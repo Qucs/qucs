@@ -3,11 +3,11 @@
     <name>QApplication</name>
     <message>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
-        <translation></translation>
+        <translation>Körbar &apos;%1&apos; kräver Qt %2, hittade Qt %3.</translation>
     </message>
     <message>
         <source>Incompatible Qt Library Error</source>
-        <translation></translation>
+        <translation>Ej kompatibelt Qt-biblioteksfel</translation>
     </message>
 </context>
 <context>
@@ -42,19 +42,19 @@
     </message>
     <message>
         <source>&amp;Basic colors</source>
-        <translation>Grundläggande färger</translation>
+        <translation>&amp;Grundläggande färger</translation>
     </message>
     <message>
         <source>&amp;Custom colors</source>
-        <translation>Valfria färger</translation>
+        <translation>&amp;Valfria färger</translation>
     </message>
     <message>
         <source>&amp;Define Custom Colors &gt;&gt;</source>
-        <translation>Definera valfria färger &gt;&gt;</translation>
+        <translation>&amp;Definera valfria färger &gt;&gt;</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>&amp;Add to Custom Colors</source>
-        <translation>Ligg till bland valfria färger</translation>
+        <translation>&amp;Lägg till bland valfria färger</translation>
     </message>
     <message>
         <source>Select color</source>
@@ -92,11 +92,11 @@
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation>Visa detta meddelande igen</translation>
+        <translation>&amp;Visa detta meddelande igen</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation></translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -143,11 +143,11 @@
     </message>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Look &amp;in:</source>
-        <translation>Leta i:</translation>
+        <translation>Leta &amp;i:</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -187,15 +187,15 @@
     </message>
     <message>
         <source>Read-write</source>
-        <translation></translation>
+        <translation>Läsning-skrivning</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation></translation>
+        <translation>Skrivskyddad</translation>
     </message>
     <message>
         <source>Write-only</source>
-        <translation></translation>
+        <translation>Lässkyddad</translation>
     </message>
     <message>
         <source>Inaccessible</source>
@@ -223,7 +223,7 @@
     </message>
     <message>
         <source>Special</source>
-        <translation></translation>
+        <translation>Special</translation>
     </message>
     <message>
         <source>Open</source>
@@ -235,35 +235,35 @@
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation>ÖppnaÖppna</translation>
+        <translation>Ö&amp;ppna</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>Spara</translation>
+        <translation>&amp;Spara</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation>Döp om</translation>
+        <translation>Dö&amp;p om</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>Ta bort</translation>
+        <translation>&amp;Ta bort</translation>
     </message>
     <message>
         <source>R&amp;eload</source>
-        <translation>Ladda om</translation>
+        <translation>L&amp;adda om</translation>
     </message>
     <message>
         <source>Sort by &amp;Name</source>
-        <translation>Sortera efter Namn</translation>
+        <translation>Sortera efter &amp;Namn</translation>
     </message>
     <message>
         <source>Sort by &amp;Size</source>
-        <translation>Sortera efter Storlek</translation>
+        <translation>Sortera efter &amp;Storlek</translation>
     </message>
     <message>
         <source>Sort by &amp;Date</source>
-        <translation>Sortera efter Datum</translation>
+        <translation>Sortera efter &amp;Datum</translation>
     </message>
     <message>
         <source>&amp;Unsorted</source>
@@ -275,7 +275,7 @@
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation>Visa dolda filer</translation>
+        <translation>Visa d&amp;olda filer</translation>
     </message>
     <message>
         <source>the file</source>
@@ -370,7 +370,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Runic</source>
-        <translation></translation>
+        <translation>Runskrift</translation>
     </message>
     <message>
         <source>Ogham</source>
@@ -494,31 +494,31 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Currency Symbols</source>
-        <translation></translation>
+        <translation>Valutasymboler</translation>
     </message>
     <message>
         <source>Letterlike Symbols</source>
-        <translation></translation>
+        <translation>Bokstavslika symboler</translation>
     </message>
     <message>
         <source>Number Forms</source>
-        <translation></translation>
+        <translation>Talform</translation>
     </message>
     <message>
         <source>Mathematical Operators</source>
-        <translation></translation>
+        <translation>Matematiska operatorer</translation>
     </message>
     <message>
         <source>Technical Symbols</source>
-        <translation></translation>
+        <translation>Tekniska symboler</translation>
     </message>
     <message>
         <source>Geometric Symbols</source>
-        <translation></translation>
+        <translation>Geometriska symboler</translation>
     </message>
     <message>
         <source>Miscellaneous Symbols</source>
-        <translation></translation>
+        <translation>Diverse symboler</translation>
     </message>
     <message>
         <source>Enclosed and Square</source>
@@ -526,7 +526,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Braille</source>
-        <translation></translation>
+        <translation>Blindskrift</translation>
     </message>
     <message>
         <source>Unicode</source>
@@ -541,7 +541,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Font st&amp;yle</source>
-        <translation>Teckenstil</translation>
+        <translation>Teckenst&amp;il</translation>
     </message>
     <message>
         <source>&amp;Size</source>
@@ -553,11 +553,11 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Stri&amp;keout</source>
-        <translation></translation>
+        <translation>Genomstry&amp;kning</translation>
     </message>
     <message>
         <source>&amp;Underline</source>
-        <translation></translation>
+        <translation>&amp;Understrykning</translation>
     </message>
     <message>
         <source>&amp;Color</source>
@@ -565,7 +565,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation>Test</translation>
+        <translation>Exempel</translation>
     </message>
     <message>
         <source>Scr&amp;ipt</source>
@@ -573,7 +573,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -596,7 +596,7 @@ Kontroller sökvägen och filnamn.</translation>
     <name>QInputDialog</name>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -607,7 +607,7 @@ Kontroller sökvägen och filnamn.</translation>
     <name>QMessageBox</name>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -631,11 +631,14 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>&amp;Ignore</source>
-        <translation></translation>
+        <translation>&amp;Ignorera</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for multiplatform GUI &amp;amp; application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants.&lt;br&gt;Qt is also available for embedded devices.&lt;/p&gt;&lt;p&gt;Qt is a Trolltech product. See &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; for more information.&lt;/p&gt;</source>
-        <translation></translation>
+        <translation>&lt;h3&gt;Om Qt&lt;/h3&gt;&lt;p&gt;Detta program använder Qt version %1.&lt;/p&gt;&lt;p&gt;Qt är ett C++-hjälpmedel för flera plattformar och för applikationsutveckling.&lt;/p&gt;&lt;p&gt;Qt åstadkommer enkelkällkodsflyttbarhet mellan MS&amp;nbsp;Windows, Mac&amp;nbsp;X, Linux och alla viktiga kommersiella varianter av Unix.&lt;br&gt;Qt är även tillgängligt för inbyggda enheter.&lt;/p&gt;&lt;P&gt;Qt är en Trolltech-produkt.
+Se
+&lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt;
+för mer information.&lt;p&gt;</translation>
     </message>
 </context>
 <context>
@@ -658,7 +661,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -874,7 +877,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>PostScript Files (*.ps);;All Files (*)</source>
-        <translation></translation>
+        <translation>PostScriptfiler (*.ps);;Alla filer (*)</translation>
     </message>
 </context>
 <context>
