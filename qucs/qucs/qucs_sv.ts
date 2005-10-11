@@ -3,55 +3,55 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera pilegenskaper</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>Huvudlängd: </translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>      Huvudbredd: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linjefärg: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>      Linjebredd: </translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestil: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>hel linje</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>strecklinje</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>punktlinje</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>streck-punkt-linje</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>streck-punkt-punkt-linje</translation>
     </message>
     <message>
         <source>Arrow head: </source>
@@ -77,6 +77,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>all components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Component Names:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -94,23 +114,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>all components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>resistors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>capacitors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transistors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Found Components</source>
@@ -127,400 +131,400 @@
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>inductors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ja</translation>
     </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara allt</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasta</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasta allt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera komponentegenskaper</translation>
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Svep</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>visa schema</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulering:</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Svepparameter:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>linjär</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>logaritmisk</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>lista</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>konstant</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>Värden:</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Början:</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slut:</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>Steg:</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Antal:</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn:</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished"></translation>
+        <translation>visa</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Bläddra</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkställ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>ja</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>nej</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla filer</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj en fil</translation>
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkter per dekad:</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graph Input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Precision:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>solid line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>long dash line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>circles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>arrows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Thickness:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>smith Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera diagramegenskaper</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>vänster axel</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dataset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete Graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>x-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>show Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid Style: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>x-Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>step</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around x-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>höger axel</translation>
     </message>
     <message>
         <source>y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>y-axel</translation>
+    </message>
+    <message>
+        <source>smith Axis</source>
+        <translation>smithaxel</translation>
+    </message>
+    <message>
+        <source>polar Axis</source>
+        <translation>polär axel</translation>
     </message>
     <message>
         <source>z-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>z-axel</translation>
+    </message>
+    <message>
+        <source>Graph Input</source>
+        <translation>Grafikindata</translation>
+    </message>
+    <message>
+        <source>Number Notation: </source>
+        <translation>Talnotation:</translation>
+    </message>
+    <message>
+        <source>real/imaginary</source>
+        <translation>real/imaginär</translation>
+    </message>
+    <message>
+        <source>magnitude/angle (degree)</source>
+        <translation>magnitud/vinkel(grader)</translation>
+    </message>
+    <message>
+        <source>magnitude/angle (radian)</source>
+        <translation>magnitud/vinkel(radianer)</translation>
+    </message>
+    <message>
+        <source>Precision:</source>
+        <translation>Precision:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Färg:</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation>Stil:</translation>
+    </message>
+    <message>
+        <source>solid line</source>
+        <translation>hel linje</translation>
+    </message>
+    <message>
+        <source>dash line</source>
+        <translation>strecklinje</translation>
+    </message>
+    <message>
+        <source>dot line</source>
+        <translation>punktlinje</translation>
+    </message>
+    <message>
+        <source>long dash line</source>
+        <translation>lång strecklinje</translation>
+    </message>
+    <message>
+        <source>stars</source>
+        <translation>asterisker</translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation>cirklar</translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation>pilar</translation>
+    </message>
+    <message>
+        <source>Thickness:</source>
+        <translation>Tjocklek:</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation>y-axel:</translation>
+    </message>
+    <message>
+        <source>Dataset</source>
+        <translation>Datamängd</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Namn</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="obsolete">Status</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Storlek</translation>
+    </message>
+    <message>
+        <source>Graph</source>
+        <translation>Kurva</translation>
+    </message>
+    <message>
+        <source>New Graph</source>
+        <translation>Ny kurva</translation>
+    </message>
+    <message>
+        <source>Delete Graph</source>
+        <translation>Tag bort kurva</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>x-Axis Label:</source>
+        <translation>x-axeletikett:</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Etikett:</translation>
     </message>
     <message>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Etiketttext&lt;/b&gt;: Använd LaTeX-stil för specialtecken t. ex. \tau</translation>
+    </message>
+    <message>
+        <source>show Grid</source>
+        <translation>visa rutnät</translation>
+    </message>
+    <message>
+        <source>Grid Color:</source>
+        <translation>Rutnätsfärg:</translation>
+    </message>
+    <message>
+        <source>Grid Style: </source>
+        <translation>Rutnätsstil: </translation>
+    </message>
+    <message>
+        <source>dash dot line</source>
+        <translation>streck-punkt-linje</translation>
+    </message>
+    <message>
+        <source>dash dot dot line</source>
+        <translation>streck-punkt-punkt-linje</translation>
+    </message>
+    <message>
+        <source>logarithmical X Axis Grid</source>
+        <translation>logaritmiskt x-axelrutnät</translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation>logaritmisk</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation>Rutnät</translation>
+    </message>
+    <message>
+        <source>Rotation around x-Axis:</source>
+        <translation>Vridning runt x-axel:</translation>
+    </message>
+    <message>
+        <source>Rotation around y-Axis:</source>
+        <translation>Vridning runt y-axel:</translation>
+    </message>
+    <message>
+        <source>Rotation around z-Axis:</source>
+        <translation>Vridning runt z-axel:</translation>
     </message>
     <message>
         <source>2D-projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>2D-projektion:</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Egenskaper</translation>
+    </message>
+    <message>
+        <source>x-Axis</source>
+        <translation>x-axel</translation>
+    </message>
+    <message>
+        <source>manual</source>
+        <translation>manual</translation>
+    </message>
+    <message>
+        <source>start</source>
+        <translation>början</translation>
+    </message>
+    <message>
+        <source>step</source>
+        <translation>steg</translation>
+    </message>
+    <message>
+        <source>stop</source>
+        <translation>slut</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation>antal</translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation>Gränser</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Verkställ</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Type</source>
@@ -531,281 +535,281 @@
     <name>DisplayDialog</name>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
 </context>
 <context>
     <name>FillDialog</name>
     <message>
         <source>Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linjebredd: </translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linjefärg: </translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestil: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>hel linje</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>strecklinje</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>punktlinje</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>streck-punkt-linje</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>streck-punkt-punkt-linje</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestil</translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation type="unfinished"></translation>
+        <translation>tillåt ifyllnad</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ifyllnadsfärg: </translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ifyllnadsstil: </translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation type="unfinished"></translation>
+        <translation>ingen ifyllnad</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation type="unfinished"></translation>
+        <translation>hel</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 1 (tätast)</translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 6</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>täthet 7 (minst tät)</translation>
     </message>
     <message>
         <source>horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>horisontell linje</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>vertikal linje</translation>
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>korsade linjer</translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>streckskuggade bakåt</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>streckskuggade framåt</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>diagonalkorsade</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Ifyllnadsstil</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera textegenskaper</translation>
     </message>
     <message>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd LaTex-stil för specialtecken t. ex. \tau</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
+    <message>
+        <source>Text color: </source>
+        <translation>Textfärg: </translation>
+    </message>
+    <message>
+        <source>Text size: </source>
+        <translation>Textstorlek: </translation>
+    </message>
+    <message>
+        <source>Rotation angle: </source>
+        <translation>Vridningsvinkel: </translation>
     </message>
 </context>
 <context>
     <name>HelpDialog</name>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter är ett filtersyntesprogram. För att skapa ett filter, fyll helt enkelt i alla parametrar och tryck på den stora knappen vid botten av huvudfönstret. Genast beräknas filtrets schema och placeras i Urklipp. Gå nu till Qucs, öppna ett tomt schema och tryck CTRL-V (klistra in från Urklipp). Filterschemat sätt nu in och  simuleras. Ha kul!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>QuscTranscalc är ett analys- och synteshjälpmedel för att beräkna de elektriska och fysikaliska egenskaperna för olika typer av RF- och mikrovågstransmissionsledningar.</translation>
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation type="unfinished"></translation>
+        <translation>För varje typ av transmissionsledning kan du, genom att använda dialogrutor, mata in värden för skilda parametrar och antigen beräkna elektriska egenskaper eller använda givna elektriska krav till att syntetisera fysikaliska parametrar för den önskade missionsledningen.</translation>
+    </message>
+    <message>
+        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
+        <translation>Tillgängliha transmissionsledningstyper är: mikrostrip, rektangulär vågledare, koaxialledning och kopplade mikrostrip.</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translation>Kasta</translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera underliggande kretsars egenskaper</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefix:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>LabelDialog</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
+        <translation>Sätt in nodnamn</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in etiketten:</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Begynnelsenodspänning:</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om inte...</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mera...</translation>
     </message>
 </context>
 <context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera markörsegenskaper</translation>
     </message>
     <message>
         <source>Precision: </source>
-        <translation type="unfinished"></translation>
+        <translation>Precision:</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>Talnotation:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>real/imaginär</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitud/vinkel(grader)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitud/vinkel(radianer)</translation>
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>genomskinlig</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -815,15 +819,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
+        <source>calculate two-port matching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -851,11 +847,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mag/deg</source>
+        <source>real/imag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>real/imag</source>
+        <source>mag/deg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -875,17 +871,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>calculate two-port matching</source>
+        <source>Frequency:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
+        <source>Create</source>
+        <translation type="unfinished">Skapa</translation>
     </message>
     <message>
-        <source>Real part of impedance must be greater zero,
-but is %1 !</source>
-        <translation type="unfinished"></translation>
+        <source>Cancel</source>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Reflexion Coefficient</source>
@@ -895,358 +890,474 @@ but is %1 !</source>
         <source>Impedance (ohms)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fel</translation>
+    </message>
+    <message>
+        <source>Real part of impedance must be greater zero,
+but is %1 !</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa nytt projekt</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Projektnamn:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished"></translation>
+        <translation>öppna nytt projekt</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Valmöjligheter</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Enheter</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvens</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Motstånd</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinkel</translation>
     </message>
     <message>
         <source>Save as Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som standard</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasta</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej spara inställningar!</translation>
     </message>
     <message>
         <source>untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Namnlös</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel: Färgläggningsfält är ej stängt!</translation>
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fel dokumentversion:</translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Urklippsformatfel
+Okänt fält!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej spara dokument!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktig begränsare i egenskapsfält!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Okänd egenskap: </translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Tal förväntat i egenskapsfält!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+&apos;Egenskaps&apos;-fält ej stängt!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+&apos;Komponentfält&apos; ej stängt!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktigt &apos;lednings&apos;-radsformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Ledningfält är ej stängt!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Okänt diagram!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktigt &apos;diagram&apos;-radsformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Diagramfältet är ej stängt!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktig &apos;färgläggnings&apos;-radsavgränsare!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Okänd färgläggning!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktig &apos;färgläggnings&apos;-radsformat!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ladda dokumnt: </translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Felaktig dokumenttyp: </translation>
     </message>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Filformatfel:
+Okänt fält!</translation>
     </message>
     <message>
-        <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
+        <translation>FEL: Kan ej ladda delkrets &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation>FEL: Kan ej ladda bibliotekskomponent &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
+        <translation>FEL: Inget filnamn i SPICE-komponent &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation>Pil</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation>Elliptisk båge</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera bågegenskaper</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation>Ellips</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation>fylld ellips</translation>
+    </message>
+    <message>
+        <source>Edit Ellipse Properties</source>
+        <translation>Redigera ellipsegenskaper</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation>Linje</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera linjeegenskaper</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Text</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rektangel</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation>fylld rektangel</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera rektangelegenskaper</translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation>Ortskurva</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>ogiltig</translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation>Polär</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation>Polär-Smith-kombination</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation>Smith-polär-kombination</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation>3D-kartesiskt</translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation>Kartesiskt</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation>Smithdiagram</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation>Admittans-Smith</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>inga variabler</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation>felaktigt beroende</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>inga data</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation>Tabellik</translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>ac-simulering</translation>
     </message>
     <message>
         <source>sweep type</source>
-        <translation type="unfinished"></translation>
+        <translation>sveptyp</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>startfrekvens i Hz</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>stoppfrekvens i Hz</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
+        <translation>antal simuleringssteg</translation>
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>beräkna brusspänning</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal ac-strömkälla</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>ström i A</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>frekvens i Hz</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>begynnelsefas i grader</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ac-strömkälla</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation>idideal dc-strömkälla</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>dc-strömkälla</translation>
     </message>
     <message>
         <source>noise current source</source>
-        <translation type="unfinished"></translation>
+        <translation>brusströmkälla</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>strömeffektspektraltäthet i A²/Hz</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>frekvensexponent</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>frekvenskoefficient</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>additativ frekvensterm</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Brusströmkälla</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal förstärkare</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsförstärkning</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans för inport</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans för utport</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Förstärkare</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>dämpsats</translation>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>effektdämpning</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>simuleringstemperatur i Celsius</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpsats</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>bias t</translation>
+    </message>
+    <message>
+        <source>for transient simulation: inductance in Henry</source>
+        <translation>för transientsimulering: induktans i H</translation>
+    </message>
+    <message>
+        <source>for transient simulation: capacitance in Farad</source>
+        <translation>för transientsimulering: kapacitans i C</translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>bipolär transistor</translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>polaritet</translation>
     </message>
     <message>
         <source>saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>mättnadsström</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>framemissionskoefficient</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>backemissionskoefficient</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>högströmsbrytpunkt för fram-beta</translation>
     </message>
     <message>
         <source>high current corner for reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>högströmsbrytpunkt för bak-beta</translation>
     </message>
     <message>
         <source>forward early voltage</source>
@@ -1258,19 +1369,19 @@ Unknown field!</source>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>bas-emitter läckmättnadsström</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>bas-emitter läckemissionskoefficient</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>bas-kollektor läckmättnadsström</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>bas-kollektor läckemissionskoefficient</translation>
     </message>
     <message>
         <source>forward beta</source>
@@ -1282,23 +1393,23 @@ Unknown field!</source>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation type="unfinished"></translation>
+        <translation>minimum basresistans för höga strömmar</translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>ström för mittpunkt på basresistans</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>kollektorns ohmska resistans</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>emitterns ohmska resistans</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished"></translation>
+        <translation>noll-förspänd basresistans (kan vara högströmsberoende)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
@@ -1326,11 +1437,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation type="unfinished"></translation>
+        <translation>del av Cjc som går till intern baspinne</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>nollförspänd kollektorsubstratkapacitans</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
@@ -1358,67 +1469,67 @@ Unknown field!</source>
     </message>
     <message>
         <source>high-current effect on Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>storströmseffekt på Tf</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal omvänd löptid</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker-bruskoefficient</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker-brusexponent</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker-brus frekvensexponet</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>skurbruskoefficient</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>skurbrusexponent</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>skurbrusbrytfrekvens i Hz</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>överskottsfas i grader</translation>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>npn-transistor</translation>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp-transistor</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>bipolär junction-transistor med substrat</translation>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>kondensator</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>kapacitans i F</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondensator</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>strömstyrd strömkälla</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
@@ -1426,54 +1537,57 @@ Unknown field!</source>
     </message>
     <message>
         <source>delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>fördröjningstid</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Strömstrýrd strömkälla</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>strömstyrd spänningskälla</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Strömstyrd spänningskälla</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>cirkulator</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans i port 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans i port 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>referensimpedans i port  3</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Cirkulator</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktig början på rad!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Okänd komponent!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfel:
+Felaktigt komponentsradsformat!</translation>
     </message>
     <message>
         <source>coplanar line</source>
@@ -1481,83 +1595,143 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>namn på substratdefinition</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ledningen</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ett gap</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>längd på ledningen</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>material på baksidan av substratet</translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation>använd approximation i stället för exakt ekvation</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dc simulation</source>
+        <source>coplanar gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>relative tolerance for convergence</source>
+        <source>width of gap between the two lines</source>
+        <translation>bredd på gapet mellan två ledningar</translation>
+    </message>
+    <message>
+        <source>Coplanar Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>absolute tolerance for currents</source>
+        <source>coplanar open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>absolute tolerance for voltages</source>
+        <source>width of gap at end of line</source>
+        <translation>bredd på gap vid slutet på ledningen</translation>
+    </message>
+    <message>
+        <source>Coplanar Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put operating points into dataset</source>
+        <source>coplanar short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>maximum number of iterations until error</source>
+        <source>Coplanar Short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>save subcircuit nodes into dataset</source>
+        <source>coplanar step</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>preferred convergence algorithm</source>
+        <source>width of line 1</source>
+        <translation>bredd på ledning 1</translation>
+    </message>
+    <message>
+        <source>width of line 2</source>
+        <translation>bredd på ledning 2</translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation>avstånd mellan jordplanen</translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation type="unfinished"></translation>
+        <translation>dc-blockering</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished"></translation>
+        <translation>dc-blockering</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>dc-matning</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>dc-matning</translation>
+    </message>
+    <message>
+        <source>dc simulation</source>
+        <translation>dc-simulering</translation>
+    </message>
+    <message>
+        <source>relative tolerance for convergence</source>
+        <translation>relativ tolerans för konvergens</translation>
+    </message>
+    <message>
+        <source>absolute tolerance for currents</source>
+        <translation>absolut tolerans för strömmar</translation>
+    </message>
+    <message>
+        <source>absolute tolerance for voltages</source>
+        <translation>absolut tolerans för spänningar</translation>
+    </message>
+    <message>
+        <source>put operating points into dataset</source>
+        <translation>skriv driftpunkter till datamängden</translation>
+    </message>
+    <message>
+        <source>maximum number of iterations until error</source>
+        <translation>maximalt antal iterationer tills fel</translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation>spara delkretsnoder i datamängden</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
+        <translation>föredragen konvergeringsalgoritm</translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation>metod för att lösa en kretsmatris</translation>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
+        <translation>diod</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>emissionskoefficient</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
@@ -1573,59 +1747,67 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>linjär kapacitans</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>rekombinationsströmsparametar</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>emissionskoefficient för lsr</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmsk serieresistans</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>löptid</translation>
+    </message>
+    <message>
+        <source>reverse breakdown voltage</source>
+        <translation>omvänd överslagsspänning</translation>
+    </message>
+    <message>
+        <source>current at reverse breakdown voltage</source>
+        <translation>ström vid omvänd överslagsspänning</translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Diod</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ekvation</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekvation</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>skriv resultat till datamängden</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>jord (referenspotential)</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Jord</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>gyrator (impedansinverterare)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>gyratorförhållande</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyrator</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
@@ -1633,91 +1815,91 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>antal övertoner</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Övertonsbalans</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>ledare</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>induktans i H</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledare</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation type="unfinished"></translation>
+        <translation>strömprob</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Strömprob</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal strömpulskälla</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ström före och efter pulsen</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsens ström</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>starttidpunkt för pulsen</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>sluttidpunkt för pulsen</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>stigtid på inledande flanken</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>falltid på avslutade flanken</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Strömpuls</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal rektangelformad strömkälla</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ström vid stor puls</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>längd på stor puls</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>längd på små pulser</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangelström</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>isolator</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1725,15 +1907,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tröskelspänning</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>transkonduktansparameter</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>kanallängdsmodulationsparameter</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
@@ -1741,23 +1923,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>parsitisk källresistans</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>gate-junction mättnadsström</translation>
     </message>
     <message>
         <source>gate-junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>gate-junction emissionskoefficient</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>gate-junction rekombinationsströmsparameter</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>lsr emissionskoefficient</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
@@ -1781,15 +1963,27 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-JFET</translation>
     </message>
     <message>
         <source>p-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-JFET</translation>
+    </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation>Komponent hämtad från Qucs bibliotek</translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation>namn på Qucs biblioteksfil</translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation>namn på komponent i bibliotek</translation>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS fälteffektransistor</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
@@ -1797,7 +1991,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>transkonduktanskoefficient i A/V²</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -1805,11 +1999,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>surface potential</source>
-        <translation type="unfinished"></translation>
+        <translation>ytpotential</translation>
     </message>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>kanallängdsmodulationsparametar i 1/V</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
@@ -1833,19 +2027,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>kanalbredd</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>kanallängd</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation>lateral diffusionslängd</translation>
     </message>
     <message>
         <source>oxide thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>oxidtjocklek</translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
@@ -1905,7 +2099,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
-        <translation type="unfinished"></translation>
+        <translation>ytrörlighet i cm²/Vs</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
@@ -1945,11 +2139,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
@@ -1957,95 +2151,87 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostriphörn</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>substrat</translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>linjebredd</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostriphörn</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>kopplad mikrostripledning</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>avstånd mellan ledningar</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripmodell</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripdispersionsmodell</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopplad mikrostripledning</translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>width of line 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripkross</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ledning 3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ledning 4</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostripkross</translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripgap</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ledningen 1</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd på ledningen 2</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>avstånd mellan mikrostripändarna</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>kvasistatisk mikrostripmodell</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostripgap</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripledning</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostripledning</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
@@ -2069,627 +2255,556 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripimpedanssteg</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd 1 på ledningen</translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>bredd 2 på ledningen</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostripsteg</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostrip T</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatur i grader Celsius</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostrip T</translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrostripvia</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>diameter på rund vialedare</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostripvia</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>operationsförstärkare</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>absolutvärde på maximum och minimum utspänning</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>OpAmp</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametersvep</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
+        <translation>simulering för att göra paremetersvep på</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>parameter, som skall svepas</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>begynnelsevärde för svep</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>slutvärde för svep</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>fasvridare</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>fasvridning i grader</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>Fasvridare</translation>
     </message>
     <message>
         <source>resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>motstånd</translation>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>omskt motstånd i ohm</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>schemasymbol</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Motstånd</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished"></translation>
+        <translation>Motstånd US</translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation type="unfinished"></translation>
+        <translation>växelströmskraftkälla</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>portens nummer</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>portimpedans</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>växelströmseffekt i W</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate noise parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Effektkälla</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S-parameterfil</translation>
     </message>
     <message>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>fil</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>namn på S-parameterfilen</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished"></translation>
+        <translation>interpolationstyp</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>1-port S-parameterfil</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE nätlistfil</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE nätlista</translation>
+    </message>
+    <message>
+        <source>sim</source>
+        <translation>sim</translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation>spice</translation>
+    </message>
+    <message>
+        <source>S parameter simulation</source>
+        <translation>S-parametersimulering</translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
+        <translation>beräkna brusparametrar</translation>
+    </message>
+    <message>
+        <source>input port for noise figure</source>
+        <translation>in-port för brusfaktor</translation>
+    </message>
+    <message>
+        <source>output port for noise figure</source>
+        <translation>ut-port för brusfaktor</translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation>S-parametersimulering</translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>delkrets</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>namn på qucs schemafil</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>en delkrets port</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>nummer på porten inom delkretsen</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Delkretsport</translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>substartdefinition</translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>relativ permitivitet</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>tjocklek i m</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>tjocklek hos metalliseringen</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>förlusttangent</translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
-        <translation type="unfinished"></translation>
+        <translation>specificera motståmndet i metall</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>rms substratgrovhet</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal symetrisk transformator</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsomsättning hos spole 1</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsomsättning hos spole 2</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>symmetrisk transformator</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal transmissionslinje</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>karaktäristisk impedans</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>ledningens elektriska längd</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transient simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>integration method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>order of integration method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmissionsledning</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal transformator</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsomsättning</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformator</translation>
+    </message>
+    <message>
+        <source>transient simulation</source>
+        <translation>transientsimulering</translation>
+    </message>
+    <message>
+        <source>start time in seconds</source>
+        <translation>starttid i sekunder</translation>
+    </message>
+    <message>
+        <source>stop time in seconds</source>
+        <translation>stopptid i sekunder</translation>
+    </message>
+    <message>
+        <source>number of simulation time steps</source>
+        <translation>antal tidssimuleringssteg</translation>
+    </message>
+    <message>
+        <source>integration method</source>
+        <translation>integrationsmetod</translation>
+    </message>
+    <message>
+        <source>order of integration method</source>
+        <translation>integrationsmetodens ordning</translation>
+    </message>
+    <message>
+        <source>initial step size in seconds</source>
+        <translation>initialt tidssteg i sekunder</translation>
+    </message>
+    <message>
+        <source>minimum step size in seconds</source>
+        <translation>minsta stegstorlek i sekunder</translation>
+    </message>
+    <message>
+        <source>relative tolerance of local truncation error</source>
+        <translation>relative tolerans hos lokalt avrundningsfel</translation>
+    </message>
+    <message>
+        <source>absolute tolerance of local truncation error</source>
+        <translation>absolut tolerans hos lokalt avrundningsfel</translation>
+    </message>
+    <message>
+        <source>overestimation of local truncation error</source>
+        <translation>överskattning av lokalt avrundningsfel</translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
+        <translation>Transientsimulering</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsstyrd strömkälla</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation>framtranskondutans</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Spänningsstyrd strömkälla</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsstyrd spänningskälla</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Spänningsstyrd spänningskälla</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal växelströmsspänninsgkälla</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>effektivvärde i V</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>växelströmsspänningskälla</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal likströmsspänningskälla</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>spänning i V</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>likströmsspänningskälla</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>brusspänningskälla</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningseffekttäthet i V²/Hz</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Brusspänningskälla</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal spänningspulskälla</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>spänning före och efter pulsen</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsens spänning</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Spänningspuls</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideal rektangulär spänningskälla</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>spänning hög vid signal</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangelspänning</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Redigerares version  </translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Mycket enkel textredigerare för Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Användning:  qucsedit [-r] fil
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -h  visa denna hjälp och avsluta
+</translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -r  öppna fil för läsning
+</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>För långt argument på kommandoraden!
+
+</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Felaktigt kommandoradsargument!</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
+        <translation>Enast ett filnamn tillåtet!
+</translation>
+    </message>
+    <message>
+        <source>number of input ports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>use approximation instead of precise equation</source>
+        <source>voltage of high level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>method for solving the circuit matrix</source>
+        <source>digital simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>for transient simulation: inductance in Henry</source>
+        <source>type of simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>for transient simulation: capacitance in Farad</source>
+        <source>digital source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coplanar open</source>
+        <source>initial output value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>width of gap at end of line</source>
+        <source>list of times for changing output value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Coplanar Open</source>
+        <source>logical AND</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coplanar short</source>
+        <source>n-port AND</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Coplanar Short</source>
+        <source>logical inverter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coplanar gap</source>
+        <source>Inverter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>width of gap between the two lines</source>
+        <source>logical NAND</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Coplanar Gap</source>
+        <source>n-port NAND</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>sim</source>
+        <source>logical NOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coplanar step</source>
+        <source>n-port NOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>distance between ground planes</source>
+        <source>logical OR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Coplanar Step</source>
+        <source>n-port OR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>reverse breakdown voltage</source>
+        <source>logical XNOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>current at reverse breakdown voltage</source>
+        <source>n-port XNOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
+        <source>logical XOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
+        <source>n-port XOR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Component taken from Qucs library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>name of qucs library file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>name of component in library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locus Curve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tabular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>filled Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>wrong dependency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>three mutual inductors</source>
+        <source>two mutual inductors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2701,11 +2816,19 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>inductance of coil 3</source>
+        <source>coupling factor between coil 1 and 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coupling factor between coil 1 and 2</source>
+        <source>Mutual Inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>three mutual inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance of coil 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2714,14 +2837,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mutual Inductors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2756,555 +2871,488 @@ Usage:  qucsedit [-r] file
         <source>voltage power spectral density of source 1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>logical OR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number of input ports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage of high level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical NOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port OR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical AND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port AND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical NAND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port NAND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port NOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical XOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical inverter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inverter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>type of simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>initial output value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtminstone två element måste väljas!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej starta textredigerare!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta filtersyntesprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta ledningsberäkningsprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta biblioteksprogram!</translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation>Kan inte starta qusc-hjälpen!</translation>
     </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Datavisning</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs-dokument</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla filer</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>innehåll i projektmappen</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehåll i</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmärkning</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>Datamängder</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>Datavisningar</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation type="unfinished"></translation>
+        <translation>Scheman</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehåll</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation type="unfinished"></translation>
+        <translation>innehåll hos det öppna projektet</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenter</translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>komponenter och kurvor</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>diskreta komponeter</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished"></translation>
+        <translation>källor</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>transmissionslinjer</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
+        <translation>icke-linjära komponenter</translation>
+    </message>
+    <message>
+        <source>file data</source>
+        <translation type="obsolete">data från fil</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>simuleringar</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>kurvor</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="unfinished"></translation>
+        <translation>färgläggningar</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Döp om</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Tag bort grupp</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej döpa om en öppen fil!</translation>
     </message>
     <message>
         <source>Rename file</source>
-        <translation type="unfinished"></translation>
+        <translation>Döp om fil</translation>
     </message>
     <message>
         <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in ett nytt namn:</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej döpa om fil: </translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort en öppen fil!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta kommer att ta bort filen för gott! Fortsätta?</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nej</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort schema: </translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort en öppen fil: </translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Detta kommer at ta bort filer
+</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>för gott! Fortsätta?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skapa arbetsmapp!</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
-        <translation type="unfinished"></translation>
+        <translation>Stänger Qucs-dokument</translation>
     </message>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta dokument innehåller osparade ändringar!
+Vill du spara dessa innan filen stängs?</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapar nytt schema...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klar.</translation>
     </message>
     <message>
         <source>Opening file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar fil...</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in ett schemanamn</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppning avbruten</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation type="unfinished"></translation>
+        <translation>-port</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar fil...</translation>
     </message>
     <message>
         <source>Saving aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara avbrutet</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in ett dokumentnamn</translation>
     </message>
     <message>
         <source>The file &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen &apos;</translation>
     </message>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&apos; finns redan!
+</translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara kommer att skriva över den gamla! Fortsätta?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Endast tilläggen &apos;.sch&apos; ocg &apos;.dpi&apos;
+</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>kommer att synas i innehållsbläddraren! Fortsätta?</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skriva över ett öppet dokument</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar fil under nytt namn...</translation>
     </message>
     <message>
         <source>Saving all files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara alla filer...</translation>
     </message>
     <message>
         <source>Closing file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stänger fil...</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentet innehåller osparade ändringr!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du spara ändringarna innan stängning?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spara</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kasta</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver ut...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutar tillämpning...</translation>
     </message>
     <message>
         <source>Quit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta...</translation>
     </message>
     <message>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du verkligen avsluta?</translation>
     </message>
     <message>
         <source>Cutting selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipper ur urvalet...</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopierar urvalet till Urklipp...</translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="obsolete">inga varningar</translation>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skapa </translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen sida satt!</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej få tillgång till projektmapp: </translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"></translation>
+        <translation> -Projekt: </translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj projektmapp att öppna</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehåll av&apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skapa projektmapp!</translation>
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget projekt är valt!</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort ett öppet projekt!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta kommer att förstöra all projektfiler för evigt! Fortsätta?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nej</translation>
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort projektfil: </translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort projektmapp!</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj projektmapp, som skall tas bort</translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation>SPICE nätlista</translation>
+    </message>
+    <message>
+        <source>1-port S parameter file</source>
+        <translation>1-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation>2-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>3-port S parameter file</source>
+        <translation>3-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>4-port S parameter file</source>
+        <translation>4-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>5-port S parameter file</source>
+        <translation>5-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>6-port S parameter file</source>
+        <translation>6-ports S-parameterfil</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera kretssymbol</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera symbolen för detta schema</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera kretssymbol
+
+Redigerar symbolen för detta schema</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera schema</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigerar schema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
+        <translation>Redigera schema
+
+Redigerar schemat</translation>
+    </message>
+    <message>
+        <source>digital components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3312,176 +3360,188 @@ Edits the schematic</source>
     <name>QucsEdit</name>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fil: </translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Quocs redigerarversion</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Mycket enkel textredigerare för Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2004,2005 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in ett filnamn</translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation>Skriv in ett dokumentnamn</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skriva fil: </translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej läsa fil: </translation>
     </message>
     <message>
         <source>Closing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Stänger dokument</translation>
     </message>
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Texten innehåller osparade ändringar!
+
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du spara ändringarna?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spara</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kasta</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Avbryt</translation>
     </message>
 </context>
 <context>
     <name>QucsFilter</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;vsluta</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp...</translation>
     </message>
     <message>
         <source>&amp;About QucsFilter...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Om QucsFilter...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om Qt...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>Filter type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtertyp:</translation>
     </message>
     <message>
         <source>Filter class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filterklass:</translation>
     </message>
     <message>
         <source>Low pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Lågpass</translation>
     </message>
     <message>
         <source>High pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Högpass</translation>
     </message>
     <message>
         <source>Order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordning:</translation>
     </message>
     <message>
         <source>Corner frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Brytfrekvens:</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppfrekvens:</translation>
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
+        <translation>Passbandsrippel:</translation>
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedans:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna och lägg i Urklipp</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter Version </translation>
     </message>
     <message>
         <source>
 Filter synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Filtersyntesprogram
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</source>
+        <translation type="obsolete">Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Om Qt</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Result: --</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat:</translation>
     </message>
     <message>
         <source>Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyckat</translation>
+    </message>
+    <message>
+        <source>Result: --</source>
+        <translation>Resultat: --</translation>
     </message>
     <message>
         <source>Band pass</source>
@@ -3497,18 +3557,18 @@ Filter synthesis program
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start frequency:</source>
+        <source>Filter order must not be less than two.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter order must not be less than two.</source>
+        <source>Start frequency:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3516,1134 +3576,1284 @@ Filter synthesis program
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
+        <translation>Qusc hjälpsystem</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälpindex</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ny</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa ett nytt dokument</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt 
+
+Skapar ett nytt dokument eller &quot;data display&quot;-dokument</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna fil</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Öppna...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar ett befintligt dokument</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna fil
+
+Öppnar ett befintligt dokument</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spara</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar det aktuella dolumentet</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil
+
+Sparar det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara fil som</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sp&amp;ara som...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar aktuellt dokument under ett nytt namn</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som
+
+Spara det aktuella dokumentet under ett nytt namn</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara alla filer</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara &amp;allt</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar alla öppna dokument</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara alla filer
+
+Sparar alla öppna dokument</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng fil</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stäng</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng aktuellt dokument</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng fil
+
+Stänger aktuellt dokument</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera kretssymbol</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigerar symbolen för detta schema</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera kretssymbol
+
+Redigerar symbolen för detta schema</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentsinställningar</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentsinställningar...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar
+
+Sätter filegenskaper</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut fil</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Skriv...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver ut aktuellt dokument</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut fil
+
+Skriver ut det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut valda element</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut det utvalda...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut utvalda element</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut utvalda element
+
+Skriver ut valda element i det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;vsluta</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta
+
+Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillämpningsinställningar</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillämpningsinställningar...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs inställningar
+
+Ställer in egenskaper för tillämpningen</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp överst</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp valda element</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp överst
+
+Rada upp valda element i överkant</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp nertill</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp nertill valda element</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad upp nertill
+
+Rada upp valda element i underkant</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rada upp till vänster</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänsterjustera valda element</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänsterjustera
+
+Justera valda element längs dess vänstra kant</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerjustera</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerjustera valda element</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerjustera
+
+Justera valda element längs dess högra kant</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela horisontellt</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela lika horisontellt</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela horisontellt
+
+Fördela valda element horisontellt</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela vertikalt</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela lika vertikalt</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela vertikalt
+
+Fördela valda element vertikalt</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Placer på rutnät</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Placera på rutnät
+
+Placerar valda element på rutnät</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta komponenttext</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta komponenttext
+
+Flyttar komponenters egenskapstext</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Kli&amp;pp</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipper ut vald sektion och lägger i Urklipp</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp
+
+Klipper ut den valda sektionen och lägger det i Urklipp</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopiera</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera
+
+Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistra in</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Klistra in</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistrar in innehållet i Urklipp vid markörspositionen</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistra in
+
+Klistrar in innehållet i Urklipp vid markörspositionen</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ta bort</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort
+
+Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Ångra</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ångra</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>Ångrar senaste kommando</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>Ångra
+
+Gör senaste åtgärden ogjord</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör om</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gör om</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör om senaste kommando</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör om
+
+Repeterar senaste åtgärden en gång till</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt projekt</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nytt projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt porjekt
+
+Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna projekt</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Öppna projekt...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar ett projekt</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna projekt
+
+Öppnar ett befintligt projekt</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort projekt</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ta bort projekt...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort ett projekt</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort projekt
+
+Tar bort ett befintligt projekt</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng projekt</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stäng projekt</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng aktuellt projekt</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng projekt
+
+Stänger aktuellt projekt</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa allt</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Visar hela sidan</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa allt
+
+Visar hela sidans innehåll</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa i skala 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Visar utan förstorning</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Visar i skala 1:1
+
+Visar sidoinnhållet utan förstorning</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zomma in</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomar in aktuell vy</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma in
+
+Zoomar in aktuell vy</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zooma ut</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomar ut aktuell vy</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Minska
+
+Zoomar ut aktuell vy</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Valläge</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj
+
+Välj läge</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj allt</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljer alla element</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj allt
+
+Väljer alla element i dokumentet</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrida</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrider den valda komponenten 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera
+
+Vrider den valda komponenten 90° motsols</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegla i X-axel</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Speglar den valda komponenten i X-axeln</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegla i X-axeln
+
+Speglar den valda komponenten i X-axeln</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegla i Y-axeln</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Speglar den valda komponenten i Y-axeln</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spegla  i Y-axeln
+
+Speglar den valda komponenten i Y-axeln</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå in i delkrets</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Går in i delkrets</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå in i delkrets
+
+Går in i den valda delkretsen</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppa ut</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppa ut ur delkrets</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppa ut
+
+Går upp en hierarkinivå, d. v. s. lämnar delkretsen</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaktivera/Aktivera</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaktiverar/Aktiverar det valda</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaktivera/Aktivera
+
+Avaktiverar/Aktiverar det valda</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in ekvation</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjuter in ekvation</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in ekvation
+
+Skjuter in en användardefinierad ekvation</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in jord</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjuter in jord</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in jord
+
+Skjuter in en jordsymbol</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in port</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjuter in port</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in port
+
+Skjuter in en portsymbol</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in ledare</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledare</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledare
+
+Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjut in ledare-/pin-etikett</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledaretikett</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjuter in en ledar- eller pinnetikett</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulate
+        <translation>Ledaretikett
 
-Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View Data Display/Schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View Data Display/Schematic
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker on Graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker
-
-Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Last Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shows last simulation messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Last Messages
-
-Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Last Netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shows last simulation netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Last Netlist
-
-Shows the netlist of the last simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool&amp;bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar
-
-Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Statusbar
-
-Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Index of Qucs Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index
-
-Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started with Qucs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started
-
-Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;About Qucs...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About the application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About
-
-About the application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt
-
-About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Insert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle toolbar...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle statusbar...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Version </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulator by Stefan Jahn
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Translations:
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German by Stefan Jahn
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Romanian by Radu Circa
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French by Vincent Habchi, F5RCS
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese by Luciano Franca
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Japanese by Toyoyuki Ishikawa
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian by Giorgio Luparia
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hebrew by Dotan Nahum
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
+Skjuter in en ledar- eller pinnetikett</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Textredigerare</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Textredigerare</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar Qucs textredigerare</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Textredigerare
+
+Startar Qucs textredigerare</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtersyntes</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtersyntes
+
+Startar QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsberäkning</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsberäkning
+
+Startar transmissionsledningsberäkning</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponetbibliotek</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
+        <translation>Startar QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponetbibliotek
+
+Startar komponetsbiblioteksprogrammet</translation>
     </message>
     <message>
-        <source>no warnings</source>
-        <translation type="unfinished"></translation>
+        <source>Simulate</source>
+        <translation>Simulera</translation>
+    </message>
+    <message>
+        <source>Simulates the current schematic</source>
+        <translation>Simulerar aktuellt schema</translation>
+    </message>
+    <message>
+        <source>Simulate
+
+Simulates the current schematic</source>
+        <translation>Simulera
+
+Simulerar aktuellt schema</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic</source>
+        <translation>Visa datavisning/schema</translation>
+    </message>
+    <message>
+        <source>Changes to data display or schematic page</source>
+        <translation>Ändrar till datavisningssida eller schemasida</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic
+
+</source>
+        <translation>Visa datavisning/schema
+
+</translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation>Sätt markör</translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation>Sätt markör i kurva</translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation>Sätter en markör i ett diagrams kurva</translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation>Sätt markör
+
+Sätter en markör i ett diagrams kurva</translation>
+    </message>
+    <message>
+        <source>Show Last Messages</source>
+        <translation>Visa senaste meddelande</translation>
+    </message>
+    <message>
+        <source>Shows last simulation messages</source>
+        <translation>Visa senaste simuleringsmeddelande</translation>
+    </message>
+    <message>
+        <source>Show Last Messages
+
+Shows the messages of the last simulation</source>
+        <translation>Visa senaste meddelande
+
+Visar senaste simuleringsmeddelandena</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist</source>
+        <translation>Visa senaste nätlista</translation>
+    </message>
+    <message>
+        <source>Shows last simulation netlist</source>
+        <translation>Visar senste simuleringens nätlista</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist
+
+Shows the netlist of the last simulation</source>
+        <translation>Visa senaste nätlista
+
+Visar senaste simuleringsens nätlista</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation>Verktygsrad</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bar</source>
+        <translation>Ver&amp;ktygsrad</translation>
+    </message>
+    <message>
+        <source>Enables/disables the toolbar</source>
+        <translation>Aktiverar/avaktiverar verktygsraden</translation>
+    </message>
+    <message>
+        <source>Toolbar
+
+Enables/disables the toolbar</source>
+        <translation>Verktygsrad
+
+Aktiverar/avaktiverar verktygsraden</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation>Statusrad</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation>&amp;Statusrad</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation>Aktiverar/avaktiverar statusraden</translation>
+    </message>
+    <message>
+        <source>Statusbar
+
+Enables/disables the statusbar</source>
+        <translation>Statusrad
+
+Aktiverar/avaktiverar statusraden</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation>Hjälpindex</translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation>Hjälpindex...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation>Index för Qucs hjälp</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation>Hjälpindex
+
+Index för Qucs hjälp</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation>Hur man börjar</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation>Hur man börjar...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation>Hur man börjar med Qucs</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation>Hur man börjar
+
+Kort introduktion till Qucs</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>Om</translation>
+    </message>
+    <message>
+        <source>&amp;About Qucs...</source>
+        <translation>&amp;Om Qucs...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation>Om tillämpningen</translation>
+    </message>
+    <message>
+        <source>About
+
+About the application</source>
+        <translation>Om
+
+Om tillämpningen</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation>Om Qt</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation>Om Qt...</translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation>Om Qt
+
+Om Qt från Trolltech</translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation>Rätta in</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Fil</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>&amp;Redigera</translation>
+    </message>
+    <message>
+        <source>&amp;Insert</source>
+        <translation>&amp;Sätt in</translation>
+    </message>
+    <message>
+        <source>&amp;Project</source>
+        <translation>&amp;Projekt</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation>&amp;Verktyg</translation>
+    </message>
+    <message>
+        <source>&amp;Simulation</source>
+        <translation>&amp;Simulering</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Vy</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
+        <translation>Varningar i senaste simuleringen! Tryck F5</translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation>inga varningar</translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation>Klar.</translation>
+    </message>
+    <message>
+        <source>Toggle toolbar...</source>
+        <translation>Växla verktygsrad...</translation>
+    </message>
+    <message>
+        <source>Toggle statusbar...</source>
+        <translation>Växla statusrad...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation>Om...</translation>
+    </message>
+    <message>
+        <source>Qucs Version </source>
+        <translation>Quocs version </translation>
     </message>
     <message>
         <source>
 Quite Universal Circuit Simulator
 </source>
+        <translation>
+Quite Universal Circuit Simulator
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</source>
+        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn
+</source>
+        <translation>Simulator av Stefan Jahn
+</translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation>Speciellt tack till Jens Flucke och Raimund Jacob
+
+</translation>
+    </message>
+    <message>
+        <source>Translations:
+</source>
+        <translation>Översättningar:
+</translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn
+</source>
+        <translation>Tyska av Stefan Jahn
+</translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski
+</source>
+        <translation>Polska av Dariusz Pienkowski
+</translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa
+</source>
+        <translation>Rumänska av Radu Circa
+</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation>Franska av Vincent Habchi, F5RCS
+</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca
+</source>
+        <translation>Portugisiska av Luciano Franca
+</translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez
+</source>
+        <translation>Spanska av Jose L. Redrejo Rodriguez
+</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation>Japanska av Toyoyuki Ishikawa
+</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation>Italienska av Giorgio Luparia
+</translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
+</source>
+        <translation>Hebreiska av Dotan Nahum
+</translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe
+</source>
+        <translation>Svenska av Peter Landgren
+</translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation>Ungerska av Jozsef Bus
+</translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4671,19 +4881,11 @@ Dialog for Creating Matching Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values..</source>
+        <source>Calculate DC bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4697,506 +4899,511 @@ Calculates DC bias and shows it</source>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Avsluta</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>Component Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentval</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök...</translation>
     </message>
     <message>
         <source>Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponent</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera till Urklipp</translation>
     </message>
     <message>
         <source>Show Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa modell</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <source>Library Manager for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotekshanterare för Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Library is corrupt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs är ett program, som hanterar Qucs komponentbibliotek. På vänstra sidan i tillämpningsfönstret kan man bläddra bland tillgängliga bibliotek för att hitta den önskade komponenten. Genom att klicka på komponentnamnet kan man se motsvarande beskrivning på höger sida. Den valda komponenten flyttas till Qucs-tillämpningen genom att klicka  på knappen &quot;Kopiera till Urklipp&quot;. Tillbaka in schemafönstret kan komponenten klistras in genom att tryck CTRL-V  (klistra in från Urklipp).</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökresultat</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot;.</source>
+        <translation>Kan ej öppna &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Library is corrupt.</source>
+        <translation>Bibliotek är förstört.</translation>
     </message>
     <message>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat</translation>
     </message>
     <message>
         <source>No appropriate component found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen passande komponent hittad.</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera Qucs egenskaper</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Font (satt efter omladdning):</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentbakgrundsfärg:</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>maximalt antal ångraoperationer:</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>textredigerare:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkställ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardvärden</translation>
     </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda</translation>
     </message>
     <message>
         <source>&amp;Load</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ladda</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spara</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Valmöjligheter</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valmöjligheter</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Avsluta</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera till Urklipp</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopiera till Urklipp</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>Analysera</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Analysera</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntetisera</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Syntetisera</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exekvera</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmissionsledningstyp</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Rektangulär vågledare</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koaxialledning</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopplad mikrostrip</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Substratparametrar</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentparametrar</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Fysiska parametrar</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Härledda elektriska parametrar</translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna fysiska parametrar</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektriska parametrar</translation>
     </message>
     <message>
         <source>Calculated Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräknade resultat</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klar.</translation>
+    </message>
+    <message>
+        <source>ErEff</source>
+        <translation>ErEff</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsförluster</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektriska förluster</translation>
     </message>
     <message>
         <source>Skin Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Skindjup</translation>
     </message>
     <message>
         <source>TE-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TE-moder</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TM-moder</translation>
+    </message>
+    <message>
+        <source>ErEff Even</source>
+        <translation>ErEff jämn</translation>
+    </message>
+    <message>
+        <source>ErEff Odd</source>
+        <translation>ErEff udda</translation>
     </message>
     <message>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsförluster jämna</translation>
     </message>
     <message>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsförluster udda</translation>
     </message>
     <message>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektriska förluster jämna</translation>
     </message>
     <message>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektriska förluster udda</translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativ permittivitet</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation type="unfinished"></translation>
+        <translation>Relativ permeabilitet</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Tjocklek hos substrat</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Höjd på lådtoppen</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Strip-tjocklek</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Strip-ledningförmåga</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektriska förluster</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledargrovhet</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvens</translation>
     </message>
     <message>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjebredd</translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjelängd</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Karaktäristisk impedans</translation>
     </message>
     <message>
         <source>Electrical Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektrisk längd</translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledningsförmåga hos metall</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Magnetiska förluster</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Bredd på vågledare</translation>
     </message>
     <message>
         <source>Height of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Höjd på vågledare</translation>
     </message>
     <message>
         <source>Waveguide Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Vågledarlängd</translation>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Inre diameter</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Yttre diameter</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Längd</translation>
     </message>
     <message>
         <source>Gap Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Gapbredd</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Jämn-mode-impedans</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Udda-mod-impedans</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Vald för beräkning</translation>
     </message>
     <message>
         <source>Check item for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Markera delar för beräkning</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Transmissionsledningskalkylator för Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 by Gopal Narayanan</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 by Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 by Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Värdena är konsistenta.</translation>
     </message>
     <message>
         <source>Values are inconsistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Värdena är inkonsistenta.</translation>
     </message>
     <message>
         <source>Loading file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laddar fil...</translation>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation type="unfinished"></translation>
+        <translation>Transcalc-fil</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv in ett filnamn</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ladda fil:</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laddning avbruten.</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sparar fil...</translation>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej spara fil:</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara avbrutet.</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema kopierat till Urklipp.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ErEff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ErEff Even</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ErEff Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmissionsledningstyp ej tillgänglig.</translation>
     </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
+        <source>Edit Properties</source>
+        <translation>Redigera egenskaper</translation>
+    </message>
+    <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Jordpotentialen kan ej få etikett!</translation>
     </message>
     <message>
         <source>power matching</source>
@@ -5212,7 +5419,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
@@ -5241,153 +5448,170 @@ Calculates DC bias and shows it</source>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökresultatet innehåller all komponenter vars
+namn innehåller söksträngen. Alla bibliotek
+ingår i sökningen.</translation>
     </message>
     <message>
         <source>Search string:</source>
-        <translation type="unfinished"></translation>
+        <translation>Söksträng:</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökresultat</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera filegenskaper</translation>
     </message>
     <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Data visning:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datamängd:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>öppna datavisning efter simulering</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulering</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>visa rutnät</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>horisontellt rutnät:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>vertikalt rutnät:</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutnät</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkställ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs simuleringsmeddelande</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Framåtskridande:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel och varningar:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå till visningssida</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt simulering</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>Börjar ny simulering av </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"></translation>
+        <translation> vid </translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation>FEL: Simulering pågår fortfarande!</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished"></translation>
+        <translation>skapar nätlista...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation>FEL: Kan ej skriva nätlistfil!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation>FEL: kan ej starta QucsConv!</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Simulator is still running!</source>
-        <translation type="unfinished"></translation>
+        <translation>klart.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Kan ej starta simulator!</translation>
+    </message>
+    <message>
+        <source>Close window</source>
+        <translation>Stäng fönster</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Simuleringen slutade på </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Klar.
+</translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>Fel inträffade under simulering av </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Avbruten.
+</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Utdata:
+----------
+
+</translation>
     </message>
     <message>
         <source>
@@ -5397,106 +5621,104 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot write netlist file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+
+Fel:
+------
+
+</translation>
     </message>
 </context>
 <context>
     <name>SpiceDialog</name>
     <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation>Redigera SPICE-komponentegenskaper</translation>
+    </message>
+    <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn:</translation>
     </message>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil: </translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Bläddra</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add &gt;&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;&lt; Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Component ports:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <source>show file name in schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot execute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Converting ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QucsConv Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit SPICE Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SPICE net nodes:</source>
-        <translation type="unfinished"></translation>
+        <translation>visa filnamn på schema</translation>
     </message>
     <message>
         <source>include SPICE simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>inkludera SPICE-simulering</translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
+        <translation>SPICE nätnoder:</translation>
+    </message>
+    <message>
+        <source>Add &gt;&gt;</source>
+        <translation>Lägg till&gt;&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;&lt; Remove</source>
+        <translation>&lt;&lt;Tag bort</translation>
+    </message>
+    <message>
+        <source>Component ports:</source>
+        <translation>Komponentportar:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Verkställ</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation>SPICE nätlista</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation>Alla filer</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation>Välj en fil</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation>Omvandlar...</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation>Kan ej exekvera</translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation>QucsConv-fel</translation>
     </message>
 </context>
 <context>
@@ -5507,14 +5729,14 @@ Errors:
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stäng</translation>
     </message>
 </context>
 <context>
     <name>SymbolWidget</name>
     <message>
         <source>Symbol:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol:</translation>
     </message>
 </context>
 </TS>
