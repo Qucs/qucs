@@ -38,8 +38,8 @@ Digi_Sim::Digi_Sim()
   Model = ".Digi";
   Name  = "Digi";
 
-  Props.append(new Property("Type", "truth-table", true,
-	QObject::tr("type of simulation")+" [truth-table, time-list]"));
+  Props.append(new Property("Type", "TruthTable", true,
+	QObject::tr("type of simulation")+" [TruthTable, TimeList]"));
 }
 
 Digi_Sim::~Digi_Sim()
