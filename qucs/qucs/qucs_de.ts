@@ -3247,6 +3247,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>voltage power spectral density of source 1</source>
         <translation>spektrale Rauschspannungsleistungsdichte der Quelle 1</translation>
     </message>
+    <message>
+        <source>data type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7139,7 +7143,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation>Italienisch von Giorgio Luparia
+        <translation type="obsolete">Italienisch von Giorgio Luparia
 </translation>
     </message>
     <message>
@@ -7231,7 +7235,7 @@ Startet das QucsFilter Programm</translation>
     <message>
         <source>Swedish by Markus Gothe
 </source>
-        <translation>Schwedisch von Markus Gothe
+        <translation type="obsolete">Schwedisch von Markus Gothe
 </translation>
     </message>
     <message>
@@ -7325,6 +7329,16 @@ Calculates DC bias and shows it</source>
         <translation>Berechnung des DC-Arbeitspunktes
 
 Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe and Peter Landgren
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

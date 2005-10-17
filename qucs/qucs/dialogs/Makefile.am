@@ -25,7 +25,7 @@
 noinst_LIBRARIES = libdialogs.a
 
 MOCHEADERS = messagebox.h settingsdialog.h simmessage.h qucssettingsdialog.h \
-             labeldialog.h changedialog.h matchdialog.h sweepdialog.h
+     labeldialog.h changedialog.h matchdialog.h sweepdialog.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 

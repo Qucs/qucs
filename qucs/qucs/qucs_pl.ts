@@ -3086,6 +3086,10 @@ Stosowanie:  qucsedit [-r] plik
         <source>list of times for changing output value</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>data type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5128,7 +5132,7 @@ Przesuwa tekst właściwości elementu</translation>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation>Włoskie Giorgio Luparia
+        <translation type="obsolete">Włoskie Giorgio Luparia
 </translation>
     </message>
     <message>
@@ -5215,11 +5219,6 @@ Starts transmission line calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Component Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5295,6 +5294,16 @@ Dialog for Creating Matching Circuit</source>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe and Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

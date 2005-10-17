@@ -66,7 +66,9 @@ SParamFile::SParamFile(int No)
   Props.append(new Property("File", "test.s2p", true,
 		QObject::tr("name of the s parameter file")));
   Props.append(new Property("Data", "rectangular", false,
-		QObject::tr("interpolation type")+" [rectangular, polar]"));
+		QObject::tr("data type")+" [rectangular, polar]"));
+  Props.append(new Property("Interpolator", "linear", false,
+		QObject::tr("interpolation type")+" [linear, cubic]"));
 }
 
 SParamFile::~SParamFile()
@@ -104,6 +106,11 @@ QString SParamFile::NetList()
   if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
   s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";
 
+  // data type
+  p2 = Props.next();
+  s += " "+p2->Name+"=\""+p2->Value+"\"";
+
+  // interpolator type
   p2 = Props.next();
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 

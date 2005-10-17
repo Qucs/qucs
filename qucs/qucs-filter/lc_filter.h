@@ -5,6 +5,7 @@
     copyright            : (C) 2005 by Toyoyuki Ishikawa
                            (C) 2005 by Vincent
                            (C) 2005 by Michael Margraf
+                           (C) 2005 by Stefan Jahn
  ***************************************************************************/
 
 /***************************************************************************
@@ -28,6 +29,13 @@
 #define TYPE_BUTTERWORTH 1
 #define TYPE_CHEBYSHEV   2
 
+#include <math.h>
+
+#ifdef __MINGW32__
+#define atanh(x) (0.5 * log((1.0 + (x)) / (1.0 - (x))))
+#define asinh(x) log((x) + sqrt((x) * (x) + 1.0))
+#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
+#endif
 
 typedef struct tFilter {
    int Type;
