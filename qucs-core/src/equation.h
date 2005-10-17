@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.22 2005/06/02 18:17:49 raimi Exp $
+ * $Id: equation.h,v 1.23 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -161,6 +161,7 @@ public:
   ~reference ();
   void print (void);
   void addDependencies (strlist *);
+  void findVariable (void);
   int evalType (void);
   char * toString (void);
   constant * evaluate (void);
@@ -223,6 +224,7 @@ public:
   node * getEquations (void) { return equations; }
   void list (void);
   int findUndefined (int);
+  static int isGenerated (char *);
   strlist * getVariables (void);
   int findDuplicate (void);
   static node * findEquation (node *, char *);
@@ -274,8 +276,9 @@ private:
 };
 
 /* The global list of equations and expression lists. */
-extern node * equations;
-extern node * expressions;
+extern node   * equations;
+extern node   * expressions;
+extern solver * solve;
 
 } /* namespace */
 

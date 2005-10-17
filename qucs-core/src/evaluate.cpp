@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.34 2005/06/07 07:49:06 raimi Exp $
+ * $Id: evaluate.cpp,v 1.35 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "matrix.h"
 #include "poly.h"
 #include "spline.h"
+#include "fourier.h"
 #include "constants.h"
 #include "circuit.h"
 #include "equation.h"
@@ -1836,13 +1837,66 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
   arg->solvee = args->getResult(0)->solvee;
   arg->evaluate ();
   vector * val = new vector (n);
-  spline s (v1, v2);
+  spline spl (SPLINE_BC_NATURAL);
+  spl.vectors (*v1, *v2);
+  spl.construct ();
   for (int k = 0; k < arg->v->getSize (); k++) {
-    val->set (s.evaluate(real (arg->v->get (k))).f0, k);
+    val->set (spl.evaluate (real (arg->v->get (k))).f0, k);
   }
   res->v = val;
   node * gen =
     args->get(0)->solvee->addGeneratedEquation (arg->v, "Interpolate");
+  res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
+  return res;
+}
+
+// ***************** fourier transformations *****************
+constant * evaluate::fourier_v_v (constant * args) {
+  vector * v = V (args->getResult (0));
+  vector * t = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+
+  vector * val = new vector (fft_1d (*v));
+  res->v = val;
+
+  int n = t->getSize ();
+  nr_double_t last  = real (t->get (n - 1));
+  nr_double_t first = real (t->get (0));
+  nr_double_t delta = (last - first) / (n - 1);
+  n = val->getSize ();
+
+  constant * arg = new constant (TAG_VECTOR);
+  arg->v = new vector (::linspace (0, 1.0 / delta, n));
+  arg->solvee = args->getResult(0)->solvee;
+  arg->evaluate ();
+  node * gen =
+    args->get(0)->solvee->addGeneratedEquation (arg->v, "Frequency");
+  res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
+  return res;
+}
+
+constant * evaluate::ifourier_v_v (constant * args) {
+  vector * v = V (args->getResult (0));
+  vector * f = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+
+  vector * val = new vector (ifft_1d (*v));
+  res->v = val;
+
+  int n = f->getSize ();
+  nr_double_t last  = real (f->get (n - 1));
+  nr_double_t first = real (f->get (0));
+  nr_double_t delta = (last - first) / (n - 1);
+  n = val->getSize ();
+
+  constant * arg = new constant (TAG_VECTOR);
+  arg->v = new vector (::linspace (0, 1.0 / delta, n));
+  arg->solvee = args->getResult(0)->solvee;
+  arg->evaluate ();
+  node * gen =
+    args->get(0)->solvee->addGeneratedEquation (arg->v, "Time");
   res->addPrepDependencies (A(gen)->result);
   res->dropdeps = 1;
   return res;
@@ -2904,6 +2958,11 @@ struct application_t eqn::applications[] = {
   { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v_d, 3,
     { TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },
   { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+
+  { "fft", TAG_VECTOR, evaluate::fourier_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+  { "ifft", TAG_VECTOR, evaluate::ifourier_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }

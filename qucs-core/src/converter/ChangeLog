@@ -1,3 +1,8 @@
+2005-10-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Redefined 'qucslib' output format to
+	accord to the library manager data format.
+
 2005-06-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Skipping the .control -> .endc interactive

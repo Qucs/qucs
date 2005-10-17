@@ -26,6 +26,8 @@ files.
 Version 0.0.8
 -------------
 
+ * new fft() and ifft() functions in equation solver
+ * cubic spline interpolation in S-parameter file data possible
  * new components: correlated noise sources
  * implementation of mutual inductors
 

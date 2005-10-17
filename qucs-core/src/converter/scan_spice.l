@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.12 2005/06/13 11:58:54 raimi Exp $
+ * $Id: scan_spice.l,v 1.13 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -53,7 +53,7 @@
 %}
 
 WS       [ \t\n\r]
-TITLE    [* \t0-9A-Za-z][A-Za-z0-9\- \t;#:=()/\.,*\\]*\r?\n
+TITLE    [* \t0-9A-Za-z][A-Za-z0-9\- \t;#:=()/\.,*\\]*\r*\n
 SPACE    [ \t]
 NAME     [A-Z][A-Z0-9]*
 IDENT    [A-Za-z][A-Za-z0-9_]*
@@ -67,7 +67,7 @@ FLOAT3   [+-]?{DIGIT}+"."
 NUMBER   ({INT}|{FLOAT1}|{FLOAT2}|{FLOAT3}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     [A-Za-z0-9_#]+
-EOL      \r?\n
+EOL      \r*\n
 
      /* Source functions */
 FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT]|[dD][cC]|[aA][cC])
@@ -530,13 +530,13 @@ MOS      ({MOS1}|{MOS2})
     return Nodes;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,SWITCH>\r?\n {
+<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,SWITCH>\r*\n {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;
 }
 
-<*>{SPACE}|\r?\n\+|[()=,] {
+<*>{SPACE}|\r*\n\+|[()=,] {
     /* skip spaces, '=', '(', ')', ',' and the leading '+' */
 }
 
@@ -550,7 +550,7 @@ MOS      ({MOS1}|{MOS2})
 <IGNORE>.  { /* skip any character in here */ }
 
 <COMMENT>. { /* skip any character in here */ }
-<COMMENT>\r?\n { BEGIN(STARTUP); /* skipping ends here */ }
+<COMMENT>\r*\n { BEGIN(STARTUP); /* skipping ends here */ }
 
 <*>.       { /* skip any character in here */ }
 

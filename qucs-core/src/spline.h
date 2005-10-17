@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.h,v 1.2 2005/06/02 18:17:51 raimi Exp $
+ * $Id: spline.h,v 1.3 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -28,9 +28,9 @@
 // Types of boundary conditions.
 enum spline_boundary_type {
   SPLINE_BC_UNKNOWN = -1,
-  SPLINE_BC_NATURAL,
-  SPLINE_BC_CLAMPED,
-  SPLINE_BC_PERIODIC
+  SPLINE_BC_NATURAL,       // natural splines -- zero derivatives
+  SPLINE_BC_CLAMPED,       // endpoint derivatives given
+  SPLINE_BC_PERIODIC       // periodic splines
 };
 
 class vector;
@@ -40,13 +40,15 @@ class spline
 {
  public:
   spline ();
-  spline (vector *, vector *);
+  spline (int);
+  spline (vector, vector);
   ~spline ();
 
-  void vectors (vector *, vector *);
+  void vectors (vector, vector);
   void construct (void);
   poly evaluate (nr_double_t);
   void setBoundary (int b) { boundary = b; }
+  void setDerivatives (nr_double_t l, nr_double_t r) { d0 = l; dn = r; }
 
  private:
   nr_double_t * upper_bound (nr_double_t *, nr_double_t *, nr_double_t);

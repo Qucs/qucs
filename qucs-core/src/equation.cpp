@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.34 2005/06/02 18:17:49 raimi Exp $
+ * $Id: equation.cpp,v 1.35 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -49,8 +50,9 @@ using namespace eqn;
 using namespace qucs;
 
 /* The global list of equations and expression lists. */
-node * eqn::equations = NULL;
-node * eqn::expressions = NULL;
+node   * eqn::equations = NULL;
+node   * eqn::expressions = NULL;
+solver * eqn::solve = NULL;
 
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
@@ -196,11 +198,26 @@ char * reference::toString (void) {
 // Adds the name of the reference to the list of dependencies.
 void reference::addDependencies (strlist * depends) {
   depends->add (n);
-  // Additionally find and save the actual equation reference.
-  for (node * eqn = eqn::equations; eqn != NULL; eqn = eqn->getNext ()) {
-    if (!strcmp (n, A(eqn)->result)) {
-      ref = eqn;
-      break;
+  findVariable ();
+}
+
+// Find and save the actual equation reference.
+void reference::findVariable (void) {
+  if (!ref) {
+    node * eqn;
+    for (eqn = eqn::equations; eqn; eqn = eqn->getNext ()) {
+      if (!strcmp (n, A(eqn)->result)) {
+	ref = eqn;
+	break;
+      }
+    }
+    if (eqn::solve && !ref) {
+      for (eqn = eqn::solve->getEquations (); eqn; eqn = eqn->getNext ()) {
+	if (!strcmp (n, A(eqn)->result)) {
+	  ref = eqn;
+	  break;
+	}
+      }
     }
   }
 }
@@ -208,6 +225,7 @@ void reference::addDependencies (strlist * depends) {
 // Returns the type of reference.
 int reference::evalType (void) {
   setType (TAG_UNKNOWN);
+  findVariable ();
   if (ref != NULL) {
     setType (A(ref)->body->evalType ());
   }
@@ -217,6 +235,7 @@ int reference::evalType (void) {
 // Returns the actual result of the reference.
 constant * reference::evaluate (void) {
   setResult (NULL);
+  findVariable ();
   if (ref != NULL) {
     setResult (A(ref)->body->getResult ());
   }
@@ -264,6 +283,12 @@ int assignment::evalType (void) {
 constant * assignment::evaluate (void) {
   body->solvee = solvee;
   setResult (body->evaluate ());
+  // inherit drop/prep dependencies
+  if (body->dropdeps) {
+    getResult()->dropdeps = body->dropdeps;
+    strlist * preps = body->getPrepDependencies ();
+    if (preps) getResult()->addPrepDependencies (preps->get (0));
+  }
   return getResult ();
 }
 
@@ -352,6 +377,8 @@ int application::evalType (void) {
       if (nargs != app->nargs) continue;
       // The correct types of arguments?
       for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
+	if (arg->getTag () == REFERENCE && checker::isGenerated (R (arg)->n))
+	  continue;
 	if (!(arg->evalType () & app->args[nr])) { nr = -1; break; }
       }
       if (nr == -1) continue;
@@ -379,6 +406,12 @@ constant * application::evaluate (void) {
     if (arg->evaluated == 0) {
       arg->solvee = solvee;
       arg->evaluate ();
+      // inherit drop/prep dependencies
+      if (arg->getResult()->dropdeps) {
+	dropdeps = arg->getResult()->dropdeps;
+	strlist * preps = arg->getResult()->getPrepDependencies ();
+	if (preps) addPrepDependencies (preps->get (0));
+      }
       arg->evaluated++;
     }
   }
@@ -572,7 +605,7 @@ constant * node::calculate (void) {
   constant * res = evaluate ();
   strlist * deps = solvee->collectDataDependencies (this);
   getResult()->setDataDependencies (deps);
-  delete deps;
+  if (deps) delete deps;
   return res;
 }
 
@@ -673,6 +706,20 @@ void checker::list (void) {
   }
 }
 
+/* Checks whether the variable name is a generated name which is
+   identified by a ".[0-9]{4}" suffix. */
+int checker::isGenerated (char * var) {
+  int len = strlen (var);
+  if (len > 5) {
+    if (isdigit (var[len-1]) && isdigit (var[len-2]) &&
+	isdigit (var[len-3]) && isdigit (var[len-4]) &&
+	var[len-5] == '.') {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 /* This function checks whether the variable references could be
    resolved within the equations and returns zero if so. */
 int checker::findUndefined (int noundefined) {
@@ -685,6 +732,7 @@ int checker::findUndefined (int noundefined) {
       char * var = depends->get (i);
       if (idents->contains (var) <= 0) {
 	if (noundefined) {
+	  if (isGenerated (var)) continue;
 	  logprint (LOG_ERROR, "checker error, undefined variable `%s' in "
 		    "equation `%s'\n", var, eqn->result);
 	  err++;
@@ -824,16 +872,17 @@ void checker::reorderEquations (void) {
   // Go through the list of equations.
   for (node * eqn = equations; eqn != NULL; eqn = next) {
     strlist * deps = eqn->getDependencies ();
-    int i, found;
+    int i, found, gens;
     next = eqn->getNext ();
     /* Check whether the variable dependencies can be found in
        previous equations. */
-    for (found = i = 0; i < deps->length (); i++) {
+    for (found = gens = i = 0; i < deps->length (); i++) {
       char * var = deps->get (i);
       if (findEquation (root, var) != NULL) found++;
+      if (isGenerated (var)) gens++;
     }
     // Yes.
-    if (found == deps->length ()) {
+    if (found == (deps->length () - gens)) {
       /* Remove the equation from the current list and append it to
          the new list. */
       dropEquation (eqn);
@@ -1192,7 +1241,7 @@ int solver::dataSize (strlist * deps) {
    for the given equation node and returns it as a string list.  It
    returns NULL if there are no such dependencies. */
 strlist * solver::collectDataDependencies (node * eqn) {
-  strlist * sub, * datadeps = NULL;
+  strlist * sub = NULL, * datadeps = NULL;
   if (!eqn->getResult()->dropdeps) {
     strlist * deps = eqn->getDependencies ();
     datadeps = eqn->getDataDependencies ();
@@ -1200,9 +1249,13 @@ strlist * solver::collectDataDependencies (node * eqn) {
     for (int i = 0; deps && i < deps->length (); i++) {
       char * var = deps->get (i);
       node * n = checker::findEquation (eqn::equations, var);
-      sub = strlist::join (datadeps, n->getDataDependencies ());
-      sub->del (n->getResult()->getDropDependencies ());
-      sub->add (n->getResult()->getPrepDependencies ());
+      if (n == NULL && eqn->solvee != NULL)
+	n = checker::findEquation (eqn->solvee->getEquations (), var);
+      if (n != NULL) {
+	sub = strlist::join (datadeps, n->getDataDependencies ());
+	sub->del (n->getResult()->getDropDependencies ());
+	sub->add (n->getResult()->getPrepDependencies ());
+      }
       if (datadeps) delete datadeps;
       datadeps = sub;
     }
@@ -1297,7 +1350,7 @@ int solver::findEquationResult (node * eqn) {
    the solver.  The optional dataset passed to the function receives
    the results of the calculations. */
 int equation_solver (dataset * data) {
-  solver * solve = new solver ();
+  if (!solve) solve = new solver ();
   solve->setEquations (eqn::equations);
   solve->setData (data);
   solve->checkinDataset ();
@@ -1309,7 +1362,6 @@ int equation_solver (dataset * data) {
   solve->checkoutDataset ();
   eqn::equations = solve->getEquations ();
   solve->setEquations (NULL);
-  delete solve;
   return 0;
 }
 

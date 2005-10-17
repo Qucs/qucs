@@ -1,3 +1,17 @@
+2005-10-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Implemented inheritance of 'dropdeps' property
+	and the 'prepdeps' entries.  Also allowing the use of auto-
+	generated variables in equations, e.g. 'Frequency.0001'.
+
+	* fourier.h (class fourier): Implemented 1-dimensional fast
+	fourier	transformation.
+
+	* evaluate.cpp: Added 'fft' (Fast Fourier Transformation)
+	function.
+
+	* spline.cpp: Completed periodic cubic spline calculations.
+
 2005-10-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: Fixed noise correlation matrix entry

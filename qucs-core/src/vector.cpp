@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.21 2005/06/07 07:49:06 raimi Exp $
+ * $Id: vector.cpp,v 1.22 2005/10/17 08:41:23 raimi Exp $
  *
  */
 
@@ -132,15 +132,17 @@ void vector::add (complex c) {
 
 /* This function appends the given vector to the vector. */
 void vector::add (vector * v) {
-  if (data == NULL) {
-    size = 0; capacity = v->getSize ();
-    data = (complex *) malloc (sizeof (complex) * capacity);
+  if (v != NULL) {
+    if (data == NULL) {
+      size = 0; capacity = v->getSize ();
+      data = (complex *) malloc (sizeof (complex) * capacity);
+    }
+    else if (size + v->getSize () > capacity) {
+      capacity += v->getSize ();
+      data = (complex *) realloc (data, sizeof (complex) * capacity);
+    }
+    for (int i = 0; i < v->getSize (); i++) data[size++] = v->get (i);
   }
-  else if (size + v->getSize () > capacity) {
-    capacity += v->getSize ();
-    data = (complex *) realloc (data, sizeof (complex) * capacity);
-  }
-  for (int i = 0; i < v->getSize (); i++) data[size++] = v->get (i);
 }
 
 // Returns the complex data item at the given position.
