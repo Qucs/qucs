@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "node.h"
 #include "sweepdialog.h"
 #include "qucsdoc.h"
 #include "node.h"

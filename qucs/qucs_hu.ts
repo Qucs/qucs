@@ -3021,6 +3021,10 @@ Használat:  qucsedit [-r] fájl
         <source>list of times for changing output value</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>data type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5109,7 +5113,7 @@ Qt a Trolltech-től</translation>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation>Giorgio Luparia - Olasz
+        <translation type="obsolete">Giorgio Luparia - Olasz
 </translation>
     </message>
     <message>
@@ -5214,7 +5218,7 @@ QucsTrans indítása</translation>
     <message>
         <source>Swedish by Markus Gothe
 </source>
-        <translation>Markus Gothe - Svéd
+        <translation type="obsolete">Markus Gothe - Svéd
 
 </translation>
     </message>
@@ -5290,6 +5294,16 @@ Dialog for Creating Matching Circuit</source>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe and Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
