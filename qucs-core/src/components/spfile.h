@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.11 2005-06-02 18:17:52 raimi Exp $
+ * $Id: spfile.h,v 1.12 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -28,9 +28,13 @@
 class vector;
 class matvec;
 class dataset;
+class spline;
 
 struct spfile_index_t {
   vector * v;
+  vector * f;
+  spline * v1;
+  spline * v2;
   int r;
   int c;
 };
@@ -48,12 +52,10 @@ class spfile : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void createIndex (void);
-  complex interpolate (vector *, vector *, nr_double_t);
+  void prepare (void);
+  complex interpolate (struct spfile_index_t * , nr_double_t);
   complex interpolate_lin (vector *, vector *, nr_double_t, int);
-  complex fetch (int, int, int);
-  vector fetch (int, int);
-  matrix fetch (int);
-  void store (int, int, complex, int);
+  complex interpolate_spl (spline *, spline *, nr_double_t);
   void createVector (int, int);
   matrix correlationMatrix (nr_double_t, complex, nr_double_t, matrix);
   nr_double_t noiseFigure (matrix, matrix, nr_double_t&, complex&,
@@ -67,13 +69,15 @@ class spfile : public circuit
 
  private:
   dataset * data;
-  struct spfile_index_t * index;
   vector * sfreq;
   vector * nfreq;
-  vector * Rn;
-  vector * Fmin;
-  vector * Sopt;
+  struct spfile_index_t * spara;
+  struct spfile_index_t * RN;
+  struct spfile_index_t * FMIN;
+  struct spfile_index_t * SOPT;
   char paraType;
+  int  dataType;
+  int  interpolType;
 };
 
 #endif /* __SPFILE_H__ */

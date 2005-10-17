@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.19 2005-06-02 18:17:52 raimi Exp $
+ * $Id: spfile.cpp,v 1.20 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -43,20 +43,50 @@
 #include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
+#include "poly.h"
+#include "spline.h"
 #include "spfile.h"
 #include "constants.h"
+
+// Type of data and interpolators.
+#define DATA_RECTANGULAR 1
+#define DATA_POLAR       2
+#define INTERPOL_LINEAR  1
+#define INTERPOL_CUBIC   2
 
 // Constructor creates an empty and unnamed instance of the spfile class.
 spfile::spfile () : circuit () {
   data = NULL;
-  sfreq = nfreq = Fmin = Sopt = Rn = NULL;
-  index = NULL;
+  sfreq = nfreq = NULL;
+  spara = FMIN = SOPT = RN = NULL;
+  interpolType = dataType = 0;
   type = CIR_SPFILE;
 }
 
 // Destructor deletes spfile object from memory.
 spfile::~spfile () {
-  if (index) free (index);
+  if (spara) {
+    for (int i = 0; i < sqr (getSize ()); i++) {
+      if (spara[i].v1) delete spara[i].v1;
+      if (spara[i].v2) delete spara[i].v2;
+    }
+    free (spara);
+  }
+  if (RN) {
+    if (RN->v1) delete RN->v1;
+    if (RN->v2) delete RN->v2;
+    free (RN);
+  }
+  if (FMIN) {
+    if (FMIN->v1) delete FMIN->v1;
+    if (FMIN->v2) delete FMIN->v2;
+    free (FMIN);
+  }
+  if (SOPT) {
+    if (SOPT->v1) delete SOPT->v1;
+    if (SOPT->v2) delete SOPT->v2;
+    free (SOPT);
+  }
 #if DEBUG && 0
   if (data) {
     data->setFile ("spfile.dat");
@@ -69,7 +99,7 @@ spfile::~spfile () {
 void spfile::calcSP (nr_double_t frequency) {
 
   // nothing to do if the given file type had errors
-  if (index == NULL || sfreq == NULL) return;
+  if (spara == NULL || sfreq == NULL) return;
 
   // set interpolated S-parameters
   setMatrixS (expandSParaMatrix (getInterpolMatrixS (frequency)));
@@ -85,7 +115,7 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
   for (int r = 0; r < getSize () - 1; r++) {
     for (int c = 0; c < getSize () - 1; c++) {
       int i = r * getSize () + c;
-      s.set (r, c, interpolate (sfreq, index[i].v, frequency));
+      s.set (r, c, interpolate (&spara[i], frequency));
     }
   }
   
@@ -115,42 +145,13 @@ void spfile::calcNoiseSP (nr_double_t frequency) {
 
 matrix spfile::calcMatrixCs (nr_double_t frequency) {
   // set interpolated noise correlation matrix
-  nr_double_t r = real (interpolate (nfreq, Rn, frequency));
-  nr_double_t f = real (interpolate (nfreq, Fmin, frequency));
-  complex g     = interpolate (nfreq, Sopt, frequency);
+  nr_double_t r = real (interpolate (RN, frequency));
+  nr_double_t f = real (interpolate (FMIN, frequency));
+  complex g     = interpolate (SOPT, frequency);
   matrix s = getInterpolMatrixS (frequency);
   matrix n = correlationMatrix (f, g, r, s);
   matrix c = expandNoiseMatrix (n, expandSParaMatrix (s));
   return c;
-}
-
-// Returns the specified matrix vector entry.
-vector spfile::fetch (int r, int c) {
-  return *(index[(r - 1) * getSize () + c - 1].v);
-}
-
-// Returns the matrix entry for the given frequency index.
-complex spfile::fetch (int r, int c, int idx) {
-  vector * var = index[(r - 1) * getSize () + c - 1].v;
-  return var->get (idx);
-}
-
-// Returns the matrix for the given frequency index.
-matrix spfile::fetch (int idx) {
-  matrix res (getSize () - 1);
-  for (int r = 0; r < getSize () - 1; r++) {
-    for (int c = 0; c < getSize () - 1; c++) {
-      vector * v = index[r * getSize () + c].v;
-      res.set (r, c, v->get (idx));
-    }
-  }
-  return res;
-}
-
-// Stores the matrix entry for the given frequency index.
-void spfile::store (int r, int c, complex z, int idx) {
-  vector * var = index[(r - 1) * getSize () + c - 1].v;
-  var->set (z, idx);
 }
 
 /* This function expands the actual S-parameter file data stored
@@ -279,10 +280,27 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
   return res;
 }
 
-void spfile::initSP (void) {
+void spfile::prepare (void) {
 
-  // allocate S-parameter matrix
-  allocMatrixS ();
+  // check type of data
+  char * type = getPropertyString ("Data");
+  if (!strcmp (type, "rectangular")) {
+    // rectangular data
+    dataType = DATA_RECTANGULAR;
+  }
+  else if (!strcmp (type, "polar")) {
+    // polar data
+    dataType = DATA_POLAR;
+  }
+
+  // check type of interpolator
+  type = getPropertyString ("Interpolator");
+  if (!strcmp (type, "linear")) {
+    interpolType = INTERPOL_LINEAR;
+  }
+  else if (!strcmp (type, "cubic")) {
+    interpolType = INTERPOL_CUBIC;
+  }
 
   // load S-parameter file
   char * file = getPropertyString ("File");
@@ -291,7 +309,7 @@ void spfile::initSP (void) {
     // determine the number of ports defined by that file
     int ports = (int) sqrt (data->countVariables ());
     if (ports == getSize () - 1) {
-      if (index == NULL) {
+      if (spara == NULL) {
 	// find matrix vector entries in touchstone dataset
 	createIndex ();
       }
@@ -308,18 +326,26 @@ void spfile::initSP (void) {
   }
 }
 
+void spfile::initSP (void) {
+
+  // allocate S-parameter matrix
+  allocMatrixS ();
+  // initialize data
+  prepare ();
+}
+
 /* The function creates an additional data vector for the given matrix
    entry and adds it to the dataset. */
 void spfile::createVector (int r, int c) {
   int i = r * getSize () + c;
-  index[i].r = r;
-  index[i].c = c;
+  spara[i].r = r;
+  spara[i].c = c;
   vector * v = new vector (matvec::createMatrixString ("S", r, c), 
 			   sfreq->getSize ());
   v->setDependencies (new strlist ());
   v->getDependencies()->add (sfreq->getName ());
   data->addVariable (v);
-  index[i].v = v;
+  spara[i].v = v;
 }
 
 /* This function goes through the dataset stored within the original
@@ -330,8 +356,16 @@ void spfile::createIndex (void) {
   vector * v; int s = getSize (); char * n;
   int r, c, i;
 
+  // go through list of dependency vectors and find frequency vectors
+  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+    if ((n = v->getName ()) != NULL) {
+      if (!strcmp (n, "frequency")) sfreq = v;
+      else if (!strcmp (n, "nfreq")) nfreq = v;
+    }
+  }
+
   // create vector index
-  index = (struct spfile_index_t *)
+  spara = (struct spfile_index_t *)
     calloc (1, sizeof (struct spfile_index_t) * s * s);
 
   // go through list of variable vectors and find matrix entries
@@ -339,25 +373,33 @@ void spfile::createIndex (void) {
     if ((n = matvec::isMatrixVector (v->getName (), r, c)) != NULL) {
       // save matrix vector indices
       i = r * s + c;
-      index[i].r = r;
-      index[i].c = c;
-      index[i].v = v;
+      spara[i].r = r;
+      spara[i].c = c;
+      spara[i].v = v;
+      spara[i].f = sfreq;
       paraType = n[0];  // save type of touchstone data
       free (n);
     }
     if ((n = v->getName ()) != NULL) {
       // find noise parameter vectors
-      if (!strcmp (n, "Rn")) Rn = v;
-      else if (!strcmp (n, "Fmin")) Fmin = v;
-      else if (!strcmp (n, "Sopt")) Sopt = v;
-    }
-  }
-
-  // go through list of dependency vectors and find frequency vectors
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
-    if ((n = v->getName ()) != NULL) {
-      if (!strcmp (n, "frequency")) sfreq = v;
-      else if (!strcmp (n, "nfreq")) nfreq = v;
+      if (!strcmp (n, "Rn")) {
+	RN = (struct spfile_index_t *)
+	  calloc (1, sizeof (struct spfile_index_t));
+	RN->v = v;
+	RN->f = nfreq;
+      }
+      else if (!strcmp (n, "Fmin")) {
+	FMIN = (struct spfile_index_t *)
+	  calloc (1, sizeof (struct spfile_index_t));
+	FMIN->v = v;
+	FMIN->f = nfreq;
+      }
+      else if (!strcmp (n, "Sopt")) {
+	SOPT = (struct spfile_index_t *)
+	  calloc (1, sizeof (struct spfile_index_t));
+	SOPT->v = v;
+	SOPT->f = nfreq;
+      }
     }
   }
 }
@@ -417,41 +459,81 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
    piecewise function f is given by 'var' and the appropriate
    dependent data by 'dep'.  The piecewise dependency data must be
    real and sorted in ascendant order. */
-complex spfile::interpolate (vector * dep, vector * var, nr_double_t x) {
+complex spfile::interpolate (struct spfile_index_t * data, nr_double_t x) {
+  vector * dep = data->f;
+  vector * var = data->v;
   int idx = -1, len = dep->getSize ();
   complex res = 0;
 
-  if (len != 0) {   // no chance to interpolate
-    if (len == 1) { // no interpolation necessary
-      res = var->get (0);
+  // no chance to interpolate
+  if (len <= 0) {
+    return res;
+  }
+  // no interpolation necessary
+  else if (len == 1) {
+    res = var->get (0);
+  }
+  // linear interpolation
+  else if (interpolType == INTERPOL_LINEAR || len < 3) {
+    // find appropriate dependency index
+    for (int i = 0; i < len; i++) {
+      if (x >= real (dep->get (i))) idx = i;
     }
-    else {
-      // find appropriate dependency index
-      for (int i = 0; i < len; i++) {
-	if (x >= real (dep->get (i))) {
-	  idx = i;
-	}
-      }
-      // dependency variable in scope or beyond
-      if (idx != -1) {
-	if (x == real (dep->get (idx))) {
-	  // found direct value
-	  res = var->get (idx);
-	}
-	else {
-	  // dependency variable is beyond scope; use last tangent
-	  if (idx == len - 1) idx--;
-	  res = interpolate_lin (dep, var, x, idx);
-	}
+    // dependency variable in scope or beyond
+    if (idx != -1) {
+      if (x == real (dep->get (idx))) {
+	// found direct value
+	res = var->get (idx);
       }
       else {
-	// dependency variable is before scope; use first tangent
-	idx = 0;
+	// dependency variable is beyond scope; use last tangent
+	if (idx == len - 1) idx--;
 	res = interpolate_lin (dep, var, x, idx);
       }
     }
+    else {
+      // dependency variable is before scope; use first tangent
+      idx = 0;
+      res = interpolate_lin (dep, var, x, idx);
+    }
+  }
+  // cubic spline interpolation
+  else if (interpolType == INTERPOL_CUBIC) {
+    // create splines if necessary
+    if (data->v1 == NULL && data->v2 == NULL) {
+      data->v1 = new spline (SPLINE_BC_NATURAL);
+      data->v2 = new spline (SPLINE_BC_NATURAL);
+      if (dataType == DATA_RECTANGULAR) {
+	data->v1->vectors (real (*var), *dep);
+	data->v2->vectors (imag (*var), *dep);
+      }
+      else if (dataType == DATA_POLAR) {
+	data->v1->vectors (abs (*var), *dep);
+	data->v2->vectors (unwrap (arg (*var)), *dep);
+      }
+      data->v1->construct ();
+      data->v2->construct ();
+    }
+    // evaluate spline functions
+    res = interpolate_spl (data->v1, data->v2, x);
   }
   return res;
+}
+
+/* The function is called by the overall interpolator to perform
+   cubic spline interpolation. */
+complex spfile::interpolate_spl (spline * v1, spline * v2, nr_double_t x) {
+  nr_double_t f1 = v1->evaluate (x).f0;
+  nr_double_t f2 = v2->evaluate (x).f0;
+  // rectangular data
+  if (dataType == DATA_RECTANGULAR) {
+    return rect (f1, f2);
+  }
+  // polar data
+  else if (dataType == DATA_POLAR) {
+    return polar (f1, f2);
+  }
+  return 0;
 }
 
 /* The function is called by the overall interpolator to perform
@@ -459,13 +541,12 @@ complex spfile::interpolate (vector * dep, vector * var, nr_double_t x) {
 complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
 				 int idx) {
   nr_double_t x1, x2, y1, y2, f1, f2;
-  char * type = getPropertyString ("Data");
 
   x1 = real (dep->get (idx));
   x2 = real (dep->get (idx + 1));
 
   // rectangular data
-  if (!strcmp (type, "rectangular")) {
+  if (dataType == DATA_RECTANGULAR) {
     y1 = real (var->get (idx));
     y2 = real (var->get (idx + 1));
     f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
@@ -475,7 +556,7 @@ complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
     return rect (f1, f2);
   }
   // polar data
-  else if (!strcmp (type, "polar")) {
+  else if (dataType == DATA_POLAR) {
     y1 = abs (var->get (idx));
     y2 = abs (var->get (idx + 1));
     f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
@@ -503,7 +584,7 @@ void spfile::initAC (void) {
 
 void spfile::calcAC (nr_double_t frequency) {
   // nothing to do if the given file type had errors
-  if (index == NULL || sfreq == NULL) return;
+  if (spara == NULL || sfreq == NULL) return;
   // calculate interpolated S-parameters
   calcSP (frequency);
   // convert S-parameters to Y-parameters
@@ -512,6 +593,6 @@ void spfile::calcAC (nr_double_t frequency) {
 
 void spfile::calcNoiseAC (nr_double_t frequency) {
   // nothing to do if the given file type had errors
-  if (index == NULL || nfreq == NULL) return;
+  if (spara == NULL || nfreq == NULL) return;
   setMatrixN (cstocy (calcMatrixCs (frequency), getMatrixY () * z0) / z0);
 }

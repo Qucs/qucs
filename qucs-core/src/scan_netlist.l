@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.16 2005-06-02 18:17:51 raimi Exp $
+ * $Id: scan_netlist.l,v 1.17 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -56,7 +56,7 @@
 
 WS       [ \t\n\r]
 SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
-POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
+POSTID   "."[a-zA-Z0-9_]+
 ID       {SIMPLEID}{POSTID}*
 FILE     "{"[^\t\n\r\}]+"}"
 CHR      "'"[^\n\r\']{1}"'"

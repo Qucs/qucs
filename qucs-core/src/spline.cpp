@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.cpp,v 1.2 2005-06-02 18:17:51 raimi Exp $
+ * $Id: spline.cpp,v 1.3 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -36,6 +36,8 @@
 #include "object.h"
 #include "vector.h"
 #include "poly.h"
+#include "tvector.h"
+#include "tridiag.h"
 #include "spline.h"
 
 // Constructor creates an instance of the spline class.
@@ -46,8 +48,16 @@ spline::spline () {
   boundary = SPLINE_BC_NATURAL;
 }
 
+// Constructor creates an instance of the spline class with given boundary.
+spline::spline (int b) {
+  x = f0 = f1 = f2 = f3 = NULL;
+  d0 = dn = 0;
+  n = 0;
+  boundary = b;
+}
+
 // Constructor creates an instance of the spline class with data given.
-spline::spline (vector * y, vector * t) {
+spline::spline (vector y, vector t) {
   x = f0 = f1 = f2 = f3 = NULL;
   d0 = dn = 0;
   n = 0;
@@ -56,13 +66,13 @@ spline::spline (vector * y, vector * t) {
   construct ();
 }
 
-#define t_ (*t)
-#define y_ (*y)
+#define t_ (t)
+#define y_ (y)
 
 // Pass interpolation datapoints.
-void spline::vectors (vector * y, vector * t) {
-  int i = t->getSize ();
-  assert (y->getSize () == i && i >= 3);
+void spline::vectors (vector y, vector t) {
+  int i = t.getSize ();
+  assert (y.getSize () == i && i >= 3);
 
   // create local copy of f(x)
   if (n != i - 1) {
@@ -91,75 +101,119 @@ void spline::construct (void) {
     }
   }
 
-  // setup right hand side
-  nr_double_t * b = new nr_double_t[n+1]; // b as in Ax = b
-  for (i = 1; i < n; i++) {
-    nr_double_t _n = f0[i+1] * h[i-1] - f0[i] * (h[i] + h[i-1]) +
-      f0[i-1] * h[i];
-    nr_double_t _d = h[i-1] * h[i];
-    b[i] = 3 * _n / _d;
-  }
-  if (boundary == SPLINE_BC_NATURAL) {
-    // natural boundary condition
-    b[0] = 0;
-    b[n] = 0;
-  } else if (boundary == SPLINE_BC_CLAMPED) {
-    // start and end derivatives given
-    b[0] = 3 * ((f0[1] - f0[0]) / h[0] - d0);
-    b[n] = 3 * (dn - (f0[n] - f0[n-1]) / h[n-1]);
-  } else if (boundary == SPLINE_BC_PERIODIC) {
-    // TODO: non-trigdiagonal equations - periodic boundary condition
-    b[0] = 0;
-    b[n] = 3 * ((f0[1] - f0[0]) / h[0] - (f0[n] - f0[n-1]) / h[n-1]);
-  }
+  // first kind of cubic splines
+  if (boundary == SPLINE_BC_NATURAL || boundary == SPLINE_BC_CLAMPED) {
 
-  nr_double_t * u = new nr_double_t[n+1];
-  nr_double_t * z = b; // reuse storage
-  if (boundary == SPLINE_BC_NATURAL) {
-    u[0] = 0;
-    z[0] = 0;
-  } else if (boundary == SPLINE_BC_CLAMPED) {
-    u[0] = h[0] / (2 * h[0]);
-    z[0] = b[0] / (2 * h[0]);
-  }
+    // setup right hand side
+    nr_double_t * b = new nr_double_t[n+1]; // b as in Ax = b
+    for (i = 1; i < n; i++) {
+      nr_double_t _n = f0[i+1] * h[i-1] - f0[i] * (h[i] + h[i-1]) +
+	f0[i-1] * h[i];
+      nr_double_t _d = h[i-1] * h[i];
+      b[i] = 3 * _n / _d;
+    }
+    if (boundary == SPLINE_BC_NATURAL) {
+      // natural boundary condition
+      b[0] = 0;
+      b[n] = 0;
+    } else if (boundary == SPLINE_BC_CLAMPED) {
+      // start and end derivatives given
+      b[0] = 3 * ((f0[1] - f0[0]) / h[0] - d0);
+      b[n] = 3 * (dn - (f0[n] - f0[n-1]) / h[n-1]);
+    }
 
-  for (i = 1; i < n; i++) {
-    nr_double_t p = 2 * (h[i] + h[i-1]) - h[i-1] * u[i-1]; // pivot
-    u[i] = h[i] / p;
-    z[i] = (b[i] - z[i-1] * h[i-1]) / p;
-  }
-  if (boundary == SPLINE_BC_NATURAL) {
-    z[n] = 0;
-  } else if (boundary == SPLINE_BC_CLAMPED) {
-    nr_double_t p = h[n-1] * (2 - u[n-1]);
-    z[n] = (b[n] - z[n-1] * h[n-1]) / p;
-  }
+    nr_double_t * u = new nr_double_t[n+1];
+    nr_double_t * z = b; // reuse storage
+    if (boundary == SPLINE_BC_NATURAL) {
+      u[0] = 0;
+      z[0] = 0;
+    } else if (boundary == SPLINE_BC_CLAMPED) {
+      u[0] = h[0] / (2 * h[0]);
+      z[0] = b[0] / (2 * h[0]);
+    }
 
-  // back substitution
-  f1 = u; // reuse storage
-  f2 = z;
-  f3 = h;
-  f2[n] = z[n];
-  f3[n] = 0;
-  for (i = n - 1; i >= 0; i--) {
-    f2[i] = z[i] - u[i] * f2[i+1];
-    f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (f2[i+1] + 2 * f2[i]) / 3;
-    f3[i] = (f2[i+1] - f2[i]) / (3 * h[i]);
-  }
-  d0 = f1[0];
+    for (i = 1; i < n; i++) {
+      nr_double_t p = 2 * (h[i] + h[i-1]) - h[i-1] * u[i-1]; // pivot
+      u[i] = h[i] / p;
+      z[i] = (b[i] - z[i-1] * h[i-1]) / p;
+    }
+    if (boundary == SPLINE_BC_NATURAL) {
+      z[n] = 0;
+    } else if (boundary == SPLINE_BC_CLAMPED) {
+      nr_double_t p = h[n-1] * (2 - u[n-1]);
+      z[n] = (b[n] - z[n-1] * h[n-1]) / p;
+    }
 
-  // set up last slot for extrapolation above
-  if (boundary == SPLINE_BC_NATURAL) {
-    f1[n] = f1[n-1] + (x[n] - x[n-1]) * f2[n-1];
-    f2[n] = 0;
+    // back substitution
+    f1 = u; // reuse storage
+    f2 = z;
+    f3 = h;
+    f2[n] = z[n];
     f3[n] = 0;
-  } else if (boundary == SPLINE_BC_CLAMPED) {
-    f1[n] = dn;
+    for (i = n - 1; i >= 0; i--) {
+      f2[i] = z[i] - u[i] * f2[i+1];
+      f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (f2[i+1] + 2 * f2[i]) / 3;
+      f3[i] = (f2[i+1] - f2[i]) / (3 * h[i]);
+    }
+
+    // set up last slot for extrapolation above
+    if (boundary == SPLINE_BC_NATURAL) {
+      f1[n] = f1[n-1] + (x[n] - x[n-1]) * f2[n-1];
+    } else if (boundary == SPLINE_BC_CLAMPED) {
+      f1[n] = dn;
+    }
     f2[n] = 0;
     f3[n] = 0;
   }
-  f2[n] = 0;
-  f3[n] = 0;
+
+  // second kind of cubic splines
+  else if (boundary == SPLINE_BC_PERIODIC) {
+    // non-trigdiagonal equations - periodic boundary condition
+    nr_double_t * z = new nr_double_t[n+1];
+    if (n == 2) {
+      nr_double_t B = h[0] + h[1];
+      nr_double_t A = 2 * B;
+      nr_double_t b[2], det;
+      b[0] = 3 * ((f0[2] - f0[1]) / h[1] - (f0[1] - f0[0]) / h[0]);
+      b[1] = 3 * ((f0[1] - f0[2]) / h[0] - (f0[2] - f0[1]) / h[1]);
+      det = 3 * B * B;
+      z[1] = ( A * b[0] - B * b[1]) / det;
+      z[2] = (-B * b[0] + A * b[1]) / det;
+      z[0] = z[2];
+    }
+    else {
+      tridiag<nr_double_t> sys;
+      tvector<nr_double_t> o (n);
+      tvector<nr_double_t> d (n);
+      tvector<nr_double_t> b;
+      b.setData (&z[1], n);
+      for (i = 0; i < n - 1; i++) {
+	o(i) = h[i+1];
+	d(i) = 2 * (h[i+1] + h[i]);
+	b(i) = 3 * ((f0[i+2] - f0[i+1]) / h[i+1] - (f0[i+1] - f0[i]) / h[i]);
+      }
+      o(i) = h[0];
+      d(i) = 2 * (h[0] + h[i]);
+      b(i) = 3 * ((f0[1] - f0[i+1]) / h[0] - (f0[i+1] - f0[i]) / h[i]);
+      sys.setDiagonal (&d);
+      sys.setOffDiagonal (&o);
+      sys.setRHS (&b);
+      sys.setType (TRIDIAG_SYM_CYCLIC);
+      sys.solve ();
+      z[0] = z[n];
+    }
+
+    f1 = new nr_double_t[n+1];
+    f2 = z; // reuse storage
+    f3 = h;
+    for (i = n - 1; i >= 0; i--) {
+      f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (z[i+1] + 2 * z[i]) / 3;
+      f3[i] = (z[i+1] - z[i]) / (3 * h[i]);
+    }
+    f1[n] = f1[0];
+    f2[n] = f2[0];
+    f3[n] = f3[0];
+  }
 }
 
 // Returns pointer to the first value greater than the given one.
@@ -185,12 +239,22 @@ nr_double_t * spline::upper_bound (nr_double_t * first, nr_double_t * last,
 
 // Evaluates the spline at the given position.
 poly spline::evaluate (nr_double_t t) {
+
+#ifndef PERIOD_DISABLED
+  if (boundary == SPLINE_BC_PERIODIC) {
+    // extrapolation easy: periodically
+    nr_double_t period = x[n] - x[0];
+    while (t > x[n]) t -= period;
+    while (t < x[0]) t += period;
+  }
+#endif /* PERIOD_DISABLED */
+
   nr_double_t * here = upper_bound (x, x+n+1, t);
   nr_double_t y0, y1, y2;
   if (here == x) {
     nr_double_t dx = t - x[0];
-    y0 = f0[0] + dx * d0;
-    y1 = d0;
+    y0 = f0[0] + dx * f1[0];
+    y1 = f1[0];
     return poly (t, y0, y1);
   }
   else {

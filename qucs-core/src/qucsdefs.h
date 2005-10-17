@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.25 2005-10-05 11:22:42 raimi Exp $
+ * $Id: qucsdefs.h,v 1.26 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -238,6 +238,7 @@ struct define_t qucs_definition_available[] =
     { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
+      { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },

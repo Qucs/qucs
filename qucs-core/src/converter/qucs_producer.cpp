@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.9 2005-06-02 18:17:56 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.10 2005-10-17 08:41:23 raimi Exp $
  *
  */
 
@@ -228,12 +228,13 @@ qucs_devices[] = {
     "  <Line 10 -10 0 20 #000080 2 1>\n"
     "  <Line -30 0 20 0 #000080 2 1>\n"
     "  <.ID -30 24 %s_>\n",
-    "1 130 60 -26 13 0 0",
+    "1 0 0 -26 13 0 0",
+    /*"1 130 60 -26 13 0 0",*/
     "  <Port P1 1 100 60 -23 -44 1 0 \"1\" 1>\n"
     "  <Port P2 1 160 60 4 -44 0 2 \"2\" 1>\n"
   },
   /* bipolar transistor */
-  { "BJT", "BJT", 4,
+  { "BJT", "_BJT", 4,
     { "Type", "Is", "Nf", "Nr", "Ikf", "Ikr", "Vaf", "Var", "Ise", "Ne", "Isc",
       "Nc", "Bf", "Br", "Rbm", "Irb", "Rc", "Re", "Rb", "Cje", "Vje", "Mje",
       "Cjc", "Vjc", "Mjc", "Xcjc", "Cjs", "Vjs", "Mjs", "Fc", "Tf", "Xtf",
@@ -253,14 +254,15 @@ qucs_devices[] = {
     "  <Line 0 -10 0 20 #000080 2 1>\n"
     "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
     "  <.ID 13 28 %s_>\n",
-    "1 170 160 92 -49 0 0",
+    "1 0 0 8 -26 0 0",
+    /*"1 170 160 92 -49 0 0",*/
     "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
     "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
     "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
     "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
   },
   /* junction FET */
-  { "JFET", "JFET", 3,
+  { "JFET", "_JFET", 3,
     { "Type", "Vt0", "Beta", "Lambda", "Rd", "Rs", "Is", "N", "Isr", "Nr",
       "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", NULL },
     "  <.PortSym -50 0 1>\n"
@@ -280,7 +282,7 @@ qucs_devices[] = {
     "  <Port P3 1 190 170 -33 32 0 1 \"3\" 1>\n"
   },
   /* MOSFET */
-  { "MOSFET", "MOSFET", 4,
+  { "MOSFET", "_MOSFET", 4,
     { "Type", "Vt0", "Kp", "Gamma", "Phi", "Lambda", "Rd", "Rs", "Rg", "Is",
       "N", "W", "L", "Ld", "Tox", "Cgso", "Cgdo", "Cgbo", "Cbd", "Cbs", "Pb",
       "Mj", "Fc", "Cjsw", "Mjsw", "Tt", "Nsub", "Nss", "Tpg", "Uo", "Rsh",
@@ -300,7 +302,8 @@ qucs_devices[] = {
     "  <Line -10 -15 0 30 #000080 2 1>\n"
     "  <Ellipse -30 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
     "  <.ID 30 34 %s_>\n",
-    "1 180 170 73 -51 0 0",
+    "1 0 0 8 -26 0 0",
+    /*"1 180 170 73 -51 0 0",*/
     "  <Port P1 1 150 170 -23 12 0 0 \"1\" 1>\n"
     "  <Port P2 1 180 140 -51 -23 0 3 \"2\" 1>\n"
     "  <Port P3 1 180 200 12 4 0 1 \"3\" 1>\n"
@@ -340,35 +343,30 @@ static void qucslib_list_device (struct definition_t * def) {
   if (!(dev = qucslib_find_device (def->type))) return;
   struct pair_t * pair;
   char txt[1024];
-  // print symbol definition
-  fprintf (qucs_out, "<Symbol>\n");
-  sprintf (txt, dev->symbol, def->instance);
+  
+  sprintf (txt, "\n<Component %s>\n", &def->instance[1]);
   fprintf (qucs_out, txt);
-  fprintf (qucs_out, "</Symbol>\n");
-  // print coponent definitions
-  fprintf (qucs_out, "<Components>\n");
-  fprintf (qucs_out, "  <%s %s %s", dev->ltype, def->instance, dev->coords);
+  fprintf (qucs_out, "  <Description>\n");
+  fprintf (qucs_out, "  </Description>\n");
+  fprintf (qucs_out, "  <Model>\n");
+  fprintf (qucs_out, "    <%s %s_ %s", dev->ltype, def->instance, dev->coords);
   for (int i = 0; dev->props[i]; i++) {
     if ((pair = qucslib_find_prop (def, dev->props[i])) != NULL) {
       fprintf (qucs_out, " \"");
       netlist_list_value (pair->value);
-      fprintf (qucs_out, "\" 1");
+      fprintf (qucs_out, "\" 0");
     }
   }
   fprintf (qucs_out, ">\n");
-  // print subcircuit port definitions
-  fprintf (qucs_out, dev->ports);
-  fprintf (qucs_out, "</Components>\n");
+  fprintf (qucs_out, "  </Model>\n");
+  fprintf (qucs_out, "</Component>\n");
 }
 
 /* This function is the overall Qucs library producer. */
 void qucslib_producer (void) {
   struct definition_t * def;
-  time_t t = time (NULL);
-  fprintf (qucs_out, "# converted Qucs library processed at %s\n", ctime (&t));
+  fprintf (qucs_out, "<Qucs Library " PACKAGE_VERSION " \"Generic\">\n");
   for (def = device_root; def; def = def->next) {
-    fprintf (qucs_out, "<Device>\n");
     qucslib_list_device (def);
-    fprintf (qucs_out, "</Device>\n\n");
   }
 }

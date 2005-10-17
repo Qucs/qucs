@@ -23,25 +23,26 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Implementation of correlated noise sources.
+- Implement dft() and idft() functions.
+	- Implementation of correlated noise sources.
 - Allow variables from other datasets in equations.
 - Use minimum noise figure for noise circles as default.
 - Use maximum gain for gain circles as default.
 - Allow impedances other than 50ohms in rtoz(), ztor(), stoy(), ytos(),
   stoz(), ztos(), ztoy(), ytoz() and alike.
-- QucsConv: Redefine qucslib format.
+	- QucsConv: Redefine qucslib format.
 - QucsConv: Find a solution for three and more mutual inductors conversion
   from spice to qucs.
 	- Implementation of non-ideal transformers (mutual inductances).
-- Spline interpolation for touchstone S-parameters.  Implement general
-  interpolation functionality for all kind of data.  Make this available
-  in equation solver as well.
+	- Spline interpolation for touchstone S-parameters.  Implement
+	  general interpolation functionality for all kind of data.  Make
+	  this available in equation solver as well.
 - Singular value decomposition (SVD) for solving linear equation systems.
 	- Automatic variable generation in equation solver (plotvs,
 	  circles).
 	- QR decomposition algorithm for solving linear equation systems.
-- Implement fft() function for signals in the time domain in the
-  equation solver.
+	- Implement fft() function for signals in the time domain in the
+	  equation solver.
 - Digital simulation (on gate level with timing?).
 - Document interface for additional device model implementations.
 - HEMT implementation.
