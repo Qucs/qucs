@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "changedialog.h"
+#include "node.h"
 #include "qucsdoc.h"
 
 #include <qlabel.h>
@@ -157,8 +158,9 @@ void ChangeDialog::slotButtReplace()
 
 
   QPtrList<QCheckBox> pList;
+  Component * pc;
   // search through all components
-  for(Component *pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
+  for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
     if(matches(pc->Model)) {
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
@@ -182,7 +184,7 @@ void ChangeDialog::slotButtReplace()
   bool changed = false;
   // change property values
   pList.first();
-  for(Component *pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
+  for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
     if(matches(pc->Model)) {
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())

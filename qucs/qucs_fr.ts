@@ -2840,6 +2840,10 @@ Usage:  qucsedit [-r] file
         <source>list of times for changing output value</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>data type</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4674,22 +4678,22 @@ Quite Universal Circuit Simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hungarian by Jozsef Bus</source>
+        <source>Swedish by Markus Gothe and Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
