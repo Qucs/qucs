@@ -37,9 +37,11 @@ if test "$enable_debug" = yes; then
   QT_DEF=""
 else
   AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
-  CFLAGS="-O2"
-  CXXFLAGS="-O2"
   QT_DEF="-DQT_NO_DEBUG"
+  if test "x$GCC" = xyes; then
+    CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
+    CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
+  fi
 fi
 unset enable_debug
 
