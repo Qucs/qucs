@@ -119,6 +119,10 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>GpCircle(S,Gp[,Winkel])</tt></td><td>Kreis(e) mit konstanter Leistungsverst&auml;rkung <tt>Gp</tt> in der Lastebene</td></tr>
 <tr><td><tt>PlotVs(data,dep)</tt></td><td>Liefert Daten zur&uuml;ck, die auf <tt>data</tt> basieren (Vektor oder Matrizenvektor) mit der Abh&auml;ngigkeit von dem gegebenen <tt>dep</tt> Vektor, also z.B. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 <tr><td><tt>interpolate(f,x[,n])</tt></td><td>Berechnet eine Interpolation der reellen Funktion <tt>f(x)</tt>an <tt>n</tt> &auml;quidistanten Punkten, letzterer Parameter kann weggelassen werden und erh&auml;lt dann einen vern&uuml;nftigen Standardwert</td></tr>
+<tr><td><tt>fft(v,t)</tt></td><td>Berechnet die schnelle Fourier-Transformation (FFT) der Funktion <tt>v(t)</tt></td></tr>
+<tr><td><tt>ifft(V,f)</tt></td><td>Berechnet die inverse schnelle Fourier-Transformation (IFFT) der Funktion <tt>V(f)</tt></td></tr>
+<tr><td><tt>dft(v,t)</tt></td><td>Berechnet die diskrete Fourier-Transformation (DFT) der Funktion <tt>v(t)</tt></td></tr>
+<tr><td><tt>idft(V,f)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation (IDFT) der Funktion <tt>V(f)</tt></td></tr>
 </table>
 <br>
 
@@ -129,6 +133,19 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>M[:,3]</tt></td><td>Vektor bestehend aus der 3. Spalte der Matrix M</td></tr>
 </table>
 <br>
+
+<b>Wertenamen</b>
+<table cellspacing=2 cellpadding=2>
+<tr><td><tt>S[1,1]</tt></td><td>S-Parameter Wert</td></tr>
+<tr><td><i>nodename</i><tt>.V</tt></td><td>DC-Spannung am Knoten <i>nodename</i></td></tr>
+<tr><td><i>name</i><tt>.I</tt></td><td>DC-Strom durch die Komponente <i>name</i></td></tr>
+<tr><td><i>nodename</i><tt>.v</tt></td><td>AC-Spannung am Knoten <i>nodename</i></td></tr>
+<tr><td><i>name</i><tt>.i</tt></td><td>AC-Strom durch die Komponente <i>name</i></td></tr>
+<tr><td><i>nodename</i><tt>.Vt</tt></td><td>Transientenspannung am Knoten <i>nodename</i></td></tr>
+<tr><td><i>name</i><tt>.It</tt></td><td>Transientenstrom durch die Komponente <i>name</i></td></tr>
+</table>
+Bitte beachten: Alle Spannungen und Str&ouml;me sind Spitzenwerte.
+<br><br>
 
 <b>Konstanten</b>
 <table cellspacing=2 cellpadding=2>

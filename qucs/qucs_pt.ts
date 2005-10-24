@@ -2997,6 +2997,10 @@ Usage:  qucsedit [-r] file
         <source>data type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>type of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

@@ -120,6 +120,11 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>GpCircle(S,Gp[,Arcs])</tt></td><td>circle(s) with constant operating power gain <tt>Gp</tt> in the load plane</td></tr>
 <tr><td><tt>PlotVs(data,dep)</tt></td><td>returns a data item based upon <tt>data</tt> (vector or matrix vector) with dependency on the given <tt>dep</tt> vector, e.g. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 <tr><td><tt>interpolate(f,x[,n])</tt></td><td>returns an interpolated data vector of the real function <tt>f(x)</tt>using <tt>n</tt> equidistant datapoints, the latter can be omitted and defaults to a reasonable value</td></tr>
+<tr><td><tt>fft(v,t)</tt></td><td>computes the fast fourier transformation (FFT) of the function <tt>v(t)</tt></td></tr>
+<tr><td><tt>ifft(V,f)</tt></td><td>computes the inverse fast fourier transformation (IFFT) of the function <tt>V(f)</tt></td></tr>
+<tr><td><tt>dft(v,t)</tt></td><td>computes the discrete fourier transformation (DFT) of the function <tt>v(t)</tt></td></tr>
+<tr><td><tt>idft(V,f)</tt></td><td>computes the inverse discrete fourier transformation (IDFT) of the function <tt>V(f)</tt></td></tr>
+
 </table>
 <br>
 
