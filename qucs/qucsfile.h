@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsfile.h  -  description
-                             -------------------
+                               qucsfile.h
+                              ------------
     begin                : Sat Mar 27 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -23,22 +23,18 @@
 #include "paintings/painting.h"
 #include "components/component.h"
 
-
 class QTextEdit;
 class QProcess;
 class QucsDoc;
 
-/**
-  *@author Michael Margraf
-  */
 
 class QucsFile {
 public:
   QucsFile(QucsDoc*);
-  ~QucsFile();
+ ~QucsFile();
 
-  int   save();
-  bool  load();
+  int  save();
+  bool load();
 
   QString createClipboardFile();
   bool    pasteFromClipboard(QTextStream*, QPtrList<Element>*);
@@ -47,22 +43,24 @@ public:
   QString createSymbolUndoString(char);
   bool    rebuildSymbol(QString *);
 
-  bool  createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*);
-  bool  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
-  void  createNetlist(QTextStream&);
+  bool createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*, bool);
+  int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
+  QString createNetlist(QTextStream&, bool);
 
 
 private:
-  bool  loadProperties(QTextStream*);
-  void  simpleInsertComponent(Component*);
-  bool  loadComponents(QTextStream*, QPtrList<Component> *List=0);
-  void  simpleInsertWire(Wire*);
-  bool  loadWires(QTextStream*, QPtrList<Element> *List=0);
-  bool  loadDiagrams(QTextStream*, QPtrList<Diagram>*);
-  bool  loadPaintings(QTextStream*, QPtrList<Painting>*);
-  bool  loadIntoNothing(QTextStream*);
+  bool loadProperties(QTextStream*);
+  void simpleInsertComponent(Component*);
+  bool loadComponents(QTextStream*, QPtrList<Component> *List=0);
+  void simpleInsertWire(Wire*);
+  bool loadWires(QTextStream*, QPtrList<Element> *List=0);
+  bool loadDiagrams(QTextStream*, QPtrList<Diagram>*);
+  bool loadPaintings(QTextStream*, QPtrList<Painting>*);
+  bool loadIntoNothing(QTextStream*);
 
-  bool  giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*);
+  static void createNodeSet(QStringList&, int&, Conductor*, Node*);
+  void throughAllNodes(bool, QStringList&, int&, bool);
+  bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, bool);
 
   QucsDoc  *Doc;
   QPtrList<Wire>      *Wires;
@@ -71,6 +69,7 @@ private:
   QPtrList<Diagram>   *Diags;
   QPtrList<Painting>  *Paints, *SymbolPaints;
 
+  QStringList Signals; // collecting node names for VHDL signal declarations
 };
 
 #endif

@@ -16,19 +16,15 @@
  ***************************************************************************/
 
 #include "logical_inv.h"
+#include "qucsdoc.h"
+#include "node.h"
 
 Logical_Inv::Logical_Inv()
 {
+  Type = isComponent;   // both analog and digital
   Description = QObject::tr("logical inverter");
 
-  x1 = -30; y1 = -23;
-  x2 =  30; y2 =  23;
-
-  tx = x1+4;
-  ty = y2+4;
-  Model = "Inv";
-  Name  = "Y";
-
+  // the list order must be preserved !!!
   Props.append(new Property("V", "1 V", false,
 		QObject::tr("voltage of high level")));
   Props.append(new Property("t", "0", false,
@@ -39,9 +35,28 @@ Logical_Inv::Logical_Inv()
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 
   createSymbol();
+  tx = x1+4;
+  ty = y2+4;
+  Model = "Inv";
+  Name  = "Y";
 }
 
+// -------------------------------------------------------
+QString Logical_Inv::VHDL_Code()
+{
+  if(!isActive) return QString("");   // should it be simulated ?
 
+  QString s = "  " + Ports.getLast()->Connection->Name + " <= not " +
+              Ports.getFirst()->Connection->Name;
+
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0)  // delay time
+    s += " after " + Props.current()->Value;
+
+  s += ';';
+  return s;
+}
+
+// -------------------------------------------------------
 void Logical_Inv::createSymbol()
 {
   int xr;
@@ -70,16 +85,21 @@ void Logical_Inv::createSymbol()
   Lines.append(new Line(-30, 0,-xr, 0, QPen(QPen::darkBlue,2)));
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
+
+  x1 = -30; y1 = -23;
+  x2 =  30; y2 =  23;
 }
 
+// -------------------------------------------------------
 Component* Logical_Inv::newOne()
 {
   Logical_Inv* p = new Logical_Inv();
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
+// -------------------------------------------------------
 Element* Logical_Inv::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Inverter");
@@ -89,35 +109,24 @@ Element* Logical_Inv::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void Logical_Inv::recreate()
+// -------------------------------------------------------
+void Logical_Inv::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   Ellips.clear();
   Ports.clear();
   Lines.clear();
   Texts.clear();
   Arcs.clear();
   createSymbol();
+  performModification();  // rotate and mirror
 
-  Line *p1;
-  bool mmir = mirroredX;
-  int  tmp, rrot = rotated;
-  if(mmir)  // mirror all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      p1->y1 = -p1->y1;
-      p1->y2 = -p1->y2;
-    }
-
-  for(int z=0; z<rrot; z++)    // rotate all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      tmp = -p1->x1;
-      p1->x1 = p1->y1;
-      p1->y1 = tmp;
-      tmp = -p1->x2;
-      p1->x2 = p1->y2;
-      p1->y2 = tmp;
-    }
-
-
-  rotated = rrot;  // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }

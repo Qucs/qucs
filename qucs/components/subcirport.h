@@ -1,6 +1,6 @@
 /***************************************************************************
-                          subcirport.h  -  description
-                             -------------------
+                               subcirport.h
+                              --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,6 +28,10 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   QString NetList();
+  void recreate(QucsDoc*);
+
+private:
+  void createSymbol();
 };
 
 #endif

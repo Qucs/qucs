@@ -35,7 +35,7 @@ public:
  ~ViewPainter();
 
   void init(QPainter*, float, int, int, int, int);
-  void map(int, int, int*, int*);
+  void map(int, int, int&, int&);
   void drawPoint(int, int);
   void drawLine (int, int, int, int);
   void drawRect (int, int, int, int);

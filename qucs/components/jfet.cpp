@@ -1,6 +1,6 @@
 /***************************************************************************
-                           jfet.cpp  -  description
-                             -------------------
+                                jfet.cpp
+                               ----------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -96,7 +96,7 @@ Component* JFET::newOne()
 {
   JFET* p = new JFET();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
@@ -117,7 +117,7 @@ Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne) {
     JFET* p = new JFET();
     p->Props.getFirst()->Value = "pfet";
-    p->recreate();
+    p->recreate(0);
     return p;
   }
   return 0;
@@ -125,7 +125,7 @@ Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a n-type or a p-type transistor (according
 // to the "Type" property).
-void JFET::recreate()
+void JFET::recreate(QucsDoc*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

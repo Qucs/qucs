@@ -28,14 +28,13 @@ struct tPoint3D {
 
 struct tPointZ {
   float z;
-  int   No;
+  int   No, NoCross;
 };
 
 struct tBound {
   int min, max;
 };
 
-//#define HIDDENLINE
 
 class Rect3DDiagram : public Diagram  {
 public:
@@ -47,34 +46,34 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  int  calcAxis(Axis*, int, int, int, int, bool);
   void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 
-  void createAxisLabels() {};   // labels created during calcDiagram
+  void createAxisLabels();
   bool insideDiagram(int, int);
   void clip(int* &);
 
-#ifdef HIDDENLINE
   tPoint3D *Mem;   // memory for all points during hidden line algorithm
   tPoint3D *pMem;  // current position in "Mem"
-  void removeHiddenLines(Graph*, tBound*);
-#endif
 
 private:
+  int  calcAxis(Axis*, int, int, double, double, bool);
+  void createAxis(Axis*, bool, int, int, int, int);
+
   void   calcCoefficients();
+  int    calcCross(int*, int*);
   double calcX_2D(double, double, double);
   double calcY_2D(double, double, double);
   double calcZ_2D(double, double, double);
 
-#ifdef HIDDENLINE
-  bool isHidden(int, int, tBound*);
+  bool isHidden(int, int, tBound*, char*);
   void enlargeMemoryBlock(tPoint3D* &);
-  void calcLine(tPoint3D*, tPoint3D*, tBound*, tPoint3D* &);
-  void calcCoordinate3D(double, double, double, double, tPoint3D*, tPointZ*, int&);
-#endif
+  void calcLine(tPoint3D* &, tPoint3D* &, tBound*, char*);
+  void calcCoordinate3D(double, double, double, double, tPoint3D*, tPointZ*);
+  void removeHiddenLines(char*, tBound*);
+  void removeHiddenCross(int, int, int, int, char*, tBound*);
 
-  int xorig, yorig;    // where is the 3D origin with respect to cx/cy
+  int  xorig, yorig; // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
   double scaleX, scaleY;
 };

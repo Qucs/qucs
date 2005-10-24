@@ -36,7 +36,7 @@ Component* Logical_XNOR::newOne()
   Logical_XNOR* p = new Logical_XNOR();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 

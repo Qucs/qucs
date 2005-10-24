@@ -1,0 +1,25 @@
+<Qucs Library 0.0.7 "LEDs">
+
+<Component xy>
+  <Description>
+    light emitting diode
+    Manufacturer: ???
+  </Description>
+  <Model>
+    .Def:LED_xy _net1 _net0
+    R:R3 _net0 _net1 R="1k" Temp="26.85"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Arrow -5 -13 -10 -10 9 3 #000080 2 1 1>
+    <Arrow 5 -13 -10 -10 9 3 #000080 2 1 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>

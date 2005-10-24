@@ -113,13 +113,17 @@ bool SimMessage::startProcess()
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   Stream.setDevice(&NetlistFile);
-  if(!Doc->File.prepareNetlist(Stream, Collect, ErrText)) {
+  int Result = Doc->File.prepareNetlist(Stream, Collect, ErrText);
+  if(Result < 0) {
     NetlistFile.close();
     FinishSimulation(-1);
     return false;
   }
   Collect.append("*");   // mark the end
 
+  isAnalogSim = true;
+  if(Result & isDigitalComponent)
+    isAnalogSim = false;
 
   disconnect(&SimProcess, 0, 0, 0);
   connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
@@ -127,6 +131,7 @@ bool SimMessage::startProcess()
                        SLOT(slotReadSpiceNetlist()));
   connect(&SimProcess, SIGNAL(processExited()),
                        SLOT(slotFinishSpiceNetlist()));
+
   nextSPICE();
   return true;
 }
@@ -140,7 +145,7 @@ void SimMessage::nextSPICE()
     Line = *(Collect.begin());
     Collect.remove(Collect.begin());
     if(Line == "*") {  // worked on all components ?
-      startSimulator();
+      startSimulator(); // <<<<<================== go on ===
       return;
     }
     if(Line.left(5) == "SPICE") {
@@ -170,10 +175,7 @@ void SimMessage::nextSPICE()
 
 
   if(makeSubcircuit) {
-    if(FileName.at(0) <= '9') if(FileName.at(0) >= '0')
-      FileName = '_' + FileName;
-    FileName.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-    Stream << "\n.Def:" << FileName << " ";
+    Stream << "\n.Def:" << properName(FileName) << " ";
   
     Line.replace(',', ' ');
     Stream << Line;
@@ -230,15 +232,27 @@ void SimMessage::startSimulator()
 {
   // output NodeSets, SPICE simulations etc.
   Stream << Collect.join("\n") << '\n';
-  Doc->File.createNetlist(Stream);
+  QString SimTime =
+    Doc->File.createNetlist(Stream, isAnalogSim);
   NetlistFile.close();
   ProgText->insert(tr("done.\n"));
 
   QStringList com;
   QFileInfo Info(Doc->DocName);
-  com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
-      << QucsHomeDir.filePath("netlist.txt") << "-o"
-      << Info.dirPath() + QDir::separator() + Doc->DataSet;
+  if(isAnalogSim)
+    com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
+        << QucsHomeDir.filePath("netlist.txt") << "-o"
+        << Info.dirPath() + QDir::separator() + Doc->DataSet;
+  else {
+    if(SimTime.isEmpty()) {
+      ErrText->insert(tr("ERROR: No time for simulation specified!")+"\n");
+      ErrText->insert(tr("ERROR: Forgotten the digital simulation component?"));
+      FinishSimulation(-1);
+      return;
+    }
+    com << "/home/margrafm/freehdl-20050510/v2cc/gvhdl"
+        << QucsHomeDir.filePath("netlist.txt");
+  }
   SimProcess.setArguments(com);
 
 
@@ -247,6 +261,7 @@ void SimMessage::startSimulator()
   connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&SimProcess, SIGNAL(processExited()), SLOT(slotSimEnded()));
   ProgressText = "";
+
   if(!SimProcess.start()) {
     ErrText->insert(tr("ERROR: Cannot start simulator!"));
     FinishSimulation(-1);

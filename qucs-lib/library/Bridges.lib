@@ -1,0 +1,39 @@
+<Qucs Library 0.0.7 "Bridges">
+
+<Component xy>
+  <Description>
+    rectifier bridge
+    Manufacturer: ???
+  </Description>
+  <Model>
+    .Def:Bridges_xy _net3 _net2 _net1 _net0
+    R:R3 _net0 _net1 R="1k" Temp="26.85"
+    R:R4 _net1 _net2 R="5k" Temp="26.85"
+    R:R5 _net2 _net3 R="39k" Temp="26.85"
+    R:R6 _net3 _net4 R="4.5k" Temp="26.85"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID 20 20 D>
+    <Line -5 -5 0 10 #000080 1 1>
+    <Line -5 -5 10 5 #000080 1 1>
+    <Line -5 5 10 -5 #000080 1 1>
+    <Line 5 -5 0 10 #000080 1 1>
+    <Line -10 0 20 0 #000080 1 1>
+    <Line 0 -20 20 20 #000080 2 1>
+    <Line 0 20 -20 -20 #000080 2 1>
+    <Line 0 -30 0 10 #000080 2 1>
+    <Line -20 0 20 -20 #000080 2 1>
+    <Line -30 0 10 0 #000080 2 1>
+    <Line 0 20 0 10 #000080 2 1>
+    <Line 20 0 -20 20 #000080 2 1>
+    <Line 30 0 -10 0 #000080 2 1>
+    <Line -26 -6 6 0 #000000 2 1>
+    <Line 20 -6 6 0 #ff0000 1 1>
+    <Line 22 -9 0 6 #ff0000 1 1>
+    <.PortSym 0 30 3 90>
+    <.PortSym 0 -30 1 270>
+    <.PortSym -30 0 2 0>
+    <.PortSym 30 0 4 180>
+  </Symbol>
+</Component>

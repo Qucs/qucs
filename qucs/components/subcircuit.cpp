@@ -21,6 +21,7 @@
 
 #include "subcircuit.h"
 #include "qucs.h"
+#include "qucsdoc.h"
 #include "main.h"
 
 #include <qdir.h>
@@ -35,9 +36,10 @@ extern QDir QucsWorkDir;
 
 Subcircuit::Subcircuit()
 {
+  Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
-  Ports.append(new Port(0,  0));  // dummy port because of being device
+  Ports.append(new Port(0, 0));  // dummy port because of being device
 
   Model = "Sub";
   Name  = "SUB";
@@ -56,15 +58,20 @@ Component* Subcircuit::newOne()
   Subcircuit *p = new Subcircuit();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
 //  p->remakeSymbol(Ports.count());
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
-void Subcircuit::recreate()
+void Subcircuit::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   int No;
   QString FileName;
 
@@ -80,13 +87,18 @@ void Subcircuit::recreate()
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
     performModification();
-    return;
+  }
+  else {
+    No = QucsApp::testFile(FileName);
+    if(No < 0)  No = 0;
+
+    remakeSymbol(No);
   }
 
-  No = QucsApp::testFile(FileName);
-  if(No < 0)  No = 0;
-
-  remakeSymbol(No);
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -209,7 +221,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 // -------------------------------------------------------
 QString Subcircuit::NetList()
 {
-  if(!isActive) return QString("");       // should it be simulated ?
+  if(!isActive) return QString("");   // should it be simulated ?
 
   QString s = Model+":"+Name;
 
@@ -217,13 +229,24 @@ QString Subcircuit::NetList()
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;   // node names
 
-  // output property
-  QString  Type = Props.getFirst()->Value;
-  QFileInfo Info(Type);
-  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
-  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
-  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-  s += " Type=\""+Type+"\"";   // type for subcircuit
-
+  // type for subcircuit
+  s += " Type=\""+properName(Props.getFirst()->Value)+"\"";
   return s;
+}
+
+// -------------------------------------------------------
+QString Subcircuit::VHDL_Code()
+{
+  if(!isActive) return QString("");   // should it be simulated ?
+
+  QString s = "  " + Name + ": entity " + properName(Props.getFirst()->Value);
+  s += " port map (";
+
+  // output all node names
+  Port *pp = Ports.first();
+  if(pp)  s += pp->Connection->Name;
+  for(pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += ", "+pp->Connection->Name;   // node names
+
+  return s + ");";
 }

@@ -45,13 +45,13 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int
 }
 
 // -------------------------------------------------------------
-void ViewPainter::map(int x1, int y1, int *x, int *y)
+void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
   float z;
-  z  = float(x1)*Scale + DX;
-  *x = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z  = float(y1)*Scale + DY;
-  *y = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  z = float(x1)*Scale + DX;
+  x = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  z = float(y1)*Scale + DY;
+  y = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 }
 
 // -------------------------------------------------------------

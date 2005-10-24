@@ -82,7 +82,8 @@ public:
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
 
-  int rotX, rotY, rotZ;  // for "Rect3D": rotation around x, y and z axis
+  bool hideLines;       // for "Rect3D": hide invisible lines ?
+  int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
 
 
 protected:

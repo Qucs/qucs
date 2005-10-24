@@ -48,8 +48,7 @@ Mutual2::Mutual2()
   Texts.append(new Text(-20, 18,"2"));
   Texts.append(new Text( 15,-22,"3"));
 
-  Arcs.append(new Arc(-25,-65, 50,100, 16*29, 16*61,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-25,-35, 50,100,16*270, 16*61,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-57,  0, 57,QPen(QPen::darkBlue,1,Qt::DashLine)));
 
   Ports.append(new Port(-30,-70));
   Ports.append(new Port( 30,-30));
