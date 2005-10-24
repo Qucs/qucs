@@ -2879,172 +2879,6 @@ Usage:  qucsedit [-r] file
         <source>data type</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsActions</name>
-    <message>
-        <source>Info</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>At least two elements must be selected !</source>
-        <translation>Åtminstone två element måste väljas!</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <source>Cannot start text editor!</source>
-        <translation>Kan ej starta textredigerare!</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation>Kan inte starta filtersyntesprogrammet!</translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation>Kan inte starta ledningsberäkningsprogrammet!</translation>
-    </message>
-    <message>
-        <source>Cannot start library program!</source>
-        <translation>Kan inte starta biblioteksprogram!</translation>
-    </message>
-    <message>
-        <source>Cannot start qucshelp!</source>
-        <translation>Kan inte starta qusc-hjälpen!</translation>
-    </message>
-</context>
-<context>
-    <name>QucsApp</name>
-    <message>
-        <source>Schematic</source>
-        <translation>Schema</translation>
-    </message>
-    <message>
-        <source>Data Display</source>
-        <translation>Datavisning</translation>
-    </message>
-    <message>
-        <source>Qucs Documents</source>
-        <translation>Qucs-dokument</translation>
-    </message>
-    <message>
-        <source>Any File</source>
-        <translation>Alla filer</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation>Ny</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Öppna</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Ta bort</translation>
-    </message>
-    <message>
-        <source>Projects</source>
-        <translation>Projekt</translation>
-    </message>
-    <message>
-        <source>content of the project directory</source>
-        <translation>innehåll i projektmappen</translation>
-    </message>
-    <message>
-        <source>Content of</source>
-        <translation>Innehåll i</translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation>Anmärkning</translation>
-    </message>
-    <message>
-        <source>Datasets</source>
-        <translation>Datamängder</translation>
-    </message>
-    <message>
-        <source>Data Displays</source>
-        <translation>Datavisningar</translation>
-    </message>
-    <message>
-        <source>Schematics</source>
-        <translation>Scheman</translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation>Innehåll</translation>
-    </message>
-    <message>
-        <source>content of the open project</source>
-        <translation>innehåll hos det öppna projektet</translation>
-    </message>
-    <message>
-        <source>Components</source>
-        <translation>Komponenter</translation>
-    </message>
-    <message>
-        <source>components and diagrams</source>
-        <translation>komponenter och kurvor</translation>
-    </message>
-    <message>
-        <source>lumped components</source>
-        <translation>diskreta komponeter</translation>
-    </message>
-    <message>
-        <source>sources</source>
-        <translation>källor</translation>
-    </message>
-    <message>
-        <source>transmission lines</source>
-        <translation>transmissionslinjer</translation>
-    </message>
-    <message>
-        <source>nonlinear components</source>
-        <translation>icke-linjära komponenter</translation>
-    </message>
-    <message>
-        <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical XOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logical inverter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inverter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>initial output value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
         <translation type="unfinished"></translation>
@@ -3062,6 +2896,10 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Timing Diagram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>duration of simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3069,16 +2907,12 @@ Usage:  qucsedit [-r] file
         <source>type of the port</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Information</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
@@ -3086,7 +2920,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fel</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
@@ -3101,11 +2935,11 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start qucshelp!</source>
+        <source>Cannot start library program!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start library program!</source>
+        <source>Cannot start qucshelp!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3129,7 +2963,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3137,7 +2971,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Projects</source>
