@@ -71,6 +71,7 @@ Diagram::Diagram(int _cx, int _cy)
   rotX = 315;  // for 3D diagram
   rotY = 0;
   rotZ = 225;
+  hideLines = true;  // hide invisible lines
 
   Type = isDiagram;
   isSelected = false;
@@ -471,16 +472,7 @@ void Diagram::calcData(Graph *g)
   if(Name == "Rect3D") {
     if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
     Counter = 2;
-#ifdef HIDDENLINE
-    Size = ((Rect3DDiagram*)this)->pMem - ((Rect3DDiagram*)this)->Mem;
-    ((Rect3DDiagram*)this)->pMem = ((Rect3DDiagram*)this)->Mem;
-    if(Size) { // hidden line ?
-qDebug("calcData Size: %d", Size);
-      Size = 3*Size - (g->cPointsX.getFirst()->count - 1) * g->countY + 32;
-    }
-    else
-#endif
-      Size *= 2;  // memory for cross grid lines
+    Size *= 2;  // memory for cross grid lines
   }
 
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
@@ -509,7 +501,13 @@ qDebug("calcData Size: %d", Size);
 	  if(Counter >= 2)   // clipping only if an axis is manual
 	    clip(p);
 	}
-	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	switch(*(p-3)) {
+	  case -2: p -= 3;  // no single point after "no stroke"
+	           break;
+	  case -10: if((*(p-2) < 0) || (*(p-1) < 0))
+	              p -= 2;  // erase last hidden point
+	            break;
+	}
 	*(p++) = -10;
 	if(py != &Dummy) {   // more-dimensional Rect3D
 	  py++;
@@ -517,20 +515,18 @@ qDebug("calcData Size: %d", Size);
 	    py = g->cPointsX.at(1)->Points;
 	}
       }
-/*qDebug("\n****** p=%p", p);
-for(int *zz=g->Points; zz<p; zz+=2)
-  qDebug("c: %d/%d", *(zz), *(zz+1));*/
 
       if(Name == "Rect3D") if(g->countY > 1) {
 	// create cross lines
 	pz = g->cPointsY;
-	for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
-	  DataX *pD = g->cPointsX.first();
-	  px = pD->Points;
-	  dx = pD->count;
-	  pD = g->cPointsX.next();
-	  dy = pD->count;
-	  for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+	DataX *pD = g->cPointsX.first();
+	px = pD->Points;
+	dx = pD->count;
+	pD = g->cPointsX.next();
+	dy = pD->count;
+	for(int j=g->countY/dy; j>0; j--) {
+	  px = g->cPointsX.getFirst()->Points;
+	  for(i=dx; i>0; i--) {  // every branch
 	    py = pD->Points;
 	    calcCoordinate(px, pz, py, p, p+1, 0);
 	    p += 2;
@@ -555,16 +551,6 @@ for(int *zz=g->Points; zz<p; zz+=2)
 	  }
 	  pz += 2*dx*(dy-1);
 	}
-/*qDebug("\n------ p=%p", p);
-for(int zz=120; zz>0; zz-=2)
-  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
-#ifdef HIDDENLINE
-	if(((Rect3DDiagram*)this)->Mem) {
-	  delete ((Rect3DDiagram*)this)->Mem;
-	  ((Rect3DDiagram*)this)->Mem  = 0;
-	  ((Rect3DDiagram*)this)->pMem = 0;
-	}
-#endif
       }
 
       
@@ -661,8 +647,13 @@ for(int zz=0; zz<60; zz+=2)
       }
 
     } // of x loop
-    if(*(p-3) == -2)
-      p -= 3;  // no single point after "no stroke"
+    switch(*(p-3)) {
+      case -2: p -= 3;  // no single point after "no stroke"
+	       break;
+      case -10: if((*(p-2) < 0) || (*(p-1) < 0))
+	        p -= 2;  // erase last hidden point
+	        break;
+    }
     *(p++) = -10;
     if(py != &Dummy) {   // more-dimensional Rect3D
       py++;
@@ -680,7 +671,7 @@ for(int zz=0; zz<60; zz+=2)
     px = pD->Points;
     int xlen = pD->count;
     pD = g->cPointsX.next();
-    for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+    for(i=xlen; i>0; i--) {  // every branch
       Flag = 1;
       dist = -Stroke;
       py = pD->Points;
@@ -747,6 +738,11 @@ for(int zz=0; zz<60; zz+=2)
  }
 
   *p = -100;
+/*z = p-g->Points+1;
+p = g->Points;
+qDebug("\n****** p=%p", p);
+for(int zz=0; zz<z; zz+=2)
+  qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
 }
 
 // -------------------------------------------------------
@@ -807,9 +803,6 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
     if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }*/
-/*qDebug("x:  %g, %g", xAxis.min, xAxis.max);
-qDebug("y:  %g, %g", yAxis.min, yAxis.max);
-qDebug("z:  %g, %g", zAxis.min, zAxis.max);*/
   updateGraphData();
 }
 
@@ -900,17 +893,21 @@ void Diagram::updateGraphData()
 {
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+  Graph *pg;
+  for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
     if(pg->Points != 0) { free(pg->Points);  pg->Points = 0; }
     if((valid & (pg->yAxisNo+1)) != 0)
       calcData(pg);   // calculate screen coordinates
     else if(pg->cPointsY) { delete[] pg->cPointsY;  pg->cPointsY = 0; }
-
-    for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
-      pm->createText();
   }
 
   createAxisLabels();  // virtual function
+
+  // Setting markers must be done last, because in 3D diagram "Mem"
+  // is released in "createAxisLabels()".
+  for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+      pm->createText();
 }
 
 // --------------------------------------------------------------------------
@@ -1196,12 +1193,14 @@ QString Diagram::save()
 {
   QString s = "<"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
-  if(xAxis.GridOn) s+= "1 ";
-  else s += "0 ";
-  s += GridPen.color().name() + " " + QString::number(GridPen.style());
+  char c = '0';
+  if(xAxis.GridOn) c |= 1;
+  if(hideLines) c |= 2;
+  s += c;
+  s += " " + GridPen.color().name() + " " + QString::number(GridPen.style());
 
   if(xAxis.log) s+= " 1";  else s += " 0";
-  char c = '0';
+  c = '0';
   if(yAxis.log)  c |= 1;
   if(zAxis.log)  c |= 2;
   s += c;
@@ -1262,8 +1261,11 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   y2 = n.toInt(&ok);
   if(!ok) return false;
 
+  char c;
   n = s.section(' ',5,5);    // GridOn
-  xAxis.GridOn = yAxis.GridOn = n.at(0) != '0';
+  c = n.at(0).latin1() - '0';
+  xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
+  hideLines = (c & 2) != 0;
 
   n = s.section(' ',6,6);    // color for GridPen
   QColor co;
@@ -1275,7 +1277,6 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
-  char c;
   n = s.section(' ',8,8);    // xlog, ylog
   xAxis.log = n.at(0) != '0';
   c = n.at(1).latin1();

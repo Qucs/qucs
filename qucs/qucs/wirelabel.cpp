@@ -122,36 +122,36 @@ void WireLabel::paint(ViewPainter *p)
   if(cx < x1+a) {    // where should frame be painted ?
     if(cy < y1+b) {
       if(phi == 16*50)  phi += 16*180;
-      p->map(x1-3, y1-2, &a, &b);    // low right
+      p->map(x1-3, y1-2, a, b);    // low right
       c = a + (x2>>1);
       d = b + y2;
-      p->map(cx+xpaint, cy+ypaint, &xpaint, &ypaint);
+      p->map(cx+xpaint, cy+ypaint, xpaint, ypaint);
     }
     else {
       if(phi != 0)  phi += 16*180;
-      p->map(x1-3, y1+1, &a, &b);    // up right
+      p->map(x1-3, y1+1, a, b);    // up right
       b += y2;
       c  = a + (x2>>1);
       d  = b - y2;
-      p->map(cx+xpaint, cy-ypaint, &xpaint, &ypaint);
+      p->map(cx+xpaint, cy-ypaint, xpaint, ypaint);
     }
   }
   else {
     if(cy < y1+b) {
-      p->map(x1+3, y1-2, &a, &b);   // low left
+      p->map(x1+3, y1-2, a, b);   // low left
       a += x2;
       c  = a - (x2>>1);
       d  = b + y2;
-      p->map(cx-xpaint, cy+ypaint, &xpaint, &ypaint);
+      p->map(cx-xpaint, cy+ypaint, xpaint, ypaint);
     }
     else {
       if(phi > 16*90)  phi += 16*180;
-      p->map(x1+3, y1+1, &a, &b);    // up left
+      p->map(x1+3, y1+1, a, b);    // up left
       a += x2;
       b += y2;
       c  = a - (x2>>1);
       d  = b - y2;
-      p->map(cx-xpaint, cy-ypaint, &xpaint, &ypaint);
+      p->map(cx-xpaint, cy-ypaint, xpaint, ypaint);
     }
   }
   if(phi)  p->drawArc(cx-4, cy-4, 9, 9, phi, 16*255);

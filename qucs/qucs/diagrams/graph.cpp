@@ -170,7 +170,7 @@ int Graph::getSelected(int x, int y)
   int *pp = Points;
   if(pp == 0) return -1;
 
-  int A, z=0, zi;
+  int A, z=0;
   int dx, dx2, x1;
   int dy, dy2, y1;
 
@@ -184,12 +184,10 @@ int Graph::getSelected(int x, int y)
       if(*pp < -10)  return -1;   // not even one point ?
     }
   }
-//  for(int z=0; z<countY; z++) {  // check every branch of curves
+
   while(*pp > -99) {
-    zi = 0;
-    do {
+    while(*pp > -5) {
       x1 = *(pp++);  y1 = *(pp++);
-      zi++;
       dx  = x - x1;
       dy  = y - y1;
 
@@ -203,11 +201,10 @@ int Graph::getSelected(int x, int y)
 	  if(dx >  5) continue;
 	  if(dy < -5) continue;
 	  if(dy >  5) continue;
-	  return z*countX;// + zi;   // points on graph
+	  return z*countX;   // points on graph
 	}
 	dx2 = *pp;
 	if(dx2 < -9) break;
-	zi -= 2;  // because of space (edge-values)
       }
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
       else { if(x > 5) if(x > dx2+5) continue; }
@@ -223,8 +220,8 @@ int Graph::getSelected(int x, int y)
       A *= A;                  // avoid the need for square root
       A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
 
-      if(A <= 0)  return z*countX;// + zi;  // lies x/y onto the graph line ?
-    } while(true);
+      if(A <= 0)  return z*countX;  // lies x/y onto the graph line ?
+    }
     pp++;
     z++;
   }

@@ -530,6 +530,10 @@
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>hide invisible lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -3002,8 +3006,198 @@ Usage:  qucsedit [-r] file
         <translation>icke-linjära komponenter</translation>
     </message>
     <message>
-        <source>file data</source>
-        <translation type="obsolete">data från fil</translation>
+        <source>logical XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>list of times for changing output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing Diagram</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsApp</name>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of the project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datasets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Displays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of the open project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>components and diagrams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>simulations</source>
@@ -5642,6 +5836,14 @@ Fel:
 ------
 
 </translation>
+    </message>
+    <message>
+        <source>ERROR: No time for simulation specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Forgotten the digital simulation component?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

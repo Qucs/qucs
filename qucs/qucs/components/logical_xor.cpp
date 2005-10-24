@@ -36,7 +36,7 @@ Component* Logical_XOR::newOne()
   Logical_XOR* p = new Logical_XOR();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 

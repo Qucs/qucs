@@ -1,6 +1,6 @@
 /***************************************************************************
-                           bjtsub.cpp  -  description
-                             -------------------
+                               bjtsub.cpp
+                              ------------
     begin                : Sat Jul 17 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -145,7 +145,7 @@ Component* BJTsub::newOne()
 {
   BJTsub* p = new BJTsub();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
@@ -166,7 +166,7 @@ Element* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne) {
     BJTsub* p = new BJTsub();
     p->Props.getFirst()->Value = "pnp";
-    p->recreate();
+    p->recreate(0);
     return p;
   }
   return 0;
@@ -174,7 +174,7 @@ Element* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a npn or a pnp transistor (according
 // to the "Type" property).
-void BJTsub::recreate()
+void BJTsub::recreate(QucsDoc*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

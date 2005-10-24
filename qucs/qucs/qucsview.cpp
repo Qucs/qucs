@@ -405,11 +405,29 @@ void QucsView::endElementMoving()
   Element *pe;
   QucsDoc *d = Docs.current();
 
+  // First the wires with length zero are removed. This is important
+  // if they are labeled. These labels must be put in the schematic
+  // before all other elements.
+  for(pe = movingElements.first(); pe != 0; ) {
+    if(pe->Type == isWire)
+      if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) {
+	if(((Wire*)pe)->Label) {
+	  d->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
+	  ((Wire*)pe)->Label = 0;
+	}
+	movingElements.removeRef(pe);
+	delete (Wire*)pe;
+	pe = movingElements.current();
+	continue;
+      }
+    pe = movingElements.next();
+  }
+
+
   for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) {
       case isWire:
-	if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
 	d->insertWire((Wire*)pe);
 	break;
       case isDiagram:
@@ -558,6 +576,8 @@ void QucsView::MMoveWire2(QMouseEvent *Event)
     painter.drawLine(MAx3, MAy3, MAx2, MAy3); // paint
     painter.drawLine(MAx2, MAy3, MAx2, MAy2); // paint
   }
+
+  MouseDoubleClickAction = &QucsView::MDoubleClickWire2;
 }
 
 // -----------------------------------------------------------
@@ -1518,11 +1538,11 @@ void QucsView::MPressWire1(QMouseEvent*, QucsDoc *d, int x, int y)
   MAx3 = x;
   MAy3 = y;
   d->setOnGrid(MAx3, MAy3);
-//  MAx2 = MAx3;
-//  MAy2 = MAy3;
+
   MouseMoveAction = &QucsView::MMoveWire2;
   MousePressAction = &QucsView::MPressWire2;
-  MouseDoubleClickAction = &QucsView::MDoubleClickWire2;
+  // Double-click action is set in "MMoveWire2" to not initiate it
+  // during "Wire1" actions.
 }
 
 // -----------------------------------------------------------
@@ -2137,7 +2157,6 @@ void QucsView::MDoubleClickWire2(QMouseEvent *Event)
 
   MouseMoveAction = &QucsView::MMoveWire1;
   MousePressAction = &QucsView::MPressWire1;
-//  MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 }
 
@@ -2472,8 +2491,8 @@ void QucsView::slotApplyCompText()
     else if(pp) {  // property was applied
       if(pp->Value != editText->text()) {
         pp->Value = editText->text();
-        if(MAx3 == 1)  d->setComponentNumber(pc); // number for sources, ports
-        d->setChanged(true, true);  // only one undo state
+        d->recreateComponent(pc);  // because of "Num" and schematic symbol
+        d->setChanged(true, true); // only one undo state
       }
     }
 
@@ -2550,10 +2569,9 @@ void QucsView::slotPowerMatching()
   Dia->S11degEdit->setText(QString::number(Imag));
   Dia->setFrequency(pm->VarPos[0]);
 
+  QucsMain->slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
-
-  QucsMain->slotToPage();
 }
 
 // -----------------------------------------------------------
@@ -2637,8 +2655,7 @@ void QucsView::slot2PortMatching()
   Dia->S22magEdit->setText(QString::number(S22real));
   Dia->S22degEdit->setText(QString::number(S22imag));
 
+  QucsMain->slotToPage();
   if(Dia->exec() != QDialog::Accepted)
     return;
-
-  QucsMain->slotToPage();
 }

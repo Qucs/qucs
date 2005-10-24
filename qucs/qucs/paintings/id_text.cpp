@@ -40,18 +40,23 @@ ID_Text::~ID_Text()
 // --------------------------------------------------------------------------
 void ID_Text::paint(ViewPainter *p)
 {
-  int Width1, Width2, Height;
+  int Width1, x, y;
   p->Painter->setPen(QPen(QPen::black,1));
-  Width1 = p->drawText(Prefix, cx, cy, &Height);
-  y2 = Height;
-  Width2 = p->drawText("File=name", cx, cy+Height, &Height);
-  y2 += Height;
-  if(Width1 > Width2)  x2 = Width1;
-  else  x2 = Width2;
+  p->map(cx, cy, x, y);
+
+  QRect r;
+  p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Prefix, -1, &r);
+  Width1 = r.width();
+  y2 = p->LineSpacing;
+
+  p->Painter->drawText(x, y+y2, 0, 0, Qt::DontClip, "File=name", -1, &r);
+  y2 += y2;
+  if(Width1 > r.width())  x2 = Width1;
+  else  x2 = r.width();
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(cx-4, cy-4, x2+8, y2+8);
+    p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }
 }
 

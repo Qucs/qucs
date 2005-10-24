@@ -36,7 +36,7 @@ Component* Logical_NAND::newOne()
   Logical_NAND* p = new Logical_NAND();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 

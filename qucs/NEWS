@@ -33,6 +33,7 @@ Version 0.0.8
  * new components: digital gates, correlated noise sources,
    mutual inductors
  * printing DC bias into schematic
+ * hide invisible lines in 3D diagram
 
 Version 0.0.7
 -------------

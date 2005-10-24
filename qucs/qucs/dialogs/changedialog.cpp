@@ -148,7 +148,7 @@ void ChangeDialog::slotButtReplace()
                                + tr("these components ?"), Dia);
   Dia_All->addWidget(Dia_Label);
   
-  QHBox       *Dia_h = new QHBox(Dia);
+  QHBox *Dia_h = new QHBox(Dia);
   Dia_h->setSpacing(5);
   Dia_All->addWidget(Dia_h);
   connect(new QPushButton(tr("Yes"), Dia_h), SIGNAL(clicked()),
@@ -171,8 +171,10 @@ void ChangeDialog::slotButtReplace()
           }
     }
   }
-  Dia_Scroll->viewport()->setPaletteBackgroundColor(
-      pList.current()->paletteBackgroundColor());
+  
+  if(!pList.isEmpty())
+    Dia_Scroll->viewport()->setPaletteBackgroundColor(
+        pList.current()->paletteBackgroundColor());
   Dia->resize(50, 300);
 
 
