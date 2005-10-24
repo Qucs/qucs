@@ -64,6 +64,7 @@ void    str2num    (const QString&, double&, QString&, double&);
 QString num2str    (double);
 QString StringNiceNum(double);
 void    convert2Unicode(QString&);
+QString properName (const QString&);
 
 // just dummies for empty lists
 extern QPtrList<Wire>      SymbolWires;

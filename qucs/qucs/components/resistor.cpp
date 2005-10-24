@@ -1,6 +1,6 @@
 /***************************************************************************
-                          resistor.cpp  -  description
-                             -------------------
+                               resistor.cpp
+                              --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -16,23 +16,11 @@
  ***************************************************************************/
 
 #include "resistor.h"
+#include "qucsdoc.h"
 
 Resistor::Resistor(bool european)
 {
   Description = QObject::tr("resistor");
-
-  createSymbol(european);
-
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
-
-  x1 = -30; y1 = -11;
-  x2 =  30; y2 =  11;
-
-  tx = x1+4;
-  ty = y2+4;
-  Model = "R";
-  Name  = "R";
 
   Props.append(new Property("R", "50 Ohm", true,
 		QObject::tr("ohmic resistance in Ohms")));
@@ -43,16 +31,21 @@ Resistor::Resistor(bool european)
   Props.append(new Property("Symbol", "european", false,
 		QObject::tr("schematic symbol")+" [european, US]"));
   if(!european)  Props.getLast()->Value = "US";
+
+  createSymbol();
+  tx = x1+4;
+  ty = y2+4;
+  Model = "R";
+  Name  = "R";
 }
 
 Resistor::~Resistor()
 {
 }
 
-
-void Resistor::createSymbol(bool european)
+void Resistor::createSymbol()
 {
-  if(european) {
+  if(Props.getLast()->Value != "US") {
     Lines.append(new Line(-18, -9, 18, -9,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 18, -9, 18,  9,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 18,  9,-18,  9,QPen(QPen::darkBlue,2)));
@@ -71,13 +64,17 @@ void Resistor::createSymbol(bool european)
     Lines.append(new Line( 15,  7, 18,  0,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
   }
+
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port( 30,  0));
+
+  x1 = -30; y1 = -11;
+  x2 =  30; y2 =  11;
 }
 
 Component* Resistor::newOne()
 {
-  Resistor* p = new Resistor();
-  p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  Resistor* p = new Resistor(Props.getLast()->Value != "US");
   return p;
 }
 
@@ -95,40 +92,24 @@ Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
   Name = QObject::tr("Resistor US");
   BitmapFile = "resistor_us";
 
-  if(getNewOne) {
-    Resistor* p = new Resistor();
-    p->Props.getLast()->Value = "US";
-    p->recreate();
-    return p;
-  }
+  if(getNewOne)  return new Resistor(false);
   return 0;
 }
 
-void Resistor::recreate()
+void Resistor::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   Lines.clear();
-  createSymbol(Props.getLast()->Value != "US");
+  Ports.clear();
+  createSymbol();
+  performModification();  // rotate and mirror
 
-  Line *p1;
-  bool mmir = mirroredX;
-  int  tmp, rrot = rotated;
-  if(mmir)  // mirror all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      p1->y1 = -p1->y1;
-      p1->y2 = -p1->y2;
-    }
-
-  for(int z=0; z<rrot; z++)    // rotate all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      tmp = -p1->x1;
-      p1->x1 = p1->y1;
-      p1->y1 = tmp;
-      tmp = -p1->x2;
-      p1->x2 = p1->y2;
-      p1->y2 = tmp;
-    }
-
-
-  rotated = rrot;  // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }

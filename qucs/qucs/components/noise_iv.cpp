@@ -68,6 +68,12 @@ Noise_iv::Noise_iv()
 		QObject::tr("voltage power spectral density of source 2")));
   Props.append(new Property("C", "0.5", true,
 		QObject::tr("normalized correlation coefficient")));
+  Props.append(new Property("e", "0", false,
+		QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", false,
+		QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", false,
+		QObject::tr("additive frequency term")));
 }
 
 Noise_iv::~Noise_iv()

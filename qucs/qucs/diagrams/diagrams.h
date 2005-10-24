@@ -29,5 +29,6 @@
 #include "psdiagram.h"
 #include "rect3ddiagram.h"
 #include "curvediagram.h"
+#include "timingdiagram.h"
 
 #endif

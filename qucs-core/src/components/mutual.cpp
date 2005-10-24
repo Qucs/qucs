@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual.cpp,v 1.1 2005-10-04 10:52:29 raimi Exp $
+ * $Id: mutual.cpp,v 1.2 2005-10-24 06:10:36 margraf Exp $
  *
  */
 
@@ -61,10 +61,10 @@ matrix mutual::calcMatrixY (nr_double_t frequency) {
   y.set (NODE_1, NODE_4, -1 / z1); y.set (NODE_4, NODE_1, -1 / z1);
   y.set (NODE_2, NODE_2, +1 / z2); y.set (NODE_3, NODE_3, +1 / z2);
   y.set (NODE_2, NODE_3, -1 / z2); y.set (NODE_3, NODE_2, -1 / z2);
-  y.set (NODE_1, NODE_3, +y3); y.set (NODE_3, NODE_1, +y3);
-  y.set (NODE_2, NODE_4, +y3); y.set (NODE_4, NODE_2, +y3);
-  y.set (NODE_1, NODE_2, -y3); y.set (NODE_2, NODE_1, -y3);
-  y.set (NODE_3, NODE_4, -y3); y.set (NODE_4, NODE_3, -y3);
+  y.set (NODE_1, NODE_3, -y3); y.set (NODE_3, NODE_1, -y3);
+  y.set (NODE_2, NODE_4, -y3); y.set (NODE_4, NODE_2, -y3);
+  y.set (NODE_1, NODE_2, +y3); y.set (NODE_2, NODE_1, +y3);
+  y.set (NODE_3, NODE_4, +y3); y.set (NODE_4, NODE_3, +y3);
   return y;
 }
 

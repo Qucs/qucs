@@ -1,6 +1,6 @@
 /***************************************************************************
-                          mosfet.cpp  -  description
-                             -------------------
+                                mosfet.cpp
+                               ------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -159,7 +159,7 @@ Component* MOSFET::newOne()
   MOSFET* p = new MOSFET();
   p->Props.first()->Value = Props.first()->Value;
   p->Props.next()->Value = Props.next()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
@@ -181,7 +181,7 @@ Element* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
     MOSFET* p = new MOSFET();
     p->Props.first()->Value = "pfet";
     p->Props.next()->Value = "-1.0 V";
-    p->recreate();
+    p->recreate(0);
     return p;
   }
   return 0;
@@ -196,7 +196,7 @@ Element* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
     MOSFET* p = new MOSFET();
     p->Props.first();
     p->Props.next()->Value = "-1.0 V";
-    p->recreate();
+    p->recreate(0);
     return p;
   }
   return 0;
@@ -204,7 +204,7 @@ Element* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a n-type, p-type or depletion MOSFET (according
 // to the "Type" and "Vt0" properties).
-void MOSFET::recreate()
+void MOSFET::recreate(QucsDoc*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          param_sweep.cpp  -  description
-                             -------------------
+                              param_sweep.cpp
+                             -----------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -71,7 +71,7 @@ Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void Param_Sweep::recreate()
+void Param_Sweep::recreate(QucsDoc*)
 {
   if((Props.at(1)->Value == "list") || (Props.at(1)->Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.

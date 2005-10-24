@@ -29,13 +29,14 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
   polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp   \
-  markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp curvediagram.cpp
+  markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp curvediagram.cpp     \
+  timingdiagram.cpp
 
 nodist_libdiagrams_a_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   smithdiagram.h tabdiagram.h diagrams.h marker.h psdiagram.h rect3ddiagram.h \
-  curvediagram.h
+  curvediagram.h timingdiagram.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

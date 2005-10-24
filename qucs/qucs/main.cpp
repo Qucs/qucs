@@ -320,6 +320,23 @@ void convert2Unicode(QString& Text)
   Text.replace("\\\\", "\\");
 }
 
+// #########################################################################
+// Takes a file name (with path) and replaces all special characters.
+QString properName (const QString& Name)
+{
+  QString s = Name;
+  QFileInfo Info(s);
+  if(Info.extension() == "sch")
+    s = s.left(s.length()-4);
+  if(s.at(0) <= '9') if(s.at(0) >= '0')
+    s = 'n' + s;
+  s.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+  s.replace("__", "_");  // '__' not allowed in VHDL
+  if(s.at(0) == '_')
+    s = 'n' + s;
+  return s;
+}
+
 
 // #########################################################################
 // ##########                                                     ##########

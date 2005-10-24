@@ -492,9 +492,9 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 void QucsDoc::setComponentNumber(Component *c)
 {
   Property *pp = c->Props.getFirst();
-  if(pp->Name != "Num")  return;
+  if(!pp) return;
+  if(pp->Name != "Num") return;
 
-  // power sources and subcircuit ports have to be numbered
   int n=1;
   QString s = pp->Value;
   QString cSign = c->Model;
@@ -567,6 +567,16 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
     }
     c->Model = "GND";    // rebuild component model
   }
+}
+
+// ---------------------------------------------------
+void QucsDoc::recreateComponent(Component *Comp)
+{
+  int x = Comp->tx, y = Comp->ty;
+  QString tmp = Comp->Name;    // is sometimes changed by "recreate"
+  Comp->recreate(this);   // to apply changes to the schematic symbol
+  Comp->Name = tmp;
+  Comp->tx = x;  Comp->ty = y;
 }
 
 // ---------------------------------------------------
@@ -725,6 +735,11 @@ bool QucsDoc::connectHWires1(Wire *w)
         w->Label = pw->Label;
 	w->Label->pOwner = w;
       }
+      else if(n->Label) {
+	     w->Label = n->Label;
+	     w->Label->pOwner = w;
+	     w->Label->Type = isHWireLabel;
+	   }
       w->x1 = pw->x1;
       w->Port1 = pw->Port1;      // new wire lengthens an existing one
       Nodes->removeRef(n);
@@ -776,7 +791,12 @@ bool QucsDoc::connectVWires1(Wire *w)
         w->Label = pw->Label;
 	w->Label->pOwner = w;
       }
-      w->y1 = pw->y1;
+      else if(n->Label) {
+	     w->Label = n->Label;
+	     w->Label->pOwner = w;
+	     w->Label->Type = isVWireLabel;
+	   }
+     w->y1 = pw->y1;
       w->Port1 = pw->Port1;         // new wire lengthens an existing one
       Nodes->removeRef(n);
       w->Port1->Connections.removeRef(pw);
@@ -2483,8 +2503,8 @@ bool QucsDoc::mirrorYComponents()
 bool QucsDoc::oneTwoWires(Node *n)
 {
   Wire *e3;
-  Wire *e1 = (Wire*)n->Connections.first();  // two wires -> one wire
-  Wire *e2 = (Wire*)n->Connections.last();
+  Wire *e1 = (Wire*)n->Connections.getFirst();  // two wires -> one wire
+  Wire *e2 = (Wire*)n->Connections.getLast();
 
   if(e1->Type == isWire) if(e2->Type == isWire)
     if(e1->isHorizontal() == e2->isHorizontal()) {
@@ -2498,6 +2518,10 @@ bool QucsDoc::oneTwoWires(Node *n)
       else if(n->Label) {
              e1->Label = n->Label;
 	     e1->Label->pOwner = e1;
+	     if(e1->isHorizontal())
+	       e1->Label->Type = isHWireLabel;
+	     else
+	       e1->Label->Type = isVWireLabel;
 	   }
 
       e1->x2 = e2->x2;

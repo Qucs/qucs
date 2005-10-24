@@ -1,6 +1,6 @@
 /***************************************************************************
-                          simmessage.h  -  description
-                             -------------------
+                               simmessage.h
+                              --------------
     begin                : Sat Sep 6 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -29,15 +29,12 @@ class QPushButton;
 class QProgressBar;
 class QucsDoc;
 
-/**
-  *@author Michael Margraf
-  */
 
 class SimMessage : public QDialog  {
    Q_OBJECT
 public:
   SimMessage(QucsDoc*, QWidget *parent=0);
-  ~SimMessage();
+ ~SimMessage();
 
   bool startProcess();
 
@@ -72,7 +69,7 @@ public:
   QProgressBar *SimProgress;
   QString       ProgressText;
 
-  bool          makeSubcircuit, insertSim;
+  bool          makeSubcircuit, insertSim, isAnalogSim;
   QStringList   Collect;
   QFile         NetlistFile;
   QTextStream   Stream;

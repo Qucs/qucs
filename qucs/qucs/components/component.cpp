@@ -189,7 +189,7 @@ void Component::paint(ViewPainter *p)
     newFont.setPointSizeFloat(float(p->Scale) * QucsSettings.largeFontSize);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
-    p->map(cx, cy, &x, &y);
+    p->map(cx, cy, x, y);
 
     p->Painter->setPen(QPen(QPen::darkBlue,2));
     a = b = 0;
@@ -205,8 +205,8 @@ void Component::paint(ViewPainter *p)
     y2 = y1+23 + int(float(b) / p->Scale);
     if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
-    p->map(cx-1, cy,   &x, &y);
-    p->map(cx-6, cy-5, &a, &b);
+    p->map(cx-1, cy, x, y);
+    p->map(cx-6, cy-5, a, b);
     p->Painter->drawRect(a, b, xb, yb);
     p->Painter->drawLine(x,      y+yb, a,      b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
@@ -264,13 +264,12 @@ void Component::paint(ViewPainter *p)
 
 
   p->Painter->setPen(QPen(QPen::black,1));
-  int Height = p->LineSpacing;
-  p->map(cx+tx, cy+ty, &x, &y);
+  p->map(cx+tx, cy+ty, x, y);
   p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Name);
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
-      y += Height;
+      y += p->LineSpacing;
       p->Painter->drawText(x, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
     }
 
@@ -361,9 +360,7 @@ void Component::print(ViewPainter *p)
 }
 
 // -------------------------------------------------------
-// Set position of property text to not interfere with component
-// symbol.
-void Component::recreate()
+void Component::recreate(QucsDoc*)
 {
 }
 
@@ -608,6 +605,12 @@ QString Component::NetList()
       s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s;
+}
+
+// -------------------------------------------------------
+QString Component::VHDL_Code()
+{
+  return QString("");   // no digital model
 }
 
 // -------------------------------------------------------
@@ -999,7 +1002,6 @@ void Component::performModification()
   if(mmir)  mirrorX();   // mirror
   for(int z=0; z<rrot; z++)  rotate(); // rotate
 
-
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 }
@@ -1015,7 +1017,7 @@ GateComponent::GateComponent()
   Type = isComponent;   // both analog and digital
   Name  = "Y";
 
-  // this must be the first property in the list !!!
+  // the list order must be preserved !!!
   Props.append(new Property("in", "2", false,
 		QObject::tr("number of input ports")));
   Props.append(new Property("V", "1 V", false,
@@ -1028,6 +1030,7 @@ GateComponent::GateComponent()
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 }
 
+// -------------------------------------------------------
 QString GateComponent::NetList()
 {
   if(!isActive) return QString("");   // should it be simulated ?
@@ -1039,13 +1042,36 @@ QString GateComponent::NetList()
     s += " "+pp->Connection->Name;   // node names
 
   // output all properties
-  Property *p = Props.next();
+  Property *p = Props.at(1);
   s += " " + p->Name + "=\"" + p->Value + "\"";
   p = Props.next();
   s += " " + p->Name + "=\"" + p->Value + "\"";
   return s;
 }
 
+// -------------------------------------------------------
+QString GateComponent::VHDL_Code()
+{
+  if(!isActive) return QString("");   // should it be simulated ?
+
+  QString s = "  ";
+  Port *pp = Ports.last();
+  s += pp->Connection->Name + " <= ";  // output port
+  pp = Ports.prev();
+  s += pp->Connection->Name;   // first input port
+
+  // output all input ports
+  for(pp = Ports.prev(); pp != 0; pp = Ports.prev())
+    s += " " + Model.lower() + " " + pp->Connection->Name;   // node names
+
+  if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0)  // delay time
+    s += " after " + Props.current()->Value;
+
+  s += ';';
+  return s;
+}
+
+// -------------------------------------------------------
 void GateComponent::createSymbol()
 {
   int Num = Props.getFirst()->Value.toInt();
@@ -1128,37 +1154,26 @@ void GateComponent::createSymbol()
   Ports.append(new Port( 30,  0));
 }
 
-void GateComponent::recreate()
+// -------------------------------------------------------
+void GateComponent::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   Ellips.clear();
   Ports.clear();
   Lines.clear();
   Texts.clear();
   Arcs.clear();
   createSymbol();
+  performModification();  // rotate and mirror
 
-  Line *p1;
-  bool mmir = mirroredX;
-  int  tmp, rrot = rotated;
-  if(mmir)  // mirror all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      p1->y1 = -p1->y1;
-      p1->y2 = -p1->y2;
-    }
-
-  for(int z=0; z<rrot; z++)    // rotate all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      tmp = -p1->x1;
-      p1->x1 = p1->y1;
-      p1->y1 = tmp;
-      tmp = -p1->x2;
-      p1->x2 = p1->y2;
-      p1->y2 = tmp;
-    }
-
-
-  rotated = rrot;  // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }
 
 
@@ -1308,7 +1323,7 @@ Component* getComponentFromName(QString& Line)
 
   cstr = c->Name;   // is perhaps changed in "recreate" (e.g. subcircuit)
   int x = c->tx, y = c->ty;
-  c->recreate();
+  c->recreate(0);
   c->Name = cstr;
   c->tx = x;  c->ty = y;
   return c;

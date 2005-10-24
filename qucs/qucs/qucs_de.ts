@@ -591,6 +591,10 @@
         <source>Type</source>
         <translation>Typ</translation>
     </message>
+    <message>
+        <source>hide invisible lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -3249,6 +3253,34 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>data type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing Diagram</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8099,6 +8131,14 @@ Fehler:
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
         <translation>FEHLER: Das Programm QucsConv kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>ERROR: No time for simulation specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Forgotten the digital simulation component?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -21,6 +21,7 @@
 
 #include "libcomp.h"
 #include "qucs.h"
+#include "qucsdoc.h"
 #include "main.h"
 
 #include <qdir.h>
@@ -58,25 +59,34 @@ Component* LibComp::newOne()
   LibComp *p = new LibComp();
   p->Props.first()->Value = Props.first()->Value;
   p->Props.next()->Value = Props.next()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
-void LibComp::recreate()
+void LibComp::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   tx = INT_MIN;
   ty = INT_MIN;
   if(loadSymbol() > 0) {
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
     performModification();
-    return;
   }
+  else
+    remakeSymbol();
 
-  remakeSymbol();
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }
 
 // ---------------------------------------------------------------------

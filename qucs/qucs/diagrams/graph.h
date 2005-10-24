@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graph.h  -  description
-                             -------------------
+                                 graph.h
+                                ---------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,14 +28,11 @@
 class Diagram;
 class ViewPainter;
 
-/**
-  *@author Michael Margraf
-  */
 
 struct DataX {
   DataX(const QString& Var_, double *Points_=0, int count_=0)
        : Var(Var_), Points(Points_), count(count_) {};
-  ~DataX() { if(Points) delete[] Points; };
+ ~DataX() { if(Points) delete[] Points; };
   QString Var;
   double *Points;
   int     count;
@@ -45,7 +42,7 @@ struct DataX {
 class Graph : public Element {
 public:
   Graph(const QString& _Line="");
-  ~Graph();
+ ~Graph();
 
   void    paint(ViewPainter*, int, int);
   void    paintLines(ViewPainter*, int, int);

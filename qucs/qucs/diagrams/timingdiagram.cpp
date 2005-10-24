@@ -1,8 +1,8 @@
 /***************************************************************************
-                               tabdiagram.cpp
-                              ----------------
-    begin                : Fri Oct 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+                             timingdiagram.cpp
+                            -------------------
+    begin                : Sat Oct 22 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,37 +15,37 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "tabdiagram.h"
+#include "timingdiagram.h"
 #include "main.h"
 
 #include <math.h>
 
 
-TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+TimingDiagram::TimingDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
   x2 = x3 = 300;  // initial size of diagram
   y2 = 200;
-  Name = "Tab";
+  Name = "Time";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 
   calcDiagram();
 }
 
-TabDiagram::~TabDiagram()
+TimingDiagram::~TimingDiagram()
 {
 }
 
 // ------------------------------------------------------------
-void TabDiagram::paint(ViewPainter *p)
+void TimingDiagram::paint(ViewPainter *p)
 {
   // paint all lines
   for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
     p->Painter->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
-
+/*
   if(x1 > 0) {  // paint scroll bar ?
     int   x, y, dx, dy;
     y = y2 - 20;
@@ -74,7 +74,7 @@ void TabDiagram::paint(ViewPainter *p)
     p->Painter->drawPie(x, y, dx, dy, 16*60, 16*60);
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
-
+*/
 
   p->Painter->setPen(Qt::black);
   // write whole text
@@ -94,27 +94,7 @@ void TabDiagram::paint(ViewPainter *p)
 }
 
 // ------------------------------------------------------------
-// Checks if the two graphs have the same independent variables.
-bool TabDiagram::sameDependencies(Graph *g1, Graph *g2)
-{
-  if(g1 == g2)  return true;
-
-  DataX *g1Data = g1->cPointsX.first();
-  DataX *g2Data = g2->cPointsX.first();
-  while(g1Data && g2Data) {
-    if(g1Data->Var != g2Data->Var)  return false;
-    g1Data = g1->cPointsX.next();
-    g2Data = g2->cPointsX.next();
-  }
-
-  if(g1Data)  return false;  // Is there more data ?
-  if(g2Data)  return false;  // Is there more data ?
-  return true;
-}
-
-// ------------------------------------------------------------
-// calculates the text in the tabular
-int TabDiagram::calcDiagram()
+int TimingDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -122,17 +102,17 @@ int TabDiagram::calcDiagram()
 
   x1 = 0;  // no scroll bar
   x3 = x2;
-  QFontMetrics  metrics(QucsSettings.font);
+/*  QFontMetrics  metrics(QucsSettings.font);
   int tHeight = metrics.lineSpacing();
   QString Str;
-  int colWidth=0, x=8, y = y2-tHeight-6;
+  int colWidth=0, x=8, y = y2-tHeight-6;*/
 
   // outer frame
   Lines.append(new Line(0, y2, x2, y2, QPen(QPen::black,0)));
   Lines.append(new Line(0, y2, 0, 0, QPen(QPen::black,0)));
   Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
-  Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
+/*  Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
   Graph *firstGraph;
   Graph *g = Graphs.first();
@@ -283,12 +263,12 @@ funcEnd:
 
     xAxis.numGraphs = NumLeft;  // number of lines in the diagram
   }
-
+*/
   return 1;
 }
 
 // ------------------------------------------------------------
-int TabDiagram::checkColumnWidth(const QString& Str,
+int TimingDiagram::checkColumnWidth(const QString& Str,
 		const QFontMetrics& metrics, int colWidth, int x, int y)
 {
   QSize r = metrics.size(0, Str);  // width of text
@@ -306,9 +286,9 @@ int TabDiagram::checkColumnWidth(const QString& Str,
 }
 
 // ------------------------------------------------------------
-bool TabDiagram::scroll(int clickPos)
+bool TimingDiagram::scroll(int)// clickPos)
 {
-  if(x1 <= 0) return false;   // no scroll bar ?
+/*  if(x1 <= 0) return false;   // no scroll bar ?
   double tmp = xAxis.limit_min;
 
   int y = cy;
@@ -336,22 +316,22 @@ bool TabDiagram::scroll(int clickPos)
   }
 
   calcDiagram();
-  if(tmp == xAxis.limit_min)  return false;   // did anything change ?
+  if(tmp == xAxis.limit_min)  return false;   // did anything change ?*/
   return true;
 }
 
 // ------------------------------------------------------------
-Diagram* TabDiagram::newOne()
+Diagram* TimingDiagram::newOne()
 {
-  return new TabDiagram();
+  return new TimingDiagram();
 }
 
 // ------------------------------------------------------------
-Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Tabular");
-  BitmapFile = "tabular";
+  Name = QObject::tr("Timing Diagram");
+  BitmapFile = "timing";
 
-  if(getNewOne)  return new TabDiagram();
+  if(getNewOne)  return new TimingDiagram();
   return 0;
 }

@@ -3,6 +3,10 @@
 	* configure.ac: Fixed overwriting CXXFLAGS and CFLAGS
 	environment variables via 'configure' command line.
 
+2005-10-13  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
+
+	* add new libraries: Bridges, LEDs
+
 2005-08-19  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
 	* add new components models to library, thanks to

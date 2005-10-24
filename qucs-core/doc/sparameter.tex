@@ -28,11 +28,17 @@ A (normalized) wave is defined as ingoing wave $\underline{a}$ or
 outgoing wave $\underline{b}$:
 
 \begin{equation}
-\underline{a} = \frac{u+Z_0\cdot i}{\sqrt{\text{Re}(Z_0)}} \qquad
-\underline{b} = \frac{u-Z_0^*\cdot i}{\sqrt{\text{Re}(Z_0)}}
+\underline{a} =
+  \underbrace{\dfrac{\underline{u}+\underline{Z}_0\cdot \underline{i}}{2}}_{\underline{U}_{forward}}
+  \cdot \sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_0}\right)}
+\qquad\qquad
+\underline{b} =
+  \underbrace{\dfrac{\underline{u}-\underline{Z}_0\cdot \underline{i}}{2}}_{\underline{U}_{backward}}
+  \cdot \sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_0}\right)}
 \label{equ:waves}
 \end{equation}
-where $u$ is (effective) voltage, $i$ (effective) current and $Z_0$ reference
+where $\underline{u}$ is (effective) voltage, $\underline{i}$
+(effective) current and $\underline{Z}_0$ reference
 impedance. The waves are related to power in the following way.
 \begin{equation}
 P = \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
@@ -64,408 +70,6 @@ Now, characterizing an n-port is straight-forward:
 \end{equation}
 
 
-\section{Computing with S-parameters}
-%\addcontentsline{toc}{section}{Computing with S-parameters}
-
-\subsection{Recalculating $\mathbf{50\ohm}$-S-parameters for arbitrary port impedances}
-%\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
-
-During S-parameter usage it sometimes appears to have not all components
-in a circuit normalized to the same impedance. But calculations can only
-be performed with all ports being normalized to the same impedance. In
-the field of high
-frequency techniques this is usually $50\ohm$.  In order to transform
-to different port impedances, the following computation must be applied
-to the resulting S-parameter matrix.
-
-\begin{equation}
-\left[\underline{N'}\right] =
-\left(\left[\underline{S}\right] - \left[\underline{R}\right]\right) \cdot
-\left(\left[\underline{E}\right] - \left[\underline{R}\right] \cdot \left[\underline{S}\right]\right)^{-1}
-\end{equation}
-
-\begin{equation}
-\underline{N}_{nm} = \underline{N'}_{nm}\cdot \sqrt{\dfrac{Z_m}{Z_n}\cdot
-\dfrac{Z_{n,before}}{Z_{m,before}}}\cdot
-\dfrac{Z_n + Z_{n,before}}{Z_m + Z_{m,before}}
-\end{equation}
-
-With
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$Z_{n}$ & = & norm impedance after the normalizing process\\& &\\
-$Z_{n,before}$ & = & norm impedance before the normalizing process\\& &\\
-$\left[\underline{E}\right]$ & = &
-$\begin{pmatrix}
-1 & 0 & \ldots & 0\\
-0 & 1 & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & 1\\
-\end{pmatrix}$
-identity matrix\\& &\\
-$\left[\underline{S}\right]$ & = & original $50\ohm$-S-parameter matrix\\& &\\
-$\left[\underline{N}\right]$ & = & recalculated scattering matrix\\& &\\
-$\left[\underline{R}\right]$ & = &
-$\begin{pmatrix}
-\underline{r}(Z_{1}) & 0 & \ldots & 0\\
-0 & \underline{r}(Z_{2}) & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & \underline{r}(Z_{n})\\
-\end{pmatrix}$
-reflection coefficient matrix\\& &\\
-$\underline{r}(Z_{n})$ & = &
-$\dfrac{Z_{n} - Z_{n,before}}{Z_{n} + Z_{n,before}}$
-reflection coefficient of impedance at port n\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-$\underline{X}_{nm}$ & = & 
-element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
-\end{tabular}
-
-\subsection{S-parameters in CAE programs}
-%\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
-\label{sec:SparameterCAE}
-
-The most common task of a simulation program is to compute the S
-parameters of an arbitrary network that consists of many elementary
-components connected to each other.  To perform this, one can build a
-large matrix containing the S parameters of all components and then
-use matrix operations to solve it.  However this method needs heavy
-algorithms.  A more elegant possibility was published in
-\cite{Compton}. Each step computes only one connection and so unites
-two connected components to a single S parameter block.  This
-procedure has to be done with every connection until there is only one
-block left whose S parameters therefore are the simulation result.
-
-\addvspace{12pt}
-
-Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of
-circuit $(\underline{T})$, the new S-parameters are
-\begin{equation}
-\underline{S}'_{ij} = \underline{S}_{ij} +
-      \frac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}
-           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
-\label{eq:connectSij}
-\end{equation}
-with $i$ and $j$ both being ports of $(\underline{S})$.  Furthermore, it is
-\begin{equation}
-\underline{S}'_{mj} =
-      \frac{\underline{S}_{kj}\cdot \underline{T}_{ml}}
-           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
-\label{eq:connectSmj}
-\end{equation}
-with $m$ being a port of the circuit $(\underline{T})$.  If two ports
-of the same circuit $(\underline{S})$ are connected, the new
-S-parameters are
-\begin{equation}
-\underline{S}'_{ij} = \underline{S}_{ij} +
-      \frac{ \underline{S}_{kj}\cdot \underline{S}_{il}\cdot (1-\underline{S}_{lk})
-           + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot (1-\underline{S}_{kl})
-           + \underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik}
-           + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}
-           {(1-\underline{S}_{kl})\cdot (1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot \underline{S}_{ll}}.
-\label{eq:iconnectSij}
-\end{equation}
-
-If more than two ports are connected at a node, one have to insert one
-or more ideal tee components.  Its S-parameters write as follows.
-\begin{equation}
-\begin{pmatrix}
-\underline{S}
-\end{pmatrix}
-= \dfrac{1}{3}\cdot
-\begin{pmatrix}
--1 &  2 &  2\\
- 2 & -1 &  2\\
- 2 &  2 & -1\\
-\end{pmatrix}
-\end{equation}
-
-For optimisation reasons it may be desirable to insert a cross if at
-least four components are connected at one node.  Its S-parameters
-write as follows.
-\begin{equation}
-\begin{pmatrix}
-\underline{S}
-\end{pmatrix}
-= \dfrac{1}{2}\cdot
-\begin{pmatrix}
--1 &  1 &  1 &  1\\
- 1 & -1 &  1 &  1\\
- 1 &  1 & -1 &  1\\
- 1 &  1 &  1 & -1\\
-\end{pmatrix}
-\end{equation}
-
-\addvspace{12pt}
-
-The formulas \eqref{eq:connectSij}, \eqref{eq:connectSmj} and
-\eqref{eq:iconnectSij} were obtained using the ``nontouching-loop''
-rule being an analytical method for solving a flow graph.  A few basic
-definitions have to be understood.
-
-\addvspace{12pt}
-
-A ``path'' is a series of branches into the same direction with no
-node touched more than once.  A paths value is the product of the
-coefficients of the branches.  A ``loop'' is formed when a path starts
-and finishes at the same node.  A ``first-order'' loop is a path
-coming to closure with no node passed more than once.  Its value is
-the product of the values of all branches encountered on the route.  A
-``second-order'' loop consists of two first-order loops not touching
-each other at any node.  Its value is calculated as the product of the
-values of the two first-order loops.  Third- and higher-order loops
-are three or more first-order loops not touching each other at any
-node.
-
-\addvspace{12pt}
-
-The nontouching-loop rule can be applied to solve any flow graph.  In
-the following equation in symbolic form $T$ represents the ratio of
-the dependent variable in question and the independent variable.
-
-\begin{equation}
-T = \dfrac{
-\begin{array}{r}
-P_{1}\cdot\left(1 - \Sigma L_{1}^{(1)} + \Sigma L_{2}^{(1)} - \Sigma L_{3}^{(1)} + \ldots\right) +
-P_{2}\cdot\left(1 - \Sigma L_{1}^{(2)} + \Sigma L_{2}^{(2)} - \Sigma L_{3}^{(2)} + \ldots\right)\\
-+ P_{3}\cdot\left(1 - \Sigma L_{1}^{(3)} + \Sigma L_{2}^{(3)} - \Sigma L_{3}^{(3)} + \ldots\right) +
-P_{4}\cdot\left(1 - \ldots\right) + \ldots
-\end{array}
-}{1 - \Sigma L_{1} + \Sigma L_{2} - \Sigma L_{3} + \ldots}
-\label{eq:ntrule}
-\end{equation}
-
-In eq. \eqref{eq:ntrule} $\Sigma L_{1}$ stands for the sum of all
-first-order loops, $\Sigma L_{2}$ is the sum of all second-order
-loops, and so on.  $P_{1}$, $P_{2}$, $P_{3}$ etc., stand for the
-values of all paths that can be found from the independent variable to
-the dependent variable.  $\Sigma L_{1}^{(1)}$ denotes the sum of those
-first-order loops which do not touch (hence the name) the path of
-$P_{1}$ at any node, $\Sigma L_{2}^{(1)}$ denotes then the sum of
-those second-order loops which do not touch the path $P_{1}$ at any
-point, $\Sigma L_{1}^{(2)}$ consequently denotes the sum of those
-first-order loops which do not touch the path of $P_{2}$ at any point.
-Each path is multiplied by the factor in parentheses which involves
-all the loops of all orders that the path does not touch.
-
-\addvspace{12pt}
-
-When connecting two different networks the signal flow graph in
-fig. \ref{fig:sconnectgraph} is used to compute the new S-parameters.
-With equally reference impedances on port $k$ and port $l$ the
-relations $\underline{a}_{k} = \underline{b}_{l}$ and
-$\underline{a}_{l} = \underline{b}_{k}$ are satisfied.
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.8\linewidth]{sconnectgraph}
-\end{center}
-\caption{signal flow graph of a joint between ports $k$ and $l$ on different networks}
-\label{fig:sconnectgraph}
-\end{figure}
-\FloatBarrier
-
-There is only one first-order loop (see fig. \ref{fig:sconnectloop})
-within this signal flow graph.  This loops value yields to
-\begin{equation}
-L_{11} = \underline{S}_{kk}\cdot \underline{T}_{ll}
-\end{equation}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[height=3.1cm]{sconnectloop}
-\end{center}
-\caption{loops in the signal flow graph when connecting ports $k$ and $l$ on different networks}
-\label{fig:sconnectloop}
-\end{figure}
-\FloatBarrier
-
-The paths that can be found from the independent variable
-$\underline{a}_{j}$ to the dependent variable $\underline{b}_{i}$ (as
-depicted in fig. \ref{fig:sconnectpath}) can be written as
-\begin{align}
-P_{1} &= \underline{S}_{kj}\cdot \underline{T}_{ll} \cdot \underline{S}_{ik}\\
-P_{2} &= \underline{S}_{ij}
-\end{align}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[height=3.1cm]{sconnectpath}
-\end{center}
-\caption{paths in the signal flow graph when connecting ports $k$ and $l$ on different networks}
-\label{fig:sconnectpath}
-\end{figure}
-\FloatBarrier
-
-Applying the nontouching-loop rule, i.e. eq. \eqref{eq:ntrule}, gives
-the new S-parameter $\underline{S}'_{ij}$
-\begin{equation}
-\begin{split}
-\underline{S}'_{ij} = \dfrac{\underline{b}_{i}}{\underline{a}_{j}} &= \dfrac{P_{1}\cdot\left(1 - L_{11}\right) + P_{2}\cdot 1}{1 - L_{11}}\\
-&= \dfrac{\underline{S}_{ij}\cdot\left(1 - \underline{S}_{kk}\cdot \underline{T}_{ll}\right) + \underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
-= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
-\end{split}
-\end{equation}
-
-The only path that can be found from the independent variable
-$\underline{a}_{j}$ to the dependent variable $\underline{b}_{m}$ (as
-depicted in fig. \ref{fig:sconnectpath}) can be written as
-\begin{equation}
-P_{1} = \underline{S}_{kj}\cdot \underline{T}_{ml}
-\end{equation}
-
-Thus the new S-parameter $\underline{S}'_{mj}$ yields to
-\begin{equation}
-\underline{S}'_{mj} = \dfrac{\underline{b}_{m}}{\underline{a}_{j}}
-= \dfrac{P_{1}\cdot 1}{1 - L_{11}}
-= \dfrac{\underline{S}_{kj}\cdot \underline{T}_{ml}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
-\end{equation}
-
-When connecting the same network the signal flow graph in
-fig. \ref{fig:siconnectgraph} is used to compute the new S-parameters.
-With equally reference impedances on port $k$ and port $l$ the
-relations $\underline{a}_{k} = \underline{b}_{l}$ and
-$\underline{a}_{l} = \underline{b}_{k}$ are satisfied.
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.55\linewidth]{siconnectgraph}
-\end{center}
-\caption{signal flow graph of a joint between ports $k$ and $l$ on the same network}
-\label{fig:siconnectgraph}
-\end{figure}
-\FloatBarrier
-
-There are three first-order loops and a second-order loop (see
-fig. \ref{fig:siconnectloop}) within this signal flow graph.  These
-loops' values yield to
-\begin{align}
-L_{11} &= \underline{S}_{kk}\cdot \underline{S}_{ll}\\
-L_{12} &= \underline{S}_{kl}\\
-L_{13} &= \underline{S}_{lk}\\
-L_{21} &= L_{12}\cdot L_{13} = \underline{S}_{kl}\cdot \underline{S}_{lk}
-\end{align}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[height=3.7cm]{siconnectloop}
-\end{center}
-\caption{loops in the signal flow graph when connecting ports $k$ and $l$ on the same network}
-\label{fig:siconnectloop}
-\end{figure}
-\FloatBarrier
-
-There are five different paths that can be found from the independent
-variable $\underline{a}_{j}$ to the dependent variable
-$\underline{b}_{i}$ (as depicted in fig. \ref{fig:siconnectpath})
-which can be written as
-\begin{align}
-P_{1} &= \underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik}\\
-P_{2} &= \underline{S}_{kj}\cdot \underline{S}_{il}\\
-P_{3} &= \underline{S}_{lj}\cdot \underline{S}_{ik}\\
-P_{4} &= \underline{S}_{ij}\\
-P_{5} &= \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}
-\end{align}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[height=7.4cm]{siconnectpath}
-\end{center}
-\caption{paths in the signal flow graph when connecting ports $k$ and $l$ on the same network}
-\label{fig:siconnectpath}
-\end{figure}
-\FloatBarrier
-
-Thus the new S-parameter $\underline{S}'_{ij}$ yields to
-\begin{equation}
-\begin{split}
-\underline{S}'_{ij}
-&= \dfrac{P_{1} + P_{2}\cdot\left(1 - L_{13}\right) + P_{3}\cdot\left(1 - L_{12}\right) + P_{4}\cdot\left(1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}\right) + P_{5}}{1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}}\\
-&= P_{4} + \dfrac{P_{1} + P_{2}\cdot\left(1 - L_{13}\right) + P_{3}\cdot\left(1 - L_{12}\right) + P_{5}}{1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}}\\
-&= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik} + \underline{S}_{kj}\cdot \underline{S}_{il} \cdot\left(1 - \underline{S}_{lk}\right) + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot\left(1 - \underline{S}_{kl}\right) + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}{1 - \left(\underline{S}_{kk}\cdot \underline{S}_{ll} + \underline{S}_{kl} + \underline{S}_{lk}\right) + \underline{S}_{kl}\cdot \underline{S}_{lk}}\\
-&= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik} + \underline{S}_{kj}\cdot \underline{S}_{il} \cdot\left(1 - \underline{S}_{lk}\right) + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot\left(1 - \underline{S}_{kl}\right) + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}{\left(1 - \underline{S}_{kl}\right)\cdot \left(1 - \underline{S}_{lk}\right) - \underline{S}_{kk}\cdot \underline{S}_{ll}}
-\end{split}
-\end{equation}
-
-This short introduction to signal flow graphs and their solution using
-the nontouching-loop rule verifies the initial formulas used to
-compute the new S-parameters for the reduced subnetworks.
-
-
-\subsection{Differential S-parameter ports}
-%\addcontentsline{toc}{subsection}{Differential S-parameter ports}
-\label{sec:diffSParam}
-
-The implemented algorithm for the S-parameter analysis calculates
-S-parameters in terms of the ground node.  In order to allow
-differential S-parameters as well it is necessary to insert an ideal
-impedance transformer with a turns ratio of 1:1 between the
-differential port and the device under test.
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=12cm]{differential}
-\end{center}
-\caption{transformation of differential port into single ended port}
-\label{fig:differential}
-\end{figure}
-\FloatBarrier
-
-The S-parameter matrix of the inserted ideal transformer being a three
-port device can be written as follows.
-
-\begin{equation}
-\begin{pmatrix}
-\underline{S}
-\end{pmatrix}
-= \dfrac{1}{3}\cdot
-\begin{pmatrix}
-1 & 2 & -2\\
-2 & 1 & 2\\
--2 & 2 & 1\\
-\end{pmatrix}
-\end{equation}
-
-This transformation can be applied to each S-parameter port in a
-circuit regardless whether it is actually differential or not.
-
-\addvspace{12pt}
-
-It is also possible to do the impedance transformation within this step
-(for S-parameter ports with impedances different than $50\ohm$). This can
-be done by using a transformer with an impedance ration of
-
-\begin{equation}
-r=T^2=\frac{50\ohm}{Z}
-\end{equation}
-
-With $Z$ being the S-parameter port impedance. The S-parameter matrix of
-the inserted ideal transformer now writes as follows.
-
-\begin{equation}
-\begin{pmatrix}
-\underline{S}
-\end{pmatrix}
-= \dfrac{1}{2\cdot Z_0+Z}\cdot
-\begin{pmatrix}
-2\cdot Z_0-Z              & 2\cdot\sqrt{Z_0\cdot Z}  & -2\cdot\sqrt{Z_0\cdot Z}\\
-2\cdot\sqrt{Z_0\cdot Z}   & Z                        & 2\cdot Z_0\\
--2\cdot\sqrt{Z_0\cdot Z}  & 2\cdot Z_0               & Z\\
-\end{pmatrix}
-\end{equation}
-
-With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
-
 \section{Matrix conversions}
 %\addcontentsline{toc}{section}{Matrix conversions}
 \label{sec:SparameterConversion}
@@ -473,12 +77,103 @@ With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
 When dealing with S-parameter analyses it may be necessary or
 convenient to convert the resulting scattering parameter matrix into
 other matrix representations used in microwave engineering.
+The following matrices and notations are used in the
+transformation equations.
 
-\subsection{S-Parameter to impedance matrix}
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{X}\right]^{*}$ & = & 
+complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{E}\right]$ & = &
+$\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{bmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & S-parameter matrix\\& &\\
+$\left[\underline{Z}\right]$ & = & impedance matrix\\& &\\
+$\left[\underline{Y}\right]$ & = & admittance matrix\\& &\\
+$\left[\underline{Z}_{ref}\right]$ & = &
+$\begin{pmatrix}
+\underline{Z}_{0,1} & 0 & \ldots & 0\\
+0 & \underline{Z}_{0,2} & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & \underline{Z}_{0,N}\\
+\end{pmatrix}$\\& &\\
+$\underline{Z}_{0,n}$ & = &
+reference impedance of port $n$\\& &\\
+$\left[G_{ref}\right]$ & = &
+$\begin{pmatrix}
+G_1 & 0 & \ldots & 0\\
+0 & G_2 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & G_N\\
+\end{pmatrix}$\\& &\\
+$G_n$ & = &
+$\sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_{0,n}}\right)}$\\& &\\
+\end{tabular}
+
+
+\subsection{Renormalization of S-parameters to different port impedances}
+%\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
+
+During S-parameter usage it sometimes appears to have not all components
+in a circuit normalized to the same impedance. But calculations can only
+be performed with all ports being normalized to the same impedance. In
+the field of high frequency techniques this is usually $50\ohm$. In order
+to transform to different port impedances, the following computation must
+be applied to the resulting S-parameter matrix.
+
+\begin{equation}
+\left[\underline{S'}\right] = \left[\underline{A}\right]^{-1} \cdot
+\left(\left[\underline{S}\right] - \left[\underline{R}\right]\right) \cdot
+\left(\left[\underline{E}\right] - \left[\underline{R}\right] \cdot \left[\underline{S}\right]\right)^{-1}
+\cdot \left[\underline{A}\right]
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$Z_{n}$ & = & reference impedance of port $n$ after the normalizing process\\& &\\
+$Z_{n,before}$ & = & reference impedance of port $n$ before the normalizing process\\& &\\
+$\left[\underline{S}\right]$ & = & original S-parameter matrix\\& &\\
+$\left[\underline{S'}\right]$ & = & recalculated scattering matrix\\& &\\
+\end{tabular}
+
+\begin{tabular}{rll}
+$\left[\underline{R}\right]$ & = &
+$\begin{pmatrix}
+\underline{r}(Z_{1}) & 0 & \ldots & 0\\
+0 & \underline{r}(Z_{2}) & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & \underline{r}(Z_{N})\\
+\end{pmatrix}$
+reflection coefficient matrix\\& &\\
+$\underline{r}(Z_{n})$ & = &
+$\dfrac{Z_{n} - Z_{n,before}}{Z_{n} + Z_{n,before}}$\\& &\\
+$\left[\underline{A}\right]$ & = &
+$\begin{pmatrix}
+A_1 & 0 & \ldots & 0\\
+0 & A_2 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & A_N\\
+\end{pmatrix}$\\& &\\
+$A_n$ & = &
+$\sqrt{\dfrac{Z_n}{Z_{n,before}}}\cdot\dfrac{1}{Z_{n} + Z_{n,before}}$\\& &\\
+\end{tabular}
+
+
+\subsection{Transformations of n-port matrices}
 %\addcontentsline{toc}{subsection}{S-Parameter to impedance matrix}
 
-Converting a scattering parameter matrix to an impedance matrix is
-done by the following formula.
+Converting scattering parameter matrix to impedance matrix:
 
 \begin{equation}
 \left[
@@ -494,51 +189,14 @@ done by the following formula.
 \right)^{-1}
 \cdot
 \left(
-\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]^{*}
+\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]
 \right)
 \cdot
 \left[\underline{G}_{ref}\right]
 \end{equation}
 
-With
 
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{E}\right]$ & = &
-$\begin{bmatrix}
-1 & 0 & \ldots & 0\\
-0 & 1 & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & 1\\
-\end{bmatrix}$
-identity matrix\\& &\\
-$\left[\underline{S}\right]$ & = & original S-parameter matrix\\& &\\
-$\left[\underline{Z}\right]$ & = & resulting impedance matrix\\& &\\
-$\left[\underline{Z}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
-$\left[\underline{G}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot 
-\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
-$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-$\left[\underline{X}\right]^{*}$ & = & 
-complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
-
-\subsection{S-Parameter to admittance matrix}
-%\addcontentsline{toc}{subsection}{S-Parameter to admittance matrix}
-
-Converting a scattering parameter matrix to an admittance matrix can
-be achieved by computing the following formula.
+Converting scattering parameter matrix to admittance matrix:
 
 \begin{equation}
 \left[
@@ -550,7 +208,7 @@ be achieved by computing the following formula.
 \right]^{-1}
 \cdot
 \left(
-\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]^{*}
+\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]
 \right)^{-1}
 \cdot
 \left(
@@ -560,45 +218,8 @@ be achieved by computing the following formula.
 \left[\underline{G}_{ref}\right]
 \end{equation}
 
-With
 
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{E}\right]$ & = &
-$\begin{bmatrix}
-1 & 0 & \ldots & 0\\
-0 & 1 & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & 1\\
-\end{bmatrix}$
-identity matrix\\& &\\
-$\left[\underline{S}\right]$ & = & original S-parameter matrix\\& &\\
-$\left[\underline{Y}\right]$ & = & resulting admittance matrix\\& &\\
-$\left[\underline{Z}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
-$\left[\underline{G}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot 
-\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
-$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-$\left[\underline{X}\right]^{*}$ & = & 
-complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
-
-\subsection{Impedance matrix to scattering parameter matrix}
-%\addcontentsline{toc}{subsection}{Impedance matrix to scattering parameter matrix}
-
-Converting an impedance matrix to a scattering parameter matrix is
-done by the following formula.
+Converting impedance matrix to scattering parameter matrix:
 
 \begin{equation}
 \left[
@@ -610,7 +231,7 @@ done by the following formula.
 \right]
 \cdot
 \left(
-\left[\underline{Z}\right] - \left[\underline{Z}_{ref}\right]^{*}
+\left[\underline{Z}\right] - \left[\underline{Z}_{ref}\right]
 \right)
 \cdot
 \left(
@@ -620,45 +241,8 @@ done by the following formula.
 \left[\underline{G}_{ref}\right]^{-1}
 \end{equation}
 
-With
 
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{E}\right]$ & = &
-$\begin{bmatrix}
-1 & 0 & \ldots & 0\\
-0 & 1 & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & 1\\
-\end{bmatrix}$
-identity matrix\\& &\\
-$\left[\underline{S}\right]$ & = & resulting S-parameter matrix\\& &\\
-$\left[\underline{Z}\right]$ & = & original impedance matrix\\& &\\
-$\left[\underline{Z}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
-$\left[\underline{G}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot 
-\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
-$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = &
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-$\left[\underline{X}\right]^{*}$ & = & 
-complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
-
-\subsection{Admittance matrix to scattering parameter matrix}
-%\addcontentsline{toc}{subsection}{Admittance matrix to scattering parameter matrix}
-
-Converting an admittance matrix to a scattering parameter matrix is
-done by the following formula.
+Converting admittance matrix to scattering parameter matrix:
 
 \begin{equation}
 \left[
@@ -670,7 +254,7 @@ done by the following formula.
 \right]
 \cdot
 \left(
-\left[\underline{E}\right] - \left[\underline{Z}_{ref}\right]^{*} \cdot \left[\underline{Y}\right]
+\left[\underline{E}\right] - \left[\underline{Z}_{ref}\right] \cdot \left[\underline{Y}\right]
 \right)
 \cdot
 \left(
@@ -680,45 +264,8 @@ done by the following formula.
 \left[\underline{G}_{ref}\right]^{-1}
 \end{equation}
 
-With
 
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{E}\right]$ & = &
-$\begin{bmatrix}
-1 & 0 & \ldots & 0\\
-0 & 1 & \ldots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & 1\\
-\end{bmatrix}$
-identity matrix\\& &\\
-$\left[\underline{S}\right]$ & = & resulting S-parameter matrix\\& &\\
-$\left[\underline{Y}\right]$ & = & original admittance matrix\\& &\\
-$\left[\underline{Z}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
-$\left[\underline{G}_{ref}\right]$ & = &
-$\left[\underline{E}\right] \cdot 
-\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
-$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-$\left[\underline{X}\right]^{*}$ & = & 
-complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
-
-\subsection{Impedance matrix to admittance matrix}
-%\addcontentsline{toc}{subsection}{Impedance matrix to admittance matrix}
-
-Converting an impedance matrix to an admittance matrix is done by the
-following formula.
+Converting impedance matrix to admittance matrix:
 
 \begin{equation}
 \left[
@@ -730,29 +277,8 @@ following formula.
 \right]^{-1}
 \end{equation}
 
-With
 
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{Y}\right]$ & = & resulting admittance matrix\\& &\\
-$\left[\underline{Z}\right]$ & = & original impedance matrix\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
-
-\subsection{Admittance matrix to impedance matrix}
-%\addcontentsline{toc}{subsection}{Admittance matrix to impedance matrix}
-
-Converting an admittance matrix to an impedance matrix is done by the
-following formula.
+Converting admittance matrix to impedance matrix:
 
 \begin{equation}
 \left[
@@ -764,23 +290,6 @@ following formula.
 \right]^{-1}
 \end{equation}
 
-With
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{Z}\right]$ & = & resulting impedance matrix\\& &\\
-$\left[\underline{Y}\right]$ & = & original admittance matrix\\& &\\
-\end{tabular}
-
-And furthermore
-
-\addvspace{12pt}
-
-\begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
-inverted matrix of $\left[\underline{X}\right]$\\& &\\
-\end{tabular}
 
 \subsection{Two-Port transformations}
 %\addcontentsline{toc}{subsection}{Two-Port transformations}
@@ -1250,6 +759,345 @@ $
 \FloatBarrier
 
 \end{itemize}
+
+\section{Computing with S-parameters}
+%\addcontentsline{toc}{section}{Computing with S-parameters}
+
+\subsection{S-parameters in CAE programs}
+%\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
+\label{sec:SparameterCAE}
+
+The most common task of a simulation program is to compute the S
+parameters of an arbitrary network that consists of many elementary
+components connected to each other.  To perform this, one can build a
+large matrix containing the S parameters of all components and then
+use matrix operations to solve it.  However this method needs heavy
+algorithms.  A more elegant possibility was published in
+\cite{Compton}. Each step computes only one connection and so unites
+two connected components to a single S parameter block.  This
+procedure has to be done with every connection until there is only one
+block left whose S parameters therefore are the simulation result.
+
+\addvspace{12pt}
+
+Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of
+circuit $(\underline{T})$, the new S-parameters are
+\begin{equation}
+\underline{S}'_{ij} = \underline{S}_{ij} +
+      \frac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}
+           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
+\label{eq:connectSij}
+\end{equation}
+with $i$ and $j$ both being ports of $(\underline{S})$.  Furthermore, it is
+\begin{equation}
+\underline{S}'_{mj} =
+      \frac{\underline{S}_{kj}\cdot \underline{T}_{ml}}
+           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
+\label{eq:connectSmj}
+\end{equation}
+with $m$ being a port of the circuit $(\underline{T})$.  If two ports
+of the same circuit $(\underline{S})$ are connected, the new
+S-parameters are
+\begin{equation}
+\underline{S}'_{ij} = \underline{S}_{ij} +
+      \frac{ \underline{S}_{kj}\cdot \underline{S}_{il}\cdot (1-\underline{S}_{lk})
+           + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot (1-\underline{S}_{kl})
+           + \underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik}
+           + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}
+           {(1-\underline{S}_{kl})\cdot (1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot \underline{S}_{ll}}.
+\label{eq:iconnectSij}
+\end{equation}
+
+If more than two ports are connected at a node, one have to insert one
+or more ideal tee components.  Its S-parameters write as follows.
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{3}\cdot
+\begin{pmatrix}
+-1 &  2 &  2\\
+ 2 & -1 &  2\\
+ 2 &  2 & -1\\
+\end{pmatrix}
+\end{equation}
+
+For optimisation reasons it may be desirable to insert a cross if at
+least four components are connected at one node.  Its S-parameters
+write as follows.
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{2}\cdot
+\begin{pmatrix}
+-1 &  1 &  1 &  1\\
+ 1 & -1 &  1 &  1\\
+ 1 &  1 & -1 &  1\\
+ 1 &  1 &  1 & -1\\
+\end{pmatrix}
+\end{equation}
+
+\addvspace{12pt}
+
+The formulas \eqref{eq:connectSij}, \eqref{eq:connectSmj} and
+\eqref{eq:iconnectSij} were obtained using the ``nontouching-loop''
+rule being an analytical method for solving a flow graph.  A few basic
+definitions have to be understood.
+
+\addvspace{12pt}
+
+A ``path'' is a series of branches into the same direction with no
+node touched more than once.  A paths value is the product of the
+coefficients of the branches.  A ``loop'' is formed when a path starts
+and finishes at the same node.  A ``first-order'' loop is a path
+coming to closure with no node passed more than once.  Its value is
+the product of the values of all branches encountered on the route.  A
+``second-order'' loop consists of two first-order loops not touching
+each other at any node.  Its value is calculated as the product of the
+values of the two first-order loops.  Third- and higher-order loops
+are three or more first-order loops not touching each other at any
+node.
+
+\addvspace{12pt}
+
+The nontouching-loop rule can be applied to solve any flow graph.  In
+the following equation in symbolic form $T$ represents the ratio of
+the dependent variable in question and the independent variable.
+
+\begin{equation}
+T = \dfrac{
+\begin{array}{r}
+P_{1}\cdot\left(1 - \Sigma L_{1}^{(1)} + \Sigma L_{2}^{(1)} - \Sigma L_{3}^{(1)} + \ldots\right) +
+P_{2}\cdot\left(1 - \Sigma L_{1}^{(2)} + \Sigma L_{2}^{(2)} - \Sigma L_{3}^{(2)} + \ldots\right)\\
++ P_{3}\cdot\left(1 - \Sigma L_{1}^{(3)} + \Sigma L_{2}^{(3)} - \Sigma L_{3}^{(3)} + \ldots\right) +
+P_{4}\cdot\left(1 - \ldots\right) + \ldots
+\end{array}
+}{1 - \Sigma L_{1} + \Sigma L_{2} - \Sigma L_{3} + \ldots}
+\label{eq:ntrule}
+\end{equation}
+
+In eq. \eqref{eq:ntrule} $\Sigma L_{1}$ stands for the sum of all
+first-order loops, $\Sigma L_{2}$ is the sum of all second-order
+loops, and so on.  $P_{1}$, $P_{2}$, $P_{3}$ etc., stand for the
+values of all paths that can be found from the independent variable to
+the dependent variable.  $\Sigma L_{1}^{(1)}$ denotes the sum of those
+first-order loops which do not touch (hence the name) the path of
+$P_{1}$ at any node, $\Sigma L_{2}^{(1)}$ denotes then the sum of
+those second-order loops which do not touch the path $P_{1}$ at any
+point, $\Sigma L_{1}^{(2)}$ consequently denotes the sum of those
+first-order loops which do not touch the path of $P_{2}$ at any point.
+Each path is multiplied by the factor in parentheses which involves
+all the loops of all orders that the path does not touch.
+
+\addvspace{12pt}
+
+When connecting two different networks the signal flow graph in
+fig. \ref{fig:sconnectgraph} is used to compute the new S-parameters.
+With equally reference impedances on port $k$ and port $l$ the
+relations $\underline{a}_{k} = \underline{b}_{l}$ and
+$\underline{a}_{l} = \underline{b}_{k}$ are satisfied.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{sconnectgraph}
+\end{center}
+\caption{signal flow graph of a joint between ports $k$ and $l$ on different networks}
+\label{fig:sconnectgraph}
+\end{figure}
+\FloatBarrier
+
+There is only one first-order loop (see fig. \ref{fig:sconnectloop})
+within this signal flow graph.  This loops value yields to
+\begin{equation}
+L_{11} = \underline{S}_{kk}\cdot \underline{T}_{ll}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3.1cm]{sconnectloop}
+\end{center}
+\caption{loops in the signal flow graph when connecting ports $k$ and $l$ on different networks}
+\label{fig:sconnectloop}
+\end{figure}
+\FloatBarrier
+
+The paths that can be found from the independent variable
+$\underline{a}_{j}$ to the dependent variable $\underline{b}_{i}$ (as
+depicted in fig. \ref{fig:sconnectpath}) can be written as
+\begin{align}
+P_{1} &= \underline{S}_{kj}\cdot \underline{T}_{ll} \cdot \underline{S}_{ik}\\
+P_{2} &= \underline{S}_{ij}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3.1cm]{sconnectpath}
+\end{center}
+\caption{paths in the signal flow graph when connecting ports $k$ and $l$ on different networks}
+\label{fig:sconnectpath}
+\end{figure}
+\FloatBarrier
+
+Applying the nontouching-loop rule, i.e. eq. \eqref{eq:ntrule}, gives
+the new S-parameter $\underline{S}'_{ij}$
+\begin{equation}
+\begin{split}
+\underline{S}'_{ij} = \dfrac{\underline{b}_{i}}{\underline{a}_{j}} &= \dfrac{P_{1}\cdot\left(1 - L_{11}\right) + P_{2}\cdot 1}{1 - L_{11}}\\
+&= \dfrac{\underline{S}_{ij}\cdot\left(1 - \underline{S}_{kk}\cdot \underline{T}_{ll}\right) + \underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
+= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
+\end{split}
+\end{equation}
+
+The only path that can be found from the independent variable
+$\underline{a}_{j}$ to the dependent variable $\underline{b}_{m}$ (as
+depicted in fig. \ref{fig:sconnectpath}) can be written as
+\begin{equation}
+P_{1} = \underline{S}_{kj}\cdot \underline{T}_{ml}
+\end{equation}
+
+Thus the new S-parameter $\underline{S}'_{mj}$ yields to
+\begin{equation}
+\underline{S}'_{mj} = \dfrac{\underline{b}_{m}}{\underline{a}_{j}}
+= \dfrac{P_{1}\cdot 1}{1 - L_{11}}
+= \dfrac{\underline{S}_{kj}\cdot \underline{T}_{ml}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
+\end{equation}
+
+When connecting the same network the signal flow graph in
+fig. \ref{fig:siconnectgraph} is used to compute the new S-parameters.
+With equally reference impedances on port $k$ and port $l$ the
+relations $\underline{a}_{k} = \underline{b}_{l}$ and
+$\underline{a}_{l} = \underline{b}_{k}$ are satisfied.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.55\linewidth]{siconnectgraph}
+\end{center}
+\caption{signal flow graph of a joint between ports $k$ and $l$ on the same network}
+\label{fig:siconnectgraph}
+\end{figure}
+\FloatBarrier
+
+There are three first-order loops and a second-order loop (see
+fig. \ref{fig:siconnectloop}) within this signal flow graph.  These
+loops' values yield to
+\begin{align}
+L_{11} &= \underline{S}_{kk}\cdot \underline{S}_{ll}\\
+L_{12} &= \underline{S}_{kl}\\
+L_{13} &= \underline{S}_{lk}\\
+L_{21} &= L_{12}\cdot L_{13} = \underline{S}_{kl}\cdot \underline{S}_{lk}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3.7cm]{siconnectloop}
+\end{center}
+\caption{loops in the signal flow graph when connecting ports $k$ and $l$ on the same network}
+\label{fig:siconnectloop}
+\end{figure}
+\FloatBarrier
+
+There are five different paths that can be found from the independent
+variable $\underline{a}_{j}$ to the dependent variable
+$\underline{b}_{i}$ (as depicted in fig. \ref{fig:siconnectpath})
+which can be written as
+\begin{align}
+P_{1} &= \underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik}\\
+P_{2} &= \underline{S}_{kj}\cdot \underline{S}_{il}\\
+P_{3} &= \underline{S}_{lj}\cdot \underline{S}_{ik}\\
+P_{4} &= \underline{S}_{ij}\\
+P_{5} &= \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=7.4cm]{siconnectpath}
+\end{center}
+\caption{paths in the signal flow graph when connecting ports $k$ and $l$ on the same network}
+\label{fig:siconnectpath}
+\end{figure}
+\FloatBarrier
+
+Thus the new S-parameter $\underline{S}'_{ij}$ yields to
+\begin{equation}
+\begin{split}
+\underline{S}'_{ij}
+&= \dfrac{P_{1} + P_{2}\cdot\left(1 - L_{13}\right) + P_{3}\cdot\left(1 - L_{12}\right) + P_{4}\cdot\left(1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}\right) + P_{5}}{1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}}\\
+&= P_{4} + \dfrac{P_{1} + P_{2}\cdot\left(1 - L_{13}\right) + P_{3}\cdot\left(1 - L_{12}\right) + P_{5}}{1 - \left(L_{11} + L_{12} + L_{13}\right) + L_{21}}\\
+&= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik} + \underline{S}_{kj}\cdot \underline{S}_{il} \cdot\left(1 - \underline{S}_{lk}\right) + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot\left(1 - \underline{S}_{kl}\right) + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}{1 - \left(\underline{S}_{kk}\cdot \underline{S}_{ll} + \underline{S}_{kl} + \underline{S}_{lk}\right) + \underline{S}_{kl}\cdot \underline{S}_{lk}}\\
+&= \underline{S}_{ij} + \dfrac{\underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik} + \underline{S}_{kj}\cdot \underline{S}_{il} \cdot\left(1 - \underline{S}_{lk}\right) + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot\left(1 - \underline{S}_{kl}\right) + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}{\left(1 - \underline{S}_{kl}\right)\cdot \left(1 - \underline{S}_{lk}\right) - \underline{S}_{kk}\cdot \underline{S}_{ll}}
+\end{split}
+\end{equation}
+
+This short introduction to signal flow graphs and their solution using
+the nontouching-loop rule verifies the initial formulas used to
+compute the new S-parameters for the reduced subnetworks.
+
+
+\subsection{Differential S-parameter ports}
+%\addcontentsline{toc}{subsection}{Differential S-parameter ports}
+\label{sec:diffSParam}
+
+The implemented algorithm for the S-parameter analysis calculates
+S-parameters in terms of the ground node.  In order to allow
+differential S-parameters as well it is necessary to insert an ideal
+impedance transformer with a turns ratio of 1:1 between the
+differential port and the device under test.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=12cm]{differential}
+\end{center}
+\caption{transformation of differential port into single ended port}
+\label{fig:differential}
+\end{figure}
+\FloatBarrier
+
+The S-parameter matrix of the inserted ideal transformer being a three
+port device can be written as follows.
+
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{3}\cdot
+\begin{pmatrix}
+1 & 2 & -2\\
+2 & 1 & 2\\
+-2 & 2 & 1\\
+\end{pmatrix}
+\end{equation}
+
+This transformation can be applied to each S-parameter port in a
+circuit regardless whether it is actually differential or not.
+
+\addvspace{12pt}
+
+It is also possible to do the impedance transformation within this step
+(for S-parameter ports with impedances different than $50\ohm$). This can
+be done by using a transformer with an impedance ration of
+
+\begin{equation}
+r=T^2=\frac{50\ohm}{Z}
+\end{equation}
+
+With $Z$ being the S-parameter port impedance. The S-parameter matrix of
+the inserted ideal transformer now writes as follows.
+
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{2\cdot Z_0+Z}\cdot
+\begin{pmatrix}
+2\cdot Z_0-Z              & 2\cdot\sqrt{Z_0\cdot Z}  & -2\cdot\sqrt{Z_0\cdot Z}\\
+2\cdot\sqrt{Z_0\cdot Z}   & Z                        & 2\cdot Z_0\\
+-2\cdot\sqrt{Z_0\cdot Z}  & 2\cdot Z_0               & Z\\
+\end{pmatrix}
+\end{equation}
+
+With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
+
 
 \section{Scattering parameters of components}
 %\addcontentsline{toc}{section}{Scattering parameters of components}

@@ -1,6 +1,6 @@
 /***************************************************************************
-                           bjt.cpp  -  description
-                             -------------------
+                                bjt.cpp
+                               ---------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -141,7 +141,7 @@ Component* BJT::newOne()
 {
   BJT* p = new BJT();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 
@@ -162,7 +162,7 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne) {
     BJT* p = new BJT();
     p->Props.getFirst()->Value = "pnp";
-    p->recreate();
+    p->recreate(0);
     return p;
   }
   return 0;
@@ -170,7 +170,7 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a npn or a pnp transistor (according
 // to the "Type" property).
-void BJT::recreate()
+void BJT::recreate(QucsDoc*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

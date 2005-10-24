@@ -36,7 +36,7 @@ Component* Logical_NOR::newOne()
   Logical_NOR* p = new Logical_NOR();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 

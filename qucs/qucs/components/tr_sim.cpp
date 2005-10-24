@@ -1,6 +1,6 @@
 /***************************************************************************
-                          tr_sim.cpp  -  description
-                             -------------------
+                                tr_sim.cpp
+                               ------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -95,7 +95,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void TR_Sim::recreate()
+void TR_Sim::recreate(QucsDoc*)
 {
   if((Props.getFirst()->Value == "list") ||
      (Props.getFirst()->Value == "const")) {

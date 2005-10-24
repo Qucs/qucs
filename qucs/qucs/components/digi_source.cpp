@@ -16,10 +16,12 @@
  ***************************************************************************/
 
 #include "digi_source.h"
+#include "node.h"
 
 
 Digi_Source::Digi_Source()
 {
+  Type = isDigitalComponent;
   Description = QObject::tr("digital source");
 
   Lines.append(new Line(-10,  0,  0,  0,QPen(QPen::darkGreen,2)));
@@ -50,19 +52,22 @@ Digi_Source::Digi_Source()
 		QObject::tr("number of the port")));
   Props.append(new Property("init", "low", false,
 		QObject::tr("initial output value")+" [low, high]"));
-  Props.append(new Property("times", "1ms; 1ms", false,
+  Props.append(new Property("times", "1ns; 1ns", false,
 		QObject::tr("list of times for changing output value")));
 }
 
+// -------------------------------------------------------
 Digi_Source::~Digi_Source()
 {
 }
 
+// -------------------------------------------------------
 Component* Digi_Source::newOne()
 {
   return new Digi_Source();
 }
 
+// -------------------------------------------------------
 Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("digital source");
@@ -70,4 +75,33 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Digi_Source();
   return 0;
+}
+
+// -------------------------------------------------------
+QString Digi_Source::VHDL_Code()
+{
+  QString s, Time;
+  QString Out("    " + Ports.getFirst()->Connection->Name + " <= '");
+//  int Num = Props.first()->Value.toInt();
+
+  char State;
+  if(Props.at(1)->Value == "low")
+    State = '0';
+  else
+    State = '1';
+
+  s  = "\n  " + Name + ":process\n  begin\n";
+
+  int z = 0;
+  Time = Props.next()->Value.section(';',z,z);
+  while(!Time.isEmpty()) {
+    s += Out + State + "';\n";    // next value for signal
+    s += "    wait for " + Time + ";\n";
+    State ^= 1;
+    z++;
+    Time = Props.current()->Value.section(';',z,z);
+  }
+
+  s += "  end process;\n";
+  return s;
 }

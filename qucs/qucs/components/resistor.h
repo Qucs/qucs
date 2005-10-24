@@ -1,6 +1,6 @@
 /***************************************************************************
-                          resistor.h  -  description
-                             -------------------
+                                resistor.h
+                               ------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,10 +28,10 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
-  void recreate();
+  void recreate(QucsDoc*);
 
 private:
-  void createSymbol(bool european=true);
+  void createSymbol();
 };
 
 #endif

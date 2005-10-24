@@ -27,7 +27,7 @@ public:
   ~SpiceFile();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate();
+  void recreate(QucsDoc*);
   QString NetList();
 
   bool withSim;
