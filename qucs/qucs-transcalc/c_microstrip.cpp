@@ -1,5 +1,5 @@
 /*
- * c_microstrip.c - coupled microstrip class implementation
+ * c_microstrip.cpp - coupled microstrip class implementation
  * 
  * Copyright (C) 2002 Claudio Girardi <claudio.girardi@ieee.org>
  * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
