@@ -4,7 +4,7 @@
 /*
  * parse_touchstone.y - parser for Touchstone Files
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_touchstone.y,v 1.3 2005-06-02 18:17:51 raimi Exp $
+ * $Id: parse_touchstone.y,v 1.4 2005-10-24 09:10:25 raimi Exp $
  *
  */
 
@@ -92,22 +92,28 @@ OptionList: /* nothing */ { }
 ;
 
 Dataset: /* nothing */ { }
-  | DataLine Dataset { /* append vector lines */
+  | DataLine Eol Dataset { /* append vector lines */
     $1->setNext (touchstone_vector);
     touchstone_vector = $1;
+  }
+  | DataLine { /* last line, no trailing end-of-line */
+    $1->setNext (touchstone_vector);
+    touchstone_vector = $1;
+    logprint (LOG_ERROR, "line %d: no trailing end-of-line found, "
+	      "continuing...\n", touchstone_lineno);
   }
   | Eol Dataset { /* skip this line */ }
 ;
 
 DataLine:
-    Float Float Float Eol { 
+    Float Float Float { 
     /* 1-port start */
     $$ = new vector ();
     $$->add ($1);
     $$->add ($2);
     $$->add ($3);
   }
-  | Float Float Float Float Float Eol {
+  | Float Float Float Float Float {
     /* noise parameters */
     $$ = new vector ();
     $$->add ($1);
@@ -116,7 +122,7 @@ DataLine:
     $$->add ($4);
     $$->add ($5);
   }
-  | Float Float Float Float Float Float Float Float Float Eol {
+  | Float Float Float Float Float Float Float Float Float {
     /* 2-port and 4- to n-port start */
     $$ = new vector ();
     $$->add ($1);
@@ -129,7 +135,7 @@ DataLine:
     $$->add ($8);
     $$->add ($9);
   }
-  | Float Float Float Float Float Float Float Eol {
+  | Float Float Float Float Float Float Float {
     /* 3-port start */
     $$ = new vector ();
     $$->add ($1);
@@ -140,7 +146,7 @@ DataLine:
     $$->add ($6);
     $$->add ($7);
   }
-  | Float Float Float Float Float Float Float Float Eol { 
+  | Float Float Float Float Float Float Float Float { 
     /* 4- and n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -152,7 +158,7 @@ DataLine:
     $$->add ($7);
     $$->add ($8);
   }
-  | Float Float Float Float Float Float Eol { 
+  | Float Float Float Float Float Float { 
     /* 3- and n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -162,7 +168,7 @@ DataLine:
     $$->add ($5);
     $$->add ($6);
   }
-  | Float Float Float Float Eol { 
+  | Float Float Float Float { 
     /* n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -170,7 +176,7 @@ DataLine:
     $$->add ($3);
     $$->add ($4);
   }
-  | Float Float Eol { 
+  | Float Float { 
     /* n-port continued */
     $$ = new vector ();
     $$->add ($1);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.39 2005-06-02 18:17:49 raimi Exp $
+ * $Id: circuit.cpp,v 1.40 2005-10-24 09:10:25 raimi Exp $
  *
  */
 
@@ -62,6 +62,7 @@ circuit::circuit () : object (), integrator () {
   inserted = -1;
   subcircuit = NULL;
   subnet = NULL;
+  deltas = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -84,6 +85,7 @@ circuit::circuit (int s) : object (), integrator () {
   inserted = -1;
   subcircuit = NULL;
   subnet = NULL;
+  deltas = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -101,6 +103,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   nsources = c.nsources;
   inserted = c.inserted;
   subnet = c.subnet;
+  deltas = c.deltas;
   subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 
   if (size > 0) {

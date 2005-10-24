@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.1 2005-10-17 08:42:03 raimi Exp $
+ * $Id: fourier.cpp,v 1.2 2005-10-24 09:10:25 raimi Exp $
  *
  */
 
@@ -121,5 +121,41 @@ vector fft_1d (vector var, int isign) {
 
   // free temporary data array
   free (data);
+  return res;
+}
+
+/* The function performs a 1-dimensional discrete fourier
+   transformation.  Each data item is meant to be defined in
+   equidistant steps. */
+void _dft_1d (nr_double_t * data, int len, int isign) {
+  int k, n, size = 2 * len * sizeof (nr_double_t);
+  nr_double_t * res = (nr_double_t *) calloc (size, 1);
+  nr_double_t theta, c, s;
+  for (n = 0; n < 2 * len; n += 2) {
+    theta = n * M_PI / 2 / len;
+    for (k = 0; k < 2 * len; k += 2) {
+      c = cos (k * theta);
+      s = isign * sin (k * theta);
+      res[n] += data[k] * c + data[k+1] * s;
+      res[n+1] += data[k+1] * c - data[k] * s;
+    }
+  }
+  memcpy (data, res, size);
+  free (res);
+}
+
+/* The function performs a 1-dimensional discrete fourier
+   transformation on the given vector 'var'.  If 'sign' is -1 the
+   inverse dft is computed, if +1 the dft itself is computed. */
+vector dft_1d (vector var, int isign) {
+  int k, n, len = var.getSize ();
+  vector res = vector (len);
+  for (n = 0; n < len; n++) {
+    nr_double_t theta = - isign * 2 * M_PI * n / len;
+    complex val = 0;
+    for (k = 0; k < len; k++)
+      val += var (k) * polar (1.0, theta * k);
+    res (n) = isign > 0 ? val / len : val;
+  }
   return res;
 }

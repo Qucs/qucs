@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.20 2005-10-17 08:41:23 raimi Exp $
+ * $Id: evaluate.h,v 1.21 2005-10-24 09:10:25 raimi Exp $
  *
  */
 
@@ -405,8 +405,10 @@ public:
   static constant * interpolate_v_v_d (constant *);
   static constant * interpolate_v_v (constant *);
 
-  static constant * fourier_v_v (constant *);
-  static constant * ifourier_v_v (constant *);
+  static constant * fft_v_v (constant *);
+  static constant * ifft_v_v (constant *);
+  static constant * dft_v_v (constant *);
+  static constant * idft_v_v (constant *);
 };
 
 // Type of application function.

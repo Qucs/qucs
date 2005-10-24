@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.cpp,v 1.23 2005-08-24 07:10:45 raimi Exp $
+ * $Id: resistor.cpp,v 1.24 2005-10-24 09:10:25 raimi Exp $
  *
  */
 
@@ -52,7 +52,7 @@ void resistor::calcSP (nr_double_t) {
 
 void resistor::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
-  nr_double_t r = fabs (getPropertyDouble ("R"));
+  nr_double_t r = getPropertyDouble ("R");
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
@@ -61,7 +61,7 @@ void resistor::calcNoiseSP (nr_double_t) {
 
 void resistor::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
-  nr_double_t r = fabs (getPropertyDouble ("R"));
+  nr_double_t r = getPropertyDouble ("R");
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) / T0 * 4.0 / r;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
