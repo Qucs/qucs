@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.15 2005/06/02 18:17:49 raimi Exp $
+ * $Id: acsolver.cpp,v 1.16 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 #endif
 
 #include <stdio.h>
+#include <math.h>
 
 #include "object.h"
 #include "complex.h"
@@ -158,7 +159,7 @@ void acsolver::saveNoiseResults (vector * f) {
   int M = countVoltageSources ();
   for (int r = 0; r < N + M; r++) {
     // renormalise the results
-    x->set (r, xn->get (r) * sqrt (kB * T0));
+    x->set (r, fabs (xn->get (r) * sqrt (kB * T0)));
   }
   saveResults ("vn", "in", 0, f);
 }

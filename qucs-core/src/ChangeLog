@@ -1,3 +1,17 @@
+2005-10-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Added dft() and idft() functions to the
+	equation solver.
+
+	* fourier.cpp: Implemented (inversve) discrete fourier
+	transformations.
+
+	* acsolver.cpp: Always output absolute noise value (no
+	negative noise currents/voltages).
+
+	* parse_touchstone.y: Accept and warn about a missing trailing
+	end-of-line character in touchstone file.
+
 2005-10-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Implemented inheritance of 'dropdeps' property

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.37 2005/09/26 08:06:23 raimi Exp $
+ * $Id: trsolver.cpp,v 1.38 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -44,7 +44,8 @@
 #include "exception.h"
 #include "exceptionstack.h"
 
-#define STEPDEBUG 0 // set to zero for release
+#define STEPDEBUG   0 // set to zero for release
+#define BREAKPOINTS 0 // exact breakpoint calculation
 
 #define dState 0 // delta T state
 #define sState 1 // solution state
@@ -93,11 +94,12 @@ void trsolver::initSteps (void) {
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
 void trsolver::solve (void) {
-  nr_double_t time;
+  nr_double_t time, saveCurrent;
   int error = 0, convError = 0;
   char * solver = getPropertyString ("Solver");
   runs++;
-  current = 0;
+  saveCurrent = current = 0;
+  stepDelta = -1;
   fixpoint = 0;
   statRejected = statSteps = statIterations = statConvergence = 0;
 
@@ -248,7 +250,7 @@ void trsolver::solve (void) {
 
       // Now advance in time or not...
       if (running > 1) {
-	adjustDelta ();
+	adjustDelta (time);
 	adjustOrder ();
       }
       else {
@@ -257,25 +259,32 @@ void trsolver::solve (void) {
 	rejected = 0;
       }
 
+      saveCurrent = current;
       current += delta;
       running++;
 
       // Tell integrators to be running.
       setMode (MODE_NONE);
     }
-    while (current < time); // Hit a requested time point?
+    while (saveCurrent < time); // Hit a requested time point?
     
     // Save results.
 #if STEPDEBUG
     logprint (LOG_STATUS, "DEBUG: save point at t = %.3e, h = %.3e\n",
-	      current, delta);
+	      saveCurrent, delta);
 #endif
+
+#if BREAKPOINTS
+    saveAllResults (saveCurrent);
+#else
     saveAllResults (time);
+#endif
+
   }
   solve_post ();
   logprogressclear (40);
   logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
-	    getName (), current / statSteps, statRejected);
+	    getName (), saveCurrent / statSteps, statRejected);
   logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
 	    "%d non-convergences\n", getName (),
 	    (double) statIterations / statSteps, statConvergence);
@@ -401,15 +410,47 @@ void trsolver::setMode (int state) {
     c->setMode (state);
 }
 
+// The function passes the time delta array to the circuit list.
+void trsolver::setDelta (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    c->setDelta (deltas);
+}
+
 /* This function tries to adapt the current time-step according to the
    global truncation error. */
-void trsolver::adjustDelta (void) {
+#if BREAKPOINTS
+void trsolver::adjustDelta (nr_double_t t) {
+#else
+void trsolver::adjustDelta (nr_double_t) {
+#endif
   deltaOld = delta;
   delta = checkDelta ();
   if (delta > deltaMax) delta = deltaMax;
   if (delta < deltaMin) delta = deltaMin;
 
-  if (delta > 0.9 * deltaOld) { // accept current delta
+  int good = 0;
+#if BREAKPOINTS
+  // check next breakpoint
+  if (stepDelta > 0.0) {
+    //delta = stepDelta;
+    stepDelta = -1.0;
+  }
+  else {
+    if (delta > (t - current) && t > current) {
+      stepDelta = deltaOld;
+      delta = t - current;
+      good = 1;
+    }
+    else {
+      stepDelta = -1.0;
+    }
+  }
+  if (delta > deltaMax) delta = deltaMax;
+  if (delta < deltaMin) delta = deltaMin;
+#endif /* BREAKPOINTS */
+
+  if (delta > 0.9 * deltaOld || good) { // accept current delta
     nextStates ();
     rejected = 0;
 #if STEPDEBUG
@@ -502,9 +543,12 @@ void trsolver::initTR (void) {
   delta = getPropertyDouble ("InitialStep");
   deltaMin = getPropertyDouble ("MinStep");
   deltaMax = getPropertyDouble ("MaxStep");
-  if (deltaMax == 0.0) deltaMax = MIN ((stop - start) / points, stop / 200);
-  if (deltaMin == 0.0) deltaMin = 1e-11 * deltaMax;
-  if (delta == 0.0) delta = MIN (stop / 200, deltaMax) / 10;
+  if (deltaMax == 0.0)
+    deltaMax = MIN ((stop - start) / (points - 1), stop / 200);
+  if (deltaMin == 0.0)
+    deltaMin = 1e-11 * deltaMax;
+  if (delta == 0.0)
+    delta = MIN (stop / 200, deltaMax) / 10;
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
 
@@ -514,6 +558,7 @@ void trsolver::initTR (void) {
   fillState (dState, delta);
 
   saveState (dState, deltas);
+  setDelta ();
   calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
   calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
 

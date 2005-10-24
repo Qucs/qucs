@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.17 2005/06/02 18:17:51 raimi Exp $
+ * $Id: trsolver.h,v 1.18 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -44,7 +44,8 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void nextStates (void);
   void fillStates (void);
   void setMode (int);
-  void adjustDelta (void);
+  void setDelta (void);
+  void adjustDelta (nr_double_t);
   void adjustOrder (int reduce = 0);
   void initTR (void);
   static void calcTR (trsolver *);
@@ -69,6 +70,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   nr_double_t deltaMax;
   nr_double_t deltaMin;
   nr_double_t deltaOld;
+  nr_double_t stepDelta;
   int CMethod;      // user specified corrector method
   int PMethod;      // user specified predictor method
   int corrMaxOrder; // maximum corrector order

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.35 2005/10/17 08:41:23 raimi Exp $
+ * $Id: evaluate.cpp,v 1.36 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -1852,55 +1852,32 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
 }
 
 // ***************** fourier transformations *****************
-constant * evaluate::fourier_v_v (constant * args) {
-  vector * v = V (args->getResult (0));
-  vector * t = V (args->getResult (1));
-  constant * res = new constant (TAG_VECTOR);
-
-  vector * val = new vector (fft_1d (*v));
-  res->v = val;
-
-  int n = t->getSize ();
-  nr_double_t last  = real (t->get (n - 1));
-  nr_double_t first = real (t->get (0));
-  nr_double_t delta = (last - first) / (n - 1);
-  n = val->getSize ();
-
-  constant * arg = new constant (TAG_VECTOR);
-  arg->v = new vector (::linspace (0, 1.0 / delta, n));
-  arg->solvee = args->getResult(0)->solvee;
-  arg->evaluate ();
-  node * gen =
-    args->get(0)->solvee->addGeneratedEquation (arg->v, "Frequency");
-  res->addPrepDependencies (A(gen)->result);
-  res->dropdeps = 1;
-  return res;
+#define FOURIER_HELPER(cfunc,dep) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_v) (constant * args) {      \
+  vector * v = V (args->getResult (0));                                  \
+  vector * t = V (args->getResult (1));                                  \
+  constant * res = new constant (TAG_VECTOR);                            \
+  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));             \
+  res->v = val;                                                          \
+  int n = t->getSize ();                                                 \
+  nr_double_t last  = real (t->get (n - 1));                             \
+  nr_double_t first = real (t->get (0));                                 \
+  nr_double_t delta = (last - first) / (n - 1);                          \
+  n = val->getSize ();                                                   \
+  constant * arg = new constant (TAG_VECTOR);                            \
+  arg->v = new vector (::linspace (0, 1.0 / delta, n));                  \
+  arg->solvee = args->getResult(0)->solvee;                              \
+  arg->evaluate ();                                                      \
+  node * gen = args->get(0)->solvee->addGeneratedEquation (arg->v, dep); \
+  res->addPrepDependencies (A(gen)->result);                             \
+  res->dropdeps = 1;                                                     \
+  return res;                                                            \
 }
 
-constant * evaluate::ifourier_v_v (constant * args) {
-  vector * v = V (args->getResult (0));
-  vector * f = V (args->getResult (1));
-  constant * res = new constant (TAG_VECTOR);
-
-  vector * val = new vector (ifft_1d (*v));
-  res->v = val;
-
-  int n = f->getSize ();
-  nr_double_t last  = real (f->get (n - 1));
-  nr_double_t first = real (f->get (0));
-  nr_double_t delta = (last - first) / (n - 1);
-  n = val->getSize ();
-
-  constant * arg = new constant (TAG_VECTOR);
-  arg->v = new vector (::linspace (0, 1.0 / delta, n));
-  arg->solvee = args->getResult(0)->solvee;
-  arg->evaluate ();
-  node * gen =
-    args->get(0)->solvee->addGeneratedEquation (arg->v, "Time");
-  res->addPrepDependencies (A(gen)->result);
-  res->dropdeps = 1;
-  return res;
-}
+FOURIER_HELPER (fft, "Frequency");
+FOURIER_HELPER (ifft,"Time");
+FOURIER_HELPER (dft, "Frequency");
+FOURIER_HELPER (idft,"Time");
 
 // ***************** matrix conversions *****************
 constant * evaluate::stoy_m (constant * args) {
@@ -2960,9 +2937,13 @@ struct application_t eqn::applications[] = {
   { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
-  { "fft", TAG_VECTOR, evaluate::fourier_v_v, 2,
+  { "fft", TAG_VECTOR, evaluate::fft_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
-  { "ifft", TAG_VECTOR, evaluate::ifourier_v_v, 2,
+  { "ifft", TAG_VECTOR, evaluate::ifft_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+  { "dft", TAG_VECTOR, evaluate::dft_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+  { "idft", TAG_VECTOR, evaluate::idft_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }

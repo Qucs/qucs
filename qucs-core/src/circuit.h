@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.39 2005/06/02 18:17:49 raimi Exp $
+ * $Id: circuit.h,v 1.40 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -108,14 +108,18 @@ class circuit : public object, public integrator
   int  getVoltageSources (void);
   void setVoltageSources (int);
   void voltageSource (int, int, int, nr_double_t value = 0.0);
-  void transientCapacitance (int, int, int, nr_double_t, nr_double_t,
-			     nr_double_t);
   bool isVSource (void) { return RETFLAG (CIRCUIT_VSOURCE); }
   void setVSource (bool v) { MODFLAG (v, CIRCUIT_VSOURCE); }
   bool isISource (void) { return RETFLAG (CIRCUIT_ISOURCE); }
   void setISource (bool i) { MODFLAG (i, CIRCUIT_ISOURCE); }
   int  getNoiseSources (void);
   void setNoiseSources (int);
+
+  // transient analyses helpers
+  void transientCapacitance (int, int, int, nr_double_t, nr_double_t,
+			     nr_double_t);
+  void setDelta (nr_double_t * d) { deltas = d; }
+  nr_double_t * getDelta (void) { return deltas; }
 
   // s-parameter helpers
   int  getPort (void) { return pacport; }
@@ -221,6 +225,7 @@ class circuit : public object, public integrator
   substrate * subst;
   operatingpoint * oper;
   net * subnet;
+  nr_double_t * deltas;
 };
 
 #endif /* __CIRCUIT_H__ */

@@ -1,7 +1,7 @@
 /*
  * vpulse.cpp - pulse voltage source class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vpulse.cpp,v 1.5 2005/06/02 18:17:52 raimi Exp $
+ * $Id: vpulse.cpp,v 1.6 2005/10/24 09:10:25 raimi Exp $
  *
  */
 
@@ -78,13 +78,13 @@ void vpulse::calcTR (nr_double_t t) {
   if (t < t1) { // before pulse
     ut = u1;
   }
-  else if (t >= t1 && t < t1 + tr) { // rising edge
+  else if (t < t1 + tr) { // rising edge
     ut = u1 + (u2 - u1) / tr * (t - t1);
   }
-  else if (t >= t1 + tr && t < t2 - tf) { // during full pulse
+  else if (t < t2 - tf) { // during full pulse
     ut = u2;
   }
-  else if (t >= t2 - tf && t < t2) { // falling edge
+  else if (t < t2) { // falling edge
     ut = u2 + (u1 - u2) / tf * (t - (t2 - tf));
   }
   else { // after pulse

@@ -23,11 +23,15 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Implement dft() and idft() functions.
+- Implement analog models for digital (and, or, xor, etc.) components.
+- Use symbol hash for function lookup in equation solver.
+	- Implement dft() and idft() functions.
 	- Implementation of correlated noise sources.
 - Allow variables from other datasets in equations.
-- Use minimum noise figure for noise circles as default.
-- Use maximum gain for gain circles as default.
+	- Use minimum noise figure for noise circles as default. Makes no
+	  sense, because there is no circle but a point for the minimum.
+	- Use maximum gain for gain circles as default. This makes no
+	  sense, because there is no circle but a point for the maximum.
 - Allow impedances other than 50ohms in rtoz(), ztor(), stoy(), ytos(),
   stoz(), ztos(), ztoy(), ytoz() and alike.
 	- QucsConv: Redefine qucslib format.
