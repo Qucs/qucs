@@ -25,6 +25,7 @@
 #include <qpoint.h>
 #include <qwidget.h>
 
+class QucsDoc;
 class ViewPainter;
 class QString;
 
@@ -35,8 +36,9 @@ public:
   virtual ~Component();
 
   virtual Component* newOne();
-  virtual void recreate();
+  virtual void recreate(QucsDoc*);
   virtual QString NetList();
+  virtual QString VHDL_Code();
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*);
@@ -77,14 +79,14 @@ protected:
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
   void performModification();
-
 };
 
 class GateComponent : public Component {
 public:
   GateComponent();
   QString NetList();
-  void recreate();
+  QString VHDL_Code();
+  void recreate(QucsDoc*);
   void createSymbol();
 };
 

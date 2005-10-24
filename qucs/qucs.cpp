@@ -604,7 +604,7 @@ bool QucsApp::gotoPage(const QString& Name)
 
   cNo = view->Docs.at();
   view->Docs.at(No);  // back to the last current
-  // make new document the current (calls "slotChangeView()" indirectly)
+  // make new document the current (calls "slotChangeView(int)" indirectly)
   WorkView->setCurrentTab(WorkView->tabAt(cNo));
   // must be done here, in order to call the change slot !
 
@@ -628,7 +628,7 @@ void QucsApp::slotNextTab()
   if(view->Docs.current() == view->Docs.getLast())
     No = 0;
 
-  // make new document the current (calls "slotChangeView()" indirectly)
+  // make new document the current (calls "slotChangeView(int)" indirectly)
   WorkView->setCurrentTab(WorkView->tabAt(No));
   view->viewport()->update();
   view->drawn = false;
@@ -697,7 +697,7 @@ void QucsApp::updatePortNumber(int No)
   if(No<0) return;
   QString pathName = view->Docs.current()->DocName;
   QFileInfo Info(pathName);
-  QString tmpStr, File, Name = Info.fileName();
+  QString File, Name = Info.fileName();
 
   // enter new port number into ListView
   QListViewItem *p;
@@ -711,26 +711,14 @@ void QucsApp::updatePortNumber(int No)
   if(No == 0) return;
 
   // update all occurencies of subcircuit in all open documents
-  int x, y;
   QucsDoc *d;
   int DocNo = view->Docs.at();
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
     for(Component *pc=d->Comps->first(); pc!=0; pc=d->Comps->next())
       if(pc->Model == "Sub") {
 	File = pc->Props.getFirst()->Value;
-	if((File == pathName) || (File == Name)) {
-	  d->Comps->setAutoDelete(false);
-	  d->deleteComp(pc);
-	  x = pc->tx;
-	  y = pc->ty;
-	  tmpStr = pc->Name;
-	  ((Subcircuit*)pc)->recreate();
-	  pc->Name = tmpStr;
-	  pc->tx = x;
-	  pc->ty = y;
-	  d->insertRawComponent(pc);
-	  d->Comps->setAutoDelete(true);
-	}
+	if((File == pathName) || (File == Name))
+          d->recreateComponent(pc);
       }
 
   view->Docs.at(DocNo);  // back to the last current document
@@ -1637,7 +1625,8 @@ pInfoFunc digitalComps[] =
 pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
    &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
-   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info, 0};
+   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info,
+   &TimingDiagram::info, 0};
 
 pInfoFunc Paintings[] =
   {&GraphicLine::info, &Arrow::info, &GraphicText::info,
@@ -1796,7 +1785,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
 
   Component *Comp = new Subcircuit();
   Comp->Props.first()->Value = item->text(0);
-  Comp->recreate();
+  Comp->recreate(0);
   view->selElem = Comp;
 
   if(view->drawn) view->viewport()->update();

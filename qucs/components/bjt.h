@@ -1,6 +1,6 @@
 /***************************************************************************
-                            bjt.h  -  description
-                             -------------------
+                                  bjt.h
+                                 -------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,7 +28,7 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_pnp(QString&, char* &, bool getNewOne=false);
-  void recreate();
+  void recreate(QucsDoc*);
 };
 
 #endif

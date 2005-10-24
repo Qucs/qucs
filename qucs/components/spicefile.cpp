@@ -20,6 +20,7 @@
 #endif
 
 #include "spicefile.h"
+#include "qucsdoc.h"
 #include "main.h"
 
 #include <qregexp.h>
@@ -37,7 +38,7 @@ SpiceFile::SpiceFile()
   Props.append(new Property("File", "", true, QString("x")));
   Props.append(new Property("Ports", "", false, QString("x")));
   Props.append(new Property("Sim", "yes", false, QString("x")));
-  recreate();
+  recreate(0);
 
   Model = "SPICE";
   Name  = "X";
@@ -62,8 +63,13 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void SpiceFile::recreate()
+void SpiceFile::recreate(QucsDoc *Doc)
 {
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
   Lines.clear();
   Texts.clear();
   Ports.clear();
@@ -121,14 +127,12 @@ void SpiceFile::recreate()
   if(Props.first()->display) ty -= fHeight;
 
   // rotate and mirror
-  bool mmir = mirroredX;
-  int  rrot = rotated;
-  if(mmir)  mirrorX();   // mirror
-  for(i=0; i<rrot; i++)  rotate(); // rotate
+  performModification();
 
-
-  rotated = rrot;   // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }
 
 // ---------------------------------------------------

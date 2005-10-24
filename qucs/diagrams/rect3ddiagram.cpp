@@ -25,22 +25,19 @@
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x1 = 10;      // position of label text
+  x1 = 10;     // position of label text
   y1 = y3 = 7;
   x2 = 200;    // initial size of diagram
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
-#ifdef HIDDENLINE
-  Mem = pMem = 0;
-#endif
+  Mem = pMem = 0;  // auxiliary buffer for hidden lines
 
   Name = "Rect3D";
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0,  0, cy, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0, cx/2, cy/2, QPen(QPen::black,0)));
-//  calcDiagram();
 }
 
 Rect3DDiagram::~Rect3DDiagram()
@@ -54,27 +51,28 @@ void Rect3DDiagram::calcCoefficients()
   double rX = double(rotX) * M_PI/180.0;
   double rY = double(rotY) * M_PI/180.0;
   double rZ = double(rotZ) * M_PI/180.0;
-  cxx =  cos(rY) * cos(rZ);
-  cxy = -cos(rY) * sin(rZ);
-  cxz =  sin(rY);
-  cyx =  sin(rX) * sin(rY) * cos(rZ) + cos(rX) * sin(rZ);
-  cyy = -sin(rX) * sin(rY) * sin(rZ) + cos(rX) * cos(rZ);
-  cyz = -sin(rX) * cos(rY);
-  czx = -cos(rX) * sin(rY) * cos(rZ) + sin(rX) * sin(rZ);
-  czy =  cos(rX) * sin(rY) * sin(rZ) + sin(rX) * cos(rZ);
-  czz =  cos(rX) * cos(rY);
+  
+  cxy = sin(rZ);  cxx = cos(rZ);
+  cxz = sin(rY);  rY  = cos(rY);
+  cyz = sin(rX);  czz = cos(rX);
+  rX  = cyz*cxz;  rZ = czz*cxz;
+  cyx = czz * cxy + rX * cxx;
+  cyy = czz * cxx - rX * cxy;
+  czx = cyz * cxy - rZ * cxx;
+  czy = cyz * cxx + rZ * cxy;
+  cxx *=  rY;  cxy *= -rY;  cyz *= -rY;  czz *=  rY;
 }
 
 // ------------------------------------------------------------
 double Rect3DDiagram::calcX_2D(double x, double y, double z)
 {
-  return cxx * x + cxy * y + cxz * z;
+  return (cxx * x + cxy * y + cxz * z) * scaleX;
 }
 
 // ------------------------------------------------------------
 double Rect3DDiagram::calcY_2D(double x, double y, double z)
 {
-  return cyx * x + cyy * y + cyz * z;
+  return (cyx * x + cyy * y + cyz * z) * scaleY;
 }
 
 // ------------------------------------------------------------
@@ -84,14 +82,50 @@ double Rect3DDiagram::calcZ_2D(double x, double y, double z)
 }
 
 // ------------------------------------------------------------
+// Determines the position of the coordinate cross, i.e. calculates
+// "scaleX", "scaleY", "xorig" and "yorig". Returns the corner with
+// the largest distance from the viewer.
+int Rect3DDiagram::calcCross(int *Xses, int *Yses)
+{
+  double x3D, y3D, z3D, x2D[8], y2D[8], z2D;
+  double XMIN_2D, XMAX_2D, YMIN_2D, YMAX_2D, ZMIN_2D;
+
+  int z, Center = 0;  // used to save minimum z (is center for axis cross)
+  scaleX = scaleY = 1.0;  // used in "calcX_2D" and "calcY_2D"
+  XMIN_2D = YMIN_2D = XMAX_2D = YMAX_2D = ZMIN_2D = 0.0; // origin is zero
+  for(z=0; z<8; z++) {  // check 2D coordinates of all 8 quadrat corners
+    if(z & 1) x3D = 1.0;  else x3D = 0.0;
+    if(z & 2) y3D = 1.0;  else y3D = 0.0;
+    if(z & 4) z3D = 1.0;  else z3D = 0.0;
+    x2D[z] = calcX_2D(x3D, y3D, z3D);
+    y2D[z] = calcY_2D(x3D, y3D, z3D);
+    z2D = calcZ_2D(x3D, y3D, z3D);
+
+    if(x2D[z] < XMIN_2D)  XMIN_2D = x2D[z];
+    if(x2D[z] > XMAX_2D)  XMAX_2D = x2D[z];
+    if(y2D[z] < YMIN_2D)  YMIN_2D = y2D[z];
+    if(y2D[z] > YMAX_2D)  YMAX_2D = y2D[z];
+    if(z2D < ZMIN_2D) { ZMIN_2D = z2D; Center = z; }
+  }
+
+  scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
+  scaleY = double(y2) / (YMAX_2D - YMIN_2D);
+  xorig  = -int(XMIN_2D * scaleX);   // position of origin
+  yorig  = -int(YMIN_2D * scaleY);
+
+  for(z=0; z<8; z++) {  // calculate 2D coordinates of all corners
+    *(Xses+z) = int(x2D[z] * scaleX + 0.5) + xorig;
+    *(Yses+z) = int(y2D[z] * scaleY + 0.5) + yorig;
+  }
+  return Center;
+}
+
+// ------------------------------------------------------------
 void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 				   int *px, int *py, Axis*)
 {
-#ifdef HIDDENLINE
-//qDebug("calcCoordinate ENTER");
-  if(pMem == 0) {
-  // needed for marker
-#endif
+ if(pMem == 0) {
+  // needed for markers and if "hide invisible lines" is off
 
   double x3D = *(zD++);
   double y3D = *(zD++);
@@ -130,21 +164,17 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
   else
     y3D = (*yD - yAxis.low) / (yAxis.up - yAxis.low);
 
-  *px = int(calcX_2D(x3D, y3D, z3D) * scaleX + 0.5) + xorig;
-  *py = int(calcY_2D(x3D, y3D, z3D) * scaleY + 0.5) + yorig;
+  *px = int(calcX_2D(x3D, y3D, z3D) + 0.5) + xorig;
+  *py = int(calcY_2D(x3D, y3D, z3D) + 0.5) + yorig;
 
-#ifdef HIDDENLINE
-  }  // of "if(Mem == 0)"
-  else {
-  // used in "calcData"
+  }  // of "if(pMem == 0)"
+ else {
+  // used in "calcData" to hide invisible lines
 
-//qDebug("calc: %p: %d, %d", pMem, pMem->x, pMem->y);
   *px = pMem->x;
   *py = pMem->y;
   pMem++;
-  }
-//qDebug("calcCoordinate LEAVE");
-#endif
+ }
 }
 
 // ------------------------------------------------------------
@@ -152,9 +182,7 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 // for sorting out unnesseccary and invisible points.
 void Rect3DDiagram::clip(int* &p)
 {
-#ifdef HIDDENLINE
-//qDebug("NEU");
-//qDebug("NEU %p: %d, %d, %d, %d", p, *(p-3), *(p-2), *(p-1), *p);
+ if(pMem) {  // hide invisible lines ?
   p -= 4;
   pMem -= 2;
   int No = pMem->No + 1;
@@ -166,44 +194,38 @@ void Rect3DDiagram::clip(int* &p)
   pMem--;
   do {  // are there more points for this line ?
     pMem++;
-//qDebug("   calc %d: %d, %d", pMem->No, pMem->x, pMem->y);
     if(pMem->done & 11) {   // point is grid point ?
-//qDebug("   0");
       if(pMem->done & 4) { // point invisible ?
         if(pMem > Mem) if(((pMem-1)->done & 12) == 0) { //if( *(p-1) >= 0 ) {
           *(p++) = pMem->x;
           *(p++) = pMem->y;
           *(p++) = -2;
-//qDebug("   1");
         }
-//qDebug("   2");
         continue;
       }
     }
 
-//qDebug("   3");
     *(p++) = pMem->x;
     *(p++) = pMem->y;
     if(pMem->done & 4) {   // point invisible ?
       *(p++) = -2;
-//qDebug("   4");
     }
 
   } while(pMem->No < No);
 
   if(pMem->done & 8)   // last point of branch ?
     if(*(p-1) == -2)  p--;
-//qDebug("   ende %p: %d, %d, %d, %d", p, *(p-3), *(p-2), *(p-1), *p);
   pMem++;
-#else
+
+ }
+ else  // do not hide any line
   rectClip(p);
-#endif
+
 }
 
-#ifdef HIDDENLINE
 // ------------------------------------------------------------
 void Rect3DDiagram::calcCoordinate3D(double x, double y, double zr, double zi,
-					tPoint3D *p, tPointZ *pz, int& No)
+					tPoint3D *p, tPointZ *pz)
 {
   if(zAxis.log) {
     zr = sqrt(zr*zr + zi*zi);
@@ -238,24 +260,22 @@ void Rect3DDiagram::calcCoordinate3D(double x, double y, double zr, double zi,
   else
     y = (y - yAxis.low) / (yAxis.up - yAxis.low);
 
-  p->x  = int(calcX_2D(x, y, zr) * scaleX + 0.5) + xorig;
-  p->y  = int(calcY_2D(x, y, zr) * scaleY + 0.5) + yorig;
-  p->No = pz->No = No++;
+  p->x  = int(calcX_2D(x, y, zr) + 0.5) + xorig;
+  p->y  = int(calcY_2D(x, y, zr) + 0.5) + yorig;
+  p->No = pz->No = p-Mem;
   p->done = 0;
   pz->z = float(calcZ_2D(x, y, zr));
 }
 
 // --------------------------------------------------------------
-bool Rect3DDiagram::isHidden(int x, int y, tBound *Bounds)
+bool Rect3DDiagram::isHidden(int x, int y, tBound *Bounds, char *zBuffer)
 {
-  if( ((Bounds+x)->max >= y) && ((Bounds+x)->min <= y) )
-    return true;
-  else {
-    if( (Bounds+x)->max < y )  (Bounds+x)->max = y;
-    if( (Bounds+x)->min > y )  (Bounds+x)->min = y;
-  }
+  // remember the boundings of the polygon
+  if( (Bounds+x)->max < y )  (Bounds+x)->max = y;
+  if( (Bounds+x)->min > y )  (Bounds+x)->min = y;
 
-  return false;
+  // diagram area already used ?
+  return ( *(zBuffer + (y>>3) + x * ((y2+7)>>3)) & (1 << (y & 7)) ) != 0;
 }
 
 // --------------------------------------------------------------
@@ -263,38 +283,32 @@ bool Rect3DDiagram::isHidden(int x, int y, tBound *Bounds)
 void Rect3DDiagram::enlargeMemoryBlock(tPoint3D* &MemEnd)
 {
   if(pMem >= MemEnd) {
-//qDebug("1: %p -> %p", pMem, MemEnd);
     int Size = MemEnd - Mem + 256;
-//qDebug("2: %d", Size);
     MemEnd = Mem;
-//qDebug("3: %p", Mem);
     Mem  = (tPoint3D*)realloc(Mem, Size*sizeof(tPoint3D));
-//qDebug("4: %p", Mem);
     pMem += Mem - MemEnd;
-//qDebug("5");
     MemEnd = Mem + Size - 5;
   }
 }
 
 // --------------------------------------------------------------
-// Calculate all 3D points of the line between point "p" and "EndPoint".
+// Calculate all 2D points of the line between point "p" and "p+1".
 // Parameters:   p        - pointer on 3D coordinate of line start point
-//               EndPoint - pointer on 3D coordinate of line end point
-//               Bounds   - pointer on memory block for occupied area
+//                          (p+1 points onto line end point)
 //               MemEnd   - pointer where memory block ends
-void Rect3DDiagram::calcLine(tPoint3D* p, tPoint3D *EndPoint,
-				tBound *Bounds, tPoint3D* &MemEnd)
+//               Bounds   - memory block for occupied polygon area
+//               zBuffer  - memory block for occupied diagram area
+void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D* &MemEnd,
+				tBound *Bounds, char *zBuffer)
 {
-  int No_ = p->No;  // needed because "p" may change (realloc)
+  int Pos_;
   int x1_ = p->x, y1_ = p->y;
-  int x2_ = EndPoint->x, y2_ = EndPoint->y;
-//qDebug("enter: %d/%d -> %d/%d, No: %d", x1_, y1_, x2_, y2_, p->No);
+  int x2_ = (p+1)->x, y2_ = (p+1)->y;
 
-  bool wasHidden = isHidden(x1_, y1_, Bounds);
-  if(wasHidden) {
-    p->done |= 4;   // mark as hidden
-//    qDebug("first hidden");
-  }
+  bool wasHidden = isHidden(x1_, y1_, Bounds, zBuffer);
+  if(wasHidden)
+    if((p->done & 1) == 0)
+      p->done |= 4;   // mark as hidden
 
   int ax_ = 0, ay_ = 0;
   int ix_, iy_, dx_, dy_, of_;
@@ -338,111 +352,135 @@ void Rect3DDiagram::calcLine(tPoint3D* p, tPoint3D *EndPoint,
       y1_ += iy_;
     }
     
-    if( isHidden(x1_, y1_, Bounds) != wasHidden ) {
-      wasHidden = !wasHidden;
-      if(i == dx_) if(!wasHidden) { // start point often hidden uneccessarily
-        // here "p" can be used as it is only executed once before "realloc"
-        p->done &= -5;   // mark as not hidden
-        continue;
-      }
-//qDebug("  hidden split: %d/%d  (%d, %d)", x1_, y1_, (Bounds+x1_)->min, (Bounds+x1_)->max);
-      pMem->x  = x1_;
-      pMem->y  = y1_;
-      pMem->No = No_;
-      pMem->done = 0;
-      if(wasHidden) pMem->done = 4;   // mark as hidden
-      pMem++;
-//qDebug("weiter");
-      // Enlarge memory block if neccessary.
-      enlargeMemoryBlock(MemEnd);   // this may make "p" invalid
-//qDebug("weiter2");
+    if( isHidden(x1_, y1_, Bounds, zBuffer) != wasHidden )
+      if((p->done & 1) == 0) {
+        wasHidden = !wasHidden;
+        pMem->x  = x1_;
+        pMem->y  = y1_;
+        pMem->No = p->No;
+        pMem->done = 0;
+        if(wasHidden) pMem->done = 4;   // mark as hidden
+        pMem++;
+
+        Pos_ = p - Mem;
+        // Enlarge memory block if neccessary.
+        enlargeMemoryBlock(MemEnd);   // this may make "p" invalid (realloc)
+        p = Mem + Pos_;  // rebuild "p"
     }
   }
 
-//  if(isHidden(EndPoint->x, EndPoint->y, Bounds)) {
-    isHidden(EndPoint->x, EndPoint->y, Bounds);   // set hidden buffer
-    if(wasHidden) {  // last point same as second last
-//qDebug("Line No: %d", p->No);
-      if((EndPoint->done & 1) == 0) {
-        EndPoint->done |= 4;   // mark as hidden
-//qDebug("yes");
-      }
-/*      pMem->x  = x1_;
-      pMem->y  = y1_;
-      pMem->No = p->No;
-      pMem->done = 4;   // mark as hidden
-      pMem++;
-    }*/
-  }
+  // extra treatment for last point (create no further point)
+  if(isHidden((p+1)->x, (p+1)->y, Bounds, zBuffer))
+    if(((p+1)->done & 1) == 0)
+      (p+1)->done |= 4;   // mark as hidden
+
+  p->done |= 1;   // mark as already worked on
 }
 
 // --------------------------------------------------------------
 // Removes the invisible parts of the graph.
-void Rect3DDiagram::removeHiddenLines(Graph *g, tBound *Bounds)
+void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
-qDebug("removeHiddenLines ANFANG");
-  double *px;
-  double *pz = g->cPointsY;
-  if(!pz)  return;
-  if(g->cPointsX.count() < 1) return;
+  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
+  double *px, *py, *pz;
 
-  int Size = g->cPointsX.getFirst()->count * g->countY;
+  Graph *g;
+  tPoint3D *p;
+  int i, j, z, dx, dy, Size=0;
+  // pre-calculate buffer size to avoid reallocations in the first step
+  for(g = Graphs.first(); g!=0; g = Graphs.next())
+    Size += g->cPointsX.getFirst()->count * g->countY;
+
+  // "Mem" should be the last malloc to simplify realloc
   tPointZ *zMem = (tPointZ*)malloc( (Size+2)*sizeof(tPointZ) );
-  Mem = (tPoint3D*)malloc( 2*(Size+2)*sizeof(tPoint3D) );
+  Mem  = (tPoint3D*)malloc( 2*(Size+2)*sizeof(tPoint3D) );
 
   pMem = Mem;
-  tPointZ *zp = zMem;
+  tPointZ *zp = zMem, *zp_tmp;
 
-  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
-  double *py = &Dummy;
-  if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
+  // ...............................................................
+  for(g = Graphs.first(); g!=0; g = Graphs.next()) {
 
-  // calculate coordinates of all lines
-  int i, j, z, dx, dy, No=0;
-  dy = g->cPointsX.at(1)->count;
-  for(i=g->countY-1; i>=0; i--) {   // y coordinates
-    px = g->cPointsX.getFirst()->Points;
-    calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++, No);
-    
-    for(j=g->cPointsX.getFirst()->count-1; j>0; j--)   // x coordinates
-      calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++, No);
-
-    (pMem-1)->done |= 8;  // mark as "last in line"
-    py++;
-    if((i % dy) == 0)
-      py = g->cPointsX.at(1)->Points;
-  }
-
-  // calculate points of cross lines
-  // "zp" points to unused memory, the values are ignored
-  if(g->countY > 1) {
     pz = g->cPointsY;
-    for(j=g->countY/g->cPointsX.at(1)->count; j>0; j--) { // every plane
-      DataX *pD = g->cPointsX.first();
-      px = pD->Points;
-      dx = pD->count;
-      pD = g->cPointsX.next();
-      dy = pD->count;
-      for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
-        py = pD->Points;
-        calcCoordinate3D(*px, *(py++), *pz, *(pz+1), pMem++, zp, No);
-        pz += 2*dx;  // next z coordinate
-        for(z=dy-1; z>0; z--) {  // every point
-          calcCoordinate3D(*px, *(py++), *pz, *(pz+1), pMem++, zp, No);
-          pz += 2*dx;  // next z coordinate
-        }
-        (pMem-1)->done |= 8;  // mark as "last in line"
-        px++;   // next x coordinate
-        pz -= 2*dx*dy - 2;  // next z coordinate
-      }
-      pz += 2*dx*(dy-1);
+    if(!pz) continue;
+    if(g->cPointsX.count() < 1) continue;
+
+    py = &Dummy;
+    if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
+
+    p = pMem;  // save status for cross grid
+    zp_tmp = zp;
+    // ..........................................
+    // calculate coordinates of all lines
+    dx = g->cPointsX.first()->count;
+    dy = g->cPointsX.next()->count;
+    for(i=g->countY-1; i>=0; i--) {   // y coordinates
+      px = g->cPointsX.getFirst()->Points;
+    
+      for(j=dx; j>0; j--)   // x coordinates
+        calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++);
+
+      (pMem-1)->done |= 8;  // mark as "last in line"
+      py++;
+      if((i % dy) == 0)
+        py = g->cPointsX.at(1)->Points;
     }
-  }
-qDebug("Size 1: %d, %d, %d", Size, pMem-Mem, zp-zMem);
+
+    // ..........................................
+    // copy points for cross lines ("dx", "dy" still unchanged ! )
+    if(g->countY > 1) {
+      zp = zp_tmp;
+      for(j=g->countY/dy; j>0; j--) { // every plane
+        for(i=dx; i>0; i--) {  // every branch
+          for(z=dy; z>0; z--) {  // every point
+            pMem->x  = p->x;
+            pMem->y  = p->y;
+            pMem->No = pMem-Mem;
+            pMem->done = 0;
+            zp->NoCross = pMem-Mem; // position of its cross grid
+            pMem++;
+            p += dx;  // next coordinate
+            zp += dx;
+          }
+          (pMem-1)->done |= 8;  // mark as "last in line"
+          p  -= dx*dy - 1;  // next z coordinate
+          zp -= dx*dy - 1;
+        }
+        p  += dx*(dy-1);
+        zp += dx*(dy-1);
+      }
+    }
 
 
-#if 1
+    // ..........................................
+    // Calculate the z-coordinate of all polygons by building the
+    // sum of the z-coordinates of all of its 4 corners.
+    // After this, each point represents one polygon. The unneccessary
+    // points are filled with "-FLTMAX".
+    zp = zp_tmp;
+    // "dx" and "dy" are still unchanged !
+    for(i=g->countY-1; i>=0; i--) {   // all branches
+      if(i % dy) {
+        for(j=dx-1; j>0; j--) {   // x coordinates
+          zp->z += (zp+1)->z + (zp+dx)->z + (zp+dx+1)->z;
+          zp++;
+        }
+        zp->z = -FLT_MAX;  // last one not needed
+        zp++;
+      }
+      else   // last line not needed
+        for(j=dx; j>0; j--) {   // x coordinates
+          zp->z = -FLT_MAX;  // last one not needed
+          zp++;
+        }
+    }
+
+  }  // of "for(Graphs)"
+
+
+#if 0
   qDebug("##########################################");
+  qDebug("Size 1b: Size=%d, %d, %d", Size, pMem-Mem, zp-zMem);
   for(tPoint3D *p=Mem; p<pMem; p++)
     qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
   qDebug("------------------------------------------");
@@ -451,36 +489,10 @@ qDebug("Size 1: %d, %d, %d", Size, pMem-Mem, zp-zMem);
 #endif
 
 
-  // Calculate the z-coordinate of all polygons by building the
-  // sum of the z-coordinates of all of its 4 corners.
-  zp = zMem;
-  dx = g->cPointsX.getFirst()->count;
-  dy = g->cPointsX.at(1)->count;
-  for(i=g->countY-1; i>=0; i--) {   // all branches
-    if(i % dy) {
-      for(j=dx-1; j>0; j--) {   // x coordinates
-        zp->z += (zp+1)->z + (zp+dx)->z + (zp+dx+1)->z;
-        zp++;
-      }
-      zp->z = -FLT_MAX;  // last one not needed
-      zp++;
-    }
-    else   // last line not needed
-      for(j=dx; j>0; j--) {   // x coordinates
-        zp->z = -FLT_MAX;  // last one not needed
-        zp++;
-      }
-  }
-qDebug("Size 2: %d, %d, %d", Size, pMem-Mem, zp-zMem);
-
-#if 0
-  qDebug("-------------------------- 4 z addition");
-  for(tPointZ *p=zMem; p-zMem<Size; p++)
-    qDebug("zPoints:   %g - %d", p->z, p->No);
-#endif
-
-
-  // bubble sort algorithm -> sort z-coordinates (greatest first)
+  // ..........................................
+  // bubble sort algorithm -> sort z-coordinates (greatest first).
+  // After this the polygons that have the smallest distance to the
+  // viewer are on top of the list and thus, will be processed first.
   tPointZ vPZ;
   for(i=1; i<=Size; i++) {
     zp = zMem;
@@ -500,45 +512,52 @@ qDebug("Size 2: %d, %d, %d", Size, pMem-Mem, zp-zMem);
     qDebug("zPoints:   %g - %d", p->z, p->No);
 #endif
 
-  tPoint3D *p, *MemEnd = Mem + 2*Size - 5;   // limit of buffer
-//  enlargeMemoryBlock(MemEnd);
-  // look for hidden lines
+
+  // ..........................................
+  char *pc;
+  tPoint3D *MemEnd = Mem + 2*Size - 5;   // limit of buffer
+
   zp = zMem;
-  dx = g->cPointsX.getFirst()->count;
-  dy = g->cPointsX.at(1)->count;
-  do {
+  for(g = Graphs.first(); g!=0; g = Graphs.next()) {
+    dx = g->cPointsX.first()->count;
+    dy = g->cPointsX.next()->count;
 
-    // go through all 4 lines of polygon
-    p  = Mem + zp->No;  // polygon corner coordinates
-    if((p->done & 1) == 0) {
-      p->done |= 1;
-      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
+    // look for hidden lines ...
+    for(int No = g->countY/dy * (dx-1)*(dy-1); No>0; No--) {
+
+      // reset the polygon bounding buffer
+      for(i=x2-1; i>=0; i--) {
+        (Bounds+i)->max = INT_MIN;
+        (Bounds+i)->min = INT_MAX;
+      }
+
+      // work on all 4 lines of polygon
+      p = Mem + zp->No;  // polygon corner coordinates
+      calcLine(p, MemEnd, Bounds, zBuffer);
+
+      p += dx;
+      calcLine(p, MemEnd, Bounds, zBuffer);
+
+      p = Mem + zp->NoCross;  // cross grid
+      calcLine(p, MemEnd, Bounds, zBuffer);
+
+      p += dy;
+      calcLine(p, MemEnd, Bounds, zBuffer);
+
+      // mark the area of the polygon (stored in "*Bounds") as used
+      for(i=x2-1; i>=0; i--)  // all x coordinates
+        if( (Bounds+i)->max > INT_MIN) {
+          pc = zBuffer + i * ((y2+7)>>3);
+          for(j=(Bounds+i)->min; j<=(Bounds+i)->max; j++) // all y coordinates
+            *(pc + (j>>3)) |= (1 << (j & 7));
+        }
+
+      zp++;   // next polygon
     }
-    p += dx;  // polygon corner coordinates
-    if((p->done & 1) == 0) {
-      p->done |= 1;
-      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
-    }
 
-    // now the cross grid lines
-    p  = Mem + Size;  // polygon corner coordinates
-    z  = zp->No % (dx * dy);
-    p += (z % dx) * dy + (z / dx) + (zp->No - z);  // map from xy to yx
-    if((p->done & 1) == 0) {
-      p->done |= 1;
-      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
-    }
-    p += dy;       // polygon corner coordinates
-    if((p->done & 1) == 0) {
-      p->done |= 1;
-      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
-    }
+  }  // of "for(Graphs)"
 
-    zp++;   // next polygon
-  } while(zp->z > -FLT_MAX);
-
-
-#if 1
+#if 0
   qDebug("--------------------------- hidden lines %d", pMem-Mem);
   for(tPoint3D *p=Mem; p<pMem; p++)
     qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
@@ -561,16 +580,44 @@ qDebug("Size 2: %d, %d, %d", Size, pMem-Mem, zp-zMem);
     }
   }
 
-
-#if 1
+#if 0
   qDebug("--------------------------- last sorting %d", pMem-Mem);
   for(tPoint3D *p=Mem; p<pMem; p++)
     qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
   qDebug("\n");
 #endif
-qDebug("removeHiddenLines ENDE");
 }
-#endif
+
+// --------------------------------------------------------------
+// Removes the invisible parts of the coordinate cross.
+void Rect3DDiagram::removeHiddenCross(int x1_, int y1_, int x2_, int y2_,
+                                      char *zBuffer, tBound *Bounds)
+{
+  pMem = Mem;
+
+  pMem->x  = x1_;
+  pMem->y  = y1_;
+  pMem->No = 0;
+  pMem->done = 0;
+  pMem++;
+
+  pMem->x  = x2_;
+  pMem->y  = y2_;
+  pMem->No = 1;
+  pMem->done = 0;
+  pMem++;
+
+  tPoint3D *p = Mem+6;
+  calcLine(Mem, p, Bounds, zBuffer);
+  *pMem = *(Mem+1);
+  *(Mem+1) = *Mem;
+  p = Mem+2;
+  do {
+    if(((p-1)->done & 4) == 0)
+      Lines.append(new Line((p-1)->x, (p-1)->y, p->x, p->y, QPen(QPen::black,0)));
+    p++;
+  } while(p <= pMem);
+}
 
 // --------------------------------------------------------------
 void Rect3DDiagram::calcLimits()
@@ -610,8 +657,8 @@ void Rect3DDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-int Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
-                                        int y, int yLen, bool Right)
+int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
+                            double xD, double phi, bool Right)
 {
   double GridStep, corr, yD, stepD, GridNum, Expo;
   double xstepD, ystepD;
@@ -620,9 +667,6 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
   QFontMetrics  metrics(QucsSettings.font);
   int maxWidth = 0;
   int count, gx, gy, w;
-
-  double xD = sqrt(double(xLen*xLen + yLen*yLen));
-  double phi = atan2(double(yLen), double(xLen));
 
   if(phi > 0.0)  Expo = phi - M_PI/2.0;
   else  Expo = phi + M_PI/2.0;
@@ -642,6 +686,7 @@ if(Axis->log) {
     xD   = 0.0;
   }
 
+  int xLen, yLen;
   ystepD = corr * log10(yD / fabs(Axis->low));
   while(ystepD <= xD) {  // create all grid lines
 
@@ -702,6 +747,71 @@ else {  // not logarithmical
 }
 
 // --------------------------------------------------------------
+void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
+                               int x1_, int y1_, int x2_, int y2_)
+{
+  DataX *pD;
+  Graph *pg;
+  double phi, cos_phi, sin_phi;
+  int x, y, z, w, valid, Index = 0;
+  if(Axis == &yAxis)  Index = 1;
+
+  QString s;
+  QFontMetrics  metrics(QucsSettings.font);
+
+  x = x2_ - x1_;
+  y = y2_ - y1_;
+  cos_phi = sqrt(double(x*x) + double(y*y));
+  phi = atan2(double(y), double(x));
+  
+  valid = calcAxis(Axis, x1_, y1_, cos_phi, phi, Right); // axis numbering
+  z = (int)cos_phi;
+  cos_phi = cos(phi);
+  sin_phi = sin(phi);
+
+  if(fabs(phi-1e-5) > M_PI/2.0) {
+    x1_ = x2_;  cos_phi *= -1;
+    y1_ = y2_;  sin_phi *= -1;
+  }
+  x = x1_ + int(double(valid)*sin_phi);
+  y = y1_ - int(double(valid)*cos_phi);
+  if(Axis->Label.isEmpty()) {
+    // write all labels ----------------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(Axis != &zAxis) {
+        if(!pg->cPointsY)  continue;
+        if(valid < 0) {
+          delete[] pg->cPointsY;
+          pg->cPointsY = 0;
+          continue;
+        }
+        pD = pg->cPointsX.at(Index);
+        if(!pD) continue;
+        s = pD->Var;
+      }
+      else {
+        s = pg->Var;
+        if(!pg->cPointsY)  s += INVALID_STR;
+      }
+      x += int(double(metrics.lineSpacing())*sin_phi);
+      y -= int(double(metrics.lineSpacing())*cos_phi);
+      w = metrics.width(s);
+      Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
+                            y+int(double((z-w)>>1)*sin_phi),
+                            s, pg->Color, 12.0, cos_phi, sin_phi));
+    }
+  }
+  else {
+    x += int(double(metrics.lineSpacing())*sin_phi);
+    y -= int(double(metrics.lineSpacing())*cos_phi);
+    w = metrics.width(Axis->Label);
+    Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
+                          y+int(double((z-w)>>1)*sin_phi),
+                          Axis->Label, Qt::black, 12.0, cos_phi, sin_phi));
+  }
+}
+
+// --------------------------------------------------------------
 int Rect3DDiagram::calcDiagram()
 {
   Lines.clear();
@@ -709,42 +819,10 @@ int Rect3DDiagram::calcDiagram()
   Arcs.clear();
 
   double GridStep, corr, zD, zDstep, GridNum;
-  double phi, cos_phi, sin_phi;
   QFontMetrics  metrics(QucsSettings.font);
 
   x3 = x2 + 7;
-  QString tmp;
-  int valid = 0;
-  int x, y, w, LineSpacing;
-#ifdef HIDDENLINE
-  tBound *Bounds;
-#endif
-
-  // =====  calculate transformation coefficients from rotation angles ===
-  calcCoefficients();
-
-
-  // =====  check position of axes in 2D rectangle =======================
-  double XMIN_2D, XMAX_2D, YMIN_2D, YMAX_2D, x3D, y3D, z3D, x2D, y2D;
-  int z;
-  XMIN_2D = YMIN_2D = XMAX_2D = YMAX_2D = 0.0;  // origin is zero
-  for(z=1; z<8; z++) {  // check 2D coordinates of all 8 corners of the quadrat
-    if(z & 1) x3D = 1.0;  else x3D = 0.0;
-    if(z & 2) y3D = 1.0;  else y3D = 0.0;
-    if(z & 4) z3D = 1.0;  else z3D = 0.0;
-    x2D = calcX_2D(x3D, y3D, z3D);
-    y2D = calcY_2D(x3D, y3D, z3D);
-
-    if(x2D < XMIN_2D)  XMIN_2D = x2D;
-    if(x2D > XMAX_2D)  XMAX_2D = x2D;
-    if(y2D < YMIN_2D)  YMIN_2D = y2D;
-    if(y2D > YMAX_2D)  YMAX_2D = y2D;
-  }
-
-  scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
-  scaleY = double(y2) / (YMAX_2D - YMIN_2D);
-  xorig  = -int(XMIN_2D * scaleX);   // position of origin
-  yorig  = -int(YMIN_2D * scaleY);
+  int z, z2, o, w;
 
 
   // =====  give "step" the right sign  ==================================
@@ -790,190 +868,83 @@ int Rect3DDiagram::calcDiagram()
   else  calcAxisScale(&zAxis, GridNum, zD, zDstep, GridStep, double(x2));
 
 
+  // ===  calculate transformation coefficients from rotation angles ===
+  calcCoefficients();
+
+  // =====  check calculate position of axes in 2D rectangle ===========
+  int X[8], Y[8];
+  o = calcCross(X, Y);
+  // "o" is now the index of the origin coordinates.
+
+
   // =====  paint coordinate cross  ====================================
-  int coord[12];
-  double *px, *py, *pz, val[2];
-  val[0] = zAxis.low;  val[1] = 0.0;
-  px = &xAxis.up;
-  py = &yAxis.low;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[0], &coord[1], &zAxis);   // x axis
-  Lines.append(new Line(xorig, yorig, coord[0], coord[1], QPen(QPen::black,0)));
+  // xy area
+  Lines.append(new Line(X[o^1], Y[o^1], X[o^3], Y[o^3], QPen(QPen::black,0)));
+  Lines.append(new Line(X[o^2], Y[o^2], X[o^3], Y[o^3], QPen(QPen::black,0)));
 
-  px = &xAxis.up;
-  py = &yAxis.up;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[2], &coord[3], &zAxis);  // xy area
-  Lines.append(new Line(coord[0], coord[1], coord[2], coord[3], QPen(QPen::lightGray,0)));
+  // yz area
+  Lines.append(new Line(X[o^2], Y[o^2], X[o^6], Y[o^6], QPen(QPen::black,0)));
+  Lines.append(new Line(X[o^4], Y[o^4], X[o^6], Y[o^6], QPen(QPen::black,0)));
 
-  px = &xAxis.low;
-  py = &yAxis.up;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[4], &coord[5], &zAxis);   // y axis
-  Lines.append(new Line(xorig, yorig, coord[4], coord[5], QPen(QPen::black,0)));
-  Lines.append(new Line(coord[4], coord[5], coord[2], coord[3], QPen(QPen::lightGray,0)));
-
-  val[0] = zAxis.up;
-  px = &xAxis.low;
-  py = &yAxis.up;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[6], &coord[7], &zAxis);  // yz area
-  Lines.append(new Line(coord[4], coord[5], coord[6], coord[7], QPen(QPen::lightGray,0)));
-
-  px = &xAxis.low;
-  py = &yAxis.low;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[8], &coord[9], &zAxis);   // z axis
-  Lines.append(new Line(xorig, yorig, coord[8], coord[9], QPen(QPen::black,0)));
-  Lines.append(new Line(coord[8], coord[9], coord[6], coord[7], QPen(QPen::lightGray,0)));
-
-  val[0] = zAxis.up;
-  px = &xAxis.up;
-  py = &yAxis.low;
-  pz = val;
-  calcCoordinate(px, pz, py, &coord[10], &coord[11], &zAxis);  // xz area
-  Lines.append(new Line(coord[0], coord[1], coord[10], coord[11], QPen(QPen::lightGray,0)));
-  Lines.append(new Line(coord[8], coord[9], coord[10], coord[11], QPen(QPen::lightGray,0)));
+  // xz area
+  Lines.append(new Line(X[o^1], Y[o^1], X[o^5], Y[o^5], QPen(QPen::black,0)));
+  Lines.append(new Line(X[o^4], Y[o^4], X[o^5], Y[o^5], QPen(QPen::black,0)));
 
 
+  // =====  create axis  =============================================
+  if(X[o^1] < X[o^2])  w = 2;   // use which z axis ?
+  else  w = 1;
 
-  DataX *pD;
-  Graph *pg;
-  LineSpacing = metrics.lineSpacing();
+  z = o^2;
+  if(z & 1)  z ^= 1;  // from where to where ?
+  z2 = z^1;
+  createAxis(&xAxis, w == 2, X[z], Y[z], X[z2], Y[z2]);
 
-  // =====  x axis labels  =============================================
-  x = coord[4]-coord[2];
-  y = coord[5]-coord[3];
-  z = (int)sqrt(double(x*x) + double(y*y));
-  phi = atan2(double(y), double(x));
-  cos_phi = cos(phi);
-  sin_phi = sin(phi);
+  z = o^1;
+  if(z & 2)  z ^= 2;  // from where to where ?
+  z2 = z^2;
+  createAxis(&yAxis, w == 1, X[z], Y[z], X[z2], Y[z2]);
+
+  z = o^w;
+  if(z & 4)  z ^= 4;  // from where to where ?
+  z2 = z^4;
+  createAxis(&zAxis, true, X[z], Y[z], X[z2], Y[z2]);
+
+
+  if(hideLines) {
+    w = x2 * (y2+7)/8;
+    // To store the pixel coordinates that are already used (hidden).
+    // Use one bit per pixel.
+    char *zBuffer = (char*)malloc(w);
+    memset(zBuffer, 0, w);
+
+    // To store the boundings of the current polygon.
+    tBound *Bounds = (tBound*)malloc(x2 * sizeof(tBound));
+
+    // hide invisible parts of graphs
+    removeHiddenLines(zBuffer, Bounds);
+
+    // now hide invisible part of coordinate cross
+    tPoint3D *MemTmp = Mem;
+    Mem = (tPoint3D*)malloc( 10*sizeof(tPoint3D) );
+    
+    removeHiddenCross(X[o^1], Y[o^1], X[o], Y[o], zBuffer, Bounds); // x axis
+    removeHiddenCross(X[o^2], Y[o^2], X[o], Y[o], zBuffer, Bounds); // y axis
+    removeHiddenCross(X[o^4], Y[o^4], X[o], Y[o], zBuffer, Bounds); // z axis
   
-  y = calcAxis(&xAxis, coord[4], -x, coord[5], -y, true); // axis numbering
-  if(y >= 0) valid |= 1;
-  x = coord[2] + int(double(y)*sin_phi);
-  y = coord[3] - int(double(y)*cos_phi);
-  if(xAxis.Label.isEmpty()) {
-    // write all x labels ----------------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      if(!pg->cPointsY)  continue;
-      if(!valid) continue;
-      pD = pg->cPointsX.getFirst();
-      if(!pD) continue;
-      x += int(double(LineSpacing)*sin_phi);
-      y -= int(double(LineSpacing)*cos_phi);
-      w = metrics.width(pD->Var);
-      Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                            y+int(double((z-w)>>1)*sin_phi),
-                            pD->Var, pg->Color, 12.0, cos_phi, sin_phi));
-    }
+    free(Mem);
+    Mem = MemTmp;  // write back values
+
+    free(Bounds);
+    free(zBuffer);
+    pMem = Mem;
   }
   else {
-    x += int(double(LineSpacing)*sin_phi);
-    y -= int(double(LineSpacing)*cos_phi);
-    w = metrics.width(xAxis.Label);
-    Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                          y+int(double((z-w)>>1)*sin_phi),
-                          xAxis.Label, Qt::black, 12.0, cos_phi, sin_phi));
+    Lines.append(new Line(X[o], Y[o], X[o^1], Y[o^1], QPen(QPen::black,0)));
+    Lines.append(new Line(X[o], Y[o], X[o^2], Y[o^2], QPen(QPen::black,0)));
+    Lines.append(new Line(X[o], Y[o], X[o^4], Y[o^4], QPen(QPen::black,0)));
   }
 
-
-  // =====  y axis labels  =============================================
-  x = coord[2]-coord[0];
-  y = coord[3]-coord[1];
-  z = (int)sqrt(double(x*x) + double(y*y));
-  phi = atan2(double(y), double(x));
-  cos_phi = cos(phi);
-  sin_phi = sin(phi);
-  
-  y = calcAxis(&yAxis, coord[0], x, coord[1], y, false); // write axis numbering
-  if(y >= 0) valid |= 2;
-  x = coord[0] + int(double(y)*sin_phi);
-  y = coord[1] - int(double(y)*cos_phi);
-  if(yAxis.Label.isEmpty()) {
-    // draw y-label for all graphs ------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      if(!valid) {
-        delete[] pg->cPointsY;
-        pg->cPointsY = 0;
-      }
-      if(!pg->cPointsY)  continue;
-      pD = pg->cPointsX.at(1);
-      if(!pD) continue;
-      x += int(double(LineSpacing)*sin_phi);
-      y -= int(double(LineSpacing)*cos_phi);
-      w = metrics.width(pD->Var);
-      Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                            y+int(double((z-w)>>1)*sin_phi),
-                            pD->Var, pg->Color, 12.0, cos_phi, sin_phi));
-    }
-  }
-  else {
-    x += int(double(LineSpacing)*sin_phi);
-    y -= int(double(LineSpacing)*cos_phi);
-    w = metrics.width(yAxis.Label);
-    Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                          y+int(double((z-w)>>1)*sin_phi),
-                          yAxis.Label, Qt::black, 12.0, cos_phi, sin_phi));
-  }
-
-
-  // =====  z axis labels  =============================================
-  x = coord[6]-coord[4];
-  y = coord[7]-coord[5];
-  z = (int)sqrt(double(x*x) + double(y*y));
-  phi = atan2(double(y), double(x));
-  cos_phi = cos(phi);
-  sin_phi = sin(phi);
-  
-  y = calcAxis(&zAxis, coord[4], x, coord[5], y, true); // write axis numbering
-  if(y >= 0) valid |= 4;
-  x = coord[4] + int(double(y)*sin_phi);
-  y = coord[5] - int(double(y)*cos_phi);
-  if(zAxis.Label.isEmpty()) {
-    // draw z-label for all graphs ------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      x += int(double(LineSpacing)*sin_phi);
-      y -= int(double(LineSpacing)*cos_phi);
-      if(pg->cPointsY) {
-        w = metrics.width(pg->Var);
-        Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                              y+int(double((z-w)>>1)*sin_phi),
-                              pg->Var, pg->Color, 12.0, cos_phi, sin_phi));
-      }
-      else {     // if no data => <invalid>
-        w = metrics.width(pg->Var+INVALID_STR);
-        Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                              y+int(double((z-w)>>1)*sin_phi),
-                              pg->Var+INVALID_STR, pg->Color, 12.0,
-                              cos_phi, sin_phi));
-      }
-    }
-  }
-  else {
-    x += int(double(LineSpacing)*sin_phi);
-    y -= int(double(LineSpacing)*cos_phi);
-    w = metrics.width(zAxis.Label);
-    Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
-                          y+int(double((z-w)>>1)*sin_phi),
-                          zAxis.Label, Qt::black, 12.0,
-                          cos_phi, sin_phi));
-  }
-
-
-#ifdef HIDDENLINE
-  // to store max and min values for hidden coordinates
-  Bounds = (tBound*)malloc(x2 * sizeof(tBound));
-  for(w=x2-1; w>=0; w--) {
-    (Bounds+w)->max = INT_MIN;
-    (Bounds+w)->min = INT_MAX;
-  }
-
-  for(Graph *pg = Graphs.first(); pg!=0; pg = Graphs.next())
-    removeHiddenLines(pg, Bounds);
-
-  free(Bounds);
-#endif
   return 3;
 
 
@@ -983,6 +954,16 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
   Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,0)));
   return 0;
+}
+
+// ------------------------------------------------------------
+// The labels are created during "calcDiagram", but the memory
+// for the coordinates is released here.
+void Rect3DDiagram::createAxisLabels()
+{
+  if(Mem)  delete Mem;
+  Mem  = 0;
+  pMem = 0;
 }
 
 // ------------------------------------------------------------

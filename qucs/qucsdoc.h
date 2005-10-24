@@ -61,6 +61,7 @@ public:
   Node* insertNode(int, int, Element*);
   void  insertComponentNodes(Component*);
   void  insertRawComponent(Component*, bool num=false);
+  void  recreateComponent(Component*);
   void  insertComponent(Component*);
   void  insertNodeLabel(WireLabel*);
 

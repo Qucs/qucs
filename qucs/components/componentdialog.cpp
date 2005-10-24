@@ -747,13 +747,7 @@ void ComponentDialog::slotApplyInput()
       ty_Dist = dy;
     }
 
-    tmp = Comp->Name;    // is sometimes changed by "recreate"
-    Doc->Comps->setAutoDelete(false);
-    Doc->deleteComp(Comp);
-    Comp->recreate();   // to apply changes to the schematic symbol
-    Doc->insertRawComponent(Comp);
-    Doc->Comps->setAutoDelete(true);
-    Comp->Name = tmp;
+    Doc->recreateComponent(Comp);
     ((QucsView*)parent())->viewport()->repaint();
   }
 }

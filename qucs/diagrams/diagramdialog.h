@@ -100,7 +100,7 @@ private:
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
   QCheckBox   *GridOn, *GridLogX, *GridLogY, *GridLogZ;
-  QCheckBox   *manualX, *manualY, *manualZ;
+  QCheckBox   *manualX, *manualY, *manualZ, *hideInvisible;
   QLineEdit   *startX, *stepX, *stopX;
   QLineEdit   *startY, *stepY, *stopY;
   QLineEdit   *startZ, *stepZ, *stopZ;

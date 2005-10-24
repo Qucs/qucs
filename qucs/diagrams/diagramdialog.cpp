@@ -150,7 +150,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   Label4 = 0;     // different types with same content
   yrLabel = 0;
   yAxisBox = 0;
-  rotationY = rotationZ = 0;
+  hideInvisible = 0;
+  rotationX = rotationY = rotationZ = 0;
 
   QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
@@ -323,7 +324,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     }
 
     // ...........................................................
-    // transfer the diagram properties to the dialog
     xLabel->setText(Diag->xAxis.Label);
     ylLabel->setText(Diag->yAxis.Label);
     if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
@@ -349,6 +349,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 
       if(Diag->Name == "Rect3D") {
+	hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
+	gp->addMultiCellWidget(hideInvisible, Row,Row,0,2);
+	Row++;
+
 	QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
 	LabelRotX->setPaletteForegroundColor(Qt::red);
 	gp->addWidget(LabelRotX, Row,0);
@@ -404,6 +408,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 	gp->addWidget(DiagCross, Row,1);
 
 	// transfer the diagram properties to the dialog
+	hideInvisible->setChecked(Diag->hideLines);
 	rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
 	rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
 	rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
@@ -912,26 +917,31 @@ void DiagramDialog::slotApply()
       changed = true;
     }
 
-    if(Diag->Name == "Rect3D") {
-      if(rotationX) {
-        if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
-          ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
-          changed = true;
-        }
+    // for "rect3D"
+    if(hideInvisible)
+      if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) {
+        ((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
+        changed = true;
       }
-      if(rotationY) {
-        if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
-          ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
-          changed = true;
-        }
+
+    if(rotationX)
+      if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
+        changed = true;
       }
-      if(rotationZ) {
-        if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
-          ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
-          changed = true;
-        }
+
+    if(rotationY)
+      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
+        changed = true;
       }
-    }
+
+    if(rotationZ)
+      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
+        changed = true;
+      }
+
   }   // of "if(Diag->Name != "Tab")"
 
   Diag->Graphs.clear();   // delete the graphs

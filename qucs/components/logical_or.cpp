@@ -36,7 +36,7 @@ Component* Logical_OR::newOne()
   Logical_OR* p = new Logical_OR();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->Props.getLast()->Value = Props.getLast()->Value;
-  p->recreate();
+  p->recreate(0);
   return p;
 }
 

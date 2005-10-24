@@ -27,7 +27,8 @@ public:
   ~Subcircuit();
   Component* newOne();
   QString NetList();
-  void recreate();
+  QString VHDL_Code();
+  void recreate(QucsDoc*);
 
 private:
   void remakeSymbol(int No);

@@ -1,6 +1,6 @@
 /***************************************************************************
-                        mosfet_sub.h  -  description
-                             -------------------
+                               mosfet_sub.h
+                              --------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_p(QString&, char* &, bool getNewOne=false);
   static Element* info_depl(QString&, char* &, bool getNewOne=false);
-  void recreate();
+  void recreate(QucsDoc*);
 };
 
 #endif

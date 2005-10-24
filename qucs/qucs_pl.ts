@@ -554,6 +554,10 @@
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>hide invisible lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -3071,10 +3075,6 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>type of simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>digital source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3084,6 +3084,34 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>list of times for changing output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timing Diagram</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6035,6 +6063,14 @@ Błędy:
 ----------
 
 </translation>
+    </message>
+    <message>
+        <source>ERROR: No time for simulation specified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Forgotten the digital simulation component?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

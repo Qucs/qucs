@@ -1,19 +1,33 @@
-2005-30-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2005-10-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug in painting arrow head
+	* arrow head always solid line
+	* fixed seg fault during inserting ground
+	* recreating component after changing property in schematic
+	* fixed bug in painting id_text
+	* fixed bug in recreating logical devices
+	* hidden line algorithm for 3D diagram
+	* changed symbol for mutual inductors
+	* fixed seg fault after "change dialog" with no components
+	* fixed bug of disapearing wire labels
+	* fixed bug for calling wire double-click action
+
+2005-09-30  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new components: boolean algebra
 	* renamed all Swedish translation files from *_se to *_sv
 
-2005-25-09  Stefan Jahn  <stefan@lkcc.org>
+2005-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsfilter.cpp (QucsFilter): Renamed Tschebyscheff (German)
 	into Chebyshev (English).
 
-2005-22-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2005-09-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* bugfix: two-port matching now finds the dataset
 	* option for arrow head: filled or not
 
-2005-10-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2005-09-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* bugfix: add path to SPICE files in work directory
 	* dialog for two-port matching

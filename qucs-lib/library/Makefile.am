@@ -22,7 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-COMPLIBS = Transistors.lib Substrates.lib Diodes.lib MOSFETs.lib OpAmps.lib
+COMPLIBS = Transistors.lib Substrates.lib Diodes.lib MOSFETs.lib OpAmps.lib \
+           Bridges.lib LEDs.lib
 
 EXTRA_DIST = $(COMPLIBS)
 

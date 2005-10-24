@@ -1,6 +1,6 @@
 /***************************************************************************
-                          param_sweep.h  -  description
-                             -------------------
+                               param_sweep.h
+                              ---------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -27,7 +27,7 @@ public:
   ~Param_Sweep();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate();
+  void recreate(QucsDoc*);
 };
 
 #endif

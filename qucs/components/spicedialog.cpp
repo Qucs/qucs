@@ -211,11 +211,7 @@ void SpiceDialog::slotButtApply()
   if(pp->Value != "yes")  Comp->withSim = false;
 
   if(changed || Comp->withSim) {  // because of "sim" text
-    Doc->Comps->setAutoDelete(false);
-    Doc->deleteComp(Comp);
-    Comp->recreate(); // to apply changes to the schematic symbol
-    Doc->insertRawComponent(Comp);
-    Doc->Comps->setAutoDelete(true);
+    Comp->recreate(Doc); // to apply changes to the schematic symbol
     ((QucsView*)parent())->viewport()->repaint();
   }
 }

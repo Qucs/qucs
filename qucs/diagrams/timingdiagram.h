@@ -1,7 +1,7 @@
 /***************************************************************************
-                                bjtsub.h
-                               ----------
-    begin                : Sat Jul 17 2004
+                              timingdiagram.h
+                             -----------------
+    begin                : Sat Oct 22 2005
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,20 +15,27 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef BJTSUB_H
-#define BJTSUB_H
+#ifndef TIMINGDIAGRAM_H
+#define TIMINGDIAGRAM_H
 
-#include "component.h"
+#include "diagram.h"
 
 
-class BJTsub : public Component  {
-public:
-  BJTsub();
-  ~BJTsub();
-  Component* newOne();
+class TimingDiagram : public Diagram  {
+public: 
+  TimingDiagram(int _cx=0, int _cy=0);
+ ~TimingDiagram();
+
+  Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info_pnp(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void paint(ViewPainter*);
+  int  calcDiagram();
+  bool scroll(int);
+
+  void createAxisLabels() {};   // no labels in this diagram
+
+private:
+  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 };
 
 #endif

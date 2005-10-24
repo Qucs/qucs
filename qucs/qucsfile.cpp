@@ -725,31 +725,109 @@ bool QucsFile::rebuildSymbol(QString *s)
 // *****                                                     *****
 // ***************************************************************
 
+void QucsFile::createNodeSet(QStringList& Collect, int& countInit,
+                             Conductor *pw, Node *p1)
+{
+  if(pw->Label)
+    if(!pw->Label->initValue.isEmpty())
+      Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
+                     p1->Name + " U=\"" + pw->Label->initValue + "\"");
+}
+
+// ---------------------------------------------------
+void QucsFile::throughAllNodes(bool User, QStringList& Collect,
+                               int& countInit, bool Analog)
+{
+  int z=0;
+  Node *pn, *p2;
+  Wire *pw;
+  Element *pe;
+  bool setName=false;
+  QPtrList<Node> Cons;
+
+  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+    if(pn->Name.isEmpty() == User) continue;  // already named ?
+    if(!User) {
+      if(Analog)  pn->Name = "_net";
+      else  pn->Name = "nnnet";   // VHDL names must not begin with '_'
+      pn->Name += QString::number(z++);  // create node name
+    }
+    else
+      if(pn->State)  continue;  // already worked on
+
+    if(!Analog)  // collect all node names for VHDL signal declaration
+      Signals.append(pn->Name);
+
+    createNodeSet(Collect, countInit, pn, pn);
+
+    pn->State = 1;
+    Cons.append(pn);
+    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+	if(pe->Type == isWire) {
+	  pw = (Wire*)pe;
+	  if(p2 != pw->Port1) {
+	    if(pw->Port1->Name.isEmpty()) {
+	      pw->Port1->Name = pn->Name;
+	      pw->Port1->State = 1;
+	      Cons.append(pw->Port1);
+	      setName = true;
+	    }
+	  }
+	  else {
+	    if(pw->Port2->Name.isEmpty()) {
+	      pw->Port2->Name = pn->Name;
+	      pw->Port2->State = 1;
+	      Cons.append(pw->Port2);
+	      setName = true;
+	    }
+	  }
+	  if(setName) {
+	    Cons.findRef(p2);   // back to current Connection
+	    createNodeSet(Collect, countInit, pw, pn);
+	    setName = false;
+	  }
+	}
+    Cons.clear();
+  }
+}
 
 // ---------------------------------------------------
 // Follows the wire lines in order to determine the node names for
-// each component. Output into "stream", NodeSets are collected in "NS".
+// each component. Output into "stream", NodeSets are collected in
+// "Collect" and counted with "countInit".
 bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
-                             QStringList& Collect, QTextEdit *ErrText)
+                       QStringList& Collect, QTextEdit *ErrText, bool Analog)
 {
-  Node *p1, *p2;
-  Wire *pw;
-  Element *pe;
-
   // delete the node names
-  for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next())
-    if(p1->Label)  p1->Name = p1->Label->Name;
-    else p1->Name = "";
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+    pn->State = 0;
+    if(pn->Label)  pn->Name = pn->Label->Name;
+    else pn->Name = "";
+  }
 
   // set the wire names to the connected node
-  for(pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     if(pw->Label != 0) pw->Port1->Name = pw->Label->Name;
 
   bool r;
   QString s;
-  // give the ground nodes the name "gnd", and insert subcircuits
+  // give the ground nodes the name "gnd", and insert subcircuits etc.
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
-    if(pc->isActive)
+    if(pc->isActive) {
+      if(Analog) {
+        if((pc->Type & isAnalogComponent) == 0) {
+          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->Name));
+          return false;
+        }
+      }
+      else {
+        if((pc->Type & isDigitalComponent) == 0) {
+          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
+          return false;
+        }
+      }
+
       if(pc->Model == "GND") pc->Ports.getFirst()->Connection->Name = "gnd";
       else if(pc->Model == "Sub") {
 	     s = pc->Props.getFirst()->Value;
@@ -765,7 +843,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
              }
 	     d->DocName = s;
 	     r = d->File.createSubNetlist(
-				stream, countInit, Collect, ErrText);
+				stream, countInit, Collect, ErrText, Analog);
 	     delete d;
 	     if(!r) return false;
            }
@@ -799,91 +877,14 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 	     else  s = "SPICEo\""+s;
 	     Collect.append(s);
 	   }
+    }  // of "if(active)"
 
 
-  bool setName=false;
-  QPtrList<Node> Cons;
   // work on named nodes first in order to preserve the user given names
-  for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next()) {
-    if(p1->Name.isEmpty()) continue;
-    if(p1->Label)
-      if(!p1->Label->initValue.isEmpty())
-	Collect.append("NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
-	      " U=\"" + p1->Label->initValue + "\"");
+  throughAllNodes(true, Collect, countInit, Analog);
 
-    Cons.append(p1);
-    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
-      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-        if(pe->Type == isWire) {
-          pw = (Wire*)pe;
-          if(p2 != pw->Port1) {
-            if(pw->Port1->Name.isEmpty()) {
-              pw->Port1->Name = p1->Name;
-              Cons.append(pw->Port1);
-              setName = true;
-            }
-          }
-          else {
-            if(pw->Port2->Name.isEmpty()) {
-              pw->Port2->Name = p1->Name;
-              Cons.append(pw->Port2);
-              setName = true;
-            }
-          }
-	  if(setName) {
-	    Cons.findRef(p2);   // back to current Connection
-	    if(pw->Label)
-	      if(!pw->Label->initValue.isEmpty())
-		Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
-		      p1->Name + " U=\"" + pw->Label->initValue + "\"");
-	    setName = false;
-	  }
-        }
-    Cons.clear();
-  }
-
-
-  int z=0;
   // give names to the remaining (unnamed) nodes
-  for(p1 = Nodes->first(); p1!=0; p1 = Nodes->next()) { // work on all nodes
-    if(!p1->Name.isEmpty()) continue;    // already named ?
-    p1->Name = "_net" + QString::number(z++);   // create node name
-    if(p1->Label)
-      if(!p1->Label->initValue.isEmpty())
-	Collect.append("NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
-			" U=\"" + p1->Label->initValue + "\"");
-
-    Cons.append(p1);
-    // create list with connections to the node
-    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
-      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-        if(pe->Type == isWire) {
-          pw = (Wire*)pe;
-          if(p2 != pw->Port1) {
-            if(pw->Port1->Name.isEmpty()) {
-              pw->Port1->Name = p1->Name;
-              Cons.append(pw->Port1);
-              setName = true;
-            }
-          }
-          else {
-            if(pw->Port2->Name.isEmpty()) {
-              pw->Port2->Name = p1->Name;
-              Cons.append(pw->Port2);
-              setName = true;
-            }
-          }
-	  if(setName) {
-	    Cons.findRef(p2);   // back to current Connection
-	    if(pw->Label)
-	      if(!pw->Label->initValue.isEmpty())
-		Collect.append("NodeSet:Nb" + QString::number(countInit++) + " " +
-		      p1->Name + " U=\"" + pw->Label->initValue + "\"");
-	    setName = false;
-	  }
-        }
-    Cons.clear();
-  }
+  throughAllNodes(false, Collect, countInit, Analog);
 
   return true;
 }
@@ -891,11 +892,13 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'NetlistFile'.
 bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
-                                QStringList& Collect, QTextEdit *Error)
+                        QStringList& Collect, QTextEdit *ErrText, bool Analog)
 {
   int i, z;
   QString s;
-  if(!giveNodeNames(stream, countInit, Collect, Error)) return false;
+  // TODO: NodeSets have to be put into the subcircuit block.
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, Analog))
+    return false;
 
   QStringList sl;
   QStringList::Iterator it;
@@ -905,59 +908,148 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
     if(pc->Model == "Port") {
       i  = pc->Props.first()->Value.toInt();
       for(z=sl.size(); z<i; z++)
-	sl.append(" ");
+        sl.append(" ");
       it = sl.at(i-1);
       (*it) = pc->Ports.getFirst()->Connection->Name;
+      if(!Analog) {
+        (*it) += ": ";
+        if(pc->Props.at(1)->Value.at(0) == 'o')  // output port ?
+          (*it) += "out";
+        else
+          (*it) += "in";
+        (*it) += " bit";
+      }
     }
 
-  QString  Type = Doc->DocName;
-  QFileInfo Info(Type);
-  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
-  if(Type.at(0) <= '9') if(Type.at(0) >= '0')  Type = '_' + Type;
-  Type.replace(QRegExp("\\W"), "_"); // replace all none [a-zA-Z0-9] with _
-  (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << "\n";
-  (*stream) << s;  // outputs the NodeSets (if any)
+  QString  Type = properName(Doc->DocName);
+
+  if(Analog)
+    (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << '\n';
+  else {
+
+    // remove all node names connected to ports
+    for(it = sl.begin(); it != sl.end(); it++)
+      Signals.remove(Signals.find((*it).section(':',0,0)));
+
+    for(it = Collect.begin(); it != Collect.end(); )
+      if((*it).left(4) == "use ") {  // output all subcircuit uses
+        (*stream) << (*it);
+        it = Collect.remove(it);
+      }
+      else it++;
+
+    (*stream) << "\nentity " << Type << " is\n"
+              << "  port (" << sl.join(";\n        ") << ");\n"
+              << "end entity;\n"
+              << "architecture ARCH" << Type << " of " << Type << " is\n";
+    if(!Signals.isEmpty())
+      (*stream) << "  signal " << Signals.join(",\n         ") << " : bit;\n";
+
+    // store own subcircuit declaration
+    Collect.append("use work." + Type + ";\n");
+    (*stream) << "begin\n";
+  }
+  Signals.clear();  // was filled in "giveNodeNames()"
 
 
   // write all components with node names into the netlist file
   for(pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    if(pc->Model.at(0) == '.') continue;  // no simulations in subcircuits
-    if(pc->Model == "Eqn") continue;  // no equations in subcircuits
-    s = pc->NetList();
+    if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
+      ErrText->insert(
+        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(Doc->DocName));
+      continue;
+    }
+    if(pc->Model == "Eqn") {  // no equations in subcircuits
+      ErrText->insert(
+        QObject::tr("WARNING: Ignore equation in subcircuit \"%1\".").arg(Doc->DocName));
+      continue;
+    }
+
+    if(Analog)
+      s = pc->NetList();
+    else
+      s = pc->VHDL_Code();
+
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       (*stream) << "   " << s << "\n";
   }
 
-  (*stream) << ".Def:End\n\n";
+  if(Analog)
+    (*stream) << ".Def:End\n\n";
+  else
+    (*stream) << "end architecture;\n\n";
+
   return true;
 }
 
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
-bool QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
+int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QTextEdit *Error)
 {
   if(Doc->showBias > 0)  Doc->showBias = -1;  // do not show DC bias anymore
 
+  int allTypes = 0;
+  bool canAnalog = false;
+  // Detect simulation domain (analog/digital) by looking at component types.
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
+    allTypes |= (pc->Type ^ isComponent) & isComponent;
+  if((allTypes & isAnalogComponent) == 0)
+    canAnalog = true;
+
+
   // first line is documentation
-  stream << "# Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
+  if(canAnalog)
+    stream << "#";
+  else
+    stream << "--";
+  stream << " Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
+//  if(!canAnalog)
+//    stream << "library ieee;\nuse ieee.std_logic_1164.all;\n\n";
+
 
   int countInit = 0;
-  StringList.clear();
-  if(!giveNodeNames(&stream, countInit, Collect, Error))
-    return false;
-  
-  return true;
+  StringList.clear();  // no subcircuits yet
+  if(!giveNodeNames(&stream, countInit, Collect, Error, canAnalog))
+    return -1;
+
+  if(canAnalog)
+    return isAnalogComponent;
+
+  QString  Type = properName(Doc->DocName);
+  stream << "entity " << Type << " is\n"
+         << "end entity;\n\n";
+  return isDigitalComponent;
 }
 
 // .................................................
 // write all components with node names into the netlist file
-void QucsFile::createNetlist(QTextStream& stream)
+QString QucsFile::createNetlist(QTextStream& stream, bool Analog)
 {
-  QString s;
+  QString  Type = properName(Doc->DocName);
+  if(!Analog)
+    stream << "architecture ARCH" << Type << " of " << Type << " is\n"
+           << "  signal " << Signals.join(",\n         ")
+           << " : bit;\n"
+           << "begin\n";
+  Signals.clear();  // was filled in "giveNodeNames()"
+
+  QString s, Time;
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    s = pc->NetList();
+    if(Analog)
+      s = pc->NetList();
+    else {
+      if(pc->Model.at(0) == '.')
+        Time = pc->Props.getFirst()->Value;
+      s = pc->VHDL_Code();
+    }
+
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       stream << s << "\n";
   }
+
+  if(!Analog)
+    stream << "end architecture;\n";
+
+  return Time;
 }
