@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.84 2005-10-17 08:41:23 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.85 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
@@ -566,7 +566,7 @@ static int checker_validate_ports (struct definition_t * root) {
   return errors;
 }
 
-/* The following funtion checks whether the parametric sweeps in the
+/* The following function checks whether the parametric sweeps in the
    netlist are valid or not.  It returns zero on success and non-zero
    otherwise. */
 static int checker_validate_lists (struct definition_t * root) {

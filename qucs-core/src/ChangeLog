@@ -1,3 +1,29 @@
+2005-10-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: New constructor taking size and content (constant
+	value).  Implemented rtoy() and ytor() functions.
+
+	* trsolver.cpp: Implemented delta correction in order to hit
+	exact breakpoint if possible.
+
+	* matvec.cpp: Implemented stos() functionality.  Allow passing
+	reference impedance vectors to stoz(), ztos(), stoy() and ytos()
+	functions as well as to	stos().
+
+	* matrix.cpp: Allow passing reference impedance vectors to
+	stoz(), ztos(),	stoy() and ytos() functions as well as to
+	stos().  Fixed calculation formulas for complex reference
+	impedances according to the manual.
+
+	* evaluate.cpp: Implemented ytor() and rtoy() functions.  Added
+	optional reference impedances for ztor(), rtoz(), ytor() and
+	rtoy() functions.  Allow additional argument for stoz(), ztos(),
+	stoy() and ytos() functions.  Employ stos() functionality.
+
+	* complex.cpp: Added ytor() and rtoy() functions with complex
+	reference impedances.  Allow complex reference impedances in
+	ztor() and rtoz() functions.
+
 2005-10-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Added dft() and idft() functions to the

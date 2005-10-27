@@ -26,6 +26,9 @@ files.
 Version 0.0.8
 -------------
 
+ * new stos() function in equation solver
+ * allowing impedances other than 50ohms in rtoz(), ztor(), stoy(),
+   ytos(), stoz(), ztos(), rtoy() and ytor()
  * new dft(), idft(), fft() and ifft() functions in equation solver
  * cubic spline interpolation in S-parameter file data possible
  * new components: correlated noise sources

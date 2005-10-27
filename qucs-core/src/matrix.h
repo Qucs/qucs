@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.15 2005-06-02 18:17:50 raimi Exp $
+ * $Id: matrix.h,v 1.16 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
+
+class vector;
 
 class matrix
 {
@@ -68,6 +70,7 @@ class matrix
   friend matrix imag (matrix);
   friend matrix eye (int, int);
   friend matrix eye (int);
+  friend matrix diagonal (vector);
   friend complex cofactor (matrix, int, int);
   friend complex detLaplace (matrix);
   friend complex detGauss (matrix);
@@ -76,18 +79,26 @@ class matrix
   friend matrix inverseGaussJordan (matrix);
   friend matrix inverse (matrix);
   friend matrix stos (matrix, complex, complex z0 = 50.0);
+  friend matrix stos (matrix, nr_double_t, nr_double_t z0 = 50.0);
+  friend matrix stos (matrix, vector, complex z0 = 50.0);
+  friend matrix stos (matrix, complex, vector);
+  friend matrix stos (matrix, vector, vector);
   friend matrix stoz (matrix, complex z0 = 50.0);
+  friend matrix stoz (matrix, vector);
   friend matrix ztos (matrix, complex z0 = 50.0);
+  friend matrix ztos (matrix, vector);
   friend matrix ztoy (matrix);
   friend matrix stoy (matrix, complex z0 = 50.0);
+  friend matrix stoy (matrix, vector);
   friend matrix ytos (matrix, complex z0 = 50.0);
+  friend matrix ytos (matrix, vector);
   friend matrix ytoz (matrix);
-  friend matrix stoa (matrix, complex z0 = 50.0);
-  friend matrix atos (matrix, complex z0 = 50.0);
-  friend matrix stoh (matrix, complex z0 = 50.0);
-  friend matrix htos (matrix, complex z0 = 50.0);
-  friend matrix stog (matrix, complex z0 = 50.0);
-  friend matrix gtos (matrix, complex z0 = 50.0);
+  friend matrix stoa (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix atos (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix stoh (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix htos (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix stog (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix gtos (matrix, complex z1 = 50.0, complex z2 = 50.0);
   friend matrix cytocs (matrix, matrix);
   friend matrix cztocs (matrix, matrix);
   friend matrix cztocy (matrix, matrix);

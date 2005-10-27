@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.17 2005-06-07 07:49:06 raimi Exp $
+ * $Id: vector.h,v 1.18 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
@@ -40,6 +40,7 @@ class vector : public object
   vector ();
   vector (char *);
   vector (int);
+  vector (int, complex);
   vector (char *, int);
   vector (const vector &);
   const vector& operator = (const vector &);
@@ -84,8 +85,10 @@ class vector : public object
   friend vector pow    (const complex, vector);
   friend vector pow    (const nr_double_t, vector);
   friend vector pow    (vector, vector);
-  friend vector ztor   (vector, nr_double_t zref = 50.0);
-  friend vector rtoz   (vector, nr_double_t zref = 50.0);
+  friend vector ztor   (vector, complex zref = 50.0);
+  friend vector rtoz   (vector, complex zref = 50.0);
+  friend vector ytor   (vector, complex zref = 50.0);
+  friend vector rtoy   (vector, complex zref = 50.0);
   friend vector diff   (vector, vector, int n = 1);
   friend vector unwrap (vector, nr_double_t tol = M_PI);
 

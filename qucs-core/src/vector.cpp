@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.22 2005-10-17 08:41:23 raimi Exp $
+ * $Id: vector.cpp,v 1.23 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
@@ -55,6 +55,18 @@ vector::vector (int s) : object () {
   assert (s >= 0);
   capacity = size = s;
   data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;
+  dependencies = NULL;
+  origin = NULL;
+  requested = 0;
+}
+
+/* Constructor creates an unnamed instance of the vector class with a
+   given initial size and content. */
+vector::vector (int s, complex val) : object () {
+  assert (s >= 0);
+  capacity = size = s;
+  data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;
+  for (int i = 0; i < s; i++) data[i] = val;
   dependencies = NULL;
   origin = NULL;
   requested = 0;
@@ -450,18 +462,30 @@ vector arcoth (vector v) {
 }
 
 // converts impedance to reflexion coefficient
-vector ztor (vector v, nr_double_t zref) {
+vector ztor (vector v, complex zref) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++)
-    result.set (ztor (v.get (i), zref), i);
+  for (int i = 0; i < v.getSize (); i++) result (i) = ztor (v (i), zref);
+  return result;
+}
+
+// converts admittance to reflexion coefficient
+vector ytor (vector v, complex zref) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result (i) = ytor (v (i), zref);
   return result;
 }
 
 // converts reflexion coefficient to impedance
-vector rtoz (vector v, nr_double_t zref) {
+vector rtoz (vector v, complex zref) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++)
-    result.set (rtoz (v.get (i), zref), i);
+  for (int i = 0; i < v.getSize (); i++) result (i) = rtoz (v (i), zref);
+  return result;
+}
+
+// converts reflexion coefficient to admittance
+vector rtoy (vector v, complex zref) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result (i) = rtoy (v (i), zref);
   return result;
 }
 
@@ -504,7 +528,7 @@ vector diff (vector var, vector dep, int n) {
 }
 
 vector vector::operator=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] = complex (c);
+  for (int i = 0; i < getSize (); i++) data[i] = c;
   return *this;
 }
 

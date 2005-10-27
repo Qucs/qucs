@@ -118,9 +118,8 @@ $G_n$ & = &
 $\sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_{0,n}}\right)}$\\& &\\
 \end{tabular}
 
-
 \subsection{Renormalization of S-parameters to different port impedances}
-%\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
+%\addcontentsline{toc}{subsection}{Renormalization of S-parameters to different port impedances}
 
 During S-parameter usage it sometimes appears to have not all components
 in a circuit normalized to the same impedance. But calculations can only
@@ -150,13 +149,13 @@ $\left[\underline{S'}\right]$ & = & recalculated scattering matrix\\& &\\
 \begin{tabular}{rll}
 $\left[\underline{R}\right]$ & = &
 $\begin{pmatrix}
-\underline{r}(Z_{1}) & 0 & \ldots & 0\\
-0 & \underline{r}(Z_{2}) & \ldots & 0\\
+\underline{r}\left(Z_{1}\right) & 0 & \ldots & 0\\
+0 & \underline{r}\left(Z_{2}\right) & \ldots & 0\\
 \vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \ldots & \underline{r}(Z_{N})\\
+0 & 0 & \ldots & \underline{r}\left(Z_{N}\right)\\
 \end{pmatrix}$
 reflection coefficient matrix\\& &\\
-$\underline{r}(Z_{n})$ & = &
+$\underline{r}\left(Z_{n}\right)$ & = &
 $\dfrac{Z_{n} - Z_{n,before}}{Z_{n} + Z_{n,before}}$\\& &\\
 $\left[\underline{A}\right]$ & = &
 $\begin{pmatrix}
@@ -169,12 +168,18 @@ $A_n$ & = &
 $\sqrt{\dfrac{Z_n}{Z_{n,before}}}\cdot\dfrac{1}{Z_{n} + Z_{n,before}}$\\& &\\
 \end{tabular}
 
+\subsection{Transformations of n-Port matrices}
+%\addcontentsline{toc}{subsection}{Transformations of n-Port matrices}
 
-\subsection{Transformations of n-port matrices}
-%\addcontentsline{toc}{subsection}{S-Parameter to impedance matrix}
+S-parameter, admittance and impedance matrices are not limited to One-
+or Two-Port definitions.  They are defined for an arbitrary number of
+ports.  The following section contains transformation formulas forth
+and back each matrix representation.
 
-Converting scattering parameter matrix to impedance matrix:
+\addvspace{12pt}
 
+Converting a scattering parameter matrix to an impedance matrix is
+done by the following formula.
 \begin{equation}
 \left[
 \underline{Z}
@@ -195,9 +200,8 @@ Converting scattering parameter matrix to impedance matrix:
 \left[\underline{G}_{ref}\right]
 \end{equation}
 
-
-Converting scattering parameter matrix to admittance matrix:
-
+Converting a scattering parameter matrix to an admittance matrix can
+be achieved by computing the following formula.
 \begin{equation}
 \left[
 \underline{Y}
@@ -218,9 +222,8 @@ Converting scattering parameter matrix to admittance matrix:
 \left[\underline{G}_{ref}\right]
 \end{equation}
 
-
-Converting impedance matrix to scattering parameter matrix:
-
+Converting an impedance matrix to a scattering parameter matrix is
+done by th following formula.
 \begin{equation}
 \left[
 \underline{S}
@@ -241,9 +244,8 @@ Converting impedance matrix to scattering parameter matrix:
 \left[\underline{G}_{ref}\right]^{-1}
 \end{equation}
 
-
-Converting admittance matrix to scattering parameter matrix:
-
+Converting an admittance matrix to a scattering parameter matrix is
+done by the following formula.
 \begin{equation}
 \left[
 \underline{S}
@@ -264,9 +266,8 @@ Converting admittance matrix to scattering parameter matrix:
 \left[\underline{G}_{ref}\right]^{-1}
 \end{equation}
 
-
-Converting impedance matrix to admittance matrix:
-
+Converting an impedance matrix to an admittance matrix is done by the
+following simple formula.
 \begin{equation}
 \left[
 \underline{Y}
@@ -277,9 +278,8 @@ Converting impedance matrix to admittance matrix:
 \right]^{-1}
 \end{equation}
 
-
-Converting admittance matrix to impedance matrix:
-
+Converting an admittance matrix to an impedance matrix is done by the
+following simple formula.
 \begin{equation}
 \left[
 \underline{Z}
@@ -289,7 +289,6 @@ Converting admittance matrix to impedance matrix:
 \underline{Y}
 \right]^{-1}
 \end{equation}
-
 
 \subsection{Two-Port transformations}
 %\addcontentsline{toc}{subsection}{Two-Port transformations}

@@ -32,8 +32,8 @@ unfixed) have a look at the file BUGS.
 	  sense, because there is no circle but a point for the minimum.
 	- Use maximum gain for gain circles as default. This makes no
 	  sense, because there is no circle but a point for the maximum.
-- Allow impedances other than 50ohms in rtoz(), ztor(), stoy(), ytos(),
-  stoz(), ztos(), ztoy(), ytoz() and alike.
+	- Allow impedances other than 50ohms in rtoz(), ztor(), stoy(),
+	  ytos(), stoz(), ztos(), ztoy(), ytoz() and alike.
 	- QucsConv: Redefine qucslib format.
 - QucsConv: Find a solution for three and more mutual inductors conversion
   from spice to qucs.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.36 2005-10-24 09:10:25 raimi Exp $
+ * $Id: evaluate.cpp,v 1.37 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
@@ -63,6 +63,41 @@ using namespace qucs;
 
 #define A(a) ((assignment *) (a))
 #define R(r) ((reference *) (r))
+
+// Argument macros.
+#define _D(var,idx) nr_double_t (var) = D (args->getResult (idx));
+#define _C(var,idx) complex * (var) = C (args->getResult (idx));
+#define _V(var,idx) vector * (var) = V (args->getResult (idx));
+#define _M(var,idx) matrix * (var) = M (args->getResult (idx));
+#define _MV(var,idx) matvec * (var) = MV (args->getResult (idx));
+
+#define _ARD0(var) _D (var,0)
+#define _ARD1(var) _D (var,1)
+#define _ARD2(var) _D (var,2)
+#define _ARC0(var) _C (var,0)
+#define _ARC1(var) _C (var,1)
+#define _ARC2(var) _C (var,2)
+#define _ARM0(var) _M (var,0)
+#define _ARM1(var) _M (var,1)
+#define _ARM2(var) _M (var,2)
+#define _ARV0(var) _V (var,0)
+#define _ARV1(var) _V (var,1)
+#define _ARV2(var) _V (var,2)
+#define _ARMV0(var) _MV (var,0)
+#define _ARMV1(var) _MV (var,1)
+#define _ARMV2(var) _MV (var,2)
+
+// Return value macros.
+#define _DEFD() constant * res = new constant (TAG_DOUBLE);
+#define _DEFC() constant * res = new constant (TAG_COMPLEX);
+#define _DEFV() constant * res = new constant (TAG_VECTOR);
+#define _DEFM() constant * res = new constant (TAG_MATRIX);
+#define _DEFMV() constant * res = new constant (TAG_MATVEC);
+#define _RETD(var) res->d = (var); return res;
+#define _RETC(var) res->c = new complex (var); return res;
+#define _RETV(var) res->v = new vector (var); return res;
+#define _RETM(var) res->m = new matrix (var); return res;
+#define _RETMV(var) res->mv = new matvec (var); return res;
 
 // Throws a math exception.
 #define THROW_MATH_EXCEPTION(txt) do { \
@@ -1478,49 +1513,64 @@ constant * evaluate::arcoth_v (constant * args) {
   return res;
 }
 
-// ***** convert impedance to reflexion coefficient *****
-constant * evaluate::ztor_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = (d1 - 50.0) / (d1 + 50.0);
-  return res;
-}
+// This is the rtoz, ztor, ytor, rtoy helper macro.
+#define MAKE_FUNC_DEFINITION_2(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) {   \
+  nr_double_t d = D (args->getResult (0));			    \
+  constant * res = new constant (TAG_DOUBLE);			    \
+  res->d = real (cfunc (rect (d, 0))); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d_d) (constant * args) { \
+  nr_double_t d = D (args->getResult (0));			    \
+  nr_double_t z = D (args->getResult (1));			    \
+  constant * res = new constant (TAG_DOUBLE);			    \
+  res->d = real (cfunc (rect (d, 0), z)); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d_c) (constant * args) { \
+  nr_double_t d = D (args->getResult (0));			    \
+  complex * z = C (args->getResult (1));			    \
+  constant * res = new constant (TAG_COMPLEX);			    \
+  res->c = new complex (cfunc (rect (d, 0), *z)); return res;	    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) {   \
+  complex * c = C (args->getResult (0));			    \
+  constant * res = new constant (TAG_COMPLEX);			    \
+  res->c = new complex (cfunc (*c)); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c_d) (constant * args) { \
+  complex * c = C (args->getResult (0));			    \
+  nr_double_t z = D (args->getResult (1));			    \
+  constant * res = new constant (TAG_COMPLEX);			    \
+  res->c = new complex (cfunc (*c, z)); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c_c) (constant * args) { \
+  complex * c = C (args->getResult (0));			    \
+  complex * z = C (args->getResult (1));			    \
+  constant * res = new constant (TAG_COMPLEX);			    \
+  res->c = new complex (cfunc (*c, *z)); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) {   \
+  vector * v = V (args->getResult (0));				    \
+  constant * res = new constant (TAG_VECTOR);			    \
+  res->v = new vector (cfunc (*v)); return res;			    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_d) (constant * args) { \
+  vector * v = V (args->getResult (0));				    \
+  nr_double_t z = D (args->getResult (1));			    \
+  constant * res = new constant (TAG_VECTOR);			    \
+  res->v = new vector (cfunc (*v, z)); return res;		    \
+}								    \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_c) (constant * args) { \
+  vector * v = V (args->getResult (0));				    \
+  complex * z = C (args->getResult (1));			    \
+  constant * res = new constant (TAG_VECTOR);			    \
+  res->v = new vector (cfunc (*v, *z)); return res;		    \
+}								    \
 
-constant * evaluate::ztor_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (ztor (*c1));
-  return res;
-}
-
-constant * evaluate::ztor_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (ztor (*v1));
-  return res;
-}
-
-// ***** convert reflexion coefficient to impedance *****
-constant * evaluate::rtoz_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = 50.0 * (1 + d1) / (1 - d1);
-  return res;
-}
-
-constant * evaluate::rtoz_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (rtoz (*c1));
-  return res;
-}
-
-constant * evaluate::rtoz_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (rtoz (*v1));
-  return res;
-}
+MAKE_FUNC_DEFINITION_2 (ztor);
+MAKE_FUNC_DEFINITION_2 (rtoz);
+MAKE_FUNC_DEFINITION_2 (ytor);
+MAKE_FUNC_DEFINITION_2 (rtoy);
 
 // ** convert reflexion coefficient to standing wave ratio **
 constant * evaluate::rtoswr_d (constant * args) {
@@ -1879,89 +1929,328 @@ FOURIER_HELPER (ifft,"Time");
 FOURIER_HELPER (dft, "Frequency");
 FOURIER_HELPER (idft,"Time");
 
+// This is the stoz, ztos, ytos, stoy helper macro.
+#define MAKE_FUNC_DEFINITION_3(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_m) (constant * args) {    \
+  matrix * m = M (args->getResult (0));				     \
+  constant * res = new constant (TAG_MATRIX);			     \
+  res->m = new matrix (cfunc (*m)); return res;			     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_m_d) (constant * args) {  \
+  matrix * m = M (args->getResult (0));				     \
+  nr_double_t z = D (args->getResult (1));			     \
+  constant * res = new constant (TAG_MATRIX);			     \
+  res->m = new matrix (cfunc (*m, rect (z, 0))); return res;	     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_m_c) (constant * args) {  \
+  matrix * m = M (args->getResult (0));				     \
+  complex * z = C (args->getResult (1));			     \
+  constant * res = new constant (TAG_MATRIX);			     \
+  res->m = new matrix (cfunc (*m, *z)); return res;		     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_m_v) (constant * args) {  \
+  matrix * m = M (args->getResult (0));				     \
+  vector * z = V (args->getResult (1));				     \
+  constant * res = new constant (TAG_MATRIX);			     \
+  res->m = new matrix (cfunc (*m, *z)); return res;		     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv) (constant * args) {   \
+  matvec * m = MV (args->getResult (0));			     \
+  constant * res = new constant (TAG_MATVEC);			     \
+  res->mv = new matvec (cfunc (*m)); return res;		     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv_d) (constant * args) { \
+  matvec * m = MV (args->getResult (0));			     \
+  nr_double_t z = D (args->getResult (1));			     \
+  constant * res = new constant (TAG_MATVEC);			     \
+  res->mv = new matvec (cfunc (*m, rect (z, 0))); return res;	     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv_c) (constant * args) { \
+  matvec * m = MV (args->getResult (0));			     \
+  complex * z = C (args->getResult (1));			     \
+  constant * res = new constant (TAG_MATVEC);			     \
+  res->mv = new matvec (cfunc (*m, *z)); return res;		     \
+}								     \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv_v) (constant * args) { \
+  matvec * m = MV (args->getResult (0));			     \
+  vector * z = V (args->getResult (1));				     \
+  constant * res = new constant (TAG_MATVEC);			     \
+  res->mv = new matvec (cfunc (*m, *z)); return res;		     \
+}								     \
+
+MAKE_FUNC_DEFINITION_3 (stoy);
+MAKE_FUNC_DEFINITION_3 (ytos);
+MAKE_FUNC_DEFINITION_3 (stoz);
+MAKE_FUNC_DEFINITION_3 (ztos);
+
 // ***************** matrix conversions *****************
-constant * evaluate::stoy_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (stoy (*m));
-  return res;
-}
-
-constant * evaluate::stoy_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (stoy (*mv));
-  return res;
-}
-
-constant * evaluate::stoz_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (stoz (*m));
-  return res;
-}
-
-constant * evaluate::stoz_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (stoz (*mv));
-  return res;
-}
-
-constant * evaluate::ytos_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (ytos (*m));
-  return res;
-}
-
-constant * evaluate::ytos_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (ytos (*mv));
-  return res;
-}
-
 constant * evaluate::ytoz_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (ytoz (*m));
-  return res;
+  _ARM0 (m);
+  _DEFM ();
+  _RETM (ytoz (*m));
 }
 
 constant * evaluate::ytoz_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (ytoz (*mv));
-  return res;
-}
-
-constant * evaluate::ztos_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (ztos (*m));
-  return res;
-}
-
-constant * evaluate::ztos_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (ztos (*mv));
-  return res;
+  _ARMV0 (mv);
+  _DEFMV ();
+  _RETMV (ytoz (*mv));
 }
 
 constant * evaluate::ztoy_m (constant * args) {
-  matrix * m = M (args->getResult (0));
-  constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (ztoy (*m));
-  return res;
+  _ARM0 (m);
+  _DEFM ();
+  _RETM (ztoy (*m));
 }
 
 constant * evaluate::ztoy_mv (constant * args) {
-  matvec * mv = MV (args->getResult (0));
-  constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (ztoy (*mv));
-  return res;
+  _ARMV0 (mv);
+  _DEFMV ();
+  _RETMV (ztoy (*mv));
+}
+
+#define _CHKM(m) \
+  if (m->getCols () != m->getRows ()) {                 \
+    THROW_MATH_EXCEPTION ("stos: not a square matrix"); \
+    res->m = new matrix (m->getRows (), m->getCols ()); \
+    return res; }
+#define _CHKMV(mv) \
+  if (mv->getCols () != mv->getRows ()) {                                  \
+    THROW_MATH_EXCEPTION ("stos: not a square matrix");                    \
+    res->mv = new matvec (mv->getSize (), mv->getRows (), mv->getCols ()); \
+    return res; }
+#define _CHKMA(m,cond) \
+  if (!(cond)) {                                            \
+    THROW_MATH_EXCEPTION ("stos: nonconformant arguments"); \
+    res->m = new matrix (m->getRows (), m->getCols ());     \
+    return res; }
+#define _CHKMVA(mv,cond) \
+  if (!(cond)) {                                                           \
+    THROW_MATH_EXCEPTION ("stos: nonconformant arguments");                \
+    res->mv = new matvec (mv->getSize (), mv->getRows (), mv->getCols ()); \
+    return res; }
+
+constant * evaluate::stos_m_d (constant * args) {
+  _ARM0 (m);
+  _ARD1 (zref);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, zref));
+}
+
+constant * evaluate::stos_m_c (constant * args) {
+  _ARM0 (m);
+  _ARC1 (zref);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, *zref));
+}
+
+constant * evaluate::stos_m_d_d (constant * args) {
+  _ARM0 (m);
+  _ARD1 (zref);
+  _ARD2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, zref, z0));
+}
+
+constant * evaluate::stos_m_d_c (constant * args) {
+  _ARM0 (m);
+  _ARD1 (zref);
+  _ARC2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, rect (zref, 0), *z0));
+}
+
+constant * evaluate::stos_m_c_d (constant * args) {
+  _ARM0 (m);
+  _ARC1 (zref);
+  _ARD2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, *zref, rect (z0, 0)));
+}
+
+constant * evaluate::stos_m_c_c (constant * args) {
+  _ARM0 (m);
+  _ARC1 (zref);
+  _ARC2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _RETM (stos (*m, *zref, *z0));
+}
+
+constant * evaluate::stos_m_v (constant * args) {
+  _ARM0 (m);
+  _ARV1 (zref);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == zref->getSize ());
+  _RETM (stos (*m, *zref));
+}
+
+constant * evaluate::stos_m_v_d (constant * args) {
+  _ARM0 (m);
+  _ARV1 (zref);
+  _ARD2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == zref->getSize ());
+  _RETM (stos (*m, *zref, rect (z0, 0)));
+}
+
+constant * evaluate::stos_m_v_c (constant * args) {
+  _ARM0 (m);
+  _ARV1 (zref);
+  _ARC2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == zref->getSize ());
+  _RETM (stos (*m, *zref, *z0));
+}
+
+constant * evaluate::stos_m_d_v (constant * args) {
+  _ARM0 (m);
+  _ARD1 (zref);
+  _ARV2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == z0->getSize ());
+  _RETM (stos (*m, rect (zref, 0), *z0));
+}
+
+constant * evaluate::stos_m_c_v (constant * args) {
+  _ARM0 (m);
+  _ARC1 (zref);
+  _ARV2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == z0->getSize ());
+  _RETM (stos (*m, *zref, *z0));
+}
+
+constant * evaluate::stos_m_v_v (constant * args) {
+  _ARM0 (m);
+  _ARV1 (zref);
+  _ARV2 (z0);
+  _DEFM ();
+  _CHKM (m);
+  _CHKMA (m, m->getRows () == z0->getSize () &&
+	  m->getRows () == zref->getSize ());
+  _RETM (stos (*m, *zref, *z0));
+}
+
+constant * evaluate::stos_mv_d (constant * args) {
+  _ARMV0 (mv);
+  _ARD1  (zref);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, zref));
+}
+
+constant * evaluate::stos_mv_c (constant * args) {
+  _ARMV0 (mv);
+  _ARC1  (zref);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, *zref));
+}
+
+constant * evaluate::stos_mv_d_d (constant * args) {
+  _ARMV0 (mv);
+  _ARD1  (zref);
+  _ARD2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, zref, z0));
+}
+
+constant * evaluate::stos_mv_d_c (constant * args) {
+  _ARMV0 (mv);
+  _ARD1  (zref);
+  _ARC2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, rect (zref, 0), *z0));
+}
+
+constant * evaluate::stos_mv_c_d (constant * args) {
+  _ARMV0 (mv);
+  _ARC1  (zref);
+  _ARD2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, *zref, rect (z0, 0)));
+}
+
+constant * evaluate::stos_mv_c_c (constant * args) {
+  _ARMV0 (mv);
+  _ARC1  (zref);
+  _ARC2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _RETMV (stos (*mv, *zref, *z0));
+}
+
+constant * evaluate::stos_mv_v (constant * args) {
+  _ARMV0 (mv);
+  _ARV1  (zref);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _RETMV (stos (*mv, *zref));
+}
+
+constant * evaluate::stos_mv_v_d (constant * args) {
+  _ARMV0 (mv);
+  _ARV1  (zref);
+  _ARD2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _RETMV (stos (*mv, *zref, rect (z0, 0)));
+}
+
+constant * evaluate::stos_mv_v_c (constant * args) {
+  _ARMV0 (mv);
+  _ARV1  (zref);
+  _ARC2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _RETMV (stos (*mv, *zref, *z0));
+}
+
+constant * evaluate::stos_mv_d_v (constant * args) {
+  _ARMV0 (mv);
+  _ARD1  (zref);
+  _ARV2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == z0->getSize ());
+  _RETMV (stos (*mv, rect (zref, 0), *z0));
+}
+
+constant * evaluate::stos_mv_c_v (constant * args) {
+  _ARMV0 (mv);
+  _ARC1  (zref);
+  _ARV2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == z0->getSize ());
+  _RETMV (stos (*mv, *zref, *z0));
+}
+
+constant * evaluate::stos_mv_v_v (constant * args) {
+  _ARMV0 (mv);
+  _ARV1  (zref);
+  _ARV2  (z0);
+  _DEFMV ();
+  _CHKMV (mv);
+  _CHKMVA (mv, mv->getRows () == z0->getSize () &&
+	   mv->getRows () == zref->getSize ());
+  _RETMV (stos (*mv, *zref, *z0));
 }
 
 constant * evaluate::twoport_m (constant * args) {
@@ -2786,13 +3075,45 @@ struct application_t eqn::applications[] = {
   { "arcoth", TAG_COMPLEX, evaluate::arcoth_c, 1, { TAG_COMPLEX } },
   { "arcoth", TAG_VECTOR,  evaluate::arcoth_v, 1, { TAG_VECTOR  } },
 
-  { "ztor", TAG_DOUBLE,  evaluate::ztor_d, 1, { TAG_DOUBLE  } },
+  { "ztor", TAG_DOUBLE,  evaluate::ztor_d, 1, { TAG_DOUBLE } },
+  { "ztor", TAG_DOUBLE,  evaluate::ztor_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "ztor", TAG_COMPLEX, evaluate::ztor_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
   { "ztor", TAG_COMPLEX, evaluate::ztor_c, 1, { TAG_COMPLEX } },
-  { "ztor", TAG_VECTOR,  evaluate::ztor_v, 1, { TAG_VECTOR  } },
+  { "ztor", TAG_COMPLEX, evaluate::ztor_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE } },
+  { "ztor", TAG_COMPLEX, evaluate::ztor_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+  { "ztor", TAG_VECTOR,  evaluate::ztor_v, 1, { TAG_VECTOR } },
+  { "ztor", TAG_VECTOR,  evaluate::ztor_v_d, 2, { TAG_VECTOR, TAG_DOUBLE } },
+  { "ztor", TAG_VECTOR,  evaluate::ztor_v_c, 2, { TAG_VECTOR, TAG_COMPLEX } },
 
-  { "rtoz", TAG_DOUBLE,  evaluate::rtoz_d, 1, { TAG_DOUBLE  } },
+  { "rtoz", TAG_DOUBLE,  evaluate::rtoz_d, 1, { TAG_DOUBLE } },
+  { "rtoz", TAG_DOUBLE,  evaluate::rtoz_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "rtoz", TAG_COMPLEX, evaluate::rtoz_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
   { "rtoz", TAG_COMPLEX, evaluate::rtoz_c, 1, { TAG_COMPLEX } },
-  { "rtoz", TAG_VECTOR,  evaluate::rtoz_v, 1, { TAG_VECTOR  } },
+  { "rtoz", TAG_COMPLEX, evaluate::rtoz_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE } },
+  { "rtoz", TAG_COMPLEX, evaluate::rtoz_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+  { "rtoz", TAG_VECTOR,  evaluate::rtoz_v, 1, { TAG_VECTOR } },
+  { "rtoz", TAG_VECTOR,  evaluate::rtoz_v_d, 2, { TAG_VECTOR, TAG_DOUBLE } },
+  { "rtoz", TAG_VECTOR,  evaluate::rtoz_v_c, 2, { TAG_VECTOR, TAG_COMPLEX } },
+
+  { "ytor", TAG_DOUBLE,  evaluate::ytor_d, 1, { TAG_DOUBLE } },
+  { "ytor", TAG_DOUBLE,  evaluate::ytor_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "ytor", TAG_COMPLEX, evaluate::ytor_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "ytor", TAG_COMPLEX, evaluate::ytor_c, 1, { TAG_COMPLEX } },
+  { "ytor", TAG_COMPLEX, evaluate::ytor_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE } },
+  { "ytor", TAG_COMPLEX, evaluate::ytor_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+  { "ytor", TAG_VECTOR,  evaluate::ytor_v, 1, { TAG_VECTOR } },
+  { "ytor", TAG_VECTOR,  evaluate::ytor_v_d, 2, { TAG_VECTOR, TAG_DOUBLE } },
+  { "ytor", TAG_VECTOR,  evaluate::ytor_v_c, 2, { TAG_VECTOR, TAG_COMPLEX } },
+
+  { "rtoy", TAG_DOUBLE,  evaluate::rtoy_d, 1, { TAG_DOUBLE } },
+  { "rtoy", TAG_DOUBLE,  evaluate::rtoy_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "rtoy", TAG_COMPLEX, evaluate::rtoy_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "rtoy", TAG_COMPLEX, evaluate::rtoy_c, 1, { TAG_COMPLEX } },
+  { "rtoy", TAG_COMPLEX, evaluate::rtoy_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE } },
+  { "rtoy", TAG_COMPLEX, evaluate::rtoy_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+  { "rtoy", TAG_VECTOR,  evaluate::rtoy_v, 1, { TAG_VECTOR } },
+  { "rtoy", TAG_VECTOR,  evaluate::rtoy_v_d, 2, { TAG_VECTOR, TAG_DOUBLE } },
+  { "rtoy", TAG_VECTOR,  evaluate::rtoy_v_c, 2, { TAG_VECTOR, TAG_COMPLEX } },
 
   { "rtoswr", TAG_DOUBLE, evaluate::rtoswr_d, 1, { TAG_DOUBLE  } },
   { "rtoswr", TAG_DOUBLE, evaluate::rtoswr_c, 1, { TAG_COMPLEX } },
@@ -2834,16 +3155,89 @@ struct application_t eqn::applications[] = {
     { TAG_MATRIX, TAG_DOUBLE, TAG_DOUBLE } },
   { "array", TAG_CHAR, evaluate::index_s_1, 2, { TAG_STRING, TAG_DOUBLE } },
 
-  { "stoy", TAG_MATRIX, evaluate::stoy_m,  1, { TAG_MATRIX } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_d,   2, { TAG_MATRIX, TAG_DOUBLE } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_d_d, 3, { TAG_MATRIX, TAG_DOUBLE,
+						   TAG_DOUBLE } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_d_c, 3, { TAG_MATRIX, TAG_DOUBLE,
+						   TAG_COMPLEX } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_d_v, 3, { TAG_MATRIX, TAG_DOUBLE,
+						   TAG_VECTOR } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_c,   2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_c_d, 3, { TAG_MATRIX, TAG_COMPLEX,
+						   TAG_DOUBLE } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_c_c, 3, { TAG_MATRIX, TAG_COMPLEX,
+						   TAG_COMPLEX } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_c_v, 3, { TAG_MATRIX, TAG_COMPLEX,
+						   TAG_VECTOR } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_v,   2, { TAG_MATRIX, TAG_VECTOR } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_v_d, 3, { TAG_MATRIX, TAG_VECTOR,
+						   TAG_DOUBLE } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_v_c, 3, { TAG_MATRIX, TAG_VECTOR,
+						   TAG_COMPLEX } },
+  { "stos", TAG_MATRIX, evaluate::stos_m_v_v, 3, { TAG_MATRIX, TAG_VECTOR,
+						   TAG_VECTOR } },
+
+  { "stos", TAG_MATVEC, evaluate::stos_mv_d,   2, { TAG_MATVEC, TAG_DOUBLE } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_d_d, 3, { TAG_MATVEC, TAG_DOUBLE,
+						    TAG_DOUBLE } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_d_c, 3, { TAG_MATVEC, TAG_DOUBLE,
+						    TAG_COMPLEX } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_d_v, 3, { TAG_MATVEC, TAG_DOUBLE,
+						    TAG_VECTOR } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_c,   2, { TAG_MATVEC,
+						    TAG_COMPLEX } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_c_d, 3, { TAG_MATVEC, TAG_COMPLEX,
+						    TAG_DOUBLE } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_c_c, 3, { TAG_MATVEC, TAG_COMPLEX,
+						    TAG_COMPLEX } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_c_v, 3, { TAG_MATVEC, TAG_COMPLEX,
+						    TAG_VECTOR } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_v,   2, { TAG_MATVEC, TAG_VECTOR } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_v_d, 3, { TAG_MATVEC, TAG_VECTOR,
+						    TAG_DOUBLE } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_v_c, 3, { TAG_MATVEC, TAG_VECTOR,
+						    TAG_COMPLEX } },
+  { "stos", TAG_MATVEC, evaluate::stos_mv_v_v, 3, { TAG_MATVEC, TAG_VECTOR,
+						    TAG_VECTOR } },
+
+  { "stoy", TAG_MATRIX, evaluate::stoy_m, 1, { TAG_MATRIX } },
+  { "stoy", TAG_MATRIX, evaluate::stoy_m_d, 2, { TAG_MATRIX, TAG_DOUBLE } },
+  { "stoy", TAG_MATRIX, evaluate::stoy_m_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "stoy", TAG_MATRIX, evaluate::stoy_m_v, 2, { TAG_MATRIX, TAG_VECTOR } },
   { "stoy", TAG_MATVEC, evaluate::stoy_mv, 1, { TAG_MATVEC } },
-  { "stoz", TAG_MATRIX, evaluate::stoz_m,  1, { TAG_MATRIX } },
+  { "stoy", TAG_MATVEC, evaluate::stoy_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE } },
+  { "stoy", TAG_MATVEC, evaluate::stoy_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "stoy", TAG_MATVEC, evaluate::stoy_mv_v, 2, { TAG_MATVEC, TAG_VECTOR } },
+
+  { "stoz", TAG_MATRIX, evaluate::stoz_m, 1, { TAG_MATRIX } },
+  { "stoz", TAG_MATRIX, evaluate::stoz_m_d, 2, { TAG_MATRIX, TAG_DOUBLE } },
+  { "stoz", TAG_MATRIX, evaluate::stoz_m_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "stoz", TAG_MATRIX, evaluate::stoz_m_v, 2, { TAG_MATRIX, TAG_VECTOR } },
   { "stoz", TAG_MATVEC, evaluate::stoz_mv, 1, { TAG_MATVEC } },
+  { "stoz", TAG_MATVEC, evaluate::stoz_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE } },
+  { "stoz", TAG_MATVEC, evaluate::stoz_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "stoz", TAG_MATVEC, evaluate::stoz_mv_v, 2, { TAG_MATVEC, TAG_VECTOR } },
+
   { "ytos", TAG_MATRIX, evaluate::ytos_m,  1, { TAG_MATRIX } },
+  { "ytos", TAG_MATRIX, evaluate::ytos_m_d, 2, { TAG_MATRIX, TAG_DOUBLE } },
+  { "ytos", TAG_MATRIX, evaluate::ytos_m_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "ytos", TAG_MATRIX, evaluate::ytos_m_v, 2, { TAG_MATRIX, TAG_VECTOR } },
   { "ytos", TAG_MATVEC, evaluate::ytos_mv, 1, { TAG_MATVEC } },
+  { "ytos", TAG_MATVEC, evaluate::ytos_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE } },
+  { "ytos", TAG_MATVEC, evaluate::ytos_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "ytos", TAG_MATVEC, evaluate::ytos_mv_v, 2, { TAG_MATVEC, TAG_VECTOR } },
+
+  { "ztos", TAG_MATRIX, evaluate::ztos_m,  1, { TAG_MATRIX } },
+  { "ztos", TAG_MATRIX, evaluate::ztos_m_d, 2, { TAG_MATRIX, TAG_DOUBLE } },
+  { "ztos", TAG_MATRIX, evaluate::ztos_m_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "ztos", TAG_MATRIX, evaluate::ztos_m_v, 2, { TAG_MATRIX, TAG_VECTOR } },
+  { "ztos", TAG_MATVEC, evaluate::ztos_mv, 1, { TAG_MATVEC } },
+  { "ztos", TAG_MATVEC, evaluate::ztos_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE } },
+  { "ztos", TAG_MATVEC, evaluate::ztos_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "ztos", TAG_MATVEC, evaluate::ztos_mv_v, 2, { TAG_MATVEC, TAG_VECTOR } },
+
   { "ytoz", TAG_MATRIX, evaluate::ytoz_m,  1, { TAG_MATRIX } },
   { "ytoz", TAG_MATVEC, evaluate::ytoz_mv, 1, { TAG_MATVEC } },
-  { "ztos", TAG_MATRIX, evaluate::ztos_m,  1, { TAG_MATRIX } },
-  { "ztos", TAG_MATVEC, evaluate::ztos_mv, 1, { TAG_MATVEC } },
   { "ztoy", TAG_MATRIX, evaluate::ztoy_m,  1, { TAG_MATRIX } },
   { "ztoy", TAG_MATVEC, evaluate::ztoy_mv, 1, { TAG_MATVEC } },
 

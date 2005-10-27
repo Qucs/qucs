@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.38 2005-10-24 09:10:25 raimi Exp $
+ * $Id: trsolver.cpp,v 1.39 2005-10-27 09:57:31 raimi Exp $
  *
  */
 
@@ -100,6 +100,7 @@ void trsolver::solve (void) {
   runs++;
   saveCurrent = current = 0;
   stepDelta = -1;
+  converged = 0;
   fixpoint = 0;
   statRejected = statSteps = statIterations = statConvergence = 0;
 
@@ -216,6 +217,7 @@ void trsolver::solve (void) {
 	statRejected++;
 	statConvergence++;
 	rejected++;
+	converged = 0;
 	error = 0;
 
 	// Start using damped Newton-Raphson.
@@ -224,7 +226,7 @@ void trsolver::solve (void) {
 
 #if DEBUG
 	logprint (LOG_ERROR, "WARNING: delta rejected at t = %.3e, h = %.3e "
-		  "(no convergence)\n", current, delta);
+		  "(no convergence)\n", saveCurrent, delta);
 #endif
 	break;
       default:
@@ -262,6 +264,7 @@ void trsolver::solve (void) {
       saveCurrent = current;
       current += delta;
       running++;
+      converged++;
 
       // Tell integrators to be running.
       setMode (MODE_NONE);
@@ -279,7 +282,6 @@ void trsolver::solve (void) {
 #else
     saveAllResults (time);
 #endif
-
   }
   solve_post ();
   logprogressclear (40);
@@ -419,37 +421,37 @@ void trsolver::setDelta (void) {
 
 /* This function tries to adapt the current time-step according to the
    global truncation error. */
-#if BREAKPOINTS
 void trsolver::adjustDelta (nr_double_t t) {
-#else
-void trsolver::adjustDelta (nr_double_t) {
-#endif
   deltaOld = delta;
   delta = checkDelta ();
   if (delta > deltaMax) delta = deltaMax;
   if (delta < deltaMin) delta = deltaMin;
 
+  // delta correction in order to hit exact breakpoint
   int good = 0;
-#if BREAKPOINTS
-  // check next breakpoint
-  if (stepDelta > 0.0) {
-    //delta = stepDelta;
-    stepDelta = -1.0;
-  }
-  else {
-    if (delta > (t - current) && t > current) {
-      stepDelta = deltaOld;
-      delta = t - current;
-      good = 1;
-    }
-    else {
+  if (!statConvergence || converged > 64) { /* Is this a good guess? */
+    // check next breakpoint
+    if (stepDelta > 0.0) {
+      // restore last valid delta
+      delta = stepDelta;
       stepDelta = -1.0;
     }
+    else {
+      if (delta > (t - current) && t > current) {
+	// save last valid delta and set exact step
+	stepDelta = deltaOld;
+	delta = t - current;
+	good = 1;
+      }
+      else {
+	stepDelta = -1.0;
+      }
+    }
+    if (delta > deltaMax) delta = deltaMax;
+    if (delta < deltaMin) delta = deltaMin;
   }
-  if (delta > deltaMax) delta = deltaMax;
-  if (delta < deltaMin) delta = deltaMin;
-#endif /* BREAKPOINTS */
 
+  // usual delta correction
   if (delta > 0.9 * deltaOld || good) { // accept current delta
     nextStates ();
     rejected = 0;
@@ -467,7 +469,7 @@ void trsolver::adjustDelta (nr_double_t) {
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 	      current, delta);
 #endif
-    current -= deltaOld;
+    if (current > 0) current -= deltaOld;
   }
   else {
     nextStates ();
@@ -478,11 +480,12 @@ void trsolver::adjustDelta (nr_double_t) {
 /* The function can be used to increase the current order of the
    integration method or to reduce it. */
 void trsolver::adjustOrder (int reduce) {
-  if (corrOrder < corrMaxOrder || reduce) {
-    if (reduce)
+  if ((corrOrder < corrMaxOrder && !rejected) || reduce) {
+    if (reduce) {
       corrOrder = 1;
-    else
+    } else if (!rejected) {
       corrOrder++;
+    }
 
     // adjust type and order of corrector and predictor
     corrType = correctorType (CMethod, corrOrder);
