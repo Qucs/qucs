@@ -74,25 +74,31 @@ benutzt werden.<br><br>
 <tr><td><tt>sech(x)</tt></td><td>Sekanshyperbolikus von x</td></tr>
 <tr><td><tt>cosech(x)</tt></td><td>Kosekanshyperbolikus von x</td></tr>
 <tr><td><tt>coth(x)</tt></td><td>Kotangenshyperbolikus von x</td></tr>
-<tr><td><tt>ztor(x)</tt></td>
-<td>Konvertiert eine Impedanz in einen Reflexionsfaktor (Referenz 50 Ohm)</td></tr>
-<tr><td><tt>rtoz(x)</tt></td>
-<td>Konvertiert einen Reflexionsfaktor (Referenz 50 Ohm) in eine Impedanz</td></tr>
+<tr><td><tt>ztor(x[,zref])</tt></td>
+<td>Konvertiert eine Impedanz in einen Reflexionsfaktor (Referenzimpedanz ist standardm&auml;&szlig;ig 50 Ohm)</td></tr>
+<tr><td><tt>rtoz(x[,zref])</tt></td>
+<td>Konvertiert einen Reflexionsfaktor (Referenzimpedanz ist standardm&auml;&szlig;ig 50 Ohm) in eine Impedanz</td></tr>
+<tr><td><tt>ytor(x[,zref])</tt></td>
+<td>Konvertiert eine Admittanz in einen Reflexionsfaktor (Referenzimpedanz ist standardm&auml;&szlig;ig 50 Ohm)</td></tr>
+<tr><td><tt>rtoy(x[,zref])</tt></td>
+<td>Konvertiert einen Reflexionsfaktor (Referenzimpedanz ist standardm&auml;&szlig;ig 50 Ohm) in eine Admittanz</td></tr>
 <tr><td><tt>rtoswr(x)</tt></td>
 <td>Konvertiert einen Reflexionsfaktor in das (Spannungs-)Stehwellenverh&auml;ltnis</td></tr>
 <tr><td><tt>diff(y,x)</tt></td>
 <td>Differenziert den Vektor y in Bezug auf x</td></tr>
 <tr><td><tt>diff(y,x,n)</tt></td>
 <td>Differenziert den Vektor y in Bezug auf x n-fach</td></tr>
-<tr><td><tt>stoy(s)</tt></td>
+<tr><td><tt>stos(s,zref[,z0])</tt></td>
+<td>Konvertiert die S-Parameter-Matrix in eine S-Parameter-Matrix mit unterschiedliche(r/n) Referenzimpedanz(en)</td></tr>
+<tr><td><tt>stoy(s[,zref])</tt></td>
 <td>Konvertiert die S-Parameter-Matrix in die Y-Parameter-Matrix</td></tr>
-<tr><td><tt>stoz(s)</tt></td>
+<tr><td><tt>stoz(s[,zref])</tt></td>
 <td>Konvertiert die S-Parameter-Matrix in die Z-Parameter-Matrix</td></tr>
-<tr><td><tt>ytos(y)</tt></td>
+<tr><td><tt>ytos(y[,z0])</tt></td>
 <td>Konvertiert die Y-Parameter-Matrix in die S-Parameter-Matrix</td></tr>
 <tr><td><tt>ytoz(y)</tt></td>
 <td>Konvertiert die Y-Parameter-Matrix in die Z-Parameter-Matrix</td></tr>
-<tr><td><tt>ztos(z)</tt></td>
+<tr><td><tt>ztos(z[,z0])</tt></td>
 <td>Konvertiert die Z-Parameter-Matrix in die S-Parameter-Matrix</td></tr>
 <tr><td><tt>ztoy(z)</tt></td>
 <td>Konvertiert die Z-Parameter-Matrix in die Y-Parameter-Matrix</td></tr>

@@ -1,3 +1,12 @@
+2005-10-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsinit.cpp (initActions): Fixed small typo.
+
+	* qucsfile.h: Including <qstringlist.h> for Qt 3.1.x.
+
+	* dialogs/changedialog.cpp (ChangeDialog): Improved look
+	of both the dialogs.
+
 2005-10-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug in painting arrow head
