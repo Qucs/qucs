@@ -230,7 +230,7 @@ void QucsInit::initActions()
 
   Acts->changeProps =
     new QAction(tr("Change Property Values..."),
-		tr("Change Property Values.."), Key_F7, App);
+		tr("Change Property Values..."), Key_F7, App);
   Acts->changeProps->setStatusTip(tr("Change Property Values"));
   Acts->changeProps->setWhatsThis(
 	tr("Change Property Values\n\nChange Property Value of Components"));
