@@ -371,9 +371,12 @@ Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} &= -Y_{21} = -Y_{34} = -Y_{43} =
 \end{align}
 
 Building the S-parameters leads to too large equations. Converting
-the Y-parameters into S-parameters is therefore recommended.\\
-The MNA matrix entries and the noise correlation matrices
-of this transformer are:
+the Y-parameters into S-parameters is therefore recommended.
+
+\addvspace{12pt}
+
+The MNA matrix entries during DC analysis and the noise correlation
+matrices of this transformer are:
 \begin{equation}
 (\underline{Y}) =
 \begin{pmatrix}
@@ -383,6 +386,7 @@ of this transformer are:
 -1/R_1 & 0 & 0 &  1/R_1 \\
 \end{pmatrix}
 \end{equation}
+
 \begin{equation}
 (\underline{C}_Y) = 4\cdot k\cdot T\cdot
 \begin{pmatrix}
@@ -392,16 +396,16 @@ of this transformer are:
 -1/R_1 & 0 & 0 &  1/R_1 \\
 \end{pmatrix}
 \end{equation}
+
 \begin{equation}
 (\underline{C}_S) = 4\cdot k\cdot T\cdot Z_0\cdot
 \begin{pmatrix}
- \frac{R_1}{(2\cdot Z_0 + R_1)^2} & 0 & 0 & -\frac{R_1}{(2\cdot Z_0 + R_1)^2} \\
- 0 &  \frac{R_2}{(2\cdot Z_0 + R_2)^2} & -\frac{R_2}{(2\cdot Z_0 + R_2)^2} & 0 \\
- 0 & -\frac{R_2}{(2\cdot Z_0 + R_2)^2} &  \frac{R_2}{(2\cdot Z_0 + R_2)^2} & 0 \\
--\frac{R_1}{(2\cdot Z_0 + R_1)^2} & 0 & 0 &  \frac{R_1}{(2\cdot Z_0 + R_1)^2} \\
+ \tfrac{R_1}{(2\cdot Z_0 + R_1)^2} & 0 & 0 & -\tfrac{R_1}{(2\cdot Z_0 + R_1)^2} \\
+ 0 &  \tfrac{R_2}{(2\cdot Z_0 + R_2)^2} & -\tfrac{R_2}{(2\cdot Z_0 + R_2)^2} & 0 \\
+ 0 & -\tfrac{R_2}{(2\cdot Z_0 + R_2)^2} &  \tfrac{R_2}{(2\cdot Z_0 + R_2)^2} & 0 \\
+-\tfrac{R_1}{(2\cdot Z_0 + R_1)^2} & 0 & 0 &  \tfrac{R_1}{(2\cdot Z_0 + R_1)^2} \\
 \end{pmatrix}
 \end{equation}
-
 
 \addvspace{12pt}
 

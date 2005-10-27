@@ -1,7 +1,7 @@
 /*
  * matvec.cpp - matrix vector class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.17 2005/06/02 18:17:50 raimi Exp $
+ * $Id: matvec.cpp,v 1.18 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -393,36 +393,90 @@ matvec transpose (matvec a) {
   return res;
 }
 
+/* Convert scattering parameters with the reference impedance 'zref'
+   to scattering parameters with the reference impedance 'z0'. */
+matvec stos (matvec s, vector zref, vector z0) {
+  assert (s.getCols () == s.getRows () &&
+	  s.getCols () == zref.getSize () && s.getCols () == z0.getSize ());
+  matvec res (s.getSize (), s.getCols (), s.getRows ());
+  for (int i = 0; i < s.getSize (); i++)
+    res.set (stos (s.get (i), zref, z0), i);
+  return res;
+}
+
+matvec stos (matvec s, complex zref, complex z0) {
+  int d = s.getRows ();
+  vector zo (d, zref);
+  vector zn (d, z0);
+  return stos (s, zo, zn);
+}
+
+matvec stos (matvec s, nr_double_t zref, nr_double_t z0) {
+  return stos (s, rect (zref, 0), rect (z0, 0));
+}
+
+matvec stos (matvec s, vector zref, complex z0) {
+  int d = zref.getSize ();
+  vector zn (d, z0);
+  return stos (s, zref, zn);
+}
+
+matvec stos (matvec s, complex zref, vector z0) {
+  int d = z0.getSize ();
+  vector zo (d, zref);
+  return stos (s, zo, z0);
+}
+
 // Convert scattering parameters to admittance matrix vector.
-matvec stoy (matvec s, complex z0) {
-  assert (s.getCols () == s.getRows ());
+matvec stoy (matvec s, vector z0) {
+  assert (s.getCols () == s.getRows () && s.getCols () == z0.getSize ());
   matvec res (s.getSize (), s.getCols (), s.getRows ());
   for (int i = 0; i < s.getSize (); i++) res.set (stoy (s.get (i), z0), i);
-  return res;  
+  return res;
+}
+
+matvec stoy (matvec s, complex z0) {
+  vector vz (s.getCols (), z0);
+  return stoy (s, vz);
 }
 
 // Convert admittance matrix to scattering parameter matrix vector.
-matvec ytos (matvec y, complex z0) {
-  assert (y.getCols () == y.getRows ());
+matvec ytos (matvec y, vector z0) {
+  assert (y.getCols () == y.getRows () && y.getCols () == z0.getSize ());
   matvec res (y.getSize (), y.getCols (), y.getRows ());
   for (int i = 0; i < y.getSize (); i++) res.set (ytos (y.get (i), z0), i);
-  return res;  
+  return res;
+}
+
+matvec ytos (matvec y, complex z0) {
+  vector vz (y.getCols (), z0);
+  return ytos (y, vz);
 }
 
 // Convert scattering parameters to impedance matrix vector.
-matvec stoz (matvec s, complex z0) {
-  assert (s.getCols () == s.getRows ());
+matvec stoz (matvec s, vector z0) {
+  assert (s.getCols () == s.getRows () && s.getCols () == z0.getSize ());
   matvec res (s.getSize (), s.getCols (), s.getRows ());
   for (int i = 0; i < s.getSize (); i++) res.set (stoz (s.get (i), z0), i);
   return res;  
 }
 
+matvec stoz (matvec s, complex z0) {
+  vector vz (s.getCols (), z0);
+  return stoz (s, vz);
+}
+
 // Convert impedance matrix vector scattering parameter matrix vector.
-matvec ztos (matvec z, complex z0) {
-  assert (z.getCols () == z.getRows ());
+matvec ztos (matvec z, vector z0) {
+  assert (z.getCols () == z.getRows () && z.getCols () == z0.getSize ());
   matvec res (z.getSize (), z.getCols (), z.getRows ());
   for (int i = 0; i < z.getSize (); i++) res.set (ztos (z.get (i), z0), i);
   return res;  
+}
+
+matvec ztos (matvec z, complex z0) {
+  vector vz (z.getCols (), z0);
+  return ztos (z, vz);
 }
 
 // Convert impedance matrix vector to admittance matrix vector.

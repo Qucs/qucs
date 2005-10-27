@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.21 2005/10/24 09:10:25 raimi Exp $
+ * $Id: evaluate.h,v 1.22 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -290,13 +290,45 @@ public:
   static constant * cosech_c (constant *);
   static constant * cosech_v (constant *);
 
-  static constant * ztor_d (constant *);
-  static constant * ztor_c (constant *);
-  static constant * ztor_v (constant *);
+  static constant * ztor_d   (constant *);
+  static constant * ztor_d_d (constant *);
+  static constant * ztor_d_c (constant *);
+  static constant * ztor_c   (constant *);
+  static constant * ztor_c_d (constant *);
+  static constant * ztor_c_c (constant *);
+  static constant * ztor_v   (constant *);
+  static constant * ztor_v_d (constant *);
+  static constant * ztor_v_c (constant *);
 
-  static constant * rtoz_d (constant *);
-  static constant * rtoz_c (constant *);
-  static constant * rtoz_v (constant *);
+  static constant * rtoz_d   (constant *);
+  static constant * rtoz_d_d (constant *);
+  static constant * rtoz_d_c (constant *);
+  static constant * rtoz_c   (constant *);
+  static constant * rtoz_c_d (constant *);
+  static constant * rtoz_c_c (constant *);
+  static constant * rtoz_v   (constant *);
+  static constant * rtoz_v_d (constant *);
+  static constant * rtoz_v_c (constant *);
+
+  static constant * ytor_d   (constant *);
+  static constant * ytor_d_d (constant *);
+  static constant * ytor_d_c (constant *);
+  static constant * ytor_c   (constant *);
+  static constant * ytor_c_d (constant *);
+  static constant * ytor_c_c (constant *);
+  static constant * ytor_v   (constant *);
+  static constant * ytor_v_d (constant *);
+  static constant * ytor_v_c (constant *);
+
+  static constant * rtoy_d   (constant *);
+  static constant * rtoy_d_d (constant *);
+  static constant * rtoy_d_c (constant *);
+  static constant * rtoy_c   (constant *);
+  static constant * rtoy_c_d (constant *);
+  static constant * rtoy_c_c (constant *);
+  static constant * rtoy_v   (constant *);
+  static constant * rtoy_v_d (constant *);
+  static constant * rtoy_v_c (constant *);
 
   static constant * rtoswr_d (constant *);
   static constant * rtoswr_c (constant *);
@@ -341,18 +373,69 @@ public:
   static constant * index_m_2 (constant *);
   static constant * index_s_1 (constant *);
 
-  static constant * stoy_m  (constant *);
-  static constant * stoy_mv (constant *);
-  static constant * stoz_m  (constant *);
-  static constant * stoz_mv (constant *);
-  static constant * ytos_m  (constant *);
-  static constant * ytos_mv (constant *);
-  static constant * ytoz_m  (constant *);
-  static constant * ytoz_mv (constant *);
-  static constant * ztos_m  (constant *);
-  static constant * ztos_mv (constant *);
+  static constant * stos_m_d   (constant *);
+  static constant * stos_m_d_d (constant *);
+  static constant * stos_m_d_c (constant *);
+  static constant * stos_m_d_v (constant *);
+  static constant * stos_m_c   (constant *);
+  static constant * stos_m_c_d (constant *);
+  static constant * stos_m_c_c (constant *);
+  static constant * stos_m_c_v (constant *);
+  static constant * stos_m_v   (constant *);
+  static constant * stos_m_v_d (constant *);
+  static constant * stos_m_v_c (constant *);
+  static constant * stos_m_v_v (constant *);
+
+  static constant * stos_mv_d   (constant *);
+  static constant * stos_mv_d_d (constant *);
+  static constant * stos_mv_d_c (constant *);
+  static constant * stos_mv_d_v (constant *);
+  static constant * stos_mv_c   (constant *);
+  static constant * stos_mv_c_d (constant *);
+  static constant * stos_mv_c_c (constant *);
+  static constant * stos_mv_c_v (constant *);
+  static constant * stos_mv_v   (constant *);
+  static constant * stos_mv_v_d (constant *);
+  static constant * stos_mv_v_c (constant *);
+  static constant * stos_mv_v_v (constant *);
+
+  static constant * stoy_m    (constant *);
+  static constant * stoy_m_d  (constant *);
+  static constant * stoy_m_c  (constant *);
+  static constant * stoy_m_v  (constant *);
+  static constant * stoy_mv   (constant *);
+  static constant * stoy_mv_d (constant *);
+  static constant * stoy_mv_c (constant *);
+  static constant * stoy_mv_v (constant *);
+  static constant * stoz_m    (constant *);
+  static constant * stoz_m_d  (constant *);
+  static constant * stoz_m_c  (constant *);
+  static constant * stoz_m_v  (constant *);
+  static constant * stoz_mv   (constant *);
+  static constant * stoz_mv_d (constant *);
+  static constant * stoz_mv_c (constant *);
+  static constant * stoz_mv_v (constant *);
+  static constant * ytos_m    (constant *);
+  static constant * ytos_m_d  (constant *);
+  static constant * ytos_m_c  (constant *);
+  static constant * ytos_m_v  (constant *);
+  static constant * ytos_mv   (constant *);
+  static constant * ytos_mv_d (constant *);
+  static constant * ytos_mv_c (constant *);
+  static constant * ytos_mv_v (constant *);
+  static constant * ztos_m    (constant *);
+  static constant * ztos_m_d  (constant *);
+  static constant * ztos_m_c  (constant *);
+  static constant * ztos_m_v  (constant *);
+  static constant * ztos_mv   (constant *);
+  static constant * ztos_mv_d (constant *);
+  static constant * ztos_mv_c (constant *);
+  static constant * ztos_mv_v (constant *);
+
   static constant * ztoy_m  (constant *);
   static constant * ztoy_mv (constant *);
+  static constant * ytoz_m  (constant *);
+  static constant * ytoz_mv (constant *);
 
   static constant * twoport_m  (constant *);
   static constant * twoport_mv (constant *);

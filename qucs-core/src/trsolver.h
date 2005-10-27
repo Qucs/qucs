@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.18 2005/10/24 09:10:25 raimi Exp $
+ * $Id: trsolver.h,v 1.19 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -80,6 +80,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int corrOrder;    // current corrector order
   int predOrder;    // current predictor order
   int rejected;
+  int converged;
   tvector<nr_double_t> * solution[8];
   nr_double_t current;
   int statSteps;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.22 2005/07/04 08:33:58 raimi Exp $
+ * $Id: complex.cpp,v 1.23 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -219,13 +219,23 @@ complex arcoth (const complex z) {
 }
 
 // converts impedance to reflexion coefficient
-complex ztor (const complex z, nr_double_t zref) {
+complex ztor (const complex z, complex zref) {
   return (z - zref) / (z + zref);
 }
 
+// converts admittance to reflexion coefficient
+complex ytor (const complex y, complex zref) {
+  return (1 - y * zref) / (1 + y * zref);
+}
+
 // converts reflexion coefficient to impedance
-complex rtoz (const complex r, nr_double_t zref) {
+complex rtoz (const complex r, complex zref) {
   return zref * (1 + r) / (1 - r);
+}
+
+// converts reflexion coefficient to admittance
+complex rtoy (const complex r, complex zref) {
+  return (1 - r) / (1 + r) / zref;
 }
 
 complex floor (const complex z) {

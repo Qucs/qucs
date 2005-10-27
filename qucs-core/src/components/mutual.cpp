@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual.cpp,v 1.2 2005/10/24 06:10:36 margraf Exp $
+ * $Id: mutual.cpp,v 1.3 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -50,11 +50,12 @@ void mutual::calcSP (nr_double_t frequency) {
 matrix mutual::calcMatrixY (nr_double_t frequency) {
   nr_double_t l1 = getPropertyDouble ("L1");
   nr_double_t l2 = getPropertyDouble ("L2");
-  nr_double_t k  = getPropertyDouble ("k");
-  nr_double_t o  = 2 * M_PI * frequency;
-  complex z1 = rect (0, o * l1 * (1 - k * k));
-  complex z2 = rect (0, o * l2 * (1 - k * k));
-  complex y3 = rect (0, k / (o * sqrt (l1 * l2) * (1 - k * k)));
+  nr_double_t k = getPropertyDouble ("k");
+  nr_double_t o = 2 * M_PI * frequency;
+  nr_double_t a = 1 - k * k;
+  complex z1 = rect (0, o * l1 * a);
+  complex z2 = rect (0, o * l2 * a);
+  complex y3 = rect (0, k / (o * sqrt (l1 * l2) * a));
   
   matrix y = matrix (4);
   y.set (NODE_1, NODE_1, +1 / z1); y.set (NODE_4, NODE_4, +1 / z1);

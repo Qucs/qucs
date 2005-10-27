@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.18 2005/06/02 18:17:49 raimi Exp $
+ * $Id: complex.h,v 1.19 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -85,8 +85,10 @@ class complex
   friend complex     artanh (const complex);
   friend complex       coth (const complex);
   friend complex     arcoth (const complex);
-  friend complex       ztor (const complex, nr_double_t zref = 50.0);
-  friend complex       rtoz (const complex, nr_double_t zref = 50.0);
+  friend complex       ztor (const complex, complex zref = 50.0);
+  friend complex       rtoz (const complex, complex zref = 50.0);
+  friend complex       ytor (const complex, complex zref = 50.0);
+  friend complex       rtoy (const complex, complex zref = 50.0);
   friend complex       sign (const complex);
   friend nr_double_t   sign (const nr_double_t);
   friend complex       sinc (const complex);

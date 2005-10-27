@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.24 2005/06/02 18:17:50 raimi Exp $
+ * $Id: matrix.cpp,v 1.25 2005/10/27 09:57:31 raimi Exp $
  *
  */
 
@@ -33,7 +33,9 @@
 #include <math.h>
 
 #include "logging.h"
+#include "object.h"
 #include "complex.h"
+#include "vector.h"
 #include "matrix.h"
 
 // Constructor creates an unnamed instance of the matrix class.
@@ -291,6 +293,14 @@ matrix eye (int s) {
   return eye (s, s);
 }
 
+// Create a square matrix with main diagonal entries only.
+matrix diagonal (vector diag) {
+  int size = diag.getSize ();
+  matrix res (size);
+  for (int i = 0; i < size; i++) res (i, i) = diag (i);
+  return res;
+}
+
 /* Computes the cofactor of the given determinant (in matrix
    representation) for the given row and column. */
 complex cofactor (matrix a, int u, int v) {
@@ -448,35 +458,70 @@ matrix inverse (matrix a) {
 
 /* Convert scattering parameters with the reference impedance 'zref'
    to scattering parameters with the reference impedance 'z0'. */
-matrix stos (matrix s, complex zref, complex z0) {
-  assert (s.getRows () == s.getCols ());
+matrix stos (matrix s, vector zref, vector z0) {
+  assert (s.getRows () == s.getCols () &&
+	  s.getRows () == z0.getSize () && s.getRows () == zref.getSize ());
   int d = s.getRows ();
-  matrix e, r, n;
+  matrix e, r, a;
   e = eye (d);
-  r = e * (z0 - zref) / (z0 + zref);
-  return (s - r) * inverse (e - r * s);
+  r = diagonal ((z0 - zref) / (z0 + zref));
+  a = diagonal (sqrt (z0 / zref) / (z0 + zref));
+  return inverse (a) * (s - r) * inverse (e - r * s) * a;
+}
+
+matrix stos (matrix s, complex zref, complex z0) {
+  int d = s.getRows ();
+  vector zo (d, zref);
+  vector zn (d, z0);
+  return stos (s, zo, zn);
+}
+
+matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
+  return stos (s, rect (zref, 0), rect (z0, 0));
+}
+
+matrix stos (matrix s, vector zref, complex z0) {
+  int d = zref.getSize ();
+  vector zn (d, z0);
+  return stos (s, zref, zn);
+}
+
+matrix stos (matrix s, complex zref, vector z0) {
+  int d = z0.getSize ();
+  vector zo (d, zref);
+  return stos (s, zo, z0);
 }
 
 // Convert scattering parameters to impedance matrix.
-matrix stoz (matrix s, complex z0) {
-  assert (s.getRows () == s.getCols ());
+matrix stoz (matrix s, vector z0) {
+  assert (s.getRows () == s.getCols () && s.getRows () == z0.getSize ());
   int d = s.getRows ();
   matrix e, zref, gref;
   e = eye (d);
-  zref = e * z0;
-  gref = e / (2 * sqrt (fabs (real (z0))));
-  return inverse (gref) * inverse (e - s) * (s * zref + conj (zref)) * gref;
+  zref = diagonal (z0);
+  gref = diagonal (sqrt (real (1 / z0)));
+  return inverse (gref) * inverse (e - s) * (s * zref + zref) * gref;
+}
+
+matrix stoz (matrix s, complex z0) {
+  vector zref (s.getRows (), z0);
+  return stoz (s, zref);
 }
 
 // Convert impedance matrix scattering parameters.
-matrix ztos (matrix z, complex z0) {
-  assert (z.getRows () == z.getCols ());
+matrix ztos (matrix z, vector z0) {
+  assert (z.getRows () == z.getCols () && z.getRows () == z0.getSize ());
   int d = z.getRows ();
   matrix e, zref, gref;
   e = eye (d);
-  zref = e * z0;
-  gref = e / (2 * sqrt (fabs (real (z0))));
-  return gref * (z - conj (zref)) * inverse (z + zref) * inverse (gref);
+  zref = diagonal (z0);
+  gref = diagonal (sqrt (real (1 / z0)));
+  return gref * (z - zref) * inverse (z + zref) * inverse (gref);
+}
+
+matrix ztos (matrix z, complex z0) {
+  vector zref (z.getRows (), z0);
+  return ztos (z, zref);
 }
 
 // Convert impedance matrix to admittance matrix.
@@ -486,32 +531,40 @@ matrix ztoy (matrix z) {
 }
 
 // Convert scattering parameters to admittance matrix.
-matrix stoy (matrix s, complex z0) {
-  assert (s.getRows () == s.getCols ());
+matrix stoy (matrix s, vector z0) {
+  assert (s.getRows () == s.getCols () && s.getRows () == z0.getSize ());
   int d = s.getRows ();
   matrix e, zref, gref;
   e = eye (d);
-  zref = e * z0;
-  gref = e / (2 * sqrt (fabs (real (z0))));
-  return inverse (gref) * inverse (s * zref + conj (zref)) * (e - s) * gref;
+  zref = diagonal (z0);
+  gref = diagonal (sqrt (real (1 / z0)));
+  return inverse (gref) * inverse (s * zref + zref) * (e - s) * gref;
+}
+
+matrix stoy (matrix s, complex z0) {
+  vector zref (s.getRows (), z0);
+  return stoy (s, zref);
 }
 
 // Convert admittance matrix to scattering parameters.
-matrix ytos (matrix y, complex z0) {
-  assert (y.getRows () == y.getCols ());
+matrix ytos (matrix y, vector z0) {
+  assert (y.getRows () == y.getCols () && y.getRows () == z0.getSize ());
   int d = y.getRows ();
-  matrix e, zref, gref, s;
+  matrix e, zref, gref;
   e = eye (d);
-  zref = e * z0;
-  gref = e / (2 * sqrt (fabs (real (z0))));
-  s = gref * (e - conj (zref) * y) * inverse (e + zref * y) * inverse (gref);
-  return s;
+  zref = diagonal (z0);
+  gref = diagonal (sqrt (real (1 / z0)));
+  return gref * (e - zref * y) * inverse (e + zref * y) * inverse (gref);
+}
+
+matrix ytos (matrix y, complex z0) {
+  vector zref (y.getRows (), z0);
+  return ytos (y, zref);
 }
 
 // Converts scattering parameters to chain matrix.
-matrix stoa (matrix s, complex z1) {
+matrix stoa (matrix s, complex z1, complex z2) {
   assert (s.getRows () >= 2 && s.getCols () >= 2);
-  complex z2 = z1;
   complex d = s (0, 0) * s (1, 1) - s (0, 1) * s (1, 0);
   complex n = 2.0 * s (1, 0) * sqrt (fabs (real (z1) * real (z2)));
   matrix a (2);
@@ -526,9 +579,8 @@ matrix stoa (matrix s, complex z1) {
 }
 
 // Converts chain matrix to scattering parameters.
-matrix atos (matrix a, complex z1) {
+matrix atos (matrix a, complex z1, complex z2) {
   assert (a.getRows () >= 2 && a.getCols () >= 2);
-  complex z2 = z1;
   complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
   complex n = a (0, 0) * z2 + a (0, 1) + 
     a (1, 0) * z1 * z2 + a (1, 1) * z1;
@@ -544,9 +596,8 @@ matrix atos (matrix a, complex z1) {
 }
 
 // Converts scattering parameters to hybrid matrix.
-matrix stoh (matrix s, complex z1) {
+matrix stoh (matrix s, complex z1, complex z2) {
   assert (s.getRows () >= 2 && s.getCols () >= 2);
-  complex z2 = z1;
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 - s (0, 0)) * (1.0 + s (1, 1)) + n;
   matrix h (2);
@@ -558,9 +609,8 @@ matrix stoh (matrix s, complex z1) {
 }
 
 // Converts hybrid matrix to scattering parameters.
-matrix htos (matrix h, complex z1) {
+matrix htos (matrix h, complex z1, complex z2) {
   assert (h.getRows () >= 2 && h.getCols () >= 2);
-  complex z2 = z1;
   complex n = h (0, 1) * h (1, 0);
   complex d = (1.0 + h (0, 0) / z1) * (1.0 + z2 * h (1, 1)) - n;
   matrix s (2);
@@ -572,9 +622,8 @@ matrix htos (matrix h, complex z1) {
 }
 
 // Converts scattering parameters to second hybrid matrix.
-matrix stog (matrix s, complex z1) {
+matrix stog (matrix s, complex z1, complex z2) {
   assert (s.getRows () >= 2 && s.getCols () >= 2);
-  complex z2 = z1;
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 + s (0, 0)) * (1.0 - s (1, 1)) + n;
   matrix g (2);
@@ -586,9 +635,8 @@ matrix stog (matrix s, complex z1) {
 }
 
 // Converts second hybrid matrix to scattering parameters.
-matrix gtos (matrix g, complex z1) {
+matrix gtos (matrix g, complex z1, complex z2) {
   assert (g.getRows () >= 2 && g.getCols () >= 2);
-  complex z2 = z1;
   complex n = g (0, 1) * g (1, 0);
   complex d = (1.0 + g (0, 0) * z1) * (1.0 + g (1, 1) / z2) - n;
   matrix s (2);
