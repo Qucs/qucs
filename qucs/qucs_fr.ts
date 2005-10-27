@@ -3878,10 +3878,6 @@ Moves the property text of components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Property Values..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Property Values</source>
         <translation type="unfinished"></translation>
     </message>

@@ -45,7 +45,8 @@ ChangeDialog::ChangeDialog(QucsDoc *d, QWidget *parent)
 
 
   // ...........................................................
-  all = new QGridLayout(this, 5,2,3,3);
+  all = new QGridLayout(this, 6,2,3,3);
+  all->setMargin(5);
 
   all->addWidget(new QLabel(tr("Components:"), this), 0,0);
   CompTypeEdit = new QComboBox(this);
@@ -83,7 +84,8 @@ ChangeDialog::ChangeDialog(QucsDoc *d, QWidget *parent)
   // ...........................................................
   QHBox *h0 = new QHBox(this);
   h0->setSpacing(5);
-  all->addMultiCellWidget(h0, 4,4, 0,1);
+  all->setRowStretch(4,5);
+  all->addMultiCellWidget(h0, 5,5, 0,1);
   connect(new QPushButton(tr("Replace"),h0), SIGNAL(clicked()),
 	  SLOT(slotButtReplace()));
   connect(new QPushButton(tr("Cancel"),h0), SIGNAL(clicked()),
@@ -139,6 +141,7 @@ void ChangeDialog::slotButtReplace()
   Dia->setCaption(tr("Found Components"));
   QVBoxLayout *Dia_All = new QVBoxLayout(Dia);
   Dia_All->setSpacing(3);
+  Dia_All->setMargin(5);
   QScrollView *Dia_Scroll = new QScrollView(Dia);
   Dia_Scroll->setMargin(5);
   Dia_All->addWidget(Dia_Scroll);

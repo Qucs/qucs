@@ -6310,7 +6310,7 @@ Finestra per la creazione di Reti di Adattamento</translation>
     </message>
     <message>
         <source>Change Property Values..</source>
-        <translation>Modifica Valori Proprietà..</translation>
+        <translation type="obsolete">Modifica Valori Proprietà..</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>

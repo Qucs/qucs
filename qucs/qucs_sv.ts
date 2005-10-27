@@ -2912,126 +2912,130 @@ Usage:  qucsedit [-r] file
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtminstone två element måste väljas!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej starta textredigerare!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta filtersyntesprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta ledningsberäkningsprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta biblioteksprogram!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte starta qusc-hjälpen!</translation>
     </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Datavisning</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs-dokument</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla filer</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Ny</translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Ta bort</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>innehåll i projektmappen</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehåll i</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmärkning</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>Datamängder</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>Datavisningar</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation type="unfinished"></translation>
+        <translation>Scheman</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehåll</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation type="unfinished"></translation>
+        <translation>innehåll hos det öppna projektet</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenter</translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>komponenter och kurvor</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>diskreta komponeter</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished"></translation>
+        <translation>källor</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>transmissionslinjer</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
+        <translation>icke-linjära komponenter</translation>
+    </message>
+    <message>
+        <source>file data</source>
+        <translation type="obsolete">data från fil</translation>
     </message>
     <message>
         <source>simulations</source>
@@ -4882,10 +4886,6 @@ Quite Universal Circuit Simulator
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

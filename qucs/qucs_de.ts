@@ -7344,7 +7344,7 @@ Dialog zum Erstellen eines Anpassnetzwerkes</translation>
     </message>
     <message>
         <source>Change Property Values..</source>
-        <translation>Eigenschaftswerte ändern..</translation>
+        <translation type="obsolete">Eigenschaftswerte ändern..</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
