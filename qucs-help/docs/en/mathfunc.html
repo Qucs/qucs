@@ -74,10 +74,14 @@ Qucs equations.<br><br>
 <tr><td><tt>sech(x)</tt></td><td>secans hyperbolicus</td></tr>
 <tr><td><tt>cosech(x)</tt></td><td>cosecans hyperbolicus</td></tr>
 <tr><td><tt>coth(x)</tt></td><td>cotangent hyperbolicus</td></tr>
-<tr><td><tt>ztor(x)</tt></td>
-<td>converts impedance to reflexion coefficient (reference 50 ohms)</td></tr>
-<tr><td><tt>rtoz(x)</tt></td>
-<td>converts reflexion coefficient (reference 50 ohms) to impedance</td></tr>
+<tr><td><tt>ztor(x[,zref])</tt></td>
+<td>converts impedance to reflexion coefficient (by default reference is 50 ohms)</td></tr>
+<tr><td><tt>rtoz(x[,zref])</tt></td>
+<td>converts reflexion coefficient (by default reference is 50 ohms) to impedance</td></tr>
+<tr><td><tt>ytor(x[,zref])</tt></td>
+<td>converts admittance to reflexion coefficient (by default reference is 50 ohms)</td></tr>
+<tr><td><tt>rtoy(x[,zref])</tt></td>
+<td>converts reflexion coefficient (by default reference is 50 ohms) to admittance</td></tr>
 <tr><td><tt>rtoswr(x)</tt></td>
 <td>converts reflexion coefficient to (voltage) standing wave ratio
 (SWR or VSWR)</td></tr>
@@ -85,15 +89,17 @@ Qucs equations.<br><br>
 <td>differentiates vector y with respect to x</td></tr>
 <tr><td><tt>diff(y,x,n)</tt></td>
 <td>differentiates vector y with respect to x n-times</td></tr>
-<tr><td><tt>stoy(s)</tt></td>
+<tr><td><tt>stos(s,zref[,z0])</tt></td>
+<td>converts s-parameter matrix to s-parameter matrix with different reference impedance(s)</td></tr>
+<tr><td><tt>stoy(s[,zref])</tt></td>
 <td>converts s-parameter matrix to y-parameter matrix</td></tr>
-<tr><td><tt>stoz(s)</tt></td>
+<tr><td><tt>stoz(s[,zref])</tt></td>
 <td>converts s-parameter matrix to z-parameter matrix</td></tr>
-<tr><td><tt>ytos(y)</tt></td>
+<tr><td><tt>ytos(y[,z0])</tt></td>
 <td>converts y-parameter matrix to s-parameter matrix</td></tr>
 <tr><td><tt>ytoz(y)</tt></td>
 <td>converts y-parameter matrix to z-parameter matrix</td></tr>
-<tr><td><tt>ztos(z)</tt></td>
+<tr><td><tt>ztos(z[,z0])</tt></td>
 <td>converts z-parameter matrix to s-parameter matrix</td></tr>
 <tr><td><tt>ztoy(z)</tt></td>
 <td>converts z-parameter matrix to y-parameter matrix</td></tr>

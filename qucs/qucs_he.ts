@@ -5112,10 +5112,6 @@ Dialog for Creating Matching Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Property Values..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Calculates DC bias and shows it</source>
         <translation type="unfinished"></translation>
     </message>

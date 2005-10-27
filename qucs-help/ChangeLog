@@ -1,3 +1,9 @@
+2005-10-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/mathfunc.html, docs/en/mathfunc.html: Added
+	descriptions of stos(), ytor(), rtoy() and corrected rtoz(),
+	ztor(), stoz(), ztos(), stoy(), ytos() entries.
+
 2005-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html, docs/de/mathfunc.html: Added unwrap(),

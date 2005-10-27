@@ -18,6 +18,8 @@
 #ifndef QUCSFILE_H
 #define QUCSFILE_H
 
+#include <qstringlist.h>
+
 #include "wire.h"
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
