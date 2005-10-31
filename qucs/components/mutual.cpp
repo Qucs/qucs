@@ -46,7 +46,7 @@ Mutual::Mutual()
   Ports.append(new Port( 30, 30));
   Ports.append(new Port(-30, 30));
 
-  x1 = -33; y1 = -43;
+  x1 = -33; y1 = -34;
   x2 =  33; y2 =  34;
 
   tx = x1+4;

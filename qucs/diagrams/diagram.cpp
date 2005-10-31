@@ -462,7 +462,7 @@ void Diagram::calcData(Graph *g)
   if(g->cPointsX.count() < 1) return;
 
   int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
-  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
+  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
   
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
@@ -478,7 +478,7 @@ void Diagram::calcData(Graph *g)
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
   int *p_end;
   g->Points = p_end = p;
-  p_end += Size - 5;   // limit of buffer
+  p_end += Size - 9;   // limit of buffer
 
   if(Name == "Rect3D")
     *(p++) = -2;

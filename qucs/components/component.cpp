@@ -1204,7 +1204,7 @@ Component* getComponentFromName(QString& Line)
   // letter of their name
   switch(first) {
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
-	else if(cstr == "us") c = new Resistor(false);
+	else if(cstr == "us") c = new Resistor(false);  // backward capatible
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();
