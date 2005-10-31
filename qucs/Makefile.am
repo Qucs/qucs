@@ -86,6 +86,6 @@ all-local: $(TRANSLATIONS) $(TRANSFILES)
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
 
-CLEANFILES = *~
+CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm

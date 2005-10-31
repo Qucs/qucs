@@ -30,7 +30,7 @@ SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
 
-CLEANFILES = *~
+CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
         stamp-h.in stamp-h[0-9].in
 DISTCLEANFILES = config.cache config.log

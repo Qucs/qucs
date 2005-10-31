@@ -26,7 +26,7 @@
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cze&amp;rwony:</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
@@ -179,11 +179,11 @@
     </message>
     <message>
         <source>Preview File Info</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Preview File Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Podgląd zawartości pliku</translation>
     </message>
     <message>
         <source>Read-write</source>
@@ -223,7 +223,7 @@
     </message>
     <message>
         <source>Special</source>
-        <translation type="unfinished"></translation>
+        <translation>Specjalny</translation>
     </message>
     <message>
         <source>Open</source>
@@ -350,15 +350,15 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     <name>QFont</name>
     <message>
         <source>Latin</source>
-        <translation type="unfinished"></translation>
+        <translation>Łacina</translation>
     </message>
     <message>
         <source>Greek</source>
-        <translation type="unfinished"></translation>
+        <translation>Greka</translation>
     </message>
     <message>
         <source>Cyrillic</source>
-        <translation type="unfinished"></translation>
+        <translation>Cyrylica</translation>
     </message>
     <message>
         <source>Armenian</source>
