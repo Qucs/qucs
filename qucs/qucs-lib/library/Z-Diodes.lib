@@ -1,13 +1,14 @@
-<Qucs Library 0.0.8 "LEDs">
+<Qucs Library 0.0.8 "Z-Diodes">
 
-<Component xy>
+<Component ZPD12>
   <Description>
-    light emitting diode
+    universal silicon Z-diode
+    V, mW
     Manufacturer: ???
   </Description>
   <Model>
-    .Def:LED_xy _net1 _net0
-    R:R3 _net0 _net1 R="1k" Temp="26.85"
+    .Def:Z-Diodes_ZPD12 _net0 _net1
+      Diode:D1 _net0 _net1 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
     .Def:End
   </Model>
   <Symbol>
@@ -17,8 +18,7 @@
     <Line 6 -9 0 18 #000080 2 1>
     <Line -6 0 12 -9 #000080 2 1>
     <Line -6 0 12 9 #000080 2 1>
-    <Arrow -5 -13 -10 -10 9 3 #000080 2 1 1>
-    <Arrow 5 -13 -10 -10 9 3 #000080 2 1 1>
+    <Line -6 9 4 0 #000080 2 1>
     <.PortSym -30 0 1 0>
     <.PortSym 30 0 2 180>
   </Symbol>

@@ -61,6 +61,9 @@ private:
 
 public:
   QucsDoc *Doc;
+  int showBias;
+  bool SimOpenDpl;
+  QString DataSet, DataDisplay;
 
   QProcess      SimProcess;
   QTextEdit    *ProgText, *ErrText;

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          simmessage.cpp  -  description
-                             -------------------
+                              simmessage.cpp
+                             ----------------
     begin                : Sat Sep 6 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -37,6 +37,12 @@ SimMessage::SimMessage(QucsDoc *Doc_, QWidget *parent)
 		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
   Doc = Doc_;
+  QFileInfo Info(Doc->DocName);
+  DataDisplay = Info.dirPath() + QDir::separator();
+  DataSet = DataDisplay + Doc->DataSet;
+  DataDisplay += Doc->DataDisplay;
+  showBias = Doc->showBias;     // save some settings as the document...
+  SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
   setCaption(tr("Qucs Simulation Messages"));
 
   all = new QVBoxLayout(this);
@@ -134,6 +140,8 @@ bool SimMessage::startProcess()
 
   nextSPICE();
   return true;
+  // Since now, the Doc pointer may be obsolete, as the user could have
+  // closed the schematic !!!
 }
   
 // ---------------------------------------------------
@@ -230,6 +238,10 @@ void SimMessage::slotFinishSpiceNetlist()
 // ------------------------------------------------------------------------
 void SimMessage::startSimulator()
 {
+  // Using the Doc pointer here is risky as the user may have closed
+  // the schematic, but converting the SPICE netlists is (hopefully)
+  // faster than the user (I have no other idea).
+
   // output NodeSets, SPICE simulations etc.
   Stream << Collect.join("\n") << '\n';
   QString SimTime =
@@ -238,11 +250,9 @@ void SimMessage::startSimulator()
   ProgText->insert(tr("done.\n"));
 
   QStringList com;
-  QFileInfo Info(Doc->DocName);
   if(isAnalogSim)
     com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
-        << QucsHomeDir.filePath("netlist.txt") << "-o"
-        << Info.dirPath() + QDir::separator() + Doc->DataSet;
+        << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
   else {
     if(SimTime.isEmpty()) {
       ErrText->insert(tr("ERROR: No time for simulation specified!")+"\n");
@@ -377,8 +387,6 @@ void SimMessage::slotClose()
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
-  QFileInfo Info(Doc->DocName);
-  emit displayDataPage(Info.dirPath() + QDir::separator() +
-                       Doc->DataDisplay);
+  emit displayDataPage(DataDisplay);
   accept();
 }

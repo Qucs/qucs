@@ -1,16 +1,17 @@
-<Qucs Library 0.0.7 "Bridges">
+<Qucs Library 0.0.8 "Bridges">
 
-<Component xy>
+<Component GBU4G>
   <Description>
-    rectifier bridge
-    Manufacturer: ???
+    glass passivated single-phase bridge rectifier
+    400V, 4.0A
+    Manufacturer: Vishay Semiconductors
   </Description>
   <Model>
-    .Def:Bridges_xy _net3 _net2 _net1 _net0
-    R:R3 _net0 _net1 R="1k" Temp="26.85"
-    R:R4 _net1 _net2 R="5k" Temp="26.85"
-    R:R5 _net2 _net3 R="39k" Temp="26.85"
-    R:R6 _net3 _net4 R="4.5k" Temp="26.85"
+    .Def:Bridges_GBU4G _net0 _net1 _net2 _net3
+      Diode:D1 _net0 _net1 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
+      Diode:D2 _net2 _net1 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
+      Diode:D3 _net3 _net2 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
+      Diode:D4 _net3 _net0 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
     .Def:End
   </Model>
   <Symbol>
@@ -31,9 +32,9 @@
     <Line -26 -6 6 0 #000000 2 1>
     <Line 20 -6 6 0 #ff0000 1 1>
     <Line 22 -9 0 6 #ff0000 1 1>
-    <.PortSym 0 30 3 90>
     <.PortSym 0 -30 1 270>
     <.PortSym -30 0 2 0>
+    <.PortSym 0 30 3 90>
     <.PortSym 30 0 4 180>
   </Symbol>
 </Component>

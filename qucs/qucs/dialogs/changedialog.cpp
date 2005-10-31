@@ -196,6 +196,7 @@ void ChangeDialog::slotButtReplace()
           if(pp->Name == PropNameEdit->currentText())
             if(pList.current()->isChecked()) {
               pp->Value = NewValueEdit->text();
+              pc->recreate(Doc);  // apply changes to schematic symbol
               pList.next();
               changed = true;
               break;
