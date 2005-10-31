@@ -138,6 +138,36 @@ int SymbolWidget::createSymbol(const QString& ModelString,
     x1 = -34; y1 = -34;
     x2 =   4; y2 =  34;
   }
+  else if(Comp == "JFET") {
+    Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+    Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10,-10,  0,-10,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,-10,  0,-30,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10, 10,  0, 10,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0, 10,  0, 30,QPen(QPen::darkBlue,2)));
+
+    Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
+
+    if(FirstProp == "nfet") {
+      Lines.append(new Line(-16, -5,-11,  0,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line(-16,  5,-11,  0,QPen(QPen::darkBlue,2)));
+    }
+    else {
+      Lines.append(new Line(-18, 0,-13, -5,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line(-18, 0,-13,  5,QPen(QPen::darkBlue,2)));
+    }
+
+    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, -34, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, 26, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+
+    PortNo = 3;
+    x1 = -30; y1 = -30;
+    x2 =   4; y2 =  30;
+  }
   else if(Comp == "_MOSFET") {
     Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
     Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));

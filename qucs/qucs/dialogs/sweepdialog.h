@@ -55,10 +55,10 @@ private slots:
 
 private:
   Graph* setBiasPoints();
-  
+
   QGridLayout *all;   // the mother of all widgets
   QRegExp Expr;
-  QRegExpValidator  *Validator;
+  QRegExpValidator *Validator;
   QPtrList<mySpinBox> BoxList;
 
   QucsDoc *Doc;
