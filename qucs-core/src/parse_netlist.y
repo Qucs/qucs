@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.15 2005/06/02 18:17:51 raimi Exp $
+ * $Id: parse_netlist.y,v 1.16 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -220,7 +220,7 @@ ValueList: /* nothing */ { $$ = NULL; }
 
 EquationLine:
   Eqn ':' Identifier Equation EquationList Eol {
-    $4->setInstance ($3);
+    $4->setInstance ($3); free ($3);
     $4->setNext (eqn::equations);
     $4->applyInstance ();
     eqn::equations = $4;
@@ -237,7 +237,7 @@ EquationList: /* nothing */ { }
 Equation:
   Assign '"' Expression '"' {
     $$ = new eqn::assignment ();
-    $$->result = strdup ($1);
+    $$->result = $1;
     $$->body = $3;
   }
 ;
@@ -293,14 +293,14 @@ Range:
 Reference:
   Identifier {
     $$ = new eqn::reference ();
-    $$->n = strdup ($1);
+    $$->n = $1;
   }
 ;
 
 Application:
     Identifier '(' ExpressionList ')' {
     $$ = new eqn::application ();
-    $$->n = strdup ($1);
+    $$->n = $1;
     $$->nargs = $3->count ();
     $$->args = $3;
     eqn::expressions = NULL;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.34 2005/06/02 18:17:49 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.35 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #endif
 
 #include "logging.h"
+#include "precision.h"
 #include "complex.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
@@ -48,9 +49,6 @@
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
 #endif
-
-#define TINY 1e-12
-#define EPSI 2.2204460492503131e-16 /* IEEE double precision 2^{-52} */
 
 // Little helper macro.
 #define Swap(type,a,b) { type t; t = a; a = b; b = t; }
@@ -283,8 +281,8 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
 #define VIRTUAL_RES(txt,i) {					  \
   qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR); \
   e->setText (txt);						  \
-  e->setData (rMap[i]);					  \
-  A->set (i, i, TINY); /* virtual resistance to ground */	  \
+  e->setData (rMap[i]);						  \
+  A->set (i, i, NR_TINY); /* virtual resistance to ground */	  \
   throw_exception (e); }
 
 /* The function uses LU decomposition and the appropriate forward and
@@ -334,7 +332,7 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
     for (MaxPivot = 0, c = 0; c < N; c++)
       if ((d = abs (A_(r, c))) > MaxPivot)
 	MaxPivot = d;
-    if (MaxPivot <= 0) MaxPivot = TINY;
+    if (MaxPivot <= 0) MaxPivot = NR_TINY;
     nPvt[r] = 1 / MaxPivot;
     rMap[r] = r;
   }
@@ -400,7 +398,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
     for (MaxPivot = 0, c = 0; c < N; c++)
       if ((d = abs (A_(r, c))) > MaxPivot)
 	MaxPivot = d;
-    if (MaxPivot <= 0) MaxPivot = TINY;
+    if (MaxPivot <= 0) MaxPivot = NR_TINY;
     nPvt[r] = 1 / MaxPivot;
     rMap[r] = r;
   }
@@ -519,7 +517,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
   int error, conv, i, c, r;
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
-  nr_double_t abstol = 1e-12;
+  nr_double_t abstol = NR_TINY;
   nr_double_t diff, crit;
 
   // ensure that all diagonal values are non-zero
@@ -608,7 +606,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
   int error, conv, i, c, r;
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
-  nr_double_t abstol = 1e-12;
+  nr_double_t abstol = NR_TINY;
   nr_double_t diff, crit, l = 1, d, s;
 
   // ensure that all diagonal values are non-zero
@@ -991,7 +989,7 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
 	nr_double_t y = 0;
 	t = A_(c, r) / s;
 	if (norm (t) < 1) y = s * sqrt (1 - norm (t));
-	if (fabs (y / s) < TINY)
+	if (fabs (y / s) < NR_TINY)
 	  nPvt[r] = euclidianCol (r, c + 1);
 	else
 	  nPvt[r] = y;
@@ -1019,7 +1017,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N - 1; r >= 0; r--) {
     f = B_(r);
     for (c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (R_(r)) > EPSI)
+    if (abs (R_(r)) > NR_EPSI)
       X_(cMap[r]) = f / R_(r);
     else
       X_(cMap[r]) = 0;
@@ -1047,7 +1045,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   // backward substitution in order to solve RX = Q'B
   for (r = N - 1; r >= 0; r--) {
     for (f = B_(r), c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (A_(r, r)) > EPSI)
+    if (abs (A_(r, r)) > NR_EPSI)
       X_(cMap[r]) = f / A_(r, r);
     else
       X_(cMap[r]) = 0;
@@ -1066,7 +1064,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   // forward substitution in order to solve R'X = B
   for (r = 0; r < N; r++) {
     for (f = B_(r), c = 0; c < r; c++) f -= A_(c, r) * B_(c);
-    if (abs (A_(r, r)) > EPSI)
+    if (abs (A_(r, r)) > NR_EPSI)
       B_(r) = f / A_(r, r);
     else
       B_(r) = 0;

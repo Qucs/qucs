@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.cpp,v 1.7 2005/06/27 14:18:09 raimi Exp $
+ * $Id: opamp.cpp,v 1.8 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -73,7 +73,7 @@ void opamp::calcDC (void) {
   nr_double_t uMax = getPropertyDouble ("Umax");
   nr_double_t Uin  = real (getV (NODE_INP) - getV (NODE_INM));
   nr_double_t Uout = uMax * M_2_PI * atan (Uin * g * M_PI_2 / uMax);
-  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin)) + 1e-12;
+  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin)) + GMin;
   setC (VSRC_1, NODE_INP, +gv);
   setC (VSRC_1, NODE_INM, -gv);
   setE (VSRC_1, Uin * gv - Uout);

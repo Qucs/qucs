@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: sweep.cpp,v 1.7 2005/06/02 18:17:51 raimi Exp $
+ * $Id: sweep.cpp,v 1.8 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -113,7 +113,7 @@ char * sweep::toString (void) {
   strcpy (txt, "[");
   for (int i = 0; i < size; i++) {
     static char str[256];  // enough for a real number
-    sprintf (str, "%g", get (i));
+    sprintf (str, "%g", (double) get (i));
     txt = (char *) realloc (txt, len += strlen (str));
     strcat (txt, str);
     if (i != size - 1) strcat (txt, ";");

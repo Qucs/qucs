@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.28 2005/06/02 18:17:50 raimi Exp $
+ * $Id: net.cpp,v 1.29 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -56,6 +56,7 @@ net::net () : object () {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = new ptrlist<analysis> ();
+  orgacts = new ptrlist<analysis> ();
   env = NULL;
   nset = NULL;
   srcFactor = 1;
@@ -67,6 +68,7 @@ net::net (char * n) : object (n) {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = new ptrlist<analysis> ();
+  orgacts = new ptrlist<analysis> ();
   env = NULL;
   nset = NULL;
   srcFactor = 1;
@@ -75,11 +77,15 @@ net::net (char * n) : object (n) {
 // Destructor deletes the net class object.
 net::~net () {
   circuit * n;
+  // delete each and every circuit
   for (circuit * c = root; c != NULL; c = n) {
     n = (circuit *) c->getNext ();
     delete c;
   }
-  root = NULL;
+  // delete original actions
+  for (int i = 0; i < orgacts->length (); i++) delete orgacts->get (i);
+  delete orgacts;
+  // delete nodeset
   delNodeset ();
   delete actions;
 }
@@ -91,6 +97,7 @@ net::net (net & n) : object (n) {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = n.actions ? new ptrlist<analysis> (*n.actions) : NULL;
+  orgacts = new ptrlist<analysis> ();
   env = n.env;
   nset = NULL;
   srcFactor = 1;
@@ -171,6 +178,7 @@ int net::containsCircuit (circuit * cand) {
 /* This function prepends the given analysis to the list of registered
    analyses. */
 void net::insertAnalysis (analysis * a) {
+  orgacts->add (a);
   actions->add (a);
 }
 

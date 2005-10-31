@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.23 2005/10/17 08:41:23 raimi Exp $
+ * $Id: equation.h,v 1.24 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -141,6 +141,7 @@ public:
   constant * evaluate (void);
 
 public:
+  bool dataref;
   int type;
   union {
     nr_double_t d;
@@ -252,7 +253,7 @@ public:
   void setData (dataset * d) { data = d; }
   dataset * getDataset (void) { return data; }
   void solve (void);
-  node * addEquationData (vector *);
+  node * addEquationData (vector *, bool ref = false);
   node * addEquationData (matvec *);
   node * addGeneratedEquation (vector *, char *);
   vector * dataVector (node *);
@@ -289,6 +290,7 @@ int equation_checker (int);
 int equation_solver (dataset *);
 strlist * equation_variables (void);
 void equation_constants (void);
+void equation_destructor (void);
 
 __END_DECLS
 

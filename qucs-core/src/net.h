@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.h,v 1.15 2005/06/02 18:17:51 raimi Exp $
+ * $Id: net.h,v 1.16 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -88,6 +88,7 @@ class net : public object
   circuit * drop;
   circuit * root;
   ptrlist<analysis> * actions;
+  ptrlist<analysis> * orgacts;
   environment * env;
   int nPorts;
   int nSources;

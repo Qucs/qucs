@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.85 2005/10/27 09:57:31 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.86 2005/10/31 16:15:30 ela Exp $
  *
  */
 
@@ -883,6 +883,15 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     // check range of all values
     if (PROP_HAS_RANGE (*prop)) {
       struct value_t * val = pair->value;
+      if (val->ident) {
+	/* no range checking on variable identifier */
+	logprint (LOG_STATUS, 
+		  "checker notice, value of `%s' (variable `%s') could be "
+		  "out of range `%c%g,%g%c' in `%s:%s'\n",
+		  pair->key, val->ident, prop->range.il, prop->range.l,
+		  prop->range.h, prop->range.ih, def->type, instance);
+	val = NULL;
+      }
       for (; val != NULL; val = val->next) {
 	int rerror = 0;
 	if (prop->range.il == '[' &&  (val->value < prop->range.l))
@@ -1659,4 +1668,5 @@ void netlist_destroy (void) {
   definition_root = subcircuit_root = NULL;
   node_root = NULL;
   pair_root = NULL;
+  netlist_lex_destroy ();
 }

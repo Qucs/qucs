@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.37 2005/10/05 11:22:42 raimi Exp $
+ * $Id: nasolver.cpp,v 1.38 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -49,6 +49,7 @@
 #include "tmatrix.h"
 #include "eqnsys.h"
 #include "constants.h"
+#include "precision.h"
 #include "operatingpoint.h"
 #include "exception.h"
 #include "exceptionstack.h"
@@ -280,7 +281,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_gMin (void) {
     if (run >= MaxIterations || error) {
       gStep /= 2;
       // here the absolute minimum step checker
-      if (gStep < 1e-15) {
+      if (gStep < NR_EPSI) {
 	error = 1;
 	e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
 	e->setText ("no convergence in %s analysis after %d gMinStepping "
@@ -342,7 +343,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void) {
     if (run >= MaxIterations || error) {
       sStep /= 2;
       // here the absolute minimum step checker
-      if (sStep < 1e-15) {
+      if (sStep < NR_EPSI) {
 	error = 1;
 	e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
 	e->setText ("no convergence in %s analysis after %d sourceStepping "
@@ -884,7 +885,7 @@ void nasolver<nr_type_t>::lineSearch (void) {
 
   // compute solution deviation vector
   tvector<nr_type_t> dx = *x - *xprev;
-  nMin = DBL_MAX;
+  nMin = NR_MAX;
 
   do {
     // apply current damping factor and see what happens

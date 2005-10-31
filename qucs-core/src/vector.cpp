@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.23 2005/10/27 09:57:31 raimi Exp $
+ * $Id: vector.cpp,v 1.24 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -127,6 +127,17 @@ vector::~vector () {
   if (origin) free (origin);
 }
 
+// Returns data dependencies.
+strlist * vector::getDependencies (void) {
+  return dependencies;
+}
+
+// Sets the data dependencies.
+void vector::setDependencies (strlist * s) {
+  if (dependencies) delete dependencies;
+  dependencies = s;
+}
+
 /* The function appends a new complex data item to the end of the
    vector and ensures that the vector can hold the increasing number
    of data items. */
@@ -189,7 +200,7 @@ int vector::checkSizes (vector v1, vector v2) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::maximum (void) {
   complex c;
-  nr_double_t d, max_D = -DBL_MAX;
+  nr_double_t d, max_D = -NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
     d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
@@ -203,7 +214,7 @@ nr_double_t vector::maximum (void) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::minimum (void) {
   complex c;
-  nr_double_t d, min_D = DBL_MAX;
+  nr_double_t d, min_D = +NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
     d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);

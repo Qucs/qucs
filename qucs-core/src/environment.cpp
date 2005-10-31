@@ -1,7 +1,7 @@
 /*
  * environment.cpp - variable environment class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.2 2005/06/02 18:17:49 raimi Exp $
+ * $Id: environment.cpp,v 1.3 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -88,6 +88,10 @@ void environment::deleteVariables (void) {
   variable * n;
   for (variable * var = root; var != NULL; var = n) {
     n = var->getNext ();
+    if (var->getType () == VAR_CONSTANT)
+      delete var->getConstant ();
+    else if (var->getType () == VAR_SUBSTRATE)
+      delete var->getSubstrate ();
     delete var;
   }
   root = NULL;

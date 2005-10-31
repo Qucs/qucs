@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_dataset.h,v 1.3 2005/06/02 18:17:49 raimi Exp $
+ * $Id: check_dataset.h,v 1.4 2005/10/31 16:15:30 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@ __BEGIN_DECLS
 int dataset_parse (void);
 int dataset_error (char *);
 int dataset_lex (void);
+int dataset_lex_destroy (void);
 int dataset_check (dataset *);
 
 __END_DECLS

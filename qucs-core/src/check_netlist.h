@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.h,v 1.19 2005/06/02 18:17:49 raimi Exp $
+ * $Id: check_netlist.h,v 1.20 2005/10/31 16:15:30 ela Exp $
  *
  */
 
@@ -46,6 +46,7 @@ int  netlist_checker (void);
 int  netlist_parse (void);
 int  netlist_error (char *);
 int  netlist_lex (void);
+int  netlist_lex_destroy (void);
 int  netlist_checker_variables (void);
 
 /* Some more functionality. */

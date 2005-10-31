@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.13 2005/06/02 18:17:55 raimi Exp $
+ * $Id: cpwline.cpp,v 1.14 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -68,12 +68,12 @@ cpwline::cpwline () : circuit (2) {
 void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
   int iMax = 16;
   if (arg == 1.0) {
-    k = DBL_MAX / DBL_MIN; // infinite
+    k = NR_MAX / NR_MIN; // infinite
     e = 0;
   }
   else if (isinf (arg) && arg < 0) {
     k = 0;
-    e = DBL_MAX / DBL_MIN; // infinite
+    e = NR_MAX / NR_MIN; // infinite
   }
   else {
     nr_double_t a, b, c, f, s, fk = 1, fe = 1, t, da = arg;
@@ -95,7 +95,7 @@ void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
       a = t;
       f *= 2;
       s += f * c * c;
-      if (c / a < 1e-16) break;
+      if (c / a < NR_EPSI) break;
     }
     if (i >= iMax) {
       k = 0; e = 0;

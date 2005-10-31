@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.8 2005/06/02 18:17:49 raimi Exp $
+ * $Id: analysis.cpp,v 1.9 2005/10/31 16:15:30 ela Exp $
  *
  */
 
@@ -59,6 +59,7 @@ analysis::analysis (char * n) : object (n) {
 
 // Destructor deletes the analysis class object.
 analysis::~analysis () {
+  if (actions) delete actions;
 }
 
 /* The copy constructor creates a new instance of the analysis class

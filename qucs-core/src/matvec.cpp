@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.18 2005/10/27 09:57:31 raimi Exp $
+ * $Id: matvec.cpp,v 1.19 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -406,9 +406,7 @@ matvec stos (matvec s, vector zref, vector z0) {
 
 matvec stos (matvec s, complex zref, complex z0) {
   int d = s.getRows ();
-  vector zo (d, zref);
-  vector zn (d, z0);
-  return stos (s, zo, zn);
+  return stos (s, vector (d, zref), vector (d, z0));
 }
 
 matvec stos (matvec s, nr_double_t zref, nr_double_t z0) {
@@ -416,15 +414,11 @@ matvec stos (matvec s, nr_double_t zref, nr_double_t z0) {
 }
 
 matvec stos (matvec s, vector zref, complex z0) {
-  int d = zref.getSize ();
-  vector zn (d, z0);
-  return stos (s, zref, zn);
+  return stos (s, zref, vector (zref.getSize (), z0));
 }
 
 matvec stos (matvec s, complex zref, vector z0) {
-  int d = z0.getSize ();
-  vector zo (d, zref);
-  return stos (s, zo, z0);
+  return stos (s, vector (z0.getSize (), zref), z0);
 }
 
 // Convert scattering parameters to admittance matrix vector.
@@ -436,8 +430,7 @@ matvec stoy (matvec s, vector z0) {
 }
 
 matvec stoy (matvec s, complex z0) {
-  vector vz (s.getCols (), z0);
-  return stoy (s, vz);
+  return stoy (s, vector (s.getCols (), z0));
 }
 
 // Convert admittance matrix to scattering parameter matrix vector.
@@ -449,8 +442,7 @@ matvec ytos (matvec y, vector z0) {
 }
 
 matvec ytos (matvec y, complex z0) {
-  vector vz (y.getCols (), z0);
-  return ytos (y, vz);
+  return ytos (y, vector (y.getCols (), z0));
 }
 
 // Convert scattering parameters to impedance matrix vector.
@@ -462,8 +454,7 @@ matvec stoz (matvec s, vector z0) {
 }
 
 matvec stoz (matvec s, complex z0) {
-  vector vz (s.getCols (), z0);
-  return stoz (s, vz);
+  return stoz (s, vector (s.getCols (), z0));
 }
 
 // Convert impedance matrix vector scattering parameter matrix vector.
@@ -475,8 +466,7 @@ matvec ztos (matvec z, vector z0) {
 }
 
 matvec ztos (matvec z, complex z0) {
-  vector vz (z.getCols (), z0);
-  return ztos (z, vz);
+  return ztos (z, vector (z.getCols (), z0));
 }
 
 // Convert impedance matrix vector to admittance matrix vector.

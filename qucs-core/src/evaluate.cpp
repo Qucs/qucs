@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.37 2005/10/27 09:57:31 raimi Exp $
+ * $Id: evaluate.cpp,v 1.38 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -1126,7 +1126,7 @@ constant * evaluate::deg2rad_v (constant * args) {
   constant * res = new constant (TAG_VECTOR);
   vector *     v = new vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (rad (real (v1->get (i))));
-  res->v = new vector (*v);
+  res->v = v;
   return res;
 }
 
@@ -1149,7 +1149,7 @@ constant * evaluate::rad2deg_v (constant * args) {
   constant * res = new constant (TAG_VECTOR);
   vector *     v = new vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (deg (real (v1->get (i))));
-  res->v = new vector (*v);
+  res->v = v;
   return res;
 }
 
@@ -1903,25 +1903,26 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
 
 // ***************** fourier transformations *****************
 #define FOURIER_HELPER(cfunc,dep) \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_v) (constant * args) {      \
-  vector * v = V (args->getResult (0));                                  \
-  vector * t = V (args->getResult (1));                                  \
-  constant * res = new constant (TAG_VECTOR);                            \
-  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));             \
-  res->v = val;                                                          \
-  int n = t->getSize ();                                                 \
-  nr_double_t last  = real (t->get (n - 1));                             \
-  nr_double_t first = real (t->get (0));                                 \
-  nr_double_t delta = (last - first) / (n - 1);                          \
-  n = val->getSize ();                                                   \
-  constant * arg = new constant (TAG_VECTOR);                            \
-  arg->v = new vector (::linspace (0, 1.0 / delta, n));                  \
-  arg->solvee = args->getResult(0)->solvee;                              \
-  arg->evaluate ();                                                      \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_v) (constant * args) {	 \
+  vector * v = V (args->getResult (0));					 \
+  vector * t = V (args->getResult (1));					 \
+  constant * res = new constant (TAG_VECTOR);				 \
+  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));		 \
+  res->v = val;								 \
+  int n = t->getSize ();						 \
+  nr_double_t last  = real (t->get (n - 1));				 \
+  nr_double_t first = real (t->get (0));				 \
+  nr_double_t delta = (last - first) / (n - 1);				 \
+  n = val->getSize ();							 \
+  constant * arg = new constant (TAG_VECTOR);				 \
+  arg->v = new vector (::linspace (0, 1.0 / delta, n));			 \
+  arg->solvee = args->getResult(0)->solvee;				 \
+  arg->evaluate ();							 \
   node * gen = args->get(0)->solvee->addGeneratedEquation (arg->v, dep); \
-  res->addPrepDependencies (A(gen)->result);                             \
-  res->dropdeps = 1;                                                     \
-  return res;                                                            \
+  res->addPrepDependencies (A(gen)->result);				 \
+  res->dropdeps = 1;							 \
+  args->append (arg);							 \
+  return res;								 \
 }
 
 FOURIER_HELPER (fft, "Frequency");
@@ -2008,12 +2009,13 @@ constant * evaluate::ztoy_mv (constant * args) {
   _RETMV (ztoy (*mv));
 }
 
-#define _CHKM(m) \
+// These are stos() helpers.
+#define _CHKM(m) /* check square matrix */              \
   if (m->getCols () != m->getRows ()) {                 \
     THROW_MATH_EXCEPTION ("stos: not a square matrix"); \
     res->m = new matrix (m->getRows (), m->getCols ()); \
     return res; }
-#define _CHKMV(mv) \
+#define _CHKMV(mv) /* check square matrix vector */                        \
   if (mv->getCols () != mv->getRows ()) {                                  \
     THROW_MATH_EXCEPTION ("stos: not a square matrix");                    \
     res->mv = new matvec (mv->getSize (), mv->getRows (), mv->getCols ()); \
@@ -2029,227 +2031,173 @@ constant * evaluate::ztoy_mv (constant * args) {
     res->mv = new matvec (mv->getSize (), mv->getRows (), mv->getCols ()); \
     return res; }
 
+// Function -- MATRIX stos (MATRIX, DOUBLE)
 constant * evaluate::stos_m_d (constant * args) {
-  _ARM0 (m);
-  _ARD1 (zref);
-  _DEFM ();
+  _ARM0 (m); _ARD1 (zref); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, zref));
 }
 
+// Function -- MATRIX stos (MATRIX, COMPLEX)
 constant * evaluate::stos_m_c (constant * args) {
-  _ARM0 (m);
-  _ARC1 (zref);
-  _DEFM ();
+  _ARM0 (m); _ARC1 (zref); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, *zref));
 }
 
+// Function -- MATRIX stos (MATRIX, DOUBLE, DOUBLE)
 constant * evaluate::stos_m_d_d (constant * args) {
-  _ARM0 (m);
-  _ARD1 (zref);
-  _ARD2 (z0);
-  _DEFM ();
+  _ARM0 (m); _ARD1 (zref); _ARD2 (z0); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, zref, z0));
 }
 
+// Function -- MATRIX stos (MATRIX, DOUBLE, COMPLEX)
 constant * evaluate::stos_m_d_c (constant * args) {
-  _ARM0 (m);
-  _ARD1 (zref);
-  _ARC2 (z0);
-  _DEFM ();
+  _ARM0 (m); _ARD1 (zref); _ARC2 (z0); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, rect (zref, 0), *z0));
 }
 
+// Function -- MATRIX stos (MATRIX, COMPLEX, DOUBLE)
 constant * evaluate::stos_m_c_d (constant * args) {
-  _ARM0 (m);
-  _ARC1 (zref);
-  _ARD2 (z0);
-  _DEFM ();
+  _ARM0 (m); _ARC1 (zref); _ARD2 (z0); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, *zref, rect (z0, 0)));
 }
 
+// Function -- MATRIX stos (MATRIX, COMPLEX, COMPLEX)
 constant * evaluate::stos_m_c_c (constant * args) {
-  _ARM0 (m);
-  _ARC1 (zref);
-  _ARC2 (z0);
-  _DEFM ();
+  _ARM0 (m); _ARC1 (zref); _ARC2 (z0); _DEFM ();
   _CHKM (m);
   _RETM (stos (*m, *zref, *z0));
 }
 
+// Function -- MATRIX stos (MATRIX, VECTOR)
 constant * evaluate::stos_m_v (constant * args) {
-  _ARM0 (m);
-  _ARV1 (zref);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == zref->getSize ());
+  _ARM0 (m); _ARV1 (zref); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == zref->getSize ());
   _RETM (stos (*m, *zref));
 }
 
+// Function -- MATRIX stos (MATRIX, VECTOR, DOUBLE)
 constant * evaluate::stos_m_v_d (constant * args) {
-  _ARM0 (m);
-  _ARV1 (zref);
-  _ARD2 (z0);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == zref->getSize ());
+  _ARM0 (m); _ARV1 (zref); _ARD2 (z0); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == zref->getSize ());
   _RETM (stos (*m, *zref, rect (z0, 0)));
 }
 
+// Function -- MATRIX stos (MATRIX, VECTOR, COMPLEX)
 constant * evaluate::stos_m_v_c (constant * args) {
-  _ARM0 (m);
-  _ARV1 (zref);
-  _ARC2 (z0);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == zref->getSize ());
+  _ARM0 (m); _ARV1 (zref); _ARC2 (z0); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == zref->getSize ());
   _RETM (stos (*m, *zref, *z0));
 }
 
+// Function -- MATRIX stos (MATRIX, DOUBLE, VECTOR)
 constant * evaluate::stos_m_d_v (constant * args) {
-  _ARM0 (m);
-  _ARD1 (zref);
-  _ARV2 (z0);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == z0->getSize ());
+  _ARM0 (m); _ARD1 (zref); _ARV2 (z0); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == z0->getSize ());
   _RETM (stos (*m, rect (zref, 0), *z0));
 }
 
+// Function -- MATRIX stos (MATRIX, COMPLEX, VECTOR)
 constant * evaluate::stos_m_c_v (constant * args) {
-  _ARM0 (m);
-  _ARC1 (zref);
-  _ARV2 (z0);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == z0->getSize ());
+  _ARM0 (m); _ARC1 (zref); _ARV2 (z0); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == z0->getSize ());
   _RETM (stos (*m, *zref, *z0));
 }
 
+// Function -- MATRIX stos (MATRIX, VECTOR, VECTOR)
 constant * evaluate::stos_m_v_v (constant * args) {
-  _ARM0 (m);
-  _ARV1 (zref);
-  _ARV2 (z0);
-  _DEFM ();
-  _CHKM (m);
-  _CHKMA (m, m->getRows () == z0->getSize () &&
-	  m->getRows () == zref->getSize ());
+  _ARM0 (m); _ARV1 (zref); _ARV2 (z0); _DEFM ();
+  _CHKM (m); _CHKMA (m, m->getRows () == z0->getSize () &&
+		     m->getRows () == zref->getSize ());
   _RETM (stos (*m, *zref, *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, DOUBLE)
 constant * evaluate::stos_mv_d (constant * args) {
-  _ARMV0 (mv);
-  _ARD1  (zref);
-  _DEFMV ();
+  _ARMV0 (mv); _ARD1 (zref); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, zref));
 }
 
+// Function -- MATVEC stos (MATVEC, COMPLEX)
 constant * evaluate::stos_mv_c (constant * args) {
-  _ARMV0 (mv);
-  _ARC1  (zref);
-  _DEFMV ();
+  _ARMV0 (mv); _ARC1 (zref); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, *zref));
 }
 
+// Function -- MATVEC stos (MATVEC, DOUBLE, DOUBLE)
 constant * evaluate::stos_mv_d_d (constant * args) {
-  _ARMV0 (mv);
-  _ARD1  (zref);
-  _ARD2  (z0);
-  _DEFMV ();
+  _ARMV0 (mv); _ARD1 (zref); _ARD2 (z0); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, zref, z0));
 }
 
+// Function -- MATVEC stos (MATVEC, DOUBLE, COMPLEX)
 constant * evaluate::stos_mv_d_c (constant * args) {
-  _ARMV0 (mv);
-  _ARD1  (zref);
-  _ARC2  (z0);
-  _DEFMV ();
+  _ARMV0 (mv); _ARD1 (zref); _ARC2 (z0); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, rect (zref, 0), *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, COMPLEX, DOUBLE)
 constant * evaluate::stos_mv_c_d (constant * args) {
-  _ARMV0 (mv);
-  _ARC1  (zref);
-  _ARD2  (z0);
-  _DEFMV ();
+  _ARMV0 (mv); _ARC1 (zref); _ARD2 (z0); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, *zref, rect (z0, 0)));
 }
 
+// Function -- MATVEC stos (MATVEC, COMPLEX, COMPLEX)
 constant * evaluate::stos_mv_c_c (constant * args) {
-  _ARMV0 (mv);
-  _ARC1  (zref);
-  _ARC2  (z0);
-  _DEFMV ();
+  _ARMV0 (mv); _ARC1 (zref); _ARC2 (z0); _DEFMV ();
   _CHKMV (mv);
   _RETMV (stos (*mv, *zref, *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, VECTOR)
 constant * evaluate::stos_mv_v (constant * args) {
-  _ARMV0 (mv);
-  _ARV1  (zref);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _ARMV0 (mv); _ARV1 (zref); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == zref->getSize ());
   _RETMV (stos (*mv, *zref));
 }
 
+// Function -- MATVEC stos (MATVEC, VECTOR, DOUBLE)
 constant * evaluate::stos_mv_v_d (constant * args) {
-  _ARMV0 (mv);
-  _ARV1  (zref);
-  _ARD2  (z0);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _ARMV0 (mv); _ARV1 (zref); _ARD2 (z0); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == zref->getSize ());
   _RETMV (stos (*mv, *zref, rect (z0, 0)));
 }
 
+// Function -- MATVEC stos (MATVEC, VECTOR, COMPLEX)
 constant * evaluate::stos_mv_v_c (constant * args) {
-  _ARMV0 (mv);
-  _ARV1  (zref);
-  _ARC2  (z0);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == zref->getSize ());
+  _ARMV0 (mv); _ARV1 (zref); _ARC2 (z0); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == zref->getSize ());
   _RETMV (stos (*mv, *zref, *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, DOUBLE, VECTOR)
 constant * evaluate::stos_mv_d_v (constant * args) {
-  _ARMV0 (mv);
-  _ARD1  (zref);
-  _ARV2  (z0);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == z0->getSize ());
+  _ARMV0 (mv); _ARD1 (zref); _ARV2 (z0); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == z0->getSize ());
   _RETMV (stos (*mv, rect (zref, 0), *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, COMPLEX, VECTOR)
 constant * evaluate::stos_mv_c_v (constant * args) {
-  _ARMV0 (mv);
-  _ARC1  (zref);
-  _ARV2  (z0);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == z0->getSize ());
+  _ARMV0 (mv); _ARC1 (zref); _ARV2 (z0); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == z0->getSize ());
   _RETMV (stos (*mv, *zref, *z0));
 }
 
+// Function -- MATVEC stos (MATVEC, VECTOR, VECTOR)
 constant * evaluate::stos_mv_v_v (constant * args) {
-  _ARMV0 (mv);
-  _ARV1  (zref);
-  _ARV2  (z0);
-  _DEFMV ();
-  _CHKMV (mv);
-  _CHKMVA (mv, mv->getRows () == z0->getSize () &&
-	   mv->getRows () == zref->getSize ());
+  _ARMV0 (mv); _ARV1 (zref); _ARV2 (z0); _DEFMV ();
+  _CHKMV (mv); _CHKMVA (mv, mv->getRows () == z0->getSize () &&
+			mv->getRows () == zref->getSize ());
   _RETMV (stos (*mv, *zref, *z0));
 }
 

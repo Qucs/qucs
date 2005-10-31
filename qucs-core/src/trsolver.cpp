@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.39 2005/10/27 09:57:31 raimi Exp $
+ * $Id: trsolver.cpp,v 1.40 2005/10/31 16:15:31 ela Exp $
  *
  */
 
@@ -186,7 +186,7 @@ void trsolver::solve (void) {
       if (delta == deltaMin) {
 	logprint (LOG_ERROR,
 		  "WARNING: %s: minimum delta h = %.3e at t = %.3e\n",
-		  getName (), delta, current);
+		  getName (), (double) delta, (double) current);
       }
 #endif
       updateCoefficients (delta);
@@ -226,7 +226,7 @@ void trsolver::solve (void) {
 
 #if DEBUG
 	logprint (LOG_ERROR, "WARNING: delta rejected at t = %.3e, h = %.3e "
-		  "(no convergence)\n", saveCurrent, delta);
+		  "(no convergence)\n", (double) saveCurrent, (double) delta);
 #endif
 	break;
       default:
@@ -241,7 +241,7 @@ void trsolver::solve (void) {
       // check whether Jacobian matrix is still non-singular
       if (!A->isFinite ()) {
 	logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
-		  "aborting %s analysis\n", getName (), current,
+		  "aborting %s analysis\n", getName (), (double) current,
 		  getDescription ());
 	return;
       }
@@ -274,7 +274,7 @@ void trsolver::solve (void) {
     // Save results.
 #if STEPDEBUG
     logprint (LOG_STATUS, "DEBUG: save point at t = %.3e, h = %.3e\n",
-	      saveCurrent, delta);
+	      (double) saveCurrent, (double) delta);
 #endif
 
 #if BREAKPOINTS
@@ -286,7 +286,7 @@ void trsolver::solve (void) {
   solve_post ();
   logprogressclear (40);
   logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
-	    getName (), saveCurrent / statSteps, statRejected);
+	    getName (), (double) (saveCurrent / statSteps), statRejected);
   logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
 	    "%d non-convergences\n", getName (),
 	    (double) statIterations / statSteps, statConvergence);
@@ -458,7 +458,7 @@ void trsolver::adjustDelta (nr_double_t t) {
 #if STEPDEBUG
     logprint (LOG_STATUS,
 	      "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
-	      current, delta);
+	      (double) current, (double) delta);
 #endif
   }
   else if (deltaOld > delta) { // reject current delta
@@ -467,7 +467,7 @@ void trsolver::adjustDelta (nr_double_t t) {
 #if STEPDEBUG
     logprint (LOG_STATUS,
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
-	      current, delta);
+	      (double) current, (double) delta);
 #endif
     if (current > 0) current -= deltaOld;
   }
@@ -549,7 +549,7 @@ void trsolver::initTR (void) {
   if (deltaMax == 0.0)
     deltaMax = MIN ((stop - start) / (points - 1), stop / 200);
   if (deltaMin == 0.0)
-    deltaMin = 1e-11 * deltaMax;
+    deltaMin = NR_TINY * 10 * deltaMax;
   if (delta == 0.0)
     delta = MIN (stop / 200, deltaMax) / 10;
   if (delta < deltaMin) delta = deltaMin;
@@ -609,7 +609,7 @@ nr_double_t trsolver::checkDelta (void) {
   nr_double_t LTEreltol = getPropertyDouble ("LTEreltol");
   nr_double_t LTEabstol = getPropertyDouble ("LTEabstol");
   nr_double_t LTEfactor = getPropertyDouble ("LTEfactor");
-  nr_double_t dif, rel, tol, lte, q, n = DBL_MAX;
+  nr_double_t dif, rel, tol, lte, q, n = NR_MAX;
   int N = countNodes ();
   int M = countVoltageSources ();
 
@@ -639,7 +639,7 @@ nr_double_t trsolver::checkDelta (void) {
   }
 #if STEPDEBUG
   logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
-	    "error h = %.3e\n", n);
+	    "error h = %.3e\n", (double) n);
 #endif
   delta = MIN ((n > 1.9 * delta) ? 2 * delta : delta, n);
   return delta;
