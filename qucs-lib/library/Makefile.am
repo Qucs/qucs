@@ -23,7 +23,7 @@
 #
 
 COMPLIBS = Transistors.lib Substrates.lib Diodes.lib MOSFETs.lib OpAmps.lib \
-           Bridges.lib LEDs.lib
+           Bridges.lib LEDs.lib JFETs.lib Z-Diodes.lib
 
 EXTRA_DIST = $(COMPLIBS)
 

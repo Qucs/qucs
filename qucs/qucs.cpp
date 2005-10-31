@@ -1154,18 +1154,21 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   if(sim->ErrText->lines() > 1)   // were there warnings ?
     Init.slotShowWarnings();
 
-  if(sim->Doc->showBias == 0) {  // paint dc bias into schematic ?
+  int Index = view->Docs.containsRef(sim->Doc);
+  if(sim->showBias == 0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
-    SweepDialog *Dia = new SweepDialog(sim->Doc);
-    Dia->show();
+    if(Index > 0) {  // schematic still open ?
+      SweepDialog *Dia = new SweepDialog(sim->Doc);
+      Dia->show();
+    }
   }
-  else if(sim->Doc->SimOpenDpl) {
-    QFileInfo Info(sim->Doc->DocName);
+  else if(sim->SimOpenDpl) {
     // switch to data display
-    slotChangePage(Info.dirPath() + QDir::separator() + sim->Doc->DataDisplay);
+    slotChangePage(sim->DataDisplay);
     sim->slotClose();   // close and delete simulation window
   }
-  else sim->Doc->reloadGraphs();  // load recent simulation data
+  else if(Index > 0)
+    sim->Doc->reloadGraphs(); // load recent simulation data (if doc still open)
 
   view->viewport()->update();
 

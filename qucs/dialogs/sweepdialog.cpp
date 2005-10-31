@@ -133,6 +133,8 @@ Graph* SweepDialog::setBiasPoints()
   bool hasNoComp;
   Graph *pg = new Graph("");
   Diagram *Diag = new Diagram();
+  QFileInfo Info(Doc->DocName);
+  QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
 
   Node *pn;
   Element *pe;
@@ -167,7 +169,7 @@ Graph* SweepDialog::setBiasPoints()
     }
 
     pg->Var = pn->Name + ".V";
-    if(Diag->loadVarData(Doc->DataSet, pg)) {
+    if(Diag->loadVarData(DataSet, pg)) {
       pn->Name = num2str(*(pg->cPointsY)) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
@@ -195,7 +197,7 @@ Graph* SweepDialog::setBiasPoints()
 
       pn->x1 = 0x10;   // mark current
       pg->Var = pc->Name + ".I";
-      if(Diag->loadVarData(Doc->DataSet, pg)) {
+      if(Diag->loadVarData(DataSet, pg)) {
         pn->Name = num2str(*(pg->cPointsY)) + "A";
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
