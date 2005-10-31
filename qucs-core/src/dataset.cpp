@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.14 2005-06-02 18:17:49 raimi Exp $
+ * $Id: dataset.cpp,v 1.15 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -364,10 +364,10 @@ void dataset::printData (vector * v, FILE * f) {
   for (int i = 0; i < v->getSize (); i++) {
     complex c = v->get (i);
     if (imag (c) == 0.0) {
-      fprintf (f, "  %+.11e\n", (double) real (c));
+      fprintf (f, "  %+." NR_DECS "e\n", (double) real (c));
     }
     else {
-      fprintf (f, "  %+.11e%cj%.11e\n", (double) real (c), 
+      fprintf (f, "  %+." NR_DECS "e%cj%." NR_DECS "e\n", (double) real (c), 
 	       imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
     }
   }
@@ -394,6 +394,8 @@ dataset * dataset::load (const char * file) {
       return NULL;
     }
   }
+  fclose (f);
+  dataset_lex_destroy ();
   dataset_result->setFile (file);
   return dataset_result;
 }
@@ -416,6 +418,8 @@ dataset * dataset::load_touchstone (const char * file) {
     fclose (f);
     return NULL;
   }
+  fclose (f);
+  touchstone_lex_destroy ();
   touchstone_result->setFile (file);
   return touchstone_result;
 }

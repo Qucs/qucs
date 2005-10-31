@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.20 2005-06-02 18:17:51 raimi Exp $
+ * $Id: ucs.cpp,v 1.21 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -129,6 +129,7 @@ int main (int argc, char ** argv) {
 
   // evaluate output dataset
   equation_solver (out);
+  equation_destructor ();
   out->setFile (outfile);
   out->print ();
 

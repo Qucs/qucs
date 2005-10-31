@@ -1,3 +1,30 @@
+2005-10-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Skip range test if a property is assigned
+	by a (sweep) variable.
+
+	* precision.h: Improved --enable-double behaviour by
+	introducing double representation dependent precision
+	constants.
+
+2005-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: Fixed smaller memory leaks in the netlist
+	parser.
+
+	* vector.cpp, equation.cpp, evaluate.cpp, net.cpp: Fixed loads
+	of memory leaks.
+
+	* environment.cpp: Fixed memory leak (deleting substrates
+	and constants).
+
+	* dataset.cpp (load_touchstone), check_touchstone.cpp: Fixed
+	scanner memory leak.
+
+	* check_netlist.cpp (netlist_destroy): Calling
+	netlist_lex_destroy() fixes a memory leak in the netlist
+	scanner.
+
 2005-10-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: New constructor taking size and content (constant

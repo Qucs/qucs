@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.44 2005-06-02 18:17:51 raimi Exp $
+ * $Id: spsolver.cpp,v 1.45 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -57,7 +57,7 @@
 #define USE_CROSSES 1   // use additional cross connectors ?
 #define SORTED_LIST 1   // use sorted node list?
 
-#define TINYS 1.235e-12 // 'tiny' value for singularities
+#define TINYS (NR_TINY * 1.235) // 'tiny' value for singularities
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {

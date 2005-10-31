@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.32 2005-08-24 07:10:46 raimi Exp $
+ * $Id: bjt.cpp,v 1.33 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -349,7 +349,7 @@ void bjt::calcDC (void) {
     if (Irb != 0.0) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-      a = MAX (a, 1e-12); // enforce positive values
+      a = MAX (a, NR_TINY); // enforce positive values
       z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
       b = tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);

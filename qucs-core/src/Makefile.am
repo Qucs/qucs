@@ -55,7 +55,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
-	spline.h tridiag.h fourier.h
+	spline.h tridiag.h fourier.h precision.h
 
 noinst_LIBRARIES = libqucsator.a
 

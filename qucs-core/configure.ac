@@ -102,18 +102,21 @@ AC_ARG_ENABLE([double],
   AC_HELP_STRING([--enable-double=TYPE],
                  [type of double representation @<:@default=double@:>@]),
   [case "$enableval" in
-   no | yes | double)  double_type="double" ;;
-   ldouble)            double_type="long double" ;;
-   float)              double_type="float" ;;
-   *)                  double_type="none" ;;
+   no | yes | double)  double_type="double"; double_size=8 ;;
+   ldouble)            double_type="long double"; double_size=12 ;;
+   float)              double_type="float"; double_size=4 ;;
+   *)                  double_type="none"; double_size=0 ;;
    esac],
-  [double_type="double"])
+  [double_type="double"; double_size=8])
 if test "$double_type" = none; then
   AC_MSG_ERROR([valid types are double, float and ldouble.])
 fi
 AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
   [The global type of double representation.])
+AC_DEFINE_UNQUOTED(NR_DOUBLE_SIZE, $double_size,
+  [The size of the double representation.])
 unset double_type
+unset double_size
 
 # Checks for library functions.
 AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin tan atan sinh cosh tanh \

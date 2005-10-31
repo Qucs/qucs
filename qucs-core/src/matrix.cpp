@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.25 2005-10-27 09:57:31 raimi Exp $
+ * $Id: matrix.cpp,v 1.26 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -459,9 +459,8 @@ matrix inverse (matrix a) {
 /* Convert scattering parameters with the reference impedance 'zref'
    to scattering parameters with the reference impedance 'z0'. */
 matrix stos (matrix s, vector zref, vector z0) {
-  assert (s.getRows () == s.getCols () &&
-	  s.getRows () == z0.getSize () && s.getRows () == zref.getSize ());
   int d = s.getRows ();
+  assert (d == s.getCols () && d == z0.getSize () && d == zref.getSize ());
   matrix e, r, a;
   e = eye (d);
   r = diagonal ((z0 - zref) / (z0 + zref));
@@ -471,9 +470,7 @@ matrix stos (matrix s, vector zref, vector z0) {
 
 matrix stos (matrix s, complex zref, complex z0) {
   int d = s.getRows ();
-  vector zo (d, zref);
-  vector zn (d, z0);
-  return stos (s, zo, zn);
+  return stos (s, vector (d, zref), vector (d, z0));
 }
 
 matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
@@ -481,21 +478,17 @@ matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
 }
 
 matrix stos (matrix s, vector zref, complex z0) {
-  int d = zref.getSize ();
-  vector zn (d, z0);
-  return stos (s, zref, zn);
+  return stos (s, zref, vector (zref.getSize (), z0));
 }
 
 matrix stos (matrix s, complex zref, vector z0) {
-  int d = z0.getSize ();
-  vector zo (d, zref);
-  return stos (s, zo, z0);
+  return stos (s, vector (z0.getSize (), zref), z0);
 }
 
 // Convert scattering parameters to impedance matrix.
 matrix stoz (matrix s, vector z0) {
-  assert (s.getRows () == s.getCols () && s.getRows () == z0.getSize ());
   int d = s.getRows ();
+  assert (d == s.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
   e = eye (d);
   zref = diagonal (z0);
@@ -504,14 +497,13 @@ matrix stoz (matrix s, vector z0) {
 }
 
 matrix stoz (matrix s, complex z0) {
-  vector zref (s.getRows (), z0);
-  return stoz (s, zref);
+  return stoz (s, vector (s.getRows (), z0));
 }
 
 // Convert impedance matrix scattering parameters.
 matrix ztos (matrix z, vector z0) {
-  assert (z.getRows () == z.getCols () && z.getRows () == z0.getSize ());
   int d = z.getRows ();
+  assert (d == z.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
   e = eye (d);
   zref = diagonal (z0);
@@ -520,8 +512,7 @@ matrix ztos (matrix z, vector z0) {
 }
 
 matrix ztos (matrix z, complex z0) {
-  vector zref (z.getRows (), z0);
-  return ztos (z, zref);
+  return ztos (z, vector (z.getRows (), z0));
 }
 
 // Convert impedance matrix to admittance matrix.
@@ -532,8 +523,8 @@ matrix ztoy (matrix z) {
 
 // Convert scattering parameters to admittance matrix.
 matrix stoy (matrix s, vector z0) {
-  assert (s.getRows () == s.getCols () && s.getRows () == z0.getSize ());
   int d = s.getRows ();
+  assert (d == s.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
   e = eye (d);
   zref = diagonal (z0);
@@ -542,14 +533,13 @@ matrix stoy (matrix s, vector z0) {
 }
 
 matrix stoy (matrix s, complex z0) {
-  vector zref (s.getRows (), z0);
-  return stoy (s, zref);
+  return stoy (s, vector (s.getRows (), z0));
 }
 
 // Convert admittance matrix to scattering parameters.
 matrix ytos (matrix y, vector z0) {
-  assert (y.getRows () == y.getCols () && y.getRows () == z0.getSize ());
   int d = y.getRows ();
+  assert (d == y.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
   e = eye (d);
   zref = diagonal (z0);
@@ -558,8 +548,7 @@ matrix ytos (matrix y, vector z0) {
 }
 
 matrix ytos (matrix y, complex z0) {
-  vector zref (y.getRows (), z0);
-  return ytos (y, zref);
+  return ytos (y, vector (y.getRows (), z0));
 }
 
 // Converts scattering parameters to chain matrix.

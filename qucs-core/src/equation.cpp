@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.35 2005-10-17 08:41:23 raimi Exp $
+ * $Id: equation.cpp,v 1.36 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -62,17 +62,38 @@ solver * eqn::solve = NULL;
 // Constructor creates an untyped instance of the constant class.
 constant::constant () : node (CONSTANT) {
   type = TAG_UNKNOWN;
+  dataref = false;
   setType (type);
 }
 
 // This constructor creates an typed instance of the constant class.
 constant::constant (int tag) : node (CONSTANT) {
   type = tag;
+  dataref = false;
   setType (type);
 }
 
 // Destructor deletes an instance of the constant class.
 constant::~constant () {
+  if (!dataref) {
+    switch (type) {
+    case TAG_COMPLEX:
+      delete c;
+      break;
+    case TAG_VECTOR:
+      delete v;
+      break;
+    case TAG_MATRIX:
+      delete m;
+      break;
+    case TAG_MATVEC:
+      delete mv;
+      break;
+    case TAG_STRING:
+      free (s);
+      break;
+    }
+  }
 }
 
 /* Depending on the type of constant the function prints the textual
@@ -302,11 +323,12 @@ application::application () : node (APPLICATION) {
 
 // Destructor deletes an instance of the application class.
 application::~application () {
-  node * next;
+  node * next, * res;
   for (node * arg = args; arg != NULL; arg = next) {
     next = arg->getNext ();
     delete arg;
   }
+  if ((res = getResult ()) != NULL) delete res;
   if (n) free (n);
 }
 
@@ -979,9 +1001,10 @@ void solver::solve (void) {
 
 /* This function adds the given dataset vector to the set of equations
    stored in the equation solver. */
-node * solver::addEquationData (vector * v) {
+node * solver::addEquationData (vector * v, bool ref) {
   constant * con = new constant (TAG_VECTOR);
   con->v = v;
+  con->dataref = ref;
   assignment * assign = new assignment ();
   assign->result = strdup (v->getName ());
   assign->body = con;
@@ -1076,7 +1099,7 @@ void solver::checkinDataset (void) {
   findMatrixVectors (data->getVariables ());
   for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
-      node * eqn = addEquationData (v);
+      node * eqn = addEquationData (v, true);
       strlist * deps = new strlist ();
       deps->add (v->getName ());
       eqn->setDataDependencies (deps);
@@ -1085,7 +1108,7 @@ void solver::checkinDataset (void) {
   }
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
-      node * eqn = addEquationData (v);
+      node * eqn = addEquationData (v, true);
       eqn->setDataDependencies (v->getDependencies ());
     }
   }
@@ -1406,4 +1429,20 @@ void equation_constants (void) {
     a->setNext (eqn::equations);
     eqn::equations = a;
   }
+}
+
+/* This is the final destructor for the equation solver. */
+void equation_destructor (void) {
+  // delete solver
+  if (solve) {
+    delete solve;
+    solve = NULL;
+  }
+  // delete equations
+  node * next, * eqn;
+  for (eqn = equations; eqn != NULL; eqn = next) {
+    next = eqn->getNext ();
+    delete eqn;
+  }
+  equations = NULL;
 }

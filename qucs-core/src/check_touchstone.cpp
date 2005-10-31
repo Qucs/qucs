@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.11 2005-06-02 18:17:49 raimi Exp $
+ * $Id: check_touchstone.cpp,v 1.12 2005-10-31 16:15:30 ela Exp $
  *
  */
 
@@ -398,6 +398,7 @@ static void touchstone_finalize (void) {
     delete touchstone_idents;
     touchstone_idents = NULL;
   }
+  touchstone_lex_destroy ();
   /* apply default values again */
   touchstone_options.unit = "GHz";
   touchstone_options.parameter = 'S';

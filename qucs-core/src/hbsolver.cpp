@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.2 2005-06-02 18:17:50 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.3 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -189,7 +189,7 @@ void hbsolver::collectHarmonics (void) {
 #if DEBUG
   fprintf (stderr, "%d frequencies: [ ", frequencies->getSize ());
   for (int i = 0; i < frequencies->getSize (); i++) {
-    fprintf (stderr, "%g ", real (frequencies->get (i)));
+    fprintf (stderr, "%g ", (double) real (frequencies->get (i)));
   }
   fprintf (stderr, "]\n");
 #endif /* DEBUG */

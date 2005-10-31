@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.18 2005-10-27 09:57:31 raimi Exp $
+ * $Id: vector.h,v 1.19 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __VECTOR_H__
 
 #include "consts.h"
+#include "precision.h"
 
 #ifdef log2
 #undef log2
@@ -55,13 +56,13 @@ class vector : public object
   int getRequested (void) { return requested; }
   void setRequested (int n) { requested = n; }
   void reverse (void);
-  strlist * getDependencies (void) { return dependencies; }
-  void setDependencies (strlist * s) { dependencies = s; }
+  strlist * getDependencies (void);
+  void setDependencies (strlist *);
   void setOrigin (char *);
   char * getOrigin (void);
   nr_double_t maximum (void);
   nr_double_t minimum (void);
-  int contains (complex, nr_double_t eps = 1e-12);
+  int contains (complex, nr_double_t eps = NR_EPSI);
   void sort (bool ascending = true);
 
   friend complex sum  (vector);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.6 2005-10-04 10:52:29 raimi Exp $
+ * $Id: netdefs.h,v 1.7 2005-10-31 16:15:31 ela Exp $
  *
  */
 
@@ -116,8 +116,8 @@ struct define_t {
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
 #define PROP_NO_RANGE     { '.', 0, 0, '.' }
-#define PROP_VAL_MAX      DBL_MAX
-#define PROP_VAL_MIN      DBL_MIN
+#define PROP_VAL_MAX      NR_MAX
+#define PROP_VAL_MIN      NR_MIN
 #define PROP_POS_RANGE    { '[', 0, 0, '.' }
 #define PROP_NEG_RANGE    { '.', 0, 0, ']' }
 #define PROP_POS_RANGEX   { ']', 0, 0, '.' }

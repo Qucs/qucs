@@ -1,7 +1,7 @@
 /*
  * constants.h - global natural constant header file
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: constants.h,v 1.2 2005-06-02 18:17:49 raimi Exp $
+ * $Id: constants.h,v 1.3 2005-10-31 16:15:30 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __CONSTANTS_H__
 
 #include "consts.h"
+#include "precision.h"
 
 #define C0   299792458.0              /* speed of light in vacuum  */
 #define kB   1.380650524e-23          /* Boltzmann constant        */
@@ -42,6 +43,7 @@
 #define ESiO2   3.9
 #define Ni      1.45e16
 #define ESi     11.7
+#define GMin    NR_TINY
 
 #define sqr(x)    ((x) * (x))
 #define cubic(x)  ((x) * (x) * (x))
