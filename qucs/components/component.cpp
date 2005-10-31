@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
+
 #include "components.h"
 #include "main.h"
 #include "qucs.h"
