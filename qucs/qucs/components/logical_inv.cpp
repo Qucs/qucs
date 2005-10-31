@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
+
 #include "logical_inv.h"
 #include "qucsdoc.h"
 #include "node.h"
