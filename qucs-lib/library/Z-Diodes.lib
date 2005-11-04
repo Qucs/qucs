@@ -1,14 +1,179 @@
 <Qucs Library 0.0.8 "Z-Diodes">
 
-<Component ZPD12>
+<Component BZT52C10T>
   <Description>
-    universal silicon Z-diode
-    V, mW
-    Manufacturer: ???
+    BZT52C10T
+    Diodes
+    Zener <= 10V; 10.0V 0.500W
+    Manufacturer: Diodes Inc. Zener
   </Description>
   <Model>
-    .Def:Z-Diodes_ZPD12 _net0 _net1
-      Diode:D1 _net0 _net1 Is="2.46092e-06" N="2.62593" Rs="0.00370811" Cj0="2.8562e-10" Vj="0.25" M="0.332534" Fc="0.5" Tt="2.88539e-06" Bv="440" Ibv="0.05" Af="1" Kf="0"
+    .Def:Z_Diodes_BZT52C10T _net1 _net2
+      Diode:D1 _net1 _net2 Is="20.6p" Rs="1.22" N="1.1" Cj0="45.6p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="4.12f" Rs="4.6" N="2.97" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="7.84"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component BZT52C10S>
+  <Description>
+    BZT52C10S
+    Diodes
+    Zener <= 10V; 10.0V 0.200W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_BZT52C10S _net1 _net2
+      Diode:D1 _net1 _net2 Is="8.24p" Rs="30.4" N="1.1" Cj0="47.6p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="1.65f" Rs="4.6" N="2.97" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="7.76"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component BZT52C10>
+  <Description>
+    BZT52C10
+    Diodes
+    Zener <= 10V; 10.0V 0.500W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_BZT52C10 _net1 _net2
+      Diode:D1 _net1 _net2 Is="20.6p" Rs="1.22" N="1.1" Cj0="45.6p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="4.12f" Rs="4.6" N="2.97" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="7.84"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component 1N4728A>
+  <Description>
+    1N4728A
+    Diodes
+    Zener <= 10V; 3.30V 1.00W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_1N4728A _net1 _net2
+      Diode:D1 _net1 _net2 Is="125p" Rs="0.62" N="1.1" Cj0="364p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="25f" Rs="1.24" N="3" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="0.972"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component 1N4729A>
+  <Description>
+    1N4729A
+    Diodes
+    Zener <= 10V; 3.60V 1.00W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_1N4729A _net1 _net2
+      Diode:D1 _net1 _net2 Is="114p" Rs="0.62" N="1.1" Cj0="319p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="22.9f" Rs="0.923" N="3" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="1.3"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component 1N4730A>
+  <Description>
+    1N4730A
+    Diodes
+    Zener <= 10V; 3.90V 1.00W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_1N4730A _net1 _net2
+      Diode:D1 _net1 _net2 Is="106p" Rs="0.62" N="1.1" Cj0="283p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="21.1f" Rs="0.645" N="3" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="1.63"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID -26 13 D>
+    <Line -30 0 60 0 #000080 2 1>
+    <Line -6 -9 0 18 #000080 2 1>
+    <Line 6 -9 0 18 #000080 2 1>
+    <Line -6 0 12 -9 #000080 2 1>
+    <Line -6 0 12 9 #000080 2 1>
+    <Line -6 9 4 0 #000080 2 1>
+    <.PortSym -30 0 1 0>
+    <.PortSym 30 0 2 180>
+  </Symbol>
+</Component>
+
+<Component 1N4731A>
+  <Description>
+    1N4731A
+    Diodes
+    Zener <= 10V; 4.30V 1.00W
+    Manufacturer: Diodes Inc. Zener
+  </Description>
+  <Model>
+    .Def:Z_Diodes_1N4731A _net1 _net2
+      Diode:D1 _net1 _net2 Is="95.8p" Rs="0.62" N="1.1" Cj0="244p" Vj="0.75" M="0.33" Tt="50.1n"
+      Diode:DZ _net3 _net1 Is="19.2f" Rs="0.377" N="2.82" M="0.5" Cj0="1e-14" Vj="0.7"
+      Vdc:VZ _net2 _net3 U="2.18"
     .Def:End
   </Model>
   <Symbol>

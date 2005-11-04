@@ -225,6 +225,7 @@ QString LibComp::NetList()
   // output property
   QString Type = Props.first()->Value;
   Type += "_" + Props.next()->Value;
+  Type.replace(QRegExp("\\W"), "_");
   s += " Type=\""+Type+"\"";   // type for subcircuit
 
   return s;
