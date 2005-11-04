@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.10 2005-10-17 08:41:23 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.11 2005-11-04 10:22:59 raimi Exp $
  *
  */
 
@@ -262,7 +262,7 @@ qucs_devices[] = {
     "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
   },
   /* junction FET */
-  { "JFET", "_JFET", 3,
+  { "JFET", "JFET", 3,
     { "Type", "Vt0", "Beta", "Lambda", "Rd", "Rs", "Is", "N", "Isr", "Nr",
       "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", NULL },
     "  <.PortSym -50 0 1>\n"
