@@ -3,7 +3,7 @@
 -- 
 -- release instructions.
 -- 
--- Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -34,9 +34,6 @@ Distribution process:
      + GNU automake 1.7.0 (at least)
      + flex 2.5.31
      + GNU Bison 1.875d
-     + a LaTeX installation (including IEEEtran bibstyle)
-     + GNU Octave
-     + epsTk 2.0.1 (at least)
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
     command `automake -a -f -c' with latest automake version installed.
   - Run `make distclean', `sh autogen.sh' and `make all'.
