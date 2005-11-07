@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.26 2005/10/17 08:41:23 raimi Exp $
+ * $Id: qucsdefs.h,v 1.27 2005/11/07 20:23:50 raimi Exp $
  *
  */
 
@@ -279,7 +279,7 @@ struct define_t qucs_definition_available[] =
   { "IInoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "i2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', -1, 1, ']' } }, 
       PROP_NO_PROP },
     { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
@@ -290,7 +290,7 @@ struct define_t qucs_definition_available[] =
   { "VVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "v1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', -1, 1, ']' } }, 
       PROP_NO_PROP },
     { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
@@ -301,7 +301,7 @@ struct define_t qucs_definition_available[] =
   { "IVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', -1, 1, ']' } }, 
       PROP_NO_PROP },
     { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
@@ -357,8 +357,8 @@ struct define_t qucs_definition_available[] =
   /* sgp bjt */
   { "BJT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "Is", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
-      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.9, 100, ']' } },
+      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.9, 100, ']' } },
       { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ikr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vaf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
