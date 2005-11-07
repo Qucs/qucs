@@ -32,3 +32,30 @@
     <JFET BF245C_ 1 190 140 8 -26 0 0 "nfet" 0 "-5.0014" 0 "0.000543157" 0 "0.0271505" 0 "12.0869" 0 "12.0869" 0 "3.64346e-16" 0 "1" 0 "1e-14" 0 "2" 0 "2e-12" 0 "2e-12" 0 "1.24659" 0 "0.5" 0 "0.5" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
   </Model>
 </Component>
+
+<Component 2N4221>
+  <Description>
+    n-channel silicon field-effect transistor
+  </Description>
+  <Model>
+    <JFET J2N4221_ 1 190 140 30 -49 0 0 "nfet" 0 "-3" 0 "600u" 0 "2m" 0 "1" 0 "1" 0 "2p" 0 "1" 0 "20p" 0 "2" 0 "3.3p" 0 "3p" 0 "1" 0 "0.5" 0 "0.3333" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component 2N5460>
+  <Description>
+    p-channel silicon field-effect transistor
+  </Description>
+  <Model>
+    <JFET J2N5460_ 1 190 140 30 -49 0 0 "pfet" 0 "-3" 0 "500u" 0 "10m" 0 "1" 0 "1" 0 "90p" 0 "1" 0 "800p" 0 "2" 0 "4p" 0 "2.5p" 0 "1" 0 "0.5" 0 "0.3333" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component 2N5485>
+  <Description>
+    n-channel silicon field-effect transistor
+  </Description>
+  <Model>
+    <JFET J2N5485_ 1 190 140 30 -49 0 0 "nfet" 0 "-2.25" 0 "1.2m" 0 "8m" 0 "1" 0 "1" 0 "20p" 0 "1" 0 "150p" 0 "2" 0 "4p" 0 "2.5p" 0 "1" 0 "0.5" 0 "0.3333" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
