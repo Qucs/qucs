@@ -66,9 +66,6 @@ the tarballs created using `make distcheck'.
   - GNU automake 1.7.0 (at least)
   - flex 2.5.31
   - GNU Bison 1.875d
-  - a LaTeX installation (including IEEEtran bibstyle)
-  - GNU Octave
-  - epsTk 2.0.1 (at least)
   - Qt installation >= version 3.1 (by Trolltech)
 
 * Unpack the packages in a temporary directory.
