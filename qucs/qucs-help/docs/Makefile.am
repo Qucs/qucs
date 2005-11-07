@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = en es fr de tutorial
+SUBDIRS = en es fr de
 
 dist_man_MANS = qucs.1
 
