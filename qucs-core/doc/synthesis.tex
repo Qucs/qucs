@@ -16,7 +16,15 @@
 
 Attenuators are used to damp a signal. Using pure ohmic resistors
 the circuit can be realized for a very high bandwidth, i.e. from
-DC to many GHz.
+DC to many GHz. The power attenuation $0 < L\le 1$ is defined as:
+\begin{equation}
+\label{eqn:loss}
+L = \dfrac{P_{in}}{P_{out}}
+  = \dfrac{U_{in}^2}{Z_{in}}\cdot\dfrac{Z_{out}}{U_{out}^2}
+  = \left( \dfrac{U_{in}}{U_{out}}\right)^2 \cdot\dfrac{Z_{out}}{Z_{in}}
+\end{equation}
+where $P_{in}$ and $P_{out}$ are the input and output power and
+$U_{in}$ and $U_{out}$ are the input and output voltages.
 
 \begin{figure}[ht]
 \begin{center}
@@ -30,22 +38,16 @@ DC to many GHz.
 Fig. \ref{fig:pi_attenuator} shows an attenuator using the
 pi-topology. The conductances can be calculated as follows.
 \begin{align}
-Y_2 & = \dfrac{L^2 - 1}{2\cdot L\cdot \sqrt{Z_{in}\cdot Z_{out}}} \\
-Y_1 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{out}}{Z_{in}}}\cdot L - 1 \right) \\
-Y_3 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{in}}{Z_{out}}}\cdot L - 1 \right)
+Y_2 & = \dfrac{L - 1}{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}} \\
+Y_1 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{out}}{Z_{in}}\cdot L} - 1 \right) \\
+Y_3 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{in}}{Z_{out}}\cdot L} - 1 \right)
 \end{align}
 where $Z_{in}$ and $Z_{out}$ are the input and output reference
-impedance, respectively. $L$ is the voltage attenuation ($0 < L\le 1$)
-defined as:
+impedance, respectively. The pi-attenuator can be used for an
+impedance ratio of:
 \begin{equation}
-\label{eqn:loss}
-L = \sqrt{\dfrac{P_{in}}{P_{out}}}
-  = \sqrt{\dfrac{U_{in}^2}{Z_{in}}\cdot\dfrac{Z_{out}}{U_{out}^2}}
-  = \left| \dfrac{U_{in}}{U_{out}}\right| \cdot\sqrt{\dfrac{Z_{out}}{Z_{in}}}
+\dfrac{1}{L} \le \dfrac{Z_{out}}{Z_{in}} \le L
 \end{equation}
-where $P_{in}$ and $P_{out}$ are the input and output power and
-$U_{in}$ and $U_{out}$ are the input and output voltages.
-
 
 \begin{figure}[ht]
 \begin{center}
@@ -59,17 +61,18 @@ $U_{in}$ and $U_{out}$ are the input and output voltages.
 Fig. \ref{fig:t_attenuator} shows an attenuator using the
 T-topology. The resistances can be calculated as follows.
 \begin{align}
-Z_1 & = Z_{in}\cdot A - B \\
-Z_3 & = Z_{out}\cdot A - B \\
-\dfrac{1}{Z_2} & = \dfrac{1}{Z_1}\cdot
-         \left( \dfrac{\sqrt{Z_{in}\cdot Z_{out}}\cdot L - Z_1}{Z_3 + Z_{out}} - 1 \right) \\
- & \text{with} \qquad A = \dfrac{L^2 + 1}{L^2 - 1} \\
- & \text{and}  \qquad B = \dfrac{2\cdot L\cdot \sqrt{Z_{in}\cdot Z_{out}}}{L^2 - 1}
+Z_2 & = \dfrac{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}}{L^2 - 1} \\
+Z_1 & = Z_{in}\cdot A - Z_2 \\
+Z_3 & = Z_{out}\cdot A - Z_2 \\
+    & \text{with} \qquad A = \dfrac{L + 1}{L - 1}
 \end{align}
 where $L$ is the attenuation ($0 < L\le 1$) according to
 equation \ref{eqn:loss} and $Z_{in}$ and $Z_{out}$
 are the input and output reference impedance, respectively.
-
+The T-attenuator can be used for an impedance ratio of:
+\begin{equation}
+\dfrac{Z_{out}}{Z_{in}} \le \dfrac{(L+1)^2}{4\cdot L}
+\end{equation}
 
 \section{Filters}
 

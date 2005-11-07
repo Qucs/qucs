@@ -4,8 +4,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC639_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -16,8 +17,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 500mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC807-16_ 1 0 0 8 -26 0 0 "pnp" 0 "50.7f" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "24.2p" 0 "2" 0 "0" 0 "2" 0 "342" 0 "4" 0 "0" 0 "0" 0 "85.2m" 0 "0.273" 0 "0.852" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "631p" 0 "0" 0 "0" 0 "0" 0 "111n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -28,8 +30,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 500mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC807-25_ 1 0 0 8 -26 0 0 "pnp" 0 "50.7f" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "15.1p" 0 "2" 0 "0" 0 "2" 0 "547" 0 "4" 0 "0" 0 "0" 0 "85.2m" 0 "0.213" 0 "0.852" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "631p" 0 "0" 0 "0" 0 "0" 0 "109n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -40,8 +43,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 500mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC807-40_ 1 0 0 8 -26 0 0 "pnp" 0 "50.7f" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "10.1p" 0 "2" 0 "0" 0 "2" 0 "821" 0 "4" 0 "0" 0 "0" 0 "85.2m" 0 "0.213" 0 "0.852" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "631p" 0 "0" 0 "0" 0 "0" 0 "108n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -52,8 +56,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 800mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC817-16_ 1 0 0 8 -26 0 0 "npn" 0 "4.04n" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "6.86n" 0 "2" 0 "0" 0 "2" 0 "342" 0 "4" 0 "0" 0 "0" 0 "90.7m" 0 "0.227" 0 "0.907" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "651p" 0 "0" 0 "0" 0 "0" 0 "111n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -64,8 +69,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 800mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC817-25_ 1 0 0 8 -26 0 0 "npn" 0 "4.04n" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "4.29n" 0 "2" 0 "0" 0 "2" 0 "548" 0 "4" 0 "0" 0 "0" 0 "90.7m" 0 "0.227" 0 "0.907" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "651p" 0 "0" 0 "0" 0 "0" 0 "109n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -76,8 +82,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 800mA, 250mW, 220MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC817-40_ 1 0 0 8 -26 0 0 "npn" 0 "4.04n" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "121" 0 "20" 0 "2.86n" 0 "2" 0 "0" 0 "2" 0 "822" 0 "4" 0 "0" 0 "0" 0 "90.7m" 0 "0.227" 0 "0.907" 0 "107p" 0 "1.1" 0 "0.5" 0 "34.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "651p" 0 "0" 0 "0" 0 "0" 0 "108n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -88,8 +95,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846A_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "53.6m" 0 "0.135" 0 "145" 0 "24" 0 "5.86p" 0 "2" 0 "0" 0 "2" 0 "305" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "416p" 0 "0" 0 "0" 0 "0" 0 "50.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -100,8 +108,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846AW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "53.6m" 0 "0.135" 0 "145" 0 "24" 0 "5.86p" 0 "2" 0 "0" 0 "2" 0 "305" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "416p" 0 "0" 0 "0" 0 "0" 0 "50.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -112,8 +121,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846B_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "39.5m" 0 "0.105" 0 "145" 0 "24" 0 "2.93p" 0 "2" 0 "0" 0 "2" 0 "650" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "385p" 0 "0" 0 "0" 0 "0" 0 "49n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -124,8 +134,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846BW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "39.5m" 0 "0.105" 0 "145" 0 "24" 0 "2.93p" 0 "2" 0 "0" 0 "2" 0 "650" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "385p" 0 "0" 0 "0" 0 "0" 0 "49n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -136,8 +147,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846C_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "60.7m" 0 "0.15" 0 "145" 0 "24" 0 "1.6p" 0 "2" 0 "0" 0 "2" 0 "1.09k" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -148,8 +160,9 @@
   <Description>
     universal silicon NPN BJT
     65V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC846CW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "60.7m" 0 "0.15" 0 "145" 0 "24" 0 "1.6p" 0 "2" 0 "0" 0 "2" 0 "1.09k" 0 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -172,8 +185,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847AT_ 1 0 0 8 -26 0 0 "npn" 0 "9.98f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "121" 0 "24.0" 0 "5.75p" 0 "2.00" 0 "0" 0 "2" 0 "301" 0 "4.00" 0 "0" 0 "0" 0 "0.326" 0 "0.815" 0 "3.26" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "13.0p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "423p" 0 "0" 0 "0" 0 "0" 0 "50.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -184,8 +198,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: BC857AW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847AW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1" 0 "1" 0 "60.7m" 0 "0.15" 0 "121" 0 "24" 0 "5.82p" 0 "2" 0 "0" 0 "2" 0 "301" 1 "4" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "50.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -208,8 +223,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847BS_ 1 0 0 8 -26 0 0 "npn" 0 "9.98f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "121" 0 "20.0" 0 "2.81p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.326" 0 "0.815" 0 "3.26" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "4.33p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "585p" 0 "0" 0 "0" 0 "0" 0 "49.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -220,8 +236,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847BT_ 1 0 0 8 -26 0 0 "npn" 0 "9.98f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "121" 0 "24.0" 0 "2.81p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.326" 0 "0.815" 0 "3.26" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "13.0p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "423p" 0 "0" 0 "0" 0 "0" 0 "49.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -232,8 +249,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847BV_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "42.5m" 0 "0.105" 0 "121" 0 "24.0" 0 "2.38p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "35.8p" 0 "1.10" 0 "0.500" 0 "11.6p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "665p" 0 "0" 0 "0" 0 "0" 0 "120n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -244,8 +262,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: BC857BW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847BW_ 1 0 0 8 -26 0 0 "npn" 0 "3.75f" 0 "1" 0 "1" 0 "8.79m" 0 "90m" 0 "121" 0 "24" 0 "8.38p" 0 "2" 0 "0" 0 "2" 0 "1.61k" 1 "4" 0 "0" 0 "0" 0 "0.306" 0 "0.765" 0 "3.06" 0 "13.3p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "520p" 0 "0" 0 "0" 0 "0" 0 "78.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -268,8 +287,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847CT_ 1 0 0 8 -26 0 0 "npn" 0 "9.98f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "121" 0 "24.0" 0 "1.58p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.326" 0 "0.815" 0 "3.26" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "13.0p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "423p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -280,8 +300,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: BC857CW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847CW_ 1 0 0 8 -26 0 0 "npn" 0 "10.3f" 0 "1" 0 "1" 0 "60.7m" 0 "0.15" 0 "121" 0 "24" 0 "1.61p" 0 "2" 0 "0" 0 "2" 0 "1.09k" 1 "4" 0 "0" 0 "0" 0 "0.386" 0 "0.965" 0 "3.86" 0 "26.8p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -292,8 +313,9 @@
   <Description>
     universal silicon NPN BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC847PN_ 1 0 0 8 -26 0 0 "npn" 0 "9.98f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "121" 0 "20.0" 0 "2.81p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.326" 0 "0.815" 0 "3.26" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "4.33p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "585p" 0 "0" 0 "0" 0 "0" 0 "49.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -304,8 +326,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848A_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "1.60p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -316,8 +339,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848AW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "1.60p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -328,8 +352,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848B_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "2.84p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "49.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -340,8 +365,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848BW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "2.84p" 0 "2.00" 0 "0" 0 "2" 0 "616" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "49.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -352,8 +378,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848C_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "1.60p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -364,8 +391,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 100mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC848CW_ 1 0 0 8 -26 0 0 "npn" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "98.6" 0 "20.0" 0 "1.60p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.366" 0 "0.915" 0 "3.66" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "427p" 0 "0" 0 "0" 0 "0" 0 "48.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -376,8 +404,9 @@
   <Description>
     universal silicon PNP BJT
     65V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC856A_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "145" 0 "20.0" 0 "5.59p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "581p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -388,8 +417,9 @@
   <Description>
     universal silicon PNP BJT
     65V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC856AW_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "145" 0 "20.0" 0 "5.59p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "581p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -400,8 +430,9 @@
   <Description>
     universal silicon PNP BJT
     80V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC856B_ 1 0 0 8 -26 0 0 "pnp" 0 "3.90f" 0 "1.00" 0 "1.00" 0 "91.1m" 0 "0.225" 0 "161" 0 "20.0" 0 "3.25p" 0 "2.00" 0 "0" 0 "2" 0 "408" 0 "4.00" 0 "0" 0 "0" 0 "0.313" 0 "0.782" 0 "3.13" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "548p" 0 "0" 0 "0" 0 "0" 0 "94.5n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -412,8 +443,9 @@
   <Description>
     universal silicon PNP BJT
     80V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC856BW_ 1 0 0 8 -26 0 0 "pnp" 0 "3.90f" 0 "1.00" 0 "1.00" 0 "91.1m" 0 "0.225" 0 "161" 0 "20.0" 0 "3.25p" 0 "2.00" 0 "0" 0 "2" 0 "408" 0 "4.00" 0 "0" 0 "0" 0 "0.313" 0 "0.782" 0 "3.13" 0 "26.8p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "548p" 0 "0" 0 "0" 0 "0" 0 "94.5n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -436,8 +468,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: BC847AW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857AW_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1" 0 "1" 0 "72.9m" 0 "0.18" 0 "121" 0 "20" 0 "5.59p" 0 "2" 0 "0" 0 "2" 0 "342" 1 "4" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.1" 0 "0.5" 0 "7.8p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "581p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -460,8 +493,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: BC847BW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857BW_ 1 0 0 8 -26 0 0 "pnp" 0 "5.51f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "121" 0 "20" 0 "2.35p" 0 "2" 0 "0" 0 "2" 0 "424" 1 "4" 0 "0" 0 "0" 0 "0.306" 0 "0.765" 0 "3.06" 0 "26.9p" 0 "1.1" 0 "0.5" 0 "8.67p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "700p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -484,8 +518,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: BC847CW
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857CW_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "121" 0 "20" 0 "1.24p" 0 "2" 0 "0" 0 "2" 0 "1.09k" 1 "4" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.1" 0 "0.5" 0 "7.8p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "587p" 0 "0" 0 "0" 0 "0" 0 "95n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -496,8 +531,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858A_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "98.6" 0 "20.0" 0 "5.59p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "581p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -508,8 +544,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858AW_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "98.6" 0 "20.0" 0 "5.59p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "581p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -520,8 +557,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858B_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "42.5m" 0 "0.105" 0 "98.6" 0 "20.0" 0 "2.25p" 0 "2.00" 0 "0" 0 "2" 0 "650" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "586p" 0 "0" 0 "0" 0 "0" 0 "95.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -532,8 +570,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858BW_ 1 0 0 8 -26 0 0 "pnp" 0 "5.51f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "98.6" 0 "20.0" 0 "2.35p" 0 "2.00" 0 "0" 0 "2" 0 "424" 0 "4.00" 0 "0" 0 "0" 0 "0.306" 0 "0.765" 0 "3.06" 0 "26.9p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "700p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -544,8 +583,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858C_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "98.6" 0 "20.0" 0 "1.24p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "587p" 0 "0" 0 "0" 0 "0" 0 "95.0n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -556,8 +596,9 @@
   <Description>
     universal silicon PNP BJT
     30V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC858CW_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "98.6" 0 "20.0" 0 "1.24p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "587p" 0 "0" 0 "0" 0 "0" 0 "95.0n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -568,8 +609,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857AT_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "121" 0 "20.0" 0 "5.59p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "37.6p" 0 "1.10" 0 "0.500" 0 "12.1p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "488p" 0 "0" 0 "0" 0 "0" 0 "97.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -580,8 +622,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857CT_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "121" 0 "20.0" 0 "1.24p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "30.8p" 0 "1.10" 0 "0.500" 0 "12.1p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "526p" 0 "0" 0 "0" 0 "0" 0 "95.0n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -592,8 +635,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857BV_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "42.5m" 0 "0.105" 0 "121" 0 "20.0" 0 "2.25p" 0 "2.00" 0 "0" 0 "2" 0 "650" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "37.6p" 0 "1.10" 0 "0.500" 0 "12.1p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "499p" 0 "0" 0 "0" 0 "0" 0 "95.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -604,8 +648,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857BT_ 1 0 0 8 -26 0 0 "pnp" 0 "5.51f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "121" 0 "20.0" 0 "2.35p" 0 "2.00" 0 "0" 0 "2" 0 "424" 0 "4.00" 0 "0" 0 "0" 0 "0.306" 0 "0.765" 0 "3.06" 0 "26.9p" 0 "1.10" 0 "0.500" 0 "8.67p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "700p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -616,8 +661,9 @@
   <Description>
     universal silicon PNP BJT
     45V, 100mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BC857BS_ 1 0 0 8 -26 0 0 "pnp" 0 "10.2f" 0 "1.00" 0 "1.00" 0 "42.5m" 0 "0.105" 0 "121" 0 "20.0" 0 "2.25p" 0 "2.00" 0 "0" 0 "2" 0 "650" 0 "4.00" 0 "0" 0 "0" 0 "0.286" 0 "0.715" 0 "2.86" 0 "13.3p" 0 "1.10" 0 "0.500" 0 "7.80p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "586p" 0 "0" 0 "0" 0 "0" 0 "95.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -628,8 +674,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCP56_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -640,8 +687,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCP5610_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -652,8 +700,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCP5616_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -664,8 +713,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCX56_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -676,8 +726,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCX5610_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -688,8 +739,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BCX5616_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -700,8 +752,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSP40_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -712,8 +765,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSP42_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -724,8 +778,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSP43_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -736,8 +791,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSR40_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -748,8 +804,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSR42_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -760,8 +817,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_BSR43_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -772,8 +830,9 @@
   <Description>
     universal silicon NPN BJT
     ?V, ?A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_FMMT493_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -784,8 +843,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_FZT493_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -796,8 +856,9 @@
   <Description>
     universal silicon NPN BJT
     120V, 50mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_IMX8_ 1 0 0 8 -26 0 0 "npn" 0 "14.6f" 0 "1.00" 0 "1.00" 0 "30.4m" 0 "75.0m" 0 "197" 0 "20.0" 0 "2.54p" 0 "2.00" 0 "0" 0 "2" 0 "581" 0 "4.00" 0 "0" 0 "0" 0 "0.332" 0 "0.830" 0 "3.32" 0 "12.5p" 0 "1.10" 0 "0.500" 0 "4.02p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "475p" 0 "0" 0 "0" 0 "0" 0 "80.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -808,8 +869,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_DMMT3904W_ 1 0 0 8 -26 0 0 "npn" 0 "20.3f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "114" 0 "24" 0 "6.99p" 0 "2" 0 "0" 0 "2" 0 "274" 0 "4" 0 "0" 0 "0" 0 "0.263" 0 "0.657" 0 "2.63" 0 "8.29p" 0 "0.5" 0 "0.5" 0 "7.1p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "426p" 0 "0" 0 "0" 0 "0" 0 "71.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -820,8 +882,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_DMMT3906_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1" 0 "1" 0 "44.6m" 0 "0.12" 0 "114" 0 "20" 0 "6.81p" 0 "2" 0 "0" 0 "2" 0 "437" 0 "4" 0 "0" 0 "0" 0 "0.463" 0 "1.16" 0 "4.63" 0 "23.5p" 0 "1.1" 0 "0.5" 0 "10.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "504p" 0 "0" 0 "0" 0 "0" 0 "94.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -832,8 +895,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_DMMT3906W_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "114" 0 "20.0" 0 "6.99p" 0 "2.00" 0 "0" 0 "2" 0 "274" 0 "4.00" 0 "0" 0 "0" 0 "0.403" 0 "1.01" 0 "4.03" 0 "12.1p" 0 "1.10" 0 "0.500" 0 "10.7p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "531p" 0 "0" 0 "0" 0 "0" 0 "85.6n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -844,8 +908,9 @@
   <Description>
     universal silicon NPN BJT
     160V, 200mA, 250mW, 150MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_DMMT5551_ 1 0 0 8 -26 0 0 "npn" 0 "15.4f" 0 "1.00" 0 "1.00" 0 "42.5m" 0 "0.105" 0 "228" 0 "24.0" 0 "5.27p" 0 "2.00" 0 "0" 0 "2" 0 "342" 0 "4.00" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "52.0p" 0 "1.10" 0 "0.500" 0 "16.8p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "873p" 0 "0" 0 "0" 0 "0" 0 "163n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -856,8 +921,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_FCX493_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -868,8 +934,9 @@
   <Description>
     universal silicon PNP BJT
     120V, 50mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_IMT4_ 1 0 0 8 -26 0 0 "pnp" 0 "12.8f" 0 "1.00" 0 "1.00" 0 "30.4m" 0 "75.0m" 0 "197" 0 "20.0" 0 "2.70p" 0 "2.00" 0 "0" 0 "2" 0 "513" 0 "4.00" 0 "0" 0 "0" 0 "0.572" 0 "1.43" 0 "5.72" 0 "19.1p" 0 "1.10" 0 "0.500" 0 "6.15p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "710p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -880,8 +947,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT2222A_ 1 0 0 8 -26 0 0 "npn" 0 "25.4f" 0 "1" 0 "1" 0 "0.121" 0 "0.3" 0 "114" 0 "24" 0 "14.3p" 0 "2" 0 "0" 0 "2" 0 "274" 0 "4" 0 "0" 0 "0" 0 "87.7m" 0 "0.219" 0 "0.877" 0 "27.6p" 0 "1.1" 0 "0.5" 0 "14.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "622p" 0 "0" 0 "0" 0 "0" 0 "124n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -892,8 +960,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT2222AT_ 1 0 0 8 -26 0 0 "npn" 0 "60.4f" 0 "1" 0 "1" 0 "66.8m" 0 "0.165" 0 "114" 0 "24" 0 "14.8p" 0 "2" 0 "0" 0 "2" 0 "301" 0 "4" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "36.2p" 0 "1.1" 0 "0.5" 0 "23.1p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "491p" 0 "0" 0 "0" 0 "0" 0 "82.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -904,8 +973,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 600mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT2907A_ 1 0 0 8 -26 0 0 "pnp" 0 "60.7f" 0 "1" 0 "1" 0 "0.219" 0 "0.54" 0 "139" 0 "20" 0 "26p" 0 "2" 0 "0" 0 "2" 0 "312" 0 "4" 0 "0" 0 "0" 0 "34.3m" 0 "85.8m" 0 "0.343" 0 "50.4p" 0 "1.1" 0 "0.5" 0 "23.1p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "758p" 0 "0" 0 "0" 0 "0" 0 "123n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -916,8 +986,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 500mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT2907AT_ 1 0 0 8 -26 0 0 "pnp" 0 "50f" 0 "1" 0 "1" 0 "0.182" 0 "0.45" 0 "139" 0 "20" 0 "16.4p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.137" 0 "0.343" 0 "1.37" 0 "34.9p" 0 "1.1" 0 "0.5" 0 "14.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "484p" 0 "0" 0 "0" 0 "0" 0 "29.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -928,8 +999,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT3904_ 1 0 0 8 -26 0 0 "npn" 0 "48.3f" 0 "1" 0 "1" 0 "0.121" 0 "0.3" 0 "114" 0 "24" 0 "13.1p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "1.05" 0 "2.63" 0 "10.5" 0 "9.67p" 0 "1.1" 0 "0.5" 0 "8.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "440p" 0 "0" 0 "0" 0 "0" 0 "74.7n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -940,8 +1012,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4124_ 1 0 0 8 -26 0 0 "npn" 0 "20.7f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "98.6" 0 "20.0" 0 "5.54p" 0 "2.00" 0 "0" 0 "2" 0 "492" 0 "4.00" 0 "0" 0 "0" 0 "1.05" 0 "2.63" 0 "10.5" 0 "9.65p" 0 "1.10" 0 "0.500" 0 "9.47p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "415p" 0 "0" 0 "0" 0 "0" 0 "69.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -952,8 +1025,9 @@
   <Description>
     universal silicon PNP BJT
     25V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4126_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "90.0" 0 "16.0" 0 "4.52p" 0 "2.00" 0 "0" 0 "2" 0 "598" 0 "4.00" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "13.8p" 0 "1.10" 0 "0.500" 0 "10.7p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "569p" 0 "0" 0 "0" 0 "0" 0 "93.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -964,8 +1038,9 @@
   <Description>
     universal silicon PNP BJT
     150V, 200mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT5401_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1" 0 "1" 0 "72.9m" 0 "0.18" 0 "220" 0 "20" 0 "8.24p" 0 "2" 0 "0" 0 "2" 0 "328" 0 "4" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "54.3p" 0 "1.1" 0 "0.5" 0 "17.5p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "315p" 0 "0" 0 "0" 0 "0" 0 "81.7n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -976,8 +1051,9 @@
   <Description>
     universal silicon PNP BJT
     150V, 200mA, 250mW, 150MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT5451_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1" 0 "1" 0 "72.9m" 0 "0.18" 0 "220" 0 "20" 0 "8.24p" 0 "2" 0 "0" 0 "2" 0 "328" 0 "4" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "54.3p" 0 "1.1" 0 "0.5" 0 "17.5p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "315p" 0 "0" 0 "0" 0 "0" 0 "81.7n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -988,8 +1064,9 @@
   <Description>
     universal silicon NPN BJT
     160V, 200mA, 250mW, 150MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT5451_ 1 0 0 8 -26 0 0 "npn" 0 "20.2f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "228" 0 "24" 0 "8.72p" 0 "2" 0 "0" 0 "2" 0 "219" 0 "4" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "27.9p" 0 "1.1" 0 "0.5" 0 "8.99p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.13n" 0 "0" 0 "0" 0 "0" 0 "193n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1000,8 +1077,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT4401_ 1 0 0 8 -26 0 0 "npn" 0 "60.7f" 0 "1" 0 "1" 0 "0.219" 0 "0.54" 0 "114" 0 "24" 0 "19.7p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "34.3m" 0 "85.8m" 0 "0.343" 0 "36.2p" 0 "1.1" 0 "0.5" 0 "15.4p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "539p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1012,8 +1090,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT4403_ 1 0 0 8 -26 0 0 "pnp" 0 "61f" 0 "1" 0 "1" 0 "0.34" 0 "0.84" 0 "114" 0 "20" 0 "24.7p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.108" 0 "0.269" 0 "1.08" 0 "27.6p" 0 "1.1" 0 "0.5" 0 "18.5p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "516p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1024,8 +1103,9 @@
   <Description>
     universal silicon PNP BJT
     150V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT5401_ 1 0 0 8 -26 0 0 "pnp" 0 "6.83f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "220" 0 "20.0" 0 "4.78p" 0 "2.00" 0 "0" 0 "2" 0 "328" 0 "4.00" 0 "0" 0 "0" 0 "63.0m" 0 "0.157" 0 "0.630" 0 "52.0p" 0 "1.10" 0 "0.500" 0 "16.8p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "450p" 0 "0" 0 "0" 0 "0" 0 "95.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1036,8 +1116,9 @@
   <Description>
     universal silicon NPN BJT
     160V, 200mA, 250mW, 130MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT5551_ 1 0 0 8 -26 0 0 "npn" 0 "20.2f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "228" 0 "24" 0 "8.72p" 0 "2" 0 "0" 0 "2" 0 "219" 0 "4" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "27.9p" 0 "1.1" 0 "0.5" 0 "8.99p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.13n" 0 "0" 0 "0" 0 "0" 0 "193n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1048,8 +1129,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST2222A_ 1 0 0 8 -26 0 0 "npn" 0 "61f" 0 "1" 0 "1" 0 "0.121" 0 "0.3" 0 "114" 0 "24" 0 "14.8p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.108" 0 "0.269" 0 "1.08" 0 "27.6p" 0 "1.1" 0 "0.5" 0 "15p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "496p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1060,8 +1142,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST2907A_ 1 0 0 8 -26 0 0 "pnp" 0 "59.9f" 0 "1" 0 "1" 0 "0.273" 0 "0.675" 0 "139" 0 "20" 0 "21.9p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.138" 0 "0.344" 0 "1.38" 0 "30.2p" 0 "1.1" 0 "0.5" 0 "18.5p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "513p" 0 "0" 0 "0" 0 "0" 0 "29.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1072,8 +1155,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST3904_ 1 0 0 8 -26 0 0 "npn" 0 "3.95e-16" 0 "1" 0 "1" 0 "30.4m" 0 "75m" 0 "114" 0 "24" 0 "593f" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "9.95p" 0 "1.1" 0 "0.5" 0 "8.99p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "367p" 0 "0" 0 "0" 0 "0" 0 "70.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1084,8 +1168,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST3906_ 1 0 0 8 -26 0 0 "pnp" 0 "7.06e-16" 0 "1" 0 "1" 0 "60.7m" 0 "0.15" 0 "114" 0 "20" 0 "1.12p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.463" 0 "1.16" 0 "4.63" 0 "7.84p" 0 "1.1" 0 "0.5" 0 "7.1p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "422p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1096,8 +1181,9 @@
   <Description>
     universal silicon NPN BJT
     25V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST4124_ 1 0 0 8 -26 0 0 "npn" 0 "5.81e-16" 0 "1" 0 "1" 0 "30.4m" 0 "75m" 0 "90" 0 "20" 0 "600f" 0 "2" 0 "0" 0 "2" 0 "492" 0 "4" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "7.84p" 0 "1.1" 0 "0.5" 0 "7.1p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "387p" 0 "0" 0 "0" 0 "0" 0 "69.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1108,8 +1194,9 @@
   <Description>
     universal silicon PNP BJT
     25V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST4126_ 1 0 0 8 -26 0 0 "pnp" 0 "7.06e-16" 0 "1" 0 "1" 0 "48.6m" 0 "0.12" 0 "90" 0 "16" 0 "836f" 0 "2" 0 "0" 0 "2" 0 "492" 0 "4" 0 "0" 0 "0" 0 "0.463" 0 "1.16" 0 "4.63" 0 "7.24p" 0 "1.1" 0 "0.5" 0 "6.86p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "576p" 0 "0" 0 "0" 0 "0" 0 "94n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1120,8 +1207,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST4401_ 1 0 0 8 -26 0 0 "npn" 0 "1.27p" 0 "410" 0 "1" 0 "60.7m" 0 "0.15" 0 "114" 0 "24" 0 "47.7p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "27.7p" 0 "1.1" 0 "0.5" 0 "14.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "533p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1132,8 +1220,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST4403_ 1 0 0 8 -26 0 0 "pnp" 0 "60.4f" 0 "1" 0 "1" 0 "0.334" 0 "0.825" 0 "114" 0 "20" 0 "24.3p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "31.4p" 0 "1.1" 0 "0.5" 0 "18.5p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "486p" 0 "0" 0 "0" 0 "0" 0 "81.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1144,8 +1233,9 @@
   <Description>
     universal silicon PNP BJT
     150V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST5401_ 1 0 0 8 -26 0 0 "pnp" 0 "6.83f" 0 "1" 0 "1" 0 "72.9m" 0 "0.18" 0 "220" 0 "20" 0 "4.78p" 0 "2" 0 "0" 0 "2" 0 "328" 0 "4" 0 "0" 0 "0" 0 "63m" 0 "0.157" 0 "0.63" 0 "52p" 0 "1.1" 0 "0.5" 0 "16.8p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "450p" 0 "0" 0 "0" 0 "0" 0 "95.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1156,8 +1246,9 @@
   <Description>
     universal silicon NPN BJT
     160V, 200mA, 250mW, 130MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMST5551_ 1 0 0 8 -26 0 0 "npn" 0 "20.2f" 0 "1" 0 "1" 0 "36.4m" 0 "90m" 0 "228" 0 "24" 0 "8.72p" 0 "2" 0 "0" 0 "2" 0 "219" 0 "4" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "27.9p" 0 "1.1" 0 "0.5" 0 "8.99p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.13n" 0 "0" 0 "0" 0 "0" 0 "193n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1168,8 +1259,9 @@
   <Description>
     universal silicon NPN BJT
     60V, 500mA, 250mW, 219MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA05_ 1 0 0 8 -26 0 0 "npn" 0 "94.2f" 0 "1" 0 "1" 0 "0.146" 0 "0.36" 0 "139" 0 "16" 0 "24.9p" 0 "2" 0 "0" 0 "2" 0 "331" 0 "4" 0 "0" 0 "0" 0 "86m" 0 "0.215" 0 "0.86" 0 "58.7p" 0 "1.1" 0 "0.5" 0 "18.9p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "633p" 0 "0" 0 "0" 0 "0" 0 "112n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1180,8 +1272,9 @@
   <Description>
     universal silicon NPN BJT
     80V, 500mA, 250mW, 219MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA06_ 1 0 0 8 -26 0 0 "npn" 0 "94.2f" 0 "1" 0 "1" 0 "0.146" 0 "0.36" 0 "161" 0 "16" 0 "27.4p" 0 "2" 0 "0" 0 "2" 0 "301" 0 "4" 0 "0" 0 "0" 0 "86m" 0 "0.215" 0 "0.86" 0 "58.7p" 0 "1.1" 0 "0.5" 0 "18.9p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "633p" 0 "0" 0 "0" 0 "0" 0 "112n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1192,8 +1285,9 @@
   <Description>
     universal silicon NPN BJT
     300V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA42_ 1 0 0 8 -26 0 0 "npn" 0 "109f" 0 "1" 0 "1" 0 "0.425" 0 "1.05" 0 "312" 0 "24" 0 "69.3p" 0 "2" 0 "0" 0 "2" 0 "219" 0 "4" 0 "0" 0 "0" 0 "0.486" 0 "1.21" 0 "4.86" 0 "32.9p" 0 "1.1" 0 "0.5" 0 "10.6p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "441p" 0 "0" 0 "0" 0 "0" 0 "72.5n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1204,8 +1298,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 500mA, 250mW, 70MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA55_ 1 0 0 8 -26 0 0 "pnp" 0 "50.2f" 0 "1" 0 "1" 0 "0.182" 0 "0.45" 0 "139" 0 "16" 0 "20.3p" 0 "2" 0 "0" 0 "2" 0 "331" 0 "4" 0 "0" 0 "0" 0 "53.2m" 0 "0.133" 0 "0.532" 0 "125p" 0 "1.1" 0 "0.5" 0 "40.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "2.16n" 0 "0" 0 "0" 0 "0" 0 "350n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1216,8 +1311,9 @@
   <Description>
     universal silicon PNP BJT
     80V, 500mA, 250mW, 70MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA56_ 1 0 0 8 -26 0 0 "pnp" 0 "50.2f" 0 "1" 0 "1" 0 "0.182" 0 "0.45" 0 "161" 0 "16" 0 "20.3p" 0 "2" 0 "0" 0 "2" 0 "331" 0 "4" 0 "0" 0 "0" 0 "53.2m" 0 "0.133" 0 "0.532" 0 "125p" 0 "1.1" 0 "0.5" 0 "40.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "2.16n" 0 "0" 0 "0" 0 "0" 0 "350n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1228,8 +1324,9 @@
   <Description>
     universal silicon PNP BJT
     300V, 100mA, 250mW, 60MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMSTA92_ 1 0 0 8 -26 0 0 "pnp" 0 "53.7f" 0 "1" 0 "1" 0 "66.8m" 0 "0.165" 0 "312" 0 "20" 0 "25.7p" 0 "2" 0 "0" 0 "2" 0 "164" 0 "4" 0 "0" 0 "0" 0 "0.226" 0 "0.565" 0 "2.26" 0 "52p" 0 "1.1" 0 "0.5" 0 "16.8p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "2.46n" 0 "0" 0 "0" 0 "0" 0 "426n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1240,8 +1337,9 @@
   <Description>
     universal silicon NPN BJT
     18V, 1.00A, 250mW, 100MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT123S_ 1 0 0 8 -26 0 0 "npn" 0 "102f" 0 "1.00" 0 "1.00" 0 "0.425" 0 "1.05" 0 "76.4" 0 "20.0" 0 "13.4p" 0 "2.00" 0 "0" 0 "2" 0 "1.09k" 0 "4.00" 0 "0" 0 "0" 0 "72.6m" 0 "0.181" 0 "0.726" 0 "71.7p" 0 "1.10" 0 "0.500" 0 "23.1p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.55n" 0 "0" 0 "0" 0 "0" 0 "238n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1252,8 +1350,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT3904T_ 1 0 0 8 -26 0 0 "npn" 0 "20.2f" 0 "1.00" 0 "1.00" 0 "30.4m" 0 "75.0m" 0 "114" 0 "24.0" 0 "4.25p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "8.92p" 0 "1.10" 0 "0.500" 0 "7.10p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "383p" 0 "0" 0 "0" 0 "0" 0 "69.9n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1264,8 +1363,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ?
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT3906_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "114" 0 "20.0" 0 "12.9p" 0 "2.00" 0 "0" 0 "2" 0 "192" 0 "4.00" 0 "0" 0 "0" 0 "0.463" 0 "1.16" 0 "4.63" 0 "7.60p" 0 "1.10" 0 "0.500" 0 "6.52p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "589p" 0 "0" 0 "0" 0 "0" 0 "98.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1276,8 +1376,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT3906T_ 1 0 0 8 -26 0 0 "pnp" 0 "7.21e-016" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "114" 0 "20.0" 0 "1.13p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.483" 0 "1.21" 0 "4.83" 0 "10.9p" 0 "1.10" 0 "0.500" 0 "6.63p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "571p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1288,8 +1389,9 @@
   <Description>
     universal silicon NPN BJT
     30V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4124_ 1 0 0 8 -26 0 0 "npn" 0 "20.7f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "98.6" 0 "20.0" 0 "5.54p" 0 "2.00" 0 "0" 0 "2" 0 "492" 0 "4.00" 0 "0" 0 "0" 0 "1.05" 0 "2.63" 0 "10.5" 0 "9.65p" 0 "1.10" 0 "0.500" 0 "9.47p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "415p" 0 "0" 0 "0" 0 "0" 0 "69.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1300,8 +1402,9 @@
   <Description>
     universal silicon PNP BJT
     25V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4126_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "90.0" 0 "16.0" 0 "4.52p" 0 "2.00" 0 "0" 0 "2" 0 "598" 0 "4.00" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "13.8p" 0 "1.10" 0 "0.500" 0 "10.7p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "569p" 0 "0" 0 "0" 0 "0" 0 "93.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1312,8 +1415,9 @@
   <Description>
     universal silicon PNP BJT
     25V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4126_ 1 0 0 8 -26 0 0 "pnp" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "90.0" 0 "16.0" 0 "4.52p" 0 "2.00" 0 "0" 0 "2" 0 "598" 0 "4.00" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "13.8p" 0 "1.10" 0 "0.500" 0 "10.7p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "569p" 0 "0" 0 "0" 0 "0" 0 "93.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1324,8 +1428,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4401_ 1 0 0 8 -26 0 0 "npn" 0 "60.9f" 0 "1.00" 0 "1.00" 0 "0.364" 0 "0.900" 0 "114" 0 "24.0" 0 "25.5p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.285" 0 "0.713" 0 "2.85" 0 "36.2p" 0 "1.10" 0 "0.500" 0 "15.4p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "717p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1336,8 +1441,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 600mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4403T_ 1 0 0 8 -26 0 0 "pnp" 0 "60.4f" 0 "1.00" 0 "1.00" 0 "0.304" 0 "0.750" 0 "114" 0 "20.0" 0 "23.2p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "27.7p" 0 "1.10" 0 "0.500" 0 "18.5p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "667p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1348,8 +1454,9 @@
   <Description>
     universal silicon NPN BJT
     160V, 200mA, 250mW, 130MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT5551_ 1 0 0 8 -26 0 0 "npn" 0 "20.2f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "228" 0 "24.0" 0 "8.72p" 0 "2.00" 0 "0" 0 "2" 0 "219" 0 "4.00" 0 "0" 0 "0" 0 "0.103" 0 "0.257" 0 "1.03" 0 "27.9p" 0 "1.10" 0 "0.500" 0 "8.99p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.13n" 0 "0" 0 "0" 0 "0" 0 "193n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1360,8 +1467,9 @@
   <Description>
     universal silicon NPN BJT
     60V, 500mA, 250mW, 219MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA05_ 1 0 0 8 -26 0 0 "npn" 0 "51.3f" 0 "1.00" 0 "1.00" 0 "0.146" 0 "0.360" 0 "139" 0 "16.0" 0 "11.1p" 0 "2.00" 0 "0" 0 "2" 0 "547" 0 "4.00" 0 "0" 0 "0" 0 "89.2m" 0 "0.223" 0 "0.892" 0 "58.7p" 0 "1.10" 0 "0.500" 0 "18.9p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "631p" 0 "0" 0 "0" 0 "0" 0 "110n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1372,8 +1480,9 @@
   <Description>
     universal silicon NPN BJT
     80V, 500mA, 250mW, 219MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA06_ 1 0 0 8 -26 0 0 "npn" 0 "50.8f" 0 "1.00" 0 "1.00" 0 "91.1m" 0 "0.225" 0 "161" 0 "16.0" 0 "9.99p" 0 "2.00" 0 "0" 0 "2" 0 "479" 0 "4.00" 0 "0" 0 "0" 0 "41.2m" 0 "0.103" 0 "0.412" 0 "58.7p" 0 "1.10" 0 "0.500" 0 "18.9p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "576p" 0 "0" 0 "0" 0 "0" 0 "110n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1384,8 +1493,9 @@
   <Description>
     universal silicon NPN BJT
     300V, 500mA, 250mW, 219MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA42_ 1 0 0 8 -26 0 0 "npn" 0 "51.0f" 0 "1.00" 0 "1.00" 0 "0.182" 0 "0.450" 0 "312" 0 "24.0" 0 "34.9p" 0 "2.00" 0 "0" 0 "2" 0 "194" 0 "4.00" 0 "0" 0 "0" 0 "4.63" 0 "11.6" 0 "46.3" 0 "58.7p" 0 "1.10" 0 "0.500" 0 "18.9p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "481p" 0 "0" 0 "0" 0 "0" 0 "115n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1396,8 +1506,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 500mA, 250mW, 163MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA55_ 1 0 0 8 -26 0 0 "pnp" 0 "50.8f" 0 "1.00" 0 "1.00" 0 "91.1m" 0 "0.225" 0 "139" 0 "16.0" 0 "9.99p" 0 "2.00" 0 "0" 0 "2" 0 "479" 0 "4.00" 0 "0" 0 "0" 0 "41.2m" 0 "0.103" 0 "0.412" 0 "125p" 0 "1.10" 0 "0.500" 0 "40.2p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "660p" 0 "0" 0 "0" 0 "0" 0 "149n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1408,8 +1519,9 @@
   <Description>
     universal silicon PNP BJT
     80V, 500mA, 250mW, 163MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA56_ 1 0 0 8 -26 0 0 "pnp" 0 "50.8f" 0 "1.00" 0 "1.00" 0 "91.1m" 0 "0.225" 0 "161" 0 "16.0" 0 "9.99p" 0 "2.00" 0 "0" 0 "2" 0 "479" 0 "4.00" 0 "0" 0 "0" 0 "41.2m" 0 "0.103" 0 "0.412" 0 "125p" 0 "1.10" 0 "0.500" 0 "40.2p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "660p" 0 "0" 0 "0" 0 "0" 0 "149n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1420,8 +1532,9 @@
   <Description>
     universal silicon PNP BJT
     300V, 500mA, 250mW, 60MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTA92_ 1 0 0 8 -26 0 0 "pnp" 0 "177f" 0 "1.00" 0 "1.00" 0 "72.9m" 0 "0.180" 0 "312" 0 "20.0" 0 "33.4p" 0 "2.00" 0 "0" 0 "2" 0 "239" 0 "4.00" 0 "0" 0 "0" 0 "0.463" 0 "1.16" 0 "4.63" 0 "125p" 0 "1.10" 0 "0.500" 0 "40.2p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "2.18n" 0 "0" 0 "0" 0 "0" 0 "415n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1432,8 +1545,9 @@
   <Description>
     universal silicon NPN BJT
     25V, 50mA, 250mW, 1GHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTH10_ 1 0 0 8 -26 0 0 "npn" 0 "1.26e-016" 0 "1.00" 0 "1.00" 0 "24.3m" 0 "60.0m" 0 "90.0" 0 "12.0" 0 "1.28p" 0 "2.00" 0 "0" 0 "2" 0 "95.8" 0 "4.00" 0 "0" 0 "0" 0 "0.605" 0 "1.51" 0 "6.05" 0 "6.27p" 0 "1.10" 0 "0.500" 0 "2.02p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "130p" 0 "0" 0 "0" 0 "0" 0 "27.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1444,8 +1558,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 50mA, 250mW, 1GHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBTH24_ 1 0 0 8 -26 0 0 "npn" 0 "1.26e-016" 0 "1.00" 0 "1.00" 0 "24.3m" 0 "60.0m" 0 "114" 0 "16.0" 0 "1.28p" 0 "2.00" 0 "0" 0 "2" 0 "95.8" 0 "4.00" 0 "0" 0 "0" 0 "0.605" 0 "1.51" 0 "6.05" 0 "6.27p" 0 "1.10" 0 "0.500" 0 "2.02p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "130p" 0 "0" 0 "0" 0 "0" 0 "27.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1456,8 +1571,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT2222A_ 1 0 0 8 -26 0 0 "npn" 0 "61.0f" 0 "1.00" 0 "1.00" 0 "0.121" 0 "0.300" 0 "114" 0 "24.0" 0 "14.8p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.108" 0 "0.269" 0 "1.08" 0 "27.7p" 0 "1.10" 0 "0.500" 0 "15.3p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "496p" 0 "0" 0 "0" 0 "0" 0 "81.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1468,8 +1584,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT2227_ 1 0 0 8 -26 0 0 "npn" 0 "61.0f" 0 "1.00" 0 "1.00" 0 "0.121" 0 "0.300" 0 "114" 0 "24.0" 0 "14.8p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.108" 0 "0.269" 0 "1.08" 0 "27.7p" 0 "1.10" 0 "0.500" 0 "15.3p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "496p" 0 "0" 0 "0" 0 "0" 0 "81.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1480,8 +1597,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT2227_ 1 0 0 8 -26 0 0 "pnp" 0 "61.2f" 0 "1.00" 0 "1.00" 0 "0.279" 0 "0.690" 0 "139" 0 "20.0" 0 "22.4p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.144" 0 "0.361" 0 "1.44" 0 "27.6p" 0 "1.10" 0 "0.500" 0 "18.5p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "491p" 0 "0" 0 "0" 0 "0" 0 "81.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1492,8 +1610,9 @@
   <Description>
     universal silicon PNP BJT
     60V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT2907A_ 1 0 0 8 -26 0 0 "pnp" 0 "61.2f" 0 "1.00" 0 "1.00" 0 "0.279" 0 "0.690" 0 "139" 0 "20.0" 0 "22.4p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.144" 0 "0.361" 0 "1.44" 0 "27.6p" 0 "1.10" 0 "0.500" 0 "18.5p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "491p" 0 "0" 0 "0" 0 "0" 0 "81.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1504,8 +1623,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT3904_ 1 0 0 8 -26 0 0 "npn" 0 "5.81e-016" 0 "1.00" 0 "1.00" 0 "0.304" 0 "0.750" 0 "114" 0 "24.0" 0 "2.28p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "9.67p" 0 "1.10" 0 "0.500" 0 "6.86p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "450p" 0 "0" 0 "0" 0 "0" 0 "70.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1516,8 +1636,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT3904V_ 1 0 0 8 -26 0 0 "npn" 0 "20.3f" 0 "1.00" 0 "1.00" 0 "36.4m" 0 "90.0m" 0 "114" 0 "24.0" 0 "6.99p" 0 "2.00" 0 "0" 0 "2" 0 "274" 0 "4.00" 0 "0" 0 "0" 0 "0.263" 0 "0.657" 0 "2.63" 0 "8.29p" 0 "1.10" 0 "0.500" 0 "7.10p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "426p" 0 "0" 0 "0" 0 "0" 0 "71.3n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1528,8 +1649,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 600mA, 250mW, 300MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4403_ 1 0 0 8 -26 0 0 "pnp" 0 "26.9f" 0 "1.00" 0 "1.00" 0 "0.304" 0 "0.750" 0 "114" 0 "20.0" 0 "23.2p" 0 "2.00" 0 "0" 0 "2" 0 "274" 0 "4.00" 0 "0" 0 "0" 0 "0.105" 0 "0.263" 0 "1.05" 0 "36.2p" 0 "1.10" 0 "0.500" 0 "24.6p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "500p" 0 "0" 0 "0" 0 "0" 0 "82.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1540,8 +1662,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT3906_ 1 0 0 8 -26 0 0 "pnp" 0 "7.21e-016" 0 "1.00" 0 "1.00" 0 "48.6m" 0 "0.120" 0 "114" 0 "20.0" 0 "1.01p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.483" 0 "1.21" 0 "4.83" 0 "10.9p" 0 "1.10" 0 "0.500" 0 "7.57p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "558p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1552,8 +1675,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT3946_ 1 0 0 8 -26 0 0 "npn" 0 "5.81e-016" 0 "1.00" 0 "1.00" 0 "0.304" 0 "0.750" 0 "114" 0 "24.0" 0 "2.28p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "9.67p" 0 "1.10" 0 "0.500" 0 "6.86p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "450p" 0 "0" 0 "0" 0 "0" 0 "70.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1564,8 +1688,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 200mA, 250mW, 257MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT3946_ 1 0 0 8 -26 0 0 "pnp" 0 "7.21e-016" 0 "1.00" 0 "1.00" 0 "48.6m" 0 "0.120" 0 "114" 0 "20.0" 0 "1.01p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.483" 0 "1.21" 0 "4.83" 0 "10.9p" 0 "1.10" 0 "0.500" 0 "7.57p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "558p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1576,8 +1701,9 @@
   <Description>
     universal silicon NPN BJT
     25V, 200mA, 250mW, 347MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT4124_ 1 0 0 8 -26 0 0 "npn" 0 "5.81e-016" 0 "1.00" 0 "1.00" 0 "30.4m" 0 "75.0m" 0 "90.0" 0 "20.0" 0 "600f" 0 "2.00" 0 "0" 0 "2" 0 "492" 0 "4.00" 0 "0" 0 "0" 0 "0.283" 0 "0.707" 0 "2.83" 0 "7.96p" 0 "1.10" 0 "0.500" 0 "7.10p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "386p" 0 "0" 0 "0" 0 "0" 0 "69.8n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1588,8 +1714,9 @@
   <Description>
     universal silicon PNP BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT4413_ 1 0 0 8 -26 0 0 "pnp" 0 "61.0f" 0 "1.00" 0 "1.00" 0 "0.340" 0 "0.840" 0 "114" 0 "20.0" 0 "24.7p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.108" 0 "0.269" 0 "1.08" 0 "27.6p" 0 "1.10" 0 "0.500" 0 "18.5p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "516p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1600,8 +1727,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMDT4413_ 1 0 0 8 -26 0 0 "npn" 0 "60.7f" 0 "1.00" 0 "1.00" 0 "0.219" 0 "0.540" 0 "114" 0 "24.0" 0 "19.7p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "34.3m" 0 "85.8m" 0 "0.343" 0 "36.2p" 0 "1.10" 0 "0.500" 0 "15.4p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "539p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1612,8 +1740,9 @@
   <Description>
     universal silicon NPN BJT
     40V, 600mA, 250mW, 275MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_MMBT4401T_ 1 0 0 8 -26 0 0 "npn" 0 "1.27p" 0 "1.00" 0 "1.00" 0 "60.7m" 0 "0.150" 0 "114" 0 "24.0" 0 "47.7p" 0 "2.00" 0 "0" 0 "2" 0 "410" 0 "4.00" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "27.7p" 0 "1.10" 0 "0.500" 0 "14.2p" 0 "0.300" 0 "0.300" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "533p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1624,8 +1753,9 @@
   <Description>
     universal silicon NPN BJT
     V, A, 250mW, Hz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: 
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_ZTX493_ 1 0 0 8 -26 0 0 "npn" 0 "6E-14" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1E-14" 0 "1.2" 0 "0" 0 "2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "108E-12" 0 "0.7" 0 "0.35" 0 "15.9E-12" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "0.8E-9" 0 "0" 0 "0" 0 "0" 0 "55e-9" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1636,8 +1766,9 @@
   <Description>
     universal silicon PNP BJT
     50V, 150mA, 250mW, 250MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     NPN complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_2DA1774R_ 1 0 0 8 -26 0 0 "pnp" 0 "15.2f" 0 "1" 0 "1" 0 "54.7m" 0 "0.135" 0 "127" 0 "24" 0 "3.88p" 0 "2" 0 "0" 0 "2" 0 "523" 0 "4" 0 "0" 0 "0" 0 "0.284" 0 "0.710" 0 "2.84" 0 "42.6p" 0 "1.1" 0 "0.5" 0 "13.7p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "453p" 0 "0" 0 "0" 0 "0" 0 "96.4n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
@@ -1648,11 +1779,11 @@
   <Description>
     universal silicon NPN BJT
     50V, 150mA, 250mW, 200MHz
-    Manufacturer: Diodes Inc., added by Leandro D'Archivio <morti667@hotmail.com>
+    Manufacturer: Diodes Inc.
     PNP complement: ???
+    added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
     <_BJT T_2DC4617R_ 1 0 0 8 -26 0 0 "npn" 0 "15.5f" 0 "1" 0 "1" 0 "54.7m" 0 "0.135" 0 "127" 0 "28" 0 "3.9p" 0 "2" 0 "0" 0 "2" 0 "524" 0 "4" 0 "0" 0 "0" 0 "0.116" 0 "0.29" 0 "1.16" 0 "22.7p" 0 "1.1" 0 "0.5" 0 "7.34p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "698p" 0 "0" 0 "0" 0 "0" 0 "121n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
   </Model>
 </Component>
-

@@ -70,7 +70,7 @@ private:
   SymbolWidget *Symbol;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
-  QString       ModelString;
+  QString       ModelString, DefaultSymbol;
 };
 
 #endif /* QUCSLIB_H */

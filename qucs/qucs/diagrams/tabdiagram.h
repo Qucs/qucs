@@ -24,7 +24,7 @@
 class TabDiagram : public Diagram  {
 public: 
   TabDiagram(int _cx=0, int _cy=0);
-  ~TabDiagram();
+ ~TabDiagram();
 
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
@@ -33,10 +33,6 @@ public:
   bool scroll(int);
 
   void createAxisLabels() {};   // no labels in this diagram
-
-private:
-  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
-  bool sameDependencies(Graph*, Graph*);
 };
 
 #endif
