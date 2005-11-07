@@ -1065,7 +1065,10 @@ void QucsApp::slotShowAll()
   int x2 = d->UsedX2;
   int y2 = d->UsedY2;
 
-  if(x2==0) if(y2==0) if(x1==0) if(y1==0) return;
+  if(x1 == INT_MAX) return;
+  if(y1 == INT_MAX) return;
+  if(x2 == INT_MIN) return;
+  if(y2 == INT_MIN) return;
   x1 -= 40;  y1 -= 40;
   x2 += 40;  y2 += 40;
 

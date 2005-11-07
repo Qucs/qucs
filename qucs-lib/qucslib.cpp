@@ -226,6 +226,7 @@ void QucsLib::slotSelectLibrary(int Index)
 
   CompList->clear();
   LibraryComps.clear();
+  DefaultSymbol = "";
 
   QFile file(QucsSettings.LibDir + Library->text(Index) + ".lib");
   if(!file.open(IO_ReadOnly)) {
@@ -250,6 +251,19 @@ void QucsLib::slotSelectLibrary(int Index)
     return;
   }
   QString LibName = LibraryString.mid(Start, End-Start).section('"', 1, 1);
+
+  Start = LibraryString.find("\n<", End);
+  if(Start < 0) return;
+  if(LibraryString.mid(Start+2, 14) == "DefaultSymbol>") {
+    End = LibraryString.find("\n</DefaultSymbol>");
+    if(End < 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+      return;
+    }
+
+    DefaultSymbol = LibraryString.mid(Start+16, End-Start-16);
+    Start = End + 3;
+  }
 
   while((Start=LibraryString.find("\n<Component ", Start)) > 0) {
     Start++;
@@ -326,6 +340,10 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
       return;
     }
     Symbol->setSymbol((*CompString).mid(Start, End-Start),
+                      (*CompString).section('\n', 0, 0), Item->text());
+  }
+  else if(!DefaultSymbol.isEmpty()) {  // has library a default symbol ?
+    Symbol->setSymbol(DefaultSymbol,
                       (*CompString).section('\n', 0, 0), Item->text());
   }
 }

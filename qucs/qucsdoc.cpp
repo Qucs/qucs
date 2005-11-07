@@ -86,7 +86,8 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   ViewX1=ViewY1=0;
   ViewX2=ViewY2=800;
   PosX=PosY=0;
-  UsedX1=UsedY1=UsedX2=UsedY2=0;
+  UsedX1 = UsedY1 = INT_MAX;
+  UsedX2 = UsedY2 = INT_MIN;
 
   tmpPosX = tmpPosY = -100;
   tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
@@ -1400,10 +1401,19 @@ Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
         }
 
     if(pd->getSelected(x, y)) {
-      if(pd->Name[0] == 'T')    // tabular diagram ?
-        if(x< pd->cx) {      // clicked on scroll bar ?
-	  pd->Type = isDiagramScroll;
-	  return pd;
+      if(pd->Name[0] == 'T')    // tabular or timing diagram ?
+        if(pd->Name[1] =='a') {
+          if(x < pd->cx) {      // clicked on scroll bar ?
+            pd->Type = isDiagramScroll;
+            return pd;
+          }
+        }
+        else {
+          if(y > pd->cy) {
+            if(x < pd->cx+pd->xAxis.numGraphs) continue;
+            pd->Type = isDiagramScroll;
+            return pd;
+          }
         }
 
       // test graphs of diagram

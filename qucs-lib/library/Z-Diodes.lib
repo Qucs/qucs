@@ -1,5 +1,17 @@
 <Qucs Library 0.0.8 "Z-Diodes">
 
+<DefaultSymbol>
+  <.ID -26 13 D>
+  <Line -30 0 60 0 #000080 2 1>
+  <Line -6 -9 0 18 #000080 2 1>
+  <Line 6 -9 0 18 #000080 2 1>
+  <Line -6 0 12 -9 #000080 2 1>
+  <Line -6 0 12 9 #000080 2 1>
+  <Line -6 9 4 0 #000080 2 1>
+  <.PortSym -30 0 1 0>
+  <.PortSym 30 0 2 180>
+</DefaultSymbol>
+
 <Component BZT52C10T>
   <Description>
     BZT52C10T

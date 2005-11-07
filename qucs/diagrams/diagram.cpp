@@ -454,7 +454,7 @@ void Diagram::clip(int* &p)
 // g->Points must already be empty!!!
 void Diagram::calcData(Graph *g)
 {
-  if(Name[0] == 'T')  return;   // no graph within tabulars
+  if(Name[0] == 'T')  return;   // no graph within tabulars, timing diagrams
 
   double *px;
   double *pz = g->cPointsY;
@@ -1162,6 +1162,43 @@ int Diagram::loadIndepVarData(const QString& Variable,
   }
 
   return n;   // return number of independent data
+}
+
+// ------------------------------------------------------------
+// Checks if the two graphs have the same independent variables.
+bool Diagram::sameDependencies(Graph *g1, Graph *g2)
+{
+  if(g1 == g2)  return true;
+
+  DataX *g1Data = g1->cPointsX.first();
+  DataX *g2Data = g2->cPointsX.first();
+  while(g1Data && g2Data) {
+    if(g1Data->Var != g2Data->Var)  return false;
+    g1Data = g1->cPointsX.next();
+    g2Data = g2->cPointsX.next();
+  }
+
+  if(g1Data)  return false;  // Is there more data ?
+  if(g2Data)  return false;  // Is there more data ?
+  return true;
+}
+
+// ------------------------------------------------------------
+int Diagram::checkColumnWidth(const QString& Str,
+		const QFontMetrics& metrics, int colWidth, int x, int y)
+{
+  int w = metrics.width(Str);  // width of text
+  if(w > colWidth) {
+    colWidth = w;
+    if((x+colWidth) >= x2) {    // enough space for text ?
+      // mark lack of space with a small arrow
+      Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
+      Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
+      Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
+      return -1;
+    }
+  }
+  return colWidth;
 }
 
 // ------------------------------------------------------------
