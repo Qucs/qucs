@@ -1,0 +1,5 @@
+2005-11-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Setup a package for CVS.
+
+	* ChangeLog: Created this file.
