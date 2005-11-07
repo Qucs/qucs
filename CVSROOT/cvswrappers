@@ -22,5 +22,7 @@
 # For example:
 
 *.gif -k 'b'
+*.png -k 'b'
 *.jpg -k 'b'
 *.eps -k 'b'
+*.pdf -k 'b'
