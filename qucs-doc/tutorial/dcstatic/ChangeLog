@@ -1,0 +1,11 @@
+2005-07-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcstatic.tex (section*{When Things Vary}): Fixed description
+	of parameter sweep as well as some typos.
+
+2005-06-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcstatic.tex: Using 'savesym' package for duplicate symbols
+	in wasysym and amsmath.
+
+	* ChangeLog: Created this file.

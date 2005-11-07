@@ -1,0 +1,47 @@
+-- 
+-- RELEASE
+-- 
+-- release instructions.
+-- 
+-- Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+-- 
+-- This is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2, or (at your option)
+-- any later version.
+-- 
+-- This software is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+-- 
+-- You should have received a copy of the GNU General Public License
+-- along with this package; see the file COPYING.  If not, write to
+-- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+-- Boston, MA 02110-1301, USA.  
+--
+
+
+Distribution process:
+---------------------
+
+* Ensure the release is complete.
+  - Check the TODO and NEWS files for pending or completed tasks.
+  - Make sure INSTALL, THANKS and README files are up to date.
+
+* Test build and packaging.
+  - Run `make distclean', `sh autogen.sh' and `make all'.
+  - Run `make distcheck'.
+  - Check this status into CVS and tag it.
+
+* Bump up version.
+  - Add a ChangeLog entry in toplevel directory.
+  - Add new section in NEWS.
+  - Bump up version number in `configure.ac'.
+  - Check into CVS.
+
+* Distribute the package. 
+  - Upload the work book and the standalone tutorials to the SourceForge
+    server.
+  - Create the technical documentation as PS and PDF and upload these as
+    well as the HTML archive (using LaTeX2HTML).
