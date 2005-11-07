@@ -67,6 +67,8 @@ public:
   void recalcGraphData();
   bool loadVarData(const QString&, Graph*);
   int  loadIndepVarData(const QString&, char*, Axis*, Graph*);
+  bool sameDependencies(Graph*, Graph*);
+  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 
   virtual bool insideDiagram(int, int);
 

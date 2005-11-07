@@ -191,10 +191,12 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     PropertyBox->insertItem(tr("solid line"));
     PropertyBox->insertItem(tr("dash line"));
     PropertyBox->insertItem(tr("dot line"));
-    PropertyBox->insertItem(tr("long dash line"));
-    PropertyBox->insertItem(tr("stars"));
-    PropertyBox->insertItem(tr("circles"));
-    PropertyBox->insertItem(tr("arrows"));
+    if(Diag->Name != "Time") {
+      PropertyBox->insertItem(tr("long dash line"));
+      PropertyBox->insertItem(tr("stars"));
+      PropertyBox->insertItem(tr("circles"));
+      PropertyBox->insertItem(tr("arrows"));
+    }
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
     Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
@@ -257,7 +259,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   // ...........................................................
   int Row = 0;
-  if(Diag->Name != "Tab") {
+  if(Diag->Name.at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
 
@@ -803,7 +805,7 @@ void DiagramDialog::slotOK()
 // Is called if "Apply" button is pressed.
 void DiagramDialog::slotApply()
 {
-  if(Diag->Name != "Tab") {
+  if(Diag->Name.at(0) != 'T') {  // not tabular or timing
     if(Diag->xAxis.Label.isEmpty())
       Diag->xAxis.Label = ""; // can be not 0 and empty!
     if(xLabel->text().isEmpty()) xLabel->setText("");

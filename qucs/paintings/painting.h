@@ -1,6 +1,6 @@
 /***************************************************************************
-                          painting.h  -  description
-                             -------------------
+                                painting.h
+                               ------------
     begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -23,14 +23,11 @@
 
 class QPainter;
 
-/**
-  *@author Michael Margraf
-  */
 
 class Painting : public Element  {
 public:
   Painting();
-  ~Painting();
+ ~Painting();
 
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(int, int) { return false; };

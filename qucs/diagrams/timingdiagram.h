@@ -33,9 +33,6 @@ public:
   bool scroll(int);
 
   void createAxisLabels() {};   // no labels in this diagram
-
-private:
-  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 };
 
 #endif
