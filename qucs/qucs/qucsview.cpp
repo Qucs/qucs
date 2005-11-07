@@ -24,6 +24,7 @@
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
 #include "diagrams/tabdiagram.h"
+#include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
 #include "dialogs/matchdialog.h"
 
@@ -1242,7 +1243,7 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
 
     case isDiagramResize:  // resize diagram ?
 	if(((Diagram*)focusElement)->Name.left(4) != "Rect")
-	  if(((Diagram*)focusElement)->Name != "Tab")
+	  if(((Diagram*)focusElement)->Name.at(0) != 'T')
 	    if(((Diagram*)focusElement)->Name != "Curve")
 	      isMoveEqual = true;  // diagram must be square
 
@@ -1271,8 +1272,14 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
     case isDiagramScroll:  // scroll in tabular ?
 	focusElement->Type = isDiagram;
 
-	if(((TabDiagram*)focusElement)->scroll(MAy1))
-	  d->setChanged(true, true, 'm'); // 'm' = only the first time
+	if(((Diagram*)focusElement)->Name == "Tab") {
+	  if(((TabDiagram*)focusElement)->scroll(MAy1))
+	    d->setChanged(true, true, 'm'); // 'm' = only the first time
+	}
+	else {
+	  if(((TimingDiagram*)focusElement)->scroll(MAx1))
+	    d->setChanged(true, true, 'm'); // 'm' = only the first time
+	}
 	viewport()->update();
 	drawn = false;
 //	focusElement = 0;  // avoid double-click on diagram scrollbar
@@ -1447,9 +1454,9 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
   setPainter(&painter, d);
 
   
+  int x1, y1, x2, y2;
   if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
-    int x1, y1, x2, y2;
     switch(Event->button()) {
       case Qt::LeftButton :
 	// left mouse button inserts component into the schematic
@@ -1512,7 +1519,9 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
 
   // ***********  it is a painting !!!
   if(((Painting*)selElem)->MousePressing()) {
-    Docs.current()->Paints->append((Painting*)selElem);
+    d->Paints->append((Painting*)selElem);
+    ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
+    enlargeView(x1, y1, x2, y2);
     selElem = ((Painting*)selElem)->newOne();
 
     drawn = false;
@@ -2082,7 +2091,14 @@ void QucsView::editElement(QMouseEvent *Event)
 	     break;
            }
 	 }
-	ddia = new DiagramDialog(dia,
+         else if(dia->Name == "Time") { // don't open dialog on scrollbar
+           if(dia->cy < y) {
+	     if(((TimingDiagram*)focusElement)->scroll(MAx1))
+	       d->setChanged(true, true, 'm'); // 'm' = only the first time
+	     break;
+           }
+	 }
+	 ddia = new DiagramDialog(dia,
 		Info.dirPath() + QDir::separator() + d->DataSet, this);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            d->setChanged(true, true);

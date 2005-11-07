@@ -48,6 +48,7 @@ void TabDiagram::paint(ViewPainter *p)
 
   if(x1 > 0) {  // paint scroll bar ?
     int   x, y, dx, dy;
+    QPointArray Points;
     y = y2 - 20;
     // draw scroll bar
     p->fillRect(cx-15, cy-y + yAxis.numGraphs, 14, zAxis.numGraphs, Qt::gray);
@@ -64,14 +65,17 @@ void TabDiagram::paint(ViewPainter *p)
 
     // draw the arrows above and below the scroll bar
     p->Painter->setBrush(QBrush(Qt::gray));
-    p->map(cx-20, cy-y2-8, x, y);
-    p->map(cx+4, cy-y2+16, dx, dy);
-    dx -= x;
-    dy -= y;
-    p->Painter->drawPie(x, y, dx, dy, 16*240, 16*60);
 
-    p->map(cx-20, cy-15, x, y);
-    p->Painter->drawPie(x, y, dx, dy, 16*60, 16*60);
+    p->map(cx-14, cy-y2+3, x, y);
+    p->map(cx-3,  cy-y2+14, dx, dy);
+    Points.setPoints(3, x, dy, (x+dx)>>1, y, dx, dy);
+    p->Painter->drawConvexPolygon(Points);
+
+    dy -= y;
+    p->map(cx-14,  cy-3, x, y);
+    Points.setPoints(3, x, y-dy, (x+dx)>>1, y, dx, y-dy);
+    p->Painter->drawConvexPolygon(Points);
+
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
 
@@ -91,25 +95,6 @@ void TabDiagram::paint(ViewPainter *p)
     p->drawResizeRect(cx+x2, cy-y2);
     p->drawResizeRect(cx+x2, cy);
   }
-}
-
-// ------------------------------------------------------------
-// Checks if the two graphs have the same independent variables.
-bool TabDiagram::sameDependencies(Graph *g1, Graph *g2)
-{
-  if(g1 == g2)  return true;
-
-  DataX *g1Data = g1->cPointsX.first();
-  DataX *g2Data = g2->cPointsX.first();
-  while(g1Data && g2Data) {
-    if(g1Data->Var != g2Data->Var)  return false;
-    g1Data = g1->cPointsX.next();
-    g2Data = g2->cPointsX.next();
-  }
-
-  if(g1Data)  return false;  // Is there more data ?
-  if(g2Data)  return false;  // Is there more data ?
-  return true;
 }
 
 // ------------------------------------------------------------
@@ -275,34 +260,16 @@ funcEnd:
     NumLeft = NumAll - NumLeft - xAxis.numGraphs;
 
     // height of scroll bar
-    zAxis.numGraphs = (y2 - 40) * NumLeft / NumAll;
-    if(zAxis.numGraphs < 2)  zAxis.numGraphs = 2;
+    zAxis.numGraphs = (y2 - 39) * NumLeft / NumAll;
+    if(zAxis.numGraphs < 3)  zAxis.numGraphs = 3;
 
     // position of scroll bar in pixel
-    yAxis.numGraphs = (y2 - 40) * xAxis.numGraphs / NumAll;
+    yAxis.numGraphs = (y2 - 39) * xAxis.numGraphs / NumAll;
 
     xAxis.numGraphs = NumLeft;  // number of lines in the diagram
   }
 
   return 1;
-}
-
-// ------------------------------------------------------------
-int TabDiagram::checkColumnWidth(const QString& Str,
-		const QFontMetrics& metrics, int colWidth, int x, int y)
-{
-  QSize r = metrics.size(0, Str);  // width of text
-  if(r.width() > colWidth) {
-    colWidth = r.width();
-    if((x+colWidth) >= x2) {    // enough space for text ?
-      // mark lack of space with a small arrow
-      Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
-      Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
-      Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
-      return -1;
-    }
-  }
-  return colWidth;
 }
 
 // ------------------------------------------------------------

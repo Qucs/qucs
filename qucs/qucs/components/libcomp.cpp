@@ -137,9 +137,21 @@ int LibComp::loadSection(const QString& Name, QString& Section)
   if(Line > s)   // wrong version number ? (only backward compatible)
     return -3;
 
+  int Start, End;
+  if(Name == "Symbol") {
+    Start = Section.find("\n<", 14); // if library has default symbol, take it
+    if(Start > 0)
+      if(Section.mid(Start+2, 14) == "DefaultSymbol>") {
+        Start += 16;
+        End = Section.find("\n</DefaultSymbol>", Start);
+        if(End < 0)  return -9;
+        Section = Section.mid(Start, End-Start);
+        return 0;
+      }
+  }
+
   // search component
   Line = "\n<Component " + Props.next()->Value + ">";
-  int Start, End;
   Start = Section.find(Line);
   if(Start < 0)  return -4;  // component not found
   Start = Section.find('\n', Start);
