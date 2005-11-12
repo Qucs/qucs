@@ -20,15 +20,15 @@ DC to many GHz. The power attenuation $0 < L\le 1$ is defined as:
 \begin{equation}
 \label{eqn:loss}
 L = \dfrac{P_{in}}{P_{out}}
-  = \dfrac{U_{in}^2}{Z_{in}}\cdot\dfrac{Z_{out}}{U_{out}^2}
-  = \left( \dfrac{U_{in}}{U_{out}}\right)^2 \cdot\dfrac{Z_{out}}{Z_{in}}
+  = \dfrac{V_{in}^2}{Z_{in}}\cdot\dfrac{Z_{out}}{V_{out}^2}
+  = \left( \dfrac{V_{in}}{V_{out}}\right)^2 \cdot\dfrac{Z_{out}}{Z_{in}}
 \end{equation}
 where $P_{in}$ and $P_{out}$ are the input and output power and
-$U_{in}$ and $U_{out}$ are the input and output voltages.
+$V_{in}$ and $V_{out}$ are the input and output voltages.
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=4cm]{picircuit}
+\includegraphics[width=5cm]{picircuit}
 \end{center}
 \caption{$\pi$-topology of an attenuator}
 \label{fig:pi_attenuator}
@@ -36,14 +36,14 @@ $U_{in}$ and $U_{out}$ are the input and output voltages.
 \FloatBarrier
 
 Fig. \ref{fig:pi_attenuator} shows an attenuator using the
-pi-topology. The conductances can be calculated as follows.
+$\pi$-topology. The conductances can be calculated as follows.
 \begin{align}
 Y_2 & = \dfrac{L - 1}{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}} \\
 Y_1 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{out}}{Z_{in}}\cdot L} - 1 \right) \\
 Y_3 & = Y_2\cdot\left( \sqrt{\dfrac{Z_{in}}{Z_{out}}\cdot L} - 1 \right)
 \end{align}
 where $Z_{in}$ and $Z_{out}$ are the input and output reference
-impedance, respectively. The pi-attenuator can be used for an
+impedances, respectively. The $\pi$-attenuator can be used for an
 impedance ratio of:
 \begin{equation}
 \dfrac{1}{L} \le \dfrac{Z_{out}}{Z_{in}} \le L
@@ -51,7 +51,7 @@ impedance ratio of:
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=4cm]{tcircuit}
+\includegraphics[width=5cm]{tcircuit}
 \end{center}
 \caption{T-topology of an attenuator}
 \label{fig:t_attenuator}
@@ -64,7 +64,7 @@ T-topology. The resistances can be calculated as follows.
 Z_2 & = \dfrac{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}}{L^2 - 1} \\
 Z_1 & = Z_{in}\cdot A - Z_2 \\
 Z_3 & = Z_{out}\cdot A - Z_2 \\
-    & \text{with} \qquad A = \dfrac{L + 1}{L - 1}
+\textrm{with} \qquad A & = \dfrac{L + 1}{L - 1}
 \end{align}
 where $L$ is the attenuation ($0 < L\le 1$) according to
 equation \ref{eqn:loss} and $Z_{in}$ and $Z_{out}$
@@ -107,7 +107,7 @@ From top to bottom the following properties increase:
 The order $n$ of a filter denotes the number of poles of its (voltage)
 transfer function. It is:
 \begin{equation}
-\text{slope of asymptote} = \pm n\cdot 20 \text{dB/dekade}
+\text{slope of asymptote} = \pm n\cdot 20 \text{dB/decade}
 \end{equation}
 Note that this equation holds for all filter characteristics, but
 there are big differences concerning the attenuation near the pass
@@ -120,7 +120,10 @@ The best possibility to realize a filters in VHF and UHF bands are
 LC ladder filters. The usual way to synthesize them is to first
 calculate a low-pass (LP) filter and afterwards transform it into a
 high-pass (HP), band-pass (BP) or band-stop (BS) filter. To do so,
-each component must be altered into another.\\
+each component must be transformed into another.
+
+\addvspace{12pt}
+
 In a low-pass filter, there are  parallel capacitors $C_{LP}$ and
 series inductors $L_{LP}$ in alternating order. The other filter
 classes can be derived from it:
