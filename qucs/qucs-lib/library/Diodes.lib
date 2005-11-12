@@ -797,3 +797,572 @@
     <Diode D_S5MC_ 1 0 0 -26 13 0 0 "2.28n" 1 "1.7" 1 "74p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "8.4m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "1k" 0 "10u" 0>
   </Model>
 </Component>
+
+<Component BAL99>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAL99_ 1 0 0 -26 13 0 0 "31.2n" 0 "2.35" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.36" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAS116>
+  <Description>
+    switching diode
+    Si, 60.0V, 0.215A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS116_ 1 0 0 -26 13 0 0 "4.53u" 0 "4.07" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.383" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "60" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAS116T>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.215A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS116T_ 1 0 0 -26 13 0 0 "10.5p" 0 "1.61" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.196" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAS16T>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.155A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS16T_ 1 0 0 -26 13 0 0 "2.69n" 0 "1.95" 0 "1.99p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.271" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "2u" 0>
+  </Model>
+</Component>
+
+<Component BAS16TW>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS16TW_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAS16V>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS16V_ 1 0 0 -26 13 0 0 "412p" 0 "1.7" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.14" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAS16W>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS16W_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAS19>
+  <Description>
+    switching diode
+    Si, 100V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS19_ 1 0 0 -26 13 0 0 "41.7n" 0 "2.35" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.27" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS19W>
+  <Description>
+    switching diode
+    Si, 100V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS19W_ 1 0 0 -26 13 0 0 "114n" 0 "2.58" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.172" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS20>
+  <Description>
+    switching diode
+    Si, 150V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS20_ 1 0 0 -26 13 0 0 "41.7n" 0 "2.35" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.27" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "150" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS20W>
+  <Description>
+    switching diode
+    Si, 150V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS20W_ 1 0 0 -26 13 0 0 "114n" 0 "2.58" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.172" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "150" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS21>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS21_ 1 0 0 -26 13 0 0 "41.7n" 0 "2.35" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.27" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS21T>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS21T_ 1 0 0 -26 13 0 0 "401n" 0 "2.87" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAS21W>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS21W_ 1 0 0 -26 13 0 0 "114n" 0 "2.58" 0 "2.98p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.172" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV116W>
+  <Description>
+    low leakage diode
+    Si, 130V, 0.215A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV116W_ 1 0 0 -26 13 0 0 "22.5p" 0 "1.67" 0 "2.4p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.282" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "130" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV16W>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV16W_ 1 0 0 -26 13 0 0 "10.4n" 0 "2.07" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "51.5m" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAV16WS>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV16WS_ 1 0 0 -26 13 0 0 "10.4n" 0 "2.07" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "51.5m" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAV170>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.215A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV170_ 1 0 0 -26 13 0 0 "31.5p" 0 "1.7" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.195" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV170T>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.125A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV170T_ 1 0 0 -26 13 0 0 "10.5p" 0 "1.61" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.196" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV199>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.160A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV199_ 1 0 0 -26 13 0 0 "59p" 0 "1.78" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.262" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV199DW>
+  <Description>
+    switching diode
+    one element of BAV199DW array
+    Si, 85.0V, 0.160A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV199DW_ 1 0 0 -26 13 0 0 "59p" 0 "1.78" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.262" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV199T>
+  <Description>
+    switching diode
+    dual, model for one element
+    Si, 85.0V, 0.125A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV199T_ 1 0 0 -26 13 0 0 "10.5p" 0 "1.61" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.196" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAV19W>
+  <Description>
+    switching diode
+    Si, 100V, 0.400A, 50.0ns 
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV19W_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV19WS>
+  <Description>
+    switching diode
+    Si, 100V, 0.400A, 50.0ns 
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV19WS_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV20W>
+  <Description>
+    switching diode
+    Si, 150V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV20W_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "150" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV20WS>
+  <Description>
+    switching diode
+    Si, 150V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV20WS_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "150" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV21W>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV21W_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV21WS>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV21WS_ 1 0 0 -26 13 0 0 "1.09u" 0 "3.29" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.105" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV23A>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV23A_ 1 0 0 -26 13 0 0 "237n" 0 "2.69" 0 "3.05p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.26" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV23C>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV23C_ 1 0 0 -26 13 0 0 "237n" 0 "2.69" 0 "3.05p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.26" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV23S>
+  <Description>
+    switching diode
+    Si, 200V, 0.400A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV23S_ 1 0 0 -26 13 0 0 "237n" 0 "2.69" 0 "3.05p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.26" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV3004W>
+  <Description>
+    switching diode
+    Si, 350V, 0.225A, 50.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV3004W_ 1 0 0 -26 13 0 0 "58.9n" 0 "2.37" 0 "1.17p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.412" 0 "72n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "350" 0 "100n" 0>
+  </Model>
+</Component>
+
+<Component BAV70>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV70_ 1 0 0 -26 13 0 0 "308p" 0 "1.7" 0 "2.65p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.329" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAV70T>
+  <Description>
+    switching diode
+    one element of device
+    Si, 85.0V, 0.155A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV70T_ 1 0 0 -26 13 0 0 "2.69n" 0 "1.95" 0 "1.99p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.271" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "2u" 0>
+  </Model>
+</Component>
+
+<Component BAV70W>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV70W_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAV756DW>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV756DW_ 1 0 0 -26 13 0 0 "49.2n" 0 "2.45" 0 "2.65p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.141" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAV99>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV99_ 1 0 0 -26 13 0 0 "261p" 0 "1.7" 0 "1.19p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.14" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAV99BRW>
+  <Description>
+    switching diode
+    quad, model for one element
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV99BRW_ 1 0 0 -26 13 0 0 "412p" 0 "1.7" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.14" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAV99DW>
+  <Description>
+    switching diode
+    quad, model for one element
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV99DW_ 1 0 0 -26 13 0 0 "412p" 0 "1.7" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.14" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "2.5u" 0>
+  </Model>
+</Component>
+
+<Component BAV99T>
+  <Description>
+    switching diode
+    one element of device
+    Si, 85.0V, 0.155A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV99T_ 1 0 0 -26 13 0 0 "2.69n" 0 "1.95" 0 "1.99p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.271" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "2u" 0>
+  </Model>
+</Component>
+
+<Component BAV99W>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAV99W_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAW156>
+  <Description>
+    switching diode
+    Si, 85.0V, 0.160A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW156_ 1 0 0 -26 13 0 0 "59p" 0 "1.78" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.262" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAW156T>
+  <Description>
+    switching diode
+    dual, model for one element
+    Si, 85.0V, 0.125A, 3.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW156T_ 1 0 0 -26 13 0 0 "10.5p" 0 "1.61" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.196" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "5n" 0>
+  </Model>
+</Component>
+
+<Component BAW56>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW56_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAW567DW>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW567DW_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAW56DW>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW56DW_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component BAW56T>
+  <Description>
+    switching diode
+    one element of device
+    Si, 85.0V, 0.155A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW56T_ 1 0 0 -26 13 0 0 "2.69n" 0 "1.95" 0 "1.99p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.271" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "85" 0 "2u" 0>
+  </Model>
+</Component>
+
+<Component BAW56W>
+  <Description>
+    switching diode
+    Si, 75.0V, 0.300A, 4.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAW56W_ 1 0 0 -26 13 0 0 "68.6n" 0 "2.34" 0 "1.72p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.377" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component LL4148>
+  <Description>
+    fast switching diode
+    Si, 75.0V, 0.300A, 4.00us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_LL4148_ 1 0 0 -26 13 0 0 "1.06n" 0 "1.87" 0 "3p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.316" 0 "5.76u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component BAS40>
+  <Description>
+    schottky diode
+    Si, 40.0V, 0.200A, 5.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS40_ 1 0 0 -26 13 0 0 "6.12u" 0 "2.61" 0 "5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.12" 0 "7.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "40" 0 "200n" 0>
+  </Model>
+</Component>
+
+<Component BAS70>
+  <Description>
+    schottky diode
+    Si, 70.0V, 70.0mA, 5.00ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_BAS70_ 1 0 0 -26 13 0 0 "99.5p" 0 "1.7" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.6" 0 "7.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "70" 0 "10u" 0>
+  </Model>
+</Component>

@@ -593,7 +593,7 @@
     </message>
     <message>
         <source>hide invisible lines</source>
-        <translation type="unfinished"></translation>
+        <translation>unsichtbare Linien verstecken</translation>
     </message>
 </context>
 <context>
@@ -2029,7 +2029,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>Schaltkreis-Anschluß</translation>
+        <translation>Schaltkreis-Anschluss</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -2497,7 +2497,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation>Koeffizient für Durchlaßbereich der Sperrschichtkapazität</translation>
+        <translation>Koeffizient für Durchlassbereich der Sperrschichtkapazität</translation>
     </message>
     <message>
         <source>bulk transit time</source>
@@ -2581,7 +2581,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation>Bipolartransistor mit Substratanschluß</translation>
+        <translation>Bipolartransistor mit Substratanschluss</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
@@ -3213,7 +3213,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation>3 gekoppelte Induktivitäten</translation>
+        <translation>3 Gekoppelte Induktivitäten</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
@@ -3253,31 +3253,31 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>data type</source>
-        <translation type="unfinished"></translation>
+        <translation>Datentyp</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Komponente &quot;%1&quot; besitzt kein analoges Modell.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Komponente &quot;%1&quot; besitzt kein digitales Modell.</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>WARNUNG: Die Simulationskomponente in der Unterschaltung &quot;%1&quot; wird ignoriert.</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>WARNUNG: Die Gleichung in der Unterschaltung &quot;%1&quot; wird ignoriert.</translation>
     </message>
     <message>
         <source>duration of simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dauer der Simulation</translation>
     </message>
     <message>
         <source>type of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>Art des Tores</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
@@ -6515,7 +6515,7 @@ Geht in den ausgewählten Schaltkreis hinein</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>Verläßt den Schaltkreis</translation>
+        <translation>Verlässt den Schaltkreis</translation>
     </message>
     <message>
         <source>Pop out
@@ -6523,7 +6523,7 @@ Geht in den ausgewählten Schaltkreis hinein</translation>
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
         <translation>Verlasse den Schaltkreis
 
-Verläßt den Schaltkreis in die nächsthöhere Hierachieebene</translation>
+Verlässt den Schaltkreis in die nächsthöhere Hierachieebene</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
@@ -6575,19 +6575,19 @@ Fügt das Massesymbol ein</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>Anschluß einfügen</translation>
+        <translation>Anschluss einfügen</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Fügt einen Anschluß ein</translation>
+        <translation>Fügt einen Anschluss ein</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Anschluß einfügen
+        <translation>Anschluss einfügen
 
-Fügt ein Anschlußsymbol ein</translation>
+Fügt ein Anschlusssymbol ein</translation>
     </message>
     <message>
         <source>Insert Wire</source>
@@ -7365,12 +7365,14 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch von Giorgio Luparia und Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe and Peter Landgren
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch von Markus Gothe und Peter Landgren
+</translation>
     </message>
 </context>
 <context>
@@ -8134,11 +8136,11 @@ Fehler:
     </message>
     <message>
         <source>ERROR: No time for simulation specified!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Für die Simulation wurde keine Zeit angegeben!</translation>
     </message>
     <message>
         <source>ERROR: Forgotten the digital simulation component?</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Wurde die Digitalsimulationskomponente vergessen?</translation>
     </message>
 </context>
 <context>
