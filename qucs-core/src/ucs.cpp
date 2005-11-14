@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.21 2005-10-31 16:15:31 ela Exp $
+ * $Id: ucs.cpp,v 1.22 2005-11-14 19:19:13 raimi Exp $
  *
  */
 
@@ -31,6 +31,7 @@
 #include <string.h>
 
 #include "logging.h"
+#include "precision.h"
 #include "component.h"
 #include "net.h"
 #include "input.h"
@@ -55,6 +56,7 @@ int main (int argc, char ** argv) {
   environment * root;
 
   loginit ();
+  precinit ();
 
   // check program arguments
   for (int i = 1; i < argc; i++) {

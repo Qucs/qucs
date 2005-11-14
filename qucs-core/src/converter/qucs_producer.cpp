@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.11 2005-11-04 10:22:59 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.12 2005-11-14 19:19:14 raimi Exp $
  *
  */
 
@@ -63,6 +63,22 @@ void qucs_add_nodes (struct node_t * node) {
     }
     node = node->next;
   }
+}
+
+/* Deletes the given node list. */
+static void qucs_free_nodes (struct node_t * node) {
+  struct node_t * n;
+  for ( ; node; node = n) {
+    n = node->next;
+    if (node->node) free (node->node);
+    free (node);
+  }
+}
+
+/* The function deletes the collected qucs nodes. */
+static void qucs_delete_nodes (void) {
+  qucs_free_nodes (qucs_nodes);
+  qucs_nodes = NULL;
 }
 
 /* Collects all nodes within the given definition root. */
@@ -173,7 +189,6 @@ static void netlist_list (void) {
   fprintf (qucs_out, "# converted Qucs netlist processed at %s\n", ctime (&t));
   if (spice_title != NULL) {
     fprintf (qucs_out, "#\n# %s#\n\n", spice_title);
-    free (spice_title);
   }
   netlist_lister (definition_root, "");
   for (def = subcircuit_root; def != NULL; def = def->next) {
@@ -187,6 +202,7 @@ static void netlist_list (void) {
   for (n = qucs_nodes; n; n = n->next) {
     fprintf (qucs_out, "# %s\n", n->node);
   }
+  qucs_delete_nodes ();
   fprintf (qucs_out, "### TOPLEVEL NODELIST END\n");
   /* Print potential external node list. */
   fprintf (qucs_out, "\n### SPICE OUTPUT NODELIST BEGIN\n");
@@ -208,6 +224,7 @@ void qucs_producer (void) {
 struct device_t {
   char * ntype;     // netlist type
   char * ltype;     // schematic type
+  char * stype;     // spice type
   int nodes;        // number of nodes
   char * props[64]; // list of properties in schematic order
   char * symbol;    // symbol text
@@ -216,7 +233,7 @@ struct device_t {
 }
 qucs_devices[] = {
   /* diode */
-  { "Diode", "Diode", 2,
+  { "Diode", "Diode", "D", 2,
     {"Is", "N", "Cj0", "M", "Vj", "Fc", "Cp", "Isr", "Nr", "Rs", "Tt", "Temp",
      "Kf", "Af", "Ffe", "Bv", "Ibv", NULL },
     "  <.PortSym -30 0 1>\n"
@@ -234,7 +251,7 @@ qucs_devices[] = {
     "  <Port P2 1 160 60 4 -44 0 2 \"2\" 1>\n"
   },
   /* bipolar transistor */
-  { "BJT", "_BJT", 4,
+  { "BJT", "_BJT", "Q", 4,
     { "Type", "Is", "Nf", "Nr", "Ikf", "Ikr", "Vaf", "Var", "Ise", "Ne", "Isc",
       "Nc", "Bf", "Br", "Rbm", "Irb", "Rc", "Re", "Rb", "Cje", "Vje", "Mje",
       "Cjc", "Vjc", "Mjc", "Xcjc", "Cjs", "Vjs", "Mjs", "Fc", "Tf", "Xtf",
@@ -262,7 +279,7 @@ qucs_devices[] = {
     "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
   },
   /* junction FET */
-  { "JFET", "JFET", 3,
+  { "JFET", "JFET", "J", 3,
     { "Type", "Vt0", "Beta", "Lambda", "Rd", "Rs", "Is", "N", "Isr", "Nr",
       "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", NULL },
     "  <.PortSym -50 0 1>\n"
@@ -282,7 +299,7 @@ qucs_devices[] = {
     "  <Port P3 1 190 170 -33 32 0 1 \"3\" 1>\n"
   },
   /* MOSFET */
-  { "MOSFET", "_MOSFET", 4,
+  { "MOSFET", "_MOSFET", "M", 4,
     { "Type", "Vt0", "Kp", "Gamma", "Phi", "Lambda", "Rd", "Rs", "Rg", "Is",
       "N", "W", "L", "Ld", "Tox", "Cgso", "Cgdo", "Cgbo", "Cbd", "Cbs", "Pb",
       "Mj", "Fc", "Cjsw", "Mjsw", "Tt", "Nsub", "Nss", "Tpg", "Uo", "Rsh",
@@ -309,7 +326,7 @@ qucs_devices[] = {
     "  <Port P3 1 180 200 12 4 0 1 \"3\" 1>\n"
     "  <Port P4 1 200 170 4 -44 0 2 \"4\" 1>\n"
   },
-  { NULL, NULL, 0, { NULL }, NULL, NULL, NULL }
+  { NULL, NULL, NULL, 0, { NULL }, NULL, NULL, NULL }
 };
 
 /* Looks through the list of available Qucs devices.  Returns NULL if
@@ -344,7 +361,8 @@ static void qucslib_list_device (struct definition_t * def) {
   struct pair_t * pair;
   char txt[1024];
   
-  sprintf (txt, "\n<Component %s>\n", &def->instance[1]);
+  sprintf (txt, "\n<Component %s>\n", def->instance[0] == dev->stype[0] ?
+	   &def->instance[1] : def->instance);
   fprintf (qucs_out, txt);
   fprintf (qucs_out, "  <Description>\n");
   fprintf (qucs_out, "  </Description>\n");

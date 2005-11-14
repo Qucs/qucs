@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.13 2005-10-17 08:41:23 raimi Exp $
+ * $Id: scan_spice.l,v 1.14 2005-11-14 19:19:14 raimi Exp $
  *
  */
 
@@ -134,7 +134,8 @@ MOS      ({MOS1}|{MOS2})
     BEGIN(CONTROL);
 }
 
-<CONTROL>. { /* skip any character in here */ }
+<CONTROL>.     { /* skip any character in here */ }
+<CONTROL>{EOL} { /* skip any character in here */ }
 
 <CONTROL>^"."[eE][nN][dD][cC] {
     BEGIN(STARTUP);
@@ -530,13 +531,13 @@ MOS      ({MOS1}|{MOS2})
     return Nodes;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,SWITCH>\r*\n {
+<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,SWITCH>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;
 }
 
-<*>{SPACE}|\r*\n\+|[()=,] {
+<*>{SPACE}|{EOL}\+|[()=,] {
     /* skip spaces, '=', '(', ')', ',' and the leading '+' */
 }
 
@@ -550,7 +551,7 @@ MOS      ({MOS1}|{MOS2})
 <IGNORE>.  { /* skip any character in here */ }
 
 <COMMENT>. { /* skip any character in here */ }
-<COMMENT>\r*\n { BEGIN(STARTUP); /* skipping ends here */ }
+<COMMENT>{EOL} { BEGIN(STARTUP); /* skipping ends here */ }
 
 <*>.       { /* skip any character in here */ }
 

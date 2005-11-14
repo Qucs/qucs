@@ -26,6 +26,7 @@ files.
 Version 0.0.8
 -------------
 
+ * spice converter translates two and three mutual inductors
  * new stos() function in equation solver
  * allowing impedances other than 50ohms in rtoz(), ztor(), stoy(),
    ytos(), stoz(), ztos(), rtoy() and ytor()

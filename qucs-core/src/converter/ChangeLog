@@ -1,3 +1,8 @@
+2005-11-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed diode node translation.  Implemented
+	translation of three mutual inductors.
+
 2005-10-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Redefined 'qucslib' output format to

@@ -4,7 +4,7 @@
 /*
  * parse_spice.y - parser for a Spice netlist
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.9 2005-06-02 18:17:56 raimi Exp $
+ * $Id: parse_spice.y,v 1.10 2005-11-14 19:19:14 raimi Exp $
  *
  */
 
@@ -318,6 +318,7 @@ DefinitionLine:
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_str_value ($$, $4, HINT_NODE);
     spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
   }
   | TRAN_Action ValueList Eol {
     /* transient analysis */
@@ -802,7 +803,7 @@ SubCkt_Ident: Identifier;
 
 EndSub:
     ENDS_Action Eol { /* nothing to do */ }
-  | ENDS_Action SubCkt_Ident Eol { /* nothing to do */ }
+  | ENDS_Action SubCkt_Ident Eol { free ($2); /* nothing to do */ }
 ;
 
 SubBodyLine:
