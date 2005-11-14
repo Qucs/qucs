@@ -1,3 +1,8 @@
+2005-11-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Checking for size of 'long double' if
+	necessary.
+
 2005-07-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.7 and bumped up to version

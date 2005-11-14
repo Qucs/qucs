@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.h,v 1.8 2005/06/02 18:17:56 raimi Exp $
+ * $Id: check_spice.h,v 1.9 2005/11/14 19:19:14 raimi Exp $
  *
  */
 
@@ -53,6 +53,8 @@ int  spice_checker (void);
 int  spice_parse (void);
 int  spice_error (char *);
 int  spice_lex (void);
+int  spice_lex_destroy (void);
+void spice_destroy (void);
 
 /* Local functionality. */
 void spice_add_last_hint (struct value_t *, int);

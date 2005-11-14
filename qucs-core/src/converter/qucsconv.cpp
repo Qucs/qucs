@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.8 2005/06/02 18:17:56 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.9 2005/11/14 19:19:14 raimi Exp $
  *
  */
 
@@ -100,12 +100,20 @@ int main (int argc, char ** argv) {
   }
 
   if (input && !strcmp (input, "spice")) {
-    if ((spice_in = open_file (infile, "r")) == NULL)
+    int ret = 0;
+    if ((spice_in = open_file (infile, "r")) == NULL) {
+      ret = -1;
+    } else if (spice_parse () != 0) {
+      ret = -1;
+    } else if (spice_checker () != 0) {
+      ret = -1;
+    }
+    spice_lex_destroy ();
+    fclose (spice_in);
+    if (ret) {
+      spice_destroy ();
       return -1;
-    if (spice_parse () != 0)
-      return -1;
-    if (spice_checker () != 0)
-      return -1;
+    }
   }
   else {
     fprintf (stderr, "invalid input data specification `%s'\n",
@@ -120,6 +128,9 @@ int main (int argc, char ** argv) {
       qucs_producer ();
     else
       qucslib_producer ();
+    fclose (qucs_out);
   }
+
+  spice_destroy ();
   return 0;
 }

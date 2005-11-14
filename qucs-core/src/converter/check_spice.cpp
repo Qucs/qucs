@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.16 2005/10/04 10:52:29 raimi Exp $
+ * $Id: check_spice.cpp,v 1.17 2005/11/14 19:19:14 raimi Exp $
  *
  */
 
@@ -103,7 +103,7 @@ struct define_t spice_definition_available[] =
   },
   /* transformer (mutual inductors) */
   { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "T", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* BJT device */
@@ -525,7 +525,7 @@ static void spice_adjust_device (struct definition_t * def,
       p = spice_generate_Model_pairs (start->next);
       def->pairs = netlist_append_pairs (def->pairs, p);
       // adjust type of device
-      free (def->type);
+      if (def->type) free (def->type);
       def->type = strdup (tran->trans_type);
       // append "Type" property
       if (tran->trans_type_prop != NULL) {
@@ -625,6 +625,10 @@ node_translations[] = {
     { 2, 1, 3, -1 },
     { 1, 2, 3, -1 }
   },
+  { "Diode", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
   { "VCCS", 0,
     { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
@@ -661,7 +665,7 @@ static int spice_count_nodes (struct definition_t * def) {
 }
 
 // Deletes node list of a definition.
-static void spice_free_nodes (struct node_t * node) {
+static void netlist_free_nodes (struct node_t * node) {
   struct node_t * n;
   for (; node != NULL; node = n) {
     n = node->next;
@@ -671,11 +675,20 @@ static void spice_free_nodes (struct node_t * node) {
 }
 
 /* The following function free()'s the given value. */
-void netlist_free_value (struct value_t * value) {
+static void netlist_free_value (struct value_t * value) {
   if (value->ident) free (value->ident);
   if (value->unit)  free (value->unit);
   if (value->scale) free (value->scale);
   free (value);
+}
+
+/* Deletes the given value list. */
+static void netlist_free_values (struct value_t * value) {
+  struct value_t * next;
+  for (; value != NULL; value = next) {
+    next = value->next;
+    netlist_free_value (value);
+  }
 }
 
 /* Deletes the given key/value pair. */
@@ -683,6 +696,15 @@ void netlist_free_pair (struct pair_t * pair) {
   if (pair->value) netlist_free_value (pair->value);
   free (pair->key);
   free (pair);
+}
+
+/* Deletes pair list of a definition. */
+static void netlist_free_pairs (struct pair_t * pair) {
+  struct pair_t * n;
+  for (; pair != NULL; pair = n) {
+    n = pair->next;
+    netlist_free_pair (pair);
+  }
 }
 
 // The function returns the node specified at the given position.
@@ -735,7 +757,7 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
     node->next = root;
     root = node;
   }
-  spice_free_nodes (def->nodes);
+  netlist_free_nodes (def->nodes);
   def->nodes = root;
 }
 
@@ -977,6 +999,66 @@ spice_add_definition (struct definition_t * root, struct definition_t * def) {
   return def;
 }
 
+/* Forward declaration for recursive calls. */
+static void netlist_destroy_intern (struct definition_t *);
+
+/* Deletes a definition and all its content. */
+static void
+netlist_free_definition (struct definition_t * def) {
+  netlist_free_nodes (def->nodes);
+  netlist_free_pairs (def->pairs);
+  netlist_free_values (def->values);
+  if (def->subcircuit) free (def->subcircuit);
+  if (def->text) free (def->text);
+  if (def->sub) netlist_destroy_intern (def->sub);
+  free (def->type);
+  free (def->instance);
+  free (def);
+}
+
+/* The function deletes the given definition list. */
+static void netlist_destroy_intern (struct definition_t * root) {
+  struct definition_t * def, * next;
+  for (def = root; def != NULL; def = next) {
+    next = def->next;
+    netlist_free_definition (def);
+  }
+}
+
+/* Deletes all available definition lists. */
+void spice_destroy (void) {
+  netlist_destroy_intern (definition_root);
+  netlist_destroy_intern (device_root);
+  for (struct definition_t * def = subcircuit_root; def; def = def->next) {
+    netlist_destroy_intern (def->sub);
+  }
+  netlist_destroy_intern (subcircuit_root);
+  definition_root = subcircuit_root = device_root = NULL;
+  netlist_free_nodes (spice_nodes);
+  spice_nodes = NULL;
+  if (spice_title) free (spice_title);
+  spice_title = NULL;  
+}
+
+/* Unchains a definition and deletes it. */
+struct definition_t *
+spice_del_definition (struct definition_t * root, struct definition_t * def) {
+  struct definition_t * prev;
+  if (def == root) {
+    root = def->next;
+    netlist_free_definition (def);
+  }
+  else {
+    // find previous to the candidate to be deleted
+    for (prev = root; prev != NULL && prev->next != def; prev = prev->next);
+    if (prev != NULL) {
+      prev->next = def->next;
+      netlist_free_definition (def);
+    }
+  }
+  return root;
+}
+
 /* This function creates an internal node name used during the
    conversion process.  The returned string is static and must be
    copied by the caller.  Successive calls result in different node
@@ -1151,6 +1233,9 @@ static char * spice_untranslated_text (struct definition_t * def) {
   ((val) != NULL && \
   (val)->hint & (HINT_NUMBER | HINT_NODE) && \
   !((val)->hint & HINT_DONE))
+
+#define VAL_IS_DONE(val) \
+  ((val) == NULL || (val)->hint & HINT_DONE)
 
 /* This function is the independent source translator.  If necessary
    new kinds of sources are created.  This must be done since Qucs has
@@ -1377,7 +1462,7 @@ static void spice_collect_external_nodes (struct definition_t * def) {
 	n->next = spice_nodes;
 	spice_nodes = n;
       }
-      else spice_free_nodes (n);
+      else netlist_free_nodes (n);
     }
   }
 }
@@ -1420,6 +1505,210 @@ static struct definition_t * spice_add_Model (struct definition_t * def) {
     Model = NULL;
   }
   return Model;
+}
+
+/* Finds a second coupled inductor definition using the same inductors
+   as the original one if there is any. */
+static struct definition_t *
+spice_find_coupled (struct definition_t * root, struct definition_t * coupled,
+		    char * type, char * inst) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (def != coupled && !strcmp (def->type, type) && !def->action) {
+      if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
+	continue;
+      char * linst1 = def->values->ident;
+      char * linst2 = def->values->next->ident;
+      if (!strcasecmp (linst1, inst) || !strcasecmp (linst2, inst))
+	return def;
+    }
+  }
+  return NULL;
+}
+
+/* Looks for the inductor definition used in a coupled inductor.
+   Emits an error message if there is no such inductor. */
+static struct definition_t *
+spice_find_coupled_inductor (struct definition_t * root,
+			     struct definition_t * def, char * type,
+			     char * inst) {
+  static struct definition_t * target;
+  target = spice_find_definition (root, type, inst);
+  if (target == NULL) {
+    fprintf (stderr, "spice error, no such inductor `%s' found as "
+	     "referenced by %s `%s'\n", inst, def->type, def->instance);
+    spice_errors++;
+  }
+  return target;
+}
+
+// Get the coefficient of coupling.
+static struct value_t * 
+spice_get_value_coupled (struct definition_t * def) {
+  struct value_t * val = NULL;
+  foreach_value (def->values, val) {
+    if (val->hint & HINT_NUMBER) break;
+  }
+  return val;
+}
+
+// Generates a coupled inductor instance description.
+static char * 
+spice_coupled_instance (struct definition_t * k1, struct definition_t * k2,
+			struct definition_t * k3) {
+  char * inst = (char *) malloc (strlen (k1->instance) +
+				 strlen (k2->instance) +
+				 strlen (k3->instance) + 1);
+  strcpy (inst, k1->instance);
+  strcat (inst, k2->instance);
+  strcat (inst, k3->instance);
+  return inst;
+}
+
+/* Post translation function for coupled inductors. */
+static struct definition_t *
+spice_translate_coupled (struct definition_t * root,
+			 struct definition_t * def) {
+  struct definition_t * target1, * target2, * target3;
+  char * linst1 = def->values->ident;       // get inductivity 1
+  char * linst2 = def->values->next->ident; // get inductivity 2
+  nr_double_t l1, l2, l3, k, t;
+  char * n1, * n2, * n3, * n4;
+  struct node_t * nn;
+
+  // initialize local variables
+  n1 = n2 = n3 = n4 = NULL;
+  l1 = l2 = l3 = k = t = 0;
+
+  // find and handle inductivity 1
+  target1 = spice_find_coupled_inductor (root, def, "L", linst1);
+
+  // find and handle inductivity 2
+  target2 = spice_find_coupled_inductor (root, def, "L", linst2);
+
+  // if both inductors found
+  if (!target1 || !target2) return root;
+
+  l1 = spice_get_property_value (target1, "L");
+  l2 = spice_get_property_value (target2, "L");
+
+  // check three inductors
+  struct definition_t * k1 = def, * k2, * k3;
+  char * k12, * k13, * k23;
+  k2 = spice_find_coupled (root, k1, "Tr", linst1);
+  k3 = spice_find_coupled (root, k1, "Tr", linst2);
+
+  // handle three inductors
+  if (k2 != NULL && k3 != NULL) {
+    char * linst3, * linst4;
+    if (!strcasecmp (k2->values->ident, linst1))
+      linst3 = k2->values->next->ident;
+    else
+      linst3 = k2->values->ident;
+    if (!strcasecmp (k3->values->ident, linst2))
+      linst4 = k3->values->next->ident;
+    else
+      linst4 = k3->values->ident;
+    spice_value_done (k1->values);
+    spice_value_done (k1->values->next);
+
+    if (strcasecmp (linst3, linst4)) {
+      fprintf (stderr, "spice error, cannot translate coupled inductors "
+	       "`%s' and `%s'\n", linst3, linst4);
+      spice_errors++;
+    }
+    else if (k2 != k3) {
+      // find and handle inductivity 3
+      target3 = spice_find_coupled_inductor (root, k2, "L", linst3);
+      if (target3 != NULL) {
+	// construct three mutual inductors
+	struct value_t * val;
+	char * inst = spice_coupled_instance (k1, k2, k3);
+	free (k1->type); k1->type = strdup ("MUT2");
+	free (k1->instance); k1->instance = inst;
+	netlist_free_pairs (k1->pairs); k1->pairs = NULL;
+	spice_value_done (k2->values);
+	spice_value_done (k2->values->next);
+	spice_value_done (k3->values);
+	spice_value_done (k3->values->next);
+	spice_append_node (k1, spice_get_node(target1, 1)->node);
+	spice_append_node (k1, spice_get_node(target3, 1)->node);
+	spice_append_node (k1, spice_get_node(target3, 2)->node);
+	spice_append_node (k1, spice_get_node(target2, 2)->node);
+	spice_append_node (k1, spice_get_node(target2, 1)->node);
+	spice_append_node (k1, spice_get_node(target1, 2)->node);
+	l3 = spice_get_property_value (target3, "L");
+	spice_set_property_value (k1, "L1", l1);
+	spice_set_property_value (k1, "L2", l2);
+	spice_set_property_value (k1, "L3", l3);
+	if ((val = spice_get_value_coupled (k1)) != NULL) {
+	  k12 = val->ident;
+	  spice_append_pair (k1, "k12", k12, 0);
+	  spice_value_done (val);
+	}
+	if ((val = spice_get_value_coupled (k2)) != NULL) {
+	  k13 = val->ident;
+	  spice_append_pair (k1, "k13", k13, 0);
+	  spice_value_done (val);
+	}
+	if ((val = spice_get_value_coupled (k3)) != NULL) {
+	  k23 = val->ident;
+	  spice_append_pair (k1, "k23", k23, 0);
+	  spice_value_done (val);
+	}
+	root = spice_del_definition (root, target1);
+	root = spice_del_definition (root, target2);
+	root = spice_del_definition (root, target3);
+	root = spice_del_definition (root, k2);
+	root = spice_del_definition (root, k3);
+	return root;
+      }
+    }
+  }
+
+  spice_value_done (def->values);
+  spice_value_done (def->values->next);
+
+  // node replacer 1
+  nn = spice_get_node (target1, 2);
+  n4 = nn->node;
+  nn->node = strdup (spice_create_intern_node ());
+  n1 = strdup (nn->node);
+
+  // node replacer 2
+  nn = spice_get_node (target2, 2);
+  n3 = nn->node;
+  nn->node = strdup (spice_create_intern_node ());
+  n2 = strdup (nn->node);
+
+  // get the coefficient of coupling
+  struct value_t * val;
+  spice_append_pair (def, "T", "1", 1);
+  if ((val = spice_get_value_coupled (def)) != NULL) {
+    spice_append_pair (def, "T", val->ident, 1);
+    spice_value_done (val);
+  }
+
+  // apply the turns ratio of the transformer and its nodes
+  k = spice_get_property_value (def, "T");
+  t = sqrt (l1 / l2);
+  spice_set_property_value (def, "T", t);
+  spice_append_node (def, n1);
+  spice_append_node (def, n2);
+  spice_append_node (def, n3);
+  spice_append_node (def, n4);
+  // adapt inductivities of original inductors
+  spice_set_property_value (target1, "L", l1 - k * l1);
+  spice_set_property_value (target2, "L", l2 - k * l1 / t / t);
+  // insert the actual mutual inductance if necessary
+  if (k > 0) {
+    struct definition_t * Mind = spice_create_definition (def, "L");
+    spice_append_node (Mind, n1);
+    spice_append_node (Mind, n4);
+    spice_set_property_value (Mind, "L", k * l1);
+    root = spice_add_definition (root, Mind);
+  }
+  free (n1); free (n2); free (n3); free (n4);
+  return root;
 }
 
 /* This function must be called after the actual Spice netlist
@@ -1479,81 +1768,7 @@ spice_post_translator (struct definition_t * root) {
     }
     // post-process mutual inductors (transformer)
     if (!def->action && !strcmp (def->type, "Tr")) {
-      struct definition_t * target1, * target2;
-      char * linst1 = def->values->ident;       // get inductivity 1
-      char * linst2 = def->values->next->ident; // get inductivity 2
-      nr_double_t l1, l2, k, t;
-      char * n1, * n2, * n3, * n4;
-      struct node_t * nn;
-
-      // initialize local variables
-      n1 = n2 = n3 = n4 = NULL;
-      l1 = l2 = k = t = 0;
-
-      // find and handle inductivity 1
-      target1 = spice_find_definition (root, "L", linst1);
-      if (target1 == NULL) {
-	fprintf (stderr, "spice error, no such inductor `%s' found as "
-		 "referenced by %s `%s'\n", linst1, def->type, def->instance);
-	spice_errors++;
-      }
-      else {
-	l1 = spice_get_property_value (target1, "L");
-	nn = spice_get_node (target1, 2);
-	n4 = nn->node;
-	nn->node = strdup (spice_create_intern_node ());
-	n1 = strdup (nn->node);
-      }
-      spice_value_done (def->values);
-
-      // find and handle inductivity 2
-      target2 = spice_find_definition (root, "L", linst2);
-      if (target2 == NULL) {
-	fprintf (stderr, "spice error, no such inductor `%s' found as "
-		 "referenced by %s `%s'\n", linst2, def->type, def->instance);
-	spice_errors++;
-      }
-      else {
-	l2 = spice_get_property_value (target2, "L");
-	nn = spice_get_node (target2, 2);
-	n3 = nn->node;
-	nn->node = strdup (spice_create_intern_node ());
-	n2 = strdup (nn->node);
-      }
-      spice_value_done (def->values->next);
-
-      // if both inductors found
-      if (n1 && n2) {
-	// get the coefficient of coupling
-	struct value_t * val;
-	foreach_value (def->values, val) {
-	  if (val->hint & HINT_NUMBER) {
-	    spice_append_pair (def, "T", val->ident, 1);
-	    spice_value_done (val);
-	    break;
-	  }
-	}
-	// apply the turns ratio of the transformer and its nodes
-	k = spice_get_property_value (def, "T");
-	t = sqrt (l1 / l2);
-	spice_set_property_value (def, "T", t);
-	spice_append_node (def, n1);
-	spice_append_node (def, n2);
-	spice_append_node (def, n3);
-	spice_append_node (def, n4);
-	// adapt inductivities of original inductors
-	spice_set_property_value (target1, "L", l1 - k * l1);
-	spice_set_property_value (target2, "L", l2 - k * l1 / t / t);
-	// insert the actual mutual inductance if necessary
-	if (k > 0) {
-	  struct definition_t * Mind = spice_create_definition (def, "L");
-	  spice_append_node (Mind, n1);
-	  spice_append_node (Mind, n4);
-	  spice_set_property_value (Mind, "L", k * l1);
-	  root = spice_add_definition (root, Mind);
-	}
-	free (n1); free (n2); free (n3); free (n4);
-      }
+      root = spice_translate_coupled (root, def);
     }
     // post-process general analysis options
     if (def->action && strstr (def->type, "OPT")) {
@@ -1804,6 +2019,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
        - mutual inductors (transformer)
    - mesfet if available in Qucs
    - other mosfet models if available in Qucs
+       - three mutual inductors
 */
 
 #if 0

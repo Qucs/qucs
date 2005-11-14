@@ -102,10 +102,23 @@ AC_ARG_ENABLE([double],
   AC_HELP_STRING([--enable-double=TYPE],
                  [type of double representation @<:@default=double@:>@]),
   [case "$enableval" in
-   no | yes | double)  double_type="double"; double_size=8 ;;
-   ldouble)            double_type="long double"; double_size=12 ;;
-   float)              double_type="float"; double_size=4 ;;
-   *)                  double_type="none"; double_size=0 ;;
+   no | yes | double)
+     double_type="double"
+     double_size=8
+     ;;
+   ldouble)
+     double_type="long double"
+     AC_CHECK_SIZEOF([long double],12)
+     double_size=$ac_cv_sizeof_long_double
+     ;;
+   float)
+     double_type="float"
+     double_size=4
+     ;;
+   *)
+     double_type="none"
+     double_size=0
+     ;;
    esac],
   [double_type="double"; double_size=8])
 if test "$double_type" = none; then
