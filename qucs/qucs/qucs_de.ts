@@ -3281,7 +3281,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitverlaufsdiagramm</translation>
     </message>
 </context>
 <context>
