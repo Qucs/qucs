@@ -47,7 +47,8 @@ PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
   deactiv.png bottom.png editpaste.png equation.png fileclose.png pointer.png \
   fileprint.png filesaveall.png gear.png mirror.png nodename.png marker.png   \
   port.png rebuild.png redo.png rotate_ccw.png top.png undo.png viewmag1.png  \
-  viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png
+  viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png   \
+  ground.png
 
 # application pictures
 ICONS = big.button.qucs.xpm big.qucs.xpm tiny.button.qucs.xpm tiny.qucs.xpm
