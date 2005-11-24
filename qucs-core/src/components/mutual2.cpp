@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual2.cpp,v 1.1 2005/10/04 10:52:29 raimi Exp $
+ * $Id: mutual2.cpp,v 1.2 2005/11/24 10:10:21 raimi Exp $
  *
  */
 
@@ -98,8 +98,8 @@ void mutual2::initDC (void) {
   setVoltageSources (3);
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_1, NODE_6);
-  voltageSource (VSRC_2, NODE_2, NODE_3);
-  voltageSource (VSRC_3, NODE_5, NODE_4);
+  voltageSource (VSRC_2, NODE_5, NODE_4);
+  voltageSource (VSRC_3, NODE_2, NODE_3);
 }
 
 void mutual2::initTR (void) {

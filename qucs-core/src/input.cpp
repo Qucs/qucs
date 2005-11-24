@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.49 2005/10/05 11:22:42 raimi Exp $
+ * $Id: input.cpp,v 1.50 2005/11/24 10:10:21 raimi Exp $
  *
  */
 
@@ -230,8 +230,8 @@ void input::factory (void) {
       c->setNonLinear (def->nonlinear != 0);
       c->setSubcircuit (def->subcircuit);
 
-      // change size (number of ports) of S-parameter files
-      if (c->getType () == CIR_SPFILE) {
+      // change size (number of ports) of variable sized components
+      if (c->isVariableSized ()) {
 	c->setSize (def->ncount);
       }
       // add appropriate nodes to circuit
@@ -404,6 +404,20 @@ circuit * input::createCircuit (char * type) {
     return new ivnoise ();
   else if (!strcmp (type, "VVnoise"))
     return new vvnoise ();
+  else if (!strcmp (type, "Inv"))
+    return new inverter ();
+  else if (!strcmp (type, "NOR"))
+    return new nor ();
+  else if (!strcmp (type, "OR"))
+    return new or ();
+  else if (!strcmp (type, "NAND"))
+    return new nand ();
+  else if (!strcmp (type, "AND"))
+    return new and ();
+  else if (!strcmp (type, "XNOR"))
+    return new xnor ();
+  else if (!strcmp (type, "XOR"))
+    return new xor ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

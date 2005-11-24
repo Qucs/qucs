@@ -24,7 +24,7 @@
 
 # the component library rules
 
-SUBDIRS = microstrip devices
+SUBDIRS = microstrip devices digital
 
 noinst_LIBRARIES = libcomponent.a
 
@@ -44,8 +44,6 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	tline.h iprobe.h iac.h spfile.h vnoise.h inoise.h vpulse.h ipulse.h  \
 	vrect.h irect.h amplifier.h opamp.h iinoise.h mutual.h mutual2.h     \
 	vvnoise.h ivnoise.h
-
-#libcomponent_a_LIBADD = microstrip/libmicrostrip.a devices/libdevices.a
 
 INCLUDES = -I$(top_srcdir)/src
 

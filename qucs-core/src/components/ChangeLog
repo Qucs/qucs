@@ -1,3 +1,17 @@
+2005-11-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/xnor.h, digital/xor.h, digital/nand.h, digital/and.h,
+	digital/nor.h, digital/or.h, digital/inverter.h: New files
+	implementing the analog models of the digital components.
+
+	* digital/digital.h (class digital): Implemented base class
+	for multiple digital input circuits.
+
+2005-11-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* mutual2.cpp: Fixed bug in three mutual inductors.  Inductor
+	two and three were interchanged during transient analysis.
+
 2005-10-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp: Allow negative noise for negative resistors

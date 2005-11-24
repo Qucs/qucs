@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.20 2005/10/17 08:41:23 raimi Exp $
+ * $Id: spfile.cpp,v 1.21 2005/11/24 10:10:21 raimi Exp $
  *
  */
 
@@ -61,6 +61,7 @@ spfile::spfile () : circuit () {
   spara = FMIN = SOPT = RN = NULL;
   interpolType = dataType = 0;
   type = CIR_SPFILE;
+  setVariableSized (true);
 }
 
 // Destructor deletes spfile object from memory.

@@ -162,7 +162,8 @@ AC_CONFIG_FILES([Makefile
                  src/converter/Makefile
                  src/components/Makefile
                  src/components/microstrip/Makefile
-                 src/components/devices/Makefile])
+                 src/components/devices/Makefile
+                 src/components/digital/Makefile])
 AC_OUTPUT
 
 # Print results.

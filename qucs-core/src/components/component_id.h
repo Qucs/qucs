@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.27 2005/10/04 10:52:29 raimi Exp $
+ * $Id: component_id.h,v 1.28 2005/11/24 10:10:21 raimi Exp $
  *
  */
 
@@ -100,6 +100,15 @@ enum circuit_type {
   CIR_JFET,
   CIR_BJT,
   CIR_MOSFET,
+
+  // digital components
+  CIR_INVERTER,
+  CIR_NOR,
+  CIR_OR,
+  CIR_NAND,
+  CIR_AND,
+  CIR_XNOR,
+  CIR_XOR,
 };
 
 #endif /* __COMPONENT_ID_H__ */

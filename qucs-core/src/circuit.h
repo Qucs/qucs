@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.40 2005/10/24 09:10:25 raimi Exp $
+ * $Id: circuit.h,v 1.41 2005/11/24 10:10:21 raimi Exp $
  *
  */
 
@@ -32,6 +32,7 @@ enum circuit_flag {
   CIRCUIT_VSOURCE     = 8,
   CIRCUIT_ISOURCE     = 16,
   CIRCUIT_INTVSOURCE  = 32,
+  CIRCUIT_VARSIZE     = 64,
 };
 
 #define NODE_1 0
@@ -93,6 +94,8 @@ class circuit : public object, public integrator
   void   setSize (int);
   bool   isEnabled (void) { return RETFLAG (CIRCUIT_ENABLED); }
   void   setEnabled (bool e) { MODFLAG (e, CIRCUIT_ENABLED); }
+  bool   isVariableSized (void) { return RETFLAG (CIRCUIT_VARSIZE); }
+  void   setVariableSized (bool v) { MODFLAG (v, CIRCUIT_VARSIZE); }
   void   setNet (net * n) { subnet = n; }
   net *  getNet (void) { return subnet; }
 
