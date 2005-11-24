@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.30 2005-10-05 11:22:42 raimi Exp $
+ * $Id: component.h,v 1.31 2005-11-24 10:10:21 raimi Exp $
  *
  */
 
@@ -99,5 +99,14 @@
 #include "microstrip/cpwshort.h"
 #include "microstrip/cpwgap.h"
 #include "microstrip/cpwstep.h"
+
+#include "digital/digital.h"
+#include "digital/inverter.h"
+#include "digital/nor.h"
+#include "digital/or.h"
+#include "digital/nand.h"
+#include "digital/and.h"
+#include "digital/xnor.h"
+#include "digital/xor.h"
 
 #endif /* __COMPONENT_H__ */
