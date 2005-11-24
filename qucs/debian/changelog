@@ -1,7 +1,18 @@
+qucs (0.0.7-2) unstable; urgency=low
+
+  * New patch from the upstream release trying to fix again FTBFS on amd64 (Closes: #303863).
+  * Added man page for qucslib
+  * debian/control.in:
+   - increased Standards-Version to 3.6.2 with no changes
+
+ -- José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>  Sat, 3 Sep 2005 10:16:23 +0200
+
 qucs (0.0.7-1) unstable; urgency=low
 
   * New upstream release (Closes: #303863).
   * Modified name from Qt Universal... to Quite Universal to comply Trolltech indications.
+ 
+ -- José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>  Sat, 23 Jul 2005 11:38:18 +0200
 
 qucs (0.0.5-1) unstable; urgency=low
 
