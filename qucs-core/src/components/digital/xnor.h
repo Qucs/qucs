@@ -18,17 +18,17 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xnor.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: xnor.h,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
 #ifndef __XNOR_H__
 #define __XNOR_H__
 
-class xnor : public digital
+class logicxnor : public digital
 {
  public:
-  xnor ();
+  logicxnor ();
   void calcOutput (void);
   void calcDerivatives (void);
 };

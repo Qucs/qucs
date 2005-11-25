@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: or.cpp,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: or.cpp,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
@@ -36,12 +36,12 @@
 #include "digital.h"
 #include "or.h"
 
-or::or () : digital () {
+logicor::logicor () : digital () {
   type = CIR_OR;
   setVariableSized (true);
 }
 
-void or::calcOutput (void) {
+void logicor::calcOutput (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
@@ -51,7 +51,7 @@ void or::calcOutput (void) {
   Vout = v * (1 - n / x);
 }
 
-void or::calcDerivatives (void) {
+void logicor::calcDerivatives (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;

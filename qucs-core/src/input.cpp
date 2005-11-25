@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.50 2005/11/24 10:10:21 raimi Exp $
+ * $Id: input.cpp,v 1.51 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
@@ -407,17 +407,17 @@ circuit * input::createCircuit (char * type) {
   else if (!strcmp (type, "Inv"))
     return new inverter ();
   else if (!strcmp (type, "NOR"))
-    return new nor ();
+    return new logicnor ();
   else if (!strcmp (type, "OR"))
-    return new or ();
+    return new logicor ();
   else if (!strcmp (type, "NAND"))
-    return new nand ();
+    return new logicnand ();
   else if (!strcmp (type, "AND"))
-    return new and ();
+    return new logicand ();
   else if (!strcmp (type, "XNOR"))
-    return new xnor ();
+    return new logicxnor ();
   else if (!strcmp (type, "XOR"))
-    return new xor ();
+    return new logicxor ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

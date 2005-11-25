@@ -18,17 +18,17 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: and.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: and.h,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
 #ifndef __AND_H__
 #define __AND_H__
 
-class and : public digital
+class logicand : public digital
 {
  public:
-  and ();
+  logicand ();
   void calcOutput (void);
   void calcDerivatives (void);
 };

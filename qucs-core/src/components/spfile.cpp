@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.21 2005/11/24 10:10:21 raimi Exp $
+ * $Id: spfile.cpp,v 1.22 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
@@ -140,7 +140,7 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
 
 void spfile::calcNoiseSP (nr_double_t frequency) {
   // nothing to do if the given file type had errors
-  if (index == NULL || nfreq == NULL) return;
+  if (spara == NULL || nfreq == NULL) return;
   setMatrixN (calcMatrixCs (frequency));
 }
 

@@ -18,17 +18,17 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nand.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: nand.h,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
 #ifndef __NAND_H__
 #define __NAND_H__
 
-class nand : public digital
+class logicnand : public digital
 {
  public:
-  nand ();
+  logicnand ();
   void calcOutput (void);
   void calcDerivatives (void);
 };

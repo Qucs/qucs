@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nor.cpp,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: nor.cpp,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
@@ -36,12 +36,12 @@
 #include "digital.h"
 #include "nor.h"
 
-nor::nor () : digital () {
+logicnor::logicnor () : digital () {
   type = CIR_NOR;
   setVariableSized (true);
 }
 
-void nor::calcOutput (void) {
+void logicnor::calcOutput (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
@@ -51,7 +51,7 @@ void nor::calcOutput (void) {
   Vout = v * n / x;
 }
 
-void nor::calcDerivatives (void) {
+void logicnor::calcDerivatives (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;

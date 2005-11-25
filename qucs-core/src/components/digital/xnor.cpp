@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xnor.cpp,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: xnor.cpp,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
@@ -36,12 +36,12 @@
 #include "digital.h"
 #include "xnor.h"
 
-xnor::xnor () : digital () {
+logicxnor::logicxnor () : digital () {
   type = CIR_XNOR;
   setVariableSized (true);
 }
 
-void xnor::calcOutput (void) {
+void logicxnor::calcOutput (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
@@ -51,7 +51,7 @@ void xnor::calcOutput (void) {
   Vout = v / 2 * (1 + x);
 }
 
-void xnor::calcDerivatives (void) {
+void logicxnor::calcDerivatives (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;

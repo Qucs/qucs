@@ -1,5 +1,11 @@
 2005-11-24  Stefan Jahn  <stefan@lkcc.org>
 
+	* digital/and.h (class logicand): Prefixed and, nand, or, nor,
+	xor and xnor with 'logic' to avoid clash with ISO C++ reserved
+	words.
+
+2005-11-24  Stefan Jahn  <stefan@lkcc.org>
+
 	* digital/xnor.h, digital/xor.h, digital/nand.h, digital/and.h,
 	digital/nor.h, digital/or.h, digital/inverter.h: New files
 	implementing the analog models of the digital components.

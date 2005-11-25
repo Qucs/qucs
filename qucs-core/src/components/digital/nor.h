@@ -18,17 +18,17 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nor.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: nor.h,v 1.2 2005/11/25 08:27:05 raimi Exp $
  *
  */
 
 #ifndef __NOR_H__
 #define __NOR_H__
 
-class nor : public digital
+class logicnor : public digital
 {
  public:
-  nor ();
+  logicnor ();
   void calcOutput (void);
   void calcDerivatives (void);
 };
