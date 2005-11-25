@@ -16,8 +16,8 @@
  ***************************************************************************/
 
 #include "subcirport.h"
+#include "node.h"
 #include "qucsdoc.h"
-
 
 SubCirPort::SubCirPort()
 {

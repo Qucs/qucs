@@ -23,9 +23,10 @@
 #include <qptrlist.h>
 #include <qspinbox.h>
 
+#include "node.h"
+
 class QucsDoc;
 class Graph;
-class Node;
 class QGridLayout;
 
 
