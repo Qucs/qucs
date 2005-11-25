@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xor.cpp,v 1.1 2005-11-24 10:10:21 raimi Exp $
+ * $Id: xor.cpp,v 1.2 2005-11-25 08:27:05 raimi Exp $
  *
  */
 
@@ -36,12 +36,12 @@
 #include "digital.h"
 #include "xor.h"
 
-xor::xor () : digital () {
+logicxor::logicxor () : digital () {
   type = CIR_XOR;
   setVariableSized (true);
 }
 
-void xor::calcOutput (void) {
+void logicxor::calcOutput (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
@@ -51,7 +51,7 @@ void xor::calcOutput (void) {
   Vout = v / 2 * (1 - x);
 }
 
-void xor::calcDerivatives (void) {
+void logicxor::calcDerivatives (void) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
