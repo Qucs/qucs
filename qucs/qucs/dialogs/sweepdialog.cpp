@@ -15,10 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "node.h"
 #include "sweepdialog.h"
 #include "qucsdoc.h"
-#include "node.h"
 #include "qucs.h"
 #include "main.h"
 #include "qucsview.h"
