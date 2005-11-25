@@ -37,7 +37,7 @@
 #define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
 #endif
 
-typedef struct tFilter {
+struct tFilter {
    int Type;
    int Class;
    int Order;

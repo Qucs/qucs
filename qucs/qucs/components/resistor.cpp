@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "resistor.h"
+#include "node.h"
 #include "qucsdoc.h"
 
 Resistor::Resistor(bool european)
