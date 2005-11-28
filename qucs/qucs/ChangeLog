@@ -1,3 +1,18 @@
+2005-11-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* in qucssettingsdialog: register filename extensions
+	* new digital simulation mode: truth table
+
+2005-11-11  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug: crash after inserting diagram into untitled doc
+	* remove status line warning when closing project
+	* fixed bug: wrong name for spice file components
+	* fixed bug: crashes in 3D diagram
+	* all graph types in 3D diagram now work
+	* new diagram: truth table
+	* new section in content listview: "Others" = no Qucs files
+
 2005-11-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new diagram: digital timing diagram
@@ -7,9 +22,7 @@
 2005-10-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsinit.cpp (initActions): Fixed small typo.
-
 	* qucsfile.h: Including <qstringlist.h> for Qt 3.1.x.
-
 	* dialogs/changedialog.cpp (ChangeDialog): Improved look
 	of both the dialogs.
 

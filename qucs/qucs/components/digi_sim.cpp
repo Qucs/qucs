@@ -39,11 +39,11 @@ Digi_Sim::Digi_Sim()
   Model = ".Digi";
   Name  = "Digi";
 
-  // This property must be the first one !
-  Props.append(new Property("time", "10 ns", true,
-	QObject::tr("duration of simulation")));
+  // Property list must keeps its order !
   Props.append(new Property("Type", "TimeList", true,
 	QObject::tr("type of simulation")+" [TruthTable, TimeList]"));
+  Props.append(new Property("time", "10 ns", true,
+	QObject::tr("duration of TimeList simulation")));
 }
 
 // -------------------------------------------------------
@@ -65,10 +65,4 @@ Element* Digi_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Digi_Sim();
   return 0;
-}
-
-// -------------------------------------------------------
-QString Digi_Sim::VHDL_Code()
-{
-  return QString("");
 }

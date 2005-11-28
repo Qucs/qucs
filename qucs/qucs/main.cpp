@@ -62,7 +62,7 @@ bool loadSettings()
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
+    Line    = Line.section('=',1);
     if(Setting == "Position") {
 	QucsSettings.x = Line.section(",",0,0).toInt(&ok);
 	QucsSettings.y = Line.section(",",1,1).toInt(&ok); }
@@ -84,6 +84,8 @@ bool loadSettings()
 	QucsSettings.maxUndo = Line.toInt(&ok); }
     else if(Setting == "Editor") {
 	QucsSettings.Editor = Line; }
+    else if(Setting == "FileType") {
+	QucsSettings.FileTypes.append(Line); }
   }
 
   file.close();
@@ -112,8 +114,12 @@ bool saveApplSettings(QucsApp *qucs)
     << "\n"
     << "maxUndo=" << QucsSettings.maxUndo << "\n"
     << "Editor=" << QucsSettings.Editor << "\n";
-  file.close();
 
+  QStringList::Iterator it = QucsSettings.FileTypes.begin();
+  while(it != QucsSettings.FileTypes.end())
+    stream << "FileType=" << (*(it++)) << "\n";
+
+  file.close();
   return true;
 }
 

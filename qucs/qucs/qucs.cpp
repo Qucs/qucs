@@ -192,6 +192,7 @@ void QucsApp::initView()
   Content->setColumnWidthMode(0,QListView::Manual);
   Content->setColumnWidth(0, 150);
 
+  ConOthers     = new QListViewItem(Content, tr("Others"));
   ConDatasets   = new QListViewItem(Content, tr("Datasets"));
   ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
   ConSchematics = new QListViewItem(Content, tr("Schematics"));
@@ -256,13 +257,18 @@ void QucsApp::initCursorMenu()
 }
 
 // ----------------------------------------------------------
-// Is called if right mouse button is pressed on a file in the "Content" ListView.
-// It shows a menu.
+// Is called if right mouse button is pressed on a file in the "Content"
+// ListView. It shows a menu.
 void QucsApp::slotShowContentMenu(QListViewItem *item, const QPoint& point, int)
 {
   if(item)
-    if(item->parent() != 0)   // no component, but item "schematic", ...
+    if(item->parent() != 0) {   // no component, but item "schematic", ...
+      if(item->parent()->nextSibling()) // "Others" section in listview ?
+        ContentMenu->setItemEnabled(ContentMenu->idAt(3), true);
+      else
+        ContentMenu->setItemEnabled(ContentMenu->idAt(3), false);
       ContentMenu->popup(point);
+    }
 }
 
 // ----------------------------------------------------------
@@ -679,7 +685,7 @@ void QucsApp::slotFileOpen()
 
   QString s = QFileDialog::getOpenFileName(
 	lastDir.isEmpty() ? QString(".") : lastDir,
-	QucsFileFilter, this, "", tr("Enter a Schematic Name"));
+	QucsFileFilter, this, 0, tr("Enter a Schematic Name"));
 
   if(s.isEmpty())
     statusBar()->message(tr("Opening aborted"), 2000);
@@ -1269,29 +1275,58 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if(item == 0) return;   // no item was double clicked
   if(item->parent() == 0) return;  // no component, but item "schematic", ...
 
-  
+/*  
   QucsWorkDir.setPath(QucsHomeDir.path());
   QString p = ProjName+"_prj";
   if(!QucsWorkDir.cd(p)) {
     QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot access project directory: ")+
+			  tr("Cannot access project directory: ")+
 			  QucsWorkDir.path()+QDir::separator()+p);
+    return;
+  }*/
+
+  QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
+  QString Suffix = Info.extension(false);
+
+  if((Suffix == "sch") || (Suffix == "dpl")) {
+    gotoPage(Info.absFilePath());
+
+    if(item->text(1).isEmpty()) return;  // is subcircuit ?
+    // switch on the 'select' action
+    Acts.select->blockSignals(true);
+    Acts.select->setOn(true);
+    Acts.select->blockSignals(false);
+    Acts.slotSelect(true);
     return;
   }
 
-  QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
-  if(Info.extension(false) == "dat") {
+  if(Suffix == "dat") {
     Acts.editFile(Info.absFilePath());  // open datasets with text editor
     return;
   }
-  gotoPage(Info.absFilePath());
 
-  if(item->text(1).isEmpty()) return;
-  // switch on the 'select' action
-  Acts.select->blockSignals(true);
-  Acts.select->setOn(true);
-  Acts.select->blockSignals(false);
-  Acts.slotSelect(true);
+
+  // File is no Qucs file, so go through list and search a program
+  // to open it.
+  QStringList com;
+  QStringList::Iterator it = QucsSettings.FileTypes.begin();
+  while(it != QucsSettings.FileTypes.end()) {
+    if(Suffix == (*it).section('/',0,0)) {
+      com << (*it).section('/',1,1) << Info.absFilePath();
+      QProcess *Program = new QProcess(com);
+      Program->setCommunication(0);
+      if(!Program->start()) {
+        QMessageBox::critical(this, tr("Error"),
+               tr("Cannot start \"%1\"!").arg((*it).section('/',0,0)));
+        delete Program;
+      }
+      return;
+    }
+    it++;
+  }
+
+  // If no appropriate program was found, open as text file.
+  Acts.editFile(Info.absFilePath());  // open datasets with text editor
 }
 
 // ########################################################################
@@ -1309,12 +1344,14 @@ void QucsApp::slotMenuCloseProject()
   view->viewport()->update();
   view->drawn = false;
 
+  Init.slotResetWarnings();
   setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
   Content->setColumnText(0,tr("Content of")); // column text
 
   Content->clear();   // empty content view
+  ConOthers     = new QListViewItem(Content, tr("Others"));
   ConDatasets   = new QListViewItem(Content, tr("Datasets"));
   ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
   ConSchematics = new QListViewItem(Content, tr("Schematics"));
@@ -1344,7 +1381,7 @@ void QucsApp::slotMenuOpenProject()
 }
 
 // #######################################################################
-// Is called when the open project button is pressed.
+// Is called when project is double-clicked.
 void QucsApp::slotOpenProject(QListBoxItem *item)
 {
   OpenProject(QucsHomeDir.filePath(item->text()+"_prj"), item->text());
@@ -1416,6 +1453,42 @@ int QucsApp::testFile(const QString& DocName)
 }
 
 // #######################################################################
+// Reads all files in the project directory and sort them into the
+// content ListView
+void QucsApp::readProjectFiles()
+{
+  Content->clear();   // empty content view
+  ConOthers     = new QListViewItem(Content, tr("Others"));
+  ConDatasets   = new QListViewItem(Content, tr("Datasets"));
+  ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
+  ConSchematics = new QListViewItem(Content, tr("Schematics"));
+
+  int n;
+  // put all files into "Content"-ListView
+  QStringList Elements = QucsWorkDir.entryList("*", QDir::Files, QDir::Name);
+  QStringList::iterator it;
+  QString Str;
+  for(it = Elements.begin(); it != Elements.end(); ++it) {
+    Str = (*it).right(4);
+    if(Str == ".sch") {
+      n = testFile(QucsWorkDir.filePath((*it).ascii()));
+      if(n >= 0) {
+        if(n > 0)
+          new QListViewItem(ConSchematics, (*it).ascii(),
+				QString::number(n)+tr("-port"));
+        else new QListViewItem(ConSchematics, (*it).ascii());
+      }
+    }
+    else if(Str == ".dpl")
+      new QListViewItem(ConDisplays, (*it).ascii());
+    else if(Str == ".dat")
+      new QListViewItem(ConDatasets, (*it).ascii());
+    else
+      new QListViewItem(ConOthers, (*it).ascii());
+  }
+}
+
+// #######################################################################
 // Opens an existing project.
 void QucsApp::OpenProject(const QString& Path, const QString& Name)
 {
@@ -1430,9 +1503,10 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   view->viewport()->update();
   view->drawn = false;
 
+  Init.slotResetWarnings();
+
   QDir ProjDir(QDir::cleanDirPath(Path));
   if(!ProjDir.exists() || !ProjDir.isReadable()) { // check project directory
-
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+Path);
     return;
@@ -1442,34 +1516,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
 //  Content->setColumnWidth(0, Content->width()-5);
 
-  Content->clear();   // empty content view
-  ConDatasets   = new QListViewItem(Content, tr("Datasets"));
-  ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
-  ConSchematics = new QListViewItem(Content, tr("Schematics"));
-
-  int n;
-  // put all schematic files into "Content"-ListView
-  QStringList Elements = ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
-  QStringList::iterator it;
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
-    n = testFile(ProjDir.filePath((*it).ascii()));
-    if(n >= 0) {
-      if(n > 0)
-        new QListViewItem(ConSchematics, (*it).ascii(),
-			  QString::number(n)+tr("-port"));
-      else new QListViewItem(ConSchematics, (*it).ascii());
-    }
-  }
-
-  // put all data display files into "Content"-ListView
-  Elements = ProjDir.entryList("*.dpl", QDir::Files, QDir::Name);
-  for(it = Elements.begin(); it != Elements.end(); ++it)
-    new QListViewItem(ConDisplays, (*it).ascii());
-
-  // put all dataset files into "Content"-ListView
-  Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
-  for(it = Elements.begin(); it != Elements.end(); ++it)
-    new QListViewItem(ConDatasets, (*it).ascii());
+  readProjectFiles();
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   Content->firstChild()->setOpen(true);  // show schematics
@@ -1632,7 +1679,7 @@ pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
    &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
    &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info,
-   &TimingDiagram::info, 0};
+   &TimingDiagram::info, &TruthDiagram::info, 0};
 
 pInfoFunc Paintings[] =
   {&GraphicLine::info, &Arrow::info, &GraphicText::info,

@@ -38,7 +38,7 @@ public:
   virtual Component* newOne();
   virtual void recreate(QucsDoc*);
   virtual QString NetList();
-  virtual QString VHDL_Code();
+  virtual QString VHDL_Code(int);
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*);
@@ -85,7 +85,7 @@ class GateComponent : public Component {
 public:
   GateComponent();
   QString NetList();
-  QString VHDL_Code();
+  QString VHDL_Code(int);
   void recreate(QucsDoc*);
   void createSymbol();
 };

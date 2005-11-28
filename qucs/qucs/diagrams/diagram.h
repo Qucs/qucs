@@ -28,6 +28,18 @@
 
 #define INVALID_STR QObject::tr(" <invalid>")
 
+// ------------------------------------------------------------
+// Enlarge memory block if neccessary.
+#define  FIT_MEMORY_SIZE  \
+  if(p >= p_end) {     \
+    Size += 256;        \
+    tmp = p - g->Points; \
+    p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int)); \
+    p += tmp; \
+    p_end += Size - 9; \
+  } \
+
+
 struct Axis {
   double  min, max; // least and greatest values of all graph data
   double  low, up;  // the limits of the diagram
@@ -103,9 +115,9 @@ protected:
   virtual void clip(int* &);
   void rectClip(int* &);
 
-private:
-  void calcData(Graph*);
+  virtual void calcData(Graph*);
 
+private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
 };
 

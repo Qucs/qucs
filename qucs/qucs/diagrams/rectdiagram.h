@@ -24,16 +24,17 @@
 class RectDiagram : public Diagram  {
 public: 
   RectDiagram(int _cx=0, int _cy=0);
-  ~RectDiagram();
+ ~RectDiagram();
 
 
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcData(Graph*);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
   bool insideDiagram(int, int);
+
+protected:
   void clip(int* &);
 };
 

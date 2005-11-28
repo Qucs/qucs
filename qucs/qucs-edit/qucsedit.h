@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsedit.h  -  description
-                             -------------------
+                                qucsedit.h
+                               ------------
     begin                : Mon Nov 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -19,7 +19,10 @@
 #define QUCSEDIT_H
 
 #include <qdialog.h>
-#include <qtextedit.h>
+
+class QLabel;
+class QTextEdit;
+
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
@@ -30,9 +33,6 @@ struct tQucsSettings {
 
 extern tQucsSettings QucsSettings;
 
-/**
-  *@author Michael Margraf
-  */
 
 class QucsEdit : public QDialog  {
    Q_OBJECT
@@ -45,6 +45,7 @@ private slots:
   void slotLoad();
   void slotSave();
   void slotQuit();
+  void slotPrintCursorPosition(int, int);
 
 private:
   void closeEvent(QCloseEvent*);
@@ -53,6 +54,7 @@ private:
 
   QString FileName;
   QTextEdit *text;
+  QLabel *PosText;
 };
 
 #endif

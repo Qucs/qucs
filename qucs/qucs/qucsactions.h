@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsactions.h  -  description
-                             -------------------
+                               qucsactions.h
+                              ---------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,7 +26,6 @@ class QucsDoc;
 class QucsView;
 
 
-
 typedef bool (QucsDoc::*pToggleFunc) (); // pointer to toggle action
 typedef void (QucsView::*pMouseFunc) (QMouseEvent*);
 typedef void (QucsView::*pMouseFunc2) (QMouseEvent*, QucsDoc*, int, int);
@@ -36,7 +35,7 @@ class QucsActions : public QObject {
   Q_OBJECT
 public:
   QucsActions();
-  ~QucsActions();
+ ~QucsActions();
 
   void init(QucsApp *p_);
   void editFile(const QString&);
@@ -46,7 +45,8 @@ public:
           *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
-          *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps;
+          *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
+          *addToProj;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -84,6 +84,7 @@ public slots:
   void slotHelpIndex();       // shows a HTML docu: Help Index
   void slotGettingStarted();  // shows a HTML docu: Getting started
   void slotChangeProps();
+  void slotAddToProject();
 
 private:
   void showHTML(const QString&);

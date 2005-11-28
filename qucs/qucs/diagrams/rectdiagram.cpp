@@ -1,6 +1,6 @@
 /***************************************************************************
-                          rectdiagram.cpp  -  description
-                             -------------------
+                              rectdiagram.cpp
+                             -----------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de

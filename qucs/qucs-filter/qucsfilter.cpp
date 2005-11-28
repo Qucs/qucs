@@ -1,6 +1,6 @@
 /***************************************************************************
                                qucsfilter.cpp
-                             ------------------
+                              ----------------
     begin                : Wed Mar 02 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -239,6 +239,11 @@ void QucsFilter::slotCalculate()
 
   if(Filter.Order < 2) {
     setError(tr("Filter order must not be less than two."));
+    return;
+  }
+
+  if(Filter.Order > 19) if(Filter.Class == TYPE_BESSEL) {
+    setError(tr("Bessel filter order must not be greater than 19."));
     return;
   }
 
