@@ -44,15 +44,16 @@ Logical_Inv::Logical_Inv()
 }
 
 // -------------------------------------------------------
-QString Logical_Inv::VHDL_Code()
+QString Logical_Inv::VHDL_Code(int NumPorts)
 {
   if(!isActive) return QString("");   // should it be simulated ?
 
   QString s = "  " + Ports.getLast()->Connection->Name + " <= not " +
               Ports.getFirst()->Connection->Name;
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0)  // delay time
-    s += " after " + Props.current()->Value;
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0)  // delay time
+      s += " after " + Props.current()->Value;
 
   s += ';';
   return s;

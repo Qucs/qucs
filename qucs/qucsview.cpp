@@ -1272,12 +1272,12 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
     case isDiagramScroll:  // scroll in tabular ?
 	focusElement->Type = isDiagram;
 
-	if(((Diagram*)focusElement)->Name == "Tab") {
-	  if(((TabDiagram*)focusElement)->scroll(MAy1))
+	if(((Diagram*)focusElement)->Name == "Time") {
+	  if(((TimingDiagram*)focusElement)->scroll(MAx1))
 	    d->setChanged(true, true, 'm'); // 'm' = only the first time
 	}
 	else {
-	  if(((TimingDiagram*)focusElement)->scroll(MAx1))
+	  if(((TabDiagram*)focusElement)->scroll(MAy1))
 	    d->setChanged(true, true, 'm'); // 'm' = only the first time
 	}
 	viewport()->update();
@@ -2084,20 +2084,22 @@ void QucsView::editElement(QMouseEvent *Event)
 
     case isDiagram :
          dia = (Diagram*)focusElement;
-         if(dia->Name == "Tab") { // don't open dialog on scrollbar of tabular
-           if(dia->cx > x) {
-	     if(((TabDiagram*)focusElement)->scroll(MAy1))
-	       d->setChanged(true, true, 'm'); // 'm' = only the first time
-	     break;
-           }
-	 }
-         else if(dia->Name == "Time") { // don't open dialog on scrollbar
-           if(dia->cy < y) {
-	     if(((TimingDiagram*)focusElement)->scroll(MAx1))
-	       d->setChanged(true, true, 'm'); // 'm' = only the first time
-	     break;
-           }
-	 }
+         if(dia->Name.at(0) == 'T')  // don't open dialog on scrollbar
+           if(dia->Name == "Time") {
+             if(dia->cy < y) {
+	       if(((TimingDiagram*)focusElement)->scroll(MAx1))
+	         d->setChanged(true, true, 'm'); // 'm' = only the first time
+	       break;
+             }
+	   }
+           else {
+             if(dia->cx > x) {
+	       if(((TabDiagram*)focusElement)->scroll(MAy1))
+	         d->setChanged(true, true, 'm'); // 'm' = only the first time
+	       break;
+             }
+	   }
+
 	 ddia = new DiagramDialog(dia,
 		Info.dirPath() + QDir::separator() + d->DataSet, this);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose

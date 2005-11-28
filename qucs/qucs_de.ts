@@ -3273,7 +3273,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>duration of simulation</source>
-        <translation>Dauer der Simulation</translation>
+        <translation type="obsolete">Dauer der Simulation</translation>
     </message>
     <message>
         <source>type of the port</source>
@@ -3282,6 +3282,30 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>Timing Diagram</source>
         <translation>Zeitverlaufsdiagramm</translation>
+    </message>
+    <message>
+        <source>Truth Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Only one digital simulation allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Analog and digital simulations cannot be mixed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Digital simulation needs at least one digital source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of TimeList simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No ground symbol allowed in digital simulation.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3484,7 +3508,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="obsolete">Fertig.</translation>
+        <translation type="unfinished">Fertig.</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3517,6 +3541,43 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>Cannot start library program!</source>
         <translation>Das Bibliotheksprogramm kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4210,6 +4271,14 @@ Edits the schematic</source>
         <translation>Schaltplan bearbeiten
 
 Bearbeitet den Schaltplan</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5838,6 +5907,10 @@ Einfacher Texteditor für Qucs
         <source>&amp;Cancel</source>
         <translation>&amp;Abbrechen</translation>
     </message>
+    <message>
+        <source>Row: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsFilter</name>
@@ -5970,6 +6043,10 @@ Filtersynthese-Programm
     <message>
         <source>Start frequency:</source>
         <translation>Startfrequenz:</translation>
+    </message>
+    <message>
+        <source>Bessel filter order must not be greater than 19.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7374,6 +7451,24 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
         <translation>Schwedisch von Markus Gothe und Peter Landgren
 </translation>
     </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
@@ -7516,6 +7611,51 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     <message>
         <source>Settings</source>
         <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Suffix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Hinzufügen</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Löschen</translation>
+    </message>
+    <message>
+        <source>File Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register filename extensions here in order to
+open files with an appropriate program.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>This suffix is already registered!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8136,11 +8276,11 @@ Fehler:
     </message>
     <message>
         <source>ERROR: No time for simulation specified!</source>
-        <translation>FEHLER: Für die Simulation wurde keine Zeit angegeben!</translation>
+        <translation type="obsolete">FEHLER: Für die Simulation wurde keine Zeit angegeben!</translation>
     </message>
     <message>
         <source>ERROR: Forgotten the digital simulation component?</source>
-        <translation>FEHLER: Wurde die Digitalsimulationskomponente vergessen?</translation>
+        <translation type="obsolete">FEHLER: Wurde die Digitalsimulationskomponente vergessen?</translation>
     </message>
 </context>
 <context>

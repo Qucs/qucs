@@ -138,8 +138,8 @@ void SearchDialog::slotSearch()
   }
 
   if(findComponent) {
-    End = ParentDialog->Library->count() - 1;
-    if(ParentDialog->Library->text(End) != tr("Search result"))
+    End = ParentDialog->Library->count();
+    if(ParentDialog->Library->text(End-1) != tr("Search result"))
       ParentDialog->Library->insertItem(tr("Search result"));
     ParentDialog->Library->setCurrentItem(End);
     reject();

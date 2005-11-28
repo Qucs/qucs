@@ -1401,16 +1401,16 @@ Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
         }
 
     if(pd->getSelected(x, y)) {
-      if(pd->Name[0] == 'T')    // tabular or timing diagram ?
-        if(pd->Name[1] =='a') {
-          if(x < pd->cx) {      // clicked on scroll bar ?
+      if(pd->Name[0] == 'T')    // tabular, timing diagram or truth table ?
+        if(pd->Name[1] == 'i') {
+          if(y > pd->cy) {
+            if(x < pd->cx+pd->xAxis.numGraphs) continue;
             pd->Type = isDiagramScroll;
             return pd;
           }
         }
         else {
-          if(y > pd->cy) {
-            if(x < pd->cx+pd->xAxis.numGraphs) continue;
+          if(x < pd->cx) {      // clicked on scroll bar ?
             pd->Type = isDiagramScroll;
             return pd;
           }
