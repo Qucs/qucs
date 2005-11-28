@@ -25,6 +25,16 @@
 #include <qcolor.h>
 #include <qptrlist.h>
 
+
+// meaning of the values in a graph "Points" list
+#define STROKEEND   -2
+#define GRAPHARROW  -5
+#define GRAPHCIRCLE -6
+#define GRAPHSTAR   -7
+#define BRANCHEND   -10
+#define GRAPHEND    -100
+
+
 class Diagram;
 class ViewPainter;
 

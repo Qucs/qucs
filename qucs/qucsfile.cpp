@@ -798,7 +798,7 @@ void QucsFile::throughAllNodes(bool User, QStringList& Collect,
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
 bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
-                       QStringList& Collect, QTextEdit *ErrText, bool Analog)
+                   QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
   // delete the node names
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
@@ -816,7 +816,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
   // give the ground nodes the name "gnd", and insert subcircuits etc.
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
     if(pc->isActive) {
-      if(Analog) {
+      if(NumPorts < 0) {
         if((pc->Type & isAnalogComponent) == 0) {
           ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->Name));
           return false;
@@ -824,7 +824,10 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
       }
       else {
         if((pc->Type & isDigitalComponent) == 0) {
-          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
+          if(pc->Name.isEmpty()) 
+            ErrText->insert(QObject::tr("ERROR: No ground symbol allowed in digital simulation."));
+          else
+            ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
           return false;
         }
       }
@@ -844,7 +847,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
              }
 	     d->DocName = s;
 	     r = d->File.createSubNetlist(
-				stream, countInit, Collect, ErrText, Analog);
+			stream, countInit, Collect, ErrText, NumPorts);
 	     delete d;
 	     if(!r) return false;
            }
@@ -882,10 +885,10 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 
 
   // work on named nodes first in order to preserve the user given names
-  throughAllNodes(true, Collect, countInit, Analog);
+  throughAllNodes(true, Collect, countInit, NumPorts<0);
 
   // give names to the remaining (unnamed) nodes
-  throughAllNodes(false, Collect, countInit, Analog);
+  throughAllNodes(false, Collect, countInit, NumPorts<0);
 
   return true;
 }
@@ -893,12 +896,12 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'NetlistFile'.
 bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
-                        QStringList& Collect, QTextEdit *ErrText, bool Analog)
+                     QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
   int i, z;
   QString s;
   // TODO: NodeSets have to be put into the subcircuit block.
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, Analog))
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
     return false;
 
   QStringList sl;
@@ -912,7 +915,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
         sl.append(" ");
       it = sl.at(i-1);
       (*it) = pc->Ports.getFirst()->Connection->Name;
-      if(!Analog) {
+      if(NumPorts >= 0) {
         (*it) += ": ";
         if(pc->Props.at(1)->Value.at(0) == 'o')  // output port ?
           (*it) += "out";
@@ -924,7 +927,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
 
   QString  Type = properName(Doc->DocName);
 
-  if(Analog)
+  if(NumPorts < 0)
     (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << '\n';
   else {
 
@@ -966,16 +969,16 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
       continue;
     }
 
-    if(Analog)
+    if(NumPorts < 0)
       s = pc->NetList();
     else
-      s = pc->VHDL_Code();
+      s = pc->VHDL_Code(NumPorts);
 
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       (*stream) << "   " << s << "\n";
   }
 
-  if(Analog)
+  if(NumPorts < 0)
     (*stream) << ".Def:End\n\n";
   else
     (*stream) << "end architecture;\n\n";
@@ -986,49 +989,79 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
 int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
-                              QTextEdit *Error)
+                              QTextEdit *ErrText)
 {
   if(Doc->showBias > 0)  Doc->showBias = -1;  // do not show DC bias anymore
 
-  int allTypes = 0;
-  bool canAnalog = false;
+  bool isTruthTable = false;
+  int allTypes = 0, NumPorts = 0;
   // Detect simulation domain (analog/digital) by looking at component types.
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
-    allTypes |= (pc->Type ^ isComponent) & isComponent;
-  if((allTypes & isAnalogComponent) == 0)
-    canAnalog = true;
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+    if(!pc->isActive) continue;
+    if(pc->Model.at(0) == '.') {
+      if(pc->Model == ".Digi") {
+        if(allTypes & isDigitalComponent) {
+          ErrText->insert(
+             QObject::tr("ERROR: Only one digital simulation allowed."));
+          return -10;
+        }
+        if(pc->Props.getFirst()->Value != "TimeList")
+          isTruthTable = true;
+        allTypes |= isDigitalComponent;
+      }
+      else allTypes |= isAnalogComponent;
+
+      if((allTypes & isComponent) == isComponent) {
+        ErrText->insert(
+           QObject::tr("ERROR: Analog and digital simulations cannot be mixed."));
+        return -10;
+      }
+    }
+    else if(pc->Model == "DigiSource")  NumPorts++;
+  }
+
+  if((allTypes & isAnalogComponent) == 0) {
+    if(NumPorts < 1) {
+      ErrText->insert(
+         QObject::tr("ERROR: Digital simulation needs at least one digital source."));
+      return -10;
+    }
+
+    if(!isTruthTable)  NumPorts = 0;
+  }
+  else NumPorts = -1;
 
 
   // first line is documentation
-  if(canAnalog)
+  if(allTypes & isAnalogComponent)
     stream << "#";
   else
     stream << "--";
   stream << " Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
-//  if(!canAnalog)
+//  if((allTypes & isAnalogComponent) == 0)
 //    stream << "library ieee;\nuse ieee.std_logic_1164.all;\n\n";
 
 
   int countInit = 0;
   StringList.clear();  // no subcircuits yet
-  if(!giveNodeNames(&stream, countInit, Collect, Error, canAnalog))
-    return -1;
+  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
+    return -10;
 
-  if(canAnalog)
-    return isAnalogComponent;
+  if(allTypes & isAnalogComponent)
+    return NumPorts;
 
   QString  Type = properName(Doc->DocName);
   stream << "entity " << Type << " is\n"
          << "end entity;\n\n";
-  return isDigitalComponent;
+  return NumPorts;
 }
 
 // .................................................
 // write all components with node names into the netlist file
-QString QucsFile::createNetlist(QTextStream& stream, bool Analog)
+QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
 {
   QString  Type = properName(Doc->DocName);
-  if(!Analog)
+  if(NumPorts >= 0)
     stream << "architecture ARCH" << Type << " of " << Type << " is\n"
            << "  signal " << Signals.join(",\n         ")
            << " : bit;\n"
@@ -1037,20 +1070,22 @@ QString QucsFile::createNetlist(QTextStream& stream, bool Analog)
 
   QString s, Time;
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    if(Analog)
+    if(NumPorts < 0)
       s = pc->NetList();
     else {
       if(pc->Model.at(0) == '.')
-        Time = pc->Props.getFirst()->Value;
-      s = pc->VHDL_Code();
+        Time = pc->Props.at(1)->Value;
+      s = pc->VHDL_Code(NumPorts);
     }
 
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       stream << s << "\n";
   }
 
-  if(!Analog)
+  if(NumPorts >= 0)
     stream << "end architecture;\n";
 
+  if(NumPorts > 0)
+    return QString::number(1 << NumPorts) + "ns";
   return Time;
 }

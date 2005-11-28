@@ -1,6 +1,6 @@
 /***************************************************************************
-                          main.h  -  description
-                             -------------------
+                                  main.h
+                                 --------
     begin                : Mon May 24  2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -47,6 +47,9 @@ struct tQucsSettings {
   QString BitmapDir;
   QString LangDir;
   QString LibDir;
+
+  // registered filename extensions with program to open the file
+  QStringList FileTypes;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used

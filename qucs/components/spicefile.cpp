@@ -140,17 +140,13 @@ QString SpiceFile::NetList()
 {
   if(!isActive) return QString("");   // should it be simulated ?
 
-  QString Type = Props.first()->Value;
-  if(Props.next()->Value.isEmpty())
+  if(Props.at(1)->Value.isEmpty())
     return QString("");  // no ports, no subcircuit instance
 
   QString s = "Sub:"+Name;   // SPICE netlist is subcircuit
   for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
     s += " "+pp->Connection->Name;   // output all node names
 
-  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
-  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-  s += " Type=\""+Type+"\"";   // type for SPICE subcircuit
-
+  s += " Type=\""+properName(Props.first()->Value)+"\"";
   return s;
 }

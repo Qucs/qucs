@@ -30,5 +30,6 @@
 #include "rect3ddiagram.h"
 #include "curvediagram.h"
 #include "timingdiagram.h"
+#include "truthdiagram.h"
 
 #endif

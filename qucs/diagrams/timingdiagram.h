@@ -33,6 +33,9 @@ public:
   bool scroll(int);
 
   void createAxisLabels() {};   // no labels in this diagram
+
+protected:
+  void calcData(Graph*) {};  // no graph data
 };
 
 #endif

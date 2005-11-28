@@ -13,14 +13,15 @@
   <.PortSym 30 0 2 180>
 </DefaultSymbol>
 
-<Component xy>
+<Component MLED96>
   <Description>
-    light emitting diode
-    Manufacturer: ???
+    660nm (red), 2.2V, max 60mA
+    Manufacturer: Motorola
   </Description>
   <Model>
-    .Def:LED_xy _net1 _net0
-    R:R3 _net0 _net1 R="1k" Temp="26.85"
+    .Def:LEDs_MLED96 _netA _netC
+      Diode:DLED _netA _netC Is="1e-20" N="1.5219" Rs="1.7433" Cj0="5e-11" M="0.3333" Vj="0.75" Isr="1e-10" Bv="5.3573" Ibv="10" Tt="5e-09"
+      R:RLEAK _netA _netC R="40M"
     .Def:End
   </Model>
 </Component>

@@ -28,7 +28,7 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(QucsDoc*);
-  QString VHDL_Code();
+  QString VHDL_Code(int);
 
 private:
   void createSymbol();

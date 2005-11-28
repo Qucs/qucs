@@ -121,12 +121,10 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
 }
 
 // ------------------------------------------------------------
+// Is needed for markers.
 void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 				   int *px, int *py, Axis*)
 {
- if(pMem == 0) {
-  // needed for markers and if "hide invisible lines" is off
-
   double x3D = *(zD++);
   double y3D = *(zD++);
   double z3D;
@@ -166,61 +164,6 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 
   *px = int(calcX_2D(x3D, y3D, z3D) + 0.5) + xorig;
   *py = int(calcY_2D(x3D, y3D, z3D) + 0.5) + yorig;
-
-  }  // of "if(pMem == 0)"
- else {
-  // used in "calcData" to hide invisible lines
-
-  *px = pMem->x;
-  *py = pMem->y;
-  pMem++;
- }
-}
-
-// ------------------------------------------------------------
-// For this diagram, this function is actual not for clipping, but
-// for sorting out unnesseccary and invisible points.
-void Rect3DDiagram::clip(int* &p)
-{
- if(pMem) {  // hide invisible lines ?
-  p -= 4;
-  pMem -= 2;
-  int No = pMem->No + 1;
-  if(*(p+1) < 0) {  // only one point accessible ?
-    p += 2;
-    pMem++;
-  }
-
-  pMem--;
-  do {  // are there more points for this line ?
-    pMem++;
-    if(pMem->done & 11) {   // point is grid point ?
-      if(pMem->done & 4) { // point invisible ?
-        if(pMem > Mem) if(((pMem-1)->done & 12) == 0) { //if( *(p-1) >= 0 ) {
-          *(p++) = pMem->x;
-          *(p++) = pMem->y;
-          *(p++) = -2;
-        }
-        continue;
-      }
-    }
-
-    *(p++) = pMem->x;
-    *(p++) = pMem->y;
-    if(pMem->done & 4) {   // point invisible ?
-      *(p++) = -2;
-    }
-
-  } while(pMem->No < No);
-
-  if(pMem->done & 8)   // last point of branch ?
-    if(*(p-1) == -2)  p--;
-  pMem++;
-
- }
- else  // do not hide any line
-  rectClip(p);
-
 }
 
 // ------------------------------------------------------------
@@ -450,8 +393,10 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
         zp += dx*(dy-1);
       }
     }
+    (pMem-1)->done |= 256;  // mark as "very last point"
 
 
+    if(hideLines) {
     // ..........................................
     // Calculate the z-coordinate of all polygons by building the
     // sum of the z-coordinates of all of its 4 corners.
@@ -474,9 +419,15 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
           zp++;
         }
     }
+    }  // of "if(hideLines)"
 
   }  // of "for(Graphs)"
 
+
+  if(!hideLines) {  // do not hide invisible lines
+    free(zMem);
+    return;
+  }
 
 #if 0
   qDebug("##########################################");
@@ -824,6 +775,9 @@ int Rect3DDiagram::calcDiagram()
   x3 = x2 + 7;
   int z, z2, o, w;
 
+  char *zBuffer=0;   // hidden line algorithm
+  tBound *Bounds=0;
+
 
   // =====  give "step" the right sign  ==================================
   xAxis.step = fabs(xAxis.step);
@@ -915,15 +869,17 @@ int Rect3DDiagram::calcDiagram()
     w = x2 * (y2+7)/8;
     // To store the pixel coordinates that are already used (hidden).
     // Use one bit per pixel.
-    char *zBuffer = (char*)malloc(w);
+    zBuffer = (char*)malloc(w);
     memset(zBuffer, 0, w);
 
     // To store the boundings of the current polygon.
-    tBound *Bounds = (tBound*)malloc(x2 * sizeof(tBound));
+    Bounds = (tBound*)malloc(x2 * sizeof(tBound));
+  }
 
-    // hide invisible parts of graphs
-    removeHiddenLines(zBuffer, Bounds);
+  // hide invisible parts of graphs
+  removeHiddenLines(zBuffer, Bounds);
 
+  if(hideLines) {
     // now hide invisible part of coordinate cross
     tPoint3D *MemTmp = Mem;
     Mem = (tPoint3D*)malloc( 10*sizeof(tPoint3D) );
@@ -937,7 +893,6 @@ int Rect3DDiagram::calcDiagram()
 
     free(Bounds);
     free(zBuffer);
-    pMem = Mem;
   }
   else {
     Lines.append(new Line(X[o], Y[o], X[o^1], Y[o^1], QPen(QPen::black,0)));
@@ -945,6 +900,7 @@ int Rect3DDiagram::calcDiagram()
     Lines.append(new Line(X[o], Y[o], X[o^4], Y[o^4], QPen(QPen::black,0)));
   }
 
+  pMem = Mem;
   return 3;
 
 
@@ -954,6 +910,188 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
   Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,0)));
   return 0;
+}
+
+// ------------------------------------------------------------
+// g->Points must already be empty!!!
+void Rect3DDiagram::calcData(Graph *g)
+{
+  if(!pMem)  return;
+
+  int tmp;
+  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
+  Size *= 2;  // memory for cross grid lines
+  
+  double *py;
+  if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
+
+  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+  int *p_end;
+  g->Points = p_end = p;
+  p_end += Size - 9;   // limit of buffer
+
+
+  *(p++) = STROKEEND;
+  int dx=0, dy=0, xtmp=0, ytmp=0;
+  double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
+  switch(g->Style) {
+    case 0:      // ***** solid line **********************************
+      do {
+
+        while(1) {
+          if(pMem->done & 11)   // is grid point ?
+            if(pMem->done & 4)  // is hidden
+              if(pMem > Mem) {
+                if((pMem-1)->done & 12)
+                  break;
+              }
+              else  break;
+
+          FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+          *(p++) = pMem->x;
+          *(p++) = pMem->y;
+          break;
+        }
+
+        if(pMem->done & 8)  *(p++) = BRANCHEND;  // new branch
+
+        if(pMem->done & 4)   // point invisible ?
+          if( *(p-1) >= 0 )  // line already interrupted ?
+            *(p++) = STROKEEND;
+
+      } while(((pMem++)->done & 256) == 0);
+      *p = GRAPHEND;
+      return;
+
+    case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
+    case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
+    case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
+
+    default:   // symbol at each point ******************************
+      if(g->Style == 4)  xtmp = GRAPHSTAR;
+      else if(g->Style == 5)  xtmp = GRAPHCIRCLE;
+      else if(g->Style == 6)  xtmp = GRAPHARROW;
+
+      do {
+        while(1) {
+          if(pMem->done & 11)   // is grid point ?
+            if(pMem->done & 4)  // is hidden
+              if(pMem > Mem) {
+                if((pMem-1)->done & 12)
+                  break;
+              }
+              else  break;
+
+          FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+          *(p++) = pMem->x;
+          *(p++) = pMem->y;
+          *(p++) = xtmp;
+          break;
+        }
+
+        if(pMem->done & 8)  *(p++) = BRANCHEND;  // new branch
+      } while(((pMem++)->done & 256) == 0);
+      *p = GRAPHEND;
+      return;
+  }
+
+
+  // **********  dashed, dotted, ...  *******************************
+  int Counter = 0;  // counter for number of points in queue
+  double alpha, dist = -Stroke;
+  int Flag = 1;    // current state: 1=stroke, 0=space
+  do {
+    while(1) {
+      if(pMem->done & 11)   // is grid point ?
+        if(pMem->done & 4)  // is hidden
+          if(pMem > Mem) {
+            if((pMem-1)->done & 12)
+              break;
+          }
+          else  break;
+
+      xtmp = pMem->x;
+      ytmp = pMem->y;
+      Counter++;
+      break;
+    }
+
+ 
+    if(Counter > 1) {
+      if(Counter == 2) {
+	*(p++) = dx;    // if first points of branch -> paint first one
+	*(p++) = dy;
+      }
+      dx = xtmp - dx;
+      dy = ytmp - dy;
+      dist += sqrt(double(dx*dx + dy*dy)); // distance between points
+      if((Flag == 1) && (dist <= 0.0)) {
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	*(p++) = xtmp;    // if stroke then save points
+	*(p++) = ytmp;
+      }
+      else {
+        alpha = atan2(double(dy), double(dx));   // slope for interpolation
+        while(dist > 0) {   // stroke or space finished ?
+	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+
+	  *(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
+	  *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+
+          if(Flag == 0) {
+            dist -= Stroke;
+            if(dist <= 0) {
+	      *(p++) = xtmp;  // don't forget point after ...
+	      *(p++) = ytmp;  // ... interpolated point
+            }
+          }
+          else {
+	    dist -= Space;
+	    if(*(p-3) < 0)  p -= 2;
+	    else *(p++) = STROKEEND;
+          }
+          Flag ^= 1; // toggle between stroke and space
+        }
+      }
+
+    } // of "if(Counter > 1)"
+
+
+    dx = xtmp;
+    dy = ytmp;
+
+    if(pMem->done & 8) {
+      switch(*(p-3)) {
+        case STROKEEND:
+             p -= 3;  // no single point after "no stroke"
+             break;
+        case BRANCHEND:
+             if((*(p-2) < 0) || (*(p-1) < 0))
+               p -= 2;  // erase last hidden point
+             break;
+      }
+      *(p++) = BRANCHEND;  // new branch
+      Counter = 0;
+      Flag = 1;
+      dist = -Stroke;
+    }
+
+    if(pMem->done & 4)   // point invisible ?
+      if( *(p-1) >= 0 )  // line already interrupted ?
+        *(p++) = STROKEEND;
+
+  } while(((pMem++)->done & 256) == 0);
+
+  *p = GRAPHEND;
+
+
+/*
+int z = p-g->Points+1;
+p = g->Points;
+qDebug("\n****** p=%p", p);
+for(int zz=0; zz<z; zz+=2)
+  qDebug("c: %d/%d", *(p+zz), *(p+zz+1));
+qDebug("ENDE");*/
 }
 
 // ------------------------------------------------------------

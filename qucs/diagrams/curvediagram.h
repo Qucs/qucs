@@ -1,6 +1,6 @@
 /***************************************************************************
                                curvediagram.h
-                              -----------------
+                              ----------------
     begin                : Sat Apr 9 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -24,16 +24,17 @@
 class CurveDiagram : public Diagram  {
 public: 
   CurveDiagram(int _cx=0, int _cy=0);
-  ~CurveDiagram();
+ ~CurveDiagram();
 
 
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
   bool insideDiagram(int, int);
+
+protected:
   void clip(int* &);
 };
 

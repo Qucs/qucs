@@ -75,9 +75,9 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
   int *pp = Points;
 
   if(*pp < 0)  pp++;
-//  for(int n1=countY; n1>0; n1--) {    // every branch of curves
   while(*pp > -99) {
-    if(*pp >= 0)  p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+    if(*pp >= 0) if(*(pp+2) != GRAPHCIRCLE)
+      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
     while(*pp > -9) {   // until end of branch
       pp += 2;
       while(*pp > -2) {    // until end of stroke
@@ -88,14 +88,14 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
       else {
 	x = x0 + *(pp-2);
 	y = y0 - *(pp-1);
-	if(*pp == -7) {    // paint star
+	if(*pp == GRAPHSTAR) {    // paint star
 	  p->drawLine(x-5, y, x+5, y);     // horizontal line
 	  p->drawLine(x-4, y+4, x+4, y-4); // upper left to lower right
 	  p->drawLine(x+4, y+4, x-4, y-4); // upper right to lower left
 	}
-	else if(*pp == -6)    // paint circle
+	else if(*pp == GRAPHCIRCLE)    // paint circle
 	  p->drawEllipse(x-4, y-4, 8, 8);
-	else if(*pp == -5) {  // paint arrow
+	else if(*pp == GRAPHARROW) {  // paint arrow
 	  p->drawLine(x, y, x, y0);
 	  p->drawLine(x-4, y+7, x, y);
 	  p->drawLine(x+4, y+7, x, y);
