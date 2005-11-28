@@ -309,7 +309,7 @@ void Diagram::rectClip(int* &p)
 
   if(code1 != 0) if(*(p-5) >= 0) { // is there already a line end flag ?
     p++;
-    *(p-5) = -2;
+    *(p-5) = STROKEEND;
   }
   if(code1 & code2) {   // line not visible at all ?
     *(p-4) = x_2;
@@ -318,7 +318,7 @@ void Diagram::rectClip(int* &p)
     return;
   }
   if(code2 != 0) {
-    *p     = -2;
+    *p = STROKEEND;
     *(p+1) = x_2;
     *(p+2) = y_2;
     z += 3;
@@ -385,7 +385,7 @@ void Diagram::clip(int* &p)
 
   if(dt1 < 0) if(*(p-5) >= 0) { // is there already a line end flag ?
     p++;
-    *(p-5) = -2;
+    *(p-5) = STROKEEND;
   }
 
   int x = x_1-x_2;
@@ -423,7 +423,7 @@ void Diagram::clip(int* &p)
   if((dt2 > 0) && (dt2 < D)) { // intersection outside start/end point ?
     *(p-2) = x_1 - x*dt2 / D;
     *(p-1) = y_1 - y*dt2 / D;
-    *p = -2;
+    *p = STROKEEND;
     p += 3;
     code |= 2;
   }
@@ -440,22 +440,9 @@ void Diagram::clip(int* &p)
 
 
 // ------------------------------------------------------------
-// Enlarge memory block if neccessary.
-#define  FIT_MEMORY_SIZE  \
-  if(p >= p_end) {     \
-    Size += 256;        \
-    tmp = p - g->Points; \
-    p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int)); \
-    p += tmp; \
-    p_end += Size - 9; \
-  } \
-
-// ------------------------------------------------------------
 // g->Points must already be empty!!!
 void Diagram::calcData(Graph *g)
 {
-  if(Name[0] == 'T')  return;   // no graph within tabulars, timing diagrams
-
   double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
@@ -467,21 +454,13 @@ void Diagram::calcData(Graph *g)
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
 
-  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
+  double Dummy = 0.0;  // not used
   double *py = &Dummy;
-  if(Name == "Rect3D") {
-    if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
-    Counter = 2;
-    Size *= 2;  // memory for cross grid lines
-  }
 
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
   int *p_end;
   g->Points = p_end = p;
   p_end += Size - 9;   // limit of buffer
-
-  if(Name == "Rect3D")
-    *(p++) = -2;
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -502,59 +481,19 @@ void Diagram::calcData(Graph *g)
 	    clip(p);
 	}
 	switch(*(p-3)) {
-	  case -2: p -= 3;  // no single point after "no stroke"
-	           break;
-	  case -10: if((*(p-2) < 0) || (*(p-1) < 0))
-	              p -= 2;  // erase last hidden point
-	            break;
+	  case STROKEEND:
+	       p -= 3;  // no single point after "no stroke"
+	       break;
+	  case BRANCHEND:
+	       if((*(p-2) < 0) || (*(p-1) < 0))
+	         p -= 2;  // erase last hidden point
+	       break;
 	}
-	*(p++) = -10;
-	if(py != &Dummy) {   // more-dimensional Rect3D
-	  py++;
-	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-	    py = g->cPointsX.at(1)->Points;
-	}
+	*(p++) = BRANCHEND;
       }
 
-      if(Name == "Rect3D") if(g->countY > 1) {
-	// create cross lines
-	pz = g->cPointsY;
-	DataX *pD = g->cPointsX.first();
-	px = pD->Points;
-	dx = pD->count;
-	pD = g->cPointsX.next();
-	dy = pD->count;
-	for(int j=g->countY/dy; j>0; j--) {
-	  px = g->cPointsX.getFirst()->Points;
-	  for(i=dx; i>0; i--) {  // every branch
-	    py = pD->Points;
-	    calcCoordinate(px, pz, py, p, p+1, 0);
-	    p += 2;
-	    px--;  // back to the current x coordinate
-	    py++;  // next y coordinate
-	    pz += 2*(dx-1);  // next z coordinate
-	    for(z=dy-1; z>0; z--) {  // every point
-	      FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	      calcCoordinate(px, pz, py, p, p+1, 0);
-	      p += 2;
-	      if(Counter >= 2)   // clipping only if an axis is manual
-	        clip(p);
-	      px--;  // back to the current x coordinate
-	      py++;  // next y coordinate
-	      pz += 2*(dx-1);  // next z coordinate
-	    }
-	    if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-	    *(p++) = -10;
 
-	    px++;   // next x coordinate
-	    pz -= 2*dx*dy - 2;  // next z coordinate
-	  }
-	  pz += 2*dx*(dy-1);
-	}
-      }
-
-      
-      *p = -100;
+      *p = GRAPHEND;
 /*z = p-g->Points+1;
 p = g->Points;
 qDebug("\n****** p=%p", p);
@@ -566,10 +505,10 @@ for(int zz=0; zz<z; zz+=2)
     case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
     case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
 
-    default:
-      if(g->Style == 4)  xtmp = -7;      // **** a star at each point ******
-      else if(g->Style == 5)  xtmp = -6; // **** a circle at each point ****
-      else if(g->Style == 6)  xtmp = -5; // **** an arrow at each point ****
+    default:  // symbol at each point ************************************
+      if(g->Style == 4)  xtmp = GRAPHSTAR;
+      else if(g->Style == 5)  xtmp = GRAPHCIRCLE;
+      else if(g->Style == 6)  xtmp = GRAPHARROW;
 
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
@@ -581,14 +520,9 @@ for(int zz=0; zz<z; zz+=2)
 	    p += 3;
 	  }
 	}
-	*(p++) = -10;
-	if(py != &Dummy) {   // more-dimensional Rect3D
-	  py++;
-	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-	    py = g->cPointsX.at(1)->Points;
-	}
+	*(p++) = BRANCHEND;
       }
-      *p = -100;
+      *p = GRAPHEND;
 /*qDebug("\n******");
 for(int zz=0; zz<60; zz+=2)
   qDebug("c: %d/%d", *(g->Points+zz), *(g->Points+zz+1));*/
@@ -639,7 +573,7 @@ for(int zz=0; zz<60; zz+=2)
         else {
 	  dist -= Space;
 	  if(*(p-3) < 0)  p -= 2;
-	  else *(p++) = -2;  // value for interrupt stroke
+	  else *(p++) = STROKEEND;
 	  if(Counter < 0)  Counter = -50000;   // if auto-scale
 	  else  Counter = 0;
         }
@@ -648,96 +582,19 @@ for(int zz=0; zz<60; zz+=2)
 
     } // of x loop
     switch(*(p-3)) {
-      case -2: p -= 3;  // no single point after "no stroke"
-	       break;
-      case -10: if((*(p-2) < 0) || (*(p-1) < 0))
-	        p -= 2;  // erase last hidden point
-	        break;
+      case STROKEEND:
+           p -= 3;  // no single point after "no stroke"
+           break;
+      case BRANCHEND:
+           if((*(p-2) < 0) || (*(p-1) < 0))
+             p -= 2;  // erase last hidden point
+           break;
     }
-    *(p++) = -10;
-    if(py != &Dummy) {   // more-dimensional Rect3D
-      py++;
-      if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-        py = g->cPointsX.at(1)->Points;
-    }
+    *(p++) = BRANCHEND;
   } // of y loop
 
 
-
- if(Name == "Rect3D") if(g->countY > 1) {
-  pz = g->cPointsY;
-  for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
-    DataX *pD = g->cPointsX.first();
-    px = pD->Points;
-    int xlen = pD->count;
-    pD = g->cPointsX.next();
-    for(i=xlen; i>0; i--) {  // every branch
-      Flag = 1;
-      dist = -Stroke;
-      py = pD->Points;
-      calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
-      *(p++) = xtmp;
-      *(p++) = ytmp;
-      Counter = 1;
-      px--;  // back to the current x coordinate
-      py++;  // next y coordinate
-      pz += 2*(xlen-1);  // next z coordinate
-      for(z=pD->count-1; z>0; z--) {  // every point
-        dx = xtmp;
-        dy = ytmp;
-        calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
-        px--;  // back to the current x coordinate
-        py++;  // next y coordinate
-        pz += 2*(xlen-1);  // next z coordinate
-
-        dx = xtmp - dx;
-        dy = ytmp - dy;
-        dist += sqrt(double(dx*dx + dy*dy)); // distance between points
-        if(Flag == 1) if(dist <= 0.0) {
-	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-
-	  *(p++) = xtmp;    // if stroke then save points
-	  *(p++) = ytmp;
-	  if((++Counter) >= 2)  clip(p);
-	  continue;
-        }
-        alpha = atan2(double(dy), double(dx));   // slope for interpolation
-        while(dist > 0) {   // stroke or space finished ?
-	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-
-	  *(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
-	  *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
-	  if((++Counter) >= 2)  clip(p);
-
-          if(Flag == 0) {
-            dist -= Stroke;
-            if(dist <= 0) {
-	      *(p++) = xtmp;  // don't forget point after ...
-	      *(p++) = ytmp;  // ... interpolated point
-	      if((++Counter) >= 2)  clip(p);
-            }
-          }
-          else {
-	    dist -= Space;
-	    if(*(p-3) < 0)  p -= 2;
-	    else *(p++) = -2;  // value for interrupt stroke
-	    if(Counter < 0)  Counter = -50000;   // if auto-scale
-	    else  Counter = 0;
-          }
-          Flag ^= 1; // toggle between stroke and space
-        }
-      }
-      if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-      *(p++) = -10;
-
-      px++;   // next x coordinate
-      pz -= 2*xlen*pD->count - 2;  // next z coordinate
-    }
-    pz += 2*xlen*(pD->count-1);
-  }
- }
-
-  *p = -100;
+  *p = GRAPHEND;
 /*z = p-g->Points+1;
 p = g->Points;
 qDebug("\n****** p=%p", p);
@@ -917,7 +774,6 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   g->cPointsX.clear();
   if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
-  if(fileName.isEmpty()) return false;
 
   QFile file;
   QString Variable;
@@ -941,6 +797,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   FileContent = file.readAll();
   file.close();
   char *FileString = FileContent.data();
+  if(!FileString)  return false;
   char *pPos = FileString+FileContent.size()-1;
   if(*pPos > ' ')  if(*pPos != '>')  return false;
   *pPos = 0;

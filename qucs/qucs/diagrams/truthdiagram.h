@@ -1,8 +1,8 @@
 /***************************************************************************
-                               tabdiagram.h
-                              --------------
-    begin                : Fri Oct 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+                              truthdiagram.h
+                             ----------------
+    begin                : Sat Nov 12 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,27 +15,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef TABDIAGRAM_H
-#define TABDIAGRAM_H
+#ifndef TRUTHDIAGRAM_H
+#define TRUTHDIAGRAM_H
 
-#include "diagram.h"
+#include "tabdiagram.h"
 
 
-class TabDiagram : public Diagram  {
+class TruthDiagram : public TabDiagram  {
 public: 
-  TabDiagram(int _cx=0, int _cy=0);
- ~TabDiagram();
+  TruthDiagram(int _cx=0, int _cy=0);
+ ~TruthDiagram();
 
-  virtual Diagram* newOne();
+  Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void paint(ViewPainter*);
-  virtual int  calcDiagram();
-  bool scroll(int);
-
-  void createAxisLabels() {};   // no labels in this diagram
-
-protected:
-  void calcData(Graph*) {};  // no graph data
+  int  calcDiagram();
 };
 
 #endif

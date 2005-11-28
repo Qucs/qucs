@@ -55,83 +55,82 @@ class SimMessage;
 extern QDir QucsWorkDir;
 extern QDir QucsHomeDir;
 
-/**
-  * This Class is the base class for the application. It sets up the main
-  * window and providing a menubar, toolbar and statusbar. For the main view,
-  * an instance of class QucsView is created which creates the view.
-  */
+
 class QucsApp : public QMainWindow
 {
   Q_OBJECT
 public:
-    QucsApp();
-   ~QucsApp();
+  QucsApp();
+ ~QucsApp();
 
-    void initView();       // setup the mainview
-    void initCursorMenu();
+  void initView();       // setup the mainview
+  void initCursorMenu();
 
-    bool closeAllFiles();
-    static int testFile(const QString&);
-    bool gotoPage(const QString&);   // to load a document
+  bool closeAllFiles();
+  static int testFile(const QString&);
+  bool gotoPage(const QString&);   // to load a document
+  void readProjectFiles();
 
+  QString       ProjName;   // name of the project, that is open
 
 protected:
-    void closeEvent(QCloseEvent*);
+  void closeEvent(QCloseEvent*);
 
 public slots:
-    void slotFileNew();     // generate a new schematic in the view TabBar
-    void slotFileOpen();    // open a document
-    void slotFileSave();    // save a document
-    void slotFileSaveAs();  // save a document under a different filename
-    void slotFileSaveAll(); // save all open documents
-    void slotFileClose();   // close the actual file
-    void slotSymbolEdit();   // edit the symbol for the schematic
-    void slotFileSettings();// open dialog to change file settings
-    void slotFilePrint();   // print the current file
-    void slotFilePrintSelected();  // Print selected elements
-    void slotFileQuit();    // exits the application
-    void slotEditCut();     // put marked object into clipboard and delete it
-    void slotEditCopy();    // put the marked object into the clipboard
-    void slotApplSettings();// open dialog to change application settings
+  void slotFileNew();     // generate a new schematic in the view TabBar
+  void slotFileOpen();    // open a document
+  void slotFileSave();    // save a document
+  void slotFileSaveAs();  // save a document under a different filename
+  void slotFileSaveAll(); // save all open documents
+  void slotFileClose();   // close the actual file
+  void slotSymbolEdit();   // edit the symbol for the schematic
+  void slotFileSettings();// open dialog to change file settings
+  void slotFilePrint();   // print the current file
+  void slotFilePrintSelected();  // Print selected elements
+  void slotFileQuit();    // exits the application
+  void slotEditCut();     // put marked object into clipboard and delete it
+  void slotEditCopy();    // put the marked object into the clipboard
+  void slotApplSettings();// open dialog to change application settings
 
-    void slotIntoHierarchy();
-    void slotPopHierarchy();
+  void slotIntoHierarchy();
+  void slotPopHierarchy();
 
-    void slotShowAll();
-    void slotShowOne();
-    void slotZoomOut(); // Zoom out by 2
+  void slotShowAll();
+  void slotShowOne();
+  void slotZoomOut(); // Zoom out by 2
+
+  void slotToPage();
+  void slotSelectComponent(QIconViewItem*);
 
 
-    // for menu that appears by right click in content ListView
-    void slotShowContentMenu(QListViewItem*, const QPoint&, int);
-    void slotCMenuOpen();
-    void slotCMenuRename();
-    void slotCMenuDelete();
-    void slotCMenuDelGroup();
+  // for menu that appears by right click in content ListView
+  void slotShowContentMenu(QListViewItem*, const QPoint&, int);
+  void slotCMenuOpen();
+  void slotCMenuRename();
+  void slotCMenuDelete();
+  void slotCMenuDelGroup();
 
 // ########################################################################
-//  private slots:
-    void slotMenuOpenProject();
-    void slotOpenProject(QListBoxItem*);
-    void slotMenuCloseProject();
-    void slotSelectComponent(QIconViewItem*);
-    void slotSelectSubcircuit(QListViewItem*);
-    void slotOpenContent(QListViewItem*);
-    void slotSetCompView(int);
-    void slotProjNewButt();
-    void slotProjOpenButt();
-    void slotProjDelButt();
-    void slotMenuDelProject();
-    void slotChangeView(int);
-    void slotSimulate();
-    void slotAfterSimulation(int, SimMessage*);
-    void slotDCbias();
-    void slotChangePage(QString);
-    void slotToPage();
-    void slotNextTab();
+private slots:
+  void slotMenuOpenProject();
+  void slotOpenProject(QListBoxItem*);
+  void slotMenuCloseProject();
+  void slotSelectSubcircuit(QListViewItem*);
+  void slotOpenContent(QListViewItem*);
+  void slotSetCompView(int);
+  void slotProjNewButt();
+  void slotProjOpenButt();
+  void slotProjDelButt();
+  void slotMenuDelProject();
+  void slotChangeView(int);
+  void slotSimulate();
+  void slotAfterSimulation(int, SimMessage*);
+  void slotDCbias();
+  void slotChangePage(QString);
+  void slotNextTab();
 
 signals:
-    void signalKillEmAll();
+  void signalKillEmAll();
 
 public:
   QucsView  *view; // the working area with schematics, data displays etc.
@@ -159,17 +158,14 @@ private:
 
   QListBox      *Projects;
   QListView     *Content;
-  QListViewItem *ConSchematics, *ConDisplays, *ConDatasets;
+  QListViewItem *ConSchematics, *ConDisplays, *ConDatasets, *ConOthers;
 
   QComboBox     *CompChoose;
 
 // ********** Properties ************************************************
-  QString       ProjName;   // name of the project, that is open
   QPtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
-
-  QString       QucsFileFilter;
-
   QPtrList<QProcess> Programs;    // list of programs started by qucs
+  QString  QucsFileFilter;
 
 // ********** Methods ***************************************************
   bool saveCurrentFile();

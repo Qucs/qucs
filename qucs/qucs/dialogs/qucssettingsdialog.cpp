@@ -1,6 +1,6 @@
 /***************************************************************************
-                      qucssettingsdialog.cpp  -  description
-                             -------------------
+                           qucssettingsdialog.cpp
+                          ------------------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -33,6 +33,7 @@
 #include <qvalidator.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
+#include <qlistview.h>
 
 
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
@@ -40,6 +41,9 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 {
   App = parent;
   setCaption(tr("Edit Qucs Properties"));
+
+  Expr.setPattern("[\\w_]+");
+  Validator  = new QRegExpValidator(Expr, this);
 
   all = new QVBoxLayout(this); // to provide the neccessary size
   QTabWidget *t = new QTabWidget(this);
@@ -77,27 +81,58 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
   t->addTab(Tab1, tr("Settings"));
 
   // ...........................................................
-/*  QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
-  Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
+  QWidget *Tab2 = new QWidget(t);
+  QGridLayout *gp2 = new QGridLayout(Tab2,5,3,3,3);
 
-  QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
-  gp2->addWidget(l3,1,0);
-  Input_GridX = new QLineEdit(Tab2);
-  gp2->addWidget(Input_GridX,1,1);
+  QLabel *l7 = new QLabel(
+     tr("Register filename extensions here in order to\nopen files with an appropriate program.")
+     , Tab2);
+  gp2->addMultiCellWidget(l7,0,0,0,2);
 
-  QLabel *l4 = new QLabel(tr("vertical Grid:"), Tab2);
-  gp2->addWidget(l4,2,0);
-  Input_GridY = new QLineEdit(Tab2);
-  gp2->addWidget(Input_GridY,2,1);
+  List_Suffix = new QListView(Tab2);
+  List_Suffix->addColumn(tr("Suffix"));
+  List_Suffix->addColumn(tr("Program"));
+  gp2->addMultiCellWidget(List_Suffix,1,4,0,0);
+  connect(List_Suffix, SIGNAL(clicked(QListViewItem*)),
+		SLOT(slotEditSuffix(QListViewItem*)));
 
-  t->addTab(Tab2, tr("Grid"));
-*/
+  // fill listview with already registered file extensions
+  QStringList::Iterator it = QucsSettings.FileTypes.begin();
+  while(it != QucsSettings.FileTypes.end()) {
+    new QListViewItem(List_Suffix,
+        (*it).section('/',0,0), (*it).section('/',1,1));
+    it++;
+  }
+
+  QLabel *l5 = new QLabel(tr("Suffix:"), Tab2);
+  gp2->addWidget(l5,1,1);
+  Input_Suffix = new QLineEdit(Tab2);
+  Input_Suffix->setValidator(Validator);
+  gp2->addWidget(Input_Suffix,1,2);
+//  connect(Input_Suffix, SIGNAL(returnPressed()), SLOT(slotGotoProgEdit()));
+
+  QLabel *l6 = new QLabel(tr("Program:"), Tab2);
+  gp2->addWidget(l6,2,1);
+  Input_Program = new QLineEdit(Tab2);
+  gp2->addWidget(Input_Program,2,2);
+
+  QHBox *h = new QHBox(Tab2);
+  h->setSpacing(3);
+  gp2->addMultiCellWidget(h,3,3,1,2);
+
+  QPushButton *AddButt = new QPushButton(tr("Set"), h);
+  connect(AddButt, SIGNAL(clicked()), SLOT(slotAdd()));
+  QPushButton *RemoveButt = new QPushButton(tr("Remove"), h);
+  connect(RemoveButt, SIGNAL(clicked()), SLOT(slotRemove()));
+
+  gp2->setRowStretch(4,5);
+  t->addTab(Tab2, tr("File Types"));
+
   // ...........................................................
   // buttons on the bottom of the dialog (independent of the TabWidget)
   QHBox *Butts = new QHBox(this);
-  Butts->setSpacing(5);
-  Butts->setMargin(5);
+  Butts->setSpacing(3);
+  Butts->setMargin(3);
   all->addWidget(Butts);
 
   QPushButton *OkButt = new QPushButton(tr("OK"), Butts);
@@ -120,12 +155,68 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 	App->view->viewport()->paletteBackgroundColor());
   undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
   editorEdit->setText(QucsSettings.Editor);
+
+  resize(300, 200);
 }
 
 QucsSettingsDialog::~QucsSettingsDialog()
 {
   delete all;
   delete val200;
+  delete Validator;
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotEditSuffix(QListViewItem *Item)
+{
+  if(Item) {
+    Input_Suffix->setText(Item->text(0));
+    Input_Program->setText(Item->text(1));
+  }
+  else {
+    Input_Suffix->setFocus();
+    Input_Suffix->setText("");
+    Input_Program->setText("");
+  }
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotAdd()
+{
+  QListViewItem *Item = List_Suffix->selectedItem();
+  if(Item) {
+    Item->setText(0, Input_Suffix->text());
+    Item->setText(1, Input_Program->text());
+    return;
+  }
+
+
+  for(Item = List_Suffix->firstChild(); Item!=0; Item = Item->itemBelow())
+    if(Item->text(0) == Input_Suffix->text()) {
+      QMessageBox::critical(this, tr("Error"),
+			tr("This suffix is already registered!"));
+      return;
+    }
+
+  List_Suffix->ensureItemVisible(
+      new QListViewItem(List_Suffix, List_Suffix->lastItem(),
+          Input_Suffix->text(), Input_Program->text()));
+  Input_Suffix->setFocus();
+  Input_Suffix->setText("");
+  Input_Program->setText("");
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotRemove()
+{
+  QListViewItem *Item = List_Suffix->selectedItem();
+  if(Item == 0) return;
+
+  List_Suffix->takeItem(Item);   // remove from ListView
+  delete Item;
+
+  Input_Suffix->setText("");
+  Input_Program->setText("");
 }
 
 // -----------------------------------------------------------
@@ -170,10 +261,15 @@ void QucsSettingsDialog::slotApply()
     changed = true;
   }
 
-  if(changed) {
-    saveApplSettings(App);  // also sets the small and large font
+  QListViewItem *Item;
+  QucsSettings.FileTypes.clear();
+  for(Item = List_Suffix->firstChild(); Item!=0; Item = Item->itemBelow())
+    QucsSettings.FileTypes.append(Item->text(0)+"/"+Item->text(1));
+
+
+  saveApplSettings(App);  // also sets the small and large font
+  if(changed)
     App->repaint();
-  }
 }
 
 // -----------------------------------------------------------

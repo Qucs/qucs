@@ -34,6 +34,7 @@ Version 0.0.8
    mutual inductors
  * printing DC bias into schematic
  * hide invisible lines in 3D diagram
+ * add non-Qucs files to project
 
 Version 0.0.7
 -------------

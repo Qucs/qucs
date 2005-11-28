@@ -78,28 +78,39 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Digi_Source::VHDL_Code()
+QString Digi_Source::VHDL_Code(int NumPorts)
 {
   QString s, Time;
   QString Out("    " + Ports.getFirst()->Connection->Name + " <= '");
-//  int Num = Props.first()->Value.toInt();
-
-  char State;
-  if(Props.at(1)->Value == "low")
-    State = '0';
-  else
-    State = '1';
 
   s  = "\n  " + Name + ":process\n  begin\n";
 
   int z = 0;
-  Time = Props.next()->Value.section(';',z,z);
-  while(!Time.isEmpty()) {
-    s += Out + State + "';\n";    // next value for signal
-    s += "    wait for " + Time + ";\n";
-    State ^= 1;
-    z++;
-    Time = Props.current()->Value.section(';',z,z);
+  char State;
+  if(NumPorts <= 0) {  // time table simulation ?
+    if(Props.at(1)->Value == "low")
+      State = '0';
+    else
+      State = '1';
+
+    Time = Props.next()->Value.section(';',z,z);
+    while(!Time.isEmpty()) {
+      s += Out + State + "';\n";    // next value for signal
+      s += "    wait for " + Time + ";\n";
+      State ^= 1;
+      z++;
+      Time = Props.current()->Value.section(';',z,z);
+    }
+  }
+  else {  // truth table simulation
+    State = '0';
+    int Num = Props.getFirst()->Value.toInt() - 1;
+    
+    for(z=1<<(NumPorts-Num); z>0; z--) {
+      s += Out + State + "';\n";    // next value for signal
+      s += "    wait for "+QString::number(1 << Num)+"ns;\n";
+      State ^= 1;
+    }
   }
 
   s += "  end process;\n";

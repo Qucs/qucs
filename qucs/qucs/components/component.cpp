@@ -610,7 +610,7 @@ QString Component::NetList()
 }
 
 // -------------------------------------------------------
-QString Component::VHDL_Code()
+QString Component::VHDL_Code(int)
 {
   return QString("");   // no digital model
 }
@@ -1052,7 +1052,7 @@ QString GateComponent::NetList()
 }
 
 // -------------------------------------------------------
-QString GateComponent::VHDL_Code()
+QString GateComponent::VHDL_Code(int NumPorts)
 {
   if(!isActive) return QString("");   // should it be simulated ?
 
@@ -1066,8 +1066,9 @@ QString GateComponent::VHDL_Code()
   for(pp = Ports.prev(); pp != 0; pp = Ports.prev())
     s += " " + Model.lower() + " " + pp->Connection->Name;   // node names
 
-  if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0)  // delay time
-    s += " after " + Props.current()->Value;
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0)  // delay time
+      s += " after " + Props.current()->Value;
 
   s += ';';
   return s;

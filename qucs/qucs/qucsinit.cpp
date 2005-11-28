@@ -344,6 +344,15 @@ void QucsInit::initActions()
   connect(App->projClose, SIGNAL(activated()),
 	  App, SLOT(slotMenuCloseProject()));
 
+  Acts->addToProj =
+    new QAction(tr("Add Files to Project"), tr("&Add Files to Project..."),
+		CTRL+SHIFT+Key_A, App);
+  Acts->addToProj->setStatusTip(tr("Copies files to project directory"));
+  Acts->addToProj->setWhatsThis(
+	tr("Add Files to Project\n\nCopies files to project directory"));
+  connect(Acts->addToProj, SIGNAL(activated()),
+	  Acts, SLOT(slotAddToProject()));
+
   App->magAll =
     new QAction(tr("View All"),
                 QIconSet(QImage(QucsSettings.BitmapDir + "viewmagfit.png")),
@@ -708,6 +717,7 @@ void QucsInit::initMenuBar()
   projMenu = new QPopupMenu();  // menuBar entry projMenu
   App->projNew->addTo(projMenu);
   App->projOpen->addTo(projMenu);
+  Acts->addToProj->addTo(projMenu);
   App->projClose->addTo(projMenu);
   App->projDel->addTo(projMenu);
 

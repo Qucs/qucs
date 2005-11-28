@@ -3191,10 +3191,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>duration of simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>type of the port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3210,6 +3206,30 @@ Usage:  qucsedit [-r] file
         <source>type of simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Truth Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Only one digital simulation allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Analog and digital simulations cannot be mixed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Digital simulation needs at least one digital source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of TimeList simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No ground symbol allowed in digital simulation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3219,7 +3239,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="obsolete">Pronto.</translation>
+        <translation type="unfinished">Pronto.</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3252,6 +3272,43 @@ Usage:  qucsedit [-r] file
     <message>
         <source>Cannot start library program!</source>
         <translation>Impossibile avviare il programma di libreria!</translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4732,6 +4789,14 @@ Modifica lo schema</translation>
         <source>digital components</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4824,6 +4889,10 @@ Editor di testo minimale per Qucs
     <message>
         <source>&amp;Cancel</source>
         <translation>&amp;Annulla</translation>
+    </message>
+    <message>
+        <source>Row: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4956,6 +5025,10 @@ Programma di sintesi dei filtri
     </message>
     <message>
         <source>Start frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bessel filter order must not be greater than 19.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6336,6 +6409,24 @@ Calculates DC bias and shows it</source>
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
@@ -6473,6 +6564,51 @@ Calculates DC bias and shows it</source>
     <message>
         <source>Settings</source>
         <translation>Impostazioni</translation>
+    </message>
+    <message>
+        <source>Suffix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Suffix:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Program:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Aggiungi</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Rimuovi</translation>
+    </message>
+    <message>
+        <source>File Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register filename extensions here in order to
+open files with an appropriate program.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
+    </message>
+    <message>
+        <source>This suffix is already registered!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7086,14 +7222,6 @@ Errori:
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
         <translation>ERRORE: Impossibile avviare QucsConv!</translation>
-    </message>
-    <message>
-        <source>ERROR: No time for simulation specified!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Forgotten the digital simulation component?</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

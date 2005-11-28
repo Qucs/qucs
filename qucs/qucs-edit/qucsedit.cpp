@@ -21,6 +21,8 @@
 
 #include "qucsedit.h"
 
+#include <qtextedit.h>
+#include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qpushbutton.h>
@@ -55,6 +57,8 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   ButtSave->setDisabled(readOnly);
 
   h->setStretchFactor(new QWidget(h),5); // stretchable placeholder
+  PosText = new QLabel(tr("Row: %1  -  Column: %2").arg(1).arg(1), h);
+  h->setStretchFactor(new QWidget(h),5); // stretchable placeholder
 
   QPushButton *ButtAbout = new QPushButton(tr("About"),h);
   connect(ButtAbout, SIGNAL(clicked()), SLOT(slotAbout()));
@@ -69,6 +73,7 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   text->setWordWrap(QTextEdit::NoWrap);
   text->setMinimumSize(300,200);
   v->addWidget(text);
+  connect(text, SIGNAL(cursorPositionChanged(int, int)), SLOT(slotPrintCursorPosition(int, int)));
 
   // .................................................
   loadFile(FileName_);
@@ -76,6 +81,12 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
 
 QucsEdit::~QucsEdit()
 {
+}
+
+// ************************************************************
+void QucsEdit::slotPrintCursorPosition(int Para, int Pos)
+{
+  PosText->setText(tr("Row: %1  -  Column: %2").arg(Para+1).arg(Pos+1));
 }
 
 // ************************************************************

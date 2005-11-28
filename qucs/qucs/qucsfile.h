@@ -45,9 +45,9 @@ public:
   QString createSymbolUndoString(char);
   bool    rebuildSymbol(QString *);
 
-  bool createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*, bool);
+  bool createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*, int);
   int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
-  QString createNetlist(QTextStream&, bool);
+  QString createNetlist(QTextStream&, int);
 
 
 private:
@@ -62,7 +62,7 @@ private:
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
   void throughAllNodes(bool, QStringList&, int&, bool);
-  bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, bool);
+  bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, int);
 
   QucsDoc  *Doc;
   QPtrList<Wire>      *Wires;

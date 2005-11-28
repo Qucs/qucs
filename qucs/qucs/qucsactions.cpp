@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsactions.cpp  -  description
-                             -------------------
+                               qucsactions.cpp
+                              -----------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -560,4 +560,90 @@ void QucsActions::slotChangeProps()
     App->view->Docs.current()->setChanged(true, true);
     App->view->viewport()->update();
   }
+}
+
+// ########################################################################
+void QucsActions::slotAddToProject()
+{
+  static QString lastDir;  // to remember last directory and file
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(App->ProjName.isEmpty()) {
+    QMessageBox::critical(App, tr("Error"), tr("No project open!"));
+    return;
+  }
+
+
+  QStringList List = QFileDialog::getOpenFileNames(
+	"*.*", lastDir.isEmpty() ? QString(".") : lastDir,
+	App, 0, tr("Select files to copy"));
+
+  if(List.isEmpty()) {
+    App->statusBar()->message(tr("No files copied."), 2000);
+    return;
+  }
+
+
+  char *Buffer = (char*)malloc(0x10000);
+  if(!Buffer) return;  // should never happen
+
+  QStringList FileList = List;  // make a copy as recommended by Qt
+  QStringList::Iterator it = FileList.begin();
+  lastDir = (*it);   // remember last directory and file
+
+  // copy all files to project directory
+  int Num;
+  QFileInfo Info;
+  QFile origFile, destFile;
+  while(it != FileList.end()) {
+    Info.setFile(*it);
+    origFile.setName(*it);
+    destFile.setName(QucsWorkDir.absPath() + 
+                     QDir::separator() + Info.fileName());
+
+    if(!origFile.open(IO_ReadOnly)) {
+      QMessageBox::critical(App, tr("Error"), tr("Cannot open \"%1\" !").arg(*it));
+      it++;
+      continue;
+    }
+
+    if(destFile.exists())
+      if(QMessageBox::question(App, tr("Overwrite"),
+           tr("File \"%1\" already exists.\nOverwrite ?").arg(*it), QMessageBox::Yes,
+           QMessageBox::No|QMessageBox::Default|QMessageBox::Escape)
+         != QMessageBox::Yes) {
+        origFile.close();
+        it++;
+        continue;
+      }
+
+    if(!destFile.open(IO_WriteOnly)) {
+      QMessageBox::critical(App, tr("Error"), tr("Cannot create \"%1\" !").arg(*it));
+      origFile.close();
+      it++;
+      continue;
+    }
+
+    // copy data
+    do {
+      Num = origFile.readBlock(Buffer, 0x10000);
+      if(Num < 0) {
+        QMessageBox::critical(App, tr("Error"), tr("Cannot read \"%1\" !").arg(*it));
+        break;
+      }
+      Num = destFile.writeBlock(Buffer, Num);
+      if(Num < 0) {
+        QMessageBox::critical(App, tr("Error"), tr("Cannot write \"%1\" !").arg(*it));
+        continue;
+      }
+    } while(Num == 0x10000);
+
+    origFile.close();
+    destFile.close();
+    it++;
+  }
+  
+  free(Buffer);
+  App->readProjectFiles();  // re-read the content ListView
+  App->statusBar()->message(tr("Ready."));
 }

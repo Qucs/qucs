@@ -46,15 +46,17 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 
   void createAxisLabels();
   bool insideDiagram(int, int);
-  void clip(int* &);
 
   tPoint3D *Mem;   // memory for all points during hidden line algorithm
   tPoint3D *pMem;  // current position in "Mem"
+
+
+protected:
+  void calcData(Graph*);
 
 private:
   int  calcAxis(Axis*, int, int, double, double, bool);
