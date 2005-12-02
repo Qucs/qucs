@@ -1228,6 +1228,30 @@ S_{11} = S_{23} = S_{32} = S_{44} = T\cdot S_{12}
 \end{figure}
 \FloatBarrier
 
+A non-ideal transformer with inductances $L_1$ and $L_2$ and
+coupling factor $K$ yields the following S-parameters:
+\begin{equation}
+D = (k^2 - 1) \cdot \dfrac{\omega^2\cdot L_1\cdot L_2}{2\cdot Z_0} +
+    j\omega L_1 + j\omega L_2 + 2\cdot Z_0
+\end{equation}
+\begin{equation}
+S_{14} = S_{41} = \frac{j\omega L_2 + 2\cdot Z_0}{D}
+\end{equation}
+\begin{equation}
+S_{11} = S_{44} = 1 - S_{14}
+\end{equation}
+\begin{equation}
+S_{23} = S_{32} = \frac{j\omega L_1 + 2\cdot Z_0}{D}
+\end{equation}
+\begin{equation}
+S_{22} = S_{33} = 1 - S_{23}
+\end{equation}
+\begin{equation}
+S_{12} = -S_{13} = S_{21} = -S_{24} = -S_{31} = S_{34} = -S_{42} = S_{43} =
+         \dfrac{j\omega\cdot k \cdot\sqrt{L_1\cdot L_2}}{D}
+\end{equation}
+
+
 \subsection{Symmetrical transformer}
 %\addcontentsline{toc}{subsection}{Symmetrical transformer}
 
