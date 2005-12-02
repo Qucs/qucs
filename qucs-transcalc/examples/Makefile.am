@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs-transcalc/Makefile.am
+# qucs-transcalc/examples/Makefile.am
 #
 # Automake input file.
 #
@@ -22,35 +22,14 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-bin_PROGRAMS = qucstrans
+EXAMPLES = hp.trc ustrip50fr4.trc ustrip_jansen.trc cstrip_kj_1.trc \
+	cstrip_kj_2.trc
 
-SUBDIRS = bitmaps examples
+EXTRA_DIST = $(EXAMPLES)
 
-dist_man_MANS = qucstrans.1
-
-MOCHEADERS = qucstrans.h helpdialog.h optionsdialog.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
-
-qucstrans_SOURCES = main.cpp qucstrans.cpp helpdialog.cpp optionsdialog.cpp
-
-qucstrans_LDADD = libtranscalc.a
-
-nodist_qucstrans_SOURCES = $(MOCFILES)
-
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
-qucstrans_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-
-noinst_HEADERS = $(MOCHEADERS) transline.h units.h microstrip.h coax.h \
-	rectwaveguide.h c_microstrip.h
-
-noinst_LIBRARIES = libtranscalc.a
-
-libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
-	rectwaveguide.cpp c_microstrip.cpp
-
-%.moc.cpp: %.h
-	$(MOC) -o $@ $<
+# installation of transmission lines
+linedatadir = ${prefix}/share/qucs/tline
+linedata_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in
