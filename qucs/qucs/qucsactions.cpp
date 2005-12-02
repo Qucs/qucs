@@ -608,7 +608,7 @@ void QucsActions::slotAddToProject()
     }
 
     if(destFile.exists())
-      if(QMessageBox::question(App, tr("Overwrite"),
+      if(QMessageBox::information(App, tr("Overwrite"),
            tr("File \"%1\" already exists.\nOverwrite ?").arg(*it), QMessageBox::Yes,
            QMessageBox::No|QMessageBox::Default|QMessageBox::Escape)
          != QMessageBox::Yes) {

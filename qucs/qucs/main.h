@@ -21,6 +21,7 @@
 #include <qfont.h>
 #include <qcolor.h>
 #include <qptrlist.h>
+#include <qstringlist.h>
 
 #include "wire.h"
 #include "node.h"
