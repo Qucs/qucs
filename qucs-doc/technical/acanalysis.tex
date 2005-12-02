@@ -425,3 +425,52 @@ Y_{15} = Y_{51} = Y_{46} = Y_{64} = -Y_{14} = -Y_{41} = -Y_{56} = -Y_{65}
 Y_{25} = Y_{52} = Y_{43} = Y_{34} = -Y_{24} = -Y_{42} = -Y_{53} = -Y_{35}
    = \dfrac{k_{12}\cdot k_{13} - k_{23}}{\sqrt{L_2\cdot L_3}\cdot A}
 \end{gather}
+
+A more general approach for coupled inductors can be obtained by
+using the induction law:
+
+\begin{equation}
+U_L = j\omega L\cdot I_L + j\omega\cdot \sum_{n=1}^N k_n\cdot\sqrt{L\cdot L_n}\cdot I_{L,n}
+\end{equation}
+where $U_L$ and $I_L$ is the voltage across and the current through
+the inductor, respectively. $L$ is its inductance. The inductor is
+coupled with $N$ other inductances $L_n$. The corresponding coupling
+factors are $k_n$ and $I_{L,n}$ are the currents through the inductors.\\
+Realizing this approach with the MNA matrix is straight forward:
+Every inductance $L$ needs an additional matrix row. The corresponding
+element in the $D$ matrix is $j\omega L$. If two inductors are coupled
+the cross element in the $D$ matrix is
+$j\omega\cdot k\cdot\sqrt{L_1\cdot L_2}$. For two coupled inductors
+this yields:
+
+\begin{equation}
+\begin{bmatrix}
+. & . & . & . & +1 &  0\\
+. & . & . & . & -1 &  0\\
+. & . & . & . &  0 & +1\\
+. & . & . & . &  0 & -1\\
++1 & -1 & 0 & 0 & j\omega L_1 & j\omega\cdot k\cdot\sqrt{L_1\cdot L_2} \\
+0 & 0 & +1 & -1 & j\omega\cdot k\cdot\sqrt{L_1\cdot L_2} & j\omega L_2 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3\\
+V_4\\
+I_{br1}\\
+I_{br2}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+I_3\\
+I_4\\
+0
+\end{bmatrix}
+\end{equation}
+
+Obviously, this approach has an advantage: It also works for
+zero inductances and for unity coupling factors. It has the
+disadvantage that it enlarges the MNA matrix.

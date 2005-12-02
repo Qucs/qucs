@@ -61,7 +61,7 @@ impedance ratio of:
 Fig. \ref{fig:t_attenuator} shows an attenuator using the
 T-topology. The resistances can be calculated as follows.
 \begin{align}
-Z_2 & = \dfrac{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}}{L^2 - 1} \\
+Z_2 & = \dfrac{2\cdot \sqrt{L\cdot Z_{in}\cdot Z_{out}}}{L - 1} \\
 Z_1 & = Z_{in}\cdot A - Z_2 \\
 Z_3 & = Z_{out}\cdot A - Z_2 \\
 \textrm{with} \qquad A & = \dfrac{L + 1}{L - 1}
@@ -90,7 +90,7 @@ Bessel filter (Thomson filter) & as constant group delay as possible \\
 Butterworth filter (power-term filter) & as constant amplitude transfer function as possible \\
 Chebychev filter type I & constant ripple in pass band \\
 Chebychev filter type II & constant ripple in stop band \\
-Cauer filter & constant ripple in pass and stop band \\
+Cauer filter (elliptical filter) & constant ripple in pass and stop band \\
 \end{tabular} 
 
 \addvspace{12pt}
