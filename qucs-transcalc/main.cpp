@@ -171,6 +171,14 @@ int main(int argc, char *argv[])
 
   qucs->loadFile(QDir::homeDirPath()+"/.qucs/transrc");
   qucs->setMode(QucsSettings.Mode);
+
+  // optional file argument
+  if (argc > 1) {
+    int _mode = 0;
+    QString File = argv[1];
+    qucs->loadFile(File,&_mode);
+  }
+
   int result = a.exec();
   saveApplSettings(qucs);
   delete qucs;
