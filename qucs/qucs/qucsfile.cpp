@@ -474,6 +474,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
     else if(cstr == "<Rect3D") d = new Rect3DDiagram();
     else if(cstr == "<Curve") d = new CurveDiagram();
     else if(cstr == "<Time") d = new TimingDiagram();
+    else if(cstr == "<Truth") d = new TruthDiagram();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));
