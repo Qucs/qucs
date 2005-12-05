@@ -430,18 +430,20 @@ A more general approach for coupled inductors can be obtained by
 using the induction law:
 
 \begin{equation}
-U_L = j\omega L\cdot I_L + j\omega\cdot \sum_{n=1}^N k_n\cdot\sqrt{L\cdot L_n}\cdot I_{L,n}
+V_L = j\omega L\cdot I_L + j\omega\cdot \sum_{n=1}^N k_n\cdot\sqrt{L\cdot L_n}\cdot I_{L,n}
 \end{equation}
-where $U_L$ and $I_L$ is the voltage across and the current through
-the inductor, respectively. $L$ is its inductance. The inductor is
-coupled with $N$ other inductances $L_n$. The corresponding coupling
-factors are $k_n$ and $I_{L,n}$ are the currents through the inductors.\\
-Realizing this approach with the MNA matrix is straight forward:
-Every inductance $L$ needs an additional matrix row. The corresponding
-element in the $D$ matrix is $j\omega L$. If two inductors are coupled
-the cross element in the $D$ matrix is
-$j\omega\cdot k\cdot\sqrt{L_1\cdot L_2}$. For two coupled inductors
-this yields:
+where $V_L$ and $I_L$ is the voltage across and the current through
+the inductor, respectively.  $L$ is its inductance.  The inductor is
+coupled with $N$ other inductances $L_n$.  The corresponding coupling
+factors are $k_n$ and $I_{L,n}$ are the currents through the inductors.
+
+\addvspace{12pt}
+
+Realizing this approach with the MNA matrix is straight forward: Every
+inductance $L$ needs an additional matrix row.  The corresponding
+element in the $D$ matrix is $j\omega L$.  If two inductors are
+coupled the cross element in the $D$ matrix is $j\omega
+k\cdot\sqrt{L_1\cdot L_2}$.  For two coupled inductors this yields:
 
 \begin{equation}
 \begin{bmatrix}
@@ -449,8 +451,8 @@ this yields:
 . & . & . & . & -1 &  0\\
 . & . & . & . &  0 & +1\\
 . & . & . & . &  0 & -1\\
-+1 & -1 & 0 & 0 & j\omega L_1 & j\omega\cdot k\cdot\sqrt{L_1\cdot L_2} \\
-0 & 0 & +1 & -1 & j\omega\cdot k\cdot\sqrt{L_1\cdot L_2} & j\omega L_2 \\
++1 & -1 & 0 & 0 & j\omega L_1 & j\omega k\cdot\sqrt{L_1\cdot L_2} \\
+0 & 0 & +1 & -1 & j\omega k\cdot\sqrt{L_1\cdot L_2} & j\omega L_2 \\
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -471,6 +473,6 @@ I_4\\
 \end{bmatrix}
 \end{equation}
 
-Obviously, this approach has an advantage: It also works for
-zero inductances and for unity coupling factors. It has the
-disadvantage that it enlarges the MNA matrix.
+Obviously, this approach has an advantage: It also works for zero
+inductances and for unity coupling factors. It has the disadvantage
+that it enlarges the MNA matrix.
