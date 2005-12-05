@@ -12,3 +12,8 @@ parse_touchstone.cpp
 tokens_dataset.h
 tokens_netlist.h
 tokens_touchstone.h
+gperfappgen
+gperfappgen.cpp
+gperfapphash.cpp
+gperfapphash.gph
+

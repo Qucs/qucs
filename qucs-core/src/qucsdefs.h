@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.28 2005/11/24 10:10:21 raimi Exp $
+ * $Id: qucsdefs.h,v 1.29 2005/12/05 12:09:36 raimi Exp $
  *
  */
 
@@ -650,6 +650,13 @@ struct define_t qucs_definition_available[] =
   { "XOR", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* digital source */
+  { "DigiSource", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "init", PROP_STR, { PROP_NO_VAL, "low" }, PROP_NO_RANGE },
+      { "times", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
 
   /* s-parameter analysis */

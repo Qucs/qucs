@@ -86,6 +86,9 @@ if test "x$osversion" = "x"; then
 fi
 unset osversion
 
+# Check for additional programs.
+AC_PATH_PROG(GPERF, gperf, :)
+
 # Checks for libraries.
 AC_CHECK_LIB(m, sin)
 

@@ -34,6 +34,7 @@ Distribution process:
      + GNU automake 1.7.0 (at least)
      + flex 2.5.31
      + GNU Bison 1.875d
+     + GNU gperf 3.0.1
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
     command `automake -a -f -c' with latest automake version installed.
   - Run `make distclean', `sh autogen.sh' and `make all'.

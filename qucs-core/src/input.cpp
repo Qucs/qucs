@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.51 2005/11/25 08:27:05 raimi Exp $
+ * $Id: input.cpp,v 1.52 2005/12/05 12:09:36 raimi Exp $
  *
  */
 
@@ -255,7 +255,16 @@ void input::factory (void) {
 	    o->addProperty (pairs->key, pairs->value->ident);
 	  }
 	} else {
-	  o->addProperty (pairs->key, pairs->value->value);
+	  if (pairs->value->var) {
+	    // add value lists to the properties
+	    variable * v = new variable (pairs->key);
+	    constant * c = new constant (TAG_VECTOR);
+	    c->v = createVector (pairs->value);
+	    v->setConstant (c);
+	    o->addProperty (pairs->key, v);
+	  } else {
+	    o->addProperty (pairs->key, pairs->value->value);
+	  }
 	}
       // additionally add missing optional properties
       assignDefaultProperties (c, def->define);
@@ -418,6 +427,8 @@ circuit * input::createCircuit (char * type) {
     return new logicxnor ();
   else if (!strcmp (type, "XOR"))
     return new logicxor ();
+  else if (!strcmp (type, "DigiSource"))
+    return new digisource ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;
