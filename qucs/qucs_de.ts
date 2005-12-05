@@ -3285,27 +3285,27 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Truth Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Logiktabelle</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Es ist nur eine Digitalsimulation erlaubt.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Analoge und digitale Simulationen können nicht gemischt werden.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Digitalsimulation benötigt mindestens eine Digitalquelle.</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitdauer der TimeList Simulation</translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das Massesymbol ist in der Digitalsimulation nicht erlaubt.</translation>
     </message>
 </context>
 <context>
@@ -3508,7 +3508,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Fertig.</translation>
+        <translation>Fertig.</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3544,40 +3544,41 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein geöffnetes Projekt!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien für das Kopieren auswählen</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es wurden keine Dateien kopiert.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; kann nicht geöffnet werden !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschreiben</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; kann nicht erstellt werden !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; kann nicht gelesen werden !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; kann nicht geschrieben werden !</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; existiert bereits.
+Überschreiben ?</translation>
     </message>
 </context>
 <context>
@@ -4274,11 +4275,11 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Programm &quot;%1&quot; kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -5909,7 +5910,7 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeile: %1  -  Spalte: %2</translation>
     </message>
 </context>
 <context>
@@ -6046,7 +6047,7 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Ordnung des Besselfilters darf nicht größer als 19 sein.</translation>
     </message>
 </context>
 <context>
@@ -7453,21 +7454,23 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien zu Projekt hinzufügen</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dateien zu Projekt hinzufügen...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiert Dateien in das Projektverzeichnis</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateien zu Projekt hinzufügen
+
+Kopiert Dateien in das Projektverzeichnis</translation>
     </message>
 </context>
 <context>
@@ -7614,19 +7617,19 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiendung</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Programm</translation>
     </message>
     <message>
         <source>Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiendung:</translation>
     </message>
     <message>
         <source>Program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Programm:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -7634,28 +7637,29 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateitypen</translation>
     </message>
     <message>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrierung von Dateinamensendungen um Dateien
+mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzen</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>This suffix is already registered!</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Endung ist schon registriert!</translation>
     </message>
 </context>
 <context>
