@@ -21,7 +21,7 @@
 
 Digi_Source::Digi_Source()
 {
-  Type = isDigitalComponent;
+  Type = isComponent;   // both analog and digital
   Description = QObject::tr("digital source");
 
   Lines.append(new Line(-10,  0,  0,  0,QPen(QPen::darkGreen,2)));
@@ -54,6 +54,8 @@ Digi_Source::Digi_Source()
 		QObject::tr("initial output value")+" [low, high]"));
   Props.append(new Property("times", "1ns; 1ns", false,
 		QObject::tr("list of times for changing output value")));
+  Props.append(new Property("V", "1 V", false,
+		QObject::tr("voltage of high level")));
 }
 
 // -------------------------------------------------------

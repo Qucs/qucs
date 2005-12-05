@@ -250,15 +250,10 @@ void SimMessage::startSimulator()
   if(SimPorts < 0)
     com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
         << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
-  else {
-/*    if(SimTime.isEmpty()) {
-      ErrText->insert(tr("ERROR: No time for simulation specified!")+"\n");
-      FinishSimulation(-1);
-      return;
-    }*/
-    com << "/home/margrafm/freehdl-20050510/v2cc/gvhdl"
-        << QucsHomeDir.filePath("netlist.txt");
-  }
+  else
+    com << QucsSettings.BinDir + "qucsdigi" << "netlist.txt" << SimTime
+        << QucsHomeDir.absPath();
+
   SimProcess.setArguments(com);
 
 

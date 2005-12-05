@@ -1312,12 +1312,13 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QStringList::Iterator it = QucsSettings.FileTypes.begin();
   while(it != QucsSettings.FileTypes.end()) {
     if(Suffix == (*it).section('/',0,0)) {
-      com << (*it).section('/',1,1) << Info.absFilePath();
+      com = QStringList::split(" ", (*it).section('/',1,1));
+      com << Info.absFilePath();
       QProcess *Program = new QProcess(com);
       Program->setCommunication(0);
       if(!Program->start()) {
         QMessageBox::critical(this, tr("Error"),
-               tr("Cannot start \"%1\"!").arg((*it).section('/',0,0)));
+               tr("Cannot start \"%1\"!").arg(Info.absFilePath()));
         delete Program;
       }
       return;

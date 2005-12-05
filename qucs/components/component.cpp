@@ -1057,13 +1057,13 @@ QString GateComponent::VHDL_Code(int NumPorts)
   if(!isActive) return QString("");   // should it be simulated ?
 
   QString s = "  ";
-  Port *pp = Ports.last();
+  Port *pp = Ports.first();
   s += pp->Connection->Name + " <= ";  // output port
-  pp = Ports.prev();
+  pp = Ports.next();
   s += pp->Connection->Name;   // first input port
 
   // output all input ports
-  for(pp = Ports.prev(); pp != 0; pp = Ports.prev())
+  for(pp = Ports.next(); pp != 0; pp = Ports.next())
     s += " " + Model.lower() + " " + pp->Connection->Name;   // node names
 
   if(NumPorts <= 0)  // no truth table simulation ?
@@ -1143,6 +1143,7 @@ void GateComponent::createSymbol()
     Ellips.append(new Area(xr,-4, 8, 8,
                   QPen(QPen::darkBlue,0), QBrush(QPen::darkBlue)));
 
+  Ports.append(new Port( 30,  0));
   y += 10;
   for(z=0; z<Num; z++) {
     y -= 20;
@@ -1153,8 +1154,6 @@ void GateComponent::createSymbol()
     }
     Lines.append(new Line(-30, y, xl, y,QPen(QPen::darkBlue,2)));
   }
-  
-  Ports.append(new Port( 30,  0));
 }
 
 // -------------------------------------------------------
