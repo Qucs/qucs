@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: and.cpp,v 1.2 2005/11/25 08:27:05 raimi Exp $
+ * $Id: and.cpp,v 1.3 2005/12/05 07:04:57 margraf Exp $
  *
  */
 
@@ -52,14 +52,13 @@ void logicand::calcOutput (void) {
 }
 
 void logicand::calcDerivatives (void) {
-  nr_double_t v = getPropertyDouble ("V");
   nr_double_t n = getSize () - 1;
   nr_double_t x;
   for (int k = 0; k < n; k++) {
     for (x = 0, i = 0; i < n; i++) {
       x += 2 / (1 + calcTransfer (i));
     }
-    x *= (1 + getVin (k));
-    g[k] = n * v * calcDerivative (k) / x / x + GMin;
+    x *= (1 + calcTransfer (k));
+    g[k] = n * calcDerivative (k) / x / x + GMin;
   }
 }
