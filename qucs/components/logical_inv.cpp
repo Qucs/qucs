@@ -48,8 +48,8 @@ QString Logical_Inv::VHDL_Code(int NumPorts)
 {
   if(!isActive) return QString("");   // should it be simulated ?
 
-  QString s = "  " + Ports.getLast()->Connection->Name + " <= not " +
-              Ports.getFirst()->Connection->Name;
+  QString s = "  " + Ports.getFirst()->Connection->Name + " <= not " +
+              Ports.getLast()->Connection->Name;
 
   if(NumPorts <= 0)  // no truth table simulation ?
     if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0)  // delay time
@@ -86,8 +86,8 @@ void Logical_Inv::createSymbol()
 
   Lines.append(new Line( xr, 0, 30, 0, QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 0,-xr, 0, QPen(QPen::darkBlue,2)));
-  Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
+  Ports.append(new Port(-30, 0));
 
   x1 = -30; y1 = -23;
   x2 =  30; y2 =  23;

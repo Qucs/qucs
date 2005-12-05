@@ -332,7 +332,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   int i, j, z, dx, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
   for(g = Graphs.first(); g!=0; g = Graphs.next())
-    Size += g->cPointsX.getFirst()->count * g->countY;
+    if(g->cPointsY)
+      Size += g->cPointsX.getFirst()->count * g->countY;
 
   // "Mem" should be the last malloc to simplify realloc
   tPointZ *zMem = (tPointZ*)malloc( (Size+2)*sizeof(tPointZ) );
@@ -356,7 +357,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     // ..........................................
     // calculate coordinates of all lines
     dx = g->cPointsX.first()->count;
-    dy = g->cPointsX.next()->count;
+    if(g->countY > 1)  dy = g->cPointsX.next()->count;
+    else  dy = 0;
     for(i=g->countY-1; i>=0; i--) {   // y coordinates
       px = g->cPointsX.getFirst()->Points;
     
@@ -365,7 +367,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
       (pMem-1)->done |= 8;  // mark as "last in line"
       py++;
-      if((i % dy) == 0)
+      if(dy > 0) if((i % dy) == 0)
         py = g->cPointsX.at(1)->Points;
     }
 
@@ -405,19 +407,21 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     zp = zp_tmp;
     // "dx" and "dy" are still unchanged !
     for(i=g->countY-1; i>=0; i--) {   // all branches
-      if(i % dy) {
+      if(dy > 0) if(i % dy) {
         for(j=dx-1; j>0; j--) {   // x coordinates
           zp->z += (zp+1)->z + (zp+dx)->z + (zp+dx+1)->z;
           zp++;
         }
         zp->z = -FLT_MAX;  // last one not needed
         zp++;
+        continue;
       }
-      else   // last line not needed
-        for(j=dx; j>0; j--) {   // x coordinates
-          zp->z = -FLT_MAX;  // last one not needed
-          zp++;
-        }
+
+      // last line not needed
+      for(j=dx; j>0; j--) {   // x coordinates
+        zp->z = -FLT_MAX;  // last one not needed
+        zp++;
+      }
     }
     }  // of "if(hideLines)"
 
@@ -470,8 +474,10 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
   zp = zMem;
   for(g = Graphs.first(); g!=0; g = Graphs.next()) {
+    if(!g->cPointsY) continue;
     dx = g->cPointsX.first()->count;
-    dy = g->cPointsX.next()->count;
+    if(g->countY > 1)  dy = g->cPointsX.next()->count;
+    else  dy = 1;
 
     // look for hidden lines ...
     for(int No = g->countY/dy * (dx-1)*(dy-1); No>0; No--) {
@@ -917,6 +923,7 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 void Rect3DDiagram::calcData(Graph *g)
 {
   if(!pMem)  return;
+  if(!g->cPointsY) return;
 
   int tmp;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
