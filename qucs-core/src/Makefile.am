@@ -42,7 +42,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp precision.c
+	spline.cpp fourier.cpp precision.c gperfapphash.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp
@@ -56,7 +56,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
-	spline.h tridiag.h fourier.h precision.h
+	spline.h tridiag.h fourier.h precision.h hash.h applications.h
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -64,7 +64,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp matrix.cpp
+	matvec.cpp matrix.cpp hash.cpp
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
@@ -92,6 +92,30 @@ else
 generated_FILES = 
 endif
 
+if MAINTAINER_MODE
+noinst_PROGRAMS = gperfappgen
+
+gperfappgen_SOURCES = gperfappgen.cpp evaluate.cpp equation.cpp spline.cpp \
+	circuit.cpp fourier.cpp integrator.cpp operatingpoint.cpp node.cpp
+
+gperfappgen_LDADD = libqucsator.a
+
+gperfappgen_DEPENDENCIES = applications.h
+
+gperfapphash.gph: gperfappgen
+	./$< > $@
+
+gperfapphash.cpp: gperfapphash.gph
+	$(GPERF) -I -m 8 $< > $@
+
+gperfapphash.o: gperfapphash.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) -c $< -o $@
+
+gperf_FILES = gperfapphash.cpp gperfapphash.gph
+else
+gperf_FILES =
+endif
+
 CLEANFILES = *~ *.orig *.rej *.output
-MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
+MAINTAINERCLEANFILES = Makefile.in $(generated_FILES) $(gperf_FILES)
 DISTCLEANFILES = $(generated_FILES)

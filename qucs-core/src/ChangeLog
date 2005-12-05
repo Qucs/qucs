@@ -1,3 +1,11 @@
+2005-12-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* hash.h (class hash): Implemented a simple hash functionality
+	for use within the simulator.
+
+	* Makefile.am (gperfappgen_SOURCES): Added rules for perfect
+	hash functionality of evaluator applications.
+
 2005-11-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* precision.c (precinit): New file containing initialization

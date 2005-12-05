@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.28 2005-11-24 10:10:21 raimi Exp $
+ * $Id: component_id.h,v 1.29 2005-12-05 12:09:36 raimi Exp $
  *
  */
 
@@ -109,6 +109,7 @@ enum circuit_type {
   CIR_AND,
   CIR_XNOR,
   CIR_XOR,
+  CIR_DIGISOURCE,
 };
 
 #endif /* __COMPONENT_ID_H__ */

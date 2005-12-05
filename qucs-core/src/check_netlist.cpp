@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.86 2005-10-31 16:15:30 ela Exp $
+ * $Id: check_netlist.cpp,v 1.87 2005-12-05 12:09:36 raimi Exp $
  *
  */
 
@@ -218,6 +218,7 @@ static struct special_t checker_specials[] = {
   { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
   { "SPfile", "Interpolator",{ "linear", "cubic", NULL } },
+  { "DigiSource", "init",    { "low", "high", NULL } },
   { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
@@ -878,6 +879,17 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
 		  "a single value in `%s:%s', no lists possible\n",
 		  pair->key, def->type, instance);
 	errors++;
+      }
+    }
+    else {
+      struct value_t * val = pair->value;
+      if (val->next != NULL) {
+	val->var = eqn::TAG_VECTOR;
+	// check and evaluate the unit scale in a value list
+	for (; val != NULL; val = val->next) {
+	  if (!checker_evaluate_scale (val))
+	    errors++;
+	}
       }
     }
     // check range of all values

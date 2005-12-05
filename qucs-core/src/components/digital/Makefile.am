@@ -27,9 +27,10 @@
 noinst_LIBRARIES = libdigital.a
 
 libdigital_a_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
-  and.cpp xnor.cpp xor.cpp
+  and.cpp xnor.cpp xor.cpp digisource.cpp
 
-noinst_HEADERS = digital.h inverter.h nor.h or.h nand.h and.h xnor.h xor.h
+noinst_HEADERS = digital.h inverter.h nor.h or.h nand.h and.h xnor.h xor.h \
+  digisource.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components
 

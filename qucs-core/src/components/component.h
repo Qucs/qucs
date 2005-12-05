@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.31 2005-11-24 10:10:21 raimi Exp $
+ * $Id: component.h,v 1.32 2005-12-05 12:09:36 raimi Exp $
  *
  */
 
@@ -108,5 +108,6 @@
 #include "digital/and.h"
 #include "digital/xnor.h"
 #include "digital/xor.h"
+#include "digital/digisource.h"
 
 #endif /* __COMPONENT_H__ */
