@@ -1,0 +1,49 @@
+#!/bin/sh
+
+NAME=$1
+TIME=$2
+DIR=$3
+
+OLDDIR=$(pwd)
+cd $DIR
+#echo "$OLDDIR -> $DIR -> $(pwd)"
+cp $NAME digi.vhdl
+NAME="digi"
+
+echo -n "converting..."
+freehdl-v2cc -m $NAME._main_.cc -L /usr/local/lib -o $NAME.cc $NAME.vhdl 2>/dev/null
+if [ $? != "0" ]; then
+  exit 1
+fi
+echo "done"
+
+echo -n "compiling functions..."
+g++ -static -c $NAME.cc
+if [ $? != "0" ]; then
+  exit 1
+fi
+echo "done"
+
+echo -n "compiling main..."
+g++ -static -c $NAME._main_.cc
+if [ $? != "0" ]; then
+  exit 1
+fi
+echo "done"
+
+echo -n "linking..."
+/usr/local/bin/freehdl-libtool --quiet --mode=link g++ $NAME._main_.o  $NAME.o -lm /usr/local/lib/libfreehdl-kernel.la /usr/local/lib/libfreehdl-std.la -o $NAME
+if [ $? != "0" ]; then
+  exit 1
+fi
+echo "done"
+
+echo -n "simulating..."
+./$NAME -cmd "dc -f $NAME.vcd -q;d;run $TIME;q;" >/dev/null
+if [ $? != "0" ]; then
+  exit 1
+fi
+echo "done"
+
+# result in "$NAME.vcd"
+cd $OLDDIR
