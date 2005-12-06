@@ -23,10 +23,10 @@
 #
 
 SUBDIRS = bitmaps components diagrams paintings dialogs
-bin_PROGRAMS = qucs
 
-inst_SCRIPTS = qucsdigi
-instdir = ${prefix}/bin
+bin_SCRIPTS = qucsdigi
+
+bin_PROGRAMS = qucs
 
 MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
