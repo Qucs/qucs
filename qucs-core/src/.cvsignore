@@ -13,7 +13,7 @@ tokens_dataset.h
 tokens_netlist.h
 tokens_touchstone.h
 gperfappgen
-gperfappgen.cpp
+gperfappgen.h
 gperfapphash.cpp
 gperfapphash.gph
 

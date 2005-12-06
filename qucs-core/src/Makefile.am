@@ -23,7 +23,7 @@
 #
 
 EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
-	parse_touchstone.y scan_touchstone.l
+	parse_touchstone.y scan_touchstone.l gperfapphash.cpp
 
 SUBDIRS = converter components
 
@@ -42,7 +42,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp precision.c gperfapphash.cpp
+	spline.cpp fourier.cpp precision.c
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp
@@ -95,23 +95,20 @@ endif
 if MAINTAINER_MODE
 noinst_PROGRAMS = gperfappgen
 
-gperfappgen_SOURCES = gperfappgen.cpp evaluate.cpp equation.cpp spline.cpp \
-	circuit.cpp fourier.cpp integrator.cpp operatingpoint.cpp node.cpp
+gperfappgen_SOURCES = gperfappgen.cpp
 
-gperfappgen_LDADD = libqucsator.a
-
-gperfappgen_DEPENDENCIES = applications.h
+gperfappgen_DEPENDENCIES = applications.h gperfappgen.h
 
 gperfapphash.gph: gperfappgen
 	./$< > $@
 
 gperfapphash.cpp: gperfapphash.gph
-	$(GPERF) -I -m 8 $< > $@
+	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
 
-gperfapphash.o: gperfapphash.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) -c $< -o $@
+gperfappgen.h: applications.h
+	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
 
-gperf_FILES = gperfapphash.cpp gperfapphash.gph
+gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
 else
 gperf_FILES =
 endif

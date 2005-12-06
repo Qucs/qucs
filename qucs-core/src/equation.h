@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.24 2005/10/31 16:15:31 ela Exp $
+ * $Id: equation.h,v 1.25 2005/12/06 16:22:07 raimi Exp $
  *
  */
 
@@ -211,6 +211,11 @@ public:
   int nargs;
   node * args;
   evaluator_t eval;
+
+private:
+  void evalTypeArgs (void);
+  char * createKey (void);
+  int evalTypeFast (void);
 };
 
 /* This class implements the actual functionality regarding a set of
@@ -225,6 +230,7 @@ public:
   node * getEquations (void) { return equations; }
   void list (void);
   int findUndefined (int);
+  static char * tag2key (int);
   static int isGenerated (char *);
   strlist * getVariables (void);
   int findDuplicate (void);
