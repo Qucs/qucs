@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.1 2005-12-05 12:09:36 raimi Exp $
+ * $Id: applications.h,v 1.2 2005-12-06 16:22:07 raimi Exp $
  *
  */
 
@@ -103,7 +103,7 @@ struct application_t eqn::applications[] = {
   { "/", TAG_VECTOR,  evaluate::over_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
   { "/", TAG_MATRIX,  evaluate::over_m_c, 2, { TAG_MATRIX,  TAG_COMPLEX } },
   { "/", TAG_MATRIX,  evaluate::over_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
-  { "/", TAG_MATVEC,  evaluate::over_mv_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "/", TAG_MATVEC,  evaluate::over_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
   { "/", TAG_MATVEC,  evaluate::over_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },
   { "/", TAG_MATVEC,  evaluate::over_mv_v, 2, { TAG_MATVEC, TAG_VECTOR  } },
 
@@ -561,5 +561,29 @@ struct application_t eqn::applications[] = {
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };
+
+// Converts a TAG_XXX value into a unique string.
+char * checker::tag2key (int tag) {
+  char * key = "";
+  switch (tag & ~TAG_RANGE) {
+  case TAG_UNKNOWN:
+    key = "U"; break;
+  case TAG_DOUBLE:
+    key = "D"; break;
+  case TAG_COMPLEX:
+    key = "C"; break;
+  case TAG_VECTOR:
+    key = "V"; break;
+  case TAG_MATRIX:
+    key = "M"; break;
+  case TAG_MATVEC:
+    key = "MV"; break;
+  case TAG_CHAR:
+    key = "CHR"; break;
+  case TAG_STRING:
+    key = "STR"; break;
+  }
+  return key;
+}
 
 #endif /* __APPLICATIONS_H__ */

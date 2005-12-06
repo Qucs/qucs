@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.36 2005-10-31 16:15:31 ela Exp $
+ * $Id: equation.cpp,v 1.37 2005-12-06 16:22:07 raimi Exp $
  *
  */
 
@@ -385,10 +385,58 @@ void application::addDependencies (strlist * depends) {
   }  
 }
 
+/* This function goes through the arguments of an application and
+   evaluates their return types. */
+void application::evalTypeArgs (void) {
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    // Skip evaluating generated reference variables.
+    if (arg->getTag () == REFERENCE)
+      if (checker::isGenerated (R (arg)->n))
+	continue;
+    // Evaluate the type of argument.
+    arg->evalType ();
+  }
+}
+
+#include "gperfapphash.cpp"
+
+/* The function creates a hash key for the given type of
+   application. */
+char * application::createKey (void) {
+  char * key = (char *) calloc (1, strlen (n) + nargs * 3 + 5);
+  strcat (key, n);
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    strcat (key, "_");
+    strcat (key, checker::tag2key (arg->getType ()));
+  }
+  return key;
+}
+
+/* This function returns the return type of the application using a
+   gperf-generated hash. */
+int application::evalTypeFast (void) {
+  char * key = createKey ();
+  struct appindex * idx = gperfapphash::get (key, strlen (key));
+  free (key);
+  if (idx != NULL) {
+    application_t * app = &applications[idx->index];
+    if (app->eval) {
+      eval = app->eval;
+      setType (app->retval);
+    }
+  }
+  return getType ();
+}
+
 /* Returns the type of application and applies the appropriate
    evaluation function if any. */
 int application::evalType (void) {
   setType (TAG_UNKNOWN);
+  // Evaluate type of arguments.
+  evalTypeArgs ();
+  // Try the fast method.
+  if (evalTypeFast () != TAG_UNKNOWN) return getType ();
+
   // Go through the list of available applications.
   for (int i = 0; applications[i].application != NULL; i++) {
     application_t * app = &applications[i];
@@ -399,9 +447,12 @@ int application::evalType (void) {
       if (nargs != app->nargs) continue;
       // The correct types of arguments?
       for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
-	if (arg->getTag () == REFERENCE && checker::isGenerated (R (arg)->n))
-	  continue;
-	if (!(arg->evalType () & app->args[nr])) { nr = -1; break; }
+	if (arg->getTag () == REFERENCE)
+	  // Skip checking generated reference variables.
+	  if (checker::isGenerated (R (arg)->n))
+	    continue;
+	// Evaluate and check the type of argument.
+	if (!(arg->getType () & app->args[nr])) { nr = -1; break; }
       }
       if (nr == -1) continue;
       // A valid application function?
