@@ -24,7 +24,7 @@
 
 SUBDIRS = bitmaps components diagrams paintings dialogs
 
-bin_SCRIPTS = qucsdigi
+dist_bin_SCRIPTS = qucsdigi
 
 bin_PROGRAMS = qucs
 
