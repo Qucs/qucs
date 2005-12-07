@@ -92,12 +92,14 @@ else
 generated_FILES = 
 endif
 
+equation.cpp: gperfapphash.cpp
+
 if MAINTAINER_MODE
 noinst_PROGRAMS = gperfappgen
 
 gperfappgen_SOURCES = gperfappgen.cpp
 
-gperfappgen_DEPENDENCIES = applications.h gperfappgen.h
+gperfappgen_DEPENDENCIES = gperfappgen.h
 
 gperfapphash.gph: gperfappgen
 	./$< > $@
