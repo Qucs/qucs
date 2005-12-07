@@ -107,6 +107,8 @@ gperfapphash.gph: gperfappgen
 gperfapphash.cpp: gperfapphash.gph
 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
 
+gperfappgen.cpp: gperfappgen.h
+
 gperfappgen.h: applications.h
 	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
 
