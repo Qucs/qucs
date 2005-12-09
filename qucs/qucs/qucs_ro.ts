@@ -6058,7 +6058,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">creare netlist ....</translation>
+        <translation type="obsolete">creare netlist ....</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6136,6 +6136,10 @@ Erori:
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

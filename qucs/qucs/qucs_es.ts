@@ -6126,7 +6126,7 @@ en la búsqueda.</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>creando lista de conexiones...</translation>
+        <translation type="obsolete">creando lista de conexiones...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6205,6 +6205,10 @@ Errores:
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
         <translation>ERROR: ¡No puedo arrancar QucsConv!</translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

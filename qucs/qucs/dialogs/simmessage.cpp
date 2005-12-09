@@ -109,7 +109,7 @@ bool SimMessage::startProcess()
     return false;
   }
 
-  ProgText->insert(tr("creating netlist ...."));
+  ProgText->insert(tr("creating netlist... "));
   NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
   if(!NetlistFile.open(IO_WriteOnly)) {
     ErrText->insert(tr("ERROR: Cannot write netlist file!"));
