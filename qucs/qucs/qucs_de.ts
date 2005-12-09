@@ -8198,7 +8198,7 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>Erzeuge Netzliste... </translation>
+        <translation type="obsolete">Erzeuge Netzliste... </translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -8285,6 +8285,10 @@ Fehler:
     <message>
         <source>ERROR: Forgotten the digital simulation component?</source>
         <translation type="obsolete">FEHLER: Wurde die Digitalsimulationskomponente vergessen?</translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation>Erzeuge Netzliste... </translation>
     </message>
 </context>
 <context>

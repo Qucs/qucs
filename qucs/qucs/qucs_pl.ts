@@ -6157,7 +6157,7 @@ uwzględniono wszystkie biblioteki.</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>tworzenie netlisty ...</translation>
+        <translation type="obsolete">tworzenie netlisty ...</translation>
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
@@ -6230,6 +6230,10 @@ Błędy:
 ----------
 
 </translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

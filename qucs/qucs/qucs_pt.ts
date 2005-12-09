@@ -5958,7 +5958,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">criando netlist ....</translation>
+        <translation type="obsolete">criando netlist ....</translation>
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
@@ -6027,6 +6027,10 @@ Erros:
 ----------
 
 </translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

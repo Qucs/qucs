@@ -5738,7 +5738,7 @@ ingår i sökningen.</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>skapar nätlista...</translation>
+        <translation type="obsolete">skapar nätlista...</translation>
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
@@ -5810,6 +5810,10 @@ Fel:
 ------
 
 </translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
