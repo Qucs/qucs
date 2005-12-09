@@ -1,9 +1,9 @@
-.TH Qucs "1" "September 2004" "Debian/GNU Linux" "User Commands"
+.TH QucsDigi "1" "December 2005" "Debian/GNU Linux" "User Commands"
 .SH NAME
-Qucs \- An integrated electronic circuit simulator.
+QucsDigi \- A wrapper script for digital simulations.
 .SH SYNOPSIS
-.B qucs
-[\fIOPTION\fR] ...
+.B qucsdigi
+[\fIOPTION\fR] \fIfilename\fR \fItime\fR \fIdirectory\fR ...
 .SH DESCRIPTION
 
 \fBQucs\fR is an integrated circuit simulator which means you are able
@@ -16,11 +16,21 @@ The software aims to support all kinds of circuit simulation types,
 e.g. DC, AC, S-parameter, harmonic balance analysis, noise analysis,
 etc.
 
-\fBQucsator\fR, the simulation backend, is a command line circuit
-simulator.  It takes a network list in a certain format as input and
-outputs a Qucs dataset.  It has been programmed for usage in the Qucs
-project but may also be used by other applications.
-
+\fBQucsDigi\fR is a wrapper script for digital simulations performed
+by Qucs.  The program utilizes the \fBFreeHDL\fR compiler in order to
+convert the VHDL output of Qucs into a C++ program.  Thereafter this
+C++ source is compiled and linked to a binary.  This binary is then
+executed and its VCD output file is converted to a Qucs dataset.
+.SH OPTIONS
+.TP
+\fR FILENAME
+the filename of the VHDL file to be simulated
+.TP
+\fR TIME
+duration of the digital simulation
+.TP
+\fR DIRECTORY
+the name of the directory where the simulation is going to be performed
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
 \fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
@@ -28,7 +38,7 @@ The latest version of Qucs can always be obtained from
 Known bugs are documented within the BUGS file.  Report bugs to
 <qucs-bugs@lists.sourceforge.net>.
 .SH COPYRIGHT
-Copyright \(co 2003, 2004, 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
+Copyright \(co 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 .PP
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

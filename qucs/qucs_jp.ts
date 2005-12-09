@@ -5955,7 +5955,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">ネットリストを作成中...</translation>
+        <translation type="obsolete">ネットリストを作成中...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6020,6 +6020,10 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
