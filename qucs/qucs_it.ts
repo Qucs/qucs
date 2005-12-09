@@ -7143,7 +7143,7 @@ sono incluse nella ricerca.</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>creazione netlist ....</translation>
+        <translation type="obsolete">creazione netlist ....</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -7222,6 +7222,10 @@ Errori:
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
         <translation>ERRORE: Impossibile avviare QucsConv!</translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

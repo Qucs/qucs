@@ -6149,7 +6149,7 @@ Rács megjelenítése</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">kötéslista készítés...</translation>
+        <translation type="obsolete">kötéslista készítés...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6228,6 +6228,10 @@ Hibák:
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>creating netlist... </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
