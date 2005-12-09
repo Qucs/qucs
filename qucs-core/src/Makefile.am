@@ -99,8 +99,6 @@ noinst_PROGRAMS = gperfappgen
 
 gperfappgen_SOURCES = gperfappgen.cpp
 
-gperfappgen_DEPENDENCIES = gperfappgen.h
-
 gperfapphash.gph: gperfappgen
 	./$< > $@
 

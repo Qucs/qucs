@@ -28,7 +28,8 @@ unfixed) have a look at the file BUGS.
 - QucsConv: Implementation of VCD to Qucs dataset converter.
 	- Implement analog models for digital (and, or, xor, etc.)
 	  components.
-- Use symbol hash for function lookup in equation solver.
+	- Use symbol hash for function lookup in equation solver. Now
+	  using 'gperf' to create a perfect hash.
 	- Implement dft() and idft() functions.
 	- Implementation of correlated noise sources.
 - Allow variables from other datasets in equations.
