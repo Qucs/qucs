@@ -4,6 +4,7 @@
 #
 # Copyright (C) 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 # Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,55 +22,56 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+# Bail out on any error
+set -e
+
+if [ "$#" != 3 ]; then
+    echo "Usage: $0 <netlist.txt> <time> <directory>"
+    echo " Directory has to contain netlist.txt"
+    exit 1
+fi
+
 NAME=$1
 TIME=$2
 DIR=$3
+
+if [ ! -d "$DIR" ]; then
+    echo "$DIR: Not a directory"
+    exit 1
+fi
+
+cd $DIR
+
+if [ ! -f $NAME ]; then
+    echo "$NAME: No such file"
+    exit 1
+fi
 
 CXX=`freehdl-config --cxx`
 CXXFLAGS=`freehdl-config --cxxflags`
 LIBS=`freehdl-config --libtool`
 LDFLAGS=`freehdl-config --ldflags`
 
-OLDDIR=$(pwd)
-cd $DIR
-#echo "$OLDDIR -> $DIR -> $(pwd)"
 cp $NAME digi.vhdl
 NAME="digi"
 
 echo -n "converting..."
+# FIXME: Isn't this diverting important output in the error case ?
 freehdl-v2cc -m $NAME._main_.cc -o $NAME.cc $NAME.vhdl 2>/dev/null
-if [ $? != "0" ]; then
-  exit 1
-fi
 echo " done."
 
 echo -n "compiling functions..."
 $CXX $CXXFLAGS -c $NAME.cc
-if [ $? != "0" ]; then
-  exit 1
-fi
 echo " done."
 
 echo -n "compiling main..."
 $CXX $CXXFLAGS -c $NAME._main_.cc
-if [ $? != "0" ]; then
-  exit 1
-fi
 echo " done."
 
 echo -n "linking..."
 freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS -o $NAME
-if [ $? != "0" ]; then
-  exit 1
-fi
 echo " done."
 
 echo -n "simulating..."
 ./$NAME -cmd "dc -f $NAME.vcd -q;d;run $TIME;q;" >/dev/null
-if [ $? != "0" ]; then
-  exit 1
-fi
 echo " done."
-
-# result in "$NAME.vcd"
-cd $OLDDIR
