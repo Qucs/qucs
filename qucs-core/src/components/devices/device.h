@@ -1,7 +1,7 @@
 /*
  * device.h - device class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.h,v 1.11 2005-06-02 18:17:55 raimi Exp $
+ * $Id: device.h,v 1.12 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -61,6 +61,8 @@ class device
   friend void fetCapacitanceMeyer (nr_double_t, nr_double_t, nr_double_t,
 				   nr_double_t, nr_double_t, nr_double_t,
 				   nr_double_t&, nr_double_t&, nr_double_t&);
+  friend nr_double_t Egap (nr_double_t, nr_double_t);
+  friend nr_double_t intrinsicDensity (nr_double_t, nr_double_t);
 };
 
 #endif /* __DEVICE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hash.cpp,v 1.1 2005-12-05 12:09:36 raimi Exp $
+ * $Id: hash.cpp,v 1.2 2005-12-12 07:46:52 raimi Exp $
  *
  */
 
@@ -70,7 +70,8 @@ static unsigned hash_key_length (char * key) {
 }
 
 // Constructor for the hash table.
-hash::hash (int size) {
+template <class type_t>
+hash<type_t>::hash (int size) {
   // set initial hash table size to a binary value
   int n;
   for (n = size, buckets = 1; n != 1; n >>= 1) 
@@ -86,11 +87,13 @@ hash::hash (int size) {
   keylen = hash_key_length;
 
   // allocate space for the hash table buckets
-  table = (hashbucket **) calloc (buckets, sizeof (hashbucket *));
+  table = (hashbucket<type_t> **)
+    calloc (buckets, sizeof (hashbucket<type_t> *));
 }
 
 // Destructor for the hash table.
-hash::~hash () {
+template <class type_t>
+hash<type_t>::~hash () {
   for (int n = 0; n < buckets; n++) {
     if (table[n]) delete table[n];
   }
@@ -99,7 +102,8 @@ hash::~hash () {
 
 /* Clears the hash table.  Afterwards it does not contain any key.
    The hash table is also shrunken to a minimal size.  */
-void hash::clear (void) {
+template <class type_t>
+void hash<type_t>::clear (void) {
   for (int n = 0; n < buckets; n++) {
     if (table[n]) delete table[n];
   }
@@ -109,21 +113,24 @@ void hash::clear (void) {
   buckets = HASH_MIN_SIZE;
   fill = 0;
   keys = 0;
-  table = (hashbucket **) calloc (buckets, sizeof (hashbucket *));
+  table = (hashbucket<type_t> **)
+    calloc (buckets, sizeof (hashbucket<type_t> *));
 }
 
 /* Rebuilds a hash table.  Double (type is HASH_EXPAND) its size and
    expand the hash codes or half (type is HASH_SHRINK) its size and
    shrink the hash codes if these would be placed somewhere else.  */
-void hash::rehash (int type) {
+template <class type_t>
+void hash<type_t>::rehash (int type) {
   int n, e;
-  hashbucket * bucket, * next;
+  hashbucket<type_t> * bucket, * next;
 
   // Expand!
   if (type == HASH_EXPAND) {
     // Reallocate and initialize the hash table itself.
     buckets *= 2;
-    table = (hashbucket **) realloc (table, sizeof (hashbucket *) * buckets);
+    table = (hashbucket<type_t> **)
+      realloc (table, sizeof (hashbucket<type_t> *) * buckets);
     for (n = buckets / 2; n < buckets; n++) { table[n] = NULL; }
 
     /* Go through all hash table entries and check if it is necessary
@@ -135,7 +142,7 @@ void hash::rehash (int type) {
 	if (n != loc) {
 	  /* copy this entry to the far entry */
 	  if ((next = table[loc]) == NULL) {
-	    next = new hashbucket ();
+	    next = new hashbucket<type_t> ();
 	    table[loc] = next;
 	  }
 	  next->add (bucket->entry[e]);
@@ -157,7 +164,7 @@ void hash::rehash (int type) {
 	for (e = 0; e < bucket->size; e++) {
 	  int loc = HASH_LOCATION (bucket->entry[e]->code);
 	  if ((next = table[loc]) == NULL) {
-	    next = new hashbucket ();
+	    next = new hashbucket<type_t> ();
 	  }
 	  next->add (bucket->entry[e]);
 	  if (next->size == 1) fill++;
@@ -166,7 +173,8 @@ void hash::rehash (int type) {
       }
       fill--;
     }
-    table = (hashbucket **) realloc (table, sizeof (hashbucket *) * buckets);
+    table = (hashbucket<type_t> **)
+      realloc (table, sizeof (hashbucket<type_t> *) * buckets);
   }
 }
 
@@ -174,16 +182,17 @@ void hash::rehash (int type) {
    existing hash.  If the hash is 75% filled it gets rehashed (size
    will be doubled).  When the key already exists then the value just
    gets replaced dropping and returning the old value.  */
-void * hash::put (char * key, void * value) {
+template <class type_t>
+type_t * hash<type_t>::put (char * key, type_t * value) {
   int code = this->code (key);
-  hashbucket * bucket = table[HASH_LOCATION (code)];
+  hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
 
   /* Check if the key is already stored. If so replace the value. */
   if (bucket) {
     for (int e = 0; e < bucket->size; e++) {
       if (bucket->entry[e]->code == code) {
 	if (equals (bucket->entry[e]->key, key) == 0) {
-	  void * old = bucket->entry[e]->value;
+	  type_t * old = bucket->entry[e]->value;
 	  bucket->entry[e]->value = value;
 	  return old;
 	}
@@ -191,12 +200,12 @@ void * hash::put (char * key, void * value) {
     }
   }
   else {
-    bucket = new hashbucket ();
+    bucket = new hashbucket<type_t> ();
     table[HASH_LOCATION (code)] = bucket;
   }
 
   /* Fill this entry. */
-  hashentry * entry = new hashentry ();
+  hashentry<type_t> * entry = new hashentry<type_t> ();
   entry->key = (char *) malloc (keylen (key));
   memcpy (entry->key, key, keylen (key));
   entry->value = value;
@@ -218,10 +227,11 @@ void * hash::put (char * key, void * value) {
 /* Delete an existing hash entry accessed via a given key form the
    hash table.  Return NULL if the key has not been found within the
    hash, otherwise the previous value.  */
-void * hash::del (char * key) {
-  void * value;
+template <class type_t>
+type_t * hash<type_t>::del (char * key) {
+  type_t * value;
   int code = this->code (key);
-  hashbucket * bucket = table[HASH_LOCATION (code)];
+  hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
   if (bucket) {
     for (int n = 0; n < bucket->size; n++) {
       if (bucket->entry[n]->code == code) {
@@ -245,9 +255,10 @@ void * hash::del (char * key) {
 
 /* Hash table lookup.  Find a value for a given key in the hash table.
    Return NULL if the key has not been found within the hash table.  */
-void * hash::get (char * key) {
+template <class type_t>
+type_t * hash<type_t>::get (char * key) {
   int code = this->code (key);
-  hashbucket * bucket = table[HASH_LOCATION (code)];
+  hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
   if (bucket) {
     for (int n = 0; n < bucket->size; n++) {
       if (bucket->entry[n]->code == code)
@@ -256,4 +267,131 @@ void * hash::get (char * key) {
     }
   }
   return NULL;
+}
+
+// Constructor for hash table iterator.
+template <class type_t>
+hashiterator<type_t>::hashiterator (hash<type_t> & h) {
+  _hash = &h;
+  _bucket = 0;
+  _entry = 0;
+  toLast ();
+  toFirst ();
+}
+
+// Destructor for hash table iterator.
+template <class type_t>
+hashiterator<type_t>::~hashiterator () {
+}
+
+// Returns number of items this iterator operates on.
+template <class type_t>
+int hashiterator<type_t>::count (void) {
+  return _hash->keys;
+}
+
+// Sets the current to the first item in the iterator list.
+template <class type_t>
+char * hashiterator<type_t>::toFirst (void) {
+  for (int n = 0; n < _hash->buckets; n++) {
+    hashbucket<type_t> * bucket = _hash->table[n];
+    if (bucket && bucket->size) {
+      _bucket = n;
+      _entry = 0;
+      _current = _first = bucket->entry[_entry];
+      return _current->key;
+    }
+  }
+  _current = _first = NULL;
+  return NULL;
+}
+
+// Sets the current to the last item in the iterator list.
+template <class type_t>
+char * hashiterator<type_t>::toLast (void) {
+  for (int n = _hash->buckets - 1; n >= 0; n--) {
+    hashbucket<type_t> * bucket = _hash->table[n];
+    if (bucket && bucket->size) {
+      _bucket = n;
+      _entry = bucket->size - 1;
+      _current = _last = bucket->entry[_entry];
+      return _current->key;
+    }
+  }
+  _current = _last = NULL;
+  return NULL;
+}
+
+// Makes the succeeding item current and returns the new current item.
+template <class type_t>
+char * hashiterator<type_t>::operator++ (void) {
+  hashbucket<type_t> * bucket = _hash->table[_bucket];
+  if (bucket && _entry < bucket->size - 1) {
+    _entry++;
+    _current = bucket->entry[_entry];
+    return _current->key;
+  }
+  for (int n = _bucket + 1; n < _hash->buckets; n++) {
+    bucket = _hash->table[n];
+    if (bucket && bucket->size) {
+      _bucket = n;
+      _entry = 0;
+      _current = bucket->entry[_entry];
+      return _current->key;
+    }
+  }
+  _current = NULL;
+  return NULL;
+}
+
+// Makes the preceding item current and returns the new current item.
+template <class type_t>
+char * hashiterator<type_t>::operator-- (void) {
+  hashbucket<type_t> * bucket = _hash->table[_bucket];
+  if (bucket && _entry > 0) {
+    _entry--;
+    _current = bucket->entry[_entry];
+    return _current->key;
+  }
+  for (int n = _bucket - 1; n >= 0 ; n--) {
+    bucket = _hash->table[n];
+    if (bucket && bucket->size) {
+      _bucket = n;
+      _entry = bucket->size - 1;
+      _current = bucket->entry[_entry];
+      return _current->key;
+    }
+  }
+  _current = NULL;
+  return NULL;
+}
+
+// Returns the current iterator item.
+template <class type_t>
+char * hashiterator<type_t>::current (void) {
+  return _current ? _current->key : NULL;
+}
+
+// Returns the current iterator items key.
+template <class type_t>
+char * hashiterator<type_t>::currentKey (void) {
+  return current ();
+}
+
+// Returns the current iterator items value.
+template <class type_t>
+type_t * hashiterator<type_t>::currentVal (void) {
+  return _current ? _current->value : NULL;
+}
+
+// Returns the first iterator item.
+template <class type_t>
+char * hashiterator<type_t>::first (void) {
+  return _first ? _first->key : NULL;
+}
+
+// Returns the last iterator item.
+template <class type_t>
+char * hashiterator<type_t>::last (void) {
+  return _last ? _last->key : NULL;
 }

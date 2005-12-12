@@ -25,7 +25,7 @@
 EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	parse_touchstone.y scan_touchstone.l gperfapphash.cpp
 
-SUBDIRS = converter components
+SUBDIRS = components . converter
 
 bin_PROGRAMS = qucsator
 
@@ -45,7 +45,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	spline.cpp fourier.cpp precision.c
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
-	ptrlist.cpp tridiag.cpp
+	ptrlist.cpp tridiag.cpp hash.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
@@ -64,7 +64,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp matrix.cpp hash.cpp
+	matvec.cpp matrix.cpp
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \

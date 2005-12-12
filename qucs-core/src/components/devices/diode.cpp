@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.25 2005-08-24 07:10:46 raimi Exp $
+ * $Id: diode.cpp,v 1.26 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -101,10 +101,78 @@ matrix diode::calcMatrixCy (nr_double_t frequency) {
   return cy;
 }
 
+void diode::initModel (void) {
+  nr_double_t T  = getPropertyDouble ("Temp");
+  nr_double_t Tn = getPropertyDouble ("Tnom");
+  nr_double_t A  = getPropertyDouble ("Area");
+
+  // compute Is temperature and area dependency
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t N   = getPropertyDouble ("N");
+  nr_double_t Xti = getPropertyDouble ("Xti");
+  nr_double_t Eg  = getPropertyDouble ("Eg");
+  nr_double_t Ut, T1, T2, TR, E2;
+  T2 = kelvin (T);
+  T1 = kelvin (Tn);
+  E2 = Egap (Eg, T2);
+  TR = T2 / T1;
+  Ut = T2 * kBoverQ;
+  Is = Is * exp (Xti / N * log (TR) - E2 / N / Ut * (1 - TR));
+  setScaledProperty ("Is", Is * A);
+
+  // compute Is temperature and area dependency
+  nr_double_t Isr = getPropertyDouble ("Isr");
+  nr_double_t Nr  = getPropertyDouble ("Nr");
+  Isr = Isr * exp (Xti / Nr * log (TR) - E2 / Nr / Ut * (1 - TR));
+  setScaledProperty ("Isr", Isr * A);
+
+  // compute Vj temperature dependency
+  nr_double_t Vj = getPropertyDouble ("Vj");
+  nr_double_t E1, VT;
+  E1 = Egap (Eg, T1);
+  VT = TR * Vj - 2 * Ut * 1.5 * log (TR) - (TR * E1 - E2);
+  setScaledProperty ("Vj", VT);
+
+  // compute Cj0 temperature and area dependency
+  nr_double_t Cj0 = getPropertyDouble ("Cj0");
+  nr_double_t M   = getPropertyDouble ("M");
+  nr_double_t DT  = T2 - T1;
+  Cj0 = Cj0 * (1 + M * (4e-4 * DT - VT / Vj + 1));
+  setScaledProperty ("Cj0", Cj0 * A);
+
+  // compute Bv temperature dependency
+  nr_double_t Bv  = getPropertyDouble ("Bv");
+  nr_double_t Tbv = getPropertyDouble ("Tbv");
+  Bv = Bv - Tbv * DT;
+  setScaledProperty ("Bv", Bv);
+
+  // compute Tt temperature dependency
+  nr_double_t Tt   = getPropertyDouble ("Tt");
+  nr_double_t Ttt1 = getPropertyDouble ("Ttt1");
+  nr_double_t Ttt2 = getPropertyDouble ("Ttt2");
+  Tt = Tt * (1 + Ttt1 * DT + Ttt2 * DT * DT);
+  setScaledProperty ("Tt", Tt);
+
+  // compute M temperature dependency
+  nr_double_t Tm1 = getPropertyDouble ("Tm1");
+  nr_double_t Tm2 = getPropertyDouble ("Tm2");
+  M = M * (1 + Tm1 * DT + Tm2 * DT * DT);
+  setScaledProperty ("M", M);
+
+  // compute Rs temperature and area dependency
+  nr_double_t Rs  = getPropertyDouble ("Rs");
+  nr_double_t Trs = getPropertyDouble ("Trs");
+  Rs = Rs * (1 + Trs * DT);
+  setScaledProperty ("Rs", Rs / A);
+}
+
 void diode::initDC (void) {
 
   // allocate MNA matrices
   allocMatrixMNA ();
+
+  // initialize scalability
+  initModel ();
 
   // initialize starting values
   Uprev = real (getV (NODE_A) - getV (NODE_C));
@@ -113,7 +181,7 @@ void diode::initDC (void) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // possibly insert series resistance
-  nr_double_t Rs = getPropertyDouble ("Rs");
+  nr_double_t Rs = getScaledProperty ("Rs");
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, getNet (), "Rs", "anode", NODE_A);
@@ -127,11 +195,11 @@ void diode::initDC (void) {
   }
 
   // calculate actual breakdown voltage
-  Bv = getPropertyDouble ("Bv");
+  Bv = getScaledProperty ("Bv");
   if (Bv != 0) {
     nr_double_t Ibv, Is, tol, Ut, Xbv, Xibv;
     Ibv = getPropertyDouble ("Ibv");
-    Is = getPropertyDouble ("Is");
+    Is = getScaledProperty ("Is");
     Ut = kelvin (T) * kBoverQ;
     // adjust very small breakdown currents
     if (Ibv < Is * Bv / Ut) {
@@ -163,9 +231,9 @@ void diode::initDC (void) {
 }
 
 void diode::calcDC (void) {
-  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t Is  = getScaledProperty ("Is");
   nr_double_t N   = getPropertyDouble ("N");
-  nr_double_t Isr = getPropertyDouble ("Isr");
+  nr_double_t Isr = getScaledProperty ("Isr");
   nr_double_t Nr  = getPropertyDouble ("Nr");
   nr_double_t T   = getPropertyDouble ("Temp");
 
@@ -222,12 +290,12 @@ void diode::saveOperatingPoints (void) {
 }
 
 void diode::calcOperatingPoints (void) {
-  nr_double_t M   = getPropertyDouble ("M");
-  nr_double_t Cj0 = getPropertyDouble ("Cj0");
-  nr_double_t Vj  = getPropertyDouble ("Vj");
+  nr_double_t M   = getScaledProperty ("M");
+  nr_double_t Cj0 = getScaledProperty ("Cj0");
+  nr_double_t Vj  = getScaledProperty ("Vj");
   nr_double_t Fc  = getPropertyDouble ("Fc");
   nr_double_t Cp  = getPropertyDouble ("Cp");
-  nr_double_t Tt  = getPropertyDouble ("Tt");
+  nr_double_t Tt  = getScaledProperty ("Tt");
   
   nr_double_t Ud, Cd;
 

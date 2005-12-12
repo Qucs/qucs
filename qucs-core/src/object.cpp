@@ -1,7 +1,7 @@
 /*
  * object.cpp - generic object class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.cpp,v 1.10 2005-06-02 18:17:51 raimi Exp $
+ * $Id: object.cpp,v 1.11 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -120,6 +120,15 @@ void object::setProperty (char * n, nr_double_t val) {
     addProperty (n, val);
 }
 
+/* Th function sets the specified property consisting of a key and a
+   double value in the object.  The property is marked a scalability
+   property. */
+void object::setScaledProperty (char * n, nr_double_t val) {
+  char prop[64];
+  sprintf (prop, "Scaled_%s", n);
+  setProperty (prop, val);
+}
+
 /* This function adds a property consisting of a key and a variable
    value to the object. */
 void object::addProperty (char * n, variable * val) {
@@ -151,6 +160,15 @@ nr_double_t object::getPropertyDouble (char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getDouble ();
   return 0.0;
+}
+
+/* The functions returns the requested (scalability) property value
+   which has been previously added.  If there is no such property the
+   function returns zero. */
+nr_double_t object::getScaledProperty (char * n) {
+  char prop[64];
+  sprintf (prop, "Scaled_%s", n);
+  return getPropertyDouble (prop);
 }
 
 /* Returns the requested property value which has been previously

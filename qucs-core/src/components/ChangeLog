@@ -1,3 +1,16 @@
+2005-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/device.cpp (intrinsicDensity, Egap): Added functions
+	for temperature dependencies of energy bandgap and intrinsic
+	density.
+
+	* devices/diode.cpp: Implemented temperature and area
+	dependencies of the diode model.
+
+	* digital/digital.cpp: Fixed numerical problems of non-linear
+	digital components during transient simlation.  Also fixed
+	bug in AC and SP simulations.
+
 2005-12-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/digisource.h (class digisource): Added new component:

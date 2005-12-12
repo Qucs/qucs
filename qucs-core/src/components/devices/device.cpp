@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.cpp,v 1.18 2005-06-02 18:17:55 raimi Exp $
+ * $Id: device.cpp,v 1.19 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -352,4 +352,19 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
       Cgd = Cox * (1 - Udsat * Udsat / Sqr2) * 2 / 3;
     }
   }
+}
+
+// Computes temperature dependency of energy band gap.
+nr_double_t Egap (nr_double_t Eg, nr_double_t T) {
+  nr_double_t a = 7.02e-4;
+  nr_double_t b = 1108;
+  return Eg - (a * sqr (T)) / (T + b);
+}
+
+// Computes temperature dependency of intrinsic density.
+nr_double_t intrinsicDensity (nr_double_t Eg, nr_double_t T) {
+  nr_double_t TR = 300.00;
+  nr_double_t E1 = Egap (Eg, TR);
+  nr_double_t E2 = Egap (Eg, T);
+  return 1.45e10 * exp (1.5 * log (T / TR) + (E1 / TR - E2 / T) / kBoverQ / 2);
 }

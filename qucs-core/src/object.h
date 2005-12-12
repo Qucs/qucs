@@ -1,7 +1,7 @@
 /*
  * object.h - generic object class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.h,v 1.7 2005-06-02 18:17:51 raimi Exp $
+ * $Id: object.h,v 1.8 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -48,10 +48,12 @@ class object
   void addProperty (char *, variable *);
   void setProperty (char *, char *);
   void setProperty (char *, nr_double_t);
+  void setScaledProperty (char *, nr_double_t);
   void setProperty (char *, variable *);
   vector * getPropertyVector (char *);
   char * getPropertyString (char *);
   nr_double_t getPropertyDouble (char *);
+  nr_double_t getScaledProperty (char *);
   int  getPropertyInteger (char *);
   int  hasProperty (char *);
   void copyProperties (property *);

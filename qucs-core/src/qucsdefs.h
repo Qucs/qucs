@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.29 2005-12-05 12:09:36 raimi Exp $
+ * $Id: qucsdefs.h,v 1.30 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -329,6 +329,16 @@ struct define_t qucs_definition_available[] =
       { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Eg", PROP_REAL, { 1.11, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* jfet */

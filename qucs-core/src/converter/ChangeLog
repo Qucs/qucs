@@ -1,3 +1,8 @@
+2005-12-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Using new hash template to increase
+	speed during spice node list creation.
+
 2005-11-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed diode node translation.  Implemented

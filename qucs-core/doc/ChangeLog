@@ -1,3 +1,7 @@
+2005-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsator.1: Added --gui (or -g) help text.
+
 2005-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsator.1: Updated manpages.

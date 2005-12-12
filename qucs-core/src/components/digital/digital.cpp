@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.cpp,v 1.2 2005-11-25 08:27:05 raimi Exp $
+ * $Id: digital.cpp,v 1.3 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -53,7 +53,9 @@ digital::~digital () {
 
 // Reserve space for derivatives.
 void digital::initDigital (void) {
-  g = (nr_double_t *) malloc ((getSize () - 1) * sizeof (nr_double_t));
+  if (g == NULL) {
+    g = (nr_double_t *) malloc ((getSize () - 1) * sizeof (nr_double_t));
+  }
 }
 
 // Free space of derivatives if necessary.
@@ -72,19 +74,19 @@ nr_double_t digital::getVin (int input) {
 // Computes the transfer function for the given input node.
 nr_double_t digital::calcTransfer (int input) {
   nr_double_t v = getPropertyDouble ("V");
-  return tanh (10 * (getVin (input) / v - 0.5));
+  nr_double_t x = tanh (10 * (getVin (input) / v - 0.5));
+  return (1 - GMin) * x;
 }
 
 // Computes the transfer functions derivative for the given input node.
 nr_double_t digital::calcDerivative (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t x = tanh (10 * (getVin (input) / v - 0.5));
-  return 10 * (1 + x * x);
+  return (1 - GMin) * 10 * (1 + x * x);
 }
 
 // Setup constant S-parameter entries.
 void digital::initSP (void) {
-  initDigital ();
   allocMatrixS ();
   setS (NODE_OUT, NODE_OUT, -1);
   for (i = 0; i < getSize () - 1; i++) {

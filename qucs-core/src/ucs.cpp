@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.22 2005-11-14 19:19:13 raimi Exp $
+ * $Id: ucs.cpp,v 1.23 2005-12-12 07:46:53 raimi Exp $
  *
  */
 
@@ -78,6 +78,7 @@ int main (int argc, char ** argv) {
 	"  -i FILENAME    use file as input netlist (default stdin)\n"
 	"  -o FILENAME    use file as output dataset (default stdout)\n"
 	"  -b, --bar      enable textual progress bar\n"
+	"  -g, --gui      special progress bar used by gui\n"
 	"  -c, --check    check the input netlist and exit\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
@@ -91,6 +92,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-b") || !strcmp (argv[i], "--bar")) {
       progressbar_enable = 1;
+    }
+    else if (!strcmp (argv[i], "-g") || !strcmp (argv[i], "--gui")) {
+      progressbar_gui = 1;
     }
     else if (!strcmp (argv[i], "-c") || !strcmp (argv[i], "--check")) {
       netlist_check = 1;
