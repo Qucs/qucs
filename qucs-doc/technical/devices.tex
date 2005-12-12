@@ -34,10 +34,22 @@ Vj & $V_{j}$ & junction potential & $\volt$ & $0.7$\\
 Fc & $F_{c}$ & forward-bias depletion capacitance coefficient & & $0.5$\\
 Cp & $C_{p}$ & linear capacitance & $\farad$ & $0.0$\\
 Tt & $\tau$ & transit time & $\second$ & $0.0$\\
+Bv & $B_v$ & reverse breakdown voltage & $\volt$ & $\infty$\\
+Ibv & $I_{Bv}$ & current at reverse breakdown voltage & $\ampere$ & $0.001$\\
 Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
 Af & $A_F$ & flicker noise exponent & & $1.0$\\
 Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
-Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
+Xti & $Xti$ & saturation current exponent & & $3.0$\\
+Eg & $E_G$ & energy bandgap & eV & $1.11$\\
+Tbv & $T_{Bv}$ & Bv linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
+Trs & $T_{RS}$ & Rs linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
+Ttt1 & $T_{\tau 1}$ & Tt linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
+Ttt2 & $T_{\tau 2}$ & Tt quadratic temperature coefficient & $1/\degree \mathrm{C}^2$ & $0.0$\\
+Tm1 & $T_{M1}$ & M linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
+Tm2 & $T_{M2}$ & M quadratic temperature coefficient & $1/\degree \mathrm{C}^2$ & $0.0$\\
+Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Area & $A$ & default area for diode & & $1.0$
 \end{tabular}
 
 \addvspace{12pt}
@@ -161,6 +173,40 @@ representation using the formulas given in section
 -\overline{i_{d}^2} & +\overline{i_{d}^2}\\
 \end{bmatrix}
 \end{equation}
+
+\subsection{Temperature model}
+%\addcontentsline{toc}{subsection}{Temperature model}
+
+This section mathematically describes the dependencies of the diode
+characterictics on temperature.  For a junction diode a typical value
+for $Xti$ is $3.0$, for a Schottky barrier diode it is $2.0$.  The
+energy band gap at zero temperature $E_G$ is by default $1.11$eV.  For
+other materials than Si, $0.69$eV (for a Schottky barrier diode),
+$0.67$eV (for Ge) and $1.43$eV (for GaAs) should be used.
+\begin{equation}
+E_G\left(T\right) = E_G - \dfrac{\alpha\cdot T^2}{\beta + T}
+\end{equation}
+
+with experimental values for Si given by
+\begin{align*}
+\alpha &= 7.02\cdot 10^{-4}\\
+\beta &= 1108\\
+E_G &= 1.16eV
+\end{align*}
+
+The following equations show the temperature dependencies of the diode
+parameters.  The reference temperature $T_1$ in these equations
+denotes the nominal temperature $T_{NOM}$ specified by the diode
+model.
+\begin{align}
+I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{Xti / N} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{N\cdot k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
+V_j\left(T_2\right) &= \dfrac{T_2}{T_1}\cdot V_j\left(T_1\right) - 2\cdot\dfrac{k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\\
+C_{j0}\left(T_2\right) &= C_{j0}\left(T_1\right)\cdot\left(1 + M\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_j\left(T_2\right) - V_j\left(T_1\right)}{V_j\left(T_1\right)}\right)\right)\\
+B_{v}\left(T_2\right) &= B_{v}\left(T_1\right) - T_{Bv}\cdot\left(T_2 - T_1\right)\\
+\tau\left(T_2\right) &= \tau\left(T_1\right)\cdot\left(1 + T_{\tau 1}\cdot\left(T_2 - T_1\right) + T_{\tau 2}\cdot\left(T_2 - T_1\right)^2\right)\\
+M\left(T_2\right) &= M\left(T_1\right)\cdot\left(1 + T_{M1}\cdot\left(T_2 - T_1\right) + T_{M2}\cdot\left(T_2 - T_1\right)^2\right)\\
+R_S\left(T_2\right) &= R_S\left(T_1\right)\cdot\left(1 + T_{RS}\cdot\left(T_2 - T_1\right)\right)
+\end{align}
 
 \section{Junction FET}
 %\addcontentsline{toc}{section}{Junction FET}

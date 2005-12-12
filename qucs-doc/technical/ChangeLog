@@ -1,3 +1,11 @@
+2005-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip.tex (section{Microstrip via hole}): Clarified
+	some math symbols in the via description.
+
+	* devices.tex (subsection{Temperature model}): Started to
+	document the temperature dependencies of the diode model.
+
 2005-11-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am: Added rules for final data creation: 'html'

@@ -1522,6 +1522,17 @@ is why the ratios are delimited to a minimum value.
 \section{Microstrip cross}
 %\addcontentsline{toc}{section}{Microstrip cross}
 
+The S-parameters of the ideal cross section are:
+\begin{equation}
+S = \dfrac{1}{2}\cdot
+\begin{bmatrix}
+ -1 & +1  & +1  &  +1\\
+ +1 & -1  & +1  &  +1\\
+ +1 & +1  & -1  &  +1\\
+ +1 & +1  & +1  &  -1
+\end{bmatrix}
+\end{equation}
+
 \section{Microstrip via hole}
 %\addcontentsline{toc}{section}{Microstrip via hole}
 
@@ -1543,16 +1554,17 @@ verified numerically and experimentally for a range of $h <
 L = \dfrac{\mu_0}{2\pi}\cdot\left(h\cdot \ln{\left(\dfrac{h + \sqrt{r^2 + h^2}}{r}\right)} + \dfrac{3}{2}\cdot\left(r - \sqrt{r^2 + h^2}\right)\right)
 \end{equation}
 
-whence $h$ is the via length (substrate height) and $r$ the via's
-radius.
+whence $h$ is the via length (substrate height) and $r = D/2$ the
+via's radius.
 \begin{equation}
 R = R\left(f = 0\right)\cdot \sqrt{1 + \dfrac{f}{f_\delta}}
 \end{equation}
 with
 \begin{equation}
-f_\delta = \dfrac{\rho}{\pi\cdot \mu_0\cdot \cdot t^2}
+f_\delta = \dfrac{\rho}{\pi\cdot \mu_0\cdot t^2}
 \end{equation}
 
 The relationship for the via resistance can be used as a close
 approximation and is valid independent of the ratio of the
-metalization thickness $t$ to the skin depth.
+metalization thickness $t$ to the skin depth.  In the formula $\rho$
+denotes the specific resistance of the conductor material.
