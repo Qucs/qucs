@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.12 2005/11/14 19:19:14 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.13 2005/12/12 07:46:56 raimi Exp $
  *
  */
 
@@ -33,12 +33,14 @@
 
 #include "netdefs.h"
 #include "check_spice.h"
+#include "hash.h"
 
 /* Global variables. */
 FILE * qucs_out = NULL;
 int    qucs_actions = 1;
 char * qucs_gnd = "gnd";
-struct node_t * qucs_nodes = NULL;
+
+qucs::hash<struct node_t> qucs_nodes;
 
 /* Looks through the given list if there is such a node already in the
    list and returns non-zero if so, otherwise the function returns
@@ -53,20 +55,15 @@ int qucs_find_node (struct node_t * root, char * node) {
 /* Adds the given node list to the overall node list without
    duplicating the nodes. */
 void qucs_add_nodes (struct node_t * node) {
-  struct node_t * n;
   while (node) {
-    if (!qucs_find_node (qucs_nodes, node->node)) {
-      n = create_node ();
-      n->node = strdup (node->node);
-      n->next = qucs_nodes;
-      qucs_nodes = n;
-    }
+    if (!qucs_nodes.get (node->node))
+      qucs_nodes.put (node->node, node);
     node = node->next;
   }
 }
 
 /* Deletes the given node list. */
-static void qucs_free_nodes (struct node_t * node) {
+void qucs_free_nodes (struct node_t * node) {
   struct node_t * n;
   for ( ; node; node = n) {
     n = node->next;
@@ -77,8 +74,7 @@ static void qucs_free_nodes (struct node_t * node) {
 
 /* The function deletes the collected qucs nodes. */
 static void qucs_delete_nodes (void) {
-  qucs_free_nodes (qucs_nodes);
-  qucs_nodes = NULL;
+  qucs_nodes.clear ();
 }
 
 /* Collects all nodes within the given definition root. */
@@ -199,7 +195,8 @@ static void netlist_list (void) {
   /* Print overall (toplevel only) node list. */
   qucs_collect_nodes (definition_root);
   fprintf (qucs_out, "\n### TOPLEVEL NODELIST BEGIN\n");
-  for (n = qucs_nodes; n; n = n->next) {
+  for (qucs::hashiterator<struct node_t> it (qucs_nodes); *it; ++it) {
+    n = it.currentVal ();
     fprintf (qucs_out, "# %s\n", n->node);
   }
   qucs_delete_nodes ();

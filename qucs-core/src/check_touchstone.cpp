@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.12 2005/10/31 16:15:30 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.13 2005/12/12 07:46:52 raimi Exp $
  *
  */
 
@@ -40,9 +40,10 @@
 #include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
-#include "circuit.h"
 #include "constants.h"
 #include "check_touchstone.h"
+
+#define ZREF 50.0 /* reference impedance */
 
 strlist * touchstone_idents = NULL;
 dataset * touchstone_result = NULL;
@@ -300,10 +301,10 @@ static void touchstone_create (void) {
       /* fill optimal noise reflexion coefficient vector */
       v = touchstone_result->findVariable ("Sopt");
       val = polar (real (root->get (2)), rad (real (root->get (3))));
-      if (circuit::z0 != touchstone_options.resistance) {
+      if (ZREF != touchstone_options.resistance) {
 	// re-normalize reflexion coefficient if necessary
-	nr_double_t r = (circuit::z0 - touchstone_options.resistance) / 
-	  (circuit::z0 + touchstone_options.resistance);
+	nr_double_t r = (ZREF - touchstone_options.resistance) / 
+	  (ZREF + touchstone_options.resistance);
 	val = (val - r) / (1 - r * val);
       }
       v->add (val);
@@ -334,7 +335,7 @@ static void touchstone_normalize_sp (void) {
       }
     }
     // convert the temporary matrix
-    s = stos (s, touchstone_options.resistance, circuit::z0);
+    s = stos (s, touchstone_options.resistance, ZREF);
     v = touchstone_result->getVariables ();
     // restore the results in the entries
     for (i = 0; i < ports; i++) {
@@ -354,7 +355,7 @@ static void touchstone_normalize (void) {
 
   // transform S-parameters if necessary
   if (touchstone_options.parameter == 'S') {
-    if (touchstone_options.resistance != circuit::z0)
+    if (touchstone_options.resistance != ZREF)
       touchstone_normalize_sp ();
     return;
   }

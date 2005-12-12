@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: or.cpp,v 1.3 2005/12/05 07:04:57 margraf Exp $
+ * $Id: or.cpp,v 1.4 2005/12/12 07:46:53 raimi Exp $
  *
  */
 
@@ -59,6 +59,6 @@ void logicor::calcDerivatives (void) {
       x += 2 / (1 - calcTransfer (i));
     }
     x *= (1 - calcTransfer (k));
-    g[k] = n * calcDerivative (k) / x / x + GMin;
+    g[k] = n * calcDerivative (k) / x / x;
   }
 }

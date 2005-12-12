@@ -1,3 +1,20 @@
+2005-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* object.cpp: Introduced getScaledProperty() and
+	setScaledProperty() functions for scalability of device
+	models.
+
+	* ucs.cpp (main): New command line option --gui enabling
+	the special progressbar for the GUI.
+
+	* logging.c: Implemented new progressbar for GUI.
+
+	* check_touchstone.cpp (ZREF): Removed dependency from
+	circuit class.
+
+	* hash.h (class hashiterator): Implemented hash iterator
+	class.  Also made the hash and hashiterator classes templates.
+
 2005-12-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Using the 'gperf' output function in order to

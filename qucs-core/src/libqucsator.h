@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: libqucsator.h,v 1.4 2005/06/02 18:17:50 raimi Exp $
+ * $Id: libqucsator.h,v 1.5 2005/12/12 07:46:52 raimi Exp $
  *
  */
 
@@ -30,12 +30,13 @@
 #include <string.h>
 #include <errno.h>
 
-typedef double nr_double_t;
-
 #include "logging.h"
 #include "complex.h"
 #include "object.h"
+#include "property.h"
+#include "variable.h"
 #include "strlist.h"
+#include "hash.h"
 #include "vector.h"
 #include "matrix.h"
 #include "matvec.h"

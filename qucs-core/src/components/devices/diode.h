@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.h,v 1.13 2005/06/02 18:17:55 raimi Exp $
+ * $Id: diode.h,v 1.14 2005/12/12 07:46:53 raimi Exp $
  *
  */
 
@@ -47,6 +47,7 @@ class diode : public circuit
 
  private:
   matrix calcMatrixCy (nr_double_t);
+  void initModel (void);
 };
 
 #endif /* __DIODE_H__ */

@@ -1,7 +1,7 @@
 /*
  * logging.h - logging facility class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: logging.h,v 1.5 2005/06/02 18:17:50 raimi Exp $
+ * $Id: logging.h,v 1.6 2005/12/12 07:46:53 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@ void logprogressclear (int);
 extern FILE * file_status;
 extern FILE * file_error;
 extern int progressbar_enable;
+extern int progressbar_gui;
 
 __END_DECLS
 

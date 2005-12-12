@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: logging.c,v 1.10 2005/10/31 16:15:31 ela Exp $
+ * $Id: logging.c,v 1.11 2005/12/12 07:46:52 raimi Exp $
  *
  */
 
@@ -66,25 +66,32 @@ void logprogressbar (nr_double_t current, nr_double_t final, int points) {
     if (((int) (current * 100 / final)) == progressbar_last && current)
       return;
     progressbar_last = (int) (current * 100 / final);
-    logprint (LOG_STATUS, "[");
-    for (i = 0; i < (current  * points / final); i++)
-      logprint (LOG_STATUS, "*");
-    for (; i < points; i++) logprint (LOG_STATUS, " ");
-    logprint (LOG_STATUS, "] %.2f%%      \r",
-	      (double) (current * 100.0 / final));
+    if (progressbar_gui) {
+      logprint (LOG_STATUS, "PROGRESS: %02d\n", progressbar_last);
+    }
+    else {
+      logprint (LOG_STATUS, "[");
+      for (i = 0; i < (current  * points / final); i++)
+	logprint (LOG_STATUS, "*");
+      for (; i < points; i++) logprint (LOG_STATUS, " ");
+      logprint (LOG_STATUS, "] %.2f%%      \r",
+		(double) (current * 100.0 / final));
+    }
   }
 }
 
 /* If non-zero then progress bars are painted... */
 int progressbar_enable = 0;
 
+/* If non-zero then progress bars are painted for the GUI. */
+int progressbar_gui = 0;
+
 /* Clears up the progress bar if requested. */
 void logprogressclear (int points) {
   int i;
   progressbar_last = 0;
-  if (progressbar_enable) {
+  if (progressbar_enable && !progressbar_gui) {
     for (i = 0; i < points + 15; i++) logprint (LOG_STATUS, " ");
     logprint (LOG_STATUS, "\r");
   }
 }
-

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xor.cpp,v 1.3 2005/12/05 07:04:57 margraf Exp $
+ * $Id: xor.cpp,v 1.4 2005/12/12 07:46:53 raimi Exp $
  *
  */
 
@@ -58,6 +58,6 @@ void logicxor::calcDerivatives (void) {
     for (x = 1, i = 0; i < n; i++) {
       if (i != k) x *= calcTransfer (i);
     }
-    g[k] = -0.5 * calcDerivative (k) * x + GMin;
+    g[k] = -0.5 * calcDerivative (k) * x;
   }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.cpp,v 1.2 2005/12/05 07:04:57 margraf Exp $
+ * $Id: inverter.cpp,v 1.3 2005/12/12 07:46:53 raimi Exp $
  *
  */
 
@@ -47,5 +47,5 @@ void inverter::calcOutput (void) {
 }
 
 void inverter::calcDerivatives (void) {
-  g[0] = - 0.5 * calcDerivative (0) + GMin;
+  g[0] = - 0.5 * calcDerivative (0);
 }
