@@ -1,3 +1,8 @@
+2005-12-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp (Diode): Added new temperature and area model
+	parameters.
+
 2005-05-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* spicedialog.cpp (loadSpiceNetList): Closing stdin of
