@@ -73,6 +73,26 @@ Diode::Diode()
 	QObject::tr("reverse breakdown voltage")));
   Props.append(new Property("Ibv", "1 mA", false,
 	QObject::tr("current at reverse breakdown voltage")));
+  Props.append(new Property("Xti", "3.0", false,
+	QObject::tr("saturation current temperature exponent")));
+  Props.append(new Property("Eg", "1.11", false,
+	QObject::tr("energy bandgap in eV")));
+  Props.append(new Property("Tbv", "0.0", false,
+	QObject::tr("Bv linear temperature coefficient")));
+  Props.append(new Property("Trs", "0.0", false,
+	QObject::tr("Rs linear temperature coefficient")));
+  Props.append(new Property("Ttt1", "0.0", false,
+	QObject::tr("Tt linear temperature coefficient")));
+  Props.append(new Property("Ttt2", "0.0", false,
+	QObject::tr("Tt quadratic temperature coefficient")));
+  Props.append(new Property("Tm1", "0.0", false,
+	QObject::tr("M linear temperature coefficient")));
+  Props.append(new Property("Tm2", "0.0", false,
+	QObject::tr("M quadratic temperature coefficient")));
+  Props.append(new Property("Tnom", "26.85", false,
+	QObject::tr("temperature at which parameters where extracted")));
+  Props.append(new Property("Area", "1.0", false,
+	QObject::tr("default area for diode")));
 }
 
 Diode::~Diode()
