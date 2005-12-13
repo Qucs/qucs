@@ -1022,7 +1022,12 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   if((allTypes & isAnalogComponent) == 0) {
-    if(NumPorts < 1) {
+    if(allTypes == 0) {
+      ErrText->insert(
+         QObject::tr("ERROR: No simulation specified on this page."));
+      return -10;
+    }
+    else if(NumPorts < 1) {
       ErrText->insert(
          QObject::tr("ERROR: Digital simulation needs at least one digital source."));
       return -10;

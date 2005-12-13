@@ -1,6 +1,6 @@
 /***************************************************************************
-                               subcirport.cpp
-                              ----------------
+                               digi_source.cpp
+                              -----------------
     begin                : Oct 3 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -47,7 +47,7 @@ Digi_Source::Digi_Source()
   Model = "DigiSource";
   Name  = "S";
 
-  // This property must be the first one !
+  // This property must stay in this order !
   Props.append(new Property("Num", "1", true,
 		QObject::tr("number of the port")));
   Props.append(new Property("init", "low", false,
@@ -77,6 +77,28 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Digi_Source();
   return 0;
+}
+
+// -------------------------------------------------------
+QString Digi_Source::NetList()
+{
+  if(!isActive) return QString("");    // should it be simulated ?
+
+  QString s = Model+":"+Name;
+
+  // output node names
+  s += " "+Ports.getFirst()->Connection->Name;
+  
+  // output all properties
+  Props.first();   // first property not needed
+  Property *pp = Props.next();
+  s += " "+pp->Name+"=\""+pp->Value+"\"";
+  pp = Props.next();
+  s += " "+pp->Name+"=\"["+pp->Value+"]\"";
+  pp = Props.next();
+  s += " "+pp->Name+"=\""+pp->Value+"\"";
+
+  return s;
 }
 
 // -------------------------------------------------------

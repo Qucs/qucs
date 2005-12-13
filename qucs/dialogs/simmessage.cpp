@@ -261,8 +261,8 @@ void SimMessage::startSimulator()
   connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
   connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&SimProcess, SIGNAL(processExited()), SLOT(slotSimEnded()));
-  ProgressText = "";
 
+  ProgressText = "";
   if(!SimProcess.start()) {
     ErrText->insert(tr("ERROR: Cannot start simulator!"));
     FinishSimulation(-1);
@@ -274,9 +274,10 @@ void SimMessage::startSimulator()
 // Is called when the process sends an output to stdout.
 void SimMessage::slotDisplayMsg()
 {
+#if 1
   int i, Para;
   QString s = QString(SimProcess.readStdout());
-//qDebug(s);
+// qDebug(s);
   while((i = s.find('\r')) >= 0) {
     if (s.find('\n') == i + 1) break; // necessary on Win32 platforms
     if(wasLF)
@@ -310,6 +311,147 @@ void SimMessage::slotDisplayMsg()
     }
   }
   else  ProgText->insert(s);
+#endif
+
+#if 0
+  char *p;
+  int i, Progress;
+  QByteArray Data = SimProcess.readStdout();
+  if(wasLF) {
+    CText += QCString(Data);
+    i = CText.find('%');
+    if(i > 1) {
+      Progress = 10*int(CText.at(i-5)-'0') +
+                    int(CText.at(i-4)-'0');
+      if(Progress < 0)  Progress += 160;
+      SimProgress->setProgress(Progress, 100);
+      CText.remove(0, i+1);
+    }
+    i = CText.find('\n');
+    if(i >= 0) {
+      ProgText->insert(QString(CText));
+//qDebug(QString(CText));
+      wasLF = false;
+    }
+  }
+  else {
+    i = Data.find('\r');
+    if(i < 0) {
+      ProgText->insert(QString(Data));
+qDebug(QString(Data));
+    }
+    else {
+      wasLF = true;
+      p = Data.data() + i;
+      *p = 0;
+      ProgText->insert(QString(Data.data()));
+//qDebug(QString(Data.data()));
+//      ProgText->insert("\n");
+      CText = QCString(p+1);
+//qDebug(QString(CText));
+    }
+  }
+#endif
+
+#if 0
+  char *p;
+  int i, Progress;
+  QByteArray Data = SimProcess.readStdout();
+  if(wasLF) {
+    ProgressText += QString(Data);
+    i = ProgressText.find('%');
+    if(i > 1) {
+      Progress = 10*int(ProgressText.at(i-5).latin1()-'0') +
+                    int(ProgressText.at(i-4).latin1()-'0');
+      if(Progress < 0)  Progress += 160;
+      SimProgress->setProgress(Progress, 100);
+      ProgressText.remove(0, i+1);
+    }
+    i = ProgressText.find('\n');
+    if(i >= 0) {
+      ProgText->insert(ProgressText);
+      wasLF = false;
+    }
+  }
+  else {
+    i = Data.find('\r');
+    if(i < 0) {
+      ProgText->insert(QString(Data));
+    }
+    else {
+      wasLF = true;
+      p = Data.data() + i;
+      *p = 0;
+      ProgText->insert(QString(Data.data()));
+      ProgressText = QString(p+1);
+    }
+  }
+#endif
+
+#if 0
+  char *p;
+  int i, Progress;
+  QByteArray Data = SimProcess.readStdout();
+  if(wasLF) {
+    ProgressText += QString(Data);
+    i = ProgressText.find('\r');
+    if(i > 0) {
+      Progress = 10*int(ProgressText.at(i-11).latin1()-'0') +
+                    int(ProgressText.at(i-10).latin1()-'0');
+      if(Progress < 0)  Progress += 160;
+      SimProgress->setProgress(Progress, 100);
+      ProgressText.remove(0, i+1);
+    }
+    i = ProgressText.find('\n');
+    if(i >= 0) {
+      ProgText->insert(ProgressText);
+      wasLF = false;
+    }
+  }
+  else {
+    i = Data.find('\r');
+    if(i < 0) {
+      ProgText->insert(QString(Data));
+    }
+    else {
+      wasLF = true;
+      p = Data.data() + i;
+      *p = 0;
+      ProgText->insert(QString(Data.data()));
+      ProgressText = QString(p+1);
+    }
+  }
+#endif
+
+#if 0
+  int i, Progress;
+  ProgressText += QString(SimProcess.readStdout());
+  if(wasLF) {
+    i = ProgressText.find('%');
+qDebug(ProgressText);
+    if(i >= 0) {
+      Progress = 10*int(ProgressText.at(i-5).latin1()-'0') +
+                    int(ProgressText.at(i-4).latin1()-'0');
+      if(Progress < 0)  Progress += 160;
+      SimProgress->setProgress(Progress, 100);
+      ProgressText.remove(0, i+1);
+    }
+    if(ProgressText.find('\n') < 0)  return;
+qDebug("ooooooooooooooooooooooooo");
+    wasLF = false;
+  }
+  else {
+    i = ProgressText.find('\r');
+    if(i >= 0) {
+      wasLF = true;
+      ProgText->insert(ProgressText.left(i));
+      ProgressText.remove(0, i+1);
+      return;
+    }
+  }
+  ProgText->insert(ProgressText);
+  ProgressText = "";
+#endif
 }
 
 // ------------------------------------------------------------------------
