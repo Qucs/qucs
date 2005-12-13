@@ -1,3 +1,10 @@
+2005-12-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Added new temperature and area
+	parameters for QucsLib output of diodes.
+
+	* parse_spice.y: Allowing translation of area parameter.
+
 2005-12-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Using new hash template to increase

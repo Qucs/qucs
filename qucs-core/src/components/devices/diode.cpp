@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.26 2005-12-12 07:46:53 raimi Exp $
+ * $Id: diode.cpp,v 1.27 2005-12-13 12:13:18 raimi Exp $
  *
  */
 
@@ -130,7 +130,7 @@ void diode::initModel (void) {
   nr_double_t Vj = getPropertyDouble ("Vj");
   nr_double_t E1, VT;
   E1 = Egap (Eg, T1);
-  VT = TR * Vj - 2 * Ut * 1.5 * log (TR) - (TR * E1 - E2);
+  VT = TR * Vj - 3 * Ut * log (TR) - (TR * E1 - E2);
   setScaledProperty ("Vj", VT);
 
   // compute Cj0 temperature and area dependency

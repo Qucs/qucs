@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.10 2005-11-14 19:19:14 raimi Exp $
+ * $Id: parse_spice.y,v 1.11 2005-12-13 12:13:19 raimi Exp $
  *
  */
 
@@ -272,6 +272,7 @@ DefinitionLine:
     spice_append_str_value ($$, $2, HINT_NODE);
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_str_value ($$, $4, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $5);
   }
   | JFET_Device Node Node Node MODEL_Ident DEVICE_List_2 {
     /* JFET */
@@ -664,7 +665,7 @@ DEVICE_List_1: /* nothing */ { $$ = NULL; }
     $$ = netlist_append_values ($$, $3);
   }
   | Value DEVICE_List_1 {
-    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$ = spice_create_par_value (strdup ("Area"), $1);
     $$ = netlist_append_values ($$, $2);
   }
   | OFF_Special DEVICE_List_1 {

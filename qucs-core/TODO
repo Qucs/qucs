@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Implement knee currents Ikf and Ikr in the diode model.
 - Implementation of delay times of digital components for transient
   simulation.
 - QucsConv: Implementation of VCD to Qucs dataset converter.
@@ -60,7 +61,8 @@ unfixed) have a look at the file BUGS.
 - Cover height (shielding) of (coupled) microstrip line.
 	- Coplanar short and open components.
 - Large signal S-parameter simulation based on harmonic balance.
-- Implement Zener diode model or extend the existing diode model.
+	- Implement Zener diode model or extend the existing diode
+	  model.  Using the Bv and Ibv parameters.
 - Use Markowitz pivoting when solving equation systems with a sparse
   matrix.
 - Implement a sparse matrix template class.

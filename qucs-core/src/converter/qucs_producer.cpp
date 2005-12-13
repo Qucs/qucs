@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.13 2005-12-12 07:46:56 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.14 2005-12-13 12:13:19 raimi Exp $
  *
  */
 
@@ -232,7 +232,8 @@ qucs_devices[] = {
   /* diode */
   { "Diode", "Diode", "D", 2,
     {"Is", "N", "Cj0", "M", "Vj", "Fc", "Cp", "Isr", "Nr", "Rs", "Tt", "Temp",
-     "Kf", "Af", "Ffe", "Bv", "Ibv", NULL },
+     "Kf", "Af", "Ffe", "Bv", "Ibv", "Xti", "Eg", "Tbv", "Trs", "Ttt1", "Ttt2",
+     "Tm1", "Tm2", "Tnom", "Area", NULL },
     "  <.PortSym -30 0 1>\n"
     "  <.PortSym 30 0 2>\n"
     "  <Line -10 -10 0 20 #000080 2 1>\n"
