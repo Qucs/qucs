@@ -3307,6 +3307,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
         <translation>FEHLER: Das Massesymbol ist in der Digitalsimulation nicht erlaubt.</translation>
     </message>
+    <message>
+        <source>ERROR: No simulation specified on this page.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

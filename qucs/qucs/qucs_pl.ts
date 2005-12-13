@@ -3144,6 +3144,10 @@ Stosowanie:  qucsedit [-r] plik
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No simulation specified on this page.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
