@@ -3086,6 +3086,46 @@ Invocation :  qucsedit [-r] fichier
         <source>ERROR: No simulation specified on this page.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>saturation current temperature exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>energy bandgap in eV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bv linear temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rs linear temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tt linear temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tt quadratic temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M linear temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M quadratic temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>temperature at which parameters where extracted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>default area for diode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
