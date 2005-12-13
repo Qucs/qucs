@@ -27,6 +27,7 @@ public:
  ~Digi_Source();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+  QString NetList();
   QString VHDL_Code(int);
 };
 
