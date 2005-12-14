@@ -3309,47 +3309,47 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Auf der Seite wurde keine Simulation spezifiziert.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturexponent des Sättigungsstroms</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandabstand in eV</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>linearer Temperaturkoeffizient von Bv</translation>
     </message>
     <message>
         <source>Rs linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>linearer Temperaturkoeffizient von Rs</translation>
     </message>
     <message>
         <source>Tt linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>linearer Temperaturkoeffizient von Tt</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>quadratischer Temperaturkoeffizient von Tt</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>linearer Temperaturkoeffizient von M</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>quadratischer Temperaturkoeffizient von M</translation>
     </message>
     <message>
         <source>temperature at which parameters where extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatur bei der die Modellparameter extrahiert wurden</translation>
     </message>
     <message>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor der Diode</translation>
     </message>
 </context>
 <context>
