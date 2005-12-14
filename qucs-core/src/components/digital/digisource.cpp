@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digisource.cpp,v 1.1 2005-12-05 12:09:36 raimi Exp $
+ * $Id: digisource.cpp,v 1.2 2005-12-14 08:57:27 raimi Exp $
  *
  */
 
@@ -82,7 +82,7 @@ void digisource::calcTR (nr_double_t t) {
   t = t - T * floor (t / T);
   for (int i = 0; i < values->getSize (); i++) {
     ti += real (values->get (i));
-    if (t > ti) lo = !lo; else break;
+    if (t >= ti) lo = !lo; else break;
   }
 
   setE (VSRC_1, lo ? 0 : v);
