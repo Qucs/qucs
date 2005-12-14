@@ -2230,8 +2230,8 @@ I_{3}\\
 \end{bmatrix}
 \end{equation}
 
-
 \subsection{Models for logical devices}
+%\addcontentsline{toc}{subsection}{Models for logical devices}
 
 Logical (boolean) functions (OR, AND, XOR etc.) can be modeled using
 macro models.  Here, each input gets the transfer characteristic and
@@ -2255,13 +2255,14 @@ the wanted function for a device with $N$ inputs:
 \text{XNOR:}     \qquad & u_{out} = 0.5\cdot\left( 1 + \prod_m u_{i,m} \right)
 \end{align}
 
-The above-mentioned functions model devices with 0V as logical low-level
-and 1V as logical high-level. Of course, they can be easily transformed
-into higher voltage levels by multiplying the desired high-level voltage
-to the output voltage $u_{out}$ and dividing the input voltages $u_{in}$
-by the desired high-level voltage. Note: The derivatives also get $u_{in}$
-devided by the desired high-level voltage, but they are not multiplied
-by the desired high-level voltage!
+The above-mentioned functions model devices with 0V as logical
+low-level and 1V as logical high-level.  Of course, they can be easily
+transformed into higher voltage levels by multiplying the desired
+high-level voltage to the output voltage $u_{out}$ and dividing the
+input voltages $u_{in}$ by the desired high-level voltage.  Note: The
+derivatives also get $u_{in}$ divided by the desired high-level
+voltage, but they are not multiplied by the desired high-level
+voltage.
 
 \addvspace{12pt}
 
@@ -2290,8 +2291,9 @@ The practical limit lies around eight input ports.
 
 \addvspace{12pt}
 
-With that knowledge it is now easy to create the MNA matrix. The first port
-is the output port of the device. So, for a 2-port device, it is:
+With that knowledge it is now easy to create the MNA matrix.  The
+first port is the output port of the device.  So, for a 2-input port
+device, it is:
 \begin{equation}
 \begin{bmatrix}
 .&.&.& 1\\
@@ -2319,8 +2321,8 @@ The above MNA matrix entries are also used during the non-linear DC
 and transient analysis with the 0 in the right hand side vector
 replaced by an equivalent voltage
 \begin{equation}
-V_{eq} = \dfrac{\partial u_{out}}{\partial u_{in,1}}\cdot V_1 +
-         \dfrac{\partial u_{out}}{\partial u_{in,2}}\cdot V_2 - u_{out}
+V_{eq} = \dfrac{\partial u_{out}}{\partial u_{in,1}}\cdot V_{in,1} +
+         \dfrac{\partial u_{out}}{\partial u_{in,2}}\cdot V_{in,2} - u_{out}
 \end{equation}
 with $u_{out}$ computed using equations \eqref{eq:logout1} to
 \eqref{eq:logout2}.
@@ -2340,8 +2342,8 @@ S-parameters is easy.
 
 These matrices can easily extended to any number of input ports.
 
-
-\subsection{Equation Defined Models}
+\subsection{Equation defined models}
+%\addcontentsline{toc}{subsection}{Equation defined models}
 
 Often it will happen that a user needs to implement his own model.
 Therefore, it is useful to supply devices that are defined by an
