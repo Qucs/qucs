@@ -40,7 +40,7 @@ Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
 Af & $A_F$ & flicker noise exponent & & $1.0$\\
 Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
 Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
-Xti & $Xti$ & saturation current exponent & & $3.0$\\
+Xti & $X_{TI}$ & saturation current exponent & & $3.0$\\
 Eg & $E_G$ & energy bandgap & eV & $1.11$\\
 Tbv & $T_{Bv}$ & Bv linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
 Trs & $T_{RS}$ & Rs linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
@@ -176,10 +176,11 @@ representation using the formulas given in section
 
 \subsection{Temperature model}
 %\addcontentsline{toc}{subsection}{Temperature model}
+\label{sec:DiodeTemp}
 
 This section mathematically describes the dependencies of the diode
 characterictics on temperature.  For a junction diode a typical value
-for $Xti$ is $3.0$, for a Schottky barrier diode it is $2.0$.  The
+for $X_{TI}$ is $3.0$, for a Schottky barrier diode it is $2.0$.  The
 energy band gap at zero temperature $E_G$ is by default $1.11$eV.  For
 other materials than Si, $0.69$eV (for a Schottky barrier diode),
 $0.67$eV (for Ge) and $1.43$eV (for GaAs) should be used.
@@ -201,14 +202,31 @@ parameters.  The reference temperature $T_1$ in these equations
 denotes the nominal temperature $T_{NOM}$ specified by the diode
 model.
 \begin{align}
-I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{Xti / N} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{N\cdot k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
+I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TI} / N} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{N\cdot k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
 V_j\left(T_2\right) &= \dfrac{T_2}{T_1}\cdot V_j\left(T_1\right) + \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{n_i\left(T_1\right)}{n_i\left(T_2\right)}\right)}\\
  &= \dfrac{T_2}{T_1}\cdot V_j\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\\
-C_{j0}\left(T_2\right) &= C_{j0}\left(T_1\right)\cdot\left(1 + M\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_j\left(T_2\right) - V_j\left(T_1\right)}{V_j\left(T_1\right)}\right)\right)\\
+C_{j0}\left(T_2\right) &= C_{j0}\left(T_1\right)\cdot\left(1 + M\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_j\left(T_2\right) - V_j\left(T_1\right)}{V_j\left(T_1\right)}\right)\right)
+\end{align}
+
+Some additionial temperature coefficients determine the temperature
+dependence of even more model parameters.
+\begin{align}
 B_{v}\left(T_2\right) &= B_{v}\left(T_1\right) - T_{Bv}\cdot\left(T_2 - T_1\right)\\
 \tau\left(T_2\right) &= \tau\left(T_1\right)\cdot\left(1 + T_{\tau 1}\cdot\left(T_2 - T_1\right) + T_{\tau 2}\cdot\left(T_2 - T_1\right)^2\right)\\
 M\left(T_2\right) &= M\left(T_1\right)\cdot\left(1 + T_{M1}\cdot\left(T_2 - T_1\right) + T_{M2}\cdot\left(T_2 - T_1\right)^2\right)\\
 R_S\left(T_2\right) &= R_S\left(T_1\right)\cdot\left(1 + T_{RS}\cdot\left(T_2 - T_1\right)\right)
+\end{align}
+
+\subsection{Area dependence of the model}
+%\addcontentsline{toc}{subsection}{Area dependence of the model}
+
+The area factor $A$ used in the diode model determines the number of
+equivalent parallel devices of the specified model.  The diode model
+parameters affected by the $A$ factor are:
+\begin{align}
+I_S\left(A\right) &= I_S\cdot A\\
+C_{j0}\left(A\right) &= C_{j0}\cdot A\\
+R_S\left(A\right) &= \dfrac{R_S}{A}
 \end{align}
 
 \section{Junction FET}
@@ -238,7 +256,13 @@ M & $M$ & gate P-N grading coefficient & & $0.5$\\
 Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
 Af & $A_F$ & flicker noise exponent & & $1.0$\\
 Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
-Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
+Xti & $X_{TI}$ & saturation current exponent & & $3.0$\\
+Eg & $E_G$ & energy bandgap & eV & $1.11$\\
+Vt0tc & $V_{Th_{TC}}$ & Vt0 temperature coefficient & $\volt/\degree \mathrm{C}$ & $0.0$\\
+Betatce & $\beta_{TCE}$ & Beta exponential temperature coefficient & $\%/\degree \mathrm{C}$ & $0.0$\\
+Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Area & $A$ & default area for JFET & & $1.0$
 \end{tabular}
 
 \addvspace{12pt}
@@ -493,6 +517,42 @@ This matrix representation can be easily converted to the noise-wave
 representation $\underline{C}_S$ if the small signal S-parameter
 matrix is known.
 
+\subsection{Temperature model}
+%\addcontentsline{toc}{subsection}{Temperature model}
+
+Temperature appears explicitly in the exponential terms of the JFET
+model equations.  In addition, saturation current, gate-junction
+potential and zero-bias junction capacitances have built-in
+temperature dependence.
+\begin{align}
+I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TI} / N} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{N\cdot k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
+I_{SR}\left(T_2\right) &= I_{SR}\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TI} / N_R} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{N_R\cdot k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
+P_{b}\left(T_2\right)  &= \dfrac{T_2}{T_1}\cdot P_{b}\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\\
+C_{gs}\left(T_2\right) &= C_{gs}\left(T_1\right)\cdot\left(1 + M\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{P_{b}\left(T_2\right) - P_{b}\left(T_1\right)}{P_{b}\left(T_1\right)}\right)\right)\\
+C_{gd}\left(T_2\right) &= C_{gd}\left(T_1\right)\cdot\left(1 + M\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{P_{b}\left(T_2\right) - P_{b}\left(T_1\right)}{P_{b}\left(T_1\right)}\right)\right)
+\end{align}
+
+where the $E_G\left(T\right)$ dependency has already been described in
+section \ref{sec:DiodeTemp} on page \pageref{sec:DiodeTemp}.  Also the
+threshold voltage as well as the transconductance parameter have a
+temperature dependence determined by
+\begin{align}
+V_{Th}\left(T_2\right) &= V_{Th}\left(T_1\right) + V_{Th_{TC}}\cdot\left(T_2 - T_1\right)\\
+\beta\left(T_2\right) &= \beta\left(T_1\right)\cdot 1.01^{\beta_{TCE}\cdot\left(T_2 - T_1\right)}
+\end{align}
+
+\subsection{Area dependence of the model}
+%\addcontentsline{toc}{subsection}{Area dependence of the model}
+
+The area factor $A$ used for the JFET model determines the number of
+equivalent parallel devices of a specified model.  The following
+parameters are affected by the area factor.
+\begin{align}
+\beta\left(A\right) &= \beta\cdot A & I_S\left(A\right) &= I_S\cdot A\\
+R_D\left(A\right) &= \dfrac{R_D}{A} & R_S\left(A\right) &= \dfrac{R_S}{A}\\
+C_{gs}\left(A\right) &= C_{gs}\cdot A & C_{gd}\left(A\right) &= C_{gd}\cdot A
+\end{align}
+
 \section{Homo-Junction Bipolar Transistor}
 %\addcontentsline{toc}{section}{Bipolar Transistor}
 
@@ -521,7 +581,8 @@ Rbm & $R_{Bm}$ & minimum base resistance for high currents & $\ohm$ & $0.0$\\
 Irb & $I_{RB}$ & current for base resistance midpoint & $\ampere$ & $\infty$\\
 Rc & $R_{C}$ & collector ohmic resistance & $\ohm$ & $0.0$\\
 Re & $R_{E}$ & emitter ohmic resistance & $\ohm$ & $0.0$\\
-Rb & $R_{B}$ & zero-bias base resistance (may be high-current dependent) & $\ohm$ & $0.0$\\
+Rb & $R_{B}$ & zero-bias base resistance (may be high-current & $\ohm$ & $0.0$\\
+& & dependent) & &\\
 Cje & $C_{JE}$ & base-emitter zero-bias depletion capacitance & $\farad$ & $0.0$\\
 Vje & $V_{JE}$ & base-emitter junction built-in potential & $\volt$ & $0.75$\\
 Mje & $M_{JE}$ & base-emitter junction exponential factor & & $0.33$\\
@@ -545,7 +606,12 @@ Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
 Kb & $K_B$ & burst noise coefficient & & $0.0$\\
 Ab & $A_B$ & burst noise exponent & & $1.0$\\
 Fb & $F_B$ & burst noise corner frequency & $\hertz$ & $1.0$\\
-Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
+Xti & $X_{TI}$ & saturation current exponent & & $3.0$\\
+Xtb & $X_{TB}$ & temperature exponent for forward- and reverse-beta & & $0.0$\\
+Eg & $E_G$ & energy bandgap & eV & $1.11$\\
+Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Area & $A$ & default area for bipolar transistor & & $1.0$
 \end{tabular}
 
 \subsection{Large signal model}
@@ -795,7 +861,6 @@ I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
 I_{CE_{eq}} &= I_{T} - g_{mf} \cdot V_{BE} + g_{mr} \cdot V_{BC}
 \end{align}
 
-
 \subsection{Small signal model}
 %\addcontentsline{toc}{subsection}{Small signal model}
 
@@ -981,6 +1046,67 @@ This matrix representation can be converted to the noise wave
 correlation matrix representation $\underline{C}_S$ using the formulas
 given in section \ref{sec:noiseTrans} on page
 \pageref{sec:noiseTrans}.
+
+\subsection{Temperature model}
+%\addcontentsline{toc}{subsection}{Temperature model}
+
+Temperature appears explicitly in the exponential term of the bipolar
+transistor model equations.  In addition, the model parameters are
+modified to reflect changes in the temperature.  The reference
+temperature $T_1$ in these equations denotes the nominal temperature
+$T_{NOM}$ specified by the bipolar transistor model.
+
+\begin{align}
+I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TI}} \cdot \exp{\left[-\dfrac{e\cdot E_G\left(300K\right)}{k_B\cdot T_2}\cdot \left(1 - \dfrac{T_2}{T_1}\right)\right]}\\
+V_{JE}\left(T_2\right)  &= \dfrac{T_2}{T_1}\cdot V_{JE}\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\\
+V_{JC}\left(T_2\right)  &= \dfrac{T_2}{T_1}\cdot V_{JC}\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\\
+V_{JS}\left(T_2\right)  &= \dfrac{T_2}{T_1}\cdot V_{JS}\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)
+\end{align}
+
+where the $E_G\left(T\right)$ dependency has already been described in
+section \ref{sec:DiodeTemp} on page \pageref{sec:DiodeTemp}.  The
+temperature dependence of $B_F$ and $B_R$ is determined by
+\begin{align}
+B_F\left(T_2\right) &= B_F\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TB}}\\
+B_R\left(T_2\right) &= B_R\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{X_{TB}}
+\end{align}
+
+Through the parameters $I_{SE}$ and $I_{SC}$, respectively, the
+temperature dependence of the non-ideal saturation currents is
+determined by
+\begin{align}
+I_{SE}\left(T_2\right) &= I_{SE}\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{-X_{TB}} \cdot \left[\dfrac{I_S\left(T_2\right)}{I_S\left(T_1\right)}\right]^{1/N_E}\\
+I_{SC}\left(T_2\right) &= I_{SC}\left(T_1\right)\cdot \left(\dfrac{T_2}{T_1}\right)^{-X_{TB}} \cdot \left[\dfrac{I_S\left(T_2\right)}{I_S\left(T_1\right)}\right]^{1/N_C}
+\end{align}
+
+The temperature dependence of the zero-bias depletion capacitances
+$C_{JE}$, $C_{JC}$ and $C_{JS}$ are determined by
+\begin{align}
+C_{JE}\left(T_2\right) &= C_{JE}\left(T_1\right)\cdot\left(1 + M_{JE}\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_{JE}\left(T_2\right) - V_{JE}\left(T_1\right)}{V_{JE}\left(T_1\right)}\right)\right)\\
+C_{JC}\left(T_2\right) &= C_{JC}\left(T_1\right)\cdot\left(1 + M_{JC}\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_{JC}\left(T_2\right) - V_{JC}\left(T_1\right)}{V_{JC}\left(T_1\right)}\right)\right)\\
+C_{JS}\left(T_2\right) &= C_{JS}\left(T_1\right)\cdot\left(1 + M_{JS}\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{V_{JS}\left(T_2\right) - V_{JS}\left(T_1\right)}{V_{JS}\left(T_1\right)}\right)\right)
+\end{align}
+
+\subsection{Area dependence of the model}
+%\addcontentsline{toc}{subsection}{Area dependence of the model}
+
+The area factor $A$ used in the bipolar transistor model determines
+the number of equivalent parallel devices of a specified model.  The
+bipolar transistor model parameters affected by the $A$ factor are:
+\begin{align}
+I_S\left(A\right) &= I_S\cdot A\\
+I_{SE}\left(A\right) &= I_{SE}\cdot A & I_{SC}\left(A\right) &= I_{SC}\cdot A\\
+I_{KF}\left(A\right) &= I_{KF}\cdot A & I_{KR}\left(A\right) &= I_{KR}\cdot A\\
+I_{RB}\left(A\right) &= I_{RB}\cdot A & I_{TF}\left(A\right) &= I_{TF}\cdot A
+\end{align}
+\begin{align}
+C_{JE}\left(A\right) &= C_{JE}\cdot A & C_{JC}\left(A\right) &= C_{JC}\cdot A\\
+C_{JS}\left(A\right) &= C_{JS}\cdot A
+\end{align}
+\begin{align}
+R_{B}\left(A\right) &= \dfrac{R_{B}}{A} & R_{Bm}\left(A\right) &= \dfrac{R_{Bm}}{A}\\
+R_{E}\left(A\right) &= \dfrac{R_{E}}{A} & R_{C}\left(A\right) &= \dfrac{R_{C}}{A}
+\end{align}
 
 \section{MOS Field-Effect Transistor}
 %\addcontentsline{toc}{section}{MOS Field-Effect Transistor}
