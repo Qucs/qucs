@@ -3345,11 +3345,39 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>temperature at which parameters where extracted</source>
-        <translation>Temperatur bei der die Modellparameter extrahiert wurden</translation>
+        <translation type="obsolete">Temperatur bei der die Modellparameter extrahiert wurden</translation>
     </message>
     <message>
         <source>default area for diode</source>
         <translation>Skalierungsfaktor der Diode</translation>
+    </message>
+    <message>
+        <source>temperature exponent for forward- and reverse beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>temperature at which parameters were extracted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>default area for bipolar transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vt0 temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Beta exponential temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>default area for JFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parameter measurement temperature</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -90,7 +90,7 @@ Diode::Diode()
   Props.append(new Property("Tm2", "0.0", false,
 	QObject::tr("M quadratic temperature coefficient")));
   Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("temperature at which parameters where extracted")));
+	QObject::tr("temperature at which parameters were extracted")));
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for diode")));
 }

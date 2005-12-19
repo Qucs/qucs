@@ -151,6 +151,8 @@ MOSFET_sub::MOSFET_sub()
 	QObject::tr("flicker noise frequency exponent")));
   Props.append(new Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("Tnom", "26.85", false,
+	QObject::tr("parameter measurement temperature")));
 }
 
 MOSFET_sub::~MOSFET_sub()
