@@ -1,3 +1,17 @@
+2005-12-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/digital.cpp: Fixed wrong derivative of digital
+	components.
+
+	* devices/mosfet.cpp: Implemented temperature model.
+
+	* devices/jfet.cpp: Implemented area and temperature model.
+
+	* devices/device.cpp: Added some temperature functions for
+	device models.
+
+	* devices/bjt.cpp: Implemented area and temperature model.
+
 2005-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/device.cpp (intrinsicDensity, Egap): Added functions

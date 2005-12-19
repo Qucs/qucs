@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.27 2005-08-24 07:10:46 raimi Exp $
+ * $Id: jfet.cpp,v 1.28 2005-12-19 07:55:14 raimi Exp $
  *
  */
 
@@ -112,10 +112,71 @@ matrix jfet::calcMatrixCy (nr_double_t frequency) {
   return cy;
 }
 
+void jfet::initModel (void) {
+  // fetch necessary device properties
+  nr_double_t T  = getPropertyDouble ("Temp");
+  nr_double_t Tn = getPropertyDouble ("Tnom");
+  nr_double_t A  = getPropertyDouble ("Area");
+
+  // compute Is temperature and area dependency
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t N   = getPropertyDouble ("N");
+  nr_double_t Xti = getPropertyDouble ("Xti");
+  nr_double_t T1, T2, Eg;
+  T2 = kelvin (T);
+  T1 = kelvin (Tn);
+  Eg = Egap (300);
+  Is = pnCurrent_T (T1, T2, Is, Eg, N, Xti);
+  setScaledProperty ("Is", Is * A);
+
+  // compute Isr temperature and area dependency
+  nr_double_t Isr = getPropertyDouble ("Isr");
+  nr_double_t Nr  = getPropertyDouble ("Nr");
+  Isr = pnCurrent_T (T1, T2, Isr, Eg, Nr, Xti);
+  setScaledProperty ("Isr", Isr * A);
+
+  // compute Pb temperature dependency
+  nr_double_t Pb = getPropertyDouble ("Pb");
+  nr_double_t PbT;
+  PbT = pnPotential_T (T1,T2, Pb);
+  setScaledProperty ("Pb", PbT);
+
+  // compute Cgs and Cgd temperature and area dependency
+  nr_double_t Cgs = getPropertyDouble ("Cgs");
+  nr_double_t Cgd = getPropertyDouble ("Cgd");
+  nr_double_t M   = getPropertyDouble ("M");
+  nr_double_t F;
+  F = A * pnCapacitance_F (T1, T2, M, PbT / Pb);
+  setScaledProperty ("Cgs", Cgs * F);
+  setScaledProperty ("Cgd", Cgd * F);
+
+  // compute Vth temperature dependency
+  nr_double_t Vt0   = getPropertyDouble ("Vt0");
+  nr_double_t Vt0tc = getPropertyDouble ("Vt0tc");
+  nr_double_t DT    = T2 - T1;
+  Vt0 = Vt0 + Vt0tc * DT;
+  setScaledProperty ("Vt0", Vt0);
+
+  // compute Beta temperature and area dependency
+  nr_double_t Beta    = getPropertyDouble ("Beta");
+  nr_double_t Betatce = getPropertyDouble ("Betatce");
+  Beta = Beta * exp (Betatce * DT * log (1.01));
+  setScaledProperty ("Beta", Beta * A);
+
+  // compute Rs and Rd area dependency
+  nr_double_t Rs = getPropertyDouble ("Rs");
+  nr_double_t Rd = getPropertyDouble ("Rd");
+  setScaledProperty ("Rs", Rs / A);
+  setScaledProperty ("Rd", Rd / A);
+}
+
 void jfet::initDC (void) {
 
   // allocate MNA matrices
   allocMatrixMNA ();
+
+  // initialize scalability
+  initModel ();
 
   // initialize starting values
   UgdPrev = real (getV (NODE_G) - getV (NODE_D));
@@ -129,7 +190,7 @@ void jfet::initDC (void) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // possibly insert series resistance at source
-  nr_double_t Rs = getPropertyDouble ("Rs");
+  nr_double_t Rs = getScaledProperty ("Rs");
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, this->getNet (), "Rs", "source", NODE_S);
@@ -143,7 +204,7 @@ void jfet::initDC (void) {
   }
 
   // possibly insert series resistance at drain
-  nr_double_t Rd = getPropertyDouble ("Rd");
+  nr_double_t Rd = getScaledProperty ("Rd");
   if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rd = splitResistance (this, rd, getNet (), "Rd", "drain", NODE_D);
@@ -160,20 +221,20 @@ void jfet::initDC (void) {
 void jfet::calcDC (void) {
 
   // fetch device model parameters
-  nr_double_t Is   = getPropertyDouble ("Is");
+  nr_double_t Is   = getScaledProperty ("Is");
   nr_double_t n    = getPropertyDouble ("N");
-  nr_double_t Isr  = getPropertyDouble ("Isr");
+  nr_double_t Isr  = getScaledProperty ("Isr");
   nr_double_t nr   = getPropertyDouble ("Nr");
-  nr_double_t Vt0  = getPropertyDouble ("Vt0");
+  nr_double_t Vt0  = getScaledProperty ("Vt0");
   nr_double_t l    = getPropertyDouble ("Lambda");
-  nr_double_t beta = getPropertyDouble ("Beta");
+  nr_double_t beta = getScaledProperty ("Beta");
   nr_double_t T    = getPropertyDouble ("Temp");
 
   nr_double_t Ugs, Ugd, Ut, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
   nr_double_t Uds, Igs, Igd, gtiny;
 
   T = kelvin (T);
-  Ut = T * kB / Q;
+  Ut = T * kBoverQ;
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
   Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
@@ -283,9 +344,9 @@ void jfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
   nr_double_t z    = getPropertyDouble ("M");
-  nr_double_t Cgd0 = getPropertyDouble ("Cgd");
-  nr_double_t Cgs0 = getPropertyDouble ("Cgs");
-  nr_double_t Pb   = getPropertyDouble ("Pb");
+  nr_double_t Cgd0 = getScaledProperty ("Cgd");
+  nr_double_t Cgs0 = getScaledProperty ("Cgs");
+  nr_double_t Pb   = getScaledProperty ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   nr_double_t T    = getPropertyDouble ("Temp");
   

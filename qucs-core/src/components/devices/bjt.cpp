@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.33 2005-10-31 16:15:31 ela Exp $
+ * $Id: bjt.cpp,v 1.34 2005-12-19 07:55:14 raimi Exp $
  *
  */
 
@@ -163,10 +163,97 @@ matrix bjt::calcMatrixCy (nr_double_t frequency) {
   return cy;
 }
 
+void bjt::initModel (void) {
+  // fetch necessary device properties
+  nr_double_t T  = getPropertyDouble ("Temp");
+  nr_double_t Tn = getPropertyDouble ("Tnom");
+  nr_double_t A  = getPropertyDouble ("Area");
+
+  // compute Is temperature and area dependency
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t Xti = getPropertyDouble ("Xti");
+  nr_double_t Eg  = getPropertyDouble ("Eg");
+  nr_double_t T1, T2, IsT;
+  T2 = kelvin (T);
+  T1 = kelvin (Tn);
+  IsT = pnCurrent_T (T1, T2, Is, Eg, 1, Xti);
+  setScaledProperty ("Is", IsT * A);
+
+  // compute Vje, Vjc and Vjs temperature dependencies
+  nr_double_t Vje = getPropertyDouble ("Vje");
+  nr_double_t Vjc = getPropertyDouble ("Vjc");
+  nr_double_t Vjs = getPropertyDouble ("Vjs");
+  nr_double_t VjeT, VjcT, VjsT;
+  VjeT = pnPotential_T (T1,T2, Vje);
+  VjcT = pnPotential_T (T1,T2, Vjc);
+  VjsT = pnPotential_T (T1,T2, Vjs);
+  setScaledProperty ("Vje", VjeT);
+  setScaledProperty ("Vjc", VjcT);
+  setScaledProperty ("Vjs", VjsT);
+
+  // compute Bf and Br temperature dependencies
+  nr_double_t Bf  = getPropertyDouble ("Bf");
+  nr_double_t Br  = getPropertyDouble ("Br");
+  nr_double_t Xtb = getPropertyDouble ("Xtb");
+  nr_double_t F = exp (Xtb * log (T2 / T1));
+  setScaledProperty ("Bf", Bf * F);
+  setScaledProperty ("Br", Br * F);
+
+  // compute Ise and Isc temperature and area dependencies
+  nr_double_t Ise = getPropertyDouble ("Ise");
+  nr_double_t Isc = getPropertyDouble ("Isc");
+  nr_double_t Ne  = getPropertyDouble ("Ne");
+  nr_double_t Nc  = getPropertyDouble ("Nc");
+  nr_double_t G = log (IsT / Is);
+  nr_double_t F1 = exp (G / Ne);
+  nr_double_t F2 = exp (G / Nc);
+  Ise = Ise / F * F1;
+  Isc = Isc / F * F2;
+  setScaledProperty ("Ise", Ise * A);
+  setScaledProperty ("Isc", Isc * A);
+
+  // compute Cje, Cjc and Cjs temperature and area dependencies
+  nr_double_t Cje = getPropertyDouble ("Cje");
+  nr_double_t Cjc = getPropertyDouble ("Cjc");
+  nr_double_t Cjs = getPropertyDouble ("Cjs");
+  nr_double_t Mje = getPropertyDouble ("Mje");
+  nr_double_t Mjc = getPropertyDouble ("Mjc");
+  nr_double_t Mjs = getPropertyDouble ("Mjs");
+  Cje = pnCapacitance_T (T1, T2, Mje, VjeT / Vje, Cje);
+  Cjc = pnCapacitance_T (T1, T2, Mjc, VjcT / Vjc, Cjc);
+  Cjs = pnCapacitance_T (T1, T2, Mjs, VjsT / Vjs, Cjs);
+  setScaledProperty ("Cje", Cje * A);
+  setScaledProperty ("Cjc", Cjc * A);
+  setScaledProperty ("Cjs", Cjs * A);
+
+  // compute Rb, Rc, Re and Rbm area dependencies
+  nr_double_t Rb  = getPropertyDouble ("Rb");
+  nr_double_t Re  = getPropertyDouble ("Re");
+  nr_double_t Rc  = getPropertyDouble ("Rc");
+  nr_double_t Rbm = getPropertyDouble ("Rbm");
+  setScaledProperty ("Rb", Rb / A);
+  setScaledProperty ("Re", Re / A);
+  setScaledProperty ("Rc", Rc / A);
+  setScaledProperty ("Rbm", Rbm / A);
+
+  // compute Ikf, Ikr, Irb and Itf area dependencies
+  nr_double_t Ikf = getPropertyDouble ("Ikf");
+  nr_double_t Ikr = getPropertyDouble ("Ikr");
+  nr_double_t Irb = getPropertyDouble ("Irb");
+  nr_double_t Itf = getPropertyDouble ("Itf");
+  setScaledProperty ("Ikf", Ikf * A);
+  setScaledProperty ("Ikr", Ikr * A);
+  setScaledProperty ("Irb", Irb * A);
+  setScaledProperty ("Itf", Itf * A);
+}
+
 void bjt::initDC (void) {
 
   // allocate MNA matrices
   allocMatrixMNA ();
+
+  // initialize scalability
+  initModel ();
 
   // apply polarity of BJT
   char * type = getPropertyString ("Type");
@@ -185,7 +272,7 @@ void bjt::initDC (void) {
   }
 
   // possibly insert series resistance at emitter
-  nr_double_t Re = getPropertyDouble ("Re");
+  nr_double_t Re = getScaledProperty ("Re");
   if (Re != 0.0) {
     // create additional circuit if necessary and reassign nodes
     re = splitResistance (this, re, getNet (), "Re", "emitter", NODE_E);
@@ -199,7 +286,7 @@ void bjt::initDC (void) {
   }
 
   // possibly insert series resistance at collector
-  nr_double_t Rc = getPropertyDouble ("Rc");
+  nr_double_t Rc = getScaledProperty ("Rc");
   if (Rc != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rc = splitResistance (this, rc, getNet (), "Rc", "collector", NODE_C);
@@ -213,8 +300,8 @@ void bjt::initDC (void) {
   }
 
   // possibly insert base series resistance
-  nr_double_t Rb  = getPropertyDouble ("Rb");
-  nr_double_t Rbm = getPropertyDouble ("Rbm");
+  nr_double_t Rb  = getScaledProperty ("Rb");
+  nr_double_t Rbm = getScaledProperty ("Rbm");
   if (Rbm <= 0.0) Rbm = Rb; // Rbm defaults to Rb if zero
   if (Rb < Rbm)   Rbm = Rb; // Rbm must be less or equal Rb
   setProperty ("Rbm", Rbm);
@@ -236,22 +323,22 @@ void bjt::initDC (void) {
 void bjt::calcDC (void) {
 
   // fetch device model parameters
-  nr_double_t Is   = getPropertyDouble ("Is");
+  nr_double_t Is   = getScaledProperty ("Is");
   nr_double_t Nf   = getPropertyDouble ("Nf");
   nr_double_t Nr   = getPropertyDouble ("Nr");
   nr_double_t Vaf  = getPropertyDouble ("Vaf");
   nr_double_t Var  = getPropertyDouble ("Var");
-  nr_double_t Ikf  = getPropertyDouble ("Ikf");
-  nr_double_t Ikr  = getPropertyDouble ("Ikr");
-  nr_double_t Bf   = getPropertyDouble ("Bf");
-  nr_double_t Br   = getPropertyDouble ("Br");
-  nr_double_t Ise  = getPropertyDouble ("Ise");
-  nr_double_t Isc  = getPropertyDouble ("Isc");
+  nr_double_t Ikf  = getScaledProperty ("Ikf");
+  nr_double_t Ikr  = getScaledProperty ("Ikr");
+  nr_double_t Bf   = getScaledProperty ("Bf");
+  nr_double_t Br   = getScaledProperty ("Br");
+  nr_double_t Ise  = getScaledProperty ("Ise");
+  nr_double_t Isc  = getScaledProperty ("Isc");
   nr_double_t Ne   = getPropertyDouble ("Ne");
   nr_double_t Nc   = getPropertyDouble ("Nc");
-  nr_double_t Rb   = getPropertyDouble ("Rb");
-  nr_double_t Rbm  = getPropertyDouble ("Rbm");
-  nr_double_t Irb  = getPropertyDouble ("Irb");
+  nr_double_t Rb   = getScaledProperty ("Rb");
+  nr_double_t Rbm  = getScaledProperty ("Rbm");
+  nr_double_t Irb  = getScaledProperty ("Irb");
   nr_double_t T    = getPropertyDouble ("Temp");
 
   nr_double_t Ut, Ube, Ubc, Q1, Q2;
@@ -427,21 +514,21 @@ void bjt::saveOperatingPoints (void) {
 void bjt::calcOperatingPoints (void) {
 
   // fetch device model parameters
-  nr_double_t Cje0 = getPropertyDouble ("Cje");
-  nr_double_t Vje  = getPropertyDouble ("Vje");
+  nr_double_t Cje0 = getScaledProperty ("Cje");
+  nr_double_t Vje  = getScaledProperty ("Vje");
   nr_double_t Mje  = getPropertyDouble ("Mje");
-  nr_double_t Cjc0 = getPropertyDouble ("Cjc");
-  nr_double_t Vjc  = getPropertyDouble ("Vjc");
+  nr_double_t Cjc0 = getScaledProperty ("Cjc");
+  nr_double_t Vjc  = getScaledProperty ("Vjc");
   nr_double_t Mjc  = getPropertyDouble ("Mjc");
   nr_double_t Xcjc = getPropertyDouble ("Xcjc");
-  nr_double_t Cjs0 = getPropertyDouble ("Cjs");
-  nr_double_t Vjs  = getPropertyDouble ("Vjs");
+  nr_double_t Cjs0 = getScaledProperty ("Cjs");
+  nr_double_t Vjs  = getScaledProperty ("Vjs");
   nr_double_t Mjs  = getPropertyDouble ("Mjs");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   nr_double_t Vtf  = getPropertyDouble ("Vtf");
   nr_double_t Tf   = getPropertyDouble ("Tf");
   nr_double_t Xtf  = getPropertyDouble ("Xtf");
-  nr_double_t Itf  = getPropertyDouble ("Itf");
+  nr_double_t Itf  = getScaledProperty ("Itf");
   nr_double_t Tr   = getPropertyDouble ("Tr");
 
   nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Ucs, Cbc, Ccs;
@@ -502,8 +589,8 @@ void bjt::initSP (void) {
 
 void bjt::processCbcx (void) {
   nr_double_t Xcjc = getPropertyDouble ("Xcjc");
-  nr_double_t Rbm  = getPropertyDouble ("Rbm");
-  nr_double_t Cjc0 = getPropertyDouble ("Cjc");
+  nr_double_t Rbm  = getScaledProperty ("Rbm");
+  nr_double_t Cjc0 = getScaledProperty ("Cjc");
 
   /* if necessary then insert external capacitance between internal
      collector node and external base node */

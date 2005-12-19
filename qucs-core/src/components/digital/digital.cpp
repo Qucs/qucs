@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.cpp,v 1.3 2005-12-12 07:46:53 raimi Exp $
+ * $Id: digital.cpp,v 1.4 2005-12-19 07:55:14 raimi Exp $
  *
  */
 
@@ -82,7 +82,7 @@ nr_double_t digital::calcTransfer (int input) {
 nr_double_t digital::calcDerivative (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t x = tanh (10 * (getVin (input) / v - 0.5));
-  return (1 - GMin) * 10 * (1 + x * x);
+  return (1 - GMin) * 10 * (1 - x * x);
 }
 
 // Setup constant S-parameter entries.
@@ -121,6 +121,10 @@ void digital::calcDC (void) {
     Veq += g[i] * getVin (i);
   }
   setE (VSRC_1, Veq - Vout);
+}
+
+void digital::calcOperatingPoints (void) {
+  calcDerivatives ();
 }
 
 // Initialize constant MNA entries for AC analysis.
