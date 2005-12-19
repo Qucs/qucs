@@ -20,9 +20,10 @@ diode model.
 
 \addvspace{12pt}
 
-\begin{tabular}{rllll}
+\begin{longtable}{rllll}
 Name & Symbol & Description & Unit & Default\\
 \hline
+\endhead
 Is & $I_{S}$ & saturation current & $\ampere$ & $10^{-14}$\\
 N & $N$ & emission coefficient & & $1.0$\\
 Isr & $I_{SR}$ & recombination current parameter & $\ampere$ & $0.0$\\
@@ -48,9 +49,9 @@ Ttt1 & $T_{\tau 1}$ & Tt linear temperature coefficient & $1/\degree \mathrm{C}$
 Ttt2 & $T_{\tau 2}$ & Tt quadratic temperature coefficient & $1/\degree \mathrm{C}^2$ & $0.0$\\
 Tm1 & $T_{M1}$ & M linear temperature coefficient & $1/\degree \mathrm{C}$ & $0.0$\\
 Tm2 & $T_{M2}$ & M quadratic temperature coefficient & $1/\degree \mathrm{C}^2$ & $0.0$\\
-Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Tnom & $T_{NOM}$ & temperature at which parameters were extracted & $\degree \mathrm{C}$ & $26.85$\\
 Area & $A$ & default area for diode & & $1.0$
-\end{tabular}
+\end{longtable}
 
 \addvspace{12pt}
 
@@ -236,9 +237,10 @@ The following table contains the model parameters for the JFET model.
 
 \addvspace{12pt}
 
-\begin{tabular}{rllll}
+\begin{longtable}{rllll}
 Name & Symbol & Description & Unit & Default\\
 \hline
+\endhead
 Vt0 & $V_{Th}$ & zero -bias threshold voltage & $\volt$ & $-2.0$\\
 Beta & $\beta$ & transconductance parameter & $\ampere / \volt^{2}$ & $10^{-4}$\\
 Lambda & $\lambda$ & channel-length modulation parameter & $1/\volt$ & $0.0$\\
@@ -258,12 +260,11 @@ Af & $A_F$ & flicker noise exponent & & $1.0$\\
 Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
 Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
 Xti & $X_{TI}$ & saturation current exponent & & $3.0$\\
-Eg & $E_G$ & energy bandgap & eV & $1.11$\\
 Vt0tc & $V_{Th_{TC}}$ & Vt0 temperature coefficient & $\volt/\degree \mathrm{C}$ & $0.0$\\
 Betatce & $\beta_{TCE}$ & Beta exponential temperature coefficient & $\%/\degree \mathrm{C}$ & $0.0$\\
-Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Tnom & $T_{NOM}$ & temperature at which parameters were extracted & $\degree \mathrm{C}$ & $26.85$\\
 Area & $A$ & default area for JFET & & $1.0$
-\end{tabular}
+\end{longtable}
 
 \addvspace{12pt}
 
@@ -561,9 +562,10 @@ Gummel-Poon) model.
 
 \addvspace{12pt}
 
-\begin{tabular}{rllll}
+\begin{longtable}{rllll}
 Name & Symbol & Description & Unit & Default\\
 \hline
+\endhead
 Is & $I_{S}$ & saturation current & $\ampere$ & $10^{-16}$\\
 Nf & $N_F$ & forward emission coefficient & & $1.0$\\
 Nr & $N_R$ & reverse emission coefficient & & $1.0$\\
@@ -610,9 +612,9 @@ Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$\\
 Xti & $X_{TI}$ & saturation current exponent & & $3.0$\\
 Xtb & $X_{TB}$ & temperature exponent for forward- and reverse-beta & & $0.0$\\
 Eg & $E_G$ & energy bandgap & eV & $1.11$\\
-Tnom & $T_{NOM}$ & temperature at which parameters where extracted & $\degree \mathrm{C}$ & $26.85$\\
+Tnom & $T_{NOM}$ & temperature at which parameters were extracted & $\degree \mathrm{C}$ & $26.85$\\
 Area & $A$ & default area for bipolar transistor & & $1.0$
-\end{tabular}
+\end{longtable}
 
 \subsection{Large signal model}
 %\addcontentsline{toc}{subsection}{Large signal model}
@@ -1120,7 +1122,6 @@ R_{E}\left(A\right) &= \dfrac{R_{E}}{A} & R_{C}\left(A\right) &= \dfrac{R_{C}}{A
 \end{figure}
 \FloatBarrier
 
-
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=0.95\linewidth]{mostypes}
@@ -1141,9 +1142,10 @@ A. Hodges \cite{Shichman}.
 The following table contains the model and device parameters for the
 MOSFET level 1.
 
-\begin{tabular}{rlllll}
+\begin{longtable}{rlllll}
 Name & Symbol & Description & Unit & Default & Typical\\
 \hline
+\endhead
 Is & $I_{S}$ & bulk junction saturation current & $\ampere$ & $10^{-14}$ & $10^{-15}$\\
 N & $N$ & bulk junction emission coefficient &  & $1.0$ & \\
 Vt0 & $V_{T0}$ & zero-bias threshold voltage & $\volt$ & $0.0$ & $0.7$\\
@@ -1185,8 +1187,9 @@ Ad & $A_{D}$ & drain diffusion area & $\meter^2$ & $0.0$ & \\
 As & $A_{S}$ & source diffusion area & $\meter^2$ & $0.0$ & \\
 Pd & $P_{D}$ & drain junction perimeter & $\meter$ & $0.0$ & \\
 Ps & $P_{S}$ & source junction perimeter & $\meter$ & $0.0$ & \\
-Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$ &
-\end{tabular}
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$ & \\
+Tnom & $T_{NOM}$ & parameter measurement temperature & $\degree \mathrm{C}$ & $26.85$
+\end{longtable}
 
 \subsection{Large signal model}
 %\addcontentsline{toc}{subsection}{Large signal model}
@@ -1711,3 +1714,39 @@ the intrinsic MOSFET can be expressed as
 This matrix representation can be easily converted to the noise-wave
 representation $\underline{C}_S$ if the small signal S-parameter
 matrix is known.
+
+\subsection{Temperature model}
+%\addcontentsline{toc}{subsection}{Temperature model}
+
+Temperature affects some MOS model parameters which are updated
+according to the new temperature.  The reference temperature $T_1$ in
+the following equations denotes the nominal temperature $T_{NOM}$
+specified by the MOS transistor model.  The temperature dependence of
+$K_P$ and $\mu_0$ is determined by
+\begin{align}
+K_P\left(T_2\right) &= K_P\left(T_1\right)\cdot \left(\dfrac{T_1}{T_2}\right)^{1.5}\\
+\mu_0\left(T_2\right) &= \mu_0\left(T_1\right)\cdot \left(\dfrac{T_1}{T_2}\right)^{1.5}
+\end{align}
+
+The effect of temperature on $\Phi_B$ and $\Phi$ is modeled by
+\begin{align}
+\Phi\left(T_2\right)  &= \dfrac{T_2}{T_1}\cdot \Phi\left(T_1\right) - \dfrac{2\cdot k_B\cdot T_2}{e} \cdot \ln{\left(\dfrac{T_2}{T_1}\right)^{1.5}} - \left(\dfrac{T_2}{T_1} \cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)
+\end{align}
+
+where the $E_G\left(T\right)$ dependency has already been described in
+section \ref{sec:DiodeTemp} on page \pageref{sec:DiodeTemp}.  The
+temperature dependence of $C_{BD}$, $C_{BS}$, $C_{J}$ and $C_{JSW}$ is
+described by the following relations
+\begin{align}
+C_{BD}\left(T_2\right) &= C_{BD}\left(T_1\right)\cdot\left(1 + M_J\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{\Phi_B\left(T_2\right) - \Phi_B\left(T_1\right)}{\Phi_B\left(T_1\right)}\right)\right)\\
+C_{BS}\left(T_2\right) &= C_{BS}\left(T_1\right)\cdot\left(1 + M_J\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{\Phi_B\left(T_2\right) - \Phi_B\left(T_1\right)}{\Phi_B\left(T_1\right)}\right)\right)\\
+C_{J}\left(T_2\right) &= C_{J}\left(T_1\right)\cdot\left(1 + M_J\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{\Phi_B\left(T_2\right) - \Phi_B\left(T_1\right)}{\Phi_B\left(T_1\right)}\right)\right)\\
+C_{JSW}\left(T_2\right) &= C_{JSW}\left(T_1\right)\cdot\left(1 + M_{JSW}\cdot\left(400\cdot 10^{-6} \cdot\left(T_2 - T_1\right) - \dfrac{\Phi_B\left(T_2\right) - \Phi_B\left(T_1\right)}{\Phi_B\left(T_1\right)}\right)\right)
+\end{align}
+
+The temperature dependence of $I_S$ is given by the relation
+\begin{align}
+I_S\left(T_2\right) &= I_S\left(T_1\right)\cdot \exp{\left[-\dfrac{e}{k_B\cdot T_2}\cdot \left(\dfrac{T_2}{T_1}\cdot E_G\left(T_1\right) - E_G\left(T_2\right)\right)\right]}
+\end{align}
+
+An analogue dependence holds for $J_S$.

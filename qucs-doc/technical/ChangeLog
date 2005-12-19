@@ -1,3 +1,9 @@
+2005-12-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices.tex (subsection{Temperature model}): Documented
+	temperature and area dependencies for diode, JFET, MOS and
+	bipolar transistor.
+
 2005-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip.tex (section{Microstrip via hole}): Clarified
