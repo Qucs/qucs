@@ -1,3 +1,8 @@
+2005-12-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* bjtsub.cpp, bjt.cpp, jfet.cpp, mosfet.cpp, mosfet_sub.cpp:
+	Added temperature and area model parameters.
+
 2005-12-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (Diode): Added new temperature and area model

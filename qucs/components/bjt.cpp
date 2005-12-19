@@ -131,6 +131,16 @@ BJT::BJT()
 	QObject::tr("burst noise corner frequency in Hertz")));
   Props.append(new Property("Ptf", "0.0", false,
 	QObject::tr("excess phase in degrees")));
+  Props.append(new Property("Xtb", "0.0", false,
+	QObject::tr("temperature exponent for forward- and reverse beta")));
+  Props.append(new Property("Xti", "3.0", false,
+	QObject::tr("saturation current temperature exponent")));
+  Props.append(new Property("Eg", "1.11", false,
+	QObject::tr("energy bandgap in eV")));
+  Props.append(new Property("Tnom", "26.85", false,
+	QObject::tr("temperature at which parameters were extracted")));
+  Props.append(new Property("Area", "1.0", false,
+	QObject::tr("default area for bipolar transistor")));
 }
 
 BJT::~BJT()
