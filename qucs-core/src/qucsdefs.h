@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.30 2005/12/12 07:46:53 raimi Exp $
+ * $Id: qucsdefs.h,v 1.31 2005/12/19 07:55:13 raimi Exp $
  *
  */
 
@@ -330,7 +330,7 @@ struct define_t qucs_definition_available[] =
       { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Eg", PROP_REAL, { 1.11, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
@@ -338,7 +338,7 @@ struct define_t qucs_definition_available[] =
       { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
       PROP_NO_PROP }
   },
   /* jfet */
@@ -362,6 +362,11 @@ struct define_t qucs_definition_available[] =
       { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
       PROP_NO_PROP }
   },
   /* sgp bjt */
@@ -410,6 +415,11 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
       { "Ptf", PROP_REAL, { 0, PROP_NO_STR }, { '[', -180, +180, ']' } },
+      { "Xtb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
       PROP_NO_PROP }
   },
   /* fet: level 1 */
@@ -457,6 +467,7 @@ struct define_t qucs_definition_available[] =
       { "Pd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ps", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
       { "capModel", PROP_INT, { 2, PROP_NO_STR }, { '[', 1 , 2, ']' } },
       PROP_NO_PROP }

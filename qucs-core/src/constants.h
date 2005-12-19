@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: constants.h,v 1.3 2005/10/31 16:15:30 ela Exp $
+ * $Id: constants.h,v 1.4 2005/12/19 07:55:13 raimi Exp $
  *
  */
 
@@ -38,12 +38,23 @@
 #define Z0   376.73031346958504364963 /* wave resistance in vacuum */
 #define T0   290                      /* standard temperature      */
 
-#define kBoverQ 0.86173433260414314916e-4
-#define QoverkB 1.16045045690360379713e+4
-#define ESiO2   3.9
-#define Ni      1.45e16
-#define ESi     11.7
-#define GMin    NR_TINY
+#define kBoverQ    0.86173433260414314916e-4
+#define QoverkB    1.16045045690360379713e+4
+
+#define ESiO2      3.9     /* relative permittivity */
+#define ESi        11.7
+#define EGe        15.8
+#define EGaAs      13.1
+#define NiSi       1.45e16 /* intrinsic carrier concentration in 1/m^3 */
+#define NiGe       2.40e19
+#define NiGaAa     9.00e12
+#define EgSi       1.11    /* energy gap at 300K in eV */
+#define EgSchottky 0.69
+#define EgGe       0.67
+#define EgGaAs     1.43
+#define Eg0Si      1.16    /* energy gap at 0K in eV */
+
+#define GMin       NR_TINY
 
 #define sqr(x)    ((x) * (x))
 #define cubic(x)  ((x) * (x) * (x))

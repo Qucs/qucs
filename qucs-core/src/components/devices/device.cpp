@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.cpp,v 1.19 2005/12/12 07:46:53 raimi Exp $
+ * $Id: device.cpp,v 1.20 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -355,16 +355,50 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
 }
 
 // Computes temperature dependency of energy band gap.
-nr_double_t Egap (nr_double_t Eg, nr_double_t T) {
+nr_double_t Egap (nr_double_t T, nr_double_t Eg0) {
   nr_double_t a = 7.02e-4;
   nr_double_t b = 1108;
-  return Eg - (a * sqr (T)) / (T + b);
+  return Eg0 - (a * sqr (T)) / (T + b);
 }
 
 // Computes temperature dependency of intrinsic density.
-nr_double_t intrinsicDensity (nr_double_t Eg, nr_double_t T) {
+nr_double_t intrinsicDensity (nr_double_t T, nr_double_t Eg0) {
   nr_double_t TR = 300.00;
-  nr_double_t E1 = Egap (Eg, TR);
-  nr_double_t E2 = Egap (Eg, T);
-  return 1.45e10 * exp (1.5 * log (T / TR) + (E1 / TR - E2 / T) / kBoverQ / 2);
+  nr_double_t E1 = Egap (TR, Eg0);
+  nr_double_t E2 = Egap (T, Eg0);
+  nr_double_t NI = NiSi / 1e6;
+  return  NI * exp (1.5 * log (T / TR) + (E1 / TR - E2 / T) / kBoverQ / 2);
+}
+
+// Calculates temperature dependence for saturation current.
+nr_double_t pnCurrent_T (nr_double_t T1, nr_double_t T2, nr_double_t Is,
+			 nr_double_t Eg, nr_double_t N,  nr_double_t Xti) {
+  nr_double_t Vt, TR;
+  TR = T2 / T1;
+  Vt = T2 * kBoverQ;
+  return Is * exp (Xti / N * log (TR) - Eg / N / Vt * (1 - TR));
+}
+
+// Calculates temperature dependence for junction potential.
+nr_double_t pnPotential_T (nr_double_t T1, nr_double_t T2, nr_double_t Vj,
+			   nr_double_t Eg0) {
+  nr_double_t Vt, TR, E1, E2;
+  TR = T2 / T1;
+  E1 = Egap (T1, Eg0);
+  E2 = Egap (T2, Eg0);
+  Vt = T2 * kBoverQ;
+  return TR * Vj - 3 * Vt * log (TR) - (TR * E1 - E2);
+}
+
+// Calculates temperature dependence for junction capacitance.
+nr_double_t pnCapacitance_T (nr_double_t T1, nr_double_t T2, nr_double_t M,
+			     nr_double_t VR, nr_double_t Cj) {
+  return Cj * pnCapacitance_F (T1, T2, M, VR);
+}
+
+// Calculates temperature dependence for junction capacitance.
+nr_double_t pnCapacitance_F (nr_double_t T1, nr_double_t T2, nr_double_t M,
+			     nr_double_t VR) {
+  nr_double_t DT = T2 - T1;
+  return 1 + M * (4e-4 * DT - VR + 1);
 }

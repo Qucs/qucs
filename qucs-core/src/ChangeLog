@@ -1,3 +1,8 @@
+2005-12-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added temperature
+	and area parameters for jfet, bjt and mosfet devices.
+
 2005-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* object.cpp: Introduced getScaledProperty() and

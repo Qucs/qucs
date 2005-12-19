@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.h,v 1.12 2005/12/12 07:46:53 raimi Exp $
+ * $Id: device.h,v 1.13 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -61,8 +61,17 @@ class device
   friend void fetCapacitanceMeyer (nr_double_t, nr_double_t, nr_double_t,
 				   nr_double_t, nr_double_t, nr_double_t,
 				   nr_double_t&, nr_double_t&, nr_double_t&);
-  friend nr_double_t Egap (nr_double_t, nr_double_t);
-  friend nr_double_t intrinsicDensity (nr_double_t, nr_double_t);
+  friend nr_double_t Egap (nr_double_t, nr_double_t Eg0 = 1.16);
+  friend nr_double_t intrinsicDensity (nr_double_t, nr_double_t Eg0 = 1.16);
+  friend nr_double_t pnCurrent_T (nr_double_t, nr_double_t, nr_double_t,
+				  nr_double_t, nr_double_t N = 1,
+				  nr_double_t Xti = 0);
+  friend nr_double_t pnPotential_T (nr_double_t, nr_double_t, nr_double_t,
+				    nr_double_t Eg0 = 1.16);
+  friend nr_double_t pnCapacitance_T (nr_double_t, nr_double_t, nr_double_t,
+				      nr_double_t, nr_double_t);
+  friend nr_double_t pnCapacitance_F (nr_double_t, nr_double_t, nr_double_t,
+				      nr_double_t);
 };
 
 #endif /* __DEVICE_H__ */

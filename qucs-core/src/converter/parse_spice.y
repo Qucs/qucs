@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.11 2005/12/13 12:13:19 raimi Exp $
+ * $Id: parse_spice.y,v 1.12 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -683,7 +683,7 @@ DEVICE_List_2: /* nothing */ { $$ = NULL; }
     $$ = netlist_append_values ($$, $3);
   }
   | Value DEVICE_List_2 {
-    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$ = spice_create_par_value (strdup ("Area"), $1);
     $$ = netlist_append_values ($$, $2);
   }
   | OFF_Special DEVICE_List_2 {

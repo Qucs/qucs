@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.h,v 1.17 2005/06/02 18:17:55 raimi Exp $
+ * $Id: bjt.h,v 1.18 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@ class bjt : public circuit
   void calcTR (nr_double_t);
 
  private:
+  void initModel (void);
   void processCbcx (void);
   matrix calcMatrixY (nr_double_t);
   matrix calcMatrixCy (nr_double_t);

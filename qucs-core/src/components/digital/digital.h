@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: digital.h,v 1.2 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@ class digital : public circuit
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+  void calcOperatingPoints (void);
 
  protected:
   virtual void calcOutput (void) { }

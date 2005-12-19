@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.14 2005/12/13 12:13:19 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.15 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -254,7 +254,7 @@ qucs_devices[] = {
       "Nc", "Bf", "Br", "Rbm", "Irb", "Rc", "Re", "Rb", "Cje", "Vje", "Mje",
       "Cjc", "Vjc", "Mjc", "Xcjc", "Cjs", "Vjs", "Mjs", "Fc", "Tf", "Xtf",
       "Vtf", "Itf", "Tr", "Temp", "Kf", "Af", "Ffe", "Kb", "Ab", "Fb", "Ptf",
-      NULL },
+      "Xtb", "Xti", "Eg", "Tnom", "Area", NULL },
     "  <.PortSym -50 0 1>\n"
     "  <.PortSym 0 -50 2>\n"
     "  <.PortSym 0 50 3>\n"
@@ -279,7 +279,8 @@ qucs_devices[] = {
   /* junction FET */
   { "JFET", "JFET", "J", 3,
     { "Type", "Vt0", "Beta", "Lambda", "Rd", "Rs", "Is", "N", "Isr", "Nr",
-      "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", NULL },
+      "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", "Xti",
+      "Vt0tc", "Betatce", "Tnom", "Area", NULL },
     "  <.PortSym -50 0 1>\n"
     "  <.PortSym 0 -50 2>\n"
     "  <.PortSym 0 50 3>\n"
@@ -302,7 +303,7 @@ qucs_devices[] = {
       "N", "W", "L", "Ld", "Tox", "Cgso", "Cgdo", "Cgbo", "Cbd", "Cbs", "Pb",
       "Mj", "Fc", "Cjsw", "Mjsw", "Tt", "Nsub", "Nss", "Tpg", "Uo", "Rsh",
       "Nrd", "Nrs", "Cj", "Js", "Ad", "As", "Pd", "Ps", "Kf", "Af", "Ffe",
-      "Temp", NULL },
+      "Temp", "Tnom", NULL },
     "  <.PortSym -40 0 1>\n"
     "  <.PortSym 10 -50 2>\n"
     "  <.PortSym 10 50 3>\n"

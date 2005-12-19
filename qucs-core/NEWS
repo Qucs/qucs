@@ -26,6 +26,7 @@ files.
 Version 0.0.8
 -------------
 
+ * implementation of temperature models of diode, jfet, mosfet and bjt
  * analog models of digital components implemented
  * spice converter translates two and three mutual inductors
  * new stos() function in equation solver

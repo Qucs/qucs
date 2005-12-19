@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.27 2005/12/13 12:13:18 raimi Exp $
+ * $Id: diode.cpp,v 1.28 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -102,6 +102,7 @@ matrix diode::calcMatrixCy (nr_double_t frequency) {
 }
 
 void diode::initModel (void) {
+  // fetch necessary device properties
   nr_double_t T  = getPropertyDouble ("Temp");
   nr_double_t Tn = getPropertyDouble ("Tnom");
   nr_double_t A  = getPropertyDouble ("Area");
@@ -111,38 +112,34 @@ void diode::initModel (void) {
   nr_double_t N   = getPropertyDouble ("N");
   nr_double_t Xti = getPropertyDouble ("Xti");
   nr_double_t Eg  = getPropertyDouble ("Eg");
-  nr_double_t Ut, T1, T2, TR, E2;
+  nr_double_t T1, T2;
   T2 = kelvin (T);
   T1 = kelvin (Tn);
-  E2 = Egap (Eg, T2);
-  TR = T2 / T1;
-  Ut = T2 * kBoverQ;
-  Is = Is * exp (Xti / N * log (TR) - E2 / N / Ut * (1 - TR));
+  Is = pnCurrent_T (T1, T2, Is, Eg, N, Xti);
   setScaledProperty ("Is", Is * A);
 
-  // compute Is temperature and area dependency
+  // compute Isr temperature and area dependency
   nr_double_t Isr = getPropertyDouble ("Isr");
   nr_double_t Nr  = getPropertyDouble ("Nr");
-  Isr = Isr * exp (Xti / Nr * log (TR) - E2 / Nr / Ut * (1 - TR));
+  Isr = pnCurrent_T (T1, T2, Isr, Eg, Nr, Xti);
   setScaledProperty ("Isr", Isr * A);
 
   // compute Vj temperature dependency
   nr_double_t Vj = getPropertyDouble ("Vj");
-  nr_double_t E1, VT;
-  E1 = Egap (Eg, T1);
-  VT = TR * Vj - 3 * Ut * log (TR) - (TR * E1 - E2);
-  setScaledProperty ("Vj", VT);
+  nr_double_t VjT;
+  VjT = pnPotential_T (T1,T2, Vj);
+  setScaledProperty ("Vj", VjT);
 
   // compute Cj0 temperature and area dependency
   nr_double_t Cj0 = getPropertyDouble ("Cj0");
   nr_double_t M   = getPropertyDouble ("M");
-  nr_double_t DT  = T2 - T1;
-  Cj0 = Cj0 * (1 + M * (4e-4 * DT - VT / Vj + 1));
+  Cj0 = pnCapacitance_T (T1, T2, M, VjT / Vj, Cj0);
   setScaledProperty ("Cj0", Cj0 * A);
 
   // compute Bv temperature dependency
   nr_double_t Bv  = getPropertyDouble ("Bv");
   nr_double_t Tbv = getPropertyDouble ("Tbv");
+  nr_double_t DT  = T2 - T1;
   Bv = Bv - Tbv * DT;
   setScaledProperty ("Bv", Bv);
 

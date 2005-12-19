@@ -1,3 +1,8 @@
+2005-12-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Allow new temperature and area parameters
+	of devices to be converted.
+
 2005-12-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Added new temperature and area

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.30 2005/08/24 07:10:46 raimi Exp $
+ * $Id: mosfet.cpp,v 1.31 2005/12/19 07:55:14 raimi Exp $
  *
  */
 
@@ -47,9 +47,6 @@
 #define NODE_D 1 /* drain node  */
 #define NODE_S 2 /* source node */
 #define NODE_B 3 /* bulk node   */
-
-// silicon bandgap as function of T
-#define Egap(T) (1.16 - (7.02e-4 * sqr (T)) / ((T) + 1108))
 
 mosfet::mosfet () : circuit (4) {
   transientMode = 0;
@@ -195,7 +192,9 @@ void mosfet::initDC (void) {
 void mosfet::initModel (void) {
 
   // get device temperature
-  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t T  = getPropertyDouble ("Temp");
+  nr_double_t T2 = kelvin (getPropertyDouble ("Temp"));
+  nr_double_t T1 = kelvin (getPropertyDouble ("Tnom"));
 
   // apply polarity of MOSFET
   char * type = getPropertyString ("Type");
@@ -224,6 +223,11 @@ void mosfet::initModel (void) {
   // calculate DC transconductance coefficient
   nr_double_t Kp = getPropertyDouble ("Kp");
   nr_double_t Uo = getPropertyDouble ("Uo");
+  nr_double_t F1 = exp (1.5 * log (T1 / T2));
+  Kp = Kp * F1;
+  Uo = Uo * F1;
+  setScaledProperty ("Kp", Kp);
+  setScaledProperty ("Uo", Uo);
   if (Kp > 0) {
     beta = Kp * W / Leff;
   } else {
@@ -240,13 +244,15 @@ void mosfet::initModel (void) {
   nr_double_t P    = getPropertyDouble ("Phi");
   nr_double_t Nsub = getPropertyDouble ("Nsub");
   nr_double_t Ut   = T0 * kBoverQ;
+  P = pnPotential_T (T1,T2, P);
+  setScaledProperty ("Phi", P);
   if ((Phi = P) <= 0) {
     if (Nsub > 0) {
-      if (Nsub * 1e6 >= Ni) {
-	Phi = 2 * Ut * log (Nsub * 1e6 / Ni);
+      if (Nsub * 1e6 >= NiSi) {
+	Phi = 2 * Ut * log (Nsub * 1e6 / NiSi);
       } else {
 	logprint (LOG_STATUS, "WARNING: substrate doping less than instrinsic "
-		  "density, adjust Nsub >= %g\n", Ni / 1e6);
+		  "density, adjust Nsub >= %g\n", NiSi / 1e6);
 	Phi = 0.6;
       }
     } else {
@@ -305,8 +311,16 @@ void mosfet::initModel (void) {
   }
 
   // calculate zero-bias junction capacitance
-  nr_double_t Cj = getPropertyDouble ("Cj");
-  nr_double_t Pb = getPropertyDouble ("Pb");
+  nr_double_t Cj  = getPropertyDouble ("Cj");
+  nr_double_t Mj  = getPropertyDouble ("Mj");
+  nr_double_t Mjs = getPropertyDouble ("Mjsw");
+  nr_double_t Pb  = getPropertyDouble ("Pb");
+  nr_double_t PbT, F2, F3;
+  PbT = pnPotential_T (T1,T2, Pb);
+  F2  = pnCapacitance_F (T1, T2, Mj, PbT / Pb);
+  F3  = pnCapacitance_F (T1, T2, Mjs, PbT / Pb);
+  Pb  = PbT;
+  setScaledProperty ("Pb", Pb);
   if (Cj <= 0) {
     if (Pb > 0 && Nsub > 0) {
       Cj = sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
@@ -316,33 +330,43 @@ void mosfet::initModel (void) {
 		"valid square junction capacitance\n");
       Cj = 0.0;
     }
-    setProperty ("Cj", Cj);
   }
+  Cj = Cj * F2;
+  setScaledProperty ("Cj", Cj);
 
   // calculate junction capacitances
   nr_double_t Cbd0 = getPropertyDouble ("Cbd");
   nr_double_t Cbs0 = getPropertyDouble ("Cbs");
   nr_double_t Ad   = getPropertyDouble ("Ad");
   nr_double_t As   = getPropertyDouble ("As");
+  Cbd0 = Cbd0 * F2;
   if (Cbd0 <= 0) {
     Cbd0 = Cj * Ad;
-    setProperty ("Cbd", Cbd0);
   }
+  setScaledProperty ("Cbd", Cbd0);
+  Cbs0 = Cbs0 * F2;
   if (Cbs0 <= 0) {
     Cbs0 = Cj * As;
-    setProperty ("Cbs", Cbs0);
   }
+  setScaledProperty ("Cbs", Cbs0);
 
   // calculate periphery junction capacitances
   nr_double_t Cjs = getPropertyDouble ("Cjsw");
   nr_double_t Pd  = getPropertyDouble ("Pd");
   nr_double_t Ps  = getPropertyDouble ("Ps");
+  Cjs = Cjs * F3;
   setProperty ("Cbds", Cjs * Pd);
   setProperty ("Cbss", Cjs * Ps);
 
   // calculate junction capacitances and saturation currents
   nr_double_t Js  = getPropertyDouble ("Js");
   nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t F4, E1, E2;
+  E1 = Egap (T1);
+  E2 = Egap (T2);
+  F4 = exp (- QoverkB / T2 * (T2 / T1 * E1 - E2));
+  Is = Is * F4;
+  Js = Js * F4;
   nr_double_t Isd = (Ad > 0) ? Js * Ad : Is;
   nr_double_t Iss = (As > 0) ? Js * As : Is;
   setProperty ("Isd", Isd);
@@ -535,14 +559,14 @@ void mosfet::saveOperatingPoints (void) {
 void mosfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
-  nr_double_t Cbd0 = getPropertyDouble ("Cbd");
-  nr_double_t Cbs0 = getPropertyDouble ("Cbs");
+  nr_double_t Cbd0 = getScaledProperty ("Cbd");
+  nr_double_t Cbs0 = getScaledProperty ("Cbs");
   nr_double_t Cbds = getPropertyDouble ("Cbds");
   nr_double_t Cbss = getPropertyDouble ("Cbss");
   nr_double_t Cgso = getPropertyDouble ("Cgso");
   nr_double_t Cgdo = getPropertyDouble ("Cgdo");
   nr_double_t Cgbo = getPropertyDouble ("Cgbo");
-  nr_double_t Pb   = getPropertyDouble ("Pb");
+  nr_double_t Pb   = getScaledProperty ("Pb");
   nr_double_t M    = getPropertyDouble ("Mj");
   nr_double_t Ms   = getPropertyDouble ("Mjsw");
   nr_double_t Fc   = getPropertyDouble ("Fc");
