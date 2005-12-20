@@ -1,3 +1,9 @@
+2005-12-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/device.h (class device): Documented device
+	functions in the header file.  Simplified the split
+	functionality for devices.  Changed all callers.
+
 2005-12-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/digital.cpp: Fixed wrong derivative of digital

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.34 2005-12-19 07:55:14 raimi Exp $
+ * $Id: bjt.cpp,v 1.35 2005-12-20 08:47:10 raimi Exp $
  *
  */
 
@@ -268,35 +268,35 @@ void bjt::initDC (void) {
 
   // disable additional base-collector capacitance
   if (deviceEnabled (cbcx)) {
-    disableCapacitance (this, cbcx, getNet ());
+    disableCapacitor (this, cbcx);
   }
 
   // possibly insert series resistance at emitter
   nr_double_t Re = getScaledProperty ("Re");
   if (Re != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    re = splitResistance (this, re, getNet (), "Re", "emitter", NODE_E);
+    re = splitResistor (this, re, "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
     re->setProperty ("Temp", T);
     re->initDC ();
   }
   // no series resistance at emitter
   else {
-    disableResistance (this, re, getNet (), NODE_E);
+    disableResistor (this, re, NODE_E);
   }
 
   // possibly insert series resistance at collector
   nr_double_t Rc = getScaledProperty ("Rc");
   if (Rc != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rc = splitResistance (this, rc, getNet (), "Rc", "collector", NODE_C);
+    rc = splitResistor (this, rc, "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
     rc->setProperty ("Temp", T);
     rc->initDC ();
   }
   // no series resistance at collector
   else {
-    disableResistance (this, rc, getNet (), NODE_C);
+    disableResistor (this, rc, NODE_C);
   }
 
   // possibly insert base series resistance
@@ -307,14 +307,14 @@ void bjt::initDC (void) {
   setProperty ("Rbm", Rbm);
   if (Rbm != 0.0) {
     // create additional circuit and reassign nodes
-    rb = splitResistance (this, rb, getNet (), "Rbb", "base", NODE_B);
+    rb = splitResistor (this, rb, "Rbb", "base", NODE_B);
     rb->setProperty ("R", Rb);
     rb->setProperty ("Temp", T);
     rb->initDC ();
   }
   // no series resistance at base
   else {
-    disableResistance (this, rb, getNet (), NODE_B);
+    disableResistor (this, rb, NODE_B);
     Rbb = 0.0;                 // set this operating point
     setProperty ("Xcjc", 1.0); // other than 1 is senseless here
   }
@@ -596,13 +596,13 @@ void bjt::processCbcx (void) {
      collector node and external base node */
   if (Rbm != 0.0 && Cjc0 != 0.0 && Xcjc != 1.0) {
     if (!deviceEnabled (cbcx)) {
-      cbcx = splitCapacitance (this, cbcx, getNet (), "Cbcx", rb->getNode (0),
-			       getNode (NODE_C));
+      cbcx = splitCapacitor (this, cbcx, "Cbcx", rb->getNode (0),
+			     getNode (NODE_C));
     }
     cbcx->setProperty ("C", getOperatingPoint ("Cbcx"));
   }
   else {
-    disableCapacitance (this, cbcx, getNet ());
+    disableCapacitor (this, cbcx);
   }
 }
 

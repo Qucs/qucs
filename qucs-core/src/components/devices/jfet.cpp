@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.28 2005-12-19 07:55:14 raimi Exp $
+ * $Id: jfet.cpp,v 1.29 2005-12-20 08:47:10 raimi Exp $
  *
  */
 
@@ -193,28 +193,28 @@ void jfet::initDC (void) {
   nr_double_t Rs = getScaledProperty ("Rs");
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rs = splitResistance (this, rs, this->getNet (), "Rs", "source", NODE_S);
+    rs = splitResistor (this, rs, "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
     rs->initDC ();
   }
   // no series resistance at source
   else {
-    disableResistance (this, rs, getNet (), NODE_S);
+    disableResistor (this, rs, NODE_S);
   }
 
   // possibly insert series resistance at drain
   nr_double_t Rd = getScaledProperty ("Rd");
   if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rd = splitResistance (this, rd, getNet (), "Rd", "drain", NODE_D);
+    rd = splitResistor (this, rd, "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
     rd->setProperty ("R", Rd);
     rd->initDC ();
   }
   // no series resistance at drain
   else {
-    disableResistance (this, rd, getNet (), NODE_D);
+    disableResistor (this, rd, NODE_D);
   }
 }
 
