@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.cpp,v 1.20 2005/12/19 07:55:14 raimi Exp $
+ * $Id: device.cpp,v 1.21 2005/12/20 08:47:10 raimi Exp $
  *
  */
 
@@ -46,12 +46,11 @@
    netlist. The given arguments can be explained as follows.
    base:     calling circuit (this)
    res:      additional resistor circuit (can be NULL)
-   subnet:   the netlist object
    c:        name of the additional circuit
    n:        name of the inserted (internal) node
    internal: number of new internal node (the original external node) */
-circuit * splitResistance (circuit * base, circuit * res, net * subnet,
-			   char * c, char * n, int internal) {
+circuit * splitResistor (circuit * base, circuit * res,
+			 char * c, char * n, int internal) {
   if (res == NULL) {
     res = new resistor ();
     char * name = circuit::createInternal (c, base->getName ());
@@ -59,7 +58,7 @@ circuit * splitResistance (circuit * base, circuit * res, net * subnet,
     res->setName (name);
     res->setNode (0, base->getNode(internal)->getName ());
     res->setNode (1, node, 1);
-    subnet->insertCircuit (res);
+    base->getNet()->insertCircuit (res);
     free (name);
     free (node);
   }
@@ -68,22 +67,21 @@ circuit * splitResistance (circuit * base, circuit * res, net * subnet,
 }
 
 /* This function is the counterpart of the above routine.  It removes
-   the resistance circuit from the netlist and re-assigns the original
+   the resistor circuit from the netlist and re-assigns the original
    node. */
-void disableResistance (circuit * base, circuit * res, net * subnet,
-			int internal) {
+void disableResistor (circuit * base, circuit * res, int internal) {
   if (res != NULL) {
-    subnet->removeCircuit (res, 0);
+    base->getNet()->removeCircuit (res, 0);
     base->setNode (internal, res->getNode(1)->getName (), 0);
   }
 }
 
-/* This function creates a new capacitance circuit if the given one is
+/* This function creates a new capacitor circuit if the given one is
    not NULL.  The new circuit is connected between the given nodes and
    a name is applied based upon the parents (base) name and the given
    name 'c'.  The circuit is then put into the netlist. */
-circuit * splitCapacitance (circuit * base, circuit * cap, net * subnet,
-			    char * c, node * n1, node * n2) {
+circuit * splitCapacitor (circuit * base, circuit * cap,
+			  char * c, node * n1, node * n2) {
   if (cap == NULL) {
     cap = new capacitor ();
     char * name = circuit::createInternal (c, base->getName ());
@@ -92,14 +90,14 @@ circuit * splitCapacitance (circuit * base, circuit * cap, net * subnet,
     cap->setNode (1, n2->getName ());
     free (name);
   }
-  subnet->insertCircuit (cap);
+  base->getNet()->insertCircuit (cap);
   return cap;
 }
 
-// The function removes the given capacitance circuit from the netlist.
-void disableCapacitance (circuit *, circuit * cap, net * subnet) {
+// The function removes the given capacitor circuit from the netlist.
+void disableCapacitor (circuit * base, circuit * cap) {
   if (cap != NULL) {
-    subnet->removeCircuit (cap, 0);
+    base->getNet()->removeCircuit (cap, 0);
   }
 }
 
@@ -354,7 +352,7 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
   }
 }
 
-// Computes temperature dependency of energy band gap.
+// Computes temperature dependency of energy bandgap.
 nr_double_t Egap (nr_double_t T, nr_double_t Eg0) {
   nr_double_t a = 7.02e-4;
   nr_double_t b = 1108;
