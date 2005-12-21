@@ -132,10 +132,10 @@ number of independent voltage sources) and:
 the G matrix is N$\times$N and is determined by the interconnections
 between the circuit elements
 \item
-the B matrix is M$\times$N and is determined by the connection of the voltage
+the B matrix is N$\times$M and is determined by the connection of the voltage
 sources
 \item
-the C matrix is N$\times$M and is determined by the connection of
+the C matrix is M$\times$N and is determined by the connection of
 the voltage sources (B and C are closely related, particularly when
 only independent sources are considered)
 \item
@@ -171,12 +171,12 @@ entries.
 \subsubsection{Rules for making the B matrix}
 %\addcontentsline{toc}{subsubsection}{Rules for making the B matrix}
 
-The B matrix is an M$\times$N matrix with only 0, 1 and -1 elements.
+The B matrix is an N$\times$M matrix with only 0, 1 and -1 elements.
 Each location in the matrix corresponds to a particular voltage source
 (first dimension) or a node (second dimension).  If the positive
 terminal of the ith voltage source is connected to node k, then the
-element (i,k) in the B matrix is a 1.  If the negative terminal of the
-ith voltage source is connected to node k, then the element (i,k) in
+element (k,i) in the B matrix is a 1.  If the negative terminal of the
+ith voltage source is connected to node k, then the element (k,i) in
 the B matrix is a -1.  Otherwise, elements of the B matrix are zero.
 
 \addvspace{12pt}
@@ -188,12 +188,12 @@ only have one element in the matrix.
 \subsubsection{Rules for making the C matrix}
 %\addcontentsline{toc}{subsubsection}{Rules for making the C matrix}
 
-The C matrix is an N$\times$M matrix with only 0, 1 and -1 elements.
+The C matrix is an M$\times$N matrix with only 0, 1 and -1 elements.
 Each location in the matrix corresponds to a particular node (first
 dimension) or voltage source (second dimension).  If the positive
 terminal of the ith voltage source is connected to node k, then the
-element (k,i) in the C matrix is a 1.  If the negative terminal of the
-ith voltage source is connected to node k, then the element (k,i) in
+element (i,k) in the C matrix is a 1.  If the negative terminal of the
+ith voltage source is connected to node k, then the element (i,k) in
 the C matrix is a -1.  Otherwise, elements of the C matrix are zero.
 
 \addvspace{12pt}
@@ -2238,7 +2238,7 @@ macro models.  Here, each input gets the transfer characteristic and
 its derivative described as follows:
 \begin{align}
 u_i  & = \tanh (10\cdot (u_{in} - 0.5)) \\
-u_i' & = 10\cdot \left( 1+ \tanh^2 (10\cdot (u_{in} - 0.5)) \right)
+u_i' & = 10\cdot \left( 1- \tanh^2 (10\cdot (u_{in} - 0.5)) \right)
 \end{align}
 
 The resulting voltages $u_i$ for each input are combined to create
@@ -2272,17 +2272,17 @@ needed:
 \text{Inverter:} \quad & \dfrac{\partial u_{out}}{\partial u_{in}}
         =  -0.5\cdot u_i' \\
 \text{OR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = \dfrac{N\cdot u_{i,n}'}{\left( (1-u_{i,n})\cdot\sum\limits_m \dfrac{2}{1-u_{i,m}} \right)^2} \\
+  = \dfrac{2\cdot N\cdot u_{i,n}'}{\left( (1-u_{i,n})\cdot\sum\limits_m \dfrac{2}{1-u_{i,m}} \right)^2} \\
 \text{NOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{OR}} \\
+  = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{OR}} \\
 \text{AND:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = \dfrac{N\cdot u_{i,n}'}{\left( (1+u_{i,n})\cdot\sum\limits_m \dfrac{2}{1+u_{i,m}} \right)^2} \\
+  = \dfrac{2\cdot N\cdot u_{i,n}'}{\left( (1+u_{i,n})\cdot\sum\limits_m \dfrac{2}{1+u_{i,m}} \right)^2} \\
 \text{NAND:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{AND}} \\
+  = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{AND}} \\
 \text{XOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = -0.5\cdot u_{i,n}' \cdot\prod_{m\ne n} u_{i,m} \\
+  = -0.5\cdot u_{i,n}' \cdot\prod_{m\ne n} u_{i,m} \\
 \text{XNOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{XOR}}
+  = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{XOR}}
 \end{align}
 
 A problem of these macro models are the numbers of input ports.
