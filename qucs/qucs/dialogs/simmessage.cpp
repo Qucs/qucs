@@ -248,7 +248,7 @@ void SimMessage::startSimulator()
 
   QStringList com;
   if(SimPorts < 0)
-    com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
+    com << QucsSettings.BinDir + "qucsator" << "-b" /*<< "-g"*/ << "-i"
         << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
   else
     com << QucsSettings.BinDir + "qucsdigi" << "netlist.txt" << SimTime
@@ -274,6 +274,20 @@ void SimMessage::startSimulator()
 // Is called when the process sends an output to stdout.
 void SimMessage::slotDisplayMsg()
 {
+#if 0
+  int i;
+  ProgressText += QString(SimProcess.readStdout());
+  if(ProgresText.at(0) != '\n') {
+    i = ProgressText.find('\n');
+    if(i
+      
+    }
+    ProgText->insert(ProgressText);
+  }
+
+  if(wasLF) {
+#endif
+
 #if 1
   int i, Para;
   QString s = QString(SimProcess.readStdout());

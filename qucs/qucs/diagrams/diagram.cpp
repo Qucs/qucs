@@ -642,6 +642,7 @@ bool Diagram::ResizeTouched(int x, int y)
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
+qDebug("A");
   yAxis.numGraphs = zAxis.numGraphs = 0;
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
@@ -660,6 +661,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
     if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }*/
+qDebug("B");
   updateGraphData();
 }
 
@@ -748,15 +750,19 @@ void Diagram::recalcGraphData()
 // ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
+qDebug("C");
   int valid = calcDiagram();   // do not calculate graph data if invalid
+qDebug("D");
 
   Graph *pg;
   for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+qDebug(".");
     if(pg->Points != 0) { free(pg->Points);  pg->Points = 0; }
     if((valid & (pg->yAxisNo+1)) != 0)
       calcData(pg);   // calculate screen coordinates
     else if(pg->cPointsY) { delete[] pg->cPointsY;  pg->cPointsY = 0; }
   }
+qDebug("E");
 
   createAxisLabels();  // virtual function
 
@@ -765,6 +771,7 @@ void Diagram::updateGraphData()
   for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
     for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
       pm->createText();
+qDebug("F");
 }
 
 // --------------------------------------------------------------------------
