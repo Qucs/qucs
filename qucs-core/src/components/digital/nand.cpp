@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nand.cpp,v 1.4 2005/12/12 07:46:53 raimi Exp $
+ * $Id: nand.cpp,v 1.5 2005/12/21 07:14:50 margraf Exp $
  *
  */
 
@@ -59,6 +59,6 @@ void logicnand::calcDerivatives (void) {
       x += 2 / (1 + calcTransfer (i));
     }
     x *= (1 + calcTransfer (k));
-    g[k] = -n * calcDerivative (k) / x / x;
+    g[k] = -2 * n * calcDerivative (k) / x / x;
   }
 }
