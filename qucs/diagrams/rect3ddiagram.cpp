@@ -771,6 +771,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
 // --------------------------------------------------------------
 int Rect3DDiagram::calcDiagram()
 {
+qDebug("0");
   Lines.clear();
   Texts.clear();
   Arcs.clear();
@@ -871,6 +872,7 @@ int Rect3DDiagram::calcDiagram()
   createAxis(&zAxis, true, X[z], Y[z], X[z2], Y[z2]);
 
 
+qDebug("3");
   if(hideLines) {
     w = x2 * (y2+7)/8;
     // To store the pixel coordinates that are already used (hidden).
@@ -906,6 +908,7 @@ int Rect3DDiagram::calcDiagram()
     Lines.append(new Line(X[o], Y[o], X[o^4], Y[o^4], QPen(QPen::black,0)));
   }
 
+qDebug("5");
   pMem = Mem;
   return 3;
 
@@ -922,13 +925,15 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 // g->Points must already be empty!!!
 void Rect3DDiagram::calcData(Graph *g)
 {
+qDebug("6");
   if(!pMem)  return;
   if(!g->cPointsY) return;
+qDebug("7");
 
   int tmp;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
   Size *= 2;  // memory for cross grid lines
-  
+
   double *py;
   if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
 
@@ -968,6 +973,7 @@ void Rect3DDiagram::calcData(Graph *g)
 
       } while(((pMem++)->done & 256) == 0);
       *p = GRAPHEND;
+qDebug("9");
       return;
 
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
