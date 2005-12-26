@@ -3353,31 +3353,31 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturexponent für die Vorwärts- und Rückwärtsverstärkung</translation>
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatur bei der die Modellparameter extrahiert wurden</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Flächenfaktor für den Bipolartransistor</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturkoeffizient von Vt0</translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>exponentieller Temperaturkoeffizient von Beta</translation>
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>Flächenfaktor für den JFET</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatur bei der die Modellparameter gemessen wurden</translation>
     </message>
 </context>
 <context>
