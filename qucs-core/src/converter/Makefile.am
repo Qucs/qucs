@@ -22,25 +22,36 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-EXTRA_DIST = parse_spice.y scan_spice.l
+EXTRA_DIST = parse_spice.y scan_spice.l parse_vcd.y scan_vcd.l
 
 bin_PROGRAMS = qucsconv
 
 INCLUDES = -I$(top_srcdir)/src
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
-	check_spice.cpp qucs_producer.cpp
+	check_spice.cpp qucs_producer.cpp check_vcd.cpp
+#parse_vcd.cpp scan_vcd.cpp
 
-noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h
+noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h
+# tokens_vcd.h
 
 if MAINTAINER_MODE
-generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h
+generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \
+	parse_vcd.cpp scan_vcd.cpp tokens_vcd.h
 
 scan_spice.cpp: scan_spice.l
 	$(LEX) -o$@ $<
 
 parse_spice.cpp: parse_spice.y
 	$(YACC) -v -o $@ --defines=tokens_spice.h $<
+
+scan_vcd.cpp: scan_vcd.l
+	$(LEX) -o$@ $<
+
+parse_vcd.cpp: parse_vcd.y
+	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
+
+
 else
 generated_FILES = 
 endif
@@ -48,3 +59,4 @@ endif
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
 DISTCLEANFILES = $(generated_FILES)
+

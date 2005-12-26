@@ -1,3 +1,9 @@
+2005-12-26  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+
+	* qucsconv.cpp: New infrastructure for converter steps.
+
+	* begin of vcd recognition
+
 2005-12-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Allow new temperature and area parameters

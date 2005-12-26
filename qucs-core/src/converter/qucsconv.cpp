@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.9 2005-11-14 19:19:14 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.10 2005-12-26 21:13:31 raimi Exp $
  *
  */
 
@@ -33,6 +33,25 @@
 
 #include "check_spice.h"
 #include "qucs_producer.h"
+
+struct actionset_t {
+  char * informat; /* -if parameter */
+  char * outformat; /* -of parameter */
+
+  /* Callback for the logic, return errorcode of program */
+  int (* execute) (struct actionset_t *, char * infile, char * outfile);
+};
+
+int spice2qucs (struct actionset_t *, char *, char *);
+int vcd2qucs (struct actionset_t *, char *, char *);
+
+struct actionset_t actionset[] = {
+  {"spice", "qucs",    spice2qucs},
+  {"spice", "qucslib", spice2qucs},
+  {"vcd", "qucsdata",  vcd2qucs},
+  {NULL, NULL, NULL}
+};
+
 
 FILE * open_file (char * file, char * flag) {
   FILE * fd = NULL;
@@ -99,38 +118,70 @@ int main (int argc, char ** argv) {
     }
   }
 
-  if (input && !strcmp (input, "spice")) {
-    int ret = 0;
-    if ((spice_in = open_file (infile, "r")) == NULL) {
-      ret = -1;
-    } else if (spice_parse () != 0) {
-      ret = -1;
-    } else if (spice_checker () != 0) {
-      ret = -1;
+  int inknown = 0;
+  int outknown = 0;
+  for (int j = 0; actionset[j].informat != NULL; j++) {
+    int in = 0, out = 0;
+
+    if (input && !strcmp (input, actionset[j].informat)) {
+      in = 1;
+      inknown = 1;
     }
-    spice_lex_destroy ();
-    fclose (spice_in);
-    if (ret) {
-      spice_destroy ();
-      return -1;
+
+    if (output && !strcmp (output, actionset[j].outformat)) {
+      out = 1;
+      outknown = 1;
+    }
+
+    if (in && out) {
+      return actionset[j].execute (&actionset[j], infile, outfile);
     }
   }
-  else {
+
+  if (!inknown) {
     fprintf (stderr, "invalid input data specification `%s'\n",
 	     input ? input : "not given");
+  }
+
+  if (!outknown) {
+    fprintf (stderr, "invalid output data specification `%s'\n",
+	     output ? output : "not given");
+  }
+
+  return -1;
+}
+
+
+int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  if ((spice_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (spice_parse () != 0) {
+    ret = -1;
+  } else if (spice_checker () != 0) {
+    ret = -1;
+  }
+  spice_lex_destroy ();
+  fclose (spice_in);
+  if (ret) {
+    spice_destroy ();
     return -1;
   }
 
-  if (output && (!strcmp (output, "qucs") || !strcmp (output, "qucslib"))) {
-    if ((qucs_out = open_file (outfile, "w")) == NULL)
-      return -1;
-    if (!strcmp (output, "qucs"))
-      qucs_producer ();
-    else
-      qucslib_producer ();
-    fclose (qucs_out);
-  }
-
+  if ((qucs_out = open_file (outfile, "w")) == NULL)
+    return -1;
+  if (!strcmp (action->outformat, "qucs"))
+    qucs_producer ();
+  else /* "qucslib" */
+    qucslib_producer ();
+  fclose (qucs_out);
   spice_destroy ();
   return 0;
 }
+
+
+int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  /* TBI */
+  return 0;
+}
+
