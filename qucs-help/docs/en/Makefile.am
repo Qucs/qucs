@@ -23,8 +23,9 @@
 #
 
 HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html internal.html characters.html matching.html
-PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png
+  programs.html internal.html characters.html matching.html start_digi.html
+PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png \
+  qucsdigi.png
 
 EXTRA_DIST = $(HTML) $(PIC)
 
