@@ -226,8 +226,6 @@ bool LibComp::outputSubNetlist(QTextStream *stream)
 // -------------------------------------------------------
 QString LibComp::NetList()
 {
-  if(!isActive) return QString("");  // should it be simulated ?
-
   QString s = "Sub:"+Name;   // output as subcircuit
 
   // output all node names

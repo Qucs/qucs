@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-HTML = index.html short.html start.html mathfunc.html subcircuit.html \
+HTML = index.html short.html start.html mathfunc.html subcircuit.html       \
   programs.html internal.html characters.html matching.html start_digi.html
 PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png \
   qucsdigi.png

@@ -150,6 +150,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   Label4 = 0;     // different types with same content
   yrLabel = 0;
   yAxisBox = 0;
+  Property2 = 0;
+  ColorButt = 0;
   hideInvisible = 0;
   rotationX = rotationY = rotationZ = 0;
 
@@ -177,7 +179,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setMaximumWidth(25);
     Property2->setText("3");
   }
-  else {
+  else if(Diag->Name != "Truth") {
     Label1 = new QLabel(tr("Color:"),Box2);
     ColorButt = new QPushButton("   ",Box2);
     ColorButt->setMinimumWidth(50);
@@ -223,13 +225,15 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
     }
   }
-  connect(Property2, SIGNAL(textChanged(const QString&)),
+  if(Property2) {
+    connect(Property2, SIGNAL(textChanged(const QString&)),
 			SLOT(slotSetProp2(const QString&)));
 
-  Label1->setEnabled(false);
-  PropertyBox->setEnabled(false);
-  Label2->setEnabled(false);
-  Property2->setEnabled(false);
+    Label1->setEnabled(false);
+    PropertyBox->setEnabled(false);
+    Label2->setEnabled(false);
+    Property2->setEnabled(false);
+  }
 
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
@@ -582,8 +586,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Row++;
   }
 
-  if(Diag->Name != "Tab")
-    ColorButt->setPaletteBackgroundColor
+  if(ColorButt)
+    if(!currentGraph)
+      ColorButt->setPaletteBackgroundColor
 	(QColor(DefaultColors[GraphList->count()]));
 }
 
@@ -656,20 +661,22 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
     Graph *g = new Graph(GraphInput->text());   // create a new graph
 
     if(Diag->Name != "Tab") {
-      g->Color = ColorButt->paletteBackgroundColor();
-      g->Thick = Property2->text().toInt();
-      ColorButt->setPaletteBackgroundColor(
+      if(Diag->Name != "Truth") {
+        g->Color = ColorButt->paletteBackgroundColor();
+        g->Thick = Property2->text().toInt();
+        ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
-      g->Style   = PropertyBox->currentItem();
-      if(yAxisBox) {
-        g->yAxisNo = yAxisBox->currentItem();
-        yAxisBox->setEnabled(true);
-        Label4->setEnabled(true);
-      }
-      else if(Diag->Name == "Rect3D") g->yAxisNo = 1;
+        g->Style   = PropertyBox->currentItem();
+        if(yAxisBox) {
+          g->yAxisNo = yAxisBox->currentItem();
+          yAxisBox->setEnabled(true);
+          Label4->setEnabled(true);
+        }
+        else if(Diag->Name == "Rect3D") g->yAxisNo = 1;
 
-      Label3->setEnabled(true);
-      ColorButt->setEnabled(true);
+        Label3->setEnabled(true);
+        ColorButt->setEnabled(true);
+      }
     }
     else {
       g->Precision = Property2->text().toInt();
@@ -683,10 +690,12 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
 
   GraphInput->blockSignals(false);
 
-  Label1->setEnabled(true);
-  PropertyBox->setEnabled(true);
-  Label2->setEnabled(true);
-  Property2->setEnabled(true);
+  if(Property2) {
+    Label1->setEnabled(true);
+    PropertyBox->setEnabled(true);
+    Label2->setEnabled(true);
+    Property2->setEnabled(true);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -710,17 +719,19 @@ void DiagramDialog::SelectGraph(Graph *g)
   GraphInput->blockSignals(false);
 
   if(Diag->Name != "Tab") {
-    Property2->setText(QString::number(g->Thick));
-    ColorButt->setPaletteBackgroundColor(g->Color);
-    PropertyBox->setCurrentItem(g->Style);
-    if(yAxisBox) {
-      yAxisBox->setCurrentItem(g->yAxisNo);
-      yAxisBox->setEnabled(true);
-      Label4->setEnabled(true);
-    }
+    if(Diag->Name != "Truth") {
+      Property2->setText(QString::number(g->Thick));
+      ColorButt->setPaletteBackgroundColor(g->Color);
+      PropertyBox->setCurrentItem(g->Style);
+      if(yAxisBox) {
+        yAxisBox->setCurrentItem(g->yAxisNo);
+        yAxisBox->setEnabled(true);
+        Label4->setEnabled(true);
+      }
 
-    Label3->setEnabled(true);
-    ColorButt->setEnabled(true);
+      Label3->setEnabled(true);
+      ColorButt->setEnabled(true);
+    }
   }
   else {
     Property2->setText(QString::number(g->Precision));
@@ -728,10 +739,12 @@ void DiagramDialog::SelectGraph(Graph *g)
   }
   toTake = false;
 
-  Label1->setEnabled(true);
-  PropertyBox->setEnabled(true);
-  Label2->setEnabled(true);
-  Property2->setEnabled(true);
+  if(Property2) {
+    Label1->setEnabled(true);
+    PropertyBox->setEnabled(true);
+    Label2->setEnabled(true);
+    Property2->setEnabled(true);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -746,27 +759,32 @@ void DiagramDialog::slotDeleteGraph()
 
   GraphInput->setText("");  // erase input line and back to default values
   if(Diag->Name != "Tab") {
-    ColorButt->setPaletteBackgroundColor(
+    if(Diag->Name != "Truth") {
+      ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
-    Property2->setText("0");
-    if(yAxisBox) {
-      yAxisBox->setCurrentItem(0);
-      yAxisBox->setEnabled(false);
-      Label4->setEnabled(false);
-    }
+      Property2->setText("0");
+      if(yAxisBox) {
+        yAxisBox->setCurrentItem(0);
+        yAxisBox->setEnabled(false);
+        Label4->setEnabled(false);
+      }
 
-    Label3->setEnabled(false);
-    ColorButt->setEnabled(false);
+      Label3->setEnabled(false);
+      ColorButt->setEnabled(false);
+    }
   }
   else  Property2->setText("3");
-  PropertyBox->setCurrentItem(0);
   changed = true;
   toTake  = false;
 
-  Label1->setEnabled(false);
-  PropertyBox->setEnabled(false);
-  Label2->setEnabled(false);
-  Property2->setEnabled(false);
+  if(Property2) {
+    PropertyBox->setCurrentItem(0);
+
+    Label1->setEnabled(false);
+    PropertyBox->setEnabled(false);
+    Label2->setEnabled(false);
+    Property2->setEnabled(false);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -778,11 +796,13 @@ void DiagramDialog::slotNewGraph()
 
   Graph *g = new Graph(GraphInput->text());   // create a new graph
   if(Diag->Name != "Tab") {
-    g->Color = ColorButt->paletteBackgroundColor();
-    g->Thick = Property2->text().toInt();
-    g->Style = PropertyBox->currentItem();
-    if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
-    else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
+    if(Diag->Name != "Truth") {
+      g->Color = ColorButt->paletteBackgroundColor();
+      g->Thick = Property2->text().toInt();
+      g->Style = PropertyBox->currentItem();
+      if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
+      else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
+    }
   }
   else {
     g->Precision = Property2->text().toInt();

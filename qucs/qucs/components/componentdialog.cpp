@@ -756,8 +756,9 @@ void ComponentDialog::slotApplyInput()
 void ComponentDialog::slotBrowseFile()
 {
   QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(),
-					tr("All Files")+" (*.*)",
-					this, "", tr("Select a file"));
+          tr("All Files")+" (*.*);;"+tr("Touchstone files")+" (*.s?p);;"+
+          tr("SPICE files")+" (*.cir *.spi)",
+          this, "", tr("Select a file"));
   if(!s.isEmpty()) {
     // snip path if file in current directory
     QFileInfo file(s);

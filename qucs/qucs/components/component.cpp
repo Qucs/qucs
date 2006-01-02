@@ -584,8 +584,6 @@ void Component::mirrorY()
 // -------------------------------------------------------
 QString Component::NetList()
 {
-  if(!isActive) return QString("");       // should it be simulated ?
-
   QString s = Model+":"+Name;
 
   // output all node names
@@ -1035,8 +1033,6 @@ GateComponent::GateComponent()
 // -------------------------------------------------------
 QString GateComponent::NetList()
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   QString s = Model+":"+Name;
 
   // output all node names
@@ -1054,8 +1050,6 @@ QString GateComponent::NetList()
 // -------------------------------------------------------
 QString GateComponent::VHDL_Code(int NumPorts)
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   QString s = "  ";
   Port *pp = Ports.first();
   s += pp->Connection->Name + " <= ";  // output port
