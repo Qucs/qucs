@@ -312,6 +312,14 @@
         <source>Points per decade:</source>
         <translation>Punti per decade:</translation>
     </message>
+    <message>
+        <source>Touchstone files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
