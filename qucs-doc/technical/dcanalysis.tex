@@ -2006,6 +2006,7 @@ I_{4}
 \end{equation}
 
 \subsection{Attenuator}
+\label{sec:dc_attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
 The ideal attenuator with (power) attenuation $L$ is determined by the
@@ -2250,9 +2251,9 @@ the wanted function for a device with $N$ inputs:
 \text{OR:}       \qquad & u_{out} = 1 - u_{out,NOR} \\
 \text{AND:}      \qquad & u_{out} = \dfrac{N}{\sum\limits_m \dfrac{2}{1 + u_{i,m}}} \\
 \text{NAND:}     \qquad & u_{out} = 1 - u_{out,AND} \\
-\text{XOR:}      \qquad & u_{out} = 0.5\cdot\left( 1 - \prod_m u_{i,m} \right) \\
+\text{XOR:}      \qquad & u_{out} = 0.5\cdot\left( 1 - \prod_m -u_{i,m} \right) \\
 \label{eq:logout2}
-\text{XNOR:}     \qquad & u_{out} = 0.5\cdot\left( 1 + \prod_m u_{i,m} \right)
+\text{XNOR:}     \qquad & u_{out} = 0.5\cdot\left( 1 + \prod_m -u_{i,m} \right)
 \end{align}
 
 The above-mentioned functions model devices with 0V as logical
@@ -2280,7 +2281,7 @@ needed:
 \text{NAND:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
   = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{AND}} \\
 \text{XOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
-  = -0.5\cdot u_{i,n}' \cdot\prod_{m\ne n} u_{i,m} \\
+  = 0.5\cdot u_{i,n}' \cdot\prod_{m\ne n} -u_{i,m} \\
 \text{XNOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
   = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{XOR}}
 \end{align}
@@ -2348,17 +2349,21 @@ These matrices can easily extended to any number of input ports.
 Often it will happen that a user needs to implement his own model.
 Therefore, it is useful to supply devices that are defined by an
 arbitrary equation. For example the user must enter an equation $i(V)$
-describing how the port current $I$ depends on the port voltage $V$
+describing how the port current $I$ depends on the port voltage $V=V_1-V_2$
 and an equation $q(V)$ describing how much charge $Q$ is held due to
 the voltage $V$. The most simple way then is a device with two nodes.
 Defining
 
 \begin{equation}
-I = i(V) \qquad\text{and}\qquad g = \dfrac{\partial I}{\partial V}
+I = i(V) \qquad\text{and}\qquad
+    g = \dfrac{\partial I}{\partial V}
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{I(V+h) - I(V)}{h}
 \end{equation}
 as well as
 \begin{equation}
-Q = q(V) \qquad\text{and}\qquad c = \dfrac{\partial Q}{\partial V}
+Q = q(V) \qquad\text{and}\qquad
+    c = \dfrac{\partial Q}{\partial V}
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{Q(V+h) - Q(V)}{h}
 \end{equation}
 
 the MNA matrix for a (non-linear) DC analysis writes:
@@ -2385,6 +2390,30 @@ V_{2}^{(m+1)}
 \end{bmatrix}
 \end{equation}
 
+For a transient simulation, the DC equations have to be extended
+by the non-linear capacitance, e.g. for backward Euler:
+\begin{equation}
+I^{n+1,m} = \underbrace{\dfrac{c(V^{n+1,m})}{h^n}}_{g_{eq}}\cdot V^{n+1}
+            \underbrace{- \dfrac{c(V^{n})}{h^n}\cdot V^{n}}_{I_{eq}}
+\end{equation}
+So with $g_{tr} = g + g_{eq}$ it is:
+\begin{equation}
+\begin{bmatrix}
+ g_{tr}^{(m)} & -g_{tr}^{(m)}\\
+-g_{tr}^{(m)} &  g_{tr}^{(m)}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}^{(n+1,m+1)}\\
+V_{2}^{(n+1,m+1)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I^{(n+1,m)} + g^{(n+1,m)}\cdot V^{(n+1,m)} - I_{eq}^{(n)}\\
+ I^{(n+1,m)} - g^{(n+1,m)}\cdot V^{(n+1,m)} + I_{eq}^{(n)}
+\end{bmatrix}
+\end{equation}
+
 For an AC analysis the MNA matrix writes.
 
 \begin{equation}
@@ -2395,8 +2424,47 @@ A = (g + j\omega\cdot c)\cdot
 \end{bmatrix}
 \end{equation}
 
+And the S-parameter matrix writes.
+
+\begin{align}
+S_{11} = S_{22} &= \frac{Z}{2\cdot Z_0+Z} \\
+S_{12} = S_{21} &= 1-S_{11} \\
+Z &= g + j\omega\cdot c
+\end{align}
+
 The simulator needs to create the derivatives $g$ and $c$ by his
-own. This can be done numerically.
+own. This can be done numerically. One might ask why the non-linear
+capacitance is modeled as charge while the capacitance itself is
+needed. Indeed this may be changed, but the charge is needed for
+harmonic balance simulation and, being the most important and critical
+simulation, this should have the highest priority.
+
+\addvspace{12pt}
+
+The component described above can be expanded to one with two ports
+(two pairs of terminals: terminal 1 and 2 and terminal 3 and 4).
+The defining equations are:
+\begin{equation}
+I_1 = i_1(V_1, V_2) \qquad\text{and}\qquad
+g_{11} = \dfrac{\partial I_1}{\partial V_1} \qquad\text{and}\qquad
+g_{12} = \dfrac{\partial I_1}{\partial V_2}
+\end{equation}
+\begin{equation}
+I_2 = i_2(V_1, V_2) \qquad\text{and}\qquad
+g_{21} = \dfrac{\partial I_2}{\partial V_1} \qquad\text{and}\qquad
+g_{22} = \dfrac{\partial I_2}{\partial V_2}
+\end{equation}
+as well as
+\begin{equation}
+Q_1 = q_1(V_1, V_2) \qquad\text{and}\qquad
+c_{11} = \dfrac{\partial Q_1}{\partial V_1} \qquad\text{and}\qquad
+c_{12} = \dfrac{\partial Q_1}{\partial V_2}
+\end{equation}
+\begin{equation}
+Q_2 = q_2(V_1, V_2) \qquad\text{and}\qquad
+c_{21} = \dfrac{\partial Q_2}{\partial V_1} \qquad\text{and}\qquad
+c_{22} = \dfrac{\partial Q_2}{\partial V_2}
+\end{equation}
 
 
 \section{Non-linear DC Analysis}
@@ -2593,11 +2661,11 @@ equation \ref{eq:NLmatrix}:
 
 \begin{equation}
 \boldsymbol{f}( \boldsymbol{V}^{(m)} ) =
-    \boldsymbol{G}\cdot \boldsymbol{V}^{(m)} - \boldsymbol{I}_{0}
+    \boldsymbol{G}\cdot \boldsymbol{V}^{(m)} - \boldsymbol{I}_{0}^{(m)}
 \end{equation}
 
-In addition to the linear case, the vector $\boldsymbol{I}_{0}$
-contains the currents flowing into the non-linear components.
+The only difference to the linear case is that the vector $\boldsymbol{I}_{0}$
+also contains the currents flowing out of the non-linear components.
 The iteration formula of the Newton-Raphson method writes:
 
 \begin{equation}
@@ -2628,17 +2696,22 @@ components. This can be avoided. Multiplying equation
 \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m+1)}
   = \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
     \boldsymbol{f}( \boldsymbol{V}^{(m)} )
+  = \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
+    \boldsymbol{G} \cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)}
 \end{equation}
 
-As can be seen, the linear terms on the right side cancel
-each other. So, bringing the Jacobian back to the right side
-results in the new iteration formula:
+As can be seen, the linear terms on the right-hand side cancel
+each other, because they are identical in $\boldsymbol{G}$
+and $\boldsymbol{J}^{(m)}$. So, bringing the Jacobian back
+to the right side results in the new iteration formula:
 \begin{equation}
-\boldsymbol{V}^{(m+1)} = \left( \boldsymbol{J}^{(m)} \right)^{-1} -
-  \left( \boldsymbol{J}_{nl}^{(m)}\cdot \boldsymbol{V}^{(m)} - \boldsymbol{I}_{nl}^{(m)} \right)
+\boldsymbol{V}^{(m+1)} = \left( \boldsymbol{J}^{(m)} \right)^{-1} \cdot
+  \left( \boldsymbol{J}_{nl}^{(m)}\cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)} \right)
 \end{equation}
 
-where the index $nl$ denotes only the non-linear terms.
+where the index $nl$ denotes only the non-linear terms. Note
+that $\boldsymbol{I}_{0}^{(m)}$ still contains contributions of linear
+and non-linear current sources.
 
 
 \subsection{Convergence}

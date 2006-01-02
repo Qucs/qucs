@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: logging.c,v 1.11 2005-12-12 07:46:52 raimi Exp $
+ * $Id: logging.c,v 1.12 2006-01-02 07:09:44 margraf Exp $
  *
  */
 
@@ -67,7 +67,7 @@ void logprogressbar (nr_double_t current, nr_double_t final, int points) {
       return;
     progressbar_last = (int) (current * 100 / final);
     if (progressbar_gui) {
-      logprint (LOG_STATUS, "PROGRESS: %02d\n", progressbar_last);
+      logprint (LOG_STATUS, "\t%02d\r", progressbar_last);
     }
     else {
       logprint (LOG_STATUS, "[");

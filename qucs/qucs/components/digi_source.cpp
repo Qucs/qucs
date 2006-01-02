@@ -82,8 +82,6 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString Digi_Source::NetList()
 {
-  if(!isActive) return QString("");    // should it be simulated ?
-
   QString s = Model+":"+Name;
 
   // output node names
@@ -119,8 +117,8 @@ QString Digi_Source::VHDL_Code(int NumPorts)
 
     Time = Props.next()->Value.section(';',z,z);
     while(!Time.isEmpty()) {
-      s += Out + State + "';\n";    // next value for signal
-      s += "    wait for " + Time + ";\n";
+      s += Out + State + "';";    // next value for signal
+      s += "  wait for " + Time + ";\n";
       State ^= 1;
       z++;
       Time = Props.current()->Value.section(';',z,z);
@@ -131,8 +129,8 @@ QString Digi_Source::VHDL_Code(int NumPorts)
     int Num = Props.getFirst()->Value.toInt() - 1;
     
     for(z=1<<(NumPorts-Num); z>0; z--) {
-      s += Out + State + "';\n";    // next value for signal
-      s += "    wait for "+QString::number(1 << Num)+"ns;\n";
+      s += Out + State + "';";    // next value for signal
+      s += "  wait for "+QString::number(1 << Num)+"ns;\n";
       State ^= 1;
     }
   }

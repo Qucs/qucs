@@ -29,6 +29,8 @@ class QPushButton;
 class QProgressBar;
 class QucsDoc;
 
+// #define SPEEDUP_PROGRESSBAR
+
 
 class SimMessage : public QDialog  {
    Q_OBJECT
@@ -53,6 +55,14 @@ private slots:
 
   void slotReadSpiceNetlist();
   void slotFinishSpiceNetlist();
+
+/* #ifdef SPEEDUP_PROGRESSBAR
+  void slotUpdateProgressBar();
+private:
+  int  iProgress;
+  bool waitForUpdate;
+#endif
+*/
 
 private:
   void FinishSimulation(int);

@@ -1076,6 +1076,8 @@ QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
 
   QString s, Time;
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+    if(!pc->isActive) continue;   // should it be simulated ?
+  
     if(NumPorts < 0)
       s = pc->NetList();
     else {

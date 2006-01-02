@@ -881,8 +881,8 @@ problem.  Rewriting them in an explicit form regarding the next
 integration current results in
 \begin{align}
 \label{eq:EulerIC}
-I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
-I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
+I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n} \qquad\text{(backward Euler)}\\
+I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n \qquad\text{(trapezoidal)}\\
 I_C^{n+1} &= \dfrac{C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1}\\
 I_C^{n+1} &= \underbrace{\dfrac{C}{b_{-1}\cdot h^{n}}}_{g_{eq}} V_C^{n+1} \underbrace{- \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{b_0}{b_{-1}} I_C^n - \dfrac{b_1}{b_{-1}} I_C^{n-1} - \ldots - \dfrac{b_{k-2}}{b_{-1}} I_C^{n-k+2}}_{I_{eq}}
 \end{align}

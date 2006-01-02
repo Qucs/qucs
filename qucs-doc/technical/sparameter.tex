@@ -1229,7 +1229,7 @@ S_{11} = S_{23} = S_{32} = S_{44} = T\cdot S_{12}
 \FloatBarrier
 
 A non-ideal transformer with inductances $L_1$ and $L_2$ and
-coupling factor $K$ yields the following S-parameters:
+coupling factor $k$ yields the following S-parameters:
 \begin{equation}
 D = (k^2 - 1) \cdot \dfrac{\omega^2\cdot L_1\cdot L_2}{2\cdot Z_0} +
     j\omega L_1 + j\omega L_2 + 2\cdot Z_0
@@ -1404,6 +1404,46 @@ S_{11} = S_{22} = \frac{r\cdot\left(1-\exp\left(j\cdot 2\phi\right)\right)}{1-r^
 \end{equation}
 \begin{equation}
 S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp\left(j\cdot\phi\right)}{1-r^2\cdot\exp\left(j\cdot 2\phi\right)}
+\end{equation}
+
+
+\subsection{Coupler}
+
+The scattering parameters of a coupler are:
+\begin{equation}
+S_{11} = S_{22} = S_{33} = S_{44} = 0
+\end{equation}
+\begin{equation}
+S_{14} = S_{23} = S_{32} = S_{41} = 0
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = S_{34} = S_{43} = \sqrt{1-k^2}
+\end{equation}
+\begin{equation}
+S_{13} = S_{31} = S_{24} = S_{42} = k\cdot \exp(j\phi)
+\end{equation}
+$0<k<1$ is the coupling factor, $\phi$ the phase shift of the
+coupling path. Extending them for an arbitrary reference impedance
+$Z_{ref}$, they already become quite complex:
+
+\begin{align}
+r &= \dfrac{Z_{ref}-Z_0}{Z_{ref}+Z_0} \\
+A &= k^2 \cdot \left( \exp(j\cdot 2\phi)+1 \right) \\
+B &= r^2 \cdot (1-A) \\
+C &= k^2 \cdot \left( \exp(j\cdot 2\phi)-1 \right) \\
+D &= 1 - 2\cdot r^2\cdot (1+C) + B^2 \\
+\end{align}
+\begin{equation}
+S_{11} = S_{22} = S_{33} = S_{44} = r\cdot\dfrac{A\cdot B + C + 2\cdot r^2\cdot k^2\cdot\exp(j\cdot 2\phi)}{D}
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = S_{34} = S_{43} = \sqrt{1-k^2}\cdot \dfrac{(1-r^2)\cdot (1-B)}{D}
+\end{equation}
+\begin{equation}
+S_{13} = S_{31} = S_{24} = S_{42} = k\cdot\exp(j\phi)\cdot \dfrac{(1-r^2)\cdot (1+B)}{D}
+\end{equation}
+\begin{equation}
+S_{14} = S_{23} = S_{32} = S_{41} = 2\cdot\sqrt{1-k^2}\cdot k\cdot\exp(j\phi)\cdot r\cdot \dfrac{(1-r^2)}{D}
 \end{equation}
 
 

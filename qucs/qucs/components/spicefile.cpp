@@ -138,8 +138,6 @@ void SpiceFile::recreate(QucsDoc *Doc)
 // ---------------------------------------------------
 QString SpiceFile::NetList()
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   if(Props.at(1)->Value.isEmpty())
     return QString("");  // no ports, no subcircuit instance
 

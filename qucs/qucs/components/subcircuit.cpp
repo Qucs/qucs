@@ -221,8 +221,6 @@ int Subcircuit::loadSymbol(const QString& DocName)
 // -------------------------------------------------------
 QString Subcircuit::NetList()
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   QString s = Model+":"+Name;
 
   // output all node names
@@ -237,8 +235,6 @@ QString Subcircuit::NetList()
 // -------------------------------------------------------
 QString Subcircuit::VHDL_Code()
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   QString s = "  " + Name + ": entity " + properName(Props.getFirst()->Value);
   s += " port map (";
 

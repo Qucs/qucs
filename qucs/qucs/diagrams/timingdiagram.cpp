@@ -222,7 +222,7 @@ if(!g->cPointsX.isEmpty()) {
     }
 
     x = xStart + 5;
-    yLast = tHeight - 4;
+    yLast = -10;
     colWidth = 0;
 
     if(g->cPointsY) {
@@ -249,9 +249,10 @@ if(!g->cPointsX.isEmpty()) {
           }
           else {
             if(yLast < 3)
-              Lines.append(new Line(x, y-tHeight+4, x, y-2, Pen));
+              if(yLast >= -5)  // no vertical graph line at beginning
+                Lines.append(new Line(x, y-tHeight+4, x, y-2, Pen));
             yLast = tHeight - 4;
-          }
+          } 
           Lines.append(new Line(x, y-yLast, x+40, y-yLast, Pen));
 
           x += 40;
