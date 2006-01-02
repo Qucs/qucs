@@ -46,8 +46,6 @@ Logical_Inv::Logical_Inv()
 // -------------------------------------------------------
 QString Logical_Inv::VHDL_Code(int NumPorts)
 {
-  if(!isActive) return QString("");   // should it be simulated ?
-
   QString s = "  " + Ports.getFirst()->Connection->Name + " <= not " +
               Ports.getLast()->Connection->Name;
 

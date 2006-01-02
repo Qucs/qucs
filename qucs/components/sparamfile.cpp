@@ -27,6 +27,7 @@ SParamFile::SParamFile(int No)
 {
   Description = QObject::tr("S parameter file");
 
+  if(No < 1)  No = 1;
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
@@ -63,7 +64,8 @@ SParamFile::SParamFile(int No)
   Model = "#SPfile";
   Name  = "X";
 
-  Props.append(new Property("File", "test.s2p", true,
+  QString s = "test.s" + QString::number(No) + "p";
+  Props.append(new Property("File", s, true,
 		QObject::tr("name of the s parameter file")));
   Props.append(new Property("Data", "rectangular", false,
 		QObject::tr("data type")+" [rectangular, polar]"));
@@ -92,8 +94,6 @@ Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 QString SParamFile::NetList()
 {
-  if(!isActive) return QString("");  // should it be simulated ?
-
   QString s = Model.mid(1)+":"+Name;
 
   // output all node names

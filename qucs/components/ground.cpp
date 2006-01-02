@@ -16,10 +16,12 @@
  ***************************************************************************/
 
 #include "ground.h"
+#include "node.h"
 
 
 Ground::Ground()
 {
+  Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
   Lines.append(new Line(  0,  0,  0, 10,QPen(QPen::darkBlue,2)));
@@ -47,6 +49,7 @@ Component* Ground::newOne()
   return new Ground();
 }
 
+// -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ground");
@@ -56,7 +59,18 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 QString Ground::NetList()
 {
   return QString("");
+}
+
+// -------------------------------------------------------
+QString Ground::VHDL_Code(int)
+{
+  QString s = "  ";
+  Port *pp = Ports.first();
+  s += pp->Connection->Name + " <= ";  // output port
+  s += pp->Connection->Name + " and '0';";   // to keep it low all the time
+  return s;
 }

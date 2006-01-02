@@ -771,7 +771,6 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
 // --------------------------------------------------------------
 int Rect3DDiagram::calcDiagram()
 {
-qDebug("0");
   Lines.clear();
   Texts.clear();
   Arcs.clear();
@@ -872,16 +871,15 @@ qDebug("0");
   createAxis(&zAxis, true, X[z], Y[z], X[z2], Y[z2]);
 
 
-qDebug("3");
   if(hideLines) {
-    w = x2 * (y2+7)/8;
+    w = (x2+1) * (y2/8 + 1);
     // To store the pixel coordinates that are already used (hidden).
     // Use one bit per pixel.
     zBuffer = (char*)malloc(w);
     memset(zBuffer, 0, w);
 
     // To store the boundings of the current polygon.
-    Bounds = (tBound*)malloc(x2 * sizeof(tBound));
+    Bounds = (tBound*)malloc((x2+1) * sizeof(tBound));
   }
 
   // hide invisible parts of graphs
@@ -908,7 +906,6 @@ qDebug("3");
     Lines.append(new Line(X[o], Y[o], X[o^4], Y[o^4], QPen(QPen::black,0)));
   }
 
-qDebug("5");
   pMem = Mem;
   return 3;
 
@@ -925,10 +922,8 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 // g->Points must already be empty!!!
 void Rect3DDiagram::calcData(Graph *g)
 {
-qDebug("6");
   if(!pMem)  return;
   if(!g->cPointsY) return;
-qDebug("7");
 
   int tmp;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
@@ -973,7 +968,6 @@ qDebug("7");
 
       } while(((pMem++)->done & 256) == 0);
       *p = GRAPHEND;
-qDebug("9");
       return;
 
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
