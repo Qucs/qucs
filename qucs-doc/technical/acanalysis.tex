@@ -182,19 +182,67 @@ whence $I_{br}$ denote the branch current through the voltage source.
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
-The impedance parameters of an attenuator with the power attenuation
-$L$ (loss) (or power gain $G=1/L$) in reference to the impedance
-$Z_{ref}$ write as follows.
-\begin{align}
-Z_{11} = Z_{22} &= Z_{ref}\cdot\frac{L+1}{L-1}\\
-Z_{12} = Z_{21} &= Z_{ref}\cdot\frac{2\cdot\sqrt{L}}{L-1}
-\end{align}
-
-The Z-parameters can be easily converted into Y-parameters which are
-required for the AC analysis.  An attenuator with a power attenuation
+The y-parameters of an attenuator are mentioned in section
+\ref{sec:dc_attenuator} (DC analysis).  An attenuator with a power attenuation
 $L=1$ (no attenuation) yields an ideal short circuit regardless its
 reference impedance very similar to the phase shifter with zero phase
 shift.
+
+\subsection{Coupler}
+
+The y-parameters of a coupler writes as follows.
+\begin{align}
+Y_{11} = Y_{22} = Y_{33} = Y_{44} &= \dfrac{A\cdot (2-A)}{D} \\
+Y_{12} = Y_{21} = Y_{34} = Y_{43} &= \dfrac{-A\cdot B}{D} \\
+Y_{13} = Y_{31} = Y_{24} = Y_{42} &= \dfrac{C\cdot (A-2)}{D} \\
+Y_{14} = Y_{41} = Y_{23} = Y_{32} &= \dfrac{B\cdot C}{D} \\
+\end{align}
+with
+\begin{align}
+A &= k^2 \cdot \left( 1+\exp(j\cdot 2\phi) \right) \\
+B &= 2 \cdot \sqrt{1-k^2} \\
+C &= 2 \cdot k \cdot \exp(j\cdot\phi) \\
+D &= Z_{ref}\cdot (A^2 - C^2) \\
+\end{align}
+$0<k<1$ is the coupling factor, $\phi$ the phase shift of the
+coupling path and $Z_{ref}$ the reference impedance.
+The coupler can also be used as hybrid by setting $k=1/\sqrt{2}$.
+For a 90 degree hybrid, for example, set $\phi$ to $\pi / 2$.
+Note that for most couplers no real DC model exists! Taking
+the real part of the AC matrix often leads to non-logical
+results. Thus, it is better to model the coupler for DC by
+making a short between port 1 and port 2 and between port 3
+and port 4. The rest should be an open. This leads to the
+following MNA matrix.
+\begin{equation}
+\begin{bmatrix}
+.&.&.&.& 1 & 0\\
+.&.&.&.& 0 & 1\\
+.&.&.&.& 0 &-1\\
+.&.&.&.&-1 & 0\\
+1 & 0 & 0 & -1 & 0 & 0\\
+0 & 1 &-1 &  0 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{out1}\\
+I_{out4}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+0\\
+\end{bmatrix}
+\end{equation}
+
 
 \subsection{Controlled sources}
 %\addcontentsline{toc}{subsection}{Controlled sources}
