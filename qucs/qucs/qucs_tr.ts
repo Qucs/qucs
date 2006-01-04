@@ -4821,11 +4821,6 @@ Quite Universal Circuit Simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Simulator by Stefan Jahn
 </source>
         <translation type="unfinished"></translation>
@@ -4887,12 +4882,17 @@ Quite Universal Circuit Simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hungarian by Jozsef Bus</source>
+        <source>Swedish by Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
