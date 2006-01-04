@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,14 +29,16 @@ dist_man_MANS = qucsfilter.1
 MOCHEADERS = qucsfilter.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp lc_filter.cpp
+qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp lc_filter.cpp \
+  qf_poly.cpp qf_filter.cpp qf_cauer.cpp
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
-noinst_HEADERS = $(MOCHEADERS) lc_filter.h
+noinst_HEADERS = $(MOCHEADERS) lc_filter.h qf_poly.h qf_filter.h qf_cauer.h \
+  qf_matrix.h
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<

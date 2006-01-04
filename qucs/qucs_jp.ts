@@ -5159,7 +5159,7 @@ Quite Universal Circuit Simulator
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf</translation>
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005 by Michael Margraf</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
@@ -5301,11 +5301,6 @@ Calculates DC bias and shows it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add Files to Project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5321,6 +5316,16 @@ Calculates DC bias and shows it</source>
         <source>Add Files to Project
 
 Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf</translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
