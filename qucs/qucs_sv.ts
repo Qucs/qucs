@@ -55,83 +55,84 @@
     </message>
     <message>
         <source>Arrow head: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pilspets: </translation>
     </message>
     <message>
         <source>two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>två rader</translation>
     </message>
     <message>
         <source>filled</source>
-        <translation type="unfinished"></translation>
+        <translation>fylld</translation>
     </message>
 </context>
 <context>
     <name>ChangeDialog</name>
     <message>
         <source>Change Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra komponentegenskaper</translation>
     </message>
     <message>
         <source>Components:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenter:</translation>
     </message>
     <message>
         <source>all components</source>
-        <translation type="unfinished"></translation>
+        <translation>alla komponenter</translation>
     </message>
     <message>
         <source>resistors</source>
-        <translation type="unfinished"></translation>
+        <translation>motstånd</translation>
     </message>
     <message>
         <source>capacitors</source>
-        <translation type="unfinished"></translation>
+        <translation>kapacitanser</translation>
     </message>
     <message>
         <source>inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>induktanser</translation>
     </message>
     <message>
         <source>transistors</source>
-        <translation type="unfinished"></translation>
+        <translation>transistorer</translation>
     </message>
     <message>
         <source>Component Names:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentnamn:</translation>
     </message>
     <message>
         <source>Property Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskapsnamn:</translation>
     </message>
     <message>
         <source>New Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt värde:</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Found Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Hittade komponenter</translation>
     </message>
     <message>
         <source>Change properties of
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra egenskaper hos
+</translation>
     </message>
     <message>
         <source>these components ?</source>
-        <translation type="unfinished"></translation>
+        <translation>dessa komponenter?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
 </context>
 <context>
@@ -536,11 +537,11 @@
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>hide invisible lines</source>
-        <translation type="unfinished"></translation>
+        <translation>göm osynliga linjer</translation>
     </message>
 </context>
 <context>
@@ -828,88 +829,89 @@
     <name>MatchDialog</name>
     <message>
         <source>Create Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa passande krets</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>beräkna två-portsmatchning</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Referensimpedans</translation>
     </message>
     <message>
         <source>Port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Port 1</translation>
     </message>
     <message>
         <source>ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ohm</translation>
     </message>
     <message>
         <source>Port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Port 2</translation>
     </message>
     <message>
         <source>S Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>S-parameter</translation>
     </message>
     <message>
         <source>Input format</source>
-        <translation type="unfinished"></translation>
+        <translation>Indataformat</translation>
     </message>
     <message>
         <source>real/imag</source>
-        <translation type="unfinished"></translation>
+        <translation>real/imaginär</translation>
     </message>
     <message>
         <source>mag/deg</source>
-        <translation type="unfinished"></translation>
+        <translation>mag/grader</translation>
     </message>
     <message>
         <source>S11</source>
-        <translation type="unfinished"></translation>
+        <translation>S11</translation>
     </message>
     <message>
         <source>S21</source>
-        <translation type="unfinished"></translation>
+        <translation>S21</translation>
     </message>
     <message>
         <source>S12</source>
-        <translation type="unfinished"></translation>
+        <translation>S12</translation>
     </message>
     <message>
         <source>S22</source>
-        <translation type="unfinished"></translation>
+        <translation>S22</translation>
     </message>
     <message>
         <source>Frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Freeekvens:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Skapa</translation>
+        <translation>Skapa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Reflexion Coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Reflexionskoefficient</translation>
     </message>
     <message>
         <source>Impedance (ohms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedans (ohm)</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>Realdel av impedans måste vara större än noll,
+men är nu %1 !</translation>
     </message>
 </context>
 <context>
@@ -2733,131 +2735,132 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>number of input ports</source>
-        <translation type="unfinished"></translation>
+        <translation>antal ingångsportar</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation type="unfinished"></translation>
+        <translation>spänning av hög nivå</translation>
     </message>
     <message>
         <source>digital simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>digital simulering</translation>
     </message>
     <message>
         <source>type of simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>typ av simulering</translation>
     </message>
     <message>
         <source>digital source</source>
-        <translation type="unfinished"></translation>
+        <translation>digital källa</translation>
     </message>
     <message>
         <source>initial output value</source>
-        <translation type="unfinished"></translation>
+        <translation>initialt utdatavärde</translation>
     </message>
     <message>
         <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
+        <translation>lista på tider för att byta utdatavärde</translation>
     </message>
     <message>
         <source>logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt AND (OCH)</translation>
     </message>
     <message>
         <source>n-port AND</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports AND</translation>
     </message>
     <message>
         <source>logical inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>logisk inverterare</translation>
     </message>
     <message>
         <source>Inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverterare</translation>
     </message>
     <message>
         <source>logical NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt N</translation>
     </message>
     <message>
         <source>n-port NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports NAND
+</translation>
     </message>
     <message>
         <source>logical NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt NOR</translation>
     </message>
     <message>
         <source>n-port NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports NOR</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt OR</translation>
     </message>
     <message>
         <source>n-port OR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports OR</translation>
     </message>
     <message>
         <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt XNOR</translation>
     </message>
     <message>
         <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>nports XNOR</translation>
     </message>
     <message>
         <source>logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>logiskt XOR</translation>
     </message>
     <message>
         <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports XOR</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>två ömsesidiga induktanser</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>induktans hos spole 1</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>induktans hos spole 2</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation type="unfinished"></translation>
+        <translation>kopplingsfaktor mellan spole 1 och 2</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Ömsesidiga induktanser</translation>
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>tre ömsesidiga induktanser</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation type="unfinished"></translation>
+        <translation>induktans hos spole 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>kopplingsfaktor mellan spole 1 och 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>kopplingsfaktor mellan spole 2 och 3</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>3 ömsesidiga induktanser</translation>
     </message>
     <message>
         <source>correlated current sources</source>
-        <translation type="unfinished"></translation>
+        <translation>korrelerade strömkällor</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
@@ -2869,11 +2872,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>normaliserad korrelationskoefficient</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrelerade bruskällor</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
@@ -2885,95 +2888,95 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>data type</source>
-        <translation type="unfinished"></translation>
+        <translation>datatyp</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Komponent &quot;%1&quot; har ingen analog modell.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Komponent &quot;%1&quot; har ingen digital modell.</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>VARNING: Ignorera simuleringskomponent i delkrets &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>VARNING: Ignorera ekvation i delkrets &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>type of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>portens typ</translation>
     </message>
     <message>
         <source>Truth Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Sanningstabell</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Endast en digital simulering tillåts.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Analog och digital simulering kan ej blandas.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Digital simulering behöver åtminstone en digital källa.</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Ingen jordsymbol tillåts i digital simulering.</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Ingen simulering specificerad på denna sida.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>mättnadströmstemperaturkoefficient</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation type="unfinished"></translation>
+        <translation>energibandgap i eV</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Bv linjär temperaturkoefficient</translation>
     </message>
     <message>
         <source>Rs linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Rs linjär temperaturkoefficient</translation>
     </message>
     <message>
         <source>Tt linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Tt linjär temperaturkoefficient</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Tt kvadratisk temperaturkoefficient</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>M linjär temperaturkoefficient</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>M kvadratisk temperaturkoefficient</translation>
     </message>
     <message>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation>standardyta för diod</translation>
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
@@ -2981,27 +2984,27 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatur vid vilken parametrar extraherats</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>standardyta för bipolär transistor</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vt0 temperaturkoefficient</translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Beta exponentiell temperaturkoefficient</translation>
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>standardyta för JFET</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>parametermätningstemperatur</translation>
     </message>
 </context>
 <context>
@@ -3040,44 +3043,45 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget projekt öppnat!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj filer för kopiering</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga filer kopierade.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej öppna &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv över</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skapa &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej läsa &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej skriva &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Klar.</translation>
+        <translation>Klar.</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen &quot;%1&quot; finns redan.
+Skriva över?</translation>
     </message>
 </context>
 <context>
@@ -3522,19 +3526,19 @@ Redigerar schemat</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="unfinished"></translation>
+        <translation>digitala komponenter</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
+        <translation>filkomponenter</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Annat</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>kan ej starta &quot;%1&quot;!</translation>
     </message>
 </context>
 <context>
@@ -3621,7 +3625,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad: %1  -  kulumn: %2</translation>
     </message>
 </context>
 <context>
@@ -3730,35 +3734,35 @@ Filtersyntesprogram
     </message>
     <message>
         <source>Band pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandpass</translation>
     </message>
     <message>
         <source>Band stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandstopp</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 by</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppfrekvens måste vara större än startfrekvens.</translation>
     </message>
     <message>
         <source>Filter order must not be less than two.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filterordningen får inte vara mindre än två.</translation>
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Startfrekvens:</translation>
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
+        <translation>Besselfilterordning får inte vara större än 19.</translation>
     </message>
 </context>
 <context>
@@ -4949,7 +4953,7 @@ Quite Universal Circuit Simulator
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -5039,72 +5043,93 @@ Quite Universal Circuit Simulator
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra egenskapsvärden...</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra egenskapsvärden</translation>
     </message>
     <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra egenskapsvärden
+
+Ändra egenskapsvärde hos komponenter</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchande krets</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa matchande krets</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Matchande krets
+
+Dialog för att skapa matchande krets</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna DC-förspänning</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräkna DC-förspänning
+
+Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Italienska av Giorgio Luparia och Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe and Peter Landgren
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Svenska av Peter Landgren
+</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till filer till projekt</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lägg till filer till projekt...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopierar filer till projektmapp</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
+        <translation>Lägg till filer till projekt
+
+Kopierar filer till projektmapp</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2003, 2004, 2005, 2006 by Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5243,19 +5268,19 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffix</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Program</translation>
     </message>
     <message>
         <source>Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffix:</translation>
     </message>
     <message>
         <source>Program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Program:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -5263,28 +5288,29 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Ta bort</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtyper</translation>
     </message>
     <message>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrera filnamnsändelser här för att kunna
+öppna filer med ett passande program.</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Mängd</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>This suffix is already registered!</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta suffix är redan registrerat!</translation>
     </message>
 </context>
 <context>
@@ -5665,39 +5691,39 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation>effektmatchning</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished"></translation>
+        <translation>brusmatchning</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>2-ports-matchning</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ladda [1,1].</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ladda [1,2].</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ladda [2,1].</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte ladda [2,2].</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel beroende!</translation>
     </message>
 </context>
 <context>
@@ -5889,7 +5915,7 @@ Fel:
     </message>
     <message>
         <source>creating netlist... </source>
-        <translation type="unfinished"></translation>
+        <translation>skapar nätlista...</translation>
     </message>
 </context>
 <context>
@@ -5987,11 +6013,11 @@ Fel:
     <name>SweepDialog</name>
     <message>
         <source>Bias Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Förspänningspunkter</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Stäng</translation>
     </message>
 </context>
 <context>

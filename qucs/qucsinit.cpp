@@ -895,7 +895,7 @@ void QucsInit::slotHelpAbout()
   QMessageBox::about(App, tr("About..."),
     tr("Qucs Version ")+PACKAGE_VERSION+
     tr("\nQuite Universal Circuit Simulator\n")+
-    tr("Copyright (C) 2003, 2004, 2005 by Michael Margraf\n")+
+    tr("Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
@@ -911,7 +911,7 @@ void QucsInit::slotHelpAbout()
     tr("Japanese by Toyoyuki Ishikawa\n")+
     tr("Italian by Giorgio Luparia and Claudio Girardi\n")+
     tr("Hebrew by Dotan Nahum\n")+
-    tr("Swedish by Markus Gothe and Peter Landgren\n")+
+    tr("Swedish by Peter Landgren\n")+
     tr("Hungarian by Jozsef Bus"));
 }
 

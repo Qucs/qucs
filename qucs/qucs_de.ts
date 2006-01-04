@@ -7347,7 +7347,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -7529,7 +7529,7 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     <message>
         <source>Swedish by Markus Gothe and Peter Landgren
 </source>
-        <translation>Schwedisch von Markus Gothe und Peter Landgren
+        <translation type="obsolete">Schwedisch von Markus Gothe und Peter Landgren
 </translation>
     </message>
     <message>
@@ -7551,6 +7551,18 @@ Copies files to project directory</source>
         <translation>Dateien zu Projekt hinzufügen
 
 Kopiert Dateien in das Projektverzeichnis</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 von Michael Margraf
+
+</translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
