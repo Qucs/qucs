@@ -14,31 +14,31 @@
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation>Hue:</translation>
+        <translation>Hu&amp;e:</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation>Sat:</translation>
+        <translation>&amp;Sat:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation>Val:</translation>
+        <translation>&amp;Val:</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation>Röd:</translation>
+        <translation>&amp;Röd:</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation>Grönt:</translation>
+        <translation>&amp;Grönt:</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation>Blå:</translation>
+        <translation>Bl&amp;å:</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation>Alfakanal:</translation>
+        <translation>A&amp;lfakanal:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
@@ -73,14 +73,14 @@
     <name>QDialog</name>
     <message>
         <source>What&apos;s This?</source>
-        <translation>Förklaring</translation>
+        <translation>Vad är detta?</translation>
     </message>
 </context>
 <context>
     <name>QErrorMessage</name>
     <message>
         <source>Debug Message:</source>
-        <translation>Meddelande från debuggern:</translation>
+        <translation>Debug-meddelande:</translation>
     </message>
     <message>
         <source>Warning:</source>
@@ -354,7 +354,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Greek</source>
-        <translation></translation>
+        <translation>Grekiska</translation>
     </message>
     <message>
         <source>Cyrillic</source>
@@ -530,7 +530,7 @@ Kontroller sökvägen och filnamn.</translation>
     </message>
     <message>
         <source>Unicode</source>
-        <translation></translation>
+        <translation>Unicode</translation>
     </message>
 </context>
 <context>
@@ -673,7 +673,7 @@ för mer information.&lt;p&gt;</translation>
     </message>
     <message>
         <source>Print in color if available</source>
-        <translation>Skriv ut i färg</translation>
+        <translation>Skriv ut i färg, om möjligt</translation>
     </message>
     <message>
         <source>Print in grayscale</source>
@@ -725,7 +725,7 @@ för mer information.&lt;p&gt;</translation>
     </message>
     <message>
         <source>To page:</source>
-        <translation>Till sidan:</translation>
+        <translation>Till sida:</translation>
     </message>
     <message>
         <source>Print first page first</source>
@@ -884,7 +884,7 @@ för mer information.&lt;p&gt;</translation>
     <name>QWhatsThisButton</name>
     <message>
         <source>What&apos;s this?</source>
-        <translation>Förklaring</translation>
+        <translation>Vad är detta?</translation>
     </message>
 </context>
 </TS>
