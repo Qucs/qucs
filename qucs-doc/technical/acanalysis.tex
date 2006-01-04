@@ -182,38 +182,38 @@ whence $I_{br}$ denote the branch current through the voltage source.
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
-The y-parameters of an attenuator are mentioned in section
+The Y-parameters of an attenuator are mentioned in section
 \ref{sec:dc_attenuator} (DC analysis).  An attenuator with a power attenuation
 $L=1$ (no attenuation) yields an ideal short circuit regardless its
 reference impedance very similar to the phase shifter with zero phase
 shift.
 
 \subsection{Coupler}
+%\addcontentsline{toc}{subsection}{Coupler}
 
-The y-parameters of a coupler writes as follows.
+The Y-parameters of a coupler write as follows.
 \begin{align}
-Y_{11} = Y_{22} = Y_{33} = Y_{44} &= \dfrac{A\cdot (2-A)}{D} \\
+Y_{11} = Y_{22} = Y_{33} = Y_{44} &= \dfrac{A\cdot \left(2-A\right)}{D} \\
 Y_{12} = Y_{21} = Y_{34} = Y_{43} &= \dfrac{-A\cdot B}{D} \\
-Y_{13} = Y_{31} = Y_{24} = Y_{42} &= \dfrac{C\cdot (A-2)}{D} \\
+Y_{13} = Y_{31} = Y_{24} = Y_{42} &= \dfrac{C\cdot \left(A-2\right)}{D} \\
 Y_{14} = Y_{41} = Y_{23} = Y_{32} &= \dfrac{B\cdot C}{D} \\
 \end{align}
 with
 \begin{align}
-A &= k^2 \cdot \left( 1+\exp(j\cdot 2\phi) \right) \\
+A &= k^2 \cdot \left( 1+\exp\left(j\cdot 2\phi\right) \right) \\
 B &= 2 \cdot \sqrt{1-k^2} \\
-C &= 2 \cdot k \cdot \exp(j\cdot\phi) \\
-D &= Z_{ref}\cdot (A^2 - C^2) \\
+C &= 2 \cdot k \cdot \exp\left(j\cdot\phi\right) \\
+D &= Z_{ref}\cdot \left(A^2 - C^2\right) \\
 \end{align}
-$0<k<1$ is the coupling factor, $\phi$ the phase shift of the
-coupling path and $Z_{ref}$ the reference impedance.
-The coupler can also be used as hybrid by setting $k=1/\sqrt{2}$.
-For a 90 degree hybrid, for example, set $\phi$ to $\pi / 2$.
-Note that for most couplers no real DC model exists! Taking
-the real part of the AC matrix often leads to non-logical
-results. Thus, it is better to model the coupler for DC by
-making a short between port 1 and port 2 and between port 3
-and port 4. The rest should be an open. This leads to the
-following MNA matrix.
+whereas $0<k<1$ denotes the coupling factor, $\phi$ the phase shift of
+the coupling path and $Z_{ref}$ the reference impedance.  The coupler
+can also be used as hybrid by setting $k=1/\sqrt{2}$.  For a 90 degree
+hybrid, for example, set $\phi$ to $\pi / 2$.  Note that for most
+couplers no real DC model exists.  Taking the real part of the AC
+matrix often leads to non-logical results.  Thus, it is better to
+model the coupler for DC by making a short between port 1 and port 2
+and between port 3 and port 4.  The rest should be an open.  This
+leads to the following MNA matrix.
 \begin{equation}
 \begin{bmatrix}
 .&.&.&.& 1 & 0\\
@@ -242,7 +242,6 @@ I_{4}\\
 0\\
 \end{bmatrix}
 \end{equation}
-
 
 \subsection{Controlled sources}
 %\addcontentsline{toc}{subsection}{Controlled sources}

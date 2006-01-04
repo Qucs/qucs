@@ -1406,8 +1406,8 @@ S_{11} = S_{22} = \frac{r\cdot\left(1-\exp\left(j\cdot 2\phi\right)\right)}{1-r^
 S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp\left(j\cdot\phi\right)}{1-r^2\cdot\exp\left(j\cdot 2\phi\right)}
 \end{equation}
 
-
 \subsection{Coupler}
+%\addcontentsline{toc}{subsection}{Coupler}
 
 The scattering parameters of a coupler are:
 \begin{equation}
@@ -1420,32 +1420,31 @@ S_{14} = S_{23} = S_{32} = S_{41} = 0
 S_{12} = S_{21} = S_{34} = S_{43} = \sqrt{1-k^2}
 \end{equation}
 \begin{equation}
-S_{13} = S_{31} = S_{24} = S_{42} = k\cdot \exp(j\phi)
+S_{13} = S_{31} = S_{24} = S_{42} = k\cdot \exp\left(j\phi\right)
 \end{equation}
-$0<k<1$ is the coupling factor, $\phi$ the phase shift of the
-coupling path. Extending them for an arbitrary reference impedance
-$Z_{ref}$, they already become quite complex:
+whereas $0<k<1$ denotes the coupling factor, $\phi$ the phase shift of
+the coupling path.  Extending them for an arbitrary reference
+impedance $Z_{ref}$, they already become quite complex:
 
 \begin{align}
 r &= \dfrac{Z_{ref}-Z_0}{Z_{ref}+Z_0} \\
-A &= k^2 \cdot \left( \exp(j\cdot 2\phi)+1 \right) \\
-B &= r^2 \cdot (1-A) \\
-C &= k^2 \cdot \left( \exp(j\cdot 2\phi)-1 \right) \\
-D &= 1 - 2\cdot r^2\cdot (1+C) + B^2 \\
+A &= k^2 \cdot \left( \exp\left(j\cdot 2\phi\right)+1 \right) \\
+B &= r^2 \cdot \left(1-A\right) \\
+C &= k^2 \cdot \left( \exp\left(j\cdot 2\phi\right)-1 \right) \\
+D &= 1 - 2\cdot r^2\cdot \left(1+C\right) + B^2 \\
 \end{align}
 \begin{equation}
-S_{11} = S_{22} = S_{33} = S_{44} = r\cdot\dfrac{A\cdot B + C + 2\cdot r^2\cdot k^2\cdot\exp(j\cdot 2\phi)}{D}
+S_{11} = S_{22} = S_{33} = S_{44} = r\cdot\dfrac{A\cdot B + C + 2\cdot r^2\cdot k^2\cdot\exp\left(j\cdot 2\phi\right)}{D}
 \end{equation}
 \begin{equation}
-S_{12} = S_{21} = S_{34} = S_{43} = \sqrt{1-k^2}\cdot \dfrac{(1-r^2)\cdot (1-B)}{D}
+S_{12} = S_{21} = S_{34} = S_{43} = \sqrt{1-k^2}\cdot \dfrac{\left(1-r^2\right)\cdot \left(1-B\right)}{D}
 \end{equation}
 \begin{equation}
-S_{13} = S_{31} = S_{24} = S_{42} = k\cdot\exp(j\phi)\cdot \dfrac{(1-r^2)\cdot (1+B)}{D}
+S_{13} = S_{31} = S_{24} = S_{42} = k\cdot\exp\left(j\phi\right)\cdot \dfrac{\left(1-r^2\right)\cdot \left(1+B\right)}{D}
 \end{equation}
 \begin{equation}
-S_{14} = S_{23} = S_{32} = S_{41} = 2\cdot\sqrt{1-k^2}\cdot k\cdot\exp(j\phi)\cdot r\cdot \dfrac{(1-r^2)}{D}
+S_{14} = S_{23} = S_{32} = S_{41} = 2\cdot\sqrt{1-k^2}\cdot k\cdot\exp\left(j\phi\right)\cdot r\cdot \dfrac{\left(1-r^2\right)}{D}
 \end{equation}
-
 
 \subsection{Gyrator}
 %\addcontentsline{toc}{subsection}{Gyrator}
