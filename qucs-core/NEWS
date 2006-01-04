@@ -1,7 +1,7 @@
 -- 
 -- NEWS
 -- 
--- Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ files.
 Version 0.0.8
 -------------
 
+ * new component: ideal coupler
  * implementation of temperature models of diode, jfet, mosfet and bjt
  * analog models of digital components implemented
  * spice converter translates two and three mutual inductors

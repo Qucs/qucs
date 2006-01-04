@@ -4,7 +4,7 @@
 #
 # Automake input file for the component library.
 #
-# Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ libcomponent_a_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp iac.cpp    \
 	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
-	vvnoise.cpp ivnoise.cpp
+	vvnoise.cpp ivnoise.cpp coupler.cpp
 
 noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
@@ -43,7 +43,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
 	tline.h iprobe.h iac.h spfile.h vnoise.h inoise.h vpulse.h ipulse.h  \
 	vrect.h irect.h amplifier.h opamp.h iinoise.h mutual.h mutual2.h     \
-	vvnoise.h ivnoise.h
+	vvnoise.h ivnoise.h coupler.h
 
 INCLUDES = -I$(top_srcdir)/src
 

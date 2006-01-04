@@ -1,7 +1,7 @@
 /*
  * mutual.cpp - two mutual inductors class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual.cpp,v 1.3 2005-10-27 09:57:31 raimi Exp $
+ * $Id: mutual.cpp,v 1.4 2006-01-04 10:40:33 raimi Exp $
  *
  */
 
@@ -44,7 +44,31 @@ mutual::mutual () : circuit (4) {
 }
 
 void mutual::calcSP (nr_double_t frequency) {
+#if 0
   setMatrixS (ytos (calcMatrixY (frequency)));
+#else
+  nr_double_t l1 = getPropertyDouble ("L1");
+  nr_double_t l2 = getPropertyDouble ("L2");
+  nr_double_t k = getPropertyDouble ("k");
+  nr_double_t o = 2 * M_PI * frequency;
+  nr_double_t a = k * k - 1;
+  complex d = rect (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
+  complex r;
+  r = rect (2 * z0, o * l2) / d;
+  setS (NODE_1, NODE_4, r); setS (NODE_4, NODE_1, r);
+  r = 1 - r;
+  setS (NODE_1, NODE_1, r); setS (NODE_4, NODE_4, r);
+  r = rect (2 * z0, o * l1) / d;
+  setS (NODE_2, NODE_3, r); setS (NODE_3, NODE_2, r);
+  r = 1 - r;
+  setS (NODE_2, NODE_2, r); setS (NODE_3, NODE_3, r);
+  r = rect (0, o * k * sqrt (l1 * l2)) / d;
+  setS (NODE_1, NODE_2, r); setS (NODE_2, NODE_1, r);
+  setS (NODE_3, NODE_4, r); setS (NODE_4, NODE_3, r);
+  r = -r;
+  setS (NODE_1, NODE_3, r); setS (NODE_3, NODE_1, r);
+  setS (NODE_2, NODE_4, r); setS (NODE_4, NODE_2, r);
+#endif
 }
 
 matrix mutual::calcMatrixY (nr_double_t frequency) {

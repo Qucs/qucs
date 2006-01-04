@@ -1,7 +1,7 @@
 /*
  * component.h - global component header file
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.32 2005-12-05 12:09:36 raimi Exp $
+ * $Id: component.h,v 1.33 2006-01-04 10:40:33 raimi Exp $
  *
  */
 
@@ -69,6 +69,7 @@
 #include "irect.h"
 #include "amplifier.h"
 #include "opamp.h"
+#include "coupler.h"
 
 #include "vnoise.h"
 #include "inoise.h"

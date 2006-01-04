@@ -1,7 +1,7 @@
 /*
  * qucsconv.cpp - main converter program implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.10 2005-12-26 21:13:31 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.11 2006-01-04 10:40:33 raimi Exp $
  *
  */
 
@@ -34,25 +34,28 @@
 #include "check_spice.h"
 #include "qucs_producer.h"
 
+/* structure defining a conversion */
 struct actionset_t {
-  char * informat; /* -if parameter */
-  char * outformat; /* -of parameter */
+  char * in;  /* -if parameter */
+  char * out; /* -of parameter */
 
-  /* Callback for the logic, return errorcode of program */
+  /* callback for the logic, return error code of application */
   int (* execute) (struct actionset_t *, char * infile, char * outfile);
 };
 
+/* required forward declarations */
 int spice2qucs (struct actionset_t *, char *, char *);
 int vcd2qucs (struct actionset_t *, char *, char *);
 
+/* conversion definitions */
 struct actionset_t actionset[] = {
-  {"spice", "qucs",    spice2qucs},
-  {"spice", "qucslib", spice2qucs},
-  {"vcd", "qucsdata",  vcd2qucs},
-  {NULL, NULL, NULL}
+  { "spice", "qucs",    spice2qucs },
+  { "spice", "qucslib", spice2qucs },
+  { "vcd",   "qucsdata",  vcd2qucs },
+  { NULL, NULL, NULL}
 };
 
-
+/* opens the given file, fallback to stdin/stdout */
 FILE * open_file (char * file, char * flag) {
   FILE * fd = NULL;
   if (file) {
@@ -68,6 +71,7 @@ FILE * open_file (char * file, char * flag) {
   return fd;
 }
 
+/* main entry point */
 int main (int argc, char ** argv) {
 
   char * infile = NULL, * outfile = NULL, * input = NULL, * output = NULL;
@@ -77,7 +81,7 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
 	"QucsConverter " PACKAGE_VERSION "\n"
-	"Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>\n"
+	"Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
 	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
@@ -118,40 +122,35 @@ int main (int argc, char ** argv) {
     }
   }
 
-  int inknown = 0;
-  int outknown = 0;
-  for (int j = 0; actionset[j].informat != NULL; j++) {
+  // check input/output formats
+  int infound = 0;
+  int outfound = 0;
+  for (int j = 0; actionset[j].in != NULL; j++) {
     int in = 0, out = 0;
-
-    if (input && !strcmp (input, actionset[j].informat)) {
-      in = 1;
-      inknown = 1;
+    if (input && !strcmp (input, actionset[j].in)) {
+      in = infound = 1;
     }
-
-    if (output && !strcmp (output, actionset[j].outformat)) {
-      out = 1;
-      outknown = 1;
+    if (output && !strcmp (output, actionset[j].out)) {
+      out = outfound = 1;
     }
-
     if (in && out) {
       return actionset[j].execute (&actionset[j], infile, outfile);
     }
   }
 
-  if (!inknown) {
+  // no appropriate conversion found
+  if (!infound) {
     fprintf (stderr, "invalid input data specification `%s'\n",
 	     input ? input : "not given");
   }
-
-  if (!outknown) {
+  if (!outfound) {
     fprintf (stderr, "invalid output data specification `%s'\n",
 	     output ? output : "not given");
   }
-
   return -1;
 }
 
-
+// SPICE to Qucs conversion.
 int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
   int ret = 0;
   if ((spice_in = open_file (infile, "r")) == NULL) {
@@ -170,7 +169,7 @@ int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
 
   if ((qucs_out = open_file (outfile, "w")) == NULL)
     return -1;
-  if (!strcmp (action->outformat, "qucs"))
+  if (!strcmp (action->out, "qucs"))
     qucs_producer ();
   else /* "qucslib" */
     qucslib_producer ();
@@ -179,9 +178,8 @@ int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
   return 0;
 }
 
-
+// VCD to Qucs conversion.
 int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
   /* TBI */
-  return 0;
+  return -1;
 }
-

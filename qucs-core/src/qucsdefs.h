@@ -1,7 +1,7 @@
 /*
  * qucsdefs.h - netlist definitions for the Qucs netlists
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.31 2005-12-19 07:55:13 raimi Exp $
+ * $Id: qucsdefs.h,v 1.32 2006-01-04 10:40:32 raimi Exp $
  *
  */
 
@@ -227,6 +227,14 @@ struct define_t qucs_definition_available[] =
       { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
+  },
+  /* ideal coupler */
+  { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
+      { "phi", PROP_REAL, { 0, PROP_NO_STR }, { '[', -180, +180, ']' } },
+      PROP_NO_PROP },
+    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* DC current probe */
   { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
