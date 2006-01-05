@@ -4939,14 +4939,14 @@ Om Qt från Trolltech</translation>
         <translation>Om...</translation>
     </message>
     <message>
-        <source>Qucs Version </source>
-        <translation>Quocs version </translation>
+        <source>Qucs Version</source>
+        <translation>Quocs version</translation>
     </message>
     <message>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation>
+        <translation type="obsolete">
 Quite Universal Circuit Simulator
 </translation>
     </message>
@@ -4957,89 +4957,60 @@ Quite Universal Circuit Simulator
 </translation>
     </message>
     <message>
-        <source>Simulator by Stefan Jahn
-</source>
-        <translation>Simulator av Stefan Jahn
-</translation>
+        <source>Simulator by Stefan Jahn</source>
+        <translation>Simulator av Stefan Jahn</translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob
-
-</source>
-        <translation>Speciellt tack till Jens Flucke och Raimund Jacob
-
-</translation>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation>Speciellt tack till Jens Flucke och Raimund Jacob</translation>
     </message>
     <message>
-        <source>Translations:
-</source>
-        <translation>Översättningar:
-</translation>
+        <source>Translations:</source>
+        <translation>Översättningar:</translation>
     </message>
     <message>
-        <source>German by Stefan Jahn
-</source>
-        <translation>Tyska av Stefan Jahn
-</translation>
+        <source>German by Stefan Jahn</source>
+        <translation>Tyska av Stefan Jahn</translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
-        <translation>Polska av Dariusz Pienkowski
-</translation>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation>Polska av Dariusz Pienkowski</translation>
     </message>
     <message>
-        <source>Romanian by Radu Circa
-</source>
-        <translation>Rumänska av Radu Circa
-</translation>
+        <source>Romanian by Radu Circa</source>
+        <translation>Rumänska av Radu Circa</translation>
     </message>
     <message>
-        <source>French by Vincent Habchi, F5RCS
-</source>
-        <translation>Franska av Vincent Habchi, F5RCS
-</translation>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation>Franska av Vincent Habchi, F5RCS</translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca
-</source>
-        <translation>Portugisiska av Luciano Franca
-</translation>
+        <source>Portuguese by Luciano Franca</source>
+        <translation>Portugisiska av Luciano Franca</translation>
     </message>
     <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation>Spanska av Jose L. Redrejo Rodriguez
-</translation>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation>Spanska av Jose L. Redrejo Rodriguez</translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki Ishikawa
-</source>
-        <translation>Japanska av Toyoyuki Ishikawa
-</translation>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation>Japanska av Toyoyuki Ishikawa</translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia
-</source>
-        <translation type="obsolete">Italienska av Giorgio Luparia
-</translation>
+        <source>Italian by Giorgio Luparia</source>
+        <translation type="obsolete">Italienska av Giorgio Luparia</translation>
     </message>
     <message>
-        <source>Hebrew by Dotan Nahum
-</source>
-        <translation>Hebreiska av Dotan Nahum
-</translation>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation>Hebreiska av Dotan Nahum</translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation type="obsolete">Svenska av Peter Landgren
-</translation>
+        <source>Swedish by Markus Gothe</source>
+        <translation type="obsolete">Svenska av Peter Landgren</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation>Ungerska av Jozsef Bus
-</translation>
+        <translation>Ungerska av Jozsef Bus</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
@@ -5090,16 +5061,12 @@ Calculates DC bias and shows it</source>
 Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi
-</source>
-        <translation>Italienska av Giorgio Luparia och Claudio Girardi
-</translation>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
-</source>
-        <translation type="obsolete">Svenska av Peter Landgren
-</translation>
+        <source>Swedish by Markus Gothe and Peter Landgren</source>
+        <translation type="obsolete">Svenska av Peter Landgren</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
@@ -5124,12 +5091,27 @@ Kopierar filer till projektmapp</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2003, 2004, 2005, 2006 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004, 2003, 2004, 2005, 2006 by Michael Margraf
 </translation>
     </message>
     <message>
-        <source>Swedish by Peter Landgren
-</source>
+        <source>Swedish by Peter Landgren</source>
+        <translation>Svenska av Peter Landgren</translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
