@@ -5038,8 +5038,8 @@ O bibliotece QT firmy Trolltech</translation>
         <translation>O...</translation>
     </message>
     <message>
-        <source>Qucs Version </source>
-        <translation>Wersja programu Qucs</translation>
+        <source>Qucs Version</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -5048,10 +5048,8 @@ O bibliotece QT firmy Trolltech</translation>
 </translation>
     </message>
     <message>
-        <source>Simulator by Stefan Jahn
-</source>
-        <translation>Symulator - Stefan Jahn
-</translation>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
@@ -5062,22 +5060,16 @@ O bibliotece QT firmy Trolltech</translation>
 </translation>
     </message>
     <message>
-        <source>Translations:
-</source>
-        <translation>Tłumaczenia:
-</translation>
+        <source>Translations:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>German by Stefan Jahn
-</source>
-        <translation>Niemieckie - Stefan Jahn
-</translation>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
-        <translation>Polskie - Dariusz Pieńkowski
-</translation>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
@@ -5266,10 +5258,8 @@ Prints selected elements of the current document</source>
 Drukuje elementy zaznaczone w aktualnym dokumencie</translation>
     </message>
     <message>
-        <source>Romanian by Radu Circa
-</source>
-        <translation>Rumuńskie - Radu Circa
-</translation>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -5288,16 +5278,12 @@ Edits the symbol for this schematic</source>
 Edytuj symbol dla tego schematu</translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca
-</source>
-        <translation>Portugalskie - Luciano Franca
-</translation>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation>Hiszpańskie - Jose L. Redrejo Rodriguez
-</translation>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move Component Text</source>
@@ -5312,10 +5298,8 @@ Moves the property text of components</source>
 Przesuwa tekst właściwości elementu</translation>
     </message>
     <message>
-        <source>French by Vincent Habchi, F5RCS
-</source>
-        <translation>Francuskie Vincent Habchi, F5RCS
-</translation>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia
@@ -5334,23 +5318,16 @@ Przesuwa tekst właściwości elementu</translation>
 </translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob
-
-</source>
-        <translation>Specjalne podziękowania dla Jensa Flucke i Raimunda Jacoba
-
-</translation>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki Ishikawa
-</source>
-        <translation>Japońskie Toyoyuki Ishikawa</translation>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hebrew by Dotan Nahum
-</source>
-        <translation>Hebrajskie Dotan Nahum
-</translation>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>About Qt...</source>
@@ -5440,7 +5417,7 @@ Uruchomia program biblioteki elementów</translation>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation>
+        <translation type="obsolete">
 Quite Universal Circuit Simulator
 </translation>
     </message>
@@ -5496,16 +5473,12 @@ Calculates DC bias and shows it</source>
         <translation></translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi
-</source>
-        <translation>Włoskie Giorgio Luparia i Claudio Girardi
-</translation>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
-</source>
-        <translation type="obsolete">Szwedzkie Markus Gothe i Peter Landgren
-</translation>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add Files to Project</source>
@@ -5528,12 +5501,23 @@ Copies files to project directory</source>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </translation>
     </message>
     <message>
-        <source>Swedish by Peter Landgren
-</source>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

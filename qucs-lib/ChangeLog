@@ -1,0 +1,4 @@
+2006-01-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Transistors.lib: Added some more transistor models
+	supplied by a user.  Thanks!

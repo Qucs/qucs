@@ -893,25 +893,27 @@ void QucsInit::slotViewStatusBar(bool toggle)
 void QucsInit::slotHelpAbout()
 {
   QMessageBox::about(App, tr("About..."),
-    tr("Qucs Version ")+PACKAGE_VERSION+
-    tr("\nQuite Universal Circuit Simulator\n")+
-    tr("Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf\n")+
+    tr("Qucs Version")+" "+PACKAGE_VERSION+"\n"+
+    tr("Quite Universal Circuit Simulator")+"\n"+
+    tr("Copyright (C)")+" 2003, 2004, 2005, 2006 "+
+    tr("by Michael Margraf")+"\n"+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
-    tr("Simulator by Stefan Jahn\n")+
-    tr("Special thanks to Jens Flucke and Raimund Jacob\n\n")+
-    tr("Translations:\n")+
-    tr("German by Stefan Jahn\n")+
-    tr("Polish by Dariusz Pienkowski\n")+
-    tr("Romanian by Radu Circa\n")+
-    tr("French by Vincent Habchi, F5RCS\n")+
-    tr("Portuguese by Luciano Franca\n")+
-    tr("Spanish by Jose L. Redrejo Rodriguez\n")+
-    tr("Japanese by Toyoyuki Ishikawa\n")+
-    tr("Italian by Giorgio Luparia and Claudio Girardi\n")+
-    tr("Hebrew by Dotan Nahum\n")+
-    tr("Swedish by Peter Landgren\n")+
+    tr("Simulator by Stefan Jahn")+"\n"+
+    tr("Special thanks to Jens Flucke and Raimund Jacob")+"\n\n"+
+    tr("Translations:")+"\n"+
+    tr("German by Stefan Jahn")+"\n"+
+    tr("Polish by Dariusz Pienkowski")+"\n"+
+    tr("Romanian by Radu Circa")+"\n"+
+    tr("French by Vincent Habchi, F5RCS")+"\n"+
+    tr("Portuguese by Luciano Franca")+"\n"+
+    tr("Spanish by Jose L. Redrejo Rodriguez")+"\n"+
+    tr("Japanese by Toyoyuki Ishikawa")+"\n"+
+    tr("Italian by Giorgio Luparia and Claudio Girardi")+"\n"+
+    tr("Hebrew by Dotan Nahum")+"\n"+
+    tr("Swedish by Peter Landgren")+"\n"+
+    tr("Turkish by Onur and Ozgur Cobanoglu")+"\n"+
     tr("Hungarian by Jozsef Bus"));
 }
 
