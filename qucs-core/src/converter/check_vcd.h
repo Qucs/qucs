@@ -1,5 +1,5 @@
 /*
- * check_vcd.h - checker definitions for a vcd
+ * check_vcd.h - checker definitions for a vcd file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.1 2005-12-26 21:13:31 raimi Exp $
+ * $Id: check_vcd.h,v 1.2 2006-01-05 07:43:31 raimi Exp $
  *
  */
 
@@ -29,6 +29,8 @@
 extern int vcd_lineno;
 extern FILE * vcd_in;
 
+extern struct vcd_file * vcd;
+
 __BEGIN_DECLS
 
 /* Available functions of the checker. */
@@ -38,20 +40,21 @@ int  vcd_error (char *);
 int  vcd_lex (void);
 int  vcd_lex_destroy (void);
 void vcd_destroy (void);
+void vcd_init (void);
 
 __END_DECLS
 
 /* VCD data structures. */
 struct vcd_vardef {
-  int type;
+  char * type;
   int size;
-  char * idcode;
+  char * code;
   char * name;
   struct vcd_vardef * next;
 };
 
 struct vcd_scope {
-  int type;
+  char * type;
   char * name;
   struct vcd_vardef * root;
 };
