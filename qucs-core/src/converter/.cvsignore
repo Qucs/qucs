@@ -6,3 +6,6 @@ scan_spice.cpp
 tokens_spice.h
 parse_spice.cpp
 qucsconv
+tokens_vcd.h
+scan_vcd.cpp
+parse_vcd.cpp
