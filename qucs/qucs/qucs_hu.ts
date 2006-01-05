@@ -5232,8 +5232,8 @@ Qt a Trolltech-től</translation>
         <translation>Névjegy...</translation>
     </message>
     <message>
-        <source>Qucs Version </source>
-        <translation>Qucs verzió </translation>
+        <source>Qucs Version</source>
+        <translation>Qucs verzió</translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -5242,73 +5242,48 @@ Qt a Trolltech-től</translation>
 </translation>
     </message>
     <message>
-        <source>Simulator by Stefan Jahn
-</source>
-        <translation></translation>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Translations:
-</source>
-        <translation>Fordítók:
-</translation>
+        <source>Translations:</source>
+        <translation>Fordítók:</translation>
     </message>
     <message>
-        <source>German by Stefan Jahn
-</source>
-        <translation>Stefan Jahn - Német
-</translation>
+        <source>German by Stefan Jahn</source>
+        <translation>Stefan Jahn - Német</translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
-        <translation>Dariusz Pienkowski - Lengyel
-</translation>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation>Dariusz Pienkowski - Lengyel</translation>
     </message>
     <message>
-        <source>Romanian by Radu Circa
-</source>
-        <translation>Radu Circa - Román
-</translation>
+        <source>Romanian by Radu Circa</source>
+        <translation>Radu Circa - Román</translation>
     </message>
     <message>
-        <source>French by Eric Marzolf
-</source>
-        <translation type="obsolete">Eric Marzolf - Francia
-</translation>
+        <source>French by Eric Marzolf</source>
+        <translation type="obsolete">Eric Marzolf - Francia</translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca
-</source>
-        <translation>Luciano Franca - Portugál
-</translation>
+        <source>Portuguese by Luciano Franca</source>
+        <translation>Luciano Franca - Portugál</translation>
     </message>
     <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation>Jose L. Redrejo Rodriguez - Spanyol
-</translation>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation>Jose L. Redrejo Rodriguez - Spanyol</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
         <translation type="obsolete">Giorgio Luparia - Olasz</translation>
     </message>
     <message>
-        <source>French by Vincent Habchi, F5RCS
-</source>
-        <translation>Vincent Habchi, F5RCS - Francia
-</translation>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation>Vincent Habchi, F5RCS - Francia</translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki ISHIKAWA
-</source>
-        <translation type="obsolete">Toyoyuki ISHIKAWA - Japán
-</translation>
-    </message>
-    <message>
-        <source>Italian by Giorgio Luparia
-</source>
-        <translation type="obsolete">Giorgio Luparia - Olasz
-</translation>
+        <source>Japanese by Toyoyuki ISHIKAWA</source>
+        <translation type="obsolete">Toyoyuki ISHIKAWA - Japán</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
@@ -5321,23 +5296,16 @@ Qt a Trolltech-től</translation>
 </translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob
-
-</source>
-        <translation>Külön köszönet Jens Flucke-nek és Raimund Jacob-nak
-
-</translation>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation>Külön köszönet Jens Flucke-nek és Raimund Jacob-nak</translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki Ishikawa
-</source>
+        <source>Japanese by Toyoyuki Ishikawa</source>
         <translation>Toyoyuki Ishikawa - Japán</translation>
     </message>
     <message>
-        <source>Hebrew by Dotan Nahum
-</source>
-        <translation>Dotan Nahum - Héber
-</translation>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation>Dotan Nahum - Héber</translation>
     </message>
     <message>
         <source>Text editor</source>
@@ -5410,11 +5378,8 @@ QucsTrans indítása</translation>
 </translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation type="obsolete">Markus Gothe - Svéd
-
-</translation>
+        <source>Swedish by Markus Gothe</source>
+        <translation type="obsolete">Markus Gothe - Svéd</translation>
     </message>
     <message>
         <source>Component Library</source>
@@ -5444,7 +5409,7 @@ QucsLib indítása</translation>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation>
+        <translation type="obsolete">
 Quite Universal Circuit Simulator
 </translation>
     </message>
@@ -5495,16 +5460,12 @@ Calculates DC bias and shows it</source>
 Kiszámítja a DC munkapontokat és megjeleníti</translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi
-</source>
-        <translation>Giorgio Luparia és Claudio Girardi - Olasz
-</translation>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation>Giorgio Luparia és Claudio Girardi - Olasz</translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
-</source>
-        <translation type="obsolete">Markus Gothe és Peter Landgren - Svéd
-</translation>
+        <source>Swedish by Peter Landgren</source>
+        <translation>Peter Landgren - Svéd</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
@@ -5529,12 +5490,23 @@ Fájlok másolása a projekt könyvtárba</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </translation>
     </message>
     <message>
-        <source>Swedish by Peter Landgren
-</source>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

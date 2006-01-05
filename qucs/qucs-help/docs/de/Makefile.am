@@ -4,7 +4,8 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+# Copyright (C) 2005 Raimund 'Raimi' Jacob <raimi@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +24,9 @@
 #
 
 HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html
+  programs.html start_digi.html
 PIC  = qucshaupt.png paste.png wire.png select.png inhalttab.png \
-  unterschaltung.png
+  unterschaltung.png qucsdigi.png
 
 EXTRA_DIST = $(HTML) $(PIC)
 

@@ -306,11 +306,11 @@
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>Touchstone Dateien</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Dateien</translation>
     </message>
 </context>
 <context>
@@ -5685,10 +5685,8 @@ Sets a marker on a diagram&apos;s graph</source>
 Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
-        <source>Translations:
-</source>
-        <translation type="obsolete">Übersetzungen:
-</translation>
+        <source>Translations:</source>
+        <translation type="obsolete">Übersetzungen:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn
@@ -7033,16 +7031,11 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation>Qucs Version </translation>
+        <translation type="obsolete">Qucs Version </translation>
     </message>
     <message>
-        <source>
-Quite Universal Circuit Simulator
-</source>
-        <translation>
-Ziemlich Universeller Schaltungssimulator
-
-</translation>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation>Ziemlich Universeller Schaltungssimulator</translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -7051,36 +7044,24 @@ Ziemlich Universeller Schaltungssimulator
 </translation>
     </message>
     <message>
-        <source>Simulator by Stefan Jahn
-</source>
-        <translation>Simulator von Stefan Jahn
-</translation>
+        <source>Simulator by Stefan Jahn</source>
+        <translation>Simulator von Stefan Jahn</translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke
-
-</source>
-        <translation type="obsolete">Besonderen Dank an Jens Flucke
-
-</translation>
+        <source>Special thanks to Jens Flucke</source>
+        <translation type="obsolete">Besonderen Dank an Jens Flucke</translation>
     </message>
     <message>
-        <source>Translations:
-</source>
-        <translation>Übersetzungen:
-</translation>
+        <source>Translations:</source>
+        <translation>Übersetzungen:</translation>
     </message>
     <message>
-        <source>German by Stefan Jahn
-</source>
-        <translation>Deutsch von Stefan Jahn
-</translation>
+        <source>German by Stefan Jahn</source>
+        <translation>Deutsch von Stefan Jahn</translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
-        <translation>Polnisch von Dariusz Pienkowski
-</translation>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation>Polnisch von Dariusz Pienkowski</translation>
     </message>
     <message>
         <source>French by Eric Marzolf</source>
@@ -7089,12 +7070,6 @@ Ziemlich Universeller Schaltungssimulator
     <message>
         <source>Italian by Giorgio Luparia</source>
         <translation type="obsolete">Italienisch von Giorgio Luparia</translation>
-    </message>
-    <message>
-        <source>French by Eric Marzolf
-</source>
-        <translation type="obsolete">Französisch von Eric Marzolf
-</translation>
     </message>
     <message>
         <source>Application Settings</source>
@@ -7275,7 +7250,7 @@ Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation>Rumänisch von Radu Circa
+        <translation type="obsolete">Rumänisch von Radu Circa
 </translation>
     </message>
     <message>
@@ -7297,13 +7272,13 @@ Bearbeitet das Symbol für diesen Schaltkreis</translation>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation>Portugiesisch von Luciano Franca
+        <translation type="obsolete">Portugiesisch von Luciano Franca
 </translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation>Spanisch von Jose L. Redrejo Rodriguez
+        <translation type="obsolete">Spanisch von Jose L. Redrejo Rodriguez
 </translation>
     </message>
     <message>
@@ -7321,7 +7296,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation>Französisch von Vincent Habchi, F5RCS
+        <translation type="obsolete">Französisch von Vincent Habchi, F5RCS
 </translation>
     </message>
     <message>
@@ -7351,24 +7326,16 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
 </translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob
-
-</source>
-        <translation>Besonderen Dank an Jens Flucke und Raimund Jacob
-
-</translation>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation>Besonderen Dank an Jens Flucke und Raimund Jacob</translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki Ishikawa
-</source>
-        <translation>Japanisch von Toyoyuki Ishikawa
-</translation>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation>Japanisch von Toyoyuki Ishikawa</translation>
     </message>
     <message>
-        <source>Hebrew by Dotan Nahum
-</source>
-        <translation>Hebräisch von Dotan Nahum
-</translation>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation>Hebräisch von Dotan Nahum</translation>
     </message>
     <message>
         <source>About Qt...</source>
@@ -7423,10 +7390,8 @@ Startet das QucsFilter Programm</translation>
 </translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation type="obsolete">Schwedisch von Markus Gothe
-</translation>
+        <source>Swedish by Markus Gothe</source>
+        <translation type="obsolete">Schwedisch von Markus Gothe</translation>
     </message>
     <message>
         <source>Line calculation</source>
@@ -7523,14 +7488,12 @@ Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi
 </source>
-        <translation>Italienisch von Giorgio Luparia und Claudio Girardi
+        <translation type="obsolete">Italienisch von Giorgio Luparia und Claudio Girardi
 </translation>
     </message>
     <message>
-        <source>Swedish by Markus Gothe and Peter Landgren
-</source>
-        <translation type="obsolete">Schwedisch von Markus Gothe und Peter Landgren
-</translation>
+        <source>Swedish by Markus Gothe and Peter Landgren</source>
+        <translation type="obsolete">Schwedisch von Markus Gothe und Peter Landgren</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
@@ -7555,14 +7518,49 @@ Kopiert Dateien in das Projektverzeichnis</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 von Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 von Michael Margraf
 
 </translation>
     </message>
     <message>
-        <source>Swedish by Peter Landgren
-</source>
-        <translation type="unfinished"></translation>
+        <source>Swedish by Peter Landgren</source>
+        <translation>Schwedisch von Peter Landgren</translation>
+    </message>
+    <message>
+        <source>Qucs Version</source>
+        <translation>Qucs Version</translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation>Copyright (C)</translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation>by Michael Margraf</translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation>Rumänisch von Radu Circa</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation>Französisch von Vincent Habchi, F5RCS</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation>Portugiesisch von Luciano Franca</translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation>Spanisch von Jose L. Redrejo Rodriguez</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation>Italienisch von Giorgio Luparia und Claudio Girardi</translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation>Türkisch von Onur und Ozgur Cobanoglu</translation>
     </message>
 </context>
 <context>

@@ -5190,7 +5190,7 @@ Acerca de Qt por Trolltech</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation>Versión de Qucs </translation>
+        <translation type="obsolete">Versión de Qucs </translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -5201,7 +5201,7 @@ Acerca de Qt por Trolltech</translation>
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation>Simulador por Stefan Jahn
+        <translation type="obsolete">Simulador por Stefan Jahn
 </translation>
     </message>
     <message>
@@ -5215,25 +5215,25 @@ Acerca de Qt por Trolltech</translation>
     <message>
         <source>Translations:
 </source>
-        <translation>Traducciones:
+        <translation type="obsolete">Traducciones:
 </translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation>Alemán por Stefan Jahn
+        <translation type="obsolete">Alemán por Stefan Jahn
 </translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation>Polaco por Dariusz Pienkowski
+        <translation type="obsolete">Polaco por Dariusz Pienkowski
 </translation>
     </message>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation>Rumano por Radu Circa
+        <translation type="obsolete">Rumano por Radu Circa
 </translation>
     </message>
     <message>
@@ -5245,7 +5245,7 @@ Acerca de Qt por Trolltech</translation>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation>Portugués por Luciano Franca
+        <translation type="obsolete">Portugués por Luciano Franca
 </translation>
     </message>
     <message>
@@ -5255,7 +5255,7 @@ Acerca de Qt por Trolltech</translation>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation>Español por José L. Redrejo Rodríguez
+        <translation type="obsolete">Español por José L. Redrejo Rodríguez
 </translation>
     </message>
     <message>
@@ -5273,7 +5273,7 @@ Mueve la propiedad texto de los componentes</translation>
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation>Francés por Vincent Habchi, F5RCS
+        <translation type="obsolete">Francés por Vincent Habchi, F5RCS
 </translation>
     </message>
     <message>
@@ -5302,19 +5302,19 @@ Mueve la propiedad texto de los componentes</translation>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
 </source>
-        <translation>Agradecimiento especial a Jens Flucke y Raimund Jacob
+        <translation type="obsolete">Agradecimiento especial a Jens Flucke y Raimund Jacob
 </translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
 </source>
-        <translation>Japonés por Toyoyuki Ishikawa
+        <translation type="obsolete">Japonés por Toyoyuki Ishikawa
 </translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum
 </source>
-        <translation>Hebreo por Dotan Nahum
+        <translation type="obsolete">Hebreo por Dotan Nahum
 </translation>
     </message>
     <message>
@@ -5411,7 +5411,7 @@ Arranca el programa de librería de componentes</translation>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation>
+        <translation type="obsolete">
 Quite Universal Circuit Simulator
 </translation>
     </message>
@@ -5458,11 +5458,6 @@ Calculates DC bias and shows it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add Files to Project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5483,12 +5478,79 @@ Copies files to project directory</source>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005, 2006 por Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 por Michael Margraf
 </translation>
     </message>
     <message>
-        <source>Swedish by Peter Landgren
-</source>
+        <source>Qucs Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
