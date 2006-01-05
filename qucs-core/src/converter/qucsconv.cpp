@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.11 2006/01/04 10:40:33 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.12 2006/01/05 07:43:31 raimi Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include <errno.h>
 
 #include "check_spice.h"
+#include "check_vcd.h"
 #include "qucs_producer.h"
 
 /* structure defining a conversion */
@@ -147,6 +148,8 @@ int main (int argc, char ** argv) {
     fprintf (stderr, "invalid output data specification `%s'\n",
 	     output ? output : "not given");
   }
+  fprintf (stderr, "invalid input/output data specification `%s->%s'\n",
+	   input ? input : "not given", output ? output : "not given");
   return -1;
 }
 
@@ -180,6 +183,21 @@ int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
 
 // VCD to Qucs conversion.
 int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  if ((vcd_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (vcd_parse () != 0) {
+    ret = -1;
+  } else if (vcd_checker () != 0) {
+    ret = -1;
+  }
+  vcd_lex_destroy ();
+  fclose (vcd_in);
+  if (ret) {
+    vcd_destroy ();
+    return -1;
+  }
+
   /* TBI */
   return -1;
 }

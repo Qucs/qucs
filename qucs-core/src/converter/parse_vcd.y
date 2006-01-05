@@ -5,6 +5,7 @@
  * parse_vcd.y - parser for a VCD data file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.1 2005/12/26 21:13:31 raimi Exp $
+ * $Id: parse_vcd.y,v 1.2 2006/01/05 07:43:31 raimi Exp $
  *
  */
 
@@ -38,36 +39,62 @@
 #define YYDEBUG 1
 #define YYMAXDEPTH 1000000
 
+#include "check_vcd.h"
+
 %}
 
-%name-prefix="spice_"
+%name-prefix="vcd_"
 
-%token END
-%token COMMENT
-%token DATE
-%token ENDDEFINITIONS
-%token SCOPE
-%token TIMESCALE
-%token UPSCOPE
-%token VAR
-%token VERSION
-%token DUMPALL
-%token DUMPOFF
-%token DUMPON
-%token DUMPVARS
+%token t_END
+%token t_COMMENT
+%token t_DATE
+%token t_ENDDEFINITIONS
+%token t_SCOPE
+%token t_TIMESCALE
+%token t_UPSCOPE
+%token t_VAR
+%token t_VERSION
+%token t_DUMPALL
+%token t_DUMPOFF
+%token t_DUMPON
+%token t_DUMPVARS
 
-%token RealNumber
-%token BinaryNumber
+%token s_MODULE s_TASK s_FUNCTION s_FORK s_BEGIN
+%token ONE B Z ZERO HASHMARK X R TEN HUNDRET
+
+%token PICO MICRO NANO FEMTO SECOND MILLI
+
+%token EVENT INTEGER PARAMETER REAL REG SUPPLY0 SUPPLY1 TIME TRI TRIAND
+%token TRIOR TRIREG TRI0 TRI1 WAND WIRE WOR
+
+%token Real
+%token Binary
 %token DecimalNumber
-%token Identifier /* proper identifiers */
+%token Identifier     /* proper identifiers */
 %token IdentifierCode /* shortcuts used in the dump */
-%token CommentText // start with $date/$comment, consume until $end, trim
+%token Reference
 
 %union {
-
+  char * ident;
+  char * value;
+  int integer;
+  struct vcd_vardef * vardef;
+  struct vcd_change * change;
+  struct vcd_scope * scope;
 }
 
-// %type
+%type <ident> Identifier IdentifierCode VarType Reference
+%type <ident> EVENT INTEGER PARAMETER REAL REG SUPPLY0 SUPPLY1 TIME TRI
+%type <ident> TRIAND TRIOR TRIREG TRI0 TRI1 WAND WIRE WOR
+%type <ident> ScopeType
+%type <ident> s_MODULE s_TASK s_FUNCTION s_BEGIN s_FORK
+
+%type <change> ScalarValueChange
+%type <scope> ScopeDeclaration
+
+%type <value> Value ZERO ONE Z X
+%type <vardef> VarDeclaration
+%type <integer> Size DecimalNumber
 
 %%
 
@@ -82,51 +109,68 @@ DeclarationList: /* empty */
 
 
 Declaration:
-     COMMENT CommentText END
-   | DATE CommentText END
-   | ENDDEFINITIONS END
-   | SCOPE ScopeDeclaration END
-   | TIMESCALE TimeScaleDeclaration END
-   | UPSCOPE END
-   | VERSION CommentTextOrEmpty END
-   | VAR VarDeclaration END
+     t_COMMENT t_END
+   | t_DATE t_END
+   | t_ENDDEFINITIONS t_END
+   | t_SCOPE ScopeDeclaration t_END {
+   }
+   | t_TIMESCALE TimeScaleDeclaration t_END
+   | t_UPSCOPE t_END
+   | t_VERSION t_END
+   | t_VAR VarDeclaration t_END
 ;
 
 
 ScopeDeclaration:
-   ScopeType Identifier
+     ScopeType Identifier {
+       $$ = (struct vcd_scope *) calloc (1, sizeof (struct vcd_scope));
+       $$->type = $1;
+       $$->name = $2;
+     }
 ;
 
 ScopeType:
-     MODULE
-   | TASK
-   | FUNCTION
-   | BEGIN
-   | FORK
+     s_MODULE
+   | s_TASK
+   | s_FUNCTION
+   | s_BEGIN
+   | s_FORK
 ;
 
 TimeScaleDeclaration:
-   Integer /* actually only 1, 10, 100 */ TimeUnit
+   TimeScale TimeUnit
+;
+
+TimeScale:
+     ONE
+   | TEN
+   | HUNDRET
 ;
 
 TimeUnit:
-   SECOND
-   MILLI
-   MICRO
-   NANO
-   PICO
-   FEMTO
+     SECOND
+   | MILLI
+   | MICRO
+   | NANO
+   | PICO
+   | FEMTO
 ;
 
 VarDeclaration:
-   VarType Size IdentifierCode Reference
+   VarType Size IdentifierCode Reference {
+     $$ = (struct vcd_vardef *) calloc (1, sizeof (struct vcd_vardef));
+     $$->type = $1;
+     $$->size = $2;
+     $$->code = $3;
+     $$->name = $4;
+   }
 ;
 
 VarType:
      EVENT
    | INTEGER
    | PARAMETER
-   | REAl
+   | REAL
    | REG
    | SUPPLY0
    | SUPPLY1
@@ -147,29 +191,27 @@ Size:
 ;
 
 
-Reference:
-    Identifier
-  | Identifier BitSelect /* [0] */
-  | Identifier BitRangeSelect /* [15:13] */
+SimulationCommandList: /* empty */
+   | SimulationCommand SimulationCommandList
 ;
 
-
 SimulationCommand:
-    DUMPALL ValueChangeList END /* probably unsupported */
-  | DUMPOFF ValueChangeList END /* probably unsupported */
-  | DUMPON ValueChangeList END /* probably unsupported */
-  | DUMPVARS ValueChangeList END // important !
-  | COMMENT CommentText END
-  | SimulationTime  // a timestep, it seems
+    t_DUMPALL  ValueChangeList t_END /* probably unsupported */
+  | t_DUMPOFF  ValueChangeList t_END /* probably unsupported */
+  | t_DUMPON   ValueChangeList t_END /* probably unsupported */
+  | t_DUMPVARS ValueChangeList t_END
+  | SimulationTime
   | ValueChange
 ;
 
 
-SimulationKeyword:
+SimulationTime:
+     HASHMARK DecimalNumber
 ;
 
-SimulationTime:
-   HASHMARK DecimalNumber
+ValueChangeList: /* empty */
+   | ValueChange ValueChangeList {
+   }
 ;
 
 ValueChange:
@@ -178,7 +220,12 @@ ValueChange:
 ;
 
 ScalarValueChange:
-  Value Identifier
+    Value IdentifierCode {
+      $$ = (struct vcd_change *) calloc (1, sizeof (struct vcd_change));
+      $$->value = $1;
+      $$->var = NULL; // find appropriate vardef
+      //fprintf (stderr, "val: %s, ident: %s\n", $1, $2);
+    }
 ;
 
 Value:
@@ -189,9 +236,14 @@ Value:
 ;
 
 VectorValueChange:
-     B BinaryNumber Identifier
-   | R RealNumber Identifier
+     B Binary IdentifierCode
+   | R Real IdentifierCode
 ;
 
 
 %%
+
+int vcd_error (char * error) {
+  fprintf (stderr, "line %d: %s\n", vcd_lineno, error);
+  return 0;
+}

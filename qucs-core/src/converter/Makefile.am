@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@ bin_PROGRAMS = qucsconv
 INCLUDES = -I$(top_srcdir)/src
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
-	check_spice.cpp qucs_producer.cpp check_vcd.cpp
-#parse_vcd.cpp scan_vcd.cpp
+	check_spice.cpp qucs_producer.cpp check_vcd.cpp parse_vcd.cpp \
+	scan_vcd.cpp
 
-noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h
-# tokens_vcd.h
+noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
+	tokens_vcd.h
 
 if MAINTAINER_MODE
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \
@@ -51,7 +51,6 @@ scan_vcd.cpp: scan_vcd.l
 parse_vcd.cpp: parse_vcd.y
 	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
 
-
 else
 generated_FILES = 
 endif
@@ -59,4 +58,3 @@ endif
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
 DISTCLEANFILES = $(generated_FILES)
-

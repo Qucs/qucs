@@ -1,3 +1,8 @@
+2006-01-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_vcd.l, parse_vcd.y: VCD scanner and parser now already
+	passes simple VCD files...
+
 2005-12-26  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
 
 	* qucsconv.cpp: New infrastructure for converter steps.
