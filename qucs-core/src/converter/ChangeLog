@@ -1,3 +1,9 @@
+2006-01-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp: Finished the VCD to Qucs dataset converter.
+	Works fine for some example VCD files... needs to be tested
+	yet.
+
 2006-01-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_vcd.l, parse_vcd.y: VCD scanner and parser now already

@@ -1,7 +1,7 @@
 /*
  * nasolver.cpp - nodal analysis solver class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.38 2005-10-31 16:15:31 ela Exp $
+ * $Id: nasolver.cpp,v 1.39 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
@@ -1081,8 +1081,9 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
       if (!c->isNonLinear ()) continue;
       if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
       c->calcOperatingPoints ();
-      operatingpoint * p = c->getOperatingPoints ();
-      for (; p != NULL; p = p->getNext ()) {
+      valuelistiterator<operatingpoint> it (c->getOperatingPoints ());
+      for (; *it; ++it) {
+	operatingpoint * p = it.currentVal ();
 	n = createOP (c->getName (), p->getName ());
 	saveVariable (n, p->getValue (), f);
 	free (n);

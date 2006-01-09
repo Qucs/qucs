@@ -1,7 +1,7 @@
 /*
- * qucs_producer.h - the Qucs producer definitions
+ * pair.h - key/value pair class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,22 +18,30 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.h,v 1.7 2006-01-09 09:11:07 raimi Exp $
+ * $Id: pair.h,v 1.1 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
-#ifndef __QUCS_PRODUCER_H__
-#define __QUCS_PRODUCER_H__
+#ifndef __PAIR_H__
+#define __PAIR_H__
 
-/* Externalize variables. */
-extern FILE * qucs_out;
-extern int    qucs_actions;
-extern char * qucs_gnd;
+class pair
+{
+ public:
+  pair ();
+  pair (char *);
+  pair (char *, nr_double_t);
+  pair (const pair &);
+  ~pair ();
 
-/* Available functions of the producers. */
-void qucs_producer (void);
-int  qucs_find_node (struct node_t *, char *);
-void qucslib_producer (void);
-void qucsdata_producer (void);
+  void setName (char *);
+  char * getName (void);
+  nr_double_t getValue (void) { return value; }
+  void setValue (nr_double_t val) { value = val; }
 
-#endif /* __QUCS_PRODUCER_H__ */
+ private:
+  char * name;
+  nr_double_t value;
+};
+
+#endif /* __PAIR_H__ */

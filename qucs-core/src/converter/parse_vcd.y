@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.2 2006-01-05 07:43:31 raimi Exp $
+ * $Id: parse_vcd.y,v 1.3 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
@@ -69,32 +69,37 @@
 
 %token Real
 %token Binary
-%token DecimalNumber
+%token PositiveInteger
 %token Identifier     /* proper identifiers */
 %token IdentifierCode /* shortcuts used in the dump */
 %token Reference
+%token InvalidCharacter
 
 %union {
   char * ident;
   char * value;
   int integer;
+  double real;
+  enum vcd_vartypes vtype;
+  enum vcd_scopes stype;
   struct vcd_vardef * vardef;
   struct vcd_change * change;
   struct vcd_scope * scope;
+  struct vcd_changeset * changeset;
+  struct vcd_range * range;
 }
 
-%type <ident> Identifier IdentifierCode VarType Reference
-%type <ident> EVENT INTEGER PARAMETER REAL REG SUPPLY0 SUPPLY1 TIME TRI
-%type <ident> TRIAND TRIOR TRIREG TRI0 TRI1 WAND WIRE WOR
-%type <ident> ScopeType
-%type <ident> s_MODULE s_TASK s_FUNCTION s_BEGIN s_FORK
-
-%type <change> ScalarValueChange
+%type <ident> Identifier IdentifierCode Reference
+%type <value> Value ZERO ONE Z X Binary Real
+%type <integer> Size PositiveInteger TimeScale SimulationTime
+%type <real> TimeUnit
+%type <change> ScalarValueChange VectorValueChange ValueChangeList ValueChange
+%type <changeset> ValueChangeset
 %type <scope> ScopeDeclaration
-
-%type <value> Value ZERO ONE Z X
+%type <range> BitSelect
 %type <vardef> VarDeclaration
-%type <integer> Size DecimalNumber
+%type <vtype> VarType
+%type <stype> ScopeType
 
 %%
 
@@ -102,94 +107,113 @@ ValueChangeDumpDefinitions:
      DeclarationList SimulationCommandList
 ;
 
-
 DeclarationList: /* empty */
    | Declaration DeclarationList
 ;
-
 
 Declaration:
      t_COMMENT t_END
    | t_DATE t_END
    | t_ENDDEFINITIONS t_END
    | t_SCOPE ScopeDeclaration t_END {
+     $2->next = vcd->scopes;
+     vcd->scopes = $2;
    }
    | t_TIMESCALE TimeScaleDeclaration t_END
    | t_UPSCOPE t_END
    | t_VERSION t_END
-   | t_VAR VarDeclaration t_END
+   | t_VAR VarDeclaration t_END {
+     $2->next = vcd->scopes->vardefs;
+     $2->scope = vcd->scopes;
+     vcd->scopes->vardefs = $2;
+   }
 ;
 
-
 ScopeDeclaration:
-     ScopeType Identifier {
-       $$ = (struct vcd_scope *) calloc (1, sizeof (struct vcd_scope));
-       $$->type = $1;
-       $$->name = $2;
-     }
+   ScopeType Identifier {
+     $$ = (struct vcd_scope *) calloc (1, sizeof (struct vcd_scope));
+     $$->type = $1;
+     $$->ident = $2;
+   }
 ;
 
 ScopeType:
-     s_MODULE
-   | s_TASK
-   | s_FUNCTION
-   | s_BEGIN
-   | s_FORK
+     s_MODULE   { $$ = SCOPE_MODULE;   }
+   | s_TASK     { $$ = SCOPE_TASK;     }
+   | s_FUNCTION { $$ = SCOPE_FUNCTION; }
+   | s_BEGIN    { $$ = SCOPE_BEGIN;    }
+   | s_FORK     { $$ = SCOPE_FORK;     }
 ;
 
 TimeScaleDeclaration:
-   TimeScale TimeUnit
+   TimeScale TimeUnit {
+     vcd->t = $1;
+     vcd->scale = $2;
+   }
 ;
 
 TimeScale:
-     ONE
-   | TEN
-   | HUNDRET
+     ONE     { $$ = 1;   }
+   | TEN     { $$ = 10;  }
+   | HUNDRET { $$ = 100; }
 ;
 
 TimeUnit:
-     SECOND
-   | MILLI
-   | MICRO
-   | NANO
-   | PICO
-   | FEMTO
+     SECOND { $$ = 1;     }
+   | MILLI  { $$ = 1e-3;  }
+   | MICRO  { $$ = 1e-6;  }
+   | NANO   { $$ = 1e-9;  }
+   | PICO   { $$ = 1e-12; }
+   | FEMTO  { $$ = 1e-15; }
 ;
 
 VarDeclaration:
-   VarType Size IdentifierCode Reference {
+   VarType Size IdentifierCode Reference BitSelect {
      $$ = (struct vcd_vardef *) calloc (1, sizeof (struct vcd_vardef));
      $$->type = $1;
      $$->size = $2;
      $$->code = $3;
-     $$->name = $4;
+     $$->ident = $4;
+     $$->range = $5;
    }
 ;
 
+BitSelect: /* nothing */ { $$ = NULL; }
+    | '[' PositiveInteger ']' {
+      $$ = (struct vcd_range *) calloc (1, sizeof (struct vcd_range));
+      $$->l = -1;
+      $$->h = $2;
+    }
+    | '[' PositiveInteger ':' PositiveInteger ']' {
+      $$ = (struct vcd_range *) calloc (1, sizeof (struct vcd_range));
+      $$->l = $2;
+      $$->h = $4;
+    }
+;
+
 VarType:
-     EVENT
-   | INTEGER
-   | PARAMETER
-   | REAL
-   | REG
-   | SUPPLY0
-   | SUPPLY1
-   | TIME
-   | TRI
-   | TRIAND
-   | TRIOR
-   | TRIREG
-   | TRI0
-   | TRI1
-   | WAND
-   | WIRE
-   | WOR
+     EVENT     { $$ = VAR_EVENT;     }
+   | INTEGER   { $$ = VAR_INTEGER;   }
+   | PARAMETER { $$ = VAR_PARAMETER; }
+   | REAL      { $$ = VAR_REAL;      }
+   | REG       { $$ = VAR_REG;       }
+   | SUPPLY0   { $$ = VAR_SUPPLY0;   }
+   | SUPPLY1   { $$ = VAR_SUPPLY1;   }
+   | TIME      { $$ = VAR_TIME;      }
+   | TRI       { $$ = VAR_TRI;       }
+   | TRIAND    { $$ = VAR_TRIAND;    }
+   | TRIOR     { $$ = VAR_TRIOR;     }
+   | TRIREG    { $$ = VAR_TRIREG;    }
+   | TRI0      { $$ = VAR_TRI0;      }
+   | TRI1      { $$ = VAR_TRI1;      }
+   | WAND      { $$ = VAR_WAND;      }
+   | WIRE      { $$ = VAR_WIRE;      }
+   | WOR       { $$ = VAR_WOR;       }
 ;
 
 Size:
-   DecimalNumber
+   PositiveInteger
 ;
-
 
 SimulationCommandList: /* empty */
    | SimulationCommand SimulationCommandList
@@ -199,19 +223,33 @@ SimulationCommand:
     t_DUMPALL  ValueChangeList t_END /* probably unsupported */
   | t_DUMPOFF  ValueChangeList t_END /* probably unsupported */
   | t_DUMPON   ValueChangeList t_END /* probably unsupported */
-  | t_DUMPVARS ValueChangeList t_END
-  | SimulationTime
-  | ValueChange
+  | t_DUMPVARS ValueChangeList t_END {
+      vcd->changesets->changes = $2;
+  }
+  | ValueChangeset {
+      $1->next = vcd->changesets;
+      vcd->changesets = $1;
+  }
 ;
 
+ValueChangeset:
+    SimulationTime ValueChangeList {
+      $$ = (struct vcd_changeset *) calloc (1, sizeof (struct vcd_changeset));
+      $$->t = $1;
+      $$->changes = $2;
+    }
+;
 
 SimulationTime:
-     HASHMARK DecimalNumber
+    HASHMARK PositiveInteger {
+      $$ = $2;
+    }
 ;
 
-ValueChangeList: /* empty */
-   | ValueChange ValueChangeList {
-   }
+ValueChangeList: /* nothing */ { $$ = NULL; }
+    | ValueChange ValueChangeList {
+      $1->next = $2;
+    }
 ;
 
 ValueChange:
@@ -223,8 +261,7 @@ ScalarValueChange:
     Value IdentifierCode {
       $$ = (struct vcd_change *) calloc (1, sizeof (struct vcd_change));
       $$->value = $1;
-      $$->var = NULL; // find appropriate vardef
-      //fprintf (stderr, "val: %s, ident: %s\n", $1, $2);
+      $$->code = $2;
     }
 ;
 
@@ -236,8 +273,17 @@ Value:
 ;
 
 VectorValueChange:
-     B Binary IdentifierCode
-   | R Real IdentifierCode
+    'B' Binary IdentifierCode {
+      $$ = (struct vcd_change *) calloc (1, sizeof (struct vcd_change));
+      $$->value = $2;
+      $$->code = $3;
+    }
+    | 'R' Real IdentifierCode {
+      $$ = (struct vcd_change *) calloc (1, sizeof (struct vcd_change));
+      $$->value = $2;
+      $$->code = $3;
+      $$->isreal = 1;
+    }
 ;
 
 

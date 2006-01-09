@@ -1,7 +1,7 @@
 /*
  * operatingpoint.h - operating point class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,35 +18,23 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: operatingpoint.h,v 1.2 2005-06-02 18:17:51 raimi Exp $
+ * $Id: operatingpoint.h,v 1.3 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
 #ifndef __OPERATINGPOINT_H__
 #define __OPERATINGPOINT_H__
 
-class variable;
+#include "pair.h"
 
-class operatingpoint
+class operatingpoint : public pair
 {
  public:
   operatingpoint ();
   operatingpoint (char *);
   operatingpoint (char *, nr_double_t);
   operatingpoint (const operatingpoint &);
-  virtual ~operatingpoint ();
-  operatingpoint * getNext (void) { return next; }
-  void setNext (operatingpoint * p) { next = p; }
-  void setName (char *);
-  char * getName (void);
-  nr_double_t getValue (void) { return value; }
-  void setValue (nr_double_t val) { value = val; }
-  operatingpoint * findOperatingPoint (char *);
-
- private:
-  char * name;
-  nr_double_t value;
-  operatingpoint * next;
+  ~operatingpoint () { }
 };
 
 #endif /* __OPERATINGPOINT_H__ */

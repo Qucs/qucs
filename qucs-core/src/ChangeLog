@@ -1,3 +1,17 @@
+2006-01-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* pair.h (class pair): New class implementing a key/value
+	pair.
+
+	* operatingpoint.cpp: Simplified the operating point class
+	accordingly.
+
+	* circuit.cpp: Using the new valuelist class to manage
+	operating points of components.
+
+	* valuelist.h (class valuelist): New template class
+	implementing a key/value list.
+
 2005-12-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added temperature

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.12 2006-01-05 07:43:31 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.13 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
@@ -184,6 +184,7 @@ int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
 // VCD to Qucs conversion.
 int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
   int ret = 0;
+  vcd_init ();
   if ((vcd_in = open_file (infile, "r")) == NULL) {
     ret = -1;
   } else if (vcd_parse () != 0) {
@@ -198,6 +199,11 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
     return -1;
   }
 
-  /* TBI */
-  return -1;
+  if ((qucs_out = open_file (outfile, "w")) == NULL)
+    return -1;
+  if (!strcmp (action->out, "qucsdata"))
+    qucsdata_producer ();
+  fclose (qucs_out);
+  vcd_destroy ();
+  return 0;
 }

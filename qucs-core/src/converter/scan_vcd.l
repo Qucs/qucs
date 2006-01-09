@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.2 2006-01-05 07:43:31 raimi Exp $
+ * $Id: scan_vcd.l,v 1.3 2006-01-09 09:11:07 raimi Exp $
  *
  */
 
@@ -56,20 +56,21 @@
 WS       [ \t\n\r]
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
-REAL     [Rr][+-]?{DIGIT}+("."{DIGIT}+)?{EXPONENT}?
-BINARY   [Bb][01]+
+REAL     [+-]?{DIGIT}+("."{DIGIT}+)?{EXPONENT}?
+BINARY   [01xXzZ]+
 DECIMAL  {DIGIT}+
 SCALAR   [01xXzZ]
 CODE     [!-~]+
 IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
 
-%x COMMENT SCALE SCOPE IGNORE VAR VAR2 VAR3 DUMP TIMESTAMP CHANGE
+%x COMMENT SCALE SCOPE IGNORE VAR VAR2 VAR3 VAR4 DUMP TIMESTAMP CHANGE
+%x BIN FLOAT
 
 %option yylineno noyywrap nounput prefix="vcd_"
 
 %%
 
-<INITIAL,COMMENT,SCALE,SCOPE,IGNORE,VAR3,DUMP>"$end" {
+<INITIAL,COMMENT,SCALE,SCOPE,IGNORE,VAR4,DUMP>"$end" {
   BEGIN(INITIAL);
   return t_END;
 }
@@ -101,6 +102,7 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
 <SCALE>"1"   { return ONE; }
 <SCALE>"10"  { return TEN; }
 <SCALE>"100" { return HUNDRET; }
+
 <SCALE>"s"   { return SECOND; }
 <SCALE>"ms"  { return MILLI;  }
 <SCALE>"us"  { return MICRO;  }
@@ -148,26 +150,45 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
 }
 
 <INITIAL,DUMP>[xX] {
-  vcd_lval.value = strdup (vcd_text);
+  vcd_lval.value = strdup ("X");
   BEGIN(CHANGE);
   return X;
 }
 
 <INITIAL,DUMP>[zZ] {
-  vcd_lval.value = strdup (vcd_text);
+  vcd_lval.value = strdup ("Z");
+  BEGIN(CHANGE);
   return Z;
-}
-
-<VAR>{DECIMAL} {
-  vcd_lval.integer = atoi (vcd_text);
-  BEGIN(VAR2);
-  return DecimalNumber;
 }
 
 <TIMESTAMP>{DECIMAL} {
   vcd_lval.integer = atoi (vcd_text);
   BEGIN(INITIAL);
-  return DecimalNumber;
+  return PositiveInteger;
+}
+
+<INITIAL>[rR] {
+  BEGIN(FLOAT);
+  return 'R';
+}
+
+<INITIAL>[bB] {
+  BEGIN(BIN);
+  return 'B';
+}
+
+<FLOAT>{REAL} {
+  vcd_lval.value = strdup (vcd_text);
+  BEGIN(CHANGE);
+  return Real;
+}
+
+<BIN>{SCALAR} {
+  vcd_lval.value = strdup (vcd_text);
+  char * p = vcd_lval.value;
+  while (*p) { *p = toupper (*p); p++; }
+  BEGIN(CHANGE);
+  return Binary;
 }
 
 <INITIAL>"$version" {
@@ -204,12 +225,14 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
 }
 
 <SCOPE>{IDENT} {
+  vcd_lval.ident = strdup (vcd_text);
   return Identifier;
 }
 
-<VAR3>{IDENT}("["{DECIMAL}"]"|"["{DECIMAL}":"{DECIMAL}"]")? {
-  vcd_lval.ident = strdup (vcd_text);
-  return Reference;
+<VAR>{DECIMAL} {
+  vcd_lval.integer = atoi (vcd_text);
+  BEGIN(VAR2);
+  return PositiveInteger;
 }
 
 <VAR2>{CODE} {
@@ -218,14 +241,35 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
   return IdentifierCode;
 }
 
+<VAR3>{IDENT} {
+  vcd_lval.ident = strdup (vcd_text);
+  BEGIN(VAR4);
+  return Reference;
+}
+
+<VAR4>"["   { /* pass the '[' to the parser */ return '['; }
+<VAR4>"]"   { /* pass the ']' to the parser */ return ']'; }
+<VAR4>":"   { /* pass the ':' to the parser */ return ':'; }
+
+<VAR4>{DECIMAL} {
+  vcd_lval.integer = atoi (vcd_text);
+  return PositiveInteger;
+}
+
 <CHANGE>{CODE} {
   vcd_lval.ident = strdup (vcd_text);
   BEGIN(INITIAL);
   return IdentifierCode;
 }
 
-<COMMENT>. { /* skip any character in here */ }
-<*>.       { /* skip any character in here */ }
-<*>\r?\n   { /* skip end of line */ }
+<IGNORE,COMMENT>. { /* skip any character in here */ }
+<*>\r?\n|{WS}     { /* skip end of line and spaces */ }
+
+<*>. { /* any other character is invalid */
+  fprintf (stderr, 
+	   "line %d: syntax error, unrecognized character: `%s'\n", 
+	   vcd_lineno, vcd_text);
+  return InvalidCharacter;
+}
 
 %%
