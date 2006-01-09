@@ -1,8 +1,8 @@
 /***************************************************************************
                                  qucs.cpp
                                 ----------
-    begin                : Thu Aug 28 18:17:41 CEST 2003
-    copyright            : (C) 2003, 2004 by Michael Margraf
+    begin                : Thu Aug 28 2003
+    copyright            : (C) 2003, 2004, 2005, 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -718,14 +718,25 @@ void QucsApp::updatePortNumber(int No)
 
   // update all occurencies of subcircuit in all open documents
   QucsDoc *d;
+  Component *pc_tmp;
   int DocNo = view->Docs.at();
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
-    for(Component *pc=d->Comps->first(); pc!=0; pc=d->Comps->next())
+
+    // start from the last to avoid re-appended components
+    for(Component *pc=d->Comps->last(); pc!=0; ) {
       if(pc->Model == "Sub") {
-	File = pc->Props.getFirst()->Value;
-	if((File == pathName) || (File == Name))
-          d->recreateComponent(pc);
+        File = pc->Props.getFirst()->Value;
+        if((File == pathName) || (File == Name)) {
+          pc_tmp = d->Comps->prev();
+          d->recreateComponent(pc);  // delete and re-append component
+          if(!pc_tmp)  break;
+          d->Comps->findRef(pc_tmp);
+          pc = d->Comps->current();
+          continue;
+        }
       }
+      pc = d->Comps->prev();
+    }
 
   view->Docs.at(DocNo);  // back to the last current document
 }
@@ -1636,7 +1647,6 @@ void QucsApp::slotProjDelButt()
 // ######################################################################
 // The following arrays contains the components that appear in the
 // component listview.
-//typedef Component*  (*pInfoFunc) (QString&, char* &, bool);
 typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
@@ -1647,8 +1657,8 @@ pInfoFunc lumpedComponents[] =
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
    &Amplifier::info, &Isolator::info, &Circulator::info,
-   &Gyrator::info, &Phaseshifter::info, &iProbe::info, &Mutual::info,
-   &Mutual2::info, 0};
+   &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
+   &Mutual::info, &Mutual2::info, 0};
 
 pInfoFunc Sources[] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
@@ -1674,7 +1684,8 @@ pInfoFunc nonlinearComps[] =
 pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
    &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
-   &Logical_XOR::info, &Logical_XNOR::info, 0};
+   &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
+   &D_FlipFlop::info, &JK_FlipFlop::info, 0};
 
 pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,

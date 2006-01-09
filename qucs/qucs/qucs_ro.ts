@@ -3173,6 +3173,46 @@ Folosire:  qucsedit [-r] file
         <source>parameter measurement temperature</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideal coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>phase shift of coupling path in degree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D-FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JK-FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS flip flop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS-FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D flip flop with asynchron reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JK flip flop with asynchron set and reset</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

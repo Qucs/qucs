@@ -94,6 +94,7 @@
 #include "libcomp.h"
 #include "mutual.h"
 #include "mutual2.h"
+#include "coupler.h"
 #include "logical_or.h"
 #include "logical_nor.h"
 #include "logical_and.h"
@@ -103,5 +104,8 @@
 #include "logical_inv.h"
 #include "digi_sim.h"
 #include "digi_source.h"
+#include "rs_flipflop.h"
+#include "d_flipflop.h"
+#include "jk_flipflop.h"
 
 #endif

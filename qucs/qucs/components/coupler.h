@@ -1,8 +1,8 @@
 /***************************************************************************
-                               subcircuit.h
-                              --------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                                coupler.h
+                               -----------
+    begin                : Tue Jan 03 2006
+    copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,24 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SUBCIRCUIT_H
-#define SUBCIRCUIT_H
+#ifndef COUPLER_H
+#define COUPLER_H
 
 #include "component.h"
 
 
-class Subcircuit : public Component  {
+class Coupler : public Component  {
 public:
-  Subcircuit();
-  ~Subcircuit();
+  Coupler();
+ ~Coupler();
   Component* newOne();
-  QString NetList();
-  QString VHDL_Code(int);
-  void recreate(QucsDoc*);
-
-private:
-  void remakeSymbol(int No);
-  int  loadSymbol(const QString&);
+  static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

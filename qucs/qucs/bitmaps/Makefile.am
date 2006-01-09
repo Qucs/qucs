@@ -40,7 +40,8 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   ysmith.png smithpolar.png polarsmith.png spicefile.png rect3d.png curve.png \
   cpwopen.png cpwstep.png mutual.png mutual2.png noise_ii.png noise_vv.png    \
   noise_iv.png or.png nor.png and.png nand.png xor.png xnor.png digi.png      \
-  inverter.png digi_source.png timing.png truth.png
+  inverter.png digi_source.png timing.png truth.png rsflipflop.png            \
+  dflipflop.png jkflipflop.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
