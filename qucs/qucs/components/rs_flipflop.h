@@ -1,8 +1,8 @@
 /***************************************************************************
-                               subcircuit.h
+                               rs_flipflop.h
                               --------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Fri Jan 06 2006
+    copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,24 +15,19 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SUBCIRCUIT_H
-#define SUBCIRCUIT_H
+#ifndef RS_FLIPFLOP_H
+#define RS_FLIPFLOP_H
 
 #include "component.h"
 
 
-class Subcircuit : public Component  {
+class RS_FlipFlop : public Component  {
 public:
-  Subcircuit();
-  ~Subcircuit();
+  RS_FlipFlop();
+ ~RS_FlipFlop() {};
   Component* newOne();
-  QString NetList();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   QString VHDL_Code(int);
-  void recreate(QucsDoc*);
-
-private:
-  void remakeSymbol(int No);
-  int  loadSymbol(const QString&);
 };
 
 #endif

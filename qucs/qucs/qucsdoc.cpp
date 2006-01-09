@@ -573,11 +573,48 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
 // ---------------------------------------------------
 void QucsDoc::recreateComponent(Component *Comp)
 {
+  Port *pp;
+  WireLabel **plMem=0, **pl;
+  int PortCount = Comp->Ports.count();
+
+  if(PortCount > 0) {
+    // Save the labels whose node is not connected to somewhere else.
+    // Otherwise the label would be deleted.
+    pl = plMem = (WireLabel**)malloc(PortCount * sizeof(WireLabel*));
+    for(pp = Comp->Ports.first(); pp != 0; pp = Comp->Ports.next())
+      if(pp->Connection->Connections.count() < 2) {
+        *(pl++) = pp->Connection->Label;
+        pp->Connection->Label = 0;
+      }
+      else  *(pl++) = 0;
+  }
+
+
   int x = Comp->tx, y = Comp->ty;
   QString tmp = Comp->Name;    // is sometimes changed by "recreate"
   Comp->recreate(this);   // to apply changes to the schematic symbol
   Comp->Name = tmp;
   Comp->tx = x;  Comp->ty = y;
+
+
+  if(PortCount > 0) {
+    // restore node labels
+    pl = plMem;
+    for(pp = Comp->Ports.first(); pp != 0; pp = Comp->Ports.next()) {
+      if(*pl != 0) {
+        (*pl)->cx = pp->Connection->cx;
+        (*pl)->cy = pp->Connection->cy;
+        placeNodeLabel(*pl);
+      }
+      pl++;
+      if((--PortCount) < 1)  break;
+    }
+    for( ; PortCount > 0; PortCount--) {
+      delete (*pl);  // delete not needed labels
+      pl++;
+    }
+    free(plMem);
+  }
 }
 
 // ---------------------------------------------------
@@ -1967,7 +2004,7 @@ int QucsDoc::placeNodeLabel(WireLabel *pl)
   int y = pl->cy;
 
   // check if new node lies upon an existing node
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) // check every node
+  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->cx == x) if(pn->cy == y) break;
 
   if(!pn)  return -1;
