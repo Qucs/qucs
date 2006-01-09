@@ -1,3 +1,11 @@
+2006-01-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new component: coupler
+	* timing diagram shows change of state at begin and end
+	* new digital components: RS, D and JK flip flop
+	* fixed bug that removed labels after subcircuit update
+	* set subcircuit port attribut "analog" to "inout" (VHDL)
+
 2006-01-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_tr.ts: Applied Turkish translations.  Thanks to

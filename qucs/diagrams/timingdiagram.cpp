@@ -222,7 +222,6 @@ if(!g->cPointsX.isEmpty()) {
     }
 
     x = xStart + 5;
-    yLast = -10;
     colWidth = 0;
 
     if(g->cPointsY) {
@@ -238,10 +237,16 @@ if(!g->cPointsX.isEmpty()) {
 
         z = int(xAxis.limit_min);
         px += 2*z;
+
+        yLast = 0;
+        if(z > 0)  yLast += 2; // vertical line before first value ?
+        if(*(px-yLast) > 0.5)  // high or low ?
+          yLast = 2;
+        else
+          yLast = tHeight - 4;
+
         z = g->cPointsX.getFirst()->count - z;
         for( ; z>0; z--) {
-          if(x+40 >= x2) break;
-
           if(*px > 0.5) {  // high or low ?
             if(yLast > 2)
               Lines.append(new Line(x, y-tHeight+4, x, y-2, Pen));
@@ -249,10 +254,11 @@ if(!g->cPointsX.isEmpty()) {
           }
           else {
             if(yLast < 3)
-              if(yLast >= -5)  // no vertical graph line at beginning
-                Lines.append(new Line(x, y-tHeight+4, x, y-2, Pen));
+              Lines.append(new Line(x, y-tHeight+4, x, y-2, Pen));
             yLast = tHeight - 4;
           } 
+
+          if(x+40 >= x2) break;
           Lines.append(new Line(x, y-yLast, x+40, y-yLast, Pen));
 
           x += 40;
