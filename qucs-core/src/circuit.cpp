@@ -1,7 +1,7 @@
 /*
  * circuit.cpp - circuit class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.40 2005/10/24 09:10:25 raimi Exp $
+ * $Id: circuit.cpp,v 1.41 2006/01/09 09:11:07 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "matrix.h"
 #include "node.h"
 #include "property.h"
+#include "valuelist.h"
 #include "circuit.h"
 #include "microstrip/substrate.h"
 #include "operatingpoint.h"
@@ -58,7 +59,6 @@ circuit::circuit () : object (), integrator () {
   vsource = -1;
   vsources = 0;
   nsources = 0;
-  oper = NULL;
   inserted = -1;
   subcircuit = NULL;
   subnet = NULL;
@@ -81,7 +81,6 @@ circuit::circuit (int s) : object (), integrator () {
   vsource = -1;
   vsources = 0;
   nsources = 0;
-  oper = NULL;
   inserted = -1;
   subcircuit = NULL;
   subnet = NULL;
@@ -146,7 +145,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   }
 
   // copy operating points
-  copyOperatingPoints (c.oper);
+  oper = valuelist<operatingpoint> (c.oper);
 }
 
 // Destructor deletes a circuit object.
@@ -158,7 +157,6 @@ circuit::~circuit () {
     delete[] nodes;
   }
   if (subcircuit) free (subcircuit);
-  deleteOperatingPoints ();
 }
 
 /* With this function the number of ports of the circuit object can be
@@ -400,15 +398,14 @@ void circuit::setG (int r, int c, nr_double_t y) {
    value to the circuit. */
 void circuit::addOperatingPoint (char * n, nr_double_t val) {
   operatingpoint * p = new operatingpoint (n, val);
-  p->setNext (oper);
-  oper = p;
+  oper.add (n, p);
 }
 
 /* Returns the requested operating point value which has been
    previously added as its double representation.  If there is no such
    operating point the function returns zero. */
 nr_double_t circuit::getOperatingPoint (char * n) {
-  operatingpoint * p = oper->findOperatingPoint (n);
+  operatingpoint * p = oper.get (n);
   if (p != NULL) return p->getValue ();
   return 0.0;
 }
@@ -416,7 +413,7 @@ nr_double_t circuit::getOperatingPoint (char * n) {
 /* This function sets the operating point specified by the given name
    to the value passed to the function. */
 void circuit::setOperatingPoint (char * n, nr_double_t val) {
-  operatingpoint * p = oper->findOperatingPoint (n);
+  operatingpoint * p = oper.get (n);
   if (p != NULL)
     p->setValue (val);
   else
@@ -427,30 +424,7 @@ void circuit::setOperatingPoint (char * n, nr_double_t val) {
    point value.  If so it returns non-zero, otherwise it returns
    zero. */
 int circuit::hasOperatingPoint (char * n) {
-  return (oper && oper->findOperatingPoint (n)) ? 1 : 0;
-}
-
-/* This function copies all properties in the given operating point
-   list into a circuit object. */
-void circuit::copyOperatingPoints (operatingpoint * org) {
-  operatingpoint * p;
-  oper = NULL;
-  while (org != NULL) {
-    p = new operatingpoint (*org);
-    p->setNext (oper);
-    oper = p;
-    org = org->getNext ();
-  }
-}
-
-// Deletes all operating points of a circuit object.
-void circuit::deleteOperatingPoints (void) {
-  operatingpoint * n;
-  for (operatingpoint * p = oper; p != NULL; p = n) {
-    n = p->getNext ();
-    delete p;
-  }
-  oper = NULL;
+  return (oper.get (n)) ? 1 : 0;
 }
 
 // Returns the S-parameter at the given matrix position.

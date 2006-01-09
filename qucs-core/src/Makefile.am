@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,10 +42,10 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp precision.c
+	spline.cpp fourier.cpp precision.c pair.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
-	ptrlist.cpp tridiag.cpp hash.cpp
+	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
@@ -56,7 +56,8 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
-	spline.h tridiag.h fourier.h precision.h hash.h applications.h
+	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
+	valuelist.h pair.h
 
 noinst_LIBRARIES = libqucsator.a
 

@@ -1,7 +1,7 @@
 /*
  * circuit.h - circuit class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.41 2005/11/24 10:10:21 raimi Exp $
+ * $Id: circuit.h,v 1.42 2006/01/09 09:11:07 raimi Exp $
  *
  */
 
@@ -57,6 +57,7 @@ class transient;
 class net;
 
 #include "integrator.h"
+#include "valuelist.h"
 
 class circuit : public object, public integrator
 {
@@ -175,9 +176,7 @@ class circuit : public object, public integrator
   nr_double_t getOperatingPoint (char *);
   void        setOperatingPoint (char *, nr_double_t);
   int         hasOperatingPoint (char *);
-  void        copyOperatingPoints (operatingpoint *);
-  void        deleteOperatingPoints (void);
-  operatingpoint * getOperatingPoints (void) { return oper; }
+  valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
   // differentiate between linear and non-linear circuits
   void setNonLinear (bool l) { MODFLAG (!l, CIRCUIT_LINEAR); }
@@ -226,7 +225,7 @@ class circuit : public object, public integrator
   char * subcircuit;
   node * nodes;
   substrate * subst;
-  operatingpoint * oper;
+  valuelist<operatingpoint> oper;
   net * subnet;
   nr_double_t * deltas;
 };

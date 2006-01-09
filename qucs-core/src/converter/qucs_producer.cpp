@@ -1,7 +1,7 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.15 2005/12/19 07:55:14 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.16 2006/01/09 09:11:07 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 
 #include "netdefs.h"
 #include "check_spice.h"
+#include "check_vcd.h"
 #include "hash.h"
 
 /* Global variables. */
@@ -385,5 +386,27 @@ void qucslib_producer (void) {
   fprintf (qucs_out, "<Qucs Library " PACKAGE_VERSION " \"Generic\">\n");
   for (def = device_root; def; def = def->next) {
     qucslib_list_device (def);
+  }
+}
+
+/* This function is the overall Qucs dataset producer. */
+void qucsdata_producer (void) {
+  struct dataset_variable * ds;
+  struct dataset_value * dv;
+  fprintf (qucs_out, "<Qucs Dataset " PACKAGE_VERSION ">\n");
+  for (ds = dataset_root; ds; ds = ds->next) {
+    if (!ds->output || ds->type == DATA_UNKNOWN)
+      continue;
+    if (ds->type == DATA_INDEPENDENT)
+      fprintf (qucs_out, "<indep %s %d>\n", ds->ident, ds->size);
+    else if (ds->type == DATA_DEPENDENT)
+      fprintf (qucs_out, "<dep %s.X %s>\n", ds->ident, ds->dependencies);
+    for (dv = ds->values; dv; dv = dv->next) {
+      fprintf (qucs_out, "  %s\n", dv->value);
+    }
+    if (ds->type == DATA_INDEPENDENT)
+      fprintf (qucs_out, "</indep>\n");
+    else if (ds->type == DATA_DEPENDENT)
+      fprintf (qucs_out, "</dep>\n");
   }
 }

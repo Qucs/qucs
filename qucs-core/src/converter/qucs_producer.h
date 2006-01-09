@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.h,v 1.6 2005/06/02 18:17:56 raimi Exp $
+ * $Id: qucs_producer.h,v 1.7 2006/01/09 09:11:07 raimi Exp $
  *
  */
 
@@ -34,5 +34,6 @@ extern char * qucs_gnd;
 void qucs_producer (void);
 int  qucs_find_node (struct node_t *, char *);
 void qucslib_producer (void);
+void qucsdata_producer (void);
 
 #endif /* __QUCS_PRODUCER_H__ */

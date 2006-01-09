@@ -29,8 +29,8 @@ bin_PROGRAMS = qucsconv
 INCLUDES = -I$(top_srcdir)/src
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
-	check_spice.cpp qucs_producer.cpp check_vcd.cpp parse_vcd.cpp \
-	scan_vcd.cpp
+	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \
+	check_vcd.cpp
 
 noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
 	tokens_vcd.h

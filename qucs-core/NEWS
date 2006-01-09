@@ -26,6 +26,7 @@ files.
 Version 0.0.8
 -------------
 
+ * conversion of vcd to dataset files using qucsconv
  * new component: ideal coupler
  * implementation of temperature models of diode, jfet, mosfet and bjt
  * analog models of digital components implemented
