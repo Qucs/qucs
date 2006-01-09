@@ -2443,28 +2443,128 @@ simulation, this should have the highest priority.
 
 The component described above can be expanded to one with two ports
 (two pairs of terminals: terminal 1 and 2 and terminal 3 and 4).
-The defining equations are:
+That is, the currents and charges of both ports depend on both
+port voltages $V_{12}=V_1-V_2$ and $V_{34}=V_3-V_4$. Thus, the defining equations are:
 \begin{equation}
-I_1 = i_1(V_1, V_2) \qquad\text{and}\qquad
-g_{11} = \dfrac{\partial I_1}{\partial V_1} \qquad\text{and}\qquad
-g_{12} = \dfrac{\partial I_1}{\partial V_2}
+I_1 = i_1(V_{12}, V_{34}) \qquad\text{and}\qquad
+g_{11} = \dfrac{\partial I_1}{\partial V_{12}} \qquad\text{and}\qquad
+g_{12} = \dfrac{\partial I_1}{\partial V_{34}}
 \end{equation}
 \begin{equation}
-I_2 = i_2(V_1, V_2) \qquad\text{and}\qquad
-g_{21} = \dfrac{\partial I_2}{\partial V_1} \qquad\text{and}\qquad
-g_{22} = \dfrac{\partial I_2}{\partial V_2}
+I_2 = i_2(V_{12}, V_{34}) \qquad\text{and}\qquad
+g_{21} = \dfrac{\partial I_2}{\partial V_{12}} \qquad\text{and}\qquad
+g_{22} = \dfrac{\partial I_2}{\partial V_{34}}
 \end{equation}
 as well as
 \begin{equation}
-Q_1 = q_1(V_1, V_2) \qquad\text{and}\qquad
-c_{11} = \dfrac{\partial Q_1}{\partial V_1} \qquad\text{and}\qquad
-c_{12} = \dfrac{\partial Q_1}{\partial V_2}
+Q_1 = q_1(V_{12}, V_{34}) \qquad\text{and}\qquad
+c_{11} = \dfrac{\partial Q_1}{\partial V_{12}} \qquad\text{and}\qquad
+c_{12} = \dfrac{\partial Q_1}{\partial V_{34}}
 \end{equation}
 \begin{equation}
-Q_2 = q_2(V_1, V_2) \qquad\text{and}\qquad
-c_{21} = \dfrac{\partial Q_2}{\partial V_1} \qquad\text{and}\qquad
-c_{22} = \dfrac{\partial Q_2}{\partial V_2}
+Q_2 = q_2(V_{12}, V_{34}) \qquad\text{and}\qquad
+c_{21} = \dfrac{\partial Q_2}{\partial V_{12}} \qquad\text{and}\qquad
+c_{22} = \dfrac{\partial Q_2}{\partial V_{34}}
 \end{equation}
+
+The MNA matrix for the DC analysis writes:
+
+\begin{equation}
+\begin{bmatrix}
+ g_{11}^{(m)} & -g_{11}^{(m)} &  g_{12}^{(m)} & -g_{12}^{(m)}\\
+-g_{11}^{(m)} &  g_{11}^{(m)} & -g_{12}^{(m)} &  g_{12}^{(m)}\\
+ g_{21}^{(m)} & -g_{21}^{(m)} &  g_{22}^{(m)} & -g_{22}^{(m)}\\
+-g_{21}^{(m)} &  g_{21}^{(m)} & -g_{22}^{(m)} &  g_{22}^{(m)}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}^{(m+1)}\\
+V_{2}^{(m+1)}\\
+V_{3}^{(m+1)}\\
+V_{4}^{(m+1)}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_1^{(m)} + g_{11}^{(m)}\cdot V_{12}^{(m)} + g_{12}^{(m)}\cdot V_{34}^{(m)}\\
+ I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)}\\
+-I_2^{(m)} + g_{21}^{(m)}\cdot V_{12}^{(m)} + g_{22}^{(m)}\cdot V_{34}^{(m)}\\
+ I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)}\\
+\end{bmatrix}
+\end{equation}
+
+For a transient simulation, the DC equations have to be extended
+by the non-linear capacitance, e.g. for backward Euler:
+\begin{align}
+I_{C11}^{n+1,m} &=
+   \underbrace{\dfrac{c_{11}(V_{12}^{n+1,m})}{h^n}}_{g_{eq,11}}\cdot V_{12}^{n+1}
+   \underbrace{- \dfrac{c_{11}(V_{12}^{n})}{h^n}\cdot V_{12}^{n}}_{I_{eq,11}}\\
+I_{C12}^{n+1,m} &=
+   \underbrace{\dfrac{c_{12}(V_{12}^{n+1,m})}{h^n}}_{g_{eq,12}}\cdot V_{12}^{n+1}
+   \underbrace{- \dfrac{c_{12}(V_{12}^{n})}{h^n}\cdot V_{12}^{n}}_{I_{eq,12}}\\
+I_{C21}^{n+1,m} &=
+   \underbrace{\dfrac{c_{21}(V_{34}^{n+1,m})}{h^n}}_{g_{eq,21}}\cdot V_{34}^{n+1}
+   \underbrace{- \dfrac{c_{21}(V_{34}^{n})}{h^n}\cdot V_{34}^{n}}_{I_{eq,21}}\\
+I_{C22}^{n+1,m} &=
+   \underbrace{\dfrac{c_{22}(V_{34}^{n+1,m})}{h^n}}_{g_{eq,22}}\cdot V_{34}^{n+1}
+   \underbrace{- \dfrac{c_{22}(V_{34}^{n})}{h^n}\cdot V_{34}^{n}}_{I_{eq,22}}
+\end{align}
+So with $g_{tr} = g + g_{eq}$ it is:
+\begin{align}
+&
+\begin{bmatrix}
+ g_{tr,11}^{(m)} & -g_{tr,11}^{(m)} &  g_{tr,12}^{(m)} & -g_{tr,12}^{(m)}\\
+-g_{tr,11}^{(m)} &  g_{tr,11}^{(m)} & -g_{tr,12}^{(m)} &  g_{tr,12}^{(m)}\\
+ g_{tr,21}^{(m)} & -g_{tr,21}^{(m)} &  g_{tr,22}^{(m)} & -g_{tr,22}^{(m)}\\
+-g_{tr,21}^{(m)} &  g_{tr,21}^{(m)} & -g_{tr,22}^{(m)} &  g_{tr,22}^{(m)}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}^{(n+1,m+1)}\\
+V_{2}^{(n+1,m+1)}\\
+V_{3}^{(n+1,m+1)}\\
+V_{4}^{(n+1,m+1)}
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+-I_1^{(m)} + g_{11}^{(m)}\cdot V_{12}^{(m)} + g_{12}^{(m)}\cdot V_{34}^{(m)} - I_{eq,11}^{(n)} - I_{eq,12}^{(n)}\\
+ I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)} + I_{eq,12}^{(n)} + I_{eq,12}^{(n)}\\
+-I_2^{(m)} + g_{21}^{(m)}\cdot V_{12}^{(m)} + g_{22}^{(m)}\cdot V_{34}^{(m)} - I_{eq,21}^{(n)} - I_{eq,22}^{(n)}\\
+ I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)} + I_{eq,21}^{(n)} + I_{eq,22}^{(n)}
+\end{bmatrix}
+\end{align}
+
+For an AC analysis the MNA matrix writes:
+
+\begin{equation}
+A =
+\begin{bmatrix}
+ g_{11} + j\omega\cdot c_{11} & -g_{11} - j\omega\cdot c_{11} &  g_{12} + j\omega\cdot c_{12} & -g_{12} - j\omega\cdot c_{12}\\
+-g_{11} - j\omega\cdot c_{11} &  g_{11} + j\omega\cdot c_{11} & -g_{12} - j\omega\cdot c_{12} &  g_{12} + j\omega\cdot c_{12}\\
+ g_{21} + j\omega\cdot c_{21} & -g_{21} - j\omega\cdot c_{21} &  g_{22} + j\omega\cdot c_{22} & -g_{22} - j\omega\cdot c_{22}\\
+-g_{21} - j\omega\cdot c_{21} &  g_{21} + j\omega\cdot c_{21} & -g_{22} - j\omega\cdot c_{22} &  g_{22} + j\omega\cdot c_{22}
+\end{bmatrix}
+\end{equation}
+
+As can bee seen, this scheme can be expanded to any number of ports.
+The matrices soon become quite complex, but fortunately, modern
+computers are able to cope with this complexity.
+
+\addvspace{12pt}
+
+The above-mentioned explicit models are not useable for all components.
+If the Y-parameters do not exist or if the equations cannot be
+analytical transformed into the explicit form, then an implicit
+representation must be taken. That is, for a one-port (two-terminal)
+component the following formulas are defined by the user:
+
+\begin{align}
+0 = f(V, I) \qquad & \text{and}\qquad
+  g_V = \dfrac{\partial f(V, I)}{\partial V}
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V+h, I)) - f(V, I)}{h}\\
+                   & \text{and}\qquad
+  g_I = \dfrac{\partial f(V, I)}{\partial I}
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V, I+h)) - f(V, I)}{h}
+\end{align}
 
 
 \section{Non-linear DC Analysis}
