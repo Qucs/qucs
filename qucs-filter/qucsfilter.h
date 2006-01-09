@@ -56,13 +56,16 @@ private slots:
 
 private:
   void setError(const QString&);
+  QString * calculateFilter(struct tFilter *);
 
   int ResultState;
 
   QGridLayout *gbox;
-  QComboBox *ComboType, *ComboClass, *ComboCorner, *ComboStop;
+  QComboBox *ComboType, *ComboClass, *ComboCorner, *ComboStop, *ComboBandStop;
   QLineEdit *EditOrder, *EditCorner, *EditStop, *EditRipple, *EditImpedance;
-  QLabel *LabelRipple, *Label_dB, *LabelStart, *LabelStop, *LabelResult;
+  QLineEdit *EditAtten, *EditBandStop;
+  QLabel *LabelRipple, *LabelRipple_dB, *LabelStart, *LabelStop, *LabelResult;
+  QLabel *LabelAtten, *LabelAtten_dB, *LabelBandStop;
   QIntValidator *IntVal;
   QDoubleValidator *DoubleVal;
 };
