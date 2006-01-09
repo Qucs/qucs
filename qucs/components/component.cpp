@@ -1201,11 +1201,13 @@ Component* getComponentFromName(QString& Line)
   switch(first) {
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
 	else if(cstr == "us") c = new Resistor(false);  // backward capatible
+	else if(cstr == "SFF") c = new RS_FlipFlop();
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();
 	else if(cstr == "CVS") c = new CCVS();
 	else if(cstr == "irculator") c = new Circulator();
+	else if(cstr == "oupler") c = new Coupler();
 	else if(cstr == "LIN") c = new Coplanar();
 	else if(cstr == "OPEN") c = new CPWopen();
 	else if(cstr == "SHORT") c = new CPWshort();
@@ -1230,6 +1232,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "nv") c = new Logical_Inv();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
+	else if(cstr == "KFF") c = new JK_FlipFlop();
         break;
   case 'V' : if(cstr == "dc") c = new Volt_dc();
         else if(cstr == "ac") c = new Volt_ac();
@@ -1259,6 +1262,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "CFeed") c = new dcFeed();
 	else if(cstr == "iode") c = new Diode();
 	else if(cstr == "igiSource") c = new Digi_Source();
+	else if(cstr == "FF") c = new D_FlipFlop();
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
 	else if(cstr == "JT") c = new BJTsub();

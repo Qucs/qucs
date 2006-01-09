@@ -918,10 +918,11 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
       (*it) = pc->Ports.getFirst()->Connection->Name;
       if(NumPorts >= 0) {
         (*it) += ": ";
-        if(pc->Props.at(1)->Value.at(0) == 'o')  // output port ?
-          (*it) += "out";
-        else
-          (*it) += "in";
+        switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          case 'o' : (*it) += "out"; break;
+          case 'i' : (*it) += "in";  break;
+          default  : (*it) += "inout";
+        }
         (*it) += " bit";
       }
     }

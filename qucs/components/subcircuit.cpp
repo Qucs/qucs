@@ -83,7 +83,7 @@ void Subcircuit::recreate(QucsDoc *Doc)
 
   tx = INT_MIN;
   ty = INT_MIN;
-  if(loadSymbol(FileName) > 0) {
+  if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
     performModification();
@@ -92,7 +92,7 @@ void Subcircuit::recreate(QucsDoc *Doc)
     No = QucsApp::testFile(FileName);
     if(No < 0)  No = 0;
 
-    remakeSymbol(No);
+    remakeSymbol(No);  // no symbol was found -> create standard symbol
   }
 
   if(Doc) {
@@ -233,7 +233,7 @@ QString Subcircuit::NetList()
 }
 
 // -------------------------------------------------------
-QString Subcircuit::VHDL_Code()
+QString Subcircuit::VHDL_Code(int)
 {
   QString s = "  " + Name + ": entity " + properName(Props.getFirst()->Value);
   s += " port map (";
