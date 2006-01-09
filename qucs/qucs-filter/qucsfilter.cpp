@@ -19,9 +19,7 @@
 # include <config.h>
 #endif
 
-#include "qucsfilter.h"
-#include "helpdialog.h"
-#include "lc_filter.h"
+#include <math.h>
 
 #include <qmenubar.h>
 #include <qpopupmenu.h>
@@ -36,10 +34,12 @@
 #include <qclipboard.h>
 #include <qapplication.h>
 
-#include <math.h>
-
-
-
+#include "lc_filter.h"
+#include "qf_poly.h"
+#include "qf_filter.h"
+#include "qf_cauer.h"
+#include "qucsfilter.h"
+#include "helpdialog.h"
 
 QucsFilter::QucsFilter()
 {
@@ -77,6 +77,7 @@ QucsFilter::QucsFilter()
   ComboType->insertItem("Bessel");
   ComboType->insertItem("Butterworth");
   ComboType->insertItem("Chebyshev");
+  ComboType->insertItem("Cauer");
   gbox->addWidget(ComboType, 1,1);
   connect(ComboType, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
 
@@ -125,33 +126,54 @@ QucsFilter::QucsFilter()
   ComboStop->setCurrentItem(3);
   gbox->addWidget(ComboStop, 5,2);
 
+  LabelBandStop = new QLabel(tr("Stop band frequency:"), this);
+  gbox->addWidget(LabelBandStop, 6,0);
+  EditBandStop = new QLineEdit("3", this);
+  EditBandStop->setValidator(DoubleVal);
+  gbox->addWidget(EditBandStop, 6,1);
+  ComboBandStop = new QComboBox(this);
+  ComboBandStop->insertItem("Hz");
+  ComboBandStop->insertItem("kHz");
+  ComboBandStop->insertItem("MHz");
+  ComboBandStop->insertItem("GHz");
+  ComboBandStop->setCurrentItem(3);
+  gbox->addWidget(ComboBandStop, 6,2);
+
   LabelRipple = new QLabel(tr("Pass band ripple:"), this);
-  gbox->addWidget(LabelRipple, 6,0);
+  gbox->addWidget(LabelRipple, 7,0);
   EditRipple = new QLineEdit("1", this);
   EditRipple->setValidator(DoubleVal);
-  gbox->addWidget(EditRipple, 6,1);
-  Label_dB = new QLabel("dB", this);
-  gbox->addWidget(Label_dB, 6,2);
+  gbox->addWidget(EditRipple, 7,1);
+  LabelRipple_dB = new QLabel("dB", this);
+  gbox->addWidget(LabelRipple_dB, 7,2);
+
+  LabelAtten = new QLabel(tr("Stop band attenuation:"), this);
+  gbox->addWidget(LabelAtten, 8,0);
+  EditAtten = new QLineEdit("20", this);
+  EditAtten->setValidator(DoubleVal);
+  gbox->addWidget(EditAtten, 8,1);
+  LabelAtten_dB = new QLabel("dB", this);
+  gbox->addWidget(LabelAtten_dB, 8,2);
 
   QLabel *Label9 = new QLabel(tr("Impedance:"), this);
-  gbox->addWidget(Label9, 7,0);
+  gbox->addWidget(Label9, 9,0);
   EditImpedance = new QLineEdit("50", this);
   EditImpedance->setValidator(DoubleVal);
-  gbox->addWidget(EditImpedance, 7,1);
+  gbox->addWidget(EditImpedance, 9,1);
   QLabel *Label10 = new QLabel("Ohm", this);
-  gbox->addWidget(Label10, 7,2);
+  gbox->addWidget(Label10, 9,2);
 
 
   QPushButton *ButtonGo =
                new QPushButton(tr("Calculate and put into Clipboard"), this);
   connect(ButtonGo, SIGNAL(clicked()), SLOT(slotCalculate()));
-  gbox->addMultiCellWidget(ButtonGo, 8,8,0,2);
+  gbox->addMultiCellWidget(ButtonGo, 10,10,0,2);
 
   LabelResult = new QLabel(this);
   ResultState = 100;
   slotShowResult();
   LabelResult->setAlignment(Qt::AlignHCenter);
-  gbox->addMultiCellWidget(LabelResult, 9,9,0,2);
+  gbox->addMultiCellWidget(LabelResult, 11,11,0,2);
 
 
   // -------  finally set initial state  --------
@@ -213,23 +235,69 @@ void QucsFilter::setError(const QString& Message)
 }
 
 // ************************************************************
+QString * QucsFilter::calculateFilter(struct tFilter * Filter)
+{
+  QString * s = NULL;
+
+  if (Filter->Type == TYPE_CAUER) {
+    qf_cauer * F = NULL;
+    double amin, amax, fc, fs, bw, r;
+    fc = Filter->Frequency;
+    amin = Filter->Ripple;
+    fs = Filter->Frequency3;
+    r = Filter->Impedance;
+    amax = Filter->Attenuation;
+    bw = Filter->Frequency2 - fc;
+
+    switch (Filter->Class) {
+    case CLASS_LOWPASS:
+      F = new qf_cauer (amin, amax, fc, fs, r, 0, LOWPASS);
+      break;
+    case CLASS_HIGHPASS:
+      F = new qf_cauer (amin, amax, fc, fs, r, 0, HIGHPASS);
+      break;
+    case CLASS_BANDPASS:
+      F = new qf_cauer (amin, amax, fc, fs, r, bw, BANDPASS);
+      break;
+    case CLASS_BANDSTOP:
+      F = new qf_cauer (amax, amin, fc, fs, r, bw, BANDSTOP);
+      break;
+    }
+    if (F) {
+      F->dump ();
+      delete F;
+    }
+    s = NULL;
+  }
+  else {
+    s = LC_Filter::createSchematic(Filter);
+  }
+  return s;
+}
+
+// ************************************************************
 void QucsFilter::slotCalculate()
 {
   // get numerical values from input widgets
-  double CornerFreq = EditCorner->text().toDouble();
-  double StopFreq   = EditStop->text().toDouble();
+  double CornerFreq   = EditCorner->text().toDouble();
+  double StopFreq     = EditStop->text().toDouble();
+  double BandStopFreq = EditBandStop->text().toDouble();
 
-  CornerFreq *= pow(10, double(3*ComboCorner->currentItem())); // add exponent
-  StopFreq   *= pow(10, double(3*ComboStop->currentItem()));
+  // add exponent
+  CornerFreq   *= pow(10, double(3*ComboCorner->currentItem()));
+  StopFreq     *= pow(10, double(3*ComboStop->currentItem()));
+  BandStopFreq *= pow(10, double(3*ComboBandStop->currentItem()));
 
   tFilter Filter;
   Filter.Type = ComboType->currentItem();
   Filter.Class = ComboClass->currentItem();
   Filter.Order = EditOrder->text().toInt();
   Filter.Ripple = EditRipple->text().toDouble();
+  Filter.Attenuation = EditAtten->text().toDouble();
   Filter.Impedance = EditImpedance->text().toDouble();
   Filter.Frequency = CornerFreq;
   Filter.Frequency2 = StopFreq;
+  Filter.Frequency3 = BandStopFreq;
 
   if(EditStop->isEnabled())
     if(Filter.Frequency >= Filter.Frequency2) {
@@ -242,14 +310,13 @@ void QucsFilter::slotCalculate()
     return;
   }
 
-  if(Filter.Order > 19) if(Filter.Class == TYPE_BESSEL) {
+  if(Filter.Order > 19) if(Filter.Type == TYPE_BESSEL) {
     setError(tr("Bessel filter order must not be greater than 19."));
     return;
   }
 
-  QString *s = LC_Filter::createSchematic(&Filter);
+  QString * s = calculateFilter(&Filter);
   if(!s) return;
-
 
   // put resulting filter schematic into clipboard
   QClipboard *cb = QApplication::clipboard();
@@ -288,17 +355,34 @@ void QucsFilter::slotShowResult()
 void QucsFilter::slotTypeChanged(int index)
 {
   switch(index) {
-    case TYPE_BESSEL :
-    case TYPE_BUTTERWORTH :
+    case TYPE_BESSEL:
+    case TYPE_BUTTERWORTH:
 	LabelRipple->setEnabled(false);
 	EditRipple->setEnabled(false);
-	Label_dB->setEnabled(false);
+	LabelRipple_dB->setEnabled(false);
 	break;
-    case TYPE_CHEBYSHEV :
+    case TYPE_CHEBYSHEV:
+    case TYPE_CAUER:
 	LabelRipple->setEnabled(true);
 	EditRipple->setEnabled(true);
-	Label_dB->setEnabled(true);
+	LabelRipple_dB->setEnabled(true);
 	break;
+  }
+  if (index == TYPE_CAUER) {
+    LabelAtten->setEnabled(true);
+    EditAtten->setEnabled(true);
+    LabelAtten_dB->setEnabled(true);
+    LabelBandStop->setEnabled(true);
+    EditBandStop->setEnabled(true);
+    ComboBandStop->setEnabled(true);
+  }
+  else {
+    LabelAtten->setEnabled(false);
+    EditAtten->setEnabled(false);
+    LabelAtten_dB->setEnabled(false);
+    LabelBandStop->setEnabled(false);
+    EditBandStop->setEnabled(false);
+    ComboBandStop->setEnabled(false);
   }
 }
 
@@ -306,15 +390,15 @@ void QucsFilter::slotTypeChanged(int index)
 void QucsFilter::slotClassChanged(int index)
 {
   switch(index) {
-    case CLASS_LOWPASS :
-    case CLASS_HIGHPASS :
+    case CLASS_LOWPASS:
+    case CLASS_HIGHPASS:
 	LabelStop->setEnabled(false);
 	EditStop->setEnabled(false);
 	ComboStop->setEnabled(false);
 	LabelStart->setText(tr("Corner frequency:"));
 	break;
-    case CLASS_BANDPASS :
-    case CLASS_BANDSTOP :
+    case CLASS_BANDPASS:
+    case CLASS_BANDSTOP:
 	LabelStop->setEnabled(true);
 	EditStop->setEnabled(true);
 	ComboStop->setEnabled(true);

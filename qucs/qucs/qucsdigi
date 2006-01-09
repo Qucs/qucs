@@ -55,9 +55,10 @@ LDFLAGS=`freehdl-config --ldflags`
 cp $NAME digi.vhdl
 NAME="digi"
 
-echo -n "converting..."
+echo -n "running C++ conversion..."
 # FIXME: Isn't this diverting important output in the error case ?
-freehdl-v2cc -m $NAME._main_.cc -o $NAME.cc $NAME.vhdl 2>/dev/null
+# freehdl-v2cc -m $NAME._main_.cc -o $NAME.cc $NAME.vhdl 2>/dev/null
+freehdl-v2cc -m $NAME._main_.cc -o $NAME.cc $NAME.vhdl
 echo " done."
 
 echo -n "compiling functions..."
@@ -74,4 +75,8 @@ echo " done."
 
 echo -n "simulating..."
 ./$NAME -cmd "dc -f $NAME.vcd -q;d;run $TIME;q;" >/dev/null
+echo " done."
+
+echo -n "running VCD conversion..."
+#qucsconv -if vcd -of qucsdata -i $NAME.vcd -o $NAME.dat
 echo " done."
