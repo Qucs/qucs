@@ -366,7 +366,10 @@ void SimMessage::slotUpdateProgressBar()
 // Is called when the process sends an output to stderr.
 void SimMessage::slotDisplayErr()
 {
-  ErrText->append(QString(SimProcess.readStderr()));
+  int par = ErrText->paragraphs();
+  int idx = ErrText->paragraphLength(par-1);
+  ErrText->setCursorPosition(par-1,idx);
+  ErrText->insert(QString(SimProcess.readStderr()));
 }
 
 // ------------------------------------------------------------------------

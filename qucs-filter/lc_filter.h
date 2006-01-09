@@ -28,6 +28,7 @@
 #define TYPE_BESSEL      0
 #define TYPE_BUTTERWORTH 1
 #define TYPE_CHEBYSHEV   2
+#define TYPE_CAUER       3
 
 #include <math.h>
 
@@ -45,6 +46,8 @@ struct tFilter {
    double Impedance;
    double Frequency;
    double Frequency2;
+   double Attenuation;
+   double Frequency3;
 };
 
 

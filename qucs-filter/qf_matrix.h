@@ -1,6 +1,6 @@
 /***************************************************************************
-                               qf_matrix.cpp
-                              ----------------
+                               qf_matrix.h
+                             ----------------
     begin                : Mon Jan 02 2006
     copyright            : (C) 2006 by Stefan Jahn
     email                : stefan@lkcc.org
@@ -15,40 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_MATRIX
-#define _QF_MATRIX
+#ifndef _QF_MATRIX_H
+#define _QF_MATRIX_H
 
 class qf_matrix
 {
-public:
+ public:
   // constructor
-  qf_matrix (unsigned int d)
-  {
+  qf_matrix (unsigned int d) {
     data = (qf_double_t *) calloc (d * d, sizeof (qf_double_t));
     n = d;
   }
 
   // destructor
-   ~qf_matrix ()
-  {
+  ~qf_matrix () {
     free (data);
   }
 
   // accessor operators
-  qf_double_t operator  () (int r, int c) const
-  {
+  qf_double_t operator () (int r, int c) const {
     return data[r * n + c];
   }
-  qf_double_t & operator  () (int r, int c)
-  {
+  qf_double_t & operator () (int r, int c) {
     return data[r * n + c];
   }
 
   // size of matrix
   unsigned int n;
 
-private:
+ private:
   qf_double_t * data;
 };
 
-#endif // _QF_MATRIX
+#endif // _QF_MATRIX_H
