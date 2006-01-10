@@ -257,10 +257,10 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
       F = new qf_cauer (amin, amax, fc, fs, r, 0, HIGHPASS);
       break;
     case CLASS_BANDPASS:
-      F = new qf_cauer (amin, amax, fc, fs, r, bw, BANDPASS);
+      F = new qf_cauer (amin, amax, fc + bw / 2, fs, r, bw, BANDPASS);
       break;
     case CLASS_BANDSTOP:
-      F = new qf_cauer (amax, amin, fc, fs, r, bw, BANDSTOP);
+      F = new qf_cauer (amax, amin, fc + bw / 2, fs, r, bw, BANDSTOP);
       break;
     }
     if (F) {
