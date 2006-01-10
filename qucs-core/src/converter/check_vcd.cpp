@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.3 2006-01-09 09:11:07 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.4 2006-01-10 12:23:50 raimi Exp $
  *
  */
 
@@ -42,7 +42,6 @@
 
 // Some more definitions.
 #define VCD_INCLUDE_RANGE 1
-#define VCD_INCLUDE_SCOPE 0
 #define VCD_TIMEVAR "dtime"
 
 // Global variables.
@@ -54,14 +53,18 @@ struct dataset_variable * dataset_root = NULL;
 
 /* The function looks through all variable definitions in all scopes
    to find the given reference code. */
-static struct vcd_vardef * vcd_find_code (char * code) {
+static struct vcd_vardef *
+vcd_find_code (struct vcd_scope * root, char * code) {
   struct vcd_scope * scope;
-  for (scope = vcd->scopes; scope; scope = scope->next) {
+  for (scope = root; scope; scope = scope->next) {
     struct vcd_vardef * var;
     for (var = scope->vardefs; var; var = var->next) {
       if (!strcmp (var->code, code))
 	return var;
     }
+    // search in sub-scopes
+    if ((var = vcd_find_code (scope->scopes, code)) != NULL)
+      return var;
   }
   return NULL;
 }
@@ -84,9 +87,9 @@ vcd_find_firstset (struct vcd_changeset * root) {
 
 /* Looks for the a variable name in the given list of variables. */
 static struct vcd_variable *
-vcd_find_variable (struct vcd_variable * root, char * var) {
+vcd_find_variable (struct vcd_variable * root, struct vcd_vardef * var) {
   for (struct vcd_variable * vv = root; vv; vv = vv->next) {
-    if (!strcmp (vv->ident, var))
+    if (!strcmp (vv->code, var->code))
       return vv;
   }
   return NULL;
@@ -117,7 +120,7 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 
     // go through list of value changes
     for (vc = cs->changes; vc; vc = vc->next) {
-      vv = vcd_find_variable (current->variables, vc->var->ident);
+      vv = vcd_find_variable (current->variables, vc->var);
       if (vv != NULL) {
 	// duplicate value change
 	vv->value = vc->value;
@@ -131,6 +134,7 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 	vv->ident = vc->var->ident;
 	vv->value = vc->value;
 	vv->isreal = vc->isreal;
+	vv->code = vc->code;
 	vv->next = current->variables;
 	current->variables = vv;
       }
@@ -138,6 +142,20 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
     // changeset processed
     cs->done = 1;
   }
+}
+
+/* Predends the scope identifiers in front of a variable identfier. */
+static char *
+vcd_prepend_scopes (struct vcd_vardef * var, char * ident) {
+  struct vcd_scope * scope = var->scope;
+  while (scope && scope != vcd->scopes) {
+    char * txt = (char *) malloc (strlen (ident) + strlen (scope->ident) + 2);
+    sprintf (txt, "%s.%s", scope->ident, ident);
+    free (ident);
+    ident = txt;
+    scope = scope->parent;
+  }
+  return ident;
 }
 
 /* This function initially creates a dataset variable based on the
@@ -151,9 +169,6 @@ vcd_create_variable (struct vcd_vardef * var) {
     calloc (1, sizeof (struct dataset_variable));
   ds->output = 1;
 
-#if VCD_INCLUDE_SCOPE
-  len += strlen (var->scope->ident) + 1;
-#endif
 #if VCD_INCLUDE_RANGE
   if (var->range) len += 32;
 #endif
@@ -184,17 +199,10 @@ vcd_create_variable (struct vcd_vardef * var) {
   sprintf (id2, "%s", id1);
 #endif
 
-  ds->ident = (char *) malloc (len);
-#if VCD_INCLUDE_SCOPE
+  ds->ident = strdup (id2);
   if (vcd_freehdl) {
-    // skip leading "arch" string
-    sprintf (ds->ident, "%s.%s", &var->scope->ident[4], id2);
-  } else {
-    sprintf (ds->ident, "%s.%s", var->scope->ident, id2);
+    ds->ident = vcd_prepend_scopes (var, ds->ident);
   }
-#else
-  sprintf (ds->ident, "%s", id2);
-#endif
 
   free (id1);
   free (id2);
@@ -318,13 +326,12 @@ static struct dataset_variable * vcd_create_indep (char * name) {
   return ds;
 }
 
-/* The function creates a list of dataset for each VCD variable and
-   for the independent (timestamps) variable as well. */
-static void vcd_prepare_datasets (void) {
+/* The function creates a list of dataset for each VCD variable. */
+static void vcd_prepare_variable_datasets (struct vcd_scope * root) {
   struct vcd_scope * scope;
   struct dataset_variable * data;
   // through each scope
-  for (scope = vcd->scopes; scope; scope = scope->next) {
+  for (scope = root; scope; scope = scope->next) {
     struct vcd_vardef * var;
     // through each variable in this scope
     for (var = scope->vardefs; var; var = var->next) {
@@ -334,7 +341,16 @@ static void vcd_prepare_datasets (void) {
       data->next = dataset_root;
       dataset_root = data;
     }
+    vcd_prepare_variable_datasets (scope->scopes);
   }
+}
+
+/* The function creates a list of dataset for each VCD variable and
+   for the independent (timestamps) variable as well. */
+static void vcd_prepare_datasets (void) {
+  struct dataset_variable * data;
+  // the dependent variables
+  vcd_prepare_variable_datasets (vcd->scopes);
   // the independent variable
   data = vcd_create_indep (VCD_TIMEVAR);
   data->type = DATA_INDEPENDENT;
@@ -379,7 +395,7 @@ int vcd_checker (void) {
   for (changeset = vcd->changesets; changeset; changeset = changeset->next) {
     struct vcd_change * change;
     for (change = changeset->changes; change; change = change->next) {
-      change->var = vcd_find_code (change->code);
+      change->var = vcd_find_code (vcd->scopes, change->code);
       if (change->var == NULL) {
 	fprintf (stderr, "vcd error, no such variable reference `%s' "
 		 "found\n", change->code);
@@ -387,6 +403,8 @@ int vcd_checker (void) {
       }
     }
   }
+
+  if (vcd_errors) return -1;
 
   // sort the VCD changesets
   vcd_sort_changesets (vcd->changesets);
@@ -402,10 +420,10 @@ int vcd_checker (void) {
   return vcd_errors ? -1 : 0;
 }
 
-// Free's the given VCD file.
-static void vcd_free_file (struct vcd_file * vcd) {
+// Free's the given scope root.
+static void vcd_free_scope (struct vcd_scope * root) {
   struct vcd_scope * vs, * snext;
-  for (vs = vcd->scopes; vs; vs = snext) {
+  for (vs = root; vs; vs = snext) {
     snext = vs->next;
     free (vs->ident);
     struct vcd_vardef * vv, * vnext;
@@ -416,8 +434,14 @@ static void vcd_free_file (struct vcd_file * vcd) {
       if (vv->range) free (vv->range);
       free (vv);
     }
+    vcd_free_scope (vs->scopes);
     free (vs);
   }
+}
+
+// Free's the given VCD file.
+static void vcd_free_file (struct vcd_file * vcd) {
+  vcd_free_scope (vcd->scopes);
   struct vcd_changeset * cs, * cnext;
   for (cs = vcd->changesets; cs; cs = cnext) {
     cnext = cs->next;

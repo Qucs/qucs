@@ -1,3 +1,9 @@
+2006-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_vcd.y, check_vcd.cpp: Improved the scope handling.
+
+	* parse_vcd.y: Documented some VCD semantics.
+
 2006-01-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_vcd.cpp: Finished the VCD to Qucs dataset converter.

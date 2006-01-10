@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.3 2006-01-09 09:11:07 raimi Exp $
+ * $Id: parse_vcd.y,v 1.4 2006-01-10 12:23:50 raimi Exp $
  *
  */
 
@@ -116,16 +116,33 @@ Declaration:
    | t_DATE t_END
    | t_ENDDEFINITIONS t_END
    | t_SCOPE ScopeDeclaration t_END {
-     $2->next = vcd->scopes;
-     vcd->scopes = $2;
+     if (!vcd->scopes) {
+       vcd->scopes = (struct vcd_scope *)
+	 calloc (1, sizeof (struct vcd_scope));
+       vcd->scopes->ident = strdup ("noscope");
+       vcd->scopes->scopes = $2;
+       $2->parent = vcd->scopes;
+     } else {
+       $2->next = vcd->currentscope->scopes;
+       vcd->currentscope->scopes = $2;
+       $2->parent = vcd->currentscope;
+     }
+     vcd->currentscope = $2;
    }
    | t_TIMESCALE TimeScaleDeclaration t_END
-   | t_UPSCOPE t_END
+   | t_UPSCOPE t_END {
+     if (vcd->currentscope->parent) {
+       vcd->currentscope = vcd->currentscope->parent;
+     } else {
+       fprintf (stderr, "vcd notice, unnecessary $upscope in line %d\n",
+		vcd_lineno);
+     }
+   }
    | t_VERSION t_END
    | t_VAR VarDeclaration t_END {
-     $2->next = vcd->scopes->vardefs;
-     $2->scope = vcd->scopes;
-     vcd->scopes->vardefs = $2;
+     $2->scope = vcd->currentscope;
+     $2->next = vcd->currentscope->vardefs;
+     vcd->currentscope->vardefs = $2;
    }
 ;
 
@@ -192,23 +209,41 @@ BitSelect: /* nothing */ { $$ = NULL; }
 ;
 
 VarType:
-     EVENT     { $$ = VAR_EVENT;     }
-   | INTEGER   { $$ = VAR_INTEGER;   }
-   | PARAMETER { $$ = VAR_PARAMETER; }
-   | REAL      { $$ = VAR_REAL;      }
-   | REG       { $$ = VAR_REG;       }
-   | SUPPLY0   { $$ = VAR_SUPPLY0;   }
-   | SUPPLY1   { $$ = VAR_SUPPLY1;   }
-   | TIME      { $$ = VAR_TIME;      }
-   | TRI       { $$ = VAR_TRI;       }
-   | TRIAND    { $$ = VAR_TRIAND;    }
-   | TRIOR     { $$ = VAR_TRIOR;     }
-   | TRIREG    { $$ = VAR_TRIREG;    }
-   | TRI0      { $$ = VAR_TRI0;      }
-   | TRI1      { $$ = VAR_TRI1;      }
-   | WAND      { $$ = VAR_WAND;      }
-   | WIRE      { $$ = VAR_WIRE;      }
-   | WOR       { $$ = VAR_WOR;       }
+     EVENT     { $$ = VAR_EVENT;
+     /* a special type to synchronize different statement blocks */ }
+   | INTEGER   { $$ = VAR_INTEGER;
+     /* signed 32-bit variable */ }
+   | PARAMETER { $$ = VAR_PARAMETER;
+     /* a named constant - the default value of a parameter can be
+	overwritten, when declaring an instance of the associated module */ }
+   | REAL      { $$ = VAR_REAL;
+     /* double-precision floating point */ }
+   | REG       { $$ = VAR_REG;
+     /* unsigned variable of any bit size */ }
+   | SUPPLY0   { $$ = VAR_SUPPLY0;
+     /* constant logic 0 (supply strength) */ }
+   | SUPPLY1   { $$ = VAR_SUPPLY1;
+     /* constant logic 1 (supply strength) */ }
+   | TIME      { $$ = VAR_TIME;
+     /* unsigned 64-bit variable */ }
+   | TRI       { $$ = VAR_TRI;
+     /* simple interconnecting wire */ }
+   | TRIAND    { $$ = VAR_TRIAND;
+     /* wired outputs AND together */ }
+   | TRIOR     { $$ = VAR_TRIOR;
+     /* wired outputs OR together */ }
+   | TRIREG    { $$ = VAR_TRIREG;
+     /* stores last value when tri-stated (capacitance strength) */ }
+   | TRI0      { $$ = VAR_TRI0;
+     /* pulls down when tri-stated */ }
+   | TRI1      { $$ = VAR_TRI1;
+     /* pulls up when tri-stated */ }
+   | WAND      { $$ = VAR_WAND;
+     /* wired outputs AND together */ }
+   | WIRE      { $$ = VAR_WIRE;
+     /* simple interconnecting wire */ }
+   | WOR       { $$ = VAR_WOR;
+     /* wired outputs OR together */ }
 ;
 
 Size:
@@ -266,10 +301,10 @@ ScalarValueChange:
 ;
 
 Value:
-    ZERO
-  | ONE
-  | X
-  | Z
+    ZERO  /* low level       */
+  | ONE   /* high level      */
+  | X     /* undefined/error */
+  | Z     /* high impedance  */
 ;
 
 VectorValueChange:

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.3 2006-01-09 09:11:07 raimi Exp $
+ * $Id: check_vcd.h,v 1.4 2006-01-10 12:23:50 raimi Exp $
  *
  */
 
@@ -101,6 +101,8 @@ struct vcd_scope {
   enum vcd_scopes type;        // type
   char * ident;                // scope identifier
   struct vcd_vardef * vardefs; // variable definitions
+  struct vcd_scope * scopes;   // sub-scopes
+  struct vcd_scope * parent;   // parent scope
   struct vcd_scope * next;
 };
 
@@ -126,6 +128,7 @@ struct vcd_file {
   int t;                             // time scale (1, 10 or 100)
   double scale;                      // time unit factor
   struct vcd_scope * scopes;         // scopes
+  struct vcd_scope * currentscope;   // the current scope
   struct vcd_changeset * changesets; // change sets
 };
 
@@ -133,6 +136,7 @@ struct vcd_file {
 
 // A VCD variable.
 struct vcd_variable {
+  char * code;  // identifier code, references 'var'
   char * ident; // variable identifer
   char * value; // the value
   int isreal;   // indicates type of value
