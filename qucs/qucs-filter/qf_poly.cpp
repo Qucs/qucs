@@ -997,17 +997,18 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
 void smpf (qf_poly & N, qf_poly & D) {
   unsigned dN = N.d;
   unsigned dD = D.d;
+  unsigned i, j;
 
   std::cout << "dN: " << dN << " dD : " << dD << '\n';
 
-  bool Ln[dN];
-  bool Ld[dD];
+  bool * Ln = new bool[dN];
+  bool * Ld = new bool[dD];
 
   // Init
-  for (unsigned i = 0; i < dN; i++)
+  for (i = 0; i < dN; i++)
     Ln[i] = true;
 
-  for (unsigned i = 0; i < dD; i++)
+  for (i = 0; i < dD; i++)
     Ld[i] = true;
 
   if (N.rep == COEFF)
@@ -1021,8 +1022,8 @@ void smpf (qf_poly & N, qf_poly & D) {
   unsigned ndN = dN;
   unsigned ndD = dD;
 
-  for (unsigned i = 0; i < 2 * dN; i += 2) {
-    for (unsigned j = 0; j < 2 * dD; j += 2) {
+  for (i = 0; i < 2 * dN; i += 2) {
+    for (j = 0; j < 2 * dD; j += 2) {
       std::cout << "N.rts[" << i << "] = " << N.rts[i] << ", ";
       std::cout << "D.rts[" << j << "] = " << D.rts[j] << "\n";
       std::cout << "N.rts[" << i + 1 << "] = " << N.rts[i + 1] << ", ";
@@ -1036,20 +1037,17 @@ void smpf (qf_poly & N, qf_poly & D) {
 	ndD--;
 	std::cout << "Common root: (" << D.rts[j]
 		  << ", " << D.rts[j + 1] << "i)\n";
-
 	break;			// Direct to next root
       }
     }
   }
 
-  if (ndN != dN)		// We have simplified sth
-  {
-    qf_double_t *nrN = new qf_double_t[2 * ndN];
-    qf_double_t *nrD = new qf_double_t[2 * ndD];
+  if (ndN != dN) {		// We have simplified sth
+    qf_double_t * nrN = new qf_double_t[2 * ndN];
+    qf_double_t * nrD = new qf_double_t[2 * ndD];
 
-    for (unsigned i = 0, j = 0; i < 2 * dN; i += 2) {
-      if (Ln[i / 2])		// Non common root
-      {
+    for (i = 0, j = 0; i < 2 * dN; i += 2) {
+      if (Ln[i / 2]) {		// Non common root
 	nrN[j] = N.rts[i];
 	nrN[j + 1] = N.rts[i + 1];
 	j += 2;
@@ -1061,9 +1059,8 @@ void smpf (qf_poly & N, qf_poly & D) {
     N.d = ndN;
     N.rep = ROOTS;
 
-    for (unsigned i = 0, j = 0; i < 2 * D.d; i += 2) {
-      if (Ld[i / 2])		// Non common root
-      {
+    for (i = 0, j = 0; i < 2 * D.d; i += 2) {
+      if (Ld[i / 2]) {		// Non common root
 	nrD[j] = D.rts[i];
 	nrD[j + 1] = D.rts[i + 1];
 	j += 2;
@@ -1079,6 +1076,8 @@ void smpf (qf_poly & N, qf_poly & D) {
     D.to_coeff ();
     std::cout << "ndN: " << ndN << " ndD : " << ndD << '\n';
   }
+  delete[] Ln;
+  delete[] Ld;
 }
 
 // Hurwitzes a polynom. That is to say, eliminate its roots whose real part
