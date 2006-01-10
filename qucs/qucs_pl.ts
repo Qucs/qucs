@@ -4183,6 +4183,14 @@ Program syntezy filtrów
         <source>Bessel filter order must not be greater than 19.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stop band frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsHelp</name>
