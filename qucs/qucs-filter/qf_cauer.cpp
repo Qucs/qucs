@@ -21,6 +21,16 @@
 #include <stdlib.h>
 #include <iostream>
 
+#ifndef M_1_PI
+#define M_1_PI    0.3183098861837906715377675267450287
+#endif
+#ifndef M_LN2
+#define M_LN2     0.6931471805599453094172321214581766
+#endif
+#ifndef M_PI
+#define M_PI      3.1415926535897932384626433832795029
+#endif
+
 #include "qf_poly.h"
 #include "qf_filter.h"
 #include "qf_cauer.h"
@@ -116,7 +126,6 @@ static double K (double k) {
 
   return (1 + (C1 * e2 - C2 - C3 * e3) * e2 + C4 * e3) / sqrt (ave);
 }
-
 
 // K'(k) = K(sqrt(1 - k²)) , even for small k's
 static double Kp (double k) {
@@ -266,6 +275,7 @@ void qf_cauer::xfer (void) {
   int m = (o - 1) / 2;
   double Ws = a[o] = sqrt (th);
   double k = K (th);
+  int u;
 
 #ifdef _QF_CAUER_DEBUG
   std::cerr << "Computing filter of order " << o << " with ";
@@ -286,7 +296,7 @@ void qf_cauer::xfer (void) {
 #endif
 
   double delta = 1;
-  for (int u = 1; u < m + 2; u++)
+  for (u = 1; u < m + 2; u++)
     delta *= a[2 * u - 1] * a[2 * u - 1];
   delta /= Ws;
   double c = delta * sqrt (1 / (rho * rho) - 1);
@@ -300,7 +310,7 @@ void qf_cauer::xfer (void) {
   F = qf_poly (1, 0, 0, 1);	// F(X) = X
   P = qf_poly (c, 0, 0, 0);	// P(X) = c
 
-  for (int u = 1; u < m + 1; u++) {
+  for (u = 1; u < m + 1; u++) {
     qf_poly MF (1, 0, a[2 * u] * a[2 * u], 2);
     qf_poly MP (a[2 * u] * a[2 * u], 0, 1, 2);
 
@@ -351,10 +361,11 @@ void qf_cauer::values (void) {
 void qf_cauer::synth (qft type) {
   double cnrm = 1 / (2 * M_PI * f * imp);
   double lnrm = imp / (2 * M_PI * f);
+  unsigned i, node;
 
   switch (type) {
   case LOWPASS:
-    for (unsigned i = 0, node = 1;;) {
+    for (i = 0, node = 1;;) {
       Comp[i].comp = CAP;	// Parallel capa first
       Comp[i].val *= cnrm;	// and last !
       Comp[i].node1 = node;
@@ -380,7 +391,7 @@ void qf_cauer::synth (qft type) {
     Comp[0].node1 = 1;
     Comp[0].node2 = 2;
     Comp[0].val = cnrm / Comp[0].val;
-    for (unsigned i = 1, node = 2; i < ncomp;) {
+    for (i = 1, node = 2; i < ncomp;) {
       // double       temp ;
       // Then a serial resonant circuit
       Comp[i].comp = CAP;

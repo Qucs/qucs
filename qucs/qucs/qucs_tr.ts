@@ -3790,6 +3790,14 @@ Filitre tasarım yazılımı
         <source>Start frequency:</source>
         <translation>Başlangıç frekansı:</translation>
     </message>
+    <message>
+        <source>Stop band frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsHelp</name>
