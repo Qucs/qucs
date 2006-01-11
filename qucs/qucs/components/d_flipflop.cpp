@@ -25,28 +25,28 @@ D_FlipFlop::D_FlipFlop()
 
   Props.append(new Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.append(new Line(-20,-25, 20,-25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20, 22, 20, 22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20,-25,-20, 22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 20,-25, 20, 22,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-20, 20,-20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20, 20, 20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-20,-20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-20, 20, 20,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-30,-20,-20,-20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,-10,-20,-10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 10,-20, 10,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30,-20, 20,-20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 22,  0, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,-10, 20,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 20,  0, 30,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-17,-25, "D", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,-25, "Q", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -4,  6, "R", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-17,-17, "D", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6,-17, "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -4,  5, "R", QPen::darkBlue, 12.0));
   Lines.append(new Line(-20,  6,-12, 10,QPen(QPen::darkBlue,0)));
   Lines.append(new Line(-20, 14,-12, 10,QPen(QPen::darkBlue,0)));
 
-  Ports.append(new Port(-30,-20));  // D
+  Ports.append(new Port(-30,-10));  // D
   Ports.append(new Port(-30, 10));  // Clock
-  Ports.append(new Port( 30,-20));  // Q
+  Ports.append(new Port( 30,-10));  // Q
   Ports.append(new Port(  0, 30));  // Reset
 
-  x1 = -30; y1 = -29;
+  x1 = -30; y1 = -24;
   x2 =  30; y2 =  30;
   tx = x1+4;
   ty = y2+4;
@@ -83,7 +83,7 @@ Component* D_FlipFlop::newOne()
 // -------------------------------------------------------
 Element* D_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("D-FF");
+  Name = QObject::tr("D-FlipFlop");
   BitmapFile = "dflipflop";
 
   if(getNewOne)  return new D_FlipFlop();

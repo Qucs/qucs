@@ -3389,43 +3389,43 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>idealer Koppler</translation>
     </message>
     <message>
         <source>coupling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppelfaktor</translation>
     </message>
     <message>
         <source>phase shift of coupling path in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>Phasenverschiebung des Koppelpfades in Grad</translation>
     </message>
     <message>
         <source>Coupler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>D-FF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JK-FF</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppler</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RS-FF</source>
-        <translation type="unfinished"></translation>
+        <translation>RS Flip-Flop</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation type="unfinished"></translation>
+        <translation>D-FlipFlop mit asynchronem Reseteingang</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation type="unfinished"></translation>
+        <translation>JK-FlipFlop mit asynchronen Set- und Reseteingängen</translation>
+    </message>
+    <message>
+        <source>D-FlipFlop</source>
+        <translation>D-FlipFlop</translation>
+    </message>
+    <message>
+        <source>JK-FlipFlop</source>
+        <translation>JK-FlipFlop</translation>
+    </message>
+    <message>
+        <source>RS-FlipFlop</source>
+        <translation>RS-FlipFlop</translation>
     </message>
 </context>
 <context>
@@ -6169,11 +6169,11 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrbandfrequenz:</translation>
     </message>
     <message>
         <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrbanddämpfung:</translation>
     </message>
 </context>
 <context>
