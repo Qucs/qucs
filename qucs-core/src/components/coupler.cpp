@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.cpp,v 1.1 2006-01-04 10:40:33 raimi Exp $
+ * $Id: coupler.cpp,v 1.2 2006-01-11 09:50:07 raimi Exp $
  *
  */
 
@@ -60,7 +60,7 @@ void coupler::initSP (void) {
   s = sqrt (1 - k2) * (1 - r2) * (1 - b) / d;
   setS (NODE_1, NODE_2, s); setS (NODE_2, NODE_1, s);
   setS (NODE_3, NODE_4, s); setS (NODE_4, NODE_3, s);
-  s = polar (k, p) * (1 - r2) * (1 - b) / d;
+  s = polar (k, p) * (1 - r2) * (1 + b) / d;
   setS (NODE_1, NODE_3, s); setS (NODE_3, NODE_1, s);
   setS (NODE_2, NODE_4, s); setS (NODE_4, NODE_2, s);
   s = 2 * sqrt (1 - k2) * polar (k, p) * r * (1 - r2) / d;
@@ -70,9 +70,10 @@ void coupler::initSP (void) {
 
 void coupler::initDC (void) {
   setVoltageSources (2);
+  setInternalVoltageSource (1);
   allocMatrixMNA ();
-  voltageSource (VSRC_1, NODE_1, NODE_4);
-  voltageSource (VSRC_2, NODE_2, NODE_3);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  voltageSource (VSRC_2, NODE_3, NODE_4);
 }
 
 void coupler::initAC (void) {

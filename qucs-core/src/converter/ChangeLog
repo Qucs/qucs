@@ -1,5 +1,9 @@
 2006-01-10  Stefan Jahn  <stefan@lkcc.org>
 
+	* parse_vcd.y: Fixed yet another bug in scope handling.
+
+2006-01-09  Stefan Jahn  <stefan@lkcc.org>
+
 	* parse_vcd.y, check_vcd.cpp: Improved the scope handling.
 
 	* parse_vcd.y: Documented some VCD semantics.

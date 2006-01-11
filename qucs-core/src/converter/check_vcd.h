@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.4 2006-01-10 12:23:50 raimi Exp $
+ * $Id: check_vcd.h,v 1.5 2006-01-11 09:50:07 raimi Exp $
  *
  */
 
@@ -29,6 +29,9 @@
 /* Externalize variables used by the scanner and parser. */
 extern int vcd_lineno;
 extern FILE * vcd_in;
+
+/* Useful defines. */
+#define VCD_NOSCOPE "noscope"
 
 __BEGIN_DECLS
 

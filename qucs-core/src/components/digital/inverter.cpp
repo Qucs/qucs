@@ -1,7 +1,7 @@
 /*
  * inverter.cpp - logical inverter class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.cpp,v 1.3 2005-12-12 07:46:53 raimi Exp $
+ * $Id: inverter.cpp,v 1.4 2006-01-11 09:50:07 raimi Exp $
  *
  */
 
@@ -43,9 +43,9 @@ inverter::inverter () : digital () {
 
 void inverter::calcOutput (void) {
   nr_double_t v = getPropertyDouble ("V");
-  Vout = v / 2 * (1 - calcTransfer (0));
+  Vout = v / 2 * (1 - calcTransferX (0));
 }
 
 void inverter::calcDerivatives (void) {
-  g[0] = - 0.5 * calcDerivative (0);
+  g[0] = - 0.5 * calcDerivativeX (0);
 }

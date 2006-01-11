@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.4 2006-01-10 12:23:50 raimi Exp $
+ * $Id: parse_vcd.y,v 1.5 2006-01-11 09:50:07 raimi Exp $
  *
  */
 
@@ -117,12 +117,14 @@ Declaration:
    | t_ENDDEFINITIONS t_END
    | t_SCOPE ScopeDeclaration t_END {
      if (!vcd->scopes) {
+       /* no scope defined yet */
        vcd->scopes = (struct vcd_scope *)
 	 calloc (1, sizeof (struct vcd_scope));
-       vcd->scopes->ident = strdup ("noscope");
+       vcd->scopes->ident = strdup (VCD_NOSCOPE);
        vcd->scopes->scopes = $2;
        $2->parent = vcd->scopes;
      } else {
+       /* concatenate scope definitions */
        $2->next = vcd->currentscope->scopes;
        vcd->currentscope->scopes = $2;
        $2->parent = vcd->currentscope;
@@ -132,6 +134,7 @@ Declaration:
    | t_TIMESCALE TimeScaleDeclaration t_END
    | t_UPSCOPE t_END {
      if (vcd->currentscope->parent) {
+       /* up one scope */
        vcd->currentscope = vcd->currentscope->parent;
      } else {
        fprintf (stderr, "vcd notice, unnecessary $upscope in line %d\n",
@@ -140,6 +143,14 @@ Declaration:
    }
    | t_VERSION t_END
    | t_VAR VarDeclaration t_END {
+     if (!vcd->scopes) {
+       /* no scope defined yet */
+       vcd->scopes = (struct vcd_scope *)
+	 calloc (1, sizeof (struct vcd_scope));
+       vcd->scopes->ident = strdup (VCD_NOSCOPE);
+       vcd->currentscope = vcd->scopes;
+     }
+     /* concatenate variable definitions */
      $2->scope = vcd->currentscope;
      $2->next = vcd->currentscope->vardefs;
      vcd->currentscope->vardefs = $2;
