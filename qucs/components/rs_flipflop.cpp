@@ -25,29 +25,29 @@ RS_FlipFlop::RS_FlipFlop()
 
   Props.append(new Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.append(new Line(-20,-25, 20,-25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20, 25, 20, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20,-25,-20, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 20,-25, 20, 25,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-20, 20,-20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20, 20, 20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-20,-20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-20, 20, 20,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-30,-20,-20,-20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-30, 20,-20, 20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30,-20, 20,-20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30, 20, 20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,-10,-20,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30, 10,-20, 10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,-10, 20,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30, 10, 20, 10,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-17,-25, "R", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-17,  9, "S", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,-25, "Q", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,  9, "Q", QPen::darkBlue, 12.0));
-  Lines.append(new Line(  7,  9, 16,  9,QPen(QPen::darkBlue,1)));
+  Texts.append(new Text(-17,-17, "R", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-17,  3, "S", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6,-17, "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6,  3, "Q", QPen::darkBlue, 12.0));
+  Lines.append(new Line(  7,   3, 15,   3,QPen(QPen::darkBlue,1)));
 
-  Ports.append(new Port(-30,-20));  // R
-  Ports.append(new Port(-30, 20));  // S
-  Ports.append(new Port( 30,-20));  // Q
-  Ports.append(new Port( 30, 20));  // nQ
+  Ports.append(new Port(-30,-10));  // R
+  Ports.append(new Port(-30, 10));  // S
+  Ports.append(new Port( 30,-10));  // Q
+  Ports.append(new Port( 30, 10));  // nQ
 
-  x1 = -30; y1 = -29;
-  x2 =  30; y2 =  29;
+  x1 = -30; y1 = -24;
+  x2 =  30; y2 =  24;
   tx = x1+4;
   ty = y2+4;
   Model = "RSFF";
@@ -81,7 +81,7 @@ Component* RS_FlipFlop::newOne()
 // -------------------------------------------------------
 Element* RS_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("RS-FF");
+  Name = QObject::tr("RS-FlipFlop");
   BitmapFile = "rsflipflop";
 
   if(getNewOne)  return new RS_FlipFlop();
