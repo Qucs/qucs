@@ -25,26 +25,26 @@ JK_FlipFlop::JK_FlipFlop()
 
   Props.append(new Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.append(new Line(-20,-25, 20,-25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20, 25, 20, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20,-25,-20, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 20,-25, 20, 25,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-30, 20,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20, 30, 20, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-30,-20, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-30, 20, 30,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line(-30,-20,-20,-20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 20,-20, 20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,-20, 20,-20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30, 20, 20, 20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-20,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,-25,  0,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 25,  0, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-30,  0,-40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 30,  0, 40,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text( -4,-25, "s", QPen::darkBlue,  9.0));
-  Texts.append(new Text( -4, 12, "R", QPen::darkBlue,  9.0));
-  Texts.append(new Text(-17,-25, "J", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-17,  9, "K", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,-25, "Q", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,  9, "Q", QPen::darkBlue, 12.0));
-  Lines.append(new Line(  7,  9, 16,  9,QPen(QPen::darkBlue,1)));
+  Texts.append(new Text( -4,-27, "S", QPen::darkBlue,  9.0));
+  Texts.append(new Text( -4, 16, "R", QPen::darkBlue,  9.0));
+  Texts.append(new Text(-17,-27, "J", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-17, 13, "K", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6,-27, "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6, 13, "Q", QPen::darkBlue, 12.0));
+  Lines.append(new Line(  7, 13, 15, 13,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(-20, -4,-12,  0,QPen(QPen::darkBlue,0)));
   Lines.append(new Line(-20,  4,-12,  0,QPen(QPen::darkBlue,0)));
 
@@ -53,11 +53,11 @@ JK_FlipFlop::JK_FlipFlop()
   Ports.append(new Port( 30,-20));  // Q
   Ports.append(new Port( 30, 20));  // nQ
   Ports.append(new Port(-30,  0));  // Clock
-  Ports.append(new Port(  0,-30));  // set
-  Ports.append(new Port(  0, 30));  // reset
+  Ports.append(new Port(  0,-40));  // set
+  Ports.append(new Port(  0, 40));  // reset
 
-  x1 = -30; y1 = -30;
-  x2 =  30; y2 =  30;
+  x1 = -30; y1 = -40;
+  x2 =  30; y2 =  40;
   tx = x1+4;
   ty = y2+4;
   Model = "JKFF";
@@ -102,7 +102,7 @@ Component* JK_FlipFlop::newOne()
 // -------------------------------------------------------
 Element* JK_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("JK-FF");
+  Name = QObject::tr("JK-FlipFlop");
   BitmapFile = "jkflipflop";
 
   if(getNewOne)  return new JK_FlipFlop();
