@@ -1,3 +1,8 @@
+2006-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* sparameter.tex (subsection{Coupler}): Added figure showing
+	the port numbers of the coupler device.
+
 2006-01-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip.tex (section{Microstrip cross}): Added remaining
