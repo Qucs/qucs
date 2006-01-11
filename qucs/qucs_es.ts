@@ -3191,19 +3191,7 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>D-FF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JK-FF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RS-FF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3212,6 +3200,18 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D-FlipFlop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JK-FlipFlop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS-FlipFlop</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

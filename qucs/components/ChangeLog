@@ -1,3 +1,9 @@
+2006-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* jk_flipflop.cpp (JK_FlipFlop), rs_flipflop.cpp (RS_FlipFlop),
+	d_flipflop.cpp (D_FlipFlop): Slightly modified the schematic
+	symbols.
+
 2005-12-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* bjtsub.cpp, bjt.cpp, jfet.cpp, mosfet.cpp, mosfet_sub.cpp:
