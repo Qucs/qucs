@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
-  lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig
+  lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig        \
+  coupler.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps
 EPSFILES = $(FIGURES:.fig=.eps)
