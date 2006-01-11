@@ -1,7 +1,7 @@
 /*
  * digital.h - digital base class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.h,v 1.2 2005/12/19 07:55:14 raimi Exp $
+ * $Id: digital.h,v 1.3 2006/01/11 09:50:07 raimi Exp $
  *
  */
 
@@ -45,7 +45,9 @@ class digital : public circuit
   virtual void calcDerivatives (void) { }
   nr_double_t getVin (int);
   nr_double_t calcTransfer (int);
+  nr_double_t calcTransferX (int);
   nr_double_t calcDerivative (int);
+  nr_double_t calcDerivativeX (int);
 
  protected:
   nr_double_t * g;

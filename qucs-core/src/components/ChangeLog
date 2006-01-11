@@ -1,3 +1,12 @@
+2006-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/xnor.cpp, digital/xor.cpp, digital/inverter.cpp: 
+	Using exact versions of the below functions.
+
+	* digital/digital.cpp: Using two versions of calcTransfer()
+	and calcDerivative().  One exact and one slightly modified 
+	multiplied by (1 - GMin).
+
 2006-01-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* coupler.h (class coupler): Implemented new component: ideal

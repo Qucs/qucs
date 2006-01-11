@@ -1,7 +1,7 @@
 /*
  * xor.cpp - logical xor class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xor.cpp,v 1.5 2006/01/02 07:09:44 margraf Exp $
+ * $Id: xor.cpp,v 1.6 2006/01/11 09:50:07 raimi Exp $
  *
  */
 
@@ -46,7 +46,7 @@ void logicxor::calcOutput (void) {
   nr_double_t n = getSize () - 1;
   nr_double_t x;
   for (x = 1, i = 0; i < n; i++) {
-    x *= -calcTransfer (i);
+    x *= -calcTransferX (i);
   }
   Vout = v / 2 * (1 - x);
 }
@@ -56,8 +56,8 @@ void logicxor::calcDerivatives (void) {
   nr_double_t x;
   for (int k = 0; k < n; k++) {
     for (x = 1, i = 0; i < n; i++) {
-      if (i != k) x *= -calcTransfer (i);
+      if (i != k) x *= -calcTransferX (i);
     }
-    g[k] = 0.5 * calcDerivative (k) * x;
+    g[k] = 0.5 * calcDerivativeX (k) * x;
   }
 }
