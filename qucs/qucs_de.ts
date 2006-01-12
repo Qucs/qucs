@@ -3405,27 +3405,27 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation>RS Flip-Flop</translation>
+        <translation>RS-Speicherglied</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation>D-FlipFlop mit asynchronem Reseteingang</translation>
+        <translation>D-Speicherglied mit asynchronem Reseteingang</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation>JK-FlipFlop mit asynchronen Set- und Reseteingängen</translation>
+        <translation>JK-Speicherglied mit asynchronen Set- und Reseteingängen</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation>D-FlipFlop</translation>
+        <translation>D-Speicherglied</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation>JK-FlipFlop</translation>
+        <translation>JK-Speicherglied</translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation>RS-FlipFlop</translation>
+        <translation>RS-Speicherglied</translation>
     </message>
 </context>
 <context>
