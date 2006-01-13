@@ -28,13 +28,13 @@
 
 // A polynom can be described either by a product of monoms equal to
 // (x - r[i]) where r[i] is the ith root and a constant factor, or by
-// the classical series of coefficient a[0]…a[n], or both.
+// the classical series of coefficient a[0]...a[n], or both.
 
 enum qf_poly_rep
 {
   NONE,				// Not initialized
-  ROOTS,			// P(X) = k * Π(x - r[i])
-  COEFF,			// P(X) = Σ a[i] x^i
+  ROOTS,			// P(X) = k * prod (x - r[i])
+  COEFF,			// P(X) = sum (a[i] * x^i)
   BOTH				// Both have been computed
 };
 
@@ -52,20 +52,20 @@ class qf_poly
   // Functions used by solve
   void qf_bcm (qf_matrix &);
   int  qf_qrc (qf_matrix &, qf_double_t *);
-  void qf_scm (qf_matrix &);	// Used by solve
+  void qf_scm (qf_matrix &);
 
  public:
   qf_poly ();
-  qf_poly (unsigned);		// id with d°
-  qf_poly (qf_double_t, qf_double_t, qf_double_t, unsigned);	// Up to d° = 2    
+  qf_poly (unsigned);		// id with d�
+  qf_poly (qf_double_t, qf_double_t, qf_double_t, unsigned); // Up to d�=2    
   qf_poly (int, const qf_double_t[]);	// Id, with inst.
   qf_poly (int, qf_double_t, const qf_double_t[]);
   qf_poly (const qf_poly &);	// Copy
   ~qf_poly ();
 
   // access operators
-  qf_poly & operator = (const qf_poly &);	// P = Q
-  qf_double_t & operator [] (int i);	// Access to element
+  qf_poly & operator = (const qf_poly &); // P = Q
+  qf_double_t & operator [] (int i);	  // Access to element
 
   // arithmetic operators
   qf_poly operator - (void);	// Unary -
@@ -93,9 +93,9 @@ class qf_poly
   qf_poly even (void);		// Even part
   qf_poly mnx (void);		// P(X) -> P(-X)
   qf_poly hsq (void);		// P(X)*P(-X)
-  qf_poly sqr (void);		// Q(X) = P(X²)
+  qf_poly sqr (void);		// Q(X) = P(X^2)
   qf_double_t eval (qf_double_t);	// P(X = a) 
-  qf_double_t evalX2 (qf_double_t);	// P(X² = a) 
+  qf_double_t evalX2 (qf_double_t);	// P(X^2 = a) 
 
   void to_roots (void);		// Solves
   qf_double_t k (void);		// Return krts factor
