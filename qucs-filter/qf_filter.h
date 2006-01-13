@@ -66,8 +66,8 @@ typedef struct qf_comp qfc;
 class qf_filter
 {
  protected:
-  const qft type;		// Lowpass, highpass…
-  const qfk kind;		// Butterwth, Chebi…
+  const qft type;		// Lowpass, highpass...
+  const qfk kind;		// Butterworth, Chebichev...
   unsigned o;			// Order of filter
 
   const double f;		// Cutoff
@@ -76,23 +76,23 @@ class qf_filter
 
   // Polynomial description
 
-  qf_poly E;			// H(ω) = E(ω)/P(ω)
-  qf_poly F;			// D(ω) = F(ω)/P(ω)
+  qf_poly E;			// H(w) = E(w)/P(w)
+  qf_poly F;			// D(w) = F(w)/P(w)
   qf_poly P;
 
-  qf_poly BN;			// B(ω) susceptance of filter
-  qf_poly BD;			// B(ω) susceptance of filter
+  qf_poly BN;			// B(w) susceptance of filter
+  qf_poly BD;			// B(w) susceptance of filter
 
   unsigned ncomp;		// Number of components
   qfc * Comp;			// Table of components
 
 public:
   qf_filter (void);		// Default init
-  qf_filter (int);		// Init 
+  qf_filter (int);		// Init
   qf_filter (qfk, qft);
   qf_filter (int, qfk, qft);
   qf_filter (qfk, qft, double, double, double);
-  virtual ~qf_filter (void);	// Init 
+  virtual ~qf_filter (void);	// Exit
 
   // Common routines to perform extraction of poles and zeros
 
@@ -100,9 +100,11 @@ public:
   void extract_pole_pCsLC (double, qfc *, double);
 
   virtual void synth (qft) = 0;	// Synthesize filter
-  void to_Qucs (void);		// Outputs to Qucs
+  std::string to_qucs (void);	// Outputs Qucs
+  std::string to_spice (void);	// Outputs SPICE
+  void dump_qucs (void);        // Outputs Qucs to std::cout
+  void dump_spice (void);	// Outputs SPICE to std::cout
   void dump_cout (void);	// Outputs to std::cout
-  void dump_spice (void);	// Outputs to std::cout
 };
 
 #endif // _QF_FILTER_H

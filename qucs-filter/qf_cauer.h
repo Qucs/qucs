@@ -20,7 +20,7 @@
 
 #define	_QF_CAUER_DEBUG
 
-const double SN_ACC = 1e-5;	// Accuracy of sn (x) is SN_ACC²
+const double SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
 const double K_ERR1 = 1e-8;	// Accuracy of K(k)
 const double K_ERR2 = 1e-20;	// Accuracy of K(k)
 const double K_ERR3 = 1e-6;	// Accuracy of K(k)
@@ -28,19 +28,23 @@ const double K_ERR3 = 1e-6;	// Accuracy of K(k)
 class qf_cauer : public qf_filter
 {
  private:
-  // Standard paramaters
 
+  // Standard parameters
   double rho;			// Reflection coeff.
   double th;			// Modular angle
 
   // Zeros of transmission
-
   double * a;
 
 public:
   qf_cauer (unsigned, double, double);
   qf_cauer (double, double, double, double, double, double, qft);
   virtual ~qf_cauer (void);
+
+  // Elliptic functions
+  static qf_double_t K (qf_double_t);
+  static qf_double_t Kp (qf_double_t);
+  static qf_double_t sn (qf_double_t, qf_double_t);
 
   // Computes standard form
   void normalize (double, double, double, qft);
