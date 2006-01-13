@@ -20,6 +20,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+#include <string>
 
 #ifndef M_1_PI
 #define M_1_PI    0.3183098861837906715377675267450287
@@ -76,21 +77,22 @@ qf_cauer::~qf_cauer (void) {
 // Computes elliptic jacobi functions
 // Adapted from: Numerical receipes in C, pp. 264 et seq.
 
-static double FMAX (double x, double y) {
+static qf_double_t FMAX (qf_double_t x, qf_double_t y) {
   return ((x > y) ? x : y);
 }
 
-// K (k)
-static double K (double k) {
-  double alamb, ave, delx, dely, delz, e2, e3;
-  double sqrtx, sqrty, sqrtz, xt, yt, zt;
+// Computes Carlson's elliptic integral of the first kind
+// K(k) = RF(0, 1 - k^2, 1) -> complete elliptic intergral of the 1st kind
+qf_double_t qf_cauer::K (qf_double_t k) {
+  qf_double_t alamb, ave, delx, dely, delz, e2, e3;
+  qf_double_t sqrtx, sqrty, sqrtz, xt, yt, zt;
 
   // Constants
-  const double THIRD = 1.0 / 3.0;
-  const double C1 = 1.0 / 24.0;
-  const double C2 = 0.1;
-  const double C3 = 3.0 / 44.0;
-  const double C4 = 1.0 / 14.0;
+  const qf_double_t THIRD = 1.0 / 3.0;
+  const qf_double_t C1 = 1.0 / 24.0;
+  const qf_double_t C2 = 0.1;
+  const qf_double_t C3 = 3.0 / 44.0;
+  const qf_double_t C4 = 1.0 / 14.0;
 
   if (k > 1) {
     std::cerr << "Invalid argument in qf_cauer::K (k): (k > 1).\n";
@@ -100,43 +102,34 @@ static double K (double k) {
   xt = 0;
   yt = 1 - k * k;
   zt = 1;
-
   do {
     sqrtx = sqrt (xt);
     sqrty = sqrt (yt);
     sqrtz = sqrt (zt);
-
     alamb = sqrtx * (sqrty + sqrtz) + sqrty * sqrtz;
-
     xt = 0.25 * (xt + alamb);
     yt = 0.25 * (yt + alamb);
     zt = 0.25 * (zt + alamb);
-
     ave = THIRD * (xt + yt + zt);
-
     delx = (ave - xt) / ave;
     dely = (ave - yt) / ave;
     delz = (ave - zt) / ave;
-
   }
   while (FMAX (FMAX (fabs (delx), fabs (dely)), fabs (delz)) > K_ERR1);
 
   e2 = delx * dely - delz * delz;
   e3 = delx * dely * delz;
-
   return (1 + (C1 * e2 - C2 - C3 * e3) * e2 + C4 * e3) / sqrt (ave);
 }
 
-// K'(k) = K(sqrt(1 - k²)) , even for small k's
-static double Kp (double k) {
-  double Kp;
-  double f1 = 1, f2, w = 1;
-  double kb = 1;
+// K'(k) = K(sqrt(1 - k^2)), even for small k's
+qf_double_t qf_cauer::Kp (qf_double_t k) {
+  qf_double_t Kp;
+  qf_double_t f1 = 1, f2, w = 1;
+  qf_double_t kb = 1;
 
   Kp = f2 = 2 * M_LN2 - log (k);	// K' = ln (4 / k')
-
   while (kb > K_ERR2) {
-//    std::cout << "Kb = " << kb << '\n' ;
     kb *= k * k;
     f1 *= (w / (w + 1));
     f2 -= 2 / (w * (w + 1));
@@ -146,10 +139,10 @@ static double Kp (double k) {
   return Kp;
 }
 
-static double sn (double x, double k) {
-  double a, b, c, d, emc, u;
-  double em[14], en[14];
-  double sn, cn, dn;
+qf_double_t qf_cauer::sn (qf_double_t x, qf_double_t k) {
+  qf_double_t a, b, c, d, emc, u;
+  qf_double_t em[14], en[14];
+  qf_double_t sn, cn, dn;
   int i, ii, l;
   bool bo;
 
@@ -213,7 +206,7 @@ static double ASIND (double ang) {
   return (180 * asin (ang) / M_PI);
 }
 
-// Normalize the filter parameters to Z = 1 Ω and ω = 1 rad.s¯¹
+// Normalize the filter parameters to Z = 1 O and w = 1 rad.s^-1
 // and computes order
 void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
   double Amax = pow (10, -amin / 10);
@@ -227,7 +220,7 @@ void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
 #ifdef _QF_CAUER_DEBUG
   std::cout << "amin + aemin = " << sAmin << " dB\n";
   std::cout << "amax + aemax = " << sAmax << " dB\n";
-  std::cout << "Δ(a) = " << sdiff << " dB\n";
+  std::cout << "D(a) = " << sdiff << " dB\n";
 #endif
 
   double kA = pow (10, -sdiff / 20);
@@ -235,7 +228,6 @@ void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
 
   if (kA < 0.001)
     KA = Kp (kA) / K (kA);
-
   else
     KA = K (sqrt (1 - kA * kA)) / K (kA);
 
@@ -268,8 +260,8 @@ void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
   a = new double[o + 1];
 }
 
-// A Cauer (or elliptic) filter has a symetric D(Ω)
-// D(Ω) = F (Ω) / P (Ω) = K * Ω * π {(Ω² + a²(i)) / (a²(i)Ω² + 1)}
+// A Cauer (or elliptic) filter has a symetric D(O)
+// D(O) = F (O) / P (O) = K * O * Prod {(O^2 + a^2(i)) / (a^2(i) * O^2 + 1)}
 // So that it is Chebichev in the passband and in the stopband
 void qf_cauer::xfer (void) {
   int m = (o - 1) / 2;
@@ -279,7 +271,7 @@ void qf_cauer::xfer (void) {
 
 #ifdef _QF_CAUER_DEBUG
   std::cerr << "Computing filter of order " << o << " with ";
-  std::cerr << "ρ = " << rho << " and Θ = " << ASIND (th) << "°\n";
+  std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "�\n";
   std::cerr << "k = " << k << '\n';
 #endif
 
@@ -302,7 +294,7 @@ void qf_cauer::xfer (void) {
   double c = delta * sqrt (1 / (rho * rho) - 1);
 
 #ifdef _QF_CAUER_DEBUG
-  std::cerr << "Δ = " << delta << '\n';
+  std::cerr << "D = " << delta << '\n';
   std::cerr << "c = " << c << '\n';
 #endif
 
@@ -323,7 +315,7 @@ void qf_cauer::xfer (void) {
   F.disp ("F");
   P.disp ("P");
 
-  // E(x)E(-x) = F(x)F(-x) + P(x)P(-x)
+  // E(x) * E(-x) = F(x) * F(-x) + P(x) * P(-x)
   E = F.hsq () + P.hsq ();
 
   E.disp ("E");
@@ -346,7 +338,7 @@ void qf_cauer::values (void) {
 #ifdef _QF_CAUER_DEBUG
     std::cerr << "Pole (" << l << ") = " << (1 / (a[l] * Ws)) << "\n";
 #endif
-    extract_pole_pCsLC (1 / a[l], &(Comp[k]), Ws);
+    extract_pole_pCsLC (1 / a[l], &Comp[k], Ws);
 
     // Zeros mangeling 
     l = o - l + 1;
@@ -392,7 +384,6 @@ void qf_cauer::synth (qft type) {
     Comp[0].node2 = 2;
     Comp[0].val = cnrm / Comp[0].val;
     for (i = 1, node = 2; i < ncomp;) {
-      // double       temp ;
       // Then a serial resonant circuit
       Comp[i].comp = CAP;
       Comp[i].node1 = node;
@@ -436,7 +427,7 @@ void qf_cauer::synth (qft type) {
       double l = Comp[i + 1].val;
       double iw2 = l * c;
 #ifdef _QF_CAUER_DEBUG
-      std::cout << "Ω(∞) = " << sqrt (1 / iw2) << '\n';
+      std::cout << "O(inf) = " << sqrt (1 / iw2) << '\n';
 #endif
       double b = sqrt (1 + 4 * q * q * iw2);
 
@@ -498,7 +489,7 @@ void qf_cauer::synth (qft type) {
       double l = Comp[i + 1].val;
       double w2 = 1 / (l * c);
 #ifdef _QF_CAUER_DEBUG
-      std::cout << "Ω(∞) = " << sqrt (w2) << "; q = " << q << '\n';
+      std::cout << "O(inf) = " << sqrt (w2) << "; q = " << q << '\n';
 #endif
       double b = sqrt (1 + 4 * q * q * w2);
 
@@ -560,8 +551,8 @@ void qf_cauer::dump () {
     std::cout << "Bandstop ";
     break;
   }
-  std::cout << "of order " << o << ", Θ = "
-	    << ASIND (th) << "°, ρ = " << rho << '\n';
+  std::cout << "of order " << o << ", theta = "
+	    << ASIND (th) << "�, rho = " << rho << '\n';
   dump_cout ();
 }
 
@@ -577,7 +568,7 @@ void CC (void) {
     std::cout << "Reflexion (%) : ";
     std::cin >> r;
     r /= 100.0;
-    std::cout << "Angle (°) : ";
+    std::cout << "Angle (�) : ";
     std::cin >> t;
     t = M_PI * t / 180.0;
     qf_cauer F (o, r, t);
@@ -603,7 +594,7 @@ int main (void) {
     std::cin >> amax;
     std::cout << "Enter bandwith (0 for high- or low-pass) (Hz): ";
     std::cin >> bw;
-    std::cout << "Enter reference impedance (Ω): ";
+    std::cout << "Enter reference impedance (Ohm): ";
     std::cin >> r;
 
     if (bw == 0) {

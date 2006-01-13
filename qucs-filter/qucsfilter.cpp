@@ -265,6 +265,7 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
     }
     if (F) {
       F->dump ();
+      F->dump_spice ();
       delete F;
     }
     s = NULL;

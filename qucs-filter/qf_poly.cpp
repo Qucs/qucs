@@ -43,8 +43,8 @@ qf_poly::qf_poly (unsigned o) :
 qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
 
 #ifdef	_QF_POLY_DEBUG
-  std::cout << "qf_poly (ax²+bx+c), a = " << a << ", b = " << b
-    << ", c = " << c << ", d° = " << deg << "\n";
+  std::cout << "qf_poly (ax^2+bx+c), a = " << a << ", b = " << b
+    << ", c = " << c << ", d� = " << deg << "\n";
 #endif
 
   // Pathological cases 
@@ -88,7 +88,7 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
     break;
 
   default:
-    // Polynom of d° 2 (aX² + bX + c)
+    // Polynom of d� 2 (aX^2 + bX + c)
     if (deg > 2)
       std::cout << "Warning: qf_poly called with deg > 2.\n";
 
@@ -129,8 +129,8 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
   }
 
 #ifdef	_QF_POLY_DEBUG
-  std::cout << "qf_poly ax²+bx+c: ";
-  this->disp ("Π");
+  std::cout << "qf_poly ax^2+bx+c: ";
+  this->disp ("prod");
 #endif
 }
 
@@ -247,7 +247,7 @@ qf_double_t & qf_poly::operator [] (int i) {
   return rts[i];
 }
 
-// Returns d° (order) of polynom
+// Returns d� (order) of polynom
 unsigned qf_poly::deg () {
   return d;
 }
@@ -682,8 +682,8 @@ qf_poly qf_poly::operator << (unsigned n) {
 	  << i << " possible.\n";
 	n = i;
       }
-    // Okay, proceed
 
+    // Okay, proceed
     R.p = new qf_double_t[d - n + 1];
     memcpy (R.p, &(p[n]), sizeof (qf_double_t) * (d - n + 1));
     R.d = d - n;
@@ -695,7 +695,6 @@ qf_poly qf_poly::operator << (unsigned n) {
     R.krts = krts;
 
     // Eliminates n zero roots
-
     for (unsigned i = 0, j = 0; i < 2 * d; i += 2) {
       if ((rts[i] == 0) && (rts[i + 1] == 0) && (nbz != 0))
 	nbz--;
@@ -723,7 +722,6 @@ qf_poly qf_poly::operator << (unsigned n) {
 }
 
 // Multiplies by x^n
-
 qf_poly qf_poly::operator >> (unsigned n) {
   if (rep == NONE) {
     std::cout << "qf_poly::>> used on a NONE polynom.\n";
@@ -860,7 +858,7 @@ qf_poly qf_poly::hsq () {
   return P;
 }
 
-// Q(X) <- P(X²)
+// Q(X) <- P(X^2)
 qf_poly qf_poly::sqr () {
   if (rep == NONE) {
     std::cout << "qf_poly::sqr () used on a NONE polynom.\n";
@@ -890,7 +888,7 @@ qf_poly qf_poly::sqr () {
   if ((rep == BOTH) || (rep == ROOTS))
     Q.to_roots ();
 
-  return Q;			// Q(X) = P(X²)
+  return Q;			// Q(X) = P(X^2)
 }
 
 // Eliminates a prime factor
@@ -946,8 +944,8 @@ void qf_poly::div (qf_double_t r, qf_double_t i) {
 
   // Proceed to general case.
   // If i = 0, we divide by (X - r)
-  // If i != 0, we divide by (X² - 2rX + r²+i²), that is to say
-  // by (X - (r + iI))(X - (r - iI)) where I² = -1
+  // If i != 0, we divide by (X^2 - 2rX + r^2+i^2), that is to say
+  // by (X - (r + iI))(X - (r - iI)) where I^2 = -1
   if (rep == COEFF)
     to_roots ();
 
@@ -1140,7 +1138,7 @@ qf_double_t qf_poly::eval (qf_double_t a) {
 
     return r;
   }
-  // ROOTS form : P (a) = k Π (a - r[i])
+  // ROOTS form : P (a) = k prod (a - r[i])
   if (d == 0)
     return krts;
 
@@ -1162,7 +1160,7 @@ qf_double_t qf_poly::eval (qf_double_t a) {
   return r;
 }
 
-// Evaluates a polynom P(X²) for X² = c (c can be negative)
+// Evaluates a polynom P(X^2) for X^2 = c (c can be negative)
 qf_double_t qf_poly::evalX2 (qf_double_t c) {
   return (sqr ()).eval (c);
 }
@@ -1270,7 +1268,7 @@ void qf_poly::disp_r (void) {
 	std::cout << " - " << rts[i] << ") ";
     }
     else { // Complex conjugate root
-      std::cout << "(X² ";
+      std::cout << "(X^2 ";
 
       qf_double_t m = rts[i] * rts[i] + rts[i + 1] * rts[i + 1];
       qf_double_t n = 2 * rts[i];
@@ -1290,7 +1288,7 @@ void qf_poly::disp_r (void) {
 }
 
 /* This function calculates P(X) = Σ a[i] X^i (sum form) out of the
-   roots (product form) P(X) = k Π (X - r[i]) */
+   roots (product form) P(X) = k * prod (X - r[i]) */
 void qf_poly::to_coeff (void) {
   if (rep == NONE) {
     std::cout << "qf_poly::to_coeff () used on a NONE polynom.\n";
@@ -1345,10 +1343,10 @@ void qf_poly::to_coeff (void) {
 
       q[0] = q[1] = s[0] = 0;
 
-      memcpy (&(q[2]), p, sizeof (qf_double_t) * (r + 1));	// Q(X) = X²P(X)
-      memcpy (&(s[1]), p, sizeof (qf_double_t) * (r + 1));	// S(X) = XP(X) 
+      memcpy (&(q[2]), p, sizeof (qf_double_t) * (r + 1)); // Q(X) = X^2P(X)
+      memcpy (&(s[1]), p, sizeof (qf_double_t) * (r + 1)); // S(X) = XP(X) 
 
-      for (unsigned j = 0; j < r + 1; j++)	// Q(X) = (X² + nX + m) P(X)
+      for (unsigned j = 0; j < r + 1; j++)	// Q(X) = (X^2 + nX + m) P(X)
 	q[j] += n * s[j] + m * p[j];
 
       q[r + 1] += n * s[r + 1];
@@ -1398,14 +1396,11 @@ void qf_poly::to_roots (void) {
   status = qf_qrc (m, rts);
 
   // root solving qr method failed to converge
-
   for (unsigned i = 0; i < 2 * d; i++) {
     if (fabs (rts[i]) <= ROOT_PREC)
       rts[i] = 0;
-
     else
       rts[i] = ROUND_ROOT (rts[i]);
-
 //    std::cout << "root(" << i/2 << ") = " << rts [i] << 
 //               " + " << rts [i+1] << " i\n" ;
   }
