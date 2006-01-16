@@ -206,7 +206,7 @@ static double ASIND (double ang) {
   return (180 * asin (ang) / M_PI);
 }
 
-// Normalize the filter parameters to Z = 1 O and w = 1 rad.s^-1
+// Normalize the filter parameters to Z = 1 O and w = 1 rad/s
 // and computes order
 void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
   double Amax = pow (10, -amin / 10);
