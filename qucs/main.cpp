@@ -343,6 +343,33 @@ QString properName (const QString& Name)
   return s;
 }
 
+// #########################################################################
+// Checks and corrects a time (number & unit) according VHDL standard.
+bool VHDL_Time(QString& t, const QString& Name)
+{
+  char *p;
+  double Time = strtod(t.latin1(), &p);
+  while(*p == ' ') p++;
+  for(;;) {
+    if(Time >= 0.0) {
+      if(strcmp(p, "fs") == 0)  break;
+      if(strcmp(p, "ps") == 0)  break;
+      if(strcmp(p, "ns") == 0)  break;
+      if(strcmp(p, "us") == 0)  break;
+      if(strcmp(p, "ms") == 0)  break;
+      if(strcmp(p, "sec") == 0) break;
+      if(strcmp(p, "min") == 0) break;
+      if(strcmp(p, "hr") == 0)  break;
+    }
+    t = "§" + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
+            + " fs, ps, ns, us, ms, sec, min, hr.\n";
+    return false;
+  }
+
+  t = QString::number(Time) + " " + QString(p);  // the space is mandatory !
+  return true;
+}
+
 
 // #########################################################################
 // ##########                                                     ##########

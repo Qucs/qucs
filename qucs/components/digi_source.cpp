@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "digi_source.h"
+#include "main.h"
 #include "node.h"
 
 
@@ -102,7 +103,7 @@ QString Digi_Source::NetList()
 // -------------------------------------------------------
 QString Digi_Source::VHDL_Code(int NumPorts)
 {
-  QString s, Time;
+  QString s, t;
   QString Out("    " + Ports.getFirst()->Connection->Name + " <= '");
 
   s  = "\n  " + Name + ":process\n  begin\n";
@@ -115,13 +116,17 @@ QString Digi_Source::VHDL_Code(int NumPorts)
     else
       State = '1';
 
-    Time = Props.next()->Value.section(';',z,z);
-    while(!Time.isEmpty()) {
+    t = Props.next()->Value.section(';',z,z).stripWhiteSpace();
+    while(!t.isEmpty()) {
       s += Out + State + "';";    // next value for signal
-      s += "  wait for " + Time + ";\n";
+
+      if(!VHDL_Time(t, Name))
+        return t;    // time has not VHDL format
+
+      s += "  wait for " + t + ";\n";
       State ^= 1;
       z++;
-      Time = Props.current()->Value.section(';',z,z);
+      t = Props.current()->Value.section(';',z,z).stripWhiteSpace();
     }
   }
   else {  // truth table simulation
@@ -130,7 +135,7 @@ QString Digi_Source::VHDL_Code(int NumPorts)
     
     for(z=1<<(NumPorts-Num); z>0; z--) {
       s += Out + State + "';";    // next value for signal
-      s += "  wait for "+QString::number(1 << Num)+"ns;\n";
+      s += "  wait for "+QString::number(1 << Num)+" ns;\n";
       State ^= 1;
     }
   }

@@ -1,3 +1,9 @@
+2006-01-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* qucsdigi script can run complete digital simulation
+	* check time formats for VHDL standard
+	* correct truth table simulation
+
 2006-01-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new component: coupler
