@@ -245,6 +245,11 @@ void SimMessage::startSimulator()
   QString SimTime =
     Doc->File.createNetlist(Stream, SimPorts);
   NetlistFile.close();
+  if(SimTime.at(0) == '§') {
+    ErrText->insert(SimTime.mid(1));
+    FinishSimulation(-1);
+    return;
+  }
   ProgText->insert(tr("done.\n"));
 
   QStringList com;
@@ -252,8 +257,8 @@ void SimMessage::startSimulator()
     com << QucsSettings.BinDir + "qucsator" << "-b" << "-g" << "-i"
         << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
   else
-    com << QucsSettings.BinDir + "qucsdigi" << "netlist.txt" << SimTime
-        << QucsHomeDir.absPath();
+    com << QucsSettings.BinDir + "qucsdigi" << "netlist.txt" << DataSet
+        << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
 
   SimProcess.setArguments(com);
 
