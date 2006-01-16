@@ -14,12 +14,12 @@ AM_MAINTAINER_MODE
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
-# Checks for programs.
+dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 
-# Check for debugging option.
+dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug],
                  [include debug output @<:@default=no@:>@]),
@@ -45,7 +45,7 @@ else
 fi
 unset enable_debug
 
-# Yet another compiler check.
+dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
   CXXFLAGS="$CXXFLAGS -pipe"
@@ -55,7 +55,7 @@ if test "x$GCC" = xyes; then
   fi
 fi
 
-# Check for new platforms.
+dnl Check for new platforms.
 osversion="`grep \"$host\" $srcdir/PLATFORMS 2>/dev/null`"
 if test "x$osversion" = "x"; then
   AC_MSG_RESULT([
@@ -68,16 +68,20 @@ if test "x$osversion" = "x"; then
 fi
 unset osversion
 
-# Release specific. Uncomment this line.
+dnl Release specific. Uncomment these as required.
 # AC_CONFIG_SUBDIRS(qucs-core)
+# AC_CONFIG_SUBDIRS(freehdl)
+# RELEASEDIRS="qucs-core"
+# RELEASEDIRS="$RELEASEDIRS freehdl"
+AC_SUBST(RELEASEDIRS)
 
-# Check for language support.
-AC_PATH_PROG(LRELEASE, lrelease, :)
-AC_PATH_PROG(LUPDATE, lupdate, :)
+dnl Check for language support.
+AC_PATH_PROG(LRELEASE, lrelease, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROG(LUPDATE, lupdate, :, [$QTDIR/bin:$PATH])
 
-# Check for MOC/UIC support.
-AC_PATH_PROG(MOC, moc, :)
-AC_PATH_PROG(UIC, uic, :)
+dnl Check for MOC/UIC support.
+AC_PATH_PROG(MOC, moc, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROG(UIC, uic, :, [$QTDIR/bin:$PATH])
 if test "$MOC" = ":"; then
   AC_MSG_WARN([
   The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
@@ -86,14 +90,14 @@ if test "$MOC" = ":"; then
   development package of Qt.])
 fi
 
-# Check for X11
+dnl Check for X11
 AC_PATH_XTRA
 X11_INCLUDES="$X_CFLAGS"
 X11_LDFLAGS="$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS"
 AC_SUBST(X11_INCLUDES)
 AC_SUBST(X11_LDFLAGS)
 
-# Check include path to Qt.
+dnl Check include path to Qt.
 QT_INCLUDES=""
 QT_VER=2
 AC_MSG_CHECKING([for Qt headers])
@@ -117,7 +121,7 @@ else
 fi
 AC_SUBST(QT_INCLUDES)
 
-# Check for multi-threaded option.
+dnl Check for multi-threaded option.
 AC_ARG_ENABLE([mt],
   AC_HELP_STRING([--disable-mt],
                  [link to non-threaded Qt (deprecated)]),
@@ -145,7 +149,7 @@ case $host_os in
 esac
 unset enable_mt
 
-# Check library path to Qt.
+dnl Check library path to Qt.
 QT_LDFLAGS=""
 AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
 AC_MSG_CHECKING([for Qt library])
@@ -179,10 +183,10 @@ fi
 AC_SUBST(QT_LDFLAGS)
 AC_LANG(C)
 
-# Check for additional header files.
+dnl Check for additional header files.
 AC_CHECK_HEADERS([ieeefp.h])
 
-# Check for path transformation.
+dnl Check for path transformation.
 case $build_os in
 mingw* | cygwin*)
   PATHXFORM="cygpath -w"
@@ -193,7 +197,7 @@ mingw* | cygwin*)
 esac
 AC_SUBST(PATHXFORM)
 
-# Create path info.
+dnl Create path info.
 BITMAP_PATH="$prefix/share/qucs/bitmaps/"
 AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"],
   [Where the data files go.])
@@ -215,7 +219,7 @@ AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
   [Where the documentation files go.])
 unset DOC_PATH
 
-# Definitions at top of <config.h>.
+dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
    so that C++ compilers don't mangle their names.  Use __END_DECLS at
@@ -235,7 +239,7 @@ AH_TOP([
 #endif
 ])
 
-# Add here all your Makefiles. These are created by configure.
+dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile 
 		 qucs-edit/Makefile
 		 qucs-help/Makefile

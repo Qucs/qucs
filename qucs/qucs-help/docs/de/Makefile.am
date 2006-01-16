@@ -24,7 +24,7 @@
 #
 
 HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html start_digi.html characters.html matching.html
+  programs.html start_digi.html characters.html matching.html internal.html
 PIC  = qucshaupt.png paste.png wire.png select.png inhalttab.png \
   unterschaltung.png qucsdigi.png
 
