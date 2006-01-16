@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- add an easy to use volt-meter (for differential voltages)
 	- implementation of 3d cartesian diagram
 	- node/branch annotation of simulation results
 	- filter design tool

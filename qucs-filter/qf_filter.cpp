@@ -21,7 +21,7 @@
 
 #include <math.h>
 #include <iostream>
-#include <strstream>
+#include <sstream>
 #include <string>
 #include <stdlib.h>
 #include <string.h>
@@ -145,7 +145,7 @@ void qf_filter::dump_cout (void) {
 }
 
 std::string qf_filter::to_spice (void) {
-  std::ostrstream res;
+  std::ostringstream res;
   unsigned i = 0;
 
   res << "* SPICE filter\n";
@@ -197,11 +197,11 @@ std::string qf_filter::to_spice (void) {
 }
 
 void qf_filter::dump_spice (void) {
-  std::cout << to_spice();
+  std::cout << to_spice().c_str();
 }
 
 std::string qf_filter::to_qucs (void) {
-  std::ostrstream res;
+  std::ostringstream res;
   return res.str();
 }
 
@@ -360,6 +360,7 @@ void qf_filter::to_Qucs (void) {
 
   std::cout << "</Paintings>\n";
 */
+
 void qf_filter::dump_qucs (void) {
-  std::cout << to_qucs();
+  std::cout << to_qucs().c_str();
 }

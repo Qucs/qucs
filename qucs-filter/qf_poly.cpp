@@ -25,6 +25,8 @@
 #include <math.h>
 #include <iostream>
 
+#undef _QF_POLY_DEBUG
+
 #include "qf_poly.h"
 
 // A polynom is essentially a structure with an order (max. index)
@@ -42,7 +44,7 @@ qf_poly::qf_poly (unsigned o) :
 // That is either constants, monoms, or binoms
 qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
 
-#ifdef	_QF_POLY_DEBUG
+#ifdef _QF_POLY_DEBUG
   std::cout << "qf_poly (ax^2+bx+c), a = " << a << ", b = " << b
     << ", c = " << c << ", d° = " << deg << "\n";
 #endif
@@ -64,66 +66,50 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
     // Constant
     d = 0;
     p = new qf_double_t[1];
-
     p[0] = a;
-    rts = NULL;			// no root (or an infinite #Â of them)
+    rts = NULL;			// no root (or an infinite # of them)
     krts = a;
     rep = BOTH;
     break;
-
   case 1:
     // (aX + b)
     d = 1;
     p = new qf_double_t[2];
-
     p[0] = b;
     p[1] = a;
-
     rts = new qf_double_t[2];
     rts[0] = ROUND_ROOT (-b / a);
     rts[1] = 0;
-
     krts = a;
     rep = BOTH;
     break;
-
   default:
     // Polynom of d° 2 (aX^2 + bX + c)
     if (deg > 2)
       std::cout << "Warning: qf_poly called with deg > 2.\n";
-
     d = 2;
     p = new qf_double_t[3];
-
     p[0] = c;
     p[1] = b;
     p[2] = a;
-
     rts = new qf_double_t[4];
     krts = a;
-
     qf_double_t dlt = (b * b - 4 * a * c);
-
     if (dlt == 0) {
       // Double root (should not occur)
       rts[0] = rts[2] = ROUND_ROOT (-b / (2 * a));
       rts[1] = rts[3] = 0;
-    }
-
-    else if (dlt > 0) {
+    } else if (dlt > 0) {
       // Two real roots (should not occur)
       rts[1] = rts[3] = 0;
       rts[0] = ROUND_ROOT ((-b + sqrt (dlt)) / (2 * a));
       rts[2] = ROUND_ROOT (-(b + sqrt (dlt)) / (2 * a));
-    }
-
-    else {
+    } else {
       // Two conjugate complex root (normal case)
       rts[0] = rts[2] = ROUND_ROOT (-b / (2 * a));
       rts[1] = ROUND_ROOT (sqrt (-dlt) / (2 * a));
       rts[3] = -rts[1];
     }
-
     rep = BOTH;
     break;
   }
@@ -139,9 +125,7 @@ qf_poly::qf_poly (int o, const qf_double_t coef[]) :
   rep (COEFF), d (o), krts (0), rts (NULL) {
 
   p = new qf_double_t[o + 1];
-
-  for (int i = o; i >= 0; i--)
-    p[i] = coef[o - i];
+  for (int i = o; i >= 0; i--) p[i] = coef[o - i];
 
 #ifdef	_QF_POLY_DEBUG
   std::cout << "qf_poly coeffs: ";
@@ -158,10 +142,8 @@ qf_poly::qf_poly (int o, qf_double_t k, const qf_double_t r[]) :
   rep (ROOTS), d (o), p (NULL) {
 
   rts = new qf_double_t[2 * o];
-
   for (int i = 0; i < 2 * o; i++)
     rts[i] = ROUND_ROOT (r[i]);
-
   krts = k;
 
 #ifdef	_QF_POLY_DEBUG
@@ -175,21 +157,18 @@ qf_poly::qf_poly (int o, qf_double_t k, const qf_double_t r[]) :
 qf_poly::qf_poly (const qf_poly & P) :
   rep (P.rep), d (P.d), krts (0), p (NULL), rts (NULL) {
 
-  if ((rep == BOTH) || (rep == COEFF)) {
+  if (rep & COEFF) {
     p = new qf_double_t[d + 1];
     memcpy (p, P.p, sizeof (qf_double_t) * (d + 1));
   }
-
-  if ((rep == BOTH) || (rep == ROOTS)) {
+  if (rep & ROOTS) {
     rts = new qf_double_t[2 * d];
     memcpy (rts, P.rts, sizeof (qf_double_t) * 2 * d);
     krts = P.krts;
   }
-
-  return;
 }
 
-// Assignement operator
+// Assignment operator
 // Identical to previous
 qf_poly & qf_poly::operator = (const qf_poly & P) {
   if (&P == this)		// Self copy, nothing to do
@@ -198,37 +177,27 @@ qf_poly & qf_poly::operator = (const qf_poly & P) {
   d = P.d;
   rep = P.rep;
 
-  if (p != NULL)
-    delete[] p;
-
-  if (rts != NULL)
-    delete[] rts;
-
+  if (p != NULL) delete[] p;
+  if (rts != NULL) delete[] rts;
   p = rts = NULL;
   krts = 0;
 
-  if ((rep == BOTH) || (rep == COEFF)) {
+  if (rep & COEFF) {
     p = new qf_double_t[d + 1];
     memcpy (p, P.p, sizeof (qf_double_t) * (d + 1));
   }
-
-  if ((rep == BOTH) || (rep == ROOTS)) {
+  if (rep & ROOTS) {
     rts = new qf_double_t[2 * d];
     memcpy (rts, P.rts, sizeof (qf_double_t) * (2 * d));
     krts = P.krts;
   }
-
   return (*this);
 }
 
 // Garbage bin
-
 qf_poly::~qf_poly () {
-  if (p != NULL)
-    delete[] p;
-
-  if (rts != NULL)
-    delete[] rts;
+  if (p != NULL) delete[] p;
+  if (rts != NULL) delete[] rts;
 }
 
 // Basic functions.
@@ -237,13 +206,11 @@ qf_poly::~qf_poly () {
 // [] overload
 qf_double_t & qf_poly::operator [] (int i) {
   if (rep == NONE) {
-    std::cout << "[] used on a NONE polynom.\n";
+    std::cout << "qf_poly::[] used on a NONE polynom.\n";
     exit (-1);
   }
-
-  if ((rep == COEFF) || (rep == BOTH))
+  if (rep & COEFF)
     return p[i];
-
   return rts[i];
 }
 
@@ -257,10 +224,8 @@ qf_double_t qf_poly::k () {
     std::cout << "qf_poly::k () used on a NONE polynom.\n";
     exit (-1);
   }
-
-  if ((rep == ROOTS) || (rep == BOTH))
+  if (rep & ROOTS)
     return krts;
-
   return p[d];
 }
 
@@ -285,12 +250,12 @@ void qf_poly::spl () {
     return;
 
   // We scan from highest to lowest order
-  while (i > 0)
+  while (i > 0) {
     if (p[i] == 0)
       i--;
     else
       break;
-
+  }
   d = i;
 
   return;
@@ -307,12 +272,12 @@ qf_poly qf_poly::operator - (void) {
 
   qf_poly R (d);
 
-  if ((rep == COEFF) || (rep == BOTH)) {
+  if (rep & COEFF) {
     R.p = new qf_double_t[d + 1];
     for (unsigned i = 0; i <= d; i++)
       R.p[i] = -p[i];
   }
-  if ((rep == ROOTS) || (rep == BOTH)) {
+  if (rep & ROOTS) {
     R.rts = new qf_double_t[2 * d];
     memcpy (R.rts, rts, sizeof (qf_double_t) * 2 * d);
     R.krts = -krts;
@@ -329,35 +294,20 @@ qf_poly operator + (qf_poly P, qf_poly Q) {
     exit (-1);
   }
 
-  // We cannot add two polynoms if one of them is under the ROOTS form
-  qf_poly R;
-
-  if (Q.rep == ROOTS)
-    Q.to_coeff ();
-
-  if (P.rep == ROOTS)
-    P.to_coeff ();
-
   if (Q.d >= P.d) {
-    R = Q;
-    for (unsigned i = 0; i <= P.d; i++)
-      R.p[i] += P.p[i];
+    qf_poly R (Q);
+    return R += P;
   }
   else {
-    R = P;
-    for (unsigned i = 0; i <= Q.d; i++)
-      R.p[i] += Q.p[i];
+    qf_poly R (P);
+    return R += Q;
   }
-
-  R.rep = COEFF;		// We must recompute roots if needed
-  R.spl ();			// Simplifies
-
-  return R;
 }
 
-qf_poly & qf_poly::operator += (qf_poly & P) {
+// Self-Addition
+qf_poly qf_poly::operator += (qf_poly P) {
   if ((rep == NONE) || (P.rep == NONE)) {
-    std::cout << "qf_poly::+ used on a NONE polynom.\n";
+    std::cout << "qf_poly::+= used on a NONE polynom.\n";
     exit (-1);
   }
 
@@ -365,6 +315,7 @@ qf_poly & qf_poly::operator += (qf_poly & P) {
   if (rep == ROOTS)
     to_coeff ();
 
+  // We add coefficients, not roots!
   if (P.rep == ROOTS)
     P.to_coeff ();
 
@@ -374,19 +325,20 @@ qf_poly & qf_poly::operator += (qf_poly & P) {
   }
   else {
     qf_double_t * pp = new qf_double_t[P.d];
-
-    memcpy (pp, P.p, sizeof (qf_double_t) * (P.d));
-
+    memcpy (pp, P.p, sizeof (qf_double_t) * P.d);
     for (unsigned i = 0; i <= d; i++)
       pp[i] += p[i];
-
     delete[] p;
     p = pp;
   }
 
+  if (rep & ROOTS) {
+    rep = COEFF;	 	// We must recompute roots if needed
+    delete[] rts;
+    rts = NULL;
+    krts = 0;
+  }
   spl ();			// Simplifies
-  rep = COEFF;
-
   return (*this);
 }
 
@@ -397,34 +349,20 @@ qf_poly operator - (qf_poly P, qf_poly Q) {
     exit (-1);
   }
 
-  qf_poly R;
-
-  if (Q.rep == ROOTS)
-    Q.to_coeff ();
-
-  if (P.rep == ROOTS)
-    P.to_coeff ();
-
   if (P.d >= Q.d) {
-    R = P;
-    for (unsigned i = 0; i <= Q.d; i++)
-      R.p[i] -= Q.p[i];
+    qf_poly R (P);
+    return R -= Q;
   }
   else {
-    R = -Q;
-    for (unsigned i = 0; i <= P.d; i++)
-      R.p[i] += P.p[i];
+    qf_poly R (Q);
+    return R -= P;
   }
-
-  R.rep = COEFF;
-  R.spl ();			// Simplifies
-
-  return R;
 }
 
-qf_poly & qf_poly::operator -= (qf_poly & P) {
+// Self-Substraction
+qf_poly qf_poly::operator -= (qf_poly P) {
   if ((rep == NONE) || (P.rep == NONE)) {
-    std::cout << "qf_poly::+ used on a NONE polynom.\n";
+    std::cout << "qf_poly::-= used on a NONE polynom.\n";
     exit (-1);
   }
 
@@ -440,23 +378,23 @@ qf_poly & qf_poly::operator -= (qf_poly & P) {
   }
   else {
     qf_double_t * pp = new qf_double_t[P.d + 1];
-
     memcpy (pp, P.p, sizeof (qf_double_t) * (P.d + 1));
-
     for (unsigned i = 0; i <= P.d; i++)
       if (i <= d)
 	pp[i] = p[i] - pp[i];
-
       else
-	pp[i] *= -1.0;
-
+	pp[i] = -pp[i];
     delete[] p;
     p = pp;
   }
 
+  if (rep & ROOTS) {
+    rep = COEFF;	 	// We must recompute roots if needed
+    delete[] rts;
+    rts = NULL;
+    krts = 0;
+  }
   spl ();			// Simplifies
-  rep = COEFF;
-
   return (*this);
 }
 
@@ -467,108 +405,56 @@ qf_poly operator * (qf_poly P, qf_poly Q) {
     exit (-1);
   }
 
-  int dr = P.d + Q.d;
-
-  qf_poly R (dr);
-
-  R.p = new qf_double_t[dr + 1];
-  memset (R.p, 0, sizeof (qf_double_t) * (dr + 1));
-
-  if ((P.rep == COEFF) || (P.rep == BOTH)) {
-    if (Q.rep == ROOTS)
-      Q.to_coeff ();
-
-    for (unsigned i = 0; i <= P.d; i++)
-      for (unsigned j = 0; j <= Q.d; j++)
-	R.p[i + j] += P.p[i] * Q.p[j];
-  }
-
-  // The roots are the concatenation of the roots of both polynoms
-  if ((P.rep == ROOTS) || (P.rep == BOTH)) {
-    if (Q.rep == COEFF)
-      Q.to_roots ();
-
-    R.rts = new qf_double_t[2 * dr];
-
-    R.krts = P.krts * Q.krts;
-
-    memcpy (R.rts, P.rts, sizeof (qf_double_t) * 2 * P.d);
-    memcpy (&(R.rts[2 * P.d]), Q.rts, sizeof (qf_double_t) * 2 * Q.d);
-  }
-
-  R.rep = P.rep;
+  qf_poly R (P);
+  R *= Q;
   return R;
 }
 
+// Multiplication with a scalar
 qf_poly operator * (qf_poly P, const qf_double_t m) {
   if (P.rep == NONE) {
     std::cout << "qf_poly::* (scalar) used on a NONE polynom.\n";
     exit (-1);
   }
 
-  if (m == 0)
-    return qf_poly (0, 0, 0, 0);
-
-  if (m == 1)
-    return P;
-
-  qf_poly R (P.d);
-
-  if ((P.rep == COEFF) || (P.rep == BOTH)) {
-    R.p = new qf_double_t[P.d + 1];
-
-    for (unsigned i = 0; i <= P.d; i++)
-      R.p[i] = P.p[i] * m;
-  }
-
-  if ((P.rep == ROOTS) || (P.rep == BOTH)) {
-    if (P.d != 0) {
-      R.rts = new qf_double_t[2 * P.d];
-      memcpy (R.rts, P.rts, sizeof (qf_double_t) * 2 * P.d);
-    }
-
-    R.krts = P.krts * m;
-  }
-
-  R.rep = P.rep;
-
+  qf_poly R (P);
+  R *= m;
   return R;
 }
 
-// Self-multiply 
-qf_poly & qf_poly::operator *= (const qf_poly & P) {
+// Self-Multiply 
+qf_poly qf_poly::operator *= (qf_poly P) {
   if ((rep == NONE) || (P.rep == NONE)) {
     std::cout << "qf_poly::*= () used on a NONE polynom.\n";
     exit (-1);
   }
 
-  if (P.d < 2) {
-    if (P.rep == COEFF)
+  // Just a constant to multiply
+  if (P.d < 1) {
+    if (P.rep & COEFF)
       return ((*this) *= P.p[0]);
-
     else
       return ((*this) *= P.krts);
   }
+
   // Resizes the coefficient list
-  if ((rep == COEFF) || (rep == BOTH)) {
+  if (rep & COEFF) {
+    if (!(P.rep & COEFF)) P.to_coeff ();
     qf_double_t * q = new qf_double_t[d + P.d + 1];
-
     memset (q, 0, sizeof (qf_double_t) * (d + P.d + 1));
-
     for (unsigned i = 0; i <= d; i++)
       for (unsigned j = 0; j <= P.d; j++)
 	q[i + j] += p[i] * P.p[j];
-
     delete[] p;
     p = q;
   }
 
-  if ((rep == ROOTS) || (rep == BOTH)) {
+  // The roots are the concatenation of the roots of both polynoms
+  if (rep & ROOTS) {
+    if (!(P.rep & ROOTS)) P.to_roots ();
     qf_double_t * rtsp = new qf_double_t[2 * (d + P.d)];
-
     memcpy (rtsp, rts, sizeof (qf_double_t) * 2 * d);
-    memcpy (&(rtsp[2 * d]), P.rts, sizeof (qf_double_t) * 2 * P.d);
-
+    memcpy (&rtsp[2 * d], P.rts, sizeof (qf_double_t) * 2 * P.d);
     delete[] rts;
     rts = rtsp;
     krts *= P.krts;
@@ -578,37 +464,37 @@ qf_poly & qf_poly::operator *= (const qf_poly & P) {
   return (*this);
 }
 
-qf_poly & qf_poly::operator *= (const qf_double_t m) {
+// Self-Scalar-Multiply 
+qf_poly qf_poly::operator *= (const qf_double_t m) {
   if (rep == NONE) {
-    std::cout << "qf_poly::* (scalar) used on a NONE polynom.\n";
+    std::cout << "qf_poly::*= (scalar) used on a NONE polynom.\n";
     exit (-1);
   }
 
   if (m == 0) {
     krts = d = 0;
-    delete[] p;
     delete[] rts;
-    p = rts = NULL;
-    rep = BOTH;
-
+    delete[] p;
+    rts = p = NULL;
+    rep = COEFF;
     return (*this);
   }
 
   if (m == 1)
     return (*this);
 
-  if ((rep == COEFF) || (rep == BOTH))
+  if (rep & COEFF)
     for (unsigned i = 0; i <= d; i++)
       p[i] *= m;
 
-  if ((rep == ROOTS) || (rep == BOTH))
+  if (rep & ROOTS)
     krts *= m;
 
   return (*this);
 }
 
 // Test
-bool qf_poly::operator == (qf_poly & P) {
+bool qf_poly::operator == (qf_poly P) {
   if (rep == NONE)
     return false;
 
@@ -634,7 +520,7 @@ bool qf_poly::operator == (qf_poly & P) {
   return true;
 }
 
-bool qf_poly::operator != (qf_poly & P) {
+bool qf_poly::operator != (qf_poly P) {
   return !((*this) == P);
 }
 
@@ -650,9 +536,8 @@ bool qf_poly::is_null (void) {
   if (d > 1)
     return false;
 
-  if ((rep == ROOTS) || (rep == BOTH))
+  if (rep & ROOTS)
     return (krts == 0);
-
   else
     return (p[0] == 0);
 }
@@ -675,7 +560,7 @@ qf_poly qf_poly::operator << (unsigned n) {
 
   qf_poly R;
 
-  if ((rep == COEFF) || (rep == BOTH)) {
+  if (rep & COEFF) {
     for (unsigned i = 0; i < n; i++)
       if (p[i] != 0) {
 	std::cout << "Warning: << by " << n << " asked for but only "
@@ -689,7 +574,7 @@ qf_poly qf_poly::operator << (unsigned n) {
     R.d = d - n;
   }
 
-  if ((rep == ROOTS) || (rep == BOTH)) {
+  if (rep & ROOTS) {
     int nbz = n;
     R.rts = new qf_double_t[2 * d];
     R.krts = krts;
@@ -714,7 +599,6 @@ qf_poly qf_poly::operator << (unsigned n) {
 		<< n - nbz << " possible.\n";
       R.d += nbz;
     }
-
   }
 
   R.rep = rep;
@@ -733,18 +617,16 @@ qf_poly qf_poly::operator >> (unsigned n) {
 
   qf_poly R (d + n);
 
-  if ((rep == COEFF) || (rep == BOTH)) {
+  if (rep & COEFF) {
     R.p = new qf_double_t[d + n + 1];
     memset (R.p, 0, sizeof (qf_double_t) * n);
     memcpy (&(R.p[n]), p, sizeof (qf_double_t) * (d + 1));
   }
 
-  if ((rep == ROOTS) || (rep == BOTH)) {
+  if (rep & ROOTS) {
     R.rts = new qf_double_t[2 * (d + n)];
-
     memset (R.rts, 0, sizeof (qf_double_t) * 2 * n);	// n times root = 0
     memcpy (&(R.rts[2 * n]), rts, sizeof (qf_double_t) * 2 * d);
-
     R.krts = krts;
   }
 
@@ -844,7 +726,7 @@ qf_poly qf_poly::mnx () {
   return P;
 }
 
-// "Half square" : P(X)P(-X)
+// "Half square" : P(X) * P(-X)
 qf_poly qf_poly::hsq () {
   if (rep == NONE) {
     std::cout << "qf_poly::hsq () used on a NONE polynom.\n";
@@ -853,7 +735,7 @@ qf_poly qf_poly::hsq () {
 
   qf_poly P (*this);
 
-  P *= (this->mnx ());
+  P *= mnx ();
 
   return P;
 }
@@ -1287,8 +1169,8 @@ void qf_poly::disp_r (void) {
   std::cout << '\n';
 }
 
-/* This function calculates P(X) = Î£ a[i] X^i (sum form) out of the
-   roots (product form) P(X) = k * prod (X - r[i]) */
+/* This function calculates P(X) = sum (a[i] * X^i) (sum form) out of
+   the roots (product form) P(X) = k * prod (X - r[i]) */
 void qf_poly::to_coeff (void) {
   if (rep == NONE) {
     std::cout << "qf_poly::to_coeff () used on a NONE polynom.\n";

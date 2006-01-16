@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib
-
-# Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib \
-#	qucs-core
+SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib \
+	$(RELEASEDIRS)
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
 

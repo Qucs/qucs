@@ -3,7 +3,7 @@
 -- 
 -- release instructions.
 -- 
--- Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -74,8 +74,8 @@ the tarballs created using `make distcheck'.
   - tar xvzf qucs-core-<version>.tar.gz and `mv qucs-core-<version> qucs-core'
 
 * Slightly modify and rebuild package.
-  - Modify the lines marked with "release specific" in `configure.ac' and
-    the `Makefile.am' files.
+  - Modify the lines marked with "release specific" in the `configure.ac'
+    file.
   - Run `sh autogen.sh' first in the qucs-core directory and then in main
     directory.
   - Run `make all' and finally `make distcheck'.
