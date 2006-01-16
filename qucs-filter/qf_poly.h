@@ -20,8 +20,6 @@
 
 /* Headers for R[X] arithmetic */
 
-#undef _QF_POLY_DEBUG
-
 #define qf_double_t long double
 
 #include "qf_matrix.h"
@@ -32,10 +30,10 @@
 
 enum qf_poly_rep
 {
-  NONE,				// Not initialized
-  ROOTS,			// P(X) = k * prod (x - r[i])
-  COEFF,			// P(X) = sum (a[i] * x^i)
-  BOTH				// Both have been computed
+  NONE  = 0,			// Not initialized
+  ROOTS = 1,			// P(X) = k * prod (x - r[i])
+  COEFF = 2,			// P(X) = sum (a[i] * x^i)
+  BOTH  = 3			// Both have been computed
 };
 
 typedef enum qf_poly_rep qpr;
@@ -75,16 +73,16 @@ class qf_poly
   friend qf_poly operator * (qf_poly, qf_poly);
   friend qf_poly operator * (qf_poly, const qf_double_t);
 
-  qf_poly & operator += (qf_poly &);
-  qf_poly & operator -= (qf_poly &);
-  qf_poly & operator *= (const qf_poly &);	// P(X) = P(X)*Q(X)
-  qf_poly & operator *= (const qf_double_t);
+  qf_poly operator += (qf_poly);
+  qf_poly operator -= (qf_poly);
+  qf_poly operator *= (qf_poly);	// P(X) = P(X)*Q(X)
+  qf_poly operator *= (const qf_double_t);
 
   qf_poly operator << (unsigned);	// Basic div by X^n
   qf_poly operator >> (unsigned);	// Multiply by X^n
 
-  bool operator == (qf_poly &);	// Test
-  bool operator != (qf_poly &);	// Test
+  bool operator == (qf_poly);	// Test
+  bool operator != (qf_poly);	// Test
   bool is_null (void);
 
   unsigned deg (void);		// Degree of poly

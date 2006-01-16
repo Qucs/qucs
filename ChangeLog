@@ -1,3 +1,8 @@
+2006-01-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Checking for Qt programs also in the
+	$QTDIR/bin path.
+
 2006-01-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-filter/qucsfilter.cpp (calculateFilter): Built in
