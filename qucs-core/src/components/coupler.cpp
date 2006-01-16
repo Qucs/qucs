@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.cpp,v 1.2 2006/01/11 09:50:07 raimi Exp $
+ * $Id: coupler.cpp,v 1.3 2006/01/16 07:19:58 margraf Exp $
  *
  */
 
@@ -47,7 +47,7 @@ void coupler::initSP (void) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t p = rad (getPropertyDouble ("phi"));
-  nr_double_t r = (z - z0) / (z + z0);
+  nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t k2 = k * k;
   nr_double_t r2 = r * r;
   complex a = k2 * (polar (1, 2 * p) + 1);
