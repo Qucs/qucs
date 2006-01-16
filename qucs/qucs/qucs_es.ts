@@ -3214,6 +3214,10 @@ Use:  qucsedit [-r] archivo
         <source>RS-FlipFlop</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

@@ -25,15 +25,17 @@
 # Bail out on any error
 set -e
 
-if [ "$#" != 3 ]; then
-    echo "Usage: $0 <netlist.txt> <time> <directory>"
+if [ "$#" != 5 ]; then
+    echo "Usage: $0 <netlist.txt> <output.dat> <time> <directory> <bindirectory>"
     echo " Directory has to contain netlist.txt"
     exit 1
 fi
 
 NAME=$1
-TIME=$2
-DIR=$3
+NAMEOUT=$2
+TIME=$3
+DIR=$4
+BINDIR=$5
 
 if [ ! -d "$DIR" ]; then
     echo "$DIR: Not a directory"
@@ -78,5 +80,5 @@ echo -n "simulating..."
 echo " done."
 
 echo -n "running VCD conversion..."
-#qucsconv -if vcd -of qucsdata -i $NAME.vcd -o $NAME.dat
+$BINDIR/qucsconv -if vcd -of qucsdata -i $NAME.vcd -o $NAMEOUT
 echo " done."

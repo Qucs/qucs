@@ -15,6 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <math.h>
 #include <iostream>
 #include <strstream>
@@ -201,6 +205,161 @@ std::string qf_filter::to_qucs (void) {
   return res.str();
 }
 
+/*
+void qf_filter::to_Qucs (void) {
+  double Value, Value2;
+
+  // create the Qucs schematic
+  std::cout << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
+
+  int x = 20;
+  if(type != BANDPASS)  x += 40;
+  std::cout << "<Components>\n";
+  std::cout << "<Pac P1 1 " << x << " 320 18 -26 0 1 \"1\" 1 \""
+            << imp << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
+  std::cout << "<GND * 1 " << x << " 350 0 0 0 0>\n";
+
+  int yc = 320, yl = 240;
+  unsigned int i, j=0;
+  for(i = 0; i < o; i++) {
+    x = 100 +((i+1) * 70);
+
+    if(Comp[j].comp == CAP)
+      std::cout << "<C C";
+    else
+      std::cout << "<L L";
+    std::cout << j << " 1 " << x;
+
+    if(Comp[j].node2 == 0)
+      std::cout << " " << yc << " 17 -26 0 1";
+    else
+      std::cout << " " << yl << " -26 10 0 0";
+    std::cout << " \"" << Comp[j].val;
+
+    if(Comp[j].comp == CAP)
+      std::cout << "F";
+    else
+      std::cout << "H";
+    std::cout << "\" 1>\n";
+
+    if(Comp[j].node2 == 0)
+      std::cout << "<GND * 1 " << x << " " << (yc+30) << " 0 0 0 0>\n";
+
+    j++;
+    if(j >= ncomp) break;
+    if(Comp[j].node1 != Comp[j-1].node1)  continue;
+    if(Comp[j].node2 != Comp[j-1].node2)  continue;
+
+
+    // second component parallel to the last
+    if(Comp[j].comp == CAP)
+      std::cout << "<C C";
+    else
+      std::cout << "<L L";
+    std::cout << j << " 1 " << x;
+
+    if(Comp[j].node2 == 0)
+      std::cout << " " << (yc+60) << " 17 -26 0 1";
+    else
+      std::cout << " " << (yl-35) << " -26 -44 0 0";
+    std::cout << " \"" << Comp[j].val;
+
+    if(Comp[j].comp == CAP)
+      std::cout << "F";
+    else
+      std::cout << "H";
+    std::cout << "\" 1>\n";
+
+    if(Comp[j].node2 == 0)
+      std::cout << "<GND * 1 " << x << " " << (yc+90) << " 0 0 0 0>\n";
+
+    j++;
+  }
+
+
+  if(o & 1)  x += 110;
+  else  x += 70;
+  std::cout << "<Pac P2 1 "<< x << " 320 18 -26 0 1 \"2\" 1 \""
+            << imp << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n"
+            << "<GND * 1 " << x << " 350 0 0 0 0>\n";
+
+  yc += 100;
+  Value = f / 10.0;
+  if((type == BANDPASS) || (type == BANDSTOP))
+    Value2 = 10.0 * (f + bw);
+  else
+    Value2 = 10.0 *f;
+  std::cout << "<.SP SP1 1 70 " << yc << " 0 50 0 0 \"log\" 1 \""
+            << Value << "Hz\" 1 \"" << Value2
+            << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n"
+            << "<Eqn Eqn1 1 260 " << (yc+10)
+            << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 \"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n"
+            << "</Components>\n";
+
+  std::cout << "<Wires>\n";
+
+  // connect left source
+  x = 20;
+  if(type != BANDPASS)  x += 40;
+  std::cout << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
+            << "<" << x << " 240 170 240 \"\" 0 0 0>\n";
+
+  // wires down to shunt components
+  for(i = 0; i < (o / 2) + 1; i++) {
+    x = 170 + (i * 140);
+    std::cout << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n";
+  }
+
+  // horizontal wires for series components
+  if(type == BANDPASS) {
+    for(i = 0; i < (o / 2); i++) {
+      x = 170 + (i * 140);
+      std::cout << "<" << x << " 240 " << (x+20) << " 240 \"\" 0 0 0>\n"
+                << "<" << (x-30) << " 290 " << x << " 290 \"\" 0 0 0>\n"
+                << "<" << (x-30) << " 350 " << x << " 350 \"\" 0 0 0>\n";
+    }
+    if(o & 1)
+      std::cout << "<" << (x+110) << " 290 " << (x+140) << " 290 \"\" 0 0 0>\n"
+                << "<" << (x+110) << " 350 " << (x+140) << " 350 \"\" 0 0 0>\n";
+  }
+  else
+    for(i = 0; i < (o / 2); i++) {
+      x = 170 + (i * 140);
+      std::cout << "<" << x << " 240 " << (x+40) << " 240 \"\" 0 0 0>\n"
+                << "<" << (x+100) << " 240 " << (x+140) << " 240 \"\" 0 0 0>\n";
+//      if(type == BANDSTOP)
+        // connect parallel components
+        std::cout << "<" << (x+40) << " 240 " << (x+40) << " 205 \"\" 0 0 0>\n"
+                  << "<" << (x+100) << " 240 " << (x+100) << " 205 \"\" 0 0 0>\n";
+    }
+
+  // connect right source
+  if(o & 1) {
+    x  += 140 + 110;
+    std::cout << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
+              << "<" << (x-110) << " 240 " << x << " 240 \"\" 0 0 0>\n";
+  }
+  std::cout << "</Wires>\n"
+            << "<Diagrams>\n"
+            << "</Diagrams>\n"
+            << "<Paintings>\n";
+
+  std::cout << "<Text 400 " << (yc+10) << " 12 #000000 0 \"Cauer ";
+
+  switch(type) {
+    case LOWPASS:
+      std::cout << "low-pass filter\\n" << f << "Hz cutoff"; break;
+    case HIGHPASS:
+      std::cout << "high-pass filter\\n" << f << "Hz cutoff"; break;
+    case BANDPASS:
+      std::cout << "band-pass filter\\n" << f << "Hz..." << (f+bw) << "Hz"; break;
+    case BANDSTOP:
+      std::cout << "band-reject filter\\n" << f << "Hz..." << (f+bw) << "Hz"; break;
+  }
+  std::cout << ", PI-type,\\nimpedance matching " << imp << " Ohm\">\n";
+
+  std::cout << "</Paintings>\n";
+*/
 void qf_filter::dump_qucs (void) {
   std::cout << to_qucs();
 }

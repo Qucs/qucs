@@ -69,6 +69,7 @@ QString num2str    (double);
 QString StringNiceNum(double);
 void    convert2Unicode(QString&);
 QString properName (const QString&);
+bool    VHDL_Time(QString&, const QString&);
 
 // just dummies for empty lists
 extern QPtrList<Wire>      SymbolWires;

@@ -1082,9 +1082,16 @@ QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
     if(NumPorts < 0)
       s = pc->NetList();
     else {
-      if(pc->Model.at(0) == '.')
-        Time = pc->Props.at(1)->Value;
+      if(pc->Model.at(0) == '.') {  // simulation component ?
+        if(NumPorts > 0)  // truth table simulation ?
+          Time = QString::number((1 << NumPorts) - 1) + " ns";
+        else {
+          Time = pc->Props.at(1)->Value;
+          if(!VHDL_Time(Time, pc->Name))  return Time;  // wrong time format
+        }
+      }
       s = pc->VHDL_Code(NumPorts);
+      if(s.at(0) == '§')  return s;   // return error
     }
 
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
@@ -1094,7 +1101,5 @@ QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
   if(NumPorts >= 0)
     stream << "end architecture;\n";
 
-  if(NumPorts > 0)
-    return QString::number(1 << NumPorts) + "ns";
   return Time;
 }
