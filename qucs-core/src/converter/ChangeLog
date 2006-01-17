@@ -1,3 +1,11 @@
+2006-01-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp: Skipping top-scope in variable identifiers
+	if there are no variables beside the top-scope.
+
+	* scan_spice.l: Allow digits as first character in .MODEL
+	identifiers.
+
 2006-01-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_vcd.y: Fixed yet another bug in scope handling.
