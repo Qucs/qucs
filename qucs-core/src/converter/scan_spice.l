@@ -4,7 +4,7 @@
 /*
  * scan_spice.l - scanner for a Spice netlist
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.14 2005-11-14 19:19:14 raimi Exp $
+ * $Id: scan_spice.l,v 1.15 2006-01-17 12:30:33 raimi Exp $
  *
  */
 
@@ -57,6 +57,7 @@ TITLE    [* \t0-9A-Za-z][A-Za-z0-9\- \t;#:=()/\.,*\\]*\r*\n
 SPACE    [ \t]
 NAME     [A-Z][A-Z0-9]*
 IDENT    [A-Za-z][A-Za-z0-9_]*
+IDENT2   [A-Za-z0-9_]+
 FILE     [/A-Za-z0-9_][/\\:A-Za-z0-9_\.]*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
@@ -508,7 +509,7 @@ MOS      ({MOS1}|{MOS2})
     return Identifier;
 }
 
-<MODREF1>{IDENT} { /* arbitrary identifier */
+<MODREF1>{IDENT2} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
     BEGIN(MODREF2);
     return Identifier;

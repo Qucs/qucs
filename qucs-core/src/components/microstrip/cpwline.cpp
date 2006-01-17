@@ -2,7 +2,7 @@
  * cpwline.cpp - coplanar waveguide line class implementation
  *
  * Copyright (C) 2004, 2005 Vincent Habchi, F5RCS <10.50@free.fr>
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.15 2005-11-14 19:19:14 raimi Exp $
+ * $Id: cpwline.cpp,v 1.16 2006-01-17 12:30:31 raimi Exp $
  *
  */
 
@@ -56,6 +56,9 @@
 # ifndef isinf
 # define isinf(x)  (!_finite(x) && !_isnan(x))
 # endif
+#endif
+#if defined (__SVR4) && defined (__sun)
+# define isinf(x) (!finite(x) && (x) == (x)) 
 #endif
 
 cpwline::cpwline () : circuit (2) {

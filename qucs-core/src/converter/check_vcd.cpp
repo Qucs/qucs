@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.4 2006-01-10 12:23:50 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.5 2006-01-17 12:30:33 raimi Exp $
  *
  */
 
@@ -149,6 +149,13 @@ static char *
 vcd_prepend_scopes (struct vcd_vardef * var, char * ident) {
   struct vcd_scope * scope = var->scope;
   while (scope && scope != vcd->scopes) {
+    if (vcd->scopes) {
+      if (scope == vcd->scopes->scopes && vcd->scopes->vardefs == NULL) {
+	/* skip top-scope description if there are no variables */
+	scope = scope->parent;
+	continue;
+      }
+    }
     char * txt = (char *) malloc (strlen (ident) + strlen (scope->ident) + 2);
     sprintf (txt, "%s.%s", scope->ident, ident);
     free (ident);
