@@ -264,11 +264,13 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
       break;
     }
     if (F) {
-      F->dump ();
-      F->dump_spice ();
+      //F->dump_qucs();
+      s = new QString(F->to_qucs().c_str());
       delete F;
     }
-    s = NULL;
+    else {
+      s = NULL;
+    }
   }
   else {
     s = LC_Filter::createSchematic(Filter);

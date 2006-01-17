@@ -24,4 +24,5 @@ powerpc-unknown-linux-gnu	gcc 3.3.5	Qt 3.3.4	0.0.5	ok
 powerpc64-unknown-linux-gnu	gcc 3.3.5	Qt 3.3.4	0.0.7	ok
 s390-ibm-linux-gnu		gcc 3.3.5	Qt 3.3.4	0.0.5	ok
 sparc-sun-solaris2.9		gcc 2.95.3	Qt 3.1.1	0.0.2	ok
+sparc-sun-solaris2.9		gcc 3.4.1	Qt 3.3.4	0.0.8	ok
 sparc-unknown-linux-gnu		gcc 3.3.5	Qt 3.3.4	0.0.5	ok

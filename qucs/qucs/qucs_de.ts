@@ -3429,7 +3429,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler: Falsches Zeitformat in &quot;%1&quot;. Verwende positive Zahl mit den Einheiten</translation>
     </message>
 </context>
 <context>
