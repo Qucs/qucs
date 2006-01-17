@@ -1,3 +1,8 @@
+2006-01-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-filter/qf_filter.cpp: Preliminary support for Cauer
+	filters.  Many bugs here...
+
 2006-01-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Checking for Qt programs also in the

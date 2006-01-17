@@ -1,3 +1,8 @@
+2006-01-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/qucsdigi.1: Fixed documentation of command line
+	arguments of the qucsdigi script.
+
 2006-01-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/de/internal.html: Added German translation of file

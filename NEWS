@@ -26,6 +26,7 @@ files.
 Version 0.0.8
 -------------
 
+ * digital simulation using FreeHDL is finally working
  * translation into Turkish
  * new diagrams: truth table and timing diagram
  * add non-Qucs files to project

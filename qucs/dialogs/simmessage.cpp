@@ -288,6 +288,11 @@ void SimMessage::slotDisplayMsg()
   ProgressText += QString(SimProcess.readStdout());
   if(wasLF) {
     i = ProgressText.findRev('\r');
+#ifdef __MINGW32__
+    while (i > 1 && ProgressText.at(i+1) == '\n') {
+      i = ProgressText.findRev('\r', i-1);
+    }
+#endif /* __MINGW32__ */
     if(i > 1) {
 #ifdef SPEEDUP_PROGRESSBAR
       iProgress = 10*int(ProgressText.at(i-2).latin1()-'0') +
@@ -328,6 +333,11 @@ void SimMessage::slotDisplayMsg()
   if(wasLF) {
     ProgressText += QString(Data);
     i = ProgressText.findRev('\r');
+#ifdef __MINGW32__
+    while (i > 1 && ProgressText.at(i+1) == '\n') {
+      i = ProgressText.findRev('\r', i-1);
+    }
+#endif /* __MINGW32__ */
     if(i > 1) {
       Progress = 10*int(ProgressText.at(i-2).latin1()-'0') +
                     int(ProgressText.at(i-1).latin1()-'0');
