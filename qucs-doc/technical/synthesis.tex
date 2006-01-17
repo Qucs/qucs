@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about synthesizing circuits.
 %
-% Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2005 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -185,12 +185,13 @@ element of an $n$ order low-pass ladder filter is:
  & \text{inductance:}  \qquad & L_k & = X_k \cdot Z_0 \\
  & \text{with}         \qquad & X_k & = \dfrac{2}{\omega_B}\cdot g_k \\
  & & r   & = \sinh\left( \frac{1}{n}\cdot\text{arsinh}\dfrac{1}{\sqrt{10^{R_{dB}/10} - 1}} \right) \\
- & & a_k & = \sin \dfrac{(2\cdot k + 1)\pi}{2\cdot n} \\
+ & & a_k & = \sin\left( \dfrac{(2\cdot k + 1)\cdot\pi}{2\cdot n} \right) \\
  & & g_k & =
 \begin{cases}
-  \dfrac{a_k}{r} & \text{for} \quad k=0\\
-  \dfrac{a_{k-1}\cdot a_k}{g_{k-1}\cdot \left( r^2 + \sin^2\dfrac{k\cdot\pi}{n} \right)}
-                 & \text{for} \quad k\ge 1
+\begin{array}{ll}
+  \dfrac{a_k}{r} & \textrm{ for } \quad k=0\\
+  \dfrac{a_{k-1}\cdot a_k}{g_{k-1}\cdot \left( r^2 + \sin^2\dfrac{k\cdot\pi}{n} \right)} & \textrm{ for } \quad k\ge 1
+\end{array}
 \end{cases} \\
  & & X_k & = \dfrac{2}{\omega_B}\cdot g_k
 \end{alignat}

@@ -146,12 +146,14 @@ Documentation License".
 \begin{appendix}
 
 % Release specific: Uncomment the grammar for Latex2HTML.
+% Also remove LaTeX commands at the beginning of the 'technical.bbl' file.
 \include{grammar-common}
 \include{grammar-qucs}
 \include{grammar-data}
 
 \chapter{Bibliography}
-%\addcontentsline{toc}{chapter}{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+% Release specific: Uncomment the following three lines.
 \def\chapter*{}% to suppress any header
 \def\section*{}% just to be sure
 \renewcommand{\bibname}{}
