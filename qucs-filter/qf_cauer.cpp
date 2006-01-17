@@ -32,6 +32,8 @@
 #define M_PI      3.1415926535897932384626433832795029
 #endif
 
+#undef _QF_CAUER_DEBUG
+
 #include "qf_poly.h"
 #include "qf_filter.h"
 #include "qf_cauer.h"

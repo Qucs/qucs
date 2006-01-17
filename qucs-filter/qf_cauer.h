@@ -18,8 +18,6 @@
 #ifndef _QF_CAUER_H
 #define _QF_CAUER_H
 
-#define	_QF_CAUER_DEBUG
-
 const double SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
 const double K_ERR1 = 1e-8;	// Accuracy of K(k)
 const double K_ERR2 = 1e-20;	// Accuracy of K(k)
