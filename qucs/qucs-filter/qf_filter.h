@@ -99,12 +99,17 @@ public:
   // This one extracts a finite pole of transmission
   void extract_pole_pCsLC (double, qfc *, double);
 
+  int order (void) { return o; }
   virtual void synth (qft) = 0;	// Synthesize filter
+
   std::string to_qucs (void);	// Outputs Qucs
   std::string to_spice (void);	// Outputs SPICE
   void dump_qucs (void);        // Outputs Qucs to std::cout
   void dump_spice (void);	// Outputs SPICE to std::cout
   void dump_cout (void);	// Outputs to std::cout
+
+private:
+  std::string num2str (double);
 };
 
 #endif // _QF_FILTER_H

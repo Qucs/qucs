@@ -94,8 +94,8 @@ QucsFilter::QucsFilter()
   IntVal = new QIntValidator(1, 200, this);
   DoubleVal = new QDoubleValidator(this);
 
-  QLabel *Label3 = new QLabel(tr("Order:"), this);
-  gbox->addWidget(Label3, 3,0);
+  LabelOrder = new QLabel(tr("Order:"), this);
+  gbox->addWidget(LabelOrder, 3,0);
   EditOrder = new QLineEdit("3", this);
   EditOrder->setValidator(IntVal);
   gbox->addWidget(EditOrder, 3,1);
@@ -264,7 +264,8 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
       break;
     }
     if (F) {
-      //F->dump_qucs();
+      //F->dump();
+      EditOrder->setText(QString::number(F->order()));
       s = new QString(F->to_qucs().c_str());
       delete F;
     }
@@ -372,6 +373,8 @@ void QucsFilter::slotTypeChanged(int index)
 	break;
   }
   if (index == TYPE_CAUER) {
+    LabelOrder->setEnabled(false);
+    EditOrder->setEnabled(false);
     LabelAtten->setEnabled(true);
     EditAtten->setEnabled(true);
     LabelAtten_dB->setEnabled(true);
@@ -380,6 +383,8 @@ void QucsFilter::slotTypeChanged(int index)
     ComboBandStop->setEnabled(true);
   }
   else {
+    LabelOrder->setEnabled(true);
+    EditOrder->setEnabled(true);
     LabelAtten->setEnabled(false);
     EditAtten->setEnabled(false);
     LabelAtten_dB->setEnabled(false);

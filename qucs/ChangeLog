@@ -1,3 +1,11 @@
+2006-01-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-filter/qf_filter.cpp: Lowpass/Highpass/Bandpass of
+	Cauer filter now quite like working.
+
+	* qucs-filter/qf_cauer.cpp: Fixed bug in bandpass/bandstop
+	generation.
+
 2006-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-filter/qf_filter.cpp: Preliminary support for Cauer
