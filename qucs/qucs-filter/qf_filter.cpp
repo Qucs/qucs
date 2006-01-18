@@ -100,6 +100,37 @@ void qf_filter::extract_pole_pCsLC (double p, qfc * pComp, double Ws) {
   BD.disp ("BD");
 }
 
+// User readable value string.
+std::string qf_filter::num2str (double num) {
+  char c = 0;
+  double cal = fabs(num);
+  if(cal > 1e-20) {
+    cal = log10(cal) / 3.0;
+    if(cal < -0.2)  cal -= 0.98;
+    int expo = int(cal);
+
+    if(expo >= -5) if(expo <= 4)
+      switch(expo) {
+        case -5: c = 'f'; break;
+        case -4: c = 'p'; break;
+        case -3: c = 'n'; break;
+        case -2: c = 'u'; break;
+        case -1: c = 'm'; break;
+        case  1: c = 'k'; break;
+        case  2: c = 'M'; break;
+        case  3: c = 'G'; break;
+        case  4: c = 'T'; break;
+      }
+
+    if(c) num /= pow(10.0, double(3*expo));
+  }
+
+  std::stringstream str;
+  str << num;
+  if(c) str << c;
+  return str.str();
+}
+
 // Dumps a filter to std::cout
 void qf_filter::dump_cout (void) {
   std::string unit;
@@ -218,90 +249,133 @@ void qf_filter::dump_spice (void) {
 
 std::string qf_filter::to_qucs (void) {
   std::ostringstream res;
+  std::ostringstream wir;
   double Value, Value2;
 
   // create the Qucs schematic
   res << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
-  int x = 20;
-  if(type != BANDPASS)  x += 40;
+  int x2, x = 20 + 40;
   res << "<Components>\n";
   res << "<Pac P1 1 " << x << " 320 18 -26 0 1 \"1\" 1 \""
       << imp << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n";
   res << "<GND * 1 " << x << " 350 0 0 0 0>\n";
 
   int yc = 320, yl = 240;
-  unsigned int i, j=0;
-  for(i = 0; i < o; i++) {
-    x = 100 +((i+1) * 70);
+  unsigned int i, j = 0, k = o, repser = 0;
 
-    if(Comp[j].comp == CAP)
-      res << "<C C";
-    else
-      res << "<L L";
-    res << j << " 1 " << x;
+  // connect left source
+  x = 20 + 40;
+  x2 = x + 110;
+  if(type == HIGHPASS) x2 -= 30;
+  wir << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
+      << "<" << x << " 240 " << x2 << " 240 \"\" 0 0 0>\n";
 
-    if(Comp[j].node2 == 0)
-      res << " " << yc << " 17 -26 0 1";
-    else
-      res << " " << yl << " -26 10 0 0";
-    res << " \"" << Comp[j].val;
+  x = 170;
+  if (type == BANDPASS) k = o * 2;
+  for(i = 0; i < k; i++) {
+    // find series components to ground
+    unsigned int a = j;
+    while (Comp[a].node2 != 0) {
+      if (a+1 < ncomp && Comp[a].node2 == Comp[a+1].node1 &&
+	  Comp[a].comp != Comp[a+1].comp)
+	a++;
+      else
+	break;
+    }
+    // handle series components to ground
+    if (Comp[a].node2 == 0) {
+      // wire down to shunt components
+      wir << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n";
+      wir << "<" << x-35 << " 240 " << x+35 << " 240 \"\" 0 0 0>\n";
+      unsigned int b, c;
+      for (c = 0, b = j; b <= a; b++, c++) {
+	// type of component
+	switch(Comp[b].comp) {
+	case CAP: res << "<C C"; break;
+	case IND: res << "<L L"; break;
+	case RES: res << "<R R"; break;
+	}
+	res << j+1 << " 1 " << x;
+	res << " " << yc+c*60 << " 17 -26 0 1";
 
-    if(Comp[j].comp == CAP)
-      res << "F";
-    else
-      res << "H";
-    res << "\" 1>\n";
+	// value of component
+	res << " \"" << num2str(Comp[b].val).c_str();
+	switch(Comp[b].comp) {
+	case CAP: res << "F"; break;
+	case IND: res << "H"; break;
+	case RES: res << "Ohm"; break;
+	}
+	res << "\" 1>\n";
+      }
+      // place ground symbol here
+      res << "<GND * 1 " << x << " " << yc+c*60-30 << " 0 0 0 0>\n";
+      j = a + 1;
+      repser = 0;
+    }
+    // handle parallel components in series
+    else {
+      if (repser) x += 35;
+      // connect in series
+      if (i != 0)
+	wir << "<" << x-70 << " 240 " << x-30 << " 240 \"\" 0 0 0>\n";
+      if (i != k - 1)
+	wir << "<" << x+70 << " 240 " << x+30 << " 240 \"\" 0 0 0>\n";
+      unsigned int b = j, c = 0;
+      do {
+	// type of component
+	switch(Comp[b].comp) {
+	case CAP: res << "<C C"; break;
+	case IND: res << "<L L"; break;
+	case RES: res << "<R R"; break;
+	}
+	res << j+1 << " 1 " << x;
+	res << " " << yl-c*35 << " -26 ";
+	if (c) {
+	  res << "-44";
+	  wir << "<" << x-30 << " " << yl 
+	      << " " << x-30 << " " << yl-c*35 << " \"\" 0 0 0>\n"
+	      << "<" << x+30 << " " << yl
+	      << " " << x+30 << " " << yl-c*35 << " \"\" 0 0 0>\n";
+	}
+	else
+	  res << "10";
+	res << " 0 0";
 
-    if(Comp[j].node2 == 0)
-      res << "<GND * 1 " << x << " " << (yc+30) << " 0 0 0 0>\n";
-
-    j++;
-    if(j >= ncomp) break;
-    if(Comp[j].node1 != Comp[j-1].node1)  continue;
-    if(Comp[j].node2 != Comp[j-1].node2)  continue;
-
-
-    // second component parallel to the last
-    if(Comp[j].comp == CAP)
-      res << "<C C";
-    else
-      res << "<L L";
-    res << j << " 1 " << x;
-
-    if(Comp[j].node2 == 0)
-      res << " " << (yc+60) << " 17 -26 0 1";
-    else
-      res << " " << (yl-35) << " -26 -44 0 0";
-    res << " \"" << Comp[j].val;
-
-    if(Comp[j].comp == CAP)
-      res << "F";
-    else
-      res << "H";
-    res << "\" 1>\n";
-
-    if(Comp[j].node2 == 0)
-      res << "<GND * 1 " << x << " " << (yc+90) << " 0 0 0 0>\n";
-
-    j++;
+	// value of commponent
+	res << " \"" << num2str(Comp[b].val).c_str();
+	switch(Comp[b].comp) {
+	case CAP: res << "F"; break;
+	case IND: res << "H"; break;
+	case RES: res << "Ohm"; break;
+	}
+	res << "\" 1>\n";
+	b++;
+	c++;
+      }
+      while (b < ncomp && Comp[b-1].node1 == Comp[b].node1 &&
+	     Comp[b-1].node2 == Comp[b].node2);
+      j = b;
+      repser++;
+    }
+    if (j >= ncomp) break;
+    x += 70;
   }
 
-
-  if(o & 1)  x += 110;
-  else  x += 70;
+  if(o & 1)
+    x += 110;
+  else
+    x += 70;
   res << "<Pac P2 1 "<< x << " 320 18 -26 0 1 \"2\" 1 \""
       << imp << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n"
       << "<GND * 1 " << x << " 350 0 0 0 0>\n";
 
   yc += 100;
+  if (type == HIGHPASS) yc += 40;
   Value = f / 10.0;
-  if((type == BANDPASS) || (type == BANDSTOP))
-    Value2 = 10.0 * (f + bw);
-  else
-    Value2 = 10.0 *f;
+  Value2 = 10.0 * f;
   res << "<.SP SP1 1 70 " << yc << " 0 50 0 0 \"log\" 1 \""
-      << Value << "Hz\" 1 \"" << Value2
+      << num2str(Value).c_str() << "Hz\" 1 \"" << num2str(Value2).c_str()
       << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n"
       << "<Eqn Eqn1 1 260 " << (yc+10)
       << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 \"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n"
@@ -309,63 +383,50 @@ std::string qf_filter::to_qucs (void) {
 
   res << "<Wires>\n";
 
-  // connect left source
-  x = 20;
-  if(type != BANDPASS)  x += 40;
-  res << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
-      << "<" << x << " 240 170 240 \"\" 0 0 0>\n";
-
-  // wires down to shunt components
-  for(i = 0; i < (o / 2) + 1; i++) {
-    x = 170 + (i * 140);
-    res << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n";
-  }
-
-  // horizontal wires for series components
-  if(type == BANDPASS) {
-    for(i = 0; i < (o / 2); i++) {
-      x = 170 + (i * 140);
-      res << "<" << x << " 240 " << (x+20) << " 240 \"\" 0 0 0>\n"
-	  << "<" << (x-30) << " 290 " << x << " 290 \"\" 0 0 0>\n"
-	  << "<" << (x-30) << " 350 " << x << " 350 \"\" 0 0 0>\n";
-    }
-    if(o & 1)
-      res << "<" << (x+110) << " 290 " << (x+140) << " 290 \"\" 0 0 0>\n"
-	  << "<" << (x+110) << " 350 " << (x+140) << " 350 \"\" 0 0 0>\n";
-  }
-  else
-    for(i = 0; i < (o / 2); i++) {
-      x = 170 + (i * 140);
-      res << "<" << x << " 240 " << (x+40) << " 240 \"\" 0 0 0>\n"
-	  << "<" << (x+100) << " 240 " << (x+140) << " 240 \"\" 0 0 0>\n";
-//      if(type == BANDSTOP)
-        // connect parallel components
-        res << "<" << (x+40) << " 240 " << (x+40) << " 205 \"\" 0 0 0>\n"
-	    << "<" << (x+100) << " 240 " << (x+100) << " 205 \"\" 0 0 0>\n";
-    }
+  // internal wires
+  res << wir.str().c_str();
 
   // connect right source
-  if(o & 1) {
-    x  += 140 + 110;
-    res << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
-	<< "<" << (x-110) << " 240 " << x << " 240 \"\" 0 0 0>\n";
-  }
+  x2 = x - 110;
+  if(type == HIGHPASS) x2 += 30;
+  res << "<" << x << " 240 " << x << " 290 \"\" 0 0 0>\n"
+      << "<" << x2 << " 240 " << x << " 240 \"\" 0 0 0>\n";
+
   res << "</Wires>\n"
       << "<Diagrams>\n"
       << "</Diagrams>\n"
       << "<Paintings>\n";
 
-  res << "<Text 400 " << (yc+10) << " 12 #000000 0 \"Cauer ";
+  res << "<Text 400 " << (yc+10) << " 12 #000000 0 \"";
+
+  switch (kind) {
+  case CAUER: res << "Cauer "; break;
+  case BUTT: res << "Butterworth "; break;
+  case CHEB: res << "Chebichev "; break;
+  case ICHEB: res << "Inverse Chebichev "; break;
+  case BESS: res << "Bessel "; break;
+  case UNDEF: res << "Undefined "; break;
+  }
 
   switch(type) {
     case LOWPASS:
-      res << "low-pass filter\\n" << f << "Hz cutoff"; break;
+      res << "low-pass filter\\n"
+	  << num2str(f).c_str() << "Hz cutoff";
+      break;
     case HIGHPASS:
-      res << "high-pass filter\\n" << f << "Hz cutoff"; break;
+      res << "high-pass filter\\n"
+	  << num2str(f).c_str() << "Hz cutoff";
+      break;
     case BANDPASS:
-      res << "band-pass filter\\n" << f << "Hz..." << (f+bw) << "Hz"; break;
+      res << "band-pass filter\\n"
+	  << num2str(f-bw/2).c_str() << "Hz ... "
+	  << num2str(f+bw/2).c_str() << "Hz";
+      break;
     case BANDSTOP:
-      res << "band-reject filter\\n" << f << "Hz..." << (f+bw) << "Hz"; break;
+      res << "band-reject filter\\n"
+	  << num2str(f-bw/2).c_str() << "Hz ... "
+	  << num2str(f+bw/2).c_str() << "Hz";
+      break;
   }
   res << ", PI-type,\\nimpedance matching " << imp << " Ohm\">\n";
 

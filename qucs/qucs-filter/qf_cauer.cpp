@@ -409,7 +409,7 @@ void qf_cauer::synth (qft type) {
   case BANDPASS: {
     // We double the number of components
     ncomp = 3 * o - 1;
-    qfc * Comp2 = (qfc *) malloc (sizeof (double) * ncomp);
+    qfc * Comp2 = (qfc *) malloc (sizeof (qfc) * ncomp);
     double q = f / bw;
 
     for (unsigned i = 0, j = 0, node = 1;;) {
@@ -471,7 +471,7 @@ void qf_cauer::synth (qft type) {
   }
   case BANDSTOP: {
     ncomp = 3 * o - 1;
-    qfc * Comp2 = (qfc *) malloc (sizeof (double) * ncomp);
+    qfc * Comp2 = (qfc *) malloc (sizeof (qfc) * ncomp);
     double q = f / bw;
 
     for (unsigned i = 0, j = 0, node = 1;;) {

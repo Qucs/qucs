@@ -65,7 +65,7 @@ private:
   QLineEdit *EditOrder, *EditCorner, *EditStop, *EditRipple, *EditImpedance;
   QLineEdit *EditAtten, *EditBandStop;
   QLabel *LabelRipple, *LabelRipple_dB, *LabelStart, *LabelStop, *LabelResult;
-  QLabel *LabelAtten, *LabelAtten_dB, *LabelBandStop;
+  QLabel *LabelAtten, *LabelAtten_dB, *LabelBandStop, *LabelOrder;
   QIntValidator *IntVal;
   QDoubleValidator *DoubleVal;
 };
