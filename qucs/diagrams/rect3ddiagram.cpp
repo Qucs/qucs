@@ -362,8 +362,10 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     for(i=g->countY-1; i>=0; i--) {   // y coordinates
       px = g->cPointsX.getFirst()->Points;
     
-      for(j=dx; j>0; j--)   // x coordinates
-        calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++);
+      for(j=dx; j>0; j--) { // x coordinates
+        calcCoordinate3D(*(px++), *py, *pz, *(pz+1), pMem++, zp++);
+	pz += 2;
+      }
 
       (pMem-1)->done |= 8;  // mark as "last in line"
       py++;
