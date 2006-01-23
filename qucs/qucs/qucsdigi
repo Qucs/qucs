@@ -25,6 +25,9 @@
 # Bail out on any error
 set -e
 
+# catch termination signal and kill all child processes
+#trap 'kill 0; exit 0' SIGTERM
+
 if [ "$#" != 5 ]; then
     echo "Usage: $0 <netlist.txt> <output.dat> <time> <directory> <bindirectory>"
     echo " Directory has to contain netlist.txt"
@@ -77,6 +80,8 @@ echo " done."
 
 echo -n "simulating..."
 ./$NAME -cmd "dc -f $NAME.vcd -q;d;run $TIME;q;" >/dev/null
+#/home/margrafm/Desktop/endlos &
+wait $!
 echo " done."
 
 echo -n "running VCD conversion..."
