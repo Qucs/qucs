@@ -1459,13 +1459,21 @@ void Diagram::calcPolarAxisScale(Axis *Axis, double& numGrids,
     GridStep = Base * pow(10.0,Expo); // grid distance in real values
     numGrids -= floor(numGrids - Axis->max/GridStep); // correct num errors
     Axis->up = GridStep*numGrids;
+
+    zD = double(x2) / numGrids;   // grid distance in pixel
   }
   else {   // no auto-scale
     Axis->up = Axis->limit_max = fabs(Axis->limit_max);
     GridStep = Axis->step;
-    numGrids = Axis->limit_max / Axis->step;
+    zD = double(x2) / Axis->limit_max * Axis->step; // grid distance in pixel
+
+    if(fabs(zD) < 2.0) {  // if grid too small, then no grid
+      zD = double(x2);
+      GridStep = Axis->step = Axis->up;
+      numGrids = 1.0;
+    }
+    else numGrids = Axis->limit_max / Axis->step;
   }
-  zD = double(x2) / numGrids;   // grid distance in pixel
 }
 
 // ------------------------------------------------------------
@@ -1643,6 +1651,12 @@ else {   // user defined limits
 }
 
   zDstep = GridStep/(Axis->up-Axis->low)*Dist; // grid in pixel
+
+  if(fabs(zDstep) < 2.0) {  // if grid too small, then no grid
+    zDstep = Dist;
+    GridStep = Axis->step = Axis->up-Axis->low;
+  }
+
   return back;
 }
 
