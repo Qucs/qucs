@@ -22,6 +22,8 @@ const double SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
 const double K_ERR1 = 1e-8;	// Accuracy of K(k)
 const double K_ERR2 = 1e-20;	// Accuracy of K(k)
 const double K_ERR3 = 1e-6;	// Accuracy of K(k)
+const double K_ERR =  4e-16;                // Accuracy of K (k)
+const double SK_ERR = sqrt (K_ERR);         // Accuracy of sn (u, k)
 
 class qf_cauer : public qf_filter
 {
@@ -43,6 +45,11 @@ public:
   static qf_double_t K (qf_double_t);
   static qf_double_t Kp (qf_double_t);
   static qf_double_t sn (qf_double_t, qf_double_t);
+  static qf_double_t ellip_RF (qf_double_t, qf_double_t, qf_double_t);
+  static qf_double_t ellip_K (qf_double_t);
+  static qf_double_t ellip_sncndn (qf_double_t, qf_double_t,
+				   qf_double_t&, qf_double_t&, qf_double_t&);
+  static qf_double_t ellip_sn (qf_double_t, qf_double_t);
 
   // Computes standard form
   void normalize (double, double, double, qft);

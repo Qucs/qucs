@@ -76,16 +76,46 @@ qf_cauer::~qf_cauer (void) {
     delete[] a;
 }
 
-// Computes elliptic jacobi functions
-// Adapted from: Numerical receipes in C, pp. 264 et seq.
-
 static qf_double_t FMAX (qf_double_t x, qf_double_t y) {
   return ((x > y) ? x : y);
 }
 
-// Computes Carlson's elliptic integral of the first kind
-// K(k) = RF(0, 1 - k^2, 1) -> complete elliptic intergral of the 1st kind
+// This is extracted from "Handbook of mathematical functions"
+// Edited by M. Abramowitz & I. A. Stegun
+// U.S. National Bureau of Standards, June '64 / Dec. '72
+
+// K by the arithmetic/geometric mean (AGM) method
 qf_double_t qf_cauer::K (qf_double_t k) {
+  qf_double_t a = 1, b = sqrt (1 - k * k);
+  while (fabs (a - b) > K_ERR) {
+    qf_double_t t = a;
+    a = 0.5 * (a + b);
+    b = sqrt (t * b);
+  }
+  return M_PI / (2 * a);
+}
+
+// sn (u, m) by descending Landen transforms
+// m = k^2
+qf_double_t qf_cauer::sn (qf_double_t u, qf_double_t m) {
+  if (m < SK_ERR) {
+    // Final approx.
+    return sin (u) - 0.25 * m * cos (u) * (u - 0.5 * sin (2 * u));
+  } else {
+    qf_double_t kp = sqrt (1 - m);
+    qf_double_t smu = (1 - kp) / (1 + kp);
+    qf_double_t v = u / (1 + smu);
+    // Recurse
+    qf_double_t sn1 = sn (v, smu * smu);
+    return (1 + smu) * sn1 / (1 + smu * sn1 * sn1);
+  }
+}
+
+// Computes elliptic jacobi functions
+// Adapted from: Numerical receipes in C, pp. 264 et seq.
+
+// Computes Carlson's elliptic integral of the first kind
+qf_double_t qf_cauer::ellip_RF (qf_double_t x, qf_double_t y, qf_double_t z) {
   qf_double_t alamb, ave, delx, dely, delz, e2, e3;
   qf_double_t sqrtx, sqrty, sqrtz, xt, yt, zt;
 
@@ -96,14 +126,9 @@ qf_double_t qf_cauer::K (qf_double_t k) {
   const qf_double_t C3 = 3.0 / 44.0;
   const qf_double_t C4 = 1.0 / 14.0;
 
-  if (k > 1) {
-    std::cerr << "Invalid argument in qf_cauer::K (k): (k > 1).\n";
-    exit (-1);
-  }
-
-  xt = 0;
-  yt = 1 - k * k;
-  zt = 1;
+  xt = x;
+  yt = y;
+  zt = z;
   do {
     sqrtx = sqrt (xt);
     sqrty = sqrt (yt);
@@ -124,6 +149,11 @@ qf_double_t qf_cauer::K (qf_double_t k) {
   return (1 + (C1 * e2 - C2 - C3 * e3) * e2 + C4 * e3) / sqrt (ave);
 }
 
+// K(k) = RF(0, 1 - k^2, 1) -> complete elliptic intergral of the 1st kind
+qf_double_t qf_cauer::ellip_K (qf_double_t k) {
+  return ellip_RF (0, 1 - k * k, 1);
+}
+
 // K'(k) = K(sqrt(1 - k^2)), even for small k's
 qf_double_t qf_cauer::Kp (qf_double_t k) {
   qf_double_t Kp;
@@ -141,16 +171,18 @@ qf_double_t qf_cauer::Kp (qf_double_t k) {
   return Kp;
 }
 
-qf_double_t qf_cauer::sn (qf_double_t x, qf_double_t k) {
+// Compute the Jacobian elliptic functions sn(u,k), cn(u,k) and dn(u,k).
+qf_double_t
+qf_cauer::ellip_sncndn (qf_double_t uu, qf_double_t emmc,
+			qf_double_t& sn, qf_double_t& cn, qf_double_t& dn) {
   qf_double_t a, b, c, d, emc, u;
   qf_double_t em[14], en[14];
-  qf_double_t sn, cn, dn;
   int i, ii, l;
   bool bo;
 
-  emc = 1 - k * k;
+  emc = emmc;
   d = 1 - emc;
-  u = x;
+  u = uu;
 
   if (emc) {
     bo = (emc < 0);
@@ -197,10 +229,17 @@ qf_double_t qf_cauer::sn (qf_double_t x, qf_double_t k) {
       cn = a;
       sn /= d;
     }
+  } else {
+    cn = 1 / cosh (u);
+    dn = cn;
+    sn = tanh (u);
   }
-  else sn = tanh (u);
-
   return sn;
+}
+
+qf_double_t qf_cauer::ellip_sn (qf_double_t x, qf_double_t k) {
+  qf_double_t sn, cn, dn;
+  return ellip_sncndn (x, 1 - k * k, sn, cn, dn);
 }
 
 // Arc sin in degrees
