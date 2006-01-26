@@ -33,36 +33,37 @@
 #endif
 
 #undef _QF_CAUER_DEBUG
+//#define _QF_CAUER_DEBUG 1
 
 #include "qf_poly.h"
 #include "qf_filter.h"
 #include "qf_cauer.h"
 
-qf_cauer::qf_cauer (unsigned n, double r, double t) :
+qf_cauer::qf_cauer (unsigned n, qf_double_t r, qf_double_t t) :
   qf_filter (CAUER, LOWPASS, 1, M_1_PI / 2, 0), rho (r) {
-  o = n;
+  ord = n;
   th = sin (t);
-  a = new double[o + 1];
+  a = new qf_double_t[ord + 1];
   xfer ();
   values ();
   synth (LOWPASS);
 }
 
-qf_cauer::qf_cauer (double amin, double amax, double fc,
-		    double fs, double r = 1, double b = 0,
+qf_cauer::qf_cauer (qf_double_t amin, qf_double_t amax, qf_double_t fc,
+		    qf_double_t fs, qf_double_t r = 1, qf_double_t b = 0,
 		    qft type = LOWPASS) :
   qf_filter (CAUER, type, r, fc, b), a (NULL) {
   if (amin > amax)
     return;
 
-  if ((amin > 3) || (amax < 3))
+  if (amin > 3 || amax < 3)
     return;
 
-  if (((f > fs) && (type == LOWPASS)) || ((f < fs) && (type == HIGHPASS)))
+  if ((fc > fs && type == LOWPASS) || (fc < fs && type == HIGHPASS))
     return;
 
-  if (((type == BANDPASS) || (type == BANDSTOP))
-      && (fabs (fs - (f * f) / fs) < bw))
+  if ((type == BANDPASS || type == BANDSTOP) &&
+      fabs (fs - (fc * fc) / fs) < bw)
     return;
 
   normalize (amin, amax, fs, type);
@@ -243,20 +244,21 @@ qf_double_t qf_cauer::ellip_sn (qf_double_t x, qf_double_t k) {
 }
 
 // Arc sin in degrees
-static double ASIND (double ang) {
+static qf_double_t ASIND (qf_double_t ang) {
   return (180 * asin (ang) / M_PI);
 }
 
 // Normalize the filter parameters to Z = 1 O and w = 1 rad/s
 // and computes order
-void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
-  double Amax = pow (10, -amin / 10);
-  double Amin = pow (10, -amax / 10);
-  double Aemax = 1 - Amin;
-  double Aemin = 1 - Amax;
-  double sAmin = -10 * log10 (Aemax) + amin;
-  double sAmax = -10 * log10 (Aemin) + amax;
-  double sdiff = sAmax - sAmin;
+void qf_cauer::normalize (qf_double_t amin, qf_double_t amax,
+			  qf_double_t fs, qft type) {
+  qf_double_t Amax = pow (10, -amin / 10);
+  qf_double_t Amin = pow (10, -amax / 10);
+  qf_double_t Aemax = 1 - Amin;
+  qf_double_t Aemin = 1 - Amax;
+  qf_double_t sAmin = -10 * log10 (Aemax) + amin;
+  qf_double_t sAmax = -10 * log10 (Aemin) + amax;
+  qf_double_t sdiff = sAmax - sAmin;
 
 #ifdef _QF_CAUER_DEBUG
   std::cout << "amin + aemin = " << sAmin << " dB\n";
@@ -264,8 +266,8 @@ void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
   std::cout << "D(a) = " << sdiff << " dB\n";
 #endif
 
-  double kA = pow (10, -sdiff / 20);
-  double KA;
+  qf_double_t kA = pow (10, -sdiff / 20);
+  qf_double_t KA;
 
   if (kA < 0.001)
     KA = Kp (kA) / K (kA);
@@ -276,48 +278,51 @@ void qf_cauer::normalize (double amin, double amax, double fs, qft type) {
 
   switch (type) {
   case LOWPASS:
-    th = f / fs;
+    th = fc / fs;
     break;
   case HIGHPASS:
-    th = fs / f;
+    th = fs / fc;
     break;
   case BANDPASS:
-  case BANDSTOP:
-    th = bw / fabs (fs - (f * f) / fs);
+    th = bw / fabs (fs - (fc * fc) / fs);
+    break;
+  case BANDSTOP :
+    th = fabs (fs * bw / (fs * fs - fc * fc));
+    bw = fabs (fs - (fc * fc) / fs);
     break;
   }
 
   // Calculate order
-  double Kth = K (th) / K (sqrt (1 - th * th));
-  o = (unsigned) ceil (Kth * KA);
-  if ((o % 2) == 0)
-    o++;
+  qf_double_t Kth = K (th) / K (sqrt (1 - th * th));
+  ord = (unsigned) ceil (Kth * KA);
+  if ((ord % 2) == 0)
+    ord++;
 
 #ifdef _QF_CAUER_DEBUG
   std::cout << "K'/K = " << Kth << ", K1/K'1 = " << KA << '\n';
-  std::cout << "Order = " << o << '\n';
+  std::cout << "Order = " << ord << '\n';
 #endif
 
-  a = new double[o + 1];
+  a = new qf_double_t[ord + 1];
 }
 
 // A Cauer (or elliptic) filter has a symetric D(O)
 // D(O) = F (O) / P (O) = K * O * Prod {(O^2 + a^2(i)) / (a^2(i) * O^2 + 1)}
 // So that it is Chebichev in the passband and in the stopband
 void qf_cauer::xfer (void) {
-  int m = (o - 1) / 2;
-  double Ws = a[o] = sqrt (th);
-  double k = K (th);
+  int m = (ord - 1) / 2;
+  qf_double_t Ws = a[ord] = sqrt (th);
+  qf_double_t k = K (th);
   int u;
 
 #ifdef _QF_CAUER_DEBUG
-  std::cerr << "Computing filter of order " << o << " with ";
+  std::cerr << "Computing filter of order " << ord << " with ";
   std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "°\n";
   std::cerr << "k = " << k << '\n';
 #endif
 
-  for (unsigned i = 1; i < o; i++) {
-    double j = (double) i / (double) o;
+  for (unsigned i = 1; i < ord; i++) {
+    qf_double_t j = (qf_double_t) i / (qf_double_t) ord;
     a[i] = Ws * sn (j * k, th);
 #ifdef _QF_CAUER_DEBUG
     std::cerr << "a(" << i << ") = " << a[i] << '\n';
@@ -328,11 +333,11 @@ void qf_cauer::xfer (void) {
   std::cerr << "Norm. puls. (Ws) = " << Ws << '\n';
 #endif
 
-  double delta = 1;
+  qf_double_t delta = 1;
   for (u = 1; u < m + 2; u++)
     delta *= a[2 * u - 1] * a[2 * u - 1];
   delta /= Ws;
-  double c = delta * sqrt (1 / (rho * rho) - 1);
+  qf_double_t c = delta * sqrt (1 / (rho * rho) - 1);
 
 #ifdef _QF_CAUER_DEBUG
   std::cerr << "D = " << delta << '\n';
@@ -369,12 +374,12 @@ void qf_cauer::xfer (void) {
 
 void qf_cauer::values (void) {
 
-  ncomp = (3 * o) / 2;
+  ncomp = (3 * ord) / 2;
   Comp = (qfc *) malloc (sizeof (qfc) * ncomp);
 
   // For each zero of transmission, we apply the method as in 
   // Saal & Ulbrich p. 288 or Zverev pp. 129 et seq.
-  double Ws = sqrt (th);
+  qf_double_t Ws = sqrt (th);
   for (unsigned k = 0, l = 2; k < (ncomp - 1); k += 3) {
 #ifdef _QF_CAUER_DEBUG
     std::cerr << "Pole (" << l << ") = " << (1 / (a[l] * Ws)) << "\n";
@@ -382,8 +387,8 @@ void qf_cauer::values (void) {
     extract_pole_pCsLC (1 / a[l], &Comp[k], Ws);
 
     // Zeros mangeling 
-    l = o - l + 1;
-    if (l < (o + 1) / 2)
+    l = ord - l + 1;
+    if (l < (ord + 1) / 2)
       l += 2;
   }
 
@@ -392,8 +397,8 @@ void qf_cauer::values (void) {
 }
 
 void qf_cauer::synth (qft type) {
-  double cnrm = 1 / (2 * M_PI * f * imp);
-  double lnrm = imp / (2 * M_PI * f);
+  qf_double_t cnrm = 1 / (2 * M_PI * fc * imp);
+  qf_double_t lnrm = imp / (2 * M_PI * fc);
   unsigned i, node;
 
   switch (type) {
@@ -447,9 +452,9 @@ void qf_cauer::synth (qft type) {
     break;
   case BANDPASS: {
     // We double the number of components
-    ncomp = 3 * o - 1;
+    ncomp = 3 * ord - 1;
     qfc * Comp2 = (qfc *) malloc (sizeof (qfc) * ncomp);
-    double q = f / bw;
+    qf_double_t q = fc / bw;
 
     for (unsigned i = 0, j = 0, node = 1;;) {
       Comp2[j].comp = CAP;
@@ -464,13 +469,13 @@ void qf_cauer::synth (qft type) {
       if (j == ncomp)
 	break;
 
-      double c = Comp[i].val;
-      double l = Comp[i + 1].val;
-      double iw2 = l * c;
+      qf_double_t c = Comp[i].val;
+      qf_double_t l = Comp[i + 1].val;
+      qf_double_t iw2 = l * c;
 #ifdef _QF_CAUER_DEBUG
       std::cout << "O(inf) = " << sqrt (1 / iw2) << '\n';
 #endif
-      double b = sqrt (1 + 4 * q * q * iw2);
+      qf_double_t b = sqrt (1 + 4 * q * q * iw2);
 
 #ifdef _QF_CAUER_DEBUG
       std::cout << "b = " << b << '\n';
@@ -509,9 +514,9 @@ void qf_cauer::synth (qft type) {
     break;
   }
   case BANDSTOP: {
-    ncomp = 3 * o - 1;
+    ncomp = 3 * ord - 1;
     qfc * Comp2 = (qfc *) malloc (sizeof (qfc) * ncomp);
-    double q = f / bw;
+    qf_double_t q = fc / bw;
 
     for (unsigned i = 0, j = 0, node = 1;;) {
       Comp2[j].comp = CAP;
@@ -526,13 +531,13 @@ void qf_cauer::synth (qft type) {
       if (j == ncomp)
 	break;
 
-      double c = Comp[i].val;
-      double l = Comp[i + 1].val;
-      double w2 = 1 / (l * c);
+      qf_double_t c = Comp[i].val;
+      qf_double_t l = Comp[i + 1].val;
+      qf_double_t w2 = 1 / (l * c);
 #ifdef _QF_CAUER_DEBUG
       std::cout << "O(inf) = " << sqrt (w2) << "; q = " << q << '\n';
 #endif
-      double b = sqrt (1 + 4 * q * q * w2);
+      qf_double_t b = sqrt (1 + 4 * q * q * w2);
 
 #ifdef _QF_CAUER_DEBUG
       std::cout << "b = " << b << '\n';
@@ -592,14 +597,14 @@ void qf_cauer::dump () {
     std::cout << "Bandstop ";
     break;
   }
-  std::cout << "of order " << o << ", theta = "
+  std::cout << "of order " << ord << ", theta = "
 	    << ASIND (th) << "°, rho = " << rho << '\n';
   dump_cout ();
 }
 
 void CC (void) {
   unsigned o;
-  double t, r;
+  qf_double_t t, r;
 
   do {
     std::cout << "Order : ";
@@ -620,7 +625,7 @@ void CC (void) {
 
 #if TEST
 int main (void) {
-  double amin, amax, fc, fs, bw, r;
+  qf_double_t amin, amax, fc, fs, bw, r;
 
   while (true) {
     std::cout << "Enter cutoff (Hz) [0 to end]: ";
