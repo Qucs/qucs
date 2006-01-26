@@ -260,7 +260,7 @@ QString * QucsFilter::calculateFilter(struct tFilter * Filter)
       F = new qf_cauer (amin, amax, fc + bw / 2, fs, r, bw, BANDPASS);
       break;
     case CLASS_BANDSTOP:
-      F = new qf_cauer (amax, amin, fc + bw / 2, fs, r, bw, BANDSTOP);
+      F = new qf_cauer (amin, amax, fc + bw / 2, fs, r, bw, BANDSTOP);
       break;
     }
     if (F) {
@@ -309,14 +309,15 @@ void QucsFilter::slotCalculate()
       return;
     }
 
-  if(Filter.Order < 2) {
-    setError(tr("Filter order must not be less than two."));
-    return;
-  }
-
-  if(Filter.Order > 19) if(Filter.Type == TYPE_BESSEL) {
-    setError(tr("Bessel filter order must not be greater than 19."));
-    return;
+  if(EditOrder->isEnabled()) {
+    if (Filter.Order < 2) {
+      setError(tr("Filter order must not be less than two."));
+      return;
+    }
+    if(Filter.Order > 19) if(Filter.Type == TYPE_BESSEL) {
+      setError(tr("Bessel filter order must not be greater than 19."));
+      return;
+    }
   }
 
   QString * s = calculateFilter(&Filter);
@@ -400,17 +401,25 @@ void QucsFilter::slotClassChanged(int index)
   switch(index) {
     case CLASS_LOWPASS:
     case CLASS_HIGHPASS:
-	LabelStop->setEnabled(false);
-	EditStop->setEnabled(false);
-	ComboStop->setEnabled(false);
-	LabelStart->setText(tr("Corner frequency:"));
-	break;
+      LabelStop->setEnabled(false);
+      EditStop->setEnabled(false);
+      ComboStop->setEnabled(false);
+      LabelStart->setText(tr("Corner frequency:"));
+      break;
     case CLASS_BANDPASS:
     case CLASS_BANDSTOP:
-	LabelStop->setEnabled(true);
-	EditStop->setEnabled(true);
-	ComboStop->setEnabled(true);
-	LabelStart->setText(tr("Start frequency:"));
-	break;
+      LabelStop->setEnabled(true);
+      EditStop->setEnabled(true);
+      ComboStop->setEnabled(true);
+      LabelStart->setText(tr("Start frequency:"));
+      break;
+  }
+  if (index == CLASS_BANDPASS) {
+    LabelBandStop->setText(tr("Stop band frequency:"));
+    LabelRipple->setText(tr("Pass band ripple:"));
+  }
+  else if (index == CLASS_BANDSTOP) {
+    LabelBandStop->setText(tr("Pass band frequency:"));
+    LabelRipple->setText(tr("Pass band attenuation:"));
   }
 }
