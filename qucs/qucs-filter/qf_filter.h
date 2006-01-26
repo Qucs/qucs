@@ -54,7 +54,7 @@ typedef enum qf_ctype qfct;
 struct qf_comp
 {
   qfct comp;
-  double val;
+  qf_double_t val;
   unsigned node1;
   unsigned node2;
 };
@@ -68,11 +68,13 @@ class qf_filter
  protected:
   const qft type;		// Lowpass, highpass...
   const qfk kind;		// Butterworth, Chebichev...
-  unsigned o;			// Order of filter
+  unsigned ord;			// Order of filter
 
-  const double f;		// Cutoff
-  const double bw;		// Bandwidth
-  const double imp;		// Terminating impedance
+  const qf_double_t fc;		// Cutoff / Center
+  qf_double_t bw;	        // Bandwidth
+  const qf_double_t imp;	// Terminating impedance
+  qf_double_t fstart;           // Start frequency
+  qf_double_t fstop;            // Stop frequency
 
   // Polynomial description
 
@@ -91,15 +93,16 @@ public:
   qf_filter (int);		// Init
   qf_filter (qfk, qft);
   qf_filter (int, qfk, qft);
-  qf_filter (qfk, qft, double, double, double);
+  qf_filter (qfk, qft, qf_double_t, qf_double_t, qf_double_t);
   virtual ~qf_filter (void);	// Exit
 
   // Common routines to perform extraction of poles and zeros
 
   // This one extracts a finite pole of transmission
-  void extract_pole_pCsLC (double, qfc *, double);
+  void extract_pole_pCsLC (qf_double_t, qfc *, qf_double_t);
 
-  int order (void) { return o; }
+  int order (void) { return ord; }
+
   virtual void synth (qft) = 0;	// Synthesize filter
 
   std::string to_qucs (void);	// Outputs Qucs
@@ -109,7 +112,7 @@ public:
   void dump_cout (void);	// Outputs to std::cout
 
 private:
-  std::string num2str (double);
+  std::string num2str (qf_double_t);
 };
 
 #endif // _QF_FILTER_H

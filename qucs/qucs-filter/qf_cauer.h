@@ -18,27 +18,28 @@
 #ifndef _QF_CAUER_H
 #define _QF_CAUER_H
 
-const double SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
-const double K_ERR1 = 1e-8;	// Accuracy of K(k)
-const double K_ERR2 = 1e-20;	// Accuracy of K(k)
-const double K_ERR3 = 1e-6;	// Accuracy of K(k)
-const double K_ERR =  4e-16;                // Accuracy of K (k)
-const double SK_ERR = sqrt (K_ERR);         // Accuracy of sn (u, k)
+const qf_double_t SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
+const qf_double_t K_ERR1 = 1e-8;	// Accuracy of K(k)
+const qf_double_t K_ERR2 = 1e-20;	// Accuracy of K(k)
+const qf_double_t K_ERR3 = 1e-6;	// Accuracy of K(k)
+const qf_double_t K_ERR =  4e-16;                // Accuracy of K (k)
+const qf_double_t SK_ERR = sqrt (K_ERR);         // Accuracy of sn (u, k)
 
 class qf_cauer : public qf_filter
 {
  private:
 
   // Standard parameters
-  double rho;			// Reflection coeff.
-  double th;			// Modular angle
+  qf_double_t rho;			// Reflection coeff.
+  qf_double_t th;			// Modular angle
 
   // Zeros of transmission
-  double * a;
+  qf_double_t * a;
 
 public:
-  qf_cauer (unsigned, double, double);
-  qf_cauer (double, double, double, double, double, double, qft);
+  qf_cauer (unsigned, qf_double_t, qf_double_t);
+  qf_cauer (qf_double_t, qf_double_t, qf_double_t, qf_double_t, qf_double_t,
+	    qf_double_t, qft);
   virtual ~qf_cauer (void);
 
   // Elliptic functions
@@ -52,7 +53,7 @@ public:
   static qf_double_t ellip_sn (qf_double_t, qf_double_t);
 
   // Computes standard form
-  void normalize (double, double, double, qft);
+  void normalize (qf_double_t, qf_double_t, qf_double_t, qft);
 
   void xfer (void);		// Computes xfer fctn
   void values (void);		// Computes norm values

@@ -33,33 +33,35 @@
 
 // Just initialize a few things
 qf_filter::qf_filter (int n) :
-  type (LOWPASS), kind (UNDEF), o (n), f (0), bw (0), imp (1),
+  type (LOWPASS), kind (UNDEF), ord (n), fc (0), bw (0), imp (1),
   ncomp (0), Comp (NULL) {
-//  std::cerr << "New filter of " << n << "th order.\n";
 }
 
 // Default constructor
 qf_filter::qf_filter () :
-  type (LOWPASS), kind (UNDEF), o (0), f (0), bw (0), imp (1),
+  type (LOWPASS), kind (UNDEF), ord (0), fc (0), bw (0), imp (1),
   ncomp (0), Comp (NULL) {
 }
 
 qf_filter::qf_filter (int n = 3, qfk k = UNDEF, qft t = LOWPASS) :
-  type (t), kind (k), o (n), f (0), bw (0), imp (1), Comp (NULL) {
+  type (t), kind (k), ord (n), fc (0), bw (0), imp (1),
+  ncomp (0), Comp (NULL) {
 }
 
-qf_filter::qf_filter (qfk k = UNDEF, qft t = LOWPASS,
-		      double r = 1, double fc = 1, double b = 0) :
-  type (t), kind (k), f (fc), bw (b), imp (r), Comp (NULL) {
+qf_filter::qf_filter (qfk k = UNDEF, qft t = LOWPASS, qf_double_t r = 1,
+		      qf_double_t f = 1, qf_double_t b = 0) :
+  type (t), kind (k), fc (f), bw (b), imp (r), ncomp (0), Comp (NULL) {
+  fstart = fc - bw / 2;
+  fstop  = fc + bw / 2;
 }
 
 qf_filter::qf_filter (qfk k = UNDEF, qft t = LOWPASS) :
-  type (t), kind (k), o (0), f (0), bw (0), imp (1), ncomp (0), Comp (NULL) {
+  type (t), kind (k), ord (0), fc (0), bw (0), imp (1),
+  ncomp (0), Comp (NULL) {
 }
 
 // Destructor of a filter
 qf_filter::~qf_filter (void) {
-//  std::cout << "Destructor qf_filter.\n" ;
   if (Comp != NULL)
     free (Comp);
 }
@@ -68,16 +70,17 @@ qf_filter::~qf_filter (void) {
 
 // Extract finite attenuation pole
 // Result is a parallel cap, and a serial resonator (L // C)
-void qf_filter::extract_pole_pCsLC (double p, qfc * pComp, double Ws) {
+void qf_filter::extract_pole_pCsLC (qf_double_t p, qfc * pComp,
+				    qf_double_t Ws) {
   BN.disp ("BN");
   BD.disp ("BD");
 
-  double pl = -p * p;
-  double bdpl = BD.evalX2 (pl);
+  qf_double_t pl = -p * p;
+  qf_double_t bdpl = BD.evalX2 (pl);
 
   // Partial removal of infinite pole (first // cap)
   // c = [B(s)/s] (s^2 = - O^2)
-  double c = ((BN << 1).evalX2 (pl)) / bdpl;
+  qf_double_t c = ((BN << 1).evalX2 (pl)) / bdpl;
   pComp->val = c * Ws;
   qf_poly cS (c, 0, 0, 1);
   BN = BN - (BD * cS);		// B = B - cs
@@ -87,7 +90,7 @@ void qf_filter::extract_pole_pCsLC (double p, qfc * pComp, double Ws) {
   // Full removal of finite pole
   // c1 = (s B(s) / (s^2 + O^2)) @ s^2 = - O^2
   BN.disp ("BN");
-  double c1 = (BN >> 1).evalX2 (pl) / bdpl;
+  qf_double_t c1 = (BN >> 1).evalX2 (pl) / bdpl;
   (pComp + 1)->val = c1;
   (pComp + 2)->val = -Ws / (c1 * pl);
   (pComp + 1)->val *= Ws;
@@ -101,9 +104,9 @@ void qf_filter::extract_pole_pCsLC (double p, qfc * pComp, double Ws) {
 }
 
 // User readable value string.
-std::string qf_filter::num2str (double num) {
+std::string qf_filter::num2str (qf_double_t num) {
   char c = 0;
-  double cal = fabs(num);
+  qf_double_t cal = fabs(num);
   if(cal > 1e-20) {
     cal = log10(cal) / 3.0;
     if(cal < -0.2)  cal -= 0.98;
@@ -122,7 +125,7 @@ std::string qf_filter::num2str (double num) {
         case  4: c = 'T'; break;
       }
 
-    if(c) num /= pow(10.0, double(3*expo));
+    if(c) num /= pow(10.0, (qf_double_t)(3*expo));
   }
 
   std::stringstream str;
@@ -182,16 +185,18 @@ std::string qf_filter::to_spice (void) {
   res << "* SPICE netlist\n";
   switch(type) {
     case LOWPASS:
-      res << "* low-pass filter " << f << " Hz cutoff\n";
+      res << "* low-pass filter " << fc << " Hz cutoff\n";
       break;
     case HIGHPASS:
-      res << "* high-pass filter " << f << " Hz cutoff\n";
+      res << "* high-pass filter " << fc << " Hz cutoff\n";
       break;
     case BANDPASS:
-      res << "* band-pass filter " << f << " Hz ... " << (f+bw) << " Hz\n";
+      res << "* band-pass filter "
+	  << fstart << " Hz ... " << fstop << " Hz\n";
       break;
     case BANDSTOP:
-      res << "* band-reject filter " << f << " Hz ... " << (f+bw) << " Hz\n";
+      res << "* band-reject filter "
+	  << fstart << " Hz ... " << fstop << " Hz\n";
       break;
   }
   res << "* PI-type, impedance matching " << imp << " Ohm\n";
@@ -250,7 +255,7 @@ void qf_filter::dump_spice (void) {
 std::string qf_filter::to_qucs (void) {
   std::ostringstream res;
   std::ostringstream wir;
-  double Value, Value2;
+  qf_double_t Value, Value2;
 
   // create the Qucs schematic
   res << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
@@ -262,7 +267,7 @@ std::string qf_filter::to_qucs (void) {
   res << "<GND * 1 " << x << " 350 0 0 0 0>\n";
 
   int yc = 320, yl = 240;
-  unsigned int i, j = 0, k = o, repser = 0;
+  unsigned int i, j = 0, k = ord, repser = 0, gndser = 1;
 
   // connect left source
   x = 20 + 40;
@@ -272,8 +277,8 @@ std::string qf_filter::to_qucs (void) {
       << "<" << x << " 240 " << x2 << " 240 \"\" 0 0 0>\n";
 
   x = 170;
-  if (type == BANDPASS) k = o * 2;
-  for(i = 0; i < k; i++) {
+  if (type == BANDPASS || type == BANDSTOP) k = ord * 2;
+  for(i = 0; i < k && ncomp > 0; i++) {
     // find series components to ground
     unsigned int a = j;
     while (Comp[a].node2 != 0) {
@@ -291,7 +296,7 @@ std::string qf_filter::to_qucs (void) {
       unsigned int b, c;
       for (c = 0, b = j; b <= a; b++, c++) {
 	// type of component
-	switch(Comp[b].comp) {
+	switch (Comp[b].comp) {
 	case CAP: res << "<C C"; break;
 	case IND: res << "<L L"; break;
 	case RES: res << "<R R"; break;
@@ -301,7 +306,7 @@ std::string qf_filter::to_qucs (void) {
 
 	// value of component
 	res << " \"" << num2str(Comp[b].val).c_str();
-	switch(Comp[b].comp) {
+	switch (Comp[b].comp) {
 	case CAP: res << "F"; break;
 	case IND: res << "H"; break;
 	case RES: res << "Ohm"; break;
@@ -311,6 +316,7 @@ std::string qf_filter::to_qucs (void) {
       // place ground symbol here
       res << "<GND * 1 " << x << " " << yc+c*60-30 << " 0 0 0 0>\n";
       j = a + 1;
+      if (gndser < c) gndser = c;
       repser = 0;
     }
     // handle parallel components in series
@@ -324,7 +330,7 @@ std::string qf_filter::to_qucs (void) {
       unsigned int b = j, c = 0;
       do {
 	// type of component
-	switch(Comp[b].comp) {
+	switch (Comp[b].comp) {
 	case CAP: res << "<C C"; break;
 	case IND: res << "<L L"; break;
 	case RES: res << "<R R"; break;
@@ -344,7 +350,7 @@ std::string qf_filter::to_qucs (void) {
 
 	// value of commponent
 	res << " \"" << num2str(Comp[b].val).c_str();
-	switch(Comp[b].comp) {
+	switch (Comp[b].comp) {
 	case CAP: res << "F"; break;
 	case IND: res << "H"; break;
 	case RES: res << "Ohm"; break;
@@ -362,7 +368,7 @@ std::string qf_filter::to_qucs (void) {
     x += 70;
   }
 
-  if(o & 1)
+  if (ord & 1)
     x += 110;
   else
     x += 70;
@@ -370,15 +376,15 @@ std::string qf_filter::to_qucs (void) {
       << imp << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n"
       << "<GND * 1 " << x << " 350 0 0 0 0>\n";
 
-  yc += 100;
-  if (type == HIGHPASS) yc += 40;
-  Value = f / 10.0;
-  Value2 = 10.0 * f;
+  yc += 20 + gndser * 60;
+  Value = fc / 10.0;
+  Value2 = 10.0 * fc;
   res << "<.SP SP1 1 70 " << yc << " 0 50 0 0 \"log\" 1 \""
       << num2str(Value).c_str() << "Hz\" 1 \"" << num2str(Value2).c_str()
       << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n"
-      << "<Eqn Eqn1 1 260 " << (yc+10)
-      << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 \"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n"
+      << "<Eqn Eqn1 1 260 " << yc+10
+      << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 "
+      << "\"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n"
       << "</Components>\n";
 
   res << "<Wires>\n";
@@ -411,21 +417,21 @@ std::string qf_filter::to_qucs (void) {
   switch(type) {
     case LOWPASS:
       res << "low-pass filter\\n"
-	  << num2str(f).c_str() << "Hz cutoff";
+	  << num2str(fc).c_str() << "Hz cutoff";
       break;
     case HIGHPASS:
       res << "high-pass filter\\n"
-	  << num2str(f).c_str() << "Hz cutoff";
+	  << num2str(fc).c_str() << "Hz cutoff";
       break;
     case BANDPASS:
       res << "band-pass filter\\n"
-	  << num2str(f-bw/2).c_str() << "Hz ... "
-	  << num2str(f+bw/2).c_str() << "Hz";
+	  << num2str(fstart).c_str() << "Hz ... "
+	  << num2str(fstop).c_str() << "Hz";
       break;
     case BANDSTOP:
       res << "band-reject filter\\n"
-	  << num2str(f-bw/2).c_str() << "Hz ... "
-	  << num2str(f+bw/2).c_str() << "Hz";
+	  << num2str(fstart).c_str() << "Hz ... "
+	  << num2str(fstop).c_str() << "Hz";
       break;
   }
   res << ", PI-type,\\nimpedance matching " << imp << " Ohm\">\n";

@@ -1,3 +1,8 @@
+2006-01-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-filter/qf_cauer.cpp: Fixed band stop filters.  Now
+	correctly working and exported into the clipboard.
+
 2006-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.8 and bumped up to version
