@@ -15,7 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucsactions.h"
+#include <stdlib.h>
+
+#include <qprocess.h>
+#include <qmessagebox.h>
 
 #include "qucs.h"
 #include "qucsview.h"
@@ -24,9 +27,7 @@
 #include "components/equation.h"
 #include "dialogs/changedialog.h"
 #include "dialogs/matchdialog.h"
-
-#include <qprocess.h>
-#include <qmessagebox.h>
+#include "qucsactions.h"
 
 
 QucsActions::QucsActions()

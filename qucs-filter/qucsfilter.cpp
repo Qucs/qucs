@@ -20,6 +20,8 @@
 #endif
 
 #include <math.h>
+#include <stdlib.h>
+#include <string>
 
 #include <qmenubar.h>
 #include <qpopupmenu.h>

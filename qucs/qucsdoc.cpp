@@ -19,6 +19,14 @@
 # include <config.h>
 #endif
 
+#include <stdlib.h>
+#include <limits.h>
+
+#include <qfileinfo.h>
+#include <qimage.h>
+#include <qiconset.h>
+#include <qregexp.h>
+
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
@@ -26,14 +34,6 @@
 #include "paintings/paintings.h"
 #include "main.h"
 #include "node.h"
-
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qiconset.h>
-#include <qregexp.h>
-
-#include <limits.h>
-
 
 // icon for unsaved files (diskette)
 const char *smallsave_xpm[] = {
