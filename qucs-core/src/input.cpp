@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.53 2006-01-04 10:40:32 raimi Exp $
+ * $Id: input.cpp,v 1.54 2006-01-27 09:32:01 raimi Exp $
  *
  */
 
@@ -353,6 +353,8 @@ circuit * input::createCircuit (char * type) {
     return new phaseshifter ();
   else if (!strcmp (type, "TLIN"))
     return new tline ();
+  else if (!strcmp (type, "COAX"))
+    return new coaxline ();
   else if (!strcmp (type, "Coupler"))
     return new coupler ();
   else if (!strcmp (type, "Diode"))

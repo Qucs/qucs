@@ -1,7 +1,7 @@
 /*
  * mscorner.cpp - microstrip corner class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: mscorner.cpp,v 1.14 2005-06-02 18:17:55 raimi Exp $
+ * $Id: mscorner.cpp,v 1.15 2006-01-27 09:32:02 raimi Exp $
  *
  */
 
@@ -47,11 +47,7 @@ mscorner::mscorner () : circuit (2) {
   type = CIR_MSCORNER;
 }
 
-void mscorner::initSP (void) {
-
-  // allocate S-parameter matrix
-  allocMatrixS ();
-
+void mscorner::initCheck (void) {
   // get properties of substrate and corner
   nr_double_t W = getPropertyDouble ("W");
   substrate * subst = getSubstrate ();
@@ -62,11 +58,11 @@ void mscorner::initSP (void) {
   nr_double_t Wh = W/h;
 
   // check validity
-  if ((Wh < 0.2) || (Wh > 6.0)) {
+  if (Wh < 0.2 || Wh > 6.0) {
     logprint (LOG_ERROR, "WARNING: Model for microstrip corner defined for "
 	      "0.2 <= W/h <= 6.0 (W/h = %g)\n", Wh);
   }
-  if ((er < 2.36) || (er > 10.4)) {
+  if (er < 2.36 || er > 10.4) {
     logprint (LOG_ERROR, "WARNING: Model for microstrip corner defined for "
 	      "2.36 <= er <= 10.4 (er = %g)\n", er);
   }
@@ -75,6 +71,12 @@ void mscorner::initSP (void) {
   C = W * ((10.35 * er + 2.5) * Wh + (2.6 * er + 5.64));
   // inductivity in nH
   L = 220.0 * h * (1.0 - 1.35 * exp (-0.18 * pow (Wh, 1.39)));
+}
+
+void mscorner::initSP (void) {
+  // allocate S-parameter matrix
+  allocMatrixS ();
+  initCheck ();
 }
 
 void mscorner::calcSP (nr_double_t frequency) {
@@ -104,14 +106,13 @@ void mscorner::initDC (void) {
   setVoltageSources (1);
   setInternalVoltageSource (1);
   allocMatrixMNA ();
-  clearY ();
   voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void mscorner::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
-  initSP ();
+  initCheck ();
 }
 
 void mscorner::calcAC (nr_double_t frequency) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.33 2006-01-04 10:40:33 raimi Exp $
+ * $Id: component.h,v 1.34 2006-01-27 09:32:01 raimi Exp $
  *
  */
 
@@ -61,6 +61,7 @@
 #include "phaseshifter.h"
 #include "gyrator.h"
 #include "tline.h"
+#include "coaxline.h"
 #include "iprobe.h"
 #include "spfile.h"
 #include "vpulse.h"

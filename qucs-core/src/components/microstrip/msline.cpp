@@ -1,7 +1,7 @@
 /*
  * msline.cpp - microstrip transmission line class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.cpp,v 1.45 2005-06-02 18:17:55 raimi Exp $
+ * $Id: msline.cpp,v 1.46 2006-01-27 09:32:02 raimi Exp $
  *
  */
 
@@ -444,7 +444,7 @@ void msline::initDC (void) {
   nr_double_t t     = subst->getPropertyDouble ("t");
   nr_double_t rho   = subst->getPropertyDouble ("rho");
 
-  if (t != 0.0 && rho != 0.0) {
+  if (t != 0.0 && rho != 0.0 && l != 0.0) {
     // tiny resistance
     nr_double_t g = t * W / rho / l;
     setVoltageSources (0);
@@ -473,7 +473,7 @@ void msline::calcAC (nr_double_t frequency) {
   // calculate propagation constants
   calcPropagation (frequency);
 
-  // calculate S-parameters
+  // calculate Y-parameters
   complex g = rect (alpha, beta);
   complex y11 = coth (g * l) / zl;
   complex y21 = -cosech (g * l) / zl;
