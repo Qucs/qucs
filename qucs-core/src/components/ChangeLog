@@ -1,3 +1,8 @@
+2006-01-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* coaxline.h (class coaxline): Implemented new component:
+	coaxial cable.
+
 2006-01-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwline.cpp (isinf): Fixed isinf() declaration
