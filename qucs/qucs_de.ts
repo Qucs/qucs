@@ -6179,6 +6179,14 @@ Filtersynthese-Programm
         <source>Stop band attenuation:</source>
         <translation>Sperrbanddämpfung:</translation>
     </message>
+    <message>
+        <source>Pass band frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsHelp</name>
