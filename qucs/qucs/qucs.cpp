@@ -1668,9 +1668,9 @@ pInfoFunc Sources[] =
    &Noise_iv::info, 0};
 
 pInfoFunc TransmissionLines[] =
-  {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
-   &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
-   &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
+  {&TLine::info, &CoaxialLine::info, &Substrate::info, &MSline::info,
+   &MScoupled::info, &MScorner::info, &MSmbend::info, &MSstep::info,
+   &MStee::info, &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
    &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
    &CPWstep::info, 0};
 
