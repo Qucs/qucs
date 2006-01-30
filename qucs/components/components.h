@@ -52,6 +52,7 @@
 #include "vcvs.h"
 #include "ccvs.h"
 #include "tline.h"
+#include "coaxialline.h"
 #include "substrate.h"
 #include "msline.h"
 #include "mscoupled.h"

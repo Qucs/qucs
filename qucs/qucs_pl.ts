@@ -3264,6 +3264,38 @@ Stosowanie:  qucsedit [-r] plik
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coaxial transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permittivity of dielectrica</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>specific resistance of conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permeability of conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outer diameter (inner diameter of shield)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of inner conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mechanical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coaxial Line</source>
+        <translation type="unfinished">Linia koncentryczna</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
