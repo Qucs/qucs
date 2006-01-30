@@ -23,8 +23,12 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Allow output of characteristics (e.g. ErEff) very likely operating
-  points.
+- Support for comma separated values (CSV) and Citi-files as an export
+  file format in the Qucs Converter.
+- Implement yval(values,xval) and xval(values,yval) evalutaion functions
+  in the equation solver.
+	- Allow output of characteristics (e.g. ErEff) very likely
+	  operating points.
 - Implement knee currents Ikf and Ikr in the diode model.
 - Implementation of delay times of digital components for transient
   simulation.

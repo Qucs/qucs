@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.cpp,v 1.1 2006-01-27 09:32:01 raimi Exp $
+ * $Id: coaxline.cpp,v 1.2 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -93,6 +93,10 @@ void coaxline::initCheck (void) {
   f1 = C0 / (M_PI * (D + d)); // TE
   f2 = C0 / (2 * (D - d));    // TM
   fc = MIN (f1, f2);
+}
+
+void coaxline::saveCharacteristics (nr_double_t) {
+  setCharacteristic ("Zl", zl);
 }
 
 void coaxline::initSP (void) {

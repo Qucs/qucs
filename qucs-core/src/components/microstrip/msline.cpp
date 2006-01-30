@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.cpp,v 1.46 2006-01-27 09:32:02 raimi Exp $
+ * $Id: msline.cpp,v 1.47 2006-01-30 07:45:35 raimi Exp $
  *
  */
 
@@ -43,7 +43,7 @@
 #include "msline.h"
 
 msline::msline () : circuit (2) {
-  alpha = beta = zl = 0;
+  alpha = beta = zl = ereff = 0;
   type = CIR_MSLINE;
 }
 
@@ -91,6 +91,7 @@ void msline::calcPropagation (nr_double_t frequency) {
 
   // calculate propagation constants and reference impedance
   zl    = ZlEffFreq;
+  ereff = ErEffFreq;
   alpha = ac + ad;
   beta  = sqrt (ErEffFreq) * 2 * M_PI * frequency / C0;
 }
@@ -110,6 +111,11 @@ void msline::calcSP (nr_double_t frequency) {
   complex s21 = 2 / n;
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
+}
+
+void msline::saveCharacteristics (nr_double_t) {
+  setCharacteristic ("Zl", zl);
+  setCharacteristic ("Er", ereff);
 }
 
 /* This function calculates the quasi-static impedance of a microstrip

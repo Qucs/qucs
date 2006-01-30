@@ -1,7 +1,7 @@
 /*
  * spsolver.h - S-parameter solver class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.h,v 1.12 2005-06-02 18:17:51 raimi Exp $
+ * $Id: spsolver.h,v 1.13 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -57,8 +57,9 @@ class spsolver : public analysis
   void noiseInterconnect (circuit *, node *, node *);
   void saveResults (nr_double_t);
   void saveNoiseResults (complex[4], complex[4], nr_double_t, vector *);
-  void saveVariable (char *, complex, vector *);
   char * createSP (int, int);
+  char * createCV (char *, char *);
+  void saveCharacteristics (nr_double_t);
   void dropTee (circuit *);
   void dropCross (circuit *);
   void dropOpen (circuit *);
@@ -69,6 +70,7 @@ class spsolver : public analysis
  private:
   int tees, crosses, grounds, opens;
   int noise;
+  int saveCVs;
   sweep * swp;
   nodelist * nlist;
   circuit * gnd;

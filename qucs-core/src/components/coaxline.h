@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.h,v 1.1 2006-01-27 09:32:01 raimi Exp $
+ * $Id: coaxline.h,v 1.2 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -36,6 +36,7 @@ class coaxline : public circuit
   void initAC (void);
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
+  void saveCharacteristics (nr_double_t);
 
  private:
   void calcPropagation (nr_double_t);

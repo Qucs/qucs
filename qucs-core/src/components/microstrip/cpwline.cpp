@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.16 2006-01-17 12:30:31 raimi Exp $
+ * $Id: cpwline.cpp,v 1.17 2006-01-30 07:45:35 raimi Exp $
  *
  */
 
@@ -62,6 +62,7 @@
 #endif
 
 cpwline::cpwline () : circuit (2) {
+  Zl = Er = 0;
   type = CIR_CPWLINE;
 }
 
@@ -274,6 +275,14 @@ void cpwline::calcAB (nr_double_t f, nr_double_t& zl, nr_double_t& al,
 
   al  = ac + ad;
   bt *= sr_er_f * f;
+
+  Er = sqr (sr_er_f);
+  Zl = zl;
+}
+
+void cpwline::saveCharacteristics (nr_double_t) {
+  setCharacteristic ("Zl", Zl);
+  setCharacteristic ("Er", Er);
 }
 
 void cpwline::calcSP (nr_double_t frequency) {

@@ -1,7 +1,7 @@
 /*
  * object.cpp - generic object class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.cpp,v 1.11 2005-12-12 07:46:53 raimi Exp $
+ * $Id: object.cpp,v 1.12 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -125,7 +125,7 @@ void object::setProperty (char * n, nr_double_t val) {
    property. */
 void object::setScaledProperty (char * n, nr_double_t val) {
   char prop[64];
-  sprintf (prop, "Scaled_%s", n);
+  sprintf (prop, "Scaled:%s", n);
   setProperty (prop, val);
 }
 
@@ -163,12 +163,16 @@ nr_double_t object::getPropertyDouble (char * n) {
 }
 
 /* The functions returns the requested (scalability) property value
-   which has been previously added.  If there is no such property the
-   function returns zero. */
+   which has been previously added.  If there is no such scaled
+   property the function returns the standard property or zero. */
 nr_double_t object::getScaledProperty (char * n) {
-  char prop[64];
-  sprintf (prop, "Scaled_%s", n);
-  return getPropertyDouble (prop);
+  char txt[64];
+  sprintf (txt, "Scaled:%s", n);
+  // try to find scaled property
+  property * p = prop->findProperty (txt);
+  if (p != NULL) return p->getDouble ();
+  // default to standard property
+  return getPropertyDouble (n);
 }
 
 /* Returns the requested property value which has been previously

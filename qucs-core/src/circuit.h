@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.42 2006-01-09 09:11:07 raimi Exp $
+ * $Id: circuit.h,v 1.43 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -52,6 +52,7 @@ class node;
 class property;
 class substrate;
 class operatingpoint;
+class characteristic;
 class matrix;
 class transient;
 class net;
@@ -85,6 +86,8 @@ class circuit : public object, public integrator
   virtual void calcHB (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
   virtual void saveOperatingPoints (void) { }
+  virtual void calcCharacteristics (nr_double_t) { }
+  virtual void saveCharacteristics (nr_double_t) { }
 
   // real basics
   void   setNode (int, char *, int intern = 0);
@@ -178,6 +181,13 @@ class circuit : public object, public integrator
   int         hasOperatingPoint (char *);
   valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
+  // characteristics functionality
+  void        addCharacteristic (char *, nr_double_t);
+  nr_double_t getCharacteristic (char *);
+  void        setCharacteristic (char *, nr_double_t);
+  int         hasCharacteristic (char *);
+  valuelist<characteristic> & getCharacteristics (void) { return charac; }
+
   // differentiate between linear and non-linear circuits
   void setNonLinear (bool l) { MODFLAG (!l, CIRCUIT_LINEAR); }
   bool isNonLinear (void) { return !RETFLAG (CIRCUIT_LINEAR); }
@@ -226,6 +236,7 @@ class circuit : public object, public integrator
   node * nodes;
   substrate * subst;
   valuelist<operatingpoint> oper;
+  valuelist<characteristic> charac;
   net * subnet;
   nr_double_t * deltas;
 };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.33 2006-01-27 09:32:01 raimi Exp $
+ * $Id: qucsdefs.h,v 1.34 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -32,6 +32,9 @@ struct define_t qucs_definition_available[] =
   { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
     { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Tc1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tc2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
   /* inductor */
@@ -353,11 +356,11 @@ struct define_t qucs_definition_available[] =
       { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
       { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
       PROP_NO_PROP }
@@ -712,6 +715,8 @@ struct define_t qucs_definition_available[] =
       { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
       { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
+      { "saveCVs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* dc analysis */

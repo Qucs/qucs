@@ -1,7 +1,7 @@
 /*
  * bjt.cpp - bipolar junction transistor class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.35 2005-12-20 08:47:10 raimi Exp $
+ * $Id: bjt.cpp,v 1.36 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -278,6 +278,7 @@ void bjt::initDC (void) {
     re = splitResistor (this, re, "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
     re->setProperty ("Temp", T);
+    re->setProperty ("Controlled", getName ());
     re->initDC ();
   }
   // no series resistance at emitter
@@ -292,6 +293,7 @@ void bjt::initDC (void) {
     rc = splitResistor (this, rc, "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
     rc->setProperty ("Temp", T);
+    rc->setProperty ("Controlled", getName ());
     rc->initDC ();
   }
   // no series resistance at collector
@@ -304,12 +306,13 @@ void bjt::initDC (void) {
   nr_double_t Rbm = getScaledProperty ("Rbm");
   if (Rbm <= 0.0) Rbm = Rb; // Rbm defaults to Rb if zero
   if (Rb < Rbm)   Rbm = Rb; // Rbm must be less or equal Rb
-  setProperty ("Rbm", Rbm);
+  setScaledProperty ("Rbm", Rbm);
   if (Rbm != 0.0) {
     // create additional circuit and reassign nodes
     rb = splitResistor (this, rb, "Rbb", "base", NODE_B);
     rb->setProperty ("R", Rb);
     rb->setProperty ("Temp", T);
+    rb->setProperty ("Controlled", getName ());
     rb->initDC ();
   }
   // no series resistance at base

@@ -1,7 +1,7 @@
 /*
  * diode.cpp - diode class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.29 2005-12-20 08:47:10 raimi Exp $
+ * $Id: diode.cpp,v 1.30 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -184,6 +184,7 @@ void diode::initDC (void) {
     rs = splitResistor (this, rs, "Rs", "anode", NODE_A);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
+    rs->setProperty ("Controlled", getName ());
     rs->initDC ();
   }
   // no series resistance

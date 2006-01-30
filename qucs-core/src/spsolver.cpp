@@ -1,7 +1,7 @@
 /*
  * spsolver.cpp - S-parameter solver class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.45 2005-10-31 16:15:31 ela Exp $
+ * $Id: spsolver.cpp,v 1.46 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "analysis.h"
 #include "sweep.h"
 #include "nodelist.h"
+#include "characteristic.h"
 #include "spsolver.h"
 #include "constants.h"
 #include "components/component_id.h"
@@ -63,6 +64,7 @@
 spsolver::spsolver () : analysis () {
   type = ANALYSIS_SPARAMETER;
   swp = NULL;
+  saveCVs = 0;
   noise = 0;
   nlist = NULL;
   tees = crosses = opens = grounds = 0;
@@ -73,6 +75,7 @@ spsolver::spsolver () : analysis () {
 spsolver::spsolver (char * n) : analysis (n) {
   type = ANALYSIS_SPARAMETER;
   swp = NULL;
+  saveCVs = 0;
   noise = 0;
   nlist = NULL;
   tees = crosses = opens = grounds = 0;
@@ -93,6 +96,7 @@ spsolver::spsolver (spsolver & n) : analysis (n) {
   opens = n.opens;
   grounds = n.grounds;
   noise = n.noise;
+  saveCVs = n.saveCVs;
   swp = n.swp ? new sweep (*n.swp) : NULL;
   nlist = n.nlist ? new nodelist (*n.nlist) : NULL;
   gnd = n.gnd;
@@ -558,11 +562,13 @@ void spsolver::init (void) {
 /* This is the netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void spsolver::solve (void) {
-
   nr_double_t freq;
   int ports;
-
   runs++;
+
+  // fetch simulation properties
+  saveCVs |= !strcmp (getPropertyString ("saveCVs"), "yes") ? SAVE_CVS : 0;
+  saveCVs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
 
   // run additional noise analysis ?
   noise = !strcmp (getPropertyString ("Noise"), "yes") ? 1 : 0;
@@ -610,6 +616,7 @@ void spsolver::solve (void) {
     saveResults (freq);
     subnet->getDroppedCircuits (nlist);
     subnet->deleteUnusedCircuits (nlist);
+    if (saveCVs & SAVE_CVS) saveCharacteristics (freq);
   }
   logprogressclear (40);
   dropConnections ();
@@ -1057,21 +1064,36 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4],
   saveVariable ("Rn", Rn, f);
 }
 
-/* Saves the given variable into dataset.  Creates the dataset vector
-   if necessary. */
-void spsolver::saveVariable (char * n, complex z, vector * f) {
-  vector * d;
-  if ((d = data->findVariable (n)) == NULL) {
-    d = new vector (n);
-    d->setDependencies (new strlist ());
-    d->getDependencies()->add (f->getName ());
-    d->setOrigin (getName ());
-    data->addVariable (d);
-  }
-  d->add (z);
-}
-
 // Create an appropriate variable name.
 char * spsolver::createSP (int i, int j) {
   return matvec::createMatrixString ("S", i - 1, j - 1);
+}
+
+/* Create an appropriate variable name for characteristic values.  The
+   caller is responsible to free() the returned string. */
+char * spsolver::createCV (char * c, char * n) {
+  char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
+  sprintf (text, "%s.%s", c, n);
+  return text;
+}
+
+/* Goes through the list of circuit objects and runs its
+   saveCharacteristics() function.  Then puts these values into the
+   dataset. */
+void spsolver::saveCharacteristics (nr_double_t freq) {
+  circuit * root = subnet->getRoot ();
+  char * n;
+  vector * f = data->findDependency ("frequency");
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->saveCharacteristics (freq);
+    if (c->getSubcircuit () && !(saveCVs & SAVE_ALL)) continue;
+    c->calcCharacteristics (freq);
+    valuelistiterator<characteristic> it (c->getCharacteristics ());
+    for (; *it; ++it) {
+      characteristic * p = it.currentVal ();
+      n = createCV (c->getName (), p->getName ());
+      saveVariable (n, p->getValue (), f);
+      free (n);
+    }
+  }
 }

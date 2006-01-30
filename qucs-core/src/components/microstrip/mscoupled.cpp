@@ -1,7 +1,7 @@
 /*
  * mscoupled.cpp - parallel coupled microstrip lines class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscoupled.cpp,v 1.20 2005-06-02 18:17:55 raimi Exp $
+ * $Id: mscoupled.cpp,v 1.21 2006-01-30 07:45:35 raimi Exp $
  *
  */
 
@@ -89,8 +89,17 @@ void mscoupled::calcPropagation (nr_double_t frequency) {
   bo = sqrt (ErEffoFreq) * k0;
   ze = ZleFreq;
   zo = ZloFreq;
+  ee = ErEffeFreq;
+  eo = ErEffoFreq;
 }
   
+void mscoupled::saveCharacteristics (nr_double_t) {
+  setCharacteristic ("ZlEven", ze);
+  setCharacteristic ("ErEven", ee);
+  setCharacteristic ("ZlOdd", zo);
+  setCharacteristic ("ErOdd", eo);
+}
+
 void mscoupled::calcSP (nr_double_t frequency) {
   // fetch line properties
   nr_double_t l = getPropertyDouble ("L");

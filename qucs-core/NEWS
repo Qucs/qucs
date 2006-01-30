@@ -26,6 +26,9 @@ files.
 Version 0.0.9
 -------------
 
+ * implementation of temperature dependencies of resistor
+ * output of characteristic values (e.g. ErEff or Zl) during S-parameter
+   simulation
  * new component: coaxial cable
 
 Version 0.0.8

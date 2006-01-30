@@ -1,7 +1,7 @@
 /*
  * analysis.cpp - analysis class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.9 2005-10-31 16:15:30 ela Exp $
+ * $Id: analysis.cpp,v 1.10 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
@@ -34,6 +34,8 @@
 #include "complex.h"
 #include "sweep.h"
 #include "vector.h"
+#include "strlist.h"
+#include "dataset.h"
 #include "ptrlist.h"
 #include "analysis.h"
 
@@ -125,4 +127,20 @@ sweep * analysis::createSweep (char * n) {
       swp->set (i, real (values->get (i)));
   }
   return swp;
+}
+
+/* Saves the given variable into the dataset.  Creates the dataset
+   vector if necessary. */
+void analysis::saveVariable (char * n, complex z, vector * f) {
+  vector * d;
+  if ((d = data->findVariable (n)) == NULL) {
+    d = new vector (n);
+    if (f != NULL) {
+      d->setDependencies (new strlist ());
+      d->getDependencies()->add (f->getName ());
+    }
+    d->setOrigin (getName ());
+    data->addVariable (d);
+  }
+  d->add (z);
 }

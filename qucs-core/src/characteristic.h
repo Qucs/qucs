@@ -1,7 +1,7 @@
 /*
- * resistor.h - resistor class definitions
+ * characteristic.h - characteristic value class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,30 +18,23 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.h,v 1.13 2006-01-30 07:45:34 raimi Exp $
+ * $Id: characteristic.h,v 1.1 2006-01-30 07:45:34 raimi Exp $
  *
  */
 
-#ifndef __RESISTOR_H__
-#define __RESISTOR_H__
+#ifndef __CHARACTERISTIC_H__
+#define __CHARACTERISTIC_H__
 
-class resistor : public circuit
+#include "pair.h"
+
+class characteristic : public pair
 {
  public:
-  resistor ();
-  void initSP (void);
-  void calcSP (nr_double_t);
-  void calcNoiseSP (nr_double_t);
-  void calcDC (void);
-  void initDC (void);
-  void calcAC (nr_double_t);
-  void calcNoiseAC (nr_double_t);
-  void initAC (void);
-  void calcTR (nr_double_t);
-  void initTR (void);
-
- private:
-  void initModel (void);
+  characteristic ();
+  characteristic (char *);
+  characteristic (char *, nr_double_t);
+  characteristic (const characteristic &);
+  ~characteristic () { }
 };
 
-#endif /* __RESISTOR_H__ */
+#endif /* __CHARACTERISTIC_H__ */
