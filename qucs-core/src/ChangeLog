@@ -1,3 +1,23 @@
+2006-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Moved saveVariable() to analysis class.
+	(saveCharacteristics): Saving characteristic values into
+	dataset.  New properties: saveCVs, saveAll.
+
+	* object.cpp: getScaledProperty() falls back to
+	getPropertyDouble() if there is no such scaled property.
+
+	* nasolver.cpp: Moved saveVariable() to analysis class.
+
+	* circuit.cpp: Implemented necessary functions for the
+	characteristic values.
+
+	* characteristic.h (class characteristic): New class for
+	storing characteristic values (very likely operating points).
+
+	* analysis.cpp (saveVariable): Moved this function from the
+	nasolver and spsolver class here.
+
 2006-01-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* pair.h (class pair): New class implementing a key/value

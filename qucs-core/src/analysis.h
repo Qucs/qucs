@@ -1,7 +1,7 @@
 /*
  * analysis.h - analysis class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,23 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.h,v 1.9 2005/06/02 18:17:49 raimi Exp $
+ * $Id: analysis.h,v 1.10 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
 #ifndef __ANALYSIS_H__
 #define __ANALYSIS_H__
 
+#define SAVE_OPS 1 // save operating points
+#define SAVE_ALL 2 // also save subcircuit nodes and operating points
+#define SAVE_CVS 4 // save characteristic values
+
 class dataset;
 class net;
 class object;
 class environment;
 class sweep;
+class complex;
 template <class type_t> class ptrlist;
 
 enum analysis_type {
@@ -63,6 +68,7 @@ class analysis : public object
   int  getType (void) { return type; }
   void setType (int t) { type = t; }
   sweep * createSweep (char *);
+  void saveVariable (char *, complex, vector *);
 
  protected:
   int runs;

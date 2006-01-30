@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.41 2006/01/09 09:11:07 raimi Exp $
+ * $Id: circuit.cpp,v 1.42 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "circuit.h"
 #include "microstrip/substrate.h"
 #include "operatingpoint.h"
+#include "characteristic.h"
 #include "component_id.h"
 
 // normalising impedance
@@ -425,6 +426,39 @@ void circuit::setOperatingPoint (char * n, nr_double_t val) {
    zero. */
 int circuit::hasOperatingPoint (char * n) {
   return (oper.get (n)) ? 1 : 0;
+}
+
+/* This function adds a characteristic point consisting of a key and a
+   value to the circuit. */
+void circuit::addCharacteristic (char * n, nr_double_t val) {
+  characteristic * p = new characteristic (n, val);
+  charac.add (n, p);
+}
+
+/* Returns the requested characteristic value which has been
+   previously added as its double representation.  If there is no such
+   characteristic value the function returns zero. */
+nr_double_t circuit::getCharacteristic (char * n) {
+  characteristic * p = charac.get (n);
+  if (p != NULL) return p->getValue ();
+  return 0.0;
+}
+
+/* This function sets the characteristic value specified by the given
+   name to the value passed to the function. */
+void circuit::setCharacteristic (char * n, nr_double_t val) {
+  characteristic * p = charac.get (n);
+  if (p != NULL)
+    p->setValue (val);
+  else
+    addCharacteristic (n, val);
+}
+
+/* The function checks whether the circuit has got a certain
+   characteristic value.  If so it returns non-zero, otherwise it
+   returns zero. */
+int circuit::hasCharacteristic (char * n) {
+  return (charac.get (n)) ? 1 : 0;
 }
 
 // Returns the S-parameter at the given matrix position.

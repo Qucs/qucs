@@ -1,7 +1,7 @@
 /*
  * nasolver.h - nodal analysis solver class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.19 2005/06/02 18:17:50 raimi Exp $
+ * $Id: nasolver.h,v 1.20 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
@@ -28,9 +28,6 @@
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-
-#define SAVE_OPS 1 // save operating points
-#define SAVE_ALL 2 // also save subcircuit nodes and operating points
 
 // Convergence helper definitions.
 #define CONV_None            0
@@ -98,7 +95,6 @@ class nasolver : public analysis
   void saveNodeVoltages (void);
   void saveBranchCurrents (void);
   int  checkConvergence (void);
-  void saveVariable (char *, nr_type_t, vector * f = NULL);
   nr_type_t MatValX (complex, complex *);
   nr_type_t MatValX (complex, nr_double_t *);
 

@@ -1,7 +1,7 @@
 /*
  * mosfet.cpp - mosfet class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.32 2005/12/20 08:47:10 raimi Exp $
+ * $Id: mosfet.cpp,v 1.33 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
@@ -154,6 +154,7 @@ void mosfet::initDC (void) {
     rs = splitResistor (this, rs, "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
+    rs->setProperty ("Controlled", getName ());
     rs->initDC ();
   }
   // no series resistance at source
@@ -168,6 +169,7 @@ void mosfet::initDC (void) {
     rg = splitResistor (this, rg, "Rg", "gate", NODE_G);
     rg->setProperty ("Temp", T);
     rg->setProperty ("R", Rg);
+    rg->setProperty ("Controlled", getName ());
     rg->initDC ();
   }
   // no series resistance at source
@@ -181,6 +183,7 @@ void mosfet::initDC (void) {
     rd = splitResistor (this, rd, "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
     rd->setProperty ("R", Rd);
+    rd->setProperty ("Controlled", getName ());
     rd->initDC ();
   }
   // no series resistance at drain

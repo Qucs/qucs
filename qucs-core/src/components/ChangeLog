@@ -1,3 +1,18 @@
+2006-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp: Implemented temperature dependencies of the
+	resistor.  New properties: Tc1, Tc2 and Tnom.  Now some bandgaps
+	can be designed...
+
+	* devices/diode.cpp, devices/bjt.cpp, devices/jfet.cpp,
+	devices/mosfet.cpp: Tell external resistors to be controlled
+	from this device.
+
+	* devices/bjt.cpp: Fixed a segfault bug.
+
+	* coaxline.cpp, microstrip/cpwline.cpp, microstrip/msline.cpp,
+	microstrip/mscoupled.cpp: Saving some characteristic values.
+
 2006-01-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* coaxline.h (class coaxline): Implemented new component:

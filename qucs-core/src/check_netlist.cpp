@@ -1,7 +1,7 @@
 /*
  * check_netlist.cpp - checker for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.87 2005/12/05 12:09:36 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.88 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
@@ -191,6 +191,8 @@ static struct special_t checker_specials[] = {
   { "BJT",    "Type",        { "npn", "pnp", NULL } },
   { "MOSFET", "Type",        { "nfet", "pfet", NULL } },
   { "SP",     "Noise",       { "yes", "no", NULL } },
+  { "SP",     "saveCVs",     { "yes", "no", NULL } },
+  { "SP",     "saveAll",     { "yes", "no", NULL } },
   { "SP",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "AC",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "AC",     "Noise",       { "yes", "no", NULL } },

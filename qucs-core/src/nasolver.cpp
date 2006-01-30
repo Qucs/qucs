@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.39 2006/01/09 09:11:07 raimi Exp $
+ * $Id: nasolver.cpp,v 1.40 2006/01/30 07:45:34 raimi Exp $
  *
  */
 
@@ -1090,23 +1090,6 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
       }
     }
   }
-}
-
-/* Saves the given variable into dataset.  Creates the dataset vector
-   if necessary. */
-template <class nr_type_t>
-void nasolver<nr_type_t>::saveVariable (char * n, nr_type_t z, vector * f) {
-  vector * d;
-  if ((d = data->findVariable (n)) == NULL) {
-    d = new vector (n);
-    if (f != NULL) {
-      d->setDependencies (new strlist ());
-      d->getDependencies()->add (f->getName ());
-    }
-    d->setOrigin (getName ());
-    data->addVariable (d);
-  }
-  d->add (z);
 }
 
 /* Create an appropriate variable name for operating points.  The
