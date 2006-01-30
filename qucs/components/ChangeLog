@@ -1,3 +1,10 @@
+2006-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* sp_sim.cpp (SP_Sim): New properties: saveCVs and saveAll.
+
+	* resistor.cpp (Resistor): Added new properties: Tc1, Tc2 and
+	Tnom.
+
 2006-01-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* d_flipflop.cpp, jk_flipflop.cpp, rs_flipflop.cpp: Including
