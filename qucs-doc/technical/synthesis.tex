@@ -107,7 +107,7 @@ From top to bottom the following properties increase:
 The order $n$ of a filter denotes the number of poles of its (voltage)
 transfer function. It is:
 \begin{equation}
-\text{slope of asymptote} = \pm n\cdot 20 \text{dB/decade}
+\text{slope of asymptote} = \pm\, n\cdot 20 \text{dB/decade}
 \end{equation}
 Note that this equation holds for all filter characteristics, but
 there are big differences concerning the attenuation near the pass
@@ -170,12 +170,16 @@ Where
 \Delta\Omega \quad\rightarrow\quad & \Delta\Omega = \dfrac{|\omega_2 - \omega_1|}{\omega}
 \end{align}
 
+\subsubsection{Butterworth}
+
 The $k$-th element of an $n$ order Butterworth low-pass ladder filter is:
 \begin{alignat}{3}
  & \text{capacitance:} \qquad & C_k = & \dfrac{X_k}{Z_0} \\
  & \text{inductance:}  \qquad & L_k = & X_k \cdot Z_0 \\
- & \text{with}         \qquad & X_k = & \dfrac{2}{\omega_B} \cdot \sin \dfrac{(2\cdot k + 1)\pi}{2\cdot n}
+ & \text{with}         \qquad & X_k = & \dfrac{2}{\omega_B} \cdot \sin \dfrac{(2\cdot k + 1)\cdot\pi}{2\cdot n}
 \end{alignat}
+
+\subsubsection{Chebyshev I}
 
 The equations for a Chebyshev type I filter are defined recursivly.
 With $R_{dB}$ being the passband ripple in decibel, the $k$-th
@@ -185,7 +189,7 @@ element of an $n$ order low-pass ladder filter is:
  & \text{inductance:}  \qquad & L_k & = X_k \cdot Z_0 \\
  & \text{with}         \qquad & X_k & = \dfrac{2}{\omega_B}\cdot g_k \\
  & & r   & = \sinh\left( \frac{1}{n}\cdot\text{arsinh}\dfrac{1}{\sqrt{10^{R_{dB}/10} - 1}} \right) \\
- & & a_k & = \sin\left( \dfrac{(2\cdot k + 1)\cdot\pi}{2\cdot n} \right) \\
+ & & a_k & = \sin \dfrac{(2\cdot k + 1)\cdot\pi}{2\cdot n} \\
  & & g_k & =
 \begin{cases}
 \begin{array}{ll}

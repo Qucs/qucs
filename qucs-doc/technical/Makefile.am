@@ -45,7 +45,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
   lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig        \
-  coupler.fig
+  coupler.fig coaxial.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps
 EPSFILES = $(FIGURES:.fig=.eps)
@@ -56,7 +56,7 @@ BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
-  hbnoise.tex synthesis.tex
+  hbnoise.tex synthesis.tex coaxial.tex
 
 technical: $(PDFFILES) $(PDFFIGURES) technical.dvi technical.ps
 	$(TEX2PDF) technical
