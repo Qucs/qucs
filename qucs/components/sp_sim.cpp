@@ -44,20 +44,26 @@ SP_Sim::SP_Sim()
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
-			QObject::tr("sweep type")+" [lin, log, list, const]"));
+	QObject::tr("sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "1 GHz", true,
-			QObject::tr("start frequency in Hertz")));
+	QObject::tr("start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
-			QObject::tr("stop frequency in Hertz")));
+	QObject::tr("stop frequency in Hertz")));
   Props.append(new Property("Points", "19", true,
-			QObject::tr("number of simulation steps")));
+	QObject::tr("number of simulation steps")));
   Props.append(new Property("Noise", "no", false,
-			QObject::tr("calculate noise parameters")+
-			" [yes, no]"));
+	QObject::tr("calculate noise parameters")+
+	" [yes, no]"));
   Props.append(new Property("NoiseIP", "1", false,
-			QObject::tr("input port for noise figure")));
+	QObject::tr("input port for noise figure")));
   Props.append(new Property("NoiseOP", "2", false,
-			QObject::tr("output port for noise figure")));
+	QObject::tr("output port for noise figure")));
+  Props.append(new Property("saveCVs", "no", false,
+	QObject::tr("put characteristic values into dataset")+
+	" [yes, no]"));
+  Props.append(new Property("saveAll", "no", false,
+	QObject::tr("save subcircuit characteristic values into dataset")+
+	" [yes, no]"));
 }
 
 SP_Sim::~SP_Sim()
