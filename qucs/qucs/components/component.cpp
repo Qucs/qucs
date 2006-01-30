@@ -1213,6 +1213,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "SHORT") c = new CPWshort();
 	else if(cstr == "GAP") c = new CPWgap();
 	else if(cstr == "STEP") c = new CPWstep();
+	else if(cstr == "OAX") c = new CoaxialLine();
 	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
 	else if(cstr == "ib") c = new LibComp();

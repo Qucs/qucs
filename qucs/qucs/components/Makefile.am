@@ -43,7 +43,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp coupler.cpp   \
-  rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp
+  rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -60,7 +60,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h       \
   noise_vv.h logical_or.h logical_nor.h logical_and.h logical_nand.h          \
   logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h         \
-  coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h
+  coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
