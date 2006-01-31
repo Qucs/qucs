@@ -1,3 +1,10 @@
+2006-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* volt_ac.cpp (Volt_ac): Changed property description from 'rms
+	voltage' into 'peak voltage'.
+
+	* coaxialline.cpp (CoaxialLine): Renamed 'mu' into 'mur'.
+
 2006-01-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* sp_sim.cpp (SP_Sim): New properties: saveCVs and saveAll.

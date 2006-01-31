@@ -46,7 +46,7 @@ CoaxialLine::CoaxialLine()
 		QObject::tr("relative permittivity of dielectrica")));
   Props.append(new Property("rho", "0.022e-6", false,
 		QObject::tr("specific resistance of conductor")));
-  Props.append(new Property("mu", "1", false,
+  Props.append(new Property("mur", "1", false,
 		QObject::tr("relative permeability of conductor")));
   Props.append(new Property("D", "5 mm", false,
 		QObject::tr("inner diameter of shield")));
