@@ -2490,7 +2490,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation>rms feszültség Voltban</translation>
+        <translation type="obsolete">rms feszültség Voltban</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
@@ -3219,10 +3219,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outer diameter (inner diameter of shield)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>diameter of inner conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3232,6 +3228,34 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>peak current in Ampere</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inner diameter of shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>first order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>second order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>peak voltage in Volts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

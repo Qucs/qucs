@@ -2446,7 +2446,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation>tensión eficaz en Voltios</translation>
+        <translation type="obsolete">tensión eficaz en Voltios</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
@@ -3235,10 +3235,6 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outer diameter (inner diameter of shield)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>diameter of inner conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3249,6 +3245,34 @@ Use:  qucsedit [-r] archivo
     <message>
         <source>Coaxial Line</source>
         <translation type="unfinished">Línea coaxial</translation>
+    </message>
+    <message>
+        <source>peak current in Ampere</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inner diameter of shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>first order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>second order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>peak voltage in Volts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
