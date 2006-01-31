@@ -1610,7 +1610,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation>napięcie w Voltach (rms)</translation>
+        <translation type="obsolete">napięcie w Voltach (rms)</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
@@ -3281,10 +3281,6 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outer diameter (inner diameter of shield)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>diameter of inner conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3295,6 +3291,34 @@ Stosowanie:  qucsedit [-r] plik
     <message>
         <source>Coaxial Line</source>
         <translation type="unfinished">Linia koncentryczna</translation>
+    </message>
+    <message>
+        <source>peak current in Ampere</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inner diameter of shield</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>first order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>second order temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit characteristic values into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>peak voltage in Volts</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
