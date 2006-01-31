@@ -1687,7 +1687,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation>Effektivwert der Spannung in Volt</translation>
+        <translation type="obsolete">Effektivwert der Spannung in Volt</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
@@ -3433,35 +3433,59 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koaxialleitung</translation>
     </message>
     <message>
         <source>relative permittivity of dielectrica</source>
-        <translation type="unfinished"></translation>
+        <translation>relative Permittivität des Dielektrikums</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>spezifischer Widerstand des Leiters</translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>outer diameter (inner diameter of shield)</source>
-        <translation type="unfinished"></translation>
+        <translation>relative Permeabilität des Leiters</translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchmesser des Innenleiters</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>mechanische Länge der Leitung</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished">Koaxialkabel</translation>
+        <translation>Koaxialkabel</translation>
+    </message>
+    <message>
+        <source>peak current in Ampere</source>
+        <translation>Spitzenwert des Stroms in Ampere</translation>
+    </message>
+    <message>
+        <source>inner diameter of shield</source>
+        <translation>innerer Durchmesser des Außenleiters</translation>
+    </message>
+    <message>
+        <source>first order temperature coefficient</source>
+        <translation>Temperaturkoeffizient erster Ordnung</translation>
+    </message>
+    <message>
+        <source>second order temperature coefficient</source>
+        <translation>Temperaturkoeffizient zweiter Ordnung</translation>
+    </message>
+    <message>
+        <source>put characteristic values into dataset</source>
+        <translation>Ausgabe der charakteristischen Werte in den Datensatz</translation>
+    </message>
+    <message>
+        <source>save subcircuit characteristic values into dataset</source>
+        <translation>Ausgabe der charakteristischen Werte von Unterschaltungen in den Datensatz</translation>
+    </message>
+    <message>
+        <source>peak voltage in Volts</source>
+        <translation>Spitzenwert der Spannung in Volt</translation>
     </message>
 </context>
 <context>
@@ -6213,11 +6237,11 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlassbandfrequenz:</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlassbanddämpfung:</translation>
     </message>
 </context>
 <context>

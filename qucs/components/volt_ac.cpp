@@ -43,7 +43,7 @@ Volt_ac::Volt_ac()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("rms voltage in Volts")));
+		QObject::tr("peak voltage in Volts")));
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
   Props.append(new Property("Phase", "0", false,
