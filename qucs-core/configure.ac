@@ -14,16 +14,33 @@ AM_MAINTAINER_MODE
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
-# Checks for programs.
+dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 
-# Check for parser and lexer generators.
+dnl Check for parser and lexer generators.
 AC_PROG_YACC
 AC_PROG_LEX
 
 if test "x$LEX" != "x:"; then
+  if test $USE_MAINTAINER_MODE = yes; then
+    AC_MSG_CHECKING([for $LEX version])
+    [lexver=`eval $LEX --version 2>/dev/null | head -1 | sed 's/[^0-9\.]//g'`]
+    if test -n "$lexver"; then
+      case "$lexver" in
+        [2.5.9 | [2-9].[5-9].[1-9][0-9])]
+          AC_MSG_RESULT([$lexver >= 2.5.9])
+        ;;
+          [*)]
+          AC_MSG_ERROR([$lexver < 2.5.9])
+        ;;
+      esac
+    else
+      AC_MSG_RESULT([not identified])
+    fi
+    unset lexver
+  fi
   AC_MSG_CHECKING([whether $LEX accepts --nounistd])
   cat <<EOF > lextest.l
 %%
@@ -40,7 +57,7 @@ EOF
   unset lexout
 fi
 
-# Check for debugging.
+dnl Check for debugging.
 AC_ARG_ENABLE([debug],
   AC_HELP_STRING([--enable-debug],
                  [include debug output @<:@default=no@:>@]),
@@ -64,7 +81,7 @@ else
 fi
 unset enable_debug
 
-# Yet another compiler check.
+dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
   CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-rtti -fno-check-new"
@@ -74,7 +91,7 @@ if test "x$GCC" = xyes; then
   fi
 fi
 
-# Check for new platforms.
+dnl Check for new platforms.
 osversion="`grep \"$host\" $srcdir/doc/PLATFORMS 2>/dev/null`"
 if test "x$osversion" = "x"; then
   AC_MSG_RESULT([
@@ -86,21 +103,21 @@ if test "x$osversion" = "x"; then
 fi
 unset osversion
 
-# Check for additional programs.
+dnl Check for additional programs.
 AC_PATH_PROG(GPERF, gperf, :)
 
-# Checks for libraries.
+dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
 
-# Checks for header files.
+dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h ieeefp.h])
 
-# Checks for typedefs, structures, and compiler characteristics.
+dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
 
-# Check for double type.
+dnl Check for double type.
 AC_ARG_ENABLE([double],
   AC_HELP_STRING([--enable-double=TYPE],
                  [type of double representation @<:@default=double@:>@]),
@@ -134,11 +151,11 @@ AC_DEFINE_UNQUOTED(NR_DOUBLE_SIZE, $double_size,
 unset double_type
 unset double_size
 
-# Checks for library functions.
+dnl Checks for library functions.
 AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin tan atan sinh cosh tanh \
                 fabs modf atan2 strdup strerror strchr])
 
-# Definitions at top of <config.h>.
+dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
    so that C++ compilers don't mangle their names.  Use __END_DECLS at
@@ -169,7 +186,7 @@ AC_CONFIG_FILES([Makefile
                  src/components/digital/Makefile])
 AC_OUTPUT
 
-# Print results.
+dnl Print results.
 AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
 AC_MSG_RESULT([])

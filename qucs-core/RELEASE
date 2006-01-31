@@ -3,7 +3,7 @@
 -- 
 -- release instructions.
 -- 
--- Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ Distribution process:
      + Autoconf version 2.57 (at least)
      + GNU automake 1.7.0 (at least)
      + flex 2.5.31
+     + GNU M4 (any version)
      + GNU Bison 1.875d
      + GNU gperf 3.0.1
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
