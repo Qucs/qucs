@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,11 +48,11 @@ noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h \
 # rules for translations
 TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \
   qucs_pt.ts qucs_es.ts qucs_jp.ts qucs_hu.ts qucs_he.ts qucs_sv.ts \
-  qucs_tr.ts
+  qucs_tr.ts qucs_uk.ts
 GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts \
   qtgeneric_es.ts qtgeneric_ro.ts qtgeneric_jp.ts qtgeneric_hu.ts \
   qtgeneric_it.ts qtgeneric_he.ts qtgeneric_sv.ts qtgeneric_pl.ts \
-  qtgeneric_tr.ts
+  qtgeneric_tr.ts qtgeneric_uk.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 qucs_%.ts: $(qucs_SOURCES)

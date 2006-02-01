@@ -3207,10 +3207,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>relative permittivity of dielectrica</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>specific resistance of conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3256,6 +3252,10 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permittivity of dielectric</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
