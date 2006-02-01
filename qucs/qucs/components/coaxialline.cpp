@@ -42,19 +42,19 @@ CoaxialLine::CoaxialLine()
   Model = "COAX";
   Name  = "Line";
 
-  Props.append(new Property("er", "1", true,
-		QObject::tr("relative permittivity of dielectrica")));
+  Props.append(new Property("er", "2.29", true,
+		QObject::tr("relative permittivity of dielectric")));
   Props.append(new Property("rho", "0.022e-6", false,
 		QObject::tr("specific resistance of conductor")));
   Props.append(new Property("mur", "1", false,
 		QObject::tr("relative permeability of conductor")));
-  Props.append(new Property("D", "5 mm", false,
+  Props.append(new Property("D", "2.95 mm", false,
 		QObject::tr("inner diameter of shield")));
-  Props.append(new Property("d", "1 mm", false,
+  Props.append(new Property("d", "0.9 mm", false,
 		QObject::tr("diameter of inner conductor")));
-  Props.append(new Property("L", "1 m", true,
+  Props.append(new Property("L", "1500 mm", true,
 		QObject::tr("mechanical length of the line")));
-  Props.append(new Property("tand", "2e-4", false,
+  Props.append(new Property("tand", "4e-4", false,
 		QObject::tr("loss tangent")));
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
