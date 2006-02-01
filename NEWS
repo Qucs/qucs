@@ -26,6 +26,9 @@ files.
 Version 0.0.9
 -------------
 
+ * new component: coaxial line
+ * fixed bug in Cauer band-stop filter
+
 Version 0.0.8
 -------------
 

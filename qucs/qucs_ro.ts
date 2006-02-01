@@ -3222,10 +3222,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>relative permittivity of dielectrica</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>specific resistance of conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3271,6 +3267,10 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>peak voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permittivity of dielectric</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
