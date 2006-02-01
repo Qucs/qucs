@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.34 2006/01/30 07:45:34 raimi Exp $
+ * $Id: qucsdefs.h,v 1.35 2006/02/01 08:05:25 raimi Exp $
  *
  */
 
@@ -233,12 +233,12 @@ struct define_t qucs_definition_available[] =
   },
   /* coaxial cable */
   { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "D", PROP_REAL, { 3.35e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
-      { "d", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      { "er", PROP_REAL, { 2.1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+    { { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "er", PROP_REAL, { 2.29, PROP_NO_STR }, { '[', 1, 100, ']' } },
       { "mur", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
-      { "tand", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
       { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
