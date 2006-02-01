@@ -3437,7 +3437,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>relative permittivity of dielectrica</source>
-        <translation>relative Permittivität des Dielektrikums</translation>
+        <translation type="obsolete">relative Permittivität des Dielektrikums</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
@@ -3486,6 +3486,10 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>peak voltage in Volts</source>
         <translation>Spitzenwert der Spannung in Volt</translation>
+    </message>
+    <message>
+        <source>relative permittivity of dielectric</source>
+        <translation>relative Permittivität des Dielektrikums</translation>
     </message>
 </context>
 <context>
