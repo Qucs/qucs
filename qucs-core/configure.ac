@@ -105,6 +105,11 @@ unset osversion
 
 dnl Check for additional programs.
 AC_PATH_PROG(GPERF, gperf, :)
+if test $USE_MAINTAINER_MODE = yes; then
+  if test "$GPERF" = ":"; then
+    AC_MSG_ERROR([The $PACKAGE package requires an installed gperf.])
+  fi
+fi
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
