@@ -1,7 +1,7 @@
 /*
  * equation.cpp - checker for the Qucs equations
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.37 2005/12/06 16:22:07 raimi Exp $
+ * $Id: equation.cpp,v 1.38 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "equation.h"
 #include "evaluate.h"
 #include "constants.h"
+#include "range.h"
 #include "exception.h"
 #include "exceptionstack.h"
 
@@ -91,6 +92,9 @@ constant::~constant () {
       break;
     case TAG_STRING:
       free (s);
+      break;
+    case TAG_RANGE:
+      delete r;
       break;
     }
   }
@@ -173,7 +177,7 @@ char * constant::toString (void) {
     txt = strdup (str);
     break;    
   case TAG_RANGE:
-    txt = strdup (":");
+    txt = strdup (r->toString ());
     break;    
   default:
     txt = strdup ("(no such type)");
@@ -1309,6 +1313,18 @@ int solver::dataSize (strlist * deps) {
     size *= dep ? dep->getSize () : var ? var->getSize () : 1;
   }
   return size;
+}
+
+/* The function returns the data vector in the dataset according to
+   the given variable name.  If there is no such variable, it returns
+   NULL. */
+vector * solver::getDataVector (char * str) {
+  vector * var;
+  if ((var = data->findVariable (str)) != NULL)
+    return var;
+  if ((var = data->findDependency (str)) != NULL)
+    return var;
+  return NULL;
 }
 
 /* The following function collects the inherited dataset dependencies

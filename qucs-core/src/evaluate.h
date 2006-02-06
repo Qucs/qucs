@@ -1,7 +1,7 @@
 /*
  * evaluate.h - definitions for Qucs equation evaluations
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.22 2005/10/27 09:57:31 raimi Exp $
+ * $Id: evaluate.h,v 1.23 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -340,10 +340,12 @@ public:
   static constant * max_d (constant *);
   static constant * max_c (constant *);
   static constant * max_v (constant *);
+  static constant * max_r (constant *);
 
   static constant * min_d (constant *);
   static constant * min_c (constant *);
   static constant * min_v (constant *);
+  static constant * min_r (constant *);
 
   static constant * sum_d (constant *);
   static constant * sum_c (constant *);
@@ -356,6 +358,7 @@ public:
   static constant * avg_d (constant *);
   static constant * avg_c (constant *);
   static constant * avg_v (constant *);
+  static constant * avg_r (constant *);
 
   static constant * sign_d (constant *);
   static constant * sign_c (constant *);
@@ -492,6 +495,11 @@ public:
   static constant * ifft_v_v (constant *);
   static constant * dft_v_v (constant *);
   static constant * idft_v_v (constant *);
+
+  static constant * xvalue_d (constant *);
+  static constant * xvalue_c (constant *);
+  static constant * yvalue_d (constant *);
+  static constant * yvalue_c (constant *);
 };
 
 // Type of application function.

@@ -1,7 +1,7 @@
 /*
  * equation.h - checker definitions for Qucs equations
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.25 2005/12/06 16:22:07 raimi Exp $
+ * $Id: equation.h,v 1.26 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 
 class strlist;
 class dataset;
+class range;
 
 namespace eqn {
 
@@ -151,6 +152,7 @@ public:
     matvec * mv;
     char chr;
     char * s;
+    range * r;
   };
 };
 
@@ -270,6 +272,7 @@ public:
   static int getDataSize (char *);
   static strlist * collectDataDependencies (node *);
   int dataSize (strlist *);
+  vector * getDataVector (char *);
   void findMatrixVectors (vector *);
   char * isMatrixVector (char *, int&, int&);
   int findEquationResult (node *);

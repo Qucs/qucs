@@ -4,7 +4,7 @@
 /*
  * parse_netlist.y - parser for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.16 2005/10/31 16:15:31 ela Exp $
+ * $Id: parse_netlist.y,v 1.17 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 #include "check_netlist.h"
 #include "logging.h"
 #include "equation.h"
+#include "range.h"
 
 %}
 
@@ -85,6 +86,7 @@
   eqn::reference * ref;
   eqn::application * app;
   eqn::assignment * assign;
+  range * rng;
 }
 
 %type <ident> Identifier Assign
@@ -100,7 +102,8 @@
 %type <value> PropertyValue ValueList Value PropertyReal
 %type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
-%type <con> Constant Range
+%type <con> Constant
+%type <rng> Range
 %type <ref> Reference
 %type <app> Application
 
@@ -276,17 +279,22 @@ Constant:
   }
   | Range {
     $$ = new eqn::constant (eqn::TAG_RANGE);
+    $$->r = $1;
   }
 ;
 
 Range:
   REAL ':' {
+    $$ = new range ('[', $1, $1 + 1, '.');
   }
   | ':' REAL {
+    $$ = new range ('.', $2 - 1, $2, ']');
   }
   | REAL ':' REAL {
+    $$ = new range ('[', $1, $3, ']');
   }
   | ':' {
+    $$ = new range ('.', 0, 0, '.');
   }
 ;
 

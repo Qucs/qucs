@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.54 2006/01/27 09:32:01 raimi Exp $
+ * $Id: input.cpp,v 1.55 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -391,6 +391,8 @@ circuit * input::createCircuit (char * type) {
     return new cpwstep ();
   else if (!strcmp (type, "IProbe"))
     return new iprobe ();
+  else if (!strcmp (type, "VProbe"))
+    return new vprobe ();
   else if (!strcmp (type, "JFET"))
     return new jfet ();
   else if (!strcmp (type, "BJT"))

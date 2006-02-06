@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.40 2006/01/30 07:45:34 raimi Exp $
+ * $Id: nasolver.cpp,v 1.41 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -1071,6 +1071,19 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 	saveVariable (n, x->get (r + N), f);
 	free (n);
       }
+    }
+  }
+
+  // add voltage probe data
+  if (volts) {
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+      if (!c->isProbe ()) continue;
+      if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
+      c->saveOperatingPoints ();
+      n = createOP (c->getName (), volts);
+      saveVariable (n, c->getOperatingPoint ("V"), f);
+      free (n);
     }
   }
 

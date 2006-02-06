@@ -1,7 +1,7 @@
 /*
  * applications.h - the Qucs application list
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.2 2005/12/06 16:22:07 raimi Exp $
+ * $Id: applications.h,v 1.3 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -345,10 +345,12 @@ struct application_t eqn::applications[] = {
   { "max", TAG_DOUBLE,  evaluate::max_d, 1, { TAG_DOUBLE  } },
   { "max", TAG_DOUBLE,  evaluate::max_c, 1, { TAG_COMPLEX } },
   { "max", TAG_DOUBLE,  evaluate::max_v, 1, { TAG_VECTOR  } },
+  { "max", TAG_DOUBLE,  evaluate::max_r, 2, { TAG_VECTOR, TAG_RANGE } },
 
   { "min", TAG_DOUBLE,  evaluate::min_d, 1, { TAG_DOUBLE  } },
   { "min", TAG_DOUBLE,  evaluate::min_c, 1, { TAG_COMPLEX } },
   { "min", TAG_DOUBLE,  evaluate::min_v, 1, { TAG_VECTOR  } },
+  { "min", TAG_DOUBLE,  evaluate::min_r, 2, { TAG_VECTOR, TAG_RANGE } },
 
   { "sum", TAG_DOUBLE,  evaluate::sum_d, 1, { TAG_DOUBLE  } },
   { "sum", TAG_COMPLEX, evaluate::sum_c, 1, { TAG_COMPLEX } },
@@ -361,6 +363,7 @@ struct application_t eqn::applications[] = {
   { "avg", TAG_DOUBLE,  evaluate::avg_d, 1, { TAG_DOUBLE  } },
   { "avg", TAG_COMPLEX, evaluate::avg_c, 1, { TAG_COMPLEX } },
   { "avg", TAG_COMPLEX, evaluate::avg_v, 1, { TAG_VECTOR  } },
+  { "avg", TAG_COMPLEX, evaluate::avg_r, 2, { TAG_VECTOR, TAG_RANGE } },
 
   { "array", TAG_VECTOR, evaluate::index_mv_2, 3,
     { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
@@ -559,13 +562,24 @@ struct application_t eqn::applications[] = {
   { "idft", TAG_VECTOR, evaluate::idft_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
+  { "xvalue", TAG_COMPLEX, evaluate::xvalue_d, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+  { "xvalue", TAG_COMPLEX, evaluate::xvalue_c, 2,
+    { TAG_VECTOR, TAG_COMPLEX } },
+  { "yvalue", TAG_COMPLEX, evaluate::yvalue_d, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+  { "yvalue", TAG_COMPLEX, evaluate::yvalue_c, 2,
+    { TAG_VECTOR, TAG_COMPLEX } },
+
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };
 
 // Converts a TAG_XXX value into a unique string.
 char * checker::tag2key (int tag) {
   char * key = "";
-  switch (tag & ~TAG_RANGE) {
+  if (tag == TAG_RANGE)
+    key = "R";
+  else switch (tag & ~TAG_RANGE) {
   case TAG_UNKNOWN:
     key = "U"; break;
   case TAG_DOUBLE:

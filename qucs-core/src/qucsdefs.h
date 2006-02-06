@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.35 2006/02/01 08:05:25 raimi Exp $
+ * $Id: qucsdefs.h,v 1.36 2006/02/06 09:50:15 raimi Exp $
  *
  */
 
@@ -252,8 +252,13 @@ struct define_t qucs_definition_available[] =
     { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
-  /* DC current probe */
+  /* current probe */
   { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* voltage probe */
+  { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
     { PROP_NO_PROP }
   },
