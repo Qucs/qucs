@@ -1,7 +1,7 @@
 -- 
 -- README
 -- 
--- Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Description
 ===========
 
 The Qucs documentation consists of a technical description of the
-simulation backend and several standalone tutorial as well as a work
+simulation backend and several standalone tutorials as well as a work
 book.
 
 Requirements
@@ -91,6 +91,8 @@ Maintainance currently requires the following software packages:
 	* hyperref
   + GNU Octave (using version 2.0.17 here)
   + epsTk 2.0.1 (at least)
+  + doxygen 1.4.5
+  + dot 2.21 (graphviz 1.7)
 
 In order to produce the standalone tutorial:
 
