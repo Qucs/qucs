@@ -1,3 +1,9 @@
+2006-02-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Documented new xvalue(), yvalue() and
+	min(), max() and avg() functions with range specifications. 
+	Also explained how to use ranges.
+
 2006-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/qucsdigi.1: Fixed documentation of command line
