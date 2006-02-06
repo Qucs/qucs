@@ -31,11 +31,11 @@ Qucs equations.<br><br>
 <tr><td><tt>x/y</tt></td><td>division</td></tr>
 <tr><td><tt>x%y</tt></td><td>modulo (remainder of division)</td></tr>
 <tr><td><tt>x^y</tt></td><td>power</td></tr>
-<tr><td><tt>max(x)</tt></td><td>maximum value in vector</td></tr>
-<tr><td><tt>min(x)</tt></td><td>minimum value in vector</td></tr>
+<tr><td><tt>max(x[,range])</tt></td><td>maximum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>min(x[,range])</tt></td><td>minimum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
 <tr><td><tt>sum(x)</tt></td><td>sum of values in vector</td></tr>
 <tr><td><tt>prod(x)</tt></td><td>product of values in vector</td></tr>
-<tr><td><tt>avg(x)</tt></td><td>arithmetic average of values in vector</td></tr>
+<tr><td><tt>avg(x[,range])</tt></td><td>arithmetic average of values in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
 <tr><td><tt>real(x)</tt></td><td>real part of complex number</td></tr>
 <tr><td><tt>imag(x)</tt></td><td>imaginary part of complex number</td></tr>
 <tr><td><tt>abs(x)</tt></td><td>absolute value, magnitude of complex number</td></tr>
@@ -130,7 +130,18 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>ifft(V,f)</tt></td><td>computes the inverse fast fourier transformation (IFFT) of the function <tt>V(f)</tt></td></tr>
 <tr><td><tt>dft(v,t)</tt></td><td>computes the discrete fourier transformation (DFT) of the function <tt>v(t)</tt></td></tr>
 <tr><td><tt>idft(V,f)</tt></td><td>computes the inverse discrete fourier transformation (IDFT) of the function <tt>V(f)</tt></td></tr>
+<tr><td><tt>yvalue(f,xval)</tt></td><td>returns the y-value of the given vector <tt>f</tt> which is located nearest to the x-value <tt>xval</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>
+<tr><td><tt>xvalue(f,yval)</tt></td><td>returns the x-value which is associated  with the y-value nearest to <tt>yval</tt> in the given vector <tt>f</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>
 
+</table>
+<br>
+
+<b>Range nomenclature</b>
+<table cellspacing=2 cellpadding=2>
+<tr><td><tt>LO:HI</tt></td><td>range from <tt>LO</tt> to <tt>HI</tt></td></tr>
+<tr><td><tt>:HI</tt></td><td>up to <tt>HI</tt></td></tr>
+<tr><td><tt>LO:</tt></td><td>from <tt>LO</tt></td></tr>
+<tr><td><tt>:</tt></td><td>no range limitations</td></tr>
 </table>
 <br>
 
