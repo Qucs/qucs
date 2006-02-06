@@ -1,7 +1,7 @@
 /*
- * check_dataset.h - checker definitions for the Qucs dataset
+ * vprobe.h - AC/DC and transient voltage probe class definitions
  *
- * Copyright (C) 2003, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,31 +18,22 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_dataset.h,v 1.5 2006-02-06 09:50:15 raimi Exp $
+ * $Id: vprobe.h,v 1.1 2006-02-06 09:50:15 raimi Exp $
  *
  */
 
-#ifndef __CHECK_DATASET_H__
-#define __CHECK_DATASET_H__
+#ifndef __VPROBE_H__
+#define __VPROBE_H__
 
-extern dataset * dataset_result;
-extern vector  * dataset_vector;
-extern strlist * dataset_idents;
+class vprobe : public circuit
+{
+ public:
+  vprobe ();
+  void initSP (void);
+  void initDC (void);
+  void initAC (void);
+  void initTR (void);
+  void saveOperatingPoints (void);
+};
 
-/* Externalize variables used by the scanner and parser. */
-extern int dataset_lineno;
-extern FILE * dataset_in;
-void dataset_restart (FILE *);
-
-__BEGIN_DECLS
-
-/* Available functions of the checker. */
-int dataset_parse (void);
-int dataset_error (char *);
-int dataset_lex (void);
-int dataset_lex_destroy (void);
-int dataset_check (dataset *);
-
-__END_DECLS
-
-#endif /* __CHECK_DATASET_H__ */
+#endif /* __VPROBE_H__ */

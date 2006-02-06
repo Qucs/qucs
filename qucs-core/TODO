@@ -25,8 +25,8 @@ unfixed) have a look at the file BUGS.
 
 - Support for comma separated values (CSV) and Citi-files as an export
   file format in the Qucs Converter.
-- Implement yval(values,xval) and xval(values,yval) evalutaion functions
-  in the equation solver.
+	- Implement yval(values,xval) and xval(values,yval) evalutaion
+	  functions in the equation solver.
 	- Allow output of characteristics (e.g. ErEff) very likely
 	  operating points.
 - Implement knee currents Ikf and Ikr in the diode model.

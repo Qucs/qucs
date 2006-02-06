@@ -1,7 +1,7 @@
 /*
  * dataset.cpp - dataset class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.15 2005-10-31 16:15:31 ela Exp $
+ * $Id: dataset.cpp,v 1.16 2006-02-06 09:50:15 raimi Exp $
  *
  */
 
@@ -383,6 +383,7 @@ dataset * dataset::load (const char * file) {
     return NULL;
   }
   dataset_in = f;
+  dataset_restart (dataset_in);
   if (dataset_parse () != 0) {
     fclose (f);
     return NULL;
@@ -410,6 +411,7 @@ dataset * dataset::load_touchstone (const char * file) {
     return NULL;
   }
   touchstone_in = f;
+  touchstone_restart (touchstone_in);
   if (touchstone_parse () != 0) {
     fclose (f);
     return NULL;

@@ -1,3 +1,27 @@
+2006-02-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: Implemented possibility to save probe data
+	into the current dataset.
+
+	* dataset.cpp (load_touchstone): Fixed segfault bug when two
+	or more S-parameter touchstone file containers are to be
+	simulated.
+
+	* scan_netlist.l: Accepting signed real values in equations.
+	This saves some computation effort.
+
+	* parse_netlist.y: The equation parser (part of netlist
+	parser) now creates an appropriate range instance.
+
+	* range.h (class range): New class implementing a value
+	range including upper and lower boundary specifications.
+
+	* evaluate.cpp: Implemented new functions: xvalue(), yvalue()
+	and min(), max() and avg() using range specification.
+
+	* equation.cpp: Added new function returning a data vector
+	from th dataset according to the given name.
+
 2006-01-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Moved saveVariable() to analysis class.

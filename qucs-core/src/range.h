@@ -1,7 +1,7 @@
 /*
- * check_dataset.h - checker definitions for the Qucs dataset
+ * range.h - range class definitions
  *
- * Copyright (C) 2003, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,31 +18,31 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_dataset.h,v 1.5 2006-02-06 09:50:15 raimi Exp $
+ * $Id: range.h,v 1.1 2006-02-06 09:50:15 raimi Exp $
  *
  */
 
-#ifndef __CHECK_DATASET_H__
-#define __CHECK_DATASET_H__
+#ifndef __RANGE_H__
+#define __RANGE_H__
 
-extern dataset * dataset_result;
-extern vector  * dataset_vector;
-extern strlist * dataset_idents;
+class range
+{
+ public:
+  range ();
+  range (nr_double_t, nr_double_t);
+  range (char, nr_double_t, nr_double_t, char);
+  range (const range &);
+  ~range ();
+  bool inside (nr_double_t);
+  bool outside (nr_double_t);
+  char * toString (void);
 
-/* Externalize variables used by the scanner and parser. */
-extern int dataset_lineno;
-extern FILE * dataset_in;
-void dataset_restart (FILE *);
+ private:
+  char il;        // interval boundary
+  nr_double_t l;  // lower bound of the value
+  nr_double_t h;  // upper bound of the value
+  char ih;        // interval boundary
+  char * txt;
+};
 
-__BEGIN_DECLS
-
-/* Available functions of the checker. */
-int dataset_parse (void);
-int dataset_error (char *);
-int dataset_lex (void);
-int dataset_lex_destroy (void);
-int dataset_check (dataset *);
-
-__END_DECLS
-
-#endif /* __CHECK_DATASET_H__ */
+#endif /* __RANGE_H__ */
