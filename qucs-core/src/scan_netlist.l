@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.18 2006-02-06 09:50:15 raimi Exp $
+ * $Id: scan_netlist.l,v 1.19 2006-02-08 07:52:58 raimi Exp $
  *
  */
 
@@ -198,7 +198,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return netlist_text[0];
   }
 
-<EQN>{UCREAL}|{CREAL} { /* identify signed or unsigned real float */
+<EQN>{UCREAL} { /* identify unsigned real float */
     netlist_lval.d = strtod (netlist_text, NULL);
     return REAL;
   }

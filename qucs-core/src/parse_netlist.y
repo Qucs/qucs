@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.17 2006-02-06 09:50:15 raimi Exp $
+ * $Id: parse_netlist.y,v 1.18 2006-02-08 07:52:58 raimi Exp $
  *
  */
 
@@ -61,6 +61,7 @@
 %token STRING
 
 %right '='
+%left ':'
 %left '-' '+'
 %left '*' '/' '%'
 %left NEG     /* unary negation */
@@ -86,7 +87,6 @@
   eqn::reference * ref;
   eqn::application * app;
   eqn::assignment * assign;
-  range * rng;
 }
 
 %type <ident> Identifier Assign
@@ -103,9 +103,8 @@
 %type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
 %type <con> Constant
-%type <rng> Range
 %type <ref> Reference
-%type <app> Application
+%type <app> Application Range
 
 %%
 
@@ -277,24 +276,44 @@ Constant:
     $$ = new eqn::constant (eqn::TAG_STRING);
     $$->s = $1;
   }
-  | Range {
-    $$ = new eqn::constant (eqn::TAG_RANGE);
-    $$->r = $1;
-  }
 ;
 
 Range:
-  REAL ':' {
-    $$ = new range ('[', $1, $1 + 1, '.');
+  Expression ':' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("range");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
   }
-  | ':' REAL {
-    $$ = new range ('.', $2 - 1, $2, ']');
+  | ':' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("range");
+    $$->nargs = 2;
+    eqn::constant * c = new eqn::constant (eqn::TAG_CHAR);
+    c->chr = '?';
+    c->append ($2);
+    $$->args = c;
   }
-  | REAL ':' REAL {
-    $$ = new range ('[', $1, $3, ']');
+  | Expression ':' {
+    $$ = new eqn::application ();
+    $$->n = strdup ("range");
+    $$->nargs = 2;
+    eqn::constant * c = new eqn::constant (eqn::TAG_CHAR);
+    c->chr = '?';
+    $1->append (c);
+    $$->args = $1;
   }
   | ':' {
-    $$ = new range ('.', 0, 0, '.');
+    $$ = new eqn::application ();
+    $$->n = strdup ("range");
+    $$->nargs = 2;
+    eqn::constant * c1 = new eqn::constant (eqn::TAG_CHAR);
+    eqn::constant * c2 = new eqn::constant (eqn::TAG_CHAR);
+    c1->chr = '?';
+    c2->chr = '?';
+    c1->append (c2);
+    $$->args = c1;
   }
 ;
 
@@ -374,6 +393,9 @@ Application:
     $$->nargs = 2;
     $1->append ($3);
     $$->args = $1;
+  }
+  | Range {
+    $$ = $1;
   }
 ;
 

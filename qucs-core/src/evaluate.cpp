@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.40 2006-02-06 09:50:15 raimi Exp $
+ * $Id: evaluate.cpp,v 1.41 2006-02-08 07:52:58 raimi Exp $
  *
  */
 
@@ -105,11 +105,13 @@ using namespace qucs;
 #define _DEFV() constant * res = new constant (TAG_VECTOR);
 #define _DEFM() constant * res = new constant (TAG_MATRIX);
 #define _DEFMV() constant * res = new constant (TAG_MATVEC);
+#define _DEFR() constant * res = new constant (TAG_RANGE);
 #define _RETD(var) res->d = (var); return res;
 #define _RETC(var) res->c = new complex (var); return res;
 #define _RETV(var) res->v = new vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
 #define _RETMV(var) res->mv = new matvec (var); return res;
+#define _RETR(var) res->r = (var); return res;
 
 #define SOLVEE(idx) args->get(idx)->solvee
 
@@ -2712,6 +2714,31 @@ constant * evaluate::avg_r (constant * args) {
     }
   }
   _RETC (c / k);
+}
+
+// *************** range functionality *****************
+constant * evaluate::range_d_d (constant * args) {
+  _ARD0 (d1);
+  _ARD1 (d2);
+  _DEFR ();
+  _RETR (new range ('[', d1, d2, ']'));
+}
+
+constant * evaluate::range_c_d (constant * args) {
+  _ARD1 (d2);
+  _DEFR ();
+  _RETR (new range ('.', d2 - 1, d2, ']'));
+}
+
+constant * evaluate::range_d_c (constant * args) {
+  _ARD0 (d1);
+  _DEFR ();
+  _RETR (new range ('[', d1, d1 + 1, '.'));
+}
+
+constant * evaluate::range_c_c (constant *) {
+  _DEFR ();
+  _RETR (new range ('.', 0, 0, '.'));
 }
 
 // Include the application array.
