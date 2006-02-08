@@ -31,11 +31,11 @@ benutzt werden.<br><br>
 <tr><td><tt>x/y</tt></td><td>Division</td></tr>
 <tr><td><tt>x%y</tt></td><td>Modulo-Operation (Nachkommateil einer Division)</td></tr>
 <tr><td><tt>x^y</tt></td><td>Potenz</td></tr>
-<tr><td><tt>max(x)</tt></td><td>Maximaler Wert in einem Vektor x</td></tr>
-<tr><td><tt>min(x)</tt></td><td>Minimaler Wert in einem Vektor x</td></tr>
+<tr><td><tt>max(x[,range])</tt></td><td>Maximaler Wert in einem Vektor x; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
+<tr><td><tt>min(x[,range])</tt></td><td>Minimaler Wert in einem Vektor x; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
 <tr><td><tt>sum(x)</tt></td><td>Summe der Werte in einem Vektors</td></tr>
 <tr><td><tt>prod(x)</tt></td><td>Produkt der Werte in einem Vektor</td></tr>
-<tr><td><tt>avg(x)</tt></td><td>Arithmetischer Mittelwert aus den Werten in einem Vektor</td></tr>
+<tr><td><tt>avg(x[,range])</tt></td><td>Arithmetischer Mittelwert aus den Werten in einem Vektor; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
 <tr><td><tt>real(x)</tt></td><td>Realteil einer komplexen Zahl</td></tr>
 <tr><td><tt>imag(x)</tt></td><td>Imagin&auml;rteil einer komplexen Zahl</td></tr>
 <tr><td><tt>abs(x)</tt></td><td>absoluter Wert, Betrag einer komplexen Zahl</td></tr>
@@ -43,11 +43,11 @@ benutzt werden.<br><br>
 <tr><td><tt>norm(x)</tt></td><td>Quadrat von mag(x)</td></tr>
 <tr><td><tt>conj(x)</tt></td><td>Konjungiert komplexe Werte der Zahl x</td></tr>
 <tr><td><tt>phase(x)</tt></td><td>Phase in Grad</td></tr>
-<tr><td><tt>angle(x)</tt></td><td>Phase im Bogenmass</td></tr>
+<tr><td><tt>angle(x)</tt></td><td>Phase im Bogenma&szlig;</td></tr>
 <tr><td><tt>arg(x)</tt></td><td>gleicher Ausdruck wie angle(x)</td></tr>
-<tr><td><tt>deg2rad(x)</tt></td><td>Umrechnung von Grad nach Bogenmass</td></tr>
-<tr><td><tt>rad2deg(x)</tt></td><td>Umrechnung von Bogenmass nach Grad</td></tr>
-<tr><td><tt>unwrap(rad[,tol])</tt></td><td>gleicht Phasenspr&uuml;nge (im Bogenmass) aus und verwendet dabei die optionale Toleranzschwelle (Standardwert ist pi)</td></tr>
+<tr><td><tt>deg2rad(x)</tt></td><td>Umrechnung von Grad nach Bogenma&szlig;</td></tr>
+<tr><td><tt>rad2deg(x)</tt></td><td>Umrechnung von Bogenma&szlig; nach Grad</td></tr>
+<tr><td><tt>unwrap(rad[,tol])</tt></td><td>gleicht Phasenspr&uuml;nge (im Bogenma&szlig;) aus und verwendet dabei die optionale Toleranzschwelle (Standardwert ist pi)</td></tr>
 <tr><td><tt>dB(x)</tt></td><td>Spannungsdezibel</td></tr>
 <tr><td><tt>sqrt(x)</tt></td><td>Quadratwurzel</td></tr>
 <tr><td><tt>exp(x)</tt></td><td>Exponentialfunktion zur Basis e</td></tr>
@@ -129,6 +129,18 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>ifft(V,f)</tt></td><td>Berechnet die inverse schnelle Fourier-Transformation (IFFT) der Funktion <tt>V(f)</tt></td></tr>
 <tr><td><tt>dft(v,t)</tt></td><td>Berechnet die diskrete Fourier-Transformation (DFT) der Funktion <tt>v(t)</tt></td></tr>
 <tr><td><tt>idft(V,f)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation (IDFT) der Funktion <tt>V(f)</tt></td></tr>
+<tr><td><tt>yvalue(f,xval)</tt></td><td>Liefert den Y-Wert des gegebenen Vektors <tt>f</tt>, der dem X-Wert <tt>xval</tt> am n&auml;chsten liegt; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
+<tr><td><tt>xvalue(f,yval)</tt></td><td>Liefert den X-Wert, der mit dem n&auml;chstliegenden Y-Wert zu <tt>yval</tt> aus dem Vektor <tt>f</tt> assoziiert ist; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
+
+</table>
+<br>
+
+<b>Intervall Schreibweise</b>
+<table cellspacing=2 cellpadding=2>
+<tr><td><tt>LO:HI</tt></td><td>Intervall von <tt>LO</tt> bis <tt>HI</tt></td></tr>
+<tr><td><tt>:HI</tt></td><td>bis zu <tt>HI</tt></td></tr>
+<tr><td><tt>LO:</tt></td><td>von <tt>LO</tt> an</td></tr>
+<tr><td><tt>:</tt></td><td>keine Intervallgrenzen</td></tr>
 </table>
 <br>
 
@@ -155,7 +167,7 @@ Bitte beachten: Alle Spannungen und Str&ouml;me sind Spitzenwerte.
 
 <b>Konstanten</b>
 <table cellspacing=2 cellpadding=2>
-<tr><td><tt>j</tt></td><td>imaginäre Einheit ("Quadratwurzel von -1")</td></tr>
+<tr><td><tt>j</tt></td><td>imagin&auml;re Einheit ("Quadratwurzel von -1")</td></tr>
 <tr><td><tt>pi</tt></td><td>4*atan(1) = 3.14159</td></tr>
 <tr><td><tt>e</tt></td><td>Eulerzahl = 2.71828</td></tr>
 <tr><td><tt>kB</tt></td><td>Boltzmann-Konstante = 1.38065e-23</td></tr>
