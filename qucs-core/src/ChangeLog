@@ -1,3 +1,12 @@
+2006-02-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: Allowing real expressions in range
+	specifications.
+
+	* scan_netlist.l: Had to revert acceptance of signed real
+	values.  Grammer wouldn't even work for "1+1"... Now implemented
+	ranges in the right way.
+
 2006-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: Implemented possibility to save probe data

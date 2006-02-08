@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.23 2006/02/06 09:50:15 raimi Exp $
+ * $Id: evaluate.h,v 1.24 2006/02/08 07:52:58 raimi Exp $
  *
  */
 
@@ -500,6 +500,11 @@ public:
   static constant * xvalue_c (constant *);
   static constant * yvalue_d (constant *);
   static constant * yvalue_c (constant *);
+
+  static constant * range_d_d (constant *);
+  static constant * range_d_c (constant *);
+  static constant * range_c_d (constant *);
+  static constant * range_c_c (constant *);
 };
 
 // Type of application function.
