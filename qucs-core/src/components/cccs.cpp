@@ -1,7 +1,7 @@
 /*
  * cccs.cpp - cccs class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cccs.cpp,v 1.12 2005-06-02 18:17:51 raimi Exp $
+ * $Id: cccs.cpp,v 1.13 2006-02-09 11:55:32 raimi Exp $
  *
  */
 
@@ -82,4 +82,8 @@ void cccs::calcAC (nr_double_t frequency) {
   nr_double_t t = getPropertyDouble ("T");
   complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
   setB (NODE_1, VSRC_1, +r); setB (NODE_4, VSRC_1, -r);
+}
+
+void cccs::initTR (void) {
+  initDC ();
 }
