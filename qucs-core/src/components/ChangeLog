@@ -1,3 +1,8 @@
+2006-02-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* vccs.cpp, vcvs.cpp, ccvs.cpp, cccs.cpp: Implemented
+	preliminary support for transient response without time delay.
+
 2006-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* vprobe.h (class vprobe): New component: voltage probe for
