@@ -153,9 +153,9 @@ dnl Check library path to Qt.
 QT_LDFLAGS=""
 AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
 AC_MSG_CHECKING([for Qt library])
-paths="$QTDIR/lib /usr/local/qt/lib /usr/lib/qt /usr/lib \
+paths="$QTDIR/lib $QTDIR/lib64 /usr/local/qt/lib /usr/lib/qt /usr/lib \
   /usr/X11R6/lib/X11/qt /usr/X11R6/lib/X11/qt /usr/X11R6/lib/qt \
-  /usr/X11R6/lib/qt2 /usr/X11R6/lib"
+  /usr/X11R6/lib/qt2 /usr/X11R6/lib /usr/lib64/qt"
 AC_LANG(C++)
 for path in $paths; do
   save_LDFLAGS="$LDFLAGS"
