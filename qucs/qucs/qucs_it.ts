@@ -3406,6 +3406,10 @@ Usage:  qucsedit [-r] file
         <source>relative permittivity of dielectric</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>inner diameter of shield</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6848,6 +6852,46 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>This suffix is already registered!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language (set after reload):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>system language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roumanian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

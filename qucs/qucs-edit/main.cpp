@@ -1,7 +1,7 @@
 /***************************************************************************
-                          main.cpp  -  description
-                             -------------------
-    begin                : Thu Aug 28 18:17:41 CEST 2003
+                                 main.cpp
+                                ----------
+    begin                : Thu Aug 28 2003
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -64,11 +64,11 @@ bool loadSettings()
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
-    if(Setting == "Font") {     // get font from "qucsrc"
-	QucsSettings.font.fromString(Line);
-	break;
-    }
+    Line    = Line.section('=',1,1).stripWhiteSpace();
+    if(Setting == "Font")
+      QucsSettings.font.fromString(Line);
+    else if(Setting == "Language")
+      QucsSettings.Language = Line;
   }
   file.close();
 
@@ -151,7 +151,10 @@ int main(int argc, char *argv[])
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir);
+  QString lang = QucsSettings.Language;
+  if(lang.isEmpty())
+    lang = QTextCodec::locale();
+  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
   bool readOnly = false;
