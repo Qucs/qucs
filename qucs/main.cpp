@@ -62,7 +62,7 @@ bool loadSettings()
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1);
+    Line    = Line.section('=',1).stripWhiteSpace();
     if(Setting == "Position") {
 	QucsSettings.x = Line.section(",",0,0).toInt(&ok);
 	QucsSettings.y = Line.section(",",1,1).toInt(&ok); }
@@ -86,6 +86,8 @@ bool loadSettings()
 	QucsSettings.Editor = Line; }
     else if(Setting == "FileType") {
 	QucsSettings.FileTypes.append(Line); }
+    else if(Setting == "Language") {
+	QucsSettings.Language = Line; }
   }
 
   file.close();
@@ -110,6 +112,7 @@ bool saveApplSettings(QucsApp *qucs)
     << "Position=" << qucs->x() << "," << qucs->y() << "\n"
     << "Size=" << qucs->width() << "," << qucs->height() << "\n"
     << "Font=" << savingFont.toString() << "\n"
+    << "Language=" << QucsSettings.Language << "\n"
     << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
     << "\n"
     << "maxUndo=" << QucsSettings.maxUndo << "\n"
@@ -418,7 +421,10 @@ int main(int argc, char *argv[])
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir);
+  QString lang = QucsSettings.Language;
+  if(lang.isEmpty())
+    lang = QTextCodec::locale();
+  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
   QucsMain = new QucsApp();

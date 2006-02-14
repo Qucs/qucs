@@ -62,11 +62,11 @@ bool loadSettings()
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
-    if(Setting == "Font") {     // get font from "qucsrc"
+    Line    = Line.section('=',1,1).stripWhiteSpace();
+    if(Setting == "Font")
 	QucsSettings.font.fromString(Line);
-	break;
-    }
+    else if(Setting == "Language")
+	QucsSettings.Language = Line;
   }
   file.close();
 
@@ -133,7 +133,10 @@ int main(int argc, char *argv[])
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir );
+  QString lang = QucsSettings.Language;
+  if(lang.isEmpty())
+    lang = QTextCodec::locale();
+  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
   QucsFilter *qucs = new QucsFilter();

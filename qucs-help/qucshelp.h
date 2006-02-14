@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucshelp.h  -  description
-                             -------------------
+                                qucshelp.h
+                               ------------
     begin                : Sun Jan 11 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -30,14 +30,12 @@ struct tQucsSettings {
   QString BitmapDir;
   QString LangDir;
   QString DocDir;
+  QString Language;
 };
 
 extern tQucsSettings QucsSettings;
 extern QDir QucsHelpDir;
 
-/**
-  *@author Michael Margraf
-  */
 
 class QucsHelp : public QDialog  {
    Q_OBJECT

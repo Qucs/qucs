@@ -41,6 +41,7 @@ struct tQucsSettings {
   QFont font;
   float largeFontSize;
   QColor BGColor;      // background color of view area
+  QString Language;
 
   unsigned int maxUndo;    // size of undo stack
   QString Editor;
