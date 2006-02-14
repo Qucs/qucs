@@ -29,6 +29,7 @@ struct tQucsSettings {
   QFont font;
   QString BitmapDir;
   QString LangDir;
+  QString Language;
 };
 
 extern tQucsSettings QucsSettings;

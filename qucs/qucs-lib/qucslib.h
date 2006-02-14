@@ -39,6 +39,7 @@ struct tQucsSettings {
   QString BitmapDir;   // pixmap directory
   QString LangDir;     // translation directory
   QString LibDir;      // library directory
+  QString Language;
 };
 
 extern tQucsSettings QucsSettings;
