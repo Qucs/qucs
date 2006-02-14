@@ -60,6 +60,7 @@ struct tQucsSettings {
   QFont font;          // font
   QString BitmapDir;   // pixmap directory
   QString LangDir;     // translation directory
+  QString Language;
   int length_unit;     // default length unit
   int freq_unit;       // default frequency unit
   int res_unit;        // default resistance unit

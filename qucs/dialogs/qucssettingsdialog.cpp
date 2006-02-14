@@ -51,31 +51,40 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,5,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,6,2,5,5);
 
-  QLabel *l1 = new QLabel(tr("Font (set after reload):"), Tab1);
-  gp->addWidget(l1,0,0);
+  gp->addWidget(new QLabel(tr("Font (set after reload):"), Tab1), 0,0);
   FontButton = new QPushButton(Tab1);
   connect(FontButton, SIGNAL(clicked()), SLOT(slotFontDialog()));
   gp->addWidget(FontButton,0,1);
 
-  QLabel *l2 = new QLabel(tr("Document Background Color:"), Tab1);
-  gp->addWidget(l2,1,0);
+  gp->addWidget(new QLabel(tr("Document Background Color:"), Tab1) ,1,0);
   BGColorButton = new QPushButton("      ", Tab1);
   connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
   gp->addWidget(BGColorButton,1,1);
 
+  gp->addWidget(new QLabel(tr("Language (set after reload):"), Tab1) ,2,0);
+  LanguageCombo = new QComboBox(Tab1);
+  LanguageCombo->insertItem(tr("system language"));
+  LanguageCombo->insertItem(tr("English")+" (en)");
+  LanguageCombo->insertItem(tr("German")+" (de)");
+  LanguageCombo->insertItem(tr("French")+" (fr)");
+  LanguageCombo->insertItem(tr("Spanish")+" (es)");
+  LanguageCombo->insertItem(tr("Italian")+" (it)");
+  LanguageCombo->insertItem(tr("Polish")+" (pl)");
+  LanguageCombo->insertItem(tr("Roumanian")+" (ro)");
+  LanguageCombo->insertItem(tr("Japanese")+" (jp)");
+  gp->addWidget(LanguageCombo,2,1);
+
   val200 = new QIntValidator(0, 200, this);
-  QLabel *l3 = new QLabel(tr("maximum undo operations:"), Tab1);
-  gp->addWidget(l3,2,0);
+  gp->addWidget(new QLabel(tr("maximum undo operations:"), Tab1) ,3,0);
   undoNumEdit = new QLineEdit(Tab1);
   undoNumEdit->setValidator(val200);
-  gp->addWidget(undoNumEdit,2,1);
+  gp->addWidget(undoNumEdit,3,1);
 
-  QLabel *l4 = new QLabel(tr("text editor:"), Tab1);
-  gp->addWidget(l4,3,0);
+  gp->addWidget(new QLabel(tr("text editor:"), Tab1) ,4,0);
   editorEdit = new QLineEdit(Tab1);
-  gp->addWidget(editorEdit,3,1);
+  gp->addWidget(editorEdit,4,1);
 
 
   t->addTab(Tab1, tr("Settings"));
@@ -155,6 +164,10 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 	App->view->viewport()->paletteBackgroundColor());
   undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
   editorEdit->setText(QucsSettings.Editor);
+
+  for(int z=LanguageCombo->count()-1; z>=0; z--)
+    if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
+      LanguageCombo->setCurrentItem(z);
 
   resize(300, 200);
 }
@@ -251,6 +264,9 @@ void QucsSettingsDialog::slotApply()
     changed = true;
   }
 
+  QucsSettings.Language =
+      LanguageCombo->currentText().section('(',1,1).remove(')');
+
   bool ok;
   if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok)) {
     QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
@@ -297,6 +313,7 @@ void QucsSettingsDialog::slotDefaultValues()
 {
   Font = QFont("Helvetica", 12);
   FontButton->setText(Font.toString());
+  LanguageCombo->setCurrentItem(0);
   BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));
 
   undoNumEdit->setText("20");
