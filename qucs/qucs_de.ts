@@ -3465,7 +3465,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation>innerer Durchmesser des Außenleiters</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
@@ -3490,10 +3490,6 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>relative permittivity of dielectric</source>
         <translation>relative Permittivität des Dielektrikums</translation>
-    </message>
-    <message>
-        <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7908,11 +7904,31 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Roumanian</source>
+        <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Japanese</source>
+        <source>Romanian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
