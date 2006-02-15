@@ -26,6 +26,7 @@ files.
 Version 0.0.9
 -------------
 
+ * language can be chosen in application settings dialog
  * new component: coaxial line
  * fixed bug in Cauer band-stop filter
 
