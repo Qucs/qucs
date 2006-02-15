@@ -3106,10 +3106,6 @@ Kullanım:  qucsedit -r kütük
         <source>relative permittivity of dielectric</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5411,11 +5407,31 @@ uygun bir uygulama ile açılabilsinler.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Roumanian</source>
+        <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Japanese</source>
+        <source>Romanian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
