@@ -3904,10 +3904,6 @@ Edits the schematic</source>
         <translation>このソフトウェアについて...</translation>
     </message>
     <message>
-        <source>Qucs Editor Version </source>
-        <translation></translation>
-    </message>
-    <message>
         <source>
 Very simple text editor for Qucs
 </source>
@@ -4044,7 +4040,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>QucsFilter バージョン</translation>
+        <translation type="obsolete">QucsFilter バージョン</translation>
     </message>
     <message>
         <source>
@@ -4075,10 +4071,6 @@ Filter synthesis program
     <message>
         <source>Band stop</source>
         <translation>バンドストップ</translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2005 by</source>
-        <translation></translation>
     </message>
     <message>
         <source>Error</source>
@@ -4114,6 +4106,10 @@ Filter synthesis program
     </message>
     <message>
         <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

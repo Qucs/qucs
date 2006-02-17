@@ -39,40 +39,46 @@ QDir QucsWorkDir;
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
+  bool result = true;
+
   QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/librc"));
-  if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
-
-  QTextStream stream(&file);
-  QString Line, Setting;
-
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
-    if(Setting == "Position") {
+  if(!file.open(IO_ReadOnly))
+    result = false; // settings file doesn't exist
+  else {
+    QTextStream stream(&file);
+    QString Line, Setting;
+    while(!stream.atEnd()) {
+      Line = stream.readLine();
+      Setting = Line.section('=',0,0);
+      Line = Line.section('=',1,1);
+      if(Setting == "Position") {
 	QucsSettings.x = Line.section(",",0,0).toInt();
 	QucsSettings.y = Line.section(",",1,1).toInt(); }
-    else if(Setting == "Size") {
+      else if(Setting == "Size") {
 	QucsSettings.dx = Line.section(",",0,0).toInt();
 	QucsSettings.dy = Line.section(",",1,1).toInt(); }
+    }
+    file.close();
   }
-  file.close();
 
   file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
-  if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
-
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1).stripWhiteSpace();
-    if(Setting == "Font")
+  if(!file.open(IO_ReadOnly))
+    result = true; // qucs settings not necessary
+  else {
+    QTextStream stream(&file);
+    QString Line, Setting;
+    while(!stream.atEnd()) {
+      Line = stream.readLine();
+      Setting = Line.section('=',0,0);
+      Line = Line.section('=',1,1).stripWhiteSpace();
+      if(Setting == "Font")
 	QucsSettings.font.fromString(Line);
-    else if(Setting == "Language")
+      else if(Setting == "Language")
 	QucsSettings.Language = Line;
+    }
+    file.close();
   }
-  file.close();
-
-  return true;
+  return result;
 }
 
 // Saves the settings in the settings file.

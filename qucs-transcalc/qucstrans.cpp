@@ -199,7 +199,7 @@ struct TransUnit TransUnits[] = {
 QucsTranscalc::QucsTranscalc() {
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
-  setCaption("QucsTranscalc " PACKAGE_VERSION);
+  setCaption("Qucs Transcalc " PACKAGE_VERSION);
 
   QMenuBar * menuBar = new QMenuBar (this);
 
@@ -816,7 +816,7 @@ bool QucsTranscalc::isSelected (QString prop) {
 void QucsTranscalc::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    "QucsTranscalc " PACKAGE_VERSION "\n"+
+    "QucsTranscalc Version " PACKAGE_VERSION "\n"+
     tr("Transmission Line Calculator for Qucs\n")+
     tr("Copyright (C) 2001 by Gopal Narayanan\n")+
     tr("Copyright (C) 2002 by Claudio Girardi\n")+

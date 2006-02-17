@@ -3661,7 +3661,7 @@ Redigerar schemat</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Quocs redigerarversion</translation>
+        <translation type="obsolete">Quocs redigerarversion</translation>
     </message>
     <message>
         <source>
@@ -3800,7 +3800,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>QucsFilter Version </translation>
+        <translation type="obsolete">QucsFilter Version </translation>
     </message>
     <message>
         <source>
@@ -3842,7 +3842,7 @@ Filtersyntesprogram
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Copyright (C) 2005 by</translation>
+        <translation type="obsolete">Copyright (C) 2005 by</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3879,6 +3879,10 @@ Filtersyntesprogram
     <message>
         <source>Pass band attenuation:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Copyright (C) 2005, 2006 by</translation>
     </message>
 </context>
 <context>

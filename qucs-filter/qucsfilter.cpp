@@ -47,7 +47,7 @@ QucsFilter::QucsFilter()
 {
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
-  setCaption("QucsFilter " PACKAGE_VERSION);
+  setCaption("Qucs Filter " PACKAGE_VERSION);
 
 
   // --------  create menubar  -------------------
@@ -63,6 +63,7 @@ QucsFilter::QucsFilter()
 
   QMenuBar *bar = new QMenuBar(this);
   bar->insertItem(tr("&File"), fileMenu);
+  bar->insertSeparator ();
   bar->insertItem(tr("&Help"), helpMenu);
 
 
@@ -206,10 +207,10 @@ void QucsFilter::slotQuit()
 void QucsFilter::slotHelpAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    tr("QucsFilter Version ")+PACKAGE_VERSION+
+    "QucsFilter Version " PACKAGE_VERSION+
     tr("\nFilter synthesis program\n")+
-    tr("Copyright (C) 2005 by")+
-    "\n     Toyoyuki Ishikawa, Vincent Habchi, Michael Margraf\n"
+    tr("Copyright (C) 2005, 2006 by")+
+    "\nToyoyuki Ishikawa, Vincent Habchi, Michael Margraf\n"
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n");

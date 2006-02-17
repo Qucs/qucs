@@ -4028,7 +4028,7 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Wersja edytora programu Qucs</translation>
+        <translation type="obsolete">Wersja edytora programu Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -4179,7 +4179,7 @@ Bardzo prosty edytor tekstowy programu Qucs
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>Wersja QucsFilter </translation>
+        <translation type="obsolete">Wersja QucsFilter </translation>
     </message>
     <message>
         <source>
@@ -4221,7 +4221,7 @@ Program syntezy filtrów
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Copyright (C) 2005 by</translation>
+        <translation type="obsolete">Copyright (C) 2005 by</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4258,6 +4258,10 @@ Program syntezy filtrów
     <message>
         <source>Pass band attenuation:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Copyright (C) 2005, 2006 by</translation>
     </message>
 </context>
 <context>
