@@ -4994,7 +4994,7 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Versione Editor Qucs</translation>
+        <translation type="obsolete">Versione Editor Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -5143,7 +5143,7 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>Versione QucsFilter</translation>
+        <translation type="obsolete">Versione QucsFilter</translation>
     </message>
     <message>
         <source>
@@ -5184,10 +5184,6 @@ Programma di sintesi dei filtri
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright (C) 2005 by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished">Errore</translation>
     </message>
@@ -5221,6 +5217,10 @@ Programma di sintesi dei filtri
     </message>
     <message>
         <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

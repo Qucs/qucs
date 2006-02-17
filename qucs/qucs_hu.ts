@@ -3990,7 +3990,7 @@ Nem indítható a tápvonal tervező program!
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Qucs verzió</translation>
+        <translation type="obsolete">Qucs verzió</translation>
     </message>
     <message>
         <source>
@@ -4167,7 +4167,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>QucsFilter verzió</translation>
+        <translation type="obsolete">QucsFilter verzió</translation>
     </message>
     <message>
         <source>
@@ -4213,7 +4213,7 @@ Szűrő méretező program
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Copyright (C) 2005 by</translation>
+        <translation type="obsolete">Copyright (C) 2005 by</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4250,6 +4250,10 @@ Szűrő méretező program
     <message>
         <source>Pass band attenuation:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Copyright (C) 2005, 2006 by</translation>
     </message>
 </context>
 <context>

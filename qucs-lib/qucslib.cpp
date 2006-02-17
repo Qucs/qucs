@@ -138,7 +138,7 @@ QucsLib::~QucsLib()
 void QucsLib::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    "QucsLib " PACKAGE_VERSION "\n"+
+    "QucsLib Version " PACKAGE_VERSION "\n"+
     tr("Library Manager for Qucs\n")+
     tr("Copyright (C) 2005 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."

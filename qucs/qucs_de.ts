@@ -6026,7 +6026,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Qucs Editor Version </translation>
+        <translation type="obsolete">Qucs Editor Version </translation>
     </message>
     <message>
         <source>
@@ -6166,10 +6166,6 @@ Einfacher Texteditor für Qucs
         <translation>Über...</translation>
     </message>
     <message>
-        <source>QucsFilter Version </source>
-        <translation></translation>
-    </message>
-    <message>
         <source>
 Filter synthesis program
 </source>
@@ -6209,7 +6205,7 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Copyright (C) 2005 von</translation>
+        <translation type="obsolete">Copyright (C) 2005 von</translation>
     </message>
     <message>
         <source>Error</source>
@@ -6246,6 +6242,10 @@ Filtersynthese-Programm
     <message>
         <source>Pass band attenuation:</source>
         <translation>Durchlassbanddämpfung:</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Copyright (C) 2005, 2006 von</translation>
     </message>
 </context>
 <context>

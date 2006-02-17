@@ -3973,7 +3973,7 @@ Editează această schemă</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Versiunea Editorului Qucs</translation>
+        <translation type="obsolete">Versiunea Editorului Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -4122,10 +4122,6 @@ Editor de text foarte simplu pentur Qucs
         <translation type="unfinished">Despre...</translation>
     </message>
     <message>
-        <source>QucsFilter Version </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>
 Filter synthesis program
 </source>
@@ -4153,10 +4149,6 @@ Filter synthesis program
     </message>
     <message>
         <source>Band stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2005 by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4193,6 +4185,10 @@ Filter synthesis program
     </message>
     <message>
         <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
