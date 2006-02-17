@@ -1,7 +1,7 @@
 /*
  * complex.cpp - complex number class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.23 2005/10/27 09:57:31 raimi Exp $
+ * $Id: complex.cpp,v 1.24 2006/02/17 07:24:06 raimi Exp $
  *
  */
 
@@ -46,19 +46,27 @@ complex::complex (const complex& z) {
   i = z.i;
 }
 
+nr_double_t complex::abs (void) {
+  return xhypot (r, i);
+}
+
 nr_double_t abs (const complex z) {
   return xhypot (z.r, z.i);
 }
 
-nr_double_t abs (nr_double_t r) {
+nr_double_t abs (const nr_double_t r) {
   return fabs (r);
+}
+
+nr_double_t complex::norm (void) {
+  return r * r + i * i;
 }
 
 nr_double_t norm (const complex z) {
   return z.r * z.r + z.i * z.i;
 }
 
-nr_double_t norm (nr_double_t r) {
+nr_double_t norm (const nr_double_t r) {
   return r * r;
 }
 
@@ -66,27 +74,39 @@ nr_double_t arg (const complex z) {
   return atan2 (z.i, z.r);
 }
 
+nr_double_t complex::real (void) {
+  return r;
+}
+
 nr_double_t real (const complex z) {
   return z.r;
 }
 
-nr_double_t real (nr_double_t r) {
+nr_double_t real (const nr_double_t r) {
   return r;
+}
+
+nr_double_t complex::imag (void) {
+  return i;
 }
 
 nr_double_t imag (const complex z) {
   return z.i;
 }
 
-nr_double_t imag (nr_double_t) {
+nr_double_t imag (const nr_double_t) {
   return 0.0;
+}
+
+complex complex::conj (void) {
+  return complex (r, -i);
 }
 
 complex conj (const complex z) {
   return complex (z.r, -z.i);
 }
 
-nr_double_t conj (nr_double_t r) {
+nr_double_t conj (const nr_double_t r) {
   return r;
 }
 
@@ -123,11 +143,11 @@ complex log2 (const complex z) {
   return complex (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
 }
 
-complex pow (const complex z, nr_double_t d) {
+complex pow (const complex z, const nr_double_t d) {
   return polar (pow (abs (z), d), arg (z) * d);
 }
 
-complex pow (nr_double_t d, const complex z) {
+complex pow (const nr_double_t d, const complex z) {
   return exp (z * log (d));
 }
 

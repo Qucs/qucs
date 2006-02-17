@@ -1,7 +1,7 @@
 /*
  * transient.h - transient helper class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.h,v 1.7 2005/06/02 18:17:51 raimi Exp $
+ * $Id: transient.h,v 1.8 2006/02/17 07:24:06 raimi Exp $
  *
  */
 
@@ -37,25 +37,25 @@ enum integrator_type {
 class circuit;
 class integrator;
 
-class transient
-{
- public:
-  friend void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t *);
-  friend void calcPredictorCoeff (int, int, nr_double_t *, nr_double_t *);
-  friend void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
-			      nr_double_t&);
-  friend void integrateBilinear (integrator *, int, nr_double_t, nr_double_t&,
-				 nr_double_t&);
-  friend void integrateGear (integrator *, int, nr_double_t, nr_double_t&,
-			     nr_double_t&);
-  friend void integrateMoulton (integrator *, int, nr_double_t, nr_double_t&,
-				nr_double_t&);
-  friend void setIntegrationMethod (circuit *, int);
-  friend int  correctorType (char *, int&);
-  friend int  correctorType (int, int);
-  friend int  predictorType (int, int, int&);
-  friend nr_double_t getCorrectorError (int, int);
-  friend nr_double_t getPredictorError (int, int);
-};
+namespace transient {
+
+  void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t *);
+  void calcPredictorCoeff (int, int, nr_double_t *, nr_double_t *);
+  void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
+		       nr_double_t&);
+  void integrateBilinear (integrator *, int, nr_double_t, nr_double_t&,
+			  nr_double_t&);
+  void integrateGear (integrator *, int, nr_double_t, nr_double_t&,
+		      nr_double_t&);
+  void integrateMoulton (integrator *, int, nr_double_t, nr_double_t&,
+			 nr_double_t&);
+  void setIntegrationMethod (circuit *, int);
+  int  correctorType (char *, int&);
+  int  correctorType (int, int);
+  int  predictorType (int, int, int&);
+  nr_double_t getCorrectorError (int, int);
+  nr_double_t getPredictorError (int, int);
+
+} // namespace
 
 #endif /* __TRANSIENT_H__ */

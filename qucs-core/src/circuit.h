@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.44 2006/02/06 09:50:15 raimi Exp $
+ * $Id: circuit.h,v 1.45 2006/02/17 07:24:06 raimi Exp $
  *
  */
 
@@ -55,7 +55,6 @@ class substrate;
 class operatingpoint;
 class characteristic;
 class matrix;
-class transient;
 class net;
 
 #include "integrator.h"

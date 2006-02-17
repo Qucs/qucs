@@ -1,3 +1,7 @@
+2006-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* Many changes for g++-4.1 errors (-ffriend-injections). 
+
 2006-02-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y: Allowing real expressions in range

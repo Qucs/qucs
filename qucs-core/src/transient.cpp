@@ -1,7 +1,7 @@
 /*
  * transient.cpp - transient helper class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.cpp,v 1.17 2005/09/26 08:06:23 raimi Exp $
+ * $Id: transient.cpp,v 1.18 2006/02/17 07:24:06 raimi Exp $
  *
  */
 
@@ -45,11 +45,14 @@
 // Defines where the equivalent admittance coefficient is going to be stored.
 #define COEFF_G 0
 
+using namespace transient;
+
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Gear (order 1-6),
    Trapezoidal, backward Euler and Adams-Moulton (order 1-6). */
-void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
-			 nr_double_t * delta) {
+void transient::calcCorrectorCoeff (int Method, int order,
+				    nr_double_t * coefficients,
+				    nr_double_t * delta) {
 
   tmatrix<nr_double_t> A (order + 1);
   tvector<nr_double_t> x (order + 1);
@@ -161,8 +164,9 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Adams-Bashford (order
    1-6), forward Euler and explicit Gear (order 1-6). */
-void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
-			 nr_double_t * delta) {
+void transient::calcPredictorCoeff (int Method, int order,
+				    nr_double_t * coefficients,
+				    nr_double_t * delta) {
 
   tmatrix<nr_double_t> A (order + 1);
   tvector<nr_double_t> x (order + 1);
@@ -238,8 +242,8 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
 }
 
 // This is the implicit Euler integrator.
-void integrateEuler (integrator * c, int qstate, nr_double_t cap,
-		     nr_double_t& geq, nr_double_t& ceq) {
+void transient::integrateEuler (integrator * c, int qstate, nr_double_t cap,
+				nr_double_t& geq, nr_double_t& ceq) {
   nr_double_t * coeff = c->getCoefficients ();
   int cstate = qstate + 1;
   nr_double_t cur;
@@ -250,8 +254,8 @@ void integrateEuler (integrator * c, int qstate, nr_double_t cap,
 }
 
 // Trapezoidal integrator.
-void integrateBilinear (integrator * c, int qstate, nr_double_t cap,
-			nr_double_t& geq, nr_double_t& ceq) {
+void transient::integrateBilinear (integrator * c, int qstate, nr_double_t cap,
+				   nr_double_t& geq, nr_double_t& ceq) {
   nr_double_t * coeff = c->getCoefficients ();
   int cstate = qstate + 1;
   nr_double_t cur;
@@ -262,8 +266,8 @@ void integrateBilinear (integrator * c, int qstate, nr_double_t cap,
 }
 
 // Integrator using the Gear coefficients.
-void integrateGear (integrator * c, int qstate, nr_double_t cap,
-		    nr_double_t& geq, nr_double_t& ceq) {
+void transient::integrateGear (integrator * c, int qstate, nr_double_t cap,
+			       nr_double_t& geq, nr_double_t& ceq) {
   nr_double_t * coeff = c->getCoefficients ();
   int i, cstate = qstate + 1;
   nr_double_t cur;
@@ -276,8 +280,8 @@ void integrateGear (integrator * c, int qstate, nr_double_t cap,
 }
 
 // Integrator using the Adams-Moulton coefficients.
-void integrateMoulton (integrator * c, int qstate, nr_double_t cap,
-		       nr_double_t& geq, nr_double_t& ceq) {
+void transient::integrateMoulton (integrator * c, int qstate, nr_double_t cap,
+				  nr_double_t& geq, nr_double_t& ceq) {
   nr_double_t * coeff = c->getCoefficients ();
   int i, cstate = qstate + 1;
   nr_double_t cur;
@@ -292,7 +296,7 @@ void integrateMoulton (integrator * c, int qstate, nr_double_t cap,
 
 /* The function applies the appropriate integration function to the
    given circuit object. */
-void setIntegrationMethod (circuit * c, int Method) {
+void transient::setIntegrationMethod (circuit * c, int Method) {
   switch (Method) {
   case INTEGRATOR_GEAR:
     c->setIntegration (integrateGear);
@@ -314,7 +318,7 @@ void setIntegrationMethod (circuit * c, int Method) {
 
 /* Returns an appropriate integrator type identifier and the maximum
    order depending on the given string argument. */
-int correctorType (char * Method, int& MaxOrder) {
+int transient::correctorType (char * Method, int& MaxOrder) {
   if (!strcmp (Method, "Gear")) {
     if (MaxOrder > 6) MaxOrder = 6;
     if (MaxOrder < 1) MaxOrder = 1;
@@ -344,7 +348,7 @@ int correctorType (char * Method, int& MaxOrder) {
 /* The function returns the appropriate predictor integration method
    for the given corrector method and adjusts the order of the
    predictor as well based on the given corrector method. */
-int predictorType (int corrMethod, int corrOrder, int& predOrder) {
+int transient::predictorType (int corrMethod, int corrOrder, int& predOrder) {
   int predMethod = INTEGRATOR_UNKNOWN;
   switch (corrMethod) {
   case INTEGRATOR_GEAR:
@@ -407,16 +411,16 @@ static struct integration_types_t integration_types[] = {
 
 /* The function returns the appropriate integration type for the given
    corrector integration type and order. */
-int correctorType (int Method, int order) {
+int transient::correctorType (int Method, int order) {
   return integration_types[Method].integratorType[order - 1];
 }
 
 // Returns the error constant for the given corrector.
-nr_double_t getCorrectorError (int Method, int order) {
+nr_double_t transient::getCorrectorError (int Method, int order) {
   return integration_types[Method].corrErrorConstant[order - 1];
 }
 
 // Returns the error constant for the given predictor.
-nr_double_t getPredictorError (int Method, int order) {
+nr_double_t transient::getPredictorError (int Method, int order) {
   return integration_types[Method].predErrorConstant[order - 1];
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.41 2006/02/08 07:52:58 raimi Exp $
+ * $Id: evaluate.cpp,v 1.42 2006/02/17 07:24:06 raimi Exp $
  *
  */
 
@@ -51,6 +51,7 @@
 
 using namespace eqn;
 using namespace qucs;
+using namespace fourier;
 
 // Short macros in order to obtain the correct constant value.
 #define D(con)   ((constant *) (con))->d
