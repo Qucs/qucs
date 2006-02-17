@@ -3968,7 +3968,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Editeur Qucs, version</translation>
+        <translation type="obsolete">Editeur Qucs, version</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -4117,7 +4117,7 @@ Un petit éditeur sans prétention pour Qucs
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>QucsFilter, version </translation>
+        <translation type="obsolete">QucsFilter, version </translation>
     </message>
     <message>
         <source>
@@ -4153,7 +4153,7 @@ Application de synthèse de filtres
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Copyright © 2005 </translation>
+        <translation type="obsolete">Copyright © 2005 </translation>
     </message>
     <message>
         <source>Error</source>
@@ -4190,6 +4190,10 @@ Application de synthèse de filtres
     <message>
         <source>Pass band attenuation:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Copyright © 2005, 2006 </translation>
     </message>
 </context>
 <context>

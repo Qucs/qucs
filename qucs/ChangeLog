@@ -1,3 +1,10 @@
+2006-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-transcalc/main.cpp, qucs-lib/main.cpp,
+	qucs-help/main.cpp, qucs-filter/main.cpp, qucs-edit/main.cpp
+	(loadSettings): Try loading items from main qucsrc even if
+	application specific resource file does not exist.
+
 2006-02-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac (paths): Added $QTDIR/lib64 to the library path
