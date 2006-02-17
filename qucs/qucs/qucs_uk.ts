@@ -3608,10 +3608,6 @@ Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>
 Very simple text editor for Qucs
 </source>
@@ -3755,17 +3751,9 @@ Very simple text editor for Qucs
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>QucsFilter Version </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>
 Filter synthesis program
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2005 by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3810,6 +3798,10 @@ Filter synthesis program
     </message>
     <message>
         <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

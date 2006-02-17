@@ -3657,7 +3657,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Qucs Metin Düzenleyici Sürümü</translation>
+        <translation type="obsolete">Qucs Metin Düzenleyici Sürümü</translation>
     </message>
     <message>
         <source>
@@ -3800,7 +3800,7 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation>QucsFilter Sürüm</translation>
+        <translation type="obsolete">QucsFilter Sürüm</translation>
     </message>
     <message>
         <source>
@@ -3812,7 +3812,7 @@ Filitre tasarım yazılımı
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation>Kopyahakkı/Telif (K) 2005 by</translation>
+        <translation type="obsolete">Kopyahakkı/Telif (K) 2005 by</translation>
     </message>
     <message>
         <source>About Qt</source>
@@ -3865,6 +3865,10 @@ Filitre tasarım yazılımı
     <message>
         <source>Pass band attenuation:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished">Kopyahakkı/Telif (K) 2005, 2006 by</translation>
     </message>
 </context>
 <context>

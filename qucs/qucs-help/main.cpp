@@ -41,40 +41,46 @@ tQucsSettings QucsSettings; // application settings
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
+  bool result = true;
+
   QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/helprc"));
-  if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
-
-  QTextStream stream(&file);
-  QString Line, Setting;
-
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
-    if(Setting == "HelpWindow") {
+  if(!file.open(IO_ReadOnly))
+    result = false; // settings file doesn't exist
+  else {
+    QTextStream stream(&file);
+    QString Line, Setting;
+    while(!stream.atEnd()) {
+      Line = stream.readLine();
+      Setting = Line.section('=',0,0);
+      Line = Line.section('=',1,1);
+      if(Setting == "HelpWindow") {
 	QucsSettings.x  = Line.section(",",0,0).toInt();
 	QucsSettings.y  = Line.section(",",1,1).toInt();
 	QucsSettings.dx = Line.section(",",2,2).toInt();
 	QucsSettings.dy = Line.section(",",3,3).toInt();
 	break; }
+    }
+    file.close();
   }
-  file.close();
 
   file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
-  if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
-
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1).stripWhiteSpace();
-    if(Setting == "Font")
+  if(!file.open(IO_ReadOnly))
+    result = true; // qucs settings not necessary
+  else {
+    QTextStream stream(&file);
+    QString Line, Setting;
+    while(!stream.atEnd()) {
+      Line = stream.readLine();
+      Setting = Line.section('=',0,0);
+      Line = Line.section('=',1,1).stripWhiteSpace();
+      if(Setting == "Font")
 	QucsSettings.font.fromString(Line);
-    else if(Setting == "Language")
+      else if(Setting == "Language")
 	QucsSettings.Language = Line;
+    }
+    file.close();
   }
-  file.close();
-
-  return true;
+  return result;
 }
 
 // #########################################################################

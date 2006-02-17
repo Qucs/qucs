@@ -38,7 +38,7 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
 {
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
-  setCaption("QucsEdit " PACKAGE_VERSION " - " + tr("File: "));
+  setCaption("Qucs Editor " PACKAGE_VERSION " - " + tr("File: "));
 
   QVBoxLayout *v = new QVBoxLayout(this);
 
@@ -93,7 +93,7 @@ void QucsEdit::slotPrintCursorPosition(int Para, int Pos)
 void QucsEdit::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    tr("Qucs Editor Version ")+PACKAGE_VERSION+
+    "QucsEdit Version " PACKAGE_VERSION+
     tr("\nVery simple text editor for Qucs\n")+
     tr("Copyright (C) 2004, 2005 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."
@@ -176,7 +176,7 @@ bool QucsEdit::loadFile(const QString& Name)
   FileName = Name;
 //  QFileInfo info(Name);
 //  FileName = info.fileName();
-  setCaption("QucsEdit " PACKAGE_VERSION " - " + tr("File: ")+FileName);
+  setCaption("Qucs Editor " PACKAGE_VERSION " - " + tr("File: ")+FileName);
   return true;
 }
 
