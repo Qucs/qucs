@@ -1,7 +1,7 @@
 /*
  * mstee.cpp - microstrip t-junction class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.cpp,v 1.10 2005-10-31 16:15:31 ela Exp $
+ * $Id: mstee.cpp,v 1.11 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -41,6 +41,8 @@
 #include "device.h"
 #include "msline.h"
 #include "mstee.h"
+
+using namespace device;
 
 mstee::mstee () : circuit (3) {
   lineA = lineB = line2 = NULL;

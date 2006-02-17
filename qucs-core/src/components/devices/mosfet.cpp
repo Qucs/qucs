@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.33 2006-01-30 07:45:34 raimi Exp $
+ * $Id: mosfet.cpp,v 1.34 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -47,6 +47,8 @@
 #define NODE_D 1 /* drain node  */
 #define NODE_S 2 /* source node */
 #define NODE_B 3 /* bulk node   */
+
+using namespace device;
 
 mosfet::mosfet () : circuit (4) {
   transientMode = 0;

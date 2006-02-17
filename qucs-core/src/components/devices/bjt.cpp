@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.36 2006-01-30 07:45:34 raimi Exp $
+ * $Id: bjt.cpp,v 1.37 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -48,6 +48,8 @@
 #define NODE_C 1 /* collector node  */
 #define NODE_E 2 /* emitter node    */
 #define NODE_S 3 /* substrate node  */
+
+using namespace device;
 
 bjt::bjt () : circuit (4) {
   cbcx = rb = re = rc = NULL;

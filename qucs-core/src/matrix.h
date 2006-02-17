@@ -1,7 +1,7 @@
 /*
  * matrix.h - matrix class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.16 2005-10-27 09:57:31 raimi Exp $
+ * $Id: matrix.h,v 1.17 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -26,6 +26,10 @@
 #define __MATRIX_H__
 
 class vector;
+class matrix;
+
+// other operations
+matrix eye (int);
 
 class matrix
 {
@@ -69,7 +73,6 @@ class matrix
   friend matrix real (matrix);
   friend matrix imag (matrix);
   friend matrix eye (int, int);
-  friend matrix eye (int);
   friend matrix diagonal (vector);
   friend complex cofactor (matrix, int, int);
   friend complex detLaplace (matrix);

@@ -1,7 +1,7 @@
 /*
  * complex.h - complex number class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.19 2005-10-27 09:57:31 raimi Exp $
+ * $Id: complex.h,v 1.20 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -28,6 +28,26 @@
 #ifdef log2
 #undef log2
 #endif
+
+class complex;
+
+// create a complex object given rectangle coordinates
+complex rect (const nr_double_t x, const nr_double_t y = 0.0);
+  
+// create a complex object given polar coordinates
+complex polar (const nr_double_t mag, const nr_double_t ang = 0.0);
+			
+// complex manipulations
+nr_double_t  real (const nr_double_t);
+nr_double_t  imag (const nr_double_t);
+nr_double_t  norm (const nr_double_t);
+nr_double_t  conj (const nr_double_t);
+
+// overloaded math functions
+nr_double_t xhypot (const nr_double_t, const nr_double_t);
+nr_double_t    abs (const nr_double_t);
+nr_double_t   sign (const nr_double_t);
+nr_double_t   sinc (const nr_double_t);
 
 class complex
 {
@@ -39,22 +59,18 @@ class complex
   complex ();
   complex (const complex&);
 		
-  // create a complex object given polar coordinates
-  friend complex polar (const nr_double_t mag, const nr_double_t ang = 0.0);
-			
-  // create a complex object given rectangle coordinates
-  friend complex rect (const nr_double_t x, const nr_double_t y = 0.0);
-  
   // complex manipulations
-  friend nr_double_t  real (const complex);  // the real part
-  friend nr_double_t  real (nr_double_t);
-  friend nr_double_t  imag (const complex);  // the imaginary part
-  friend nr_double_t  imag (nr_double_t);
-  friend complex      conj (const complex);  // the complex conjugate
-  friend nr_double_t  conj (nr_double_t);
-  friend nr_double_t  norm (const complex);  // the square of the magnitude
-  friend nr_double_t  norm (nr_double_t);
-  friend nr_double_t  arg  (const complex);  // the angle in the plane
+  friend nr_double_t arg  (const complex);  // the angle in the plane
+  friend nr_double_t real (const complex);  // the real part
+  friend nr_double_t imag (const complex);  // the imaginary part
+  friend nr_double_t norm (const complex);  // the square of the magnitude
+  friend complex     conj (const complex);  // the complex conjugate
+
+  nr_double_t norm (void);  // the square of the magnitude
+  nr_double_t real (void);  // the real part
+  nr_double_t imag (void);  // the imaginary part
+  complex     conj (void);  // the complex conjugate
+  nr_double_t abs  (void);  // the magnitude
 
   // overloaded math functions
   friend nr_double_t     dB (const complex);
@@ -64,11 +80,9 @@ class complex
   friend complex      log10 (const complex);
   friend complex       log2 (const complex);
   friend complex      floor (const complex);
-  friend complex        pow (const complex, nr_double_t);
-  friend complex        pow (nr_double_t, const complex);
+  friend complex        pow (const complex, const nr_double_t);
+  friend complex        pow (const nr_double_t, const complex);
   friend complex        pow (const complex, const complex);
-  friend nr_double_t    abs (const complex);
-  friend nr_double_t    abs (nr_double_t);
   friend complex        sin (const complex);
   friend complex     arcsin (const complex);
   friend complex        cos (const complex);
@@ -89,11 +103,9 @@ class complex
   friend complex       rtoz (const complex, complex zref = 50.0);
   friend complex       ytor (const complex, complex zref = 50.0);
   friend complex       rtoy (const complex, complex zref = 50.0);
+  friend nr_double_t    abs (const complex);
   friend complex       sign (const complex);
-  friend nr_double_t   sign (const nr_double_t);
   friend complex       sinc (const complex);
-  friend nr_double_t   sinc (const nr_double_t);
-  friend nr_double_t xhypot (const nr_double_t, const nr_double_t);
   friend nr_double_t xhypot (const complex, const complex);
 
   // operator functions

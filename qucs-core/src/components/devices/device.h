@@ -1,7 +1,7 @@
 /*
  * device.h - device class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.h,v 1.14 2005-12-20 08:47:10 raimi Exp $
+ * $Id: device.h,v 1.15 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -29,11 +29,10 @@ class circuit;
 class node;
 class net;
 
-class device
-{
- public:
+namespace device {
+
   // creates external resistor circuit
-  friend circuit *
+  circuit *
     splitResistor (
       circuit * base, // calling circuit (this)
       circuit * res,  // additional resistor circuit (can be NULL)
@@ -42,14 +41,14 @@ class device
       int internal);  // number of new node (the original external node)
 
   // removes external resistor circuit
-  friend void
+  void
     disableResistor (
       circuit * base, // calling circuit (this)
       circuit * res,  // additional resistor circuit
       int internal);  // number of new node (the original external node)
 
   // creates external capacitor circuit
-  friend circuit *
+  circuit *
     splitCapacitor (
       circuit * base, // calling circuit (this)
       circuit * cap,  // additional capacitor circuit (can be NULL)
@@ -58,18 +57,18 @@ class device
       node * n2);     // second node of new capacitor
 
   // removes external capacitor circuit
-  friend void
+  void
     disableCapacitor (
       circuit * base, // calling circuit (this)
       circuit * cap); // additional capacitor circuit
 
   // checks whether circuit is enabled
-  friend int
+  int
     deviceEnabled (
       circuit * c); // circuit to be checked
 
   // computes current and its derivative for a MOS pn-junction
-  friend void
+  void
     pnJunctionMOS (
       nr_double_t Upn, // pn-voltage
       nr_double_t Iss, // saturation current
@@ -78,7 +77,7 @@ class device
       nr_double_t& g); // result derivative
 
   // computes current and its derivative for a bipolar pn-junction
-  friend void
+  void
     pnJunctionBIP (
       nr_double_t Upn, // pn-voltage
       nr_double_t Iss, // saturation current
@@ -87,7 +86,7 @@ class device
       nr_double_t& g); // result derivative
 
   // limits the forward pn-voltage
-  friend nr_double_t
+  nr_double_t
      pnVoltage (
        nr_double_t Ud,     // current pn-voltage
        nr_double_t Uold,   // previous pn-voltage
@@ -95,21 +94,21 @@ class device
        nr_double_t Ucrit); // critical voltage
 
   // computes the exponential pn-junction current
-  friend nr_double_t
+  nr_double_t
     pnCurrent (
       nr_double_t Upn,  // pn-voltage
       nr_double_t Iss,  // saturation current
       nr_double_t Ute); // temperature voltage
 
   // computes the exponential pn-junction current's derivative
-  friend nr_double_t
+  nr_double_t
     pnConductance (
       nr_double_t Upn,  // pn-voltage
       nr_double_t Iss,  // saturation current
       nr_double_t Ute); // temperature voltage
 
   // computes pn-junction depletion capacitance
-  friend nr_double_t
+  nr_double_t
     pnCapacitance (
       nr_double_t Uj,  // pn-voltage
       nr_double_t Cj,  // zero-bias capacitance
@@ -118,7 +117,7 @@ class device
       nr_double_t Fc); // forward-bias coefficient
 
   // computes pn-junction depletion charge
-  friend nr_double_t
+  nr_double_t
     pnCharge (
       nr_double_t Uj,  // pn-voltage
       nr_double_t Cj,  // zero-bias capacitance
@@ -127,7 +126,7 @@ class device
       nr_double_t Fc); // forward-bias coefficient
 
   // computes pn-junction depletion capacitance
-  friend nr_double_t
+  nr_double_t
     pnCapacitance (
       nr_double_t Uj,  // pn-voltage
       nr_double_t Cj,  // zero-bias capacitance
@@ -135,7 +134,7 @@ class device
       nr_double_t Mj); // grading coefficient
 
   // computes pn-junction depletion charge
-  friend nr_double_t
+  nr_double_t
     pnCharge (
       nr_double_t Uj,  // pn-voltage
       nr_double_t Cj,  // zero-bias capacitance
@@ -143,26 +142,26 @@ class device
       nr_double_t Mj); // grading coefficient
 
   // compute critical voltage of pn-junction
-  friend nr_double_t
+  nr_double_t
     pnCriticalVoltage (
       nr_double_t Iss,  // saturation current
       nr_double_t Ute); // temperature voltage
 
   // limits the forward fet-voltage
-  friend nr_double_t
+  nr_double_t
     fetVoltage (
       nr_double_t Ufet, // current fet voltage
       nr_double_t Uold, // previous fet voltage
       nr_double_t Uth); // threshold voltage
 
   // limits the drain-source voltage
-  friend nr_double_t
+  nr_double_t
     fetVoltageDS (
       nr_double_t Ufet,  // current fet voltage
       nr_double_t Uold); // previous fet voltage
 
   // calculates the overlap capacitance for mosfet (meyer model)
-  friend void
+  void
     fetCapacitanceMeyer (
       nr_double_t Ugs,   // gate-source voltage
       nr_double_t Ugd,   // gate-drain voltage
@@ -175,19 +174,19 @@ class device
       nr_double_t& Cgb); // resulting gate-bulk capacitance
 
   // computes temperature dependency of energy bandgap
-  friend nr_double_t
+  nr_double_t
     Egap (
       nr_double_t T,            // temperature
       nr_double_t Eg0 = Eg0Si); // bandgap at 0K
 
   // computes temperature dependency of intrinsic density
-  friend nr_double_t
+  nr_double_t
     intrinsicDensity (
       nr_double_t T,            // temperature
       nr_double_t Eg0 = Eg0Si); // bandgap at 0K
 
   // calculates temperature dependence for saturation current
-  friend nr_double_t
+  nr_double_t
     pnCurrent_T (
       nr_double_t T1,       // reference temperature
       nr_double_t T2,       // temperature
@@ -197,7 +196,7 @@ class device
       nr_double_t Xti = 0); // temperature coefficient
 
   // calculates temperature dependence for junction potential
-  friend nr_double_t
+  nr_double_t
     pnPotential_T (
       nr_double_t T1,           // reference temperature
       nr_double_t T2,           // temperature
@@ -205,7 +204,7 @@ class device
       nr_double_t Eg0 = Eg0Si); // bandgap at 0K
 
   // calculates temperature dependence for junction capacitance
-  friend nr_double_t
+  nr_double_t
     pnCapacitance_T (
       nr_double_t T1,  // reference temperature
       nr_double_t T2,  // temperature
@@ -214,13 +213,13 @@ class device
       nr_double_t Cj); // zero-bias capacitance
 
   // calculates temperature dependence for junction capacitance
-  friend nr_double_t
+  nr_double_t
     pnCapacitance_F (
       nr_double_t T1,  // reference temperature
       nr_double_t T2,  // temperature
       nr_double_t M,   // grading coefficient
       nr_double_t VR); // built-in potential ratio: Vj(T2) / Vj(T1)
 
-};
+} // namespace
 
 #endif /* __DEVICE_H__ */

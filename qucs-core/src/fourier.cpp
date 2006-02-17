@@ -1,7 +1,7 @@
 /*
  * fourier.cpp - fourier transformation class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.2 2005-10-24 09:10:25 raimi Exp $
+ * $Id: fourier.cpp,v 1.3 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -40,10 +40,12 @@
 // Helper macro.
 #define Swap(a,b) { nr_double_t t; t = a; a = b; b = t; }
 
+using namespace fourier;
+
 /* The function performs a 1-dimensional fast fourier transformation.
    Each data item is meant to be defined in equidistant steps.  The
    number of data items needs to be of binary size, e.g. 64, 128. */
-void _fft_1d (nr_double_t * data, int len, int isign) {
+void fourier::_fft_1d (nr_double_t * data, int len, int isign) {
 
   // bit reversal method
   int i, j, m, n;
@@ -95,7 +97,7 @@ void _fft_1d (nr_double_t * data, int len, int isign) {
    on the given vector 'var'.  If 'sign' is -1 the inverse fft is
    computed, if +1 the fft itself is computed.  It returns a vector of
    binary size (as necessary for a fft). */
-vector fft_1d (vector var, int isign) {
+vector fourier::fft_1d (vector var, int isign) {
   int i, n, len = var.getSize ();
 
   // compute necessary binary data array size
@@ -127,7 +129,7 @@ vector fft_1d (vector var, int isign) {
 /* The function performs a 1-dimensional discrete fourier
    transformation.  Each data item is meant to be defined in
    equidistant steps. */
-void _dft_1d (nr_double_t * data, int len, int isign) {
+void fourier::_dft_1d (nr_double_t * data, int len, int isign) {
   int k, n, size = 2 * len * sizeof (nr_double_t);
   nr_double_t * res = (nr_double_t *) calloc (size, 1);
   nr_double_t theta, c, s;
@@ -147,7 +149,7 @@ void _dft_1d (nr_double_t * data, int len, int isign) {
 /* The function performs a 1-dimensional discrete fourier
    transformation on the given vector 'var'.  If 'sign' is -1 the
    inverse dft is computed, if +1 the dft itself is computed. */
-vector dft_1d (vector var, int isign) {
+vector fourier::dft_1d (vector var, int isign) {
   int k, n, len = var.getSize ();
   vector res = vector (len);
   for (n = 0; n < len; n++) {
@@ -158,4 +160,18 @@ vector dft_1d (vector var, int isign) {
     res (n) = isign > 0 ? val / len : val;
   }
   return res;
+}
+
+// Helper functions.
+vector fourier::ifft_1d (vector var) {
+  return fft_1d (var, -1);
+}
+vector fourier::idft_1d (vector var) {
+  return dft_1d (var, -1);
+}
+void fourier::_ifft_1d (nr_double_t * data, int len) {
+  _fft_1d (data, len, -1);
+}
+void fourier::_idft_1d (nr_double_t * data, int len) {
+  _dft_1d (data, len, -1);
 }

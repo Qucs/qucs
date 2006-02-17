@@ -1,7 +1,7 @@
 /*
  * vector.h - vector class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.19 2005-10-31 16:15:31 ela Exp $
+ * $Id: vector.h,v 1.20 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -34,6 +34,10 @@
 
 class complex;
 class strlist;
+class vector;
+
+vector linspace (nr_double_t, nr_double_t, int);
+vector logspace (nr_double_t, nr_double_t, int);
 
 class vector : public object
 {
@@ -68,9 +72,6 @@ class vector : public object
   friend complex sum  (vector);
   friend complex prod (vector);
   friend complex avg  (vector);
-
-  friend vector linspace (nr_double_t, nr_double_t, int);
-  friend vector logspace (nr_double_t, nr_double_t, int);
 
   // vector manipulations
   friend vector real   (vector);  // the real part

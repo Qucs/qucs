@@ -1,7 +1,7 @@
 /*
  * trsolver.cpp - transient solver class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.40 2005-10-31 16:15:31 ela Exp $
+ * $Id: trsolver.cpp,v 1.41 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -49,6 +49,8 @@
 
 #define dState 0 // delta T state
 #define sState 1 // solution state
+
+using namespace transient;
 
 // Constructor creates an unnamed instance of the trsolver class.
 trsolver::trsolver ()

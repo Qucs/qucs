@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.30 2006-01-30 07:45:34 raimi Exp $
+ * $Id: diode.cpp,v 1.31 2006-02-17 07:24:06 raimi Exp $
  *
  */
 
@@ -44,6 +44,8 @@
 
 #define NODE_C 0 /* cathode node */
 #define NODE_A 1 /* anode node   */
+
+using namespace device;
 
 diode::diode () : circuit (2) {
   rs = NULL;
