@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.41 2006-02-17 07:24:06 raimi Exp $
+ * $Id: trsolver.cpp,v 1.42 2006-02-20 18:02:11 raimi Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "net.h"
 #include "analysis.h"
 #include "nasolver.h"
+#include "history.h"
 #include "trsolver.h"
 #include "transient.h"
 #include "exception.h"
@@ -59,6 +60,7 @@ trsolver::trsolver ()
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
+  tHistory = new history ();
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -68,12 +70,14 @@ trsolver::trsolver (char * n)
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
+  tHistory = new history ();
 }
 
 // Destructor deletes the trsolver class object.
 trsolver::~trsolver () {
   if (swp) delete swp;
   for (int i = 0; i < 8; i++) if (solution[i] != NULL) delete solution[i];
+  if (tHistory) delete tHistory;
 }
 
 /* The copy constructor creates a new instance of the trsolver class
@@ -270,6 +274,14 @@ void trsolver::solve (void) {
 
       // Tell integrators to be running.
       setMode (MODE_NONE);
+
+      // Initialize or update history.
+      if (running > 1) {
+	updateHistory (saveCurrent);
+      }
+      else {
+	initHistory (saveCurrent);
+      }
     }
     while (saveCurrent < time); // Hit a requested time point?
     
@@ -292,6 +304,53 @@ void trsolver::solve (void) {
   logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
 	    "%d non-convergences\n", getName (),
 	    (double) statIterations / statSteps, statConvergence);
+}
+
+// The function initializes the history.
+void trsolver::initHistory (nr_double_t t) {
+  // initialize time vector
+  tHistory->append (t);
+  tHistory->self ();
+  // initialize circuit histories
+  nr_double_t age = 0.0;
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->hasHistory ()) {
+      c->applyHistory (tHistory);
+      saveHistory (c);
+      if (c->getHistoryAge () > age) age = c->getHistoryAge ();
+    }
+  }
+  // set maximum required age for all circuits
+  tHistory->setAge (age);
+}
+
+/* The following function updates the histories for the circuits which
+   requested them. */
+void trsolver::updateHistory (nr_double_t t) {
+  // update time vector
+  tHistory->append (t);
+  // update circuit histories
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->hasHistory ()) saveHistory (c);
+  }
+}
+
+// Stores node voltages and branch currents in the given circuits history.
+void trsolver::saveHistory (circuit * c) {
+  int N = countNodes ();
+  int r, i, s = c->getSize ();
+  for (i = 0; i < s; i++) {
+    // save node voltages
+    r = findAssignedNode (c, i);
+    c->appendHistory (i, x->get (r));
+  }
+  for (i = 0; i < c->getVoltageSources (); i++) {
+    // save branch currents
+    r = c->getVoltageSource () + i;
+    c->appendHistory (i + s, x->get (r + N));
+  }
 }
 
 /* This function predicts a start value for the solution vector for
@@ -625,7 +684,7 @@ nr_double_t trsolver::checkDelta (void) {
     
     // skip real voltage sources
     if (r >= N) {
-      if (findVoltageSource (r - N)->isVSource ())
+      if (findVoltageSource(r - N)->isVSource ())
 	continue;
     }
 

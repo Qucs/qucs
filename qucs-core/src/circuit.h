@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.45 2006-02-17 07:24:06 raimi Exp $
+ * $Id: circuit.h,v 1.46 2006-02-20 18:02:11 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@ enum circuit_flag {
   CIRCUIT_INTVSOURCE  = 32,
   CIRCUIT_VARSIZE     = 64,
   CIRCUIT_PROBE       = 128,
+  CIRCUIT_HISTORY     = 256,
 };
 
 #define NODE_1 0
@@ -56,6 +57,7 @@ class operatingpoint;
 class characteristic;
 class matrix;
 class net;
+class history;
 
 #include "integrator.h"
 #include "valuelist.h"
@@ -129,6 +131,17 @@ class circuit : public object, public integrator
 			     nr_double_t);
   void setDelta (nr_double_t * d) { deltas = d; }
   nr_double_t * getDelta (void) { return deltas; }
+
+  // history specific functionality
+  bool hasHistory (void) { return RETFLAG (CIRCUIT_HISTORY); }
+  void setHistory (bool h) { MODFLAG (h, CIRCUIT_HISTORY); }
+  void initHistory (nr_double_t);
+  void deleteHistory (void);
+  void appendHistory (int, nr_double_t);
+  void applyHistory (history *);
+  nr_double_t getV (int, nr_double_t);
+  nr_double_t getJ (int, nr_double_t);
+  nr_double_t getHistoryAge (void);
 
   // s-parameter helpers
   int  getPort (void) { return pacport; }
@@ -241,6 +254,7 @@ class circuit : public object, public integrator
   valuelist<characteristic> charac;
   net * subnet;
   nr_double_t * deltas;
+  history * histories;
 };
 
 #endif /* __CIRCUIT_H__ */

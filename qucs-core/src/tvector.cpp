@@ -1,7 +1,7 @@
 /*
  * tvector.cpp - simple vector template class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.12 2005-06-27 14:18:08 raimi Exp $
+ * $Id: tvector.cpp,v 1.13 2006-02-20 18:02:11 raimi Exp $
  *
  */
 
@@ -47,7 +47,7 @@
 template <class nr_type_t>
 tvector<nr_type_t>::tvector () {
   external = 0;
-  size = 0;
+  capacity = size = 0;
   data = NULL;
 }
 
@@ -56,7 +56,7 @@ tvector<nr_type_t>::tvector () {
 template <class nr_type_t>
 tvector<nr_type_t>::tvector (int s)  {
   external = 0;
-  size = s;
+  capacity = size = s;
   if (s > 0) {
     data = new nr_type_t[s];
     memset (data, 0, sizeof (nr_type_t) * s);
@@ -70,6 +70,7 @@ template <class nr_type_t>
 tvector<nr_type_t>::tvector (const tvector & v) {
   external = 0;
   size = v.size;
+  capacity = v.capacity;
   data = NULL;
 
   // copy tvector elements
@@ -86,6 +87,7 @@ const tvector<nr_type_t>&
 tvector<nr_type_t>::operator=(const tvector<nr_type_t> & v) {
   if (&v != this) {
     size = v.size;
+    capacity = v.capacity;
     if (data && !external) { delete[] data; data = NULL; }
     external = 0;
     if (size > 0) {
@@ -126,6 +128,34 @@ void tvector<nr_type_t>::set (nr_type_t z, int start, int stop) {
   for (int i = start; i < stop; i++) data[i] = z;
 }
 
+// Appends the given value to the tvector.
+template <class nr_type_t>
+void tvector<nr_type_t>::add (nr_type_t z) {
+  if (size >= capacity) {
+    if (data) {
+      // double the vectors capacity
+      capacity *= 2;
+      data = (nr_type_t *) realloc (data, capacity * sizeof (nr_type_t));
+    }
+    else {
+      // initial capacity
+      capacity = 4;
+      data = (nr_type_t *) malloc (capacity * sizeof (nr_type_t));
+    }
+  }
+  data[size++] = z;
+}
+
+// Rejects the given number of values in the tvector.
+template <class nr_type_t>
+void tvector<nr_type_t>::drop (int n) {
+  if (n < size) {
+    for (int i = 0; i < size - n; i++) data[i] = data[i + n];
+    size -= n;
+  }
+  else size = 0;
+}
+
 // Copies the specified elements from the given tvector.
 template <class nr_type_t>
 void tvector<nr_type_t>::set (tvector<nr_type_t> a, int start, int stop) {
@@ -138,7 +168,7 @@ void tvector<nr_type_t>::setData (nr_type_t * d, int len) {
   if (data && !external) delete[] data;
   external = 1;
   data = d;
-  size = len;
+  capacity = size = len;
 }
 
 // The function swaps the given rows with each other.

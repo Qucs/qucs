@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.20 2006-01-30 07:45:34 raimi Exp $
+ * $Id: nasolver.h,v 1.21 2006-02-20 18:02:11 raimi Exp $
  *
  */
 
@@ -69,6 +69,7 @@ class nasolver : public analysis
  protected:
   void savePreviousIteration (void);
   int  countNodes (void);
+  int  findAssignedNode (circuit *, int);
   int  countVoltageSources (void);
   void saveSolution (void);
   circuit * findVoltageSource (int);
