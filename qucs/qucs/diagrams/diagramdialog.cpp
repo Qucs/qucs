@@ -169,6 +169,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     PropertyBox->insertItem(tr("real/imaginary"));
     PropertyBox->insertItem(tr("magnitude/angle (degree)"));
     PropertyBox->insertItem(tr("magnitude/angle (radian)"));
+    PropertyBox->setCurrentItem(1);
     connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
 

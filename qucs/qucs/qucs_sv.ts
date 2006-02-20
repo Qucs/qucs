@@ -134,6 +134,10 @@
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -2912,7 +2916,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>type of the port</source>
-        <translation>portens typ</translation>
+        <translation type="obsolete">portens typ</translation>
     </message>
     <message>
         <source>Truth Table</source>
@@ -2940,7 +2944,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation>FEL: Ingen simulering specificerad på denna sida.</translation>
+        <translation type="obsolete">FEL: Ingen simulering specificerad på denna sida.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
@@ -3104,6 +3108,30 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">2-ports S-parameterfil</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3566,31 +3594,31 @@ Vill du spara dessa innan filen stängs?</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE nätlista</translation>
+        <translation type="obsolete">SPICE nätlista</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-ports S-parameterfil</translation>
+        <translation type="obsolete">1-ports S-parameterfil</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-ports S-parameterfil</translation>
+        <translation type="obsolete">2-ports S-parameterfil</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-ports S-parameterfil</translation>
+        <translation type="obsolete">3-ports S-parameterfil</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-ports S-parameterfil</translation>
+        <translation type="obsolete">4-ports S-parameterfil</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-ports S-parameterfil</translation>
+        <translation type="obsolete">5-ports S-parameterfil</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-ports S-parameterfil</translation>
+        <translation type="obsolete">6-ports S-parameterfil</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -5472,6 +5500,30 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

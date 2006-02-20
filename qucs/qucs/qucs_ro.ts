@@ -133,6 +133,10 @@
         <source>inductors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3066,10 +3070,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>type of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timing Diagram</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3103,10 +3103,6 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No simulation specified on this page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3271,6 +3267,30 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">Fisier parametrii S 2-port</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3740,27 +3760,27 @@ Erori:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>Fisier parametrii S 1-port</translation>
+        <translation type="obsolete">Fisier parametrii S 1-port</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>Fisier parametrii S 2-port</translation>
+        <translation type="obsolete">Fisier parametrii S 2-port</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>Fisier parametrii S 3-port</translation>
+        <translation type="obsolete">Fisier parametrii S 3-port</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>Fisier parametrii S 4-port</translation>
+        <translation type="obsolete">Fisier parametrii S 4-port</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>Fisier parametrii S 5-port</translation>
+        <translation type="obsolete">Fisier parametrii S 5-port</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>Fisier parametrii S 6-port</translation>
+        <translation type="obsolete">Fisier parametrii S 6-port</translation>
     </message>
     <message>
         <source>Line</source>
@@ -3931,10 +3951,6 @@ Editează această schemă</translation>
     <message>
         <source>permanently! Continue ?</source>
         <translation>definitiv! Continuaţi?</translation>
-    </message>
-    <message>
-        <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>file components</source>
@@ -5809,6 +5825,30 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

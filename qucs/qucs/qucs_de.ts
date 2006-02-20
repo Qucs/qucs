@@ -134,6 +134,10 @@
         <source>inductors</source>
         <translation>Spulen</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3285,7 +3289,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>type of the port</source>
-        <translation>Art des Tores</translation>
+        <translation type="obsolete">Art des Tores</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
@@ -3317,7 +3321,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation>FEHLER: Auf der Seite wurde keine Simulation spezifiziert.</translation>
+        <translation type="obsolete">FEHLER: Auf der Seite wurde keine Simulation spezifiziert.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
@@ -3490,6 +3494,30 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>relative permittivity of dielectric</source>
         <translation>relative Permittivität des Dielektrikums</translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">2-Tor S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4399,31 +4427,31 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE Netzliste</translation>
+        <translation type="obsolete">SPICE Netzliste</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">1-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">2-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">3-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">4-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">5-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-Tor S-Parameter Datei</translation>
+        <translation type="obsolete">6-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -7929,6 +7957,30 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

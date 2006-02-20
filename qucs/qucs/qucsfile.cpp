@@ -899,7 +899,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
-  int i, z;
+  int i, z, Collect_count = Collect.count();;
   QString s;
   // TODO: NodeSets have to be put into the subcircuit block.
   if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
@@ -918,11 +918,10 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
       (*it) = pc->Ports.getFirst()->Connection->Name;
       if(NumPorts >= 0) {
         (*it) += ": ";
-        switch(pc->Props.at(1)->Value.at(0).latin1()) {
-          case 'o' : (*it) += "out"; break;
-          case 'i' : (*it) += "in";  break;
-          default  : (*it) += "inout";
-        }
+        if(pc->Props.at(1)->Value.at(0).latin1() == 'a')
+          (*it) += "inout";
+        else
+          (*it) += pc->Props.at(1)->Value;
         (*it) += " bit";
       }
     }
@@ -937,7 +936,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
     for(it = sl.begin(); it != sl.end(); it++)
       Signals.remove(Signals.find((*it).section(':',0,0)));
 
-    for(it = Collect.begin(); it != Collect.end(); )
+    for(it = Collect.at(Collect_count); it != Collect.end(); )
       if((*it).left(4) == "use ") {  // output all subcircuit uses
         (*stream) << (*it);
         it = Collect.remove(it);
@@ -1024,17 +1023,24 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
 
   if((allTypes & isAnalogComponent) == 0) {
     if(allTypes == 0) {
-      ErrText->insert(
+/*      ErrText->insert(
          QObject::tr("ERROR: No simulation specified on this page."));
-      return -10;
-    }
-    else if(NumPorts < 1) {
-      ErrText->insert(
-         QObject::tr("ERROR: Digital simulation needs at least one digital source."));
-      return -10;
-    }
+      return -10;*/
 
-    if(!isTruthTable)  NumPorts = 0;
+      // If no simulation exists, assume analog simulation. There may
+      // be a simulation within a SPICE file. Otherwise Qucsator will
+      // output an error.
+      allTypes |= isAnalogComponent;
+      NumPorts = -1;
+    }
+    else {
+      if(NumPorts < 1) {
+        ErrText->insert(
+           QObject::tr("ERROR: Digital simulation needs at least one digital source."));
+        return -10;
+      }
+      if(!isTruthTable)  NumPorts = 0;
+    }
   }
   else NumPorts = -1;
 

@@ -133,6 +133,10 @@
         <source>inductors</source>
         <translation>コイル</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3028,10 +3032,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>type of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timing Diagram</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3057,10 +3057,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No simulation specified on this page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3233,6 +3229,30 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">2-ポート Sパラメータファイル</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3742,27 +3762,27 @@ Errors occured during simulation on </source>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">1-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">2-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">3-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">4-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">5-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">6-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>Cartesian</source>
@@ -3862,7 +3882,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICEネットリスト</translation>
+        <translation type="obsolete">SPICEネットリスト</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -5716,6 +5736,30 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

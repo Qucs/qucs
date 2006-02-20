@@ -134,6 +134,10 @@
         <source>inductors</source>
         <translation>tekercsek</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3052,7 +3056,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>type of the port</source>
-        <translation>kivezetés típusa</translation>
+        <translation type="obsolete">kivezetés típusa</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
@@ -3092,7 +3096,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation>HIBA: Nincs szimulácó megadva ezen az oldalon.</translation>
+        <translation type="obsolete">HIBA: Nincs szimulácó megadva ezen az oldalon.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
@@ -3256,6 +3260,30 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">2-csatlakozós S paraméter fájl</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3811,27 +3839,27 @@ Hibák:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">1-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">2-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">3-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">4-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">5-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-csatlakozós S paraméter fájl</translation>
+        <translation type="obsolete">6-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>Cartesian</source>
@@ -3919,7 +3947,7 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE kötéslista</translation>
+        <translation type="obsolete">SPICE kötéslista</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
@@ -5867,6 +5895,30 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

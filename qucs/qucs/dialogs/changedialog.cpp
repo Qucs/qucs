@@ -154,13 +154,15 @@ void ChangeDialog::slotButtReplace()
   QHBox *Dia_h = new QHBox(Dia);
   Dia_h->setSpacing(5);
   Dia_All->addWidget(Dia_h);
-  connect(new QPushButton(tr("Yes"), Dia_h), SIGNAL(clicked()),
+  QPushButton *YesButton = new QPushButton(tr("Yes"), Dia_h);
+  connect(YesButton, SIGNAL(clicked()),
 	  Dia, SLOT(accept()));
   connect(new QPushButton(tr("Cancel"), Dia_h), SIGNAL(clicked()),
 	  Dia, SLOT(reject()));
 
 
   QPtrList<QCheckBox> pList;
+  QCheckBox * pb;
   Component * pc;
   // search through all components
   for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
@@ -168,16 +170,23 @@ void ChangeDialog::slotButtReplace()
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
           if(pp->Name == PropNameEdit->currentText()) {
-            pList.append(new QCheckBox(pc->Name, Dia_Box));
-            pList.current()->setChecked(true);
+            pb = new QCheckBox(pc->Name, Dia_Box);
+            pList.append(pb);
+            pb->setChecked(true);
             break;
           }
     }
   }
-  
-  if(!pList.isEmpty())
-    Dia_Scroll->viewport()->setPaletteBackgroundColor(
-        pList.current()->paletteBackgroundColor());
+
+  QColor theColor;
+  if(pList.isEmpty()) {
+    YesButton->setEnabled(false);
+    theColor =
+       (new QLabel(tr("No match found!"), Dia_Box))->paletteBackgroundColor();
+  }
+  else  theColor = pList.current()->paletteBackgroundColor();
+
+  Dia_Scroll->viewport()->setPaletteBackgroundColor(theColor);
   Dia->resize(50, 300);
 
 
@@ -188,20 +197,40 @@ void ChangeDialog::slotButtReplace()
 
   bool changed = false;
   // change property values
-  pList.first();
-  for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
-    if(matches(pc->Model)) {
-      if(Expr.search(pc->Name) >= 0)
-        for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
-          if(pp->Name == PropNameEdit->currentText())
-            if(pList.current()->isChecked()) {
-              pp->Value = NewValueEdit->text();
-              pc->recreate(Doc);  // apply changes to schematic symbol
-              pList.next();
-              changed = true;
-              break;
-            }
-            else pList.next();
+  for(pb = pList.first(); pb!=0; pb = pList.next()) {
+    if(!pb->isChecked())  continue;
+
+    for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
+      if(pb->text() != pc->Name)  continue;
+
+      for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next()) {
+        if(pp->Name != PropNameEdit->currentText())  continue;
+
+        int tx_Dist, ty_Dist, tmp;
+        pc->TextSize(tx_Dist, ty_Dist);
+        tmp = pc->tx+tx_Dist - pc->x1;
+        if((tmp > 0) || (tmp < -6))  tx_Dist = 0; // remember text position
+        tmp = pc->ty+ty_Dist - pc->y1;
+        if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
+
+        pp->Value = NewValueEdit->text();
+
+        int dx, dy;
+        pc->TextSize(dx, dy);   // correct text position
+        if(tx_Dist != 0) {
+          pc->tx += tx_Dist-dx;
+          tx_Dist = dx;
+        }
+        if(ty_Dist != 0) {
+          pc->ty += ty_Dist-dy;
+          ty_Dist = dy;
+        }
+
+        Doc->recreateComponent(pc);  // apply changes to schematic symbol
+        changed = true;
+        break;
+      }
+      break;
     }
   }
 
