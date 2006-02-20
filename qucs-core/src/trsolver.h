@@ -1,7 +1,7 @@
 /*
  * trsolver.h - transient solver class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.19 2005/10/27 09:57:31 raimi Exp $
+ * $Id: trsolver.h,v 1.20 2006/02/20 18:02:11 raimi Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 
 class sweep;
 class circuit;
+class history;
 
 class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
 {
@@ -55,6 +56,9 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void saveAllResults (nr_double_t);
   nr_double_t checkDelta (void);
   void updateCoefficients (nr_double_t);
+  void initHistory (nr_double_t);
+  void updateHistory (nr_double_t);
+  void saveHistory (circuit *);
   void predictBashford (void);
   void predictEuler (void);
   void predictGear (void);
@@ -87,6 +91,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int statRejected;
   int statIterations;
   int statConvergence;
+  history * tHistory;
 };
 
 #endif /* __TRSOLVER_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.41 2006/02/06 09:50:15 raimi Exp $
+ * $Id: nasolver.cpp,v 1.42 2006/02/20 18:02:11 raimi Exp $
  *
  */
 
@@ -790,6 +790,22 @@ void nasolver<nr_type_t>::createZVector (void) {
 template <class nr_type_t>
 int nasolver<nr_type_t>::countNodes (void) {
   return nlist->length () - 1;
+}
+
+/* The function returns the assigned node number for the port of the
+   given circuits.  It returns -1 if there is no such node. */
+template <class nr_type_t>
+int nasolver<nr_type_t>::findAssignedNode (circuit * c, int port) {
+  int N = countNodes ();
+  struct nodelist_t * n;
+  for (int r = 0; r < N; r++) {
+    n = nlist->getNode (r);
+    for (int i = 0; i < n->nNodes; i++)
+      if (c == n->nodes[i]->getCircuit ())
+	if (port == n->nodes[i]->getPort ())
+	  return r;
+  }
+  return -1;
 }
 
 // Returns the number of voltage sources in the nodelist.

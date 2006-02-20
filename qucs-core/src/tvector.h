@@ -1,7 +1,7 @@
 /*
  * tvector.h - simple vector template class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.h,v 1.15 2005/06/27 14:18:08 raimi Exp $
+ * $Id: tvector.h,v 1.16 2006/02/20 18:02:11 raimi Exp $
  *
  */
 
@@ -77,6 +77,8 @@ class tvector
   int  getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }
   void setData (nr_type_t *, int);
+  void add (nr_type_t);
+  void drop (int);
   void exchangeRows (int, int);
   int  isFinite (void);
   void print (void);
@@ -119,6 +121,7 @@ class tvector
  private:
   int external;
   int size;
+  int capacity;
   nr_type_t * data;
 };
 
