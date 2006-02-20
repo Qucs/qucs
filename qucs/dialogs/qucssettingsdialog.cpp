@@ -74,11 +74,12 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
   LanguageCombo->insertItem(tr("Polish")+" (pl)");
   LanguageCombo->insertItem(tr("Romanian")+" (ro)");
   LanguageCombo->insertItem(tr("Japanese")+" (jp)");
-  LanguageCombo->insertItem(tr("Hebrew")+" (he)");
   LanguageCombo->insertItem(tr("Swedish")+" (sv)");
-  LanguageCombo->insertItem(tr("Turkish")+" (tr)");
   LanguageCombo->insertItem(tr("Hungarian")+" (hu)");
+  LanguageCombo->insertItem(tr("Hebrew")+" (he)");
   LanguageCombo->insertItem(tr("Portuguese")+" (pt)");
+  LanguageCombo->insertItem(tr("Turkish")+" (tr)");
+  LanguageCombo->insertItem(tr("Ukrainian")+" (uk)");
   gp->addWidget(LanguageCombo,2,1);
 
   val200 = new QIntValidator(0, 200, this);

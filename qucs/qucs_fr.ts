@@ -134,6 +134,10 @@
         <source>inductors</source>
         <translation>bobines</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3066,7 +3070,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>type of the port</source>
-        <translation>type du port</translation>
+        <translation type="obsolete">type du port</translation>
     </message>
     <message>
         <source>Truth Table</source>
@@ -3094,7 +3098,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation>ERREUR : aucune simulation demandée sur cette page.</translation>
+        <translation type="obsolete">ERREUR : aucune simulation demandée sur cette page.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
@@ -3258,6 +3262,30 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">Fichier de paramètres S quadripôle</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3641,27 +3669,27 @@ Erreurs :
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>Fichier de paramètres S bipôle</translation>
+        <translation type="obsolete">Fichier de paramètres S bipôle</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>Fichier de paramètres S quadripôle</translation>
+        <translation type="obsolete">Fichier de paramètres S quadripôle</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>Fichier de paramètres S hexapôle</translation>
+        <translation type="obsolete">Fichier de paramètres S hexapôle</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>Fichier de paramètres S octopole</translation>
+        <translation type="obsolete">Fichier de paramètres S octopole</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>Fichier de paramètres S décapôle</translation>
+        <translation type="obsolete">Fichier de paramètres S décapôle</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>Fichier de paramètres S dodécapôle</translation>
+        <translation type="obsolete">Fichier de paramètres S dodécapôle</translation>
     </message>
     <message>
         <source>Line</source>
@@ -3921,7 +3949,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>Document Spice</translation>
+        <translation type="obsolete">Document Spice</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -5880,6 +5908,30 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

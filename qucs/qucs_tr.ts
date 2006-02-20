@@ -134,6 +134,10 @@
         <source>Yes</source>
         <translation>Evet</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -1140,7 +1144,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation>HATA: Bu sayfada herhangi bir simulasyon belirtilmedi.</translation>
+        <translation type="obsolete">HATA: Bu sayfada herhangi bir simulasyon belirtilmedi.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
@@ -2706,7 +2710,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>type of the port</source>
-        <translation>portun çeşidi</translation>
+        <translation type="obsolete">portun çeşidi</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -3104,6 +3108,30 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">2 girişli S parametre kütüğü</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3574,31 +3602,31 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE bağlantı listesi</translation>
+        <translation type="obsolete">SPICE bağlantı listesi</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">1 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">2 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">3 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">4 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">5 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6 girişli S parametre kütüğü</translation>
+        <translation type="obsolete">6 girişli S parametre kütüğü</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -5436,6 +5464,30 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
