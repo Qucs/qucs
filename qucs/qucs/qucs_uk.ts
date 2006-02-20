@@ -5188,10 +5188,6 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Roumanian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5217,6 +5213,10 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Ukrainian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
