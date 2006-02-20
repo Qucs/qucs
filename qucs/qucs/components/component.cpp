@@ -616,10 +616,7 @@ QString Component::VHDL_Code(int)
 // -------------------------------------------------------
 QString Component::save()
 {
-  QString s = "<";
-  if(Model.at(0) == '#')
-    s  += Model.mid(1) + QString::number(Ports.count()-1);
-  else s += Model;
+  QString s = "<" + Model;
 
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
@@ -680,18 +677,18 @@ bool Component::load(const QString& _s)
   tty = n.toInt(&ok);
   if(!ok) return false;
 
-if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
-  n  = s.section(' ',7,7);    // mirroredX
-  if(n.toInt(&ok) == 1) mirrorX();  // mirror component
-  if(!ok) return false;
+    n  = s.section(' ',7,7);    // mirroredX
+    if(n.toInt(&ok) == 1) mirrorX();
+    if(!ok) return false;
 
-  n  = s.section(' ',8,8);    // rotated
-  tmp = n.toInt(&ok);
-  if(!ok) return false;
-  for(int z=0; z<tmp; z++) rotate();   // rotate component
+    n  = s.section(' ',8,8);    // rotated
+    tmp = n.toInt(&ok);
+    if(!ok) return false;
+    for(int z=0; z<tmp; z++) rotate();
 
-}
+  }
 
   tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
 
@@ -717,6 +714,11 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 	Props.prev();
       }
     }
+    if(z == 6)  if(counts == 6)     // backward compatible
+      if(Model == "R") {
+        Props.getLast()->Value = n;
+        return true;
+      }
     p1->Value = n;
 
     n  = s.section('"',z,z);    // display
@@ -1061,8 +1063,13 @@ QString GateComponent::VHDL_Code(int NumPorts)
     s += " " + Model.lower() + " " + pp->Connection->Name;   // node names
 
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0)  // delay time
-      s += " after " + Props.current()->Value;
+    if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
+      QString t = Props.current()->Value;
+      if(!VHDL_Time(t, Name))
+        return t;    // time has not VHDL format
+
+      s += " after " + t;
+    }
 
   s += ';';
   return s;
@@ -1239,6 +1246,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ac") c = new Volt_ac();
         else if(cstr == "CCS") c = new VCCS();
         else if(cstr == "CVS") c = new VCVS();
+        else if(cstr == "Probe") c = new vProbe();
         else if(cstr == "noise") c = new Volt_noise();
         else if(cstr == "pulse") c = new vPulse();
         else if(cstr == "rect") c = new vRect();
@@ -1253,8 +1261,10 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ort") c = new SubCirPort();
         else if(cstr == "Shift") c = new Phaseshifter();
         break;
-  case 'S' : if(cstr.left(5) == "Pfile") {
-	       c = new SParamFile(cstr.mid(5).toInt()); }
+  case 'S' : if(cstr == "Pfile") c = new SParamFile();
+        else if(cstr.left(5) == "Pfile") {  // backward compatible
+          c = new SParamFile();
+          c->Props.getLast()->Value = cstr.mid(5); }
         else if(cstr == "ub")   c = new Subcircuit();
         else if(cstr == "UBST") c = new Substrate();
         else if(cstr == "PICE") c = new SpiceFile();

@@ -30,8 +30,8 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   sweep.png tran.png cccs.png ccvs.png vccs.png vcvs.png ac.png cpwshort.png  \
   attenuator.png biast.png circulator.png dcblock.png dcfeed.png diode.png    \
   isolator.png mscorner.png mscross.png msstep.png mstee.png substrate.png    \
-  subport.png spfile1.png spfile2.png spfile3.png spfile4.png spfile5.png     \
-  spfile6.png coplanar.png ellipse.png mscoupled.png gyrator.png cpwgap.png   \
+  subport.png spfile1.png spfile2.png spfile3.png coplanar.png ellipse.png    \
+  mscoupled.png gyrator.png cpwgap.png   \
   pshifter.png iprobe.png noise_current.png noise_volt.png msmbend.png        \
   msopen.png filledellipse.png filledrect.png ac_current.png npn.png pnp.png  \
   nfet.png pfet.png nmosfet.png pmosfet.png dmosfet.png msgap.png npnsub.png  \

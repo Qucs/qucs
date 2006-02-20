@@ -134,6 +134,10 @@
         <source>inductors</source>
         <translation>cewki</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3125,10 +3129,6 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>type of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Truth Table</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3150,10 +3150,6 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No simulation specified on this page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3318,6 +3314,30 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">plik z parameterami S dwuwrotnika</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3705,27 +3725,27 @@ Błędy:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>plik z parameterami S jednowrotnika</translation>
+        <translation type="obsolete">plik z parameterami S jednowrotnika</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>plik z parameterami S dwuwrotnika</translation>
+        <translation type="obsolete">plik z parameterami S dwuwrotnika</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>plik z parameterami S trójwrotnika</translation>
+        <translation type="obsolete">plik z parameterami S trójwrotnika</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>plik z parameterami S czterowrotnika</translation>
+        <translation type="obsolete">plik z parameterami S czterowrotnika</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>plik z parameterami S pięciowrotnika</translation>
+        <translation type="obsolete">plik z parameterami S pięciowrotnika</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>plik z parameterami S sześciowrotnika</translation>
+        <translation type="obsolete">plik z parameterami S sześciowrotnika</translation>
     </message>
     <message>
         <source>Line</source>
@@ -3989,7 +4009,7 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>netlista w formacie SPICE</translation>
+        <translation type="obsolete">netlista w formacie SPICE</translation>
     </message>
     <message>
         <source>file components</source>
@@ -5877,6 +5897,30 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

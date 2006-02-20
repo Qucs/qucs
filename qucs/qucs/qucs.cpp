@@ -1648,17 +1648,13 @@ void QucsApp::slotProjDelButt()
 // The following arrays contains the components that appear in the
 // component listview.
 typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
-pInfoFunc Simulations[] =
-  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
-
 pInfoFunc lumpedComponents[] =
   {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
    &Amplifier::info, &Isolator::info, &Circulator::info,
    &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
-   &Mutual::info, &Mutual2::info, 0};
+   &vProbe::info, &Mutual::info, &Mutual2::info, 0};
 
 pInfoFunc Sources[] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
@@ -1687,6 +1683,13 @@ pInfoFunc digitalComps[] =
    &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
    &D_FlipFlop::info, &JK_FlipFlop::info, 0};
 
+pInfoFunc Simulations[] =
+  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
+   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
+
+pInfoFunc FileComponents[] =
+  {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2, &SParamFile::info};
+
 pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
    &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
@@ -1713,31 +1716,16 @@ void QucsApp::slotSetCompView(int index)
   if((index+1) >= CompChoose->count())  // because of symbol edit mode
     Infos = &Paintings[0];
   else
-  switch(index) {
-    case COMBO_passive:   Infos = &lumpedComponents[0];  break;
-    case COMBO_Sources:   Infos = &Sources[0];           break;
-    case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
-    case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
-    case COMBO_digital:   Infos = &digitalComps[0];      break;
-    case COMBO_File:
-      new QIconViewItem(CompComps, tr("SPICE netlist"),
-		QImage(QucsSettings.BitmapDir + "spicefile.png"));
-      new QIconViewItem(CompComps, tr("1-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile1.png"));
-      new QIconViewItem(CompComps, tr("2-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile2.png"));
-      new QIconViewItem(CompComps, tr("3-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile3.png"));
-      new QIconViewItem(CompComps, tr("4-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile4.png"));
-      new QIconViewItem(CompComps, tr("5-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile5.png"));
-      new QIconViewItem(CompComps, tr("6-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile6.png"));
-      return;
-    case COMBO_Sims:     Infos = &Simulations[0]; break;
-    case COMBO_Diagrams: Infos = &Diagrams[0];    break;
-  }
+    switch(index) {
+      case COMBO_passive:   Infos = &lumpedComponents[0];  break;
+      case COMBO_Sources:   Infos = &Sources[0];           break;
+      case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
+      case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
+      case COMBO_digital:   Infos = &digitalComps[0];      break;
+      case COMBO_File:      Infos = &FileComponents[0];    break;
+      case COMBO_Sims:      Infos = &Simulations[0];       break;
+      case COMBO_Diagrams:  Infos = &Diagrams[0];          break;
+    }
 
   while(*Infos != 0) {
     (**Infos) (Name, File, false);
@@ -1780,38 +1768,20 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   view->MouseDoubleClickAction = 0;
 
   pInfoFunc Infos = 0;
+  int i = CompComps->index(item);
   if((CompChoose->currentItem()+1) >= CompChoose->count())
-    Infos = Paintings[CompComps->index(item)];
+    Infos = Paintings[i];   // the only one in "symbol-painting" mode
   else
-  switch(CompChoose->currentItem()) {
-    case COMBO_passive:
-	 Infos = lumpedComponents[CompComps->index(item)];
-	 break;
-    case COMBO_Sources:
-	 Infos = Sources[CompComps->index(item)];
-	 break;
-    case COMBO_TLines:
-	 Infos = TransmissionLines[CompComps->index(item)];
-	 break;
-    case COMBO_nonlinear:
-	 Infos = nonlinearComps[CompComps->index(item)];
-	 break;
-    case COMBO_digital:
-	 Infos = digitalComps[CompComps->index(item)];
-	 break;
-    case COMBO_File:
-         if(CompComps->index(item) == 0)
-	   view->selElem = new SpiceFile();
-	 else
-	   view->selElem = new SParamFile(CompComps->index(item));
-	 break;
-    case COMBO_Sims:
-	 Infos = Simulations[CompComps->index(item)];
-	 break;
-    case COMBO_Diagrams:
-	 Infos = Diagrams[CompComps->index(item)];
-	 break;
-  }
+    switch(CompChoose->currentItem()) {
+      case COMBO_passive:   Infos = lumpedComponents[i];  break;
+      case COMBO_Sources:   Infos = Sources[i];           break;
+      case COMBO_TLines:    Infos = TransmissionLines[i]; break;
+      case COMBO_nonlinear: Infos = nonlinearComps[i];    break;
+      case COMBO_digital:   Infos = digitalComps[i];      break;
+      case COMBO_File:      Infos = FileComponents[i];    break;
+      case COMBO_Sims:      Infos = Simulations[i];       break;
+      case COMBO_Diagrams:  Infos = Diagrams[i];          break;
+    }
 
   char *Dummy2;
   QString Dummy1;

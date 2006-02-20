@@ -134,6 +134,10 @@
         <source>inductors</source>
         <translation>induttori</translation>
     </message>
+    <message>
+        <source>No match found!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
@@ -3199,10 +3203,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>type of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Timing Diagram</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3236,10 +3236,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No simulation specified on this page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3404,6 +3400,30 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished">file parametri S a 2 porte</translation>
+    </message>
+    <message>
+        <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4683,27 +4703,27 @@ Errori:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>file parametri S a 1 porta</translation>
+        <translation type="obsolete">file parametri S a 1 porta</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>file parametri S a 2 porte</translation>
+        <translation type="obsolete">file parametri S a 2 porte</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>file parametri S a 3 porte</translation>
+        <translation type="obsolete">file parametri S a 3 porte</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>file parametri S a 4 porte</translation>
+        <translation type="obsolete">file parametri S a 4 porte</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>file parametri S a 5 porte</translation>
+        <translation type="obsolete">file parametri S a 5 porte</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>file parametri S a 6 porte</translation>
+        <translation type="obsolete">file parametri S a 6 porte</translation>
     </message>
     <message>
         <source>dc simulation</source>
@@ -4943,7 +4963,7 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>netlist SPICE</translation>
+        <translation type="obsolete">netlist SPICE</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -6908,6 +6928,30 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

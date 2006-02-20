@@ -17,6 +17,7 @@
 
 #include <stdlib.h>
 
+#include "main.h"
 #include "logical_inv.h"
 #include "qucsdoc.h"
 #include "node.h"
@@ -50,8 +51,13 @@ QString Logical_Inv::VHDL_Code(int NumPorts)
               Ports.getLast()->Connection->Name;
 
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0)  // delay time
-      s += " after " + Props.current()->Value;
+    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
+      QString t = Props.current()->Value;
+      if(!VHDL_Time(t, Name))
+        return t;    // time has not VHDL format
+
+      s += " after " + t;
+    }
 
   s += ';';
   return s;

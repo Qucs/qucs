@@ -29,7 +29,8 @@ SubCirPort::SubCirPort()
 		QObject::tr("number of the port within the subcircuit")));
   // This property must be the second one !
   Props.append(new Property("Type", "analog", false,
-		QObject::tr("type of the port")+" [analog, in, out]"));
+		QObject::tr("type of the port (for digital simulation only)")
+		+" [analog, in, out, inout]"));
 
   createSymbol();
   tx = x1+4;
@@ -44,27 +45,25 @@ SubCirPort::~SubCirPort()
 
 void SubCirPort::createSymbol()
 {
-  switch(Props.at(1)->Value.at(0).latin1()) {
-    case 'a':
-      Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
-      Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
-      break;
-    case 'o':
-      Lines.append(new Line( -9,  0,  0,  0,QPen(QPen::darkBlue,2)));
-      Lines.append(new Line(-20, -5,-25,  0,QPen(QPen::red,2)));
-      Lines.append(new Line(-20,  5,-25,  0,QPen(QPen::red,2)));
-      Lines.append(new Line(-20, -5, -9, -5,QPen(QPen::red,2)));
-      Lines.append(new Line(-20,  5, -9,  5,QPen(QPen::red,2)));
-      Lines.append(new Line( -9, -5, -9,  5,QPen(QPen::red,2)));
-      break;
-    default:
-      Lines.append(new Line( -9,  0,  0,  0,QPen(QPen::darkBlue,2)));
-      Lines.append(new Line(-14, -5, -9,  0,QPen(QPen::darkGreen,2)));
-      Lines.append(new Line(-14,  5, -9,  0,QPen(QPen::darkGreen,2)));
-      Lines.append(new Line(-25, -5,-14, -5,QPen(QPen::darkGreen,2)));
-      Lines.append(new Line(-25,  5,-14,  5,QPen(QPen::darkGreen,2)));
-      Lines.append(new Line(-25, -5,-25,  5,QPen(QPen::darkGreen,2)));
-      break;
+  if(Props.at(1)->Value == "in") {
+    Lines.append(new Line( -9,  0,  0,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-14, -5, -9,  0,QPen(QPen::darkGreen,2)));
+    Lines.append(new Line(-14,  5, -9,  0,QPen(QPen::darkGreen,2)));
+    Lines.append(new Line(-25, -5,-14, -5,QPen(QPen::darkGreen,2)));
+    Lines.append(new Line(-25,  5,-14,  5,QPen(QPen::darkGreen,2)));
+    Lines.append(new Line(-25, -5,-25,  5,QPen(QPen::darkGreen,2)));
+  }
+  else if(Props.at(1)->Value == "out") {
+    Lines.append(new Line( -9,  0,  0,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-20, -5,-25,  0,QPen(QPen::red,2)));
+    Lines.append(new Line(-20,  5,-25,  0,QPen(QPen::red,2)));
+    Lines.append(new Line(-20, -5, -9, -5,QPen(QPen::red,2)));
+    Lines.append(new Line(-20,  5, -9,  5,QPen(QPen::red,2)));
+    Lines.append(new Line( -9, -5, -9,  5,QPen(QPen::red,2)));
+  }
+  else {
+    Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
   }
 
   Ports.append(new Port(  0,  0));
