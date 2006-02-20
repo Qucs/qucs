@@ -17,60 +17,33 @@
 
 #include "sparamfile.h"
 #include "main.h"
+#include "qucsdoc.h"
 
 #include <qfileinfo.h>
 
 extern QDir QucsWorkDir;
 
 
-SParamFile::SParamFile(int No)
+SParamFile::SParamFile()
 {
   Description = QObject::tr("S parameter file");
 
-  if(No < 1)  No = 1;
-  int h = 30*((No-1)/2) + 15;
-  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( -9, -6,QObject::tr("file")));
-
-
-  int i=0, y = 15-h;
-  while(i<No) {
-    i++;
-    Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
-    Texts.append(new Text(-25,y-14,QString::number(i)));
-
-    if(i == No) break;
-    i++;
-    Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
-    Texts.append(new Text( 19,y-14,QString::number(i)));
-    y += 60;
-  }
-
-  Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( 4, h,"Ref"));
-  Ports.append(new Port( 0,h+15));    // 'Ref' port
-
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+15;
-
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  tx = x1+4;
-  ty = y1 - 2*metrics.lineSpacing() - 4;
-  Model = "#SPfile";
+  Model = "SPfile";
   Name  = "X";
 
-  QString s = "test.s" + QString::number(No) + "p";
-  Props.append(new Property("File", s, true,
+  // must be the first property !!!
+  Props.append(new Property("File", "test.s1p", true,
 		QObject::tr("name of the s parameter file")));
   Props.append(new Property("Data", "rectangular", false,
 		QObject::tr("data type")+" [rectangular, polar]"));
   Props.append(new Property("Interpolator", "linear", false,
 		QObject::tr("interpolation type")+" [linear, cubic]"));
+
+  // must be the last property !!!
+  Props.append(new Property("Ports", "1", false,
+		QObject::tr("number of ports")));
+
+  createSymbol();
 }
 
 SParamFile::~SParamFile()
@@ -79,22 +52,55 @@ SParamFile::~SParamFile()
 
 Component* SParamFile::newOne()
 {
-  return new SParamFile(Ports.count()-1);
+  SParamFile* p = new SParamFile();
+  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->recreate(0);
+  return p;
 }
 
 Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
+  Name = QObject::tr("n-port S parameter file");
+  BitmapFile = "spfile3";
+
+  if(getNewOne) {
+    SParamFile* p = new SParamFile();
+    p->Props.getFirst()->Value = "test.s3p";
+    p->Props.getLast()->Value = "3";
+    p->recreate(0);
+    return p;
+  }
+  return 0;
+}
+
+Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
+{
   Name = QObject::tr("1-port S parameter file");
   BitmapFile = "spfile1";
 
-  if(getNewOne)  return new SParamFile(1);
+  if(getNewOne)  return new SParamFile();
+  return 0;
+}
+
+Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("2-port S parameter file");
+  BitmapFile = "spfile2";
+
+  if(getNewOne) {
+    SParamFile* p = new SParamFile();
+    p->Props.getFirst()->Value = "test.s2p";
+    p->Props.getLast()->Value = "2";
+    p->recreate(0);
+    return p;
+  }
   return 0;
 }
 
 // -------------------------------------------------------
 QString SParamFile::NetList()
 {
-  QString s = Model.mid(1)+":"+Name;
+  QString s = Model+":"+Name;
 
   // output all node names
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
@@ -115,4 +121,71 @@ QString SParamFile::NetList()
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s;
+}
+
+// -------------------------------------------------------
+void SParamFile::createSymbol()
+{
+  int PortDistance = 60;
+  int Num = Props.getLast()->Value.toInt();
+  if(Num < 1) Num = 1;
+  else if(Num > 8) {
+    PortDistance = 20;
+    if(Num > 40) Num = 40;
+  }
+  Props.getLast()->Value = QString::number(Num);
+
+  int h = (PortDistance/2)*((Num-1)/2) + 15;
+  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text( -9, -6,QObject::tr("file")));
+
+
+  int i=0, y = 15-h;
+  while(i<Num) {
+    i++;
+    Lines.append(new Line(-30, y,-15, y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port(-30, y));
+    Texts.append(new Text(-25,y-14,QString::number(i)));
+
+    if(i == Num) break;
+    i++;
+    Lines.append(new Line( 15, y, 30, y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port( 30, y));
+    Texts.append(new Text( 19,y-14,QString::number(i)));
+    y += PortDistance;
+  }
+
+  Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text( 4, h,"Ref"));
+  Ports.append(new Port( 0,h+15));    // 'Ref' port
+
+  x1 = -30; y1 = -h-2;
+  x2 =  30; y2 =  h+15;
+
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  tx = x1+4;
+  ty = y1 - 2*metrics.lineSpacing() - 4;
+}
+
+// -------------------------------------------------------
+void SParamFile::recreate(QucsDoc *Doc)
+{
+  if(Doc) {
+    Doc->Comps->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
+  Ports.clear();
+  Lines.clear();
+  Texts.clear();
+  createSymbol();
+  performModification();  // rotate and mirror
+
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Comps->setAutoDelete(true);
+  }
 }

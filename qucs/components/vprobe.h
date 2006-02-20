@@ -1,8 +1,8 @@
 /***************************************************************************
-                                sparamfile.h
-                               --------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                                vprobe.h
+                               ----------
+    begin                : Sat Feb 18 2006
+    copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,23 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SPARAMFILE_H
-#define SPARAMFILE_H
+#ifndef VPROBE_H
+#define VPROBE_H
 
 #include "component.h"
 
 
-class SParamFile : public Component  {
+class vProbe : public Component  {
 public:
-  SParamFile();
- ~SParamFile();
+  vProbe();
+ ~vProbe();
   Component* newOne();
-  QString NetList();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info1(QString&, char* &, bool getNewOne=false);
-  static Element* info2(QString&, char* &, bool getNewOne=false);
-  void createSymbol();
-  void recreate(QucsDoc*);
 };
 
 #endif

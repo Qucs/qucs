@@ -151,13 +151,12 @@ int main(int argc, char *argv[])
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  QString lang = QucsSettings.Language;
-  if(lang.isEmpty())
-    lang = QTextCodec::locale();
-  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
+  QString locale = QucsSettings.Language;
+  if(locale.isEmpty())
+    locale = QTextCodec::locale();
+  tor.load( QString("qucs_") + locale, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
-  QString locale = QTextCodec::locale();
   QucsHelpDir = QucsSettings.DocDir + locale;
   if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
     int p = locale.find ('_');

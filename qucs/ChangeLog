@@ -1,3 +1,13 @@
+2006-02-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* load resistors with backward compatibility
+	* diagram dialog of tabular: default number representation mag/deg
+	* change dialog fixed
+	* correct VDHL time for gates
+	* s-parmeter file component with chooseable port number
+	* inout attribut for subcircuit port
+	* fixed bug to allow more than 1 subcircuit in VHDL
+
 2006-02-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* language can be set in settings dialog

@@ -325,47 +325,6 @@ void SimMessage::slotDisplayMsg()
   ProgText->insert(ProgressText);
   ProgressText = "";
   wasLF = false;
-
-#if 0
-  char *p;
-  int i, Progress;
-  QByteArray Data = SimProcess.readStdout();
-  if(wasLF) {
-    ProgressText += QString(Data);
-    i = ProgressText.findRev('\r');
-#ifdef __MINGW32__
-    while (i > 1 && ProgressText.at(i+1) == '\n') {
-      i = ProgressText.findRev('\r', i-1);
-    }
-#endif /* __MINGW32__ */
-    if(i > 1) {
-      Progress = 10*int(ProgressText.at(i-2).latin1()-'0') +
-                    int(ProgressText.at(i-1).latin1()-'0');
-      if(Progress < 0)  Progress += 160;
-      SimProgress->setProgress(Progress, 100);
-      ProgressText.remove(0, i+1);
-    }
-
-    if(ProgressText.at(0).latin1() > '\t') {
-      ProgText->insert(ProgressText);
-      wasLF = false;
-//qDebug("Ende: "+ProgressText);
-    }
-  }
-  else {
-    i = Data.find('\t');
-    if(i < 0)
-      ProgText->insert(QString(Data));
-    else {
-      wasLF = true;
-      p = Data.data();
-      *(p+i) = 0;
-      ProgText->insert(QString(p) + "\n");
-      ProgressText = QString(Data).mid(i+1);
-//qDebug("Beginn: "+ProgressText);
-    }
-  }
-#endif
 }
 
 #ifdef SPEEDUP_PROGRESSBAR
