@@ -5898,26 +5898,6 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Swedish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hungarian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hebrew</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
