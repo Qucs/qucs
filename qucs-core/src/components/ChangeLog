@@ -1,3 +1,11 @@
+2006-02-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* vccs.cpp: Implemented delay time for transient analysis.
+	Don't know (yet) why, but seems like working...
+
+	* resistor.cpp: Fixed AC noise calculation with zero resistance
+	applied.
+
 2006-02-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* vccs.cpp, vcvs.cpp, ccvs.cpp, cccs.cpp: Implemented

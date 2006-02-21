@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.42 2006-02-17 07:24:06 raimi Exp $
+ * $Id: evaluate.cpp,v 1.43 2006-02-21 20:56:17 raimi Exp $
  *
  */
 
@@ -69,6 +69,7 @@ using namespace fourier;
 
 // Argument macros.
 #define _ARES(idx) args->getResult(idx)
+#define _ARG(idx) args->get(idx)
 
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
 #define _C(var,idx) complex * (var) = C (_ARES (idx));
@@ -309,8 +310,8 @@ constant * evaluate::plus_m_mv (constant * args) {
 }
 
 constant * evaluate::plus_s_s (constant * args) {
-  char * s1 = STR (args->getResult (0));
-  char * s2 = STR (args->getResult (1));
+  char * s1 = STR (_ARES(0));
+  char * s2 = STR (_ARES(1));
   constant * res = new constant (TAG_STRING);
   char * p = (char *) malloc (strlen (s1) + strlen (s2) + 1);
   strcpy (p, s1); strcat (p, s2);
@@ -319,8 +320,8 @@ constant * evaluate::plus_s_s (constant * args) {
 }
 
 constant * evaluate::plus_c_s (constant * args) {
-  char   c1 = CHR (args->getResult (0));
-  char * s2 = STR (args->getResult (1));
+  char   c1 = CHR (_ARES(0));
+  char * s2 = STR (_ARES(1));
   constant * res = new constant (TAG_STRING);
   char * p = (char *) malloc (strlen (s2) + 2);
   p[0] = c1; strcpy (&p[1], s2);
@@ -329,8 +330,8 @@ constant * evaluate::plus_c_s (constant * args) {
 }
 
 constant * evaluate::plus_s_c (constant * args) {
-  char * s1 = STR (args->getResult (0));
-  char   c2 = CHR (args->getResult (1));
+  char * s1 = STR (_ARES(0));
+  char   c2 = CHR (_ARES(1));
   constant * res = new constant (TAG_STRING);
   char * p = (char *) malloc (strlen (s1) + 2);
   strcpy (p, s1); p[strlen (s1)] = c2; p[strlen (s1) + 1] = '\0';
@@ -1604,9 +1605,9 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
 			       constant * res) {
   _ARV0 (v);
   int i = INT (_ARES (idx));
-  int type = args->get(idx)->getType ();
+  int type = _ARG(idx)->getType ();
   vector * vres;
-  strlist * deps = args->getResult(0)->getDataDependencies ();
+  strlist * deps = _ARES(0)->getDataDependencies ();
   int didx = (deps ? deps->length () : 0) - idx;
   int dsize = solver::getDependencySize (deps, idx);
 
@@ -1653,10 +1654,10 @@ constant * evaluate::index_v_2 (constant * args) {
   _DEFV ();
   int skip = 1, size = 1;
   res->v = new vector (*v);
-  if (!EQUATION_HAS_DEPS (args->getResult (0), 2)) {
+  if (!EQUATION_HAS_DEPS (_ARES(0), 2)) {
     char txt[256];
     sprintf (txt, "invalid number of vector indices (%d > %d)", 2,
-	     EQUATION_DEPS (args->getResult (0)));
+	     EQUATION_DEPS (_ARES(0)));
     THROW_MATH_EXCEPTION (txt);
     return res;
   }
@@ -1682,7 +1683,7 @@ constant * evaluate::index_m_2 (constant * args) {
 }
 
 constant * evaluate::index_s_1 (constant * args) {
-  char * s = STR (args->getResult (0));
+  char * s = STR (_ARES(0));
   _ARI1 (i);
   constant * res = new constant (TAG_CHAR);
   res->chr = (i >= 0 && i < (int) strlen (s)) ? s[i] : ' ';
@@ -2036,8 +2037,8 @@ constant * evaluate::stos_mv_v_v (constant * args) {
 
 constant * evaluate::twoport_m (constant * args) {
   _ARM0 (m);
-  char f = CHR (args->getResult (1));
-  char t = CHR (args->getResult (2));
+  char f = CHR (_ARES(1));
+  char t = CHR (_ARES(2));
   _DEFM ();
   if (m->getRows () < 2 || m->getCols () < 2) {
     THROW_MATH_EXCEPTION ("invalid matrix dimensions for twoport "
@@ -2049,8 +2050,8 @@ constant * evaluate::twoport_m (constant * args) {
 
 constant * evaluate::twoport_mv (constant * args) {
   _ARMV0 (mv);
-  char f = CHR (args->getResult (1));
-  char t = CHR (args->getResult (2));
+  char f = CHR (_ARES(1));
+  char t = CHR (_ARES(2));
   _DEFMV ();
   if (mv->getRows () < 2 || mv->getCols () < 2) {
     THROW_MATH_EXCEPTION ("invalid matrix dimensions for twoport "
@@ -2227,11 +2228,11 @@ constant * evaluate::logspace (constant * args) {
 
 // ***************** s-parameter noise circles *****************
 constant * evaluate::noise_circle_d_v (constant * args) {
-  vector * Sopt = V (args->getResult (0));
-  vector * Fmin = V (args->getResult (1));
-  vector * Rn   = V (args->getResult (2));
-  nr_double_t F = D (args->getResult (3));
-  vector * arc  = V (args->getResult (4));
+  vector * Sopt = V (_ARES(0));
+  vector * Fmin = V (_ARES(1));
+  vector * Rn   = V (_ARES(2));
+  nr_double_t F = D (_ARES(3));
+  vector * arc  = V (_ARES(4));
 
   _DEFV ();
   vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
@@ -2263,11 +2264,11 @@ constant * evaluate::noise_circle_d (constant * args) {
 }
 
 constant * evaluate::noise_circle_v_v (constant * args) {
-  vector * Sopt = V (args->getResult (0));
-  vector * Fmin = V (args->getResult (1));
-  vector * Rn   = V (args->getResult (2));
-  vector * F    = V (args->getResult (3));
-  vector * arc  = V (args->getResult (4));
+  vector * Sopt = V (_ARES(0));
+  vector * Fmin = V (_ARES(1));
+  vector * Rn   = V (_ARES(2));
+  vector * F    = V (_ARES(3));
+  vector * arc  = V (_ARES(4));
 
   _DEFV ();
   vector * circle =
@@ -2566,7 +2567,7 @@ constant * evaluate::xvalue_d (constant * args) {
   _ARV0 (v);
   _ARD1 (d);
   _DEFC ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
@@ -2588,7 +2589,7 @@ constant * evaluate::xvalue_c (constant * args) {
   _ARV0 (v);
   _ARC1 (c);
   _DEFC ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
@@ -2611,7 +2612,7 @@ constant * evaluate::yvalue_d (constant * args) {
   _ARV0 (v);
   _ARD1 (d);
   _DEFC ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
@@ -2633,7 +2634,7 @@ constant * evaluate::yvalue_c (constant * args) {
   _ARV0 (v);
   _ARC1 (c);
   _DEFC ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
@@ -2656,10 +2657,10 @@ constant * evaluate::max_r (constant * args) {
   _ARV0 (v);
   _ARR1 (r);
   _DEFD ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
-    _RETC (0.0);
+    _RETD (0.0);
   }
   vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   complex c;
@@ -2678,10 +2679,10 @@ constant * evaluate::min_r (constant * args) {
   _ARV0 (v);
   _ARR1 (r);
   _DEFD ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
-    _RETC (0.0);
+    _RETD (0.0);
   }
   vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   complex c;
@@ -2700,7 +2701,7 @@ constant * evaluate::avg_r (constant * args) {
   _ARV0 (v);
   _ARR1 (r);
   _DEFC ();
-  strlist * deps = _ARES(0)->getDataDependencies ();
+  strlist * deps = _ARG(0)->collectDataDependencies ();
   if (!deps || deps->length () != 1) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
