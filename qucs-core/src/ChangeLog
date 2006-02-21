@@ -1,3 +1,11 @@
+2006-02-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed return value of max_r() in case of an
+	error.
+
+	* equation.cpp: Implemented some data dependency functionality
+	for intermediate values in equations.
+
 2006-02-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* circuit.cpp: Implemented history lookup functions for

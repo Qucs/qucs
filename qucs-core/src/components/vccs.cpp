@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vccs.cpp,v 1.14 2006/02/20 18:02:11 raimi Exp $
+ * $Id: vccs.cpp,v 1.15 2006/02/21 20:56:17 raimi Exp $
  *
  */
 
@@ -64,6 +64,7 @@ void vccs::calcSP (nr_double_t frequency) {
 }
 
 void vccs::initDC (void) {
+  setISource (false);
   allocMatrixMNA ();
 #if AUGMENTED
   setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, +0.0);
@@ -99,6 +100,7 @@ void vccs::calcAC (nr_double_t frequency) {
 void vccs::initTR (void) {
   nr_double_t t = getPropertyDouble ("T");
   initDC ();
+  setISource (true);
   if (t > 0.0) {
     setHistory (true);
     initHistory (t);
@@ -106,6 +108,13 @@ void vccs::initTR (void) {
 }
 
 void vccs::calcTR (nr_double_t t) {
-  nr_double_t T = t - getPropertyDouble ("T");
-  nr_double_t v = getV (NODE_1, T);
+  nr_double_t T = getPropertyDouble ("T");
+  if (T > 0.0) {
+    T = t - T;
+    nr_double_t g = getPropertyDouble ("G");
+    nr_double_t v = getV (NODE_1, T) - getV (NODE_4, T);
+    v -= real (getV (NODE_1) - getV (NODE_4));
+    setI (NODE_2, -g * v);
+    setI (NODE_3, +g * v);
+  }
 }

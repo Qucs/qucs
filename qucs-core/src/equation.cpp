@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.38 2006/02/06 09:50:15 raimi Exp $
+ * $Id: equation.cpp,v 1.39 2006/02/21 20:56:17 raimi Exp $
  *
  */
 
@@ -684,6 +684,34 @@ constant * node::calculate (void) {
   getResult()->setDataDependencies (deps);
   if (deps) delete deps;
   return res;
+}
+
+/* Collects the equation dependencies for a specific node. */
+strlist * node::collectDependencies (void) {
+  strlist * depends = new strlist ();
+  addDependencies (depends);
+  setDependencies (checker::foldDependencies (depends));
+  return getDependencies ();
+}
+
+/* Collects the data dependencies for a specific node. */
+strlist * node::collectDataDependencies (void) {
+  strlist * deps = getResult()->getDataDependencies ();
+  if (deps) {
+    // data dependencies already collected
+    setDataDependencies (deps);
+    return deps;
+  }
+  // collect equation dependencies
+  if (!getDependencies ())
+    collectDependencies ();
+  if (solvee) {
+    // finally collect the appropriate data dependencies
+    deps = solvee->collectDataDependencies (this);
+    setDataDependencies (deps);
+    delete deps;
+  }
+  return getDataDependencies ();
 }
 
 // Constructor creates an instance of the checker class.

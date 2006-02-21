@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.26 2006/02/06 09:50:15 raimi Exp $
+ * $Id: equation.h,v 1.27 2006/02/21 20:56:17 raimi Exp $
  *
  */
 
@@ -87,6 +87,8 @@ public:
   void setInstance (char *);
   void applyInstance (void);
   constant * calculate (void);    
+  strlist * collectDependencies (void);
+  strlist * collectDataDependencies (void);
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
