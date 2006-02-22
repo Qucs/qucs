@@ -1,3 +1,11 @@
+2006-02-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* tline.cpp: Implemented constant 'Alpha' loss for AC and S-
+	parameter analysis.
+
+	* iac.cpp, vac.cpp: Implemented 'Theta' damping factor during
+	transient analysis.
+
 2006-02-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* vccs.cpp: Implemented delay time for transient analysis.

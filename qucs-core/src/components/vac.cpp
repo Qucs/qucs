@@ -1,7 +1,7 @@
 /*
  * vac.cpp - AC voltage source class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.cpp,v 1.14 2005-06-02 18:17:52 raimi Exp $
+ * $Id: vac.cpp,v 1.15 2006-02-22 11:43:57 raimi Exp $
  *
  */
 
@@ -72,6 +72,8 @@ void vac::initTR (void) {
 void vac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
   nr_double_t p = getPropertyDouble ("Phase");
-  nr_double_t u = getPropertyDouble ("U") * sin (2 * M_PI * f * t + rad (p));
+  nr_double_t d = getPropertyDouble ("Theta");
+  nr_double_t a = getPropertyDouble ("U");
+  nr_double_t u = a * exp (-d * t) * sin (2 * M_PI * f * t + rad (p));
   setE (VSRC_1, u);
 }

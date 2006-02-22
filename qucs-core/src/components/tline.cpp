@@ -1,7 +1,7 @@
 /*
  * tline.cpp - ideal transmission line class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.cpp,v 1.10 2005-06-02 18:17:52 raimi Exp $
+ * $Id: tline.cpp,v 1.11 2006-02-22 11:43:57 raimi Exp $
  *
  */
 
@@ -45,20 +45,19 @@ tline::tline () : circuit (2) {
 void tline::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t r = (z - z0) / (z + z0);
-  complex p = polar (1, - 2.0 * M_PI * frequency * l / C0);
+  nr_double_t b = 2 * M_PI * frequency / C0;
+  complex p = exp (-l * rect (a, b));
   complex s11 = r * (1 - p * p) / (1 - p * p * r * r);
   complex s21 = p * (1 - r * r) / (1 - p * p * r * r);
-  setS (NODE_1, NODE_1, s11);
-  setS (NODE_2, NODE_2, s11);
-  setS (NODE_1, NODE_2, s21);
-  setS (NODE_2, NODE_1, s21);
+  setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
 
 void tline::initDC (void) {
   setVoltageSources (1);
   allocMatrixMNA ();
-  clearY ();
   voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
@@ -70,9 +69,10 @@ void tline::initAC (void) {
 void tline::calcAC (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  nr_double_t y11 = -1 / z / tan (b * l);
-  nr_double_t y21 = +1 / z / sin (b * l);
-  setY (NODE_1, NODE_1, rect (0, y11)); setY (NODE_2, NODE_2, rect (0, y11));
-  setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
+  complex y11 = +1 / z / tanh (rect (a, b) * l);
+  complex y21 = -1 / z / sinh (rect (a, b) * l);
+  setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
+  setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
 }
