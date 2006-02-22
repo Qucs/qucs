@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.36 2006/02/06 09:50:15 raimi Exp $
+ * $Id: qucsdefs.h,v 1.37 2006/02/22 11:43:56 raimi Exp $
  *
  */
 
@@ -164,6 +164,7 @@ struct define_t qucs_definition_available[] =
     { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
+      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* AC current source */
@@ -171,6 +172,7 @@ struct define_t qucs_definition_available[] =
     { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
+      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* pulse voltage source */
@@ -229,7 +231,8 @@ struct define_t qucs_definition_available[] =
     { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Alpha", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* coaxial cable */
   { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

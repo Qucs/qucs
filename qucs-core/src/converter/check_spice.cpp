@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.17 2005/11/14 19:19:14 raimi Exp $
+ * $Id: check_spice.cpp,v 1.18 2006/02/22 11:43:57 raimi Exp $
  *
  */
 
@@ -1267,7 +1267,7 @@ spice_translate_source (struct definition_t * root,
       spice_value_done (prop);
       prop = prop->next;
       struct property_field_t field =
-      { { type == 'U' ? "U" : "I", "f", "Phase", NULL } };
+      { { type == 'U' ? "U" : "I", "f", "Phase", "Theta", NULL } };
       spice_extract_properties (ac, prop, &field);
     }
     double v;
