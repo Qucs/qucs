@@ -179,6 +179,14 @@ The $k$-th element of an $n$ order Butterworth low-pass ladder filter is:
  & \text{with}         \qquad & X_k = & \dfrac{2}{\omega_B} \cdot \sin \dfrac{(2\cdot k + 1)\cdot\pi}{2\cdot n}
 \end{alignat}
 
+The order of the Butterworth filter is dependent on the specifications
+provided by the user.  These specifications include the edge
+frequencies and gains.
+\begin{equation}
+\label{eq:ButtOrder}
+n = \dfrac{\log{\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\cdot \alpha_{pass}} - 1}\right)}}{2\cdot\log{\left(\dfrac{\omega_{stop}}{\omega_{pass}}\right)}}
+\end{equation}
+
 \subsubsection{Chebyshev I}
 
 The equations for a Chebyshev type I filter are defined recursivly.
@@ -199,3 +207,17 @@ element of an $n$ order low-pass ladder filter is:
 \end{cases} \\
  & & X_k & = \dfrac{2}{\omega_B}\cdot g_k
 \end{alignat}
+
+The order of the Chebychev filter is dependent on the specifications
+provided by the user.  The general form of the calculation for the
+order is the same as for the Butterworth, except that the inverse
+hyperbolic cosine function is used in place of the common logarithm
+function.
+\begin{equation}
+\label{eq:ChebOrder}
+n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\cdot \alpha_{pass}} - 1}\right)}{2\cdot\textrm{sech}\left(\dfrac{\omega_{stop}}{\omega_{pass}}\right)}
+\end{equation}
+
+\subsubsection{Chebyshev II}
+
+Because of the nature of the derivation of the inverse Chebychev approxiation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
