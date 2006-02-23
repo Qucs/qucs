@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vccs.cpp,v 1.15 2006-02-21 20:56:17 raimi Exp $
+ * $Id: vccs.cpp,v 1.16 2006-02-23 09:02:01 raimi Exp $
  *
  */
 
@@ -41,9 +41,6 @@
 
 vccs::vccs () : circuit (4) {
   type = CIR_VCCS;
-#if AUGMENTED
-  setVoltageSources (1);
-#endif
 }
 
 void vccs::calcSP (nr_double_t frequency) {
@@ -66,18 +63,9 @@ void vccs::calcSP (nr_double_t frequency) {
 void vccs::initDC (void) {
   setISource (false);
   allocMatrixMNA ();
-#if AUGMENTED
-  setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, +0.0);
-  setC (VSRC_1, NODE_3, +0.0); setC (VSRC_1, NODE_4, -1.0);
-  setB (NODE_1, VSRC_1, +0.0); setB (NODE_2, VSRC_1, +1.0);
-  setB (NODE_3, VSRC_1, -1.0); setB (NODE_4, VSRC_1, +0.0);
-  setD (VSRC_1, VSRC_1, -1.0 / getPropertyDouble ("G"));
-  setE (VSRC_1, +0.0);
-#else
   nr_double_t g = getPropertyDouble ("G");
   setY (NODE_2, NODE_1, +g); setY (NODE_3, NODE_4, +g);
   setY (NODE_3, NODE_1, -g); setY (NODE_2, NODE_4, -g);
-#endif
 }
 
 void vccs::initAC (void) {
@@ -86,24 +74,19 @@ void vccs::initAC (void) {
 
 void vccs::calcAC (nr_double_t frequency) {
   nr_double_t t = getPropertyDouble ("T");
-#if AUGMENTED
-  nr_double_t g = getPropertyDouble ("G");
-  complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
-  setD (VSRC_1, 1, -r);
-#else
   complex g = polar (getPropertyDouble ("G"), - 2.0 * M_PI * frequency * t);
   setY (NODE_2, NODE_1, +g); setY (NODE_3, NODE_4, +g);
   setY (NODE_3, NODE_1, -g); setY (NODE_2, NODE_4, -g);
-#endif
 }
 
 void vccs::initTR (void) {
   nr_double_t t = getPropertyDouble ("T");
   initDC ();
-  setISource (true);
   if (t > 0.0) {
+    setISource (true);
     setHistory (true);
     initHistory (t);
+    clearY ();
   }
 }
 
@@ -113,7 +96,6 @@ void vccs::calcTR (nr_double_t t) {
     T = t - T;
     nr_double_t g = getPropertyDouble ("G");
     nr_double_t v = getV (NODE_1, T) - getV (NODE_4, T);
-    v -= real (getV (NODE_1) - getV (NODE_4));
     setI (NODE_2, -g * v);
     setI (NODE_3, +g * v);
   }

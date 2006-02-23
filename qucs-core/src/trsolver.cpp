@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.42 2006-02-20 18:02:11 raimi Exp $
+ * $Id: trsolver.cpp,v 1.43 2006-02-23 09:02:01 raimi Exp $
  *
  */
 
@@ -328,12 +328,15 @@ void trsolver::initHistory (nr_double_t t) {
 /* The following function updates the histories for the circuits which
    requested them. */
 void trsolver::updateHistory (nr_double_t t) {
-  // update time vector
-  tHistory->append (t);
-  // update circuit histories
-  circuit * root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->hasHistory ()) saveHistory (c);
+  if (t > tHistory->last ()) {
+    // update time vector
+    tHistory->append (t);
+    // update circuit histories
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+      if (c->hasHistory ()) saveHistory (c);
+    }
+    tHistory->drop ();
   }
 }
 
@@ -344,7 +347,10 @@ void trsolver::saveHistory (circuit * c) {
   for (i = 0; i < s; i++) {
     // save node voltages
     r = findAssignedNode (c, i);
-    c->appendHistory (i, x->get (r));
+    if (r < 0)
+      c->appendHistory (i, 0.0);
+    else
+      c->appendHistory (i, x->get (r));
   }
   for (i = 0; i < c->getVoltageSources (); i++) {
     // save branch currents

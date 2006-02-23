@@ -1,7 +1,7 @@
 /*
  * spline.h - spline class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.h,v 1.3 2005-10-17 08:41:23 raimi Exp $
+ * $Id: spline.h,v 1.4 2006-02-23 09:02:01 raimi Exp $
  *
  */
 
 #ifndef __SPLINE_H__
 #define __SPLINE_H__
+
+#include "tvector.h"
 
 // Types of boundary conditions.
 enum spline_boundary_type {
@@ -42,9 +44,11 @@ class spline
   spline ();
   spline (int);
   spline (vector, vector);
+  spline (tvector<nr_double_t>, tvector<nr_double_t>);
   ~spline ();
 
   void vectors (vector, vector);
+  void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
   void construct (void);
   poly evaluate (nr_double_t);
   void setBoundary (int b) { boundary = b; }
@@ -52,6 +56,7 @@ class spline
 
  private:
   nr_double_t * upper_bound (nr_double_t *, nr_double_t *, nr_double_t);
+  void realloc (int);
 
  private:
   nr_double_t * x;

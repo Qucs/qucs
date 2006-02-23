@@ -26,6 +26,10 @@ files.
 Version 0.0.9
 -------------
 
+ * delay times of controlled sources during transient analysis
+ * frequency-independent loss factor for 'ideal' transmission line
+ * damping factor for ac voltage/current sources during transient
+   analysis
  * new functions in equation solver: xvalue(), yvalue() and min(), max()
    and avg() with range specification
  * implementation of temperature dependencies of resistor

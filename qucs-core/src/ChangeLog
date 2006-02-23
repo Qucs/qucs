@@ -1,3 +1,12 @@
+2006-02-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* history.cpp: Using interpolation on request.  This means
+	some more effort while getting values from the history, but
+	speeds up simulation because of better convergence.
+
+	* spline.h (class spline): Made spline class ready to use for
+	tvectors as well.
+
 2006-02-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed return value of max_r() in case of an
