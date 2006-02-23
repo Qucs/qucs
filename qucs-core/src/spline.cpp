@@ -1,7 +1,7 @@
 /*
  * spline.cpp - spline class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.cpp,v 1.3 2005/10/17 08:41:23 raimi Exp $
+ * $Id: spline.cpp,v 1.4 2006/02/23 09:02:01 raimi Exp $
  *
  */
 
@@ -56,8 +56,18 @@ spline::spline (int b) {
   boundary = b;
 }
 
-// Constructor creates an instance of the spline class with data given.
+// Constructor creates an instance of the spline class with vector data given.
 spline::spline (vector y, vector t) {
+  x = f0 = f1 = f2 = f3 = NULL;
+  d0 = dn = 0;
+  n = 0;
+  boundary = SPLINE_BC_NATURAL;
+  vectors (y, t);
+  construct ();
+}
+
+// Constructor creates an instance of the spline class with tvector data given.
+spline::spline (tvector<nr_double_t> y, tvector<nr_double_t> t) {
   x = f0 = f1 = f2 = f3 = NULL;
   d0 = dn = 0;
   n = 0;
@@ -69,22 +79,42 @@ spline::spline (vector y, vector t) {
 #define t_ (t)
 #define y_ (y)
 
-// Pass interpolation datapoints.
+// Pass interpolation datapoints as vectors.
 void spline::vectors (vector y, vector t) {
   int i = t.getSize ();
   assert (y.getSize () == i && i >= 3);
 
   // create local copy of f(x)
-  if (n != i - 1) {
-    n = i - 1;
+  realloc (i);
+  for (i = 0; i <= n; i++) {
+    f0[i] = real (y_(i)); x[i] = real (t_(i));
+  }
+}
+
+// Pass interpolation datapoints as tvectors.
+void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
+  int i = t.getSize ();
+  assert (y.getSize () == i && i >= 3);
+
+  // create local copy of f(x)
+  realloc (i);
+  for (i = 0; i <= n; i++) {
+    f0[i] = y_(i); x[i] = t_(i);
+  }
+}
+
+// Reallocate vector data if necessary.
+void spline::realloc (int size) {
+  if (n != size - 1) {
+    n = size - 1;
     if (f0) delete[] f0;
     f0 = new nr_double_t[n+1];
     if (x) delete[] x;
     x  = new nr_double_t[n+1];
   }
-  for (i = 0; i <= n; i++) {
-    f0[i] = real (y_(i)); x[i] = real (t_(i));
-  }
+  if (f1) { delete[] f1; f1 = NULL; }
+  if (f2) { delete[] f2; f2 = NULL; }
+  if (f3) { delete[] f3; f3 = NULL; }
 }
 
 // Construct cubic spline interpolation coefficients.

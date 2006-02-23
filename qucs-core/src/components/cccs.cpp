@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cccs.cpp,v 1.13 2006/02/09 11:55:32 raimi Exp $
+ * $Id: cccs.cpp,v 1.14 2006/02/23 09:02:01 raimi Exp $
  *
  */
 
@@ -63,8 +63,9 @@ void cccs::calcSP (nr_double_t frequency) {
 }
 
 void cccs::initDC (void) {
-  nr_double_t g = getPropertyDouble ("G");
+  setISource (false);
   allocMatrixMNA ();
+  nr_double_t g = getPropertyDouble ("G");
   setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, +0.0);
   setC (VSRC_1, NODE_3, +0.0); setC (VSRC_1, NODE_4, -1.0);
   setB (NODE_1, VSRC_1, +1/g); setB (NODE_2, VSRC_1, +1.0);
@@ -85,5 +86,24 @@ void cccs::calcAC (nr_double_t frequency) {
 }
 
 void cccs::initTR (void) {
+  nr_double_t t = getPropertyDouble ("T");
   initDC ();
+  if (t > 0.0) {
+    setISource (true);
+    setHistory (true);
+    initHistory (t);
+    setB (NODE_1, VSRC_1, +1.0); setB (NODE_2, VSRC_1, +0.0);
+    setB (NODE_3, VSRC_1, -0.0); setB (NODE_4, VSRC_1, -1.0);
+  }
+}
+
+void cccs::calcTR (nr_double_t t) {
+  nr_double_t T = getPropertyDouble ("T");
+  if (T > 0.0) {
+    T = t - T;
+    nr_double_t g = getPropertyDouble ("G");
+    nr_double_t i = getJ (VSRC_1, T);
+    setI (NODE_2, -g * i);
+    setI (NODE_3, +g * i);
+  }
 }

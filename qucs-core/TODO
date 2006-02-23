@@ -88,7 +88,7 @@ unfixed) have a look at the file BUGS.
 	- Implement variable step-size coefficient calculations for
 	  transient integrators.
 - Transient model of phaseshifter.
-- Transient models for controlled sources with time delay.
+	- Transient models for controlled sources with time delay.
 - Transient noise analysis.
 	- Implement a real predictor for transient analysis.
 	- Use Milne's formula for local truncation error estimation.

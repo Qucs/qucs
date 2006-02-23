@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: history.h,v 1.1 2006/02/21 20:56:17 raimi Exp $
+ * $Id: history.h,v 1.2 2006/02/23 09:02:01 raimi Exp $
  *
  */
 
@@ -45,10 +45,12 @@ class history
   tvector<nr_double_t> * getTvector (void) { return t; }
   void self (void) { t = values; }
 
-  nr_double_t nearest (nr_double_t);
+  nr_double_t interpol (nr_double_t, int, bool);
+  nr_double_t nearest (nr_double_t, bool interpolate = true);
   int seek (nr_double_t, int, int, nr_double_t&, int);
 
  private:
+  bool sign;
   nr_double_t age;
   tvector<nr_double_t> * values;
   tvector<nr_double_t> * t;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: history.cpp,v 1.1 2006/02/21 20:56:17 raimi Exp $
+ * $Id: history.cpp,v 1.2 2006/02/23 09:02:01 raimi Exp $
  *
  */
 
@@ -32,6 +32,8 @@
 
 #include "precision.h"
 #include "tvector.h"
+#include "poly.h"
+#include "spline.h"
 #include "history.h"
 
 // Constructor creates an unnamed instance of the history class.
@@ -57,7 +59,7 @@ history::~history () {
 void history::append (nr_double_t val) {
   if (values == NULL) values = new tvector<nr_double_t>;
   values->add (val);
-  drop ();
+  if (values != t) drop ();
 }
 
 // Returns the first (oldest) time value in the history.
@@ -89,15 +91,40 @@ void history::drop (void) {
   }
 }
 
-/* The function returns the value nearest to the given time value. */
-nr_double_t history::nearest (nr_double_t tval) {
+/* Interpolates a value using 2 left side and 2 right side values if
+   possible. */
+nr_double_t history::interpol (nr_double_t tval, int idx, bool left) {
+  static spline spl (SPLINE_BC_NATURAL);
+  static tvector<nr_double_t> x (4);
+  static tvector<nr_double_t> y (4);
+
+  int n = left ? idx + 1: idx;
+  if (n > 1 && n + 2 < values->getSize ()) {
+    int i, k, l = t->getSize () - values->getSize ();
+    for (k = 0, i = n - 2; k < 4; i++, k++) {
+      x (k) = t->get (i + l);
+      y (k) = values->get (i);
+    }
+    spl.vectors (y, x);
+    spl.construct ();
+    return spl.evaluate (tval).f0;
+  }
+  return values->get (idx);
+}
+
+/* The function returns the value nearest to the given time value.  If
+   the otional parameter is true then additionally cubic spline
+   interpolation is used. */
+nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
   if (t != NULL) {
     int l = t->getSize () - values->getSize ();
     int r = t->getSize () - 1;
     int i = -1;
     nr_double_t diff = NR_MAX;
+    sign = true;
     i = seek (tval, l, r, diff, i);
     i = i - l;
+    if (interpolate) return interpol (tval, i, sign);
     return values->get (i);
   }
   return 0.0;
@@ -116,6 +143,7 @@ int history::seek (nr_double_t tval, int l, int r, nr_double_t& diff,
   if (fabs (d) < diff) {
     // better approximation
     diff = fabs (d);
+    sign = d < 0.0 ? true : false;
     idx = i;
   }
   else if (i == l) {
