@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.h,v 1.5 2005-06-02 18:17:52 raimi Exp $
+ * $Id: tline.h,v 1.6 2006-02-25 14:42:50 raimi Exp $
  *
  */
 
@@ -33,6 +33,8 @@ class tline : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void initTR (void);
+  void calcTR (nr_double_t);
 };
 
 #endif /* __TLINE_H__ */

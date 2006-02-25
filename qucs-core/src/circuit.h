@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.46 2006-02-20 18:02:11 raimi Exp $
+ * $Id: circuit.h,v 1.47 2006-02-25 14:42:50 raimi Exp $
  *
  */
 
@@ -254,6 +254,7 @@ class circuit : public object, public integrator
   valuelist<characteristic> charac;
   net * subnet;
   nr_double_t * deltas;
+  int nHistories;
   history * histories;
 };
 

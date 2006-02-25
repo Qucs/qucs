@@ -1,3 +1,8 @@
+2006-02-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* ccvs.cpp, vcvs.cpp, cccs.cpp, vccs.cpp: Fixed history memory
+	leak which appeared when sweeping transient analyses.
+
 2006-02-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* ccvs.cpp, vcvs.cpp, cccs.cpp: Implemented delay time for

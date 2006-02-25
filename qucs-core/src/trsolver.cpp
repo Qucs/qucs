@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.43 2006-02-23 09:02:01 raimi Exp $
+ * $Id: trsolver.cpp,v 1.44 2006-02-25 14:42:50 raimi Exp $
  *
  */
 
@@ -60,7 +60,7 @@ trsolver::trsolver ()
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
-  tHistory = new history ();
+  tHistory = NULL;
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -70,7 +70,7 @@ trsolver::trsolver (char * n)
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
-  tHistory = new history ();
+  tHistory = NULL;
 }
 
 // Destructor deletes the trsolver class object.
@@ -86,6 +86,7 @@ trsolver::trsolver (trsolver & o)
   : nasolver<nr_double_t> (o), states<nr_double_t> (o) {
   swp = o.swp ? new sweep (*o.swp) : NULL;
   for (int i = 0; i < 8; i++) solution[i] = NULL;
+  tHistory = o.tHistory ? new history (*o.tHistory) : NULL;
 }
 
 // This function creates the time sweep if necessary.
@@ -304,11 +305,15 @@ void trsolver::solve (void) {
   logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
 	    "%d non-convergences\n", getName (),
 	    (double) statIterations / statSteps, statConvergence);
+
+  // cleanup
+  deinitTR ();
 }
 
 // The function initializes the history.
 void trsolver::initHistory (nr_double_t t) {
   // initialize time vector
+  tHistory = new history ();
   tHistory->append (t);
   tHistory->self ();
   // initialize circuit histories
@@ -645,6 +650,20 @@ void trsolver::initTR (void) {
   // also initialize created circuits
   for (c = root; c != NULL; c = (circuit *) c->getPrev ())
     initCircuitTR (c);
+}
+
+// This function cleans up some memory used by the transient analysis.
+void trsolver::deinitTR (void) {
+  // cleanup solutions
+  for (int i = 0; i < 8; i++) {
+    delete solution[i];
+    solution[i] = NULL;
+  }
+  // cleanup history
+  if (tHistory) {
+    delete tHistory;
+    tHistory = NULL;
+  }
 }
 
 // The function initialize a single circuit.
