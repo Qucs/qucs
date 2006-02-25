@@ -47,8 +47,8 @@ vProbe::vProbe()
   x1 = -24; y1 = -35;
   x2 =  24; y2 =  20;
 
-  tx = x1+4;
-  ty = y2+4;
+  tx = x2+4;
+  ty = y1+4;
   Model = "VProbe";
   Name  = "Pr";
 }
