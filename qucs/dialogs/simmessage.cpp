@@ -316,7 +316,7 @@ void SimMessage::slotDisplayMsg()
     i = ProgressText.find('\t');
     if(i >= 0) {
       wasLF = true;
-      ProgText->insert(ProgressText.left(i) + "\n");
+      ProgText->insert(ProgressText.left(i));
       ProgressText.remove(0, i+1);
       return;
     }
