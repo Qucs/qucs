@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ccvs.cpp,v 1.13 2006/02/23 09:02:01 raimi Exp $
+ * $Id: ccvs.cpp,v 1.14 2006/02/25 14:42:50 raimi Exp $
  *
  */
 
@@ -92,6 +92,7 @@ void ccvs::calcAC (nr_double_t frequency) {
 void ccvs::initTR (void) {
   nr_double_t t = getPropertyDouble ("T");
   initDC ();
+  deleteHistory ();
   if (t > 0.0) {
     setHistory (true);
     initHistory (t);

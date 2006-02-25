@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.43 2006/02/20 18:02:11 raimi Exp $
+ * $Id: circuit.cpp,v 1.44 2006/02/25 14:42:50 raimi Exp $
  *
  */
 
@@ -67,6 +67,7 @@ circuit::circuit () : object (), integrator () {
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
+  nHistories = 0;
   type = CIR_UNKNOWN;
 }
 
@@ -90,6 +91,7 @@ circuit::circuit (int s) : object (), integrator () {
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
+  nHistories = 0;
   type = CIR_UNKNOWN;
 }
 
@@ -108,6 +110,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   inserted = c.inserted;
   subnet = c.subnet;
   deltas = c.deltas;
+  nHistories = c.nHistories;
   histories = NULL;
   subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 
@@ -645,14 +648,18 @@ void circuit::transientCapacitance (int qstate, int pos, int neg,
 
 // The function initializes the histories of a circuit having the given age.
 void circuit::initHistory (nr_double_t age) {
-  int n = getSize () + getVoltageSources ();
-  histories = new history[n];
-  for (int i = 0; i < n; i++) histories[i].setAge (age);
+  nHistories = getSize () + getVoltageSources ();
+  histories = new history[nHistories];
+  for (int i = 0; i < nHistories; i++) histories[i].setAge (age);
 }
 
 // The function deletes the histories for the transient analysis.
 void circuit::deleteHistory (void) {
-  if (histories) delete[] histories;
+  if (histories != NULL) {
+    delete[] histories;
+    histories = NULL;
+  }
+  setHistory (false);
 }
 
 // Appends a history value.
@@ -662,18 +669,15 @@ void circuit::appendHistory (int n, nr_double_t val) {
 
 // Returns the required age of the history.
 nr_double_t circuit::getHistoryAge (void) {
-  if (histories) {
-    return histories[0].getAge ();
-  }
+  if (histories) return histories[0].getAge ();
   return 0.0;
 }
 
 /* This function should be used to apply the time vector history to
    the value histories of a circuit. */
 void circuit::applyHistory (history * h) {
-  int n = getSize () + getVoltageSources ();
   tvector<nr_double_t> * t = h->getTvector ();
-  for (int i = 0; i < n; i++) histories[i].setTvector (t);
+  for (int i = 0; i < nHistories; i++) histories[i].setTvector (t);
 }
 
 // Returns voltage at the given time for the given node.

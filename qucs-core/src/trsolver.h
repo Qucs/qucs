@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.20 2006/02/20 18:02:11 raimi Exp $
+ * $Id: trsolver.h,v 1.21 2006/02/25 14:42:50 raimi Exp $
  *
  */
 
@@ -49,6 +49,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void adjustDelta (nr_double_t);
   void adjustOrder (int reduce = 0);
   void initTR (void);
+  void deinitTR (void);
   static void calcTR (trsolver *);
   void initDC (void);
   static void calcDC (trsolver *);
