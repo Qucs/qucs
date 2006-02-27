@@ -1,3 +1,10 @@
+2006-02-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new components: switch, relais, AM- and PM-modulator
+	* correct path for files loaded via command line
+	* catch wrong characters for components names on schematic
+	* sources all have initial rotation angle as in icon
+
 2006-02-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* load resistors with backward compatibility

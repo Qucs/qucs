@@ -98,6 +98,8 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   if(_Name.isEmpty()) Tab = new QTab(QObject::tr("untitled"));
   else {
     QFileInfo Info(DocName);
+    DocName = Info.absFilePath();
+
     Tab = new QTab(Info.fileName());
     DataSet = Info.baseName()+".dat";   // name of the default dataset
     if(Info.extension(false) == "sch")

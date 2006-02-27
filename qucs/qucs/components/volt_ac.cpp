@@ -1,6 +1,6 @@
 /***************************************************************************
-                          volt_ac.cpp  -  description
-                             -------------------
+                               volt_ac.cpp
+                              -------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -48,6 +48,10 @@ Volt_ac::Volt_ac()
 		QObject::tr("frequency in Hertz")));
   Props.append(new Property("Phase", "0", false,
 		QObject::tr("initial phase in degrees")));
+  Props.append(new Property("Theta", "0", false,
+		QObject::tr("damping factor (transient simulation only)")));
+
+  rotate();  // fix historical flaw
 }
 
 Volt_ac::~Volt_ac()

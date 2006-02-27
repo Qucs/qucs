@@ -1,6 +1,6 @@
 /***************************************************************************
-                         irect.cpp  -  description
-                             -------------------
+                                 irect.cpp
+                                -----------
     begin                : Sat Sep 18 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -55,6 +55,8 @@ iRect::iRect()
 		QObject::tr("duration of high pulses")));
   Props.append(new Property("TL", "1 ms", true,
 		QObject::tr("duration of low pulses")));
+
+  rotate();  // fix historical flaw
 }
 
 iRect::~iRect()
