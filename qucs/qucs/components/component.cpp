@@ -686,7 +686,9 @@ bool Component::load(const QString& _s)
     n  = s.section(' ',8,8);    // rotated
     tmp = n.toInt(&ok);
     if(!ok) return false;
-    for(int z=0; z<tmp; z++) rotate();
+    if(rotated > tmp)  // neccessary because of historical flaw in ...
+      tmp += 4;        // ... components like "volt_dc"
+    for(int z=rotated; z<tmp; z++) rotate();
 
   }
 
@@ -1209,6 +1211,7 @@ Component* getComponentFromName(QString& Line)
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
 	else if(cstr == "us") c = new Resistor(false);  // backward capatible
 	else if(cstr == "SFF") c = new RS_FlipFlop();
+	else if(cstr == "elais") c = new Relais();
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();
@@ -1260,6 +1263,7 @@ Component* getComponentFromName(QString& Line)
   case 'P' : if(cstr == "ac") c = new Source_ac();
         else if(cstr == "ort") c = new SubCirPort();
         else if(cstr == "Shift") c = new Phaseshifter();
+        else if(cstr == "M_Mod") c = new PM_Modulator();
         break;
   case 'S' : if(cstr == "Pfile") c = new SParamFile();
         else if(cstr.left(5) == "Pfile") {  // backward compatible
@@ -1268,6 +1272,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ub")   c = new Subcircuit();
         else if(cstr == "UBST") c = new Substrate();
         else if(cstr == "PICE") c = new SpiceFile();
+        else if(cstr == "witch") c = new Switch();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
 	else if(cstr == "CFeed") c = new dcFeed();
@@ -1276,11 +1281,12 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "FF") c = new D_FlipFlop();
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
-	else if(cstr == "JT") c = new BJTsub();
-	break;
+        else if(cstr == "JT") c = new BJTsub();
+        break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
-	else if(cstr == "mp") c = new Amplifier();
+        else if(cstr == "mp") c = new Amplifier();
         else if(cstr == "ND") c = new Logical_AND();
+        else if(cstr == "M_Mod") c = new AM_Modulator();
         break;
   case 'M' : if(cstr == "UT") c = new Mutual();
 	else if(cstr == "UT2") c = new Mutual2();

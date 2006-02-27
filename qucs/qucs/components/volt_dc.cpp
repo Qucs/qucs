@@ -1,6 +1,6 @@
 /***************************************************************************
-                          volt_dc.cpp  -  description
-                             -------------------
+                               volt_dc.cpp
+                              -------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,9 +26,9 @@ Volt_dc::Volt_dc()
   Lines.append(new Line( -4, -6, -4,  6,QPen(QPen::darkBlue,4)));
   Lines.append(new Line( 30,  0,  4,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -4,  0,-30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 10,  5, 10, 11,QPen(QPen::red,1)));
-  Lines.append(new Line( 13,  8,  7,  8,QPen(QPen::red,1)));
-  Lines.append(new Line( -9,  5, -9, 11,QPen(QPen::black,1)));
+  Lines.append(new Line( 11,  5, 11, 11,QPen(QPen::red,1)));
+  Lines.append(new Line( 14,  8,  8,  8,QPen(QPen::red,1)));
+  Lines.append(new Line(-11,  5,-11, 11,QPen(QPen::black,1)));
 
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
@@ -43,6 +43,8 @@ Volt_dc::Volt_dc()
 
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("voltage in Volts")));
+
+  rotate();  // fix historical flaw
 }
 
 Volt_dc::~Volt_dc()
