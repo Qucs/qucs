@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ampere_ac.cpp  -  description
-                             -------------------
+                               ampere_ac.cpp
+                              ---------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -48,6 +48,10 @@ Ampere_ac::Ampere_ac()
 		QObject::tr("frequency in Hertz")));
   Props.append(new Property("Phase", "0", false,
 		QObject::tr("initial phase in degrees")));
+  Props.append(new Property("Theta", "0", false,
+		QObject::tr("damping factor (transient simulation only)")));
+
+  rotate();  // fix historical flaw
 }
 
 Ampere_ac::~Ampere_ac()

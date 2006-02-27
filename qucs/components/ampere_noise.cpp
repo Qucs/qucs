@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ampere_noise.cpp  -  description
-                             -------------------
+                              ampere_noise.cpp
+                             ------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -55,6 +55,8 @@ Ampere_noise::Ampere_noise()
 		QObject::tr("frequency coefficient")));
   Props.append(new Property("a", "0", false,
 		QObject::tr("additive frequency term")));
+
+  rotate();  // fix historical flaw
 }
 
 Ampere_noise::~Ampere_noise()

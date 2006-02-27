@@ -1,6 +1,6 @@
 /***************************************************************************
-                         vpulse.cpp  -  description
-                             -------------------
+                                vpulse.cpp
+                               ------------
     begin                : Sat Sep 18 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -58,6 +58,8 @@ vPulse::vPulse()
 		QObject::tr("rise time of the leading edge")));
   Props.append(new Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the trailing edge")));
+
+  rotate();  // fix historical flaw
 }
 
 vPulse::~vPulse()

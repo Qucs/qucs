@@ -38,6 +38,10 @@
 #include <stdlib.h>
 
 
+QRegExp  Expr_CompProp;
+QRegExpValidator Val_CompProp(Expr_CompProp, 0);  // for edit component name on schematic
+
+
 QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 {
   setVScrollBarMode(QScrollView::AlwaysOn);
@@ -83,10 +87,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 
   // .......................................................................
   // valid expressions for component property editor
-  Expression.setPattern("[^\"=]+");
-  Validator = new QRegExpValidator(Expression, this);
   editText  = new QLineEdit(viewport());
-  editText->setValidator(Validator);
   editText->setFrame(false);
   editText->setHidden(true);
   editText->setPaletteBackgroundColor(QucsSettings.BGColor);
@@ -100,7 +101,6 @@ QucsView::~QucsView()
 {
   delete ComponentMenu;
   delete focusMEvent;
-  delete Validator;
 }
 
 // -----------------------------------------------------------
@@ -2461,7 +2461,8 @@ void QucsView::contentsDragMoveEvent(QDragMoveEvent *Event)
 }
 
 // -----------------------------------------------------------
-// Is called if return is pressed in the component text QLineEdit.
+// Is called if user clicked on component text of if return is
+// pressed in the component text QLineEdit.
 void QucsView::slotApplyCompText()
 {
   QString s;
@@ -2543,12 +2544,18 @@ void QucsView::slotApplyCompText()
 			 int(d->Scale * float(MAy1 - d->ViewY1)),
 			 MAx2, MAy2);
   editText->setReadOnly(false);
-  if(pp) {
+  if(pp) {  // is it a property ?
     s = pp->Value;
     MAx2 += editText->fontMetrics().width(pp->Name+"=");
     if(pp->Description.find('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
+    Expr_CompProp.setPattern("[^\"=]+");
   }
+  else   // it is the component name
+    Expr_CompProp.setPattern("[\\w_]+");
+  Val_CompProp.setRegExp(Expr_CompProp);
+  editText->setValidator(&Val_CompProp);
+
   z = editText->fontMetrics().lineSpacing();
   MAy2 += n*z;
   editText->move(QPoint(MAx2, MAy2));

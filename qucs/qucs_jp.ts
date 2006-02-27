@@ -3255,6 +3255,86 @@ Usage:  qucsedit [-r] file
         <source>type of the port (for digital simulation only)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ac voltage source with amplitude modulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modulation level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AM modulated Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>damping factor (transient simulation only)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac voltage source with phase modulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modulation index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PM modulated Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relais</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage to switch on the relais</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage to switch off the relais</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of &quot;on&quot; state in ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of &quot;off&quot; state in ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relais</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>switch (time controled)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time when state changes (comma separated list possible)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attenuation factor per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
