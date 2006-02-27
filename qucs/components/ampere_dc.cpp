@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ampere_dc.cpp  -  description
-                             -------------------
+                               ampere_dc.cpp
+                              ---------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -42,6 +42,8 @@ Ampere_dc::Ampere_dc()
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current in Ampere")));
+
+  rotate();  // fix historical flaw
 }
 
 Ampere_dc::~Ampere_dc()

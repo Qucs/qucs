@@ -1,6 +1,6 @@
 /***************************************************************************
-                          source_ac.cpp  -  description
-                             -------------------
+                               source_ac.cpp
+                              ---------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -65,6 +65,8 @@ Source_ac::Source_ac()
 		QObject::tr("frequency in Hertz")));
   Props.append(new Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
+
+  rotate();  // fix historical flaw
 }
 
 Source_ac::~Source_ac()

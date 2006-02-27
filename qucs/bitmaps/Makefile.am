@@ -31,7 +31,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   attenuator.png biast.png circulator.png dcblock.png dcfeed.png diode.png    \
   isolator.png mscorner.png mscross.png msstep.png mstee.png substrate.png    \
   subport.png spfile1.png spfile2.png spfile3.png coplanar.png ellipse.png    \
-  mscoupled.png gyrator.png cpwgap.png   \
+  mscoupled.png gyrator.png cpwgap.png vprobe.png switch.png relais.png       \
   pshifter.png iprobe.png noise_current.png noise_volt.png msmbend.png        \
   msopen.png filledellipse.png filledrect.png ac_current.png npn.png pnp.png  \
   nfet.png pfet.png nmosfet.png pmosfet.png dmosfet.png msgap.png npnsub.png  \
@@ -41,7 +41,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   cpwopen.png cpwstep.png mutual.png mutual2.png noise_ii.png noise_vv.png    \
   noise_iv.png or.png nor.png and.png nand.png xor.png xnor.png digi.png      \
   inverter.png digi_source.png timing.png truth.png rsflipflop.png            \
-  dflipflop.png jkflipflop.png coupler.png coaxial.png vprobe.png
+  dflipflop.png jkflipflop.png coupler.png coaxial.png am_mod.png pm_mod.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \

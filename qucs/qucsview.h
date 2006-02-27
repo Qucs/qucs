@@ -61,7 +61,7 @@ public:
 
   bool    drawn;  // indicates whether the scheme element was drawn last time
   QString ProjName;
-  QLineEdit *editText;  // for edit component properties
+  QLineEdit *editText;  // for edit component properties on schematic
 
   QPtrList<Element> movingElements;
 
@@ -173,9 +173,6 @@ private:
   QMouseEvent *focusMEvent;
   Wire *labeledWire;     // remember the wire whose label is moving
   ViewPainter Painter;
-
-  QRegExp Expression;
-  QRegExpValidator *Validator;
 };
 
 #endif

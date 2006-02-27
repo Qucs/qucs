@@ -45,6 +45,8 @@ TLine::TLine()
 		QObject::tr("characteristic impedance")));
   Props.append(new Property("L", "1 mm", true,
 		QObject::tr("electrical length of the line")));
+  Props.append(new Property("Alpha", "0", true,
+		QObject::tr("attenuation factor per length in 1/m")));
 }
 
 TLine::~TLine()

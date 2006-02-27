@@ -1,6 +1,6 @@
 /***************************************************************************
-                          volt_noise.cpp  -  description
-                             -------------------
+                               volt_noise.cpp
+                              ----------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -50,6 +50,8 @@ Volt_noise::Volt_noise()
 		QObject::tr("frequency coefficient")));
   Props.append(new Property("a", "0", false,
 		QObject::tr("additive frequency term")));
+
+  rotate();  // fix historical flaw
 }
 
 Volt_noise::~Volt_noise()

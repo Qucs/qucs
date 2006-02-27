@@ -53,18 +53,6 @@
 
 
 
-#define  COMBO_passive   0
-#define  COMBO_Sources   1
-#define  COMBO_TLines    2
-#define  COMBO_nonlinear 3
-#define  COMBO_digital   4
-#define  COMBO_File      5
-#define  COMBO_Sims      6
-#define  COMBO_Diagrams  7
-
-// must be the last one
-#define  COMBO_Paints    8
-
 QDir QucsWorkDir;  // current project path
 QDir QucsHomeDir;  // Qucs user directory where all projects are located
 
@@ -238,6 +226,139 @@ void QucsApp::fillComboBox(bool setAll)
     CompChoose->insertItem(tr("diagrams"));
   }
   CompChoose->insertItem(tr("paintings"));
+}
+
+// ######################################################################
+// The following arrays contains the components that appear in the
+// component listview.
+typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
+pInfoFunc lumpedComponents[] =
+  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
+   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
+   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
+   &Amplifier::info, &Isolator::info, &Circulator::info,
+   &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
+   &vProbe::info, &Mutual::info, &Mutual2::info, &Switch::info,
+   &Relais::info, 0};
+
+pInfoFunc Sources[] =
+  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
+   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
+   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
+   &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
+   &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, 0};
+
+pInfoFunc TransmissionLines[] =
+  {&TLine::info, &CoaxialLine::info, &Substrate::info, &MSline::info,
+   &MScoupled::info, &MScorner::info, &MSmbend::info, &MSstep::info,
+   &MStee::info, &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
+   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
+   &CPWstep::info, 0};
+
+pInfoFunc nonlinearComps[] =
+  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
+   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
+   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
+   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
+   &OpAmp::info, 0};
+
+pInfoFunc digitalComps[] =
+  {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
+   &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
+   &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
+   &D_FlipFlop::info, &JK_FlipFlop::info, 0};
+
+pInfoFunc Simulations[] =
+  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
+   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
+
+pInfoFunc FileComponents[] =
+  {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2,
+   &SParamFile::info, 0};
+
+pInfoFunc Diagrams[] =
+  {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
+   &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
+   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info,
+   &TimingDiagram::info, &TruthDiagram::info, 0};
+
+pInfoFunc Paintings[] =
+  {&GraphicLine::info, &Arrow::info, &GraphicText::info,
+   &Ellipse::info, &Rectangle::info, &Ellipse::info_filled,
+   &Rectangle::info_filled, &EllipseArc::info, 0};
+
+// Order of the component groups in the ComboBox
+pInfoFunc *ComponentGroups[] =
+  {lumpedComponents, Sources, TransmissionLines, nonlinearComps,
+   digitalComps, FileComponents, Simulations, Diagrams, 0};
+
+// #######################################################################
+// Whenever the Component Library ComboBox is changed, this slot fills the
+// Component IconView with the appropriat components.
+void QucsApp::slotSetCompView(int index)
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  char *File;
+  QString Name;
+  pInfoFunc *Infos = 0;
+
+  CompComps->clear();   // clear the IconView
+  if((index+1) >= CompChoose->count())  // because of symbol edit mode
+    Infos = &Paintings[0];
+  else
+    Infos = ComponentGroups[index];
+
+  while(*Infos != 0) {
+    (**Infos) (Name, File, false);
+    new QIconViewItem(CompComps, Name,
+		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
+    Infos++;
+  }
+}
+
+// ----------------------------------------------------------------------
+// Is called when the mouse is clicked within the Component QIconView.
+void QucsApp::slotSelectComponent(QIconViewItem *item)
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  // delete previously selected elements
+  if(view->selElem != 0)  delete view->selElem;
+  view->selElem  = 0;   // no component/diagram/painting selected
+
+  if(view->drawn) view->viewport()->repaint();  // don't use update() here !!!
+  view->drawn = false;
+
+  if(item == 0) {   // mouse button pressed not over an item ?
+    CompComps->clearSelection();  // deselect component in ViewList
+    return;
+  }
+
+  // toggle last toolbar button off
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = 0;
+
+
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
+
+  pInfoFunc Infos = 0;
+  int i = CompComps->index(item);
+  if((CompChoose->currentItem()+1) >= CompChoose->count())
+    Infos = Paintings[i];   // the only one in "symbol-painting" mode
+  else
+    Infos = *(ComponentGroups[CompChoose->currentItem()] + i);
+
+  char *Dummy2;
+  QString Dummy1;
+  if(Infos) view->selElem = (*Infos) (Dummy1, Dummy2, true);
 }
 
 // ----------------------------------------------------------
@@ -1258,8 +1379,9 @@ void QucsApp::slotChangePage(QString Name)
 
   TabView->setCurrentPage(2);   // switch to "Component"-Tab
   if(Name.right(4) == ".dpl") {
-    CompChoose->setCurrentItem(COMBO_Diagrams);   // switch to diagrams
-    slotSetCompView(COMBO_Diagrams);
+    cNo = sizeof(ComponentGroups)/sizeof(pInfoFunc) - 2;
+    CompChoose->setCurrentItem(cNo);   // switch to diagrams
+    slotSetCompView(cNo);
   }
 }
 
@@ -1642,150 +1764,6 @@ void QucsApp::slotProjDelButt()
   if(!DeleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
-}
-
-// ######################################################################
-// The following arrays contains the components that appear in the
-// component listview.
-typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
-pInfoFunc lumpedComponents[] =
-  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
-   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
-   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
-   &Amplifier::info, &Isolator::info, &Circulator::info,
-   &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
-   &vProbe::info, &Mutual::info, &Mutual2::info, 0};
-
-pInfoFunc Sources[] =
-  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
-   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
-   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
-   &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
-   &Noise_iv::info, 0};
-
-pInfoFunc TransmissionLines[] =
-  {&TLine::info, &CoaxialLine::info, &Substrate::info, &MSline::info,
-   &MScoupled::info, &MScorner::info, &MSmbend::info, &MSstep::info,
-   &MStee::info, &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
-   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
-   &CPWstep::info, 0};
-
-pInfoFunc nonlinearComps[] =
-  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
-   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
-   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
-   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
-   &OpAmp::info, 0};
-
-pInfoFunc digitalComps[] =
-  {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
-   &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
-   &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
-   &D_FlipFlop::info, &JK_FlipFlop::info, 0};
-
-pInfoFunc Simulations[] =
-  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
-
-pInfoFunc FileComponents[] =
-  {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2, &SParamFile::info};
-
-pInfoFunc Diagrams[] =
-  {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
-   &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
-   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info,
-   &TimingDiagram::info, &TruthDiagram::info, 0};
-
-pInfoFunc Paintings[] =
-  {&GraphicLine::info, &Arrow::info, &GraphicText::info,
-   &Ellipse::info, &Rectangle::info, &Ellipse::info_filled,
-   &Rectangle::info_filled, &EllipseArc::info, 0};
-
-// #######################################################################
-// Whenever the Component Library ComboBox is changed, this slot fills the
-// Component IconView with the appropriat components.
-void QucsApp::slotSetCompView(int index)
-{
-  view->editText->setHidden(true); // disable text edit of component property
-
-  char *File;
-  QString Name;
-  pInfoFunc *Infos = 0;
-
-  CompComps->clear();   // clear the IconView
-  if((index+1) >= CompChoose->count())  // because of symbol edit mode
-    Infos = &Paintings[0];
-  else
-    switch(index) {
-      case COMBO_passive:   Infos = &lumpedComponents[0];  break;
-      case COMBO_Sources:   Infos = &Sources[0];           break;
-      case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
-      case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
-      case COMBO_digital:   Infos = &digitalComps[0];      break;
-      case COMBO_File:      Infos = &FileComponents[0];    break;
-      case COMBO_Sims:      Infos = &Simulations[0];       break;
-      case COMBO_Diagrams:  Infos = &Diagrams[0];          break;
-    }
-
-  while(*Infos != 0) {
-    (**Infos) (Name, File, false);
-    new QIconViewItem(CompComps, Name,
-		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
-    Infos++;
-  }
-}
-
-// ----------------------------------------------------------------------
-// Is called when the mouse is clicked within the Component QIconView.
-void QucsApp::slotSelectComponent(QIconViewItem *item)
-{
-  view->editText->setHidden(true); // disable text edit of component property
-
-  // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
-  view->selElem  = 0;   // no component/diagram/painting selected
-
-  if(view->drawn) view->viewport()->repaint();  // don't use update() here !!!
-  view->drawn = false;
-
-  if(item == 0) {   // mouse button pressed not over an item ?
-    CompComps->clearSelection();  // deselect component in ViewList
-    return;
-  }
-
-  // toggle last toolbar button off
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = 0;
-
-
-  view->MouseMoveAction = &QucsView::MMoveElement;
-  view->MousePressAction = &QucsView::MPressElement;
-  view->MouseReleaseAction = 0;
-  view->MouseDoubleClickAction = 0;
-
-  pInfoFunc Infos = 0;
-  int i = CompComps->index(item);
-  if((CompChoose->currentItem()+1) >= CompChoose->count())
-    Infos = Paintings[i];   // the only one in "symbol-painting" mode
-  else
-    switch(CompChoose->currentItem()) {
-      case COMBO_passive:   Infos = lumpedComponents[i];  break;
-      case COMBO_Sources:   Infos = Sources[i];           break;
-      case COMBO_TLines:    Infos = TransmissionLines[i]; break;
-      case COMBO_nonlinear: Infos = nonlinearComps[i];    break;
-      case COMBO_digital:   Infos = digitalComps[i];      break;
-      case COMBO_File:      Infos = FileComponents[i];    break;
-      case COMBO_Sims:      Infos = Simulations[i];       break;
-      case COMBO_Diagrams:  Infos = Diagrams[i];          break;
-    }
-
-  char *Dummy2;
-  QString Dummy1;
-  if(Infos) view->selElem = (*Infos) (Dummy1, Dummy2, true);
 }
 
 // -----------------------------------------------------------------------
