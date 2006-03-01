@@ -3580,10 +3580,6 @@ Verwendung:  qucsedit [-r] Datei
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>switch (time controled)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>initial state</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3597,6 +3593,10 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>switch (time controlled)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
