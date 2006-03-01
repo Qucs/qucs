@@ -43,6 +43,22 @@
 # define finite(x) _finite(x)
 #endif
 
+#if defined (__MINGW32__)
+// strtod() appears to be so sloooooooo under Win32...
+static double strtod_faster (char * pPos, char ** pEnd) {
+  *pEnd = pPos;
+  while((**pEnd) && (**pEnd > ' ') && (**pEnd != 'j') && (**pEnd != 'i'))
+    (*pEnd)++;
+  if ((**pEnd == 'j') || (**pEnd == 'i'))
+    (*pEnd)--;
+  QCString str = QCString (pPos, *pEnd - pPos + 1);
+  bool ok;
+  double x = str.toDouble(&ok);
+  if (!ok) *pEnd = pPos;
+  return x;
+}
+#define strtod(a,b) strtod_faster(a,b)
+#endif /* __MINGW32__ */
 
 using namespace std;
 

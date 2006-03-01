@@ -3347,10 +3347,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>switch (time controled)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>initial state</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3364,6 +3360,10 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>switch (time controlled)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

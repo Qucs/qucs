@@ -20,7 +20,7 @@
 
 Switch::Switch()
 {
-  Description = QObject::tr("switch (time controled)");
+  Description = QObject::tr("switch (time controlled)");
 
   Lines.append(new Line(-30,  0,-15,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 17,  0, 30,  0,QPen(QPen::darkBlue,2)));
@@ -41,7 +41,7 @@ Switch::Switch()
   Name  = "S";
 
   Props.append(new Property("init", "off", false,
-		QObject::tr("initial state")+"[on, off]"));
+		QObject::tr("initial state")+" [on, off]"));
   Props.append(new Property("time", "1 ms", false,
 		QObject::tr("time when state changes (comma separated list possible)")));
   Props.append(new Property("Ron", "0", false,
