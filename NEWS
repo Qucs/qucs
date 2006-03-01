@@ -28,7 +28,7 @@ Version 0.0.9
 
  * number of ports of S-parameter component not anymore limited
  * language can be chosen in application settings dialog
- * new component: coaxial line, voltage probe
+ * new components: coaxial line, voltage probe
  * fixed bug in Cauer band-stop filter
 
 Version 0.0.8

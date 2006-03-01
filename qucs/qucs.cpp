@@ -709,7 +709,8 @@ bool QucsApp::gotoPage(const QString& Name)
 
   // search, if page is already loaded
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
-    if(d->DocName == Name) break;
+    if(QDir::convertSeparators (d->DocName) == QDir::convertSeparators (Name))
+      break;
 
   if(d != 0) {   // open page found ?
     view->Docs.current()->reloadGraphs();   // load recent simulation data
@@ -1338,7 +1339,8 @@ void QucsApp::slotChangePage(QString Name)
 
   // search, if page is already loaded
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
-    if(d->DocName == Name) break;
+    if(QDir::convertSeparators (d->DocName) == QDir::convertSeparators (Name))
+      break;
 
   if(d == 0) {   // no open page found ?
     Info.setFile(Name);

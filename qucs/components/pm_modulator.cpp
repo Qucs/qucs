@@ -34,7 +34,7 @@ PM_Modulator::PM_Modulator()
   Lines.append(new Line(-12,  0,-30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-12,  0,-17,  5,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-12,  0,-17, -5,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-30,-18, QObject::tr("PM"), Qt::black, 10.0,1.0,0.0));
+  Texts.append(new Text(-30,-22, QObject::tr("PM"), Qt::black, 10.0,1.0,0.0));
 
   Ports.append(new Port(  0,-30));
   Ports.append(new Port(  0, 30));
