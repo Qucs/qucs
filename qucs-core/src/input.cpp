@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.55 2006-02-06 09:50:15 raimi Exp $
+ * $Id: input.cpp,v 1.56 2006-03-02 08:06:00 raimi Exp $
  *
  */
 
@@ -339,6 +339,10 @@ circuit * input::createCircuit (char * type) {
     return new vac ();
   else if (!strcmp (type, "Iac"))
     return new iac ();
+  else if (!strcmp (type, "AM_Mod"))
+    return new vam ();
+  else if (!strcmp (type, "PM_Mod"))
+    return new vpm ();
   else if (!strcmp (type, "Vpulse"))
     return new vpulse ();
   else if (!strcmp (type, "Ipulse"))
@@ -351,6 +355,10 @@ circuit * input::createCircuit (char * type) {
     return new gyrator ();
   else if (!strcmp (type, "PShift"))
     return new phaseshifter ();
+  else if (!strcmp (type, "Switch"))
+    return new tswitch ();
+  else if (!strcmp (type, "Relais"))
+    return new relais ();
   else if (!strcmp (type, "TLIN"))
     return new tline ();
   else if (!strcmp (type, "COAX"))

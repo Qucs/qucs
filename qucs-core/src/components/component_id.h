@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.32 2006-02-06 09:50:15 raimi Exp $
+ * $Id: component_id.h,v 1.33 2006-03-02 08:06:03 raimi Exp $
  *
  */
 
@@ -57,8 +57,12 @@ enum circuit_type {
   CIR_IDC,
   CIR_VAC,
   CIR_IAC,
+  CIR_VAM,
+  CIR_VPM,
   CIR_PHASESHIFTER,
   CIR_GYRATOR,
+  CIR_TSWITCH,
+  CIR_RELAIS,
   CIR_TLINE,
   CIR_COAXLINE,
   CIR_IPROBE,
