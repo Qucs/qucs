@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.37 2006/02/22 11:43:56 raimi Exp $
+ * $Id: qucsdefs.h,v 1.38 2006/03/02 08:06:00 raimi Exp $
  *
  */
 
@@ -175,6 +175,24 @@ struct define_t qucs_definition_available[] =
       { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
+  /* AM modulated AC voltage source */
+  { "AM_Mod", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "m", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0, 1, ']' } },
+      PROP_NO_PROP },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
+      PROP_NO_PROP }
+  },
+  /* PM modulated AC voltage source */
+  { "PM_Mod", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "M", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0, 1, ']' } },
+      PROP_NO_PROP },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
+      PROP_NO_PROP }
+  },
   /* pulse voltage source */
   { "Vpulse", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
@@ -226,12 +244,33 @@ struct define_t qucs_definition_available[] =
     { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
+  /* time controlled switch */
+  { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "init", PROP_STR, { PROP_NO_VAL, "low" }, PROP_NO_RANGE },
+      { "time", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
+  /* relais */
+  { "Relais", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Von", PROP_REAL, { 0.4, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Voff", PROP_REAL, { 0.6, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
   /* ideal transmission line */
   { "TLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Alpha", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
   /* coaxial cable */

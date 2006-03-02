@@ -1,7 +1,7 @@
 /*
- * tline.h - ideal transmission line class definitions
+ * vpm.h - PM modulated AC voltage source class definitions
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,22 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.h,v 1.7 2006/03/02 08:06:03 raimi Exp $
+ * $Id: vpm.h,v 1.1 2006/03/02 08:06:03 raimi Exp $
  *
  */
 
-#ifndef __TLINE_H__
-#define __TLINE_H__
+#ifndef __VPM_H__
+#define __VPM_H__
 
-class tline : public circuit
+class vpm : public circuit
 {
  public:
-  tline ();
-  void calcSP (nr_double_t);
+  vpm ();
+  void initSP (void);
   void initDC (void);
   void initAC (void);
-  void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-  void calcNoiseAC (nr_double_t);
-  void calcNoiseSP (nr_double_t);
 };
 
-#endif /* __TLINE_H__ */
+#endif /* __VPM_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.35 2006/02/06 09:50:15 raimi Exp $
+ * $Id: component.h,v 1.36 2006/03/02 08:06:03 raimi Exp $
  *
  */
 
@@ -58,8 +58,12 @@
 #include "idc.h"
 #include "vac.h"
 #include "iac.h"
+#include "vam.h"
+#include "vpm.h"
 #include "phaseshifter.h"
 #include "gyrator.h"
+#include "tswitch.h"
+#include "relais.h"
 #include "tline.h"
 #include "coaxline.h"
 #include "iprobe.h"

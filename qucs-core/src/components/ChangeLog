@@ -1,3 +1,11 @@
+2006-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* vpm.h (class vpm), vam.h (class vam), tswitch.h (class tswitch),
+	relais.h (class relais): Added four new components.
+
+	* tline.cpp: Transmission line transient analysis implemented.
+	Also noise due to losses implemented.
+
 2006-02-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* ccvs.cpp, vcvs.cpp, cccs.cpp, vccs.cpp: Fixed history memory

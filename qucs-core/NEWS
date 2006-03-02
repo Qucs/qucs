@@ -26,6 +26,8 @@ files.
 Version 0.0.9
 -------------
 
+ * new components: AM and PM modulated and sources, relais, switch
+ * transient analysis of ideal transmission line
  * delay times of controlled sources during transient analysis
  * frequency-independent loss factor for 'ideal' transmission line
  * damping factor for ac voltage/current sources during transient
