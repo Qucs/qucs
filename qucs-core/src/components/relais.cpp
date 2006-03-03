@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.1 2006/03/02 08:06:03 raimi Exp $
+ * $Id: relais.cpp,v 1.2 2006/03/03 07:45:01 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "vector.h"
 #include "component_id.h"
 #include "consts.h"
+#include "constants.h"
 #include "relais.h"
 
 relais::relais () : circuit (4) {
@@ -46,12 +47,34 @@ relais::relais () : circuit (4) {
 
 void relais::initSP (void) {
   allocMatrixS ();
+  setS (NODE_1, NODE_1, 1.0); setS (NODE_4, NODE_4, 1.0);
+  setS (NODE_2, NODE_2, r / (r + 2));
+  setS (NODE_3, NODE_3, r / (r + 2));
+  setS (NODE_2, NODE_3, 2 / (r + 2));
+  setS (NODE_3, NODE_2, 2 / (r + 2));
+}
+
+void relais::calcNoiseSP (nr_double_t) {
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  setN (NODE_2, NODE_2, +f); setN (NODE_3, NODE_3, +f);
+  setN (NODE_2, NODE_3, -f); setN (NODE_3, NODE_2, -f);
+}
+
+void relais::calcNoiseAC (nr_double_t) {
+  if (r > 0.0 || r < 0.0) {
+    nr_double_t T = getPropertyDouble ("Temp");
+    nr_double_t f = kelvin (T) / T0 * 4.0 / r;
+    setN (NODE_2, NODE_2, +f); setN (NODE_3, NODE_3, +f);
+    setN (NODE_2, NODE_3, -f); setN (NODE_3, NODE_2, -f);
+  }
 }
 
 void relais::initDC (void) {
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_2, NODE_3);
   state = 0;
+  r = 0.0;
 }
 
 #define REAL_OFF 0
@@ -65,7 +88,6 @@ void relais::calcDC (void) {
   nr_double_t ron  = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
   nr_double_t v = real (getV (NODE_1) - getV (NODE_4));
-  nr_double_t r = 0;
   if (state == REAL_OFF) {
     if (v >= von) {
       state = REAL_ON;
@@ -83,14 +105,19 @@ void relais::calcDC (void) {
   setD (VSRC_1, VSRC_1, r);
 }
 
+void relais::saveOperatingPoints (void) {
+  setOperatingPoint ("R", r);
+}
+
 void relais::initAC (void) {
   initDC ();
+  setD (VSRC_1, VSRC_1, r);
 }
 
 void relais::initTR (void) {
   initDC ();
 }
 
-void relais::calcTR (nr_double_t t) {
+void relais::calcTR (nr_double_t) {
   calcDC ();
 }
