@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.h,v 1.1 2006-03-02 08:06:03 raimi Exp $
+ * $Id: relais.h,v 1.2 2006-03-03 07:45:01 raimi Exp $
  *
  */
 
@@ -35,9 +35,13 @@ class relais : public circuit
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
+  void saveOperatingPoints (void);
+  void calcNoiseSP (nr_double_t);
+  void calcNoiseAC (nr_double_t);
 
  private:
   int state;
+  nr_double_t r;
 };
 
 #endif /* __RELAIS_H__ */
