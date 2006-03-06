@@ -47,6 +47,8 @@ TLine::TLine()
 		QObject::tr("electrical length of the line")));
   Props.append(new Property("Alpha", "0", true,
 		QObject::tr("attenuation factor per length in 1/m")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 }
 
 TLine::~TLine()

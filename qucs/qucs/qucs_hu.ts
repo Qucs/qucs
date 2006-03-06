@@ -3092,7 +3092,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation>HIBA: Nem megengedett a föld szimbólum a digitális szimulációban. </translation>
+        <translation type="obsolete">HIBA: Nem megengedett a föld szimbólum a digitális szimulációban. </translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
@@ -5735,6 +5735,14 @@ Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

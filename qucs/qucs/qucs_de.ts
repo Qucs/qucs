@@ -3317,7 +3317,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation>FEHLER: Das Massesymbol ist in der Digitalsimulation nicht erlaubt.</translation>
+        <translation type="obsolete">FEHLER: Das Massesymbol ist in der Digitalsimulation nicht erlaubt.</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
@@ -7789,6 +7789,14 @@ Kopiert Dateien in das Projektverzeichnis</translation>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation>Türkisch von Onur und Ozgur Cobanoglu</translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

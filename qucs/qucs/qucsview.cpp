@@ -714,7 +714,8 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  d->setOnGrid(MAx2, MAy2);
+  if((Event->state() & Qt::ControlButton) == 0)
+    d->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
