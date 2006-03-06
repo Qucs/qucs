@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about transient analysis.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -806,6 +806,7 @@ This approximation is called Milne's estimate.
 
 \subsection{Adaptive step-size control}
 %\addcontentsline{toc}{subsection}{Adaptive step-size control}
+\label{sec:stepsize}
 
 For all numerical integration methods used for the transient analysis
 of electrical networks the choice of a proper step-size is essential.
@@ -1225,6 +1226,573 @@ conservation control.
 \begin{equation}
 Q^{n+1} = \left(V^{n+1} - V^{n}\right)\cdot \dfrac{C(V^{n+1}) + 4 C(V^{n}) + C(V^{n-1})}{6}
 \end{equation}
+
+\section{Special time-domain models}
+%\addcontentsline{toc}{section}{Special time-domain models}
+
+\subsection{AM modulated AC source}
+%\addcontentsline{toc}{section}{AM modulated AC source}
+
+An AC voltage source in the time-domain is characterized by its
+frequency $f$, the initial phase $\phi$ and the amplitude $A$.  During
+amplitude modulation the modulation level $M$ must be considered.  The
+output voltage of the source is determined by the following equation.
+\begin{equation}
+V_1\left(t\right) - V_2\left(t\right) = \left(1 + M\cdot V_3\left(t\right)\right)\cdot A\cdot \sin{\left(\omega\cdot t + \phi\right)}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.3\linewidth]{vam}
+\end{center}
+\label{fig:VAM}
+\caption{AM modulated AC source}
+\end{figure}
+\FloatBarrier
+
+The appropriate MNA matrix entries during the transient analysis
+decribing a simple linear operation can be written as
+\begin{equation}
+\begin{bmatrix}
+. & . & . & 1\\
+. & . & . & -1\\
+. & . & . & 0\\
+1 & -1 & -M\cdot A\cdot \sin{\left(\omega\cdot t + \phi\right)} & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+J_1\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+I_3\left(t\right)\\
+A\cdot \sin{\left(\omega\cdot t + \phi\right)}
+\end{bmatrix}
+\end{equation}
+
+\subsection{PM modulated AC source}
+%\addcontentsline{toc}{section}{PM modulated AC source}
+
+The phase modulated AC source is also characterized by the frequency
+$f$, the amplidude $A$ and by an initial phase $\phi$.  The output
+voltage in the time-domain is determinded by the following equation
+\begin{equation}
+V_1\left(t\right) - V_2\left(t\right) = A\cdot\sin{\left(\omega\cdot t + \phi + M\cdot V_3\left(t\right)\right)}
+\end{equation}
+
+whereas $M$ denotes the modulation index and $V_3$ the modulating
+voltage.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.3\linewidth]{vpm}
+\end{center}
+\label{fig:VPM}
+\caption{PM modulated AC source}
+\end{figure}
+\FloatBarrier
+
+The component is non-linear in the frequency- as well in the
+time-domain.  In order to prepare the source for subsequent
+Newton-Raphson iterations the derivative
+\begin{equation}
+g = \dfrac{\partial \left(V_1 - V_2\right)}{\partial V_3} = M\cdot A\cdot\cos{\left(\omega\cdot t + \phi + M\cdot V_3\right)}
+\end{equation}
+
+is required.  With this at hand the MNA matrix entries of the PM
+modulated AC voltage source during the transient analysis can be
+written as
+\begin{equation}
+\begin{bmatrix}
+. & . & . & +1\\
+. & . & . & -1\\
+. & . & . & 0\\
++1 & -1 & g & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+J_1\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+I_3\left(t\right)\\
+g\cdot V_3 - A\cdot \sin{\left(\omega\cdot t + \phi + M\cdot V_3\right)}
+\end{bmatrix}
+\end{equation}
+
+\section{Components defined in the frequency domain}
+%\addcontentsline{toc}{section}{Components defined in the frequency domain}
+
+The time-domain simulation of components defined in the
+frequency-domain can be performed using an inverse Fourier
+transformation of the Y-parameters of the component (giving the
+impulse response) and an adjacent convolution with the prior node
+voltages (or branch currents) of the component.
+
+\addvspace{12pt}
+
+This requires a memory of the node voltages and branch currents for
+each component defined in the frequency-domain.  During a transient
+simulation the time steps are not equidistant and the maximum required
+memory length $T_{end}$ of a component may not correspond with the
+time grid produced by the time step control (see section
+\ref{sec:stepsize} on page \pageref{sec:stepsize}) of the transient
+simulation.  That is why an interpolation of exact values (voltage or
+current) at a given point in time is necessary.
+
+\addvspace{12pt}
+
+Components defined in the frequency-domain can be divided into two
+major classes.
+
+\begin{itemize}
+\item Components with frequency-independent (non-dispersive) delay
+times and with or without constant losses.
+\item Components with frequency-dependent (dispersive) delay times and
+losses.
+\end{itemize}
+
+\subsection{Components with frequency-independent delay times}
+%\addcontentsline{toc}{subsection}{Components with frequency-independent delay times}
+
+Components with constant delay times are a special case.  The impulse
+response corresponds to the node voltages and/or branch currents at
+some prior point in time optionally multiplied with a constant loss
+factor.
+
+\subsubsection{Voltage controlled current source}
+%\addcontentsline{toc}{subsubsection}{Voltage controlled current source}
+
+With no constant delay time the MNA matrix entries of a voltage
+controlled current source is determined by the following equations
+according to the node numbering in fig. \ref{fig:vccs} on page
+\pageref{fig:vccs}.
+\begin{equation}
+\label{eq:vccs_dc}
+I_2 = -I_3 = G\cdot \left(V_1 - V_4\right)
+\end{equation}
+
+The equations yield the following MNA entries during the transient
+analysis.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0\\
++G & 0 & 0 & -G\\
+-G & 0 & 0 & +G\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3\\
+V_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+I_3\\
+I_4
+\end{bmatrix}
+\end{equation}
+
+With a constant delay time $\tau$ eq. \eqref{eq:vccs_dc} rewrites as
+\begin{equation}
+\label{eq:vccs_delay}
+I_2\left(t\right) = -I_3\left(t\right) = G\cdot \left(V_1\left(t -\tau\right) - V_4\left(t -\tau\right)\right)
+\end{equation}
+
+which yields the following MNA entries during the transient analysis.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+V_4\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+-G\cdot\left(V_1\left(t -\tau\right) - V_4\left(t -\tau\right)\right)\\
++G\cdot\left(V_1\left(t -\tau\right) - V_4\left(t -\tau\right)\right)\\
+I_4\left(t\right)
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Voltage controlled voltage source}
+%\addcontentsline{toc}{subsubsection}{Voltage controlled voltage source}
+
+The MNA matrix entries of a voltage controlled voltage source are
+determined by the following characteristic equation according to the
+node numbering in fig. \ref{fig:vcvs} on page \pageref{fig:vcvs}.
+\begin{equation}
+\label{eq:vcvs_dc}
+V_2 - V_3 = G\cdot\left(V_4 - V_1\right)
+\end{equation}
+
+This equation yields the following augmented MNA matrix entries with a
+single extra branch equation.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0\\
+G & -1 & 1 & -G & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3\\
+V_4\\
+J_1\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+I_3\\
+I_4\\
+0
+\end{bmatrix}
+\end{equation}
+
+When considering an additional constant time delay $\tau$
+eq. \eqref{eq:vcvs_dc} must be rewritten as
+\begin{equation}
+\label{eq:vcvs_delay}
+V_2\left(t\right) - V_3\left(t\right) = G\cdot\left(V_4\left(t - \tau\right) - V_1\left(t - \tau\right)\right)
+\end{equation}
+
+This representation requires a change of the MNA matrix entries which
+now yield the following matrix equation.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0\\
+0 & -1 & 1 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+V_4\left(t\right)\\
+J_1\left(t\right)\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+I_3\left(t\right)\\
+I_4\left(t\right)\\
+G\cdot\left(V_4\left(t - \tau\right) - V_1\left(t - \tau\right)\right)
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Current controlled current source}
+%\addcontentsline{toc}{subsubsection}{Current controlled current source}
+
+With no time delay the MNA matrix entries of a current controlled
+current source are determined by the following equations according to
+the node numbering in fig. \ref{fig:cccs} on page \pageref{fig:cccs}.
+\begin{align}
+\label{eq:cccs_dc}
+I_2 = -I_3 &= G\cdot I_1 = -G\cdot I_4\\
+V_1 &= V_4
+\end{align}
+
+These equations yield the following MNA matrix entries using a single
+extra branch equation.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1/G\\
+0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & -1/G\\
+1 & 0 & 0 & -1 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3\\
+V_4\\
+J_1\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+I_3\\
+I_4\\
+0
+\end{bmatrix}
+\end{equation}
+
+When additional considering a constant delay time $\tau$
+eq. \eqref{eq:cccs_dc} must be rewritten as
+\begin{equation}
+\label{eq:cccs_delay}
+I_2\left(t\right) = -I_3\left(t\right) = G\cdot I_1\left(t -\tau\right) = -G\cdot I_4\left(t -\tau\right)\\
+\end{equation}
+
+Thus the MNA matrix entries change as well yielding
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -1\\
+1 & 0 & 0 & -1 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+V_4\left(t\right)\\
+J_1\left(t\right)\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+-G\cdot J_1\left(t -\tau\right)\\
++G\cdot J_1\left(t -\tau\right)\\
+I_4\left(t\right)\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Current controlled voltage source}
+%\addcontentsline{toc}{subsubsection}{Current controlled voltage source}
+
+The MNA matrix entries for a current controlled voltage source are
+determined by the following characteristic equations according to the
+node numbering in fig. \ref{fig:ccvs} on page \pageref{fig:ccvs}.
+\begin{align}
+\label{eq:ccvs_dc}
+V_2 - V_3 &= G\cdot I_2 = -G\cdot I_3\\
+V_1 &= V_4
+\end{align}
+
+These equations yield the following MNA matrix entries.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & -1 & 0\\
+0 & 1 & -1 & 0 & G & 0\\
+1 & 0 & 0 & -1 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3\\
+V_4\\
+J_1\\
+J_2\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+I_3\\
+I_4\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+With an additional time delay $\tau$ between the input current and
+the output voltage eq. \eqref{eq:ccvs_dc} rewrites as
+\begin{equation}
+\label{eq:ccvs_delay}
+V_2\left(t\right) - V_3\left(t\right) = G\cdot I_2\left(t - \tau\right) = -G\cdot I_3\left(t - \tau\right)\\
+\end{equation}
+
+Due to the additional time delay the MNA matrix entries must be
+rewritten as follows
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & -1 & 0\\
+0 & 1 & -1 & 0 & 0 & 0\\
+1 & 0 & 0 & -1 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+V_4\left(t\right)\\
+J_1\left(t\right)\\
+J_2\left(t\right)\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+I_3\left(t\right)\\
+I_4\left(t\right)\\
+0\\
+G\cdot J_1\left(t - \tau\right)
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Ideal transmission line}
+%\addcontentsline{toc}{subsubsection}{Ideal transmission line}
+
+The A-parameters of a transmission line (see eq \eqref{eq:tl_apara} on
+page \pageref{eq:tl_apara}) are defined in the frequency domain.  The
+equation system formed by these parameters write as
+\begin{align}
+\textrm{I.}\;\;\;\;V_1 &= V_2\cdot\cosh{\left(\gamma\cdot l\right)} + I_2\cdot Z_L\cdot\sinh{\left(\gamma\cdot l\right)}\\
+\textrm{II.}\;\;\;\;I_1 &= V_2\cdot\dfrac{1}{Z_L}\sinh{\left(\gamma\cdot l\right)} + I_2\cdot \cosh{\left(\gamma\cdot l\right)}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.4\linewidth]{tline}
+\end{center}
+\label{fig:TransLine}
+\caption{ideal transmission line}
+\end{figure}
+\FloatBarrier
+
+Applying $\textrm{I} + Z_L\cdot \textrm{II}$ and $\textrm{I} -
+Z_L\cdot \textrm{II}$ to the above equation system and using the
+following transformations
+\begin{align}
+\cosh{x} + \sinh{x} &= \dfrac{e^x + e^{-x}}{2} + \dfrac{e^x - e^{-x}}{2} = e^x\\
+\cosh{x} - \sinh{x} &= \dfrac{e^x + e^{-x}}{2} - \dfrac{e^x - e^{-x}}{2} = e^{-x}
+\end{align}
+
+yields
+\begin{align}
+\label{eq:tl_v1}
+V_1 &= V_2\cdot e^{-\gamma\cdot l} + Z_L\cdot \left(I_1 + I_2\cdot e^{-\gamma\cdot l}\right)\\
+\label{eq:tl_v2}
+V_2 &= V_1\cdot e^{-\gamma\cdot l} + Z_L\cdot \left(I_2 + I_1\cdot e^{-\gamma\cdot l}\right)
+\end{align}
+
+whereas $\gamma$ denotes the propagation constant $\alpha + j\beta$,
+$l$ the length of the transmission line and $Z_L$ the line impedance.
+
+\addvspace{12pt}
+
+These equation can be transformed from the frequency domain into the
+time domain using the inverse Fourier transformation.  The frequency
+independent loss $\alpha \ne f\left(\omega\right)$ gives the constant
+factor 
+\begin{equation}
+A = e^{-\alpha\cdot l}
+\end{equation}
+
+The only remaining frequency dependent term is
+\begin{equation}
+e^{-j\beta\cdot l} = e^{-j\omega\cdot\tau}
+\;\;\;\; \textrm{with} \;\;\;\;
+\beta = \dfrac{\omega}{v_{ph}} = \dfrac{\omega}{c_0} = \dfrac{\omega\cdot \tau}{l}
+\end{equation}
+
+which yields the following transformation
+\begin{equation}
+f\left(\omega\right)\cdot e^{-\gamma\cdot l} =
+A\cdot f\left(\omega\right)\cdot e^{-j\omega\cdot\tau}
+\Longleftrightarrow
+A\cdot f\left(t - \tau\right)
+\end{equation}
+
+All the presented time-domain models with a frequency-independent
+delay time are based on this simple transformation.  It can be applied
+since the phase velocity $v_{ph} \ne f\left(\omega\right)$ is not a
+function of the frequency.  This is true for all non-dispersive
+transmission media (e.g. air or vacuum).  The given transformation can
+now be applied to the eq. \eqref{eq:tl_v1} and eq. \eqref{eq:tl_v2}
+defined in the frequency-domain to obtain equations in the
+time-domain.
+
+\addvspace{12pt}
+
+The length $T_{end}$ of the memory needed by the ideal transmission
+line can be easily computed by
+\begin{equation}
+T_{end} = \tau = \dfrac{l}{v_{ph}} = \dfrac{l}{c_0}
+\end{equation}
+whereas $c_0$ denotes the speed of light in free space (since there is
+no dielectric involved during transmission) and $l$ the physical
+length of the transmission line.
+
+\addvspace{12pt}
+
+The MNA matrix for a lossy (or lossless with $\alpha = 0$)
+transmission line during the transient analysis is augmented by two
+new rows and columns in order to consider the following branch
+equations.
+\begin{align}
+V_1\left(t\right) = Z_L\cdot I_1\left(t\right) + A\cdot\left( Z_L\cdot I_2\left(t -\tau\right) + V_2\left(t -\tau\right)\right)\\
+V_2\left(t\right) = Z_L\cdot I_2\left(t\right) + A\cdot\left( Z_L\cdot I_1\left(t -\tau\right) + V_1\left(t -\tau\right)\right)
+\end{align}
+
+Thus the MNA matrix entries can be written as
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+1 & 0 & -Z_L & 0\\
+0 & 1 & 0 & -Z_L
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+J_1\left(t\right)\\
+J_2\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+A\cdot\left(V_2\left(t -\tau\right) + Z_L\cdot J_2\left(t -\tau\right)\right)\\
+A\cdot\left(V_1\left(t -\tau\right) + Z_L\cdot J_1\left(t -\tau\right)\right)\\
+\end{bmatrix}
+\end{equation}
+
+with $A$ denoting the loss factor derived from the constant (and
+frequency independent) line attenuation $\alpha$ and the transmission
+line length $l$.
+\begin{equation}
+A = e^{-\tfrac{\alpha}{2}\cdot l}
+\end{equation}
+
+\subsection{Components with frequency-dependent delay times and losses}
+%\addcontentsline{toc}{subsection}{Components with frequency-dependent delay times and losses}
 
 \section{Convergence}
 %\addcontentsline{toc}{section}{Convergence}

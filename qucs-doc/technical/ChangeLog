@@ -1,3 +1,11 @@
+2006-03-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.tex (subsection{AM modulated AC source}):
+	Documented AM and PM modulated sources in the time domain.
+	(section{Components defined in the frequency domain}): Started
+	to document the transient analysis of components defined
+	in the frequency domain with constant delay times.
+
 2006-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* synthesis.tex (subsubsection{Chebyshev I}): Documented
