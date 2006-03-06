@@ -1,3 +1,8 @@
+2006-03-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* csv_producer.cpp (csv_producer): Conversion from Qucs
+	dataset to CSV data files implemented.
+
 2006-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Implemented conversion of theta property

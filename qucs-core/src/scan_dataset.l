@@ -4,7 +4,7 @@
 /*
  * scan_dataset.l - scanner for the Qucs dataset
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_dataset.l,v 1.7 2005/06/02 18:17:51 raimi Exp $
+ * $Id: scan_dataset.l,v 1.8 2006/03/06 10:13:23 raimi Exp $
  *
  */
 
@@ -53,8 +53,11 @@
 %}
 
 WS       [ \t\n\r]
-SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
-POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
+IDENT1   [a-zA-Z_][a-zA-Z0-9_]*
+IDENT2   [a-zA-Z_][a-zA-Z0-9_\[\],]*
+IDENT    {IDENT1}|{IDENT2}
+SIMPLEID {IDENT}
+POSTID   "."{IDENT}
 ID       {SIMPLEID}{POSTID}*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+

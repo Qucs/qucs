@@ -26,6 +26,7 @@ files.
 Version 0.0.9
 -------------
 
+ * conversion of dataset to csv files using qucsconv
  * new components: AM and PM modulated and sources, relais, switch
  * transient analysis of ideal transmission line
  * delay times of controlled sources during transient analysis

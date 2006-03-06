@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.13 2006/01/09 09:11:07 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.14 2006/03/06 10:13:24 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "check_spice.h"
 #include "check_vcd.h"
 #include "qucs_producer.h"
+#include "csv_producer.h"
 
 /* structure defining a conversion */
 struct actionset_t {
@@ -47,12 +48,14 @@ struct actionset_t {
 /* required forward declarations */
 int spice2qucs (struct actionset_t *, char *, char *);
 int vcd2qucs (struct actionset_t *, char *, char *);
+int qucs2csv (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
-  { "spice", "qucs",    spice2qucs },
-  { "spice", "qucslib", spice2qucs },
-  { "vcd",   "qucsdata",  vcd2qucs },
+  { "spice",    "qucs",     spice2qucs },
+  { "spice",    "qucslib",  spice2qucs },
+  { "vcd",      "qucsdata", vcd2qucs },
+  { "qucsdata", "csv",      qucs2csv },
   { NULL, NULL, NULL}
 };
 
@@ -100,6 +103,7 @@ int main (int argc, char ** argv) {
 	"  -of FORMAT      output data specification (e.g. qucs)\n"
 	"  -a, --noaction  do not include netlist actions in the output\n"
 	"  -g  GNDNODE     replace ground node\n"
+	"  -d  DATANAME    data variable specification\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -120,6 +124,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-g")) {
       if (argv[++i]) qucs_gnd = argv[i];
+    }
+    else if (!strcmp (argv[i], "-d")) {
+      if (argv[++i]) csv_var = argv[i];
     }
   }
 
@@ -206,4 +213,25 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
   fclose (qucs_out);
   vcd_destroy ();
   return 0;
+}
+
+// Qucs dataset to CSV conversion.
+int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  loginit ();
+  if ((qucs_data = dataset::load (infile)) != NULL) {
+    if ((csv_out = open_file (outfile, "w")) == NULL)
+      return -1;
+    if (!strcmp (action->out, "csv")) {
+      if (csv_var != NULL)
+	csv_producer (csv_var, ",");
+      else {
+	fprintf (stderr, "no data variable given\n");
+	ret = -1;
+      }
+    }
+    fclose (csv_out);
+    return ret;
+  }
+  return -1;
 }

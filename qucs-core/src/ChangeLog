@@ -1,3 +1,11 @@
+2006-03-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_dataset.l: Allow matrix entry spcecification, e.g.
+	S[1,1], as data variable identifiers.
+
+	* parse_dataset.y (YYMAXDEPTH): Increased stack size for large
+	datasets.
+
 2006-02-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Fixed some memory leaks in the transient
