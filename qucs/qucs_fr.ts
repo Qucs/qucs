@@ -3094,7 +3094,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation>ERREUR : aucun symbole de masse autorisé en mode simulation numérique.</translation>
+        <translation type="obsolete">ERREUR : aucun symbole de masse autorisé en mode simulation numérique.</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
@@ -5749,6 +5749,14 @@ Copie les fichiers dans le répertoire du projet</translation>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
         <translation>Turc par Onur et Ozgur Cobanoglu</translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -77,6 +77,7 @@ Component* SubCirPort::newOne()
   return new SubCirPort();
 }
 
+// -------------------------------------------------------
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Subcircuit Port");
@@ -86,11 +87,26 @@ Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 QString SubCirPort::NetList()
 {
   return QString("");
 }
 
+// -------------------------------------------------------
+QString SubCirPort::VHDL_Code(int)
+{
+  if(Props.at(1)->Value != "out")  return QString("");
+
+  // Insert dummy buffer to avoid reading from an output port.
+  QString s = "  nnout_";
+  Node *pn = Ports.getFirst()->Connection;
+  s += pn->Name + " <= ";
+  s += pn->Name + " or '0';";
+  return s;
+}
+
+// -------------------------------------------------------
 void SubCirPort::recreate(QucsDoc *Doc)
 {
   if(Doc) {

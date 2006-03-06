@@ -235,8 +235,8 @@ QString Subcircuit::NetList()
 // -------------------------------------------------------
 QString Subcircuit::VHDL_Code(int)
 {
-  QString s = "  " + Name + ": entity " + properName(Props.getFirst()->Value);
-  s += " port map (";
+  QString s = "  " + Name + ": entity Sub_" +
+              properName(Props.getFirst()->Value) + " port map (";
 
   // output all node names
   Port *pp = Ports.first();

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ground.h  -  description
-                             -------------------
+                                 ground.h
+                                ----------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -24,11 +24,10 @@
 class Ground : public Component  {
 public:
   Ground();
-  ~Ground();
+ ~Ground();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   QString NetList();
-  QString VHDL_Code(int);
 };
 
 #endif

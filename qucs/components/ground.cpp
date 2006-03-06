@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ground.cpp  -  description
-                             -------------------
+                                ground.cpp
+                               ------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -63,14 +63,4 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString Ground::NetList()
 {
   return QString("");
-}
-
-// -------------------------------------------------------
-QString Ground::VHDL_Code(int)
-{
-  QString s = "  ";
-  Port *pp = Ports.first();
-  s += pp->Connection->Name + " <= ";  // output port
-  s += pp->Connection->Name + " and '0';";   // to keep it low all the time
-  return s;
 }

@@ -1108,7 +1108,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation>HATA: Dijital simülasyonda toprak simgesi kullanılamaz.</translation>
+        <translation type="obsolete">HATA: Dijital simülasyonda toprak simgesi kullanılamaz.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
@@ -5309,6 +5309,14 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     <message>
         <source>Swedish by Peter Landgren</source>
         <translation>İsveççe, Peter Landgren tarafından</translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
