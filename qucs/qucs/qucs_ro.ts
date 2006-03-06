@@ -3102,10 +3102,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>saturation current temperature exponent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5667,6 +5663,14 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

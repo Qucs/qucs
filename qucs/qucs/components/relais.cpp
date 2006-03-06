@@ -60,6 +60,8 @@ Relais::Relais()
 		QObject::tr("resistance of \"on\" state in ohms")));
   Props.append(new Property("Roff", "1e12", false,
 		QObject::tr("resistance of \"off\" state in ohms")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 }
 
 Relais::~Relais()

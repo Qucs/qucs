@@ -758,7 +758,8 @@ void QucsFile::throughAllNodes(bool User, QStringList& Collect,
       if(pn->State)  continue;  // already worked on
 
     if(!Analog)  // collect all node names for VHDL signal declaration
-      Signals.append(pn->Name);
+      if(Signals.findIndex(pn->Name) < 0)  // avoid redeclaration of signal
+        Signals.append(pn->Name);
 
     createNodeSet(Collect, countInit, pn, pn);
 
@@ -825,10 +826,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
       }
       else {
         if((pc->Type & isDigitalComponent) == 0) {
-          if(pc->Name.isEmpty()) 
-            ErrText->insert(QObject::tr("ERROR: No ground symbol allowed in digital simulation."));
-          else
-            ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
+          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
           return false;
         }
       }
@@ -899,29 +897,41 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
-  int i, z, Collect_count = Collect.count();;
+  int i, z;
+//  int Collect_count = Collect.count();   // position for this subcircuit
   QString s;
   // TODO: NodeSets have to be put into the subcircuit block.
   if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
     return false;
 
-  QStringList sl;
+/*  Example for TODO
+      for(it = Collect.at(Collect_count); it != Collect.end(); )
+      if((*it).left(4) == "use ") {  // output all subcircuit uses
+        (*stream) << (*it);
+        it = Collect.remove(it);
+      }
+      else it++;*/
+
+  QStringList SubcircuitPorts;
   QStringList::Iterator it;
   Component *pc;
-  // collect all subcircuit ports and sort their node names into "sl"
+  // collect subcircuit ports and sort their node names into "SubcircuitPorts"
   for(pc = Comps->first(); pc != 0; pc = Comps->next())
     if(pc->Model == "Port") {
       i  = pc->Props.first()->Value.toInt();
-      for(z=sl.size(); z<i; z++)
-        sl.append(" ");
-      it = sl.at(i-1);
+      for(z=SubcircuitPorts.size(); z<i; z++)
+        SubcircuitPorts.append(" ");
+      it = SubcircuitPorts.at(i-1);
       (*it) = pc->Ports.getFirst()->Connection->Name;
       if(NumPorts >= 0) {
-        (*it) += ": ";
-        if(pc->Props.at(1)->Value.at(0).latin1() == 'a')
-          (*it) += "inout";
-        else
-          (*it) += pc->Props.at(1)->Value;
+        Signals.remove(Signals.find(*it));  // remove node name of output port
+        switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          case 'a': (*it) += ": inout";  // attribut "analog" is "inout"
+                    break;
+          case 'o': Signals.append(*it);   // output ports need workaround
+                    (*it) = "nnout_" + (*it);  // no break here !!!
+          default:  (*it) += ": " + pc->Props.at(1)->Value;
+        }
         (*it) += " bit";
       }
     }
@@ -929,30 +939,20 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
   QString  Type = properName(Doc->DocName);
 
   if(NumPorts < 0)
-    (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << '\n';
+    (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ") << '\n';
   else {
-
-    // remove all node names connected to ports
-    for(it = sl.begin(); it != sl.end(); it++)
-      Signals.remove(Signals.find((*it).section(':',0,0)));
-
-    for(it = Collect.at(Collect_count); it != Collect.end(); )
-      if((*it).left(4) == "use ") {  // output all subcircuit uses
-        (*stream) << (*it);
-        it = Collect.remove(it);
-      }
-      else it++;
-
-    (*stream) << "\nentity " << Type << " is\n"
-              << "  port (" << sl.join(";\n        ") << ");\n"
+    (*stream) << "\nentity Sub_" << Type << " is\n"
+              << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
               << "end entity;\n"
-              << "architecture ARCH" << Type << " of " << Type << " is\n";
+              << "use work.all;\n"
+              << "architecture Arch_Sub_" << Type << " of Sub_" << Type << " is\n";
     if(!Signals.isEmpty())
       (*stream) << "  signal " << Signals.join(",\n         ") << " : bit;\n";
 
-    // store own subcircuit declaration
-    Collect.append("use work." + Type + ";\n");
     (*stream) << "begin\n";
+
+    if(Signals.findIndex("gnd") >= 0)
+      (*stream) << "  gnd <= gnd and '0';\n";  // should appear only once
   }
   Signals.clear();  // was filled in "giveNodeNames()"
 
@@ -976,7 +976,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
       s = pc->VHDL_Code(NumPorts);
 
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
-      (*stream) << "   " << s << "\n";
+      (*stream) << s << "\n";
   }
 
   if(NumPorts < 0)
@@ -1063,9 +1063,9 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
   if(allTypes & isAnalogComponent)
     return NumPorts;
 
-  QString  Type = properName(Doc->DocName);
-  stream << "entity " << Type << " is\n"
-         << "end entity;\n\n";
+  stream << "entity TestBench is\n"
+         << "end entity;\n"
+         << "use work.all;\n";
   return NumPorts;
 }
 
@@ -1073,12 +1073,15 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
 // write all components with node names into the netlist file
 QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
 {
-  QString  Type = properName(Doc->DocName);
-  if(NumPorts >= 0)
-    stream << "architecture ARCH" << Type << " of " << Type << " is\n"
+  if(NumPorts >= 0) {
+    stream << "architecture Arch_TestBench of TestBench is\n"
            << "  signal " << Signals.join(",\n         ")
            << " : bit;\n"
            << "begin\n";
+
+    if(Signals.findIndex("gnd") >= 0)
+      stream << "  gnd <= gnd and '0';\n";  // should appear only once
+  }
   Signals.clear();  // was filled in "giveNodeNames()"
 
   QString s, Time;

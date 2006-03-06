@@ -1,3 +1,9 @@
+2006-02-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* press CTRL key during component moving to use no grid
+	* "Temp" property for tline, relais and switch
+	* reworked the generation of VHDL code
+
 2006-02-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/diagram.cpp: Improved speed while loading datasets
