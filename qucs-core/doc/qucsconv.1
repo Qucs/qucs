@@ -11,8 +11,9 @@ netlists, data files and schematics from other software into data
 formats used by \fBQucs\fR and its simulation backend.
 
 The software aims to support a variety of data formats and currently
-supports SPICE netlists and VCD files as input data format and Qucs
-netlists, libraries and datasets as output data format.
+supports Qucs datasets, SPICE netlists and VCD files as input data
+format and CSV files, Qucs netlists, libraries and datasets as output
+data format.
 
 .SH OPTIONS
 .TP
@@ -29,16 +30,19 @@ use file as input file (default stdin)
 use file as output file (default stdout)
 .TP
 \fB\-if\fR FORMAT
-input data specification (e.g. \fBspice\fR or \fBvcd\fR)
+input data specification (e.g. \fBqucsdata\fR, \fBspice\fR or \fBvcd\fR)
 .TP
 \fB\-of\fR FORMAT
-output data specification (e.g. \fBqucs\fR, \fBqucsdata\fR or \fBqucslib\fR)
+output data specification (e.g. \fBcsv\fR, \fBqucs\fR, \fBqucsdata\fR or \fBqucslib\fR)
 .TP
 \fB\-a\fR, \fB\-\-noaction\fR
 do not include netlist actions in the output
 .TP
 \fB\-g\fR GNDNODE
 replace ground node
+.TP
+\fB\-d\fR DATANAME
+data variable specification
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
 \fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
