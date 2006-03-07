@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.2 2006/03/03 07:45:01 raimi Exp $
+ * $Id: relais.cpp,v 1.3 2006/03/07 11:13:54 raimi Exp $
  *
  */
 
@@ -83,8 +83,10 @@ void relais::initDC (void) {
 #define HYST_ON  3
 
 void relais::calcDC (void) {
-  nr_double_t von  = getPropertyDouble ("Von");
-  nr_double_t voff = getPropertyDouble ("Voff");
+  nr_double_t vt   = getPropertyDouble ("Vt");
+  nr_double_t vh   = getPropertyDouble ("Vh");
+  nr_double_t von  = vt + vh;
+  nr_double_t voff = vt - vh;
   nr_double_t ron  = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
   nr_double_t v = real (getV (NODE_1) - getV (NODE_4));

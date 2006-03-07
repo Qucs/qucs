@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.1 2006/03/06 10:13:24 raimi Exp $
+ * $Id: csv_producer.cpp,v 1.2 2006/03/07 11:13:54 raimi Exp $
  *
  */
 
@@ -46,6 +46,13 @@ struct csv_data {
   int len;    // length of vector
 };
 
+/* Definition of line separator. */
+#ifdef __MINGW32__
+#define csv_crlf "\n"
+#else
+#define csv_crlf "\r\n"
+#endif
+
 /* The CSV data printer. */
 void csv_print (struct csv_data * data, int vectors, char * sep) {
   // print header
@@ -55,7 +62,7 @@ void csv_print (struct csv_data * data, int vectors, char * sep) {
 	       sep, data[i].v->getName ());
     else
       fprintf (csv_out, "\"%s\"", data[i].v->getName ());
-    fprintf (csv_out, "%s", i != vectors - 1 ? sep : "\r\n");
+    fprintf (csv_out, "%s", i != vectors - 1 ? sep : csv_crlf);
   }
 
   // print data
@@ -68,7 +75,7 @@ void csv_print (struct csv_data * data, int vectors, char * sep) {
       else
 	fprintf (csv_out, "%+." NR_DECS "e",
 		 real (data[i].v->get (data[i].idx)));
-      fprintf (csv_out, "%s", i != vectors - 1 ? sep : "\r\n");
+      fprintf (csv_out, "%s", i != vectors - 1 ? sep : csv_crlf);
       data[i].idx = ((k + 1) / data[i].skip) % data[i].len;
     }
   }
