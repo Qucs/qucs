@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.14 2006-03-06 10:13:24 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.15 2006-03-07 11:13:54 raimi Exp $
  *
  */
 
@@ -224,9 +224,9 @@ int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
       return -1;
     if (!strcmp (action->out, "csv")) {
       if (csv_var != NULL)
-	csv_producer (csv_var, ",");
+	csv_producer (csv_var, ";");
       else {
-	fprintf (stderr, "no data variable given\n");
+	fprintf (stderr, "no data variable given (passed by -d option)\n");
 	ret = -1;
       }
     }

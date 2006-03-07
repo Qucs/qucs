@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.39 2006-03-03 07:45:00 raimi Exp $
+ * $Id: qucsdefs.h,v 1.40 2006-03-07 11:13:54 raimi Exp $
  *
  */
 
@@ -256,8 +256,8 @@ struct define_t qucs_definition_available[] =
   },
   /* relais */
   { "Relais", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Von", PROP_REAL, { 0.6, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Voff", PROP_REAL, { 0.4, PROP_NO_STR }, PROP_NO_RANGE },
+    { { "Vt", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Vh", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
     { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
