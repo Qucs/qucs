@@ -52,14 +52,14 @@ Relais::Relais()
   Model = "Relais";
   Name  = "S";
 
-  Props.append(new Property("Von", "0.4 V", false,
-		QObject::tr("voltage to switch on the relais")));
-  Props.append(new Property("Voff", "0.6 V", false,
-		QObject::tr("voltage to switch off the relais")));
+  Props.append(new Property("Vt", "0.5 V", false,
+		QObject::tr("threshold voltage in Volts")));
+  Props.append(new Property("Vh", "0.1 V", false,
+		QObject::tr("hysteresis voltage in Volts")));
   Props.append(new Property("Ron", "0", false,
-		QObject::tr("resistance of \"on\" state in ohms")));
+		QObject::tr("resistance of \"on\" state in Ohms")));
   Props.append(new Property("Roff", "1e12", false,
-		QObject::tr("resistance of \"off\" state in ohms")));
+		QObject::tr("resistance of \"off\" state in Ohms")));
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }

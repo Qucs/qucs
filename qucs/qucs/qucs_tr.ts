@@ -3175,14 +3175,6 @@ Kullanım:  qucsedit -r kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>voltage to switch on the relais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage to switch off the relais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3212,6 +3204,22 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>switch (time controlled)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>threshold voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hysteresis voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of &quot;on&quot; state in Ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
