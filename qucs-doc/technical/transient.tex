@@ -1794,6 +1794,242 @@ A = e^{-\tfrac{\alpha}{2}\cdot l}
 \subsection{Components with frequency-dependent delay times and losses}
 %\addcontentsline{toc}{subsection}{Components with frequency-dependent delay times and losses}
 
+In the general case a component with $P$ ports which is defined in the
+frequency-domain can be represented by the following matrix equation.
+\begin{equation}
+\begin{bmatrix}
+Y_{11} & Y_{12} & \ldots & Y_{1P}\\
+Y_{21} & Y_{22} &  & Y_{2P}\\
+\vdots &  & \ddots & \vdots\\
+Y_{P1} & Y_{P2} & \ldots & Y_{PP}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+\vdots\\
+V_{P}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+\vdots\\
+I_{P}
+\end{bmatrix}
+\end{equation}
+
+This matrix representation is the MNA representation during the AC
+analysis.  With no specific time-domain model at hand the equation
+\begin{equation}
+\begin{bmatrix}
+Y\left(j\omega\right)
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V\left(j\omega\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I\left(j\omega\right)
+\end{bmatrix}
+\end{equation}
+
+must be transformed into the time-domain using a Fourier
+transformation.
+
+\subsubsection{The convolution integral}
+%\addcontentsline{toc}{subsubsection}{The convolution integral}
+
+The multiplication in the frequency-domain is equivalent to a
+convolution in the time-domain after the transformation.  It yields
+the following matrix equation
+\begin{equation}
+\begin{bmatrix}
+H\left(t\right)
+\end{bmatrix}
+*
+\begin{bmatrix}
+V\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I\left(t\right)
+\end{bmatrix}
+\end{equation}
+
+whereas $H\left(t\right)$ is the impulse response based on the
+frequency-domain model and $*$ operator denotes the convolution
+integral
+\begin{equation}
+H\left(t\right)
+*
+V\left(t\right)
+=
+\int^{+\infty}_{-\infty} H\left(\tau\right)\cdot V\left(t-\tau\right) d\tau
+\end{equation}
+
+The lower bound of the given integral is set to zero since both the
+impulse response as well as the node voltages are meant to deliver no
+contribution to the integral.  Otherwise the circuit appears to be
+unphysical.  The upper limit should be bound to a maximum impulse
+response time $T_{end}$
+\begin{equation}
+\label{eq:ConvolutionT}
+H\left(t\right)
+*
+V\left(t\right)
+=
+\int^{T_{end}}_{0} H\left(\tau\right)\cdot V\left(t-\tau\right) d\tau
+\end{equation}
+
+with
+\begin{equation}
+H\left(\tau\right) = 0 \;\;\; \forall \;\;\; \tau > T_{end}
+\end{equation}
+
+Since there is no analytic represention for the impulse response as
+well as for the node voltages eq. \eqref{eq:ConvolutionT} must be
+rewritten to
+\begin{equation}
+\label{eq:ConvolutionN}
+H\left(n\cdot\Delta t\right)
+*
+V\left(n\cdot\Delta t\right)
+=
+\sum^{N-1}_{k=0} H\left(k\cdot\Delta t\right)\cdot V\left(\left(n-k\right)\cdot\Delta t\right)
+\end{equation}
+
+with
+\begin{equation}
+\Delta t = \dfrac{T_{end}}{N}
+\end{equation}
+
+whereas $N$ denotes the number of samples to be used during numerical
+convolution.  Using the current time step $t = n\cdot\Delta t$ it is
+possible to express eq. \eqref{eq:ConvolutionN} as
+\begin{equation}
+I\left(t\right) =
+H\left(0\right)\cdot V\left(t\right) \underbrace{+
+\sum^{N-1}_{k=1} H\left(k\cdot\Delta t\right)\cdot V\left(t -k\cdot\Delta t\right)}_{I_{eq}}
+\end{equation}
+
+With $G = H\left(0\right)$ the resulting MNA matrix equation during
+the transient analysis gets
+\begin{equation}
+\begin{bmatrix}
+G
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I\left(t\right)
+\end{bmatrix}
+-
+\begin{bmatrix}
+I_{eq}
+\end{bmatrix}
+\end{equation}
+
+This means, the component defined in the frequency-domain can be
+expressed with an equivalent DC admittance $G$ and additional
+independent current sources in the time-domain.  Each independent
+current source at node $r$ delivers the following current
+\begin{equation}
+I_{eq_r} = 
+\sum^{P}_{c=1}\sum^{N-1}_{k=1} H_{rc}\left(k\cdot\Delta t\right)\cdot V_c\left(t -k\cdot\Delta t\right)
+\end{equation}
+
+whereas $V_c$ denotes the node voltage at node $c$ at some prior time
+and $H_{rc}$ the impulse response of the component based on the
+frequency-domain representation.  The MNA matrix equation during
+transient analysis can thus be written as
+
+\begin{equation}
+\begin{bmatrix}
+G_{11} & G_{12} & \ldots & G_{1P}\\
+G_{21} & G_{22} &  & G_{2P}\\
+\vdots &  & \ddots & \vdots\\
+G_{P1} & G_{P2} & \ldots & G_{PP}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\left(t\right)\\
+V_{2}\left(t\right)\\
+\vdots\\
+V_{P}\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\left(t\right)\\
+I_{2}\left(t\right)\\
+\vdots\\
+I_{P}\left(t\right)
+\end{bmatrix}
+-
+\begin{bmatrix}
+I_{eq_1}\\
+I_{eq_2}\\
+\vdots\\
+I_{eq_P}
+\end{bmatrix}
+\end{equation}
+
+\subsubsection{Frequency- to time-domain transformation}
+%\addcontentsline{toc}{subsubsection}{Frequency- to time-domain transformation}
+
+With the number of samples $N$ being a power of two it is possible to
+use the Inverse Fast Fourier Transformation (IFFT).  The
+transformation to be performed is
+\begin{equation}
+Y\left(j\omega\right) \Leftrightarrow H\left(t\right)
+\end{equation}
+
+The maximum impulse response time of the component is specified by
+$T_{end}$ requiring the following transformation pairs.
+\begin{equation}
+Y\left(j\omega_i\right) \Leftrightarrow H\left(t_i\right)
+\;\;\;\; \textrm{with} \;\;\;\;
+i = 0, 1, 2, \ldots, N-1
+\end{equation}
+
+with
+\begin{align}
+t_i &= 0, \Delta t, 2\cdot\Delta t, \ldots, \left(N-1\right)\cdot\Delta t\\
+\label{eq:FFTOmegaI}
+\omega_i &= 0, \dfrac{1}{T_{end}}, \dfrac{1}{T_{end}}, \ldots, \dfrac{N/2}{T_{end}}
+\end{align}
+
+The frequency samples in eq. \eqref{eq:FFTOmegaI} indicate that only
+half the values are required to obtain the appropriate impulse
+response.  This is because the impulse response $H\left(t\right)$ is
+real valued and that is why
+\begin{equation}
+Y\left(j\omega\right) = Y^*\left(-j\omega\right)
+\end{equation}
+
+The maximum frequency considered is determined by the maximum impulse
+response time $T_{end}$ and the number of time samples $N$.
+\begin{equation}
+f_{max} = \dfrac{N/2}{2\pi\cdot T_{end}} = \dfrac{1}{4\pi\cdot\Delta t}
+\end{equation}
+
+It could prove useful to weight the Y-parameter samples in the
+frequency-domain by multiplying them with an appropriate windowing
+function (e.g. Kaiser-Bessel).
+
+\subsubsection{Implementation considerations}
+%\addcontentsline{toc}{subsubsection}{Implementation considerations}
+
+For the method presented the Y-parameters of a component must be
+finite for $f\rightarrow 0$ as well as for $f\rightarrow f_{max}$.  To
+obtain $G = H\left(0\right)$ the Y-parameters at $f=0$ are required.
+This cannot be ensured for the general case (e.g. for an ideal
+inductor).
+
 \section{Convergence}
 %\addcontentsline{toc}{section}{Convergence}
 
