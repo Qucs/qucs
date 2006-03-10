@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Support for equation defined voltage/current sources or components.
+- Allow equations in subcircuits.
 - Support for Citi-files as an export file format in the Qucs Converter.
 	- Support for comma separated values (CSV) as an export
 	  file format in the Qucs Converter.

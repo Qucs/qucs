@@ -1,7 +1,8 @@
 /*
  * vector.cpp - vector class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.24 2005-10-31 16:15:31 ela Exp $
+ * $Id: vector.cpp,v 1.25 2006-03-10 07:56:57 raimi Exp $
  *
  */
 
@@ -773,8 +774,7 @@ vector operator%(vector v1, vector v2) {
 /* This function reverses the order of the data list. */
 void vector::reverse (void) {
   complex * buffer = (complex *) malloc (sizeof (complex) * size);
-  for (int i = 0; i < size; i++)
-    buffer[i] = data[size - 1 - i];
+  for (int i = 0; i < size; i++) buffer[i] = data[size - 1 - i];
   free (data);
   data = buffer;
   capacity = size;
@@ -858,5 +858,118 @@ vector logspace (nr_double_t start, nr_double_t stop, int points) {
     else
       result.set (stop * exp (step * i), j);
   }
+  return result;
+}
+
+vector cumsum (vector v) {
+  vector result (v);
+  complex val (0.0);
+  for (int i = 0; i < v.getSize (); i++) {
+    val += v.get (i);
+    result.set (val, i);
+  }
+  return result;
+}
+
+vector cumavg (vector v) {
+  vector result (v);
+  complex val (0.0);
+  for (int i = 0; i < v.getSize (); i++) {
+    val = (val * i + v.get (i)) / (i + 1);
+    result.set (val, i);
+  }
+  return result;
+}
+
+vector cumprod (vector v) {
+  vector result (v);
+  complex val (1.0);
+  for (int i = 0; i < v.getSize (); i++) {
+    val *= v.get (i);
+    result.set (val, i);
+  }
+  return result;
+}
+
+vector ceil (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (ceil (v.get (i)), i);
+  return result;
+}
+
+vector fix (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (fix (v.get (i)), i);
+  return result;
+}
+
+vector floor (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (floor (v.get (i)), i);
+  return result;
+}
+
+vector round (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (round (v.get (i)), i);
+  return result;
+}
+
+vector sqr (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sqr (v.get (i)), i);
+  return result;
+}
+
+vector step (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (step (v.get (i)), i);
+  return result;
+}
+
+static nr_double_t integrate_n (vector v) { /* using trapezoidal rule */
+  nr_double_t result = 0.0;
+  for (int i = 1; i < v.getSize () - 1; i++) result += norm (v.get (i));
+  result += 0.5 * norm (v.get (0));
+  result += 0.5 * norm (v.get (v.getSize () - 1));
+  return result;
+}
+
+nr_double_t vector::rms (void) {
+  nr_double_t result = sqrt (integrate_n (*this) / getSize ());
+  return result; 
+}
+
+nr_double_t vector::variance (void) { 
+  nr_double_t rms2 = integrate_n (*this) / getSize ();
+  nr_double_t avg2 = norm (avg (*this));
+  return rms2 - avg2;
+}
+
+nr_double_t vector::stddev (void) {
+  return sqrt (variance ());
+}
+
+vector erf (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (erf (v.get (i)), i);
+  return result;
+}
+
+vector erfc (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (erfc (v.get (i)), i);
+  return result;
+}
+
+vector jn (const int n, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (jn (n, v.get (i)), i);
+  return result;
+}
+
+vector yn (const int n, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (yn (n, v.get (i)), i);
   return result;
 }

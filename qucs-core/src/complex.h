@@ -2,6 +2,7 @@
  * complex.h - complex number class definitions
  *
  * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.20 2006-02-17 07:24:06 raimi Exp $
+ * $Id: complex.h,v 1.21 2006-03-10 07:56:57 raimi Exp $
  *
  */
 
@@ -42,6 +43,8 @@ nr_double_t  real (const nr_double_t);
 nr_double_t  imag (const nr_double_t);
 nr_double_t  norm (const nr_double_t);
 nr_double_t  conj (const nr_double_t);
+nr_double_t   fix (const nr_double_t);
+nr_double_t  step (const nr_double_t);
 
 // overloaded math functions
 nr_double_t xhypot (const nr_double_t, const nr_double_t);
@@ -107,6 +110,15 @@ class complex
   friend complex       sign (const complex);
   friend complex       sinc (const complex);
   friend nr_double_t xhypot (const complex, const complex);
+  friend complex       ceil (const complex);
+  friend complex        fix (const complex);
+  friend complex      round (const complex);
+  friend complex        sqr (const complex);
+  friend complex       step (const complex);
+  friend complex         jn (const int, const complex);
+  friend complex         yn (const int, const complex);
+  friend complex        erf (const complex);
+  friend complex       erfc (const complex);
 
   // operator functions
   friend complex operator + (const complex, const complex);

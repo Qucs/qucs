@@ -2,6 +2,7 @@
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
  * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.43 2006-02-21 20:56:17 raimi Exp $
+ * $Id: evaluate.cpp,v 1.44 2006-03-10 07:56:57 raimi Exp $
  *
  */
 
@@ -2741,6 +2742,168 @@ constant * evaluate::range_d_c (constant * args) {
 constant * evaluate::range_c_c (constant *) {
   _DEFR ();
   _RETR (new range ('.', 0, 0, '.'));
+}
+
+MAKE_FUNC_DEFINITION_0 (ceil);    // ceil double->integer conversion
+MAKE_FUNC_DEFINITION_0 (floor);   // floor double->integer conversion
+MAKE_FUNC_DEFINITION_0 (fix);     // fix double->integer conversion
+MAKE_FUNC_DEFINITION_0 (step);    // step function
+MAKE_FUNC_DEFINITION_0 (round);   // round function
+MAKE_FUNC_DEFINITION_0 (erf);     // error function 
+MAKE_FUNC_DEFINITION_0 (erfc);    // complementary error function 
+
+// ******************* cumulative sum *********************
+constant * evaluate::cumsum_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (d1);
+}
+
+constant * evaluate::cumsum_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (*c1);
+}
+
+constant * evaluate::cumsum_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (cumsum (*v1));
+}
+
+// **************** cumulative average ******************
+constant * evaluate::cumavg_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (d1);
+}
+
+constant * evaluate::cumavg_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (*c1);
+}
+
+constant * evaluate::cumavg_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (cumavg (*v1));
+}
+
+// ******************* cumulative product *********************
+constant * evaluate::cumprod_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (d1);
+}
+
+constant * evaluate::cumprod_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (*c1);
+}
+
+constant * evaluate::cumprod_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (cumprod (*v1));
+}
+
+// ******************* rms *********************
+constant * evaluate::rms_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (fabs (d1));
+}
+
+constant * evaluate::rms_c (constant * args) {
+  _ARC0 (c1);
+  _DEFD ();
+  _RETD (abs (*c1));
+}
+
+constant * evaluate::rms_v (constant * args) {
+  _ARV0 (v1);
+  _DEFD ();
+  _RETD (v1->rms ());
+}
+
+// ******************* variance *********************
+constant * evaluate::variance_d (constant *) {
+  _DEFD ();
+  _RETD (0);
+}
+
+constant * evaluate::variance_c (constant *) {
+  _DEFD ();
+  _RETD (0);
+}
+
+constant * evaluate::variance_v (constant * args) {
+  _ARV0 (v1);
+  _DEFD ();
+  _RETD (v1->variance ());
+}
+
+// ******************* stddev *********************
+constant * evaluate::stddev_d (constant *) {
+  _DEFD ();
+  _RETD (0);
+}
+
+constant * evaluate::stddev_c (constant *) {
+  _DEFD ();
+  _RETD (0);
+}
+
+constant * evaluate::stddev_v (constant * args) {
+  _ARV0 (v1);
+  _DEFD ();
+  _RETD (v1->stddev ());
+}
+
+// ********* jn (bessel function of 1st kind, nth order) ***********
+constant * evaluate::jn_d_d (constant * args) {
+  _ARI0 (n);
+  _ARD1 (x);
+  _DEFD ();
+  _RETD (jn (n, x));
+}
+
+constant * evaluate::jn_d_c (constant * args) {
+  _ARI0 (n);
+  _ARC1 (x);
+  _DEFC ();
+  _RETC (jn (n, *x));
+}
+
+constant * evaluate::jn_d_v (constant * args) {
+  _ARI0 (n);
+  _ARV1 (x);
+  _DEFV ();
+  _RETV (jn (n, *x));
+}
+
+// ********* yn (bessel function of 2nd kind, nth order) ***********
+constant * evaluate::yn_d_d (constant * args) {
+  _ARI0 (n);
+  _ARD1 (x);
+  _DEFD ();
+  _RETD (yn (n, x));
+}
+
+constant * evaluate::yn_d_c (constant * args) {
+  _ARI0 (n);
+  _ARC1 (x);
+  _DEFC ();
+  _RETC (yn (n, *x));
+}
+
+constant * evaluate::yn_d_v (constant * args) {
+  _ARI0 (n);
+  _ARV1 (x);
+  _DEFV ();
+  _RETV (yn (n, *x));
 }
 
 // Include the application array.

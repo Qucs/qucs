@@ -2,6 +2,7 @@
  * evaluate.h - definitions for Qucs equation evaluations
  *
  * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.24 2006-02-08 07:52:58 raimi Exp $
+ * $Id: evaluate.h,v 1.25 2006-03-10 07:56:57 raimi Exp $
  *
  */
 
@@ -505,6 +506,55 @@ public:
   static constant * range_d_c (constant *);
   static constant * range_c_d (constant *);
   static constant * range_c_c (constant *);
+
+  static constant * ceil_d  (constant *);
+  static constant * ceil_c  (constant *);
+  static constant * ceil_v  (constant *);
+  static constant * floor_d (constant *);
+  static constant * floor_c (constant *);
+  static constant * floor_v (constant *);
+  static constant * fix_d   (constant *);
+  static constant * fix_c   (constant *);
+  static constant * fix_v   (constant *);
+  static constant * step_d  (constant *);
+  static constant * step_c  (constant *);
+  static constant * step_v  (constant *);
+  static constant * round_d (constant *);
+  static constant * round_c (constant *);
+  static constant * round_v (constant *);
+  static constant * erf_d   (constant *);
+  static constant * erf_c   (constant *);
+  static constant * erf_v   (constant *);
+  static constant * erfc_d  (constant *);
+  static constant * erfc_c  (constant *);
+  static constant * erfc_v  (constant *);
+
+  static constant * rms_d      (constant *);
+  static constant * rms_c      (constant *);
+  static constant * rms_v      (constant *);
+  static constant * variance_d (constant *);
+  static constant * variance_c (constant *);
+  static constant * variance_v (constant *);
+  static constant * stddev_d   (constant *);
+  static constant * stddev_c   (constant *);
+  static constant * stddev_v   (constant *);
+
+  static constant * cumsum_d  (constant *);
+  static constant * cumsum_c  (constant *);
+  static constant * cumsum_v  (constant *);
+  static constant * cumavg_d  (constant *);
+  static constant * cumavg_c  (constant *);
+  static constant * cumavg_v  (constant *);
+  static constant * cumprod_d (constant *);
+  static constant * cumprod_c (constant *);
+  static constant * cumprod_v (constant *);
+
+  static constant * jn_d_d (constant *);
+  static constant * jn_d_c (constant *);
+  static constant * jn_d_v (constant *);
+  static constant * yn_d_d (constant *);
+  static constant * yn_d_c (constant *);
+  static constant * yn_d_v (constant *);
 };
 
 // Type of application function.
