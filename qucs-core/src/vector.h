@@ -2,6 +2,7 @@
  * vector.h - vector class definitions
  *
  * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.20 2006/02/17 07:24:06 raimi Exp $
+ * $Id: vector.h,v 1.21 2006/03/10 07:56:57 raimi Exp $
  *
  */
 
@@ -64,14 +65,21 @@ class vector : public object
   void setDependencies (strlist *);
   void setOrigin (char *);
   char * getOrigin (void);
-  nr_double_t maximum (void);
-  nr_double_t minimum (void);
   int contains (complex, nr_double_t eps = NR_EPSI);
   void sort (bool ascending = true);
 
-  friend complex sum  (vector);
-  friend complex prod (vector);
-  friend complex avg  (vector);
+  nr_double_t maximum  (void);
+  nr_double_t minimum  (void);
+  nr_double_t rms      (void);
+  nr_double_t variance (void);
+  nr_double_t stddev   (void);
+
+  friend complex sum     (vector);
+  friend complex prod    (vector);
+  friend complex avg     (vector);
+  friend vector  cumsum  (vector);
+  friend vector  cumprod (vector);
+  friend vector  cumavg  (vector);
 
   // vector manipulations
   friend vector real   (vector);  // the real part
@@ -117,6 +125,16 @@ class vector : public object
   friend vector arcoth (vector);
   friend vector sign   (vector);
   friend vector sinc   (vector);
+  friend vector ceil   (vector);
+  friend vector floor  (vector);
+  friend vector fix    (vector);
+  friend vector round  (vector);
+  friend vector sqr    (vector);
+  friend vector step   (vector);
+  friend vector jn     (const int, vector);
+  friend vector yn     (const int, vector);
+  friend vector erf    (vector);
+  friend vector erfc   (vector);
 
   // operator functions
   friend vector operator + (vector, vector);

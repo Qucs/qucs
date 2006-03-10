@@ -2,6 +2,7 @@
  * applications.h - the Qucs application list
  *
  * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.4 2006/02/08 07:52:58 raimi Exp $
+ * $Id: applications.h,v 1.5 2006/03/10 07:56:57 raimi Exp $
  *
  */
 
@@ -575,6 +576,65 @@ struct application_t eqn::applications[] = {
   { "range", TAG_RANGE, evaluate::range_c_d, 2, { TAG_CHAR, TAG_DOUBLE } },
   { "range", TAG_RANGE, evaluate::range_d_c, 2, { TAG_DOUBLE, TAG_CHAR } },
   { "range", TAG_RANGE, evaluate::range_c_c, 2, { TAG_CHAR, TAG_CHAR } },
+
+  { "ceil", TAG_DOUBLE,  evaluate::ceil_d, 1, { TAG_DOUBLE  } },
+  { "ceil", TAG_COMPLEX, evaluate::ceil_c, 1, { TAG_COMPLEX } },
+  { "ceil", TAG_VECTOR,  evaluate::ceil_v, 1, { TAG_VECTOR  } },
+
+  { "fix", TAG_DOUBLE,  evaluate::fix_d, 1, { TAG_DOUBLE  } },
+  { "fix", TAG_COMPLEX, evaluate::fix_c, 1, { TAG_COMPLEX } },
+  { "fix", TAG_VECTOR,  evaluate::fix_v, 1, { TAG_VECTOR  } },
+
+  { "step", TAG_DOUBLE,  evaluate::step_d, 1, { TAG_DOUBLE  } },
+  { "step", TAG_COMPLEX, evaluate::step_c, 1, { TAG_COMPLEX } },
+  { "step", TAG_VECTOR,  evaluate::step_v, 1, { TAG_VECTOR  } },
+
+  { "floor", TAG_DOUBLE,  evaluate::floor_d, 1, { TAG_DOUBLE  } },
+  { "floor", TAG_COMPLEX, evaluate::floor_c, 1, { TAG_COMPLEX } },
+  { "floor", TAG_VECTOR,  evaluate::floor_v, 1, { TAG_VECTOR  } },
+
+  { "round", TAG_DOUBLE,  evaluate::round_d, 1, { TAG_DOUBLE  } },
+  { "round", TAG_COMPLEX, evaluate::round_c, 1, { TAG_COMPLEX } },
+  { "round", TAG_VECTOR,  evaluate::round_v, 1, { TAG_VECTOR  } },
+
+  { "erf", TAG_DOUBLE,  evaluate::erf_d, 1, { TAG_DOUBLE  } },
+  { "erf", TAG_COMPLEX, evaluate::erf_c, 1, { TAG_COMPLEX } },
+  { "erf", TAG_VECTOR,  evaluate::erf_v, 1, { TAG_VECTOR  } },
+
+  { "erfc", TAG_DOUBLE,  evaluate::erfc_d, 1, { TAG_DOUBLE  } },
+  { "erfc", TAG_COMPLEX, evaluate::erfc_c, 1, { TAG_COMPLEX } },
+  { "erfc", TAG_VECTOR,  evaluate::erfc_v, 1, { TAG_VECTOR  } },
+
+  { "cumsum", TAG_DOUBLE,  evaluate::cumsum_d, 1, { TAG_DOUBLE  } },
+  { "cumsum", TAG_COMPLEX, evaluate::cumsum_c, 1, { TAG_COMPLEX } },
+  { "cumsum", TAG_VECTOR,  evaluate::cumsum_v, 1, { TAG_VECTOR  } },
+
+  { "cumavg", TAG_DOUBLE,  evaluate::cumavg_d, 1, { TAG_DOUBLE  } },
+  { "cumavg", TAG_COMPLEX, evaluate::cumavg_c, 1, { TAG_COMPLEX } },
+  { "cumavg", TAG_VECTOR,  evaluate::cumavg_v, 1, { TAG_VECTOR  } },
+
+  { "cumprod", TAG_DOUBLE,  evaluate::cumprod_d, 1, { TAG_DOUBLE  } },
+  { "cumprod", TAG_COMPLEX, evaluate::cumprod_c, 1, { TAG_COMPLEX } },
+  { "cumprod", TAG_VECTOR,  evaluate::cumprod_v, 1, { TAG_VECTOR  } },
+
+  { "rms", TAG_DOUBLE, evaluate::rms_d, 1, { TAG_DOUBLE  } },
+  { "rms", TAG_DOUBLE, evaluate::rms_c, 1, { TAG_COMPLEX } },
+  { "rms", TAG_DOUBLE, evaluate::rms_v, 1, { TAG_VECTOR  } },
+
+  { "variance", TAG_DOUBLE, evaluate::variance_d, 1, { TAG_DOUBLE  } },
+  { "variance", TAG_DOUBLE, evaluate::variance_c, 1, { TAG_COMPLEX } },
+  { "variance", TAG_DOUBLE, evaluate::variance_v, 1, { TAG_VECTOR  } },
+
+  { "stddev", TAG_DOUBLE, evaluate::stddev_d, 1, { TAG_DOUBLE  } },
+  { "stddev", TAG_DOUBLE, evaluate::stddev_c, 1, { TAG_COMPLEX } },
+  { "stddev", TAG_DOUBLE, evaluate::stddev_v, 1, { TAG_VECTOR  } },
+
+  { "jn", TAG_DOUBLE,  evaluate::jn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
+  { "jn", TAG_COMPLEX, evaluate::jn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "jn", TAG_VECTOR,  evaluate::jn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
+  { "yn", TAG_DOUBLE,  evaluate::yn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
+  { "yn", TAG_COMPLEX, evaluate::yn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "yn", TAG_VECTOR,  evaluate::yn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

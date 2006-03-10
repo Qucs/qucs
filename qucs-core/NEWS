@@ -26,6 +26,9 @@ files.
 Version 0.0.9
 -------------
 
+ * new functions in equation solver: ceil(), fix(), floor(), round(),
+   step(), jn(), yn(), erf(), erfc(), cumsum(), cumavg(), cumprod(), rms(),
+   variance() and stddev()
  * conversion of dataset to csv files using qucsconv
  * new components: AM and PM modulated and sources, relais, switch
  * transient analysis of ideal transmission line

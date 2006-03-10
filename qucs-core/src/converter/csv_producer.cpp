@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.2 2006/03/07 11:13:54 raimi Exp $
+ * $Id: csv_producer.cpp,v 1.3 2006/03/10 07:56:57 raimi Exp $
  *
  */
 
@@ -55,6 +55,9 @@ struct csv_data {
 
 /* The CSV data printer. */
 void csv_print (struct csv_data * data, int vectors, char * sep) {
+
+  int len = 0;
+
   // print header
   for (int i = 0; i < vectors; i++) {
     if (data[i].type == 'c')
@@ -63,10 +66,12 @@ void csv_print (struct csv_data * data, int vectors, char * sep) {
     else
       fprintf (csv_out, "\"%s\"", data[i].v->getName ());
     fprintf (csv_out, "%s", i != vectors - 1 ? sep : csv_crlf);
+    // find longest vector
+    if (len < data[i].len) len = data[i].len;
   }
 
   // print data
-  for (int k = 0; k < data[0].v->getSize (); k++) {
+  for (int k = 0; k < len; k++) {
     for (int i = 0; i < vectors; i++) {
       if (data[i].type == 'c')
 	fprintf (csv_out, "%+." NR_DECS "e%s%+." NR_DECS "e",
@@ -91,15 +96,16 @@ void csv_producer (char * variable, char * sep) {
     strlist * deps = v->getDependencies ();
     int vectors = 1 + (deps ? deps->length () : 0);
     struct csv_data * data = new struct csv_data[vectors];
-    data[0].type = real (sum (norm (imag (*v)))) > 0.0 ? 'c' : 'r';
-    data[0].v = v;
-    data[0].idx = 0;
-    data[0].skip = 1;
-    data[0].len = v->getSize ();
+    int i = vectors - 1;
+    data[i].type = real (sum (norm (imag (*v)))) > 0.0 ? 'c' : 'r';
+    data[i].v = v;
+    data[i].idx = 0;
+    data[i].skip = 1;
+    data[i].len = v->getSize ();
 
     int a = v->getSize ();
-    for (int i = vectors - 1; i >= 1; i--) {
-      vector * d = qucs_data->findDependency (deps->get (i - 1));
+    for (i = vectors - 2; i >= 0; i--) {
+      vector * d = qucs_data->findDependency (deps->get (i));
       data[i].type = real (sum (norm (imag (*d)))) > 0.0 ? 'c' : 'r';
       data[i].v = d;
       data[i].idx = 0;

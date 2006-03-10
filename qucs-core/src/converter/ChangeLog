@@ -1,3 +1,9 @@
+2006-03-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* csv_producer.cpp (csv_producer): When exporting a dependent
+	variable export it in the last column, the dependecies in the
+	first columns.
+
 2006-03-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* csv_producer.cpp (csv_producer): Conversion from Qucs

@@ -2,6 +2,7 @@
  * complex.cpp - complex number class implementation
  *
  * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.24 2006/02/17 07:24:06 raimi Exp $
+ * $Id: complex.cpp,v 1.25 2006/03/10 07:56:57 raimi Exp $
  *
  */
 
@@ -314,6 +315,83 @@ complex polar (const nr_double_t mag, const nr_double_t ang) {
 
 complex rect (const nr_double_t x, const nr_double_t y) {
   return complex (x, y);
+}
+
+complex ceil (const complex z) {
+  return rect (ceil (z.r), ceil (z.i));
+}
+
+nr_double_t fix (const nr_double_t d) {
+  return (d > 0) ? floor (d) : ceil (d);
+}
+
+complex fix (const complex z) {
+  nr_double_t x = z.r;
+  nr_double_t y = z.i;
+  x = (x > 0) ? floor (x) : ceil (x);
+  y = (y > 0) ? floor (y) : ceil (y);
+  return rect (x, y);
+}
+
+complex round (const complex z) {
+#if 0
+  nr_double_t x = z.r;
+  nr_double_t y = z.i;
+  x = (x > 0) ? floor (x + 0.5) : ceil (x - 0.5);
+  y = (y > 0) ? floor (y + 0.5) : ceil (y - 0.5);
+  return rect (x, y);
+#else
+  return rect (round (z.r), round (z.i));
+#endif
+}
+
+complex sqr (const complex z) {
+  return rect (z.r * z.r - z.i * z.i, 2 * z.r * z.i);
+}
+
+nr_double_t step (const nr_double_t d) {
+  nr_double_t x = d;
+  if (x < 0.0)
+    x = 0.0;
+  else if (x > 0.0)
+    x = 1.0;
+  else
+    x = 0.5;
+  return x;
+}
+
+complex step (const complex z) {
+  nr_double_t x = z.r;
+  nr_double_t y = z.i;
+  if (x < 0.0)
+    x = 0.0;
+  else if (x > 0.0)
+    x = 1.0;
+  else
+    x = 0.5;
+  if (y < 0.0)
+    y = 0.0;
+  else if (y > 0.0)
+    y = 1.0;
+  else
+    y = 0.5;
+  return rect (x, y);
+}
+
+complex jn (const int n, const complex z) {
+  return rect (jn (n, z.r), jn (n, z.i));
+}
+
+complex yn (const int n, const complex z) {
+  return rect (yn (n, z.r), yn (n, z.i));
+}
+
+complex erf (const complex z) {
+  return rect (erf (z.r), erf (z.i));
+}
+
+complex erfc (const complex z) {
+  return rect (erfc (z.r), erfc (z.i));
 }
 
 complex complex::operator+() {
