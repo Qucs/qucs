@@ -47,8 +47,8 @@ Relais::Relais()
   x1 = -48; y1 = -30;
   x2 =  45; y2 =  30;
 
-  tx = x1-4;
-  ty = y2+4;
+  tx = x2+4;
+  ty = y1+4;
   Model = "Relais";
   Name  = "S";
 
