@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: consts.h,v 1.3 2005/06/02 18:17:49 raimi Exp $
+ * $Id: consts.h,v 1.4 2006/03/13 08:26:25 raimi Exp $
  *
  */
 
@@ -62,6 +62,9 @@
 #endif
 #ifndef M_LN10
 #define M_LN10    2.3025850929940456840179914546843642
+#endif
+#ifndef M_SQRTPI
+#define M_SQRTPI  1.77245385090551602729816748334
 #endif
 
 #endif /* __CONSTS_H__ */

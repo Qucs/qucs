@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.44 2006/03/10 07:56:57 raimi Exp $
+ * $Id: evaluate.cpp,v 1.45 2006/03/13 08:26:25 raimi Exp $
  *
  */
 
@@ -42,6 +42,7 @@
 #include "spline.h"
 #include "fourier.h"
 #include "constants.h"
+#include "fspecial.h"
 #include "circuit.h"
 #include "range.h"
 #include "equation.h"
@@ -53,6 +54,7 @@
 using namespace eqn;
 using namespace qucs;
 using namespace fourier;
+using namespace fspecial;
 
 // Short macros in order to obtain the correct constant value.
 #define D(con)   ((constant *) (con))->d
@@ -192,6 +194,7 @@ MAKE_FUNC_DEFINITION_0 (sech);   // secans hyperbolicus
 MAKE_FUNC_DEFINITION_0 (cosech); // cosecans hyperbolicus
 MAKE_FUNC_DEFINITION_0 (sign);   // signum function
 MAKE_FUNC_DEFINITION_0 (sinc);   // sin(x)/x aka sinc function
+MAKE_FUNC_DEFINITION_0 (sqr);    // square value
 
 MAKE_FUNC_DEFINITION_1 (real);   // real value
 MAKE_FUNC_DEFINITION_1 (imag);   // imaginary value
@@ -1482,6 +1485,43 @@ constant * evaluate::max_v (constant * args) {
   _RETD (v1->maximum ());
 }
 
+constant * evaluate::max_d_d (constant * args) {
+  _ARD0 (d1);
+  _ARD1 (d2);
+  _DEFD ();
+  _RETD (MAX (d1, d2));
+}
+
+constant * evaluate::max_d_c (constant * args) {
+  _ARD0 (d1);
+  _ARC1 (c2);
+  _DEFC ();
+  nr_double_t a = d1;
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  complex r = a > b ? d1 : *c2;
+  _RETC (r);
+}
+
+constant * evaluate::max_c_c (constant * args) {
+  _ARC0 (c1);
+  _ARC1 (c2);
+  _DEFC ();
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  complex r = a > b ? *c1 : *c2;
+  _RETC (r);
+}
+
+constant * evaluate::max_c_d (constant * args) {
+  _ARC0 (c1);
+  _ARD1 (d2);
+  _DEFC ();
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = d2;
+  complex r = a > b ? *c1 : d2;
+  _RETC (r);
+}
+
 // ***************** minimum *******************
 constant * evaluate::min_d (constant * args) {
   _ARD0 (d1);
@@ -1503,6 +1543,43 @@ constant * evaluate::min_v (constant * args) {
   _ARV0 (v1);
   _DEFD ();
   _RETD (v1->minimum ());
+}
+
+constant * evaluate::min_d_d (constant * args) {
+  _ARD0 (d1);
+  _ARD1 (d2);
+  _DEFD ();
+  _RETD (MIN (d1, d2));
+}
+
+constant * evaluate::min_d_c (constant * args) {
+  _ARD0 (d1);
+  _ARC1 (c2);
+  _DEFC ();
+  nr_double_t a = d1;
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  complex r = a < b ? d1 : *c2;
+  _RETC (r);
+}
+
+constant * evaluate::min_c_c (constant * args) {
+  _ARC0 (c1);
+  _ARC1 (c2);
+  _DEFC ();
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  complex r = a < b ? *c1 : *c2;
+  _RETC (r);
+}
+
+constant * evaluate::min_c_d (constant * args) {
+  _ARC0 (c1);
+  _ARD1 (d2);
+  _DEFC ();
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = d2;
+  complex r = a < b ? *c1 : d2;
+  _RETC (r);
 }
 
 // ******************** sum **********************
@@ -2904,6 +2981,264 @@ constant * evaluate::yn_d_v (constant * args) {
   _ARV1 (x);
   _DEFV ();
   _RETV (yn (n, *x));
+}
+
+// ***************** sqr *****************
+constant * evaluate::sqr_m (constant * args) {
+  _ARM0 (m1);
+  _DEFM ();
+  _RETM (sqr (*m1));
+}
+
+constant * evaluate::sqr_mv (constant * args) {
+  _ARMV0 (m1);
+  _DEFMV ();
+  _RETMV (sqr (*m1));
+}
+
+// ******************* polar *********************
+constant * evaluate::polar_d_d (constant * args) {
+  _ARD0 (a);
+  _ARD1 (p);
+  _DEFC ();
+  _RETC (polar (a, rad (p)));
+}
+
+constant * evaluate::polar_c_d (constant * args) {
+  _ARC0 (a);
+  _ARD1 (p);
+  _DEFC ();
+  _RETC (polar (*a, rect (rad (p), 0)));
+}
+
+constant * evaluate::polar_d_c (constant * args) {
+  _ARD0 (a);
+  _ARC1 (p);
+  _DEFC ();
+  _RETC (polar (rect (a, 0), rad (*p)));
+}
+
+constant * evaluate::polar_c_c (constant * args) {
+  _ARC0 (a);
+  _ARC1 (p);
+  _DEFC ();
+  _RETC (polar (*a, rad (*p)));
+}
+
+constant * evaluate::polar_d_v (constant * args) {
+  _ARD0 (a);
+  _ARV1 (v);
+  _DEFV ();
+  _RETV (polar (rect (a, 0), *v));
+}
+
+constant * evaluate::polar_c_v (constant * args) {
+  _ARC0 (a);
+  _ARV1 (v);
+  _DEFV ();
+  _RETV (polar (*a, *v));
+}
+
+constant * evaluate::polar_v_d (constant * args) {
+  _ARV0 (v);
+  _ARD1 (p);
+  _DEFV ();
+  _RETV (polar (*v, rect (p, 0)));
+}
+
+constant * evaluate::polar_v_c (constant * args) {
+  _ARV0 (v);
+  _ARC1 (p);
+  _DEFV ();
+  _RETV (polar (*v, *p));
+}
+
+constant * evaluate::polar_v_v (constant * args) {
+  _ARV0 (a);
+  _ARV1 (p);
+  _DEFV ();
+  _RETV (polar (*a, *p));
+}
+
+// ******************* arctan2 *********************
+constant * evaluate::arctan2_d_d (constant * args) {
+  _ARD0 (y);
+  _ARD1 (x);
+  _DEFD ();
+  if ((x == 0) && (y == 0)) {
+    THROW_MATH_EXCEPTION("arctan2: not defined for (0,0)");
+    _RETD (-M_PI / 2);
+  }
+  _RETD (atan2 (y, x));
+}
+
+constant * evaluate::arctan2_d_v (constant * args) {
+  _ARD0 (y);
+  _ARV1 (x);
+  _DEFV ();
+  _RETV (arctan2 (y, *x));
+}
+
+constant * evaluate::arctan2_v_d (constant * args) {
+  _ARV0 (y);
+  _ARD1 (x);
+  _DEFV ();
+  _RETV (arctan2 (*y, x));
+}
+
+constant * evaluate::arctan2_v_v (constant * args) {
+  _ARV0 (y);
+  _ARV1 (x);
+  _DEFV ();
+  _RETV (arctan2 (*y, *x));
+}
+
+// ******************* dbm2w *********************
+constant * evaluate::dbm2w_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (0.001 * pow (10.0, d1 / 10.0));
+}
+
+constant * evaluate::dbm2w_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (0.001 * pow (10.0, *c1 / 10.0));
+}
+
+constant * evaluate::dbm2w_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (dbm2w (*v1));
+}
+
+// ******************* w2dbm *********************
+constant * evaluate::w2dbm_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (10.0 * log10 (d1 / 0.001));
+}
+
+constant * evaluate::w2dbm_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (10.0 * log10 (*c1 / 0.001));
+}
+
+constant * evaluate::w2dbm_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (w2dbm (*v1));
+}
+
+// ********** integrate *****************
+constant * evaluate::integrate_d_d (constant * args) {
+  _ARD0 (data);
+  _ARD1 (incr);
+  _DEFD ();
+  _RETD (data * incr);
+}
+
+constant * evaluate::integrate_c_c (constant * args) {
+  _ARC0 (data);
+  _ARC1 (incr);
+  _DEFC ();
+  _RETC (*data * *incr);
+}
+
+constant * evaluate::integrate_v_d (constant * args) {
+  _ARV0 (data);
+  _ARD1 (incr);
+  _DEFD ();
+  _RETD (integrate (*data, incr));
+}
+
+constant * evaluate::integrate_v_c (constant * args) {
+  _ARV0 (data);
+  _ARC1 (incr);
+  _DEFC ();
+  _RETC (integrate (*data, *incr));
+}
+
+// ******************* dbm *********************
+constant * evaluate::dbm_d_d (constant * args) {
+  _ARD0 (d1);
+  _ARD1 (z);
+  _DEFD ();
+  _RETD (10.0 * log10 (norm (d1) / z / 0.001));
+}
+
+constant * evaluate::dbm_c_d (constant * args) {
+  _ARC0 (c1);
+  _ARD1 (z);
+  _DEFC ();
+  _RETC (10.0 * log10 (norm (*c1) / z / 0.001));
+}
+
+constant * evaluate::dbm_v_d (constant * args) {
+  _ARV0 (v1);
+  _ARD1 (z);
+  _DEFV ();
+  _RETV (dbm (*v1, z));
+}
+
+constant * evaluate::dbm_d_c (constant * args) {
+  _ARD0 (d1);
+  _ARC1 (z);
+  _DEFC ();
+  _RETC (10.0 * log10 (norm (d1) / conj (*z) / 0.001));
+}
+
+constant * evaluate::dbm_c_c (constant * args) {
+  _ARC0 (c1);
+  _ARC1 (z);
+  _DEFC ();
+  _RETC (10.0 * log10 (norm (*c1) / conj (*z) / 0.001));
+}
+
+constant * evaluate::dbm_v_c (constant * args) {
+  _ARV0 (v1);
+  _ARC1 (z);
+  _DEFV ();
+  _RETV (dbm (*v1, *z));
+}
+
+// ************** running average ****************
+constant * evaluate::runavg_d_d (constant * args) {
+  _ARD0 (x);
+  _ARI1 (n);
+  _DEFV ();
+  if (n < 1) {
+    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
+			 "larger or equal 1");
+    _RETV ();
+  }
+  _RETV (runavg (rect (x, 0), n));
+}
+
+constant * evaluate::runavg_c_d (constant * args) {
+  _ARC0 (x);
+  _ARI1 (n);
+  _DEFV ();
+  if (n < 1) {
+    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
+			 "larger or equal 1");
+    _RETV ();
+  }
+  _RETV (runavg (*x, n));
+}
+
+constant * evaluate::runavg_v_d (constant * args) {
+  _ARV0 (x);
+  _ARI1 (n);
+  _DEFV ();
+  if (n < 1 || n > x->getSize ()) {
+    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
+			 "larger or equal 1 and less or equal than the "
+			 "number of vector elements");
+    _RETV ();
+  }
+  _RETV (runavg (*x, n));
 }
 
 // Include the application array.

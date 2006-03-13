@@ -58,7 +58,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
 	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
-	valuelist.h pair.h characteristic.h range.h history.h
+	valuelist.h pair.h characteristic.h range.h history.h fspecial.h
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -66,7 +66,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp matrix.cpp
+	matvec.cpp matrix.cpp fspecial.cpp
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \

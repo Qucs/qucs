@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.25 2006/03/10 07:56:57 raimi Exp $
+ * $Id: evaluate.h,v 1.26 2006/03/13 08:26:25 raimi Exp $
  *
  */
 
@@ -343,10 +343,20 @@ public:
   static constant * max_v (constant *);
   static constant * max_r (constant *);
 
+  static constant * max_d_d (constant *);
+  static constant * max_c_d (constant *);
+  static constant * max_d_c (constant *);
+  static constant * max_c_c (constant *);
+
   static constant * min_d (constant *);
   static constant * min_c (constant *);
   static constant * min_v (constant *);
   static constant * min_r (constant *);
+
+  static constant * min_d_d (constant *);
+  static constant * min_c_d (constant *);
+  static constant * min_d_c (constant *);
+  static constant * min_c_c (constant *);
 
   static constant * sum_d (constant *);
   static constant * sum_c (constant *);
@@ -555,6 +565,50 @@ public:
   static constant * yn_d_d (constant *);
   static constant * yn_d_c (constant *);
   static constant * yn_d_v (constant *);
+
+  static constant * sqr_d  (constant *);
+  static constant * sqr_c  (constant *);
+  static constant * sqr_v  (constant *);
+  static constant * sqr_m  (constant *);
+  static constant * sqr_mv (constant *);
+
+  static constant * polar_d_d (constant *);
+  static constant * polar_d_c (constant *);
+  static constant * polar_c_d (constant *);
+  static constant * polar_c_c (constant *);
+  static constant * polar_d_v (constant *);
+  static constant * polar_c_v (constant *);
+  static constant * polar_v_d (constant *);
+  static constant * polar_v_c (constant *);
+  static constant * polar_v_v (constant *);
+
+  static constant * arctan2_d_d (constant *);
+  static constant * arctan2_d_v (constant *);
+  static constant * arctan2_v_d (constant *);
+  static constant * arctan2_v_v (constant *);
+
+  static constant * w2dbm_d (constant *);
+  static constant * w2dbm_c (constant *);
+  static constant * w2dbm_v (constant *);
+  static constant * dbm2w_d (constant *);
+  static constant * dbm2w_c (constant *);
+  static constant * dbm2w_v (constant *);
+
+  static constant * integrate_d_d (constant *);
+  static constant * integrate_c_c (constant *);
+  static constant * integrate_v_d (constant *);
+  static constant * integrate_v_c (constant *);
+
+  static constant * dbm_d_d (constant *);
+  static constant * dbm_c_d (constant *);
+  static constant * dbm_v_d (constant *);
+  static constant * dbm_d_c (constant *);
+  static constant * dbm_c_c (constant *);
+  static constant * dbm_v_c (constant *);
+
+  static constant * runavg_d_d (constant *);
+  static constant * runavg_c_d (constant *);
+  static constant * runavg_v_d (constant *);
 };
 
 // Type of application function.

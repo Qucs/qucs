@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.21 2006/03/10 07:56:57 raimi Exp $
+ * $Id: vector.h,v 1.22 2006/03/13 08:26:25 raimi Exp $
  *
  */
 
@@ -39,6 +39,8 @@ class vector;
 
 vector linspace (nr_double_t, nr_double_t, int);
 vector logspace (nr_double_t, nr_double_t, int);
+vector runavg (vector, const int);
+vector runavg (const complex, const int);
 
 class vector : public object
 {
@@ -80,6 +82,9 @@ class vector : public object
   friend vector  cumsum  (vector);
   friend vector  cumprod (vector);
   friend vector  cumavg  (vector);
+  friend vector  dbm     (vector, const complex z = 50.0);
+  friend complex integrate (vector v, const complex);
+  friend nr_double_t integrate (vector v, const nr_double_t);
 
   // vector manipulations
   friend vector real   (vector);  // the real part
@@ -101,6 +106,15 @@ class vector : public object
   friend vector rtoy   (vector, complex zref = 50.0);
   friend vector diff   (vector, vector, int n = 1);
   friend vector unwrap (vector, nr_double_t tol = M_PI);
+
+  friend vector polar   (vector, const complex);
+  friend vector polar   (const complex, vector);
+  friend vector polar   (vector, vector);
+  friend vector arctan2 (vector, const nr_double_t);
+  friend vector arctan2 (const nr_double_t, vector);
+  friend vector arctan2 (vector, vector);
+  friend vector dbm2w   (vector);
+  friend vector w2dbm   (vector);
 
   // overloaded math functions
   friend vector abs    (vector);
