@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.21 2006-03-10 07:56:57 raimi Exp $
+ * $Id: complex.h,v 1.22 2006-03-13 08:26:25 raimi Exp $
  *
  */
 
@@ -119,6 +119,8 @@ class complex
   friend complex         yn (const int, const complex);
   friend complex        erf (const complex);
   friend complex       erfc (const complex);
+  friend complex      polar (const complex, const complex);
+  friend complex    arctan2 (const complex, const complex);
 
   // operator functions
   friend complex operator + (const complex, const complex);

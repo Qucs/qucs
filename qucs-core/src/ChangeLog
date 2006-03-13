@@ -1,3 +1,12 @@
+2006-03-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* fspecial.h: Implementation of fallback functions for
+	erf, erfc and round (Win32).  Also added some elliptic
+	integral functions.
+
+	* applications.h: Again many new functions for equation
+	solver added.
+
 2006-03-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Loads of new functions in the equation solver.

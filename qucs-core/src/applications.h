@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.5 2006-03-10 07:56:57 raimi Exp $
+ * $Id: applications.h,v 1.6 2006-03-13 08:26:25 raimi Exp $
  *
  */
 
@@ -348,10 +348,20 @@ struct application_t eqn::applications[] = {
   { "max", TAG_DOUBLE,  evaluate::max_v, 1, { TAG_VECTOR  } },
   { "max", TAG_DOUBLE,  evaluate::max_r, 2, { TAG_VECTOR, TAG_RANGE } },
 
+  { "max", TAG_DOUBLE,  evaluate::max_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "max", TAG_COMPLEX, evaluate::max_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "max", TAG_COMPLEX, evaluate::max_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "max", TAG_COMPLEX, evaluate::max_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+
   { "min", TAG_DOUBLE,  evaluate::min_d, 1, { TAG_DOUBLE  } },
   { "min", TAG_DOUBLE,  evaluate::min_c, 1, { TAG_COMPLEX } },
   { "min", TAG_DOUBLE,  evaluate::min_v, 1, { TAG_VECTOR  } },
   { "min", TAG_DOUBLE,  evaluate::min_r, 2, { TAG_VECTOR, TAG_RANGE } },
+
+  { "min", TAG_DOUBLE,  evaluate::min_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "min", TAG_COMPLEX, evaluate::min_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "min", TAG_COMPLEX, evaluate::min_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "min", TAG_COMPLEX, evaluate::min_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
 
   { "sum", TAG_DOUBLE,  evaluate::sum_d, 1, { TAG_DOUBLE  } },
   { "sum", TAG_COMPLEX, evaluate::sum_c, 1, { TAG_COMPLEX } },
@@ -635,6 +645,71 @@ struct application_t eqn::applications[] = {
   { "yn", TAG_DOUBLE,  evaluate::yn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
   { "yn", TAG_COMPLEX, evaluate::yn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
   { "yn", TAG_VECTOR,  evaluate::yn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
+
+  { "sqr", TAG_DOUBLE,  evaluate::sqr_d,  1, { TAG_DOUBLE  } },
+  { "sqr", TAG_COMPLEX, evaluate::sqr_c,  1, { TAG_COMPLEX } },
+  { "sqr", TAG_VECTOR,  evaluate::sqr_v,  1, { TAG_VECTOR  } },
+  { "sqr", TAG_MATRIX,  evaluate::sqr_m,  1, { TAG_MATRIX  } },
+  { "sqr", TAG_MATVEC,  evaluate::sqr_mv, 1, { TAG_MATVEC  } },
+
+  { "polar", TAG_COMPLEX, evaluate::polar_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "polar", TAG_COMPLEX, evaluate::polar_d_c, 2,
+    { TAG_DOUBLE, TAG_COMPLEX } },
+  { "polar", TAG_COMPLEX, evaluate::polar_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE } },
+  { "polar", TAG_COMPLEX, evaluate::polar_c_c, 2,
+    { TAG_COMPLEX, TAG_COMPLEX } },
+  { "polar", TAG_VECTOR,  evaluate::polar_d_v, 2,
+    { TAG_DOUBLE, TAG_VECTOR } },
+  { "polar", TAG_VECTOR,  evaluate::polar_c_v, 2,
+    { TAG_COMPLEX, TAG_VECTOR } },
+  { "polar", TAG_VECTOR,  evaluate::polar_v_d, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+  { "polar", TAG_VECTOR,  evaluate::polar_v_c, 2,
+    { TAG_VECTOR, TAG_COMPLEX } },
+  { "polar", TAG_VECTOR,  evaluate::polar_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+
+  { "arctan", TAG_COMPLEX, evaluate::arctan2_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "arctan", TAG_VECTOR,  evaluate::arctan2_d_v, 2,
+    { TAG_DOUBLE, TAG_VECTOR } },
+  { "arctan", TAG_VECTOR,  evaluate::arctan2_v_d, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+  { "arctan", TAG_VECTOR,  evaluate::arctan2_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+
+  { "dbm2w", TAG_DOUBLE,  evaluate::dbm2w_d, 1, { TAG_DOUBLE  } },
+  { "dbm2w", TAG_COMPLEX, evaluate::dbm2w_c, 1, { TAG_COMPLEX } },
+  { "dbm2w", TAG_VECTOR,  evaluate::dbm2w_v, 1, { TAG_VECTOR  } },
+
+  { "w2dbm", TAG_DOUBLE,  evaluate::w2dbm_d, 1, { TAG_DOUBLE  } },
+  { "w2dbm", TAG_COMPLEX, evaluate::w2dbm_c, 1, { TAG_COMPLEX } },
+  { "w2dbm", TAG_VECTOR,  evaluate::w2dbm_v, 1, { TAG_VECTOR  } },
+
+  { "integrate", TAG_DOUBLE,  evaluate::integrate_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE   } },
+  { "integrate", TAG_COMPLEX, evaluate::integrate_c_c, 2,
+    { TAG_COMPLEX, TAG_COMPLEX } },
+  { "integrate", TAG_DOUBLE,  evaluate::integrate_v_d, 2,
+    { TAG_VECTOR, TAG_DOUBLE   } },
+  { "integrate", TAG_COMPLEX, evaluate::integrate_v_c, 2,
+    { TAG_VECTOR, TAG_COMPLEX  } },
+
+  { "dbm", TAG_DOUBLE,  evaluate::dbm_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "dbm", TAG_DOUBLE,  evaluate::dbm_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "dbm", TAG_VECTOR,  evaluate::dbm_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "dbm", TAG_COMPLEX, evaluate::dbm_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "dbm", TAG_COMPLEX, evaluate::dbm_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
+  { "dbm", TAG_VECTOR,  evaluate::dbm_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
+
+  { "runavg", TAG_VECTOR, evaluate::runavg_d_d, 2,
+    { TAG_DOUBLE,  TAG_DOUBLE } },
+  { "runavg", TAG_VECTOR, evaluate::runavg_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE } },
+  { "runavg", TAG_VECTOR, evaluate::runavg_v_d, 2,
+    { TAG_VECTOR,  TAG_DOUBLE } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

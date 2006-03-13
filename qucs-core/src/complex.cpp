@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.25 2006-03-10 07:56:57 raimi Exp $
+ * $Id: complex.cpp,v 1.26 2006-03-13 08:26:25 raimi Exp $
  *
  */
 
@@ -31,6 +31,9 @@
 
 #include "complex.h"
 #include "consts.h"
+#include "fspecial.h"
+
+using namespace fspecial;
 
 complex::complex (nr_double_t real, nr_double_t imag) {
   r = real;
@@ -189,6 +192,11 @@ complex arctan (const complex z) {
   return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
 }
 
+complex arctan2 (const complex y, const complex x) {
+  complex a = arctan (y / x);
+  return real (x) > 0.0 ? a : -a;
+}
+
 complex cot (const complex z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
@@ -317,6 +325,10 @@ complex rect (const nr_double_t x, const nr_double_t y) {
   return complex (x, y);
 }
 
+complex polar (const complex a, const complex p) {
+  return a * exp (rect (p.i, -p.r));
+}
+
 complex ceil (const complex z) {
   return rect (ceil (z.r), ceil (z.i));
 }
@@ -334,15 +346,7 @@ complex fix (const complex z) {
 }
 
 complex round (const complex z) {
-#if 0
-  nr_double_t x = z.r;
-  nr_double_t y = z.i;
-  x = (x > 0) ? floor (x + 0.5) : ceil (x - 0.5);
-  y = (y > 0) ? floor (y + 0.5) : ceil (y - 0.5);
-  return rect (x, y);
-#else
   return rect (round (z.r), round (z.i));
-#endif
 }
 
 complex sqr (const complex z) {

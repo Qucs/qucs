@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.25 2006-03-10 07:56:57 raimi Exp $
+ * $Id: vector.cpp,v 1.26 2006-03-13 08:26:25 raimi Exp $
  *
  */
 
@@ -971,5 +971,107 @@ vector jn (const int n, vector v) {
 vector yn (const int n, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (yn (n, v.get (i)), i);
+  return result;
+}
+
+vector polar (const complex a, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (polar (a, v.get (i) * M_PI / 180.0), i);
+  return result;
+}
+
+vector polar (vector v, const complex p) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (polar (v.get (i), p * M_PI / 180.0), i);
+  return result;
+}
+
+vector polar (vector a, vector p) {
+  assert (a.checkSizes (a, p));
+  int n = a.getSize () < p.getSize () ? a.getSize () : p.getSize ();
+  vector result (n);
+  for (int i = 0; i < n; i++)
+    result.set (polar (a.get (i), p.get (i) * M_PI / 180.0), i);
+  return result;
+}
+
+vector arctan2 (const nr_double_t y, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (arctan2 (y, v.get (i)), i);
+  return result;
+}
+
+vector arctan2 (vector v, const nr_double_t x) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (arctan2 (v.get (i), x) , i);
+  return result;
+}
+
+vector arctan2 (vector y, vector x) {
+  assert (y.checkSizes (y, x));
+  int n = y.getSize () < x.getSize () ? y.getSize () : x.getSize ();
+  vector result (n);
+  for (int i = 0; i < n; i++)
+    result.set (arctan2 (y.get (i), x.get (i)), i);
+  return result;
+}
+
+vector w2dbm (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (10.0 * log10 (v.get (i) / 0.001), i);
+  return result;
+}
+
+vector dbm2w (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (0.001 * pow (10.0 , v.get (i) / 10.0), i);
+  return result;
+}
+
+nr_double_t integrate (vector v, const nr_double_t h) {
+  nr_double_t s = real (v.get (0) ) / 2;
+  for (int i = 1; i < v.getSize () - 1; i++)
+    s += real (v.get (i));
+  return (s + real (v.get (v.getSize () - 1) ) / 2) * h;
+}
+
+complex integrate (vector v, const complex h) {
+  complex s;
+  s = v.get (0) / 2;
+  for (int i = 1; i < v.getSize () - 1; i++)
+    s += v.get (i);
+  return (s + v.get (v.getSize () - 1) / 2) * h;
+}
+
+vector dbm (vector v, const complex z) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result.set (10.0 * log10 (norm (v.get (i)) / conj (z) / 0.001), i);
+  return result;
+}
+
+vector runavg (const complex x, const int n) {
+  vector result (n);
+  for (int i = 0; i < n; i++) result.set (x, i);
+  return result;
+}
+
+vector runavg (vector v, const int n) {
+  complex s (0.0), y;
+  int len = v.getSize () - n + 1, i;
+  vector result (len);
+  for (i = 0; i < n; i++) s += v.get (i);
+  y = s / n; // first running average value
+  result.set (y, 0);
+  for (i = 0; i < len - 1; i++) {
+    y += (v.get (i + n) - v.get (i)) / n;
+    result.set (y, i + 1);
+  }
   return result;
 }
