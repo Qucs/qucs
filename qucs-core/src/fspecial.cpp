@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.1 2006/03/13 08:26:25 raimi Exp $
+ * $Id: fspecial.cpp,v 1.2 2006/03/14 07:29:13 raimi Exp $
  *
  */
 
@@ -104,7 +104,7 @@ void fspecial::ellip_ke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
 const nr_double_t SN_ACC = 1e-5;	// Accuracy of sn(x) is SN_ACC^2
 const nr_double_t K_ERR  = 1e-8;	// Accuracy of K(k)
 
-// Computes Carlson's elliptic integral of the first kind
+// Computes Carlson's elliptic integral of the first kind.
 nr_double_t fspecial::ellip_rf (nr_double_t x, nr_double_t y, nr_double_t z) {
   nr_double_t al, av, dx, dy, dz, e2, e3;
   nr_double_t sx, sy, sz, xt, yt, zt;
@@ -197,11 +197,13 @@ nr_double_t fspecial::ellip_sncndn (nr_double_t u, nr_double_t k,
   return sn;
 }
 
-#ifdef _MSC_VER
+#ifndef HAVE_ROUND
 
 nr_double_t fspecial::round (nr_double_t arg) {
   return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
 }
+
+#endif /* HAVE_ROUND */
 
 /* data for a Chebyshev series over a given interval */
 struct cheb_series_t {
@@ -225,6 +227,8 @@ static nr_double_t cheb_eval (const cheb_series * cs, const nr_double_t x) {
   d = y * d - dd + 0.5 * cs->c[0];
   return d;
 }
+
+#if !defined (HAVE_ERF) || !defined (HAVE_ERFC)
 
 /* Chebyshev fit for erfc ((t+1)/2), -1 < t < 1 */
 static nr_double_t erfc_xlt1_data[20] = {
@@ -250,9 +254,7 @@ static nr_double_t erfc_xlt1_data[20] = {
  -9.29599561220523396007359328540e-19
 };
 static cheb_series erfc_xlt1_cs = {
-  erfc_xlt1_data,
-  19,
-  -1, 1
+  erfc_xlt1_data, 19, -1, 1
 };
 
 /* Chebyshev fit for erfc (x) * exp (x^2), 1 < x < 5, x = 2t + 3, -1 < t < 1 */
@@ -284,9 +286,7 @@ static nr_double_t erfc_x15_data[25] = {
   3.50826648032737849245113757340e-16
 };
 static cheb_series erfc_x15_cs = {
-  erfc_x15_data,
-  24,
-  -1, 1
+  erfc_x15_data, 24, -1, 1
 };
 
 /* Chebyshev fit for erfc(x) * exp(x^2),
@@ -314,9 +314,7 @@ static nr_double_t erfc_x510_data[20] = {
   9.12600607264794717315507477670e-17
 };
 static cheb_series erfc_x510_cs = {
-  erfc_x510_data,
-  19,
-  -1, 1
+  erfc_x510_data, 19, -1, 1
 };
 
 /* Estimates erfc (x) valid for 8 < x < 100, this is based on index 5725
@@ -349,18 +347,9 @@ static nr_double_t erfc8 (nr_double_t x) {
   return exp (-x * x) * (n / d);
 }
 
-/* Abramowitz + Stegun, 7.1.5 */
-static nr_double_t erfseries (nr_double_t x) {
-  nr_double_t c = x;
-  nr_double_t e = c;
-  nr_double_t d;
-  for (int k = 1; k < 30; ++k) {
-    c *= -x * x / k;
-    d  = c / (2.0 * k + 1.0);
-    e += d;
-  }
-  return 2.0 / M_SQRTPI * e;
-}
+#endif /* !HAVE_ERF || !HAVE_ERFC */
+
+#ifndef HAVE_ERFC
 
 nr_double_t fspecial::erfc (nr_double_t x) {
   const nr_double_t ax = fabs (x);
@@ -386,6 +375,23 @@ nr_double_t fspecial::erfc (nr_double_t x) {
   return (x < 0.0) ? 2.0 - val : val;
 }
 
+#endif /* HAVE_ERFC */
+
+#ifndef HAVE_ERF
+
+/* Abramowitz + Stegun, 7.1.5 */
+static nr_double_t erfseries (nr_double_t x) {
+  nr_double_t c = x;
+  nr_double_t e = c;
+  nr_double_t d;
+  for (int k = 1; k < 30; ++k) {
+    c *= -x * x / k;
+    d  = c / (2.0 * k + 1.0);
+    e += d;
+  }
+  return 2.0 / M_SQRTPI * e;
+}
+
 nr_double_t fspecial::erf (nr_double_t x) {
   if (fabs (x) < 1.0) {
     return erfseries (x);
@@ -393,4 +399,139 @@ nr_double_t fspecial::erf (nr_double_t x) {
   return 1.0 - erfc (x);
 }
 
-#endif /* _MSC_VER */
+#endif /* HAVE_ERF */
+
+// Inverse of the error function erf().
+nr_double_t fspecial::erfinv (nr_double_t y) {
+  nr_double_t x = 0.0;  // The output
+  nr_double_t z = 0.0;  // Intermediate variable
+  nr_double_t y0 = 0.7; // Central range variable
+
+  // Coefficients in rational approximations.
+  nr_double_t a[4] = { 0.886226899, -1.645349621,  0.914624893, -0.140543331};
+  nr_double_t b[4] = {-2.118377725,  1.442710462, -0.329097515,  0.012229801};
+  nr_double_t c[4] = {-1.970840454, -1.624906493,  3.429567803,  1.641345311};
+  nr_double_t d[2] = { 3.543889200,  1.637067800};
+
+  if (y < -1.0 || 1.0 < y) {
+    x = log (-1.0);
+  }
+  else if (y == -1.0 || 1.0 == y) {
+    x = -y * log(0.0);
+  }
+  else if (-1.0 < y && y < -y0) {
+    z = sqrt(-log((1.0+y)/2.0));
+    x = -(((c[3]*z+c[2])*z+c[1])*z+c[0])/((d[1]*z+d[0])*z+1.0);
+  }
+  else {
+    if (-y0 < y && y < y0) {
+      z = y * y;
+      x = y*(((a[3]*z+a[2])*z+a[1])*z+a[0]) /
+	   ((((b[3]*z+b[3])*z+b[1])*z+b[0])*z+1.0);
+    }
+    else if (y0 < y && y < 1.0) {
+      z = sqrt(-log((1.0-y)/2.0));
+      x = (((c[3]*z+c[2])*z+c[1])*z+c[0])/((d[1]*z+d[0])*z+1.0);
+    }
+
+    // Two steps of Newton-Raphson correction to full accuracy.
+    x = x - (erf (x) - y) / (2.0 / M_SQRTPI * exp (-x * x));
+    x = x - (erf (x) - y) / (2.0 / M_SQRTPI * exp (-x * x));
+  }
+  return x;
+}
+
+static nr_double_t bi0_data[12] = {
+  -.07660547252839144951,
+  1.92733795399380827000,
+   .22826445869203013390, 
+   .01304891466707290428,
+   .00043442709008164874,
+   .00000942265768600193,
+   .00000014340062895106,
+   .00000000161384906966,
+   .00000000001396650044,
+   .00000000000009579451,
+   .00000000000000053339,
+   .00000000000000000245
+};
+static cheb_series bi0_cs = {
+  bi0_data, 11, -1, 1
+};
+
+static nr_double_t ai0_data[21] = {
+   .07575994494023796, 
+   .00759138081082334,
+   .00041531313389237,
+   .00001070076463439,
+  -.00000790117997921,
+  -.00000078261435014,
+   .00000027838499429,
+   .00000000825247260,
+  -.00000001204463945,
+   .00000000155964859,
+   .00000000022925563,
+  -.00000000011916228,
+   .00000000001757854,
+   .00000000000112822,
+  -.00000000000114684,
+   .00000000000027155,
+  -.00000000000002415,
+  -.00000000000000608,
+   .00000000000000314,
+  -.00000000000000071,
+   .00000000000000007
+};
+static cheb_series ai0_cs = {
+  ai0_data, 20, -1, 1
+};
+
+static nr_double_t ai02_data[22] = {
+   .05449041101410882,
+   .00336911647825569,
+   .00006889758346918,
+   .00000289137052082,
+   .00000020489185893,
+   .00000002266668991,
+   .00000000339623203,
+   .00000000049406022,
+   .00000000001188914,
+  -.00000000003149915,
+  -.00000000001321580,
+  -.00000000000179419,
+   .00000000000071801,
+   .00000000000038529,
+   .00000000000001539,
+  -.00000000000004151,
+  -.00000000000000954,
+   .00000000000000382,
+   .00000000000000176,
+  -.00000000000000034,
+  -.00000000000000027,
+   .00000000000000003
+};
+static cheb_series ai02_cs = {
+  ai02_data, 21, -1, 1
+};
+
+// Modified Bessel function of order zero.
+nr_double_t fspecial::i0 (nr_double_t x) {
+  nr_double_t y = fabs (x);
+  nr_double_t val;
+
+  if (y < 2.0 * sqrt (NR_EPSI)) {
+    val = 1.0;
+  }
+  else if (y <= 3.0) {
+    val = 2.75 + cheb_eval (&bi0_cs, y * y / 4.5 - 1.0);
+  }
+  else if (y <= 8.0) {
+    val = cheb_eval (&ai0_cs, (48.0 / y - 11.0) / 5.0);
+    val = exp (y) * (0.375 + val) / sqrt (y);
+  }
+  else {
+    val = cheb_eval (&ai02_cs, 16.0 / y - 1.0);
+    val = exp (y) * (0.375 + val) / sqrt (y);
+  }
+  return val;
+}

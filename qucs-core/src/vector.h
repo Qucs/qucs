@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.22 2006/03/13 08:26:25 raimi Exp $
+ * $Id: vector.h,v 1.23 2006/03/14 07:29:13 raimi Exp $
  *
  */
 
@@ -149,6 +149,8 @@ class vector : public object
   friend vector yn     (const int, vector);
   friend vector erf    (vector);
   friend vector erfc   (vector);
+  friend vector erfinv (vector);
+  friend vector i0     (vector);
 
   // operator functions
   friend vector operator + (vector, vector);

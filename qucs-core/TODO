@@ -28,7 +28,7 @@ unfixed) have a look at the file BUGS.
 - Support for Citi-files as an export file format in the Qucs Converter.
 	- Support for comma separated values (CSV) as an export
 	  file format in the Qucs Converter.
-	- Implement yval(values,xval) and xval(values,yval) evalutaion
+	- Implement yval(values,xval) and xval(values,yval) evaluation
 	  functions in the equation solver.
 	- Allow output of characteristics (e.g. ErEff) very likely
 	  operating points.

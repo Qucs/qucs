@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.26 2006/03/13 08:26:25 raimi Exp $
+ * $Id: evaluate.h,v 1.27 2006/03/14 07:29:13 raimi Exp $
  *
  */
 
@@ -517,27 +517,30 @@ public:
   static constant * range_c_d (constant *);
   static constant * range_c_c (constant *);
 
-  static constant * ceil_d  (constant *);
-  static constant * ceil_c  (constant *);
-  static constant * ceil_v  (constant *);
-  static constant * floor_d (constant *);
-  static constant * floor_c (constant *);
-  static constant * floor_v (constant *);
-  static constant * fix_d   (constant *);
-  static constant * fix_c   (constant *);
-  static constant * fix_v   (constant *);
-  static constant * step_d  (constant *);
-  static constant * step_c  (constant *);
-  static constant * step_v  (constant *);
-  static constant * round_d (constant *);
-  static constant * round_c (constant *);
-  static constant * round_v (constant *);
-  static constant * erf_d   (constant *);
-  static constant * erf_c   (constant *);
-  static constant * erf_v   (constant *);
-  static constant * erfc_d  (constant *);
-  static constant * erfc_c  (constant *);
-  static constant * erfc_v  (constant *);
+  static constant * ceil_d   (constant *);
+  static constant * ceil_c   (constant *);
+  static constant * ceil_v   (constant *);
+  static constant * floor_d  (constant *);
+  static constant * floor_c  (constant *);
+  static constant * floor_v  (constant *);
+  static constant * fix_d    (constant *);
+  static constant * fix_c    (constant *);
+  static constant * fix_v    (constant *);
+  static constant * step_d   (constant *);
+  static constant * step_c   (constant *);
+  static constant * step_v   (constant *);
+  static constant * round_d  (constant *);
+  static constant * round_c  (constant *);
+  static constant * round_v  (constant *);
+  static constant * erf_d    (constant *);
+  static constant * erf_c    (constant *);
+  static constant * erf_v    (constant *);
+  static constant * erfc_d   (constant *);
+  static constant * erfc_c   (constant *);
+  static constant * erfc_v   (constant *);
+  static constant * erfinv_d (constant *);
+  static constant * erfinv_c (constant *);
+  static constant * erfinv_v (constant *);
 
   static constant * rms_d      (constant *);
   static constant * rms_c      (constant *);
@@ -559,6 +562,9 @@ public:
   static constant * cumprod_c (constant *);
   static constant * cumprod_v (constant *);
 
+  static constant * i0_d   (constant *);
+  static constant * i0_c   (constant *);
+  static constant * i0_v   (constant *);
   static constant * jn_d_d (constant *);
   static constant * jn_d_c (constant *);
   static constant * jn_d_v (constant *);
@@ -599,8 +605,11 @@ public:
   static constant * integrate_v_d (constant *);
   static constant * integrate_v_c (constant *);
 
+  static constant * dbm_d   (constant *);
   static constant * dbm_d_d (constant *);
+  static constant * dbm_c   (constant *);
   static constant * dbm_c_d (constant *);
+  static constant * dbm_v   (constant *);
   static constant * dbm_v_d (constant *);
   static constant * dbm_d_c (constant *);
   static constant * dbm_c_c (constant *);

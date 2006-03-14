@@ -1,3 +1,11 @@
+2006-03-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (libqucsator_a_SOURCES): Moved 'precision.c'
+	into the libqucsator library.
+
+	* evaluate.cpp: Added erfinv(), i0() and one-argument dbm()
+	functions to the equation solver.
+
 2006-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* fspecial.h: Implementation of fallback functions for

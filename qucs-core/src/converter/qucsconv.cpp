@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.15 2006/03/07 11:13:54 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.16 2006/03/14 07:29:13 raimi Exp $
  *
  */
 
@@ -31,6 +31,8 @@
 #include <string.h>
 #include <errno.h>
 
+#include "logging.h"
+#include "precision.h"
 #include "check_spice.h"
 #include "check_vcd.h"
 #include "qucs_producer.h"
@@ -79,6 +81,9 @@ FILE * open_file (char * file, char * flag) {
 int main (int argc, char ** argv) {
 
   char * infile = NULL, * outfile = NULL, * input = NULL, * output = NULL;
+
+  loginit ();
+  precinit ();
 
   // check program arguments
   for (int i = 1; i < argc; i++) {
@@ -218,7 +223,6 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
 // Qucs dataset to CSV conversion.
 int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
   int ret = 0;
-  loginit ();
   if ((qucs_data = dataset::load (infile)) != NULL) {
     if ((csv_out = open_file (outfile, "w")) == NULL)
       return -1;
