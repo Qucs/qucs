@@ -42,8 +42,8 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp precision.c pair.cpp characteristic.cpp       \
-	range.cpp history.cpp
+	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
+	range.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp
@@ -66,7 +66,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp matrix.cpp fspecial.cpp
+	matvec.cpp matrix.cpp fspecial.cpp precision.c
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.6 2006-03-13 08:26:25 raimi Exp $
+ * $Id: applications.h,v 1.7 2006-03-14 07:29:13 raimi Exp $
  *
  */
 
@@ -615,6 +615,10 @@ struct application_t eqn::applications[] = {
   { "erfc", TAG_COMPLEX, evaluate::erfc_c, 1, { TAG_COMPLEX } },
   { "erfc", TAG_VECTOR,  evaluate::erfc_v, 1, { TAG_VECTOR  } },
 
+  { "erfinv", TAG_DOUBLE,  evaluate::erfinv_d, 1, { TAG_DOUBLE  } },
+  { "erfinv", TAG_COMPLEX, evaluate::erfinv_c, 1, { TAG_COMPLEX } },
+  { "erfinv", TAG_VECTOR,  evaluate::erfinv_v, 1, { TAG_VECTOR  } },
+
   { "cumsum", TAG_DOUBLE,  evaluate::cumsum_d, 1, { TAG_DOUBLE  } },
   { "cumsum", TAG_COMPLEX, evaluate::cumsum_c, 1, { TAG_COMPLEX } },
   { "cumsum", TAG_VECTOR,  evaluate::cumsum_v, 1, { TAG_VECTOR  } },
@@ -638,6 +642,10 @@ struct application_t eqn::applications[] = {
   { "stddev", TAG_DOUBLE, evaluate::stddev_d, 1, { TAG_DOUBLE  } },
   { "stddev", TAG_DOUBLE, evaluate::stddev_c, 1, { TAG_COMPLEX } },
   { "stddev", TAG_DOUBLE, evaluate::stddev_v, 1, { TAG_VECTOR  } },
+
+  { "_i0", TAG_DOUBLE,  evaluate::i0_d,   1, { TAG_DOUBLE  } },
+  { "_i0", TAG_COMPLEX, evaluate::i0_c,   1, { TAG_COMPLEX } },
+  { "_i0", TAG_VECTOR,  evaluate::i0_v,   1, { TAG_VECTOR  } },
 
   { "jn", TAG_DOUBLE,  evaluate::jn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
   { "jn", TAG_COMPLEX, evaluate::jn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
@@ -697,8 +705,11 @@ struct application_t eqn::applications[] = {
   { "integrate", TAG_COMPLEX, evaluate::integrate_v_c, 2,
     { TAG_VECTOR, TAG_COMPLEX  } },
 
+  { "dbm", TAG_DOUBLE,  evaluate::dbm_d,   1, { TAG_DOUBLE  } },
   { "dbm", TAG_DOUBLE,  evaluate::dbm_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "dbm", TAG_COMPLEX, evaluate::dbm_c,   1, { TAG_COMPLEX } },
   { "dbm", TAG_DOUBLE,  evaluate::dbm_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "dbm", TAG_VECTOR,  evaluate::dbm_v,   1, { TAG_VECTOR  } },
   { "dbm", TAG_VECTOR,  evaluate::dbm_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "dbm", TAG_COMPLEX, evaluate::dbm_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
   { "dbm", TAG_COMPLEX, evaluate::dbm_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },

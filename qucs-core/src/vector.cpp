@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.26 2006-03-13 08:26:25 raimi Exp $
+ * $Id: vector.cpp,v 1.27 2006-03-14 07:29:13 raimi Exp $
  *
  */
 
@@ -823,8 +823,7 @@ vector linspace (nr_double_t start, nr_double_t stop, int points) {
   nr_double_t val, step = (stop - start) / (points - 1);
   for (int i = 0; i < points; i++) {
     val = start + (i * step);
-    if (i != 0 && fabs (val) < fabs (step) / 2 &&
-	fabs (val - (start + (i - 1) * step)) < fabs (step))
+    if (i != 0 && fabs (val) < fabs (step) / 4 && fabs (val) < NR_EPSI)
       val = 0.0;
     result.set (val, i);
   }
@@ -962,6 +961,18 @@ vector erfc (vector v) {
   return result;
 }
 
+vector erfinv (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (erfinv (v.get (i)), i);
+  return result;
+}
+
+vector i0 (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (i0 (v.get (i)), i);
+  return result;
+}
+
 vector jn (const int n, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (jn (n, v.get (i)), i);
@@ -976,15 +987,13 @@ vector yn (const int n, vector v) {
 
 vector polar (const complex a, vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++)
-    result.set (polar (a, v.get (i) * M_PI / 180.0), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (polar (a, v.get (i)), i);
   return result;
 }
 
 vector polar (vector v, const complex p) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++)
-    result.set (polar (v.get (i), p * M_PI / 180.0), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (polar (v.get (i), p), i);
   return result;
 }
 
@@ -992,8 +1001,7 @@ vector polar (vector a, vector p) {
   assert (a.checkSizes (a, p));
   int n = a.getSize () < p.getSize () ? a.getSize () : p.getSize ();
   vector result (n);
-  for (int i = 0; i < n; i++)
-    result.set (polar (a.get (i), p.get (i) * M_PI / 180.0), i);
+  for (int i = 0; i < n; i++) result.set (polar (a.get (i), p.get (i)), i);
   return result;
 }
 

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.45 2006-03-13 08:26:25 raimi Exp $
+ * $Id: evaluate.cpp,v 1.46 2006-03-14 07:29:13 raimi Exp $
  *
  */
 
@@ -2828,6 +2828,8 @@ MAKE_FUNC_DEFINITION_0 (step);    // step function
 MAKE_FUNC_DEFINITION_0 (round);   // round function
 MAKE_FUNC_DEFINITION_0 (erf);     // error function 
 MAKE_FUNC_DEFINITION_0 (erfc);    // complementary error function 
+MAKE_FUNC_DEFINITION_0 (erfinv);  // inverse of error function 
+MAKE_FUNC_DEFINITION_0 (i0);      // modified bessel zero order 
 
 // ******************* cumulative sum *********************
 constant * evaluate::cumsum_d (constant * args) {
@@ -3029,35 +3031,35 @@ constant * evaluate::polar_d_v (constant * args) {
   _ARD0 (a);
   _ARV1 (v);
   _DEFV ();
-  _RETV (polar (rect (a, 0), *v));
+  _RETV (polar (rect (a, 0), rad (*v)));
 }
 
 constant * evaluate::polar_c_v (constant * args) {
   _ARC0 (a);
   _ARV1 (v);
   _DEFV ();
-  _RETV (polar (*a, *v));
+  _RETV (polar (*a, rad (*v)));
 }
 
 constant * evaluate::polar_v_d (constant * args) {
   _ARV0 (v);
   _ARD1 (p);
   _DEFV ();
-  _RETV (polar (*v, rect (p, 0)));
+  _RETV (polar (*v, rect (rad (p), 0)));
 }
 
 constant * evaluate::polar_v_c (constant * args) {
   _ARV0 (v);
   _ARC1 (p);
   _DEFV ();
-  _RETV (polar (*v, *p));
+  _RETV (polar (*v, rad (*p)));
 }
 
 constant * evaluate::polar_v_v (constant * args) {
   _ARV0 (a);
   _ARV1 (p);
   _DEFV ();
-  _RETV (polar (*a, *p));
+  _RETV (polar (*a, rad (*p)));
 }
 
 // ******************* arctan2 *********************
@@ -3161,6 +3163,12 @@ constant * evaluate::integrate_v_c (constant * args) {
 }
 
 // ******************* dbm *********************
+constant * evaluate::dbm_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (10.0 * log10 (norm (d1) / circuit::z0 / 0.001));
+}
+
 constant * evaluate::dbm_d_d (constant * args) {
   _ARD0 (d1);
   _ARD1 (z);
@@ -3168,11 +3176,23 @@ constant * evaluate::dbm_d_d (constant * args) {
   _RETD (10.0 * log10 (norm (d1) / z / 0.001));
 }
 
+constant * evaluate::dbm_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (10.0 * log10 (norm (*c1) / circuit::z0 / 0.001));
+}
+
 constant * evaluate::dbm_c_d (constant * args) {
   _ARC0 (c1);
   _ARD1 (z);
   _DEFC ();
   _RETC (10.0 * log10 (norm (*c1) / z / 0.001));
+}
+
+constant * evaluate::dbm_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (dbm (*v1));
 }
 
 constant * evaluate::dbm_v_d (constant * args) {

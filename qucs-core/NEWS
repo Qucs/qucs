@@ -29,8 +29,8 @@ Version 0.0.9
  * support for two-argument functions: arctan(), min() and max()
  * new functions in equation solver: ceil(), fix(), floor(), round(),
    step(), jn(), yn(), erf(), erfc(), cumsum(), cumavg(), cumprod(),
-   sqr(), polar(), rms(), dbm2w(), w2dbm(), integrate(), dbm(),
-   runavg(), variance() and stddev()
+   sqr(), polar(), rms(), dbm2w(), w2dbm(), integrate(), dbm(), _i0(),
+   erfinv(), runavg(), variance() and stddev()
  * conversion of dataset to csv files using qucsconv
  * new components: AM and PM modulated and sources, relais, switch
  * transient analysis of ideal transmission line
