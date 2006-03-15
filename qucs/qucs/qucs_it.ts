@@ -55,15 +55,15 @@
     </message>
     <message>
         <source>Arrow head: </source>
-        <translation type="unfinished"></translation>
+        <translation>Forma freccia:</translation>
     </message>
     <message>
         <source>two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>linea doppia</translation>
     </message>
     <message>
         <source>filled</source>
-        <translation type="unfinished"></translation>
+        <translation>riempito</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun risultato trovato!</translation>
     </message>
 </context>
 <context>
@@ -318,11 +318,11 @@
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>File Touchstone</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation>File SPICE</translation>
     </message>
 </context>
 <context>
@@ -609,11 +609,11 @@
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>hide invisible lines</source>
-        <translation type="unfinished"></translation>
+        <translation>nascondi linee invisibili</translation>
     </message>
 </context>
 <context>
@@ -1036,67 +1036,68 @@
     <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>La parte reale dell&apos;impedenza deve essere maggiore di zero,
+ma è %1 !</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>calcola adattamento su due porte</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento</translation>
     </message>
     <message>
         <source>Port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta 1</translation>
     </message>
     <message>
         <source>ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ohm</translation>
     </message>
     <message>
         <source>Port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta 2</translation>
     </message>
     <message>
         <source>S Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro S</translation>
     </message>
     <message>
         <source>Input format</source>
-        <translation type="unfinished"></translation>
+        <translation>formato ingresso</translation>
     </message>
     <message>
         <source>real/imag</source>
-        <translation type="unfinished"></translation>
+        <translation>reale/immaginario</translation>
     </message>
     <message>
         <source>mag/deg</source>
-        <translation type="unfinished"></translation>
+        <translation>ampiezza/fase</translation>
     </message>
     <message>
         <source>S11</source>
-        <translation type="unfinished"></translation>
+        <translation>S11</translation>
     </message>
     <message>
         <source>S21</source>
-        <translation type="unfinished"></translation>
+        <translation>S21</translation>
     </message>
     <message>
         <source>S12</source>
-        <translation type="unfinished"></translation>
+        <translation>S12</translation>
     </message>
     <message>
         <source>S22</source>
-        <translation type="unfinished"></translation>
+        <translation>S22</translation>
     </message>
     <message>
         <source>Reflexion Coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di riflessione</translation>
     </message>
     <message>
         <source>Impedance (ohms)</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza (ohm)</translation>
     </message>
 </context>
 <context>
@@ -3040,459 +3041,479 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>tre induttori accoppiati</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>induttanza dell&apos;induttore 1</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>induttanza dell&apos;induttore 2</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation type="unfinished"></translation>
+        <translation>induttanza dell&apos;induttore 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di accoppiamento tra gli induttori 1 e 2</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di accoppiamento tra gli induttori 1 e 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di accoppiamento tra gli induttori 2 e 3</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>due induttori accoppiati</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Induttori accoppiati</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>3 Induttori accoppiati</translation>
     </message>
     <message>
         <source>correlated current sources</source>
-        <translation type="unfinished"></translation>
+        <translation>generatori di corrente correlati</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza della corrente per il generatore 1</translation>
     </message>
     <message>
         <source>current power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza della corrente per il generatore 2</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di correlazione normalizzato</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatori di Rumore Correlati</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza della tensione per il generatore 2</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza della tensione per il generatore 1</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>OR logico</translation>
     </message>
     <message>
         <source>number of input ports</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di porte di ingresso</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione del livello alto</translation>
     </message>
     <message>
         <source>logical NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>NOR logico</translation>
     </message>
     <message>
         <source>n-port OR</source>
-        <translation type="unfinished"></translation>
+        <translation>OR a n porte</translation>
     </message>
     <message>
         <source>logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation>AND logico</translation>
     </message>
     <message>
         <source>n-port AND</source>
-        <translation type="unfinished"></translation>
+        <translation>AND a n porte</translation>
     </message>
     <message>
         <source>logical NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>NAND logico</translation>
     </message>
     <message>
         <source>n-port NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>NAND a n porte</translation>
     </message>
     <message>
         <source>n-port NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>NOR a n porte</translation>
     </message>
     <message>
         <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>XNOR logico</translation>
     </message>
     <message>
         <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>XNOR a n porte</translation>
     </message>
     <message>
         <source>logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>XOR logico</translation>
     </message>
     <message>
         <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>XOR a n porte</translation>
     </message>
     <message>
         <source>logical inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>invertitore logico</translation>
     </message>
     <message>
         <source>Inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertitore</translation>
     </message>
     <message>
         <source>digital simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione digitale</translation>
     </message>
     <message>
         <source>digital source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore digitale</translation>
     </message>
     <message>
         <source>initial output value</source>
-        <translation type="unfinished"></translation>
+        <translation>valore in uscita iniziale</translation>
     </message>
     <message>
         <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
+        <translation>Elenco istanti di cambiamento dell&apos;uscita</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Il componente &quot;%1&quot; non ha un modello analogico.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Il componente &quot;%1&quot; non ha un modello digitale.</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ATTENZIONE: Ignorato componente di simulazione nel sottocircuito &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ATTENZIONE: Ignorata equazione nel sottocircuito &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>type of the port</source>
+        <translation type="obsolete">tipo della porta</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagramma Temporale</translation>
     </message>
     <message>
         <source>data type</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo dati</translation>
     </message>
     <message>
         <source>type of simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo simulazione</translation>
     </message>
     <message>
         <source>Truth Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabella della verità</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: E&apos; ammessa una sola simulazione digitale.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Simulazione digitali e analogiche non possono essere mescolate.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: La simulazione digitale ha bisogno di almeno un generatore digitale.</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>durata della simulazione TimeList</translation>
+    </message>
+    <message>
+        <source>ERROR: No ground symbol allowed in digital simulation.</source>
+        <translation type="obsolete">ERRORE: Simboli di massa non sono ammessi nella simulazione digitale.</translation>
+    </message>
+    <message>
+        <source>ERROR: No simulation specified on this page.</source>
+        <translation type="obsolete">ERRORE: Nessuna simulazione richiesta in questa pagina.</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente della temperatura per la corrente di saturazione</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation type="unfinished"></translation>
+        <translation>energy bandgap in eV</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura lineare per Bv</translation>
     </message>
     <message>
         <source>Rs linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura lineare per Rs</translation>
     </message>
     <message>
         <source>Tt linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura lineare per Tt</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura quadratico per Tt</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura lineare per M</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura quadratico per M</translation>
     </message>
     <message>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation>area predefinita per il diodo</translation>
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente della temperatura per beta diretto e inverso</translation>
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura alla quale i parametri sono stati estratti</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>area predefinita per il transistore bipolare</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura per Vt0</translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente della temperatura per Beta</translation>
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>area predefinita per JFET</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura di misura dei parametri</translation>
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>accoppiatore ideale</translation>
     </message>
     <message>
         <source>coupling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore di accoppiamento</translation>
     </message>
     <message>
         <source>phase shift of coupling path in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>sfasamento dell&apos;accoppiamento in gradi</translation>
     </message>
     <message>
         <source>Coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>Accoppiatore</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
+        <translation>flip flop RS</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation type="unfinished"></translation>
+        <translation>flip flop D con reset asincrono</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation type="unfinished"></translation>
+        <translation>flip flop JK con set e reset asincroni</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>FlipFlop D</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>FlipFlop JK</translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>FlipFlop RS</translation>
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore: Formato del tempo errato in &quot;%1&quot;. Usare numeri positivi con le unità</translation>
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea di trasmissione coassiale</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza specifica del conduttore</translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>permeabilità relativa del conduttore</translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>diametro del conduttore interno</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza meccanica della linea</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished">Linea Coassiale</translation>
+        <translation>Linea Coassiale</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di picco in Ampere</translation>
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
+        <translation>diametro interno dello schermo</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura del primo ordine</translation>
     </message>
     <message>
         <source>second order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di temperatura del secondo ordine</translation>
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>inserisci valori caratteristici nell&apos;insieme dati</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>salva valori caratteristici del sottocircuito nell&apos;insieme dati</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione di picco in Volts</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>permittività relativa del dielettrico</translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>sonda di tensione</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonda di Tensione</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di porte</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a n porte</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished">file parametri S a 2 porte</translation>
+        <translation>file parametri S a 2 porte</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo della porta (solo per simulazione digitale)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di tensione ac con modulatore di ampiezza</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>livello modulazione</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore modulato AM</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore di smorzamento (solo simulazione transitorio)</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di tensione ac con modulatore di fase</translation>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>indice di modulazione</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore modulato PM</translation>
     </message>
     <message>
         <source>relais</source>
-        <translation type="unfinished"></translation>
+        <translation>relè</translation>
+    </message>
+    <message>
+        <source>voltage to switch on the relais</source>
+        <translation type="obsolete">tensione chiusura relè</translation>
+    </message>
+    <message>
+        <source>voltage to switch off the relais</source>
+        <translation type="obsolete">tensione apertura relè</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza nello stato chiuso in ohms</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza nello stato aperto in ohms</translation>
     </message>
     <message>
         <source>Relais</source>
-        <translation type="unfinished"></translation>
+        <translation>Relè</translation>
     </message>
     <message>
         <source>initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>stato iniziale</translation>
     </message>
     <message>
         <source>time when state changes (comma separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>istanti di cambiamento stato (possibile lista separata da virgole)</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Interruttore</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore di attenuazione per unità di lunghezza in 1/m</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>interruttore (controllato temporalmente)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
@@ -3519,7 +3540,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Pronto.</translation>
+        <translation>Pronto.</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3555,40 +3576,41 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun progetto aperto!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezionare file da copiare</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun file copiato.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile aprire &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Sovrascrivere</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile creare &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile leggere &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile scrivere &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation>File &quot;%1&quot; esiste già.
+Sovrascrivere ?</translation>
     </message>
 </context>
 <context>
@@ -5063,19 +5085,19 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
+        <translation>componenti file</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="unfinished"></translation>
+        <translation>componenti digitali</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Altro</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare &quot;%1&quot;!</translation>
     </message>
 </context>
 <context>
@@ -5172,7 +5194,7 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Riga: %1  -  Colonna: %2</translation>
     </message>
 </context>
 <context>
@@ -5281,51 +5303,57 @@ Programma di sintesi dei filtri
     </message>
     <message>
         <source>Band pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Passa banda</translation>
     </message>
     <message>
         <source>Band stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina banda</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by</source>
+        <translation type="obsolete">Copyright (C) 2005 di 
+</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation type="unfinished"></translation>
+        <translation>La frequenza finale deve essere maggiore della frequenza iniziale.</translation>
     </message>
     <message>
         <source>Filter order must not be less than two.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;ordine del filtro non deve essere minore di due.</translation>
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza d&apos;inizio:</translation>
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;ordine del filtro di Bessel non deve essere maggiore di 19.</translation>
     </message>
     <message>
         <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza banda oscura:</translation>
     </message>
     <message>
         <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenuazione banda oscura:</translation>
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza banda passante:</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenuazione banda passante:</translation>
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005, 2006 di 
+</translation>
     </message>
 </context>
 <context>
@@ -6663,35 +6691,39 @@ Finestra per la creazione di Reti di Adattamento</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola polarizzazione DC</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola la polarizzazione DC e la mostra</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola polarizzazione DC
+
+Calcola la polarizzazione DC e la mostra</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi File al Progetto</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aggiungi File al Progetto...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia file nella directory del progetto</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi File al Progetto
+
+Copia file nella directory del progetto</translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
@@ -6701,75 +6733,75 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione Qucs</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
+        <translation>di Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulatore di Stefan Jahn</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished"></translation>
+        <translation>Ringraziamenti particolari a Jens Flucke e Raimund Jacob</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>Tedesco di Stefan Jahn</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished"></translation>
+        <translation>Polacco di Dariusz Pienkowski</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumeno di Radu Circa</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Francese di Vincent Habchi, F5RCS</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
+        <translation>Portoghese di Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished"></translation>
+        <translation>Spagnolo di Jose L. Redrejo Rodriguez</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished"></translation>
+        <translation>Giapponese di Toyoyuki Ishikawa</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiano di Giorgio Luparia e Claudio Girardi</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebraico di Dotan Nahum</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished"></translation>
+        <translation>Svedese di Peter Landgren</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
+        <translation>Turco di Onur and Ozgur Cobanoglu</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
@@ -6919,19 +6951,19 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffisso</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma</translation>
     </message>
     <message>
         <source>Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Suffisso:</translation>
     </message>
     <message>
         <source>Program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -6939,92 +6971,93 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Rimuovi</translation>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipi File</translation>
     </message>
     <message>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrare le estensioni dei nomi dei file qui al
+fine di aprirli utilizzando il programma appropriato.</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Insieme</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>This suffix is already registered!</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo suffisso è già stato registrato!</translation>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingua (effettiva dopo aver rilanciato l&apos;applicazione):</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>lingua di default</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Inglese</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Tedesco</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francese</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spagnolo</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiano</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polacco</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Giapponese</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumeno</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebraico</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Svedese</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turco</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungherese</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portoghese</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ucraino</translation>
     </message>
 </context>
 <context>
@@ -7414,7 +7447,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>noise matching</source>
@@ -7422,27 +7455,27 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>adattamento su due porte</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare S[1,1].</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare S[1,2].</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare S[2,1].</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare S[2,2].</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dipendenza errata!</translation>
     </message>
 </context>
 <context>
@@ -7641,7 +7674,7 @@ Errori:
     </message>
     <message>
         <source>creating netlist... </source>
-        <translation type="unfinished"></translation>
+        <translation>creazione netlist...</translation>
     </message>
 </context>
 <context>
@@ -7739,11 +7772,11 @@ Errori:
     <name>SweepDialog</name>
     <message>
         <source>Bias Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Punti di Lavoro</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <translation>Chiudi</translation>
     </message>
 </context>
 <context>
