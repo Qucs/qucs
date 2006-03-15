@@ -1,7 +1,7 @@
 /*
  * precision.c - precision file
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: precision.c,v 1.1 2005/11/14 19:19:13 raimi Exp $
+ * $Id: precision.c,v 1.2 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -31,10 +31,13 @@
 #include "precision.h"
 
 nr_double_t nr_inf; /* the core's idea of infinity */
+nr_double_t nr_nan; /* the core's idea of NaN */
 
 void precinit (void) {
 #ifdef INFINITY
   nr_inf = INFINITY;
+#elif NR_INF_TESTED
+  nr_inf = -log (0.0);
 #else
   nr_double_t t = 1e+10;
   nr_inf = t;
@@ -44,4 +47,5 @@ void precinit (void) {
     t = nr_inf;
   }
 #endif
+  nr_nan = -log (-1.0);
 }

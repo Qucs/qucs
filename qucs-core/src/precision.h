@@ -1,7 +1,7 @@
 /*
  * precision.h - global precision header file
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: precision.h,v 1.2 2005/11/14 19:19:13 raimi Exp $
+ * $Id: precision.h,v 1.3 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -111,10 +111,13 @@
 #endif
 
 #define NR_INF nr_inf
+#define NR_NAN nr_nan
 
 __BEGIN_DECLS
 
 extern nr_double_t nr_inf;
+extern nr_double_t nr_nan;
+
 void precinit (void);
 
 __END_DECLS

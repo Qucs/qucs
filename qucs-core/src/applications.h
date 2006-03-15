@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.7 2006/03/14 07:29:13 raimi Exp $
+ * $Id: applications.h,v 1.8 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -619,6 +619,10 @@ struct application_t eqn::applications[] = {
   { "erfinv", TAG_COMPLEX, evaluate::erfinv_c, 1, { TAG_COMPLEX } },
   { "erfinv", TAG_VECTOR,  evaluate::erfinv_v, 1, { TAG_VECTOR  } },
 
+  { "erfcinv", TAG_DOUBLE,  evaluate::erfcinv_d, 1, { TAG_DOUBLE  } },
+  { "erfcinv", TAG_COMPLEX, evaluate::erfcinv_c, 1, { TAG_COMPLEX } },
+  { "erfcinv", TAG_VECTOR,  evaluate::erfcinv_v, 1, { TAG_VECTOR  } },
+
   { "cumsum", TAG_DOUBLE,  evaluate::cumsum_d, 1, { TAG_DOUBLE  } },
   { "cumsum", TAG_COMPLEX, evaluate::cumsum_c, 1, { TAG_COMPLEX } },
   { "cumsum", TAG_VECTOR,  evaluate::cumsum_v, 1, { TAG_VECTOR  } },
@@ -643,16 +647,16 @@ struct application_t eqn::applications[] = {
   { "stddev", TAG_DOUBLE, evaluate::stddev_c, 1, { TAG_COMPLEX } },
   { "stddev", TAG_DOUBLE, evaluate::stddev_v, 1, { TAG_VECTOR  } },
 
-  { "_i0", TAG_DOUBLE,  evaluate::i0_d,   1, { TAG_DOUBLE  } },
-  { "_i0", TAG_COMPLEX, evaluate::i0_c,   1, { TAG_COMPLEX } },
-  { "_i0", TAG_VECTOR,  evaluate::i0_v,   1, { TAG_VECTOR  } },
+  { "besseli0", TAG_DOUBLE,  evaluate::i0_d,  1, { TAG_DOUBLE  } },
+  { "besseli0", TAG_COMPLEX, evaluate::i0_c,  1, { TAG_COMPLEX } },
+  { "besseli0", TAG_VECTOR,  evaluate::i0_v,  1, { TAG_VECTOR  } },
 
-  { "jn", TAG_DOUBLE,  evaluate::jn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
-  { "jn", TAG_COMPLEX, evaluate::jn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
-  { "jn", TAG_VECTOR,  evaluate::jn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
-  { "yn", TAG_DOUBLE,  evaluate::yn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
-  { "yn", TAG_COMPLEX, evaluate::yn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
-  { "yn", TAG_VECTOR,  evaluate::yn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
+  { "besselj", TAG_DOUBLE,  evaluate::jn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
+  { "besselj", TAG_COMPLEX, evaluate::jn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "besselj", TAG_VECTOR,  evaluate::jn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
+  { "bessely", TAG_DOUBLE,  evaluate::yn_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE  } },
+  { "bessely", TAG_COMPLEX, evaluate::yn_d_c, 2, { TAG_DOUBLE, TAG_COMPLEX } },
+  { "bessely", TAG_VECTOR,  evaluate::yn_d_v, 2, { TAG_DOUBLE, TAG_VECTOR  } },
 
   { "sqr", TAG_DOUBLE,  evaluate::sqr_d,  1, { TAG_DOUBLE  } },
   { "sqr", TAG_COMPLEX, evaluate::sqr_c,  1, { TAG_COMPLEX } },
@@ -721,6 +725,9 @@ struct application_t eqn::applications[] = {
     { TAG_COMPLEX, TAG_DOUBLE } },
   { "runavg", TAG_VECTOR, evaluate::runavg_v_d, 2,
     { TAG_VECTOR,  TAG_DOUBLE } },
+
+  { "kbd", TAG_VECTOR, evaluate::kbd_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "kbd", TAG_VECTOR, evaluate::kbd_d,   1, { TAG_DOUBLE } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

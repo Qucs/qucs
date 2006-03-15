@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.27 2006/03/14 07:29:13 raimi Exp $
+ * $Id: complex.cpp,v 1.28 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -390,6 +390,10 @@ complex yn (const int n, const complex z) {
   return rect (yn (n, z.r), 0);
 }
 
+complex i0 (const complex z) {
+  return rect (i0 (z.r), 0);
+}
+
 complex erf (const complex z) {
   return rect (erf (z.r), 0);
 }
@@ -402,8 +406,8 @@ complex erfinv (const complex z) {
   return rect (erfinv (z.r), 0);
 }
 
-complex i0 (const complex z) {
-  return rect (i0 (z.r), 0);
+complex erfcinv (const complex z) {
+  return rect (erfcinv (z.r), 0);
 }
 
 complex complex::operator+() {

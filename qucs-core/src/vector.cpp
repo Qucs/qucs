@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.27 2006/03/14 07:29:13 raimi Exp $
+ * $Id: vector.cpp,v 1.28 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -964,6 +964,12 @@ vector erfc (vector v) {
 vector erfinv (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (erfinv (v.get (i)), i);
+  return result;
+}
+
+vector erfcinv (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (erfcinv (v.get (i)), i);
   return result;
 }
 

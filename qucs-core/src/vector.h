@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.23 2006/03/14 07:29:13 raimi Exp $
+ * $Id: vector.h,v 1.24 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -117,40 +117,41 @@ class vector : public object
   friend vector w2dbm   (vector);
 
   // overloaded math functions
-  friend vector abs    (vector);
-  friend vector log10  (vector);
-  friend vector exp    (vector);
-  friend vector sqrt   (vector);
-  friend vector sin    (vector);
-  friend vector arcsin (vector);
-  friend vector cos    (vector);
-  friend vector arccos (vector);
-  friend vector tan    (vector);
-  friend vector arctan (vector);
-  friend vector cot    (vector);
-  friend vector arccot (vector);
-  friend vector sinh   (vector);
-  friend vector arsinh (vector);
-  friend vector cosh   (vector);
-  friend vector arcosh (vector);
-  friend vector tanh   (vector);
-  friend vector artanh (vector);
-  friend vector coth   (vector);
-  friend vector arcoth (vector);
-  friend vector sign   (vector);
-  friend vector sinc   (vector);
-  friend vector ceil   (vector);
-  friend vector floor  (vector);
-  friend vector fix    (vector);
-  friend vector round  (vector);
-  friend vector sqr    (vector);
-  friend vector step   (vector);
-  friend vector jn     (const int, vector);
-  friend vector yn     (const int, vector);
-  friend vector erf    (vector);
-  friend vector erfc   (vector);
-  friend vector erfinv (vector);
-  friend vector i0     (vector);
+  friend vector abs     (vector);
+  friend vector log10   (vector);
+  friend vector exp     (vector);
+  friend vector sqrt    (vector);
+  friend vector sin     (vector);
+  friend vector arcsin  (vector);
+  friend vector cos     (vector);
+  friend vector arccos  (vector);
+  friend vector tan     (vector);
+  friend vector arctan  (vector);
+  friend vector cot     (vector);
+  friend vector arccot  (vector);
+  friend vector sinh    (vector);
+  friend vector arsinh  (vector);
+  friend vector cosh    (vector);
+  friend vector arcosh  (vector);
+  friend vector tanh    (vector);
+  friend vector artanh  (vector);
+  friend vector coth    (vector);
+  friend vector arcoth  (vector);
+  friend vector sign    (vector);
+  friend vector sinc    (vector);
+  friend vector ceil    (vector);
+  friend vector floor   (vector);
+  friend vector fix     (vector);
+  friend vector round   (vector);
+  friend vector sqr     (vector);
+  friend vector step    (vector);
+  friend vector jn      (const int, vector);
+  friend vector yn      (const int, vector);
+  friend vector i0      (vector);
+  friend vector erf     (vector);
+  friend vector erfc    (vector);
+  friend vector erfinv  (vector);
+  friend vector erfcinv (vector);
 
   // operator functions
   friend vector operator + (vector, vector);

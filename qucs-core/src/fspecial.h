@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.h,v 1.2 2006/03/14 07:29:13 raimi Exp $
+ * $Id: fspecial.h,v 1.3 2006/03/15 16:46:28 raimi Exp $
  *
  */
 
@@ -28,13 +28,14 @@
 namespace fspecial {
 
 #ifdef _MSC_VER
-  nr_double_t  round (nr_double_t);
-  nr_double_t    erf (nr_double_t);
-  nr_double_t   erfc (nr_double_t);
+  nr_double_t   round (nr_double_t);
+  nr_double_t     erf (nr_double_t);
+  nr_double_t    erfc (nr_double_t);
 #endif
-  nr_double_t erfinv (nr_double_t);
-  nr_double_t     i0 (nr_double_t);
-  
+  nr_double_t  erfinv (nr_double_t);
+  nr_double_t erfcinv (nr_double_t);
+  nr_double_t ltqnorm (nr_double_t);
+  nr_double_t      i0 (nr_double_t);
 
   void        ellip_ke (nr_double_t, nr_double_t&, nr_double_t&);
   nr_double_t ellip_rf (nr_double_t, nr_double_t, nr_double_t);
