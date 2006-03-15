@@ -1,3 +1,15 @@
+2006-03-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: New function: kbd (Kaiser-Bessel derived
+	window).
+
+	* precision.c (precinit): Added core's idea of NaN.
+
+	* evaluate.cpp: Added erfcinv() function.
+
+	* applications.h: Renamed yn to bessely, jn to besselj and
+	i0 to besseli0.
+
 2006-03-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (libqucsator_a_SOURCES): Moved 'precision.c'

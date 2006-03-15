@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.27 2006-03-14 07:29:13 raimi Exp $
+ * $Id: evaluate.h,v 1.28 2006-03-15 16:46:28 raimi Exp $
  *
  */
 
@@ -532,15 +532,19 @@ public:
   static constant * round_d  (constant *);
   static constant * round_c  (constant *);
   static constant * round_v  (constant *);
-  static constant * erf_d    (constant *);
-  static constant * erf_c    (constant *);
-  static constant * erf_v    (constant *);
-  static constant * erfc_d   (constant *);
-  static constant * erfc_c   (constant *);
-  static constant * erfc_v   (constant *);
-  static constant * erfinv_d (constant *);
-  static constant * erfinv_c (constant *);
-  static constant * erfinv_v (constant *);
+
+  static constant * erf_d     (constant *);
+  static constant * erf_c     (constant *);
+  static constant * erf_v     (constant *);
+  static constant * erfc_d    (constant *);
+  static constant * erfc_c    (constant *);
+  static constant * erfc_v    (constant *);
+  static constant * erfinv_d  (constant *);
+  static constant * erfinv_c  (constant *);
+  static constant * erfinv_v  (constant *);
+  static constant * erfcinv_d (constant *);
+  static constant * erfcinv_c (constant *);
+  static constant * erfcinv_v (constant *);
 
   static constant * rms_d      (constant *);
   static constant * rms_c      (constant *);
@@ -618,6 +622,9 @@ public:
   static constant * runavg_d_d (constant *);
   static constant * runavg_c_d (constant *);
   static constant * runavg_v_d (constant *);
+
+  static constant * kbd_d_d (constant *);
+  static constant * kbd_d   (constant *);
 };
 
 // Type of application function.

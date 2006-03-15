@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.2 2006-03-14 07:29:13 raimi Exp $
+ * $Id: fspecial.cpp,v 1.3 2006-03-15 16:46:28 raimi Exp $
  *
  */
 
@@ -534,4 +534,75 @@ nr_double_t fspecial::i0 (nr_double_t x) {
     val = exp (y) * (0.375 + val) / sqrt (y);
   }
   return val;
+}
+
+// Lower tail quantile for the standard normal distribution function.
+nr_double_t fspecial::ltqnorm (nr_double_t x) {
+  nr_double_t q, r, e, u, z = 0.0;
+  static nr_double_t a[] = {
+    -3.969683028665376e+01,  2.209460984245205e+02,
+    -2.759285104469687e+02,  1.383577518672690e+02,
+    -3.066479806614716e+01,  2.506628277459239e+00 };
+  static nr_double_t b[] = {
+    -5.447609879822406e+01,  1.615858368580409e+02,
+    -1.556989798598866e+02,  6.680131188771972e+01,
+    -1.328068155288572e+01 };
+  static nr_double_t c[] = {
+    -7.784894002430293e-03, -3.223964580411365e-01,
+    -2.400758277161838e+00, -2.549732539343734e+00,
+     4.374664141464968e+00,  2.938163982698783e+00 };
+  static nr_double_t d[] = {
+     7.784695709041462e-03,  3.224671290700398e-01,
+     2.445134137142996e+00,  3.754408661907416e+00 };
+
+  // Define break-points.
+  nr_double_t pl = 0.02425;
+  nr_double_t ph = 1.0 - pl;
+
+  // Rational approximation for central region:
+  if (pl <= x && x <= ph) {
+    q = x - 0.5;
+    r = q * q;
+    z = (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/
+        (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+  }
+  // Rational approximation for lower region:
+  else if (0.0 < x && x < pl) {
+    q = sqrt(-2*log(x));
+    z = (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/
+         ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+  }
+  // Rational approximation for upper region:
+  else if (ph < x && x < 1.0) {
+    q = sqrt(-2*log(1-x));
+    z = -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/
+          ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+  }
+  // Case when X = 0:
+  else if (x == 0.0) {
+    z = -NR_INF;
+  }
+  // Case when X = 1:
+  else if (x == 1.0) {
+    z = +NR_INF;
+  }
+  // Cases when output will be NaN:
+  else if (x < 0.0 || x > 1.0 || isnan (x)) {
+    z = +NR_NAN;
+  }
+
+  // The relative error of the approximation has absolute value less
+  // than 1.15e-9.  One iteration of Halley's rational method (third
+  // order) gives full machine precision.
+  if (0.0 < x && x < 1.0) {
+    e = 0.5*erfc(-z/sqrt(2)) - x;          // error
+    u = e * sqrt(2*M_PI) * exp(z*z/2);     // f(z)/df(z)
+    z = z - u/(1+z*u/2);                   // Halley's method
+  }
+  return z;
+}
+
+// Inverse of the error function erfc().
+nr_double_t fspecial::erfcinv (nr_double_t x) {
+  return -ltqnorm (x / 2.0) / M_SQRT2;
 }

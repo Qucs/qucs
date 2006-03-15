@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.46 2006-03-14 07:29:13 raimi Exp $
+ * $Id: evaluate.cpp,v 1.47 2006-03-15 16:46:28 raimi Exp $
  *
  */
 
@@ -2829,6 +2829,7 @@ MAKE_FUNC_DEFINITION_0 (round);   // round function
 MAKE_FUNC_DEFINITION_0 (erf);     // error function 
 MAKE_FUNC_DEFINITION_0 (erfc);    // complementary error function 
 MAKE_FUNC_DEFINITION_0 (erfinv);  // inverse of error function 
+MAKE_FUNC_DEFINITION_0 (erfcinv); // inverse of complementary error function 
 MAKE_FUNC_DEFINITION_0 (i0);      // modified bessel zero order 
 
 // ******************* cumulative sum *********************
@@ -3068,7 +3069,7 @@ constant * evaluate::arctan2_d_d (constant * args) {
   _ARD1 (x);
   _DEFD ();
   if ((x == 0) && (y == 0)) {
-    THROW_MATH_EXCEPTION("arctan2: not defined for (0,0)");
+    THROW_MATH_EXCEPTION ("arctan2: not defined for (0,0)");
     _RETD (-M_PI / 2);
   }
   _RETD (atan2 (y, x));
@@ -3229,8 +3230,8 @@ constant * evaluate::runavg_d_d (constant * args) {
   _ARI1 (n);
   _DEFV ();
   if (n < 1) {
-    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
-			 "larger or equal 1");
+    THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
+			  "larger or equal 1");
     _RETV ();
   }
   _RETV (runavg (rect (x, 0), n));
@@ -3241,8 +3242,8 @@ constant * evaluate::runavg_c_d (constant * args) {
   _ARI1 (n);
   _DEFV ();
   if (n < 1) {
-    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
-			 "larger or equal 1");
+    THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
+			  "larger or equal 1");
     _RETV ();
   }
   _RETV (runavg (*x, n));
@@ -3253,12 +3254,47 @@ constant * evaluate::runavg_v_d (constant * args) {
   _ARI1 (n);
   _DEFV ();
   if (n < 1 || n > x->getSize ()) {
-    THROW_MATH_EXCEPTION("runavg: number n to be averaged over must be "
-			 "larger or equal 1 and less or equal than the "
-			 "number of vector elements");
+    THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
+			  "larger or equal 1 and less or equal than the "
+			  "number of vector elements");
     _RETV ();
   }
   _RETV (runavg (*x, n));
+}
+
+// ************** Kaiser-Bessel derived window ****************
+constant * evaluate::kbd_d_d (constant * args) {
+  _ARD0 (alpha);
+  _ARI1 (size);
+  _DEFV ();
+  int i;
+  nr_double_t sval = 0.0;
+  if (size <= 0) {
+    THROW_MATH_EXCEPTION ("kbd: vector length must be greater than zero");
+    _RETV ();
+  }
+  vector v (size);
+  for (i = 0; i < size / 2; i++) {
+    sval += i0 (M_PI * alpha * sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
+    v (i) = sval;
+  }
+  // need to add one more value to the normalization factor at size/2
+  sval += i0 (M_PI * alpha * sqrt (1.0 - sqr (4.0 * (size / 2) / size - 1.0)));
+  // normalize the window and fill in the righthand side of the window
+  for (i = 0; i < size / 2; i++) {
+    v (i) = sqrt (v (i) / sval);
+    v (size - 1 - i) = v (i);
+  }
+  _RETV (v);
+}
+
+constant * evaluate::kbd_d (constant * args) {
+  constant * arg = new constant (TAG_DOUBLE);
+  arg->d = 64;
+  arg->solvee = args->getResult(0)->solvee;
+  arg->evaluate ();
+  args->append (arg);
+  return kbd_d_d (args);
 }
 
 // Include the application array.
