@@ -1791,6 +1791,49 @@ line length $l$.
 A = e^{-\tfrac{\alpha}{2}\cdot l}
 \end{equation}
 
+\subsubsection{Logical devices}
+%\addcontentsline{toc}{subsubsection}{Logical devices}
+
+The analogue models of logical (digital) components explained in
+section \ref{sec:DClogic} on page \pageref{sec:DClogic} do not include
+delay times.  With a constant delay time $\tau$ the determining
+equations for the logical components yield
+\begin{equation}
+u_{out}\left(t\right) = f\left(V_{in,1}\left(t - \tau\right), V_{in,2}\left(t - \tau\right), \ldots\right)
+\end{equation}
+
+With the prior node voltages $V_{in,n}\left(t - \tau\right)$ known the
+MNA matrix entries in eq. \eqref{eq:DClogicMNA} can be rewritten as
+\begin{equation}
+\label{eq:DClogicMNA}
+\begin{bmatrix}
+.&.&.& 1\\
+.&.&.& 0\\
+.&.&.& 0\\
+1 & 0 & 0 & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{out}\left(t\right)\\
+V_{in,1}\left(t\right)\\
+V_{in,2}\left(t\right)\\
+I_{out}\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{0}\left(t\right)\\
+I_{1}\left(t\right)\\
+I_{2}\left(t\right)\\
+u_{out}\left(t\right)
+\end{bmatrix}
+\end{equation}
+
+during the transient analysis.  The components now appear to be simple
+linear components.  The derivatives are not anymore necessary for the
+Newton-Raphson iterations.  This happens to be because the output
+voltage does not depend directly on the input voltage(s) at exactly
+the same time point.
+
 \subsection{Components with frequency-dependent delay times and losses}
 %\addcontentsline{toc}{subsection}{Components with frequency-dependent delay times and losses}
 

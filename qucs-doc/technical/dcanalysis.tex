@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about DC analysis.
 %
-% Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -2233,6 +2233,7 @@ I_{3}\\
 
 \subsection{Models for logical devices}
 %\addcontentsline{toc}{subsection}{Models for logical devices}
+\label{sec:DClogic}
 
 Logical (boolean) functions (OR, AND, XOR etc.) can be modeled using
 macro models.  Here, each input gets the transfer characteristic and
@@ -2296,6 +2297,7 @@ With that knowledge it is now easy to create the MNA matrix.  The
 first port is the output port of the device.  So, for a 2-input port
 device, it is:
 \begin{equation}
+\label{eq:DClogicMNA}
 \begin{bmatrix}
 .&.&.& 1\\
 .&.&.& 0\\
@@ -2311,9 +2313,9 @@ I_{out}
 \end{bmatrix}
 =
 \begin{bmatrix}
+I_{0}\\
 I_{1}\\
 I_{2}\\
-I_{3}\\
 0
 \end{bmatrix}
 \end{equation}
