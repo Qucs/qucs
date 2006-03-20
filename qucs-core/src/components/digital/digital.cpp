@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.cpp,v 1.5 2006-01-11 09:50:07 raimi Exp $
+ * $Id: digital.cpp,v 1.6 2006-03-20 08:52:11 raimi Exp $
  *
  */
 
@@ -44,6 +44,8 @@ digital::digital () : circuit () {
   setVoltageSources (1);
   g = NULL;
   Vout = 0;
+  Tdelay = 0;
+  delay = false;
 }
 
 // Destructor.
@@ -68,7 +70,11 @@ void digital::freeDigital (void) {
 
 // Returns voltage at given input node.
 nr_double_t digital::getVin (int input) {
-  return real (getV (NODE_IN1 + input));
+  if (delay) {
+    return real (getV (NODE_IN1 + input, Tdelay));
+  } else {
+    return real (getV (NODE_IN1 + input));
+  }
 }
 
 // Computes the transfer function for the given input node.
@@ -151,10 +157,26 @@ void digital::calcAC (nr_double_t frequency) {
 
 // Initialize transient analysis.
 void digital::initTR (void) {
+  nr_double_t t = getPropertyDouble ("t");
+  delay = false;
   initDC ();
+  deleteHistory ();
+  if (t > 0.0) {
+    delay = true;
+    setHistory (true);
+    initHistory (t);
+    setC (VSRC_1, NODE_OUT, 1);
+  }
 }
 
 // Computes MNA entries during transient analysis.
-void digital::calcTR (nr_double_t) {
-  calcDC ();
+void digital::calcTR (nr_double_t t) {
+  if (delay) {
+    Tdelay = t - getPropertyDouble ("t");
+    calcOutput ();
+    setE (VSRC_1, Vout);
+  }
+  else {
+    calcDC ();
+  }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.h,v 1.3 2006-01-11 09:50:07 raimi Exp $
+ * $Id: digital.h,v 1.4 2006-03-20 08:52:11 raimi Exp $
  *
  */
 
@@ -51,8 +51,9 @@ class digital : public circuit
 
  protected:
   nr_double_t * g;
-  nr_double_t Vout, Veq;
+  nr_double_t Vout, Veq, Tdelay;
   int i;
+  bool delay;
 
  private:
   void initDigital (void);
