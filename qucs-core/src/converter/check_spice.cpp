@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.18 2006/02/22 11:43:57 raimi Exp $
+ * $Id: check_spice.cpp,v 1.19 2006/03/20 08:59:11 raimi Exp $
  *
  */
 
@@ -123,6 +123,11 @@ struct define_t spice_definition_available[] =
   },
   /* diodes */
   { "D", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* relais */
+  { "S", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -445,6 +450,7 @@ spice_devices[] = {
   { "NMOS", "MOSFET", "nfet" },
   { "PMOS", "MOSFET", "pfet" },
   { "D",    "Diode",  NULL   },
+  { "SW",   "Relais", NULL   },
   { NULL, NULL, NULL }
 };
 
@@ -585,6 +591,7 @@ spice_device_table[] = {
   { "F", "CCCS"   },
   { "H", "CCVS"   },
   { "K", "Tr"     },
+  { "S", "Relais" },
   { NULL, NULL }
 };
 
@@ -652,6 +659,10 @@ node_translations[] = {
   { "NodeSet", 1,
     { 1, -1 },
     { 1, -1 }
+  },
+  { "Relais", 0,
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
   },
   { NULL, 0, { -1 }, { -1 } }
 };
@@ -1966,7 +1977,8 @@ static struct definition_t * spice_translator (struct definition_t * root) {
       if (!def->action) { // handle normal components
 	// devices
 	if (!strcasecmp (def->type, "Q") || !strcasecmp (def->type, "M") ||
-	    !strcasecmp (def->type, "J") || !strcasecmp (def->type, "D")) {
+	    !strcasecmp (def->type, "J") || !strcasecmp (def->type, "D") ||
+	    !strcasecmp (def->type, "S")) {
 	  spice_translate_device (root, def);
 	}
 	// voltage sources

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.39 2006/02/21 20:56:17 raimi Exp $
+ * $Id: equation.cpp,v 1.40 2006/03/20 08:59:10 raimi Exp $
  *
  */
 
@@ -1473,8 +1473,10 @@ int equation_solver (dataset * data) {
   solve->setData (data);
   solve->checkinDataset ();
   eqn::equations = solve->getEquations ();
-  if (equation_checker (data ? 1 : 0) != 0)
+  if (equation_checker (data ? 1 : 0) != 0) {
+    solve->setEquations (NULL);
     return -1;
+  }
   solve->setEquations (eqn::equations);
   solve->solve ();
   solve->checkoutDataset ();
@@ -1535,7 +1537,7 @@ void equation_destructor (void) {
   }
   // delete equations
   node * next, * eqn;
-  for (eqn = equations; eqn != NULL; eqn = next) {
+  for (eqn = eqn::equations; eqn != NULL; eqn = next) {
     next = eqn->getNext ();
     delete eqn;
   }

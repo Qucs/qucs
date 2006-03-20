@@ -4,7 +4,7 @@
 /*
  * parse_spice.y - parser for a Spice netlist
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.12 2005/12/19 07:55:14 raimi Exp $
+ * $Id: parse_spice.y,v 1.13 2006/03/20 08:59:11 raimi Exp $
  *
  */
 

@@ -1,3 +1,11 @@
+2006-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed rad2deg() and deg2rad() for complex
+	arguments.  Using asin() and acos() from math library.
+
+	* equation.cpp: Fixed segfault bug when not all equations
+	can be solved.
+
 2006-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: New function: kbd (Kaiser-Bessel derived

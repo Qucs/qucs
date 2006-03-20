@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.3 2006/03/10 07:56:57 raimi Exp $
+ * $Id: csv_producer.cpp,v 1.4 2006/03/20 08:59:11 raimi Exp $
  *
  */
 
@@ -75,11 +75,11 @@ void csv_print (struct csv_data * data, int vectors, char * sep) {
     for (int i = 0; i < vectors; i++) {
       if (data[i].type == 'c')
 	fprintf (csv_out, "%+." NR_DECS "e%s%+." NR_DECS "e",
-		 real (data[i].v->get (data[i].idx)), sep,
-		 imag (data[i].v->get (data[i].idx)));
+		 (double) real (data[i].v->get (data[i].idx)), sep,
+		 (double) imag (data[i].v->get (data[i].idx)));
       else
 	fprintf (csv_out, "%+." NR_DECS "e",
-		 real (data[i].v->get (data[i].idx)));
+		 (double) real (data[i].v->get (data[i].idx)));
       fprintf (csv_out, "%s", i != vectors - 1 ? sep : csv_crlf);
       data[i].idx = ((k + 1) / data[i].skip) % data[i].len;
     }

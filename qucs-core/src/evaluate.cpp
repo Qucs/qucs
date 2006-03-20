@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.47 2006/03/15 16:46:28 raimi Exp $
+ * $Id: evaluate.cpp,v 1.48 2006/03/20 08:59:10 raimi Exp $
  *
  */
 
@@ -1012,7 +1012,7 @@ constant * evaluate::deg2rad_d (constant * args) {
 constant * evaluate::deg2rad_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETC (rad (real (*c1)));
+  _RETD (rad (real (*c1)));
 }
 
 constant * evaluate::deg2rad_v (constant * args) {
@@ -1033,7 +1033,7 @@ constant * evaluate::rad2deg_d (constant * args) {
 constant * evaluate::rad2deg_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETC (deg (real (*c1)));
+  _RETD (deg (real (*c1)));
 }
 
 constant * evaluate::rad2deg_v (constant * args) {
@@ -1138,7 +1138,7 @@ constant * evaluate::log2_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new complex (log (-d1) * M_LOG2E , M_PI * M_LOG2E);
+    res->c = new complex (log (-d1) * M_LOG2E, M_PI * M_LOG2E);
   else
     res->c = new complex (log (d1) * M_LOG2E);
   return res;
@@ -1160,7 +1160,7 @@ constant * evaluate::log2_v (constant * args) {
 constant * evaluate::arcsin_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (atan (d1 / sqrt (1.0 - d1 * d1)));
+  _RETD (asin (d1));
 }
 
 constant * evaluate::arcsin_c (constant * args) {
@@ -1179,7 +1179,7 @@ constant * evaluate::arcsin_v (constant * args) {
 constant * evaluate::arccos_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (M_PI_2 - atan (d1 / sqrt (1.0 - d1 * d1)));
+  _RETD (acos (d1));
 }
 
 constant * evaluate::arccos_c (constant * args) {
