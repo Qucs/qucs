@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.15 2006-01-17 12:30:33 raimi Exp $
+ * $Id: scan_spice.l,v 1.16 2006-03-20 08:59:11 raimi Exp $
  *
  */
 
@@ -111,7 +111,7 @@ MOS2     ([rR][gG][eE][oO][mM][oO][dD]|[tT][sSdD])
 MOS      ({MOS1}|{MOS2})
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE SWITCH CONTROL
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -221,13 +221,13 @@ MOS      ({MOS1}|{MOS2})
 
 <STARTUP,INITIAL>^[sS][A-Za-z0-9]+ { /* voltage controlled switch */
     spice_lval.ident = strdup (spice_text);
-    BEGIN(SWITCH);
+    BEGIN(VSWITCH);
     return S_Device;
 }
 
 <STARTUP,INITIAL>^[wW][A-Za-z0-9]+ { /* current controlled switch */
     spice_lval.ident = strdup (spice_text);
-    BEGIN(SWITCH);
+    BEGIN(ISWITCH);
     return W_Device;
 }
 
@@ -377,12 +377,12 @@ MOS      ({MOS1}|{MOS2})
     return ALL_Special;
 }
 
-<DEVPROP,SWITCH>[oO][fF][fF] { /* a device special */
+<DEVPROP,VSWITCH,ISWITCH>[oO][fF][fF] { /* a device special */
     spice_lval.ident = strdup (spice_text);
     return OFF_Special;
 }
 
-<SWITCH>[oO][nN] { /* a device special */
+<VSWITCH,ISWITCH>[oO][nN] { /* a device special */
     spice_lval.ident = strdup (spice_text);
     return ON_Special;
 }
@@ -422,7 +422,7 @@ MOS      ({MOS1}|{MOS2})
     return ModelProps;
 }
 
-<IVREF,VREF,SWITCH>[vV][A-Za-z0-9]+ { /* voltage source references */
+<IVREF,VREF,ISWITCH>[vV][A-Za-z0-9]+ { /* voltage source references */
     spice_lval.ident = strdup (spice_text);
     return V_Source;
 }
@@ -481,7 +481,7 @@ MOS      ({MOS1}|{MOS2})
     return End;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,SWITCH>{DIGIT}+ {
+<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH>{DIGIT}+ {
     /* identify node (containing digits) */
     spice_lval.ident = strdup (spice_text);
     return Digits;
@@ -504,7 +504,7 @@ MOS      ({MOS1}|{MOS2})
     return MODEL_Spec;
 }
 
-<STARTUP,DEVPROP,MODREF2,SWITCH>{IDENT} { /* arbitrary identifier */
+<STARTUP,DEVPROP,MODREF2,ISWITCH,VSWITCH>{IDENT} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
     return Identifier;
 }
@@ -527,18 +527,20 @@ MOS      ({MOS1}|{MOS2})
     return OpFunc;
 }
 
-<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,SWITCH>{NODE} { /* identify node */
+<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH>{NODE} {
+    /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Nodes;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,SWITCH>{EOL} {
+<STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
+ ISWITCH,VSWITCH>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;
 }
 
-<*>{SPACE}|{EOL}\+|[()=,] {
+<*>{SPACE}|{EOL}+\+|[()=,] {
     /* skip spaces, '=', '(', ')', ',' and the leading '+' */
 }
 

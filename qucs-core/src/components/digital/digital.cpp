@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.cpp,v 1.6 2006-03-20 08:52:11 raimi Exp $
+ * $Id: digital.cpp,v 1.7 2006-03-20 08:59:10 raimi Exp $
  *
  */
 
@@ -122,6 +122,7 @@ void digital::calcSP (nr_double_t frequency) {
 void digital::initDC (void) {
   initDigital ();
   allocMatrixMNA ();
+  delay = false;
   setB (NODE_OUT, VSRC_1, +1);
   setC (VSRC_1, NODE_OUT, -1);
   setE (VSRC_1, 0);
@@ -158,7 +159,6 @@ void digital::calcAC (nr_double_t frequency) {
 // Initialize transient analysis.
 void digital::initTR (void) {
   nr_double_t t = getPropertyDouble ("t");
-  delay = false;
   initDC ();
   deleteHistory ();
   if (t > 0.0) {

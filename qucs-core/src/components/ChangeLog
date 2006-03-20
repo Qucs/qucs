@@ -1,3 +1,7 @@
+2006-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/digital.cpp: Fixed minor bug.
+
 2006-03-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/digital.cpp (calcTR): Implemented delay times of
