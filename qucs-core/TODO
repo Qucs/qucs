@@ -33,8 +33,8 @@ unfixed) have a look at the file BUGS.
 	- Allow output of characteristics (e.g. ErEff) very likely
 	  operating points.
 - Implement knee currents Ikf and Ikr in the diode model.
-- Implementation of delay times of digital components for transient
-  simulation.
+	- Implementation of delay times of digital components for
+	  transient simulation.
 	- QucsConv: Implementation of VCD to Qucs dataset converter.
 	- Implement analog models for digital (and, or, xor, etc.)
 	  components.

@@ -26,6 +26,8 @@ files.
 Version 0.0.9
 -------------
 
+ * implementation of delay times of digital components during
+   transient analysis
  * support for two-argument functions: arctan(), min() and max()
  * new functions in equation solver: ceil(), fix(), floor(), round(),
    step(), besselj(), bessely(), erf(), erfc(), cumsum(), cumavg(),
