@@ -1,7 +1,7 @@
 /*
  * hbsolver.h - harmonic balance solver class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,21 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.2 2005-06-02 18:17:50 raimi Exp $
+ * $Id: hbsolver.h,v 1.3 2006-03-22 09:39:19 raimi Exp $
  *
  */
 
 #ifndef __HBSOLVER_H__
 #define __HBSOLVER_H__
 
-#include "nasolver.h"
+#include "ptrlist.h"
+#include "tvector.h"
 
 class vector;
 class strlist;
+class circuit;
 
-class hbsolver : public nasolver<complex>
+class hbsolver : public analysis
 {
  public:
   hbsolver ();
@@ -41,15 +43,23 @@ class hbsolver : public nasolver<complex>
   void initHB (void);
   void initDC (void);
   static void calc (hbsolver *);
-  void collectHarmonics (void);
+  void collectFrequencies (void);
   void solveLinear (void);
-  void getNonLinearNodes (void);
   int  checkBalance (void);
 
+  void splitCircuits (void);
+  void expandFrequencies (nr_double_t, int);
+  bool isExcitation (circuit *);
+  strlist * circuitNodes (ptrlist<circuit>);
+  void getNodeLists (void);
+
  private:
-  vector * frequencies;
+  tvector<nr_double_t> frequencies;
   nr_double_t frequency;
-  strlist * nlnodes;
+  strlist * nlnodes, * lnnodes, * banodes;
+  ptrlist<circuit> excitations;
+  ptrlist<circuit> nlcircuits;
+  ptrlist<circuit> lncircuits;
 };
 
 #endif /* __HBSOLVER_H__ */

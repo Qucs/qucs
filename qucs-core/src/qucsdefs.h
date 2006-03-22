@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.40 2006-03-07 11:13:54 raimi Exp $
+ * $Id: qucsdefs.h,v 1.41 2006-03-22 09:39:19 raimi Exp $
  *
  */
 
@@ -830,7 +830,8 @@ struct define_t qucs_definition_available[] =
   { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* subcircuit definition */
   { "Def", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,

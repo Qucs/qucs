@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.13 2006-02-20 18:02:11 raimi Exp $
+ * $Id: tvector.cpp,v 1.14 2006-03-22 09:39:20 raimi Exp $
  *
  */
 
@@ -154,6 +154,12 @@ void tvector<nr_type_t>::drop (int n) {
     size -= n;
   }
   else size = 0;
+}
+
+// Sets size to zero.  Does not reduce the capacity.
+template <class nr_type_t>
+void tvector<nr_type_t>::clear (void) {
+  size = 0;
 }
 
 // Copies the specified elements from the given tvector.
