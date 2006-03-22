@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.28 2006/03/15 16:46:28 raimi Exp $
+ * $Id: complex.cpp,v 1.29 2006/03/22 09:39:19 raimi Exp $
  *
  */
 
@@ -179,7 +179,7 @@ complex cos (const complex z) {
 }
 
 complex arccos (const complex z) {
-  return complex (0.0, 1.0) * ln (z + sqrt (z * z - 1.0));
+  return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
 }
 
 complex tan (const complex z) {

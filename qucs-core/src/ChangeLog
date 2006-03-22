@@ -1,3 +1,12 @@
+2006-03-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* complex.cpp: Fixed arccos() implementation.
+
+	* hbsolver.cpp: Collecting the harmonics works now, also
+	splitting the network into linear and non-linear part.  Now
+	having nodes of linear and non-linear parts as well as the
+	nodes which need to be balanced.
+
 2006-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed rad2deg() and deg2rad() for complex
