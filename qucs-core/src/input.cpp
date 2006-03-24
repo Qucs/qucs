@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.56 2006-03-02 08:06:00 raimi Exp $
+ * $Id: input.cpp,v 1.57 2006-03-24 14:30:05 raimi Exp $
  *
  */
 
@@ -241,7 +241,15 @@ void input::factory (void) {
 
       // add the properties to circuit
       for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
-	if (pairs->value->ident) {
+	if (pairs->value == NULL) {
+	  // zero-length value lists
+	  variable * v = new variable (pairs->key);
+	  constant * c = new constant (TAG_VECTOR);
+	  c->v = new vector ();
+	  v->setConstant (c);
+	  o->addProperty (pairs->key, v);
+	}
+	else if (pairs->value->ident) {
 	  if (pairs->value->var) {
 	    // at this stage it should be ensured that the variable is
 	    // already in the root environment

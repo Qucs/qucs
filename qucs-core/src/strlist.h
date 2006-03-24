@@ -1,7 +1,7 @@
 /*
  * strlist.h - string list class definitions
  *
- * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.h,v 1.7 2005-06-02 18:17:51 raimi Exp $
+ * $Id: strlist.h,v 1.8 2006-03-24 14:30:05 raimi Exp $
  *
  */
 
@@ -44,6 +44,8 @@ class strlist
   int length (void);
   int contains (char *);
   char * get (int);
+  char * first (void);
+  char * last (void);
   int index (char *);
   static strlist * join (strlist *, strlist *);
   void del (strlist *);

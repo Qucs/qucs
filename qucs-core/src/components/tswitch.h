@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.h,v 1.1 2006-03-02 08:06:03 raimi Exp $
+ * $Id: tswitch.h,v 1.2 2006-03-24 14:30:06 raimi Exp $
  *
  */
 
@@ -40,6 +40,7 @@ class tswitch : public circuit
  private:
   nr_double_t initState (void);
   nr_double_t T;
+  bool repeat;
 };
 
 #endif /* __TSWITCH_H__ */

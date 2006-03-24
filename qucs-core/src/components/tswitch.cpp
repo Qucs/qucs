@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.1 2006-03-02 08:06:03 raimi Exp $
+ * $Id: tswitch.cpp,v 1.2 2006-03-24 14:30:06 raimi Exp $
  *
  */
 
@@ -90,8 +90,9 @@ void tswitch::initAC (void) {
 }
 
 void tswitch::initTR (void) {
-  vector * values = getPropertyVector ("times");
+  vector * values = getPropertyVector ("time");
   T = real (sum (*values));
+  repeat = (values->getSize () % 2) == 0 ? true : false;
   initDC ();
 }
 
@@ -99,11 +100,11 @@ void tswitch::calcTR (nr_double_t t) {
   char * init = getPropertyString ("init");
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
-  vector * values = getPropertyVector ("times");
+  vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
   nr_double_t ti = 0;
 
-  t = t - T * floor (t / T);
+  if (repeat) t = t - T * floor (t / T);
   for (int i = 0; i < values->getSize (); i++) {
     ti += real (values->get (i));
     if (t >= ti) on = !on; else break;
