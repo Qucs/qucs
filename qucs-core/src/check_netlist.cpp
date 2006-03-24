@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.89 2006/03/02 08:06:00 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.90 2006/03/24 14:30:05 raimi Exp $
  *
  */
 
@@ -885,14 +885,13 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
       }
     }
     else {
+      // a value list
       struct value_t * val = pair->value;
-      if (val->next != NULL) {
-	val->var = eqn::TAG_VECTOR;
-	// check and evaluate the unit scale in a value list
-	for (; val != NULL; val = val->next) {
-	  if (!checker_evaluate_scale (val))
-	    errors++;
-	}
+      val->var = eqn::TAG_VECTOR;
+      // check and evaluate the unit scale in a value list
+      for (; val != NULL; val = val->next) {
+	if (!checker_evaluate_scale (val))
+	  errors++;
       }
     }
     // check range of all values
@@ -1544,16 +1543,19 @@ static int netlist_checker_intern (struct definition_t * root) {
 		    pair->key, def->type, def->instance);
 	  errors++;
 	}
-	/* check and evaluate the unit scale in a property */
-	if (!checker_evaluate_scale (pair->value))
-	  errors++;
-	/* check whether properties are in range */
-	if (!checker_value_in_range (def->instance, available, pair)) {
-	  errors++;
+	// do not check zero-length lists
+	if (pair->value != NULL) {
+	  /* check and evaluate the unit scale in a property */
+	  if (!checker_evaluate_scale (pair->value))
+	    errors++;
+	  /* check whether properties are in range */
+	  if (!checker_value_in_range (def->instance, available, pair)) {
+	    errors++;
+	  }
+	  /* check variables in properties */
+	  if (!checker_resolve_variable (root, def, pair->value))
+	    errors++;
 	}
-	/* check variables in properties */
-	if (!checker_resolve_variable (root, def, pair->value))
-	  errors++;
       }
     }
     /* check the number of definitions */
@@ -1576,7 +1578,9 @@ static int netlist_checker_intern (struct definition_t * root) {
 #if DEBUG
 /* Debug function: Prints value representation. */
 static void netlist_list_value (struct value_t * value) {
-  if (value->ident)
+  if (value == NULL)
+    logprint (LOG_STATUS, "[]");
+  else if (value->ident)
     logprint (LOG_STATUS, "%s", value->ident);
   else if (value->next) {
     logprint (LOG_STATUS, "[");

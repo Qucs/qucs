@@ -1,3 +1,8 @@
+2006-03-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* tswitch.cpp: Fixed 'time' property handling.  Even number
+	of values means repetition of switches, odd a finite sequence.
+
 2006-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/digital.cpp: Fixed minor bug.

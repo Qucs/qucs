@@ -1,7 +1,7 @@
 /*
  * strlist.cpp - string list class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.cpp,v 1.8 2005/06/02 18:17:51 raimi Exp $
+ * $Id: strlist.cpp,v 1.9 2006/03/24 14:30:05 raimi Exp $
  *
  */
 
@@ -127,6 +127,21 @@ int strlist::index (char * str) {
 char * strlist::get (int pos) {
   struct strlist_t * s = root;
   for (int i = 0; i < pos && s != NULL; s = s->next, i++);
+  return s ? s->str : NULL;
+}
+
+/* This function returns the string positioned at the end of the
+   string list. */
+char * strlist::last (void) {
+  struct strlist_t * s;
+  for (s = root; s != NULL && s->next != NULL; s = s->next);
+  return s ? s->str : NULL;
+}
+
+/* This function returns the string positioned at the beginning of the
+   string list. */
+char * strlist::first (void) {
+  struct strlist_t * s = root;
   return s ? s->str : NULL;
 }
 

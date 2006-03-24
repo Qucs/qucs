@@ -1,3 +1,18 @@
+2006-03-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.h (class strlist): New functions: last() and
+	first().
+
+	* input.cpp: Handle zero-length value lists properly.
+
+	* equation.cpp: Handle drop/prep dependencies properly.
+	Fixed a bug due to improved passing of these dependencies.
+	Detect errors during evaluation of generated variables.
+
+	* check_netlist.cpp: Allow zero-length value lists in
+	properties.  For lists 'value' and '[value; ...]' and '[]'
+	are possible handled correctly now.
+
 2006-03-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* complex.cpp: Fixed arccos() implementation.

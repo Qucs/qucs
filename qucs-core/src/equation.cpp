@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.40 2006/03/20 08:59:10 raimi Exp $
+ * $Id: equation.cpp,v 1.41 2006/03/24 14:30:05 raimi Exp $
  *
  */
 
@@ -478,26 +478,42 @@ int application::evalType (void) {
 /* This function runs the actual evaluation function and the returns
    the result. */
 constant * application::evaluate (void) {
+  int errors = 0;
   // first evaluate each argument
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     if (arg->evaluated == 0) {
       arg->solvee = solvee;
       arg->evaluate ();
-      // inherit drop/prep dependencies
-      if (arg->getResult()->dropdeps) {
-	dropdeps = arg->getResult()->dropdeps;
-	strlist * preps = arg->getResult()->getPrepDependencies ();
-	if (preps) addPrepDependencies (preps->get (0));
+      if (arg->getResult () == NULL) {
+	if (arg->getTag () == REFERENCE) {
+	  logprint (LOG_ERROR, "evaluate error, no such generated variable "
+		    "`%s'\n", arg->toString ());
+	}
+	else {
+	  logprint (LOG_ERROR, "evaluate error, unable to evaluate "
+		    "`%s'\n", arg->toString ());
+	}
+	errors++;
       }
-      arg->evaluated++;
+      else {
+	// inherit drop/prep dependencies
+	if (arg->getResult()->dropdeps) {
+	  dropdeps = arg->getResult()->dropdeps;
+	  strlist * preps = arg->getResult()->getPrepDependencies ();
+	  if (preps) addPrepDependencies (preps->get (0));
+	}
+	arg->evaluated++;
+      }
     }
   }
-  // then evaluate the application
-  setResult (eval (C (args)));
-  // check the returned type once again
-  if (getResult()->getType () != getType ()) {
-    logprint (LOG_ERROR, "evaluate error, function `%s' returned invalid "
-	      "constant type\n", toString ());
+  if (!errors) {
+    // then evaluate the application
+    setResult (eval (C (args)));
+    // check the returned type once again
+    if (getResult()->getType () != getType ()) {
+      logprint (LOG_ERROR, "evaluate error, function `%s' returned invalid "
+		"constant type\n", toString ());
+    }
   }
   return getResult ();
 }
@@ -680,9 +696,15 @@ void node::setDataDependencies (strlist * deps) {
 /* Evaluates the equation node and applies the data dependencies. */
 constant * node::calculate (void) {
   constant * res = evaluate ();
-  strlist * deps = solvee->collectDataDependencies (this);
-  getResult()->setDataDependencies (deps);
-  if (deps) delete deps;
+  if (getResult ()) {
+    strlist * deps = solvee->collectDataDependencies (this);
+    getResult()->setDataDependencies (deps);
+    if (deps) delete deps;
+  }
+  else {
+    qucs::exception * e = new qucs::exception (EXCEPTION_MATH);
+    e->setText ("evaluator exception"); throw_exception (e);
+  }
   return res;
 }
 
@@ -1076,7 +1098,7 @@ void solver::solve (void) {
       eqn->evaluated++;
 #if DEBUG
       logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
-		eqn->getResult()->toString ());
+		eqn->getResult () ? eqn->getResult()->toString () : "error");
 #endif
     }
   }
@@ -1123,6 +1145,7 @@ node * solver::addGeneratedEquation (vector * v, char * n) {
    given equation node to one or more valid dataset vector(s). */
 vector * solver::dataVector (node * eqn) {
   vector * v = NULL;
+  if (!eqn->getResult ()) return NULL;
   switch (eqn->getType ()) {
   case TAG_VECTOR: // simple vector
     v = new vector (* (eqn->getResult()->v));
@@ -1378,11 +1401,12 @@ strlist * solver::collectDataDependencies (node * eqn) {
       datadeps = sub;
     }
   }
+  strlist * preps = eqn->getResult()->getPrepDependencies ();
   if (datadeps) {
-    datadeps->add (eqn->getResult()->getPrepDependencies ());
+    if (preps) datadeps->add (preps->last ());
   } else {
-    datadeps = strlist::join (datadeps,
-			      eqn->getResult()->getPrepDependencies ());
+    datadeps = new strlist ();
+    if (preps) datadeps->add (preps->last ());
   }
   datadeps = checker::foldDependencies (datadeps);
   datadeps->del (eqn->getResult()->getDropDependencies ());
