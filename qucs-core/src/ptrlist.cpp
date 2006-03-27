@@ -1,7 +1,7 @@
 /*
  * ptrlist.cpp - pointer list template class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ptrlist.cpp,v 1.2 2005/06/02 18:17:51 raimi Exp $
+ * $Id: ptrlist.cpp,v 1.3 2006/03/27 09:55:49 raimi Exp $
  *
  */
 
@@ -146,4 +146,70 @@ type_t * ptrlist<type_t>::get (int idx) {
   ptrentry<type_t> * ptr = root;
   for (int i = 0 ; i < idx && ptr != NULL; ptr = ptr->next, i++);
   return ptr ? ptr->data : NULL;
+}
+
+// Constructor for pointer list iterator.
+template <class type_t>
+ptrlistiterator<type_t>::ptrlistiterator (ptrlist<type_t> & p) {
+  _ptrlist = &p;
+  toLast ();
+  toFirst ();
+}
+
+// Destructor for pointer list iterator.
+template <class type_t>
+ptrlistiterator<type_t>::~ptrlistiterator () {
+}
+
+// Returns number of items this iterator operates on.
+template <class type_t>
+int ptrlistiterator<type_t>::count (void) {
+  return _ptrlist->size;
+}
+
+// Sets the current to the first item in the iterator list.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::toFirst (void) {
+  _current = _first = _ptrlist->root;
+  return _current ? _current->data : NULL;
+}
+
+// Sets the current to the last item in the iterator list.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::toLast (void) {
+  for (_last = _ptrlist->root; _last && _last->next; _last = _last->next);
+  _current = _last;
+  return _current ? _current->data : NULL;
+}
+
+// Makes the succeeding item current and returns the new current item.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::operator++ (void) {
+  _current = _current->next;
+  return _current ? _current->data : NULL;
+}
+
+// Makes the preceding item current and returns the new current item.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::operator-- (void) {
+  _current = _current->prev;
+  return _current ? _current->data : NULL;
+}
+
+// Returns the current iterator item.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::current (void) {
+  return _current ? _current->data : NULL;
+}
+
+// Returns the first iterator item.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::first (void) {
+  return _first ? _first->data : NULL;
+}
+
+// Returns the last iterator item.
+template <class type_t>
+type_t * ptrlistiterator<type_t>::last (void) {
+  return _last ? _last->data : NULL;
 }

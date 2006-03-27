@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.16 2006/02/06 09:50:15 raimi Exp $
+ * $Id: dataset.cpp,v 1.17 2006/03/27 09:55:49 raimi Exp $
  *
  */
 
@@ -342,11 +342,8 @@ void dataset::printVariable (vector * v, FILE * f) {
   // print data header
   fprintf (f, "<dep %s", v->getName ());
   if (v->getDependencies () != NULL) {
-    struct strlist_t * root = v->getDependencies()->getRoot ();
-    while (root != NULL) {
-      fprintf (f, " %s", root->str);
-      root = root->next;
-    }
+    for (strlistiterator it (v->getDependencies ()); *it; ++it)
+      fprintf (f, " %s", *it);
   }
   fprintf (f, ">\n");
   

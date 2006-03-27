@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.3 2006/03/22 09:39:19 raimi Exp $
+ * $Id: hbsolver.h,v 1.4 2006/03/27 09:55:49 raimi Exp $
  *
  */
 
@@ -52,6 +52,14 @@ class hbsolver : public analysis
   bool isExcitation (circuit *);
   strlist * circuitNodes (ptrlist<circuit>);
   void getNodeLists (void);
+  int  assignVoltageSources (ptrlist<circuit>);
+  int  assignNodes (ptrlist<circuit>, strlist *);
+  void prepareLinear (void);
+  void createMatrixLinearA (void);
+  void fillMatrixLinearA (tmatrix<complex> *, int);
+  void invertMatrix (tmatrix<complex> *, tmatrix<complex> *);
+  void createMatrixLinearY (void);
+  void saveResults (void);
 
  private:
   tvector<nr_double_t> frequencies;
@@ -60,6 +68,16 @@ class hbsolver : public analysis
   ptrlist<circuit> excitations;
   ptrlist<circuit> nlcircuits;
   ptrlist<circuit> lncircuits;
+
+  tmatrix<complex> * A;
+  tmatrix<complex> * Z;
+  tmatrix<complex> * YV;
+  tmatrix<complex> * YC;
+
+  int runs;
+  int nfreqs;
+  int nlnvsrcs;
+  int nlnnodes;
 };
 
 #endif /* __HBSOLVER_H__ */

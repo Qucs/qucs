@@ -1,7 +1,7 @@
 /*
  * check_dataset.cpp - checker for the Qucs dataset
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_dataset.cpp,v 1.3 2005/06/02 18:17:49 raimi Exp $
+ * $Id: check_dataset.cpp,v 1.4 2006/03/27 09:55:49 raimi Exp $
  *
  */
 
@@ -74,11 +74,10 @@ int dataset_check (dataset * data) {
     else {
       int n = 1;
       /* go through each dependency and check it */
-      for (struct strlist_t * root = s->getRoot (); 
-	   root != NULL; root = root->next) {
-	if ((d = data->findDependency (root->str)) == NULL) {
+      for (strlistiterator it (s); *it; ++it) {
+	if ((d = data->findDependency (*it)) == NULL) {
 	  logprint (LOG_ERROR, "checker error, no such dependency `%s' as "
-		    "stated in `%s'\n", root->str, v->getName ());
+		    "stated in `%s'\n", *it, v->getName ());
 	  errors++;
 	}
 	else {

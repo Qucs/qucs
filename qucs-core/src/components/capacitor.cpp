@@ -1,7 +1,7 @@
 /*
  * capacitor.cpp - capacitor class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.cpp,v 1.17 2005/06/02 18:17:51 raimi Exp $
+ * $Id: capacitor.cpp,v 1.18 2006/03/27 09:55:50 raimi Exp $
  *
  */
 
@@ -55,8 +55,6 @@ void capacitor::calcSP (nr_double_t frequency) {
 
 void capacitor::initDC (void) {
   allocMatrixMNA ();
-  clearI ();
-  clearY ();
 }
 
 void capacitor::calcAC (nr_double_t frequency) {
@@ -68,7 +66,6 @@ void capacitor::calcAC (nr_double_t frequency) {
 
 void capacitor::initAC (void) {
   allocMatrixMNA ();
-  clearI ();
 }
 
 #define qState 0 // charge state
@@ -94,4 +91,12 @@ void capacitor::calcTR (nr_double_t) {
   setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
   setI (NODE_1 , -i);
   setI (NODE_2 , +i);
+}
+
+void capacitor::initHB (void) {
+  initAC ();
+}
+
+void capacitor::calcHB (nr_double_t frequency) {
+  calcAC (frequency);
 }

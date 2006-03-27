@@ -18,20 +18,24 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.h,v 1.8 2006/03/24 14:30:05 raimi Exp $
+ * $Id: strlist.h,v 1.9 2006/03/27 09:55:49 raimi Exp $
  *
  */
 
 #ifndef __STRLIST_H__
 #define __STRLIST_H__
 
+/* String list entry. */
 struct strlist_t {
   char * str;
   struct strlist_t * next;
 };
 
+/* String list class. */
 class strlist
 {
+  friend class strlistiterator;
+
  public:
   strlist ();
   strlist (const strlist &);
@@ -40,7 +44,6 @@ class strlist
   void add (strlist *);
   void append (char *);
   void append (strlist *);
-  struct strlist_t * getRoot (void) { return root; }
   int length (void);
   int contains (char *);
   char * get (int);
@@ -54,6 +57,30 @@ class strlist
  private:
   struct strlist_t * root;
   char * txt;
+};
+
+/* String list iterator. */
+class strlistiterator
+{
+ public:
+  strlistiterator (strlist &);
+  strlistiterator (strlist *);
+  ~strlistiterator ();
+
+  int count (void);
+  char * toFirst (void);
+  char * toLast (void);
+  char * operator++ (void);
+  char * operator * (void) { return current (); }
+  char * current (void);
+  char * first (void);
+  char * last (void);
+
+ private:
+  strlist * _strlist;
+  struct strlist_t * _first;
+  struct strlist_t * _last;
+  struct strlist_t * _current;
 };
 
 #endif /* __STRLIST_H__ */
