@@ -1,3 +1,12 @@
+2006-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.h (class strlistiterator): New iterator class.
+
+	* ptrlist.h (class ptrlistiterator): New iterator class.
+
+	* hbsolver.cpp: Implemented large parts of the linear
+	network handling.
+
 2006-03-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* strlist.h (class strlist): New functions: last() and

@@ -1,7 +1,7 @@
 /*
  * inductor.cpp - inductor class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.cpp,v 1.14 2005-06-02 18:17:52 raimi Exp $
+ * $Id: inductor.cpp,v 1.15 2006-03-27 09:55:50 raimi Exp $
  *
  */
 
@@ -105,4 +105,16 @@ void inductor::calcTR (nr_double_t) {
   integrate (fState, l, r, v);
   setD (VSRC_1, VSRC_1, -r);
   setE (VSRC_1, v);
+}
+
+void inductor::initHB (void) {
+  setVoltageSources (1);
+  setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+}
+
+void inductor::calcHB (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L");
+  setD (VSRC_1, VSRC_1, -l * 2 * M_PI * frequency);
 }

@@ -1,3 +1,8 @@
+2006-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp, inductor.cpp, capacitor.cpp: Implemented HB
+	callbacks.
+
 2006-03-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* tswitch.cpp: Fixed 'time' property handling.  Even number

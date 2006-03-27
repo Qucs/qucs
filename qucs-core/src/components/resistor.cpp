@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.cpp,v 1.26 2006-02-21 20:56:17 raimi Exp $
+ * $Id: resistor.cpp,v 1.27 2006-03-27 09:55:50 raimi Exp $
  *
  */
 
@@ -139,4 +139,15 @@ void resistor::initTR (void) {
 
 void resistor::calcTR (nr_double_t) {
   calcDC ();
+}
+
+// Initialize computation of MNA matrix entries for HB.
+void resistor::initHB (void) {
+  initModel ();
+  nr_double_t r = getScaledProperty ("R");
+  setVoltageSources (1);
+  setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  setD (VSRC_1, VSRC_1, -r);
 }

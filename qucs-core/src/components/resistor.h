@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.h,v 1.13 2006-01-30 07:45:34 raimi Exp $
+ * $Id: resistor.h,v 1.14 2006-03-27 09:55:50 raimi Exp $
  *
  */
 
@@ -39,6 +39,7 @@ class resistor : public circuit
   void initAC (void);
   void calcTR (nr_double_t);
   void initTR (void);
+  void initHB (void);
 
  private:
   void initModel (void);

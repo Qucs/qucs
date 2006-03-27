@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.cpp,v 1.9 2006-03-24 14:30:05 raimi Exp $
+ * $Id: strlist.cpp,v 1.10 2006-03-27 09:55:49 raimi Exp $
  *
  */
 
@@ -185,4 +185,61 @@ char * strlist::toString (char * concat) {
   }
   if (txt) txt[strlen (txt) - 1] = '\0';
   return txt ? txt : (char *) "";
+}
+
+// Constructor for string list iterator.
+strlistiterator::strlistiterator (strlist & s) {
+  _strlist = &s;
+  toLast ();
+  toFirst ();
+}
+
+// Another constructor for string list iterator.
+strlistiterator::strlistiterator (strlist * s) {
+  _strlist = s;
+  toLast ();
+  toFirst ();
+}
+
+// Destructor for string list iterator.
+strlistiterator::~strlistiterator () {
+}
+
+// Returns number of items this iterator operates on.
+int strlistiterator::count (void) {
+  return _strlist->length ();
+}
+
+// Sets the current to the first item in the iterator list.
+char * strlistiterator::toFirst (void) {
+  _current = _first = _strlist->root;
+  return _current ? _current->str : NULL;
+}
+
+// Sets the current to the last item in the iterator list.
+char * strlistiterator::toLast (void) {
+  for (_last = _strlist->root; _last && _last->next; _last = _last->next);
+  _current = _last;
+  return _current ? _current->str : NULL;
+}
+
+// Makes the succeeding item current and returns the new current item.
+char * strlistiterator::operator++ (void) {
+  _current = _current->next;
+  return _current ? _current->str : NULL;
+}
+
+// Returns the current iterator item.
+char * strlistiterator::current (void) {
+  return _current ? _current->str : NULL;
+}
+
+// Returns the first iterator item.
+char * strlistiterator::first (void) {
+  return _first ? _first->str : NULL;
+}
+
+// Returns the last iterator item.
+char * strlistiterator::last (void) {
+  return _last ? _last->str : NULL;
 }
