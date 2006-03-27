@@ -45,7 +45,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
   lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig        \
-  coupler.fig coax.fig tline.fig vam.fig vpm.fig
+  coupler.fig coax.fig tline.fig vam.fig vpm.fig twisted.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps
 EPSFILES = $(FIGURES:.fig=.eps)
