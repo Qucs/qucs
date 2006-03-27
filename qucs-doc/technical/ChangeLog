@@ -1,3 +1,8 @@
+2006-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* transline.tex (section{Twisted pair}): Documented twisted
+	pair analysis equations.
+
 2006-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* literature.bib: Added some books lend from library.
