@@ -210,7 +210,8 @@ void QucsFilter::slotHelpAbout()
     "QucsFilter Version " PACKAGE_VERSION+
     tr("\nFilter synthesis program\n")+
     tr("Copyright (C) 2005, 2006 by")+
-    "\nToyoyuki Ishikawa, Vincent Habchi, Michael Margraf\n"
+    "\nVincent Habchi, Toyoyuki Ishikawa,\n"
+    "Michael Margraf, Stefan Jahn\n"
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n");

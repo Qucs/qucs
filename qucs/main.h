@@ -72,11 +72,4 @@ void    convert2Unicode(QString&);
 QString properName (const QString&);
 bool    VHDL_Time(QString&, const QString&);
 
-// just dummies for empty lists
-extern QPtrList<Wire>      SymbolWires;
-extern QPtrList<Node>      SymbolNodes;
-extern QPtrList<Diagram>   SymbolDiags;
-extern QPtrList<Component> SymbolComps;
-
 #endif
-

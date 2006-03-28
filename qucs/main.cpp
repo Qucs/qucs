@@ -32,7 +32,6 @@
 #include <qregexp.h>
 
 #include "qucs.h"
-#include "qucsview.h"
 #include "main.h"
 #include "node.h"
 
@@ -41,12 +40,6 @@ tQucsSettings QucsSettings;
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
 QucsApp *QucsMain;   // the Qucs application itself
-
-// just dummies for empty lists
-QPtrList<Wire>      SymbolWires;
-QPtrList<Node>      SymbolNodes;
-QPtrList<Diagram>   SymbolDiags;
-QPtrList<Component> SymbolComps;
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -113,8 +106,7 @@ bool saveApplSettings(QucsApp *qucs)
     << "Size=" << qucs->width() << "," << qucs->height() << "\n"
     << "Font=" << savingFont.toString() << "\n"
     << "Language=" << QucsSettings.Language << "\n"
-    << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
-    << "\n"
+    << "BGColor=" << QucsSettings.BGColor.name() << "\n"
     << "maxUndo=" << QucsSettings.maxUndo << "\n"
     << "Editor=" << QucsSettings.Editor << "\n";
 

@@ -191,17 +191,17 @@ void PortSymbol::rotate()
 }
 
 // --------------------------------------------------------------------------
-// Mirrors about center line.
+// Mirrors about connection node (not center line !).
 void PortSymbol::mirrorX()
-{
-  if(Angel == 0)  Angel = 180;
-  else  if(Angel == 180)  Angel = 0;
-}
-
-// --------------------------------------------------------------------------
-// Mirrors about center line.
-void PortSymbol::mirrorY()
 {
   if(Angel == 90)  Angel = 270;
   else  if(Angel == 270)  Angel = 90;
+}
+
+// --------------------------------------------------------------------------
+// Mirrors about connection node (not center line !).
+void PortSymbol::mirrorY()
+{
+  if(Angel == 0)  Angel = 180;
+  else  if(Angel == 180)  Angel = 0;
 }

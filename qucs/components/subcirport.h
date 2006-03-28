@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   QString NetList();
   QString VHDL_Code(int);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 
 private:
   void createSymbol();

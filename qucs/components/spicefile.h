@@ -24,10 +24,10 @@
 class SpiceFile : public Component  {
 public:
   SpiceFile();
-  ~SpiceFile();
+ ~SpiceFile();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
   QString NetList();
 
   bool withSim;

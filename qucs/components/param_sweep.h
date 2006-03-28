@@ -27,7 +27,7 @@ public:
   ~Param_Sweep();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 };
 
 #endif

@@ -84,7 +84,7 @@ Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void SP_Sim::recreate(QucsDoc*)
+void SP_Sim::recreate(Schematic*)
 {
   if((Props.getFirst()->Value == "list") ||
      (Props.getFirst()->Value == "const")) {

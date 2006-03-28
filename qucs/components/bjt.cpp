@@ -180,7 +180,7 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a npn or a pnp transistor (according
 // to the "Type" property).
-void BJT::recreate(QucsDoc*)
+void BJT::recreate(Schematic*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

@@ -31,7 +31,7 @@
 #include <qptrlist.h>
 #include <qdir.h>
 
-class QucsDoc;
+class Schematic;
 class QGridLayout;
 class QValidator;
 class QVBoxLayout;
@@ -44,8 +44,8 @@ extern QDir QucsWorkDir;
 class ComponentDialog : public QDialog {
    Q_OBJECT
 public:
-  ComponentDialog(Component*, QucsDoc*, QWidget *parent=0);
-  ~ComponentDialog();
+  ComponentDialog(Component*, Schematic*);
+ ~ComponentDialog();
 
 private slots:
   void slotButtOK();
@@ -91,7 +91,7 @@ private:
   QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
-  QucsDoc     *Doc;
+  Schematic   *Doc;
   bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
 
