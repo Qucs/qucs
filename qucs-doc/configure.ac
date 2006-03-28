@@ -88,6 +88,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/poweramp/Makefile
 		 tutorial/poweramp/pics/Makefile
 		 tutorial/lna/Makefile
+		 tutorial/digital/Makefile
+		 tutorial/digital/pics/Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile])
 
