@@ -16,14 +16,14 @@
  ***************************************************************************/
 
 #include "sweepdialog.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 #include "qucs.h"
 #include "main.h"
-#include "qucsview.h"
 #include "../diagrams/graph.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qlineedit.h>
 #include <qvalidator.h>
 #include <qpushbutton.h>
 
@@ -43,10 +43,10 @@ QString mySpinBox::mapValueToText(int Val)
 
 
 
-SweepDialog::SweepDialog(QucsDoc *d, QWidget *parent)
-			: QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
+SweepDialog::SweepDialog(Schematic *Doc_)
+			: QDialog(Doc_, 0, TRUE, Qt::WDestructiveClose)
 {
-  Doc = d;
+  Doc = Doc_;
 
   pGraph = setBiasPoints();
   // if simulation has no sweeps, terminate dialog before showing it
@@ -119,7 +119,7 @@ void SweepDialog::slotNewValue(int)
     p = ValueList.next();
   }
 
-  QucsMain->view->viewport()->update();
+  Doc->viewport()->update();
 }
 
 // ---------------------------------------------------
@@ -187,7 +187,8 @@ Graph* SweepDialog::setBiasPoints()
 
 
   // create DC current through each probe
-  for(Component *pc = Doc->Comps->first(); pc != 0; pc = Doc->Comps->next())
+  Component *pc;
+  for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
     if(pc->Model == "IProbe") {
       pn = pc->Ports.first()->Connection;
       if(!pn->Name.isEmpty())   // preserve node voltage ?

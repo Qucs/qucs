@@ -95,7 +95,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void TR_Sim::recreate(QucsDoc*)
+void TR_Sim::recreate(Schematic*)
 {
   if((Props.getFirst()->Value == "list") ||
      (Props.getFirst()->Value == "const")) {

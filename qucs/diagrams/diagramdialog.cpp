@@ -16,8 +16,8 @@
  ***************************************************************************/
 
 #include "diagramdialog.h"
-#include "qucsview.h"
 #include "qucs.h"
+#include "schematic.h"
 #include "rect3ddiagram.h"
 
 #include <math.h>
@@ -38,6 +38,9 @@
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qslider.h>
+#include <qcombobox.h>
+#include <qlistview.h>
+#include <qlistbox.h>
 
 
 #define CROSS3D_SIZE   30
@@ -98,7 +101,7 @@ static const QRgb DefaultColors[]
 
 DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
                              QWidget *parent, Graph *currentGraph)
-                    : QDialog(parent, "", TRUE, Qt::WDestructiveClose)
+                    : QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
   Graphs.setAutoDelete(true);
@@ -975,7 +978,7 @@ void DiagramDialog::slotApply()
   Graphs.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
-  ((QucsView*)parent())->viewport()->repaint();
+  ((Schematic*)parent())->viewport()->repaint();
   copyDiagramGraphs();
   if(changed) transfer = true;   // changes have been applied ?
 }

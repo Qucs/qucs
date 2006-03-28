@@ -18,7 +18,7 @@
 #include "simmessage.h"
 #include "main.h"
 #include "qucs.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -36,14 +36,14 @@
 SimMessage::SimMessage(QucsDoc *Doc_, QWidget *parent)
 		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
+  setCaption(tr("Qucs Simulation Messages"));
   Doc = Doc_;
-  QFileInfo Info(Doc->DocName);
-  DataDisplay = Info.dirPath() + QDir::separator();
-  DataSet = DataDisplay + Doc->DataSet;
-  DataDisplay += Doc->DataDisplay;
+  DocName = Doc->DocName;
+  DataDisplay = Doc->DataDisplay;
+  QFileInfo Info(DocName);
+  DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
-  setCaption(tr("Qucs Simulation Messages"));
 
   all = new QVBoxLayout(this);
   all->setSpacing(5);
@@ -110,21 +110,25 @@ bool SimMessage::startProcess()
     return false;
   }
 
-  ProgText->insert(tr("creating netlist... "));
-  NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
-  if(!NetlistFile.open(IO_WriteOnly)) {
-    ErrText->insert(tr("ERROR: Cannot write netlist file!"));
-    FinishSimulation(-1);
-    return false;
-  }
-
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
-  Stream.setDevice(&NetlistFile);
-  SimPorts = Doc->File.prepareNetlist(Stream, Collect, ErrText);
-  if(SimPorts < -5) {
-    NetlistFile.close();
-    FinishSimulation(-1);
-    return false;
+  if(typeid(*Doc) == typeid(Schematic)) {
+    ProgText->insert(tr("creating netlist... "));
+    NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
+    if(!NetlistFile.open(IO_WriteOnly)) {
+      ErrText->insert(tr("ERROR: Cannot write netlist file!"));
+      FinishSimulation(-1);
+      return false;
+    }
+
+    Stream.setDevice(&NetlistFile);
+
+    SimPorts =
+       ((Schematic*)Doc)->prepareNetlist(Stream, Collect, ErrText);
+    if(SimPorts < -5) {
+      NetlistFile.close();
+      FinishSimulation(-1);
+      return false;
+    }
   }
   Collect.append("*");   // mark the end
 
@@ -236,31 +240,38 @@ void SimMessage::slotFinishSpiceNetlist()
 // ------------------------------------------------------------------------
 void SimMessage::startSimulator()
 {
-  // Using the Doc pointer here is risky as the user may have closed
-  // the schematic, but converting the SPICE netlists is (hopefully)
-  // faster than the user (I have no other idea).
+  QString SimTime;
+  QStringList CommandLine;
+  if(typeid(*Doc) == typeid(Schematic)) {
+    // Using the Doc pointer here is risky as the user may have closed
+    // the schematic, but converting the SPICE netlists is (hopefully)
+    // faster than the user (I have no other idea).
 
-  // output NodeSets, SPICE simulations etc.
-  Stream << Collect.join("\n") << '\n';
-  QString SimTime =
-    Doc->File.createNetlist(Stream, SimPorts);
-  NetlistFile.close();
-  if(SimTime.at(0) == '§') {
-    ErrText->insert(SimTime.mid(1));
-    FinishSimulation(-1);
-    return;
+    // output NodeSets, SPICE simulations etc.
+    Stream << Collect.join("\n") << '\n';
+    SimTime = ((Schematic*)Doc)->createNetlist(Stream, SimPorts);
+    NetlistFile.close();
+    if(SimTime.at(0) == '§') {
+      ErrText->insert(SimTime.mid(1));
+      FinishSimulation(-1);
+      return;
+    }
+    ProgText->insert(tr("done.\n"));  // of "creating netlist... 
+
+    if(SimPorts < 0)
+      CommandLine << QucsSettings.BinDir + "qucsator" << "-b" << "-g"
+         << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
+    else
+      CommandLine << QucsSettings.BinDir + "qucsdigi" << "netlist.txt"
+         << DataSet << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
   }
-  ProgText->insert(tr("done.\n"));
+  else {
+    SimTime = "10 ns";
+    CommandLine << QucsSettings.BinDir + "qucsdigi" << DocName
+       << DataSet << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
+  }
 
-  QStringList com;
-  if(SimPorts < 0)
-    com << QucsSettings.BinDir + "qucsator" << "-b" << "-g" << "-i"
-        << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
-  else
-    com << QucsSettings.BinDir + "qucsdigi" << "netlist.txt" << DataSet
-        << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
-
-  SimProcess.setArguments(com);
+  SimProcess.setArguments(CommandLine);
 
 
   disconnect(&SimProcess, 0, 0, 0);
@@ -405,6 +416,6 @@ void SimMessage::slotClose()
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
-  emit displayDataPage(DataDisplay);
+  emit displayDataPage(DocName, DataDisplay);
   accept();
 }

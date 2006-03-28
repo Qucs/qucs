@@ -1,6 +1,6 @@
 /***************************************************************************
                                 labeldialog.h
-                              ----------------
+                               ---------------
     begin                : Thu Dec 09 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,15 +28,12 @@ class QGridLayout;
 class QRegExpValidator;
 class WireLabel;
 
-/**
-  *@author Michael Margraf
-  */
 
 class LabelDialog : public QDialog  {
 Q_OBJECT
 public:
   LabelDialog(WireLabel*, QWidget *parent=0);
-  ~LabelDialog();
+ ~LabelDialog();
 
   QLineEdit  *NodeName, *InitValue;
 

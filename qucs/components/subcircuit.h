@@ -28,7 +28,7 @@ public:
   Component* newOne();
   QString NetList();
   QString VHDL_Code(int);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 
 private:
   void remakeSymbol(int No);

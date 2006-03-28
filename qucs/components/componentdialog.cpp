@@ -16,9 +16,9 @@
  ***************************************************************************/
 
 #include "componentdialog.h"
+#include "main.h"
 #include "qucs.h"
-#include "qucsview.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 
 #include <qlayout.h>
 #include <qhbox.h>
@@ -26,12 +26,13 @@
 #include <qmessagebox.h>
 #include <qvalidator.h>
 #include <qfiledialog.h>
+#include <qtabwidget.h>
 
 #include <math.h>
 
 
-ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
-			: QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
+ComponentDialog::ComponentDialog(Component *c, Schematic *d)
+			: QDialog(d, 0, TRUE, Qt::WDestructiveClose)
 {
   resize(400, 250);
   setCaption(tr("Edit Component Properties"));
@@ -156,7 +157,8 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
 
     if(Comp->Model == ".SW") {   // parameter sweep
-      for(Component *pc=Doc->Comps->first(); pc!=0; pc=Doc->Comps->next())
+      Component *pc;
+      for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
         if(pc != Comp)
           if(pc->Model[0] == '.')
             editSim->insertItem(pc->Name);
@@ -571,7 +573,7 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
   else
   if(CompNameEdit->text() != Comp->Name) {
-    for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next())
+    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
       if(pc->Name == CompNameEdit->text())
         break;  // found component with the same name ?
     if(pc)  CompNameEdit->setText(Comp->Name);
@@ -748,7 +750,7 @@ void ComponentDialog::slotApplyInput()
     }
 
     Doc->recreateComponent(Comp);
-    ((QucsView*)parent())->viewport()->repaint();
+    Doc->viewport()->repaint();
   }
 }
 
@@ -772,7 +774,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  Doc->App->Acts.editFile(QucsWorkDir.filePath(edit->text()));
+  Doc->App->editFile(QucsWorkDir.filePath(edit->text()));
 }
 
 // -------------------------------------------------------------------------

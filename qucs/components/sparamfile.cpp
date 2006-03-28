@@ -17,7 +17,7 @@
 
 #include "sparamfile.h"
 #include "main.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 
 #include <qfileinfo.h>
 
@@ -171,10 +171,10 @@ void SParamFile::createSymbol()
 }
 
 // -------------------------------------------------------
-void SParamFile::recreate(QucsDoc *Doc)
+void SParamFile::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -186,6 +186,6 @@ void SParamFile::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }
