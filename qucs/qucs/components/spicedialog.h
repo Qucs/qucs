@@ -22,7 +22,7 @@
 #include <qregexp.h>
 #include <qdir.h>
 
-class QucsDoc;
+class Schematic;
 class SpiceFile;
 class QLineEdit;
 class QPushButton;
@@ -40,8 +40,8 @@ extern QDir QucsWorkDir;
 class SpiceDialog : public QDialog {
    Q_OBJECT
 public:
-  SpiceDialog(SpiceFile*, QucsDoc*, QWidget *parent=0);
-  ~SpiceDialog();
+  SpiceDialog(SpiceFile*, Schematic*);
+ ~SpiceDialog();
 
 private slots:
   void slotButtOK();
@@ -72,7 +72,7 @@ private:
   QLineEdit   *FileEdit, *CompNameEdit;
   QPushButton *ButtBrowse, *ButtEdit, *ButtAdd, *ButtRemove;
   SpiceFile   *Comp;
-  QucsDoc     *Doc;
+  Schematic   *Doc;
   bool        changed;
 
   QProcess *QucsConv;

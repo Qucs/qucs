@@ -28,7 +28,7 @@ public:
   Component* newOne();
   QString NetList();
   bool outputSubNetlist(QTextStream*);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 
 private:
   void remakeSymbol();

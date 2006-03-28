@@ -24,11 +24,11 @@
 class BJT : public Component  {
 public:
   BJT();
-  ~BJT();
+ ~BJT();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_pnp(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 };
 
 #endif

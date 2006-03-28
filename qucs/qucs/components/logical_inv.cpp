@@ -19,8 +19,9 @@
 
 #include "main.h"
 #include "logical_inv.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 #include "node.h"
+
 
 Logical_Inv::Logical_Inv()
 {
@@ -117,10 +118,10 @@ Element* Logical_Inv::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-void Logical_Inv::recreate(QucsDoc *Doc)
+void Logical_Inv::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -134,6 +135,6 @@ void Logical_Inv::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }

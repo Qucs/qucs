@@ -31,7 +31,7 @@ public:
   static Element* info1(QString&, char* &, bool getNewOne=false);
   static Element* info2(QString&, char* &, bool getNewOne=false);
   void createSymbol();
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 };
 
 #endif

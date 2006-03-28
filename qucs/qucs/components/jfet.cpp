@@ -135,7 +135,7 @@ Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a n-type or a p-type transistor (according
 // to the "Type" property).
-void JFET::recreate(QucsDoc*)
+void JFET::recreate(Schematic*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

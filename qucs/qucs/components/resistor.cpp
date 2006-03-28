@@ -17,7 +17,8 @@
 
 #include "resistor.h"
 #include "node.h"
-#include "qucsdoc.h"
+#include "schematic.h"
+
 
 Resistor::Resistor(bool european)
 {
@@ -103,10 +104,10 @@ Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void Resistor::recreate(QucsDoc *Doc)
+void Resistor::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -117,6 +118,6 @@ void Resistor::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }

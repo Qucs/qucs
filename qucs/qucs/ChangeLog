@@ -1,3 +1,8 @@
+2006-03-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* extensive restructuring of Qucs
+	* started to implement a VHDL text editor
+
 2006-02-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* press CTRL key during component moving to use no grid

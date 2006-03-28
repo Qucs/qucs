@@ -18,7 +18,6 @@
 #include "graphictextdialog.h"
 
 #include "qucs.h"
-#include "qucsview.h"
 
 #include <qlayout.h>
 #include <qlabel.h>

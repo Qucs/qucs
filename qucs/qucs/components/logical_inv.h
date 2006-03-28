@@ -27,7 +27,7 @@ public:
  ~Logical_Inv() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
   QString VHDL_Code(int);
 
 private:

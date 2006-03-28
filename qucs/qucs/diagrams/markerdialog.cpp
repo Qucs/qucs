@@ -24,8 +24,8 @@
 #include <qvalidator.h>
 
 
-MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
-                     : QDialog(parent, name, FALSE, Qt::WDestructiveClose)
+MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
+                     : QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
   setCaption(tr("Edit Marker Properties"));
   pMarker = pm_;

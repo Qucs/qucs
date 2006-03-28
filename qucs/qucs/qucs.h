@@ -1,7 +1,7 @@
 /***************************************************************************
                                    qucs.h
                                   --------
-    begin                : Thu Aug 28 18:17:41 CEST 2003
+    begin                : Thu Aug 28 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -18,66 +18,64 @@
 #ifndef QUCS_H
 #define QUCS_H
 
-// include files for QT
-#include <qapplication.h>
 #include <qmainwindow.h>
-#include <qaction.h>
-#include <qmenubar.h>
-#include <qpopupmenu.h>
-#include <qtoolbar.h>
-#include <qtoolbutton.h>
-#include <qstatusbar.h>
-#include <qwhatsthis.h>
 #include <qstring.h>
-#include <qpixmap.h>
-#include <qmessagebox.h>
-#include <qfiledialog.h>
-#include <qprinter.h>
-#include <qpainter.h>
-#include <qtabbar.h>
-#include <qlistbox.h>
-#include <qlistview.h>
-#include <qpushbutton.h>
-#include <qiconview.h>
-#include <qcombobox.h>
-#include <qtabwidget.h>
 #include <qdir.h>
-#include <qprocess.h>
 
-
-// application specific includes
-#include "qucsinit.h"
-#include "qucsactions.h"
-
-class QucsView;
+class QucsDoc;
+class Schematic;
 class SimMessage;
+class MouseActions;
+class QLabel;
+class QAction;
+class QPrinter;
+class QToolBar;
+class QLineEdit;
+class QComboBox;
+class QTabWidget;
+class QPopupMenu;
+class QListBox;
+class QListBoxItem;
+class QListView;
+class QListViewItem;
+class QIconView;
+class QIconViewItem;
+
+typedef bool (Schematic::*pToggleFunc) ();
+typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
+typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, int, int);
 
 extern QDir QucsWorkDir;
 extern QDir QucsHomeDir;
 
 
-class QucsApp : public QMainWindow
-{
+class QucsApp : public QMainWindow {
   Q_OBJECT
 public:
   QucsApp();
  ~QucsApp();
 
-  void initView();       // setup the mainview
-  void initCursorMenu();
-
   bool closeAllFiles();
   static int testFile(const QString&);
   bool gotoPage(const QString&);   // to load a document
-  void readProjectFiles();
+  QucsDoc *getDoc(int No=-1);
 
-  QString       ProjName;   // name of the project, that is open
+  QString ProjName;   // name of the project, that is open
+
+  QLineEdit *editText;  // for edit component properties on schematic
+
+  // current mouse methods
+  void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
+  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, int, int);
+  void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
+  void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
 
 protected:
   void closeEvent(QCloseEvent*);
 
 public slots:
   void slotFileNew();     // generate a new schematic in the view TabBar
+  void slotTextNew();     // generate a new text editor in the view TabBar
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document
   void slotFileSaveAs();  // save a document under a different filename
@@ -102,6 +100,9 @@ public slots:
   void slotToPage();
   void slotSelectComponent(QIconViewItem*);
 
+  void slotEditElement();
+  void slotPowerMatching();
+  void slot2PortMatching();
 
   // for menu that appears by right click in content ListView
   void slotShowContentMenu(QListViewItem*, const QPoint&, int);
@@ -122,61 +123,166 @@ private slots:
   void slotProjOpenButt();
   void slotProjDelButt();
   void slotMenuDelProject();
-  void slotChangeView(int);
+  void slotChangeView(QWidget*);
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
-  void slotChangePage(QString);
+  void slotChangePage(QString&, QString&);
   void slotNextTab();
+  void slotHideEdit();
 
 signals:
   void signalKillEmAll();
 
 public:
-  QucsView  *view; // the working area with schematics, data displays etc.
-  QTabBar   *WorkView;
-  QIconView *CompComps;
+  MouseActions *view;
+  QTabWidget *DocumentTab;
+  QIconView  *CompComps;
 
   // menu appearing by right mouse button click on content listview
   QPopupMenu *ContentMenu;
 
-  QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
+  QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintSel,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
 
   QAction *activeAction;    // pointer to the action selected by the user
-  QucsActions  Acts;    // contains most of the toggle actions
 
 private:
   QPrinter  *Printer; // printer is global (to remember the user settings)
-  QucsInit   Init;    // initializes toolbars, menubar, actions ...
 
 // ********* Widgets on the main area **********************************
   QTabWidget    *TabView;
 
   QListBox      *Projects;
   QListView     *Content;
-  QListViewItem *ConSchematics, *ConDisplays, *ConDatasets, *ConOthers;
+  QListViewItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
+                *ConOthers;
 
   QComboBox     *CompChoose;
 
 // ********** Properties ************************************************
   QPtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
-  QPtrList<QProcess> Programs;    // list of programs started by qucs
   QString  QucsFileFilter;
 
 // ********** Methods ***************************************************
-  bool saveCurrentFile();
+  void initView();
+  void initCursorMenu();
+  void initContentListView();
+
+  bool saveFile(QucsDoc *Doc=0);
   bool saveAs();
   void readProjects();
+  void readProjectFiles();
   void OpenProject(const QString&, const QString&);
   bool DeleteProject(const QString&, const QString&);
   void updatePortNumber(int);
-  void nextDocument(bool);
   void fillComboBox(bool);
+  void switchSchematicDoc(bool);
   void switchEditMode(bool);
-  void changeSchematicSymbolMode(QucsDoc*);
+  void changeSchematicSymbolMode(Schematic*);
+
+
+
+/* **************************************************
+   *****  The following methods are located in  *****
+   *****  "qucs_init.cpp".                      *****
+   ************************************************** */
+
+public slots:
+  void slotViewToolBar(bool toggle);    // toggle the toolbar
+  void slotViewStatusBar(bool toggle);  // toggle the statusbar
+
+  void slotHelpAbout();       // shows an about dialog
+  void slotHelpAboutQt();     // shows the standard about dialog for Qt
+
+  void slotShowWarnings();
+  void slotResetWarnings();
+
+private:
+  void initActions();    // initializes all QActions of the application
+  void initMenuBar();    // creates the menu_bar and inserts the menuitems
+  void initToolBar();    // creates the toolbars
+  void initStatusBar();  // setup the statusbar
+
+  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar;
+
+  // menus contain the items of their menubar
+  QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
+             *helpMenu, *alignMenu, *toolMenu;
+
+  QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
+
+  QAccel *mainAccel;     // to set more than one key to one action
+  QLabel *WarningLabel;
+
+
+
+/* **************************************************
+   *****  The following methods are located in  *****
+   *****  "qucs_actions.cpp".                   *****
+   ************************************************** */
+
+public:
+  void editFile(const QString&);
+
+  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
+          *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
+          *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
+          *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
+          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
+          *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
+          *addToProj;
+
+public slots:
+  void slotEditRotate(bool);  // rotate the selected items
+  void slotEditMirrorX(bool); // mirror the selected items about X axis
+  void slotEditMirrorY(bool); // mirror the selected items about Y axis
+  void slotEditPaste(bool);   // paste the clipboard into the document
+  void slotEditDelete(bool);  // delete the selected items
+  void slotInsertEquation(bool);
+  void slotInsertGround(bool);
+  void slotInsertPort(bool);
+  void slotSetWire(bool);
+  void slotSelect(bool);
+  void slotEditActivate(bool);
+  void slotInsertLabel(bool);
+  void slotSetMarker(bool);
+  void slotOnGrid(bool);      // set selected elements on grid
+  void slotMoveText(bool);    // move property text of components
+  void slotZoomIn(bool);
+  void slotEditUndo();    // makes the last operation undone
+  void slotEditRedo();    // makes the last undo undone
+  void slotAlignTop();    // align selected elements with respect to top
+  void slotAlignBottom(); // align selected elements with respect to bottom
+  void slotAlignLeft();   // align selected elements with respect to left
+  void slotAlignRight();  // align selected elements with respect to right
+  void slotDistribHoriz();// distribute horizontally selected elements
+  void slotDistribVert(); // distribute vertically selected elements
+  void slotSelectAll();
+  void slotShowLastMsg();
+  void slotShowLastNetlist();
+  void slotCallEditor();
+  void slotCallFilter();
+  void slotCallLine();
+  void slotCallLibrary();
+  void slotCallMatch();
+  void slotHelpIndex();       // shows a HTML docu: Help Index
+  void slotGettingStarted();  // shows a HTML docu: Getting started
+  void slotChangeProps();
+  void slotAddToProject();
+  void slotApplyCompText();
+
+private slots:
+  void slotCursorLeft();
+  void slotCursorRight();
+  void slotCursorUp();
+  void slotCursorDown();
+
+private:
+  void showHTML(const QString&);
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
 };
 #endif

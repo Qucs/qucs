@@ -1,6 +1,6 @@
 /***************************************************************************
-                          markerdialog.h  -  description
-                             -------------------
+                               markerdialog.h
+                              ----------------
     begin                : Wed April 21 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,15 +26,11 @@
 #include "marker.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class MarkerDialog : public QDialog  {
 Q_OBJECT
 public:
-  MarkerDialog(Marker *pm_, QWidget *parent=0, const char *name=0);
-  ~MarkerDialog();
+  MarkerDialog(Marker *pm_, QWidget *parent=0);
+ ~MarkerDialog();
 
 private slots:
   void slotAcceptValues();
