@@ -1,6 +1,6 @@
 /***************************************************************************
-                          settingsdialog.cpp  -  description
-                             -------------------
+                             settingsdialog.cpp
+                            --------------------
     begin                : Mon Oct 20 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -18,8 +18,7 @@
 #include "settingsdialog.h"
 
 #include "qucs.h"
-#include "qucsdoc.h"
-#include "qucsview.h"
+#include "schematic.h"
 
 #include <qwidget.h>
 #include <qlabel.h>
@@ -33,10 +32,10 @@
 #include <qcheckbox.h>
 
 
-SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
-                         : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
+SettingsDialog::SettingsDialog(Schematic *Doc_)
+                : QDialog(Doc_, 0, TRUE, Qt::WDestructiveClose)
 {
-  Doc = d;
+  Doc = Doc_;
   setCaption(tr("Edit File Properties"));
 
   all = new QVBoxLayout(this); // to provide the neccessary size
@@ -162,6 +161,6 @@ void SettingsDialog::slotApply()
 
   if(changed) {
     Doc->setChanged(true);
-    ((QucsApp*)parent())->view->viewport()->repaint();
+    Doc->viewport()->repaint();
   }
 }

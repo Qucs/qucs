@@ -21,7 +21,8 @@
 
 #include "qucssettingsdialog.h"
 #include "main.h"
-#include "qucsview.h"
+#include "textdoc.h"
+#include "schematic.h"
 
 #include <qwidget.h>
 #include <qlabel.h>
@@ -34,6 +35,8 @@
 #include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qlistview.h>
+#include <qcombobox.h>
+#include <qmessagebox.h>
 
 
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
@@ -166,8 +169,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
   Font  = QucsSettings.font;
   FontButton->setText(Font.toString());
-  BGColorButton->setPaletteBackgroundColor(
-	App->view->viewport()->paletteBackgroundColor());
+  BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
   undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
   editorEdit->setText(QucsSettings.Editor);
 
@@ -250,16 +252,18 @@ void QucsSettingsDialog::slotApply()
 {
   bool changed = false;
 
-  if(App->view->viewport()->paletteBackgroundColor() !=
-		BGColorButton->paletteBackgroundColor()) {
-    App->view->viewport()->setPaletteBackgroundColor(
-		BGColorButton->paletteBackgroundColor());
-    changed = true;
-  }
-  if(App->view->editText->paletteBackgroundColor() !=
-		BGColorButton->paletteBackgroundColor()) {
-    App->view->editText->setPaletteBackgroundColor(
-		BGColorButton->paletteBackgroundColor());
+  if(QucsSettings.BGColor != BGColorButton->paletteBackgroundColor()) {
+    QucsSettings.BGColor = BGColorButton->paletteBackgroundColor();
+
+    int No=0;
+    QWidget *w;
+    while((w=App->DocumentTab->page(No++)) != 0)
+      if(typeid(*w) == typeid(Schematic))
+        ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
+					QucsSettings.BGColor);
+      else
+        ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
+					QucsSettings.BGColor);
     changed = true;
   }
 

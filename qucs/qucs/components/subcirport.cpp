@@ -17,7 +17,8 @@
 
 #include "subcirport.h"
 #include "node.h"
-#include "qucsdoc.h"
+#include "schematic.h"
+
 
 SubCirPort::SubCirPort()
 {
@@ -107,10 +108,10 @@ QString SubCirPort::VHDL_Code(int)
 }
 
 // -------------------------------------------------------
-void SubCirPort::recreate(QucsDoc *Doc)
+void SubCirPort::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -122,6 +123,6 @@ void SubCirPort::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }

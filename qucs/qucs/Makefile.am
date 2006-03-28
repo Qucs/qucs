@@ -28,12 +28,13 @@ dist_bin_SCRIPTS = qucsdigi
 
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
+MOCHEADERS = qucs.h schematic.h textdoc.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp qucsview.cpp \
-  qucs.cpp main.cpp wirelabel.cpp qucsfile.cpp qucsinit.cpp qucsactions.cpp \
-  viewpainter.cpp mnemo.cpp
+qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+  qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
+  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
+  schematic_file.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -42,12 +43,12 @@ qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   paintings/libpaintings.a dialogs/libdialogs.a
 
-noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h \
-  node.h wirelabel.h qucsfile.h viewpainter.h mnemo.h
+noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h      \
+  node.h wirelabel.h viewpainter.h mnemo.h mouseactions.h
 
 # rules for translations
 TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \
-  qucs_pt.ts qucs_es.ts qucs_jp.ts qucs_hu.ts qucs_he.ts qucs_sv.ts \
+  qucs_pt.ts qucs_es.ts qucs_jp.ts qucs_hu.ts qucs_he.ts qucs_sv.ts   \
   qucs_tr.ts qucs_uk.ts
 GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts \
   qtgeneric_es.ts qtgeneric_ro.ts qtgeneric_jp.ts qtgeneric_hu.ts \

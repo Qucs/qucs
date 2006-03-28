@@ -1,8 +1,8 @@
 /***************************************************************************
-                                  jfet.h
-                                 --------
-    begin                : Fri Jun 4 2004
-    copyright            : (C) 2003 by Michael Margraf
+                                textdoc.h
+                               -----------
+    begin                : Sat Mar 11 2006
+    copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,20 +15,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef JFET_H
-#define JFET_H
+#ifndef TEXTDOC_H
+#define TEXTDOC_H
 
-#include "component.h"
+#include "qucsdoc.h"
+
+#include <qtextedit.h>
+
+extern const char *smallsave_xpm[];// icon for unsaved files (diskette)
+extern const char *empty_xpm[];    // provides same height than "smallsave_xpm"
 
 
-class JFET : public Component  {
-public:
-  JFET();
-  ~JFET();
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  static Element* info_p(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+class TextDoc : public QTextEdit, public QucsDoc {
+  Q_OBJECT
+public: 
+  TextDoc(QucsApp*, const QString&);
+ ~TextDoc();
+
+  QString SimTime;
+
+  void setName(const QString&);
+  bool load();
+  int  save();
+  void becomeCurrent(bool);
+  void outcommmentSelected();
+
+public slots:
+  void slotSetChanged();
+  void slotChangeUndo(bool);
+  void slotChangeRedo(bool);
+
+private:
+  bool undoIsAvailable, redoIsAvailable;
 };
 
 #endif

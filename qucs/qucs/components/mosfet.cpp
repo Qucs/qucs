@@ -206,7 +206,7 @@ Element* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
 
 // Makes the schematic symbol a n-type, p-type or depletion MOSFET (according
 // to the "Type" and "Vt0" properties).
-void MOSFET::recreate(QucsDoc*)
+void MOSFET::recreate(Schematic*)
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();

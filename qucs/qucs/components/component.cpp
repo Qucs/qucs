@@ -18,18 +18,20 @@
 #include <stdlib.h>
 
 #include "components.h"
+#include "node.h"
 #include "main.h"
 #include "qucs.h"
-#include "qucsview.h"
-#include "node.h"
+#include "schematic.h"
 #include "viewpainter.h"
 
-#include <qpoint.h>
-#include <qpainter.h>
-#include <qstring.h>
-#include <qpen.h>
-#include <qmessagebox.h>
 #include <qdir.h>
+#include <qpen.h>
+#include <qpoint.h>
+#include <qstring.h>
+#include <qpainter.h>
+#include <qtabwidget.h>
+#include <qmessagebox.h>
+
 
 
 // ***********************************************************************
@@ -297,7 +299,8 @@ void Component::paintScheme(QPainter *p)
     int a, b, xb, yb;
     QFont newFont = p->font();
 
-    float Scale = QucsMain->view->Docs.current()->Scale;
+    float Scale =
+          ((Schematic*)QucsMain->DocumentTab->currentPage())->Scale;
     newFont.setPointSizeFloat(float(Scale) * QucsSettings.largeFontSize);
     newFont.setWeight(QFont::DemiBold);
     QFontMetrics  metrics(newFont);
@@ -359,11 +362,6 @@ void Component::print(ViewPainter *p)
     pa->w += 1;   // back to old size
     pa->h += 1;
   }
-}
-
-// -------------------------------------------------------
-void Component::recreate(QucsDoc*)
-{
 }
 
 // -------------------------------------------------------
@@ -1160,10 +1158,10 @@ void GateComponent::createSymbol()
 }
 
 // -------------------------------------------------------
-void GateComponent::recreate(QucsDoc *Doc)
+void GateComponent::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -1177,7 +1175,7 @@ void GateComponent::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }
 

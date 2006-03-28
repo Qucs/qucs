@@ -20,7 +20,7 @@
 #endif
 
 #include "spicefile.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 #include "main.h"
 
 #include <qregexp.h>
@@ -63,10 +63,10 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void SpiceFile::recreate(QucsDoc *Doc)
+void SpiceFile::recreate(Schematic *Doc)
 {
   if(Doc) {
-    Doc->Comps->setAutoDelete(false);
+    Doc->Components->setAutoDelete(false);
     Doc->deleteComp(this);
   }
 
@@ -131,7 +131,7 @@ void SpiceFile::recreate(QucsDoc *Doc)
 
   if(Doc) {
     Doc->insertRawComponent(this);
-    Doc->Comps->setAutoDelete(true);
+    Doc->Components->setAutoDelete(true);
   }
 }
 

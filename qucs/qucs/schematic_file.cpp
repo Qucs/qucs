@@ -1,6 +1,6 @@
 /***************************************************************************
-                                qucsfile.cpp
-                               --------------
+                              schematic_file.cpp
+                             --------------------
     begin                : Sat Mar 27 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -19,14 +19,12 @@
 # include <config.h>
 #endif
 
-#include "qucsfile.h"
-
 #include "node.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
 #include "components/libcomp.h"
-#include "qucsdoc.h"
+#include "schematic.h"
 #include "main.h"
 
 #include <qmessagebox.h>
@@ -38,29 +36,16 @@
 
 
 extern QDir QucsWorkDir;
+
+// Here the subcircuits, SPICE components etc are collected. It must be
+// global to also work within the subcircuits.
 QStringList StringList;
 
-
-QucsFile::QucsFile(QucsDoc *p)
-{
-  Doc = p;
-
-  Wires  = &(p->DocWires);
-  Nodes  = &(p->DocNodes);
-  Comps  = &(p->DocComps);
-  Diags  = &(p->DocDiags);
-  Paints = &(p->DocPaints);
-  SymbolPaints = &(p->SymbolPaints);
-}
-
-QucsFile::~QucsFile()
-{
-}
 
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to copy the selected elements into the clipboard.
-QString QucsFile::createClipboardFile()
+QString Schematic::createClipboardFile()
 {
   int z=0;  // counts selected elements
   Wire *pw;
@@ -72,13 +57,13 @@ QString QucsFile::createClipboardFile()
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = Doc->Comps->first(); pc != 0; pc = Doc->Comps->next())
+  for(pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected) {
       s += pc->save()+"\n";  z++; }
   s += "</Components>\n";
 
   s += "<Wires>\n";
-  for(pw = Doc->Wires->first(); pw != 0; pw = Doc->Wires->next())
+  for(pw = Wires->first(); pw != 0; pw = Wires->next())
     if(pw->isSelected) {
       z++;
       if(pw->Label) if(!pw->Label->isSelected) {
@@ -93,13 +78,13 @@ QString QucsFile::createClipboardFile()
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
-  for(pd = Doc->Diags->first(); pd != 0; pd = Doc->Diags->next())
+  for(pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
     if(pd->isSelected) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
-  for(pp = Doc->Paints->first(); pp != 0; pp = Doc->Paints->next())
+  for(pp = Paintings->first(); pp != 0; pp = Paintings->next())
     if(pp->isSelected)
       if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
@@ -112,7 +97,7 @@ QString QucsFile::createClipboardFile()
 
 // -------------------------------------------------------------
 // Only read fields without loading them.
-bool QucsFile::loadIntoNothing(QTextStream *stream)
+bool Schematic::loadIntoNothing(QTextStream *stream)
 {
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -127,7 +112,7 @@ bool QucsFile::loadIntoNothing(QTextStream *stream)
 
 // -------------------------------------------------------------
 // Paste from clipboard.
-bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
+bool Schematic::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
 {
   QString Line;
 
@@ -144,7 +129,7 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
   }
 
   // read content in symbol edit mode *************************
-  if(Doc->symbolMode) {
+  if(symbolMode) {
     while(!stream->atEnd()) {
       Line = stream->readLine();
       if(Line == "<Components>") {
@@ -194,9 +179,9 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
 
 // -------------------------------------------------------------
 // Returns the number of subcircuit ports.
-int QucsFile::save()
+int Schematic::saveDocument()
 {
-  QFile file(Doc->DocName);
+  QFile file(DocName);
   if(!file.open(IO_WriteOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
 				QObject::tr("Cannot save document!"));
@@ -208,50 +193,50 @@ int QucsFile::save()
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
-  if(Doc->symbolMode) {
-    stream << "  <View=" << Doc->tmpViewX1<<","<<Doc->tmpViewY1<<","
-			 << Doc->tmpViewX2<<","<<Doc->tmpViewY2<< ",";
-    stream <<Doc->tmpScale<<","<<Doc->tmpPosX<<","<<Doc->tmpPosY << ">\n";
+  if(symbolMode) {
+    stream << "  <View=" << tmpViewX1<<","<<tmpViewY1<<","
+			 << tmpViewX2<<","<<tmpViewY2<< ",";
+    stream <<tmpScale<<","<<tmpPosX<<","<<tmpPosY << ">\n";
   }
   else {
-    stream << "  <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
-			 << Doc->ViewX2<<","<<Doc->ViewY2<< ",";
-    stream << Doc->Scale <<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
+    stream << "  <View=" << ViewX1<<","<<ViewY1<<","
+			 << ViewX2<<","<<ViewY2<< ",";
+    stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
   }
-  stream << "  <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
-			<< Doc->GridOn << ">\n";
-  stream << "  <DataSet=" << Doc->DataSet << ">\n";
-  stream << "  <DataDisplay=" << Doc->DataDisplay << ">\n";
-  stream << "  <OpenDisplay=" << Doc->SimOpenDpl << ">\n";
+  stream << "  <Grid=" << GridX<<","<<GridY<<","
+			<< GridOn << ">\n";
+  stream << "  <DataSet=" << DataSet << ">\n";
+  stream << "  <DataDisplay=" << DataDisplay << ">\n";
+  stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "</Properties>\n";
 
   Painting *pp;
   stream << "<Symbol>\n";     // save all paintings for symbol
-  for(pp = SymbolPaints->first(); pp != 0; pp = SymbolPaints->next())
+  for(pp = SymbolPaints.first(); pp != 0; pp = SymbolPaints.next())
     stream << "  <" << pp->save() << ">\n";
   stream << "</Symbol>\n";
 
   stream << "<Components>\n";    // save all components
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next())
     stream << "  " << pc->save() << "\n";
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
     stream << "  " << pw->save() << "\n";
 
   // save all labeled nodes as wires
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
     if(pn->Label) stream << "  " << pn->Label->save() << "\n";
   stream << "</Wires>\n";
 
   stream << "<Diagrams>\n";    // save all diagrams
-  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
+  for(Diagram *pd = DocDiags.first(); pd != 0; pd = DocDiags.next())
     stream << "  " << pd->save() << "\n";
   stream << "</Diagrams>\n";
 
   stream << "<Paintings>\n";     // save all paintings
-  for(pp = Paints->first(); pp != 0; pp = Paints->next())
+  for(pp = DocPaints.first(); pp != 0; pp = DocPaints.next())
     stream << "  <" << pp->save() << ">\n";
   stream << "</Paintings>\n";
 
@@ -260,7 +245,7 @@ int QucsFile::save()
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadProperties(QTextStream *stream)
+bool Schematic::loadProperties(QTextStream *stream)
 {
   bool ok = true;
   QString Line, cstr, nstr;
@@ -285,23 +270,24 @@ bool QucsFile::loadProperties(QTextStream *stream)
     cstr = Line.section('=',0,0);    // property type
     nstr = Line.section('=',1,1);    // property value
          if(cstr == "View") {
-		Doc->ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		Doc->ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		Doc->ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-		Doc->ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
-		Doc->Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		Doc->PosX   = nstr.section(',',5,5).toInt(&ok); if(ok) {
-		Doc->PosY   = nstr.section(',',6,6).toInt(&ok); }}}}}} }
+		ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		int PosX    = nstr.section(',',5,5).toInt(&ok); if(ok) {
+		int PosY    = nstr.section(',',6,6).toInt(&ok); if(ok)
+		setContentsPos(PosX, PosY); }}}}}} }
     else if(cstr == "Grid") {
-		Doc->GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		Doc->GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		if(nstr.section(',',2,2).toInt(&ok) == 0) Doc->GridOn = false;
-		else Doc->GridOn = true; }} }
-    else if(cstr == "DataSet") Doc->DataSet = nstr;
-    else if(cstr == "DataDisplay") Doc->DataDisplay = nstr;
+		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		if(nstr.section(',',2,2).toInt(&ok) == 0) GridOn = false;
+		else GridOn = true; }} }
+    else if(cstr == "DataSet") DataSet = nstr;
+    else if(cstr == "DataDisplay") DataDisplay = nstr;
     else if(cstr == "OpenDisplay")
-		if(nstr.toInt(&ok) == 0) Doc->SimOpenDpl = false;
-		else Doc->SimOpenDpl = true;
+		if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
+		else SimOpenDpl = true;
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
@@ -321,7 +307,7 @@ bool QucsFile::loadProperties(QTextStream *stream)
 
 // ---------------------------------------------------
 // Inserts a component without performing logic for wire optimization.
-void QucsFile::simpleInsertComponent(Component *c)
+void Schematic::simpleInsertComponent(Component *c)
 {
   Node *pn;
   int x, y;
@@ -331,23 +317,23 @@ void QucsFile::simpleInsertComponent(Component *c)
     y = pp->y+c->cy;
 
     // check if new node lies upon existing node
-    for(pn = Nodes->first(); pn != 0; pn = Nodes->next())  // check every node
+    for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
       if(pn->cx == x) if(pn->cy == y)  break;
 
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
-      Nodes->append(pn);
+      DocNodes.append(pn);
     }
     pn->Connections.append(c);  // connect schematic node to component node
 
     pp->Connection = pn;  // connect component node to schematic node
   }
 
-  Comps->append(c);
+  DocComps.append(c);
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
+bool Schematic::loadComponents(QTextStream *stream, QPtrList<Component> *List)
 {
   QString Line, cstr;
   Component *c;
@@ -377,16 +363,16 @@ bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
 
 // -------------------------------------------------------------
 // Inserts a wire without performing logic for optimizing.
-void QucsFile::simpleInsertWire(Wire *pw)
+void Schematic::simpleInsertWire(Wire *pw)
 {
   Node *pn;
   // check if first wire node lies upon existing node
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())  // check every node
+  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
     if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x1, pw->y1);
-    Nodes->append(pn);
+    DocNodes.append(pn);
   }
 
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
@@ -402,21 +388,21 @@ void QucsFile::simpleInsertWire(Wire *pw)
   pw->Port1 = pn;
 
   // check if second wire node lies upon existing node
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())  // check every node
+  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
     if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
 
   if(!pn) {   // create new node, if no existing one lies at this position
     pn = new Node(pw->x2, pw->y2);
-    Nodes->append(pn);
+    DocNodes.append(pn);
   }
   pn->Connections.append(pw);  // connect schematic node to component node
   pw->Port2 = pn;
 
-  Wires->append(pw);
+  DocWires.append(pw);
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadWires(QTextStream *stream, QPtrList<Element> *List)
+bool Schematic::loadWires(QTextStream *stream, QPtrList<Element> *List)
 {
   Wire *w;
   QString Line;
@@ -453,7 +439,7 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Element> *List)
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
+bool Schematic::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
 {
   Diagram *d;
   QString Line, cstr;
@@ -496,7 +482,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
+bool Schematic::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
 {
   Painting *p=0;
   QString Line, cstr;
@@ -543,12 +529,12 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
 }
 
 // -------------------------------------------------------------
-bool QucsFile::load()
+bool Schematic::loadDocument()
 {
-  QFile file(Doc->DocName);
+  QFile file(DocName);
   if(!file.open(IO_ReadOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load document: ")+Doc->DocName);
+                 QObject::tr("Cannot load document: ")+DocName);
     return false;
   }
 
@@ -568,7 +554,7 @@ bool QucsFile::load()
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
     QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type: ")+Doc->DocName);
+ 		 QObject::tr("Wrong document type: ")+DocName);
     return false;
   }
 
@@ -590,7 +576,7 @@ bool QucsFile::load()
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {
-      if(!loadPaintings(&stream, SymbolPaints)) {
+      if(!loadPaintings(&stream, &SymbolPaints)) {
 	file.close();
 	return false;
       }
@@ -606,10 +592,10 @@ bool QucsFile::load()
       if(!loadWires(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Diagrams>") {
-      if(!loadDiagrams(&stream, Diags)) { file.close(); return false; } }
+      if(!loadDiagrams(&stream, &DocDiags)) { file.close(); return false; } }
     else
     if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, Paints)) { file.close(); return false; } }
+      if(!loadPaintings(&stream, &DocPaints)) { file.close(); return false; } }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("File Format Error:\nUnknown field!"));
@@ -625,7 +611,7 @@ bool QucsFile::load()
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
-QString QucsFile::createUndoString(char Op)
+QString Schematic::createUndoString(char Op)
 {
   Wire *pw;
   Diagram *pd;
@@ -635,22 +621,22 @@ QString QucsFile::createUndoString(char Op)
   // Build element document.
   QString s = "  \n";
   s.at(0) = Op;
-  for(pc = Comps->first(); pc != 0; pc = Comps->next())
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
     s += pc->save()+"\n";
   s += "</>\n";  // short end flag
 
-  for(pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(pw = DocWires.first(); pw != 0; pw = DocWires.next())
     s += pw->save()+"\n";
   // save all labeled nodes as wires
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
     if(pn->Label) s += pn->Label->save()+"\n";
   s += "</>\n";
 
-  for(pd = Diags->first(); pd != 0; pd = Diags->next())
+  for(pd = DocDiags.first(); pd != 0; pd = DocDiags.next())
     s += pd->save()+"\n";
   s += "</>\n";
 
-  for(pp = Paints->first(); pp != 0; pp = Paints->next())
+  for(pp = DocPaints.first(); pp != 0; pp = DocPaints.next())
     s += "<"+pp->save()+">\n";
   s += "</>\n";
 
@@ -659,7 +645,7 @@ QString QucsFile::createUndoString(char Op)
 
 // -------------------------------------------------------------
 // Same as "createUndoString(char Op)" but for symbol edit mode.
-QString QucsFile::createSymbolUndoString(char Op)
+QString Schematic::createSymbolUndoString(char Op)
 {
   Painting *pp;
 
@@ -670,7 +656,7 @@ QString QucsFile::createSymbolUndoString(char Op)
   s += "</>\n";  // short end flag for wires
   s += "</>\n";  // short end flag for diagrams
 
-  for(pp = SymbolPaints->first(); pp != 0; pp = SymbolPaints->next())
+  for(pp = SymbolPaints.first(); pp != 0; pp = SymbolPaints.next())
     s += "<"+pp->save()+">\n";
   s += "</>\n";
 
@@ -680,13 +666,13 @@ QString QucsFile::createSymbolUndoString(char Op)
 // -------------------------------------------------------------
 // Is quite similiar to "load()" but with less error checking.
 // Used for "undo" function.
-bool QucsFile::rebuild(QString *s)
+bool Schematic::rebuild(QString *s)
 {
-  Wires->clear();	// delete whole document
-  Nodes->clear();
-  Comps->clear();
-  Diags->clear();
-  Paints->clear();
+  DocWires.clear();	// delete whole document
+  DocNodes.clear();
+  DocComps.clear();
+  DocDiags.clear();
+  DocPaints.clear();
 
   QString Line;
   QTextStream stream(s, IO_ReadOnly);
@@ -695,17 +681,17 @@ bool QucsFile::rebuild(QString *s)
   // read content *************************
   if(!loadComponents(&stream))  return false;
   if(!loadWires(&stream))  return false;
-  if(!loadDiagrams(&stream, Diags))  return false;
-  if(!loadPaintings(&stream, Paints)) return false;
+  if(!loadDiagrams(&stream, &DocDiags))  return false;
+  if(!loadPaintings(&stream, &DocPaints)) return false;
 
   return true;
 }
 
 // -------------------------------------------------------------
 // Same as "rebuild(QString *s)" but for symbol edit mode.
-bool QucsFile::rebuildSymbol(QString *s)
+bool Schematic::rebuildSymbol(QString *s)
 {
-  SymbolPaints->clear();	// delete whole document
+  SymbolPaints.clear();	// delete whole document
 
   QString Line;
   QTextStream stream(s, IO_ReadOnly);
@@ -715,7 +701,7 @@ bool QucsFile::rebuildSymbol(QString *s)
   Line = stream.readLine();  // skip components
   Line = stream.readLine();  // skip wires
   Line = stream.readLine();  // skip diagrams
-  if(!loadPaintings(&stream, SymbolPaints)) return false;
+  if(!loadPaintings(&stream, &SymbolPaints)) return false;
 
   return true;
 }
@@ -727,7 +713,7 @@ bool QucsFile::rebuildSymbol(QString *s)
 // *****                                                     *****
 // ***************************************************************
 
-void QucsFile::createNodeSet(QStringList& Collect, int& countInit,
+void Schematic::createNodeSet(QStringList& Collect, int& countInit,
                              Conductor *pw, Node *p1)
 {
   if(pw->Label)
@@ -737,7 +723,7 @@ void QucsFile::createNodeSet(QStringList& Collect, int& countInit,
 }
 
 // ---------------------------------------------------
-void QucsFile::throughAllNodes(bool User, QStringList& Collect,
+void Schematic::throughAllNodes(bool User, QStringList& Collect,
                                int& countInit, bool Analog)
 {
   int z=0;
@@ -747,7 +733,7 @@ void QucsFile::throughAllNodes(bool User, QStringList& Collect,
   bool setName=false;
   QPtrList<Node> Cons;
 
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     if(pn->Name.isEmpty() == User) continue;  // already named ?
     if(!User) {
       if(Analog)  pn->Name = "_net";
@@ -799,24 +785,24 @@ void QucsFile::throughAllNodes(bool User, QStringList& Collect,
 // Follows the wire lines in order to determine the node names for
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
-bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
+bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
                    QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
   // delete the node names
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+  for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     pn->State = 0;
     if(pn->Label)  pn->Name = pn->Label->Name;
     else pn->Name = "";
   }
 
   // set the wire names to the connected node
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
     if(pw->Label != 0) pw->Port1->Name = pw->Label->Name;
 
   bool r;
   QString s;
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next())
     if(pc->isActive) {
       if(NumPorts < 0) {
         if((pc->Type & isAnalogComponent) == 0) {
@@ -838,14 +824,14 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 		continue;   // insert each subcircuit just one time
 
 	     StringList.append(s);
-	     QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
-             if(!d->File.load()) {  // load document if possible
+	     Schematic *d = new Schematic(0, QucsWorkDir.filePath(s));
+             if(!d->load()) {  // load document if possible
                delete d;
                ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
                return false;
              }
 	     d->DocName = s;
-	     r = d->File.createSubNetlist(
+	     r = d->createSubNetlist(
 			stream, countInit, Collect, ErrText, NumPorts);
 	     delete d;
 	     if(!r) return false;
@@ -894,7 +880,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'NetlistFile'.
-bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
+bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QTextEdit *ErrText, int NumPorts)
 {
   int i, z;
@@ -916,7 +902,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
   QStringList::Iterator it;
   Component *pc;
   // collect subcircuit ports and sort their node names into "SubcircuitPorts"
-  for(pc = Comps->first(); pc != 0; pc = Comps->next())
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
     if(pc->Model == "Port") {
       i  = pc->Props.first()->Value.toInt();
       for(z=SubcircuitPorts.size(); z<i; z++)
@@ -936,7 +922,7 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
       }
     }
 
-  QString  Type = properName(Doc->DocName);
+  QString  Type = properName(DocName);
 
   if(NumPorts < 0)
     (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ") << '\n';
@@ -958,15 +944,15 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
 
 
   // write all components with node names into the netlist file
-  for(pc = Comps->first(); pc != 0; pc = Comps->next()) {
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
       ErrText->insert(
-        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(Doc->DocName));
+        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName));
       continue;
     }
     if(pc->Model == "Eqn") {  // no equations in subcircuits
       ErrText->insert(
-        QObject::tr("WARNING: Ignore equation in subcircuit \"%1\".").arg(Doc->DocName));
+        QObject::tr("WARNING: Ignore equation in subcircuit \"%1\".").arg(DocName));
       continue;
     }
 
@@ -989,15 +975,15 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
 
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
-int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
+int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QTextEdit *ErrText)
 {
-  if(Doc->showBias > 0)  Doc->showBias = -1;  // do not show DC bias anymore
+  if(showBias > 0)  showBias = -1;  // do not show DC bias anymore
 
   bool isTruthTable = false;
   int allTypes = 0, NumPorts = 0;
   // Detect simulation domain (analog/digital) by looking at component types.
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(!pc->isActive) continue;
     if(pc->Model.at(0) == '.') {
       if(pc->Model == ".Digi") {
@@ -1050,13 +1036,12 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "#";
   else
     stream << "--";
-  stream << " Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
+  stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
 //  if((allTypes & isAnalogComponent) == 0)
 //    stream << "library ieee;\nuse ieee.std_logic_1164.all;\n\n";
 
 
   int countInit = 0;
-  StringList.clear();  // no subcircuits yet
   if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
     return -10;
 
@@ -1071,7 +1056,7 @@ int QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
 
 // .................................................
 // write all components with node names into the netlist file
-QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
+QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 {
   if(NumPorts >= 0) {
     stream << "architecture Arch_TestBench of TestBench is\n"
@@ -1083,9 +1068,10 @@ QString QucsFile::createNetlist(QTextStream& stream, int NumPorts)
       stream << "  gnd <= gnd and '0';\n";  // should appear only once
   }
   Signals.clear();  // was filled in "giveNodeNames()"
+  StringList.clear();
 
   QString s, Time;
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(!pc->isActive) continue;   // should it be simulated ?
   
     if(NumPorts < 0)

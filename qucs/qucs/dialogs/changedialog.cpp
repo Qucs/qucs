@@ -17,7 +17,8 @@
 
 #include "changedialog.h"
 #include "node.h"
-#include "qucsdoc.h"
+#include "schematic.h"
+#include "components/component.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -32,11 +33,11 @@
 #include <qmessagebox.h>
 
 
-ChangeDialog::ChangeDialog(QucsDoc *d, QWidget *parent)
-			: QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
+ChangeDialog::ChangeDialog(Schematic *Doc_)
+			: QDialog(Doc_, 0, TRUE, Qt::WDestructiveClose)
 {
+  Doc = Doc_;
   setCaption(tr("Change Component Properties"));
-  Doc = d;
 
   Expr.setPattern("[^\"=]+");  // valid expression for property value
   Validator = new QRegExpValidator(Expr, this);
@@ -162,10 +163,10 @@ void ChangeDialog::slotButtReplace()
 
 
   QPtrList<QCheckBox> pList;
-  QCheckBox * pb;
-  Component * pc;
+  QCheckBox *pb;
+  Component *pc;
   // search through all components
-  for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
+  for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
     if(matches(pc->Model)) {
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
@@ -200,7 +201,7 @@ void ChangeDialog::slotButtReplace()
   for(pb = pList.first(); pb!=0; pb = pList.next()) {
     if(!pb->isChecked())  continue;
 
-    for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
+    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
       if(pb->text() != pc->Name)  continue;
 
       for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next()) {
@@ -226,7 +227,8 @@ void ChangeDialog::slotButtReplace()
           ty_Dist = dy;
         }
 
-        Doc->recreateComponent(pc);  // apply changes to schematic symbol
+        // apply changes to schematic symbol
+        Doc->recreateComponent(pc);
         changed = true;
         break;
       }

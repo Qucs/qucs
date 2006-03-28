@@ -1,6 +1,6 @@
 /***************************************************************************
-                          settingsdialog.h  -  description
-                             -------------------
+                              settingsdialog.h
+                             ------------------
     begin                : Mon Oct 20 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,28 +20,25 @@
 
 #include <qdialog.h>
 
-class QucsDoc;
+class Schematic;
 class QLineEdit;
 class QCheckBox;
 class QVBoxLayout;
 class QRegExpValidator;
 
-/**
-  *@author Michael Margraf
-  */
 
 class SettingsDialog : public QDialog  {
    Q_OBJECT
 public:
-  SettingsDialog(QucsDoc *d, QWidget *parent=0, const char *name=0);
-  ~SettingsDialog();
+  SettingsDialog(Schematic*);
+ ~SettingsDialog();
 
 private slots:
   void slotOK();
   void slotApply();
 
 public:
-  QucsDoc   *Doc;
+  Schematic *Doc;
 
   QLineEdit *Input_DataSet, *Input_DataDisplay;
   QLineEdit *Input_GridX, *Input_GridY;

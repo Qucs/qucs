@@ -42,7 +42,7 @@ public:
 
 signals:
   void SimulationEnded(int, SimMessage*);
-  void displayDataPage(QString);
+  void displayDataPage(QString&, QString&);
 
 public slots:
   void slotClose();
@@ -73,7 +73,7 @@ public:
   QucsDoc *Doc;
   int showBias;
   bool SimOpenDpl;
-  QString DataSet, DataDisplay;
+  QString DocName, DataSet, DataDisplay;
 
   QProcess      SimProcess;
   QTextEdit    *ProgText, *ErrText;

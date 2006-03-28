@@ -20,8 +20,8 @@
 #endif
 
 #include "matchdialog.h"
+#include "main.h"
 #include "qucs.h"
-#include "qucsview.h"
 #include "element.h"
 #include "../components/capacitor.h"
 #include "../components/inductor.h"
@@ -381,7 +381,7 @@ void MatchDialog::slotButtCreate()
     if(!calcMatchingCircuit(S11real, S11imag, Z1, Freq))
       return;
 
-  QucsMain->Acts.slotEditPaste(true);
+  QucsMain->slotEditPaste(true);
   accept();
 }
 

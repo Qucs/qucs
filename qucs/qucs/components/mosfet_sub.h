@@ -29,7 +29,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_p(QString&, char* &, bool getNewOne=false);
   static Element* info_depl(QString&, char* &, bool getNewOne=false);
-  void recreate(QucsDoc*);
+  void recreate(Schematic*);
 };
 
 #endif

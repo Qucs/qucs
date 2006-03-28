@@ -75,7 +75,7 @@ Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void AC_Sim::recreate(QucsDoc*)
+void AC_Sim::recreate(Schematic*)
 {
   if((Props.getFirst()->Value == "list") ||
      (Props.getFirst()->Value == "const")) {
