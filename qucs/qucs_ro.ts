@@ -3377,81 +3377,52 @@ Folosire:  qucsedit [-r] file
         <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsActions</name>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Info</source>
         <translation type="unfinished">Info</translation>
     </message>
     <message>
+        <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished">Potenţialul de masă nu poate fi etichetat!</translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">Info</translation>
+    </message>
+    <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">Cel puţin două elemente trebuie selectate!</translation>
+        <translation type="obsolete">Cel puţin două elemente trebuie selectate!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Eroare</translation>
+        <translation type="obsolete">Eroare</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">Editorul de text nu poate fi iniţializat!</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Editorul de text nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">qucshelp nu poate fi iniţializat!</translation>
-    </message>
-    <message>
-        <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project open!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No files copied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwrite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; already exists.
-Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">qucshelp nu poate fi iniţializat!</translation>
     </message>
 </context>
 <context>
@@ -3478,7 +3449,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>Conţinutul directorului de proiecte</translation>
+        <translation type="obsolete">Conţinutul directorului de proiecte</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -3506,7 +3477,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>Conţinutul proiectului deschis</translation>
+        <translation type="obsolete">Conţinutul proiectului deschis</translation>
     </message>
     <message>
         <source>Components</source>
@@ -3667,12 +3638,12 @@ Doriţi sa salvaţi modificările înaintea salvării? </translation>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation>Numai extensiile  &apos;.sch&apos; and &apos;.dpl&apos;
+        <translation type="obsolete">Numai extensiile  &apos;.sch&apos; and &apos;.dpl&apos;
 </translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>vor aparea in listajul de conţinut! Continuaţi?</translation>
+        <translation type="obsolete">vor aparea in listajul de conţinut! Continuaţi?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3948,11 +3919,11 @@ Erori:
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">qucshelp nu poate fi iniţializat!</translation>
+        <translation type="unfinished">qucshelp nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">Editorul de text nu poate fi iniţializat!</translation>
+        <translation type="unfinished">Editorul de text nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -3960,7 +3931,7 @@ Erori:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="obsolete">Cel puţin două elemente trebuie selectate!</translation>
+        <translation type="unfinished">Cel puţin două elemente trebuie selectate!</translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -4050,6 +4021,1395 @@ Editează această schemă</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data display: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete VHDL source: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating new text editor...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing selected...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong dependency!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="unfinished">&amp;Nou</translation>
+    </message>
+    <message>
+        <source>Creates a new document</source>
+        <translation type="unfinished">Crează un nou document</translation>
+    </message>
+    <message>
+        <source>New
+
+Creates a new schematic or data display document</source>
+        <translation type="unfinished">Nou
+
+Crează o schema nouă sau document afişaj de date</translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text
+
+Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation type="unfinished">Deschide fişier</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">&amp;Deschide...</translation>
+    </message>
+    <message>
+        <source>Opens an existing document</source>
+        <translation type="unfinished">Deschide un document existent</translation>
+    </message>
+    <message>
+        <source>Open File
+
+Opens an existing document</source>
+        <translation type="unfinished">Deschide Fişier
+
+Deschide un document existent</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished">Salvează Fişier</translation>
+    </message>
+    <message>
+        <source>Saves the current document</source>
+        <translation type="unfinished">Salvează documentul curent</translation>
+    </message>
+    <message>
+        <source>Save File
+
+Saves the current document</source>
+        <translation type="unfinished">Salvează Fişier
+
+Salvează documentul curent</translation>
+    </message>
+    <message>
+        <source>Save File As</source>
+        <translation type="unfinished">Salvează Fişier ca</translation>
+    </message>
+    <message>
+        <source>Save as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saves the current document under a new filename</source>
+        <translation type="unfinished">Salvează documentul curent sub un nou nume</translation>
+    </message>
+    <message>
+        <source>Save As
+
+Saves the current document under a new filename</source>
+        <translation type="unfinished">Salvează ca
+
+Salvează documentul curent sub un nou nume </translation>
+    </message>
+    <message>
+        <source>Save All Files</source>
+        <translation type="unfinished">Salvează toate fişierele</translation>
+    </message>
+    <message>
+        <source>Save &amp;All</source>
+        <translation type="unfinished">Salvează &amp;Tot</translation>
+    </message>
+    <message>
+        <source>Saves all open documents</source>
+        <translation type="unfinished">Salvează toate documentele deschise</translation>
+    </message>
+    <message>
+        <source>Save All Files
+
+Saves all open documents</source>
+        <translation type="unfinished">Salvează Toate Fişierele
+
+Salvează toate documentele deschise</translation>
+    </message>
+    <message>
+        <source>Close File</source>
+        <translation type="unfinished">Închide Fişierul</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished">&amp;Închide</translation>
+    </message>
+    <message>
+        <source>Closes the current document</source>
+        <translation type="unfinished">Închide documentul curent</translation>
+    </message>
+    <message>
+        <source>Close File
+
+Closes the current document</source>
+        <translation type="unfinished">Închide Fişier
+
+Închide documentul curent</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings...</source>
+        <translation type="unfinished">Setările Documentului...</translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Setările Documentului</translation>
+    </message>
+    <message>
+        <source>Settings
+
+Sets properties of the file</source>
+        <translation type="unfinished">Setări
+
+Setează proprietăţile fişierului</translation>
+    </message>
+    <message>
+        <source>Print File</source>
+        <translation type="unfinished">Printează Fişier</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished">&amp;Printează...</translation>
+    </message>
+    <message>
+        <source>Prints the current document</source>
+        <translation type="unfinished">Printează documentul curent</translation>
+    </message>
+    <message>
+        <source>Print File
+
+Prints the current document</source>
+        <translation type="unfinished">Printează Fişier
+
+Printează documentul curent</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished">Printează Elementele Selectate</translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished">Printează Selecţia...</translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished">Printează Elementele Selectate</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
+        <translation type="unfinished">Printează Elementele Selectate
+
+Printează elementele selectate în documentul curent</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="unfinished">Ieşire</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">I&amp;eşire</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="unfinished">Întrerupere aplicaţie</translation>
+    </message>
+    <message>
+        <source>Exit
+
+Quits the application</source>
+        <translation type="unfinished">Ieşire
+
+Întrerupere aplicaţie</translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished">Setările Aplicaţiei</translation>
+    </message>
+    <message>
+        <source>Application Settings...</source>
+        <translation type="unfinished">Setările Aplicaţiei...</translation>
+    </message>
+    <message>
+        <source>Qucs Settings
+
+Sets properties of the application</source>
+        <translation type="unfinished">Setările Qucs
+
+Setează proprietăţile aplicaţiei</translation>
+    </message>
+    <message>
+        <source>Align top</source>
+        <translation type="unfinished">Aliniază deasupra</translation>
+    </message>
+    <message>
+        <source>Align top selected elements</source>
+        <translation type="unfinished">Aliniază componentele selectate deasupra</translation>
+    </message>
+    <message>
+        <source>Align top
+
+Align selected elements to their upper edge</source>
+        <translation type="unfinished">Aliniază deasupra
+
+Aliniază componentele selectate la marginea superioară</translation>
+    </message>
+    <message>
+        <source>Align bottom</source>
+        <translation type="unfinished">Aliniază dedesubt</translation>
+    </message>
+    <message>
+        <source>Align bottom selected elements</source>
+        <translation type="unfinished">Aliniază componentele selectate dedesubt</translation>
+    </message>
+    <message>
+        <source>Align bottom
+
+Align selected elements to their lower edge</source>
+        <translation type="unfinished">Aliniază dedesubt
+
+Aliniază componentele selectate la marginea inferioară</translation>
+    </message>
+    <message>
+        <source>Align left</source>
+        <translation type="unfinished">Aliniază stânga</translation>
+    </message>
+    <message>
+        <source>Align left selected elements</source>
+        <translation type="unfinished">Aliniază componentele selectate la stânga</translation>
+    </message>
+    <message>
+        <source>Align left
+
+Align selected elements to their left edge</source>
+        <translation type="unfinished">Aliniază stânga
+
+Aliniază componentele selectate la marginea din stânga</translation>
+    </message>
+    <message>
+        <source>Align right</source>
+        <translation type="unfinished">Aliniază dreapta</translation>
+    </message>
+    <message>
+        <source>Align right selected elements</source>
+        <translation type="unfinished">Aliniază componentele selectate la dreapta</translation>
+    </message>
+    <message>
+        <source>Align right
+
+Align selected elements to their right edge</source>
+        <translation type="unfinished">Aliniază dreapta
+
+Aliniază componentele selectate la marginea din dreapta</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally</source>
+        <translation type="unfinished">Distribuie orizontal</translation>
+    </message>
+    <message>
+        <source>Distribute equally horizontally</source>
+        <translation type="unfinished">Distribuie uniform orizontal</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally
+
+Distribute horizontally selected elements</source>
+        <translation type="unfinished">Distribuie orizontal
+
+Distribuie orizontal componentele selectate</translation>
+    </message>
+    <message>
+        <source>Distribute vertically</source>
+        <translation type="unfinished">Distribuie vertical</translation>
+    </message>
+    <message>
+        <source>Distribute equally vertically</source>
+        <translation type="unfinished">Distribuie uniform vertical</translation>
+    </message>
+    <message>
+        <source>Distribute vertically
+
+Distribute vertically selected elements</source>
+        <translation type="unfinished">Distribuie vertical
+
+Distribuie vertical componentele selectate</translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished">Aşează pe Reţea</translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
+        <translation type="unfinished">Aşează pe reţea
+
+Pune elementele selectate pe reţea</translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished">Mută Textul Componentei</translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="unfinished">Mută Textul Componentei
+
+Mută proprietatea text al componentelor</translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values
+
+Change Property Value of Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">Taie</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">T&amp;aie</translation>
+    </message>
+    <message>
+        <source>Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Taie secţiunea selectată si pune-o în clipboard</translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Taie
+
+Taie secţiunea selectată si pune-o în clipboard</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Copiază</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Copiază</translation>
+    </message>
+    <message>
+        <source>Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Copiază secţiunea selectată si pune-o în clipboard</translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Copiază
+
+Copiază secţiunea selectată si pune-o în clipboard</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Lipeşte</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">&amp;Lipeşte</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Lipeşte conţinutul clipboardului la poziţia cursorului</translation>
+    </message>
+    <message>
+        <source>Paste
+
+Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Lipeşte
+
+Lipeşte conţinutul clipboardului la poziţia cursorului</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Şterge</translation>
+    </message>
+    <message>
+        <source>Deletes the selected components</source>
+        <translation type="unfinished">Şterge componentele selectate</translation>
+    </message>
+    <message>
+        <source>Delete
+
+Deletes the selected components</source>
+        <translation type="unfinished">Şterge
+
+Şterge componentele selectate</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Anulează</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">&amp;Anulează</translation>
+    </message>
+    <message>
+        <source>Undoes the last command</source>
+        <translation type="unfinished">Anulează ultima comandă</translation>
+    </message>
+    <message>
+        <source>Undo
+
+Makes the last action undone</source>
+        <translation type="unfinished">Anulează
+
+Anulează ultima acţiune</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Repetă</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">&amp;Repetă</translation>
+    </message>
+    <message>
+        <source>Redoes the last command</source>
+        <translation type="unfinished">Repetă ultima comanda</translation>
+    </message>
+    <message>
+        <source>Redo
+
+Repeats the last action once more</source>
+        <translation type="unfinished">Repetă
+
+Repetă ultima acţiune înca odata</translation>
+    </message>
+    <message>
+        <source>New Project</source>
+        <translation type="unfinished">Proiect nou</translation>
+    </message>
+    <message>
+        <source>&amp;New Project...</source>
+        <translation type="unfinished">Proiect &amp;Nou...</translation>
+    </message>
+    <message>
+        <source>Creates a new project</source>
+        <translation type="unfinished">Crează un nou proiect</translation>
+    </message>
+    <message>
+        <source>New Project
+
+Creates a new project</source>
+        <translation type="unfinished">Proiect Nou
+
+Crează un nou proiect</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation type="unfinished">Deschide Proiect</translation>
+    </message>
+    <message>
+        <source>&amp;Open Project...</source>
+        <translation type="unfinished">&amp;Deschide Proiect...</translation>
+    </message>
+    <message>
+        <source>Opens a project</source>
+        <translation type="unfinished">Deschide un Proiect</translation>
+    </message>
+    <message>
+        <source>Open Project
+
+Opens an existing project</source>
+        <translation type="unfinished">Proiect Deschis
+
+Deschide un proiect existent</translation>
+    </message>
+    <message>
+        <source>Delete Project</source>
+        <translation type="unfinished">Şterge Proiect</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Project...</source>
+        <translation type="unfinished">&amp;Şterge Proiect...</translation>
+    </message>
+    <message>
+        <source>Deletes a project</source>
+        <translation type="unfinished">Şterge un proiect</translation>
+    </message>
+    <message>
+        <source>Delete Project
+
+Deletes an existing project</source>
+        <translation type="unfinished">Şterge Proiect
+
+Şterge un proiect existent</translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished">Închide Proiectul</translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished">&amp;Închide Proiectul</translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished">Închide proiectul curent</translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished">Închide Proiectul
+
+Închide Proiectul curent</translation>
+    </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View All</source>
+        <translation type="unfinished">Arată tot</translation>
+    </message>
+    <message>
+        <source>Views the whole page</source>
+        <translation type="unfinished">Arată toata pagina</translation>
+    </message>
+    <message>
+        <source>View All
+
+Shows the whole page content</source>
+        <translation type="unfinished">Arată Tot
+
+Arată conţinutul întergii pagini</translation>
+    </message>
+    <message>
+        <source>View 1:1</source>
+        <translation type="unfinished">Arată 1:1</translation>
+    </message>
+    <message>
+        <source>Views without magnification</source>
+        <translation type="unfinished">Arată fără magnificare</translation>
+    </message>
+    <message>
+        <source>View 1:1
+
+Shows the page content without magnification</source>
+        <translation type="unfinished">Arată 1:1
+
+Arată conţinutul paginii fara magnificare</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished">Măreşte</translation>
+    </message>
+    <message>
+        <source>Zooms into the current view</source>
+        <translation type="unfinished">Măreşte în afişajul curent</translation>
+    </message>
+    <message>
+        <source>Zoom in
+
+Zooms the current view</source>
+        <translation type="unfinished">Măreşte
+
+Măreşte afişajul curent</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished">Micşorează</translation>
+    </message>
+    <message>
+        <source>Zooms out the current view</source>
+        <translation type="unfinished">Micşorează afişajul curent</translation>
+    </message>
+    <message>
+        <source>Zoom out
+
+Zooms out the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Selectează</translation>
+    </message>
+    <message>
+        <source>Select mode</source>
+        <translation type="unfinished">Mod de selecţie</translation>
+    </message>
+    <message>
+        <source>Select
+
+Select mode</source>
+        <translation type="unfinished">Selectează
+
+Mod de selecţie</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">Selectează Tot</translation>
+    </message>
+    <message>
+        <source>Selects all elements</source>
+        <translation type="unfinished">Selectează toate elementele</translation>
+    </message>
+    <message>
+        <source>Select All
+
+Selects all elements of the document</source>
+        <translation type="unfinished">Selectează Tot
+
+Selectează toate elementele din document</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished">Roteşte</translation>
+    </message>
+    <message>
+        <source>Rotates the selected component by 90&#xb0;</source>
+        <translation type="unfinished">Roteşte componenta curentă cu 90°</translation>
+    </message>
+    <message>
+        <source>Rotate
+
+Rotates the selected component by 90&#xb0; counter-clockwise</source>
+        <translation type="unfinished">Roteşte
+
+Roteşte componenta selectată cu 90° sens antiorar</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis</source>
+        <translation type="unfinished">Oglindeşte pe Axa X</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X axis</source>
+        <translation type="unfinished">Oglindeşte elementul selectat pe axa X</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis
+
+Mirrors the selected item about X Axis</source>
+        <translation type="unfinished">Oglindeşte pe Axa X
+
+Oglindeşte elementul selectat pe Axa X</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis</source>
+        <translation type="unfinished">Oglindeşte pe Axa Y</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y axis</source>
+        <translation type="unfinished">Oglindeşte elementul selectat pe axa Y</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis
+
+Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished">Oglindeşte pe Axa Y
+
+Oglindeşte elementul selectat pe Axa Y</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit</source>
+        <translation type="unfinished">Intră în Subcircuit</translation>
+    </message>
+    <message>
+        <source>Goes inside subcircuit</source>
+        <translation type="unfinished">Intră în subcircuit</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit
+
+Goes inside the selected subcircuit</source>
+        <translation type="unfinished">Intră în Subcircuit
+
+Intră în subcircuitul selectat</translation>
+    </message>
+    <message>
+        <source>Pop out</source>
+        <translation type="unfinished">Ieşi</translation>
+    </message>
+    <message>
+        <source>Pop outside subcircuit</source>
+        <translation type="unfinished">Ieşi în afara subcircuitului</translation>
+    </message>
+    <message>
+        <source>Pop out
+
+Goes up one hierarchy level, i.e. leaves subcircuit</source>
+        <translation type="unfinished">Ieşi
+
+Merge în sus un nivel ierarhic adică părăseşte subcircuitului</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate</source>
+        <translation type="unfinished">Deactivează/Activează</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Deactivează/Activează elementul selectat</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Deactivează/Activează
+
+Deactivează/Activează elementul selectat</translation>
+    </message>
+    <message>
+        <source>Insert Equation</source>
+        <translation type="unfinished">Inserează Ecuaţie</translation>
+    </message>
+    <message>
+        <source>Inserts equation</source>
+        <translation type="unfinished">Inserează Ecuaţie</translation>
+    </message>
+    <message>
+        <source>Insert Equation
+
+Inserts a user defined equation</source>
+        <translation type="unfinished">Inserează Ecuaţie
+
+Inserează o Ecuaţie predefinită</translation>
+    </message>
+    <message>
+        <source>Insert Ground</source>
+        <translation type="unfinished">Inserează Masă</translation>
+    </message>
+    <message>
+        <source>Inserts ground</source>
+        <translation type="unfinished">Inserează Masă</translation>
+    </message>
+    <message>
+        <source>Insert Ground
+
+Inserts a ground symbol</source>
+        <translation type="unfinished">Inserează Masă
+
+Inserează un simbol de masă</translation>
+    </message>
+    <message>
+        <source>Insert Port</source>
+        <translation type="unfinished">Inserează un Port</translation>
+    </message>
+    <message>
+        <source>Inserts port</source>
+        <translation type="unfinished">Inserează un Port</translation>
+    </message>
+    <message>
+        <source>Insert Port
+
+Inserts a port symbol</source>
+        <translation type="unfinished">Inserează un Port
+
+Inserează un simbol de Port</translation>
+    </message>
+    <message>
+        <source>Insert Wire</source>
+        <translation type="unfinished">Inserează un Fir</translation>
+    </message>
+    <message>
+        <source>Wire</source>
+        <translation type="unfinished">Fir</translation>
+    </message>
+    <message>
+        <source>Inserts a wire</source>
+        <translation type="unfinished">Inserează un Fir</translation>
+    </message>
+    <message>
+        <source>Wire
+
+Inserts a wire</source>
+        <translation type="unfinished">Fir
+
+Inserează un Fir</translation>
+    </message>
+    <message>
+        <source>Insert Wire/Pin Label</source>
+        <translation type="unfinished">Inserează un Fir/Etichetă de Pin</translation>
+    </message>
+    <message>
+        <source>Wire Label</source>
+        <translation type="unfinished">Etichetă de Fir</translation>
+    </message>
+    <message>
+        <source>Inserts a wire or pin label</source>
+        <translation type="unfinished">Inserează un fir sau o etichetă de pin</translation>
+    </message>
+    <message>
+        <source>Wire Label
+
+Inserts a wire or pin label</source>
+        <translation type="unfinished">Etichetă de Fir
+
+Inserează un fir sau o eticheta de pin</translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsTrans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation
+
+Starts transmission line calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsLib</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library
+
+Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit
+
+Dialog for Creating Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulate</source>
+        <translation type="unfinished">Simulează</translation>
+    </message>
+    <message>
+        <source>Simulates the current schematic</source>
+        <translation type="unfinished">Simulează schema curentă</translation>
+    </message>
+    <message>
+        <source>Simulate
+
+Simulates the current schematic</source>
+        <translation type="unfinished">Simulează
+
+Simulează schema curentă</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic</source>
+        <translation type="unfinished">Arată Afişajul de Date/Schema</translation>
+    </message>
+    <message>
+        <source>Changes to data display or schematic page</source>
+        <translation type="unfinished">Schimbă între Afişajul de date si Schemă</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic
+
+</source>
+        <translation type="unfinished">Arată Afişajul de Date/Schema
+
+</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished">Setează Marcajul</translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished">Pune Marcajul pe Grafic</translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">Pune un  marcaj pe diagrama graficului</translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">Pune marcajul
+
+Pune marcajul pe diagrama graficului</translation>
+    </message>
+    <message>
+        <source>Show Last Messages</source>
+        <translation type="unfinished">Afişează Ultimele Mesaje</translation>
+    </message>
+    <message>
+        <source>Shows last simulation messages</source>
+        <translation type="unfinished">Afişează ultimele mesaje ale simulării</translation>
+    </message>
+    <message>
+        <source>Show Last Messages
+
+Shows the messages of the last simulation</source>
+        <translation type="unfinished">Afişează ultimele mesaje
+
+Afişează mesaje ultimei simulări</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist</source>
+        <translation type="unfinished">Afişează ultimul Netlist</translation>
+    </message>
+    <message>
+        <source>Shows last simulation netlist</source>
+        <translation type="unfinished">Afişează netlist-ul ultimei simulări</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist
+
+Shows the netlist of the last simulation</source>
+        <translation type="unfinished">Afişează ultimul Netlist
+
+Afişează netlist-ul ultimei simulări</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Bara de Scule</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bar</source>
+        <translation type="unfinished">Bara de &amp;Scule</translation>
+    </message>
+    <message>
+        <source>Enables/disables the toolbar</source>
+        <translation type="unfinished">Activează/Dezactivează bara de scule</translation>
+    </message>
+    <message>
+        <source>Toolbar
+
+Enables/disables the toolbar</source>
+        <translation type="unfinished">Bara de scule
+
+Activează/Dezactivează bara de scule</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Bara de Stare</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="unfinished">&amp;Bara de Stare</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="unfinished">Activează/Dezactivează bara de stare</translation>
+    </message>
+    <message>
+        <source>Statusbar
+
+Enables/disables the statusbar</source>
+        <translation type="unfinished">Bara de Stare
+
+Activează/Dezactivează bara de stare</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished">Ajutor Index</translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished">Ajutor Index...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished">Indexul Ajutorului Qucs</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished">Ajutor Index
+
+Indexul Ajutorului intern Qucs</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished">Introducere</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished">Introducere...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished">Introducere în Qucs</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation type="unfinished">Introducere
+
+Scurtă introducere în Qucs</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Despre</translation>
+    </message>
+    <message>
+        <source>&amp;About Qucs...</source>
+        <translation type="unfinished">&amp;Despre Qucs...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="unfinished">Despre aplicaţie</translation>
+    </message>
+    <message>
+        <source>About
+
+About the application</source>
+        <translation type="unfinished">Despre
+
+Despre aplicaţie</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">Despre Qt</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation type="unfinished">Despre Qt
+
+Despre Qt la Trolltech</translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation type="unfinished">Aliniază</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Fişier</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;Editează</translation>
+    </message>
+    <message>
+        <source>&amp;Insert</source>
+        <translation type="unfinished">&amp;Inserează</translation>
+    </message>
+    <message>
+        <source>&amp;Project</source>
+        <translation type="unfinished">&amp;Proiect</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Simulation</source>
+        <translation type="unfinished">&amp;Simulare</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;Afişaj</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">A&amp;jutor</translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle toolbar...</source>
+        <translation type="unfinished">Activează/Dezactivează bara de scule...</translation>
+    </message>
+    <message>
+        <source>Toggle statusbar...</source>
+        <translation type="unfinished">Activează/Dezactivează bara de stare...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">Despre...</translation>
+    </message>
+    <message>
+        <source>Qucs Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4311,121 +5671,121 @@ Filter synthesis program
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation>Nou</translation>
+        <translation type="obsolete">Nou</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;Nou</translation>
+        <translation type="obsolete">&amp;Nou</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation>Crează un nou document</translation>
+        <translation type="obsolete">Crează un nou document</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>Nou
+        <translation type="obsolete">Nou
 
 Crează o schema nouă sau document afişaj de date</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>Deschide fişier</translation>
+        <translation type="obsolete">Deschide fişier</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;Deschide...</translation>
+        <translation type="obsolete">&amp;Deschide...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation>Deschide un document existent</translation>
+        <translation type="obsolete">Deschide un document existent</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>Deschide Fişier
+        <translation type="obsolete">Deschide Fişier
 
 Deschide un document existent</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Salvează Fişier</translation>
+        <translation type="obsolete">Salvează Fişier</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Salvează</translation>
+        <translation type="obsolete">&amp;Salvează</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation>Salvează documentul curent</translation>
+        <translation type="obsolete">Salvează documentul curent</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation>Salvează Fişier
+        <translation type="obsolete">Salvează Fişier
 
 Salvează documentul curent</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>Salvează Fişier ca</translation>
+        <translation type="obsolete">Salvează Fişier ca</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Salveaza &amp;ca...</translation>
+        <translation type="obsolete">Salveaza &amp;ca...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation>Salvează documentul curent sub un nou nume</translation>
+        <translation type="obsolete">Salvează documentul curent sub un nou nume</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>Salvează ca
+        <translation type="obsolete">Salvează ca
 
 Salvează documentul curent sub un nou nume </translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>Salvează toate fişierele</translation>
+        <translation type="obsolete">Salvează toate fişierele</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation>Salvează &amp;Tot</translation>
+        <translation type="obsolete">Salvează &amp;Tot</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation>Salvează toate documentele deschise</translation>
+        <translation type="obsolete">Salvează toate documentele deschise</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>Salvează Toate Fişierele
+        <translation type="obsolete">Salvează Toate Fişierele
 
 Salvează toate documentele deschise</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>Închide Fişierul</translation>
+        <translation type="obsolete">Închide Fişierul</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Închide</translation>
+        <translation type="obsolete">&amp;Închide</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation>Închide documentul curent</translation>
+        <translation type="obsolete">Închide documentul curent</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation>Închide Fişier
+        <translation type="obsolete">Închide Fişier
 
 Închide documentul curent</translation>
     </message>
@@ -4433,697 +5793,697 @@ Closes the current document</source>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>Setări
+        <translation type="obsolete">Setări
 
 Setează proprietăţile fişierului</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>Printează Fişier</translation>
+        <translation type="obsolete">Printează Fişier</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>&amp;Printează...</translation>
+        <translation type="obsolete">&amp;Printează...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation>Printează documentul curent</translation>
+        <translation type="obsolete">Printează documentul curent</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation>Printează Fişier
+        <translation type="obsolete">Printează Fişier
 
 Printează documentul curent</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Ieşire</translation>
+        <translation type="obsolete">Ieşire</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>I&amp;eşire</translation>
+        <translation type="obsolete">I&amp;eşire</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>Întrerupere aplicaţie</translation>
+        <translation type="obsolete">Întrerupere aplicaţie</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation>Ieşire
+        <translation type="obsolete">Ieşire
 
 Întrerupere aplicaţie</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Taie</translation>
+        <translation type="obsolete">Taie</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>T&amp;aie</translation>
+        <translation type="obsolete">T&amp;aie</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>Taie secţiunea selectată si pune-o în clipboard</translation>
+        <translation type="obsolete">Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>Taie
+        <translation type="obsolete">Taie
 
 Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copiază</translation>
+        <translation type="obsolete">Copiază</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Copiază</translation>
+        <translation type="obsolete">&amp;Copiază</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>Copiază secţiunea selectată si pune-o în clipboard</translation>
+        <translation type="obsolete">Copiază secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>Copiază
+        <translation type="obsolete">Copiază
 
 Copiază secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Lipeşte</translation>
+        <translation type="obsolete">Lipeşte</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>&amp;Lipeşte</translation>
+        <translation type="obsolete">&amp;Lipeşte</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Lipeşte conţinutul clipboardului la poziţia cursorului</translation>
+        <translation type="obsolete">Lipeşte conţinutul clipboardului la poziţia cursorului</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>Lipeşte
+        <translation type="obsolete">Lipeşte
 
 Lipeşte conţinutul clipboardului la poziţia cursorului</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Şterge</translation>
+        <translation type="obsolete">Şterge</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp;Şterge</translation>
+        <translation type="obsolete">&amp;Şterge</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation>Şterge componentele selectate</translation>
+        <translation type="obsolete">Şterge componentele selectate</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>Şterge
+        <translation type="obsolete">Şterge
 
 Şterge componentele selectate</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Anulează</translation>
+        <translation type="obsolete">Anulează</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;Anulează</translation>
+        <translation type="obsolete">&amp;Anulează</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>Anulează ultima comandă</translation>
+        <translation type="obsolete">Anulează ultima comandă</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>Anulează
+        <translation type="obsolete">Anulează
 
 Anulează ultima acţiune</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Repetă</translation>
+        <translation type="obsolete">Repetă</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>&amp;Repetă</translation>
+        <translation type="obsolete">&amp;Repetă</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation>Repetă ultima comanda</translation>
+        <translation type="obsolete">Repetă ultima comanda</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>Repetă
+        <translation type="obsolete">Repetă
 
 Repetă ultima acţiune înca odata</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>Proiect nou</translation>
+        <translation type="obsolete">Proiect nou</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>Proiect &amp;Nou...</translation>
+        <translation type="obsolete">Proiect &amp;Nou...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>Crează un nou proiect</translation>
+        <translation type="obsolete">Crează un nou proiect</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>Proiect Nou
+        <translation type="obsolete">Proiect Nou
 
 Crează un nou proiect</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Deschide Proiect</translation>
+        <translation type="obsolete">Deschide Proiect</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>&amp;Deschide Proiect...</translation>
+        <translation type="obsolete">&amp;Deschide Proiect...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>Deschide un Proiect</translation>
+        <translation type="obsolete">Deschide un Proiect</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>Proiect Deschis
+        <translation type="obsolete">Proiect Deschis
 
 Deschide un proiect existent</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>Şterge Proiect</translation>
+        <translation type="obsolete">Şterge Proiect</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>&amp;Şterge Proiect...</translation>
+        <translation type="obsolete">&amp;Şterge Proiect...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>Şterge un proiect</translation>
+        <translation type="obsolete">Şterge un proiect</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>Şterge Proiect
+        <translation type="obsolete">Şterge Proiect
 
 Şterge un proiect existent</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation>Arată tot</translation>
+        <translation type="obsolete">Arată tot</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>Arată toata pagina</translation>
+        <translation type="obsolete">Arată toata pagina</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>Arată Tot
+        <translation type="obsolete">Arată Tot
 
 Arată conţinutul întergii pagini</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation>Arată 1:1</translation>
+        <translation type="obsolete">Arată 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>Arată fără magnificare</translation>
+        <translation type="obsolete">Arată fără magnificare</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>Arată 1:1
+        <translation type="obsolete">Arată 1:1
 
 Arată conţinutul paginii fara magnificare</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>Măreşte</translation>
+        <translation type="obsolete">Măreşte</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation>Măreşte în afişajul curent</translation>
+        <translation type="obsolete">Măreşte în afişajul curent</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>Măreşte
+        <translation type="obsolete">Măreşte
 
 Măreşte afişajul curent</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Micşorează</translation>
+        <translation type="obsolete">Micşorează</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation>Micşorează afişajul curent</translation>
+        <translation type="obsolete">Micşorează afişajul curent</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>Micşorează
+        <translation type="obsolete">Micşorează
 
 Micşorează afişajul curent</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Selectează</translation>
+        <translation type="obsolete">Selectează</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Mod de selecţie</translation>
+        <translation type="obsolete">Mod de selecţie</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>Selectează
+        <translation type="obsolete">Selectează
 
 Mod de selecţie</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Selectează Tot</translation>
+        <translation type="obsolete">Selectează Tot</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>Selectează toate elementele</translation>
+        <translation type="obsolete">Selectează toate elementele</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>Selectează Tot
+        <translation type="obsolete">Selectează Tot
 
 Selectează toate elementele din document</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Roteşte</translation>
+        <translation type="obsolete">Roteşte</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation>Roteşte componenta curentă cu 90°</translation>
+        <translation type="obsolete">Roteşte componenta curentă cu 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation>Roteşte
+        <translation type="obsolete">Roteşte
 
 Roteşte componenta selectată cu 90° sens antiorar</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>Oglindeşte pe Axa X</translation>
+        <translation type="obsolete">Oglindeşte pe Axa X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>Oglindeşte elementul selectat pe axa X</translation>
+        <translation type="obsolete">Oglindeşte elementul selectat pe axa X</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>Oglindeşte pe Axa X
+        <translation type="obsolete">Oglindeşte pe Axa X
 
 Oglindeşte elementul selectat pe Axa X</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>Oglindeşte pe Axa Y</translation>
+        <translation type="obsolete">Oglindeşte pe Axa Y</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>Oglindeşte elementul selectat pe axa Y</translation>
+        <translation type="obsolete">Oglindeşte elementul selectat pe axa Y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Oglindeşte pe Axa Y
+        <translation type="obsolete">Oglindeşte pe Axa Y
 
 Oglindeşte elementul selectat pe Axa Y</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation>Intră în Subcircuit</translation>
+        <translation type="obsolete">Intră în Subcircuit</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>Intră în subcircuit</translation>
+        <translation type="obsolete">Intră în subcircuit</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>Intră în Subcircuit
+        <translation type="obsolete">Intră în Subcircuit
 
 Intră în subcircuitul selectat</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation>Ieşi</translation>
+        <translation type="obsolete">Ieşi</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>Ieşi în afara subcircuitului</translation>
+        <translation type="obsolete">Ieşi în afara subcircuitului</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>Ieşi
+        <translation type="obsolete">Ieşi
 
 Merge în sus un nivel ierarhic adică părăseşte subcircuitului</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation>Deactivează/Activează</translation>
+        <translation type="obsolete">Deactivează/Activează</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>Deactivează/Activează elementul selectat</translation>
+        <translation type="obsolete">Deactivează/Activează elementul selectat</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>Deactivează/Activează
+        <translation type="obsolete">Deactivează/Activează
 
 Deactivează/Activează elementul selectat</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation>Inserează Ecuaţie</translation>
+        <translation type="obsolete">Inserează Ecuaţie</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>Inserează Ecuaţie</translation>
+        <translation type="obsolete">Inserează Ecuaţie</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>Inserează Ecuaţie
+        <translation type="obsolete">Inserează Ecuaţie
 
 Inserează o Ecuaţie predefinită</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>Inserează Masă</translation>
+        <translation type="obsolete">Inserează Masă</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>Inserează Masă</translation>
+        <translation type="obsolete">Inserează Masă</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>Inserează Masă
+        <translation type="obsolete">Inserează Masă
 
 Inserează un simbol de masă</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>Inserează un Port</translation>
+        <translation type="obsolete">Inserează un Port</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Inserează un Port</translation>
+        <translation type="obsolete">Inserează un Port</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Inserează un Port
+        <translation type="obsolete">Inserează un Port
 
 Inserează un simbol de Port</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>Inserează un Fir</translation>
+        <translation type="obsolete">Inserează un Fir</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation>Fir</translation>
+        <translation type="obsolete">Fir</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>Inserează un Fir</translation>
+        <translation type="obsolete">Inserează un Fir</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>Fir
+        <translation type="obsolete">Fir
 
 Inserează un Fir</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>Inserează un Fir/Etichetă de Pin</translation>
+        <translation type="obsolete">Inserează un Fir/Etichetă de Pin</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>Etichetă de Fir</translation>
+        <translation type="obsolete">Etichetă de Fir</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>Inserează un fir sau o etichetă de pin</translation>
+        <translation type="obsolete">Inserează un fir sau o etichetă de pin</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>Etichetă de Fir
+        <translation type="obsolete">Etichetă de Fir
 
 Inserează un fir sau o eticheta de pin</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>Simulează</translation>
+        <translation type="obsolete">Simulează</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>Simulează schema curentă</translation>
+        <translation type="obsolete">Simulează schema curentă</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>Simulează
+        <translation type="obsolete">Simulează
 
 Simulează schema curentă</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>Arată Afişajul de Date/Schema</translation>
+        <translation type="obsolete">Arată Afişajul de Date/Schema</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>Schimbă între Afişajul de date si Schemă</translation>
+        <translation type="obsolete">Schimbă între Afişajul de date si Schemă</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>Arată Afişajul de Date/Schema
+        <translation type="obsolete">Arată Afişajul de Date/Schema
 
 </translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>Setează Marcajul</translation>
+        <translation type="obsolete">Setează Marcajul</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>Pune Marcajul pe Grafic</translation>
+        <translation type="obsolete">Pune Marcajul pe Grafic</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Pune un  marcaj pe diagrama graficului</translation>
+        <translation type="obsolete">Pune un  marcaj pe diagrama graficului</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>Pune marcajul
+        <translation type="obsolete">Pune marcajul
 
 Pune marcajul pe diagrama graficului</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>Afişează Ultimele Mesaje</translation>
+        <translation type="obsolete">Afişează Ultimele Mesaje</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>Afişează ultimele mesaje ale simulării</translation>
+        <translation type="obsolete">Afişează ultimele mesaje ale simulării</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>Afişează ultimele mesaje
+        <translation type="obsolete">Afişează ultimele mesaje
 
 Afişează mesaje ultimei simulări</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>Afişează ultimul Netlist</translation>
+        <translation type="obsolete">Afişează ultimul Netlist</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>Afişează netlist-ul ultimei simulări</translation>
+        <translation type="obsolete">Afişează netlist-ul ultimei simulări</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>Afişează ultimul Netlist
+        <translation type="obsolete">Afişează ultimul Netlist
 
 Afişează netlist-ul ultimei simulări</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Bara de Scule</translation>
+        <translation type="obsolete">Bara de Scule</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation>Bara de &amp;Scule</translation>
+        <translation type="obsolete">Bara de &amp;Scule</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>Activează/Dezactivează bara de scule</translation>
+        <translation type="obsolete">Activează/Dezactivează bara de scule</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>Bara de scule
+        <translation type="obsolete">Bara de scule
 
 Activează/Dezactivează bara de scule</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Bara de Stare</translation>
+        <translation type="obsolete">Bara de Stare</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Bara de Stare</translation>
+        <translation type="obsolete">&amp;Bara de Stare</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>Activează/Dezactivează bara de stare</translation>
+        <translation type="obsolete">Activează/Dezactivează bara de stare</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>Bara de Stare
+        <translation type="obsolete">Bara de Stare
 
 Activează/Dezactivează bara de stare</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Ajutor Index</translation>
+        <translation type="obsolete">Ajutor Index</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation>Ajutor Index...</translation>
+        <translation type="obsolete">Ajutor Index...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation>Indexul Ajutorului Qucs</translation>
+        <translation type="obsolete">Indexul Ajutorului Qucs</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>Ajutor Index
+        <translation type="obsolete">Ajutor Index
 
 Indexul Ajutorului intern Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>Introducere</translation>
+        <translation type="obsolete">Introducere</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>Introducere...</translation>
+        <translation type="obsolete">Introducere...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>Introducere în Qucs</translation>
+        <translation type="obsolete">Introducere în Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Introducere
+        <translation type="obsolete">Introducere
 
 Scurtă introducere în Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Despre</translation>
+        <translation type="obsolete">Despre</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation>&amp;Despre Qucs...</translation>
+        <translation type="obsolete">&amp;Despre Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>Despre aplicaţie</translation>
+        <translation type="obsolete">Despre aplicaţie</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation>Despre
+        <translation type="obsolete">Despre
 
 Despre aplicaţie</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Despre Qt</translation>
+        <translation type="obsolete">Despre Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
@@ -5133,53 +6493,53 @@ Despre aplicaţie</translation>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>Despre Qt
+        <translation type="obsolete">Despre Qt
 
 Despre Qt la Trolltech</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fişier</translation>
+        <translation type="obsolete">&amp;Fişier</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Editează</translation>
+        <translation type="obsolete">&amp;Editează</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation>&amp;Inserează</translation>
+        <translation type="obsolete">&amp;Inserează</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>&amp;Proiect</translation>
+        <translation type="obsolete">&amp;Proiect</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>&amp;Simulare</translation>
+        <translation type="obsolete">&amp;Simulare</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Afişaj</translation>
+        <translation type="obsolete">&amp;Afişaj</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>A&amp;jutor</translation>
+        <translation type="obsolete">A&amp;jutor</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Gata.</translation>
+        <translation type="obsolete">Gata.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Activează/Dezactivează bara de scule...</translation>
+        <translation type="obsolete">Activează/Dezactivează bara de scule...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Activează/Dezactivează bara de stare...</translation>
+        <translation type="obsolete">Activează/Dezactivează bara de stare...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>Despre...</translation>
+        <translation type="obsolete">Despre...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
@@ -5229,177 +6589,177 @@ Despre Qt la Trolltech</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>Setările Aplicaţiei</translation>
+        <translation type="obsolete">Setările Aplicaţiei</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation>Setările Aplicaţiei...</translation>
+        <translation type="obsolete">Setările Aplicaţiei...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Setările Qucs
+        <translation type="obsolete">Setările Qucs
 
 Setează proprietăţile aplicaţiei</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>Setările Documentului</translation>
+        <translation type="obsolete">Setările Documentului</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>Setările Documentului...</translation>
+        <translation type="obsolete">Setările Documentului...</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>Aliniază deasupra</translation>
+        <translation type="obsolete">Aliniază deasupra</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>Aliniază componentele selectate deasupra</translation>
+        <translation type="obsolete">Aliniază componentele selectate deasupra</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>Aliniază deasupra
+        <translation type="obsolete">Aliniază deasupra
 
 Aliniază componentele selectate la marginea superioară</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation>Aliniază dedesubt</translation>
+        <translation type="obsolete">Aliniază dedesubt</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>Aliniază componentele selectate dedesubt</translation>
+        <translation type="obsolete">Aliniază componentele selectate dedesubt</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>Aliniază dedesubt
+        <translation type="obsolete">Aliniază dedesubt
 
 Aliniază componentele selectate la marginea inferioară</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation>Aliniază stânga</translation>
+        <translation type="obsolete">Aliniază stânga</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>Aliniază componentele selectate la stânga</translation>
+        <translation type="obsolete">Aliniază componentele selectate la stânga</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>Aliniază stânga
+        <translation type="obsolete">Aliniază stânga
 
 Aliniază componentele selectate la marginea din stânga</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation>Aliniază dreapta</translation>
+        <translation type="obsolete">Aliniază dreapta</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>Aliniază componentele selectate la dreapta</translation>
+        <translation type="obsolete">Aliniază componentele selectate la dreapta</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>Aliniază dreapta
+        <translation type="obsolete">Aliniază dreapta
 
 Aliniază componentele selectate la marginea din dreapta</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>Aliniază</translation>
+        <translation type="obsolete">Aliniază</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation>Distribuie orizontal</translation>
+        <translation type="obsolete">Distribuie orizontal</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation>Distribuie uniform orizontal</translation>
+        <translation type="obsolete">Distribuie uniform orizontal</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>Distribuie orizontal
+        <translation type="obsolete">Distribuie orizontal
 
 Distribuie orizontal componentele selectate</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation>Distribuie vertical</translation>
+        <translation type="obsolete">Distribuie vertical</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation>Distribuie uniform vertical</translation>
+        <translation type="obsolete">Distribuie uniform vertical</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>Distribuie vertical
+        <translation type="obsolete">Distribuie vertical
 
 Distribuie vertical componentele selectate</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation>Aşează pe Reţea</translation>
+        <translation type="obsolete">Aşează pe Reţea</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>Aşează pe reţea
+        <translation type="obsolete">Aşează pe reţea
 
 Pune elementele selectate pe reţea</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>Printează Elementele Selectate</translation>
+        <translation type="obsolete">Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>Printează Selecţia...</translation>
+        <translation type="obsolete">Printează Selecţia...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>Printează Elementele Selectate</translation>
+        <translation type="obsolete">Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>Printează Elementele Selectate
+        <translation type="obsolete">Printează Elementele Selectate
 
 Printează elementele selectate în documentul curent</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>Închide Proiectul</translation>
+        <translation type="obsolete">Închide Proiectul</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>&amp;Închide Proiectul</translation>
+        <translation type="obsolete">&amp;Închide Proiectul</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>Închide proiectul curent</translation>
+        <translation type="obsolete">Închide proiectul curent</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>Închide Proiectul
+        <translation type="obsolete">Închide Proiectul
 
 Închide Proiectul curent</translation>
     </message>
@@ -5411,17 +6771,17 @@ Closes the current project</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Editează Simbolul Circuitului</translation>
+        <translation type="obsolete">Editează Simbolul Circuitului</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>Editează simbolul pentru schema aceasta</translation>
+        <translation type="obsolete">Editează simbolul pentru schema aceasta</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>Editează Simbolul Circuitului
+        <translation type="obsolete">Editează Simbolul Circuitului
 
 Editează simbolul pentru aceasta schemă</translation>
     </message>
@@ -5439,19 +6799,15 @@ Editează simbolul pentru aceasta schemă</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation>Mută Textul Componentei</translation>
+        <translation type="obsolete">Mută Textul Componentei</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>Mută Textul Componentei
+        <translation type="obsolete">Mută Textul Componentei
 
 Mută proprietatea text al componentelor</translation>
-    </message>
-    <message>
-        <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
@@ -5460,226 +6816,10 @@ Mută proprietatea text al componentelor</translation>
 </translation>
     </message>
     <message>
-        <source>About Qt...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text editor
-
-Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter synthesis
-
-Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line calculation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line calculation
-
-Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Component Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Component Library
-
-Starts component library program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>no warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Matching Circuit
-
-Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias
-
-Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files to Project
-
-Copies files to project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
         <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 de Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>Qucs Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Translations:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Romanian by Radu Circa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6287,11 +7427,11 @@ open files with an appropriate program.</source>
     <name>QucsView</name>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>Potenţialul de masă nu poate fi etichetat!</translation>
+        <translation type="obsolete">Potenţialul de masă nu poate fi etichetat!</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
@@ -6302,44 +7442,8 @@ open files with an appropriate program.</source>
         <translation type="obsolete">Introdu eticheta:</translation>
     </message>
     <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>power matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
-        <translation type="unfinished">Eroare</translation>
-    </message>
-    <message>
-        <source>noise matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Eroare</translation>
     </message>
 </context>
 <context>

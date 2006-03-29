@@ -3222,82 +3222,106 @@ Kullanım:  qucsedit -r kütük
         <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Özellikleri Düzenle</translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished">power matching</translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished">noise matching</translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished">2-port matching</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Bilgi</translation>
+    </message>
+    <message>
+        <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished">Toprak potansiyeli etiketlenemiyor!</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation>Bilgi</translation>
+        <translation type="obsolete">Bilgi</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>En az iki eleman seçilmeli !</translation>
+        <translation type="obsolete">En az iki eleman seçilmeli !</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation type="obsolete">Hata</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Metin düzenleyici başlatılamıyor!</translation>
+        <translation type="obsolete">Metin düzenleyici başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Filtre tasarım programı başlatılamıyor!</translation>
+        <translation type="obsolete">Filtre tasarım programı başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>Hat hesaplayıcı uygulama başlatılamıyor!</translation>
+        <translation type="obsolete">Hat hesaplayıcı uygulama başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation>Kütüphane yazılımı başlatılamıyor!</translation>
+        <translation type="obsolete">Kütüphane yazılımı başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Qucs yardım (qucshelp) açılamıyor!</translation>
+        <translation type="obsolete">Qucs yardım (qucshelp) açılamıyor!</translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation>Hiçbir proje açık değil!</translation>
+        <translation type="obsolete">Hiçbir proje açık değil!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation>Kopyalanacak kütükleri seçin</translation>
+        <translation type="obsolete">Kopyalanacak kütükleri seçin</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation>Hiçbir kütük kopyalanmadı.</translation>
+        <translation type="obsolete">Hiçbir kütük kopyalanmadı.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; açılamıyor !</translation>
+        <translation type="obsolete">&quot;%1&quot; açılamıyor !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation>Üzerine yaz</translation>
+        <translation type="obsolete">Üzerine yaz</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>&quot;%1&quot; dosyası zaten var.
+        <translation type="obsolete">&quot;%1&quot; dosyası zaten var.
 Üzerine yazılsın mı ?</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; oluşturulamıyor !</translation>
+        <translation type="obsolete">&quot;%1&quot; oluşturulamıyor !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; okunamıyor !</translation>
+        <translation type="obsolete">&quot;%1&quot; okunamıyor !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; yazılamıyor !</translation>
+        <translation type="obsolete">&quot;%1&quot; yazılamıyor !</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Hazır.</translation>
+        <translation type="obsolete">Hazır.</translation>
     </message>
 </context>
 <context>
@@ -3336,7 +3360,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>proje dizininin içeriği</translation>
+        <translation type="obsolete">proje dizininin içeriği</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -3368,7 +3392,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>açık projenin içeriği</translation>
+        <translation type="obsolete">açık projenin içeriği</translation>
     </message>
     <message>
         <source>Components</source>
@@ -3551,12 +3575,12 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation>Yalnızca &apos;.sch&apos; ve &apos;dpl&apos; uzantıları
+        <translation type="obsolete">Yalnızca &apos;.sch&apos; ve &apos;dpl&apos; uzantıları
 </translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>görünecek içerik gözatıcısında! Devam?</translation>
+        <translation type="obsolete">görünecek içerik gözatıcısında! Devam?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3747,6 +3771,1422 @@ Edits the schematic</source>
         <translation>Şemayı Düzenle
 
 Şemayı düzenler/değiştirir</translation>
+    </message>
+    <message>
+        <source>VHDL Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data display: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete VHDL source: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating new text editor...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing selected...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished">Yüklenemiyor S(1.1).</translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished">Yüklenemiyor S(1.2).</translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished">Yüklenemiyor S(2.1).</translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
+        <translation type="unfinished">Yüklenemiyor S(2.2).</translation>
+    </message>
+    <message>
+        <source>Wrong dependency!</source>
+        <translation type="unfinished">Yanlış dayanak!</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">En az iki eleman seçilmeli !</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">Metin düzenleyici başlatılamıyor!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished">Filtre tasarım programı başlatılamıyor!</translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished">Hat hesaplayıcı uygulama başlatılamıyor!</translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished">Kütüphane yazılımı başlatılamıyor!</translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Qucs yardım (qucshelp) açılamıyor!</translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished">Hiçbir proje açık değil!</translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished">Kopyalanacak kütükleri seçin</translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished">Hiçbir kütük kopyalanmadı.</translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; açılamıyor !</translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished">Üzerine yaz</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished">&quot;%1&quot; dosyası zaten var.
+Üzerine yazılsın mı ?</translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; oluşturulamıyor !</translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; okunamıyor !</translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; yazılamıyor !</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="unfinished">&amp;Yeni</translation>
+    </message>
+    <message>
+        <source>Creates a new document</source>
+        <translation type="unfinished">Yeni belge oluşturur</translation>
+    </message>
+    <message>
+        <source>New
+
+Creates a new schematic or data display document</source>
+        <translation type="unfinished">Yeni
+
+Veri görüntüleme ya da şema belgesi oluşturur</translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text
+
+Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation type="unfinished">Kütük Aç</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">&amp;Aç...</translation>
+    </message>
+    <message>
+        <source>Opens an existing document</source>
+        <translation type="unfinished">Varolan bir belgeyi açar</translation>
+    </message>
+    <message>
+        <source>Open File
+
+Opens an existing document</source>
+        <translation type="unfinished">Kütük Aç
+
+Varolan bir belgeyi açar</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished">Kütük Kaydet</translation>
+    </message>
+    <message>
+        <source>Saves the current document</source>
+        <translation type="unfinished">Geçerli belgeyi kaydeder</translation>
+    </message>
+    <message>
+        <source>Save File
+
+Saves the current document</source>
+        <translation type="unfinished">Kütük Kaydet
+
+Geçerli belgeyi kaydeder</translation>
+    </message>
+    <message>
+        <source>Save File As</source>
+        <translation type="unfinished">Farklı Kaydet</translation>
+    </message>
+    <message>
+        <source>Save as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saves the current document under a new filename</source>
+        <translation type="unfinished">Geçerli dokümanı yeni dosya adı altında kaydet</translation>
+    </message>
+    <message>
+        <source>Save As
+
+Saves the current document under a new filename</source>
+        <translation type="unfinished">Farklı kaydet
+
+Geçerli belgeyi yeni bir ad altında kaydeder</translation>
+    </message>
+    <message>
+        <source>Save All Files</source>
+        <translation type="unfinished">Tüm kütükleri kaydet</translation>
+    </message>
+    <message>
+        <source>Save &amp;All</source>
+        <translation type="unfinished">Tümünü &amp;Kaydet</translation>
+    </message>
+    <message>
+        <source>Saves all open documents</source>
+        <translation type="unfinished">Tüm açık belgeleri kaydeder</translation>
+    </message>
+    <message>
+        <source>Save All Files
+
+Saves all open documents</source>
+        <translation type="unfinished">Tüm kütükleri kaydet
+
+Tüm açık belgeleri kaydeder</translation>
+    </message>
+    <message>
+        <source>Close File</source>
+        <translation type="unfinished">Kütük Kapat</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished">&amp;Kapat</translation>
+    </message>
+    <message>
+        <source>Closes the current document</source>
+        <translation type="unfinished">Geçerli belgeyi kapatır</translation>
+    </message>
+    <message>
+        <source>Close File
+
+Closes the current document</source>
+        <translation type="unfinished">Kütük Kapat
+
+Geçerli belgeyi kapatır</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings...</source>
+        <translation type="unfinished">Belge Ayarları...</translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Belge Ayarları</translation>
+    </message>
+    <message>
+        <source>Settings
+
+Sets properties of the file</source>
+        <translation type="unfinished">Ayarlar
+
+Kütük ayarlarını yap</translation>
+    </message>
+    <message>
+        <source>Print File</source>
+        <translation type="unfinished">Kütük Yazdır</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished">&amp;Yazdır...</translation>
+    </message>
+    <message>
+        <source>Prints the current document</source>
+        <translation type="unfinished">Geçerli belgeyi yazdır</translation>
+    </message>
+    <message>
+        <source>Print File
+
+Prints the current document</source>
+        <translation type="unfinished">Kütük Yazdır
+
+Geçerli belgeyi yazdırır</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished">Seçili Elemanları Yazdır</translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished">Seçimi Yazdır...</translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished">Seçili Elemanları Yazdır</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
+        <translation type="unfinished">Seçili Elemanları Yazdırır
+
+Geçerli belgede seçili elemanları yazdırır</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="unfinished">Çıkış</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="unfinished">Uygulamadan çık</translation>
+    </message>
+    <message>
+        <source>Exit
+
+Quits the application</source>
+        <translation type="unfinished">Çıkış
+
+Uygulamadan çıkar</translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished">Uygulama ayarları</translation>
+    </message>
+    <message>
+        <source>Application Settings...</source>
+        <translation type="unfinished">Uygulama Ayarları ...</translation>
+    </message>
+    <message>
+        <source>Qucs Settings
+
+Sets properties of the application</source>
+        <translation type="unfinished">Qucs Ayarları
+
+Uygulama ayarlarını kur</translation>
+    </message>
+    <message>
+        <source>Align top</source>
+        <translation type="unfinished">Yukarı hizala</translation>
+    </message>
+    <message>
+        <source>Align top selected elements</source>
+        <translation type="unfinished">Seçili elementleri yukarı hizala</translation>
+    </message>
+    <message>
+        <source>Align top
+
+Align selected elements to their upper edge</source>
+        <translation type="unfinished">Yukarı hizala
+
+Seçili elementleri üst köşelerine hizala</translation>
+    </message>
+    <message>
+        <source>Align bottom</source>
+        <translation type="unfinished">Alta hizala</translation>
+    </message>
+    <message>
+        <source>Align bottom selected elements</source>
+        <translation type="unfinished">Seçili elementleri alta hizala</translation>
+    </message>
+    <message>
+        <source>Align bottom
+
+Align selected elements to their lower edge</source>
+        <translation type="unfinished">Alta hizala
+
+Seçili elementleri alt köşelerine hizala</translation>
+    </message>
+    <message>
+        <source>Align left</source>
+        <translation type="unfinished">Sola hizala</translation>
+    </message>
+    <message>
+        <source>Align left selected elements</source>
+        <translation type="unfinished">Seçili elementleri sola hizala</translation>
+    </message>
+    <message>
+        <source>Align left
+
+Align selected elements to their left edge</source>
+        <translation type="unfinished">Sola hizala
+
+Seçili elementleri sol köşelerine hizala</translation>
+    </message>
+    <message>
+        <source>Align right</source>
+        <translation type="unfinished">Sağa hizala</translation>
+    </message>
+    <message>
+        <source>Align right selected elements</source>
+        <translation type="unfinished">Seçili elementleri sağa hizala</translation>
+    </message>
+    <message>
+        <source>Align right
+
+Align selected elements to their right edge</source>
+        <translation type="unfinished">Sağa hizala
+
+Seçili öğeleri sağ köşelerine hizala</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally</source>
+        <translation type="unfinished">Yatay Dağıt</translation>
+    </message>
+    <message>
+        <source>Distribute equally horizontally</source>
+        <translation type="unfinished">Yatay ve eşit dağıt</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally
+
+Distribute horizontally selected elements</source>
+        <translation type="unfinished">Yatay dağıt
+
+Seçili elementleri yatay dağıt</translation>
+    </message>
+    <message>
+        <source>Distribute vertically</source>
+        <translation type="unfinished">Dikey dağıt</translation>
+    </message>
+    <message>
+        <source>Distribute equally vertically</source>
+        <translation type="unfinished">Dikey ve eşit dağıt</translation>
+    </message>
+    <message>
+        <source>Distribute vertically
+
+Distribute vertically selected elements</source>
+        <translation type="unfinished">Dikey dağıt
+
+Seçili elementleri dikey dağıt</translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished">Izgaranın üzerine kur</translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
+        <translation type="unfinished">Izgaranın üzerine kur
+
+Seçili elementleri ızgaranın üzerine kurar</translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished">Bileşen Metnini Taşı</translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="unfinished">Bileşen Metnini Taşı
+
+Bileşenlerin özellik yazısını taşır</translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished">Özellik Değerlerini Değiştir...</translation>
+    </message>
+    <message>
+        <source>Change Property Values</source>
+        <translation type="unfinished">Özellik Değerlerini Değiştir</translation>
+    </message>
+    <message>
+        <source>Change Property Values
+
+Change Property Value of Components</source>
+        <translation type="unfinished">Özellik Değerlerini Değiştir
+
+Özellik Değerlerini Değiştirir</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">Kes</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">K&amp;es</translation>
+    </message>
+    <message>
+        <source>Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Seçili kısmı keser ve not tahtasına koyar</translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Kes
+
+Seçili kısmı keser ve not tahtasına koyar</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopyala</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Kopyala</translation>
+    </message>
+    <message>
+        <source>Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Seçili kısmı not tahtasına kopyalar</translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Kopyala
+
+Seçili kısmı not tahtasına kopyalar</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Yapıştır</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">&amp;Yapıştır</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
+    </message>
+    <message>
+        <source>Paste
+
+Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Yapıştır
+
+Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Sil</translation>
+    </message>
+    <message>
+        <source>Deletes the selected components</source>
+        <translation type="unfinished">Seçili bilşenleri siler</translation>
+    </message>
+    <message>
+        <source>Delete
+
+Deletes the selected components</source>
+        <translation type="unfinished">Sil
+
+Seçili bilşenleri siler</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Geri Al</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">&amp;Geri Al</translation>
+    </message>
+    <message>
+        <source>Undoes the last command</source>
+        <translation type="unfinished">Son komutu geri alır</translation>
+    </message>
+    <message>
+        <source>Undo
+
+Makes the last action undone</source>
+        <translation type="unfinished">Geri Al
+
+Son komutu geri alır</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Tekrarla</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">&amp;Tekrarla</translation>
+    </message>
+    <message>
+        <source>Redoes the last command</source>
+        <translation type="unfinished">Son komutu tekrarlar</translation>
+    </message>
+    <message>
+        <source>Redo
+
+Repeats the last action once more</source>
+        <translation type="unfinished">Tekrarla
+
+Son komutu tekrarlar</translation>
+    </message>
+    <message>
+        <source>New Project</source>
+        <translation type="unfinished">Yeni Proje</translation>
+    </message>
+    <message>
+        <source>&amp;New Project...</source>
+        <translation type="unfinished">&amp;Yeni Proje...</translation>
+    </message>
+    <message>
+        <source>Creates a new project</source>
+        <translation type="unfinished">Yeni bir proje oluşturur</translation>
+    </message>
+    <message>
+        <source>New Project
+
+Creates a new project</source>
+        <translation type="unfinished">Yeni Proje
+
+Yeni bir proje oluşturur</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation type="unfinished">Proje Aç</translation>
+    </message>
+    <message>
+        <source>&amp;Open Project...</source>
+        <translation type="unfinished">&amp;Proje Aç...</translation>
+    </message>
+    <message>
+        <source>Opens a project</source>
+        <translation type="unfinished">Projeyi açar</translation>
+    </message>
+    <message>
+        <source>Open Project
+
+Opens an existing project</source>
+        <translation type="unfinished">Proje Aç
+
+Varolan bir projeyi açar</translation>
+    </message>
+    <message>
+        <source>Delete Project</source>
+        <translation type="unfinished">Proje Sil</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Project...</source>
+        <translation type="unfinished">Proje &amp;Sil...</translation>
+    </message>
+    <message>
+        <source>Deletes a project</source>
+        <translation type="unfinished">Proje siler</translation>
+    </message>
+    <message>
+        <source>Delete Project
+
+Deletes an existing project</source>
+        <translation type="unfinished">Proje Sil
+
+Varolan bir projeyi siler</translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished">Proje Kapat</translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished">Proje &amp;Kapat</translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished">Geçerli projeyi kapat</translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished">Proje Kapat
+
+Geçerli olan projeyi kapatır</translation>
+    </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished">Kütükleri Projeye Ekle</translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished">&amp;Kütükleri Projeye Ekle...</translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished">Kütükleri proje dizinine kopyalar</translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished">Projeye Kütük Ekle
+
+Kütükleri proje dizinine kopyalar</translation>
+    </message>
+    <message>
+        <source>View All</source>
+        <translation type="unfinished">Tümünü Görüntüle</translation>
+    </message>
+    <message>
+        <source>Views the whole page</source>
+        <translation type="unfinished">Tüm sayfayı görüntüler</translation>
+    </message>
+    <message>
+        <source>View All
+
+Shows the whole page content</source>
+        <translation type="unfinished">Tümünü Görüntüle
+
+Tüm sayfa içeriğini görüntüler</translation>
+    </message>
+    <message>
+        <source>View 1:1</source>
+        <translation type="unfinished">Görüntüle 1:1</translation>
+    </message>
+    <message>
+        <source>Views without magnification</source>
+        <translation type="unfinished">Büyütme olmaksızın görüntüler</translation>
+    </message>
+    <message>
+        <source>View 1:1
+
+Shows the page content without magnification</source>
+        <translation type="unfinished">Görüntüle 1:1
+
+Sayfa içeriğini büyütme olmaksızın görüntüler</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished">Büyüt</translation>
+    </message>
+    <message>
+        <source>Zooms into the current view</source>
+        <translation type="unfinished">Geçerli görünümü büyütür</translation>
+    </message>
+    <message>
+        <source>Zoom in
+
+Zooms the current view</source>
+        <translation type="unfinished">Büyüt
+
+Geçerli görünümü büyütür</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished">Küçült</translation>
+    </message>
+    <message>
+        <source>Zooms out the current view</source>
+        <translation type="unfinished">Geçerli görünümü küçültür</translation>
+    </message>
+    <message>
+        <source>Zoom out
+
+Zooms out the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Seç</translation>
+    </message>
+    <message>
+        <source>Select mode</source>
+        <translation type="unfinished">Seçme durumu</translation>
+    </message>
+    <message>
+        <source>Select
+
+Select mode</source>
+        <translation type="unfinished">Seç
+
+Seçme durumu</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">Tümünü Seç</translation>
+    </message>
+    <message>
+        <source>Selects all elements</source>
+        <translation type="unfinished">Tüm elemanları seçer</translation>
+    </message>
+    <message>
+        <source>Select All
+
+Selects all elements of the document</source>
+        <translation type="unfinished">Tümünü Seç
+
+Belgenin tüm elemanlarını seçer</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished">Döndür</translation>
+    </message>
+    <message>
+        <source>Rotates the selected component by 90&#xb0;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotate
+
+Rotates the selected component by 90&#xb0; counter-clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis</source>
+        <translation type="unfinished">X Ekseni Etrafında Aynala</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X axis</source>
+        <translation type="unfinished">Seçili elemanı x ekseni etrafında aynalar</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis
+
+Mirrors the selected item about X Axis</source>
+        <translation type="unfinished">X Ekseni Etrafında Aynala
+
+Seçili elemanı x ekseni etrafında aynalar</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis</source>
+        <translation type="unfinished">Y Ekseni Etrafında Aynala</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y axis</source>
+        <translation type="unfinished">Seçili elemanı y ekseni etrafında aynalar</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis
+
+Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished">Y Ekseni Etrafında Aynalar
+
+Seçili elemanı y ekseni etrafında aynalar</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit</source>
+        <translation type="unfinished">Alt-Devreye Git</translation>
+    </message>
+    <message>
+        <source>Goes inside subcircuit</source>
+        <translation type="unfinished">Alt-devrenin içine girer</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit
+
+Goes inside the selected subcircuit</source>
+        <translation type="unfinished">Alt-Devreye Git
+
+Alt-devrenin içine girer</translation>
+    </message>
+    <message>
+        <source>Pop out</source>
+        <translation type="unfinished">Bir Üst Katmana</translation>
+    </message>
+    <message>
+        <source>Pop outside subcircuit</source>
+        <translation type="unfinished">Bir üst katmana çık</translation>
+    </message>
+    <message>
+        <source>Pop out
+
+Goes up one hierarchy level, i.e. leaves subcircuit</source>
+        <translation type="unfinished">Bir üst katmana
+
+Devre hiyerarşisinde bir üst katmana çıkar, yani alt-devreyi terkeder</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate</source>
+        <translation type="unfinished">Kapat/Etkinleştir</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Seçili elemanı Kapat/Etkinleştir</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Kapat/Etkinleştir
+
+Seçili elemanı Kapat/Etkinleştir</translation>
+    </message>
+    <message>
+        <source>Insert Equation</source>
+        <translation type="unfinished">Eşitlik Ekle</translation>
+    </message>
+    <message>
+        <source>Inserts equation</source>
+        <translation type="unfinished">Eşitlik ekler</translation>
+    </message>
+    <message>
+        <source>Insert Equation
+
+Inserts a user defined equation</source>
+        <translation type="unfinished">Eşitlik Ekle
+
+Kullanıcı tarafından belirlenen bit eşitlik ekler</translation>
+    </message>
+    <message>
+        <source>Insert Ground</source>
+        <translation type="unfinished">Toprak Ekle</translation>
+    </message>
+    <message>
+        <source>Inserts ground</source>
+        <translation type="unfinished">Toprak Ekler</translation>
+    </message>
+    <message>
+        <source>Insert Ground
+
+Inserts a ground symbol</source>
+        <translation type="unfinished">Toprak Ekle
+
+Toprak simgesi ekler</translation>
+    </message>
+    <message>
+        <source>Insert Port</source>
+        <translation type="unfinished">Ayak Ekle</translation>
+    </message>
+    <message>
+        <source>Inserts port</source>
+        <translation type="unfinished">Ayak ekler</translation>
+    </message>
+    <message>
+        <source>Insert Port
+
+Inserts a port symbol</source>
+        <translation type="unfinished">Ayak Ekle
+
+Giriş/çıkış ayak(port) simgesi ekler</translation>
+    </message>
+    <message>
+        <source>Insert Wire</source>
+        <translation type="unfinished">Bağlantı Hattı Ekle</translation>
+    </message>
+    <message>
+        <source>Wire</source>
+        <translation type="unfinished">Bağlantı Hattı</translation>
+    </message>
+    <message>
+        <source>Inserts a wire</source>
+        <translation type="unfinished">Bağlantı hattı ekler</translation>
+    </message>
+    <message>
+        <source>Wire
+
+Inserts a wire</source>
+        <translation type="unfinished">Bağlantı Hattı
+
+Bağlantı hattı ekler</translation>
+    </message>
+    <message>
+        <source>Insert Wire/Pin Label</source>
+        <translation type="unfinished">Bağlantı Hattı/Ayak Etiketi Ekle</translation>
+    </message>
+    <message>
+        <source>Wire Label</source>
+        <translation type="unfinished">Bağlantı Hattı Etiketi</translation>
+    </message>
+    <message>
+        <source>Inserts a wire or pin label</source>
+        <translation type="unfinished">Bağlantı Hattı/Ayak Etiketi Ekler</translation>
+    </message>
+    <message>
+        <source>Wire Label
+
+Inserts a wire or pin label</source>
+        <translation type="unfinished">Bağlantı Hattı Etiketi
+
+Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished">Metin Düzenleyici</translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished">Metin düzenleyici</translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished">Qucs metin düzenleyiciyisini başlatır</translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished">Metin düzenleyici
+
+Qucs metin düzenleyicisini başlatır</translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished">Filitre tasarımı</translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished">QucsFilter uygulamasını başlatır</translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished">Filitre Tasarımı
+
+QucsFilter uygulamasını başlatır</translation>
+    </message>
+    <message>
+        <source>Line calculation</source>
+        <translation type="unfinished">Hat hesabı</translation>
+    </message>
+    <message>
+        <source>Starts QucsTrans</source>
+        <translation type="unfinished">QucsTrans uygulamasını başlatır</translation>
+    </message>
+    <message>
+        <source>Line calculation
+
+Starts transmission line calculator</source>
+        <translation type="unfinished">Hat hesabı
+
+İletim hattı hesaplayıcısını başlatır</translation>
+    </message>
+    <message>
+        <source>Component Library</source>
+        <translation type="unfinished">Bileşen Kütüphanesi</translation>
+    </message>
+    <message>
+        <source>Starts QucsLib</source>
+        <translation type="unfinished">QucsLib uygulamasını başlatır</translation>
+    </message>
+    <message>
+        <source>Component Library
+
+Starts component library program</source>
+        <translation type="unfinished">Bileşen Kütüphanesi
+
+Bileşen Kütüphanesi uygulamasını başlatır</translation>
+    </message>
+    <message>
+        <source>Matching Circuit</source>
+        <translation type="unfinished">Karşılaştırma Devresi</translation>
+    </message>
+    <message>
+        <source>Creates Matching Circuit</source>
+        <translation type="unfinished">Karşılaştırma Devresi Oluşturur</translation>
+    </message>
+    <message>
+        <source>Matching Circuit
+
+Dialog for Creating Matching Circuit</source>
+        <translation type="unfinished">Karşılaştırma Devresi
+
+Karşılaştırma Devresi Oluşturma İletişim Penceresi</translation>
+    </message>
+    <message>
+        <source>Simulate</source>
+        <translation type="unfinished">Simüle Et</translation>
+    </message>
+    <message>
+        <source>Simulates the current schematic</source>
+        <translation type="unfinished">Geçerli şemayı simüle eder</translation>
+    </message>
+    <message>
+        <source>Simulate
+
+Simulates the current schematic</source>
+        <translation type="unfinished">Simüle et
+
+Geçerli şemayı simüle eder</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic</source>
+        <translation type="unfinished">Veri Göstergesi/Şema Görüntüle</translation>
+    </message>
+    <message>
+        <source>Changes to data display or schematic page</source>
+        <translation type="unfinished">Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic
+
+</source>
+        <translation type="unfinished">Veri Göstergesi/Şema Görüntüle
+
+</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished">DC bias hesapla</translation>
+    </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished">DC kutuplanma durumunu hesaplar ve gösterir</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished">DC bias hesapla
+
+DC kutuplanma durumunu hesaplar ve gösterir</translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished">İşaretçi Koy</translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished">Grafik Üzerine İşaretçi Koy</translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">Diyagramın grafiği üzerine bir işaretçi koyar</translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">İşaretçi Koy
+
+Diyagramın grafiği üzerine işaretçi koyar</translation>
+    </message>
+    <message>
+        <source>Show Last Messages</source>
+        <translation type="unfinished">Son Mesajları Göster</translation>
+    </message>
+    <message>
+        <source>Shows last simulation messages</source>
+        <translation type="unfinished">Son simülasyon mesajlarını gösterir</translation>
+    </message>
+    <message>
+        <source>Show Last Messages
+
+Shows the messages of the last simulation</source>
+        <translation type="unfinished">Son Mesajları Göster
+
+Son simülasyondan olan mesajları gösterir</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist</source>
+        <translation type="unfinished">Son Bağlantı Listesini Göster</translation>
+    </message>
+    <message>
+        <source>Shows last simulation netlist</source>
+        <translation type="unfinished">Son simülasyondan son bağlantı listesini gösterir</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist
+
+Shows the netlist of the last simulation</source>
+        <translation type="unfinished">Son Bağlantı Listesini Göster
+
+Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Araç Çubuğu</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bar</source>
+        <translation type="unfinished">&amp;Araç Çubuğu</translation>
+    </message>
+    <message>
+        <source>Enables/disables the toolbar</source>
+        <translation type="unfinished">Araç çubuğunu etkinleştir/kapat</translation>
+    </message>
+    <message>
+        <source>Toolbar
+
+Enables/disables the toolbar</source>
+        <translation type="unfinished">Araç Çubuğu
+
+Araç çubuğunu etkinleştir/kapat</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Durumçubuğu</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="unfinished">&amp;Durumçubuğu</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="unfinished">Durumçubuğunu etkinleştirir veya kapatır</translation>
+    </message>
+    <message>
+        <source>Statusbar
+
+Enables/disables the statusbar</source>
+        <translation type="unfinished">Durumçubuğu
+
+Durumçubuğunu Etkinleştirir/kapatır</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished">Yardım - İçindekiler...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished">İçindekiler - Qucs Yardım</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished">Yardım - İçindekiler
+
+Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished">Başlarken</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished">Başlarken...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished">Qucs İle Başlarken</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation type="unfinished">Başlarken
+
+Qucs hakkında kısa tanıtım</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Hakkında</translation>
+    </message>
+    <message>
+        <source>&amp;About Qucs...</source>
+        <translation type="unfinished">&amp;Qucs Hakkında...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="unfinished">Uygulama hakkında</translation>
+    </message>
+    <message>
+        <source>About
+
+About the application</source>
+        <translation type="unfinished">Hakkında
+
+Uygulama hakkında</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">Qt Hakkında</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished">Qt Hakkında...</translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation type="unfinished">Qt Hakkında
+
+Trolltech tarafından Qt hakkında</translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation type="unfinished">Hizala</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Kütük</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;Düzen</translation>
+    </message>
+    <message>
+        <source>&amp;Insert</source>
+        <translation type="unfinished">&amp;Ekle</translation>
+    </message>
+    <message>
+        <source>&amp;Project</source>
+        <translation type="unfinished">&amp;Proje</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished">&amp;Araçlar</translation>
+    </message>
+    <message>
+        <source>&amp;Simulation</source>
+        <translation type="unfinished">&amp;Simülasyon</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;Görünüm</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Yardım</translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished">Son simülasyondaki uyarılar ! için f5&apos;e basınız</translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished">uyarı yok</translation>
+    </message>
+    <message>
+        <source>Toggle toolbar...</source>
+        <translation type="unfinished">Araç çubuğunu aç/kapa...</translation>
+    </message>
+    <message>
+        <source>Toggle statusbar...</source>
+        <translation type="unfinished">Durum çubuğunu aç/kapa...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">Hakkında...</translation>
+    </message>
+    <message>
+        <source>Qucs Version</source>
+        <translation type="unfinished">Qucs Sürümü</translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished">Quite Universal Circuit Simulator (Bayağı Evrensel Devre Simülatötü)</translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished">by Michael Margraf</translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished">Simülatör, Stefan Jahn tarafından</translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished">Jens Flucke ve Raimund Jacob&apos; a özel teşekkürler</translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation type="unfinished">Çevirmenler:</translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished">Almanca, Stefan Jahn tarafından</translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished">Polyaca, Dariusz Pienkowski tarafından</translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished">Romence, Radu Circa tarafından</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished">Fransızca, Vincent Habchi, F5RCS tarafından</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished">Portekizce, Luciano Franca tarafından</translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished">İspanyolca, Jose L. Redrejo Rodriguez tarafından</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished">Japonca, Toyoyuki Ishikawa tarafından</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished">İtalyanca, Giorgio Luparia ve Claudio Girardi tarafından</translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished">İbranice, Dotan Nahum tarafından</translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished">İsveççe, Peter Landgren tarafından</translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished">Türkçe, Onur Çobanoğlu ve Özgür Çobanoğlu tarafından</translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished">Macarca, Jozsef Bus tarafından</translation>
     </message>
 </context>
 <context>
@@ -4006,687 +5446,687 @@ Filitre tasarım yazılımı
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation>Yeni</translation>
+        <translation type="obsolete">Yeni</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;Yeni</translation>
+        <translation type="obsolete">&amp;Yeni</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation>Yeni belge oluşturur</translation>
+        <translation type="obsolete">Yeni belge oluşturur</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>Yeni
+        <translation type="obsolete">Yeni
 
 Veri görüntüleme ya da şema belgesi oluşturur</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>Kütük Aç</translation>
+        <translation type="obsolete">Kütük Aç</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;Aç...</translation>
+        <translation type="obsolete">&amp;Aç...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation>Varolan bir belgeyi açar</translation>
+        <translation type="obsolete">Varolan bir belgeyi açar</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>Kütük Aç
+        <translation type="obsolete">Kütük Aç
 
 Varolan bir belgeyi açar</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Kütük Kaydet</translation>
+        <translation type="obsolete">Kütük Kaydet</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Kaydet</translation>
+        <translation type="obsolete">&amp;Kaydet</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation>Geçerli belgeyi kaydeder</translation>
+        <translation type="obsolete">Geçerli belgeyi kaydeder</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation>Kütük Kaydet
+        <translation type="obsolete">Kütük Kaydet
 
 Geçerli belgeyi kaydeder</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>Farklı Kaydet</translation>
+        <translation type="obsolete">Farklı Kaydet</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Farklı  &amp;Kaydet...</translation>
+        <translation type="obsolete">Farklı  &amp;Kaydet...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation>Geçerli dokümanı yeni dosya adı altında kaydet</translation>
+        <translation type="obsolete">Geçerli dokümanı yeni dosya adı altında kaydet</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>Farklı kaydet
+        <translation type="obsolete">Farklı kaydet
 
 Geçerli belgeyi yeni bir ad altında kaydeder</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>Tüm kütükleri kaydet</translation>
+        <translation type="obsolete">Tüm kütükleri kaydet</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation>Tümünü &amp;Kaydet</translation>
+        <translation type="obsolete">Tümünü &amp;Kaydet</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation>Tüm açık belgeleri kaydeder</translation>
+        <translation type="obsolete">Tüm açık belgeleri kaydeder</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>Tüm kütükleri kaydet
+        <translation type="obsolete">Tüm kütükleri kaydet
 
 Tüm açık belgeleri kaydeder</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>Kütük Kapat</translation>
+        <translation type="obsolete">Kütük Kapat</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Kapat</translation>
+        <translation type="obsolete">&amp;Kapat</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation>Geçerli belgeyi kapatır</translation>
+        <translation type="obsolete">Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation>Kütük Kapat
+        <translation type="obsolete">Kütük Kapat
 
 Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Devre Sembolünü Düzenle</translation>
+        <translation type="obsolete">Devre Sembolünü Düzenle</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>Bu şema için sembol düzenle</translation>
+        <translation type="obsolete">Bu şema için sembol düzenle</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>Devre Sembolünü Düzenle
+        <translation type="obsolete">Devre Sembolünü Düzenle
 
 Bu şema için sembol düzenle</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>Belge Ayarları</translation>
+        <translation type="obsolete">Belge Ayarları</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>Belge Ayarları...</translation>
+        <translation type="obsolete">Belge Ayarları...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>Ayarlar
+        <translation type="obsolete">Ayarlar
 
 Kütük ayarlarını yap</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>Kütük Yazdır</translation>
+        <translation type="obsolete">Kütük Yazdır</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>&amp;Yazdır...</translation>
+        <translation type="obsolete">&amp;Yazdır...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation>Geçerli belgeyi yazdır</translation>
+        <translation type="obsolete">Geçerli belgeyi yazdır</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation>Kütük Yazdır
+        <translation type="obsolete">Kütük Yazdır
 
 Geçerli belgeyi yazdırır</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>Seçili Elemanları Yazdır</translation>
+        <translation type="obsolete">Seçili Elemanları Yazdır</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>Seçimi Yazdır...</translation>
+        <translation type="obsolete">Seçimi Yazdır...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>Seçili Elemanları Yazdır</translation>
+        <translation type="obsolete">Seçili Elemanları Yazdır</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>Seçili Elemanları Yazdırır
+        <translation type="obsolete">Seçili Elemanları Yazdırır
 
 Geçerli belgede seçili elemanları yazdırır</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Çıkış</translation>
+        <translation type="obsolete">Çıkış</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>Ç&amp;ıkış</translation>
+        <translation type="obsolete">Ç&amp;ıkış</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>Uygulamadan çık</translation>
+        <translation type="obsolete">Uygulamadan çık</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation>Çıkış
+        <translation type="obsolete">Çıkış
 
 Uygulamadan çıkar</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>Uygulama ayarları</translation>
+        <translation type="obsolete">Uygulama ayarları</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation>Uygulama Ayarları ...</translation>
+        <translation type="obsolete">Uygulama Ayarları ...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Qucs Ayarları
+        <translation type="obsolete">Qucs Ayarları
 
 Uygulama ayarlarını kur</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>Yukarı hizala</translation>
+        <translation type="obsolete">Yukarı hizala</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>Seçili elementleri yukarı hizala</translation>
+        <translation type="obsolete">Seçili elementleri yukarı hizala</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>Yukarı hizala
+        <translation type="obsolete">Yukarı hizala
 
 Seçili elementleri üst köşelerine hizala</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation>Alta hizala</translation>
+        <translation type="obsolete">Alta hizala</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>Seçili elementleri alta hizala</translation>
+        <translation type="obsolete">Seçili elementleri alta hizala</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>Alta hizala
+        <translation type="obsolete">Alta hizala
 
 Seçili elementleri alt köşelerine hizala</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation>Sola hizala</translation>
+        <translation type="obsolete">Sola hizala</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>Seçili elementleri sola hizala</translation>
+        <translation type="obsolete">Seçili elementleri sola hizala</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>Sola hizala
+        <translation type="obsolete">Sola hizala
 
 Seçili elementleri sol köşelerine hizala</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation>Sağa hizala</translation>
+        <translation type="obsolete">Sağa hizala</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>Seçili elementleri sağa hizala</translation>
+        <translation type="obsolete">Seçili elementleri sağa hizala</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>Sağa hizala
+        <translation type="obsolete">Sağa hizala
 
 Seçili öğeleri sağ köşelerine hizala</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation>Yatay Dağıt</translation>
+        <translation type="obsolete">Yatay Dağıt</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation>Yatay ve eşit dağıt</translation>
+        <translation type="obsolete">Yatay ve eşit dağıt</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>Yatay dağıt
+        <translation type="obsolete">Yatay dağıt
 
 Seçili elementleri yatay dağıt</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation>Dikey dağıt</translation>
+        <translation type="obsolete">Dikey dağıt</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation>Dikey ve eşit dağıt</translation>
+        <translation type="obsolete">Dikey ve eşit dağıt</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>Dikey dağıt
+        <translation type="obsolete">Dikey dağıt
 
 Seçili elementleri dikey dağıt</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation>Izgaranın üzerine kur</translation>
+        <translation type="obsolete">Izgaranın üzerine kur</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>Izgaranın üzerine kur
+        <translation type="obsolete">Izgaranın üzerine kur
 
 Seçili elementleri ızgaranın üzerine kurar</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation>Bileşen Metnini Taşı</translation>
+        <translation type="obsolete">Bileşen Metnini Taşı</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>Bileşen Metnini Taşı
+        <translation type="obsolete">Bileşen Metnini Taşı
 
 Bileşenlerin özellik yazısını taşır</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation>Özellik Değerlerini Değiştir...</translation>
+        <translation type="obsolete">Özellik Değerlerini Değiştir...</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation>Özellik Değerlerini Değiştir</translation>
+        <translation type="obsolete">Özellik Değerlerini Değiştir</translation>
     </message>
     <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation>Özellik Değerlerini Değiştir
+        <translation type="obsolete">Özellik Değerlerini Değiştir
 
 Özellik Değerlerini Değiştirir</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kes</translation>
+        <translation type="obsolete">Kes</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>K&amp;es</translation>
+        <translation type="obsolete">K&amp;es</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>Seçili kısmı keser ve not tahtasına koyar</translation>
+        <translation type="obsolete">Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>Kes
+        <translation type="obsolete">Kes
 
 Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopyala</translation>
+        <translation type="obsolete">Kopyala</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopyala</translation>
+        <translation type="obsolete">&amp;Kopyala</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>Seçili kısmı not tahtasına kopyalar</translation>
+        <translation type="obsolete">Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>Kopyala
+        <translation type="obsolete">Kopyala
 
 Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Yapıştır</translation>
+        <translation type="obsolete">Yapıştır</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>&amp;Yapıştır</translation>
+        <translation type="obsolete">&amp;Yapıştır</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
+        <translation type="obsolete">Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>Yapıştır
+        <translation type="obsolete">Yapıştır
 
 Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation type="obsolete">Sil</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp;Sil</translation>
+        <translation type="obsolete">&amp;Sil</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation>Seçili bilşenleri siler</translation>
+        <translation type="obsolete">Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>Sil
+        <translation type="obsolete">Sil
 
 Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri Al</translation>
+        <translation type="obsolete">Geri Al</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;Geri Al</translation>
+        <translation type="obsolete">&amp;Geri Al</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>Son komutu geri alır</translation>
+        <translation type="obsolete">Son komutu geri alır</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>Geri Al
+        <translation type="obsolete">Geri Al
 
 Son komutu geri alır</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Tekrarla</translation>
+        <translation type="obsolete">Tekrarla</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>&amp;Tekrarla</translation>
+        <translation type="obsolete">&amp;Tekrarla</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation>Son komutu tekrarlar</translation>
+        <translation type="obsolete">Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>Tekrarla
+        <translation type="obsolete">Tekrarla
 
 Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>Yeni Proje</translation>
+        <translation type="obsolete">Yeni Proje</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>&amp;Yeni Proje...</translation>
+        <translation type="obsolete">&amp;Yeni Proje...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>Yeni bir proje oluşturur</translation>
+        <translation type="obsolete">Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>Yeni Proje
+        <translation type="obsolete">Yeni Proje
 
 Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Proje Aç</translation>
+        <translation type="obsolete">Proje Aç</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>&amp;Proje Aç...</translation>
+        <translation type="obsolete">&amp;Proje Aç...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>Projeyi açar</translation>
+        <translation type="obsolete">Projeyi açar</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>Proje Aç
+        <translation type="obsolete">Proje Aç
 
 Varolan bir projeyi açar</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>Proje Sil</translation>
+        <translation type="obsolete">Proje Sil</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>Proje &amp;Sil...</translation>
+        <translation type="obsolete">Proje &amp;Sil...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>Proje siler</translation>
+        <translation type="obsolete">Proje siler</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>Proje Sil
+        <translation type="obsolete">Proje Sil
 
 Varolan bir projeyi siler</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>Proje Kapat</translation>
+        <translation type="obsolete">Proje Kapat</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>Proje &amp;Kapat</translation>
+        <translation type="obsolete">Proje &amp;Kapat</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>Geçerli projeyi kapat</translation>
+        <translation type="obsolete">Geçerli projeyi kapat</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>Proje Kapat
+        <translation type="obsolete">Proje Kapat
 
 Geçerli olan projeyi kapatır</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation>Kütükleri Projeye Ekle</translation>
+        <translation type="obsolete">Kütükleri Projeye Ekle</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation>&amp;Kütükleri Projeye Ekle...</translation>
+        <translation type="obsolete">&amp;Kütükleri Projeye Ekle...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation>Kütükleri proje dizinine kopyalar</translation>
+        <translation type="obsolete">Kütükleri proje dizinine kopyalar</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation>Projeye Kütük Ekle
+        <translation type="obsolete">Projeye Kütük Ekle
 
 Kütükleri proje dizinine kopyalar</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation>Tümünü Görüntüle</translation>
+        <translation type="obsolete">Tümünü Görüntüle</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>Tüm sayfayı görüntüler</translation>
+        <translation type="obsolete">Tüm sayfayı görüntüler</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>Tümünü Görüntüle
+        <translation type="obsolete">Tümünü Görüntüle
 
 Tüm sayfa içeriğini görüntüler</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation>Görüntüle 1:1</translation>
+        <translation type="obsolete">Görüntüle 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>Büyütme olmaksızın görüntüler</translation>
+        <translation type="obsolete">Büyütme olmaksızın görüntüler</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>Görüntüle 1:1
+        <translation type="obsolete">Görüntüle 1:1
 
 Sayfa içeriğini büyütme olmaksızın görüntüler</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>Büyüt</translation>
+        <translation type="obsolete">Büyüt</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation>Geçerli görünümü büyütür</translation>
+        <translation type="obsolete">Geçerli görünümü büyütür</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>Büyüt
+        <translation type="obsolete">Büyüt
 
 Geçerli görünümü büyütür</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Küçült</translation>
+        <translation type="obsolete">Küçült</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation>Geçerli görünümü küçültür</translation>
+        <translation type="obsolete">Geçerli görünümü küçültür</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>Azalt
+        <translation type="obsolete">Azalt
 
 Geçerli görünümü küçültür</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Seç</translation>
+        <translation type="obsolete">Seç</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Seçme durumu</translation>
+        <translation type="obsolete">Seçme durumu</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>Seç
+        <translation type="obsolete">Seç
 
 Seçme durumu</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Tümünü Seç</translation>
+        <translation type="obsolete">Tümünü Seç</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>Tüm elemanları seçer</translation>
+        <translation type="obsolete">Tüm elemanları seçer</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>Tümünü Seç
+        <translation type="obsolete">Tümünü Seç
 
 Belgenin tüm elemanlarını seçer</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Döndür</translation>
+        <translation type="obsolete">Döndür</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90</source>
@@ -4702,595 +6142,595 @@ Seçili bileşeni 90 derece dönürür</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>X Ekseni Etrafında Aynala</translation>
+        <translation type="obsolete">X Ekseni Etrafında Aynala</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>Seçili elemanı x ekseni etrafında aynalar</translation>
+        <translation type="obsolete">Seçili elemanı x ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>X Ekseni Etrafında Aynala
+        <translation type="obsolete">X Ekseni Etrafında Aynala
 
 Seçili elemanı x ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>Y Ekseni Etrafında Aynala</translation>
+        <translation type="obsolete">Y Ekseni Etrafında Aynala</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>Seçili elemanı y ekseni etrafında aynalar</translation>
+        <translation type="obsolete">Seçili elemanı y ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Y Ekseni Etrafında Aynalar
+        <translation type="obsolete">Y Ekseni Etrafında Aynalar
 
 Seçili elemanı y ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation>Alt-Devreye Git</translation>
+        <translation type="obsolete">Alt-Devreye Git</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>Alt-devrenin içine girer</translation>
+        <translation type="obsolete">Alt-devrenin içine girer</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>Alt-Devreye Git
+        <translation type="obsolete">Alt-Devreye Git
 
 Alt-devrenin içine girer</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation>Bir Üst Katmana</translation>
+        <translation type="obsolete">Bir Üst Katmana</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>Bir üst katmana çık</translation>
+        <translation type="obsolete">Bir üst katmana çık</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>Bir üst katmana
+        <translation type="obsolete">Bir üst katmana
 
 Devre hiyerarşisinde bir üst katmana çıkar, yani alt-devreyi terkeder</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation>Kapat/Etkinleştir</translation>
+        <translation type="obsolete">Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>Seçili elemanı Kapat/Etkinleştir</translation>
+        <translation type="obsolete">Seçili elemanı Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>Kapat/Etkinleştir
+        <translation type="obsolete">Kapat/Etkinleştir
 
 Seçili elemanı Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation>Eşitlik Ekle</translation>
+        <translation type="obsolete">Eşitlik Ekle</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>Eşitlik ekler</translation>
+        <translation type="obsolete">Eşitlik ekler</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>Eşitlik Ekle
+        <translation type="obsolete">Eşitlik Ekle
 
 Kullanıcı tarafından belirlenen bit eşitlik ekler</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>Toprak Ekle</translation>
+        <translation type="obsolete">Toprak Ekle</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>Toprak Ekler</translation>
+        <translation type="obsolete">Toprak Ekler</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>Toprak Ekle
+        <translation type="obsolete">Toprak Ekle
 
 Toprak simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>Ayak Ekle</translation>
+        <translation type="obsolete">Ayak Ekle</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Ayak ekler</translation>
+        <translation type="obsolete">Ayak ekler</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Ayak Ekle
+        <translation type="obsolete">Ayak Ekle
 
 Giriş/çıkış ayak(port) simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>Bağlantı Hattı Ekle</translation>
+        <translation type="obsolete">Bağlantı Hattı Ekle</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation>Bağlantı Hattı</translation>
+        <translation type="obsolete">Bağlantı Hattı</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>Bağlantı hattı ekler</translation>
+        <translation type="obsolete">Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>Bağlantı Hattı
+        <translation type="obsolete">Bağlantı Hattı
 
 Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>Bağlantı Hattı/Ayak Etiketi Ekle</translation>
+        <translation type="obsolete">Bağlantı Hattı/Ayak Etiketi Ekle</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>Bağlantı Hattı Etiketi</translation>
+        <translation type="obsolete">Bağlantı Hattı Etiketi</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>Bağlantı Hattı/Ayak Etiketi Ekler</translation>
+        <translation type="obsolete">Bağlantı Hattı/Ayak Etiketi Ekler</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>Bağlantı Hattı Etiketi
+        <translation type="obsolete">Bağlantı Hattı Etiketi
 
 Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation>Metin Düzenleyici</translation>
+        <translation type="obsolete">Metin Düzenleyici</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation>Metin düzenleyici</translation>
+        <translation type="obsolete">Metin düzenleyici</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation>Qucs metin düzenleyiciyisini başlatır</translation>
+        <translation type="obsolete">Qucs metin düzenleyiciyisini başlatır</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation>Metin düzenleyici
+        <translation type="obsolete">Metin düzenleyici
 
 Qucs metin düzenleyicisini başlatır</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation>Filitre tasarımı</translation>
+        <translation type="obsolete">Filitre tasarımı</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation>QucsFilter uygulamasını başlatır</translation>
+        <translation type="obsolete">QucsFilter uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation>Filitre Tasarımı
+        <translation type="obsolete">Filitre Tasarımı
 
 QucsFilter uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation>Hat hesabı</translation>
+        <translation type="obsolete">Hat hesabı</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation>QucsTrans uygulamasını başlatır</translation>
+        <translation type="obsolete">QucsTrans uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation>Hat hesabı
+        <translation type="obsolete">Hat hesabı
 
 İletim hattı hesaplayıcısını başlatır</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation>Bileşen Kütüphanesi</translation>
+        <translation type="obsolete">Bileşen Kütüphanesi</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation>QucsLib uygulamasını başlatır</translation>
+        <translation type="obsolete">QucsLib uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation>Bileşen Kütüphanesi
+        <translation type="obsolete">Bileşen Kütüphanesi
 
 Bileşen Kütüphanesi uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation>Karşılaştırma Devresi</translation>
+        <translation type="obsolete">Karşılaştırma Devresi</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation>Karşılaştırma Devresi Oluşturur</translation>
+        <translation type="obsolete">Karşılaştırma Devresi Oluşturur</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation>Karşılaştırma Devresi
+        <translation type="obsolete">Karşılaştırma Devresi
 
 Karşılaştırma Devresi Oluşturma İletişim Penceresi</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>Simüle Et</translation>
+        <translation type="obsolete">Simüle Et</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>Geçerli şemayı simüle eder</translation>
+        <translation type="obsolete">Geçerli şemayı simüle eder</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>Simüle et
+        <translation type="obsolete">Simüle et
 
 Geçerli şemayı simüle eder</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>Veri Göstergesi/Şema Görüntüle</translation>
+        <translation type="obsolete">Veri Göstergesi/Şema Görüntüle</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
+        <translation type="obsolete">Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>Veri Göstergesi/Şema Görüntüle
+        <translation type="obsolete">Veri Göstergesi/Şema Görüntüle
 
 </translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation>DC bias hesapla</translation>
+        <translation type="obsolete">DC bias hesapla</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation>DC kutuplanma durumunu hesaplar ve gösterir</translation>
+        <translation type="obsolete">DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation>DC bias hesapla
+        <translation type="obsolete">DC bias hesapla
 
 DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>İşaretçi Koy</translation>
+        <translation type="obsolete">İşaretçi Koy</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>Grafik Üzerine İşaretçi Koy</translation>
+        <translation type="obsolete">Grafik Üzerine İşaretçi Koy</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Diyagramın grafiği üzerine bir işaretçi koyar</translation>
+        <translation type="obsolete">Diyagramın grafiği üzerine bir işaretçi koyar</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>İşaretçi Koy
+        <translation type="obsolete">İşaretçi Koy
 
 Diyagramın grafiği üzerine işaretçi koyar</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>Son Mesajları Göster</translation>
+        <translation type="obsolete">Son Mesajları Göster</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>Son simülasyon mesajlarını gösterir</translation>
+        <translation type="obsolete">Son simülasyon mesajlarını gösterir</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>Son Mesajları Göster
+        <translation type="obsolete">Son Mesajları Göster
 
 Son simülasyondan olan mesajları gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>Son Bağlantı Listesini Göster</translation>
+        <translation type="obsolete">Son Bağlantı Listesini Göster</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>Son simülasyondan son bağlantı listesini gösterir</translation>
+        <translation type="obsolete">Son simülasyondan son bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>Son Bağlantı Listesini Göster
+        <translation type="obsolete">Son Bağlantı Listesini Göster
 
 Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Araç Çubuğu</translation>
+        <translation type="obsolete">Araç Çubuğu</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation>&amp;Araç Çubuğu</translation>
+        <translation type="obsolete">&amp;Araç Çubuğu</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>Araç çubuğunu etkinleştir/kapat</translation>
+        <translation type="obsolete">Araç çubuğunu etkinleştir/kapat</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>Araç Çubuğu
+        <translation type="obsolete">Araç Çubuğu
 
 Araç çubuğunu etkinleştir/kapat</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Durumçubuğu</translation>
+        <translation type="obsolete">Durumçubuğu</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Durumçubuğu</translation>
+        <translation type="obsolete">&amp;Durumçubuğu</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>Durumçubuğunu etkinleştirir veya kapatır</translation>
+        <translation type="obsolete">Durumçubuğunu etkinleştirir veya kapatır</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>Durumçubuğu
+        <translation type="obsolete">Durumçubuğu
 
 Durumçubuğunu Etkinleştirir/kapatır</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Yardım - İçindekiler</translation>
+        <translation type="obsolete">Yardım - İçindekiler</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation>Yardım - İçindekiler...</translation>
+        <translation type="obsolete">Yardım - İçindekiler...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation>İçindekiler - Qucs Yardım</translation>
+        <translation type="obsolete">İçindekiler - Qucs Yardım</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>Yardım - İçindekiler
+        <translation type="obsolete">Yardım - İçindekiler
 
 Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>Başlarken</translation>
+        <translation type="obsolete">Başlarken</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>Başlarken...</translation>
+        <translation type="obsolete">Başlarken...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>Qucs İle Başlarken</translation>
+        <translation type="obsolete">Qucs İle Başlarken</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Başlarken
+        <translation type="obsolete">Başlarken
 
 Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Hakkında</translation>
+        <translation type="obsolete">Hakkında</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation>&amp;Qucs Hakkında...</translation>
+        <translation type="obsolete">&amp;Qucs Hakkında...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>Uygulama hakkında</translation>
+        <translation type="obsolete">Uygulama hakkında</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation>Hakkında
+        <translation type="obsolete">Hakkında
 
 Uygulama hakkında</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Qt Hakkında</translation>
+        <translation type="obsolete">Qt Hakkında</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation>Qt Hakkında...</translation>
+        <translation type="obsolete">Qt Hakkında...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>Qt Hakkında
+        <translation type="obsolete">Qt Hakkında
 
 Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>Hizala</translation>
+        <translation type="obsolete">Hizala</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Kütük</translation>
+        <translation type="obsolete">&amp;Kütük</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Düzen</translation>
+        <translation type="obsolete">&amp;Düzen</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation>&amp;Ekle</translation>
+        <translation type="obsolete">&amp;Ekle</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>&amp;Proje</translation>
+        <translation type="obsolete">&amp;Proje</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Araçlar</translation>
+        <translation type="obsolete">&amp;Araçlar</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>&amp;Simülasyon</translation>
+        <translation type="obsolete">&amp;Simülasyon</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Görünüm</translation>
+        <translation type="obsolete">&amp;Görünüm</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Yardım</translation>
+        <translation type="obsolete">&amp;Yardım</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation>Son simülasyondaki uyarılar ! için f5&apos;e basınız</translation>
+        <translation type="obsolete">Son simülasyondaki uyarılar ! için f5&apos;e basınız</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation>uyarı yok</translation>
+        <translation type="obsolete">uyarı yok</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Hazır.</translation>
+        <translation type="obsolete">Hazır.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Araç çubuğunu aç/kapa...</translation>
+        <translation type="obsolete">Araç çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Durum çubuğunu aç/kapa...</translation>
+        <translation type="obsolete">Durum çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>Hakkında...</translation>
+        <translation type="obsolete">Hakkında...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation>Qucs Sürümü</translation>
+        <translation type="obsolete">Qucs Sürümü</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation>Quite Universal Circuit Simulator (Bayağı Evrensel Devre Simülatötü)</translation>
+        <translation type="obsolete">Quite Universal Circuit Simulator (Bayağı Evrensel Devre Simülatötü)</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation>by Michael Margraf</translation>
+        <translation type="obsolete">by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation>Simülatör, Stefan Jahn tarafından</translation>
+        <translation type="obsolete">Simülatör, Stefan Jahn tarafından</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation>Jens Flucke ve Raimund Jacob&apos; a özel teşekkürler</translation>
+        <translation type="obsolete">Jens Flucke ve Raimund Jacob&apos; a özel teşekkürler</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation>Çevirmenler:</translation>
+        <translation type="obsolete">Çevirmenler:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation>Almanca, Stefan Jahn tarafından</translation>
+        <translation type="obsolete">Almanca, Stefan Jahn tarafından</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation>Türkçe, Onur Çobanoğlu ve Özgür Çobanoğlu tarafından</translation>
+        <translation type="obsolete">Türkçe, Onur Çobanoğlu ve Özgür Çobanoğlu tarafından</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation>Polyaca, Dariusz Pienkowski tarafından</translation>
+        <translation type="obsolete">Polyaca, Dariusz Pienkowski tarafından</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation>Romence, Radu Circa tarafından</translation>
+        <translation type="obsolete">Romence, Radu Circa tarafından</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation>Fransızca, Vincent Habchi, F5RCS tarafından</translation>
+        <translation type="obsolete">Fransızca, Vincent Habchi, F5RCS tarafından</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Portekizce, Luciano Franca tarafından</translation>
+        <translation type="obsolete">Portekizce, Luciano Franca tarafından</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation>İspanyolca, Jose L. Redrejo Rodriguez tarafından</translation>
+        <translation type="obsolete">İspanyolca, Jose L. Redrejo Rodriguez tarafından</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation>Japonca, Toyoyuki Ishikawa tarafından</translation>
+        <translation type="obsolete">Japonca, Toyoyuki Ishikawa tarafından</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation>İtalyanca, Giorgio Luparia ve Claudio Girardi tarafından</translation>
+        <translation type="obsolete">İtalyanca, Giorgio Luparia ve Claudio Girardi tarafından</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation>İbranice, Dotan Nahum tarafından</translation>
+        <translation type="obsolete">İbranice, Dotan Nahum tarafından</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe and Peter Landgren</source>
@@ -5298,33 +6738,11 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation>Macarca, Jozsef Bus tarafından</translation>
-    </message>
-    <message>
-        <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate
-
-Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Macarca, Jozsef Bus tarafından</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation>İsveççe, Peter Landgren tarafından</translation>
-    </message>
-    <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">İsveççe, Peter Landgren tarafından</translation>
     </message>
 </context>
 <context>
@@ -5934,51 +7352,51 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <name>QucsView</name>
     <message>
         <source>Edit Properties</source>
-        <translation>Özellikleri Düzenle</translation>
+        <translation type="obsolete">Özellikleri Düzenle</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation>power matching</translation>
+        <translation type="obsolete">power matching</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation>noise matching</translation>
+        <translation type="obsolete">noise matching</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation>2-port matching</translation>
+        <translation type="obsolete">2-port matching</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Bilgi</translation>
+        <translation type="obsolete">Bilgi</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>Toprak potansiyeli etiketlenemiyor!</translation>
+        <translation type="obsolete">Toprak potansiyeli etiketlenemiyor!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation type="obsolete">Hata</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation>Yüklenemiyor S(1.1).</translation>
+        <translation type="obsolete">Yüklenemiyor S(1.1).</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation>Yüklenemiyor S(1.2).</translation>
+        <translation type="obsolete">Yüklenemiyor S(1.2).</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation>Yüklenemiyor S(2.1).</translation>
+        <translation type="obsolete">Yüklenemiyor S(2.1).</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation>Yüklenemiyor S(2.2).</translation>
+        <translation type="obsolete">Yüklenemiyor S(2.2).</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation>Yanlış dayanak!</translation>
+        <translation type="obsolete">Yanlış dayanak!</translation>
     </message>
 </context>
 <context>
