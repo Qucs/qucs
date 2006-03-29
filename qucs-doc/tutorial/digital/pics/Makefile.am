@@ -22,9 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-EXTRA_DIST = $(PNGS) $(PDFS) $(XFIG)
-
-PNGS = 
+EXTRA_DIST = $(PDFS)
 
 PDFS = comb1s.pdf g2bitsch.pdf mux21.pdf prim1tt.pdf regt.pdf dffl.pdf \
   g4bit.pdf mux21sch.pdf prim2sch.pdf t1ex2sch.pdf dfflsch.pdf g4bitsch.pdf \
