@@ -1,7 +1,7 @@
 /*
  * pac.cpp - AC power source class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pac.cpp,v 1.11 2005/06/02 18:17:52 raimi Exp $
+ * $Id: pac.cpp,v 1.12 2006/03/29 08:02:03 raimi Exp $
  *
  */
 
@@ -90,4 +90,26 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t i = sqrt (8 * p / r) * sin (2 * M_PI * f * t);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
+}
+
+void pac::initHB (void) {
+  setVoltageSources (1);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  nr_double_t g = 1.0 / getPropertyDouble ("Z");
+  setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+  setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+}
+
+void pac::calcHB (nr_double_t frequency) {
+  nr_double_t f = getPropertyDouble ("f");
+  if (f == frequency) {
+    nr_double_t p = getPropertyDouble ("P");
+    nr_double_t r = getPropertyDouble ("Z");
+    nr_double_t u = sqrt (4 * p * r);
+    setE (VSRC_1, u);
+  }
+  else {
+    setE (VSRC_1, 0);
+  }
 }

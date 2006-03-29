@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.h,v 1.9 2006/03/27 09:55:49 raimi Exp $
+ * $Id: strlist.h,v 1.10 2006/03/29 08:02:03 raimi Exp $
  *
  */
 
@@ -63,6 +63,7 @@ class strlist
 class strlistiterator
 {
  public:
+  strlistiterator ();
   strlistiterator (strlist &);
   strlistiterator (strlist *);
   ~strlistiterator ();

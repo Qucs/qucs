@@ -1,3 +1,10 @@
+2006-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.cpp, ptrlist.cpp: Added a default constructor.
+
+	* hbsolver.cpp: Some more work on the linear solver for
+	harmonic balance done...
+
 2006-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* strlist.h (class strlistiterator): New iterator class.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.35 2005/10/31 16:15:31 ela Exp $
+ * $Id: eqnsys.cpp,v 1.36 2006/03/29 08:02:03 raimi Exp $
  *
  */
 
@@ -361,12 +361,12 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
     if (MaxPivot <= 0) {
 #if LU_FAILURE
       qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
-      e->setText ("no pivot != 0 found during LU decomposition");
+      e->setText ("no pivot != 0 found during Crout LU decomposition");
       e->setData (c);
       throw_exception (e);
       goto fail;
 #else /* insert virtual resistance */
-      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", c);
+      VIRTUAL_RES ("no pivot != 0 found during Crout LU decomposition", c);
 #endif
     }
 
@@ -427,12 +427,12 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
     if (MaxPivot <= 0) {
 #if LU_FAILURE
       qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
-      e->setText ("no pivot != 0 found during LU decomposition");
+      e->setText ("no pivot != 0 found during Doolittle LU decomposition");
       e->setData (c);
       throw_exception (e);
       goto fail;
 #else /* insert virtual resistance */
-      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", c);
+      VIRTUAL_RES ("no pivot != 0 found during Doolittle LU decomposition", c);
 #endif
     }
 

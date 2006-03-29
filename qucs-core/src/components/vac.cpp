@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.cpp,v 1.15 2006/02/22 11:43:57 raimi Exp $
+ * $Id: vac.cpp,v 1.16 2006/03/29 08:02:03 raimi Exp $
  *
  */
 
@@ -76,4 +76,22 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t u = a * exp (-d * t) * sin (2 * M_PI * f * t + rad (p));
   setE (VSRC_1, u);
+}
+
+void vac::initHB (void) {
+  setVoltageSources (1);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+}
+
+void vac::calcHB (nr_double_t frequency) {
+  nr_double_t f = getPropertyDouble ("f");
+  if (f == frequency) {
+    nr_double_t a = getPropertyDouble ("U");
+    nr_double_t p = getPropertyDouble ("Phase");
+    setE (VSRC_1, polar (a, rad (p)));
+  }
+  else {
+    setE (VSRC_1, 0);
+  }
 }
