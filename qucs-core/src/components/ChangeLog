@@ -1,3 +1,7 @@
+2006-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* vac.cpp, pac.cpp: Implemented HB callbacks.
+
 2006-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp, inductor.cpp, capacitor.cpp: Implemented HB

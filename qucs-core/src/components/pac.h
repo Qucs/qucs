@@ -1,7 +1,7 @@
 /*
  * pac.h - AC power source class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pac.h,v 1.8 2005-06-02 18:17:52 raimi Exp $
+ * $Id: pac.h,v 1.9 2006-03-29 08:02:03 raimi Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class pac : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void calcTR (nr_double_t);
+  void initHB (void);
+  void calcHB (nr_double_t);
 };
 
 #endif /* __PAC_H__ */

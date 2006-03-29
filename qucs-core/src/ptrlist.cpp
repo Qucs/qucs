@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ptrlist.cpp,v 1.3 2006-03-27 09:55:49 raimi Exp $
+ * $Id: ptrlist.cpp,v 1.4 2006-03-29 08:02:03 raimi Exp $
  *
  */
 
@@ -154,6 +154,13 @@ ptrlistiterator<type_t>::ptrlistiterator (ptrlist<type_t> & p) {
   _ptrlist = &p;
   toLast ();
   toFirst ();
+}
+
+// Default constructor for pointer list iterator.
+template <class type_t>
+ptrlistiterator<type_t>::ptrlistiterator () {
+  _ptrlist = NULL;
+  _first = _last = _current = NULL;
 }
 
 // Destructor for pointer list iterator.

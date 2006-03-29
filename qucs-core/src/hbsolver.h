@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.4 2006-03-27 09:55:49 raimi Exp $
+ * $Id: hbsolver.h,v 1.5 2006-03-29 08:02:03 raimi Exp $
  *
  */
 
@@ -53,31 +53,40 @@ class hbsolver : public analysis
   strlist * circuitNodes (ptrlist<circuit>);
   void getNodeLists (void);
   int  assignVoltageSources (ptrlist<circuit>);
-  int  assignNodes (ptrlist<circuit>, strlist *);
+  int  assignNodes (ptrlist<circuit>, strlist *, int offset = 0);
   void prepareLinear (void);
   void createMatrixLinearA (void);
   void fillMatrixLinearA (tmatrix<complex> *, int);
   void invertMatrix (tmatrix<complex> *, tmatrix<complex> *);
   void createMatrixLinearY (void);
   void saveResults (void);
+  void calcConstantCurrent (void);
+  complex excitationZ (tvector<complex> *, circuit *, int);
+  void finalSolution (void);
 
  private:
   tvector<nr_double_t> frequencies;
+  tvector<nr_double_t> pfreqs;
   nr_double_t frequency;
-  strlist * nlnodes, * lnnodes, * banodes;
+  strlist * nlnodes, * lnnodes, * banodes, * nanodes, * exnodes;
   ptrlist<circuit> excitations;
-  ptrlist<circuit> nlcircuits;
-  ptrlist<circuit> lncircuits;
+  ptrlist<circuit> nolcircuits;
+  ptrlist<circuit> lincircuits;
 
+  tmatrix<complex> * Y;
   tmatrix<complex> * A;
   tmatrix<complex> * Z;
   tmatrix<complex> * YV;
-  tmatrix<complex> * YC;
+
+  tvector<complex> * IC;
+  tvector<complex> * IS;
+  tvector<complex> * x;
 
   int runs;
   int nfreqs;
   int nlnvsrcs;
   int nlnnodes;
+  int nnanodes;
 };
 
 #endif /* __HBSOLVER_H__ */
