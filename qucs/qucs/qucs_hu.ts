@@ -3374,88 +3374,112 @@ Digitális szimuláció</translation>
         <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Tulajdonságok beállítása</translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Infó</translation>
+    </message>
+    <message>
+        <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished">A földpotenciál nem lehet cimke!</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation>Infó</translation>
+        <translation type="obsolete">Infó</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Legalább két elemet kell kiválasztani! </translation>
+        <translation type="obsolete">Legalább két elemet kell kiválasztani! </translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation type="obsolete">Hiba</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>A szövegszerkesztő (qucsedit) nem indítható!</translation>
+        <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>
+        <translation type="obsolete">
 Nem indítható a szűrő méretező program!
 </translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>
+        <translation type="obsolete">
 Nem indítható a tápvonal tervező program!
 </translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>A Qucs Súgó (qucshelp) nem indítható!</translation>
+        <translation type="obsolete">A Qucs Súgó (qucshelp) nem indítható!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation>
+        <translation type="obsolete">
 Nem indítható az alkatrészkönyvtár program!
 </translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation>Nincs nyitott projekt!</translation>
+        <translation type="obsolete">Nincs nyitott projekt!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation>Fájlok kiválasztása másoláshoz</translation>
+        <translation type="obsolete">Fájlok kiválasztása másoláshoz</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation>Nincs másolt fájl.</translation>
+        <translation type="obsolete">Nincs másolt fájl.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; megnyitása nem sikerült!</translation>
+        <translation type="obsolete">&quot;%1&quot; megnyitása nem sikerült!</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation>Felülírás</translation>
+        <translation type="obsolete">Felülírás</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; létrehozása nem sikerült!</translation>
+        <translation type="obsolete">&quot;%1&quot; létrehozása nem sikerült!</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; nem olvasható!</translation>
+        <translation type="obsolete">&quot;%1&quot; nem olvasható!</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; nem írható!</translation>
+        <translation type="obsolete">&quot;%1&quot; nem írható!</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Kész.
+        <translation type="obsolete">Kész.
 </translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>A &quot;%1&quot; fájl létezik.
+        <translation type="obsolete">A &quot;%1&quot; fájl létezik.
 Felülírjam?</translation>
     </message>
 </context>
@@ -3495,7 +3519,7 @@ Felülírjam?</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>A projekt könyvtár összetevői</translation>
+        <translation type="obsolete">A projekt könyvtár összetevői</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -3523,7 +3547,7 @@ Felülírjam?</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>A megnyitott projekt összetevői</translation>
+        <translation type="obsolete">A megnyitott projekt összetevői</translation>
     </message>
     <message>
         <source>Components</source>
@@ -3704,12 +3728,12 @@ Szeretnéd menteni a változásakat bezárás előtt?
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation>A kiterjesztés csak &apos;.sch&apos; és &apos;.dpl&apos; lehet
+        <translation type="obsolete">A kiterjesztés csak &apos;.sch&apos; és &apos;.dpl&apos; lehet
 </translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>nem fog látszani betöltéskor! Folytatja?</translation>
+        <translation type="obsolete">nem fog látszani betöltéskor! Folytatja?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3776,7 +3800,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">A Qucs Súgó (qucshelp) nem indítható!</translation>
+        <translation type="unfinished">A Qucs Súgó (qucshelp) nem indítható!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -3859,7 +3883,7 @@ Hibák:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
+        <translation type="unfinished">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3999,7 +4023,7 @@ Hibák:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="obsolete">Legalább két elemet kell kiválasztani! </translation>
+        <translation type="unfinished">Legalább két elemet kell kiválasztani! </translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -4055,13 +4079,13 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="obsolete">
+        <translation type="unfinished">
 Nem indítható a szűrő méretező program!
 </translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="obsolete">
+        <translation type="unfinished">
 Nem indítható a tápvonal tervező program!
 </translation>
     </message>
@@ -4084,6 +4108,1405 @@ Nem indítható a tápvonal tervező program!
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
         <translation>&quot;%1&quot; nem indítható!</translation>
+    </message>
+    <message>
+        <source>VHDL Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data display: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete VHDL source: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating new text editor...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing selected...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong dependency!</source>
+        <translation type="unfinished">Rossz függőség!</translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished">
+Nem indítható az alkatrészkönyvtár program!
+</translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished">Nincs nyitott projekt!</translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished">Fájlok kiválasztása másoláshoz</translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished">Nincs másolt fájl.</translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; megnyitása nem sikerült!</translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished">Felülírás</translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished">A &quot;%1&quot; fájl létezik.
+Felülírjam?</translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; létrehozása nem sikerült!</translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; nem olvasható!</translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished">&quot;%1&quot; nem írható!</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="unfinished">Ú&amp;j</translation>
+    </message>
+    <message>
+        <source>Creates a new document</source>
+        <translation type="unfinished">Új dokumentumot készít</translation>
+    </message>
+    <message>
+        <source>New
+
+Creates a new schematic or data display document</source>
+        <translation type="unfinished">Új
+
+Új kapcsolási rajzot vagy adatmegjelenítő dokumentumot hoz létre</translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text
+
+Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation type="unfinished">Fájl megnyitása</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">&amp;Megnyitás...</translation>
+    </message>
+    <message>
+        <source>Opens an existing document</source>
+        <translation type="unfinished">Megnyit egy létező dokumentumot</translation>
+    </message>
+    <message>
+        <source>Open File
+
+Opens an existing document</source>
+        <translation type="unfinished">Fájl megnyitás
+
+Megnyit egy létező dokumentumot</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished">Fájl mentés</translation>
+    </message>
+    <message>
+        <source>Saves the current document</source>
+        <translation type="unfinished">Menti az aktuális dokumentum</translation>
+    </message>
+    <message>
+        <source>Save File
+
+Saves the current document</source>
+        <translation type="unfinished">Fájl mentése
+
+Menti az aktuális dokumentumot</translation>
+    </message>
+    <message>
+        <source>Save File As</source>
+        <translation type="unfinished">Mentés másként</translation>
+    </message>
+    <message>
+        <source>Save as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saves the current document under a new filename</source>
+        <translation type="unfinished">Menti az aktuális dokumentumot új fájlnévvel</translation>
+    </message>
+    <message>
+        <source>Save As
+
+Saves the current document under a new filename</source>
+        <translation type="unfinished">Mentés másként
+
+Menti az aktuális dokumentumot új fájlnévvel</translation>
+    </message>
+    <message>
+        <source>Save All Files</source>
+        <translation type="unfinished">Összes fájl mentése</translation>
+    </message>
+    <message>
+        <source>Save &amp;All</source>
+        <translation type="unfinished">Min&amp;dent ment</translation>
+    </message>
+    <message>
+        <source>Saves all open documents</source>
+        <translation type="unfinished">Ment minden nyitott dokumentumot</translation>
+    </message>
+    <message>
+        <source>Save All Files
+
+Saves all open documents</source>
+        <translation type="unfinished">Minden fájl mentése
+
+Ment minden nyitott dokumentumot</translation>
+    </message>
+    <message>
+        <source>Close File</source>
+        <translation type="unfinished">Fájl bezárás</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished">&amp;Bezárás</translation>
+    </message>
+    <message>
+        <source>Closes the current document</source>
+        <translation type="unfinished">Bezárja az aktuális dokumentumot</translation>
+    </message>
+    <message>
+        <source>Close File
+
+Closes the current document</source>
+        <translation type="unfinished">Fájl bezárás
+
+Bezárja az aktuális dokumentumot</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings...</source>
+        <translation type="unfinished">Dokumentum tulajdonságai...</translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Dokumentum tulajdonságai</translation>
+    </message>
+    <message>
+        <source>Settings
+
+Sets properties of the file</source>
+        <translation type="unfinished">Beállítások
+
+Tulajdonságok beállítása a fájlhoz</translation>
+    </message>
+    <message>
+        <source>Print File</source>
+        <translation type="unfinished">Fájl nyomtatása</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished">&amp;Nyomtatás...</translation>
+    </message>
+    <message>
+        <source>Prints the current document</source>
+        <translation type="unfinished">Nyomtatja az aktuális dokumentumot</translation>
+    </message>
+    <message>
+        <source>Print File
+
+Prints the current document</source>
+        <translation type="unfinished">Fájl nyomtatása
+
+Nyomtatja az aktuális dokumentumot</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished">Kiválasztott rész nyomtatása</translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished">Kijelölt rész nyomtatása...</translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished">Kinyomtatja a kiválasztott részt</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
+        <translation type="unfinished">Kijelölt rész nyomtatása
+
+Kinyomtatja a kiválasztott részt</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="unfinished">Kilépés</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">&amp;Kilépés</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="unfinished">Kilépés a programból</translation>
+    </message>
+    <message>
+        <source>Exit
+
+Quits the application</source>
+        <translation type="unfinished">Kilépés
+
+Kilépés a programból</translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished">Beállítások</translation>
+    </message>
+    <message>
+        <source>Application Settings...</source>
+        <translation type="unfinished">Beállítások...</translation>
+    </message>
+    <message>
+        <source>Qucs Settings
+
+Sets properties of the application</source>
+        <translation type="unfinished">Qucs beállításai
+
+Beállítja a program tulajdonságait</translation>
+    </message>
+    <message>
+        <source>Align top</source>
+        <translation type="unfinished">Tetejéhez igazít</translation>
+    </message>
+    <message>
+        <source>Align top selected elements</source>
+        <translation type="unfinished">A kiválasztott elemeket a tetejéhez igazítja</translation>
+    </message>
+    <message>
+        <source>Align top
+
+Align selected elements to their upper edge</source>
+        <translation type="unfinished">Tetejéhez igazít
+
+A kiválasztott elemeket a tetejéhez igazítja</translation>
+    </message>
+    <message>
+        <source>Align bottom</source>
+        <translation type="unfinished">Aljához igazít</translation>
+    </message>
+    <message>
+        <source>Align bottom selected elements</source>
+        <translation type="unfinished">A kiválasztott elemeket az aljához igazítja</translation>
+    </message>
+    <message>
+        <source>Align bottom
+
+Align selected elements to their lower edge</source>
+        <translation type="unfinished">Aljához igazít
+
+A kiválasztott elemeket az aljához igazítja</translation>
+    </message>
+    <message>
+        <source>Align left</source>
+        <translation type="unfinished">Balra igazít</translation>
+    </message>
+    <message>
+        <source>Align left selected elements</source>
+        <translation type="unfinished">A kiválasztott elemeket balra igazítja</translation>
+    </message>
+    <message>
+        <source>Align left
+
+Align selected elements to their left edge</source>
+        <translation type="unfinished">Balra igazít
+
+A kiválasztott elemeket balra igazítja</translation>
+    </message>
+    <message>
+        <source>Align right</source>
+        <translation type="unfinished">Jobbra igazít</translation>
+    </message>
+    <message>
+        <source>Align right selected elements</source>
+        <translation type="unfinished">A kiválasztott elemeket jobbra igazítja</translation>
+    </message>
+    <message>
+        <source>Align right
+
+Align selected elements to their right edge</source>
+        <translation type="unfinished">Jobbra igazít
+
+A kiválasztott elemeket jobbra igazítja</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally</source>
+        <translation type="unfinished">Vízszintesen elterít</translation>
+    </message>
+    <message>
+        <source>Distribute equally horizontally</source>
+        <translation type="unfinished">Vízszintesen egyenletesen elterít</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally
+
+Distribute horizontally selected elements</source>
+        <translation type="unfinished">Vízszintesen elterít
+
+A kiválasztott elemeket vízszintesen elteríti</translation>
+    </message>
+    <message>
+        <source>Distribute vertically</source>
+        <translation type="unfinished">Függőlegesen elterít</translation>
+    </message>
+    <message>
+        <source>Distribute equally vertically</source>
+        <translation type="unfinished">Függőlegesen egyenletesen elterít</translation>
+    </message>
+    <message>
+        <source>Distribute vertically
+
+Distribute vertically selected elements</source>
+        <translation type="unfinished">Függőlegesen elterít
+
+A kiválasztott elemeket függőlegesen elteríti</translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished">Rácshoz illeszt</translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
+        <translation type="unfinished">Rácshoz illeszt
+
+A kiválasztott elemet rácshoz illeszti</translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished">Alkatrészfelirat mozgatás</translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="unfinished">Alkatrészfelirat mozgatás
+
+Mozgatja az alkatrészfeliratokat</translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished">Tulajdonság értékeinek változtatása...</translation>
+    </message>
+    <message>
+        <source>Change Property Values</source>
+        <translation type="unfinished">Tulajdonság értékeinek változtatása</translation>
+    </message>
+    <message>
+        <source>Change Property Values
+
+Change Property Value of Components</source>
+        <translation type="unfinished">Tulajdonság értékeinek változtatása
+
+Az alkatrészek tulajdonság értékeit változtatja</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">Kivágás</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">&amp;Kivágás</translation>
+    </message>
+    <message>
+        <source>Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">Kivágás
+
+Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Másolás</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Másolás</translation>
+    </message>
+    <message>
+        <source>Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Átmásolja a kijelölt részeket a vágólapra</translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selected section to the clipboard</source>
+        <translation type="unfinished">Másolás
+
+Átmásolja a kijelölt részeket a vágólapra</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Beillesztés</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">&amp;Beillesztés</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
+    </message>
+    <message>
+        <source>Paste
+
+Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">Beillesztés
+
+Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Törlés</translation>
+    </message>
+    <message>
+        <source>Deletes the selected components</source>
+        <translation type="unfinished">Törli a kijelölt részeket</translation>
+    </message>
+    <message>
+        <source>Delete
+
+Deletes the selected components</source>
+        <translation type="unfinished">Törlés
+
+Törli a kijelölt részeket</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Visszavonás</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">&amp;Visszavonás</translation>
+    </message>
+    <message>
+        <source>Undoes the last command</source>
+        <translation type="unfinished">Visszavonja az utolsó parancsot</translation>
+    </message>
+    <message>
+        <source>Undo
+
+Makes the last action undone</source>
+        <translation type="unfinished">Visszavonás
+
+Visszavonja az utolsó parancsot</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Újra</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">Új&amp;ra</translation>
+    </message>
+    <message>
+        <source>Redoes the last command</source>
+        <translation type="unfinished">Az utolsó visszavont parancsot újból végrehajtja</translation>
+    </message>
+    <message>
+        <source>Redo
+
+Repeats the last action once more</source>
+        <translation type="unfinished">Újra
+
+Az utolsó visszavont parancsot újból végrehajtja</translation>
+    </message>
+    <message>
+        <source>New Project</source>
+        <translation type="unfinished">Új projekt</translation>
+    </message>
+    <message>
+        <source>&amp;New Project...</source>
+        <translation type="unfinished">Ú&amp;j Projekt...</translation>
+    </message>
+    <message>
+        <source>Creates a new project</source>
+        <translation type="unfinished">Új projektet hoz létre</translation>
+    </message>
+    <message>
+        <source>New Project
+
+Creates a new project</source>
+        <translation type="unfinished">Új projekt
+
+Új projektet hoz létre</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation type="unfinished">Projekt megnyitása</translation>
+    </message>
+    <message>
+        <source>&amp;Open Project...</source>
+        <translation type="unfinished">Projekt &amp;megnyitása...</translation>
+    </message>
+    <message>
+        <source>Opens a project</source>
+        <translation type="unfinished">Projektet nyit meg</translation>
+    </message>
+    <message>
+        <source>Open Project
+
+Opens an existing project</source>
+        <translation type="unfinished">Projekt megnyitása
+
+Projektet nyit meg</translation>
+    </message>
+    <message>
+        <source>Delete Project</source>
+        <translation type="unfinished">Projekt törlése</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Project...</source>
+        <translation type="unfinished">Projekt &amp;törlése...</translation>
+    </message>
+    <message>
+        <source>Deletes a project</source>
+        <translation type="unfinished">Projektet töröl</translation>
+    </message>
+    <message>
+        <source>Delete Project
+
+Deletes an existing project</source>
+        <translation type="unfinished">Projekt törlése
+
+Projektet töröl</translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished">Projekt bezárása</translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished">Projekt &amp;bezárása</translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished">Aktuális projekt bezárása</translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished">Projekt bezárása
+
+Aktuális projekt bezárása</translation>
+    </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished">Fájlok hozzáadása a Projekthez</translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished">Fájlok &amp;hozzáadása a Projekthez...</translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished">Fájlok másolása a projekt könyvtárba</translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished">Fájlok hozzáadása a Projekthez
+
+Fájlok másolása a projekt könyvtárba</translation>
+    </message>
+    <message>
+        <source>View All</source>
+        <translation type="unfinished">Nagyítás ablakméretre</translation>
+    </message>
+    <message>
+        <source>Views the whole page</source>
+        <translation type="unfinished">Nagyit az ablak méretére</translation>
+    </message>
+    <message>
+        <source>View All
+
+Shows the whole page content</source>
+        <translation type="unfinished">Nagyítás ablakméretre
+
+Nagyit az ablak méretére</translation>
+    </message>
+    <message>
+        <source>View 1:1</source>
+        <translation type="unfinished">Tényleges méret</translation>
+    </message>
+    <message>
+        <source>Views without magnification</source>
+        <translation type="unfinished">Nagyít a tényleges méretre</translation>
+    </message>
+    <message>
+        <source>View 1:1
+
+Shows the page content without magnification</source>
+        <translation type="unfinished">Tényleges méret
+
+Tényleges méretben mutatja az oldal összetevőit</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished">Nagyítás</translation>
+    </message>
+    <message>
+        <source>Zooms into the current view</source>
+        <translation type="unfinished">Nagyít az aktuális ablakban</translation>
+    </message>
+    <message>
+        <source>Zoom in
+
+Zooms the current view</source>
+        <translation type="unfinished">Nagyítás
+
+Nagyít az aktuális ablakban</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished">Kicsinyítés</translation>
+    </message>
+    <message>
+        <source>Zooms out the current view</source>
+        <translation type="unfinished">Kicsinyít az aktuális ablakban</translation>
+    </message>
+    <message>
+        <source>Zoom out
+
+Zooms out the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Kijelölés</translation>
+    </message>
+    <message>
+        <source>Select mode</source>
+        <translation type="unfinished">Kijelölő mód</translation>
+    </message>
+    <message>
+        <source>Select
+
+Select mode</source>
+        <translation type="unfinished">Kijelölés
+
+Kijelölő mód</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">Mindent kijelöl</translation>
+    </message>
+    <message>
+        <source>Selects all elements</source>
+        <translation type="unfinished">Kijelöl minden elemet</translation>
+    </message>
+    <message>
+        <source>Select All
+
+Selects all elements of the document</source>
+        <translation type="unfinished">Mindent kijelöl
+
+Kijelöl minden elemet</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished">Forgatás</translation>
+    </message>
+    <message>
+        <source>Rotates the selected component by 90&#xb0;</source>
+        <translation type="unfinished">Elforgatja a kiválasztott komponenst  90°-kal</translation>
+    </message>
+    <message>
+        <source>Rotate
+
+Rotates the selected component by 90&#xb0; counter-clockwise</source>
+        <translation type="unfinished">Forgatás
+
+Elforgatja a kiválasztott komponenst  90°-kal</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis</source>
+        <translation type="unfinished">Függőleges tükrözés</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X axis</source>
+        <translation type="unfinished">Tükrözi a kiválasztott elemet függőlegesen</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis
+
+Mirrors the selected item about X Axis</source>
+        <translation type="unfinished">Függőleges tükrözés
+
+Tükrözi a kiválasztott elemet függőlegesen</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis</source>
+        <translation type="unfinished">Vízszintes tükrözés</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y axis</source>
+        <translation type="unfinished">Tükrözi a kiválasztott elemet vízszintesen</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis
+
+Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished">Vízszintes tükrözés
+
+Tükrözi a kiválasztott elemet vízszintesen</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit</source>
+        <translation type="unfinished">Ugrás a beágyazott kapcsolásba</translation>
+    </message>
+    <message>
+        <source>Goes inside subcircuit</source>
+        <translation type="unfinished">Beugrik a beágyazott kapcsolásba</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit
+
+Goes inside the selected subcircuit</source>
+        <translation type="unfinished">Ugrás a beágyazott kapcsolásba
+
+Beugrik a beágyazott kapcsolásba</translation>
+    </message>
+    <message>
+        <source>Pop out</source>
+        <translation type="unfinished">Kiugrás</translation>
+    </message>
+    <message>
+        <source>Pop outside subcircuit</source>
+        <translation type="unfinished">Kiugrik a beágyazott kapcsolásból</translation>
+    </message>
+    <message>
+        <source>Pop out
+
+Goes up one hierarchy level, i.e. leaves subcircuit</source>
+        <translation type="unfinished">Kiugrás
+
+Kiugrik a beágyazott kapcsolásból</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate</source>
+        <translation type="unfinished">Passziválás/Aktiválás</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Passziválja/Aktiválja a kiválasztott elemet</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected item</source>
+        <translation type="unfinished">Passziválás/Aktiválás
+
+Passziválja/Aktiválja a kiválasztott elemet</translation>
+    </message>
+    <message>
+        <source>Insert Equation</source>
+        <translation type="unfinished">Egyenlet beszúrása</translation>
+    </message>
+    <message>
+        <source>Inserts equation</source>
+        <translation type="unfinished">Egyenlet beszúrása</translation>
+    </message>
+    <message>
+        <source>Insert Equation
+
+Inserts a user defined equation</source>
+        <translation type="unfinished">Egyenlet beszúrása
+
+Beszúr egy felhasználói egyenletet</translation>
+    </message>
+    <message>
+        <source>Insert Ground</source>
+        <translation type="unfinished">Földelés beszúrása</translation>
+    </message>
+    <message>
+        <source>Inserts ground</source>
+        <translation type="unfinished">Beszúr egy földelést</translation>
+    </message>
+    <message>
+        <source>Insert Ground
+
+Inserts a ground symbol</source>
+        <translation type="unfinished">Földelés beszúrása
+
+Beszúr egy földelést</translation>
+    </message>
+    <message>
+        <source>Insert Port</source>
+        <translation type="unfinished">Csatlakozópont beszúrása</translation>
+    </message>
+    <message>
+        <source>Inserts port</source>
+        <translation type="unfinished">Beszúr egy ssatlakozópontot</translation>
+    </message>
+    <message>
+        <source>Insert Port
+
+Inserts a port symbol</source>
+        <translation type="unfinished">Csatlakozópont beszúrása
+
+Beszúr egy csatlakozópont rajzot</translation>
+    </message>
+    <message>
+        <source>Insert Wire</source>
+        <translation type="unfinished">Vezeték beszúrása</translation>
+    </message>
+    <message>
+        <source>Wire</source>
+        <translation type="unfinished">Vezeték</translation>
+    </message>
+    <message>
+        <source>Inserts a wire</source>
+        <translation type="unfinished">Beszúr egy vezetéket</translation>
+    </message>
+    <message>
+        <source>Wire
+
+Inserts a wire</source>
+        <translation type="unfinished">Vezeték
+
+Vezeték beszúrása</translation>
+    </message>
+    <message>
+        <source>Insert Wire/Pin Label</source>
+        <translation type="unfinished">Vezeték/Csomópont cimke beszúrása</translation>
+    </message>
+    <message>
+        <source>Wire Label</source>
+        <translation type="unfinished">Vezeték cimke</translation>
+    </message>
+    <message>
+        <source>Inserts a wire or pin label</source>
+        <translation type="unfinished">Vezeték/Csomópont cimke beszúrása</translation>
+    </message>
+    <message>
+        <source>Wire Label
+
+Inserts a wire or pin label</source>
+        <translation type="unfinished">Vezeték cimke
+
+Vezeték/Csomópont cimke beszúrása</translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished">Szövegszerkesztő</translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished">Szövegszerkesztő</translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished">Qucs szövegszerkesztő indítása</translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished">Szövegszerkesztő
+
+Qucs szövegszerkesztő indítása</translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished">Szűrő méretező</translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished">QucsFilter indítása</translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished">Szűrő méretező
+
+QucsFilter indítása</translation>
+    </message>
+    <message>
+        <source>Line calculation</source>
+        <translation type="unfinished">Tápvonal számítás</translation>
+    </message>
+    <message>
+        <source>Starts QucsTrans</source>
+        <translation type="unfinished">QucsTrans indítása</translation>
+    </message>
+    <message>
+        <source>Line calculation
+
+Starts transmission line calculator</source>
+        <translation type="unfinished">Tápvonal kalkulátor
+
+QucsTrans indítása</translation>
+    </message>
+    <message>
+        <source>Component Library</source>
+        <translation type="unfinished">Alkatrész könyvtár</translation>
+    </message>
+    <message>
+        <source>Starts QucsLib</source>
+        <translation type="unfinished">QucsLib indítása</translation>
+    </message>
+    <message>
+        <source>Component Library
+
+Starts component library program</source>
+        <translation type="unfinished">Alkatrész könyvtár
+
+QucsLib indítása</translation>
+    </message>
+    <message>
+        <source>Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit
+
+Dialog for Creating Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulate</source>
+        <translation type="unfinished">Szimuláció</translation>
+    </message>
+    <message>
+        <source>Simulates the current schematic</source>
+        <translation type="unfinished">Szimuláció futtatása az aktuális kapcsoláson</translation>
+    </message>
+    <message>
+        <source>Simulate
+
+Simulates the current schematic</source>
+        <translation type="unfinished">Szimuláció
+
+Szimuláció futtatása az aktuális kapcsoláson</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic</source>
+        <translation type="unfinished">Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet</translation>
+    </message>
+    <message>
+        <source>Changes to data display or schematic page</source>
+        <translation type="unfinished">Átkapcsolás az Adatmegjelenítő(dpl) és a Kapcsolási rajz(sch) között</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic
+
+</source>
+        <translation type="unfinished">Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet
+
+</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished">DC munkapont számítása</translation>
+    </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished">Kiszámítja a DC munkapontokat és megjeleníti</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished">DC munkapont számítása
+
+Kiszámítja a DC munkapontokat és megjeleníti</translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished">Jelző beéllítása</translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished">Jelző beállítása a grafikonon</translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">Jelző beállítása a diagram grafikonjain</translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">Jelző beéllítása
+
+Jelző beállítása a diagram grafikonjain</translation>
+    </message>
+    <message>
+        <source>Show Last Messages</source>
+        <translation type="unfinished">Utolsó üzenet megjelenítése</translation>
+    </message>
+    <message>
+        <source>Shows last simulation messages</source>
+        <translation type="unfinished">Utolsó szimuláció üzeneteinek megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Last Messages
+
+Shows the messages of the last simulation</source>
+        <translation type="unfinished">Utolsó üzenet megjelenítése
+
+Utolsó szimuláció üzeneteinek megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist</source>
+        <translation type="unfinished">Utolsó kötéslista megjelenítése</translation>
+    </message>
+    <message>
+        <source>Shows last simulation netlist</source>
+        <translation type="unfinished">Utolsó szimuláció kötéslistájának megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist
+
+Shows the netlist of the last simulation</source>
+        <translation type="unfinished">Utolsó kötéslista megjelenítése
+
+Utolsó szimuláció kötéslistájának megjelenítése</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Eszköztár</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bar</source>
+        <translation type="unfinished">Esz&amp;köztár</translation>
+    </message>
+    <message>
+        <source>Enables/disables the toolbar</source>
+        <translation type="unfinished">Eszköztár be/ki</translation>
+    </message>
+    <message>
+        <source>Toolbar
+
+Enables/disables the toolbar</source>
+        <translation type="unfinished">Eszköztár
+
+Eszköztár be/ki</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Státuszsor</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="unfinished">&amp;Státuszsor</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="unfinished">Státuszsor be/ki</translation>
+    </message>
+    <message>
+        <source>Statusbar
+
+Enables/disables the statusbar</source>
+        <translation type="unfinished">Státuszsor
+
+Státuszsor be/ki</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished">Súgó index</translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished">Súgó index...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished">Qucs súgó tartalomjegyzék</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished">Súgó index
+
+
+Tartalomjegyzék az internetes Qucs súgóhoz </translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished">Kezd így</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished">Kezd így...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished">Kezd így a Qucs-ot</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation type="unfinished">Kezd így
+
+Rövid bemutatás a Qucs-hoz</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Névjegy</translation>
+    </message>
+    <message>
+        <source>&amp;About Qucs...</source>
+        <translation type="unfinished">Qucs &amp;Névjegy...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="unfinished">Program névjegy</translation>
+    </message>
+    <message>
+        <source>About
+
+About the application</source>
+        <translation type="unfinished">Névjegy
+
+Program névjegy</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">Qt Névjegy</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished">Qt Névjegy...</translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation type="unfinished">Qt Névjegy
+
+Qt a Trolltech-től</translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation type="unfinished">Elhelyezés</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Fájl</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;Szerkesztés</translation>
+    </message>
+    <message>
+        <source>&amp;Insert</source>
+        <translation type="unfinished">&amp;Beszúrás</translation>
+    </message>
+    <message>
+        <source>&amp;Project</source>
+        <translation type="unfinished">&amp;Projekt</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished">&amp;Eszközök</translation>
+    </message>
+    <message>
+        <source>&amp;Simulation</source>
+        <translation type="unfinished">Sz&amp;imuláció</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;Megjelenítés</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Súgó</translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished">Az utolsó szimuláció figyelmeztetései! F5</translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished">nincs figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>Toggle toolbar...</source>
+        <translation type="unfinished">Eszköztár kapcsoló...</translation>
+    </message>
+    <message>
+        <source>Toggle statusbar...</source>
+        <translation type="unfinished">Státuszsor kapcsoló...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">Névjegy...</translation>
+    </message>
+    <message>
+        <source>Qucs Version</source>
+        <translation type="unfinished">Qucs verzió</translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished">Külön köszönet Jens Flucke-nek és Raimund Jacob-nak</translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation type="unfinished">Fordítók:</translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished">Stefan Jahn - Német</translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished">Dariusz Pienkowski - Lengyel</translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished">Radu Circa - Román</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished">Vincent Habchi, F5RCS - Francia</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished">Luciano Franca - Portugál</translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished">Jose L. Redrejo Rodriguez - Spanyol</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished">Toyoyuki Ishikawa - Japán</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished">Giorgio Luparia és Claudio Girardi - Olasz</translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished">Dotan Nahum - Héber</translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished">Peter Landgren - Svéd</translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished">Bús József - Magyar</translation>
     </message>
 </context>
 <context>
@@ -4391,1020 +5814,1020 @@ Szűrő méretező program
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation>Új</translation>
+        <translation type="obsolete">Új</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>Ú&amp;j</translation>
+        <translation type="obsolete">Ú&amp;j</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation>Új dokumentumot készít</translation>
+        <translation type="obsolete">Új dokumentumot készít</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>Új
+        <translation type="obsolete">Új
 
 Új kapcsolási rajzot vagy adatmegjelenítő dokumentumot hoz létre</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>Fájl megnyitása</translation>
+        <translation type="obsolete">Fájl megnyitása</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;Megnyitás...</translation>
+        <translation type="obsolete">&amp;Megnyitás...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation>Megnyit egy létező dokumentumot</translation>
+        <translation type="obsolete">Megnyit egy létező dokumentumot</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>Fájl megnyitás
+        <translation type="obsolete">Fájl megnyitás
 
 Megnyit egy létező dokumentumot</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Fájl mentés</translation>
+        <translation type="obsolete">Fájl mentés</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Mentés</translation>
+        <translation type="obsolete">&amp;Mentés</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation>Menti az aktuális dokumentum</translation>
+        <translation type="obsolete">Menti az aktuális dokumentum</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation>Fájl mentése
+        <translation type="obsolete">Fájl mentése
 
 Menti az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>Mentés másként</translation>
+        <translation type="obsolete">Mentés másként</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>Men&amp;tés másként...</translation>
+        <translation type="obsolete">Men&amp;tés másként...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation>Menti az aktuális dokumentumot új fájlnévvel</translation>
+        <translation type="obsolete">Menti az aktuális dokumentumot új fájlnévvel</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>Mentés másként
+        <translation type="obsolete">Mentés másként
 
 Menti az aktuális dokumentumot új fájlnévvel</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>Összes fájl mentése</translation>
+        <translation type="obsolete">Összes fájl mentése</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation>Min&amp;dent ment</translation>
+        <translation type="obsolete">Min&amp;dent ment</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation>Ment minden nyitott dokumentumot</translation>
+        <translation type="obsolete">Ment minden nyitott dokumentumot</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>Minden fájl mentése
+        <translation type="obsolete">Minden fájl mentése
 
 Ment minden nyitott dokumentumot</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>Fájl bezárás</translation>
+        <translation type="obsolete">Fájl bezárás</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Bezárás</translation>
+        <translation type="obsolete">&amp;Bezárás</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation>Bezárja az aktuális dokumentumot</translation>
+        <translation type="obsolete">Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation>Fájl bezárás
+        <translation type="obsolete">Fájl bezárás
 
 Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Áramköri szimbólum szerkesztése</translation>
+        <translation type="obsolete">Áramköri szimbólum szerkesztése</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
+        <translation type="obsolete">Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>Áramköri szimbólum szerkesztése
+        <translation type="obsolete">Áramköri szimbólum szerkesztése
 
 Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>Dokumentum tulajdonságai</translation>
+        <translation type="obsolete">Dokumentum tulajdonságai</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>Dokumentum tulajdonságai...</translation>
+        <translation type="obsolete">Dokumentum tulajdonságai...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>Beállítások
+        <translation type="obsolete">Beállítások
 
 Tulajdonságok beállítása a fájlhoz</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>Fájl nyomtatása</translation>
+        <translation type="obsolete">Fájl nyomtatása</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>&amp;Nyomtatás...</translation>
+        <translation type="obsolete">&amp;Nyomtatás...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation>Nyomtatja az aktuális dokumentumot</translation>
+        <translation type="obsolete">Nyomtatja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation>Fájl nyomtatása
+        <translation type="obsolete">Fájl nyomtatása
 
 Nyomtatja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>Kiválasztott rész nyomtatása</translation>
+        <translation type="obsolete">Kiválasztott rész nyomtatása</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>Kijelölt rész nyomtatása...</translation>
+        <translation type="obsolete">Kijelölt rész nyomtatása...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>Kinyomtatja a kiválasztott részt</translation>
+        <translation type="obsolete">Kinyomtatja a kiválasztott részt</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>Kijelölt rész nyomtatása
+        <translation type="obsolete">Kijelölt rész nyomtatása
 
 Kinyomtatja a kiválasztott részt</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Kilépés</translation>
+        <translation type="obsolete">Kilépés</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>&amp;Kilépés</translation>
+        <translation type="obsolete">&amp;Kilépés</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>Kilépés a programból</translation>
+        <translation type="obsolete">Kilépés a programból</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation>Kilépés
+        <translation type="obsolete">Kilépés
 
 Kilépés a programból</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>Beállítások</translation>
+        <translation type="obsolete">Beállítások</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation>Beállítások...</translation>
+        <translation type="obsolete">Beállítások...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Qucs beállításai
+        <translation type="obsolete">Qucs beállításai
 
 Beállítja a program tulajdonságait</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>Tetejéhez igazít</translation>
+        <translation type="obsolete">Tetejéhez igazít</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>A kiválasztott elemeket a tetejéhez igazítja</translation>
+        <translation type="obsolete">A kiválasztott elemeket a tetejéhez igazítja</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>Tetejéhez igazít
+        <translation type="obsolete">Tetejéhez igazít
 
 A kiválasztott elemeket a tetejéhez igazítja</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation>Aljához igazít</translation>
+        <translation type="obsolete">Aljához igazít</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>A kiválasztott elemeket az aljához igazítja</translation>
+        <translation type="obsolete">A kiválasztott elemeket az aljához igazítja</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>Aljához igazít
+        <translation type="obsolete">Aljához igazít
 
 A kiválasztott elemeket az aljához igazítja</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation>Balra igazít</translation>
+        <translation type="obsolete">Balra igazít</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>A kiválasztott elemeket balra igazítja</translation>
+        <translation type="obsolete">A kiválasztott elemeket balra igazítja</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>Balra igazít
+        <translation type="obsolete">Balra igazít
 
 A kiválasztott elemeket balra igazítja</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation>Jobbra igazít</translation>
+        <translation type="obsolete">Jobbra igazít</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>A kiválasztott elemeket jobbra igazítja</translation>
+        <translation type="obsolete">A kiválasztott elemeket jobbra igazítja</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>Jobbra igazít
+        <translation type="obsolete">Jobbra igazít
 
 A kiválasztott elemeket jobbra igazítja</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation>Vízszintesen elterít</translation>
+        <translation type="obsolete">Vízszintesen elterít</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation>Vízszintesen egyenletesen elterít</translation>
+        <translation type="obsolete">Vízszintesen egyenletesen elterít</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>Vízszintesen elterít
+        <translation type="obsolete">Vízszintesen elterít
 
 A kiválasztott elemeket vízszintesen elteríti</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation>Függőlegesen elterít</translation>
+        <translation type="obsolete">Függőlegesen elterít</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation>Függőlegesen egyenletesen elterít</translation>
+        <translation type="obsolete">Függőlegesen egyenletesen elterít</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>Függőlegesen elterít
+        <translation type="obsolete">Függőlegesen elterít
 
 A kiválasztott elemeket függőlegesen elteríti</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation>Rácshoz illeszt</translation>
+        <translation type="obsolete">Rácshoz illeszt</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>Rácshoz illeszt
+        <translation type="obsolete">Rácshoz illeszt
 
 A kiválasztott elemet rácshoz illeszti</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation>Alkatrészfelirat mozgatás</translation>
+        <translation type="obsolete">Alkatrészfelirat mozgatás</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>Alkatrészfelirat mozgatás
+        <translation type="obsolete">Alkatrészfelirat mozgatás
 
 Mozgatja az alkatrészfeliratokat</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Kivágás</translation>
+        <translation type="obsolete">Kivágás</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>&amp;Kivágás</translation>
+        <translation type="obsolete">&amp;Kivágás</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
+        <translation type="obsolete">Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>Kivágás
+        <translation type="obsolete">Kivágás
 
 Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation type="obsolete">Másolás</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Másolás</translation>
+        <translation type="obsolete">&amp;Másolás</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>Átmásolja a kijelölt részeket a vágólapra</translation>
+        <translation type="obsolete">Átmásolja a kijelölt részeket a vágólapra</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>Másolás
+        <translation type="obsolete">Másolás
 
 Átmásolja a kijelölt részeket a vágólapra</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Beillesztés</translation>
+        <translation type="obsolete">Beillesztés</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>&amp;Beillesztés</translation>
+        <translation type="obsolete">&amp;Beillesztés</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
+        <translation type="obsolete">Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>Beillesztés
+        <translation type="obsolete">Beillesztés
 
 Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Törlés</translation>
+        <translation type="obsolete">Törlés</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp;Törlés</translation>
+        <translation type="obsolete">&amp;Törlés</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation>Törli a kijelölt részeket</translation>
+        <translation type="obsolete">Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>Törlés
+        <translation type="obsolete">Törlés
 
 Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Visszavonás</translation>
+        <translation type="obsolete">Visszavonás</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;Visszavonás</translation>
+        <translation type="obsolete">&amp;Visszavonás</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>Visszavonja az utolsó parancsot</translation>
+        <translation type="obsolete">Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>Visszavonás
+        <translation type="obsolete">Visszavonás
 
 Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Újra</translation>
+        <translation type="obsolete">Újra</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>Új&amp;ra</translation>
+        <translation type="obsolete">Új&amp;ra</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation>Az utolsó visszavont parancsot újból végrehajtja</translation>
+        <translation type="obsolete">Az utolsó visszavont parancsot újból végrehajtja</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>Újra
+        <translation type="obsolete">Újra
 
 Az utolsó visszavont parancsot újból végrehajtja</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>Új projekt</translation>
+        <translation type="obsolete">Új projekt</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>Ú&amp;j Projekt...</translation>
+        <translation type="obsolete">Ú&amp;j Projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>Új projektet hoz létre</translation>
+        <translation type="obsolete">Új projektet hoz létre</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>Új projekt
+        <translation type="obsolete">Új projekt
 
 Új projektet hoz létre</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Projekt megnyitása</translation>
+        <translation type="obsolete">Projekt megnyitása</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>Projekt &amp;megnyitása...</translation>
+        <translation type="obsolete">Projekt &amp;megnyitása...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>Projektet nyit meg</translation>
+        <translation type="obsolete">Projektet nyit meg</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>Projekt megnyitása
+        <translation type="obsolete">Projekt megnyitása
 
 Projektet nyit meg</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>Projekt törlése</translation>
+        <translation type="obsolete">Projekt törlése</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>Projekt &amp;törlése...</translation>
+        <translation type="obsolete">Projekt &amp;törlése...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>Projektet töröl</translation>
+        <translation type="obsolete">Projektet töröl</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>Projekt törlése
+        <translation type="obsolete">Projekt törlése
 
 Projektet töröl</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>Projekt bezárása</translation>
+        <translation type="obsolete">Projekt bezárása</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>Projekt &amp;bezárása</translation>
+        <translation type="obsolete">Projekt &amp;bezárása</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>Aktuális projekt bezárása</translation>
+        <translation type="obsolete">Aktuális projekt bezárása</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>Projekt bezárása
+        <translation type="obsolete">Projekt bezárása
 
 Aktuális projekt bezárása</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation>Nagyítás ablakméretre</translation>
+        <translation type="obsolete">Nagyítás ablakméretre</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>Nagyit az ablak méretére</translation>
+        <translation type="obsolete">Nagyit az ablak méretére</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>Nagyítás ablakméretre
+        <translation type="obsolete">Nagyítás ablakméretre
 
 Nagyit az ablak méretére</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation>Tényleges méret</translation>
+        <translation type="obsolete">Tényleges méret</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>Nagyít a tényleges méretre</translation>
+        <translation type="obsolete">Nagyít a tényleges méretre</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>Tényleges méret
+        <translation type="obsolete">Tényleges méret
 
 Tényleges méretben mutatja az oldal összetevőit</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>Nagyítás</translation>
+        <translation type="obsolete">Nagyítás</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation>Nagyít az aktuális ablakban</translation>
+        <translation type="obsolete">Nagyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>Nagyítás
+        <translation type="obsolete">Nagyítás
 
 Nagyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Kicsinyítés</translation>
+        <translation type="obsolete">Kicsinyítés</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation>Kicsinyít az aktuális ablakban</translation>
+        <translation type="obsolete">Kicsinyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>Kicsinyítés
+        <translation type="obsolete">Kicsinyítés
 
 Kicsinyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Kijelölés</translation>
+        <translation type="obsolete">Kijelölés</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Kijelölő mód</translation>
+        <translation type="obsolete">Kijelölő mód</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>Kijelölés
+        <translation type="obsolete">Kijelölés
 
 Kijelölő mód</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Mindent kijelöl</translation>
+        <translation type="obsolete">Mindent kijelöl</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>Kijelöl minden elemet</translation>
+        <translation type="obsolete">Kijelöl minden elemet</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>Mindent kijelöl
+        <translation type="obsolete">Mindent kijelöl
 
 Kijelöl minden elemet</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Forgatás</translation>
+        <translation type="obsolete">Forgatás</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation>Elforgatja a kiválasztott komponenst  90°-kal</translation>
+        <translation type="obsolete">Elforgatja a kiválasztott komponenst  90°-kal</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation>Forgatás
+        <translation type="obsolete">Forgatás
 
 Elforgatja a kiválasztott komponenst  90°-kal</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>Függőleges tükrözés</translation>
+        <translation type="obsolete">Függőleges tükrözés</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>Tükrözi a kiválasztott elemet függőlegesen</translation>
+        <translation type="obsolete">Tükrözi a kiválasztott elemet függőlegesen</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>Függőleges tükrözés
+        <translation type="obsolete">Függőleges tükrözés
 
 Tükrözi a kiválasztott elemet függőlegesen</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>Vízszintes tükrözés</translation>
+        <translation type="obsolete">Vízszintes tükrözés</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>Tükrözi a kiválasztott elemet vízszintesen</translation>
+        <translation type="obsolete">Tükrözi a kiválasztott elemet vízszintesen</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Vízszintes tükrözés
+        <translation type="obsolete">Vízszintes tükrözés
 
 Tükrözi a kiválasztott elemet vízszintesen</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation>Ugrás a beágyazott kapcsolásba</translation>
+        <translation type="obsolete">Ugrás a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>Beugrik a beágyazott kapcsolásba</translation>
+        <translation type="obsolete">Beugrik a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>Ugrás a beágyazott kapcsolásba
+        <translation type="obsolete">Ugrás a beágyazott kapcsolásba
 
 Beugrik a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation>Kiugrás</translation>
+        <translation type="obsolete">Kiugrás</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>Kiugrik a beágyazott kapcsolásból</translation>
+        <translation type="obsolete">Kiugrik a beágyazott kapcsolásból</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>Kiugrás
+        <translation type="obsolete">Kiugrás
 
 Kiugrik a beágyazott kapcsolásból</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation>Passziválás/Aktiválás</translation>
+        <translation type="obsolete">Passziválás/Aktiválás</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>Passziválja/Aktiválja a kiválasztott elemet</translation>
+        <translation type="obsolete">Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>Passziválás/Aktiválás
+        <translation type="obsolete">Passziválás/Aktiválás
 
 Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation>Egyenlet beszúrása</translation>
+        <translation type="obsolete">Egyenlet beszúrása</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>Egyenlet beszúrása</translation>
+        <translation type="obsolete">Egyenlet beszúrása</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>Egyenlet beszúrása
+        <translation type="obsolete">Egyenlet beszúrása
 
 Beszúr egy felhasználói egyenletet</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>Földelés beszúrása</translation>
+        <translation type="obsolete">Földelés beszúrása</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>Beszúr egy földelést</translation>
+        <translation type="obsolete">Beszúr egy földelést</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>Földelés beszúrása
+        <translation type="obsolete">Földelés beszúrása
 
 Beszúr egy földelést</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>Csatlakozópont beszúrása</translation>
+        <translation type="obsolete">Csatlakozópont beszúrása</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Beszúr egy ssatlakozópontot</translation>
+        <translation type="obsolete">Beszúr egy ssatlakozópontot</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Csatlakozópont beszúrása
+        <translation type="obsolete">Csatlakozópont beszúrása
 
 Beszúr egy csatlakozópont rajzot</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>Vezeték beszúrása</translation>
+        <translation type="obsolete">Vezeték beszúrása</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation>Vezeték</translation>
+        <translation type="obsolete">Vezeték</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>Beszúr egy vezetéket</translation>
+        <translation type="obsolete">Beszúr egy vezetéket</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>Vezeték
+        <translation type="obsolete">Vezeték
 
 Vezeték beszúrása</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>Vezeték/Csomópont cimke beszúrása</translation>
+        <translation type="obsolete">Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>Vezeték cimke</translation>
+        <translation type="obsolete">Vezeték cimke</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>Vezeték/Csomópont cimke beszúrása</translation>
+        <translation type="obsolete">Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>Vezeték cimke
+        <translation type="obsolete">Vezeték cimke
 
 Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>Szimuláció</translation>
+        <translation type="obsolete">Szimuláció</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>Szimuláció futtatása az aktuális kapcsoláson</translation>
+        <translation type="obsolete">Szimuláció futtatása az aktuális kapcsoláson</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>Szimuláció
+        <translation type="obsolete">Szimuláció
 
 Szimuláció futtatása az aktuális kapcsoláson</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet</translation>
+        <translation type="obsolete">Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>Átkapcsolás az Adatmegjelenítő(dpl) és a Kapcsolási rajz(sch) között</translation>
+        <translation type="obsolete">Átkapcsolás az Adatmegjelenítő(dpl) és a Kapcsolási rajz(sch) között</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet
+        <translation type="obsolete">Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet
 
 </translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>Jelző beéllítása</translation>
+        <translation type="obsolete">Jelző beéllítása</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>Jelző beállítása a grafikonon</translation>
+        <translation type="obsolete">Jelző beállítása a grafikonon</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Jelző beállítása a diagram grafikonjain</translation>
+        <translation type="obsolete">Jelző beállítása a diagram grafikonjain</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>Jelző beéllítása
+        <translation type="obsolete">Jelző beéllítása
 
 Jelző beállítása a diagram grafikonjain</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>Utolsó üzenet megjelenítése</translation>
+        <translation type="obsolete">Utolsó üzenet megjelenítése</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>Utolsó szimuláció üzeneteinek megjelenítése</translation>
+        <translation type="obsolete">Utolsó szimuláció üzeneteinek megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>Utolsó üzenet megjelenítése
+        <translation type="obsolete">Utolsó üzenet megjelenítése
 
 Utolsó szimuláció üzeneteinek megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>Utolsó kötéslista megjelenítése</translation>
+        <translation type="obsolete">Utolsó kötéslista megjelenítése</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>Utolsó szimuláció kötéslistájának megjelenítése</translation>
+        <translation type="obsolete">Utolsó szimuláció kötéslistájának megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>Utolsó kötéslista megjelenítése
+        <translation type="obsolete">Utolsó kötéslista megjelenítése
 
 Utolsó szimuláció kötéslistájának megjelenítése</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Eszköztár</translation>
+        <translation type="obsolete">Eszköztár</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation>Esz&amp;köztár</translation>
+        <translation type="obsolete">Esz&amp;köztár</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>Eszköztár be/ki</translation>
+        <translation type="obsolete">Eszköztár be/ki</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>Eszköztár
+        <translation type="obsolete">Eszköztár
 
 Eszköztár be/ki</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Státuszsor</translation>
+        <translation type="obsolete">Státuszsor</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Státuszsor</translation>
+        <translation type="obsolete">&amp;Státuszsor</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>Státuszsor be/ki</translation>
+        <translation type="obsolete">Státuszsor be/ki</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>Státuszsor
+        <translation type="obsolete">Státuszsor
 
 Státuszsor be/ki</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Súgó index</translation>
+        <translation type="obsolete">Súgó index</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation>Súgó index...</translation>
+        <translation type="obsolete">Súgó index...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation>Qucs súgó tartalomjegyzék</translation>
+        <translation type="obsolete">Qucs súgó tartalomjegyzék</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>Súgó index
+        <translation type="obsolete">Súgó index
 
 
 Tartalomjegyzék az internetes Qucs súgóhoz </translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>Kezd így</translation>
+        <translation type="obsolete">Kezd így</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>Kezd így...</translation>
+        <translation type="obsolete">Kezd így...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>Kezd így a Qucs-ot</translation>
+        <translation type="obsolete">Kezd így a Qucs-ot</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Kezd így
+        <translation type="obsolete">Kezd így
 
 Rövid bemutatás a Qucs-hoz</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Névjegy</translation>
+        <translation type="obsolete">Névjegy</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation>Qucs &amp;Névjegy...</translation>
+        <translation type="obsolete">Qucs &amp;Névjegy...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>Program névjegy</translation>
+        <translation type="obsolete">Program névjegy</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation>Névjegy
+        <translation type="obsolete">Névjegy
 
 Program névjegy</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Qt Névjegy</translation>
+        <translation type="obsolete">Qt Névjegy</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
@@ -5414,62 +6837,62 @@ Program névjegy</translation>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>Qt Névjegy
+        <translation type="obsolete">Qt Névjegy
 
 Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>Elhelyezés</translation>
+        <translation type="obsolete">Elhelyezés</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fájl</translation>
+        <translation type="obsolete">&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Szerkesztés</translation>
+        <translation type="obsolete">&amp;Szerkesztés</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation>&amp;Beszúrás</translation>
+        <translation type="obsolete">&amp;Beszúrás</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>&amp;Projekt</translation>
+        <translation type="obsolete">&amp;Projekt</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>Sz&amp;imuláció</translation>
+        <translation type="obsolete">Sz&amp;imuláció</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Megjelenítés</translation>
+        <translation type="obsolete">&amp;Megjelenítés</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Súgó</translation>
+        <translation type="obsolete">&amp;Súgó</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Kész.
+        <translation type="obsolete">Kész.
 </translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Eszköztár kapcsoló...</translation>
+        <translation type="obsolete">Eszköztár kapcsoló...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Státuszsor kapcsoló...</translation>
+        <translation type="obsolete">Státuszsor kapcsoló...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>Névjegy...</translation>
+        <translation type="obsolete">Névjegy...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation>Qucs verzió</translation>
+        <translation type="obsolete">Qucs verzió</translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -5478,24 +6901,20 @@ Qt a Trolltech-től</translation>
 </translation>
     </message>
     <message>
-        <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Translations:</source>
-        <translation>Fordítók:</translation>
+        <translation type="obsolete">Fordítók:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation>Stefan Jahn - Német</translation>
+        <translation type="obsolete">Stefan Jahn - Német</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation>Dariusz Pienkowski - Lengyel</translation>
+        <translation type="obsolete">Dariusz Pienkowski - Lengyel</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation>Radu Circa - Román</translation>
+        <translation type="obsolete">Radu Circa - Román</translation>
     </message>
     <message>
         <source>French by Eric Marzolf</source>
@@ -5503,11 +6922,11 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Luciano Franca - Portugál</translation>
+        <translation type="obsolete">Luciano Franca - Portugál</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation>Jose L. Redrejo Rodriguez - Spanyol</translation>
+        <translation type="obsolete">Jose L. Redrejo Rodriguez - Spanyol</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
@@ -5515,7 +6934,7 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation>Vincent Habchi, F5RCS - Francia</translation>
+        <translation type="obsolete">Vincent Habchi, F5RCS - Francia</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA</source>
@@ -5523,7 +6942,7 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation>Bús József - Magyar</translation>
+        <translation type="obsolete">Bús József - Magyar</translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
@@ -5533,75 +6952,75 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation>Külön köszönet Jens Flucke-nek és Raimund Jacob-nak</translation>
+        <translation type="obsolete">Külön köszönet Jens Flucke-nek és Raimund Jacob-nak</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation>Toyoyuki Ishikawa - Japán</translation>
+        <translation type="obsolete">Toyoyuki Ishikawa - Japán</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation>Dotan Nahum - Héber</translation>
+        <translation type="obsolete">Dotan Nahum - Héber</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation>Szövegszerkesztő</translation>
+        <translation type="obsolete">Szövegszerkesztő</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation>Szövegszerkesztő</translation>
+        <translation type="obsolete">Szövegszerkesztő</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation>Qucs szövegszerkesztő indítása</translation>
+        <translation type="obsolete">Qucs szövegszerkesztő indítása</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation>Szövegszerkesztő
+        <translation type="obsolete">Szövegszerkesztő
 
 Qucs szövegszerkesztő indítása</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation>Szűrő méretező</translation>
+        <translation type="obsolete">Szűrő méretező</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation>QucsFilter indítása</translation>
+        <translation type="obsolete">QucsFilter indítása</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation>Szűrő méretező
+        <translation type="obsolete">Szűrő méretező
 
 QucsFilter indítása</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation>Tápvonal számítás</translation>
+        <translation type="obsolete">Tápvonal számítás</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation>QucsTrans indítása</translation>
+        <translation type="obsolete">QucsTrans indítása</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation>Tápvonal kalkulátor
+        <translation type="obsolete">Tápvonal kalkulátor
 
 QucsTrans indítása</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation>Qt Névjegy...</translation>
+        <translation type="obsolete">Qt Névjegy...</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Eszközök</translation>
+        <translation type="obsolete">&amp;Eszközök</translation>
     </message>
     <message>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
@@ -5619,27 +7038,27 @@ QucsTrans indítása</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation>Alkatrész könyvtár</translation>
+        <translation type="obsolete">Alkatrész könyvtár</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation>QucsLib indítása</translation>
+        <translation type="obsolete">QucsLib indítása</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation>Alkatrész könyvtár
+        <translation type="obsolete">Alkatrész könyvtár
 
 QucsLib indítása</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation>nincs figyelmeztetés</translation>
+        <translation type="obsolete">nincs figyelmeztetés</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation>Az utolsó szimuláció figyelmeztetései! F5</translation>
+        <translation type="obsolete">Az utolsó szimuláció figyelmeztetései! F5</translation>
     </message>
     <message>
         <source>
@@ -5651,75 +7070,61 @@ Quite Universal Circuit Simulator
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation>Tulajdonság értékeinek változtatása</translation>
+        <translation type="obsolete">Tulajdonság értékeinek változtatása</translation>
     </message>
     <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation>Tulajdonság értékeinek változtatása
+        <translation type="obsolete">Tulajdonság értékeinek változtatása
 
 Az alkatrészek tulajdonság értékeit változtatja</translation>
     </message>
     <message>
-        <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Matching Circuit
-
-Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Property Values...</source>
-        <translation>Tulajdonság értékeinek változtatása...</translation>
+        <translation type="obsolete">Tulajdonság értékeinek változtatása...</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation>Kiszámítja a DC munkapontokat és megjeleníti</translation>
+        <translation type="obsolete">Kiszámítja a DC munkapontokat és megjeleníti</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation>DC munkapont számítása</translation>
+        <translation type="obsolete">DC munkapont számítása</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation>DC munkapont számítása
+        <translation type="obsolete">DC munkapont számítása
 
 Kiszámítja a DC munkapontokat és megjeleníti</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation>Giorgio Luparia és Claudio Girardi - Olasz</translation>
+        <translation type="obsolete">Giorgio Luparia és Claudio Girardi - Olasz</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation>Peter Landgren - Svéd</translation>
+        <translation type="obsolete">Peter Landgren - Svéd</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation>Fájlok hozzáadása a Projekthez</translation>
+        <translation type="obsolete">Fájlok hozzáadása a Projekthez</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation>Fájlok &amp;hozzáadása a Projekthez...</translation>
+        <translation type="obsolete">Fájlok &amp;hozzáadása a Projekthez...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation>Fájlok másolása a projekt könyvtárba</translation>
+        <translation type="obsolete">Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation>Fájlok hozzáadása a Projekthez
+        <translation type="obsolete">Fájlok hozzáadása a Projekthez
 
 Fájlok másolása a projekt könyvtárba</translation>
     </message>
@@ -5728,30 +7133,6 @@ Fájlok másolása a projekt könyvtárba</translation>
 </source>
         <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6378,51 +7759,23 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Infó</translation>
+        <translation type="obsolete">Infó</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>A földpotenciál nem lehet cimke!</translation>
+        <translation type="obsolete">A földpotenciál nem lehet cimke!</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Tulajdonságok beállítása</translation>
-    </message>
-    <message>
-        <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tulajdonságok beállítása</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
-    </message>
-    <message>
-        <source>noise matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Hiba</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation>Rossz függőség!</translation>
+        <translation type="obsolete">Rossz függőség!</translation>
     </message>
 </context>
 <context>

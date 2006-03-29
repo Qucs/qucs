@@ -3292,81 +3292,57 @@ Usage:  qucsedit [-r] file
         <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsActions</name>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">מאפייני עריכה</translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Info</source>
         <translation type="unfinished">מידע</translation>
     </message>
     <message>
+        <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished">לא ניתן לתת תוית לפונציאל האדמה!
+</translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">מידע</translation>
+    </message>
+    <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">בחר לפחות שני אלמנטים!</translation>
+        <translation type="obsolete">בחר לפחות שני אלמנטים!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">שגיאה</translation>
+        <translation type="obsolete">שגיאה</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">לא יכול להריץ את עורץ הטקסט!</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">לא יכול להריץ את עורץ הטקסט!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">לא יכול להתחיל את QUCSHELP!</translation>
-    </message>
-    <message>
-        <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project open!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No files copied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwrite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">לא יכול להתחיל את QUCSHELP!</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">מוכן.</translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; already exists.
-Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">מוכן.</translation>
     </message>
 </context>
 <context>
@@ -3409,7 +3385,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>תכולת ספריית הפרוייקטים</translation>
+        <translation type="obsolete">תכולת ספריית הפרוייקטים</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -3437,7 +3413,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>תוכן הפרוייקט הפתוח</translation>
+        <translation type="obsolete">תוכן הפרוייקט הפתוח</translation>
     </message>
     <message>
         <source>Components</source>
@@ -3613,12 +3589,12 @@ Do you want to save the changes before closing?</source>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation>רק הסיומות &apos;.sch&apos; ו &apos;.dpl&apos;
+        <translation type="obsolete">רק הסיומות &apos;.sch&apos; ו &apos;.dpl&apos;
 </translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>יופיע בסייר התוכן! להמשיך?</translation>
+        <translation type="obsolete">יופיע בסייר התוכן! להמשיך?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3683,7 +3659,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">לא יכול להתחיל את QUCSHELP!</translation>
+        <translation type="unfinished">לא יכול להתחיל את QUCSHELP!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -3757,7 +3733,7 @@ Errors:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">לא יכול להריץ את עורץ הטקסט!</translation>
+        <translation type="unfinished">לא יכול להריץ את עורץ הטקסט!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3913,7 +3889,7 @@ Errors:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="obsolete">בחר לפחות שני אלמנטים!</translation>
+        <translation type="unfinished">בחר לפחות שני אלמנטים!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -3960,6 +3936,1395 @@ Edits the schematic</source>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data display: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete data file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete VHDL source: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating new text editor...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing selected...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong dependency!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="unfinished">&amp;חדש</translation>
+    </message>
+    <message>
+        <source>Creates a new document</source>
+        <translation type="unfinished">יוצר מסמך חדש</translation>
+    </message>
+    <message>
+        <source>New
+
+Creates a new schematic or data display document</source>
+        <translation type="unfinished">חדש
+
+ יוצר סכמה חדשה או מסמך תצוגת מידע</translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text
+
+Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation type="unfinished">פתח קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">&amp;פתח...</translation>
+    </message>
+    <message>
+        <source>Opens an existing document</source>
+        <translation type="unfinished">פותח מסמך קיים</translation>
+    </message>
+    <message>
+        <source>Open File
+
+Opens an existing document</source>
+        <translation type="unfinished">פתח קובץ
+
+ פותח מסמך קיים</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished">שמור קובץ</translation>
+    </message>
+    <message>
+        <source>Saves the current document</source>
+        <translation type="unfinished">שומר את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Save File
+
+Saves the current document</source>
+        <translation type="unfinished">שמור קובץ
+
+שומר את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Save File As</source>
+        <translation type="unfinished">שמור קובץ בתור</translation>
+    </message>
+    <message>
+        <source>Save as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saves the current document under a new filename</source>
+        <translation type="unfinished">שומר את הקובץ הנוכחי תחת שם חדש</translation>
+    </message>
+    <message>
+        <source>Save As
+
+Saves the current document under a new filename</source>
+        <translation type="unfinished">שמור בתור
+
+שומר את הקובץ הנוכחי תחת שם חדש</translation>
+    </message>
+    <message>
+        <source>Save All Files</source>
+        <translation type="unfinished">שמור כל הקבצים</translation>
+    </message>
+    <message>
+        <source>Save &amp;All</source>
+        <translation type="unfinished">שמור &amp;הכל</translation>
+    </message>
+    <message>
+        <source>Saves all open documents</source>
+        <translation type="unfinished">שומר את כל הקבצים הפתוחים</translation>
+    </message>
+    <message>
+        <source>Save All Files
+
+Saves all open documents</source>
+        <translation type="unfinished">שמור כל הקבצים
+
+שומר את כל הקבצים הפתוחים</translation>
+    </message>
+    <message>
+        <source>Close File</source>
+        <translation type="unfinished">סגור קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished">&amp;סגור</translation>
+    </message>
+    <message>
+        <source>Closes the current document</source>
+        <translation type="unfinished">סוגר את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Close File
+
+Closes the current document</source>
+        <translation type="unfinished">סגור קובץ
+
+סוגר את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings...</source>
+        <translation type="unfinished">הגדרות מסמך...</translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">הגדרות מסמך</translation>
+    </message>
+    <message>
+        <source>Settings
+
+Sets properties of the file</source>
+        <translation type="unfinished">הגדרות
+
+עורך את המאפיינים של הקובץ</translation>
+    </message>
+    <message>
+        <source>Print File</source>
+        <translation type="unfinished">הדפס קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished">&amp;הדפס...</translation>
+    </message>
+    <message>
+        <source>Prints the current document</source>
+        <translation type="unfinished">מדפיס את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Print File
+
+Prints the current document</source>
+        <translation type="unfinished">הדפס קובץ
+
+מדפיס את המסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished">הדפך אלמנטים נבחרים</translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished">הדפס בחירה...</translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished">מדפיס אלמנטים שנבחרו</translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
+        <translation type="unfinished">הדפס אלמנטים נבחרים
+
+מדפיס אלמנטים שנבחרו במסמך הנוכחי</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="unfinished">צא</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">&amp;צא</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="unfinished">יוצא מהתוכנית</translation>
+    </message>
+    <message>
+        <source>Exit
+
+Quits the application</source>
+        <translation type="unfinished">צא
+
+יוצא מהתוכנית</translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished">הגדרות תוכנית</translation>
+    </message>
+    <message>
+        <source>Application Settings...</source>
+        <translation type="unfinished">הגדרות תוכנית...</translation>
+    </message>
+    <message>
+        <source>Qucs Settings
+
+Sets properties of the application</source>
+        <translation type="unfinished">הגדרות QUCS
+
+קובע את המאפיינים של התוכנית</translation>
+    </message>
+    <message>
+        <source>Align top</source>
+        <translation type="unfinished">סדר ללמעלה</translation>
+    </message>
+    <message>
+        <source>Align top selected elements</source>
+        <translation type="unfinished">סדר ללמעלה אלמנטים נבחרים</translation>
+    </message>
+    <message>
+        <source>Align top
+
+Align selected elements to their upper edge</source>
+        <translation type="unfinished">סדר ללמעלה
+
+מסדר אלמנטים שנבחרו לקצה העליון שלהם</translation>
+    </message>
+    <message>
+        <source>Align bottom</source>
+        <translation type="unfinished">סדר ללמטה</translation>
+    </message>
+    <message>
+        <source>Align bottom selected elements</source>
+        <translation type="unfinished">סדר אלמנטים שנבחרו בתחתית</translation>
+    </message>
+    <message>
+        <source>Align bottom
+
+Align selected elements to their lower edge</source>
+        <translation type="unfinished">סדר לתחתית
+
+מסדר אלמנטים שנבחרו לתחתית</translation>
+    </message>
+    <message>
+        <source>Align left</source>
+        <translation type="unfinished">סדר לשמאל</translation>
+    </message>
+    <message>
+        <source>Align left selected elements</source>
+        <translation type="unfinished">סדר לשמאל אלמנטים נבחרים</translation>
+    </message>
+    <message>
+        <source>Align left
+
+Align selected elements to their left edge</source>
+        <translation type="unfinished">סדר לשמאל
+
+מסדר אלמנטים שנבחרו לקצותיהם השמאליות</translation>
+    </message>
+    <message>
+        <source>Align right</source>
+        <translation type="unfinished">סדר לימין</translation>
+    </message>
+    <message>
+        <source>Align right selected elements</source>
+        <translation type="unfinished">סדר אלמנטים שנבחרו לימין</translation>
+    </message>
+    <message>
+        <source>Align right
+
+Align selected elements to their right edge</source>
+        <translation type="unfinished">סדר לימין
+
+מסדר אלמנטים שנבחרו לקצותיהם הימניות</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally</source>
+        <translation type="unfinished">פזר אופקית</translation>
+    </message>
+    <message>
+        <source>Distribute equally horizontally</source>
+        <translation type="unfinished">פזר אופקית בצורה שווה</translation>
+    </message>
+    <message>
+        <source>Distribute horizontally
+
+Distribute horizontally selected elements</source>
+        <translation type="unfinished">פזר אופקית
+
+מפזר אופקית אלמנטים שנבחרו</translation>
+    </message>
+    <message>
+        <source>Distribute vertically</source>
+        <translation type="unfinished">פזר אנכית</translation>
+    </message>
+    <message>
+        <source>Distribute equally vertically</source>
+        <translation type="unfinished">פזר אנכית בצורה שווה</translation>
+    </message>
+    <message>
+        <source>Distribute vertically
+
+Distribute vertically selected elements</source>
+        <translation type="unfinished">פזר אנכית
+
+מפזר אנכית אלמנטים שנבחרו</translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished">סדר על הרשת</translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
+        <translation type="unfinished">סדר על הרשת
+
+מסדר את האלמנטים שנבחרו בהתאם לרשת</translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished">הזז טקסט של האלמנט</translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="unfinished">הזז טקסט של האלמנט
+
+מזיז את טקסט המאפיינים של הרכיב</translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values
+
+Change Property Value of Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">גזור</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">&amp;גזור</translation>
+    </message>
+    <message>
+        <source>Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts the selected section and puts it to the clipboard</source>
+        <translation type="unfinished">גזור
+
+גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">העתק</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">ה&amp;עתק</translation>
+    </message>
+    <message>
+        <source>Copies the selected section to the clipboard</source>
+        <translation type="unfinished">מעתיק את הבחירה לקליפבורד</translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selected section to the clipboard</source>
+        <translation type="unfinished">העתק
+
+מעתיק את הבחירה לקליפבורד</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">הדבק</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">ה&amp;דבק</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">מדביק את הבחירה תחת הסמן</translation>
+    </message>
+    <message>
+        <source>Paste
+
+Pastes the clipboard contents to the cursor position</source>
+        <translation type="unfinished">הדבק
+
+מדביק את הבחירה תחת הסמן</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">מ&amp;חק</translation>
+    </message>
+    <message>
+        <source>Deletes the selected components</source>
+        <translation type="unfinished">מוחק את הבחירה</translation>
+    </message>
+    <message>
+        <source>Delete
+
+Deletes the selected components</source>
+        <translation type="unfinished">מחק
+
+מוחק את הבחירה</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">חזור</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">&amp;חזור</translation>
+    </message>
+    <message>
+        <source>Undoes the last command</source>
+        <translation type="unfinished">מבטל את הפעולה האחרונה</translation>
+    </message>
+    <message>
+        <source>Undo
+
+Makes the last action undone</source>
+        <translation type="unfinished">חזור
+
+מבטל את הפעולה האחרונה</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">עשה שוב</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">עשה &amp;שוב</translation>
+    </message>
+    <message>
+        <source>Redoes the last command</source>
+        <translation type="unfinished">חוזר על הפעולה האחרונה</translation>
+    </message>
+    <message>
+        <source>Redo
+
+Repeats the last action once more</source>
+        <translation type="unfinished">עשה שוב
+
+חוזר על הפעולה האחרונה</translation>
+    </message>
+    <message>
+        <source>New Project</source>
+        <translation type="unfinished">פרוייקט חדש</translation>
+    </message>
+    <message>
+        <source>&amp;New Project...</source>
+        <translation type="unfinished">&amp;פרוייקט חדש...</translation>
+    </message>
+    <message>
+        <source>Creates a new project</source>
+        <translation type="unfinished">יוצר פרוייקט חדש</translation>
+    </message>
+    <message>
+        <source>New Project
+
+Creates a new project</source>
+        <translation type="unfinished">פרוייקט חדש
+
+יוצר פרוייקט חדש</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation type="unfinished">פתח פרוייקט</translation>
+    </message>
+    <message>
+        <source>&amp;Open Project...</source>
+        <translation type="unfinished">פ&amp;תח פרוייקט...</translation>
+    </message>
+    <message>
+        <source>Opens a project</source>
+        <translation type="unfinished">פותח פרוייקט</translation>
+    </message>
+    <message>
+        <source>Open Project
+
+Opens an existing project</source>
+        <translation type="unfinished">פתח פרוייקט
+
+פותח פרוייקט קיים</translation>
+    </message>
+    <message>
+        <source>Delete Project</source>
+        <translation type="unfinished">מחק פרוייקט</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Project...</source>
+        <translation type="unfinished">מח&amp;ק פרוייקט...</translation>
+    </message>
+    <message>
+        <source>Deletes a project</source>
+        <translation type="unfinished">מוחק פרוייקט</translation>
+    </message>
+    <message>
+        <source>Delete Project
+
+Deletes an existing project</source>
+        <translation type="unfinished">מחק פרוייקט
+
+מוחק פרוייקט קיים</translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished">סגור פרוייקט</translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished">&amp;סגור פרוייקט</translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished">סגור פרוייקט נוכחי</translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished">סגור פרוייקט
+
+סוגר את הפרוייקט הנוכחי</translation>
+    </message>
+    <message>
+        <source>Add Files to Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add Files to Project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Files to Project
+
+Copies files to project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View All</source>
+        <translation type="unfinished">צפה בהכל</translation>
+    </message>
+    <message>
+        <source>Views the whole page</source>
+        <translation type="unfinished">צופה בכל הדף</translation>
+    </message>
+    <message>
+        <source>View All
+
+Shows the whole page content</source>
+        <translation type="unfinished">צפה בהכל
+
+צופה בכל תוכן הדף</translation>
+    </message>
+    <message>
+        <source>View 1:1</source>
+        <translation type="unfinished">צפה 1:1</translation>
+    </message>
+    <message>
+        <source>Views without magnification</source>
+        <translation type="unfinished">צופה ללא הגדלה</translation>
+    </message>
+    <message>
+        <source>View 1:1
+
+Shows the page content without magnification</source>
+        <translation type="unfinished">צפה 1:1
+
+מראה את הדף בגודל המקורי</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="unfinished">הגדל</translation>
+    </message>
+    <message>
+        <source>Zooms into the current view</source>
+        <translation type="unfinished">מגדיל את החלון הנוכחי</translation>
+    </message>
+    <message>
+        <source>Zoom in
+
+Zooms the current view</source>
+        <translation type="unfinished">הגדל
+
+מגדיל את החלון הנוכחי</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="unfinished">הקטן</translation>
+    </message>
+    <message>
+        <source>Zooms out the current view</source>
+        <translation type="unfinished">מקטין את החלון הנוכחי</translation>
+    </message>
+    <message>
+        <source>Zoom out
+
+Zooms out the current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">בחר</translation>
+    </message>
+    <message>
+        <source>Select mode</source>
+        <translation type="unfinished">בחר מצב</translation>
+    </message>
+    <message>
+        <source>Select
+
+Select mode</source>
+        <translation type="unfinished">בחר
+
+בחר מצב</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">בחר הכל</translation>
+    </message>
+    <message>
+        <source>Selects all elements</source>
+        <translation type="unfinished">בוחר את כל האלמנטים</translation>
+    </message>
+    <message>
+        <source>Select All
+
+Selects all elements of the document</source>
+        <translation type="unfinished">בחר הכל
+
+בוחר את כל האלמנטים</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="unfinished">סובב</translation>
+    </message>
+    <message>
+        <source>Rotates the selected component by 90&#xb0;</source>
+        <translation type="unfinished">מסובב את הרכיב הנבחר ב90 מעלות</translation>
+    </message>
+    <message>
+        <source>Rotate
+
+Rotates the selected component by 90&#xb0; counter-clockwise</source>
+        <translation type="unfinished">סובב
+
+מסובב את האלמנט הנבחר ב90 מעלות</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis</source>
+        <translation type="unfinished">העתק דמוי-מראה על ציר הX</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X axis</source>
+        <translation type="unfinished">מעתיק את הפריט על ציר הX (דמוי מראה)</translation>
+    </message>
+    <message>
+        <source>Mirror about X Axis
+
+Mirrors the selected item about X Axis</source>
+        <translation type="unfinished">העתק דמוי-מראה על ציר הX
+
+מעתיק את הפריט דמוי-מראה על ציר X</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis</source>
+        <translation type="unfinished">העתק דמוי-מראה על ציר הY</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y axis</source>
+        <translation type="unfinished">מעתיק את הפריט על ציר הY (דמוי מראה)</translation>
+    </message>
+    <message>
+        <source>Mirror about Y Axis
+
+Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished">העתק דמוי-מראה על ציר הY
+
+מעתיק את הפריט דמוי-מראה על ציר Y</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit</source>
+        <translation type="unfinished">לך לתת-מעגל</translation>
+    </message>
+    <message>
+        <source>Goes inside subcircuit</source>
+        <translation type="unfinished">נכנס לתת-מעגל</translation>
+    </message>
+    <message>
+        <source>Go into Subcircuit
+
+Goes inside the selected subcircuit</source>
+        <translation type="unfinished">לך לתת מעגל
+
+נכנס לתת-מעגל בבחירה</translation>
+    </message>
+    <message>
+        <source>Pop out</source>
+        <translation type="unfinished">צא החוצה</translation>
+    </message>
+    <message>
+        <source>Pop outside subcircuit</source>
+        <translation type="unfinished">יוצא מחוץ לתת המעגל</translation>
+    </message>
+    <message>
+        <source>Pop out
+
+Goes up one hierarchy level, i.e. leaves subcircuit</source>
+        <translation type="unfinished">צא החוצה
+
+יוצא רמה אחת בהיררכיה מחוץ לתת המעגל</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate</source>
+        <translation type="unfinished">הפעל\הפסק</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate the selected item</source>
+        <translation type="unfinished">מפעיל\מפסיק את הפריט הנבחר</translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected item</source>
+        <translation type="unfinished">הפעל\הפסק
+
+הפעל\הפסק את הפריט הנבחר</translation>
+    </message>
+    <message>
+        <source>Insert Equation</source>
+        <translation type="unfinished">הכנס משוואה</translation>
+    </message>
+    <message>
+        <source>Inserts equation</source>
+        <translation type="unfinished">הכנס משוואה</translation>
+    </message>
+    <message>
+        <source>Insert Equation
+
+Inserts a user defined equation</source>
+        <translation type="unfinished">הכנס משוואה
+
+מכניס משוואה שהוגדרה על ידי המשתמש</translation>
+    </message>
+    <message>
+        <source>Insert Ground</source>
+        <translation type="unfinished">הכנס אדמה</translation>
+    </message>
+    <message>
+        <source>Inserts ground</source>
+        <translation type="unfinished">מכניס אדמה</translation>
+    </message>
+    <message>
+        <source>Insert Ground
+
+Inserts a ground symbol</source>
+        <translation type="unfinished">הכנס אדמה
+
+מכניס סמל של אדמה</translation>
+    </message>
+    <message>
+        <source>Insert Port</source>
+        <translation type="unfinished">הכנס פורט</translation>
+    </message>
+    <message>
+        <source>Inserts port</source>
+        <translation type="unfinished">מכניס פורט</translation>
+    </message>
+    <message>
+        <source>Insert Port
+
+Inserts a port symbol</source>
+        <translation type="unfinished">הכנס פורט
+
+מכניס סמל של פורט</translation>
+    </message>
+    <message>
+        <source>Insert Wire</source>
+        <translation type="unfinished">הכנס חוט</translation>
+    </message>
+    <message>
+        <source>Wire</source>
+        <translation type="unfinished">חוט</translation>
+    </message>
+    <message>
+        <source>Inserts a wire</source>
+        <translation type="unfinished">מכניס חוט</translation>
+    </message>
+    <message>
+        <source>Wire
+
+Inserts a wire</source>
+        <translation type="unfinished">חוט
+
+מכניס חוט</translation>
+    </message>
+    <message>
+        <source>Insert Wire/Pin Label</source>
+        <translation type="unfinished">הכנס חוט\תוית פין</translation>
+    </message>
+    <message>
+        <source>Wire Label</source>
+        <translation type="unfinished">תוית חוט</translation>
+    </message>
+    <message>
+        <source>Inserts a wire or pin label</source>
+        <translation type="unfinished">מכניס חוט או תוית פין</translation>
+    </message>
+    <message>
+        <source>Wire Label
+
+Inserts a wire or pin label</source>
+        <translation type="unfinished">תוית חוט
+
+מכניס חוט או תוית פין</translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsTrans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation
+
+Starts transmission line calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsLib</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library
+
+Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit
+
+Dialog for Creating Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulate</source>
+        <translation type="unfinished">התחל סימולציה</translation>
+    </message>
+    <message>
+        <source>Simulates the current schematic</source>
+        <translation type="unfinished">מתחיל הדמיה עבור הסכמה הנוכחית</translation>
+    </message>
+    <message>
+        <source>Simulate
+
+Simulates the current schematic</source>
+        <translation type="unfinished">התחל סימולציה
+
+מתחיל את ההדמיה עבור הסכמה הנוכחית</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic</source>
+        <translation type="unfinished">צפה בחלון המידע\סכמה</translation>
+    </message>
+    <message>
+        <source>Changes to data display or schematic page</source>
+        <translation type="unfinished">משנה את החלון לחלון הסכמה או המידע</translation>
+    </message>
+    <message>
+        <source>View Data Display/Schematic
+
+</source>
+        <translation type="unfinished">צפה בחלון המידע\סכמה
+
+</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished">קבע סמן</translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished">קבע סמן על הגרף</translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">קובע סמן על גרף הדיאגרמה</translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished">קבע סמן
+
+קובע סמן על גרף הדיאגרמה</translation>
+    </message>
+    <message>
+        <source>Show Last Messages</source>
+        <translation type="unfinished">הראה הודעות אחרונות</translation>
+    </message>
+    <message>
+        <source>Shows last simulation messages</source>
+        <translation type="unfinished">מראה את הודעות הסימולציה האחרונות</translation>
+    </message>
+    <message>
+        <source>Show Last Messages
+
+Shows the messages of the last simulation</source>
+        <translation type="unfinished">הראה הודעות אחרונות
+
+מראה את הודעות הסימולציה האחרונות</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist</source>
+        <translation type="unfinished">הראה NETLIST האחרון</translation>
+    </message>
+    <message>
+        <source>Shows last simulation netlist</source>
+        <translation type="unfinished">מראה את הNETLIST מהסימולציה האחרונה</translation>
+    </message>
+    <message>
+        <source>Show Last Netlist
+
+Shows the netlist of the last simulation</source>
+        <translation type="unfinished">הראה NETLIST אחרון
+
+מראה את הNETLIST מהסימולציה האחרונה</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">סרגל כלים</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bar</source>
+        <translation type="unfinished">סרגל &amp;כלים</translation>
+    </message>
+    <message>
+        <source>Enables/disables the toolbar</source>
+        <translation type="unfinished">מראה\מחביא את סרגל הכלים</translation>
+    </message>
+    <message>
+        <source>Toolbar
+
+Enables/disables the toolbar</source>
+        <translation type="unfinished">סרגל כלים
+
+מראה\מחביא את סרגל הכלים</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">שורת סטאטוס</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="unfinished">שורת &amp;סטאטוס</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="unfinished">מראה\מחביא את שורת הסטאטוס</translation>
+    </message>
+    <message>
+        <source>Statusbar
+
+Enables/disables the statusbar</source>
+        <translation type="unfinished">שורת סטאטוס
+
+מראה\מחביא את שורת הסטאטוס</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished">אינדקס עזרה...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished">אינדקס העזרה של QUCS</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished">אינדקס עזרה
+
+האינדקס של העזרה הפנימית של QUCS</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished">מתחילים</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished">מתחילים...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished">מתחילים עם QUCS</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation type="unfinished">מתחילים
+
+הכרות קצרה עם QUCS</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">אודות</translation>
+    </message>
+    <message>
+        <source>&amp;About Qucs...</source>
+        <translation type="unfinished">אודות &amp;QUCS...</translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="unfinished">אודות האפליקציה</translation>
+    </message>
+    <message>
+        <source>About
+
+About the application</source>
+        <translation type="unfinished">אודות
+
+אודות האפליקציה</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">אודות QT</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation type="unfinished">אודות QT
+
+אודות QT מבית TROLLTECH</translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation type="unfinished">סדר</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">&amp;ערוך</translation>
+    </message>
+    <message>
+        <source>&amp;Insert</source>
+        <translation type="unfinished">&amp;הכנס</translation>
+    </message>
+    <message>
+        <source>&amp;Project</source>
+        <translation type="unfinished">&amp;פרוייקט</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Simulation</source>
+        <translation type="unfinished">&amp;סימולציה</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished">&amp;צפה</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;עזרה</translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle toolbar...</source>
+        <translation type="unfinished">הפעל סרגל כלים...</translation>
+    </message>
+    <message>
+        <source>Toggle statusbar...</source>
+        <translation type="unfinished">הפעל שורת סטאטוס...</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">אודות...</translation>
+    </message>
+    <message>
+        <source>Qucs Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quite Universal Circuit Simulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>by Michael Margraf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Peter Landgren</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turkish by Onur and Ozgur Cobanoglu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished">Hungarian by Jozsef Bus</translation>
     </message>
 </context>
 <context>
@@ -4210,1019 +5575,1019 @@ Filter synthesis program
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation>חדש</translation>
+        <translation type="obsolete">חדש</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;חדש</translation>
+        <translation type="obsolete">&amp;חדש</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation>יוצר מסמך חדש</translation>
+        <translation type="obsolete">יוצר מסמך חדש</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>חדש
+        <translation type="obsolete">חדש
 
  יוצר סכמה חדשה או מסמך תצוגת מידע</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>פתח קובץ</translation>
+        <translation type="obsolete">פתח קובץ</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;פתח...</translation>
+        <translation type="obsolete">&amp;פתח...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation>פותח מסמך קיים</translation>
+        <translation type="obsolete">פותח מסמך קיים</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>פתח קובץ
+        <translation type="obsolete">פתח קובץ
 
  פותח מסמך קיים</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>שמור קובץ</translation>
+        <translation type="obsolete">שמור קובץ</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;שמור</translation>
+        <translation type="obsolete">&amp;שמור</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation>שומר את המסמך הנוכחי</translation>
+        <translation type="obsolete">שומר את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation>שמור קובץ
+        <translation type="obsolete">שמור קובץ
 
 שומר את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>שמור קובץ בתור</translation>
+        <translation type="obsolete">שמור קובץ בתור</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>שמור &amp;בתור...</translation>
+        <translation type="obsolete">שמור &amp;בתור...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation>שומר את הקובץ הנוכחי תחת שם חדש</translation>
+        <translation type="obsolete">שומר את הקובץ הנוכחי תחת שם חדש</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>שמור בתור
+        <translation type="obsolete">שמור בתור
 
 שומר את הקובץ הנוכחי תחת שם חדש</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>שמור כל הקבצים</translation>
+        <translation type="obsolete">שמור כל הקבצים</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation>שמור &amp;הכל</translation>
+        <translation type="obsolete">שמור &amp;הכל</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation>שומר את כל הקבצים הפתוחים</translation>
+        <translation type="obsolete">שומר את כל הקבצים הפתוחים</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>שמור כל הקבצים
+        <translation type="obsolete">שמור כל הקבצים
 
 שומר את כל הקבצים הפתוחים</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>סגור קובץ</translation>
+        <translation type="obsolete">סגור קובץ</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;סגור</translation>
+        <translation type="obsolete">&amp;סגור</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation>סוגר את המסמך הנוכחי</translation>
+        <translation type="obsolete">סוגר את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation>סגור קובץ
+        <translation type="obsolete">סגור קובץ
 
 סוגר את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>ערוך סמל מעגל</translation>
+        <translation type="obsolete">ערוך סמל מעגל</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>עורך את הסמל לסכימה זו</translation>
+        <translation type="obsolete">עורך את הסמל לסכימה זו</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>ערוך סמך מעגל
+        <translation type="obsolete">ערוך סמך מעגל
 
 עורך את הסמל לסכימה זו</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>הגדרות מסמך</translation>
+        <translation type="obsolete">הגדרות מסמך</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>הגדרות מסמך...</translation>
+        <translation type="obsolete">הגדרות מסמך...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>הגדרות
+        <translation type="obsolete">הגדרות
 
 עורך את המאפיינים של הקובץ</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>הדפס קובץ</translation>
+        <translation type="obsolete">הדפס קובץ</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>&amp;הדפס...</translation>
+        <translation type="obsolete">&amp;הדפס...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation>מדפיס את המסמך הנוכחי</translation>
+        <translation type="obsolete">מדפיס את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation>הדפס קובץ
+        <translation type="obsolete">הדפס קובץ
 
 מדפיס את המסמך הנוכחי</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>הדפך אלמנטים נבחרים</translation>
+        <translation type="obsolete">הדפך אלמנטים נבחרים</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>הדפס בחירה...</translation>
+        <translation type="obsolete">הדפס בחירה...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>מדפיס אלמנטים שנבחרו</translation>
+        <translation type="obsolete">מדפיס אלמנטים שנבחרו</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>הדפס אלמנטים נבחרים
+        <translation type="obsolete">הדפס אלמנטים נבחרים
 
 מדפיס אלמנטים שנבחרו במסמך הנוכחי</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>צא</translation>
+        <translation type="obsolete">צא</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>&amp;צא</translation>
+        <translation type="obsolete">&amp;צא</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>יוצא מהתוכנית</translation>
+        <translation type="obsolete">יוצא מהתוכנית</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation>צא
+        <translation type="obsolete">צא
 
 יוצא מהתוכנית</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>הגדרות תוכנית</translation>
+        <translation type="obsolete">הגדרות תוכנית</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation>הגדרות תוכנית...</translation>
+        <translation type="obsolete">הגדרות תוכנית...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>הגדרות QUCS
+        <translation type="obsolete">הגדרות QUCS
 
 קובע את המאפיינים של התוכנית</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>סדר ללמעלה</translation>
+        <translation type="obsolete">סדר ללמעלה</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>סדר ללמעלה אלמנטים נבחרים</translation>
+        <translation type="obsolete">סדר ללמעלה אלמנטים נבחרים</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>סדר ללמעלה
+        <translation type="obsolete">סדר ללמעלה
 
 מסדר אלמנטים שנבחרו לקצה העליון שלהם</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation>סדר ללמטה</translation>
+        <translation type="obsolete">סדר ללמטה</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>סדר אלמנטים שנבחרו בתחתית</translation>
+        <translation type="obsolete">סדר אלמנטים שנבחרו בתחתית</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>סדר לתחתית
+        <translation type="obsolete">סדר לתחתית
 
 מסדר אלמנטים שנבחרו לתחתית</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation>סדר לשמאל</translation>
+        <translation type="obsolete">סדר לשמאל</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>סדר לשמאל אלמנטים נבחרים</translation>
+        <translation type="obsolete">סדר לשמאל אלמנטים נבחרים</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>סדר לשמאל
+        <translation type="obsolete">סדר לשמאל
 
 מסדר אלמנטים שנבחרו לקצותיהם השמאליות</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation>סדר לימין</translation>
+        <translation type="obsolete">סדר לימין</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>סדר אלמנטים שנבחרו לימין</translation>
+        <translation type="obsolete">סדר אלמנטים שנבחרו לימין</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>סדר לימין
+        <translation type="obsolete">סדר לימין
 
 מסדר אלמנטים שנבחרו לקצותיהם הימניות</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation>פזר אופקית</translation>
+        <translation type="obsolete">פזר אופקית</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation>פזר אופקית בצורה שווה</translation>
+        <translation type="obsolete">פזר אופקית בצורה שווה</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>פזר אופקית
+        <translation type="obsolete">פזר אופקית
 
 מפזר אופקית אלמנטים שנבחרו</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation>פזר אנכית</translation>
+        <translation type="obsolete">פזר אנכית</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation>פזר אנכית בצורה שווה</translation>
+        <translation type="obsolete">פזר אנכית בצורה שווה</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>פזר אנכית
+        <translation type="obsolete">פזר אנכית
 
 מפזר אנכית אלמנטים שנבחרו</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation>סדר על הרשת</translation>
+        <translation type="obsolete">סדר על הרשת</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>סדר על הרשת
+        <translation type="obsolete">סדר על הרשת
 
 מסדר את האלמנטים שנבחרו בהתאם לרשת</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation>הזז טקסט של האלמנט</translation>
+        <translation type="obsolete">הזז טקסט של האלמנט</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>הזז טקסט של האלמנט
+        <translation type="obsolete">הזז טקסט של האלמנט
 
 מזיז את טקסט המאפיינים של הרכיב</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>גזור</translation>
+        <translation type="obsolete">גזור</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>&amp;גזור</translation>
+        <translation type="obsolete">&amp;גזור</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
+        <translation type="obsolete">גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>גזור
+        <translation type="obsolete">גזור
 
 גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>העתק</translation>
+        <translation type="obsolete">העתק</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>ה&amp;עתק</translation>
+        <translation type="obsolete">ה&amp;עתק</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>מעתיק את הבחירה לקליפבורד</translation>
+        <translation type="obsolete">מעתיק את הבחירה לקליפבורד</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>העתק
+        <translation type="obsolete">העתק
 
 מעתיק את הבחירה לקליפבורד</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>הדבק</translation>
+        <translation type="obsolete">הדבק</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>ה&amp;דבק</translation>
+        <translation type="obsolete">ה&amp;דבק</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>מדביק את הבחירה תחת הסמן</translation>
+        <translation type="obsolete">מדביק את הבחירה תחת הסמן</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>הדבק
+        <translation type="obsolete">הדבק
 
 מדביק את הבחירה תחת הסמן</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>מחק</translation>
+        <translation type="obsolete">מחק</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>מ&amp;חק</translation>
+        <translation type="obsolete">מ&amp;חק</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation>מוחק את הבחירה</translation>
+        <translation type="obsolete">מוחק את הבחירה</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>מחק
+        <translation type="obsolete">מחק
 
 מוחק את הבחירה</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>חזור</translation>
+        <translation type="obsolete">חזור</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;חזור</translation>
+        <translation type="obsolete">&amp;חזור</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>מבטל את הפעולה האחרונה</translation>
+        <translation type="obsolete">מבטל את הפעולה האחרונה</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>חזור
+        <translation type="obsolete">חזור
 
 מבטל את הפעולה האחרונה</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>עשה שוב</translation>
+        <translation type="obsolete">עשה שוב</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>עשה &amp;שוב</translation>
+        <translation type="obsolete">עשה &amp;שוב</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation>חוזר על הפעולה האחרונה</translation>
+        <translation type="obsolete">חוזר על הפעולה האחרונה</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>עשה שוב
+        <translation type="obsolete">עשה שוב
 
 חוזר על הפעולה האחרונה</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>פרוייקט חדש</translation>
+        <translation type="obsolete">פרוייקט חדש</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>&amp;פרוייקט חדש...</translation>
+        <translation type="obsolete">&amp;פרוייקט חדש...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>יוצר פרוייקט חדש</translation>
+        <translation type="obsolete">יוצר פרוייקט חדש</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>פרוייקט חדש
+        <translation type="obsolete">פרוייקט חדש
 
 יוצר פרוייקט חדש</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>פתח פרוייקט</translation>
+        <translation type="obsolete">פתח פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>פ&amp;תח פרוייקט...</translation>
+        <translation type="obsolete">פ&amp;תח פרוייקט...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>פותח פרוייקט</translation>
+        <translation type="obsolete">פותח פרוייקט</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>פתח פרוייקט
+        <translation type="obsolete">פתח פרוייקט
 
 פותח פרוייקט קיים</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>מחק פרוייקט</translation>
+        <translation type="obsolete">מחק פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>מח&amp;ק פרוייקט...</translation>
+        <translation type="obsolete">מח&amp;ק פרוייקט...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>מוחק פרוייקט</translation>
+        <translation type="obsolete">מוחק פרוייקט</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>מחק פרוייקט
+        <translation type="obsolete">מחק פרוייקט
 
 מוחק פרוייקט קיים</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>סגור פרוייקט</translation>
+        <translation type="obsolete">סגור פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>&amp;סגור פרוייקט</translation>
+        <translation type="obsolete">&amp;סגור פרוייקט</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>סגור פרוייקט נוכחי</translation>
+        <translation type="obsolete">סגור פרוייקט נוכחי</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>סגור פרוייקט
+        <translation type="obsolete">סגור פרוייקט
 
 סוגר את הפרוייקט הנוכחי</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation>צפה בהכל</translation>
+        <translation type="obsolete">צפה בהכל</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>צופה בכל הדף</translation>
+        <translation type="obsolete">צופה בכל הדף</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>צפה בהכל
+        <translation type="obsolete">צפה בהכל
 
 צופה בכל תוכן הדף</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation>צפה 1:1</translation>
+        <translation type="obsolete">צפה 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>צופה ללא הגדלה</translation>
+        <translation type="obsolete">צופה ללא הגדלה</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>צפה 1:1
+        <translation type="obsolete">צפה 1:1
 
 מראה את הדף בגודל המקורי</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>הגדל</translation>
+        <translation type="obsolete">הגדל</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation>מגדיל את החלון הנוכחי</translation>
+        <translation type="obsolete">מגדיל את החלון הנוכחי</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>הגדל
+        <translation type="obsolete">הגדל
 
 מגדיל את החלון הנוכחי</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>הקטן</translation>
+        <translation type="obsolete">הקטן</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation>מקטין את החלון הנוכחי</translation>
+        <translation type="obsolete">מקטין את החלון הנוכחי</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>הקטן
+        <translation type="obsolete">הקטן
 
 מקטין את החלון הנוכחי</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>בחר</translation>
+        <translation type="obsolete">בחר</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>בחר מצב</translation>
+        <translation type="obsolete">בחר מצב</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>בחר
+        <translation type="obsolete">בחר
 
 בחר מצב</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>בחר הכל</translation>
+        <translation type="obsolete">בחר הכל</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>בוחר את כל האלמנטים</translation>
+        <translation type="obsolete">בוחר את כל האלמנטים</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>בחר הכל
+        <translation type="obsolete">בחר הכל
 
 בוחר את כל האלמנטים</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>סובב</translation>
+        <translation type="obsolete">סובב</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation>מסובב את הרכיב הנבחר ב90 מעלות</translation>
+        <translation type="obsolete">מסובב את הרכיב הנבחר ב90 מעלות</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation>סובב
+        <translation type="obsolete">סובב
 
 מסובב את האלמנט הנבחר ב90 מעלות</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>העתק דמוי-מראה על ציר הX</translation>
+        <translation type="obsolete">העתק דמוי-מראה על ציר הX</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>מעתיק את הפריט על ציר הX (דמוי מראה)</translation>
+        <translation type="obsolete">מעתיק את הפריט על ציר הX (דמוי מראה)</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>העתק דמוי-מראה על ציר הX
+        <translation type="obsolete">העתק דמוי-מראה על ציר הX
 
 מעתיק את הפריט דמוי-מראה על ציר X</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>העתק דמוי-מראה על ציר הY</translation>
+        <translation type="obsolete">העתק דמוי-מראה על ציר הY</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>מעתיק את הפריט על ציר הY (דמוי מראה)</translation>
+        <translation type="obsolete">מעתיק את הפריט על ציר הY (דמוי מראה)</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>העתק דמוי-מראה על ציר הY
+        <translation type="obsolete">העתק דמוי-מראה על ציר הY
 
 מעתיק את הפריט דמוי-מראה על ציר Y</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation>לך לתת-מעגל</translation>
+        <translation type="obsolete">לך לתת-מעגל</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>נכנס לתת-מעגל</translation>
+        <translation type="obsolete">נכנס לתת-מעגל</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>לך לתת מעגל
+        <translation type="obsolete">לך לתת מעגל
 
 נכנס לתת-מעגל בבחירה</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation>צא החוצה</translation>
+        <translation type="obsolete">צא החוצה</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>יוצא מחוץ לתת המעגל</translation>
+        <translation type="obsolete">יוצא מחוץ לתת המעגל</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>צא החוצה
+        <translation type="obsolete">צא החוצה
 
 יוצא רמה אחת בהיררכיה מחוץ לתת המעגל</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation>הפעל\הפסק</translation>
+        <translation type="obsolete">הפעל\הפסק</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>מפעיל\מפסיק את הפריט הנבחר</translation>
+        <translation type="obsolete">מפעיל\מפסיק את הפריט הנבחר</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>הפעל\הפסק
+        <translation type="obsolete">הפעל\הפסק
 
 הפעל\הפסק את הפריט הנבחר</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation>הכנס משוואה</translation>
+        <translation type="obsolete">הכנס משוואה</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>הכנס משוואה</translation>
+        <translation type="obsolete">הכנס משוואה</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>הכנס משוואה
+        <translation type="obsolete">הכנס משוואה
 
 מכניס משוואה שהוגדרה על ידי המשתמש</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>הכנס אדמה</translation>
+        <translation type="obsolete">הכנס אדמה</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>מכניס אדמה</translation>
+        <translation type="obsolete">מכניס אדמה</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>הכנס אדמה
+        <translation type="obsolete">הכנס אדמה
 
 מכניס סמל של אדמה</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>הכנס פורט</translation>
+        <translation type="obsolete">הכנס פורט</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>מכניס פורט</translation>
+        <translation type="obsolete">מכניס פורט</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>הכנס פורט
+        <translation type="obsolete">הכנס פורט
 
 מכניס סמל של פורט</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>הכנס חוט</translation>
+        <translation type="obsolete">הכנס חוט</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation>חוט</translation>
+        <translation type="obsolete">חוט</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>מכניס חוט</translation>
+        <translation type="obsolete">מכניס חוט</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>חוט
+        <translation type="obsolete">חוט
 
 מכניס חוט</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>הכנס חוט\תוית פין</translation>
+        <translation type="obsolete">הכנס חוט\תוית פין</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>תוית חוט</translation>
+        <translation type="obsolete">תוית חוט</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>מכניס חוט או תוית פין</translation>
+        <translation type="obsolete">מכניס חוט או תוית פין</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>תוית חוט
+        <translation type="obsolete">תוית חוט
 
 מכניס חוט או תוית פין</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>התחל סימולציה</translation>
+        <translation type="obsolete">התחל סימולציה</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>מתחיל הדמיה עבור הסכמה הנוכחית</translation>
+        <translation type="obsolete">מתחיל הדמיה עבור הסכמה הנוכחית</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>התחל סימולציה
+        <translation type="obsolete">התחל סימולציה
 
 מתחיל את ההדמיה עבור הסכמה הנוכחית</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>צפה בחלון המידע\סכמה</translation>
+        <translation type="obsolete">צפה בחלון המידע\סכמה</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>משנה את החלון לחלון הסכמה או המידע</translation>
+        <translation type="obsolete">משנה את החלון לחלון הסכמה או המידע</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>צפה בחלון המידע\סכמה
+        <translation type="obsolete">צפה בחלון המידע\סכמה
 
 </translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>קבע סמן</translation>
+        <translation type="obsolete">קבע סמן</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>קבע סמן על הגרף</translation>
+        <translation type="obsolete">קבע סמן על הגרף</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>קובע סמן על גרף הדיאגרמה</translation>
+        <translation type="obsolete">קובע סמן על גרף הדיאגרמה</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>קבע סמן
+        <translation type="obsolete">קבע סמן
 
 קובע סמן על גרף הדיאגרמה</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>הראה הודעות אחרונות</translation>
+        <translation type="obsolete">הראה הודעות אחרונות</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>מראה את הודעות הסימולציה האחרונות</translation>
+        <translation type="obsolete">מראה את הודעות הסימולציה האחרונות</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>הראה הודעות אחרונות
+        <translation type="obsolete">הראה הודעות אחרונות
 
 מראה את הודעות הסימולציה האחרונות</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>הראה NETLIST האחרון</translation>
+        <translation type="obsolete">הראה NETLIST האחרון</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>מראה את הNETLIST מהסימולציה האחרונה</translation>
+        <translation type="obsolete">מראה את הNETLIST מהסימולציה האחרונה</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>הראה NETLIST אחרון
+        <translation type="obsolete">הראה NETLIST אחרון
 
 מראה את הNETLIST מהסימולציה האחרונה</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>סרגל כלים</translation>
+        <translation type="obsolete">סרגל כלים</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation>סרגל &amp;כלים</translation>
+        <translation type="obsolete">סרגל &amp;כלים</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>מראה\מחביא את סרגל הכלים</translation>
+        <translation type="obsolete">מראה\מחביא את סרגל הכלים</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>סרגל כלים
+        <translation type="obsolete">סרגל כלים
 
 מראה\מחביא את סרגל הכלים</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>שורת סטאטוס</translation>
+        <translation type="obsolete">שורת סטאטוס</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>שורת &amp;סטאטוס</translation>
+        <translation type="obsolete">שורת &amp;סטאטוס</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>מראה\מחביא את שורת הסטאטוס</translation>
+        <translation type="obsolete">מראה\מחביא את שורת הסטאטוס</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>שורת סטאטוס
+        <translation type="obsolete">שורת סטאטוס
 
 מראה\מחביא את שורת הסטאטוס</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>אינדקס עזרה</translation>
+        <translation type="obsolete">אינדקס עזרה</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation>אינדקס עזרה...</translation>
+        <translation type="obsolete">אינדקס עזרה...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation>אינדקס העזרה של QUCS</translation>
+        <translation type="obsolete">אינדקס העזרה של QUCS</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>אינדקס עזרה
+        <translation type="obsolete">אינדקס עזרה
 
 האינדקס של העזרה הפנימית של QUCS</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>מתחילים</translation>
+        <translation type="obsolete">מתחילים</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>מתחילים...</translation>
+        <translation type="obsolete">מתחילים...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>מתחילים עם QUCS</translation>
+        <translation type="obsolete">מתחילים עם QUCS</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>מתחילים
+        <translation type="obsolete">מתחילים
 
 הכרות קצרה עם QUCS</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>אודות</translation>
+        <translation type="obsolete">אודות</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation>אודות &amp;QUCS...</translation>
+        <translation type="obsolete">אודות &amp;QUCS...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>אודות האפליקציה</translation>
+        <translation type="obsolete">אודות האפליקציה</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation>אודות
+        <translation type="obsolete">אודות
 
 אודות האפליקציה</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>אודות QT</translation>
+        <translation type="obsolete">אודות QT</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
@@ -5232,57 +6597,57 @@ About the application</source>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>אודות QT
+        <translation type="obsolete">אודות QT
 
 אודות QT מבית TROLLTECH</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>סדר</translation>
+        <translation type="obsolete">סדר</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;קובץ</translation>
+        <translation type="obsolete">&amp;קובץ</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;ערוך</translation>
+        <translation type="obsolete">&amp;ערוך</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation>&amp;הכנס</translation>
+        <translation type="obsolete">&amp;הכנס</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>&amp;פרוייקט</translation>
+        <translation type="obsolete">&amp;פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>&amp;סימולציה</translation>
+        <translation type="obsolete">&amp;סימולציה</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;צפה</translation>
+        <translation type="obsolete">&amp;צפה</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;עזרה</translation>
+        <translation type="obsolete">&amp;עזרה</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>מוכן.</translation>
+        <translation type="obsolete">מוכן.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>הפעל סרגל כלים...</translation>
+        <translation type="obsolete">הפעל סרגל כלים...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>הפעל שורת סטאטוס...</translation>
+        <translation type="obsolete">הפעל שורת סטאטוס...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>אודות...</translation>
+        <translation type="obsolete">אודות...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
@@ -5363,229 +6728,13 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation>Hungarian by Jozsef Bus</translation>
-    </message>
-    <message>
-        <source>About Qt...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text editor
-
-Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter synthesis
-
-Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line calculation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line calculation
-
-Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Component Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Component Library
-
-Starts component library program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>no warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Matching Circuit
-
-Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias
-
-Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Files to Project
-
-Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Hungarian by Jozsef Bus</translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </source>
         <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>Qucs Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Translations:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>German by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Romanian by Radu Circa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6193,52 +7342,20 @@ open files with an appropriate program.</source>
     <name>QucsView</name>
     <message>
         <source>Info</source>
-        <translation>מידע</translation>
+        <translation type="obsolete">מידע</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>לא ניתן לתת תוית לפונציאל האדמה!
+        <translation type="obsolete">לא ניתן לתת תוית לפונציאל האדמה!
 </translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">מאפייני עריכה</translation>
-    </message>
-    <message>
-        <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">מאפייני עריכה</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">שגיאה</translation>
-    </message>
-    <message>
-        <source>noise matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">שגיאה</translation>
     </message>
 </context>
 <context>
