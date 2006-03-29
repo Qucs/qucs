@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = digital.tex content.tex
 TARGETS = digital.pdf
 
+digital.pdf: $(SOURCES)
+
 pics-tutorial:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
 
