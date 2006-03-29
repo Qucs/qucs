@@ -3172,82 +3172,33 @@ Usage:  qucsedit [-r] file
         <source>resistance of &quot;off&quot; state in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsActions</name>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least two elements must be selected !</source>
+        <source>The ground potential cannot be labeled!</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project open!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No files copied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwrite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; already exists.
-Overwrite ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
+</context>
+<context>
+    <name>QucsActions</name>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3284,10 +3235,6 @@ Overwrite ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Content of</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3313,10 +3260,6 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>content of the open project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3495,15 +3438,6 @@ Do you want to save the changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3660,246 +3594,121 @@ Edits the symbol for this schematic</source>
 Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsEdit</name>
     <message>
-        <source>File: </source>
+        <source>VHDL Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Row: %1  -  Column: %2</source>
+        <source>VHDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About</source>
+        <source>content of project directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quit</source>
+        <source>content of current project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About...</source>
+        <source>Cannot delete data display: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-Very simple text editor for Qucs
-</source>
+        <source>Cannot delete data file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright (C) 2004, 2005 by Michael Margraf
-</source>
+        <source>Cannot delete VHDL source: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a Filename</source>
+        <source>Creating new text editor...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a Document Name</source>
+        <source>Printing selected...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
+        <source>Could not load S[1,1].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot write file: </source>
+        <source>Could not load S[1,2].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot read file: </source>
+        <source>Could not load S[2,1].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Closing document</source>
+        <source>Could not load S[2,2].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The text contains unsaved changes!
-</source>
+        <source>Wrong dependency!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to save the changes?</source>
+        <source>At least two elements must be selected !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Save</source>
+        <source>Cannot start text editor!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Discard</source>
+        <source>Cannot start filter synthesis program!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QucsFilter</name>
-    <message>
-        <source>E&amp;xit</source>
+        <source>Cannot start line calculation program!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help...</source>
+        <source>Cannot start library program!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;About QucsFilter...</source>
+        <source>Cannot start qucshelp!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About Qt...</source>
+        <source>No project open!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;File</source>
+        <source>Select files to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Help</source>
+        <source>No files copied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter type:</source>
+        <source>Cannot open &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter class:</source>
+        <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Low pass</source>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>High pass</source>
+        <source>Cannot create &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Band pass</source>
+        <source>Cannot read &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Band stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Order:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Corner frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Impedance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Filter synthesis program
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Result:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop frequency must be greater than start frequency.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter order must not be less than two.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Successful</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Result: --</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QucsHelp</name>
-    <message>
-        <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QucsInit</name>
-    <message>
-        <source>New</source>
+        <source>Cannot write &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3914,6 +3723,24 @@ Filter synthesis program
         <source>New
 
 Creates a new schematic or data display document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates a new text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text
+
+Creates a new text document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3939,10 +3766,6 @@ Opens an existing document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Saves the current document</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3957,7 +3780,7 @@ Saves the current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save &amp;as...</source>
+        <source>Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4007,25 +3830,19 @@ Closes the current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
+        <source>&amp;Edit Circuit Symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Circuit Symbol
-
-Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Document Settings</source>
+        <source>&amp;Document Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4275,10 +4092,6 @@ Pastes the clipboard contents to the cursor position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4469,7 +4282,7 @@ Zooms the current view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reduce
+        <source>Zoom out
 
 Zooms out the current view</source>
         <translation type="unfinished"></translation>
@@ -4975,10 +4788,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Toggle toolbar...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5011,7 +4820,15 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5066,14 +4883,244 @@ About Qt by Trolltech</source>
         <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>QucsEdit</name>
     <message>
-        <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
+        <source>File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
+        <source>Row: %1  -  Column: %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The text contains unsaved changes!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsFilter</name>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About QucsFilter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Band pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Band stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corner frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop band frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pass band ripple:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate and put into Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Filter synthesis program
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop frequency must be greater than start frequency.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter order must not be less than two.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bessel filter order must not be greater than 19.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result: --</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pass band frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pass band attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005, 2006 by</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsHelp</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsInit</name>
 </context>
 <context>
     <name>QucsLib</name>
@@ -5673,54 +5720,6 @@ open files with an appropriate program.</source>
 </context>
 <context>
     <name>QucsView</name>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>power matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>noise matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SearchDialog</name>
