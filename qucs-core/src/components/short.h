@@ -1,7 +1,7 @@
 /*
- * vdc.h - DC voltage source class definitions
+ * short.h - short class definitions
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +18,22 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vdc.h,v 1.11 2006-04-05 08:27:06 raimi Exp $
+ * $Id: short.h,v 1.1 2006-04-05 08:27:06 raimi Exp $
  *
  */
 
-#ifndef __VDC_H__
-#define __VDC_H__
+#ifndef __SHORT_H__
+#define __SHORT_H__
 
-class vdc : public circuit
+class ashort : public circuit
 {
  public:
-  vdc ();
+  ashort ();
   void initSP (void);
   void initDC (void);
-  void calcDC (void);
   void initAC (void);
   void initTR (void);
   void initHB (void);
-  void calcHB (nr_double_t);
 };
 
-#endif /* __VDC_H__ */
+#endif /* __SHORT_H__ */

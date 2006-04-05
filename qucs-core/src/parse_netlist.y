@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.18 2006-02-08 07:52:58 raimi Exp $
+ * $Id: parse_netlist.y,v 1.19 2006-04-05 08:27:06 raimi Exp $
  *
  */
 
@@ -89,7 +89,7 @@
   eqn::assignment * assign;
 }
 
-%type <ident> Identifier Assign
+%type <ident> Identifier Assign NodeIdentifier
 %type <str> ScaleOrUnit
 %type <d> REAL IMAG
 %type <c> COMPLEX
@@ -152,8 +152,13 @@ DefinitionLine:
   }
 ;
 
+NodeIdentifier:
+    Identifier  { $$ = $1; }
+  | ScaleOrUnit { $$ = $1; }
+;
+
 IdentifierList: /* nothing */ { $$ = NULL; }
-  | Identifier IdentifierList {
+  | NodeIdentifier IdentifierList {
     $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
     $$->node = $1;
     $$->next = $2;

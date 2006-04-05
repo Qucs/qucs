@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.33 2006-03-02 08:06:03 raimi Exp $
+ * $Id: component_id.h,v 1.34 2006-04-05 08:27:06 raimi Exp $
  *
  */
 
@@ -29,12 +29,15 @@
 enum circuit_type {
   CIR_UNKNOWN = -1,
 
-  // linear components
+  // linear helper components
   CIR_GROUND,
   CIR_OPEN,
+  CIR_SHORT,
   CIR_TEE,
   CIR_CROSS,
   CIR_ITRAFO,
+
+  // linear components
   CIR_RESISTOR,
   CIR_CAPACITOR,
   CIR_INDUCTOR,

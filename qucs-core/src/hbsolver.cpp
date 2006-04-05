@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.6 2006-03-29 08:02:03 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.7 2006-04-05 08:27:06 raimi Exp $
  *
  */
 
@@ -50,7 +50,7 @@ hbsolver::hbsolver () : analysis () {
   type = ANALYSIS_HBALANCE;
   frequency = 0;
   nlnodes = lnnodes = banodes = nanodes = NULL;
-  YV = Z = A = NULL;
+  NA = YV = Z = A = NULL;
   IS = IC = x = NULL;
   runs = 0;
 }
@@ -60,7 +60,7 @@ hbsolver::hbsolver (char * n) : analysis (n) {
   type = ANALYSIS_HBALANCE;
   frequency = 0;
   nlnodes = lnnodes = banodes = nanodes = NULL;
-  YV = Z = A = NULL;
+  NA = YV = Z = A = NULL;
   IS = IC = x = NULL;
   runs = 0;
 }
@@ -73,6 +73,7 @@ hbsolver::~hbsolver () {
   if (nanodes) delete nanodes;
   if (A) delete A;
   if (Z) delete Z;
+  if (NA) delete NA;
   if (YV) delete YV;
   if (IC) delete IC;
   if (IS) delete IS;
@@ -88,7 +89,7 @@ hbsolver::hbsolver (hbsolver & o) : analysis (o) {
   lnnodes = o.lnnodes;
   banodes = o.banodes;
   nanodes = o.nanodes;
-  YV = Z = A = NULL;
+  NA = YV = Z = A = NULL;
   IS = IC = x = NULL;
   runs = o.runs;
 }
@@ -163,7 +164,7 @@ void hbsolver::initDC (void) {
 // Returns true if circuit is a HB source.
 bool hbsolver::isExcitation (circuit * c) {
   int type = c->getType ();
-  if (type == CIR_PAC || type == CIR_VAC || type == CIR_IAC)
+  if (type == CIR_PAC || type == CIR_VAC || type == CIR_VDC)
     return true;
   return false;
 }
@@ -199,8 +200,10 @@ void hbsolver::collectFrequencies (void) {
   nr_double_t freq;
   for (ptrlistiterator<circuit> it (excitations); *it; ++it) {
     circuit * c = it.current ();
-    freq = c->getPropertyDouble ("f");
-    expandFrequencies (freq, n);
+    if (c->getType () != CIR_VDC) {
+      freq = c->getPropertyDouble ("f");
+      expandFrequencies (freq, n);
+    }
   }
 
   // no excitations
@@ -274,12 +277,16 @@ void hbsolver::getNodeLists (void) {
   // organization of the nodes for the MNA:
   // --------------------------------------
   // 1.)  balanced nodes: all connected to at least one non-linear device
-  // 2.a) all linear nodes not contained in 1.
-  // 2.b) additional gyrators of linear nodes (built-in voltage sources)
-  // please note: excitation nodes all in 2.a
+  // 2.a) the excitation nodes
+  // 2.b) all linear nodes not contained in 1. and 2.a
+  // 2.c) additional gyrators of linear nodes (built-in voltage sources)
+  // please note: excitation nodes also in 2.b; 1. and 2.a are 'ports'
 
   nanodes = new strlist (*nlnodes); // list 1.
-  // add linear nodes; list 2.a
+  // add excitation nodes; list 2.a
+  for (strlistiterator it (exnodes); *it; ++it)
+    nanodes->append (*it);
+  // add linear nodes; list 2.b
   for (strlistiterator it (lnnodes); *it; ++it) {
     if (!nanodes->contains (*it))
       nanodes->append (*it);
@@ -288,6 +295,8 @@ void hbsolver::getNodeLists (void) {
   banodes = new strlist (*nlnodes);
 #if DEBUG && 0
   fprintf (stderr, " balanced nodes: [ %s ]\n", banodes->toString ());
+  fprintf (stderr, "  exnodes nodes: [ %s ]\n", exnodes->toString ());
+  fprintf (stderr, "  nanodes nodes: [ %s ]\n", nanodes->toString ());
 #endif
 }
 
@@ -330,20 +339,12 @@ void hbsolver::prepareLinear (void) {
   for (ptrlistiterator<circuit> it (lincircuits); *it; ++it) (*it)->initHB ();
   nlnvsrcs = assignVoltageSources (lincircuits);
   nnanodes = nanodes->length ();
+  nexnodes = exnodes->length ();
   assignNodes (nolcircuits, nanodes);
   assignNodes (lincircuits, nanodes);
   assignNodes (excitations, nanodes);
-#if DEBUG
-  fprintf (stderr, "creating overall MNA entries\n");
-#endif
   createMatrixLinearA ();
-#if DEBUG
-  fprintf (stderr, "creating Ys and Yc entries\n");
-#endif
   createMatrixLinearY ();
-#if DEBUG
-  fprintf (stderr, "creating Ic vector\n");
-#endif
   calcConstantCurrent ();
 }
 
@@ -368,6 +369,9 @@ void hbsolver::createMatrixLinearA (void) {
     // fill in all matrix entries for the given frequency
     fillMatrixLinearA (A, f++);
   }
+
+  // save a copy of the original MNA matrix
+  NA = new tmatrix<complex> (*A);
 }
 
 // some definitions for the matrix filler
@@ -382,7 +386,7 @@ void hbsolver::createMatrixLinearA (void) {
 /* This function fills in the MNA matrix entries intp the A matrix for
    a given frequency index. */
 void hbsolver::fillMatrixLinearA (tmatrix<complex> * A, int f) {
-  int N = nlnnodes;
+  int N = nnanodes;
 
   // through each linear circuit
   for (ptrlistiterator<circuit> it (lincircuits); *it; ++it) {
@@ -439,16 +443,26 @@ void hbsolver::invertMatrix (tmatrix<complex> * A, tmatrix<complex> * H) {
   tvector<complex> * x = new tvector<complex> (N);
   tvector<complex> * z = new tvector<complex> (N);
 
-  // create LU decomposition of the A matrix
-  eqns.setAlgo (ALGO_LU_FACTORIZATION_CROUT);
-  eqns.passEquationSys (A, x, z);
-  eqns.solve ();
+  try_running () {
+    // create LU decomposition of the A matrix
+    eqns.setAlgo (ALGO_LU_FACTORIZATION_CROUT);
+    eqns.passEquationSys (A, x, z);
+    eqns.solve ();
+  }
+  // appropriate exception handling
+  catch_exception () {
+  case EXCEPTION_PIVOT:
+  default:
+    logprint (LOG_ERROR, "WARNING: %s: during TI inversion\n", getName ());
+    estack.print ();
+  }
 
   // use the LU decomposition to obtain the inverse H
   eqns.setAlgo (ALGO_LU_SUBSTITUTION_CROUT);
   for (int c = 0; c < N; c++) {
     z->set (0.0);
     z->set (c, 1.0);
+    eqns.passEquationSys (A, x, z);
     eqns.solve ();
     for (int r = 0; r < N; r++) H->set (r, c, x->get (r));
   }
@@ -456,11 +470,19 @@ void hbsolver::invertMatrix (tmatrix<complex> * A, tmatrix<complex> * H) {
   delete z;
 }
 
+// Some defines for matrix element access.
+#define V_(r) (*V) (r)
+#define I_(r) (*I) (r)
+
 #define Z_(r,c) (*Z) (r,c)
+#define Y_(r,c) (*Y) (r,c)
+
 #define ZVU_(r,c) Z_(r,c)
 #define ZVL_(r,c) Z_((r)*nfreqs+f+sn,c)
 #define ZCU_(r,c) Z_(r,(c)*nfreqs+f+sn)
 #define ZCL_(r,c) Z_((r)*nfreqs+f+sn,(c)*nfreqs+f+sn)
+
+#define YV_(r,c) Y_(r,c)
 
 /* The following function performs the following steps:
    1. form the MNA matrix A including all nodes (linear, non-linear and
@@ -499,24 +521,34 @@ void hbsolver::createMatrixLinearY (void) {
   V = new tvector<complex> (sa);
   I = new tvector<complex> (sa);
 
-  // connect a 100 Ohm resistor (to ground) to each node in the MNA matrix
-  for (c = 0; c < sa; c++) (*A) (c, c) += 0.01;
+  // connect a 100 Ohm resistor (to ground) to each port in the MNA matrix
+  for (c = 0; c < (sv + nexnodes) * nfreqs; c++) (*A) (c, c) += 0.01;
 
   // LU decompose the MNA matrix
-  eqns.setAlgo (ALGO_LU_FACTORIZATION_CROUT);
-  eqns.passEquationSys (A, V, I);
-  eqns.solve ();
+  try_running () {
+    eqns.setAlgo (ALGO_LU_FACTORIZATION_CROUT);
+    eqns.passEquationSys (A, V, I);
+    eqns.solve ();
+  }
+  // appropriate exception handling
+  catch_exception () {
+  case EXCEPTION_PIVOT:
+  default:
+    logprint (LOG_ERROR, "WARNING: %s: during A factorization\n", getName ());
+    estack.print ();
+  }
 
   // aquire variable transimpedance matrix entries
   eqns.setAlgo (ALGO_LU_SUBSTITUTION_CROUT);
   for (c = 0; c < sn; c++) {
     I->set (0.0);
-    I->set (c, 1.0);
+    I_(c) = 1.0;
+    eqns.passEquationSys (A, V, I);
     eqns.solve ();
     // ZV | ..
     // ---+---
     // .. | ..
-    for (r = 0; r < sn; r++) ZVU_(r, c) = V->get (r);
+    for (r = 0; r < sn; r++) ZVU_(r, c) = V_(r);
     // .. | ..
     // ---+---
     // ZV | ..
@@ -541,16 +573,17 @@ void hbsolver::createMatrixLinearY (void) {
     for (f = 0; f < nfreqs; f++) { // for each frequency
       int pn = (pnode - 1) * nfreqs + f;
       int nn = (nnode - 1) * nfreqs + f;
-      V->set (0.0);
-      if (pnode) I->set (pn, +1.0);
-      if (nnode) I->set (nn, -1.0);
+      I->set (0.0);
+      if (pnode) I_(pn) = +1.0;
+      if (nnode) I_(nn) = -1.0;
+      eqns.passEquationSys (A, V, I);
       eqns.solve ();
       // .. | ZC
       // ---+---
       // .. | ..
       for (r = 0; r < sn; r++) {
 	// upper part of the entries
-	ZCU_(r, vsrc) = V->get (r);
+	ZCU_(r, vsrc) = V_(r);
       }
       // .. | ..
       // ---+---
@@ -571,14 +604,14 @@ void hbsolver::createMatrixLinearY (void) {
   // invert the Z matrix to a Y matrix
   invertMatrix (Z, Y);
 
-  // substract the 100 Ohm resitor
-  for (c = 0; c < sy * nfreqs; c++) (*Y) (c, c) -= 0.01;
+  // substract the 100 Ohm resistor
+  for (c = 0; c < sy * nfreqs; c++) Y_(c, c) -= 0.01;
 
   // extract the variable transadmittance matrix
   YV = new tmatrix<complex> (sn);
   for (r = 0; r < sn ; r++)
     for (c = 0; c < sn; c++)
-      (*YV) (r, c) = (*Y) (r, c);
+      YV_(r, c) = Y_(r, c);
 }
 
 /* Little helper function obtaining a transimpedance value for the
@@ -589,12 +622,12 @@ complex hbsolver::excitationZ (tvector<complex> * V, circuit * vs, int f) {
   int pnode = vs->getNode(NODE_1)->getNode ();
   int nnode = vs->getNode(NODE_2)->getNode ();
   complex z = 0.0;
-  if (pnode) z += V->get ((pnode - 1) * nfreqs + f);
-  if (nnode) z -= V->get ((nnode - 1) * nfreqs + f);
+  if (pnode) z += V_((pnode - 1) * nfreqs + f);
+  if (nnode) z -= V_((nnode - 1) * nfreqs + f);
   return z;
 }
 
-/* This function computes the constant current vector using the
+/* This function computes the constant current vectors using the
    voltage of the excitations and the transadmittance matrix
    entries. */
 void hbsolver::calcConstantCurrent (void) {
@@ -614,23 +647,29 @@ void hbsolver::calcConstantCurrent (void) {
       VC (vsrc * nfreqs + f) = vs->getE (VSRC_1);
     }
   }
-  
+
   // compute constant current vector for balanced nodes
   IC = new tvector<complex> (sn);
+  // .. | YC * VC
+  // ---+---
+  // .. | ..
   for (r = 0; r < sn; r++) {
     complex i = 0.0;
     for (c = 0; c < se; c++) {
-      i += Y->get (r, c + sn) * VC (c);
+      i += Y_(r, c + sn) * VC (c);
     }
     IC->set (r, i);
   }
 
-  // compute constant current vectors for sources itself
+  // compute constant current vector for sources itself
   IS = new tvector<complex> (se);
+  // .. | ..
+  // ---+---
+  // .. | YC * VC
   for (r = 0; r < se; r++) {
     complex i = 0.0;
     for (c = 0; c < se; c++) {
-      i += Y->get (r + sn, c + sn) * VC (c);
+      i += Y_(r + sn, c + sn) * VC (c);
     }
     IS->set (r, i);
   }
@@ -649,19 +688,51 @@ int hbsolver::checkBalance (void) {
 
 /* The function calculates and saves the final solution. */
 void hbsolver::finalSolution (void) {
-  eqnsys<complex> eqns;
-  int S = A->getCols ();
+  int S = NA->getCols ();
   int N = nnanodes * nfreqs;
+
+  // right hand side vector
   tvector<complex> * I = new tvector<complex> (S);
+  // temporary solution
   tvector<complex> * V = new tvector<complex> (S);
+  // final solution
   x = new tvector<complex> (N);
 
+  // put computed currents caused by the HB sources into the right
+  // hand side (already saved in IS)
+  int vsrc = 0;
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it, vsrc++) {
+    circuit * vs = it.current ();
+    // get nodes of original HB sources
+    int pnode = vs->getNode(NODE_1)->getNode ();
+    int nnode = vs->getNode(NODE_2)->getNode ();
+    for (int f = 0; f < nfreqs; f++) { // for each frequency
+      complex i = IS->get (vsrc * nfreqs + f);
+      int pn = (pnode - 1) * nfreqs + f;
+      int nn = (nnode - 1) * nfreqs + f;
+      if (pnode) I_(pn) += +i;
+      if (nnode) I_(nn) += -i;
+    }
+  }
+
+  // TODO: put currents through balanced nodes into right hand side
+
   // use LU decomposition for the final solution
-  //  for (int i = 0; i < N; i++) I->set (i, IC->get (i));
-  eqns.setAlgo (ALGO_LU_DECOMPOSITION);
-  eqns.passEquationSys (A, V, I);
-  eqns.solve ();
-  for (int i = 0; i < N; i++) x->set (i, V->get (i));
+  try_running () {
+    eqnsys<complex> eqns;
+    eqns.setAlgo (ALGO_LU_DECOMPOSITION);
+    eqns.passEquationSys (NA, V, I);
+    eqns.solve ();
+  }
+  // appropriate exception handling
+  catch_exception () {
+  case EXCEPTION_PIVOT:
+  default:
+    logprint (LOG_ERROR, "WARNING: %s: during final AC analysis\n",
+	      getName ());
+    estack.print ();
+  }
+  for (int i = 0; i < N; i++) x->set (i, V_(i));
 }
 
 // Saves simulation results.
