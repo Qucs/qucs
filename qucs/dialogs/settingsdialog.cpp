@@ -19,6 +19,7 @@
 
 #include "qucs.h"
 #include "schematic.h"
+#include "node.h"
 
 #include <qwidget.h>
 #include <qlabel.h>

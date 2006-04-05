@@ -242,6 +242,13 @@ void SimMessage::startSimulator()
 {
   QString SimTime;
   QStringList CommandLine;
+  QString SimPath = QDir::convertSeparators (QucsHomeDir.absPath());
+#ifdef __MINGW32__
+  QString QucsDigi = "qucsdigi.bat";
+#else
+  QString QucsDigi = "qucsdigi";
+#endif
+
   if(typeid(*Doc) == typeid(Schematic)) {
     // Using the Doc pointer here is risky as the user may have closed
     // the schematic, but converting the SPICE netlists is (hopefully)
@@ -262,17 +269,16 @@ void SimMessage::startSimulator()
       CommandLine << QucsSettings.BinDir + "qucsator" << "-b" << "-g"
          << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
     else
-      CommandLine << QucsSettings.BinDir + "qucsdigi" << "netlist.txt"
-         << DataSet << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
+      CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
+         << DataSet << SimTime << SimPath << QucsSettings.BinDir;
   }
   else {
     SimTime = "10 ns";
-    CommandLine << QucsSettings.BinDir + "qucsdigi" << DocName
-       << DataSet << SimTime << QucsHomeDir.absPath() << QucsSettings.BinDir;
+    CommandLine << QucsSettings.BinDir + QucsDigi << DocName
+       << DataSet << SimTime << SimPath << QucsSettings.BinDir;
   }
 
   SimProcess.setArguments(CommandLine);
-
 
   disconnect(&SimProcess, 0, 0, 0);
   connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
