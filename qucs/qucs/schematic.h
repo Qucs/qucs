@@ -24,6 +24,7 @@
 #include "components/component.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
+#include "node.h"
 
 #include <qscrollview.h>
 #include <qpainter.h>
