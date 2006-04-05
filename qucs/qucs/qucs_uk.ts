@@ -3198,9 +3198,6 @@ Usage:  qucsedit [-r] file
     </message>
 </context>
 <context>
-    <name>QucsActions</name>
-</context>
-<context>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
@@ -5120,9 +5117,6 @@ Filter synthesis program
     </message>
 </context>
 <context>
-    <name>QucsInit</name>
-</context>
-<context>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
@@ -5717,9 +5711,6 @@ open files with an appropriate program.</source>
         <source>Transmission line type not available.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsView</name>
 </context>
 <context>
     <name>SearchDialog</name>
