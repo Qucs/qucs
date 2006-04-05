@@ -117,7 +117,7 @@ QucsApp::QucsApp()
     tr("Schematic")+" (*.sch);;"+
     tr("Data Display")+" (*.dpl);;"+
     tr("Qucs Documents")+" (*.sch *.dpl);;"+
-    tr("VHDL Sources")+" (*.vhdl);;"+
+    tr("VHDL Sources")+" (*.vhdl *.vhd);;"+
     tr("Any File")+" (*)";
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
@@ -1107,7 +1107,7 @@ bool QucsApp::saveAs()
     }
 
     if(typeid(*w) == typeid(TextDoc))
-      Filter = tr("VHDL Sources")+" (*.vhdl);;" + tr("Any File")+" (*)";
+      Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" + tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
     s = QFileDialog::getSaveFileName(s, Filter,
