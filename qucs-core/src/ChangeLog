@@ -1,3 +1,15 @@
+2006-04-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* fourier.cpp: Implemented multi-dimensional Fast Fourier
+	Transformation (also IFFT).
+
+2006-04-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Linear HB seems to work now.  Tests needed...
+
+	* parse_netlist.y: Also allow scales and units as node
+	identifiers.
+
 2006-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* strlist.cpp, ptrlist.cpp: Added a default constructor.

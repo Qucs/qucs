@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.5 2006/03/29 08:02:03 raimi Exp $
+ * $Id: hbsolver.h,v 1.6 2006/04/05 08:27:06 raimi Exp $
  *
  */
 
@@ -76,7 +76,9 @@ class hbsolver : public analysis
   tmatrix<complex> * Y;
   tmatrix<complex> * A;
   tmatrix<complex> * Z;
+
   tmatrix<complex> * YV;
+  tmatrix<complex> * NA;
 
   tvector<complex> * IC;
   tvector<complex> * IS;
@@ -87,6 +89,7 @@ class hbsolver : public analysis
   int nlnvsrcs;
   int nlnnodes;
   int nnanodes;
+  int nexnodes;
 };
 
 #endif /* __HBSOLVER_H__ */

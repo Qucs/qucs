@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.37 2006/02/17 07:24:06 raimi Exp $
+ * $Id: bjt.cpp,v 1.38 2006/04/05 08:27:06 raimi Exp $
  *
  */
 
@@ -589,7 +589,10 @@ void bjt::calcOperatingPoints (void) {
 void bjt::initSP (void) {
   allocMatrixS ();
   processCbcx ();
-  if (deviceEnabled (cbcx)) cbcx->initSP ();
+  if (deviceEnabled (cbcx)) {
+    cbcx->initSP ();
+    cbcx->initNoiseSP ();
+  }
 }
 
 void bjt::processCbcx (void) {
@@ -614,8 +617,10 @@ void bjt::processCbcx (void) {
 void bjt::initAC (void) {
   allocMatrixMNA ();
   processCbcx ();
-  if (deviceEnabled (cbcx)) cbcx->initAC ();
-  clearI ();
+  if (deviceEnabled (cbcx)) {
+    cbcx->initAC ();
+    cbcx->initNoiseAC ();
+  }
 }
 
 void bjt::calcAC (nr_double_t frequency) {

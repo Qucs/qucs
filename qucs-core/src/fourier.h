@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.h,v 1.3 2006/02/17 07:24:06 raimi Exp $
+ * $Id: fourier.h,v 1.4 2006/04/05 08:27:06 raimi Exp $
  *
  */
 
@@ -40,6 +40,9 @@ namespace fourier {
   void _ifft_1d (nr_double_t *, int);
   void  _dft_1d (nr_double_t *, int, int isign = 1);
   void _idft_1d (nr_double_t *, int);
+
+  void  _fft_nd (nr_double_t *, int[], int, int isign = 1);
+  void _ifft_nd (nr_double_t *, int[], int);
 
 } // namespace
 

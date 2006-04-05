@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.36 2006/03/02 08:06:03 raimi Exp $
+ * $Id: component.h,v 1.37 2006/04/05 08:27:06 raimi Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include "component_id.h"
 #include "ground.h"
 #include "open.h"
+#include "short.h"
 #include "tee.h"
 #include "cross.h"
 #include "itrafo.h"
