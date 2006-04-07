@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.16 2006/03/14 07:29:13 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.17 2006/04/07 07:11:23 raimi Exp $
  *
  */
 
@@ -176,7 +176,8 @@ int spice2qucs (struct actionset_t * action, char * infile, char * outfile) {
     ret = -1;
   }
   spice_lex_destroy ();
-  fclose (spice_in);
+  if (spice_in)
+    fclose (spice_in);
   if (ret) {
     spice_destroy ();
     return -1;

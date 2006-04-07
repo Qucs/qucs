@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.16 2006/03/20 08:59:11 raimi Exp $
+ * $Id: scan_spice.l,v 1.17 2006/04/07 07:11:23 raimi Exp $
  *
  */
 
@@ -56,8 +56,8 @@ WS       [ \t\n\r]
 TITLE    [* \t0-9A-Za-z][A-Za-z0-9\- \t;#:=()/\.,*\\]*\r*\n
 SPACE    [ \t]
 NAME     [A-Z][A-Z0-9]*
-IDENT    [A-Za-z][A-Za-z0-9_]*
-IDENT2   [A-Za-z0-9_]+
+IDENT    [A-Za-z][A-Za-z0-9_\-]*
+IDENT2   [A-Za-z0-9_][A-Za-z0-9_\-]*
 FILE     [/A-Za-z0-9_][/\\:A-Za-z0-9_\.]*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
@@ -544,18 +544,17 @@ MOS      ({MOS1}|{MOS2})
     /* skip spaces, '=', '(', ')', ',' and the leading '+' */
 }
 
-<INITIAL,STARTUP>. { /* any other character is invalid */
+<COMMENT>{EOL} { BEGIN(STARTUP); /* skipping ends here */ }
+<COMMENT>. { /* skip any character in here */ }
+<IGNORE>.  { /* skip any character in here */ }
+
+<*>.       { /* skip any character in here */ }
+
+<*>. { /* any other character is invalid */
     fprintf (stderr, 
 	     "line %d: syntax error, unrecognized character: `%s'\n", 
 	     spice_lineno, spice_text);
     return InvalidCharacter;
 }
-
-<IGNORE>.  { /* skip any character in here */ }
-
-<COMMENT>. { /* skip any character in here */ }
-<COMMENT>{EOL} { BEGIN(STARTUP); /* skipping ends here */ }
-
-<*>.       { /* skip any character in here */ }
 
 %%

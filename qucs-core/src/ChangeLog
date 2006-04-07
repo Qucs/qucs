@@ -1,3 +1,16 @@
+2006-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* devstates.h (class devstates): New class going to be used
+	by all non-linear components.  Thus it is possible to re-use
+	a single instance of a non-linear component class for
+	each required HB frequency.
+
+	* hbsolver.cpp: Started to implement the non-linear
+	functionality in the HB solver.
+
+	* circuit.cpp: Prepared matrix and vector entries for
+	HB analysis.
+
 2006-04-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* fourier.cpp: Implemented multi-dimensional Fast Fourier

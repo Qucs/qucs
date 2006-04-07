@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.6 2006/04/05 08:27:06 raimi Exp $
+ * $Id: hbsolver.h,v 1.7 2006/04/07 07:11:22 raimi Exp $
  *
  */
 
@@ -44,7 +44,6 @@ class hbsolver : public analysis
   void initDC (void);
   static void calc (hbsolver *);
   void collectFrequencies (void);
-  void solveLinear (void);
   int  checkBalance (void);
 
   void splitCircuits (void);
@@ -63,6 +62,12 @@ class hbsolver : public analysis
   void calcConstantCurrent (void);
   complex excitationZ (tvector<complex> *, circuit *, int);
   void finalSolution (void);
+  void fillMatrixNonLinear (tmatrix<complex> *, tmatrix<complex> *, 
+			    tvector<complex> *, tvector<complex> *, int);
+  void prepareNonLinear (void);
+  void solveHB (void);
+  void loadMatrices (void);
+  void vectorFFT (tvector<complex> *);
 
  private:
   tvector<nr_double_t> frequencies;
@@ -80,6 +85,12 @@ class hbsolver : public analysis
   tmatrix<complex> * YV;
   tmatrix<complex> * NA;
 
+  tmatrix<complex> * JQ;
+  tmatrix<complex> * JG;
+  tvector<complex> * IG;
+  tvector<complex> * FQ;
+  tvector<complex> * VS;
+
   tvector<complex> * IC;
   tvector<complex> * IS;
   tvector<complex> * x;
@@ -90,6 +101,7 @@ class hbsolver : public analysis
   int nlnnodes;
   int nnanodes;
   int nexnodes;
+  int nbanodes;
 };
 
 #endif /* __HBSOLVER_H__ */
