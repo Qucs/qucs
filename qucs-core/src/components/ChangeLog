@@ -1,3 +1,8 @@
+2006-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp (calcHB): Setup callbacks for the HB
+	analysis.  First non-linear element to be implemented...
+
 2006-04-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* short.h (class ashort): A new helper component.  Probably

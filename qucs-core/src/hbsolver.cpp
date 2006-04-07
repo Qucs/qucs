@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.7 2006-04-05 08:27:06 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.8 2006-04-07 07:11:22 raimi Exp $
  *
  */
 
@@ -43,7 +43,10 @@
 #include "eqnsys.h"
 #include "analysis.h"
 #include "dataset.h"
+#include "fourier.h"
 #include "hbsolver.h"
+
+using namespace fourier;
 
 // Constructor creates an unnamed instance of the hbsolver class.
 hbsolver::hbsolver () : analysis () {
@@ -98,6 +101,8 @@ hbsolver::hbsolver (hbsolver & o) : analysis (o) {
    solves it then. */
 void hbsolver::solve (void) {
 
+  int done = 0;
+
   // collect different parts of the circuit
   splitCircuits ();
 
@@ -107,30 +112,68 @@ void hbsolver::solve (void) {
   // find interconnects between the linear and non-linear subcircuit
   getNodeLists ();
 
-  // preapares the linear part --> 0 = IC + [YV] * V
+  // prepares the linear part --> 0 = IC + [YV] * V
   prepareLinear ();
   
   runs++;
-  logprint (LOG_STATUS, "NOTIFY: %s: solving for %d frequencies balanced at "
-	    "%d nodes\n", getName (), nfreqs, banodes->length ());
+  logprint (LOG_STATUS, "NOTIFY: %s: solving for %d frequencies\n",
+	    getName (), nfreqs);
 
-  // start iteration
-  do {
+  if (nbanodes > 0) {
 
-    solveLinear ();
+    // start balancing
+    logprint (LOG_STATUS, "NOTIFY: %s: balancing at %d nodes\n", getName (),
+	      nbanodes);
 
-    // inverse FFT of frequency domain voltage vector
+    // prepares the non-linear part
+    prepareNonLinear ();
 
-    // compute non-linear charges and currents
+    // start iteration
+    do {
+      // evaluate component functionality and fill matrices and vectors
+      loadMatrices ();
 
-    // FFT of time domain currents
+      // currents into frequency domain
+      vectorFFT (IG);
+
+      // charges into frequency domain
+      vectorFFT (FQ);
+
+      // solve HB equation --> E = IC + [YV] * VS + j[O] * FQ + IG
+      solveHB ();
+
+      // termination criteria met
+      if (checkBalance ()) {
+	done = 1;
+	break;
+      }
+
+      // G-Jacobian into frequency domain
+
+      // Q-Jacobian into frequency domain
+
+      // calculate Jacobian --> JF = [YV] + j[O] * JQ + JG
+      
+      // solve equation system --> JF * V(n+1) = JF * V(n) - F
+
+      // inverse FFT of frequency domain voltage vector V(n+1)
+
+      // save voltages into non-linear circuits
+
+    }
+    // check termination criteria (balanced frequency domain currents)
+    while (!done);
   }
-  // check termination criteria (balanced frequency domain currents)
-  while (!checkBalance ());
+  else {
+    // no balancing necessary
+    logprint (LOG_STATUS, "NOTIFY: %s: no balancing necessary\n", getName ());
+  }
 
   // apply AC analysis to the complete network in order to obtain the
   // final results
   finalSolution ();
+
+  // save results into dataset
   saveResults ();
 }
 
@@ -283,11 +326,12 @@ void hbsolver::getNodeLists (void) {
   // please note: excitation nodes also in 2.b; 1. and 2.a are 'ports'
 
   nanodes = new strlist (*nlnodes); // list 1.
+  strlistiterator it;
   // add excitation nodes; list 2.a
-  for (strlistiterator it (exnodes); *it; ++it)
+  for (it = strlistiterator (exnodes); *it; ++it)
     nanodes->append (*it);
   // add linear nodes; list 2.b
-  for (strlistiterator it (lnnodes); *it; ++it) {
+  for (it = strlistiterator (lnnodes); *it; ++it) {
     if (!nanodes->contains (*it))
       nanodes->append (*it);
   }
@@ -340,7 +384,7 @@ void hbsolver::prepareLinear (void) {
   nlnvsrcs = assignVoltageSources (lincircuits);
   nnanodes = nanodes->length ();
   nexnodes = exnodes->length ();
-  assignNodes (nolcircuits, nanodes);
+  nbanodes = banodes->length ();
   assignNodes (lincircuits, nanodes);
   assignNodes (excitations, nanodes);
   createMatrixLinearA ();
@@ -374,7 +418,7 @@ void hbsolver::createMatrixLinearA (void) {
   NA = new tmatrix<complex> (*A);
 }
 
-// some definitions for the matrix filler
+// some definitions for the linear matrix filler
 #undef  A_
 #undef  B_
 #define A_(r,c) (*A) ((r)*nfreqs+f,(c)*nfreqs+f)
@@ -383,7 +427,7 @@ void hbsolver::createMatrixLinearA (void) {
 #define C_(r,c) A_(r+N,c)
 #define D_(r,c) A_(r+N,c+N)
 
-/* This function fills in the MNA matrix entries intp the A matrix for
+/* This function fills in the MNA matrix entries into the A matrix for
    a given frequency index. */
 void hbsolver::fillMatrixLinearA (tmatrix<complex> * A, int f) {
   int N = nnanodes;
@@ -675,15 +719,110 @@ void hbsolver::calcConstantCurrent (void) {
   }
 }
 
-/* The function creates the linear subcircuit matrices in the
-   frequency domain. */
-void hbsolver::solveLinear (void) {
-}
-
 /* Checks whether currents through the interconnects of the linear and
    non-linear subcircuit (in the frequency domain) are equal. */
 int hbsolver::checkBalance (void) {
   return 1;
+}
+
+// some definitions for the non-linear matrix filler
+#undef  G_
+#undef  C_
+#define G_(r,c) (*G) ((r)*nfreqs+f,(c)*nfreqs+f)
+#define C_(r,c) (*C) ((r)*nfreqs+f,(c)*nfreqs+f)
+#undef  FI_
+#undef  FQ_
+#define FI_(r) (*I) ((r)*nfreqs+f)
+#define FQ_(r) (*Q) ((r)*nfreqs+f)
+
+/* This function fills in the matrix and vector entries for the
+   non-linear HB equations for a given frequency index. */
+void hbsolver::fillMatrixNonLinear (tmatrix<complex> * G,
+				    tmatrix<complex> * C, 
+				    tvector<complex> * I, 
+				    tvector<complex> * Q, int f) {
+  // through each linear circuit
+  for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
+    circuit * cir = it.current ();
+    int s = cir->getSize ();
+    int nr, nc, r, c;
+
+    for (r = 0; r < s; r++) {
+      if ((nr = cir->getNode(r)->getNode () - 1) < 0) continue;
+      // apply G- and C-matrix entries
+      for (c = 0; c < s; c++) {
+	if ((nc = cir->getNode(c)->getNode () - 1) < 0) continue;
+	G_(nr, nc) += cir->getY (r, c);
+	C_(nr, nc) += cir->getH (r, c);
+      }
+      // apply I- and Q-vector entries
+      FI_(nr) += cir->getI (r);
+      FQ_(nr) += cir->getQ (r);
+    }
+  }
+}
+
+/* The function initializes the non-linear part of the HB. */
+void hbsolver::prepareNonLinear (void) {
+  int N = nbanodes;
+
+  // allocate matrices and vectors
+  if (FQ == NULL) {
+    FQ = new tvector<complex> (N);
+  }
+  if (IG == NULL) {
+    IG = new tvector<complex> (N);
+  }
+  if (JG == NULL) {
+    JG = new tmatrix<complex> (N);
+  }
+  if (JQ == NULL) {
+    JQ = new tmatrix<complex> (N);
+  }
+
+  // voltage vector
+  if (VS == NULL) {
+    VS = new tvector<complex> (N);
+  }
+  
+  // assign nodes
+  assignNodes (nolcircuits, nanodes);
+
+  // initialize circuits
+  for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
+    (*it)->initHB (nfreqs);
+  }
+}
+
+/* The function runs each non-linear components' HB calculator for
+   each frequency and applies the matrix and vector entries
+   appropriately. */
+void hbsolver::loadMatrices (void) {
+  // through each frequency
+  for (int f = 0; f < pfreqs.getSize (); f++) {
+    // calculate components' HB matrices and vector for the given frequency
+    for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it)
+      (*it)->calcHB (f);
+    // fill in all matrix entries for the given frequency
+    fillMatrixNonLinear (JG, JQ, IG, FQ, f);
+  }
+}
+
+/* The following function transforms a vector using a Fast Fourier
+   Transformation from or to the time domain or frequency domain. */
+void hbsolver::vectorFFT (tvector<complex> * V) {
+  int i, k;
+  int n = pfreqs.getSize ();
+  complex * d = V->getData ();
+  // ThinkME: ...
+
+  // for each node a single FFT
+  for (k = i = 0; i < nbanodes; i++, k += n) {
+    _fft_1d ((nr_double_t *) &d[k], n);
+  }
+}
+			  
+void hbsolver::solveHB (void) {
 }
 
 /* The function calculates and saves the final solution. */

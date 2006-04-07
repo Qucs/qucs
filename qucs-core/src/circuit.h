@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.47 2006-02-25 14:42:50 raimi Exp $
+ * $Id: circuit.h,v 1.48 2006-04-07 07:11:22 raimi Exp $
  *
  */
 
@@ -86,6 +86,8 @@ class circuit : public object, public integrator
   virtual void calcTR (nr_double_t) { }
   virtual void initHB (void) { allocMatrixMNA (); }
   virtual void calcHB (nr_double_t) { }
+  virtual void initHB (int) { allocMatrixMNA (); allocMatrixHB (); }
+  virtual void calcHB (int) { }
   virtual void calcOperatingPoints (void) { }
   virtual void saveOperatingPoints (void) { }
   virtual void calcCharacteristics (nr_double_t) { }
@@ -162,10 +164,12 @@ class circuit : public object, public integrator
   complex getB (int, int);
   complex getC (int, int);
   complex getD (int, int);
+  complex getH (int, int);
   complex getE (int);
   complex getI (int);
   complex getJ (int);
   complex getV (int);
+  complex getQ (int);
   nr_double_t getG (int, int);
   void setS (int, int, complex);
   void setN (int, int, complex);
@@ -173,10 +177,12 @@ class circuit : public object, public integrator
   void setB (int, int, complex);
   void setC (int, int, complex);
   void setD (int, int, complex);
+  void setH (int, int, complex);
   void setE (int, complex);
   void setI (int, complex);
   void setJ (int, complex);
   void setV (int, complex);
+  void setQ (int, complex);
   void setG (int, int, nr_double_t);
   void clearB (void);
   void clearC (void);
@@ -216,6 +222,8 @@ class circuit : public object, public integrator
   void   allocMatrixN (int sources = 0);
   void   allocMatrixMNA (void);
   void   freeMatrixMNA (void);
+  void   allocMatrixHB (void);
+  void   freeMatrixHB (void);
   void   setMatrixS (matrix);
   matrix getMatrixS (void);
   void   setMatrixN (matrix);
@@ -243,10 +251,12 @@ class circuit : public object, public integrator
   complex * MatrixB;
   complex * MatrixC;
   complex * MatrixD;
-  complex * MatrixE;
-  complex * MatrixI;
-  complex * MatrixV;
-  complex * MatrixJ;
+  complex * MatrixH;
+  complex * VectorE;
+  complex * VectorI;
+  complex * VectorV;
+  complex * VectorJ;
+  complex * VectorQ;
   char * subcircuit;
   node * nodes;
   substrate * subst;

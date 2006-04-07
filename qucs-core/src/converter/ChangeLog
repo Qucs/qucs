@@ -1,3 +1,10 @@
+2006-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Allowing '-' in model identifiers.
+
+	* qucsconv.cpp: Fixed a segfault bug when using stdin as
+	input stream for spice parser.
+
 2006-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Differentiate between current and voltage
