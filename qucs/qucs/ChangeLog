@@ -1,3 +1,23 @@
+2006-04-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* compiling with "no-exceptions" reduces binary by a third
+	* syntay highlighting for text document
+
+2006-04-01  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed segfault during simulations with subcircuits
+	* show cursor position of text documents
+	* set "gnd <= '0';"
+	* switch symbol closed if initial value is on
+	* time list of switch with"[...]"
+	* new symbol for "inout" subcircuit port
+	* zoom for VHDL editor
+	* fixed VHDL output for multi-port nor/nand
+	* correct old xnor symbol
+	* new action: search string in text document
+	* "edit circuit symbol" is now on F9 key
+	* don't paint lineedit on schematic over scrollbar
+
 2006-03-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* extensive restructuring of Qucs

@@ -97,10 +97,18 @@ interconnections are the same for the linear and the non-linear
 subcircuit. This principle actually gave the harmonic balance
 simulation its name, because through the interconnections the
 currents of the linear and non-linear subcircuits have to be
-\textit{balanced} at every \textit{harmonic} frequency. (To
-be precise the described method is called KCL-HB, Kirchhoff's
-current law harmonic balance.) So, the non-linear equation
-system that needs to be solved writes:
+\textit{balanced} at every \textit{harmonic} frequency. To
+be precise the described method is called Kirchhoff's current
+law harmonic balance (KCL-HB). Theoretically, it would also be
+possible to use an algorithm that tries to balance the voltages
+at the subcircuit interconnections. But then the Z matrix (linear
+subcircuit) and current-dependend voltage laws (non-linear
+subcircuit) have to be used. That doesn't fit the need (see other
+simulation types).
+
+\addvspace{12pt}
+
+So, the non-linear equation system that needs to be solved writes:
 \begin{equation}
 \label{eqn:HBeqn}
 \textbf{F}(\textbf{V})
@@ -138,7 +146,9 @@ the simulation is complete.
 It needs several steps to get the transadmittance matrices $[\tilde{Y}]$
 and $[\hat{Y}]$ mentioned in equation \eqref{eqn:HBlin}. First the MNA
 matrix of the linear subcircuit (figure \ref{fig:hb_concept}) is created
-(chapter \ref{sec:MNA}) without the voltage sources $S_1$...$S_M$. Then
+(chapter \ref{sec:MNA}) without the voltage sources $S_1$...$S_M$ and
+without the non-linear components. Note that all nodes must appear in the
+matrix, even those where only non-linear components are connected. Then
 the transimpedance matrix is derived by
 exciting one by one the port nodes of the MNA matrix with unity current.
 After that the transadmittance matrix is calculated by inverting the
@@ -208,6 +218,23 @@ decomposition.
 
 \addvspace{12pt}
 
+As $[\tilde{Y}]$ is not square, problems encounter by trying to
+build its inverse matrix. Therefore, the following procedure is
+recommended:
+\begin{itemize}
+\item Create the transimpedance matrix for all ports (sources
+  and interconnections).
+\item Compute the inverse matrix (transadmittance matrix).
+\item The upper left and upper right corner contains $[\tilde{Y}]$
+  and $[\hat{Y}]$.
+\item The lower left and lower right corner contains the transadmittance
+  matrices to calculate the currents through the sources. They
+  can be used to simplify the AC simulatio at the very end.
+\end{itemize}
+
+
+\addvspace{12pt}
+
 One further thing must be mentioned: Because the non-linear
 components are missing in the linear MNA matrix, there are often
 components that are completely disconnected from the rest of the
@@ -241,6 +268,10 @@ do so is the Newton method:
 \textbf{V}_{n+1} = \textbf{V}_n - \textbf{J}_F (\textbf{V}_n)^{-1}
                    \cdot \textbf{F} (\textbf{V}_n)
 \end{equation}
+\begin{equation}
+\Rightarrow \qquad \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_{n+1}
+    = \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_n - \textbf{F} (\textbf{V}_n)
+\end{equation}
 with $\textbf{J}_F$ being the Jacobian matrix. DC and transient
 simulation also use this technique, but here a problem appears:
 The derivatives of the component models are not given in frequency
@@ -249,14 +280,15 @@ equation \ref{eqn:HBeqn}:
 \begin{equation}
 \boldsymbol{J}_F (\boldsymbol{V}_n) = \frac{d\boldsymbol{F} (\boldsymbol{V})}{d\boldsymbol{V}}
     = \boldsymbol{\hat{Y}}_{N \times N} + \frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
-     + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
+     + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{Q}}{\partial \boldsymbol{V}}
     = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,G}
-     + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{F}_{F,Q}
+     + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{J}_{F,Q}
 \end{equation}
 So, two Jacobian matrices have to be built, one for the current
 $\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
 from a Fourier Transformation. The two operations (Fourier Transformation
-and differentiation) can be exchanged. Hence, the Jacobian matrices
+and differentiation) are linear and thus, can be exchanged. Hence, the
+Jacobian matrices
 are built in time domain and transformed into frequency domain afterwards.
 
 \addvspace{12pt}
@@ -273,11 +305,25 @@ with $\boldsymbol{u}$ and $\boldsymbol{U}$ being the vectors of the time
 and frequency values, respectively. Now, it is possible to transform the
 desired Jacobian matrix into frequency domain:
 \begin{equation}
-\boldsymbol{J}_{F,G} = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
+\label{eqn:HB_jacobi}
+\boldsymbol{J}_{F,G}
+  = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
+  = \frac{\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{i})}
+         {\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{v})}
   = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
     \cdot\boldsymbol{\Gamma}^{-1}
 \end{equation}
-This formula seems to be quite clear, but it has to be pointed out how
+Here $\boldsymbol{i}$ is a vector with length $K\cdot N$, i.e. first all
+time values of the first node are inserted, then all time values of the
+second node etc. Hence the Jacobi matrix of $\boldsymbol{i}$ consists of
+$K \times K$ blocks (one for each node) that are diagonal matrices with
+time values of the derivatives in it. (Components exists that create
+non-diagonal blocks, but these are so special ones that they do not appear
+in this document.)
+
+\addvspace{12pt}
+
+The formula \ref{eqn:HB_jacobi} seems to be quite clear, but it has to be pointed out how
 this works with FFT algorithm. With
 $\boldsymbol{\Gamma}^{-1} = (\boldsymbol{\Gamma}^{-1})^T$
 (see equation \ref{eqn:IDFT}) and
@@ -300,6 +346,16 @@ domain Jacobian matrix into the frequency domain Jacobian:
       a new matrix $\boldsymbol{B}$ with this result, i.e. the first row of
       $\boldsymbol{B}$ is the IFFTed first row of $\boldsymbol{A}$ and so on.
 \end{enumerate}
+As the Fourier transformation has to be applied to diagonal sub-matrices,
+the whole above-mentioned process can be performed by one single FFT. This
+is done by taking the $\partial\boldsymbol{i} / \partial\boldsymbol{v}$
+values in a vector $\boldsymbol{J}_i$ and calculating:
+\begin{equation}
+\dfrac{\text{FFT}(\boldsymbol{J}_i)}{N}
+\end{equation}
+The result is the first column of $\boldsymbol{J}_{F,G}$. The second column
+equals the first one rotated down by one element. The third column is the
+second one rotated down by one element etc.
 
 
 \subsection{Termination Criteria}
@@ -405,7 +461,7 @@ one with data having even indices and the other with odd indices:
         \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{even}} +
         W_{n,N}\cdot \underbrace{ \sum_{k=0}^{N/2-1} u_{2k+1}\cdot
         \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{odd}} \\
-\text{with} & & W_{n,N} = \exp\left( 2\pi\cdot j\cdot \frac{k}{N} \right)
+\text{with} & & W_{n,N} = \exp\left( 2\pi\cdot j\cdot \frac{n}{N} \right)
 \end{eqnarray}
 
 The new formula shows no speed advantages. The important thing is that
@@ -477,51 +533,57 @@ Parameters:\\
 \addvspace{12pt}
 
 \texttt{ \\
->\quad // bit reversal method \\
->\quad int i, j, m, n; \\
->\quad n = 2*num; \\
->\quad j = 0; \\
->\quad for (i=0; i<n; i+=2) \{ \\
->\quad \qquad if(j > i) \{   // was index already swapped ? \\
->\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part \\
->\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part \\
->\quad \qquad \} \\
->\quad \qquad m = n/2; \\
->\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index \\
->\quad \qquad\qquad j -= m; \\
->\quad \qquad\qquad m >>= 1; \\
->\quad \qquad \} \\
->\quad \qquad j += m; \\
->\quad \} \\
->\quad \\
->\quad // Danielson-Lanzcos algorithm \\
->\quad int mmax, istep; \\
->\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr; \\
->\quad mmax = 2; \\
->\quad while (n > mmax) \{ \\
->\quad \qquad istep = mmax << 1; \\
->\quad \qquad theta = isign * (2*pi/mmax); \\
->\quad \qquad wtemp = sin(0.5*theta); \\
->\quad \qquad wpr = -2.0*wtemp*wtemp; \\
->\quad \qquad wpi = sin(theta); \\
->\quad \qquad wr = 1.0; \\
->\quad \qquad wi = 0.0; \\
->\quad \qquad for (m=1; m<mmax; m+=2) \{ \\
->\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{ \\
->\quad \qquad\qquad\qquad j = i+mmax; \\
->\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j]; \\
->\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1]; \\
->\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr; \\
->\quad \qquad\qquad\qquad data[j] = data[i] - tempi; \\
->\quad \qquad\qquad\qquad data[i-1] += tempr; \\
->\quad \qquad\qquad\qquad data[i] += tempi; \\
->\quad \qquad\qquad \} \\
->\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr; \\
->\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi; \\
->\quad \qquad \} \\
->\quad \qquad mmax = istep; \\
->\quad \}
+<01>\quad // bit reversal method \\
+<02>\quad int i, j, m, n; \\
+<03>\quad n = 2*num; \\
+<04>\quad j = 0; \\
+<05>\quad for (i=0; i<n; i+=2) \{ \\
+<06>\quad \qquad if(j > i) \{   // was index already swapped ? \\
+<07>\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part \\
+<08>\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part \\
+<09>\quad \qquad \} \\
+<10>\quad \qquad m = n/2; \\
+<11>\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index \\
+<12>\quad \qquad\qquad j -= m; \\
+<13>\quad \qquad\qquad m >>= 1; \\
+<14>\quad \qquad \} \\
+<15>\quad \qquad j += m; \\
+<16>\quad \} \\
+<17>\quad \\
+<18>\quad // Danielson-Lanzcos algorithm \\
+<19>\quad int mmax, istep; \\
+<20>\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr; \\
+<21>\quad mmax = 2; \\
+<22>\quad while (n > mmax) \{ // each value of the other domain \\
+<23>\quad \qquad istep = mmax << 1; \\
+<24>\quad \qquad theta = isign * (2*pi/mmax); \\
+<25>\quad \qquad wtemp = sin(0.5*theta); \\
+<26>\quad \qquad wpr = -2.0*wtemp*wtemp; \\
+<27>\quad \qquad wpi = sin(theta); \\
+<28>\quad \qquad wr = 1.0; \\
+<29>\quad \qquad wi = 0.0; \\
+<30>\quad \qquad for (m=1; m<mmax; m+=2) \{ \\
+<31>\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{ \\
+<32>\quad \qquad\qquad\qquad j = i+mmax; \\
+<33>\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j]; \\
+<34>\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1]; \\
+<35>\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr; \\
+<36>\quad \qquad\qquad\qquad data[j] = data[i] - tempi; \\
+<37>\quad \qquad\qquad\qquad data[i-1] += tempr; \\
+<38>\quad \qquad\qquad\qquad data[i] += tempi; \\
+<39>\quad \qquad\qquad \} \\
+<40>\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr; \\
+<41>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi; \\
+<42>\quad \qquad \} \\
+<43>\quad \qquad mmax = istep; \\
+<44>\quad \}
 }
+
+\addvspace{12pt}
+
+If real time values should be transformed, then the second half
+of the frequency values are the conjugate complex of the first half.
+Therefore, \texttt{n} in line line 22 can be replaced be \texttt{num}.
 
 \addvspace{12pt}
 
@@ -663,7 +725,7 @@ presented.
 \quad I = FFT(i);                       & // current into frequency domain \\
 \quad Q = FFT(q);                       & // charge into frequency domain \\
 \quad E = Is + Y*V + j*Omega*Q + I;     & // HB equation \\
-\quad if (abs(E) < Eterm)  return;      & // convergence reached ? \\
+\quad if (abs(E) < Eterm)  break;       & // convergence reached ? \\
 \quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
 \quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
 \quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
@@ -672,6 +734,8 @@ presented.
 \quad i = nonlinearCurrent(v);          & // use component models to get... \\
 \quad q = nonlinearCharge(v);           & // ... values for next iteration \\
 \quad goto loop; & \\
+ & \\
+Va = invert(Y) * I                      & // AC simulation to get all voltages \\
 \end{tabular}
 }
 

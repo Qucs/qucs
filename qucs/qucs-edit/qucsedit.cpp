@@ -73,7 +73,8 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   text->setWordWrap(QTextEdit::NoWrap);
   text->setMinimumSize(300,200);
   v->addWidget(text);
-  connect(text, SIGNAL(cursorPositionChanged(int, int)), SLOT(slotPrintCursorPosition(int, int)));
+  connect(text, SIGNAL(cursorPositionChanged(int, int)),
+          SLOT(slotPrintCursorPosition(int, int)));
 
   // .................................................
   loadFile(FileName_);

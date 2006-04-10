@@ -1700,7 +1700,7 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   if((Doc->Scale * DX) < 6.0) {
     MAx1  = (MAx1<<1) - (Doc->visibleWidth()>>1)  - Doc->contentsX();
     MAy1  = (MAy1<<1) - (Doc->visibleHeight()>>1) - Doc->contentsY();
-    Doc->zoom(2.0);    // a simple click zooms by factor 2
+    Doc->zoom(1.5);    // a simple click zooms by constant factor
   }
   else {
     float xScale = float(Doc->visibleWidth())  / DX;
@@ -1720,9 +1720,6 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again
-
-  Doc->viewport()->update();
-  drawn = false;
 }
 
 
