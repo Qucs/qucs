@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xnor.cpp,v 1.6 2006/01/11 09:50:07 raimi Exp $
+ * $Id: xnor.cpp,v 1.7 2006/04/10 06:12:35 margraf Exp $
  *
  */
 
@@ -46,7 +46,7 @@ void logicxnor::calcOutput (void) {
   nr_double_t n = getSize () - 1;
   nr_double_t x;
   for (x = 1, i = 0; i < n; i++) {
-    x *= -calcTransferX (i);
+    x *= calcTransferX (i);
   }
   Vout = v / 2 * (1 + x);
 }
@@ -56,8 +56,8 @@ void logicxnor::calcDerivatives (void) {
   nr_double_t x;
   for (int k = 0; k < n; k++) {
     for (x = 1, i = 0; i < n; i++) {
-      if (i != k) x *= -calcTransferX (i);
+      if (i != k) x *= calcTransferX (i);
     }
-    g[k] = -0.5 * calcDerivativeX (k) * x;
+    g[k] = 0.5 * calcDerivativeX (k) * x;
   }
 }
