@@ -1,7 +1,7 @@
 /***************************************************************************
-                                 switch.h
-                                ----------
-    begin                : Sat Feb 25 2006
+                             digisettingsdialog.h
+                            ----------------------
+    begin                : Sat Apr 01 2006
     copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,23 +15,34 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SWITCH_H
-#define SWITCH_H
+#ifndef DIGISETTINGSDIALOG_H
+#define DIGISETTINGSDIALOG_H
 
-#include "component.h"
+#include <qdialog.h>
+#include <qregexp.h>
+
+class TextDoc;
+class QLineEdit;
+class QPushButton;
+class QRegExpValidator;
 
 
-class Switch : public Component  {
+class DigiSettingsDialog : public QDialog  {
+Q_OBJECT
 public:
-  Switch();
- ~Switch();
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
-  QString NetList();
+  DigiSettingsDialog(TextDoc*);
+ ~DigiSettingsDialog();
+
+  QString SimTime;
+  QLineEdit *TimeEdit;
+
+private slots:
+  void slotOk();
 
 private:
-  void createSymbol();
+  TextDoc *Doc;
+  QRegExp Expr;
+  QRegExpValidator *Validator;
 };
 
 #endif

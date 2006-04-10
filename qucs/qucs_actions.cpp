@@ -35,8 +35,9 @@
 #include "components/ground.h"
 #include "components/subcirport.h"
 #include "components/equation.h"
-#include "dialogs/changedialog.h"
 #include "dialogs/matchdialog.h"
+#include "dialogs/changedialog.h"
+#include "dialogs/searchdialog.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -125,16 +126,16 @@ void QucsApp::slotEditMirrorY(bool on)
 void QucsApp::slotEditActivate(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(typeid(*Doc) == typeid(Schematic))
-    performToggleAction(on, editActivate, &Schematic::activateComponents,
-            &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
-  else {
+  if(Doc->inherits("QTextEdit")) {
     Doc->outcommmentSelected();
 
     editActivate->blockSignals(true);
     editActivate->setOn(false);  // release toolbar button
     editActivate->blockSignals(false);
   }
+  else
+    performToggleAction(on, editActivate, &Schematic::activateComponents,
+            &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
 // ------------------------------------------------------------------------
@@ -142,10 +143,7 @@ void QucsApp::slotEditActivate(bool on)
 void QucsApp::slotEditDelete(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(typeid(*Doc) == typeid(Schematic))
-    performToggleAction(on, editDelete, &Schematic::deleteElements,
-          &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
-  else {
+  if(Doc->inherits("QTextEdit")) {
     Doc->viewport()->setFocus();
     Doc->del();
 
@@ -153,6 +151,9 @@ void QucsApp::slotEditDelete(bool on)
     editDelete->setOn(false);  // release toolbar button
     editDelete->blockSignals(false);
   }
+  else
+    performToggleAction(on, editDelete, &Schematic::deleteElements,
+          &MouseActions::MMoveDelete, &MouseActions::MPressDelete);
 }
 
 // -----------------------------------------------------------------------
@@ -189,7 +190,15 @@ void QucsApp::slotMoveText(bool on)
 // Is called, when "Zoom in" action is activated.
 void QucsApp::slotZoomIn(bool on)
 {
-  performToggleAction(on, magPlus, 0,
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  if(Doc->inherits("QTextEdit")) {
+    Doc->zoom(2.0f);
+    magPlus->blockSignals(true);
+    magPlus->setOn(false);
+    magPlus->blockSignals(false);
+  }
+  else
+    performToggleAction(on, magPlus, 0,
 		&MouseActions::MMoveZoomIn, &MouseActions::MPressZoomIn);
 }
 
@@ -197,9 +206,9 @@ void QucsApp::slotZoomIn(bool on)
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(typeid(*Doc) != typeid(Schematic)) {
-    Doc->viewport()->setFocus();
+  QWidget *w = DocumentTab->currentPage();
+  if(w->inherits("QTextEdit")) {
+    ((TextDoc*)w)->viewport()->setFocus();
 
     select->blockSignals(true);
     select->setOn(true);
@@ -217,7 +226,7 @@ void QucsApp::slotSelect(bool on)
 void QucsApp::slotEditPaste(bool on)
 {
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(typeid(*Doc) != typeid(Schematic)) {
+  if(Doc->inherits("QTextEdit")) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->paste();
 
@@ -364,7 +373,7 @@ void QucsApp::slotInsertPort(bool on)
 void QucsApp::slotEditUndo()
 {
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(typeid(*Doc) != typeid(Schematic)) {
+  if(Doc->inherits("QTextEdit")) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->undo();
     return;
@@ -382,7 +391,7 @@ void QucsApp::slotEditUndo()
 void QucsApp::slotEditRedo()
 {
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(typeid(*Doc) != typeid(Schematic)) {
+  if(Doc->inherits("QTextEdit")) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->redo();
     return;
@@ -481,16 +490,30 @@ void QucsApp::slotSelectAll()
 {
   editText->setHidden(true); // disable text edit of component property
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(typeid(*Doc) == typeid(Schematic)) {
-    Doc->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
-    Doc->viewport()->update();
-    view->drawn = false;
-  }
-  else {
+  QWidget *Doc = DocumentTab->currentPage();
+  if(Doc->inherits("QTextEdit")) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->selectAll(true);
   }
+  else {
+    ((Schematic*)Doc)->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
+    ((Schematic*)Doc)->viewport()->update();
+    view->drawn = false;
+  }
+}
+
+// ---------------------------------------------------------------------
+// Is called when the find action is activated.
+void QucsApp::slotEditFind()
+{
+  SearchDia->initSearch();
+}
+
+// ---------------------------------------------------------------------
+// Is called when the find-again action is activated.
+void QucsApp::slotEditFindAgain()
+{
+  SearchDia->searchText(true, 1);
 }
 
 // ------------------------------------------------------------------------
@@ -950,7 +973,7 @@ void QucsApp::slotApplyCompText()
     view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
     if(pp->Description.find('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
-    Expr_CompProp.setPattern("[^\"=]+");
+    Expr_CompProp.setPattern("[^\"=\\x5B\\x5D]+");
   }
   else   // it is the component name
     Expr_CompProp.setPattern("[\\w_]+");
@@ -964,5 +987,5 @@ void QucsApp::slotApplyCompText()
   editText->resize(editText->fontMetrics().width(s)+3*z, z);
   editText->setFocus();
   editText->selectAll();
-  editText->reparent(Doc, 0, QPoint(view->MAx2, view->MAy2), true);
+  editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
 }

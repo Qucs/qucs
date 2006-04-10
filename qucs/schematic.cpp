@@ -26,6 +26,7 @@
 #include <qaction.h>
 #include <qregexp.h>
 #include <qiconset.h>
+#include <qprinter.h>
 #include <qlineedit.h>
 #include <qfileinfo.h>
 #include <qiconview.h>
@@ -64,37 +65,36 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
     // calls indirectly "becomeCurrent"
     App->DocumentTab->setCurrentPage(App->DocumentTab->indexOf(this));
-  }
 
-  setVScrollBarMode(QScrollView::AlwaysOn);
-  setHScrollBarMode(QScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
-  viewport()->setMouseTracking(true);
-  viewport()->setAcceptDrops(true);  // enable drag'n drop
+    setVScrollBarMode(QScrollView::AlwaysOn);
+    setHScrollBarMode(QScrollView::AlwaysOn);
+    viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+    viewport()->setMouseTracking(true);
+    viewport()->setAcceptDrops(true);  // enable drag'n drop
 
-  connect(horizontalScrollBar(),
+    connect(horizontalScrollBar(),
 		SIGNAL(prevLine()), SLOT(slotScrollLeft()));
-  connect(horizontalScrollBar(),
+    connect(horizontalScrollBar(),
 		SIGNAL(nextLine()), SLOT(slotScrollRight()));
-  connect(verticalScrollBar(),
+    connect(verticalScrollBar(),
 		SIGNAL(prevLine()), SLOT(slotScrollUp()));
-  connect(verticalScrollBar(),
+    connect(verticalScrollBar(),
 		SIGNAL(nextLine()), SLOT(slotScrollDown()));
 
   // ...........................................................
-  // to repair some strange  scrolling artefacts
-  connect(this, SIGNAL(horizontalSliderReleased()),
+    // to repair some strange  scrolling artefacts
+    connect(this, SIGNAL(horizontalSliderReleased()),
 		viewport(), SLOT(update()));
-  connect(this, SIGNAL(verticalSliderReleased()),
+    connect(this, SIGNAL(verticalSliderReleased()),
 		viewport(), SLOT(update()));
 
-  // to prevent user from editing something that he doesn't see
-  connect(this, SIGNAL(horizontalSliderPressed()), App, SLOT(slotHideEdit()));
-  connect(this, SIGNAL(verticalSliderPressed()), App, SLOT(slotHideEdit()));
+    // to prevent user from editing something that he doesn't see
+    connect(this, SIGNAL(horizontalSliderPressed()), App, SLOT(slotHideEdit()));
+    connect(this, SIGNAL(verticalSliderPressed()), App, SLOT(slotHideEdit()));
+  }  // of "if(App)"
 
   // ...........................................................
   GridX  = GridY  = 10;
-  Scale  = 1.0;
   ViewX1=ViewY1=0;
   ViewX2=ViewY2=800;
   UsedX1 = UsedY1 = INT_MAX;
@@ -120,14 +120,17 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
 Schematic::~Schematic()
 {
-  App->editText->reparent(App, 0, QPoint(0, 0));
-  if(App)  App->DocumentTab->removePage(this);  // delete tab in TabBar
+  if(App) {
+    App->editText->reparent(App, 0, QPoint(0, 0));
+    App->DocumentTab->removePage(this);  // delete tab in TabBar
+  }
 }
 
 // ---------------------------------------------------
 void Schematic::becomeCurrent(bool update)
 {
   QString *ps;
+  App->slotPrintCursorPosition(0, 0);
 
   if(symbolMode) {
     Nodes = &SymbolNodes;
@@ -222,45 +225,46 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 
   showBias = -1;   // schematic changed => bias points may be invalid
 
-  if(fillStack) {
+  if(!fillStack)
+    return;
 
-    // ................................................
-    if(symbolMode) {  // for symbol edit mode
-      QString *Curr = UndoSymbol.current();
-      while(Curr != UndoSymbol.last())
-        UndoSymbol.remove();   // remove "Redo" items
 
-      UndoSymbol.append(new QString(createSymbolUndoString(Op)));
+  // ................................................
+  if(symbolMode) {  // for symbol edit mode
+    QString *Curr = UndoSymbol.current();
+    while(Curr != UndoSymbol.last())
+      UndoSymbol.remove();   // remove "Redo" items
 
-      if(!App->undo->isEnabled()) App->undo->setEnabled(true);
-      if(App->redo->isEnabled())  App->redo->setEnabled(false);
-
-      while(UndoSymbol.count() > QucsSettings.maxUndo) { // "while..." because
-        UndoSymbol.removeFirst();    // "maxUndo" could be decreased meanwhile
-        UndoSymbol.last();
-      }
-      return;
-    }
-
-    // ................................................
-    // for schematic edit mode
-    QString *Curr = UndoStack.current();
-    while(Curr != UndoStack.last())
-      UndoStack.remove();   // remove "Redo" items
-
-    if(Op == 'm')   // only one for move marker
-      if(UndoStack.current()->at(0) == Op)
-        UndoStack.remove();
-
-    UndoStack.append(new QString(createUndoString(Op)));
+    UndoSymbol.append(new QString(createSymbolUndoString(Op)));
 
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
     if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-    while(UndoStack.count() > QucsSettings.maxUndo) { // "while..." because
-      UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
-      UndoStack.last();
+    while(UndoSymbol.count() > QucsSettings.maxUndo) { // "while..." because
+      UndoSymbol.removeFirst();    // "maxUndo" could be decreased meanwhile
+      UndoSymbol.last();
     }
+    return;
+  }
+
+  // ................................................
+  // for schematic edit mode
+  QString *Curr = UndoStack.current();
+  while(Curr != UndoStack.last())
+    UndoStack.remove();   // remove "Redo" items
+
+  if(Op == 'm')   // only one for move marker
+    if(UndoStack.current()->at(0) == Op)
+      UndoStack.remove();
+
+  UndoStack.append(new QString(createUndoString(Op)));
+
+  if(!App->undo->isEnabled()) App->undo->setEnabled(true);
+  if(App->redo->isEnabled())  App->redo->setEnabled(false);
+
+  while(UndoStack.count() > QucsSettings.maxUndo) { // "while..." because
+    UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
+    UndoStack.last();
   }
 }
 
@@ -367,11 +371,15 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::print(QPainter *p_, bool printAll)
+void Schematic::print(QPrinter *Printer, bool printAll)
 {
+  QPainter painter(Printer);
+  if(!painter.device())   // valid device available ?
+    return;
+
   bool selected;
   ViewPainter p;
-  p.init(p_, 1.0, 0, 0, UsedX1, UsedY1);
+  p.init(&painter, 1.0, 0, 0, UsedX1-20, UsedY1-20);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected || printAll) {
@@ -461,6 +469,8 @@ float Schematic::zoom(float s)
 
   resizeContents(int(Scale*float(ViewX2 - ViewX1)),
                  int(Scale*float(ViewY2 - ViewY1)));
+  viewport()->update();
+  App->view->drawn = false;
   return Scale;
 }
 
@@ -912,8 +922,8 @@ bool Schematic::paste(QTextStream *stream, QPtrList<Element> *pe)
 // Loads this Qucs document.
 bool Schematic::load()
 {
-  UndoStack.clear();
   if(!loadDocument()) return false;
+  UndoStack.clear();
   setChanged(false, true); // "not changed" state, but put on undo stack
   UndoStack.current()->at(1) = 'i';  // state of being unchanged
 
@@ -1251,8 +1261,6 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
       else Scaling = 1.1*60.0/float(delta);
       Scaling = zoom(Scaling);
 //      center(Event->x(), Event->y());
-      viewport()->update();
-      App->view->drawn = false;
   }
   // ...................................................................
   else {     // scroll vertically !

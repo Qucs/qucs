@@ -45,9 +45,9 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   QWidget *myParent = this;
   ValInteger = new QIntValidator(1, 1000000, this);
 
-  Expr.setPattern("[^\"=]+");  // valid expression for property 'edit' etc
+  Expr.setPattern("[^\"=\\x5B\\x5D]+");  // valid expression for property 'edit'
   Validator = new QRegExpValidator(Expr, this);
-  Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit' etc
+  Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
   ValRestrict = new QRegExpValidator(Expr, this);
 
   checkSim  = 0;  editSim  = 0;  comboType  = 0;  checkParam = 0;

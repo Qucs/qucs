@@ -18,6 +18,7 @@
 #include "simmessage.h"
 #include "main.h"
 #include "qucs.h"
+#include "textdoc.h"
 #include "schematic.h"
 
 #include <qlabel.h>
@@ -33,11 +34,17 @@
 #include <qregexp.h>
 
 
-SimMessage::SimMessage(QucsDoc *Doc_, QWidget *parent)
+SimMessage::SimMessage(QWidget *w, QWidget *parent)
 		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
   setCaption(tr("Qucs Simulation Messages"));
-  Doc = Doc_;
+  QucsDoc *Doc;
+  DocWidget = w;
+  if(DocWidget->inherits("QTextEdit"))
+    Doc = (QucsDoc*) ((TextDoc*)DocWidget);
+  else
+    Doc = (QucsDoc*) ((Schematic*)DocWidget);
+
   DocName = Doc->DocName;
   DataDisplay = Doc->DataDisplay;
   QFileInfo Info(DocName);
@@ -111,7 +118,7 @@ bool SimMessage::startProcess()
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
-  if(typeid(*Doc) == typeid(Schematic)) {
+  if(!DocWidget->inherits("QTextEdit")) {
     ProgText->insert(tr("creating netlist... "));
     NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
     if(!NetlistFile.open(IO_WriteOnly)) {
@@ -123,7 +130,7 @@ bool SimMessage::startProcess()
     Stream.setDevice(&NetlistFile);
 
     SimPorts =
-       ((Schematic*)Doc)->prepareNetlist(Stream, Collect, ErrText);
+       ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
       NetlistFile.close();
       FinishSimulation(-1);
@@ -240,6 +247,10 @@ void SimMessage::slotFinishSpiceNetlist()
 // ------------------------------------------------------------------------
 void SimMessage::startSimulator()
 {
+  // Using the Doc pointer here is risky as the user may have closed
+  // the schematic, but converting the SPICE netlists is (hopefully)
+  // faster than the user (I have no other idea).
+
   QString SimTime;
   QStringList CommandLine;
   QString SimPath = QDir::convertSeparators (QucsHomeDir.absPath());
@@ -249,14 +260,15 @@ void SimMessage::startSimulator()
   QString QucsDigi = "qucsdigi";
 #endif
 
-  if(typeid(*Doc) == typeid(Schematic)) {
-    // Using the Doc pointer here is risky as the user may have closed
-    // the schematic, but converting the SPICE netlists is (hopefully)
-    // faster than the user (I have no other idea).
-
+  if(DocWidget->inherits("QTextEdit")) {
+    CommandLine << QucsSettings.BinDir + "qucsdigi" << DocName << DataSet
+       << ((TextDoc*)DocWidget)->SimTime << QucsHomeDir.absPath()
+       << QucsSettings.BinDir;
+  }
+  else {
     // output NodeSets, SPICE simulations etc.
     Stream << Collect.join("\n") << '\n';
-    SimTime = ((Schematic*)Doc)->createNetlist(Stream, SimPorts);
+    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts);
     NetlistFile.close();
     if(SimTime.at(0) == '§') {
       ErrText->insert(SimTime.mid(1));
@@ -271,11 +283,6 @@ void SimMessage::startSimulator()
     else
       CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
          << DataSet << SimTime << SimPath << QucsSettings.BinDir;
-  }
-  else {
-    SimTime = "10 ns";
-    CommandLine << QucsSettings.BinDir + QucsDigi << DocName
-       << DataSet << SimTime << SimPath << QucsSettings.BinDir;
   }
 
   SimProcess.setArguments(CommandLine);

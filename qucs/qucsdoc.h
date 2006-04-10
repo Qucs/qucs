@@ -21,7 +21,7 @@
 #include <qstring.h>
 
 class QucsApp;
-class QPainter;
+class QPrinter;
 
 extern const char *smallsave_xpm[];// icon for unsaved files (diskette)
 extern const char *empty_xpm[];    // provides same height than "smallsave_xpm"
@@ -35,13 +35,16 @@ public:
   virtual void setName(const QString&) {};
   virtual bool load() { return true; };
   virtual int  save() { return 0; };
-  virtual void print(QPainter*, bool) {};
+  virtual void print(QPrinter*, bool) {};
   virtual void becomeCurrent(bool) {};
+  virtual float zoom(float) { return 1.0; };
 
   QString DocName;
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
+  QString SimTime;     // used for VHDL simulation, but stored in datadisplay
 
+  float Scale;
   QucsApp *App;
   bool DocChanged;
   bool SimOpenDpl;  // open data display after simulation ?
