@@ -33,7 +33,7 @@
 #include "qucs.h"
 
 
-// ########################################################################
+// ----------------------------------------------------------
 // initializes all QActions of the application
 void QucsApp::initActions()
 {
@@ -53,7 +53,7 @@ void QucsApp::initActions()
 
   textNew = new QAction(tr("New Text"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "textnew.png")),
-		tr("New &Text"), CTRL+SHIFT+Key_N, this);
+		tr("New &Text"), CTRL+SHIFT+Key_M, this);
   textNew->setStatusTip(tr("Creates a new text document"));
   textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
   connect(textNew, SIGNAL(activated()), SLOT(slotTextNew()));
@@ -97,7 +97,7 @@ void QucsApp::initActions()
   connect(fileClose, SIGNAL(activated()), SLOT(slotFileClose()));
 
   symEdit = new QAction(tr("&Edit Circuit Symbol"),
-		tr("Edit Circuit Symbol"), Key_F3, this);
+		tr("Edit Circuit Symbol"), Key_F9, this);
   symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
   symEdit->setWhatsThis(
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
@@ -237,6 +237,17 @@ void QucsApp::initActions()
 	tr("Delete\n\nDeletes the selected components"));
   editDelete->setToggleAction(true);
   connect(editDelete, SIGNAL(toggled(bool)), SLOT(slotEditDelete(bool)));
+
+  editFind = new QAction(tr("Find"), tr("Find..."), CTRL+Key_F, this);
+  editFind->setStatusTip(tr("Find a piece of text"));
+  editFind->setWhatsThis(tr("Find\n\nSearches for a piece of text"));
+  connect(editFind, SIGNAL(activated()), SLOT(slotEditFind()));
+
+  editFindAgain = new QAction(tr("Find Again"), tr("Find Again"), Key_F3, this);
+  editFindAgain->setStatusTip(tr("Find same text again"));
+  editFindAgain->setWhatsThis(
+                 tr("Find\n\nSearches for the same piece of text again"));
+  connect(editFindAgain, SIGNAL(activated()), SLOT(slotEditFindAgain()));
 
   // to ease usage with notebooks, backspace can also be used to delete
   mainAccel->connectItem(mainAccel->insertItem(Key_Backspace),
@@ -565,7 +576,7 @@ void QucsApp::initActions()
   connect(helpAboutQt, SIGNAL(activated()), SLOT(slotHelpAboutQt()));
 }
 
-// #########################################################################
+// ----------------------------------------------------------
 void QucsApp::initMenuBar()
 {
   fileMenu = new QPopupMenu();  // menuBar entry fileMenu
@@ -607,6 +618,8 @@ void QucsApp::initMenuBar()
   editMenu->insertSeparator();
   select->addTo(editMenu);
   selectAll->addTo(editMenu);
+  editFind->addTo(editMenu);
+  editFindAgain->addTo(editMenu);
   editRotate->addTo(editMenu);
   editMirror->addTo(editMenu);
   editMirrorY->addTo(editMenu);
@@ -677,7 +690,7 @@ void QucsApp::initMenuBar()
 
 }
 
-// #########################################################################
+// ----------------------------------------------------------
 void QucsApp::initToolBar()
 {
   fileToolbar = new QToolBar(this);
@@ -724,18 +737,21 @@ void QucsApp::initToolBar()
 
 }
 
-// #########################################################################
+// ----------------------------------------------------------
 void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
-  WarningLabel =
-    new QLabel(tr("Warnings in last simulation! Press F5"), statusBar());
+  WarningLabel = new QLabel(tr("no warnings"), statusBar());
   statusBar()->addWidget(WarningLabel, 0, true);
-  WarningLabel->setText(tr("no warnings"));
+
+  PositionLabel = new QLabel("0 : 0", statusBar());
+  PositionLabel->setAlignment(Qt::AlignRight);
+  statusBar()->addWidget(PositionLabel, 0, true);
+
   statusBar()->message(tr("Ready."), 2000);
 }
 
-// #########################################################################
+// ----------------------------------------------------------
 void QucsApp::slotShowWarnings()
 {
   static int ResultState = 0;
@@ -759,7 +775,7 @@ void QucsApp::slotShowWarnings()
     ResultState = 0;
 }
 
-// #########################################################################
+// ----------------------------------------------------------
 void QucsApp::slotResetWarnings()
 {
   QFont f = WarningLabel->font();   // reset warning label
@@ -769,7 +785,14 @@ void QucsApp::slotResetWarnings()
   WarningLabel->setText(tr("no warnings"));
 }
 
-// ######################################################################
+// ----------------------------------------------------------
+void QucsApp::slotPrintCursorPosition(int x, int y)
+{
+  PositionLabel->setText(QString::number(x)+" : "+QString::number(y));
+  PositionLabel->setMinimumWidth(PositionLabel->width());
+}
+
+// ----------------------------------------------------------
 // turn Toolbar on or off
 void QucsApp::slotViewToolBar(bool toggle)
 {
@@ -791,7 +814,7 @@ void QucsApp::slotViewToolBar(bool toggle)
   statusBar()->message(tr("Ready."));
 }
 
-// ########################################################################
+// ----------------------------------------------------------
 // turn Statusbar on or off
 void QucsApp::slotViewStatusBar(bool toggle)
 {
@@ -803,7 +826,7 @@ void QucsApp::slotViewStatusBar(bool toggle)
   statusBar()->message(tr("Ready."));
 }
 
-// ########################################################################
+// ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
   QMessageBox::about(this, tr("About..."),
@@ -833,7 +856,7 @@ void QucsApp::slotHelpAbout()
     tr("Hungarian by Jozsef Bus"));
 }
 
-// ########################################################################
+// ----------------------------------------------------------
 void QucsApp::slotHelpAboutQt()
 {
   QMessageBox::aboutQt(this, tr("About Qt"));

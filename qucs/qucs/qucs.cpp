@@ -69,11 +69,13 @@
 #include "dialogs/messagebox.h"
 #include "dialogs/newprojdialog.h"
 #include "dialogs/settingsdialog.h"
+#include "dialogs/digisettingsdialog.h"
 #include "dialogs/qucssettingsdialog.h"
-#include "dialogs/simmessage.h"
+#include "dialogs/searchdialog.h"
 #include "dialogs/sweepdialog.h"
 #include "dialogs/labeldialog.h"
 #include "dialogs/matchdialog.h"
+#include "dialogs/simmessage.h"
 
 extern const char *empty_xpm[];
 
@@ -137,13 +139,18 @@ QucsApp::QucsApp()
 
   // default settings of the printer
   Printer = new QPrinter(QPrinter::PrinterResolution);
-  Printer->setOrientation(QPrinter::Landscape);
+//  Printer->setOrientation(QPrinter::Landscape);
+  Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
   Printer->setColorMode(QPrinter::Color);
+  Printer->setFullPage(true);
+
+  SearchDia = new SearchDialog(this);
 
   // creates a document called "untitled"
   new Schematic(this, "");
 
   select->setOn(true);  // switch on the 'select' action
+  switchSchematicDoc(true);  // "untitled" document is schematic
 
   // load documents given as command line arguments
   for(int z=1; z<qApp->argc(); z++)
@@ -264,10 +271,9 @@ QucsDoc* QucsApp::getDoc(int No)
     w = DocumentTab->page(No);
 
   if(w) {
-    if(typeid(*w) == typeid(Schematic))
-      return (QucsDoc*) ((Schematic*)w);
-    if(typeid(*w) == typeid(TextDoc))
+    if(w->inherits("QTextEdit"))
       return (QucsDoc*) ((TextDoc*)w);
+    return (QucsDoc*) ((Schematic*)w);
   }
 
   return 0;
@@ -868,7 +874,7 @@ void QucsApp::slotMenuCloseProject()
   editText->setHidden(true); // disable text edit of component property
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  new QucsDoc(this, "");
+  new Schematic(this, "");
   view->drawn = false;
 
   slotResetWarnings();
@@ -1106,7 +1112,7 @@ bool QucsApp::saveAs()
       else s = QucsWorkDir.path();
     }
 
-    if(typeid(*w) == typeid(TextDoc))
+    if(w->inherits("QTextEdit"))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" + tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
@@ -1115,7 +1121,7 @@ bool QucsApp::saveAs()
     if(s.isEmpty())  return false;
     Info.setFile(s);                 // try to guess the best extension ...
     if(Info.extension(false).isEmpty()) {  // ... if no one was specified
-      if(typeid(*w) == typeid(TextDoc))
+      if(w->inherits("QTextEdit"))
         s += ".vhdl";
       else
         s += ".sch";
@@ -1280,7 +1286,14 @@ void QucsApp::slotChangeView(QWidget *w)
   editText->setHidden(true); // disable text edit of component property
 
   QucsDoc *Doc;
-  if(typeid(*w) == typeid(Schematic)) {
+  if(w->inherits("QTextEdit")) {
+    TextDoc *d = (TextDoc*)w;
+    Doc = (QucsDoc*)d;
+
+    if(mainAccel->isEnabled())
+      switchSchematicDoc(false);
+  }
+  else {
     Schematic *d = (Schematic*)w;
     Doc = (QucsDoc*)d;
 
@@ -1293,13 +1306,6 @@ void QucsApp::slotChangeView(QWidget *w)
       switchSchematicDoc(true);
       changeSchematicSymbolMode(d);
     }
-  }
-  else {
-    TextDoc *d = (TextDoc*)w;
-    Doc = (QucsDoc*)d;
-
-    if(mainAccel->isEnabled())
-      switchSchematicDoc(false);
   }
 
   Doc->becomeCurrent(true);
@@ -1330,9 +1336,15 @@ void QucsApp::slotFileSettings()
 {
   editText->setHidden(true); // disable text edit of component property
 
-  SettingsDialog *d =
-      new SettingsDialog((Schematic*)DocumentTab->currentPage());
-  d->exec();
+  QWidget *w = DocumentTab->currentPage();
+  if(w->inherits("QTextEdit")) {
+    DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)w);
+    d->exec();
+  }
+  else {
+    SettingsDialog *d = new SettingsDialog((Schematic*)w);
+    d->exec();
+  }
   view->drawn = false;
 }
 
@@ -1352,7 +1364,7 @@ void QucsApp::updatePortNumber(int No)
 {
   if(No<0) return;
   QWidget *w = DocumentTab->currentPage();
-  if(typeid(*w) != typeid(Schematic)) return;
+  if(w->inherits("QTextEdit")) return;
 
   QString pathName = ((Schematic*)w)->DocName;
   QFileInfo Info(pathName);
@@ -1373,7 +1385,7 @@ void QucsApp::updatePortNumber(int No)
   No = 0;
   Component *pc_tmp;
   while((w=DocumentTab->page(No++)) != 0) {
-    if(typeid(*w) != typeid(Schematic))  continue;
+    if(w->inherits("QTextEdit"))  continue;
  
     // start from the last to avoid re-appended components
     Schematic *Doc = (Schematic*)w;
@@ -1401,13 +1413,8 @@ void QucsApp::slotFilePrint()
   statusBar()->message(tr("Printing..."));
   editText->setHidden(true); // disable text edit of component property
 
-  if (Printer->setup(this))  // print dialog
-  {
-    QPainter painter;
-    painter.begin(Printer);
-    getDoc()->print(&painter, true);
-    painter.end();
-  };
+  if(Printer->setup(this))   // printer dialog
+    getDoc()->print(Printer, true);
 
   statusBar()->message(tr("Ready."));
 }
@@ -1418,13 +1425,8 @@ void QucsApp::slotFilePrintSelected()
   statusBar()->message(tr("Printing selected..."));
   editText->setHidden(true); // disable text edit of component property
 
-  if (Printer->setup(this))  // print dialog
-  {
-    QPainter painter;
-    painter.begin(Printer);
-    getDoc()->print(&painter, false);
-    painter.end();
-  };
+  if(Printer->setup(this))   // printer dialog
+    getDoc()->print(Printer, false);
 
   statusBar()->message(tr("Ready."));
 }
@@ -1565,46 +1567,48 @@ void QucsApp::slotShowAll()
   Doc->ViewX2 = x2;
   Doc->ViewY2 = y2;
   Doc->zoom(xScale);
-
-  Doc->viewport()->update();
-  view->drawn = false;
 }
 
 // -----------------------------------------------------------
 // Sets the scale factor to 1.
 void QucsApp::slotShowOne()
 {
-  editText->setHidden(true); // disable text edit of component property
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  QWidget *w = DocumentTab->currentPage();
+  if(w->inherits("QTextEdit")) {
+    TextDoc *Doc = (TextDoc*)w;
+    Doc->Scale = (float)QucsSettings.font.pointSize();
+    Doc->zoomTo(QucsSettings.font.pointSize());
+  }
+  else {
 
-  Doc->Scale = 1.0;
+    editText->setHidden(true); // disable text edit of component property
+    Schematic *Doc = (Schematic*)w;
 
-  int x1 = Doc->UsedX1;
-  int y1 = Doc->UsedY1;
-  int x2 = Doc->UsedX2;
-  int y2 = Doc->UsedY2;
+    Doc->Scale = 1.0;
 
-//  view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
-  if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
+    int x1 = Doc->UsedX1;
+    int y1 = Doc->UsedY1;
+    int x2 = Doc->UsedX2;
+    int y2 = Doc->UsedY2;
 
-  Doc->ViewX1 = x1-40;
-  Doc->ViewY1 = y1-40;
-  Doc->ViewX2 = x2+40;
-  Doc->ViewY2 = y2+40;
-  Doc->resizeContents(x2-x1+80, y2-y1+80);
-  Doc->viewport()->update();
-  view->drawn = false;
+//    view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
+    if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
+
+    Doc->ViewX1 = x1-40;
+    Doc->ViewY1 = y1-40;
+    Doc->ViewX2 = x2+40;
+    Doc->ViewY2 = y2+40;
+    Doc->resizeContents(x2-x1+80, y2-y1+80);
+    Doc->viewport()->update();
+    view->drawn = false;
+  }
 }
 
 // -----------------------------------------------------------
 void QucsApp::slotZoomOut()
 {
   editText->setHidden(true); // disable text edit of component property
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  
-  Doc->zoom(0.5f);
-  Doc->viewport()->update();
-  view->drawn = false;
+  getDoc()->zoom(0.7f);
 }
 
 // -----------------------------------------------------------------------
@@ -1613,12 +1617,24 @@ void QucsApp::slotSimulate()
 {
   editText->setHidden(true); // disable text edit of component property
 
-  QucsDoc *Doc = getDoc();
+  QucsDoc *Doc;
+  QWidget *w = DocumentTab->currentPage();
+  if(w->inherits("QTextEdit")) {
+    Doc = (QucsDoc*)((TextDoc*)w);
+    if(Doc->SimTime.isEmpty()) {
+      DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
+      if(d->exec() == QDialog::Rejected)
+        return;
+    }
+  }
+  else
+    Doc = (QucsDoc*)((Schematic*)w);
+
   if(Doc->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveAs()) return;    // ... save schematic before
 
   slotResetWarnings();
-  SimMessage *sim = new SimMessage(Doc, this);
+  SimMessage *sim = new SimMessage(w, this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
@@ -1643,15 +1659,15 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     slotShowWarnings();
 
   int i=0;
-  QucsDoc *d;  // search, if page is still open
-  while((d=getDoc(i++)) != 0)
-    if(d == sim->Doc)
+  QWidget *w;  // search, if page is still open
+  while((w=DocumentTab->page(i++)) != 0)
+    if(w == sim->DocWidget)
       break;
 
   if(sim->showBias == 0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
-    if(d) {  // schematic still open ?
-      SweepDialog *Dia = new SweepDialog((Schematic*)sim->Doc);
+    if(w) {  // schematic still open ?
+      SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
       Dia->show();
     }
   }
@@ -1661,12 +1677,12 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->slotClose();   // close and delete simulation window
   }
   else
-    if(d) if(typeid(*(sim->Doc)) == typeid(Schematic))
+    if(w) if(!sim->DocWidget->inherits("QTextEdit"))
       // load recent simulation data (if document is still open)
-      ((Schematic*)sim->Doc)->reloadGraphs();
+      ((Schematic*)sim->DocWidget)->reloadGraphs();
 
-  if(typeid(*(sim->Doc)) == typeid(Schematic))
-    ((Schematic*)sim->Doc)->viewport()->update();
+  if(!sim->DocWidget->inherits("QTextEdit"))
+    ((Schematic*)sim->DocWidget)->viewport()->update();
 
   // put all dataset files into "Content"-ListView (update)
 /*  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
@@ -1677,7 +1693,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // ------------------------------------------------------------------------
 void QucsApp::slotDCbias()
 {
-qDebug("DC bias");
   getDoc()->showBias = 0;
   slotSimulate();
 }
@@ -1733,7 +1748,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
 
   if(DocumentTab->currentPage() == w)      // if page not ...
-    if(typeid(*w) == typeid(Schematic))
+    if(!w->inherits("QTextEdit"))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
   TabView->setCurrentPage(2);   // switch to "Component"-Tab
@@ -1869,10 +1884,17 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
 {
   mainAccel->setEnabled(SchematicMode);
 
-  if(!SchematicMode)
+  if(!SchematicMode) {
+    if(activeAction) {
+      activeAction->blockSignals(true); // do not call toggle slot
+      activeAction->setOn(false);       // set last toolbar button off
+      activeAction->blockSignals(false);
+    }
+    activeAction = select;
     select->setOn(true);
+  }
+
   symEdit->setEnabled(SchematicMode);
-  fileSettings->setEnabled(SchematicMode);
   alignTop->setEnabled(SchematicMode);
   alignBottom->setEnabled(SchematicMode);
   alignLeft->setEnabled(SchematicMode);
@@ -1883,9 +1905,8 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   moveText->setEnabled(SchematicMode);
   changeProps->setEnabled(SchematicMode);
   magAll->setEnabled(SchematicMode);
-  magOne->setEnabled(SchematicMode);
-  magPlus->setEnabled(SchematicMode);
-  magMinus->setEnabled(SchematicMode);
+  editFind->setEnabled(!SchematicMode);
+  editFindAgain->setEnabled(!SchematicMode);
   editRotate->setEnabled(SchematicMode);
   editMirror->setEnabled(SchematicMode);
   editMirrorY->setEnabled(SchematicMode);

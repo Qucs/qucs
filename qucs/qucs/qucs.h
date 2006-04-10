@@ -26,6 +26,7 @@ class QucsDoc;
 class Schematic;
 class SimMessage;
 class MouseActions;
+class SearchDialog;
 class QLabel;
 class QAction;
 class QPrinter;
@@ -63,6 +64,7 @@ public:
   QString ProjName;   // name of the project, that is open
 
   QLineEdit *editText;  // for edit component properties on schematic
+  SearchDialog *SearchDia;  // global in order to keep values
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
@@ -200,6 +202,7 @@ public slots:
 
   void slotShowWarnings();
   void slotResetWarnings();
+  void slotPrintCursorPosition(int, int);
 
 private:
   void initActions();    // initializes all QActions of the application
@@ -216,7 +219,7 @@ private:
   QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
 
   QAccel *mainAccel;     // to set more than one key to one action
-  QLabel *WarningLabel;
+  QLabel *WarningLabel, *PositionLabel;  // labels in status bar
 
 
 
@@ -234,7 +237,7 @@ public:
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj;
+          *addToProj, *editFind, *editFindAgain;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -255,6 +258,8 @@ public slots:
   void slotZoomIn(bool);
   void slotEditUndo();    // makes the last operation undone
   void slotEditRedo();    // makes the last undo undone
+  void slotEditFind();    // searches for a piece of text
+  void slotEditFindAgain();  // searches for the same piece of text again
   void slotAlignTop();    // align selected elements with respect to top
   void slotAlignBottom(); // align selected elements with respect to bottom
   void slotAlignLeft();   // align selected elements with respect to left

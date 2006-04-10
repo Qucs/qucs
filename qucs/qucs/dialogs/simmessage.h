@@ -27,7 +27,6 @@ class QTextEdit;
 class QVBoxLayout;
 class QPushButton;
 class QProgressBar;
-class QucsDoc;
 
 // #define SPEEDUP_PROGRESSBAR
 
@@ -35,7 +34,7 @@ class QucsDoc;
 class SimMessage : public QDialog  {
    Q_OBJECT
 public:
-  SimMessage(QucsDoc*, QWidget *parent=0);
+  SimMessage(QWidget*, QWidget *parent=0);
  ~SimMessage();
 
   bool startProcess();
@@ -70,7 +69,7 @@ private:
   void startSimulator();
 
 public:
-  QucsDoc *Doc;
+  QWidget *DocWidget;
   int showBias;
   bool SimOpenDpl;
   QString DocName, DataSet, DataDisplay;
