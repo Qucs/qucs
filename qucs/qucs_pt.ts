@@ -564,6 +564,25 @@
     </message>
 </context>
 <context>
+    <name>DigiSettingsDialog</name>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Configurações do Documento</translation>
+    </message>
+    <message>
+        <source>Duration of Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>DisplayDialog</name>
     <message>
         <source>Close</source>
@@ -3270,10 +3289,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>time when state changes (comma separated list possible)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3324,6 +3339,10 @@ Usage:  qucsedit [-r] file
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation type="unfinished">O nó de terra não pode ser rotulado!</translation>
+    </message>
+    <message>
+        <source>time when state changes (semicolon separated list possible)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5291,6 +5310,38 @@ Sobre Qt por Trolltech</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find a piece of text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find
+
+Searches for a piece of text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find Again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find same text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find
+
+Searches for the same piece of text again</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7281,6 +7332,42 @@ are included in the search.</source>
         <source>Search result</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to search for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From cursor position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search backwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not find search string!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -7554,6 +7641,21 @@ Erros:
     <name>SymbolWidget</name>
     <message>
         <source>Symbol:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TextDoc</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erro</translation>
+    </message>
+    <message>
+        <source>There is no selection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page %1 of %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
