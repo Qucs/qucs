@@ -609,6 +609,25 @@
     </message>
 </context>
 <context>
+    <name>DigiSettingsDialog</name>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Dokumenteneinstellungen</translation>
+    </message>
+    <message>
+        <source>Duration of Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>DisplayDialog</name>
     <message>
         <source>Close</source>
@@ -3577,7 +3596,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>time when state changes (comma separated list possible)</source>
-        <translation>Zeit der Zustandsänderung (durch Kommas getrennte Liste möglich)</translation>
+        <translation type="obsolete">Zeit der Zustandsänderung (durch Kommas getrennte Liste möglich)</translation>
     </message>
     <message>
         <source>Switch</source>
@@ -3630,6 +3649,10 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>Massepotential kann nicht bezeichnet werden!</translation>
+    </message>
+    <message>
+        <source>time when state changes (semicolon separated list possible)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5822,6 +5845,38 @@ About Qt by Trolltech</source>
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation>Ungarisch von Jozsef Bus</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find a piece of text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find
+
+Searches for a piece of text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find Again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find same text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find
+
+Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9750,6 +9805,42 @@ werden in die Suche mit einbezogen.</translation>
         <source>Search result</source>
         <translation>Suchergebnis</translation>
     </message>
+    <message>
+        <source>Search Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to search for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From cursor position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whole words only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search backwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished">Suchen...</translation>
+    </message>
+    <message>
+        <source>Could not find search string!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -10046,6 +10137,21 @@ Fehler:
     <message>
         <source>Symbol:</source>
         <translation>Symbol:</translation>
+    </message>
+</context>
+<context>
+    <name>TextDoc</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>There is no selection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
