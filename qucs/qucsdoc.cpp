@@ -89,4 +89,5 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 
   DocChanged = false;
   showBias = -1;  // don't show DC bias (currently for "Schematic" only)
+  Scale = 1.0;
 }

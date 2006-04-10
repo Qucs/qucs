@@ -1052,15 +1052,23 @@ QString GateComponent::NetList()
 // -------------------------------------------------------
 QString GateComponent::VHDL_Code(int NumPorts)
 {
-  QString s = "  ";
   Port *pp = Ports.first();
-  s += pp->Connection->Name + " <= ";  // output port
+  QString s = "  " + pp->Connection->Name + " <= ";  // output port
+
+  QString Op = ' ' + Model.lower() + ' ';
+  if(Model.at(0) == 'N') {
+    s += "not (";    // nor, nand is NOT assoziative !!! but xnor is !!!
+    Op = Op.remove(1, 1);
+  }
+
   pp = Ports.next();
   s += pp->Connection->Name;   // first input port
 
-  // output all input ports
+  // output all input ports with node names
   for(pp = Ports.next(); pp != 0; pp = Ports.next())
-    s += " " + Model.lower() + " " + pp->Connection->Name;   // node names
+    s += Op + pp->Connection->Name;
+  if(Model.at(0) == 'N')
+    s += ')';
 
   if(NumPorts <= 0)  // no truth table simulation ?
     if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
@@ -1117,8 +1125,6 @@ void GateComponent::createSymbol()
       else
         Texts.append(new Text( -12, 3-y, "=1", QPen::darkBlue, 15.0));
     }
-
-    z = 0;
   }
   else {   // old symbol
 
@@ -1131,16 +1137,20 @@ void GateComponent::createSymbol()
     Arcs.append(new Arc(-30,y-30, 40, 30, 0,-16*90,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 10,15-y, 10, y-15,QPen(QPen::darkBlue,2)));
 
-    z = 0;
     if(Model.at(0) == 'X') {
-      z = 1;
-      Arcs.append(new Arc(-6,-6, 12, 12, 0, 16*360,QPen(QPen::darkBlue,1)));
       Lines.append(new Line(-5, 0, 5, 0,QPen(QPen::darkBlue,1)));
-      Lines.append(new Line( 0,-5, 0, 5,QPen(QPen::darkBlue,1)));
+      if(Model.at(1) == 'N') {
+        Lines.append(new Line(-5,-3, 5,-3,QPen(QPen::darkBlue,1)));
+        Lines.append(new Line(-5, 3, 5, 3,QPen(QPen::darkBlue,1)));
+      }
+      else {
+        Arcs.append(new Arc(-6,-6, 12, 12, 0, 16*360,QPen(QPen::darkBlue,1)));
+        Lines.append(new Line( 0,-5, 0, 5,QPen(QPen::darkBlue,1)));
+      }
     }
   }
 
-  if(Model.at(z) == 'N')
+  if(Model.at(0) == 'N')
     Ellips.append(new Area(xr,-4, 8, 8,
                   QPen(QPen::darkBlue,0), QBrush(QPen::darkBlue)));
 

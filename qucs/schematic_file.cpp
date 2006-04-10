@@ -825,7 +825,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 
 	     StringList.append(s);
 	     Schematic *d = new Schematic(0, QucsWorkDir.filePath(s));
-             if(!d->load()) {  // load document if possible
+             if(!d->loadDocument()) {  // load document if possible
                delete d;
                ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
                return false;
@@ -938,7 +938,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
     (*stream) << "begin\n";
 
     if(Signals.findIndex("gnd") >= 0)
-      (*stream) << "  gnd <= gnd and '0';\n";  // should appear only once
+      (*stream) << "  gnd <= '0';\n";  // should appear only once
   }
   Signals.clear();  // was filled in "giveNodeNames()"
 
@@ -1065,7 +1065,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
            << "begin\n";
 
     if(Signals.findIndex("gnd") >= 0)
-      stream << "  gnd <= gnd and '0';\n";  // should appear only once
+      stream << "  gnd <= '0';\n";  // should appear only once
   }
   Signals.clear();  // was filled in "giveNodeNames()"
   StringList.clear();

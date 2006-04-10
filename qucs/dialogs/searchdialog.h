@@ -1,7 +1,7 @@
 /***************************************************************************
-                                 switch.h
-                                ----------
-    begin                : Sat Feb 25 2006
+                               searchdialog.h
+                              ----------------
+    begin                : Sat Apr 01 2006
     copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,23 +15,33 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SWITCH_H
-#define SWITCH_H
+#ifndef SEARCHDIALOG_H
+#define SEARCHDIALOG_H
 
-#include "component.h"
+#include <qdialog.h>
+
+class QucsApp;
+class QLineEdit;
+class QCheckBox;
+class QPushButton;
 
 
-class Switch : public Component  {
+class SearchDialog : public QDialog  {
+Q_OBJECT
 public:
-  Switch();
- ~Switch();
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
-  QString NetList();
+  SearchDialog(QucsApp*);
+ ~SearchDialog();
+
+  void initSearch();
+  void searchText(bool, int);
+
+private slots:
+  void slotSearch();
 
 private:
-  void createSymbol();
+  QucsApp *App;
+  QLineEdit *SearchEdit;
+  QCheckBox *PositionBox, *CaseBox, *WordBox, *BackwardBox;
 };
 
 #endif

@@ -258,11 +258,11 @@ void QucsSettingsDialog::slotApply()
     int No=0;
     QWidget *w;
     while((w=App->DocumentTab->page(No++)) != 0)
-      if(typeid(*w) == typeid(Schematic))
-        ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
+      if(w->inherits("QTextEdit"))
+        ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
 					QucsSettings.BGColor);
       else
-        ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
+        ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
 					QucsSettings.BGColor);
     changed = true;
   }
