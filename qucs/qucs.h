@@ -202,7 +202,7 @@ public slots:
 
   void slotShowWarnings();
   void slotResetWarnings();
-  void slotPrintCursorPosition(int, int);
+  void printCursorPosition(int, int);
 
 private:
   void initActions();    // initializes all QActions of the application
@@ -237,7 +237,7 @@ public:
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *editFindAgain;
+          *addToProj, *editFind, *editFindAgain, *insEntity;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -248,6 +248,7 @@ public slots:
   void slotInsertEquation(bool);
   void slotInsertGround(bool);
   void slotInsertPort(bool);
+  void slotInsertEntity();
   void slotSetWire(bool);
   void slotSelect(bool);
   void slotEditActivate(bool);

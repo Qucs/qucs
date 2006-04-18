@@ -1849,9 +1849,18 @@ void Schematic::recreateComponent(Component *Comp)
 
 
   int x = Comp->tx, y = Comp->ty;
+  int x1 = Comp->x1, x2 = Comp->x2, y1 = Comp->y1, y2 = Comp->y2;
   QString tmp = Comp->Name;    // is sometimes changed by "recreate"
   Comp->recreate(this);   // to apply changes to the schematic symbol
   Comp->Name = tmp;
+  if(x < x1)
+    x += Comp->x1 - x1;
+  else if(x > x2)
+    x += Comp->x2 - x2;
+  if(y < y1)
+    y += Comp->y1 - y1;
+  else if(y > y2)
+    y += Comp->y2 - y2;
   Comp->tx = x;  Comp->ty = y;
 
 
@@ -2014,7 +2023,7 @@ Component* Schematic::selectCompText(int x_, int y_, int& w, int& h)
     b = pc->cy + pc->ty;
     if(y_ < b)  continue;
 
-    pc->TextSize(dx, dy);
+    pc->textSize(dx, dy);
     if(x_ > a+dx)  continue;
     if(y_ > b+dy)  continue;
 

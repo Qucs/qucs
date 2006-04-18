@@ -46,7 +46,7 @@ Component::Component()
   mirroredX = false;
   rotated = 0;
   isSelected = false;
-  isActive   = true;
+  isActive = showName = true;
 
   cx = 0;
   cy = 0;
@@ -80,19 +80,25 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 // -------------------------------------------------------
 // Size of component text.
-void Component::TextSize(int& _dx, int& _dy)
+int Component::textSize(int& _dx, int& _dy)
 {
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  int tmp;
-  _dx = metrics.width(Name);
-  _dy = metrics.height();    // for "Name"
+  int tmp, count=0;
+  _dx = _dy = 0;
+  if(showName) {
+    _dx = metrics.width(Name);
+    _dy = metrics.height();
+    count++;
+  }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > _dx)  _dx = tmp;
       _dy += metrics.height();
+      count++;
     }
+  return count;
 }
 
 // -------------------------------------------------------
@@ -108,21 +114,11 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
   if(tx < x1) _x1 = tx+cx;
   if(ty < y1) _y1 = ty+cy;
 
-  QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, Name);
-  if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
-  if((ty+r.height()) > y2) _y2 = ty+r.height()+cy;
+  int dx, dy, ny;
+  ny = textSize(dx, dy);
+  dy = int(float(ny) / Corr);  // correction for unproportional font scaling
 
-  int dy=1; // due to 'Name' text
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
-      // get width of text
-      r = metrics.size(0, pp->Name+"="+pp->Value);
-      if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
-      dy++;
-    }
-    
-  dy = int(float(dy) / Corr);  // correction for unproportional font scaling
+  if((tx+dx) > x2) _x2 = tx+dx+cx;
   if((ty+dy) > y2) _y2 = ty+dy+cy;
 }
 
@@ -150,18 +146,21 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 
   x_ -= tx;
   y_ -= ty;
+  int w, dy = int(float(y_) * Corr);  // correction for font scaling
   QFontMetrics  metrics(QucsSettings.font);
-  int w  = metrics.width(Name);
-  int dy = int(float(y_) * Corr);  // correction for font scaling
-  if(dy < 1) {
-    if(x_ < w) return 0;
-    return -1;
+  if(showName) {
+    w  = metrics.width(Name);
+    if(dy < 1) {
+      if(x_ < w) return 0;
+      return -1;
+    }
+    dy--;
   }
 
   Property *pp;
   for(pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display)
-      if((--dy) < 1) break;
+      if((dy--) < 1) break;
   if(!pp) return -1;
 
   // get width of text
@@ -269,12 +268,15 @@ void Component::paint(ViewPainter *p)
 
   p->Painter->setPen(QPen(QPen::black,1));
   p->map(cx+tx, cy+ty, x, y);
-  p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Name);
+  if(showName) {
+    p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Name);
+    y += p->LineSpacing;
+  }
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
-      y += p->LineSpacing;
       p->Painter->drawText(x, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
+      y += p->LineSpacing;
     }
 
   if(!isActive) {
@@ -441,8 +443,11 @@ void Component::rotate()
   tx  = ty;
   ty  = tmp;
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  dx = metrics.width(Name);
-  dy = metrics.lineSpacing();
+  dx = dy = 0;
+  if(showName) {
+    dx = metrics.width(Name);
+    dy = metrics.lineSpacing();
+  }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
@@ -506,7 +511,9 @@ void Component::mirrorX()
   y1  = -y2; y2 = -tmp;   // mirror boundings
 
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  int dy = metrics.lineSpacing();    // for "Name"
+  int dy = 0;
+  if(showName)
+    dy = metrics.lineSpacing();   // for "Name"
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display)  dy += metrics.lineSpacing();
   if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
@@ -563,7 +570,9 @@ void Component::mirrorY()
   x1  = -x2; x2 = -tmp;   // mirror boundings
 
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  int dx = metrics.width(Name);
+  int dx = 0;
+  if(showName)
+    dx = metrics.width(Name);
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
@@ -616,11 +625,15 @@ QString Component::save()
 {
   QString s = "<" + Model;
 
-  if(Name.isEmpty()) s += " *";
-  else s += " "+Name;
+  if(Name.isEmpty()) s += " * ";
+  else s += " "+Name+" ";
 
-  if(isActive) s += " 1";
-  else s += " 0";
+  int i=0;
+  if(!showName)
+    i = 2;
+  if(isActive)
+    i |= 1;
+  s += QString::number(i);
   s += " "+QString::number(cx)+" "+QString::number(cy);
   s += " "+QString::number(tx)+" "+QString::number(ty);
   if(mirroredX) s += " 1";
@@ -655,9 +668,16 @@ bool Component::load(const QString& _s)
   if(Name == "*") Name = "";
 
   n  = s.section(' ',2,2);      // isActive
-  if(n.toInt(&ok) == 1) isActive = true;
-  else isActive = false;
+  tmp = n.toInt(&ok);
   if(!ok) return false;
+  if(tmp & 1)
+    isActive = true;
+  else
+    isActive = false;
+  if(tmp & 2)
+    showName = false;
+  else
+    showName = true;
 
   n  = s.section(' ',3,3);    // cx
   cx = n.toInt(&ok);
@@ -1262,6 +1282,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "pulse") c = new vPulse();
         else if(cstr == "rect") c = new vRect();
         else if(cstr == "Vnoise") c = new Noise_vv();
+        else if(cstr == "HDL") c = new VHDL_File();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();

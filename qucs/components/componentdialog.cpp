@@ -20,13 +20,14 @@
 #include "qucs.h"
 #include "schematic.h"
 
-#include <qlayout.h>
 #include <qhbox.h>
 #include <qvbox.h>
-#include <qmessagebox.h>
+#include <qlayout.h>
+#include <qhgroupbox.h>
 #include <qvalidator.h>
-#include <qfiledialog.h>
 #include <qtabwidget.h>
+#include <qmessagebox.h>
+#include <qfiledialog.h>
 
 #include <math.h>
 
@@ -41,7 +42,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   QString s;
 
   all = new QVBoxLayout(this); // to provide neccessary size
-  QGridLayout *gp2;
+  QGridLayout *gp1;
   QWidget *myParent = this;
   ValInteger = new QIntValidator(1, 1000000, this);
 
@@ -226,64 +227,64 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
     QWidget *Tab2 = new QWidget(t);
     t->addTab(Tab2, tr("Properties"));
-    gp2 = new QGridLayout(Tab2, 9,2,5,5);
+    gp1 = new QGridLayout(Tab2, 9,2,5,5);
     myParent = Tab2;
   }
   else {   // no simulation component
-    gp2 = new QGridLayout(0, 9,2,5,5);
-    all->addLayout(gp2);
+    gp1 = new QGridLayout(0, 9,2,5,5);
+    all->addLayout(gp1);
   }
 
 
   // ...........................................................
-  gp2->addMultiCellWidget(new QLabel(Comp->Description, myParent), 0,0,0,1);
+  gp1->addMultiCellWidget(new QLabel(Comp->Description, myParent), 0,0,0,1);
 
   QHBox *h5 = new QHBox(myParent);
   h5->setSpacing(5);
-  gp2->addWidget(h5, 1,0);
+  gp1->addWidget(h5, 1,0);
   new QLabel(tr("Name:"), h5);
   CompNameEdit = new QLineEdit(h5);
   CompNameEdit->setValidator(ValRestrict);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
-  prop = new QListView(myParent);
+  showName = new QCheckBox(tr("display in schematic"), myParent);
+  gp1->addWidget(showName, 1,1);
+
+  QHGroupBox *PropertyBox = new QHGroupBox(tr("Properties"), myParent);
+  gp1->addMultiCellWidget(PropertyBox, 2,2,0,1);
+
+  prop = new QListView(PropertyBox);
   prop->setMinimumSize(200, 150);
   prop->addColumn(tr("Name"));
   prop->addColumn(tr("Value"));
   prop->addColumn(tr("display"));
   prop->addColumn(tr("Description"));
   prop->setSorting(-1);   // no sorting
-  gp2->addMultiCellWidget(prop, 2,8,0,0);
 
-  Name = new QLabel(myParent);
-  gp2->addWidget(Name, 2,1);
+  QVBox *v1 = new QVBox(PropertyBox);
 
-  Description = new QLabel(myParent);
-  gp2->addWidget(Description, 3,1);
+  Name = new QLabel(v1);
+
+  Description = new QLabel(v1);
 
   // hide, because it only replaces 'Description' in some cases
-  NameEdit = new QLineEdit(myParent);
+  NameEdit = new QLineEdit(v1);
   NameEdit->setShown(false);
   NameEdit->setValidator(ValRestrict);
-  gp2->addWidget(NameEdit, 3,1);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
 
-  edit = new QLineEdit(myParent);
+  edit = new QLineEdit(v1);
   edit->setMinimumWidth(150);
-  gp2->addWidget(edit, 4,1);
   edit->setValidator(Validator);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
-  ComboEdit = new QComboBox(false, myParent);
+  ComboEdit = new QComboBox(false, v1);
   ComboEdit->setShown(false);
-  gp2->addWidget(ComboEdit, 4,1);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
 
-  QHBox *h3 = new QHBox(myParent);
-  gp2->addWidget(h3, 5,1);
-  h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
+  QHBox *h3 = new QHBox(v1);
   EditButt = new QPushButton(tr("Edit"),h3);
   EditButt->setEnabled(false);
   EditButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -293,17 +294,13 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
-  disp = new QCheckBox(tr("display in schematic"), myParent);
-  gp2->addWidget(disp, 6,1);
+  disp = new QCheckBox(tr("display in schematic"), v1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
-  QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
-  v->addStretch(2);
-  gp2->addLayout(v,7,1);
+  v1->setStretchFactor(new QWidget(v1),5); // stretchable placeholder
 
-  QHBox *h4 = new QHBox(myParent);
+  QHBox *h4 = new QHBox(v1);
   h4->setSpacing(5);
-  gp2->addMultiCellWidget(h4, 8,8,1,1);
   ButtAdd = new QPushButton(tr("Add"),h4);
   ButtAdd->setEnabled(false);
   ButtRem = new QPushButton(tr("Remove"),h4);
@@ -324,9 +321,10 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
   // ------------------------------------------------------------
   CompNameEdit->setText(Comp->Name);
+  showName->setChecked(Comp->showName);
   changed = false;
 
-  Comp->TextSize(tx_Dist, ty_Dist);
+  Comp->textSize(tx_Dist, ty_Dist);
   int tmp = Comp->tx+tx_Dist - Comp->x1;
   if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
   tmp = Comp->ty+ty_Dist - Comp->y1;
@@ -568,6 +566,11 @@ void ComponentDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void ComponentDialog::slotApplyInput()
 {
+  if(Comp->showName != showName->isChecked()) {
+    Comp->showName = showName->isChecked();
+    changed = true;
+  }
+
   QString tmp;
   Component *pc;
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
@@ -739,7 +742,7 @@ void ComponentDialog::slotApplyInput()
 
   if(changed) {
     int dx, dy;
-    Comp->TextSize(dx, dy);
+    Comp->textSize(dx, dy);
     if(tx_Dist != 0) {
       Comp->tx += tx_Dist-dx;
       tx_Dist = dx;
@@ -782,7 +785,16 @@ void ComponentDialog::slotEditFile()
 // properties.
 void ComponentDialog::slotButtAdd()
 {
-  QListViewItem *item = prop->selectedItem();
+  QListViewItem *item;
+  // Search if property with this name already exist.
+  for(item = prop->firstChild(); item != 0; item = item->itemBelow())
+    if(item->text(0) == NameEdit->text()) {
+      prop->setSelected(item, true);
+      slotSelectProperty(item);
+      return;
+    }
+
+  item = prop->selectedItem();
   if(item == 0) item = prop->lastItem();
 
   QString s = tr("no");
