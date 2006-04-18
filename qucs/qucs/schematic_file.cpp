@@ -664,7 +664,7 @@ QString Schematic::createSymbolUndoString(char Op)
 }
 
 // -------------------------------------------------------------
-// Is quite similiar to "load()" but with less error checking.
+// Is quite similiar to "loadDocument()" but with less error checking.
 // Used for "undo" function.
 bool Schematic::rebuild(QString *s)
 {
@@ -866,6 +866,34 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 	     else  s = "SPICEo\""+s;
 	     Collect.append(s);
 	   }
+      else if(pc->Model == "VHDL") {
+	     s = pc->Props.getFirst()->Value;
+	     if(s.isEmpty()) {
+               ErrText->insert(QObject::tr("ERROR: No file name in VHDL component \"%1\".").
+			       arg(pc->Name));
+	       return false;
+	     }
+	     if(StringList.findIndex(s) >= 0)
+		continue;   // insert each vhdl component just one time
+	     StringList.append(s);
+
+	     QFileInfo Info(s);
+	     if(Info.isRelative())
+	       s = QucsWorkDir.filePath(s);
+
+	     QFile f(s);
+	     if(!f.open(IO_ReadOnly)) {
+               ErrText->insert(QObject::tr("ERROR: Cannot open VHDL file \"%1\".").
+			       arg(s));
+	       return false;
+	     }
+
+	     // Write the whole VHDL file into the netllist output.
+	     QTextStream streamVHDL(&f);
+	     s = streamVHDL.read();
+	     f.close();
+	     (*stream) << '\n' << s << '\n';
+	   }
     }  // of "if(active)"
 
 
@@ -945,6 +973,8 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
   // write all components with node names into the netlist file
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+    if(!pc->isActive) continue;   // should it be simulated ?
+  
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
       ErrText->insert(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName));

@@ -54,6 +54,8 @@ public:
   bool  elementsOnGrid();
 
   float zoom(float);
+  void  showAll();
+  void  showNoZoom();
   void  enlargeView(int, int, int, int);
   void  switchPaintMode();
   int   adjustPortNumbers();
@@ -90,8 +92,7 @@ public:
 
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".
-  float  tmpScale;
-  int tmpPosX, tmpPosY;
+  float tmpScale;
   int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
 

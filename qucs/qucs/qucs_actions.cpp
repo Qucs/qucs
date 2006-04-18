@@ -127,6 +127,7 @@ void QucsApp::slotEditActivate(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
   if(Doc->inherits("QTextEdit")) {
+    Doc->clearParagraphBackground(Doc->tmpPosX);
     Doc->outcommmentSelected();
 
     editActivate->blockSignals(true);
@@ -269,6 +270,16 @@ void QucsApp::slotEditPaste(bool on)
   MouseDoubleClickAction = 0;
 }
 
+// -----------------------------------------------------------------------
+void QucsApp::slotInsertEntity()
+{
+  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
+  Doc->viewport()->setFocus();
+  Doc->clearParagraphBackground(Doc->tmpPosX);
+  Doc->insert("entity  is\n  port ( : in bit);\nend;\n"
+              "architecture  of  is\n  signal : bit;\nbegin\n\nend;\n\n");
+}
+  
 // -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the equation toolbar button.
 void QucsApp::slotInsertEquation(bool on)
@@ -728,7 +739,7 @@ void QucsApp::slotAddToProject()
       Num = destFile.writeBlock(Buffer, Num);
       if(Num < 0) {
         QMessageBox::critical(this, tr("Error"), tr("Cannot write \"%1\" !").arg(*it));
-        continue;
+        break;
       }
     } while(Num == 0x10000);
 
@@ -887,6 +898,7 @@ void QucsApp::slotCursorDown()
 // -----------------------------------------------------------
 // Is called if user clicked on component text of if return is
 // pressed in the component text QLineEdit.
+// In "view->MAx3" is the number of the current property.
 void QucsApp::slotApplyCompText()
 {
   QString s;
@@ -974,6 +986,7 @@ void QucsApp::slotApplyCompText()
     if(pp->Description.find('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
     Expr_CompProp.setPattern("[^\"=\\x5B\\x5D]+");
+    if(!pc->showName) n--;
   }
   else   // it is the component name
     Expr_CompProp.setPattern("[\\w_]+");

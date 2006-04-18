@@ -86,16 +86,20 @@ void SpiceFile::recreate(Schematic *Doc)
   Lines.append(new Line(-16,  h, 16,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16, -h,-16,  h,QPen(QPen::darkBlue,2)));
 
-  int i = fHeight/2;
+  int w, i = fHeight/2;
   if(withSim) {
     i = fHeight - 2;
-    Texts.append(new Text(-10, 0, QObject::tr("sim"), Qt::red));
+    tmp = QObject::tr("sim");
+    w = metrics.width(tmp);
+    Texts.append(new Text(w/-2, 0, tmp, Qt::red));
   }
-  Texts.append(new Text(-15, -i, QObject::tr("spice")));
+  tmp = QObject::tr("spice");
+  w = metrics.width(tmp);
+  Texts.append(new Text(w/-2, -i, tmp));
 
 
   i = 0;
-  int w, y = 15-h;
+  int y = 15-h;
   while(i<No) {
     Lines.append(new Line(-30,  y,-16,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port(-30,  y));

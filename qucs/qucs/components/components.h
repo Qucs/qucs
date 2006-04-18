@@ -113,5 +113,6 @@
 #include "rs_flipflop.h"
 #include "d_flipflop.h"
 #include "jk_flipflop.h"
+#include "vhdlfile.h"
 
 #endif

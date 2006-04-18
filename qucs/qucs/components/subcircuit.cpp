@@ -73,13 +73,10 @@ void Subcircuit::recreate(Schematic *Doc)
   }
 
   int No;
-  QString FileName;
-
-  QFileInfo Info(Props.getFirst()->Value);
+  QString FileName(Props.getFirst()->Value);
+  QFileInfo Info(FileName);
   if(Info.isRelative())
-    FileName = QucsWorkDir.filePath(Props.getFirst()->Value);
-  else
-    FileName = Props.getFirst()->Value;
+    FileName = QucsWorkDir.filePath(FileName);
 
   tx = INT_MIN;
   ty = INT_MIN;
@@ -244,5 +241,6 @@ QString Subcircuit::VHDL_Code(int)
   for(pp = Ports.next(); pp != 0; pp = Ports.next())
     s += ", "+pp->Connection->Name;   // node names
 
-  return s + ");";
+  s += ");";
+  return s;
 }

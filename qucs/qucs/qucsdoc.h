@@ -19,6 +19,7 @@
 #define QUCSDOC_H
 
 #include <qstring.h>
+#include <qdatetime.h>
 
 class QucsApp;
 class QPrinter;
@@ -32,17 +33,20 @@ public:
   QucsDoc(QucsApp*, const QString&);
   virtual ~QucsDoc() {};
 
-  virtual void setName(const QString&) {};
-  virtual bool load() { return true; };
-  virtual int  save() { return 0; };
-  virtual void print(QPrinter*, bool) {};
-  virtual void becomeCurrent(bool) {};
+  virtual void  setName(const QString&) {};
+  virtual bool  load() { return true; };
+  virtual int   save() { return 0; };
+  virtual void  print(QPrinter*, bool) {};
+  virtual void  becomeCurrent(bool) {};
   virtual float zoom(float) { return 1.0; };
+  virtual void  showAll() {};
+  virtual void  showNoZoom() {};
 
   QString DocName;
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
   QString SimTime;     // used for VHDL simulation, but stored in datadisplay
+  QDateTime lastSaved;
 
   float Scale;
   QucsApp *App;
@@ -50,6 +54,7 @@ public:
   bool SimOpenDpl;  // open data display after simulation ?
   int  showBias;    // -1=no, 0=calculation running, >0=show DC bias points
   bool GridOn;
+  int  tmpPosX, tmpPosY;
 };
 
 #endif

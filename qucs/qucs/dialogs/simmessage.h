@@ -67,6 +67,7 @@ private:
   void FinishSimulation(int);
   void nextSPICE();
   void startSimulator();
+  int  copyFile(const QString&, const QString&);
 
 public:
   QWidget *DocWidget;

@@ -208,7 +208,7 @@ void ChangeDialog::slotButtReplace()
         if(pp->Name != PropNameEdit->currentText())  continue;
 
         int tx_Dist, ty_Dist, tmp;
-        pc->TextSize(tx_Dist, ty_Dist);
+        pc->textSize(tx_Dist, ty_Dist);
         tmp = pc->tx+tx_Dist - pc->x1;
         if((tmp > 0) || (tmp < -6))  tx_Dist = 0; // remember text position
         tmp = pc->ty+ty_Dist - pc->y1;
@@ -217,7 +217,7 @@ void ChangeDialog::slotButtReplace()
         pp->Value = NewValueEdit->text();
 
         int dx, dy;
-        pc->TextSize(dx, dy);   // correct text position
+        pc->textSize(dx, dy);   // correct text position
         if(tx_Dist != 0) {
           pc->tx += tx_Dist-dx;
           tx_Dist = dx;
