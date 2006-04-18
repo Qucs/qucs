@@ -63,7 +63,23 @@ To display the result of this simulation type, there is the diagram
 row by row in one diagram. So, let's have fun...
 <br>
 
+<br>
+<h3>VHDL File Component</h3>
+More complex and more universal simulations can be performed using the
+component "VHDL file". This component can be picked up from the component
+list view (section "digital components"). Nevertheless the recommended
+usage is the following: The VHDL file should be a member of the project.
+Then go to the content list view and click on the file name. After entering
+the schematic area, the VHDL component can be placed.<br>
+The last entity block in the VHDL file defines the interface, that is, all
+input and output ports must be declared here. These ports are also shown by the
+schematic symbol and can be connected to the rest of the circuit. During
+simulation the source code of the VHDL file is placed into the top-level
+VHDL file. This must be considered as it causes some limitations. For
+example, the entity names within the VHDL file must differ from names
+already given to subcircuits. (After a simulation, the complete source
+code can be seen by pressing F6. Use it to get a feeling for this procedure.)
 
-<br><a href="#top">back to the top</a><br>
+<br><br><a href="#top">back to the top</a><br>
 </body>
 </html>

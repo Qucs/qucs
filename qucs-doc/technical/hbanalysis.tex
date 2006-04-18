@@ -315,7 +315,16 @@ desired Jacobian matrix into frequency domain:
 \end{equation}
 Here $\boldsymbol{i}$ is a vector with length $K\cdot N$, i.e. first all
 time values of the first node are inserted, then all time values of the
-second node etc. Hence the Jacobi matrix of $\boldsymbol{i}$ consists of
+second node etc. The Jacobi matrix of $\boldsymbol{i}$ is defined as:
+\begin{equation}
+\boldsymbol{J}_{F,G}(\boldsymbol{u}) =
+\begin{bmatrix}
+\dfrac{\partial i_1}{\partial u_1} & \hdots & \dfrac{\partial i_1}{\partial u_n} \\
+\vdots & \ddots & \vdots\\
+\dfrac{\partial i_n}{\partial u_1} & \hdots & \dfrac{\partial i_n}{\partial u_n} \\
+\end{bmatrix}
+\end{equation}
+Hence this matrix consists of
 $K \times K$ blocks (one for each node) that are diagonal matrices with
 time values of the derivatives in it. (Components exists that create
 non-diagonal blocks, but these are so special ones that they do not appear

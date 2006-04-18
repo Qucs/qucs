@@ -1169,9 +1169,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, int, int)
     switch(Event->button()) {
       case Qt::LeftButton :
 	// left mouse button inserts component into the schematic
-	Comp->TextSize(x1, y1);
+	Comp->textSize(x1, y1);
 	Doc->insertComponent(Comp);
-	Comp->TextSize(x2, y2);
+	Comp->textSize(x2, y2);
 	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
 
 	// enlarge viewarea if component lies outside the view

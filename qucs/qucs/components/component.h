@@ -44,7 +44,7 @@ public:
   void    print(ViewPainter*);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
-  void    TextSize(int&, int&);
+  int     textSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&, float);
   bool    getSelected(int, int);
@@ -70,6 +70,7 @@ public:
   bool     isActive; // should it be used in simulation or not ?
   int      tx, ty;   // upper left corner of text (position)
   QString  Description;
+  bool     showName;
   QString  Model, Name;
 
 protected:

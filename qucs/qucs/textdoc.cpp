@@ -51,13 +51,14 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
     setPaletteBackgroundColor(QucsSettings.BGColor);
     connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
     connect(this, SIGNAL(cursorPositionChanged(int, int)),
-            App, SLOT(slotPrintCursorPosition(int, int)));
+            SLOT(slotCursorPosChanged(int, int)));
     connect(this, SIGNAL(undoAvailable(bool)), SLOT(slotChangeUndo(bool)));
     connect(this, SIGNAL(redoAvailable(bool)), SLOT(slotChangeRedo(bool)));
 
     syntaxHighlight = new SyntaxHighlighter(this);
   }
 
+  tmpPosX = tmpPosY = 0;
   Scale = (float)QucsSettings.font.pointSize();
 
   undoIsAvailable = redoIsAvailable = false;
@@ -88,13 +89,28 @@ void TextDoc::becomeCurrent(bool)
 {
   int x, y;
   getCursorPosition(&x, &y);
-  App->slotPrintCursorPosition(x, y);
+  slotCursorPosChanged(x, y);
   viewport()->setFocus();
 
   if(undoIsAvailable)  App->undo->setEnabled(true);
   else  App->undo->setEnabled(false);
   if(redoIsAvailable)  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
+}
+
+// ---------------------------------------------------
+void TextDoc::slotCursorPosChanged(int x, int y)
+{
+  if(tmpPosX > x)
+    clearParagraphBackground(tmpPosX);
+  else
+    for(int z=tmpPosX; z<x; z++)
+      clearParagraphBackground(z);
+  if(tmpPosX != x)
+    setParagraphBackgroundColor(x, QColor(240, 240, 255));
+  App->printCursorPosition(x, y);
+  tmpPosX = x;
+  tmpPosY = y;
 }
 
 // ---------------------------------------------------
@@ -122,6 +138,7 @@ bool TextDoc::load()
   setModified(false);
   slotSetChanged();
   file.close();
+  lastSaved = QDateTime::currentDateTime();
   return true;
 }
 
@@ -137,6 +154,7 @@ int TextDoc::save()
   setModified(false);
   slotSetChanged();
   file.close();
+  lastSaved = QDateTime::currentDateTime();
   return 0;
 }
 
@@ -199,10 +217,27 @@ float TextDoc::zoom(float s)
 {
   if(s < 1.0f) s = -1.0f/s;
   Scale += s;
-  if(Scale > 40.0) Scale = 40.0f;
-  if(Scale <  4.0) Scale =  4.0f;
-  zoomTo((int)Scale);
+  if(Scale > 40.0f) Scale = 40.0f;
+  if(Scale <  4.0f) Scale =  4.0f;
+  zoomTo((int)(Scale+0.5f));
   return Scale;
+}
+
+// ---------------------------------------------------
+void TextDoc::showAll()
+{
+  sync();
+  Scale *= float(visibleHeight()) / float(contentsHeight());
+  if(Scale > 40.0f) Scale = 40.0f;
+  if(Scale <  4.0f) Scale =  4.0f;
+  zoomTo((int)(Scale+0.5f));
+}
+
+// ---------------------------------------------------
+void TextDoc::showNoZoom()
+{
+  Scale = (float)QucsSettings.font.pointSize();
+  zoomTo(QucsSettings.font.pointSize());
 }
 
 // ---------------------------------------------------
@@ -233,21 +268,23 @@ void TextDoc::slotChangeRedo(bool available)
 // ---------------------------------------------------
 void TextDoc::outcommmentSelected()
 {
-  int i, paraStart, paraEnd, colStart, colEnd;
-  getSelection(&paraStart, &colStart, &paraEnd, &colEnd);
+  QString s = selectedText();
+  if(s.isEmpty())
+    return;
 
-  if(paraStart < 0)  return;  // no selection
-  if(colStart > 0)  paraStart++;
-  if(colEnd < 1)  paraEnd--;
-  if(paraStart > paraEnd)  return;  // no complete line selected
-  
-  for(i=paraStart; i<=paraEnd; i++)
-    if(text(i).left(3) == "-- ") {
-      setSelection(i, 0, i, 3);
-      removeSelectedText();
+  if(s.left(2) == "--")
+    s.remove(0, 2);
+  else
+    s = "--" + s;
+
+  for(int i=s.length()-2; i>=0; i--)
+    if(s.at(i) == '\n') {
+      if(s.mid(i+1, 2) == "--")
+        s.remove(i+1, 2);
+      else
+        s.insert(i+1, "--");
     }
-    else
-      insertAt("-- ", i, 0);
+  insert(s);
 }
 
 
@@ -272,11 +309,18 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
 {
   QChar c;
   bool isFloat=false;
-  int  iWord=-1, iNumber=-1, i=0;
+  int  iString=-1, iWord=-1, iNumber=-1, iExpo=-1, i=0;
   setFormat(0, text.length(), QucsSettings.font, QPen::black);
 
   for(c = text.at(i); !c.isNull(); c = text.at(++i)) {
-    if(iWord >= 0) {
+    if(iString >= 0) {
+      setFormat(iString, i-iString+1, Qt::red);
+      if(c == '"')
+        iString = -1;
+      continue;
+    }
+    // ----- word that might become a reserved word --------------
+    else if(iWord >= 0) {
       if(c.isLetterOrNumber())
         continue;
       if(c == '_')
@@ -284,40 +328,72 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
       markWord(text, iWord, i-iWord);
       iWord = -1;
     }
+    // ----- integer or floating point number --------------
     else if(iNumber >= 0) {
       if(c.isNumber())
         continue;
       if(c == '.') {
-        isFloat = true;
+        if(iExpo < 0) {
+          if(isFloat)
+            iNumber = -1;
+          isFloat = true;
+        }
+        else
+          iNumber = -1;
         continue;
+      }
+      if((c == 'e') || (c == 'E')) {
+        if(iExpo < 0) {
+          iExpo = i;
+          isFloat = true;
+        }
+        else
+          iNumber = -1;
+        continue;
+      }
+      if((c == '-') || (c == '+')) {
+        if((iExpo+1) == i)
+          continue;
       }
       if(c != '_')
         if(!c.isLetter()) {
           if(isFloat)
-            setFormat(iNumber, i-iNumber, Qt::magenta);
+            setFormat(iNumber, i-iNumber, Qt::darkMagenta);
           else
             setFormat(iNumber, i-iNumber, Qt::blue);
         }
       iNumber = -1;
     }
+    // ----- maybe a comment -------------------------------
     else if(c == '-') {
       if(i > 0)
         if(text.at(i-1) == '-') {  // VHDL comment starts with --
           setFormat(i-1, text.length()-i, Qt::gray);
           return 0;
         }
+      continue;
     }
+    // ----- no special syntax yet (or anymore) --------------
     else {
       if(c.isLetter())
         iWord = i;     // start a word
       else if(c.isNumber()) {
+        iExpo = -1;
         iNumber = i;   // start a number
         isFloat = false;
         c = text.at(i-1);
-        if((c == '-') || (c == '+'))  // include sign into number
-          iNumber--;
+/*        if((c == '-') || (c == '+'))  // include sign into number
+          iNumber--;*/
       }
     }
+
+    if(c == '\'') {
+      if(i > 1)
+        if(text.at(i-2) == '\'')
+          setFormat(i-2, 3, Qt::magenta);
+    }
+    else if(c == '"')
+      iString = i;
   }
   return 0;
 }
@@ -381,7 +457,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     if(Word == *List) {
       QFont boldFont = QucsSettings.font;
       boldFont.setWeight(QFont::Bold);
-      setFormat(start, len, boldFont, Qt::magenta);
+      setFormat(start, len, boldFont, Qt::darkMagenta);
       return;
     }
 }

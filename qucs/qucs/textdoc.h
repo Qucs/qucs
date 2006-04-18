@@ -50,11 +50,14 @@ public:
   int   save();
   void  print(QPrinter*, bool);
   float zoom(float);
+  void  showAll();
+  void  showNoZoom();
   void  becomeCurrent(bool);
   bool  loadSimulationTime(QString&);
   void  outcommmentSelected();
 
 public slots:
+  void slotCursorPosChanged(int, int);
   void slotSetChanged();
   void slotChangeUndo(bool);
   void slotChangeRedo(bool);

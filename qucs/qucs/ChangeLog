@@ -1,3 +1,13 @@
+2006-04-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* mark current line in text editor
+	* new action: insert sceleton of VHDL entity
+	* bugfix: take care of deactivated components in subcircuits
+	* new component: VHDL file
+	* match text position after change of component symbol
+	* component name can be shown or not on schematic
+	* catch if user adds an equation line with already existing name
+
 2006-04-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* compiling with "no-exceptions" reduces binary by a third

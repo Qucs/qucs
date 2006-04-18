@@ -130,7 +130,7 @@ Schematic::~Schematic()
 void Schematic::becomeCurrent(bool update)
 {
   QString *ps;
-  App->slotPrintCursorPosition(0, 0);
+  App->printCursorPosition(0, 0);
 
   if(symbolMode) {
     Nodes = &SymbolNodes;
@@ -472,6 +472,55 @@ float Schematic::zoom(float s)
   viewport()->update();
   App->view->drawn = false;
   return Scale;
+}
+
+// ---------------------------------------------------
+void Schematic::showAll()
+{
+  int x1 = UsedX1;
+  int y1 = UsedY1;
+  int x2 = UsedX2;
+  int y2 = UsedY2;
+
+  if(x1 == INT_MAX) return;
+  if(y1 == INT_MAX) return;
+  if(x2 == INT_MIN) return;
+  if(y2 == INT_MIN) return;
+  x1 -= 40;  y1 -= 40;
+  x2 += 40;  y2 += 40;
+
+  float xScale = float(visibleWidth()) / float(x2-x1);
+  float yScale = float(visibleHeight()) / float(y2-y1);
+  if(xScale > yScale) xScale = yScale;
+  xScale /= Scale;
+
+  ViewX1 = x1;
+  ViewY1 = y1;
+  ViewX2 = x2;
+  ViewY2 = y2;
+  zoom(xScale);
+}
+
+// ---------------------------------------------------
+void Schematic::showNoZoom()
+{
+  Scale = 1.0;
+
+  int x1 = UsedX1;
+  int y1 = UsedY1;
+  int x2 = UsedX2;
+  int y2 = UsedY2;
+
+//  sizeOfAll(x1, y1, x2, y2);
+  if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
+
+  ViewX1 = x1-40;
+  ViewY1 = y1-40;
+  ViewX2 = x2+40;
+  ViewY2 = y2+40;
+  resizeContents(x2-x1+80, y2-y1+80);
+  viewport()->update();
+  App->view->drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -922,7 +971,15 @@ bool Schematic::paste(QTextStream *stream, QPtrList<Element> *pe)
 // Loads this Qucs document.
 bool Schematic::load()
 {
+  DocComps.clear();
+  DocWires.clear();
+  DocNodes.clear();
+  DocDiags.clear();
+  DocPaints.clear();
+  SymbolPaints.clear();
+
   if(!loadDocument()) return false;
+  lastSaved = QDateTime::currentDateTime();
   UndoStack.clear();
   setChanged(false, true); // "not changed" state, but put on undo stack
   UndoStack.current()->at(1) = 'i';  // state of being unchanged
@@ -945,6 +1002,7 @@ int Schematic::save()
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
   saveDocument();
+  lastSaved = QDateTime::currentDateTime();
   if(result >= 0) {
     setChanged(false);
     QString *p, *ps = UndoStack.current();
