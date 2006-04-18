@@ -7473,6 +7473,10 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
         <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Russian</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
