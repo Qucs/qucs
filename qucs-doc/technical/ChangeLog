@@ -1,3 +1,14 @@
+2006-04-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* transline.tex (section{Twisted pair}): Fixed formulas for
+	twisted pair line.
+
+2006-04-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbanalysis.tex (subsection{Frequency-Time Domain
+	Transformation}): Put listings into a real 'lstlisting'
+	environment.  Also fixed some typos.
+
 2006-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* transline.tex (section{Twisted pair}): Documented twisted

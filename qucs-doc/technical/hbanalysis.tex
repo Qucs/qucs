@@ -1,8 +1,9 @@
 %
 % This document contains the chapter about harmonic balance analysis.
 %
-% Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
-% Copyright (C) 2005 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
+% Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2005, 2006
+%               Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -229,7 +230,7 @@ recommended:
   and $[\hat{Y}]$.
 \item The lower left and lower right corner contains the transadmittance
   matrices to calculate the currents through the sources. They
-  can be used to simplify the AC simulatio at the very end.
+  can be used to simplify the AC simulation at the very end.
 \end{itemize}
 
 
@@ -360,7 +361,7 @@ the whole above-mentioned process can be performed by one single FFT. This
 is done by taking the $\partial\boldsymbol{i} / \partial\boldsymbol{v}$
 values in a vector $\boldsymbol{J}_i$ and calculating:
 \begin{equation}
-\dfrac{\text{FFT}(\boldsymbol{J}_i)}{N}
+\dfrac{1}{K}\cdot\text{FFT}\left(\boldsymbol{J}_i\right)
 \end{equation}
 The result is the first column of $\boldsymbol{J}_{F,G}$. The second column
 equals the first one rotated down by one element. The third column is the
@@ -378,15 +379,13 @@ finished if one of the criteria is satisfied.
 \addvspace{12pt}
 
 The absolute and relative criteria write as follows:
-\begin{equation}
-\left| \tilde{I}_{n,k} + \hat{I}_{n,k} \right| < \epsilon_{abs}
-  \qquad \text{for all} \quad n, k
-\end{equation}
-\begin{equation}
+\begin{align}
+\left| \tilde{I}_{n,k} + \hat{I}_{n,k} \right| &< \varepsilon_{abs}
+   &\forall \quad n, k\\
 2\cdot \left| \frac{\tilde{I}_{n,k} + \hat{I}_{n,k}}
                    {\tilde{I}_{n,k} - \hat{I}_{n,k}} \right|
-  < \epsilon_{rel}  \qquad \text{for all} \quad n, k
-\end{equation}
+  &< \varepsilon_{rel}  &\forall \quad n, k
+\end{align}
 where $\tilde{I}_{n,k}$ is the current of the linear circuit
 partition for node $n$ and frequency $k$ and $\hat{I}_{n,k}$
 is the current of the non-linear circuit partition.
@@ -541,52 +540,56 @@ Parameters:\\
 
 \addvspace{12pt}
 
-\texttt{ \\
-<01>\quad // bit reversal method \\
-<02>\quad int i, j, m, n; \\
-<03>\quad n = 2*num; \\
-<04>\quad j = 0; \\
-<05>\quad for (i=0; i<n; i+=2) \{ \\
-<06>\quad \qquad if(j > i) \{   // was index already swapped ? \\
-<07>\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part \\
-<08>\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part \\
-<09>\quad \qquad \} \\
-<10>\quad \qquad m = n/2; \\
-<11>\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index \\
-<12>\quad \qquad\qquad j -= m; \\
-<13>\quad \qquad\qquad m >>= 1; \\
-<14>\quad \qquad \} \\
-<15>\quad \qquad j += m; \\
-<16>\quad \} \\
-<17>\quad \\
-<18>\quad // Danielson-Lanzcos algorithm \\
-<19>\quad int mmax, istep; \\
-<20>\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr; \\
-<21>\quad mmax = 2; \\
-<22>\quad while (n > mmax) \{ // each value of the other domain \\
-<23>\quad \qquad istep = mmax << 1; \\
-<24>\quad \qquad theta = isign * (2*pi/mmax); \\
-<25>\quad \qquad wtemp = sin(0.5*theta); \\
-<26>\quad \qquad wpr = -2.0*wtemp*wtemp; \\
-<27>\quad \qquad wpi = sin(theta); \\
-<28>\quad \qquad wr = 1.0; \\
-<29>\quad \qquad wi = 0.0; \\
-<30>\quad \qquad for (m=1; m<mmax; m+=2) \{ \\
-<31>\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{ \\
-<32>\quad \qquad\qquad\qquad j = i+mmax; \\
-<33>\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j]; \\
-<34>\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1]; \\
-<35>\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr; \\
-<36>\quad \qquad\qquad\qquad data[j] = data[i] - tempi; \\
-<37>\quad \qquad\qquad\qquad data[i-1] += tempr; \\
-<38>\quad \qquad\qquad\qquad data[i] += tempi; \\
-<39>\quad \qquad\qquad \} \\
-<40>\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr; \\
-<41>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi; \\
-<42>\quad \qquad \} \\
-<43>\quad \qquad mmax = istep; \\
-<44>\quad \}
+\begin{lstlisting}[language=C++,
+    caption={1D-FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+// bit reversal method
+int i, j, m, n;
+n = 2*num;
+j = 0;
+for (i=0; i<n; i+=2) {
+  if(j > i) {   // was index already swapped ?
+    SWAP(data[j], data[i]);   // swap real part
+    SWAP(data[j+1], data[i+1]);   // swap imaginary part
+  }
+  m = n/2;
+  while (m >= 2 && j >= m) {  // calculate next swap index
+    j -= m;
+    m >>= 1;
+  }
+  j += m;
+ }
+
+// Danielson-Lanzcos algorithm
+int mmax, istep;
+double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr;
+mmax = 2;
+while (n > mmax) { // each value of the other domain
+  istep = mmax << 1;
+  theta = isign * (2*pi/mmax);
+  wtemp = sin(0.5*theta);
+  wpr = -2.0*wtemp*wtemp;
+  wpi = sin(theta);
+  wr = 1.0;
+  wi = 0.0;
+  for (m=1; m<mmax; m+=2) {
+    for (i=m; i<=n; i+=istep) {
+      j = i+mmax;
+      tempr = wr*data[j-1] - wi*data[j];
+      tempi = wr*data[j] + wi*data[j-1];
+      data[j-1] = data[i-1] - tempr;
+      data[j] = data[i] - tempi;
+      data[i-1] += tempr; data[i] += tempi;
+    }
+    wr = (wtemp=wr)*wpr - wi*wpi + wr;
+    wi = wi*wpr + wtemp*wpi + wi;
+  }
+  mmax = istep;
 }
+\end{lstlisting}
 
 \addvspace{12pt}
 
@@ -649,71 +652,75 @@ Parameters:\\
 
 \addvspace{12pt}
 
-\texttt{ \\
->\quad int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2; \\
->\quad int ibit, k1, k2, n, nprev, nrem, ntot; \\
->\quad double tempi, tempr, wtemp, theta, wr, wi, wpi, wpr; \\
->\quad \\
->\quad ntot = 1; \\
->\quad for (idim=1; idim<=ndim; idim++) // compute total number of complex values \\
->\quad \qquad ntot *= num[idim]; \\
->\quad \\
->\quad nprev = 1; \\
->\quad for (idim=ndim; idim>=1; idim--) \{ // main loop over the dimensions \\
->\quad \qquad n = num[idim]; \\
->\quad \qquad nrem = ntot/(n*nprev); \\
->\quad \qquad ip1 = nprev << 1; \\
->\quad \qquad ip2 = ip1*n; \\
->\quad \qquad ip3 = ip2*nrem; \\
->\quad \qquad i2rev = 1; \\
->\quad \\
->\quad \qquad for (i2=1; i2<=ip2; i2+=ip1) \{ // bit-reversal method \\
->\quad \qquad\qquad if (i2 < i2rev) \{ \\
->\quad \qquad\qquad\qquad for (i1=i2; i1<=i2+ip1-2; i1+=2) \{ \\
->\quad \qquad\qquad\qquad\qquad for (i3=i1; i3<=ip3; i3+=ip2) \{ \\
->\quad \qquad\qquad\qquad\qquad\qquad i3rev = i2rev+i3-i2; \\
->\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3],data[i3rev]); \\
->\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3+1],data[i3rev+1]); \\
->\quad \qquad\qquad\qquad\qquad \} \\
->\quad \qquad\qquad\qquad \} \\
->\quad \qquad\qquad \} \\
->\quad \qquad\qquad ibit=ip2 >> 1; \\
->\quad \qquad\qquad while (ibit >= ip1 \&\& i2rev > ibit) \{ \\
->\quad \qquad\qquad\qquad i2rev -= ibit; \\
->\quad \qquad\qquad\qquad ibit >>= 1; \\
->\quad \qquad\qquad \} \\
->\quad \qquad\qquad i2rev += ibit; \\
->\quad \qquad \} \\
->\quad \\
->\quad \qquad ifp1 = ip1; \\
->\quad \qquad while (ifp1 < ip2) \{ // Danielson-Lanzcos algorithm \\
->\quad \qquad\qquad ifp2 = ifp1 << 1; \\
->\quad \qquad\qquad theta = isign*2*pi/(ifp2/ip1); \\
->\quad \qquad\qquad wtemp = sin(0.5*theta); \\
->\quad \qquad\qquad wpr = -2.0*wtemp*wtemp; \\
->\quad \qquad\qquad wpi = sin(theta); \\
->\quad \qquad\qquad wr = 1.0; wi = 0.0; \\
->\quad \qquad\qquad for (i3=1; i3<=ifp1; i3+=ip1) \{ \\
->\quad \qquad\qquad\qquad for (i1=i3; i1<=i3+ip1-2; i1+=2) \{ \\
->\quad \qquad\qquad\qquad\qquad for (i2=i1; i2<=ip3; i2+=ifp2) \{ \\
->\quad \qquad\qquad\qquad\qquad\qquad k1 = i2; \\
->\quad \qquad\qquad\qquad\qquad\qquad k2 = k1+ifp1; \\
->\quad \qquad\qquad\qquad\qquad\qquad tempr = wr*data[k2] - wi*data[k2+1]; \\
->\quad \qquad\qquad\qquad\qquad\qquad tempi = wr*data[k2+1] + wi*data[k2]; \\
->\quad \qquad\qquad\qquad\qquad\qquad data[k2] = data[k1] - tempr; \\
->\quad \qquad\qquad\qquad\qquad\qquad data[k2+1] = data[k1+1] - tempi; \\
->\quad \qquad\qquad\qquad\qquad\qquad data[k1] += tempr; data[k1+1] += tempi; \\
->\quad \qquad\qquad\qquad\qquad \} \\
->\quad \qquad\qquad\qquad \} \\
->\quad \qquad\qquad\qquad wr = (wtemp=wr)*wpr-wi*wpi+wr; \\
->\quad \qquad\qquad\qquad wi = wi*wpr+wtemp*wpi+wi; \\
->\quad \qquad\qquad \} \\
->\quad \qquad\qquad ifp1 = ifp2; \\
->\quad \qquad \} \\
->\quad \qquad nprev *= n; \\
->\quad \}
-}
+\begin{lstlisting}[language=C++,
+    caption={multidimensional FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2;
+int ibit, k1, k2, n, nprev, nrem, ntot;
+double tempi, tempr, wtemp, theta, wr, wi, wpi, wpr;
 
+ntot = 1;
+for (idim=0; idim<ndim; idim++) // compute total number of complex values
+  ntot *= num[idim];
+
+nprev = 1;
+for (idim=ndim-1; idim>=0; idim--) { // main loop over the dimensions
+  n = num[idim];
+  nrem = ntot/(n*nprev);
+  ip1 = nprev << 1;
+  ip2 = ip1*n;
+  ip3 = ip2*nrem;
+  i2rev = 1;
+
+  for (i2=1; i2<=ip2; i2+=ip1) { // bit-reversal method
+    if (i2 < i2rev) {
+      for (i1=i2; i1<=i2+ip1-2; i1+=2) {
+	for (i3=i1; i3<=ip3; i3+=ip2) {
+	  i3rev = i2rev+i3-i2;
+	  SWAP(data[i3-1],data[i3rev-1]);
+	  SWAP(data[i3],data[i3rev]);
+	}
+      }
+    }
+    ibit=ip2 >> 1;
+    while (ibit >= ip1 && i2rev > ibit) {
+      i2rev -= ibit;
+      ibit >>= 1;
+    }
+    i2rev += ibit;
+  }
+
+  ifp1 = ip1;
+  while (ifp1 < ip2) { // Danielson-Lanzcos algorithm
+    ifp2 = ifp1 << 1;
+    theta = isign*2*pi/(ifp2/ip1);
+    wtemp = sin(0.5*theta);
+    wpr = -2.0*wtemp*wtemp;
+    wpi = sin(theta);
+    wr = 1.0; wi = 0.0;
+    for (i3=1; i3<=ifp1; i3+=ip1) {
+      for (i1=i3; i1<=i3+ip1-2; i1+=2) {
+	for (i2=i1; i2<=ip3; i2+=ifp2) {
+	  k1 = i2;
+	  k2 = k1+ifp1;
+	  tempr = wr*data[k2-1] - wi*data[k2];
+	  tempi = wr*data[k2] + wi*data[k2-1];
+	  data[k2-1] = data[k1-1] - tempr;
+	  data[k2] = data[k1] - tempi;
+	  data[k1-1] += tempr; data[k1] += tempi;
+	}
+      }
+      wr = (wtemp=wr)*wpr-wi*wpi+wr;
+      wi = wi*wpr+wtemp*wpi+wi;
+    }
+    ifp1 = ifp2;
+  }
+  nprev *= n;
+}
+\end{lstlisting}
 
 \section{A Symbolic HB Algorithm}
 
@@ -722,32 +729,34 @@ presented.
 
 \addvspace{12pt}
 
-\texttt{ \\
-\begin{tabular}{ll}
- init();                    & // separate linear and non-linear devices \\
- Y = calcTransMatrix();     & // transimpedance matrix of linear circuit \\
- Is = calcSourceCurrent();  & // source current of linear subcircuit \\
- (v, i, q) = calculateDC(); & // DC simulation as initial HB estimate \\
- V = FFT(v);                & // transform voltage into frequency domain \\
- & \\
- loop: & \\
-\quad I = FFT(i);                       & // current into frequency domain \\
-\quad Q = FFT(q);                       & // charge into frequency domain \\
-\quad E = Is + Y*V + j*Omega*Q + I;     & // HB equation \\
-\quad if (abs(E) < Eterm)  break;       & // convergence reached ? \\
-\quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
-\quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
-\quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
-\quad V = V - invert(J) * Error;        & // Newton Raphson iteration step \\
-\quad v = IFFT(V);                      & // voltage into time domain \\
-\quad i = nonlinearCurrent(v);          & // use component models to get... \\
-\quad q = nonlinearCharge(v);           & // ... values for next iteration \\
-\quad goto loop; & \\
- & \\
-Va = invert(Y) * I                      & // AC simulation to get all voltages \\
-\end{tabular}
-}
+\begin{lstlisting}[language=C++,
+    caption={symbolic HB algorithm},
+    basicstyle=\small,
+    frame=single,
+    mathescape=true,
+    fontadjust]
+ init();                    // separate linear and non-linear devices
+ Y = calcTransMatrix();     // transadmittance matrix of linear circuit
+ Is = calcSourceCurrent();  // source current of linear subcircuit
+ (v, i, q) = calculateDC(); // DC simulation as initial HB estimate
+ V = FFT(v);                // transform voltage into frequency domain
 
+ loop:
+   I = FFT(i);                       // current into frequency domain
+   Q = FFT(q);                       // charge into frequency domain
+   E = Is + Y*V + j*$\Omega$*Q + I;          // HB equation
+   if (abs(E) < Eterm) break;       // convergence reached ?
+   JG = mFFT(GJacobian(v));          // create Jacobians and transform...
+   JQ = mFFT(QJacobian(v));          // ... them into frequency domain
+   J = Y + j*$\Omega$*JQ + JG;               // calculate overall Jacobian
+   V = V - invert(J) * E;            // Newton Raphson iteration step
+   v = IFFT(V);                      // voltage into time domain
+   i = nonlinearCurrent(v);          // use component models to get...
+   q = nonlinearCharge(v);           // ... values for next iteration
+   goto loop;
+
+ Va = invert(Ya) * Ia;               // AC simulation to get all voltages
+\end{lstlisting}
 
 \section{Large-Signal S-Parameter Simulation}
 

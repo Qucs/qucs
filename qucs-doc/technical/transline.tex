@@ -88,7 +88,7 @@ According to P. Lefferson \cite{Lefferson} the characteristic
 impedance and effective dielectric constant of a twisted pair can be
 calculated as follows.
 \begin{align}
-Z_0 &= \dfrac{Z_{F0}}{\pi\cdot\sqrt{\varepsilon_{r,eff}}}\cdot\textrm{sech}\left(\dfrac{D}{d}\right)\\
+Z_0 &= \dfrac{Z_{F0}}{\pi\cdot\sqrt{\varepsilon_{r,eff}}}\cdot\textrm{acosh}\left(\dfrac{D}{d}\right)\\
 \label{eq:TPereff}
 \varepsilon_{r,eff} &= \varepsilon_{r,1} + q\cdot\left(\varepsilon_r - \varepsilon_{r,1}\right)
 \end{align}
@@ -98,7 +98,7 @@ with
 \label{eq:TPq}
 q = 0.25 + 0.0004\cdot \theta^2
 \;\;\;\; \textrm{ and } \;\;\;\;
-\theta = \cot{\left(T\cdot\pi\cdot D\right)}
+\theta = \textrm{atan}\left(T\cdot\pi\cdot D\right)
 \end{equation}
 
 whereas $\theta$ is the pitch angle of the twist; the angle between
