@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.7 2006/04/07 07:11:22 raimi Exp $
+ * $Id: hbsolver.h,v 1.8 2006/04/18 08:03:11 raimi Exp $
  *
  */
 
@@ -67,36 +67,52 @@ class hbsolver : public analysis
   void prepareNonLinear (void);
   void solveHB (void);
   void loadMatrices (void);
-  void vectorFFT (tvector<complex> *);
+  void VectorFFT (tvector<complex> *, int isign = 1);
+  void VectorIFFT (tvector<complex> *, int isign = 1);
+  int  calcOrder (int);
+  void MatrixFFT (tmatrix<complex> *);
+  void calcJacobian (void);
+  void solveVoltages (void);
+  tvector<complex> expandVector (tvector<complex>);
+  void saveNodeVoltages (circuit *, int);
 
  private:
-  tvector<nr_double_t> frequencies;
-  tvector<nr_double_t> pfreqs;
+  tvector<nr_double_t> negfreqs;    // full frequency set
+  tvector<nr_double_t> posfreqs;    // full frequency set but positive
+  tvector<nr_double_t> rfreqs;      // real positive frequency set
+  int * ndfreqs;                    // number of frequencies for each dimension
+  tvector<nr_double_t> dfreqs;      // base frequencies for each dimension
   nr_double_t frequency;
   strlist * nlnodes, * lnnodes, * banodes, * nanodes, * exnodes;
   ptrlist<circuit> excitations;
   ptrlist<circuit> nolcircuits;
   ptrlist<circuit> lincircuits;
 
-  tmatrix<complex> * Y;
-  tmatrix<complex> * A;
-  tmatrix<complex> * Z;
+  tmatrix<complex> * Y;  // transadmittance matrix of linear network
+  tmatrix<complex> * A;  // MNA-matrix of linear network
+  tmatrix<complex> * Z;  // transimpedance matrix of linear network
 
-  tmatrix<complex> * YV;
-  tmatrix<complex> * NA;
+  tmatrix<complex> * YV; // linear transadmittance matrix
+  tmatrix<complex> * NA; // MNA-matrix of complete network
 
-  tmatrix<complex> * JQ;
-  tmatrix<complex> * JG;
-  tvector<complex> * IG;
-  tvector<complex> * FQ;
+  tmatrix<complex> * JQ; // C-Jacobian in t and f
+  tmatrix<complex> * JG; // G-Jacobian in t and f
+  tmatrix<complex> * JF; // full Jacobian for non-linear balancing
+  tvector<complex> * IG; // currents in t and f
+  tvector<complex> * FQ; // charges in t and f
   tvector<complex> * VS;
+  tvector<complex> * FV; // error vector F(V) of HB equation
+  tvector<complex> * IL; // currents into linear network
+  tvector<complex> * IN; // currents into non-linear network
 
-  tvector<complex> * IC;
-  tvector<complex> * IS;
+  tvector<complex> * IC; // source currents into balanced nodes
+  tvector<complex> * IS; // currents through sources themselves
   tvector<complex> * x;
+  tvector<complex> * vs;
 
   int runs;
-  int nfreqs;
+  int lnfreqs;
+  int nlfreqs;
   int nlnvsrcs;
   int nlnnodes;
   int nnanodes;

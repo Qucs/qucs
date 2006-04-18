@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.42 2006/04/05 08:27:06 raimi Exp $
+ * $Id: qucsdefs.h,v 1.43 2006/04/18 08:03:11 raimi Exp $
  *
  */
 
@@ -769,7 +769,7 @@ struct define_t qucs_definition_available[] =
   /* dc analysis */
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { { "MaxIter", PROP_REAL, { 150, PROP_NO_STR }, { '[', 2, 10000, ']' } },
+    { { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, { '[', 2, 10000, ']' } },
       { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
       { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
       { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
@@ -815,7 +815,7 @@ struct define_t qucs_definition_available[] =
       { "Order", PROP_INT, { 2, PROP_NO_STR }, { '[', 1, 6, ']' } },
       { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
-      { "MaxIter", PROP_REAL, { 150, PROP_NO_STR }, { '[', 2, 10000, ']' } },
+      { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, { '[', 2, 10000, ']' } },
       { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
       { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
       { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
@@ -830,7 +830,10 @@ struct define_t qucs_definition_available[] =
   { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (0) },
       PROP_NO_PROP },
-    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+      { "MaxIter", PROP_INT, { 500, PROP_NO_STR }, { '[', 2, 10000, ']' } },
       PROP_NO_PROP }
   },
   /* subcircuit definition */

@@ -1,7 +1,7 @@
 /*
  * tmatrix.cpp - simple matrix template class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.cpp,v 1.11 2005/06/02 18:17:51 raimi Exp $
+ * $Id: tmatrix.cpp,v 1.12 2006/04/18 08:03:11 raimi Exp $
  *
  */
 
@@ -127,6 +127,52 @@ void tmatrix<nr_type_t>::set (int r, int c, nr_type_t z) {
   data[r * cols + c] = z;
 }
 
+// Sets all the tmatrix elements to the given value.
+template <class nr_type_t>
+void tmatrix<nr_type_t>::set (nr_type_t z) {
+  for (int i = 0; i < rows * cols; i++) data[i] = z;
+}
+
+// The function returns the given row in a tvector.
+template <class nr_type_t>
+tvector<nr_type_t> tmatrix<nr_type_t>::getRow (int r) {
+  assert (r >= 0 && r < rows);
+  tvector<nr_type_t> res (cols);
+  nr_type_t * dst = res.getData ();
+  nr_type_t * src = &data[r * cols];
+  memcpy (dst, src, sizeof (nr_type_t) * cols);
+  return res;
+}
+
+// Puts the given tvector into the given row of the tmatrix instance.
+template <class nr_type_t>
+void tmatrix<nr_type_t>::setRow (int r, tvector<nr_type_t> v) {
+  assert (r >= 0 && r < rows && v.getSize () == cols);
+  nr_type_t * dst = &data[r * cols];
+  nr_type_t * src = v.getData ();
+  memcpy (dst, src, sizeof (nr_type_t) * cols);
+}
+
+// The function returns the given column in a tvector.
+template <class nr_type_t>
+tvector<nr_type_t> tmatrix<nr_type_t>::getCol (int c) {
+  assert (c >= 0 && c < cols);
+  tvector<nr_type_t> res (rows);
+  nr_type_t * dst = res.getData ();
+  nr_type_t * src = &data[c];
+  for (int r = 0; r < rows; r++, src += cols, dst++) *dst = *src;
+  return res;
+}
+
+// Puts the given tvector into the given column of the tmatrix instance.
+template <class nr_type_t>
+void tmatrix<nr_type_t>::setCol (int c, tvector<nr_type_t> v) {
+  assert (c >= 0 && c < cols && v.getSize () == rows);
+  nr_type_t * dst = &data[c];
+  nr_type_t * src = v.getData ();
+  for (int r = 0; r < rows; r++, src++, dst += cols) *dst = *src;
+}
+
 // The function swaps the given rows with each other.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::exchangeRows (int r1, int r2) {
@@ -209,6 +255,26 @@ tmatrix<nr_type_t> teye (int n) {
   return res;
 }
 
+// Intrinsic matrix addition.
+template <class nr_type_t>
+tmatrix<nr_type_t> tmatrix<nr_type_t>::operator += (tmatrix<nr_type_t> a) {
+  assert (a.getRows () == rows && a.getCols () == cols);
+  nr_type_t * src = a.getData ();
+  nr_type_t * dst = data;
+  for (int i = 0; i < rows * cols; i++) *dst++ += *src++;
+  return *this;
+}
+
+// Intrinsic matrix substraction.
+template <class nr_type_t>
+tmatrix<nr_type_t> tmatrix<nr_type_t>::operator -= (tmatrix<nr_type_t> a) {
+  assert (a.getRows () == rows && a.getCols () == cols);
+  nr_type_t * src = a.getData ();
+  nr_type_t * dst = data;
+  for (int i = 0; i < rows * cols; i++) *dst++ -= *src++;
+  return *this;
+}
+
 // Matrix multiplication.
 template <class nr_type_t>
 tmatrix<nr_type_t> operator * (tmatrix<nr_type_t> a, tmatrix<nr_type_t> b) {
@@ -278,12 +344,18 @@ int tmatrix<nr_type_t>::isFinite (void) {
 #ifdef DEBUG
 // Debug function: Prints the matrix object.
 template <class nr_type_t>
-void tmatrix<nr_type_t>::print (void) {
+void tmatrix<nr_type_t>::print (bool realonly) {
   for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
-      fprintf (stderr, "%+.2e ", (double) real (get (r, c)));
+      if (realonly) {
+	fprintf (stderr, "%+.2e%s", (double) real (get (r, c)),
+		 c != cols - 1 ? " " : "");
+      } else {
+	fprintf (stderr, "%+.2e%+.2ei%s", (double) real (get (r, c)),
+		 (double) imag (get (r, c)), c != cols - 1 ? " " : "");
+      }
     }
-    fprintf (stderr, "\n");
+    fprintf (stderr, ";\n");
   }
 }
 #endif /* DEBUG */
