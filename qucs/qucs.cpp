@@ -318,7 +318,7 @@ pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
    &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
    &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
-   &D_FlipFlop::info, &JK_FlipFlop::info, 0};
+   &D_FlipFlop::info, &JK_FlipFlop::info, &VHDL_File::info, 0};
 
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
@@ -404,7 +404,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   }
 
   if(view->drawn)
-    ((QScrollView*)DocumentTab->currentPage())->repaint(); // not update() !!!
+    ((QScrollView*)DocumentTab->currentPage())->viewport()->update();
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -430,7 +430,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 
   char *Dummy2;
   QString Dummy1;
-  if(Infos) view->selElem = (*Infos) (Dummy1, Dummy2, true);
+  if(Infos)
+    view->selElem = (*Infos) (Dummy1, Dummy2, true);
 }
 
 // ####################################################################
@@ -1543,65 +1544,15 @@ void QucsApp::slotPopHierarchy()
 void QucsApp::slotShowAll()
 {
   editText->setHidden(true); // disable text edit of component property
-
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  int x1 = Doc->UsedX1;
-  int y1 = Doc->UsedY1;
-  int x2 = Doc->UsedX2;
-  int y2 = Doc->UsedY2;
-
-  if(x1 == INT_MAX) return;
-  if(y1 == INT_MAX) return;
-  if(x2 == INT_MIN) return;
-  if(y2 == INT_MIN) return;
-  x1 -= 40;  y1 -= 40;
-  x2 += 40;  y2 += 40;
-
-  float xScale = float(Doc->visibleWidth()) / float(x2-x1);
-  float yScale = float(Doc->visibleHeight()) / float(y2-y1);
-  if(xScale > yScale) xScale = yScale;
-  xScale /= Doc->Scale;
-
-  Doc->ViewX1 = x1;
-  Doc->ViewY1 = y1;
-  Doc->ViewX2 = x2;
-  Doc->ViewY2 = y2;
-  Doc->zoom(xScale);
+  getDoc()->showAll();
 }
 
 // -----------------------------------------------------------
 // Sets the scale factor to 1.
 void QucsApp::slotShowOne()
 {
-  QWidget *w = DocumentTab->currentPage();
-  if(w->inherits("QTextEdit")) {
-    TextDoc *Doc = (TextDoc*)w;
-    Doc->Scale = (float)QucsSettings.font.pointSize();
-    Doc->zoomTo(QucsSettings.font.pointSize());
-  }
-  else {
-
-    editText->setHidden(true); // disable text edit of component property
-    Schematic *Doc = (Schematic*)w;
-
-    Doc->Scale = 1.0;
-
-    int x1 = Doc->UsedX1;
-    int y1 = Doc->UsedY1;
-    int x2 = Doc->UsedX2;
-    int y2 = Doc->UsedY2;
-
-//    view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
-    if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
-
-    Doc->ViewX1 = x1-40;
-    Doc->ViewY1 = y1-40;
-    Doc->ViewX2 = x2+40;
-    Doc->ViewY2 = y2+40;
-    Doc->resizeContents(x2-x1+80, y2-y1+80);
-    Doc->viewport()->update();
-    view->drawn = false;
-  }
+  editText->setHidden(true); // disable text edit of component property
+  getDoc()->showNoZoom();
 }
 
 // -----------------------------------------------------------
@@ -1632,6 +1583,19 @@ void QucsApp::slotSimulate()
 
   if(Doc->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveAs()) return;    // ... save schematic before
+
+  // Perhaps the document was modified from another program ?
+  if(Doc->lastSaved.isValid()) {
+    QFileInfo Info(Doc->DocName);
+    if(Doc->lastSaved < Info.lastModified()) {
+      int No = QMessageBox::warning(this, tr("Warning"),
+               tr("The document was modified by another program !") + '\n' +
+               tr("Do you want to reload or keep this version ?"),
+               tr("Reload"), tr("Keep it"));
+      if(No == 0)
+        Doc->load();
+    }
+  }
 
   slotResetWarnings();
   SimMessage *sim = new SimMessage(w, this);
@@ -1779,7 +1743,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   editText->setHidden(true); // disable text edit of component property
 
   if(item == 0) return;   // no item was double clicked
-  if(item->parent() == 0) return;  // no component, but item "schematic", ...
+  if(item->parent() == 0) return; // no document, but item "schematic", ...
 
 /*  
   QucsWorkDir.setPath(QucsHomeDir.path());
@@ -1797,12 +1761,18 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if((Suffix == "sch") || (Suffix == "dpl") || (Suffix == "vhdl")) {
     gotoPage(Info.absFilePath());
 
-    if(item->text(1).isEmpty()) return;  // is subcircuit ?
-    // switch on the 'select' action
-    select->blockSignals(true);
+    if(item->text(1).isEmpty())     // is subcircuit ?
+      if(Suffix != "vhdl") return;  // is VHDL subcircuit ?
+
+    select->blockSignals(true);  // switch on the 'select' action ...
     select->setOn(true);
     select->blockSignals(false);
-    slotSelect(true);
+
+    activeAction = select;
+    MouseMoveAction = 0;
+    MousePressAction = &MouseActions::MPressSelect;
+    MouseReleaseAction = &MouseActions::MReleaseSelect;
+    MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
     return;
   }
 
@@ -1848,10 +1818,15 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   }
 
 
+  bool isVHDL = true;
   if(item->parent() == 0) return;
-  if(item->parent()->text(0) != tr("Schematics"))
-    return;   // return, if not clicked on schematic
-  if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
+  if(item->parent()->text(0) == tr("Schematics")) {
+    if(item->text(1).isEmpty())
+      return;   // return, if not a subcircuit
+    isVHDL = false;
+  }
+  else if(item->parent()->text(0) != tr("VHDL"))
+    return;
 
   // delete previously selected elements
   if(view->selElem != 0)  delete view->selElem;
@@ -1865,7 +1840,11 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   }
   activeAction = 0;
 
-  Component *Comp = new Subcircuit();
+  Component *Comp;
+  if(isVHDL)
+    Comp = new VHDL_File();
+  else
+    Comp = new Subcircuit();
   Comp->Props.first()->Value = item->text(0);
   Comp->recreate(0);
   view->selElem = Comp;
@@ -1904,7 +1883,6 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   onGrid->setEnabled(SchematicMode);
   moveText->setEnabled(SchematicMode);
   changeProps->setEnabled(SchematicMode);
-  magAll->setEnabled(SchematicMode);
   editFind->setEnabled(!SchematicMode);
   editFindAgain->setEnabled(!SchematicMode);
   editRotate->setEnabled(SchematicMode);
@@ -1912,14 +1890,14 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   editMirrorY->setEnabled(SchematicMode);
   intoH->setEnabled(SchematicMode);
   popH->setEnabled(SchematicMode);
-  insEquation->setEnabled(SchematicMode);
-  insGround->setEnabled(SchematicMode);
-  insPort->setEnabled(SchematicMode);
+  dcbias->setEnabled(SchematicMode);
   insWire->setEnabled(SchematicMode);
   insLabel->setEnabled(SchematicMode);
-  dcbias->setEnabled(SchematicMode);
+  insPort->setEnabled(SchematicMode);
+  insGround->setEnabled(SchematicMode);
+  insEquation->setEnabled(SchematicMode);
+  insEntity->setEnabled(!SchematicMode);
   setMarker->setEnabled(SchematicMode);
-  showNet->setEnabled(SchematicMode);
 }
 
 // ---------------------------------------------------------

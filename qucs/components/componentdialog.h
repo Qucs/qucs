@@ -101,7 +101,7 @@ private:
   QLineEdit *editParam, *editValues, *editStart, *editStop,
             *editStep, *editNumber;
   QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
-            *checkNumber, *checkType;
+            *checkNumber, *checkType, *showName;
   QComboBox *editSim, *comboType;
 };
 

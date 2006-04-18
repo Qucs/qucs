@@ -261,7 +261,12 @@ void SimMessage::startSimulator()
 #endif
 
   if(DocWidget->inherits("QTextEdit")) {
-    CommandLine << QucsSettings.BinDir + "qucsdigi" << DocName << DataSet
+    if(copyFile(DocName, QucsHomeDir.filePath("netlist.txt")) < 0) {
+      ErrText->insert(tr("ERROR: Cannot copy \"%1\" !").arg(DocName));
+      return;
+    }
+
+    CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
        << ((TextDoc*)DocWidget)->SimTime << QucsHomeDir.absPath()
        << QucsSettings.BinDir;
   }
@@ -431,4 +436,40 @@ void SimMessage::slotDisplayButton()
 {
   emit displayDataPage(DocName, DataDisplay);
   accept();
+}
+
+// ------------------------------------------------------------------------
+int SimMessage::copyFile(const QString& SrcName, const QString& DestName)
+{
+  char *Buffer = (char*)malloc(0x10000);
+  if(!Buffer) return -10;  // should never happen
+
+  QFile origFile, destFile;
+  origFile.setName(SrcName);
+  destFile.setName(DestName);
+
+  if(!origFile.open(IO_ReadOnly)) {
+    free(Buffer);
+    return -1;
+  }
+
+  if(!destFile.open(IO_WriteOnly)) {
+    origFile.close();
+    free(Buffer);
+    return -2;
+  }
+
+  int Num;
+  do {     // copy data
+    Num = origFile.readBlock(Buffer, 0x10000);
+    if(Num < 0)  break;
+    Num = destFile.writeBlock(Buffer, Num);
+    if(Num < 0)  break;
+  } while(Num == 0x10000);
+
+  origFile.close();
+  destFile.close();
+  free(Buffer);
+  if(Num < 0)  return -3;
+  return 0;
 }
