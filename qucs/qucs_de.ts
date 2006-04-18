@@ -612,19 +612,19 @@
     <name>DigiSettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Dokumenteneinstellungen</translation>
+        <translation>Dokumenteneinstellungen</translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitdauer der Simulation:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -3652,7 +3652,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeit der Zustandsänderung (durch Semikolons getrennte Liste möglich)</translation>
     </message>
 </context>
 <context>
@@ -5848,35 +5848,39 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucht einen Textausschnitt</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen
+
+Sucht nach einem Textausschnitt</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Weitersuchen</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucht nach dem gleichen Textausschnitt</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen
+
+Sucht nach dem gleichen Text noch einmal</translation>
     </message>
 </context>
 <context>
@@ -9356,6 +9360,10 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
         <source>Ukrainian</source>
         <translation>Ukrainisch</translation>
     </message>
+    <message>
+        <source>Russian</source>
+        <translation>Russisch</translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
@@ -9807,39 +9815,39 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Textsuche</translation>
     </message>
     <message>
         <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
+        <translation>Text nach dem gesucht wird:</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Von der aktuellen Cursorposition</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Beachte Klein-/Großschreibung</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur ganze Wörter</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückwärts suchen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Suchen...</translation>
+        <translation>Suchen...</translation>
     </message>
     <message>
         <source>Could not find search string!</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Suchbegriff konnte nicht gefunden werden!</translation>
     </message>
 </context>
 <context>
@@ -10143,15 +10151,15 @@ Fehler:
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es existiert keine Auswahl!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seite %1 von %2</translation>
     </message>
 </context>
 </TS>

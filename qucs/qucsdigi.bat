@@ -20,13 +20,13 @@ if not exist %NAME% goto nofile
 copy %NAME% digi.vhdl > NUL
 set NAME=digi
 
-set MINGWDIR=H:/Daten/Misc/mingw
-set FREEHDL=H:/Daten/Misc/freehdl
+REM set MINGWDIR=H:/Daten/Misc/mingw
+REM set FREEHDL=H:/Daten/Misc/freehdl
 REM set QUCSDIR=H:/Daten/Misc/Qucs
 
 set CXX=%MINGWDIR%/bin/g++
 set CXXFLAGS=-O2 -g -I"%FREEHDL%/include"
-set NAMEOUT=digi.dat
+REM set NAMEOUT=digi.dat
 set LDFLAGS=-L"%FREEHDL%/lib" -Wl,--enable-auto-import -s
 set LIBS=-lfreehdl-kernel -lfreehdl-std -lregex
 

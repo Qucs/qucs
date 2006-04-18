@@ -7029,6 +7029,10 @@ open files with an appropriate program.</source>
         <source>Ukrainian</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Russian</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
