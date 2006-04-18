@@ -1,3 +1,15 @@
+2006-04-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: New functions: contains() as well as '+=' and '-='
+	operators.
+
+	* tmatrix.cpp: New functions: setCol(), getCol(), setRow(),
+	getRow(), set(val) as well as '+=' and '-=' operators.
+
+	* hbsolver.cpp: Implemented non-linear part of the harmonic
+	balance as far as possible.  All parts of the algorithm adressed
+	but not yet working...
+
 2006-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* devstates.h (class devstates): New class going to be used

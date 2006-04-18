@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.5 2006-01-17 12:30:33 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.6 2006-04-18 08:03:11 raimi Exp $
  *
  */
 
@@ -75,7 +75,7 @@ vcd_find_code (struct vcd_scope * root, char * code) {
 static struct vcd_changeset *
 vcd_find_firstset (struct vcd_changeset * root) {
   struct vcd_changeset * cs, * result = NULL;
-  int Min = root->t;
+  int Min = root ? root->t : 0;
   for (cs = root; cs; cs = cs->next) {
     if (!cs->done && cs->t <= Min) {
       Min = cs->t;

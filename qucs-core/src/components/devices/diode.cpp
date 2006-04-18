@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.32 2006-04-07 07:11:22 raimi Exp $
+ * $Id: diode.cpp,v 1.33 2006-04-18 08:03:11 raimi Exp $
  *
  */
 
@@ -390,6 +390,7 @@ void diode::initHB (int frequencies) {
   deviceStates (StateVars, frequencies);
   hb = true;
   prepareDC ();
+  allocMatrixHB ();
 }
 
 // Callback for the HB analysis.

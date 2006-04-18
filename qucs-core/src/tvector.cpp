@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.14 2006-03-22 09:39:20 raimi Exp $
+ * $Id: tvector.cpp,v 1.15 2006-04-18 08:03:11 raimi Exp $
  *
  */
 
@@ -119,7 +119,7 @@ void tvector<nr_type_t>::set (int i, nr_type_t z) {
 // Sets all the tvector elements to the given value.
 template <class nr_type_t>
 void tvector<nr_type_t>::set (nr_type_t z) {
-  for (int i = 0; i < getSize (); i++) data[i] = z;
+  for (int i = 0; i < size; i++) data[i] = z;
 }
 
 // Sets the specified tvector elements to the given value.
@@ -162,6 +162,15 @@ void tvector<nr_type_t>::clear (void) {
   size = 0;
 }
 
+/* The function returns the number of entries with the given value
+   deviating no more than the given epsilon. */
+template <class nr_type_t>
+int tvector<nr_type_t>::contains (nr_type_t val, nr_double_t eps) {
+  int count = 0;
+  for (int i = 0; i < size; i++) if (abs (data[i] - val) <= eps) count++;
+  return count;
+}
+
 // Copies the specified elements from the given tvector.
 template <class nr_type_t>
 void tvector<nr_type_t>::set (tvector<nr_type_t> a, int start, int stop) {
@@ -196,6 +205,16 @@ tvector<nr_type_t> operator + (tvector<nr_type_t> a, tvector<nr_type_t> b) {
   return res;
 }
 
+// Intrinsic vector addition.
+template <class nr_type_t>
+tvector<nr_type_t> tvector<nr_type_t>::operator += (tvector<nr_type_t> a) {
+  assert (a.getSize () == size);
+  nr_type_t * src = a.getData ();
+  nr_type_t * dst = data;
+  for (int i = 0; i < size; i++) *dst++ += *src++;
+  return *this;
+}
+
 // Subtraction.
 template <class nr_type_t>
 tvector<nr_type_t> operator - (tvector<nr_type_t> a, tvector<nr_type_t> b) {
@@ -204,6 +223,16 @@ tvector<nr_type_t> operator - (tvector<nr_type_t> a, tvector<nr_type_t> b) {
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, a.get (i) - b.get (i));
   return res;
+}
+
+// Intrinsic vector substration.
+template <class nr_type_t>
+tvector<nr_type_t> tvector<nr_type_t>::operator -= (tvector<nr_type_t> a) {
+  assert (a.getSize () == size);
+  nr_type_t * src = a.getData ();
+  nr_type_t * dst = data;
+  for (int i = 0; i < size; i++) *dst++ -= *src++;
+  return *this;
 }
 
 // Scalar multiplication.
@@ -242,7 +271,7 @@ nr_type_t scalar (tvector<nr_type_t> a, tvector<nr_type_t> b) {
 // Constant assignment operation.
 template <class nr_type_t>
 tvector<nr_type_t> tvector<nr_type_t>::operator = (const nr_type_t val) {
-  for (int i = 0; i < getSize (); i++) data[i] = val;
+  for (int i = 0; i < size; i++) data[i] = val;
   return *this;
 }
 
@@ -374,7 +403,8 @@ void tvector<nr_type_t>::reorder (int * idx) {
 template <class nr_type_t>
 void tvector<nr_type_t>::print (void) {
   for (int r = 0; r < size; r++) {
-    fprintf (stderr, "%+.2e\n", (double) real (get (r)));
+    fprintf (stderr, "%+.2e%+.2ei\n", (double) real (get (r)),
+	     (double) imag (get (r)));
   }
 }
 #endif /* DEBUG */

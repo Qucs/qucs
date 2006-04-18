@@ -1,7 +1,7 @@
 /*
  * tmatrix.h - simple matrix template class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.h,v 1.12 2005-06-02 18:17:51 raimi Exp $
+ * $Id: tmatrix.h,v 1.13 2006-04-18 08:03:11 raimi Exp $
  *
  */
 
@@ -52,14 +52,19 @@ class tmatrix
   ~tmatrix ();
   nr_type_t get (int, int);
   void set (int, int, nr_type_t);
+  void set (nr_type_t);
   int  getCols (void) { return cols; }
   int  getRows (void) { return rows; }
   nr_type_t * getData (void) { return data; }
+  tvector<nr_type_t> getRow (int);
+  void setRow (int, tvector<nr_type_t>);
+  tvector<nr_type_t> getCol (int);
+  void setCol (int, tvector<nr_type_t>);
   void exchangeRows (int, int);
   void exchangeCols (int, int);
   void transpose (void);
   int  isFinite (void);
-  void print (void);
+  void print (bool realonly = false);
 
   // some basic matrix operations
 #ifndef _MSC_VER
@@ -69,6 +74,10 @@ class tmatrix
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
   friend tvector<nr_type_t> operator *<> (tvector<nr_type_t>, tmatrix);
 #endif
+
+  // intrinsic operators
+  tmatrix operator += (tmatrix);
+  tmatrix operator -= (tmatrix);
 
   // easy accessor operators
   nr_type_t  operator () (int r, int c) const { return data[r * cols + c]; }

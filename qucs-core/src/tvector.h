@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.h,v 1.17 2006-03-22 09:39:20 raimi Exp $
+ * $Id: tvector.h,v 1.18 2006-04-18 08:03:11 raimi Exp $
  *
  */
 
 #ifndef __TVECTOR_H__
 #define __TVECTOR_H__
+
+#include "precision.h"
 
 template <class nr_type_t>
 class tvector;
@@ -84,6 +86,7 @@ class tvector
   int  isFinite (void);
   void print (void);
   void reorder (int *);
+  int  contains (nr_type_t, nr_double_t eps = NR_EPSI);
 
   // some basic vector operations
 #ifndef _MSC_VER
@@ -111,6 +114,10 @@ class tvector
   friend bool operator < <> (tvector, tvector);
   friend bool operator > <> (tvector, tvector);
 #endif
+
+  // intrinsic operators
+  tvector operator += (tvector);
+  tvector operator -= (tvector);
 
   // assignment operators
   tvector operator = (const nr_type_t);
