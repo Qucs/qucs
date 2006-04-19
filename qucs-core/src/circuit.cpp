@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.45 2006/04/07 07:11:22 raimi Exp $
+ * $Id: circuit.cpp,v 1.46 2006/04/19 07:03:26 raimi Exp $
  *
  */
 
@@ -53,8 +53,10 @@ const nr_double_t circuit::z0 = 50.0;
 circuit::circuit () : object (), integrator () {
   size = 0;
   MatrixN = MatrixS = MatrixY = NULL;
-  MatrixB = MatrixC = MatrixD = MatrixH = NULL;
+  MatrixB = MatrixC = MatrixD = NULL;
   VectorQ = VectorE = VectorI = VectorV = VectorJ = NULL;
+  MatrixQV = NULL;
+  VectorCV = VectorGV = NULL;
   nodes = NULL;
   pacport = 0;
   pol = 1;
@@ -79,8 +81,10 @@ circuit::circuit (int s) : object (), integrator () {
   size = s;
   if (size > 0) nodes = new node[s];
   MatrixN = MatrixS = MatrixY = NULL;
-  MatrixB = MatrixC = MatrixD = MatrixH = NULL;
+  MatrixB = MatrixC = MatrixD = NULL;
   VectorQ = VectorE = VectorI = VectorV = VectorJ = NULL;
+  MatrixQV = NULL;
+  VectorCV = VectorGV = NULL;
   pacport = 0;
   pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
@@ -135,9 +139,11 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
       memcpy (MatrixN, c.MatrixN, i * i * sizeof (complex));
     }
     // copy each HB-matrix entry
-    if (c.MatrixH) {
+    if (c.MatrixQV) {
       allocMatrixHB ();
-      memcpy (MatrixH, c.MatrixH, size * size * sizeof (complex));
+      memcpy (MatrixQV, c.MatrixQV, size * size * sizeof (complex));
+      memcpy (VectorGV, c.VectorGV, size * sizeof (complex));
+      memcpy (VectorCV, c.VectorCV, size * sizeof (complex));
       memcpy (VectorQ, c.VectorQ, size * sizeof (complex));
     }
     // copy each G-MNA matrix entry
@@ -158,8 +164,10 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   else {
     nodes = NULL;
     MatrixS = MatrixN = MatrixY = NULL;
-    MatrixB = MatrixC = MatrixD = MatrixH = NULL;
+    MatrixB = MatrixC = MatrixD = NULL;
     VectorQ = VectorE = VectorI = VectorV = VectorJ = NULL;
+    MatrixQV = NULL;
+    VectorCV = VectorGV = NULL;
   }
 
   // copy operating points
@@ -208,7 +216,9 @@ void circuit::setSize (int s) {
 /* Destroys the HB-matrix memory. */
 void circuit::freeMatrixHB (void) {
   if (VectorQ) { delete[] VectorQ; VectorQ = NULL; }
-  if (MatrixH) { delete[] MatrixH; MatrixH = NULL; }
+  if (MatrixQV) { delete[] MatrixQV; MatrixQV = NULL; }
+  if (VectorCV) { delete[] VectorCV; VectorCV = NULL; }
+  if (VectorGV) { delete[] VectorGV; VectorGV = NULL; }
 }
 
 /* Allocates the HB-matrix memory. */
@@ -218,10 +228,20 @@ void circuit::allocMatrixHB (void) {
   } else {
     VectorQ = new complex[size];
   }
-  if (MatrixH) {
-    memset (MatrixH, 0, size * size * sizeof (complex));
+  if (MatrixQV) {
+    memset (MatrixQV, 0, size * size * sizeof (complex));
   } else {
-    MatrixH = new complex[size * size];
+    MatrixQV = new complex[size * size];
+  }
+  if (VectorCV) {
+    memset (VectorCV, 0, size * sizeof (complex));
+  } else {
+    VectorCV = new complex[size];
+  }
+  if (VectorGV) {
+    memset (VectorGV, 0, size * sizeof (complex));
+  } else {
+    VectorGV = new complex[size];
   }
 }
 
@@ -446,15 +466,40 @@ void circuit::setG (int r, int c, nr_double_t y) {
 
 /* Returns the circuits C-HB matrix value depending on the port
    numbers. */
-complex circuit::getH (int r, int c) {
-  return MatrixH[r * size + c];
+complex circuit::getQV (int r, int c) {
+  return MatrixQV[r * size + c];
 }
 
 /* Sets the circuits C-HB matrix value depending on the port
    numbers. */
-void circuit::setH (int r, int c, complex h) {
-  MatrixH[r * size + c] = h;
+void circuit::setQV (int r, int c, complex qv) {
+  MatrixQV[r * size + c] = qv;
 }
+
+/* Returns the circuits GV-HB vector value depending on the port
+   number. */
+complex circuit::getGV (int port) {
+  return VectorGV[port];
+}
+
+/* Sets the circuits GV-HB matrix value depending on the port
+   number. */
+void circuit::setGV (int port, complex gv) {
+  VectorGV[port] = gv;
+}
+
+/* Returns the circuits CV-HB vector value depending on the port
+   number. */
+complex circuit::getCV (int port) {
+  return VectorCV[port];
+}
+
+/* Sets the circuits CV-HB matrix value depending on the port
+   number. */
+void circuit::setCV (int port, complex cv) {
+  VectorCV[port] = cv;
+}
+
 /* This function adds a operating point consisting of a key and a
    value to the circuit. */
 void circuit::addOperatingPoint (char * n, nr_double_t val) {

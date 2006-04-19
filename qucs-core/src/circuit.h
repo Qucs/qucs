@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.48 2006/04/07 07:11:22 raimi Exp $
+ * $Id: circuit.h,v 1.49 2006/04/19 07:03:26 raimi Exp $
  *
  */
 
@@ -86,7 +86,7 @@ class circuit : public object, public integrator
   virtual void calcTR (nr_double_t) { }
   virtual void initHB (void) { allocMatrixMNA (); }
   virtual void calcHB (nr_double_t) { }
-  virtual void initHB (int) { allocMatrixMNA (); allocMatrixHB (); }
+  virtual void initHB (int) { allocMatrixMNA (); }
   virtual void calcHB (int) { }
   virtual void calcOperatingPoints (void) { }
   virtual void saveOperatingPoints (void) { }
@@ -164,7 +164,9 @@ class circuit : public object, public integrator
   complex getB (int, int);
   complex getC (int, int);
   complex getD (int, int);
-  complex getH (int, int);
+  complex getQV (int, int);
+  complex getGV (int);
+  complex getCV (int);
   complex getE (int);
   complex getI (int);
   complex getJ (int);
@@ -177,7 +179,9 @@ class circuit : public object, public integrator
   void setB (int, int, complex);
   void setC (int, int, complex);
   void setD (int, int, complex);
-  void setH (int, int, complex);
+  void setQV (int, int, complex);
+  void setGV (int, complex);
+  void setCV (int, complex);
   void setE (int, complex);
   void setI (int, complex);
   void setJ (int, complex);
@@ -251,12 +255,14 @@ class circuit : public object, public integrator
   complex * MatrixB;
   complex * MatrixC;
   complex * MatrixD;
-  complex * MatrixH;
   complex * VectorE;
   complex * VectorI;
   complex * VectorV;
   complex * VectorJ;
   complex * VectorQ;
+  complex * MatrixQV;
+  complex * VectorGV;
+  complex * VectorCV;
   char * subcircuit;
   node * nodes;
   substrate * subst;
