@@ -821,7 +821,8 @@ void QucsApp::slotHelpAbout()
     tr("Hebrew by Dotan Nahum")+"\n"+
     tr("Swedish by Peter Landgren")+"\n"+
     tr("Turkish by Onur and Ozgur Cobanoglu")+"\n"+
-    tr("Hungarian by Jozsef Bus"));
+    tr("Hungarian by Jozsef Bus")+"\n"+
+    tr("Russian by Igor Gorbounov"));
 }
 
 // ----------------------------------------------------------
