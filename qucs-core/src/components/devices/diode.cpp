@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.33 2006-04-18 08:03:11 raimi Exp $
+ * $Id: diode.cpp,v 1.34 2006-04-19 07:03:26 raimi Exp $
  *
  */
 
@@ -305,6 +305,8 @@ void diode::calcDC (void) {
 
   if (hb) {
     Ieq = Id;
+    setGV (NODE_C, -gd * Ud);
+    setGV (NODE_A, +gd * Ud);
   } else {
     Ieq = Id - Ud * gd;
   }
@@ -406,12 +408,16 @@ void diode::calcHB (int frequency) {
   calcOperatingPoints ();
 
   nr_double_t Cd = getOperatingPoint ("Cd");
+  nr_double_t Ud = getOperatingPoint ("Vd");
 
   // fill in Q's in Q-Vector
   setQ (NODE_C, +Qd);
   setQ (NODE_A, -Qd);
 
+  setCV (NODE_C, -Cd * Ud);
+  setCV (NODE_A, +Cd * Ud);
+
   // fill in C's (dQ/dU) into H-Matrix 
-  setH (NODE_C, NODE_C, +Cd); setH (NODE_A, NODE_A, +Cd);
-  setH (NODE_C, NODE_A, -Cd); setH (NODE_A, NODE_C, -Cd);
+  setQV (NODE_C, NODE_C, +Cd); setQV (NODE_A, NODE_A, +Cd);
+  setQV (NODE_C, NODE_A, -Cd); setQV (NODE_A, NODE_C, -Cd);
 }

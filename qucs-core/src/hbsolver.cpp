@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.9 2006-04-18 08:03:11 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.10 2006-04-19 07:03:26 raimi Exp $
  *
  */
 
@@ -57,7 +57,7 @@ hbsolver::hbsolver () : analysis () {
   nlnodes = lnnodes = banodes = nanodes = NULL;
   Y = Z = A = NULL;
   NA = YV = JQ = JG = JF = NULL;
-  IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
+  RH = CV = GV = IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
   vs = x = NULL;
   runs = 0;
   ndfreqs = NULL;
@@ -70,7 +70,7 @@ hbsolver::hbsolver (char * n) : analysis (n) {
   nlnodes = lnnodes = banodes = nanodes = NULL;
   Y = Z = A = NULL;
   NA = YV = JQ = JG = JF = NULL;
-  IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
+  RH = CV = GV = IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
   vs = x = NULL;
   runs = 0;
   ndfreqs = NULL;
@@ -106,6 +106,9 @@ hbsolver::~hbsolver () {
   if (FQ) delete FQ;
   if (VS) delete VS;
   if (vs) delete vs;
+  if (CV) delete CV;
+  if (GV) delete GV;
+  if (RH) delete RH;
 
   if (x) delete x;
   if (ndfreqs) delete[] ndfreqs;
@@ -123,7 +126,7 @@ hbsolver::hbsolver (hbsolver & o) : analysis (o) {
   nanodes = o.nanodes;
   Y = Z = A = NULL;
   NA = YV = JQ = JG = JF = NULL;
-  IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
+  RH = CV = GV = IG = FQ = VS = FV = IL = IN = IC = IS = NULL;
   vs = x = NULL;
   runs = o.runs;
   ndfreqs = NULL;
@@ -182,7 +185,18 @@ void hbsolver::solve (void) {
 
       // charges into frequency domain
       VectorFFT (FQ);
-      
+
+#if HB_DEBUG
+      fprintf (stderr, "GV -- in t:\n"); GV->print ();
+      fprintf (stderr, "CV -- in t:\n"); CV->print ();
+#endif
+      VectorFFT (GV);
+      VectorFFT (CV);
+#if HB_DEBUG
+      fprintf (stderr, "GV -- in f:\n"); GV->print ();
+      fprintf (stderr, "CV -- in f:\n"); CV->print ();
+#endif
+
 #if HB_DEBUG
       fprintf (stderr, "IC -- constant current in f:\n"); IC->print ();
       fprintf (stderr, "YV -- transY in f:\n"); YV->print ();
@@ -201,7 +215,7 @@ void hbsolver::solve (void) {
 #endif
 
       // termination criteria met
-      if (checkBalance ()) {
+      if (iterations > 2 && checkBalance ()) {
 	done = 1;
 	break;
       }
@@ -871,10 +885,13 @@ int hbsolver::checkBalance (void) {
   nr_double_t abstol = getPropertyDouble ("abstol");
   nr_double_t reltol = getPropertyDouble ("reltol");
   for (int n = 0; n < FV->getSize (); n++) {
-    nr_double_t i_abs = abs (IL->get (n) + IN->get (n));
-    nr_double_t i_rel = abs ((IL->get (n) + IN->get (n)) /
-			     (IL->get (n) - IN->get (n)));
-    if (i_abs >= abstol && 2 * i_rel >= reltol) return 0;
+    complex il = IL->get (n);
+    complex in = IN->get (n);
+    if (il != in) {
+      nr_double_t i_abs = abs (il + in);
+      nr_double_t i_rel = abs ((il + in) / (il - in));
+      if (i_abs >= abstol && 2.0 * i_rel >= reltol) return 0;
+    }
   }
   return 1;
 }
@@ -882,19 +899,24 @@ int hbsolver::checkBalance (void) {
 // some definitions for the non-linear matrix filler
 #undef  G_
 #undef  C_
-#define G_(r,c) (*G) ((r)*nlfreqs+f,(c)*nlfreqs+f)
-#define C_(r,c) (*C) ((r)*nlfreqs+f,(c)*nlfreqs+f)
+#define G_(r,c) (*jg) ((r)*nlfreqs+f,(c)*nlfreqs+f)
+#define C_(r,c) (*jq) ((r)*nlfreqs+f,(c)*nlfreqs+f)
 #undef  FI_
 #undef  FQ_
-#define FI_(r) (*I) ((r)*nlfreqs+f)
-#define FQ_(r) (*Q) ((r)*nlfreqs+f)
+#define FI_(r) (*ig) ((r)*nlfreqs+f)
+#define FQ_(r) (*fq) ((r)*nlfreqs+f)
+#define GV_(r) (*gv) ((r)*nlfreqs+f)
+#define CV_(r) (*cv) ((r)*nlfreqs+f)
 
 /* This function fills in the matrix and vector entries for the
    non-linear HB equations for a given frequency index. */
-void hbsolver::fillMatrixNonLinear (tmatrix<complex> * G,
-				    tmatrix<complex> * C, 
-				    tvector<complex> * I, 
-				    tvector<complex> * Q, int f) {
+void hbsolver::fillMatrixNonLinear (tmatrix<complex> * jg,
+				    tmatrix<complex> * jq, 
+				    tvector<complex> * ig, 
+				    tvector<complex> * fq,
+				    tvector<complex> * gv,
+				    tvector<complex> * cv,
+				    int f) {
   // through each linear circuit
   for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
     circuit * cir = it.current ();
@@ -907,12 +929,14 @@ void hbsolver::fillMatrixNonLinear (tmatrix<complex> * G,
       for (c = 0; c < s; c++) {
 	if ((nc = cir->getNode(c)->getNode () - 1) < 0) continue;
 	G_(nr, nc) += cir->getY (r, c);
-	C_(nr, nc) += cir->getH (r, c);
+	C_(nr, nc) += cir->getQV (r, c);
       }
       // apply I- and Q-vector entries
       FI_(nr) -= cir->getI (r);
       FQ_(nr) -= cir->getQ (r);
       // ThinkME: positive or negative?
+      GV_(nr) += cir->getGV (r);
+      CV_(nr) += cir->getCV (r);
     }
   }
 }
@@ -927,6 +951,12 @@ void hbsolver::prepareNonLinear (void) {
   }
   if (IG == NULL) {
     IG = new tvector<complex> (N * nlfreqs);
+  }
+  if (GV == NULL) {
+    GV = new tvector<complex> (N * nlfreqs);
+  }
+  if (CV == NULL) {
+    CV = new tvector<complex> (N * nlfreqs);
   }
   if (JG == NULL) {
     JG = new tmatrix<complex> (N * nlfreqs);
@@ -949,6 +979,10 @@ void hbsolver::prepareNonLinear (void) {
   // error vector
   if (FV == NULL) {
     FV = new tvector<complex> (N * lnfreqs);
+  }
+  // right hand side vector
+  if (RH == NULL) {
+    RH = new tvector<complex> (N * lnfreqs);
   }
 
   // linear and non-linear current vector
@@ -986,6 +1020,8 @@ void hbsolver::loadMatrices (void) {
   // clear matrices and vectors before
   IG->set (0.0);
   FQ->set (0.0);
+  GV->set (0.0);
+  CV->set (0.0);
   JG->set (0.0);
   JQ->set (0.0);
   // through each frequency
@@ -996,7 +1032,7 @@ void hbsolver::loadMatrices (void) {
       (*it)->calcHB (f);         // HB calculator
     }
     // fill in all matrix entries for the given frequency
-    fillMatrixNonLinear (JG, JQ, IG, FQ, f);
+    fillMatrixNonLinear (JG, JQ, IG, FQ, GV, CV, f);
   }
 }
 
@@ -1046,12 +1082,15 @@ void hbsolver::MatrixFFT (tmatrix<complex> * M) {
   }
 }
 
-/* This function solve the actual HB equation in the frequency domain.
+/* This function solves the actual HB equation in the frequency domain.
    F(V) = IC + [YV] * VS + j[O] * FQ + IG -> 0
    Care must be taken with indexing here: In the frequency domain only
    real positive frequencies are used and computed, but in the time
-   domain we have more values because of the periodic coontinuation in
-   the frequency domain. */
+   domain we have more values because of the periodic continuation in
+   the frequency domain. 
+   RHS = j[O] * CV + GV - (IC + j[O] * FQ + IG)
+   Also the right hand side of the equation system for the new voltage
+   vector is computed here. */
 void hbsolver::solveHB (void) {
   int rf = 0;
   int rt = 0;
@@ -1061,9 +1100,11 @@ void hbsolver::solveHB (void) {
     rt = n * nlfreqs;
     // for each real positive frequency
     for (int f = 0; f < lnfreqs; f++, rt++, rf++) {
-      complex il = 0.0, in = 0.0;
+      complex il = 0.0, in = 0.0, ir = 0.0;
       // constant current vector due to sources
       il += IC->get (rf);
+      // part 1 of right hand side vector
+      ir -= il;
       // transadmittance matrix multiplied by voltage vector
       for (int cf = 0; cf < nbanodes * lnfreqs; cf++) {
 	il += YV_(rf, cf) * VS_(cf);
@@ -1072,7 +1113,12 @@ void hbsolver::solveHB (void) {
       in += rect (0, 2 * M_PI * rfreqs (f)) * FQ->get (rt);
       // current vector
       in += IG->get (rt);
-      // put value into result vector
+      // part 2, 3 and 4 of right hand side vector
+      ir -= in;
+      ir -= GV->get (rt);
+      ir -= rect (0, 2 * M_PI * rfreqs (f)) * CV->get (rt);
+      // put values into result vectors
+      RH->set (rf, ir);
       FV->set (rf, il + in);
       IL->set (rf, il);
       IN->set (rf, in);
@@ -1126,8 +1172,12 @@ tvector<complex> hbsolver::expandVector (tvector<complex> V) {
 void hbsolver::solveVoltages (void) {
   // create ride hand side
   tvector<complex> rhs (nbanodes * lnfreqs);
+#if 0
   rhs  = *JF * *VS;
   rhs -= *FV;
+#else
+  rhs = *RH;
+#endif
 
   // setup equation system
   eqnsys<complex> eqns;

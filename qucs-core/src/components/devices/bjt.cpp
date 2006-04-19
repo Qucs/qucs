@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.38 2006-04-05 08:27:06 raimi Exp $
+ * $Id: bjt.cpp,v 1.39 2006-04-19 07:03:26 raimi Exp $
  *
  */
 
@@ -449,7 +449,7 @@ void bjt::calcDC (void) {
     else {
       Rbb = Rbm + (Rb - Rbm) / Qb;
     }
-    rb->setProperty ("R", Rbb);
+    rb->setScaledProperty ("R", Rbb);
     rb->calcDC ();
   }
 
@@ -552,7 +552,7 @@ void bjt::calcOperatingPoints (void) {
   // diffusion capacitance of base-emitter diode
   if (If != 0) {
     nr_double_t e, Tff, dTffdUbe;
-    e = 2 * exp (Ubc * Vtf);
+    e = 2 * exp (MIN (Ubc * Vtf, 709));
     Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
     dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
@@ -668,12 +668,12 @@ void bjt::calcTR (nr_double_t t) {
 
   // handle Rbb and Cbcx appropriately
   if (Rbb != 0.0) {
-    rb->setProperty ("R", Rbb);
+    rb->setScaledProperty ("R", Rbb);
     rb->calcTR (t);
     if (deviceEnabled (cbcx)) {
       cbcx->clearI ();
       cbcx->clearY ();
-      cbcx->transientCapacitance (qbxState, 1, 2, Cbcx, Ubc, Qbcx);
+      cbcx->transientCapacitance (qbxState, NODE_1, NODE_2, Cbcx, Ubc, Qbcx);
     }
   }
 
