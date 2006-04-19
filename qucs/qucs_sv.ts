@@ -3265,6 +3265,26 @@ Usage:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3934,10 +3954,6 @@ Creates a new schematic or data display document</source>
 Skapar ett nytt dokument eller &quot;data display&quot;-dokument</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3953,7 +3969,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">Öppna fil</translation>
+        <translation type="obsolete">Öppna fil</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -3973,7 +3989,7 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">Spara fil</translation>
+        <translation type="obsolete">Spara fil</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -3989,7 +4005,7 @@ Sparar det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">Spara fil som</translation>
+        <translation type="obsolete">Spara fil som</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4009,7 +4025,7 @@ Spara det aktuella dokumentet under ett nytt namn</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">Spara alla filer</translation>
+        <translation type="obsolete">Spara alla filer</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4029,7 +4045,7 @@ Sparar alla öppna dokument</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">Stäng fil</translation>
+        <translation type="obsolete">Stäng fil</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4052,16 +4068,12 @@ Stänger aktuellt dokument</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation type="unfinished">Dokumentsinställningar...</translation>
+        <translation type="obsolete">Dokumentsinställningar...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Dokumentsinställningar</translation>
+        <translation type="obsolete">Dokumentsinställningar</translation>
     </message>
     <message>
         <source>Settings
@@ -4073,7 +4085,7 @@ Sätter filegenskaper</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">Skriv ut fil</translation>
+        <translation type="obsolete">Skriv ut fil</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4093,7 +4105,7 @@ Skriver ut det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished">Skriv ut valda element</translation>
+        <translation type="obsolete">Skriv ut valda element</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4101,7 +4113,7 @@ Skriver ut det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished">Skriv ut utvalda element</translation>
+        <translation type="obsolete">Skriv ut utvalda element</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4113,7 +4125,7 @@ Skriver ut valda element i det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Avsluta</translation>
+        <translation type="obsolete">Avsluta</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4133,7 +4145,7 @@ Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Tillämpningsinställningar</translation>
+        <translation type="obsolete">Tillämpningsinställningar</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4273,7 +4285,7 @@ Flyttar komponenters egenskapstext</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished">Ändra egenskapsvärden</translation>
+        <translation type="obsolete">Ändra egenskapsvärden</translation>
     </message>
     <message>
         <source>Change Property Values
@@ -4285,7 +4297,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Klipp</translation>
+        <translation type="obsolete">Klipp</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4293,19 +4305,19 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Klipper ut vald sektion och lägger i Urklipp</translation>
+        <translation type="obsolete">Klipper ut vald sektion och lägger i Urklipp</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Klipp
+        <translation type="obsolete">Klipp
 
 Klipper ut den valda sektionen och lägger det i Urklipp</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiera</translation>
+        <translation type="obsolete">Kopiera</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4313,19 +4325,19 @@ Klipper ut den valda sektionen och lägger det i Urklipp</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Kopierar den valda sektionen till Urklipp</translation>
+        <translation type="obsolete">Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Kopiera
+        <translation type="obsolete">Kopiera
 
 Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Klistra in</translation>
+        <translation type="obsolete">Klistra in</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4361,7 +4373,7 @@ Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Ångra</translation>
+        <translation type="obsolete">Ångra</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -4381,7 +4393,7 @@ Gör senaste åtgärden ogjord</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Gör om</translation>
+        <translation type="obsolete">Gör om</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -4401,7 +4413,7 @@ Repeterar senaste åtgärden en gång till</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">Nytt projekt</translation>
+        <translation type="obsolete">Nytt projekt</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -4421,7 +4433,7 @@ Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">Öppna projekt</translation>
+        <translation type="obsolete">Öppna projekt</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -4429,7 +4441,7 @@ Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">Öppnar ett projekt</translation>
+        <translation type="obsolete">Öppnar ett projekt</translation>
     </message>
     <message>
         <source>Open Project
@@ -4441,7 +4453,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">Ta bort projekt</translation>
+        <translation type="obsolete">Ta bort projekt</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4449,7 +4461,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">Tar bort ett projekt</translation>
+        <translation type="obsolete">Tar bort ett projekt</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4461,7 +4473,7 @@ Tar bort ett befintligt projekt</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished">Stäng projekt</translation>
+        <translation type="obsolete">Stäng projekt</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -4469,7 +4481,7 @@ Tar bort ett befintligt projekt</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished">Stäng aktuellt projekt</translation>
+        <translation type="obsolete">Stäng aktuellt projekt</translation>
     </message>
     <message>
         <source>Close Project
@@ -4481,7 +4493,7 @@ Stänger aktuellt projekt</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation type="unfinished">Lägg till filer till projekt</translation>
+        <translation type="obsolete">Lägg till filer till projekt</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -4505,7 +4517,7 @@ Kopierar filer till projektmapp</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">Visar hela sidan</translation>
+        <translation type="obsolete">Visar hela sidan</translation>
     </message>
     <message>
         <source>View All
@@ -4567,13 +4579,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">Valläge</translation>
+        <translation type="obsolete">Valläge</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">Välj
+        <translation type="obsolete">Välj
 
 Välj läge</translation>
     </message>
@@ -4615,7 +4627,7 @@ Vrider den valda komponenten 90° motsols</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">Speglar den valda komponenten i X-axeln</translation>
+        <translation type="obsolete">Speglar den valda komponenten i X-axeln</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4631,7 +4643,7 @@ Speglar den valda komponenten i X-axeln</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">Speglar den valda komponenten i Y-axeln</translation>
+        <translation type="obsolete">Speglar den valda komponenten i Y-axeln</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4647,7 +4659,7 @@ Speglar den valda komponenten i Y-axeln</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">Går in i delkrets</translation>
+        <translation type="obsolete">Går in i delkrets</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4695,7 +4707,7 @@ Avaktiverar/Aktiverar det valda</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">Skjuter in ekvation</translation>
+        <translation type="obsolete">Skjuter in ekvation</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4711,7 +4723,7 @@ Skjuter in en användardefinierad ekvation</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">Skjuter in jord</translation>
+        <translation type="obsolete">Skjuter in jord</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4727,7 +4739,7 @@ Skjuter in en jordsymbol</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">Skjuter in port</translation>
+        <translation type="obsolete">Skjuter in port</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4739,7 +4751,7 @@ Skjuter in en portsymbol</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished">Skjut in ledare</translation>
+        <translation type="obsolete">Skjut in ledare</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -4747,7 +4759,7 @@ Skjuter in en portsymbol</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Skjuter in en ledare</translation>
+        <translation type="obsolete">Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Wire
@@ -4759,7 +4771,7 @@ Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished">Skjut in ledare-/pin-etikett</translation>
+        <translation type="obsolete">Skjut in ledare-/pin-etikett</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -4779,7 +4791,7 @@ Skjuter in en ledar- eller pinnetikett</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished">Textredigerare</translation>
+        <translation type="obsolete">Textredigerare</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -4911,7 +4923,7 @@ Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished">Sätt markör</translation>
+        <translation type="obsolete">Sätt markör</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -4963,7 +4975,7 @@ Visar senaste simuleringsens nätlista</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">Verktygsrad</translation>
+        <translation type="obsolete">Verktygsrad</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -4983,7 +4995,7 @@ Aktiverar/avaktiverar verktygsraden</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Statusrad</translation>
+        <translation type="obsolete">Statusrad</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -5003,7 +5015,7 @@ Aktiverar/avaktiverar statusraden</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished">Hjälpindex</translation>
+        <translation type="obsolete">Hjälpindex</translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5023,7 +5035,7 @@ Index för Qucs hjälp</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">Hur man börjar</translation>
+        <translation type="obsolete">Hur man börjar</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5043,7 +5055,7 @@ Kort introduktion till Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Om</translation>
+        <translation type="obsolete">Om</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5051,7 +5063,7 @@ Kort introduktion till Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Om tillämpningen</translation>
+        <translation type="obsolete">Om tillämpningen</translation>
     </message>
     <message>
         <source>About
@@ -5214,10 +5226,6 @@ Om Qt från Trolltech</translation>
         <translation type="unfinished">Ungerska av Jozsef Bus</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5243,6 +5251,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7715,6 +7795,10 @@ Fel:
     <message>
         <source>creating netlist... </source>
         <translation>skapar nätlista...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

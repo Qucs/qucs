@@ -3653,6 +3653,26 @@ Usage:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3947,7 +3967,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation>Открыть файл</translation>
+        <translation type="obsolete">Открыть файл</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -3979,7 +3999,7 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Сохранить файл</translation>
+        <translation type="obsolete">Сохранить файл</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -4003,7 +4023,7 @@ Saves the current document</source>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>Сохранить файл как</translation>
+        <translation type="obsolete">Сохранить файл как</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -4023,7 +4043,7 @@ Saves the current document under a new filename</source>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>Сохранить все файлы</translation>
+        <translation type="obsolete">Сохранить все файлы</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4043,7 +4063,7 @@ Saves all open documents</source>
     </message>
     <message>
         <source>Close File</source>
-        <translation>Закрыть файл</translation>
+        <translation type="obsolete">Закрыть файл</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4083,7 +4103,7 @@ Sets properties of the file</source>
     </message>
     <message>
         <source>Print File</source>
-        <translation>Напечатать файл</translation>
+        <translation type="obsolete">Напечатать файл</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4107,7 +4127,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Выйти</translation>
+        <translation type="obsolete">Выйти</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4131,7 +4151,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Вырезать</translation>
+        <translation type="obsolete">Вырезать</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4143,19 +4163,19 @@ Quits the application</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>Вырезает выделенную область и помещает ее в буфер обмена</translation>
+        <translation type="obsolete">Вырезает выделенную область и помещает ее в буфер обмена</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>Вырезать
+        <translation type="obsolete">Вырезать
 
 Вырезает выделенную область и помещает ее в буфер обмена</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Скопировать</translation>
+        <translation type="obsolete">Скопировать</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4167,19 +4187,19 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>Копирует выделенную область в буфер обмена</translation>
+        <translation type="obsolete">Копирует выделенную область в буфер обмена</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>Скопировать
+        <translation type="obsolete">Скопировать
 
 Копирует выделенную область в буфер обмена</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Вставить</translation>
+        <translation type="obsolete">Вставить</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4746,10 +4766,6 @@ Overwrite ?</source>
         <translation>Неправильная зависимость!</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4772,20 +4788,16 @@ Creates a new text document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation>Настройки документа...</translation>
+        <translation type="obsolete">Настройки документа...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>Настройки документа</translation>
+        <translation type="obsolete">Настройки документа</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>Печатать выделенные элементы</translation>
+        <translation type="obsolete">Печатать выделенные элементы</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4793,7 +4805,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>Печатает выделенные элементы</translation>
+        <translation type="obsolete">Печатает выделенные элементы</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4805,7 +4817,7 @@ Prints selected elements of the current document</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>Настройки программы</translation>
+        <translation type="obsolete">Настройки программы</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4945,7 +4957,7 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation>Изменить значения свойств</translation>
+        <translation type="obsolete">Изменить значения свойств</translation>
     </message>
     <message>
         <source>Change Property Values
@@ -4984,10 +4996,6 @@ Deletes the selected components</source>
 Удаляет выделенные компоненты</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5017,7 +5025,7 @@ Searches for the same piece of text again</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Отменить</translation>
+        <translation type="obsolete">Отменить</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -5035,7 +5043,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Вернуть</translation>
+        <translation type="obsolete">Вернуть</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -5053,7 +5061,7 @@ Repeats the last action once more</source>
     </message>
     <message>
         <source>New Project</source>
-        <translation>Новый проект</translation>
+        <translation type="obsolete">Новый проект</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -5073,7 +5081,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Открыть проект</translation>
+        <translation type="obsolete">Открыть проект</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -5081,7 +5089,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>Открывает проект</translation>
+        <translation type="obsolete">Открывает проект</translation>
     </message>
     <message>
         <source>Open Project
@@ -5093,7 +5101,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>Удалить проект</translation>
+        <translation type="obsolete">Удалить проект</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -5101,7 +5109,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>Удаляет проект</translation>
+        <translation type="obsolete">Удаляет проект</translation>
     </message>
     <message>
         <source>Delete Project
@@ -5113,7 +5121,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>Закрыть проект</translation>
+        <translation type="obsolete">Закрыть проект</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -5121,7 +5129,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>Закрыть текущий проект</translation>
+        <translation type="obsolete">Закрыть текущий проект</translation>
     </message>
     <message>
         <source>Close Project
@@ -5133,7 +5141,7 @@ Closes the current project</source>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation>Добавить файлы к проекту</translation>
+        <translation type="obsolete">Добавить файлы к проекту</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -5154,10 +5162,6 @@ Copies files to project directory</source>
     <message>
         <source>View All</source>
         <translation>Показать все</translation>
-    </message>
-    <message>
-        <source>Views the whole page</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>View All
@@ -5217,13 +5221,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Режим выделения</translation>
+        <translation type="obsolete">Режим выделения</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>Выделить
+        <translation type="obsolete">Выделить
 
 Режим выделения</translation>
     </message>
@@ -5263,7 +5267,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>Отображает выделенный объект относительно оси X</translation>
+        <translation type="obsolete">Отображает выделенный объект относительно оси X</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -5279,7 +5283,7 @@ Mirrors the selected item about X Axis</source>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>Отображает выделенный объект относительно оси Y</translation>
+        <translation type="obsolete">Отображает выделенный объект относительно оси Y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -5295,7 +5299,7 @@ Mirrors the selected item about Y Axis</source>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>Переходит внутрь подсхемы</translation>
+        <translation type="obsolete">Переходит внутрь подсхемы</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -5341,7 +5345,7 @@ Deactivate/Activate the selected item</source>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>Вставляет уравнение</translation>
+        <translation type="obsolete">Вставляет уравнение</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -5357,7 +5361,7 @@ Inserts a user defined equation</source>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>Вставляет обозначение земли</translation>
+        <translation type="obsolete">Вставляет обозначение земли</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -5373,7 +5377,7 @@ Inserts a ground symbol</source>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Вставляет вывод</translation>
+        <translation type="obsolete">Вставляет вывод</translation>
     </message>
     <message>
         <source>Insert Port
@@ -5385,7 +5389,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>Вставить проводник</translation>
+        <translation type="obsolete">Вставить проводник</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -5393,7 +5397,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>Вставляет проводник</translation>
+        <translation type="obsolete">Вставляет проводник</translation>
     </message>
     <message>
         <source>Wire
@@ -5405,7 +5409,7 @@ Inserts a wire</source>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>Вставить метку проводника/вывода</translation>
+        <translation type="obsolete">Вставить метку проводника/вывода</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -5425,7 +5429,7 @@ Inserts a wire or pin label</source>
     </message>
     <message>
         <source>Text editor</source>
-        <translation>Текстовый редактор</translation>
+        <translation type="obsolete">Текстовый редактор</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5557,7 +5561,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>Установить маркер</translation>
+        <translation type="obsolete">Установить маркер</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -5609,7 +5613,7 @@ Shows the netlist of the last simulation</source>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Панель инструментов</translation>
+        <translation type="obsolete">Панель инструментов</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -5629,7 +5633,7 @@ Enables/disables the toolbar</source>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Строка состояния</translation>
+        <translation type="obsolete">Строка состояния</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -5646,10 +5650,6 @@ Enables/disables the statusbar</source>
         <translation>Строка состояния
 
 Включает/выключает строку состояния</translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5669,7 +5669,7 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>Как начать</translation>
+        <translation type="obsolete">Как начать</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5689,7 +5689,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About</source>
-        <translation>О</translation>
+        <translation type="obsolete">О</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5697,7 +5697,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation>О программе</translation>
+        <translation type="obsolete">О программе</translation>
     </message>
     <message>
         <source>About
@@ -5862,6 +5862,78 @@ About Qt by Trolltech</source>
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation>Венгерский - Jozsef Bus</translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9999,6 +10071,10 @@ Errors:
     <message>
         <source>creating netlist... </source>
         <translation>создание схемы... </translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

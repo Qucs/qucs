@@ -3578,6 +3578,26 @@ Usage:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3684,7 +3704,7 @@ Sovrascrivere ?</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>Apri File</translation>
+        <translation type="obsolete">Apri File</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -3704,7 +3724,7 @@ Apre un documento esistente</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Salva File</translation>
+        <translation type="obsolete">Salva File</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -3724,7 +3744,7 @@ Salva il documento corrente</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>Salva con Nome</translation>
+        <translation type="obsolete">Salva con Nome</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -3744,7 +3764,7 @@ Salva il documento corrente con un nuovo nome</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>Salva Tutti</translation>
+        <translation type="obsolete">Salva Tutti</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -3764,7 +3784,7 @@ Salva tutti i documenti aperti</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>Chiudi File</translation>
+        <translation type="obsolete">Chiudi File</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -3800,7 +3820,7 @@ Imposta le proprietà�del file</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>Stampa File</translation>
+        <translation type="obsolete">Stampa File</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -3820,7 +3840,7 @@ Stampa il documento corrente</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Esci</translation>
+        <translation type="obsolete">Esci</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -3844,7 +3864,7 @@ Esce dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Taglia</translation>
+        <translation type="obsolete">Taglia</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -3852,19 +3872,19 @@ Esce dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>Taglia la parte selezionata e la copia negli appunti</translation>
+        <translation type="obsolete">Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>Taglia
+        <translation type="obsolete">Taglia
 
 Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copia</translation>
+        <translation type="obsolete">Copia</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -3872,19 +3892,19 @@ Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>Copia la parte selezionata negli appunti</translation>
+        <translation type="obsolete">Copia la parte selezionata negli appunti</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>Copia
+        <translation type="obsolete">Copia
 
 Copia la parte selezionata negli appunti</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Incolla</translation>
+        <translation type="obsolete">Incolla</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -3924,7 +3944,7 @@ Cancella i componenti selezionati</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Annulla</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -3944,7 +3964,7 @@ Annulla l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Ripeti</translation>
+        <translation type="obsolete">Ripeti</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -3964,7 +3984,7 @@ Ripete l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>Nuovo Progetto</translation>
+        <translation type="obsolete">Nuovo Progetto</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -3984,7 +4004,7 @@ Crea un nuovo progetto</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Apri Progetto</translation>
+        <translation type="obsolete">Apri Progetto</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -3992,7 +4012,7 @@ Crea un nuovo progetto</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>Apre un progetto</translation>
+        <translation type="obsolete">Apre un progetto</translation>
     </message>
     <message>
         <source>Open Project
@@ -4004,7 +4024,7 @@ Apre un progetto esistente</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>Cancella Progetto</translation>
+        <translation type="obsolete">Cancella Progetto</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4012,7 +4032,7 @@ Apre un progetto esistente</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>Cancella un progetto</translation>
+        <translation type="obsolete">Cancella un progetto</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4028,7 +4048,7 @@ Cancella un progetto esistente</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>Visualizza tutta la pagina</translation>
+        <translation type="obsolete">Visualizza tutta la pagina</translation>
     </message>
     <message>
         <source>View All
@@ -4092,13 +4112,13 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Modalità selezione</translation>
+        <translation type="obsolete">Modalità selezione</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>Seleziona
+        <translation type="obsolete">Seleziona
 
 Modalità selezione</translation>
     </message>
@@ -4140,7 +4160,7 @@ Ruota il componente selezionato di 90° in senso antiorario</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
+        <translation type="obsolete">Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4156,7 +4176,7 @@ Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
+        <translation type="obsolete">Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4172,7 +4192,7 @@ Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>Va nel sottocircuito</translation>
+        <translation type="obsolete">Va nel sottocircuito</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4220,7 +4240,7 @@ Disattiva/Attiva l&apos;oggetto selezionato</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>Inserisce un&apos;equazione</translation>
+        <translation type="obsolete">Inserisce un&apos;equazione</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4236,7 +4256,7 @@ Inserisce un&apos;equazione definita dall&apos;utente</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>Inserisce una terra</translation>
+        <translation type="obsolete">Inserisce una terra</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4252,7 +4272,7 @@ Inserisce un simbolo di terra</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>Inserisce una porta</translation>
+        <translation type="obsolete">Inserisce una porta</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4264,7 +4284,7 @@ Inserisce il simbolo di una porta</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>Barra Strumenti</translation>
+        <translation type="obsolete">Barra Strumenti</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -4284,7 +4304,7 @@ Attiva/disattiva la barra degli strumenti</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Barra di Stato</translation>
+        <translation type="obsolete">Barra di Stato</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -4304,7 +4324,7 @@ Attiva/Disattiva la barra di stato</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Indice dell&apos;Aiuto</translation>
+        <translation type="obsolete">Indice dell&apos;Aiuto</translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -4324,7 +4344,7 @@ Indice dell&apos;aiuto interno di Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>Come Iniziare</translation>
+        <translation type="obsolete">Come Iniziare</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5262,7 +5282,7 @@ Crea un nuovo documento schema o vista dati</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation>Nuovo file Testo</translation>
+        <translation type="obsolete">Nuovo file Testo</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -5290,19 +5310,19 @@ Crea un nuovo documento di testo</translation>
     </message>
     <message>
         <source>&amp;Document Settings</source>
-        <translation>&amp;Impostazioni Documento</translation>
+        <translation type="obsolete">&amp;Impostazioni Documento</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>Impostazioni Documento...</translation>
+        <translation type="obsolete">Impostazioni Documento...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>Impostazioni Documento</translation>
+        <translation type="obsolete">Impostazioni Documento</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>Stampa Elementi Selezionati</translation>
+        <translation type="obsolete">Stampa Elementi Selezionati</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -5310,7 +5330,7 @@ Crea un nuovo documento di testo</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>Stampa gli Elementi Selezionati</translation>
+        <translation type="obsolete">Stampa gli Elementi Selezionati</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -5322,7 +5342,7 @@ Stampa gli elementi selezionati del documento corrente</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>Impostazioni Applicazione</translation>
+        <translation type="obsolete">Impostazioni Applicazione</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -5462,7 +5482,7 @@ Muove il testo del componente</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation>Modifica Valori Proprietà</translation>
+        <translation type="obsolete">Modifica Valori Proprietà</translation>
     </message>
     <message>
         <source>Change Property Values
@@ -5474,7 +5494,7 @@ Modifica Valore Proprietà dei Componenti</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>Chiudi Progetto</translation>
+        <translation type="obsolete">Chiudi Progetto</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -5482,7 +5502,7 @@ Modifica Valore Proprietà dei Componenti</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>Chiudi il progetto corrente</translation>
+        <translation type="obsolete">Chiudi il progetto corrente</translation>
     </message>
     <message>
         <source>Close Project
@@ -5494,7 +5514,7 @@ Chiude il progetto corrente</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation>Aggiungi File al Progetto</translation>
+        <translation type="obsolete">Aggiungi File al Progetto</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -5522,7 +5542,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>Inserisci Filo</translation>
+        <translation type="obsolete">Inserisci Filo</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -5530,7 +5550,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>Inserisce un filo</translation>
+        <translation type="obsolete">Inserisce un filo</translation>
     </message>
     <message>
         <source>Wire
@@ -5542,7 +5562,7 @@ Inserisce un filo</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>Inserisci etichetta filo/pin</translation>
+        <translation type="obsolete">Inserisci etichetta filo/pin</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -5562,7 +5582,7 @@ Inserisce l&apos;etichetta per filo/pin</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation>Editor di testo</translation>
+        <translation type="obsolete">Editor di testo</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5694,7 +5714,7 @@ Calcola la polarizzazione DC e la mostra</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>Imposta marker</translation>
+        <translation type="obsolete">Imposta marker</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -5746,7 +5766,7 @@ Mostra la netlist dell&apos;ultima simulazione</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Informazioni</translation>
+        <translation type="obsolete">Informazioni</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5754,7 +5774,7 @@ Mostra la netlist dell&apos;ultima simulazione</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>Informazioni sull&apos;applicazione</translation>
+        <translation type="obsolete">Informazioni sull&apos;applicazione</translation>
     </message>
     <message>
         <source>About
@@ -5885,10 +5905,6 @@ Informazioni su Qt di Trolltech</translation>
         <translation>Ungherese di Jozsef Bus</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5914,6 +5930,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8520,6 +8608,10 @@ Errori:
     <message>
         <source>creating netlist... </source>
         <translation>creazione netlist... </translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
