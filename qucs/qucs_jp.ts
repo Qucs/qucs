@@ -3382,6 +3382,26 @@ Usage:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4112,10 +4132,6 @@ Creates a new schematic or data display document</source>
 新しい回路図かデータ表示を作成</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4131,7 +4147,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">ファイルを開く</translation>
+        <translation type="obsolete">ファイルを開く</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -4149,7 +4165,7 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">ファイルを保存</translation>
+        <translation type="obsolete">ファイルを保存</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -4163,7 +4179,7 @@ Saves the current document</source>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">別名で保存</translation>
+        <translation type="obsolete">別名で保存</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4183,7 +4199,7 @@ Saves the current document under a new filename</source>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">全てのファイルを保存</translation>
+        <translation type="obsolete">全てのファイルを保存</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4203,7 +4219,7 @@ Saves all open documents</source>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">ファイルを閉じる</translation>
+        <translation type="obsolete">ファイルを閉じる</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4226,16 +4242,12 @@ Closes the current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation type="unfinished">ドキュメント セッティング...</translation>
+        <translation type="obsolete">ドキュメント セッティング...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">ドキュメント セッティング</translation>
+        <translation type="obsolete">ドキュメント セッティング</translation>
     </message>
     <message>
         <source>Settings
@@ -4247,7 +4259,7 @@ Sets properties of the file</source>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">ファイルを印刷</translation>
+        <translation type="obsolete">ファイルを印刷</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4267,7 +4279,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished">選択された要素を印刷</translation>
+        <translation type="obsolete">選択された要素を印刷</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4275,7 +4287,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished">選択された要素を印刷</translation>
+        <translation type="obsolete">選択された要素を印刷</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4287,7 +4299,7 @@ Prints selected elements of the current document</source>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">終了</translation>
+        <translation type="obsolete">終了</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4305,7 +4317,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">アプリケーションの設定</translation>
+        <translation type="obsolete">アプリケーションの設定</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4436,7 +4448,7 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished">プロパティー変更</translation>
+        <translation type="obsolete">プロパティー変更</translation>
     </message>
     <message>
         <source>Change Property Values
@@ -4448,7 +4460,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">切り取り</translation>
+        <translation type="obsolete">切り取り</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4456,19 +4468,19 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">選択された部分を切り取り、クリップボードにいれます</translation>
+        <translation type="obsolete">選択された部分を切り取り、クリップボードにいれます</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">切り取り
+        <translation type="obsolete">切り取り
 
 選択された部分を切り取り、クリップボードにいれます</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">コピー</translation>
+        <translation type="obsolete">コピー</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4476,19 +4488,19 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">選択された部分をクリップボードにコピーします</translation>
+        <translation type="obsolete">選択された部分をクリップボードにコピーします</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">コピー
+        <translation type="obsolete">コピー
 
 選択された部分をクリップボードにコピーします</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">貼付け</translation>
+        <translation type="obsolete">貼付け</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4524,7 +4536,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">やり直し</translation>
+        <translation type="obsolete">やり直し</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -4544,7 +4556,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">元に戻す</translation>
+        <translation type="obsolete">元に戻す</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -4564,7 +4576,7 @@ Repeats the last action once more</source>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">新規プロジェクト</translation>
+        <translation type="obsolete">新規プロジェクト</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -4584,7 +4596,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">プロジェクトを開く</translation>
+        <translation type="obsolete">プロジェクトを開く</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -4592,7 +4604,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">プロジェクトを開きます</translation>
+        <translation type="obsolete">プロジェクトを開きます</translation>
     </message>
     <message>
         <source>Open Project
@@ -4604,7 +4616,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">プロジェクトを削除</translation>
+        <translation type="obsolete">プロジェクトを削除</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4612,7 +4624,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">プロジェクトを削除します</translation>
+        <translation type="obsolete">プロジェクトを削除します</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4624,7 +4636,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished">プロジェクトを閉じる</translation>
+        <translation type="obsolete">プロジェクトを閉じる</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -4632,7 +4644,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished">現在のプロジェクトを閉じる</translation>
+        <translation type="obsolete">現在のプロジェクトを閉じる</translation>
     </message>
     <message>
         <source>Close Project
@@ -4641,10 +4653,6 @@ Closes the current project</source>
         <translation type="unfinished">プロジェクトを閉じる
 
 現在のプロジェクトを閉じます</translation>
-    </message>
-    <message>
-        <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -4666,7 +4674,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">ページ全体を見ます</translation>
+        <translation type="obsolete">ページ全体を見ます</translation>
     </message>
     <message>
         <source>View All
@@ -4726,13 +4734,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">選択モード</translation>
+        <translation type="obsolete">選択モード</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">選択
+        <translation type="obsolete">選択
 
 選択モード</translation>
     </message>
@@ -4774,7 +4782,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">選択されたアイテムをX軸で反転</translation>
+        <translation type="obsolete">選択されたアイテムをX軸で反転</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4790,7 +4798,7 @@ Mirrors the selected item about X Axis</source>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">選択されたアイテムをY軸で反転</translation>
+        <translation type="obsolete">選択されたアイテムをY軸で反転</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4806,7 +4814,7 @@ Mirrors the selected item about Y Axis</source>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">サブサーキット内部に行く</translation>
+        <translation type="obsolete">サブサーキット内部に行く</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4854,7 +4862,7 @@ Deactivate/Activate the selected item</source>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">方程式を挿入</translation>
+        <translation type="obsolete">方程式を挿入</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4870,7 +4878,7 @@ Inserts a user defined equation</source>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">グラウンドを挿入</translation>
+        <translation type="obsolete">グラウンドを挿入</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4886,7 +4894,7 @@ Inserts a ground symbol</source>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">ポートを挿入</translation>
+        <translation type="obsolete">ポートを挿入</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4898,7 +4906,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished">ワイアを挿入</translation>
+        <translation type="obsolete">ワイアを挿入</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -4906,7 +4914,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">ワイアを挿入</translation>
+        <translation type="obsolete">ワイアを挿入</translation>
     </message>
     <message>
         <source>Wire
@@ -4918,7 +4926,7 @@ Inserts a wire</source>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished">ワイア/ピン ラベルを挿入</translation>
+        <translation type="obsolete">ワイア/ピン ラベルを挿入</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -4938,7 +4946,7 @@ Inserts a wire or pin label</source>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished">テキストエディタ</translation>
+        <translation type="obsolete">テキストエディタ</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5069,7 +5077,7 @@ DCバイアス計算</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished">マーカセット</translation>
+        <translation type="obsolete">マーカセット</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -5121,7 +5129,7 @@ Shows the netlist of the last simulation</source>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">ツールバー</translation>
+        <translation type="obsolete">ツールバー</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -5141,7 +5149,7 @@ Enables/disables the toolbar</source>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">ステータスバー</translation>
+        <translation type="obsolete">ステータスバー</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -5161,7 +5169,7 @@ Enables/disables the statusbar</source>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished">ヘルプ目次</translation>
+        <translation type="obsolete">ヘルプ目次</translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5181,7 +5189,7 @@ Qucsヘルプ目次</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">はじめに</translation>
+        <translation type="obsolete">はじめに</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5201,7 +5209,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">About</translation>
+        <translation type="obsolete">About</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5209,7 +5217,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">このアプリケーションについて</translation>
+        <translation type="obsolete">このアプリケーションについて</translation>
     </message>
     <message>
         <source>About
@@ -5374,10 +5382,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5403,6 +5407,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7782,6 +7858,10 @@ Errors:
     </message>
     <message>
         <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
