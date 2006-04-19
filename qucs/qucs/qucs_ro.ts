@@ -3420,6 +3420,26 @@ Folosire:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4164,10 +4184,6 @@ Creates a new schematic or data display document</source>
 Crează o schema nouă sau document afişaj de date</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4183,7 +4199,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">Deschide fişier</translation>
+        <translation type="obsolete">Deschide fişier</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -4203,7 +4219,7 @@ Deschide un document existent</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">Salvează Fişier</translation>
+        <translation type="obsolete">Salvează Fişier</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -4219,7 +4235,7 @@ Salvează documentul curent</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">Salvează Fişier ca</translation>
+        <translation type="obsolete">Salvează Fişier ca</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4239,7 +4255,7 @@ Salvează documentul curent sub un nou nume </translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">Salvează toate fişierele</translation>
+        <translation type="obsolete">Salvează toate fişierele</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4259,7 +4275,7 @@ Salvează toate documentele deschise</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">Închide Fişierul</translation>
+        <translation type="obsolete">Închide Fişierul</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4282,16 +4298,12 @@ Closes the current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation type="unfinished">Setările Documentului...</translation>
+        <translation type="obsolete">Setările Documentului...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Setările Documentului</translation>
+        <translation type="obsolete">Setările Documentului</translation>
     </message>
     <message>
         <source>Settings
@@ -4303,7 +4315,7 @@ Setează proprietăţile fişierului</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">Printează Fişier</translation>
+        <translation type="obsolete">Printează Fişier</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4323,7 +4335,7 @@ Printează documentul curent</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished">Printează Elementele Selectate</translation>
+        <translation type="obsolete">Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4331,7 +4343,7 @@ Printează documentul curent</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished">Printează Elementele Selectate</translation>
+        <translation type="obsolete">Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4343,7 +4355,7 @@ Printează elementele selectate în documentul curent</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Ieşire</translation>
+        <translation type="obsolete">Ieşire</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4363,7 +4375,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Setările Aplicaţiei</translation>
+        <translation type="obsolete">Setările Aplicaţiei</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4502,10 +4514,6 @@ Mută proprietatea text al componentelor</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
@@ -4513,7 +4521,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Taie</translation>
+        <translation type="obsolete">Taie</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4521,19 +4529,19 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Taie secţiunea selectată si pune-o în clipboard</translation>
+        <translation type="obsolete">Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Taie
+        <translation type="obsolete">Taie
 
 Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiază</translation>
+        <translation type="obsolete">Copiază</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4541,19 +4549,19 @@ Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Copiază secţiunea selectată si pune-o în clipboard</translation>
+        <translation type="obsolete">Copiază secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Copiază
+        <translation type="obsolete">Copiază
 
 Copiază secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Lipeşte</translation>
+        <translation type="obsolete">Lipeşte</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4589,7 +4597,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Anulează</translation>
+        <translation type="obsolete">Anulează</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -4609,7 +4617,7 @@ Anulează ultima acţiune</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Repetă</translation>
+        <translation type="obsolete">Repetă</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -4629,7 +4637,7 @@ Repetă ultima acţiune înca odata</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">Proiect nou</translation>
+        <translation type="obsolete">Proiect nou</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -4649,7 +4657,7 @@ Crează un nou proiect</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">Deschide Proiect</translation>
+        <translation type="obsolete">Deschide Proiect</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -4657,7 +4665,7 @@ Crează un nou proiect</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">Deschide un Proiect</translation>
+        <translation type="obsolete">Deschide un Proiect</translation>
     </message>
     <message>
         <source>Open Project
@@ -4669,7 +4677,7 @@ Deschide un proiect existent</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">Şterge Proiect</translation>
+        <translation type="obsolete">Şterge Proiect</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4677,7 +4685,7 @@ Deschide un proiect existent</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">Şterge un proiect</translation>
+        <translation type="obsolete">Şterge un proiect</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4689,7 +4697,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished">Închide Proiectul</translation>
+        <translation type="obsolete">Închide Proiectul</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -4697,7 +4705,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished">Închide proiectul curent</translation>
+        <translation type="obsolete">Închide proiectul curent</translation>
     </message>
     <message>
         <source>Close Project
@@ -4706,10 +4714,6 @@ Closes the current project</source>
         <translation type="unfinished">Închide Proiectul
 
 Închide Proiectul curent</translation>
-    </message>
-    <message>
-        <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -4731,7 +4735,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">Arată toata pagina</translation>
+        <translation type="obsolete">Arată toata pagina</translation>
     </message>
     <message>
         <source>View All
@@ -4793,13 +4797,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">Mod de selecţie</translation>
+        <translation type="obsolete">Mod de selecţie</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">Selectează
+        <translation type="obsolete">Selectează
 
 Mod de selecţie</translation>
     </message>
@@ -4841,7 +4845,7 @@ Roteşte componenta selectată cu 90° sens antiorar</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">Oglindeşte elementul selectat pe axa X</translation>
+        <translation type="obsolete">Oglindeşte elementul selectat pe axa X</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4857,7 +4861,7 @@ Oglindeşte elementul selectat pe Axa X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">Oglindeşte elementul selectat pe axa Y</translation>
+        <translation type="obsolete">Oglindeşte elementul selectat pe axa Y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4873,7 +4877,7 @@ Oglindeşte elementul selectat pe Axa Y</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">Intră în subcircuit</translation>
+        <translation type="obsolete">Intră în subcircuit</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4921,7 +4925,7 @@ Deactivează/Activează elementul selectat</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">Inserează Ecuaţie</translation>
+        <translation type="obsolete">Inserează Ecuaţie</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4937,7 +4941,7 @@ Inserează o Ecuaţie predefinită</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">Inserează Masă</translation>
+        <translation type="obsolete">Inserează Masă</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4953,7 +4957,7 @@ Inserează un simbol de masă</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">Inserează un Port</translation>
+        <translation type="obsolete">Inserează un Port</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4965,7 +4969,7 @@ Inserează un simbol de Port</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished">Inserează un Fir</translation>
+        <translation type="obsolete">Inserează un Fir</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -4973,7 +4977,7 @@ Inserează un simbol de Port</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Inserează un Fir</translation>
+        <translation type="obsolete">Inserează un Fir</translation>
     </message>
     <message>
         <source>Wire
@@ -4985,7 +4989,7 @@ Inserează un Fir</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished">Inserează un Fir/Etichetă de Pin</translation>
+        <translation type="obsolete">Inserează un Fir/Etichetă de Pin</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -5002,10 +5006,6 @@ Inserts a wire or pin label</source>
         <translation type="unfinished">Etichetă de Fir
 
 Inserează un fir sau o eticheta de pin</translation>
-    </message>
-    <message>
-        <source>Text editor</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5125,7 +5125,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished">Setează Marcajul</translation>
+        <translation type="obsolete">Setează Marcajul</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -5177,7 +5177,7 @@ Afişează netlist-ul ultimei simulări</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">Bara de Scule</translation>
+        <translation type="obsolete">Bara de Scule</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -5197,7 +5197,7 @@ Activează/Dezactivează bara de scule</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Bara de Stare</translation>
+        <translation type="obsolete">Bara de Stare</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -5217,7 +5217,7 @@ Activează/Dezactivează bara de stare</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished">Ajutor Index</translation>
+        <translation type="obsolete">Ajutor Index</translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5237,7 +5237,7 @@ Indexul Ajutorului intern Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">Introducere</translation>
+        <translation type="obsolete">Introducere</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5257,7 +5257,7 @@ Scurtă introducere în Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Despre</translation>
+        <translation type="obsolete">Despre</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5265,7 +5265,7 @@ Scurtă introducere în Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Despre aplicaţie</translation>
+        <translation type="obsolete">Despre aplicaţie</translation>
     </message>
     <message>
         <source>About
@@ -5432,10 +5432,6 @@ Despre Qt la Trolltech</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5461,6 +5457,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7731,6 +7799,10 @@ Erori:
     </message>
     <message>
         <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -3265,6 +3265,26 @@ Kullanım:  qucsedit -r kütük
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3926,10 +3946,6 @@ Creates a new schematic or data display document</source>
 Veri görüntüleme ya da şema belgesi oluşturur</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3945,7 +3961,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">Kütük Aç</translation>
+        <translation type="obsolete">Kütük Aç</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -3965,7 +3981,7 @@ Varolan bir belgeyi açar</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">Kütük Kaydet</translation>
+        <translation type="obsolete">Kütük Kaydet</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -3981,7 +3997,7 @@ Geçerli belgeyi kaydeder</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">Farklı Kaydet</translation>
+        <translation type="obsolete">Farklı Kaydet</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4001,7 +4017,7 @@ Geçerli belgeyi yeni bir ad altında kaydeder</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">Tüm kütükleri kaydet</translation>
+        <translation type="obsolete">Tüm kütükleri kaydet</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4021,7 +4037,7 @@ Tüm açık belgeleri kaydeder</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">Kütük Kapat</translation>
+        <translation type="obsolete">Kütük Kapat</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4044,16 +4060,12 @@ Geçerli belgeyi kapatır</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation type="unfinished">Belge Ayarları...</translation>
+        <translation type="obsolete">Belge Ayarları...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Belge Ayarları</translation>
+        <translation type="obsolete">Belge Ayarları</translation>
     </message>
     <message>
         <source>Settings
@@ -4065,7 +4077,7 @@ Kütük ayarlarını yap</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">Kütük Yazdır</translation>
+        <translation type="obsolete">Kütük Yazdır</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4085,7 +4097,7 @@ Geçerli belgeyi yazdırır</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished">Seçili Elemanları Yazdır</translation>
+        <translation type="obsolete">Seçili Elemanları Yazdır</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4093,7 +4105,7 @@ Geçerli belgeyi yazdırır</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished">Seçili Elemanları Yazdır</translation>
+        <translation type="obsolete">Seçili Elemanları Yazdır</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4105,7 +4117,7 @@ Geçerli belgede seçili elemanları yazdırır</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Çıkış</translation>
+        <translation type="obsolete">Çıkış</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4125,7 +4137,7 @@ Uygulamadan çıkar</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Uygulama ayarları</translation>
+        <translation type="obsolete">Uygulama ayarları</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4265,7 +4277,7 @@ Bileşenlerin özellik yazısını taşır</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished">Özellik Değerlerini Değiştir</translation>
+        <translation type="obsolete">Özellik Değerlerini Değiştir</translation>
     </message>
     <message>
         <source>Change Property Values
@@ -4277,7 +4289,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Kes</translation>
+        <translation type="obsolete">Kes</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4285,19 +4297,19 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Seçili kısmı keser ve not tahtasına koyar</translation>
+        <translation type="obsolete">Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Kes
+        <translation type="obsolete">Kes
 
 Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopyala</translation>
+        <translation type="obsolete">Kopyala</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4305,19 +4317,19 @@ Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Seçili kısmı not tahtasına kopyalar</translation>
+        <translation type="obsolete">Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Kopyala
+        <translation type="obsolete">Kopyala
 
 Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Yapıştır</translation>
+        <translation type="obsolete">Yapıştır</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4353,7 +4365,7 @@ Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Geri Al</translation>
+        <translation type="obsolete">Geri Al</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -4373,7 +4385,7 @@ Son komutu geri alır</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Tekrarla</translation>
+        <translation type="obsolete">Tekrarla</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -4393,7 +4405,7 @@ Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">Yeni Proje</translation>
+        <translation type="obsolete">Yeni Proje</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -4413,7 +4425,7 @@ Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">Proje Aç</translation>
+        <translation type="obsolete">Proje Aç</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -4421,7 +4433,7 @@ Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">Projeyi açar</translation>
+        <translation type="obsolete">Projeyi açar</translation>
     </message>
     <message>
         <source>Open Project
@@ -4433,7 +4445,7 @@ Varolan bir projeyi açar</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">Proje Sil</translation>
+        <translation type="obsolete">Proje Sil</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4441,7 +4453,7 @@ Varolan bir projeyi açar</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">Proje siler</translation>
+        <translation type="obsolete">Proje siler</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4453,7 +4465,7 @@ Varolan bir projeyi siler</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished">Proje Kapat</translation>
+        <translation type="obsolete">Proje Kapat</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -4461,7 +4473,7 @@ Varolan bir projeyi siler</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished">Geçerli projeyi kapat</translation>
+        <translation type="obsolete">Geçerli projeyi kapat</translation>
     </message>
     <message>
         <source>Close Project
@@ -4473,7 +4485,7 @@ Geçerli olan projeyi kapatır</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
-        <translation type="unfinished">Kütükleri Projeye Ekle</translation>
+        <translation type="obsolete">Kütükleri Projeye Ekle</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -4497,7 +4509,7 @@ Kütükleri proje dizinine kopyalar</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">Tüm sayfayı görüntüler</translation>
+        <translation type="obsolete">Tüm sayfayı görüntüler</translation>
     </message>
     <message>
         <source>View All
@@ -4559,13 +4571,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">Seçme durumu</translation>
+        <translation type="obsolete">Seçme durumu</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">Seç
+        <translation type="obsolete">Seç
 
 Seçme durumu</translation>
     </message>
@@ -4605,7 +4617,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">Seçili elemanı x ekseni etrafında aynalar</translation>
+        <translation type="obsolete">Seçili elemanı x ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4621,7 +4633,7 @@ Seçili elemanı x ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">Seçili elemanı y ekseni etrafında aynalar</translation>
+        <translation type="obsolete">Seçili elemanı y ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4637,7 +4649,7 @@ Seçili elemanı y ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">Alt-devrenin içine girer</translation>
+        <translation type="obsolete">Alt-devrenin içine girer</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4685,7 +4697,7 @@ Seçili elemanı Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">Eşitlik ekler</translation>
+        <translation type="obsolete">Eşitlik ekler</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4701,7 +4713,7 @@ Kullanıcı tarafından belirlenen bit eşitlik ekler</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">Toprak Ekler</translation>
+        <translation type="obsolete">Toprak Ekler</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4717,7 +4729,7 @@ Toprak simgesi ekler</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">Ayak ekler</translation>
+        <translation type="obsolete">Ayak ekler</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4729,7 +4741,7 @@ Giriş/çıkış ayak(port) simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished">Bağlantı Hattı Ekle</translation>
+        <translation type="obsolete">Bağlantı Hattı Ekle</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -4737,7 +4749,7 @@ Giriş/çıkış ayak(port) simgesi ekler</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Bağlantı hattı ekler</translation>
+        <translation type="obsolete">Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Wire
@@ -4749,7 +4761,7 @@ Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished">Bağlantı Hattı/Ayak Etiketi Ekle</translation>
+        <translation type="obsolete">Bağlantı Hattı/Ayak Etiketi Ekle</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -4769,7 +4781,7 @@ Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished">Metin Düzenleyici</translation>
+        <translation type="obsolete">Metin Düzenleyici</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -4901,7 +4913,7 @@ DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished">İşaretçi Koy</translation>
+        <translation type="obsolete">İşaretçi Koy</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -4953,7 +4965,7 @@ Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">Araç Çubuğu</translation>
+        <translation type="obsolete">Araç Çubuğu</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -4973,7 +4985,7 @@ Araç çubuğunu etkinleştir/kapat</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Durumçubuğu</translation>
+        <translation type="obsolete">Durumçubuğu</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -4990,10 +5002,6 @@ Enables/disables the statusbar</source>
         <translation type="unfinished">Durumçubuğu
 
 Durumçubuğunu Etkinleştirir/kapatır</translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5013,7 +5021,7 @@ Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translatio
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">Başlarken</translation>
+        <translation type="obsolete">Başlarken</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5033,7 +5041,7 @@ Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Hakkında</translation>
+        <translation type="obsolete">Hakkında</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5041,7 +5049,7 @@ Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Uygulama hakkında</translation>
+        <translation type="obsolete">Uygulama hakkında</translation>
     </message>
     <message>
         <source>About
@@ -5208,10 +5216,6 @@ Trolltech tarafından Qt hakkında</translation>
         <translation type="unfinished">Macarca, Jozsef Bus tarafından</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5237,6 +5241,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7677,6 +7753,10 @@ Hatalar:
 -------------
 
 </translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

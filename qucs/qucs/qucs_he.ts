@@ -3336,6 +3336,26 @@ Usage:  qucsedit [-r] file
         <source>time when state changes (semicolon separated list possible)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of VHDL file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vhdl</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4078,10 +4098,6 @@ Creates a new schematic or data display document</source>
  יוצר סכמה חדשה או מסמך תצוגת מידע</translation>
     </message>
     <message>
-        <source>New Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New &amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4097,7 +4113,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">פתח קובץ</translation>
+        <translation type="obsolete">פתח קובץ</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -4117,7 +4133,7 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">שמור קובץ</translation>
+        <translation type="obsolete">שמור קובץ</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -4133,7 +4149,7 @@ Saves the current document</source>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">שמור קובץ בתור</translation>
+        <translation type="obsolete">שמור קובץ בתור</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4153,7 +4169,7 @@ Saves the current document under a new filename</source>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">שמור כל הקבצים</translation>
+        <translation type="obsolete">שמור כל הקבצים</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
@@ -4173,7 +4189,7 @@ Saves all open documents</source>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">סגור קובץ</translation>
+        <translation type="obsolete">סגור קובץ</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -4196,16 +4212,12 @@ Closes the current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Document Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Settings...</source>
-        <translation type="unfinished">הגדרות מסמך...</translation>
+        <translation type="obsolete">הגדרות מסמך...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">הגדרות מסמך</translation>
+        <translation type="obsolete">הגדרות מסמך</translation>
     </message>
     <message>
         <source>Settings
@@ -4217,7 +4229,7 @@ Sets properties of the file</source>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">הדפס קובץ</translation>
+        <translation type="obsolete">הדפס קובץ</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -4237,7 +4249,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished">הדפך אלמנטים נבחרים</translation>
+        <translation type="obsolete">הדפך אלמנטים נבחרים</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -4245,7 +4257,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished">מדפיס אלמנטים שנבחרו</translation>
+        <translation type="obsolete">מדפיס אלמנטים שנבחרו</translation>
     </message>
     <message>
         <source>Print Selected Elements
@@ -4257,7 +4269,7 @@ Prints selected elements of the current document</source>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">צא</translation>
+        <translation type="obsolete">צא</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -4277,7 +4289,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">הגדרות תוכנית</translation>
+        <translation type="obsolete">הגדרות תוכנית</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -4416,10 +4428,6 @@ Moves the property text of components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
@@ -4427,7 +4435,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">גזור</translation>
+        <translation type="obsolete">גזור</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -4435,19 +4443,19 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
+        <translation type="obsolete">גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">גזור
+        <translation type="obsolete">גזור
 
 גוזר את האזור הנבחר ומעתיק אותו לקליפבורד</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">העתק</translation>
+        <translation type="obsolete">העתק</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -4455,19 +4463,19 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">מעתיק את הבחירה לקליפבורד</translation>
+        <translation type="obsolete">מעתיק את הבחירה לקליפבורד</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">העתק
+        <translation type="obsolete">העתק
 
 מעתיק את הבחירה לקליפבורד</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">הדבק</translation>
+        <translation type="obsolete">הדבק</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -4503,7 +4511,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">חזור</translation>
+        <translation type="obsolete">חזור</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -4523,7 +4531,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">עשה שוב</translation>
+        <translation type="obsolete">עשה שוב</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -4543,7 +4551,7 @@ Repeats the last action once more</source>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">פרוייקט חדש</translation>
+        <translation type="obsolete">פרוייקט חדש</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
@@ -4563,7 +4571,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">פתח פרוייקט</translation>
+        <translation type="obsolete">פתח פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
@@ -4571,7 +4579,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">פותח פרוייקט</translation>
+        <translation type="obsolete">פותח פרוייקט</translation>
     </message>
     <message>
         <source>Open Project
@@ -4583,7 +4591,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">מחק פרוייקט</translation>
+        <translation type="obsolete">מחק פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
@@ -4591,7 +4599,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">מוחק פרוייקט</translation>
+        <translation type="obsolete">מוחק פרוייקט</translation>
     </message>
     <message>
         <source>Delete Project
@@ -4603,7 +4611,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished">סגור פרוייקט</translation>
+        <translation type="obsolete">סגור פרוייקט</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
@@ -4611,7 +4619,7 @@ Deletes an existing project</source>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished">סגור פרוייקט נוכחי</translation>
+        <translation type="obsolete">סגור פרוייקט נוכחי</translation>
     </message>
     <message>
         <source>Close Project
@@ -4620,10 +4628,6 @@ Closes the current project</source>
         <translation type="unfinished">סגור פרוייקט
 
 סוגר את הפרוייקט הנוכחי</translation>
-    </message>
-    <message>
-        <source>Add Files to Project</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
@@ -4645,7 +4649,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">צופה בכל הדף</translation>
+        <translation type="obsolete">צופה בכל הדף</translation>
     </message>
     <message>
         <source>View All
@@ -4707,13 +4711,13 @@ Zooms out the current view</source>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">בחר מצב</translation>
+        <translation type="obsolete">בחר מצב</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">בחר
+        <translation type="obsolete">בחר
 
 בחר מצב</translation>
     </message>
@@ -4755,7 +4759,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">מעתיק את הפריט על ציר הX (דמוי מראה)</translation>
+        <translation type="obsolete">מעתיק את הפריט על ציר הX (דמוי מראה)</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -4771,7 +4775,7 @@ Mirrors the selected item about X Axis</source>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">מעתיק את הפריט על ציר הY (דמוי מראה)</translation>
+        <translation type="obsolete">מעתיק את הפריט על ציר הY (דמוי מראה)</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -4787,7 +4791,7 @@ Mirrors the selected item about Y Axis</source>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">נכנס לתת-מעגל</translation>
+        <translation type="obsolete">נכנס לתת-מעגל</translation>
     </message>
     <message>
         <source>Go into Subcircuit
@@ -4835,7 +4839,7 @@ Deactivate/Activate the selected item</source>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">הכנס משוואה</translation>
+        <translation type="obsolete">הכנס משוואה</translation>
     </message>
     <message>
         <source>Insert Equation
@@ -4851,7 +4855,7 @@ Inserts a user defined equation</source>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">מכניס אדמה</translation>
+        <translation type="obsolete">מכניס אדמה</translation>
     </message>
     <message>
         <source>Insert Ground
@@ -4867,7 +4871,7 @@ Inserts a ground symbol</source>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">מכניס פורט</translation>
+        <translation type="obsolete">מכניס פורט</translation>
     </message>
     <message>
         <source>Insert Port
@@ -4879,7 +4883,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished">הכנס חוט</translation>
+        <translation type="obsolete">הכנס חוט</translation>
     </message>
     <message>
         <source>Wire</source>
@@ -4887,7 +4891,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">מכניס חוט</translation>
+        <translation type="obsolete">מכניס חוט</translation>
     </message>
     <message>
         <source>Wire
@@ -4899,7 +4903,7 @@ Inserts a wire</source>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished">הכנס חוט\תוית פין</translation>
+        <translation type="obsolete">הכנס חוט\תוית פין</translation>
     </message>
     <message>
         <source>Wire Label</source>
@@ -4916,10 +4920,6 @@ Inserts a wire or pin label</source>
         <translation type="unfinished">תוית חוט
 
 מכניס חוט או תוית פין</translation>
-    </message>
-    <message>
-        <source>Text editor</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5039,7 +5039,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished">קבע סמן</translation>
+        <translation type="obsolete">קבע סמן</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
@@ -5091,7 +5091,7 @@ Shows the netlist of the last simulation</source>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">סרגל כלים</translation>
+        <translation type="obsolete">סרגל כלים</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
@@ -5111,7 +5111,7 @@ Enables/disables the toolbar</source>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">שורת סטאטוס</translation>
+        <translation type="obsolete">שורת סטאטוס</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -5128,10 +5128,6 @@ Enables/disables the statusbar</source>
         <translation type="unfinished">שורת סטאטוס
 
 מראה\מחביא את שורת הסטאטוס</translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Help Index...</source>
@@ -5151,7 +5147,7 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">מתחילים</translation>
+        <translation type="obsolete">מתחילים</translation>
     </message>
     <message>
         <source>Getting Started...</source>
@@ -5171,7 +5167,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">אודות</translation>
+        <translation type="obsolete">אודות</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
@@ -5179,7 +5175,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">אודות האפליקציה</translation>
+        <translation type="obsolete">אודות האפליקציה</translation>
     </message>
     <message>
         <source>About
@@ -5346,10 +5342,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished">Hungarian by Jozsef Bus</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Find...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5375,6 +5367,78 @@ Searches for a piece of text</source>
         <source>Find
 
 Searches for the same piece of text again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document was modified by another program !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to reload or keep this version ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut
+
+Cuts out the selection and puts it into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy
+
+Copies the selection into the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the whole page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select
+
+Activates select mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts sceleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the sceleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Russian by Igor Gorbounov</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7635,6 +7699,10 @@ Errors:
     </message>
     <message>
         <source>creating netlist... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot copy &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
