@@ -3656,23 +3656,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: In der VHDL-Komponente &quot;%1&quot; fehlt der Dateiname.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die VHDL-Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-Datei</translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der VHDL-Datei</translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
 </context>
 <context>
@@ -5904,75 +5904,83 @@ Sucht nach dem gleichen Text noch einmal</translation>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Dokument wurde durch ein anderes Programm modifiziert !</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soll neu geladen werden oder mit dieser Version weitergearbeitet werden ?</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu laden</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>Erhalten</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dokumenteneinstellungen...</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneidet die Auswahl aus und legt sie in die Zwischenablage</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausschneiden
+
+Schneidet die Auswahl aus und legt sie in die Zwischenablage</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiert die Auswahl in die Zwischenablage</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren
+
+Kopiert die Auswahl in die Zwischenablage</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständige Seite anzeigen</translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivieren des Auswahlmodus</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswählen
+
+Aktiviert den Auswahlmodus</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-Entität</translation>
     </message>
     <message>
         <source>Inserts sceleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt das Gerüst der VHDL-Entität ein</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the sceleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-Entität
+
+Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>Russisch von Igor Gorbounov</translation>
     </message>
 </context>
 <context>
@@ -10123,7 +10131,7 @@ Fehler:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Datei &quot;%1&quot; kann nicht kopiert werden !</translation>
     </message>
 </context>
 <context>
