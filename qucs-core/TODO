@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Implement open/short in S-parameter component during DC.
+- Support for touchstone as an export file format in the Qucs Converter.
 - Translate switches in spice netlists in the netlist converter.
 - Support for equation defined voltage/current sources or components.
 - Allow equations in subcircuits.
