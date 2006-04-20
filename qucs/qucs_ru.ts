@@ -616,15 +616,15 @@
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжительность моделирования:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
 </context>
 <context>
@@ -3651,7 +3651,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>время, когда изменяется состояние (возможен список, разделенный двоеточиями)</translation>
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
@@ -3971,7 +3971,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">О&amp;ткрыть</translation>
+        <translation>&amp;Открыть...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
@@ -4685,7 +4685,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Должно быть выбрано хотя бы два элемента!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
@@ -4697,7 +4697,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить программу расчета линий передач!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
@@ -4705,7 +4705,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить программу qucshelp!</translation>
     </message>
     <message>
         <source>No project open!</source>
@@ -4739,7 +4739,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished">Die Datei &quot;%1&quot; kann nicht gelesen werden !</translation>
+        <translation>Невозможно прочитать файл &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
@@ -4766,26 +4766,36 @@ Overwrite ?</source>
         <translation>Неправильная зависимость!</translation>
     </message>
     <message>
+        <source>New Text</source>
+        <translation type="obsolete">Новый текст</translation>
+    </message>
+    <message>
         <source>New &amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый &amp;текст</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Создает новый текстовый документ</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый текст
+
+Создает новый текстовый документ</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить как...</translation>
     </message>
     <message>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Изменить обозначение схемы</translation>
+    </message>
+    <message>
+        <source>&amp;Document Settings</source>
+        <translation type="obsolete">Настройки &amp;документа</translation>
     </message>
     <message>
         <source>Document Settings...</source>
@@ -4981,7 +4991,7 @@ Pastes the clipboard contents to the cursor position</source>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Удалить</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
@@ -4996,32 +5006,40 @@ Deletes the selected components</source>
 Удаляет выделенные компоненты</translation>
     </message>
     <message>
+        <source>Find</source>
+        <translation type="obsolete">Поиск</translation>
+    </message>
+    <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти текст</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск
+
+Поиск текста</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти следующее</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти тот же текст еще раз</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск
+
+Поиск того же текста еще раз</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -5039,7 +5057,11 @@ Searches for the same piece of text again</source>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить
+
+Отменяет последнее действие
+
+</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -5057,7 +5079,9 @@ Makes the last action undone</source>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>Вернуть
+
+Повторяет последнее действие еще раз</translation>
     </message>
     <message>
         <source>New Project</source>
@@ -5085,7 +5109,7 @@ Creates a new project</source>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Открыть проект...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -5164,10 +5188,16 @@ Copies files to project directory</source>
         <translation>Показать все</translation>
     </message>
     <message>
+        <source>Views the whole page</source>
+        <translation type="obsolete">Просмотр всей страницы</translation>
+    </message>
+    <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать все
+
+Просмотр содержимого всей страницы</translation>
     </message>
     <message>
         <source>View 1:1</source>
@@ -5175,7 +5205,7 @@ Shows the whole page content</source>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр без увеличения</translation>
     </message>
     <message>
         <source>View 1:1
@@ -5213,7 +5243,9 @@ Zooms the current view</source>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Уменьшить масштаб
+
+Уменьшает текущее изображение</translation>
     </message>
     <message>
         <source>Select</source>
@@ -5243,7 +5275,9 @@ Select mode</source>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделить все
+
+Выделяет все элементы документа</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -5311,17 +5345,19 @@ Goes inside the selected subcircuit</source>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из подсхемы</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти
+
+Поднимает на один уровень иерархии вверх, т. е. покидает подсхему</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
@@ -5652,6 +5688,10 @@ Enables/disables the statusbar</source>
 Включает/выключает строку состояния</translation>
     </message>
     <message>
+        <source>Help Index</source>
+        <translation type="obsolete">Содержание справки</translation>
+    </message>
+    <message>
         <source>Help Index...</source>
         <translation>Содержание справки...</translation>
     </message>
@@ -5773,7 +5813,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключение панели инструментов...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -5793,7 +5833,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"> Michael Margraf</translation>
+        <translation>Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
@@ -5801,7 +5841,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL симулятор &apos;FreeHDL&apos; Эдвина Нароска (Edwin Naroska) и Мариуса Вольмера (Marius Vollmer)</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
@@ -5809,7 +5849,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation>Большая благодарность Майку Бринсону (Mike Brinson) за внесение поправок в результаты VHDL</translation>
     </message>
     <message>
         <source>Translations:</source>
@@ -9407,7 +9447,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Русский</translation>
     </message>
 </context>
 <context>
@@ -9858,39 +9898,39 @@ are included in the search.</source>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти текст</translation>
     </message>
     <message>
         <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти:</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>С позиции курсора</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Учитывать регистр</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только полные слова</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Обратный поиск</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Найти...</translation>
+        <translation>Найти...</translation>
     </message>
     <message>
         <source>Could not find search string!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно найти строку!</translation>
     </message>
 </context>
 <context>
@@ -10198,15 +10238,15 @@ Errors:
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет выделения!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Страница %1 из %2</translation>
     </message>
 </context>
 </TS>
