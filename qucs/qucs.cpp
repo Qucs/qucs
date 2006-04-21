@@ -1012,10 +1012,10 @@ bool QucsApp::gotoPage(const QString& Name)
   }
 
   QFileInfo Info(Name);
-  if(Info.extension(false) == "vhdl")
-    d = new TextDoc(this, Name);
-  else
+  if((Info.extension(false) == "sch") || (Info.extension(false) == "dpl"))
     d = new Schematic(this, Name);
+  else
+    d = new TextDoc(this, Name);
 
   if(!d->load()) {    // load document if possible
     delete d;
@@ -1537,7 +1537,8 @@ void QucsApp::slotPopHierarchy()
   }
 
   HierarchyHistory.remove();
-  if(HierarchyHistory.count() == 0) popH->setEnabled(false);
+  if(HierarchyHistory.count() == 0)
+    popH->setEnabled(false);
 }
 
 // --------------------------------------------------------------
@@ -1889,7 +1890,6 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   editMirror->setEnabled(SchematicMode);
   editMirrorY->setEnabled(SchematicMode);
   intoH->setEnabled(SchematicMode);
-  popH->setEnabled(SchematicMode);
   dcbias->setEnabled(SchematicMode);
   insWire->setEnabled(SchematicMode);
   insLabel->setEnabled(SchematicMode);

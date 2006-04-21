@@ -23,20 +23,10 @@
 #include <qtextedit.h>
 #include <qsyntaxhighlighter.h>
 
+class SyntaxHighlighter;
+
 extern const char *smallsave_xpm[];// icon for unsaved files (diskette)
 extern const char *empty_xpm[];    // provides same height than "smallsave_xpm"
-
-
-class SyntaxHighlighter : public QSyntaxHighlighter {
-public:
- SyntaxHighlighter(QTextEdit*);
- virtual ~SyntaxHighlighter();
-
- int highlightParagraph(const QString&, int);
-
-private:
-  void markWord(const QString&, int, int);
-};
 
 
 class TextDoc : public QTextEdit, public QucsDoc {
@@ -65,6 +55,19 @@ public slots:
 private:
   bool undoIsAvailable, redoIsAvailable;
   SyntaxHighlighter *syntaxHighlight;
+};
+
+
+class SyntaxHighlighter : public QSyntaxHighlighter {
+public:
+ SyntaxHighlighter(TextDoc*);
+ virtual ~SyntaxHighlighter();
+
+ int highlightParagraph(const QString&, int);
+
+private:
+  TextDoc *Doc;
+  void markWord(const QString&, int, int);
 };
 
 #endif
