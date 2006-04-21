@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.6 2006/04/18 08:03:11 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.7 2006/04/21 08:02:02 raimi Exp $
  *
  */
 
@@ -125,8 +125,10 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 	// duplicate value change
 	vv->value = vc->value;
 	vv->isreal = vc->isreal;
-	fprintf (stderr, "vcd notice, duplicate value change at t = %d of "
-		 "variable `%s'\n", current->t, vc->var->ident);
+	if (current->t > 0) { // due to a $dumpvars before
+	  fprintf (stderr, "vcd notice, duplicate value change at t = %d of "
+		   "variable `%s'\n", current->t, vc->var->ident);
+	}
       }
       else {
 	// add variable to set

@@ -1,3 +1,8 @@
+2006-04-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp: Suppressing unnecessary vcd notice about
+	duplicate value changes due to $dumpvars statements.
+
 2006-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Allowing '-' in model identifiers.
