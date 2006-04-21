@@ -1,7 +1,13 @@
+2006-04-20  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug of disappearing wires after component update
+	* fixed bug omitting first character of VHDL entity
+	* new action: go into VHDL file
+	* *.vhdl/*.vhd suffix for component dialog (browse)
+
 2006-04-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_it.ts: Applied Italian translation updates.
-
 	* qucs_ru.ts: Added Russian translations.  Thanks to Igor.
 
 2006-04-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>

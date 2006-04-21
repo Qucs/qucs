@@ -193,7 +193,7 @@ void MouseActions::endElementMoving(Schematic *Doc, QPtrList<Element> *movElemen
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	Doc->insertRawComponent((Component*)pe);
+	Doc->insertRawComponent((Component*)pe, false);
 	break;
       case isMovingLabel:
       case isHMovingLabel:

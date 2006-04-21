@@ -67,8 +67,10 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 
 TextDoc::~TextDoc()
 {
-  if(App)
+  if(App) {
+    delete syntaxHighlight;
     App->DocumentTab->removePage(this);  // delete tab in TabBar
+  }
 }
 
 // ---------------------------------------------------
@@ -295,9 +297,10 @@ void TextDoc::outcommmentSelected()
 // **********                                             **********
 // *****************************************************************
 
-SyntaxHighlighter::SyntaxHighlighter(QTextEdit *textEdit) 
+SyntaxHighlighter::SyntaxHighlighter(TextDoc *textEdit) 
                  : QSyntaxHighlighter(textEdit)
 {
+  Doc = textEdit;
 }
 
 SyntaxHighlighter::~SyntaxHighlighter()
@@ -310,7 +313,9 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
   QChar c;
   bool isFloat=false;
   int  iString=-1, iWord=-1, iNumber=-1, iExpo=-1, i=0;
-  setFormat(0, text.length(), QucsSettings.font, QPen::black);
+  QFont font = QucsSettings.font;
+  font.setPointSize((int)Doc->Scale);
+  setFormat(0, text.length(), font, QPen::black);
 
   for(c = text.at(i); !c.isNull(); c = text.at(++i)) {
     if(iString >= 0) {
@@ -448,6 +453,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     for( ; *List != 0; List++)
       if(Word == *List) {
         QFont boldFont = QucsSettings.font;
+        boldFont.setPointSize((int)Doc->Scale);
         boldFont.setWeight(QFont::Bold);
         setFormat(start, len, boldFont);
         return;
@@ -457,6 +463,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     if(Word == *List) {
       QFont boldFont = QucsSettings.font;
       boldFont.setWeight(QFont::Bold);
+      boldFont.setPointSize((int)Doc->Scale);
       setFormat(start, len, boldFont, Qt::darkMagenta);
       return;
     }
