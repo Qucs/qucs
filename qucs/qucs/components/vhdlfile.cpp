@@ -120,7 +120,7 @@ QString VHDL_File::loadFile()
     i = File.find(Expr, k+7);
     if(i < 0)
       return QString("");
-    s = File.mid(k+8, i-k-8);  // cut out entity declaration
+    s = File.mid(k+7, i-k-7);  // cut out entity declaration
 
     Expr.setPattern("\\b");
     i = s.find(Expr);

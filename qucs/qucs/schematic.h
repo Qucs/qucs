@@ -164,8 +164,7 @@ public:
   bool     distribVert();
 
   void       setComponentNumber(Component*);
-  void       insertComponentNodes(Component*);
-  void       insertRawComponent(Component*, bool num=false);
+  void       insertRawComponent(Component*, bool noOptimize=true);
   void       recreateComponent(Component*);
   void       insertComponent(Component*);
   void       activateComps(int, int, int, int);
@@ -188,6 +187,8 @@ public:
   Painting* selectedPainting(int, int);
   void      copyPaintings(int&, int&, int&, int&, QPtrList<Element>*);
 
+public:
+  void insertComponentNodes(Component*, bool);
 
 
 /* ********************************************************************
