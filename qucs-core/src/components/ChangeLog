@@ -1,3 +1,8 @@
+2006-04-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Fixed a bug during transient analysis due
+	to wrong Cbcx computation.
+
 2006-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp (calcHB): Setup callbacks for the HB

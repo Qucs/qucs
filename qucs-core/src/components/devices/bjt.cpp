@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.39 2006-04-19 07:03:26 raimi Exp $
+ * $Id: bjt.cpp,v 1.40 2006-04-21 08:02:02 raimi Exp $
  *
  */
 
@@ -514,6 +514,11 @@ void bjt::saveOperatingPoints (void) {
   setOperatingPoint ("Vbc", Ubc);
   setOperatingPoint ("Vce", Ube - Ubc);
   setOperatingPoint ("Vcs", Ucs);
+  if (deviceEnabled (cbcx)) {
+    nr_double_t Ubx;
+    Ubx = real (cbcx->getV (NODE_1) - cbcx->getV (NODE_2)) * pol;
+    setOperatingPoint ("Vbx", Ubx);
+  }
 }
 
 void bjt::calcOperatingPoints (void) {
@@ -536,7 +541,7 @@ void bjt::calcOperatingPoints (void) {
   nr_double_t Itf  = getScaledProperty ("Itf");
   nr_double_t Tr   = getPropertyDouble ("Tr");
 
-  nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Ucs, Cbc, Ccs;
+  nr_double_t Cbe, Ube, Ubc, Ubx, Cbci, Cbcx, Ucs, Ccs;
 
   // interpret zero as infinity for that model parameter
   Vtf = Vtf > 0 ? 1.0 / Vtf : 0;
@@ -544,13 +549,14 @@ void bjt::calcOperatingPoints (void) {
   Ube = getOperatingPoint ("Vbe");
   Ubc = getOperatingPoint ("Vbc");
   Ucs = getOperatingPoint ("Vcs");
+  Ubx = getOperatingPoint ("Vbx");
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
   Qbe = pnCharge (Ube, Cje0, Vje, Mje, Fc);
 
   // diffusion capacitance of base-emitter diode
-  if (If != 0) {
+  if (If != 0.0) {
     nr_double_t e, Tff, dTffdUbe;
     e = 2 * exp (MIN (Ubc * Vtf, 709));
     Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
@@ -560,13 +566,12 @@ void bjt::calcOperatingPoints (void) {
   }
 
   // depletion and diffusion capacitance of base-collector diode
-  nr_double_t Qbc;
-  Cbc = pnCapacitance (Ubc, Cjc0, Vjc, Mjc, Fc);
-  Cbci = Cbc * Xcjc + Tr * gir;
-  Qbc = pnCharge (Ubc, Cjc0, Vjc, Mjc, Fc);
-  Qbci = Xcjc * Qbc + Tr * Ir;
-  Cbcx = Cbc * (1 - Xcjc);
-  Qbcx = Qbc * (1 - Xcjc);
+  Cbci = pnCapacitance (Ubc, Cjc0 * Xcjc, Vjc, Mjc, Fc) + Tr * gir;
+  Qbci = pnCharge (Ubc, Cjc0 * Xcjc, Vjc, Mjc, Fc) + Tr * Ir;
+
+  // depletion and diffusion capacitance of external base-collector capacitor
+  Cbcx = pnCapacitance (Ubx, Cjc0 * (1 - Xcjc), Vjc, Mjc, Fc);
+  Qbcx = pnCharge (Ubx, Cjc0 * (1 - Xcjc), Vjc, Mjc, Fc);
 
   // depletion capacitance of collector-substrate diode
   Ccs = pnCapacitance (Ucs, Cjs0, Vjs, Mjs);
@@ -604,7 +609,7 @@ void bjt::processCbcx (void) {
      collector node and external base node */
   if (Rbm != 0.0 && Cjc0 != 0.0 && Xcjc != 1.0) {
     if (!deviceEnabled (cbcx)) {
-      cbcx = splitCapacitor (this, cbcx, "Cbcx", rb->getNode (0),
+      cbcx = splitCapacitor (this, cbcx, "Cbcx", rb->getNode (NODE_1),
 			     getNode (NODE_C));
     }
     cbcx->setProperty ("C", getOperatingPoint ("Cbcx"));
@@ -658,11 +663,12 @@ void bjt::calcTR (nr_double_t t) {
   saveOperatingPoints ();
   calcOperatingPoints ();
 
-  nr_double_t Ube = getOperatingPoint ("Vbe");
-  nr_double_t Ubc = getOperatingPoint ("Vbc");
-  nr_double_t Ucs = getOperatingPoint ("Vcs");
-  nr_double_t Cbe = getOperatingPoint ("Cbe");
-  nr_double_t Ccs = getOperatingPoint ("Ccs");
+  nr_double_t Ube  = getOperatingPoint ("Vbe");
+  nr_double_t Ubc  = getOperatingPoint ("Vbc");
+  nr_double_t Ucs  = getOperatingPoint ("Vcs");
+  nr_double_t Ubx  = getOperatingPoint ("Vbx");
+  nr_double_t Cbe  = getOperatingPoint ("Cbe");
+  nr_double_t Ccs  = getOperatingPoint ("Ccs");
   nr_double_t Cbci = getOperatingPoint ("Cbci");
   nr_double_t Cbcx = getOperatingPoint ("Cbcx");
 
@@ -673,7 +679,7 @@ void bjt::calcTR (nr_double_t t) {
     if (deviceEnabled (cbcx)) {
       cbcx->clearI ();
       cbcx->clearY ();
-      cbcx->transientCapacitance (qbxState, NODE_1, NODE_2, Cbcx, Ubc, Qbcx);
+      cbcx->transientCapacitance (qbxState, NODE_1, NODE_2, Cbcx, Ubx, Qbcx);
     }
   }
 
