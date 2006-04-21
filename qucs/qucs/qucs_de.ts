@@ -316,6 +316,10 @@
         <source>SPICE files</source>
         <translation>SPICE Dateien</translation>
     </message>
+    <message>
+        <source>VHDL files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -5968,19 +5972,31 @@ Aktiviert den Auswahlmodus</translation>
     </message>
     <message>
         <source>Inserts sceleton of VHDL entity</source>
-        <translation>Fügt das Gerüst der VHDL-Entität ein</translation>
+        <translation type="obsolete">Fügt das Gerüst der VHDL-Entität ein</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the sceleton of a VHDL entity</source>
-        <translation>VHDL-Entität
+        <translation type="obsolete">VHDL-Entität
 
 Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
         <translation>Russisch von Igor Gorbounov</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation>Fügt das Gerüst einer VHDL-Entität ein</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation>VHDL-Entität
+
+Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
 </context>
 <context>

@@ -324,6 +324,10 @@
         <source>SPICE files</source>
         <translation>File SPICE</translation>
     </message>
+    <message>
+        <source>VHDL files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -5991,17 +5995,17 @@ Activates select mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Inserts sceleton of VHDL entity</source>
+        <source>Russian by Igor Gorbounov</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>VHDL entity
 
-Inserts the sceleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Russian by Igor Gorbounov</source>
+Inserts the skeleton of a VHDL entity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
