@@ -1778,12 +1778,14 @@ void Schematic::setComponentNumber(Component *c)
 }
 
 // ---------------------------------------------------
-void Schematic::insertComponentNodes(Component *c)
+void Schematic::insertComponentNodes(Component *c, bool noOptimize)
 {
   Port *pp;
   // connect every node of the component to corresponding schematic node
   for(pp = c->Ports.first(); pp != 0; pp = c->Ports.next())
     pp->Connection = insertNode(pp->x+c->cx, pp->y+c->cy, c);
+
+  if(noOptimize)  return;
 
   Node    *pn;
   Element *pe, *pe1;
@@ -1808,12 +1810,10 @@ void Schematic::insertComponentNodes(Component *c)
 
 // ---------------------------------------------------
 // Used for example in moving components.
-void Schematic::insertRawComponent(Component *c, bool num)
+void Schematic::insertRawComponent(Component *c, bool noOptimize)
 {
   // connect every node of component to corresponding schematic node
-  insertComponentNodes(c);
-
-  if(num) setComponentNumber(c);
+  insertComponentNodes(c, noOptimize);
   Components->append(c);
 
   // a ground symbol erases an existing label on the wire line
@@ -1888,7 +1888,7 @@ void Schematic::recreateComponent(Component *Comp)
 void Schematic::insertComponent(Component *c)
 {
   // connect every node of component to corresponding schematic node
-  insertComponentNodes(c);
+  insertComponentNodes(c, false);
 
   bool ok;
   QString s;
@@ -2042,7 +2042,8 @@ Component* Schematic::searchSelSubcircuit()
   // test all components
   for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
     if(!pc->isSelected) continue;
-    if(pc->Model != "Sub") continue;
+    if(pc->Model != "Sub")
+      if(pc->Model != "VHDL") continue;
 
     if(sub != 0) return 0;    // more than one subcircuit selected
     sub = pc;

@@ -91,6 +91,8 @@ void SearchDialog::searchText(bool fromCursor, int Offset)
   if(!BackwardBox->isChecked())
     Column += Offset;
 
+  if(SearchEdit->text().isEmpty())
+    return;
   if(!Doc->find(SearchEdit->text(), CaseBox->isChecked(),
          WordBox->isChecked(), !BackwardBox->isChecked(), &Line, &Column)) {
     QMessageBox::information(Doc, tr("Search..."),
