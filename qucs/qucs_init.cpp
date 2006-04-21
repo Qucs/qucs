@@ -429,9 +429,9 @@ void QucsApp::initActions()
   connect(insLabel, SIGNAL(toggled(bool)), SLOT(slotInsertLabel(bool)));
 
   insEntity = new QAction(tr("VHDL entity"), CTRL+Key_Space, this);
-  insEntity->setStatusTip(tr("Inserts sceleton of VHDL entity"));
+  insEntity->setStatusTip(tr("Inserts skeleton of VHDL entity"));
   insEntity->setWhatsThis(
-	tr("VHDL entity\n\nInserts the sceleton of a VHDL entity"));
+	tr("VHDL entity\n\nInserts the skeleton of a VHDL entity"));
   connect(insEntity, SIGNAL(activated()), SLOT(slotInsertEntity()));
 
   callEditor = new QAction(tr("Text Editor"), CTRL+Key_1, this);
