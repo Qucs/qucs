@@ -35,6 +35,12 @@
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 {
+  tmpPosX = tmpPosY = 0;
+  Scale = (float)QucsSettings.font.pointSize();
+
+  undoIsAvailable = redoIsAvailable = false;
+  setUndoDepth(QucsSettings.maxUndo);
+
   QFileInfo Info(Name_);
   if(App) {
     if(Name_.isEmpty())
@@ -57,12 +63,6 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 
     syntaxHighlight = new SyntaxHighlighter(this);
   }
-
-  tmpPosX = tmpPosY = 0;
-  Scale = (float)QucsSettings.font.pointSize();
-
-  undoIsAvailable = redoIsAvailable = false;
-  setUndoDepth(QucsSettings.maxUndo);
 }
 
 TextDoc::~TextDoc()

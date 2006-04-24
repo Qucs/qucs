@@ -318,7 +318,7 @@
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL Dateien</translation>
     </message>
 </context>
 <context>
