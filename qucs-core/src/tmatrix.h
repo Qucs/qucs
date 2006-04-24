@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.h,v 1.13 2006-04-18 08:03:11 raimi Exp $
+ * $Id: tmatrix.h,v 1.14 2006-04-24 08:25:46 raimi Exp $
  *
  */
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
+
+#include <assert.h>
 
 template <class nr_type_t>
 class tmatrix;
@@ -80,8 +82,12 @@ class tmatrix
   tmatrix operator -= (tmatrix);
 
   // easy accessor operators
-  nr_type_t  operator () (int r, int c) const { return data[r * cols + c]; }
-  nr_type_t& operator () (int r, int c) { return data[r * cols + c]; }
+  nr_type_t  operator () (int r, int c) const {
+    assert (r >= 0 && r < rows && c >= 0 && c < cols);
+    return data[r * cols + c]; }
+  nr_type_t& operator () (int r, int c) {
+    assert (r >= 0 && r < rows && c >= 0 && c < cols);
+    return data[r * cols + c]; }
 
  private:
   int cols;

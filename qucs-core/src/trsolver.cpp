@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.44 2006-02-25 14:42:50 raimi Exp $
+ * $Id: trsolver.cpp,v 1.45 2006-04-24 08:25:46 raimi Exp $
  *
  */
 
@@ -61,6 +61,7 @@ trsolver::trsolver ()
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = NULL;
+  relaxTSR = false;
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -71,6 +72,7 @@ trsolver::trsolver (char * n)
   setDescription ("transient");
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = NULL;
+  relaxTSR = false;
 }
 
 // Destructor deletes the trsolver class object.
@@ -87,6 +89,7 @@ trsolver::trsolver (trsolver & o)
   swp = o.swp ? new sweep (*o.swp) : NULL;
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = o.tHistory ? new history (*o.tHistory) : NULL;
+  relaxTSR = o.relaxTSR;
 }
 
 // This function creates the time sweep if necessary.
@@ -501,26 +504,28 @@ void trsolver::adjustDelta (nr_double_t t) {
 
   // delta correction in order to hit exact breakpoint
   int good = 0;
-  if (!statConvergence || converged > 64) { /* Is this a good guess? */
-    // check next breakpoint
-    if (stepDelta > 0.0) {
-      // restore last valid delta
-      delta = stepDelta;
-      stepDelta = -1.0;
-    }
-    else {
-      if (delta > (t - current) && t > current) {
-	// save last valid delta and set exact step
-	stepDelta = deltaOld;
-	delta = t - current;
-	good = 1;
-      }
-      else {
+  if (!relaxTSR) { // relaxed step raster?
+    if (!statConvergence || converged > 64) { /* Is this a good guess? */
+      // check next breakpoint
+      if (stepDelta > 0.0) {
+	// restore last valid delta
+	delta = stepDelta;
 	stepDelta = -1.0;
       }
+      else {
+	if (delta > (t - current) && t > current) {
+	  // save last valid delta and set exact step
+	  stepDelta = deltaOld;
+	  delta = t - current;
+	  good = 1;
+	}
+	else {
+	  stepDelta = -1.0;
+	}
+      }
+      if (delta > deltaMax) delta = deltaMax;
+      if (delta < deltaMin) delta = deltaMin;
     }
-    if (delta > deltaMax) delta = deltaMax;
-    if (delta < deltaMin) delta = deltaMin;
   }
 
   // usual delta correction

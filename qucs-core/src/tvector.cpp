@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.15 2006-04-18 08:03:11 raimi Exp $
+ * $Id: tvector.cpp,v 1.16 2006-04-24 08:25:46 raimi Exp $
  *
  */
 
@@ -107,12 +107,14 @@ tvector<nr_type_t>::~tvector () {
 // Returns the tvector element at the given position.
 template <class nr_type_t>
 nr_type_t tvector<nr_type_t>::get (int i) {
+  assert (i >= 0 && i < size);
   return data[i];
 }
 
 // Sets the tvector element at the given position.
 template <class nr_type_t>
 void tvector<nr_type_t>::set (int i, nr_type_t z) {
+  assert (i >= 0 && i < size);
   data[i] = z;
 }
 

@@ -1,3 +1,14 @@
+2006-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Re-implemented the FFT of a matrix using the
+	block-diagonal property of Jacobians in the time domain.
+	Extended the termination criteria using the iteration voltages.
+
+	* parse_netlist.y: Fixed a small bug occurring when an instance
+	of a (1) component, (2) action, (3) equation and (4) subcircuit
+	or (5) a reference to one of these in a property is named like
+	a physical unit or scale, e.g. V, Hz, A or T.
+
 2006-04-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.cpp: New functions: contains() as well as '+=' and '-='
