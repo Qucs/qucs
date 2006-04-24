@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.cpp,v 1.12 2006/04/18 08:03:11 raimi Exp $
+ * $Id: tmatrix.cpp,v 1.13 2006/04/24 08:25:46 raimi Exp $
  *
  */
 
@@ -118,12 +118,14 @@ tmatrix<nr_type_t>::~tmatrix () {
 // Returns the tmatrix element at the given row and column.
 template <class nr_type_t>
 nr_type_t tmatrix<nr_type_t>::get (int r, int c) {
+  assert (r >= 0 && r < rows && c >= 0 && c < cols);
   return data[r * cols + c];
 }
 
 // Sets the tmatrix element at the given row and column.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::set (int r, int c, nr_type_t z) {
+  assert (r >= 0 && r < rows && c >= 0 && c < cols);
   data[r * cols + c] = z;
 }
 

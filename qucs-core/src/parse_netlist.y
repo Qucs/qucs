@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.19 2006/04/05 08:27:06 raimi Exp $
+ * $Id: parse_netlist.y,v 1.20 2006/04/24 08:25:46 raimi Exp $
  *
  */
 
@@ -89,7 +89,7 @@
   eqn::assignment * assign;
 }
 
-%type <ident> Identifier Assign NodeIdentifier
+%type <ident> Identifier Assign NodeIdentifier InstanceIdentifier
 %type <str> ScaleOrUnit
 %type <d> REAL IMAG
 %type <c> COMPLEX
@@ -97,7 +97,7 @@
 %type <str> STRING
 %type <definition> DefinitionLine ActionLine DefBody DefBodyLine
 %type <subcircuit> DefBegin SubcircuitBody
-%type <node> IdentifierList
+%type <node> NodeList
 %type <pair> PairList
 %type <value> PropertyValue ValueList Value PropertyReal
 %type <eqn> EquationList Expression ExpressionList
@@ -130,7 +130,7 @@ InputLine:
 ;
 
 ActionLine:
-  '.' Identifier ':' Identifier PairList Eol { 
+  '.' Identifier ':' InstanceIdentifier PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = PROP_ACTION;
     $$->type = $2;
@@ -141,7 +141,7 @@ ActionLine:
 ;
 
 DefinitionLine:
-  Identifier ':' Identifier IdentifierList PairList Eol { 
+  Identifier ':' InstanceIdentifier NodeList PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = PROP_COMPONENT;
     $$->type = $1;
@@ -152,13 +152,18 @@ DefinitionLine:
   }
 ;
 
+InstanceIdentifier:
+    Identifier  { $$ = $1; }
+  | ScaleOrUnit { $$ = $1; }
+;
+
 NodeIdentifier:
     Identifier  { $$ = $1; }
   | ScaleOrUnit { $$ = $1; }
 ;
 
-IdentifierList: /* nothing */ { $$ = NULL; }
-  | NodeIdentifier IdentifierList {
+NodeList: /* nothing */ { $$ = NULL; }
+  | NodeIdentifier NodeList {
     $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
     $$->node = $1;
     $$->next = $2;
@@ -205,7 +210,7 @@ PropertyValue:
   PropertyReal {
     $$ = $1;
   }
-  | Identifier {
+  | InstanceIdentifier {
     $$ = create_value ();
     $$->ident = $1;
   }
@@ -226,7 +231,7 @@ ValueList: /* nothing */ { $$ = NULL; }
 ;
 
 EquationLine:
-  Eqn ':' Identifier Equation EquationList Eol {
+  Eqn ':' InstanceIdentifier Equation EquationList Eol {
     $4->setInstance ($3); free ($3);
     $4->setNext (eqn::equations);
     $4->applyInstance ();
@@ -424,7 +429,7 @@ SubcircuitBody:
 ;
 
 DefBegin:
-  DefSub Identifier IdentifierList Eol {
+  DefSub InstanceIdentifier NodeList Eol {
     /* create subcircuit definition right here */
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->type = strdup ("Def");

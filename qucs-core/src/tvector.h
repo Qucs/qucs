@@ -18,13 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.h,v 1.18 2006/04/18 08:03:11 raimi Exp $
+ * $Id: tvector.h,v 1.19 2006/04/24 08:25:46 raimi Exp $
  *
  */
 
 #ifndef __TVECTOR_H__
 #define __TVECTOR_H__
 
+#include <assert.h>
 #include "precision.h"
 
 template <class nr_type_t>
@@ -123,8 +124,10 @@ class tvector
   tvector operator = (const nr_type_t);
 
   // easy accessor operators
-  nr_type_t  operator () (int i) const { return data[i]; }
-  nr_type_t& operator () (int i) { return data[i]; }
+  nr_type_t  operator () (int i) const {
+    assert (i >= 0 && i < size); return data[i]; }
+  nr_type_t& operator () (int i) {
+    assert (i >= 0 && i < size); return data[i]; }
 
  private:
   int external;
