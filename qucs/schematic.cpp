@@ -54,6 +54,30 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 {
   symbolMode = false;
 
+  // ...........................................................
+  GridX  = GridY  = 10;
+  ViewX1=ViewY1=0;
+  ViewX2=ViewY2=800;
+  UsedX1 = UsedY1 = INT_MAX;
+  UsedX2 = UsedY2 = INT_MIN;
+
+  tmpPosX = tmpPosY = -100;
+  tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
+  tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
+  tmpScale = 1.0;
+
+  DocComps.setAutoDelete(true);
+  DocWires.setAutoDelete(true);
+  DocNodes.setAutoDelete(true);
+  DocDiags.setAutoDelete(true);
+  DocPaints.setAutoDelete(true);
+  SymbolPaints.setAutoDelete(true);
+
+  UndoStack.setAutoDelete(true);
+  UndoSymbol.setAutoDelete(true);
+  // The 'i' means state for being unchanged.
+  UndoStack.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
+
   QFileInfo Info(Name_);
   if(App) {
     if(Name_.isEmpty())
@@ -81,7 +105,8 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
     connect(verticalScrollBar(),
 		SIGNAL(nextLine()), SLOT(slotScrollDown()));
 
-  // ...........................................................
+    // ...........................................................
+
     // to repair some strange  scrolling artefacts
     connect(this, SIGNAL(horizontalSliderReleased()),
 		viewport(), SLOT(update()));
@@ -91,31 +116,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
     // to prevent user from editing something that he doesn't see
     connect(this, SIGNAL(horizontalSliderPressed()), App, SLOT(slotHideEdit()));
     connect(this, SIGNAL(verticalSliderPressed()), App, SLOT(slotHideEdit()));
-  }  // of "if(App)"
-
-  // ...........................................................
-  GridX  = GridY  = 10;
-  ViewX1=ViewY1=0;
-  ViewX2=ViewY2=800;
-  UsedX1 = UsedY1 = INT_MAX;
-  UsedX2 = UsedY2 = INT_MIN;
-
-  tmpPosX = tmpPosY = -100;
-  tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
-  tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
-  tmpScale = 1.0;
-
-  DocComps.setAutoDelete(true);
-  DocWires.setAutoDelete(true);
-  DocNodes.setAutoDelete(true);
-  DocDiags.setAutoDelete(true);
-  DocPaints.setAutoDelete(true);
-  SymbolPaints.setAutoDelete(true);
-
-  UndoStack.setAutoDelete(true);
-  UndoSymbol.setAutoDelete(true);
-  // The 'i' means state for being unchanged.
-  UndoStack.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
+  } // of "if(App)"
 }
 
 Schematic::~Schematic()
