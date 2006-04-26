@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.10 2006-04-24 08:25:46 raimi Exp $
+ * $Id: hbsolver.h,v 1.11 2006-04-26 09:06:09 raimi Exp $
  *
  */
 
@@ -64,7 +64,6 @@ class hbsolver : public analysis
   void finalSolution (void);
   void fillMatrixNonLinear (tmatrix<complex> *, tmatrix<complex> *, 
 			    tvector<complex> *, tvector<complex> *,
-			    tvector<complex> *, tvector<complex> *,
 			    tvector<complex> *, tvector<complex> *, int);
   void prepareNonLinear (void);
   void solveHB (void);
@@ -108,11 +107,10 @@ class hbsolver : public analysis
   tvector<complex> * IL; // currents into linear network
   tvector<complex> * IN; // currents into non-linear network
 
-  tvector<complex> * CV;
-  tvector<complex> * GV;
   tvector<complex> * IR;
   tvector<complex> * QR;
   tvector<complex> * RH;
+  tvector<complex> * OM;
 
   tvector<complex> * IC; // source currents into balanced nodes
   tvector<complex> * IS; // currents through sources themselves
@@ -122,6 +120,7 @@ class hbsolver : public analysis
   int runs;
   int lnfreqs;
   int nlfreqs;
+  int nnlvsrcs;
   int nlnvsrcs;
   int nlnnodes;
   int nnanodes;

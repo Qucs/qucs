@@ -1,3 +1,11 @@
+2006-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: Added '*=' and '/=' operators for scalar
+	arguments.
+
+	* hbsolver.cpp: Non-linear equations system is now smoothly
+	converging for our simple Vac-R-R-Diode example.
+
 2006-04-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* hbsolver.cpp: Re-implemented the FFT of a matrix using the

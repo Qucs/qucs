@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.h,v 1.19 2006-04-24 08:25:46 raimi Exp $
+ * $Id: tvector.h,v 1.20 2006-04-26 09:06:09 raimi Exp $
  *
  */
 
@@ -119,6 +119,8 @@ class tvector
   // intrinsic operators
   tvector operator += (tvector);
   tvector operator -= (tvector);
+  tvector operator *= (nr_double_t);
+  tvector operator /= (nr_double_t);
 
   // assignment operators
   tvector operator = (const nr_type_t);

@@ -1,7 +1,7 @@
 /*
  * bjt.h - bipolar junction transistor class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.h,v 1.18 2005-12-19 07:55:14 raimi Exp $
+ * $Id: bjt.h,v 1.19 2006-04-26 09:06:10 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@ class bjt : public circuit
   void calcDC (void);
   void initDC (void);
   void saveOperatingPoints (void);
+  void loadOperatingPoints (void);
   void calcOperatingPoints (void);
   void initAC (void);
   void calcAC (nr_double_t);
@@ -49,8 +50,7 @@ class bjt : public circuit
   matrix calcMatrixCy (nr_double_t);
 
  private:
-  nr_double_t UbePrev;
-  nr_double_t UbcPrev;
+  nr_double_t Ucs, Ubx, Ube, Ubc, Uce, UbePrev, UbcPrev;
   circuit * re;
   circuit * rc;
   circuit * rb;

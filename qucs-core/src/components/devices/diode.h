@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.h,v 1.15 2006-04-07 07:11:22 raimi Exp $
+ * $Id: diode.h,v 1.16 2006-04-26 09:06:10 raimi Exp $
  *
  */
 
@@ -36,6 +36,7 @@ class diode : public circuit, public devstates
   void initDC (void);
   void calcDC (void);
   void saveOperatingPoints (void);
+  void loadOperatingPoints (void);
   void calcOperatingPoints (void);
   void initAC (void);
   void calcAC (nr_double_t);
@@ -46,7 +47,7 @@ class diode : public circuit, public devstates
   void calcHB (int);
 
  private:
-  nr_double_t gd, Id, Qd, Bv;
+  nr_double_t Ud, gd, Id, Qd, Bv;
   circuit * rs;
   bool hb;
 
