@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.40 2006/04/21 08:02:02 raimi Exp $
+ * $Id: bjt.cpp,v 1.41 2006/04/26 09:06:10 raimi Exp $
  *
  */
 
@@ -265,8 +265,8 @@ void bjt::initDC (void) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // initialize starting values
-  UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
-  UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
+  Ube = UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  Ubc = UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
 
   // disable additional base-collector capacitance
   if (deviceEnabled (cbcx)) {
@@ -346,9 +346,9 @@ void bjt::calcDC (void) {
   nr_double_t Irb  = getScaledProperty ("Irb");
   nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t Ut, Ube, Ubc, Q1, Q2;
+  nr_double_t Ut, Q1, Q2;
   nr_double_t Iben, Ibcn, Ibei, Ibci, Ibc, gbe, gbc, gtiny;
-  nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
+  nr_double_t IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
   nr_double_t gm, go;
 
   // interpret zero as infinity for these model parameters
@@ -506,19 +506,25 @@ void bjt::calcDC (void) {
 }
 
 void bjt::saveOperatingPoints (void) {
-  nr_double_t Ube, Ubc, Ucs;
-  Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
-  Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
+  nr_double_t Vbe, Vbc;
+  Vbe = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  Vbc = real (getV (NODE_B) - getV (NODE_C)) * pol;
   Ucs = real (getV (NODE_S) - getV (NODE_C)) * pol;
-  setOperatingPoint ("Vbe", Ube);
-  setOperatingPoint ("Vbc", Ubc);
-  setOperatingPoint ("Vce", Ube - Ubc);
+  setOperatingPoint ("Vbe", Vbe);
+  setOperatingPoint ("Vbc", Vbc);
+  setOperatingPoint ("Vce", Vbe - Vbc);
   setOperatingPoint ("Vcs", Ucs);
   if (deviceEnabled (cbcx)) {
-    nr_double_t Ubx;
     Ubx = real (cbcx->getV (NODE_1) - cbcx->getV (NODE_2)) * pol;
     setOperatingPoint ("Vbx", Ubx);
   }
+}
+
+void bjt::loadOperatingPoints (void) {
+  Ube = getOperatingPoint ("Vbe");
+  Ubc = getOperatingPoint ("Vbc");
+  Uce = getOperatingPoint ("Vce");
+  Ucs = getOperatingPoint ("Vcs");
 }
 
 void bjt::calcOperatingPoints (void) {
@@ -541,15 +547,10 @@ void bjt::calcOperatingPoints (void) {
   nr_double_t Itf  = getScaledProperty ("Itf");
   nr_double_t Tr   = getPropertyDouble ("Tr");
 
-  nr_double_t Cbe, Ube, Ubc, Ubx, Cbci, Cbcx, Ucs, Ccs;
+  nr_double_t Cbe, Cbci, Cbcx, Ccs;
 
   // interpret zero as infinity for that model parameter
   Vtf = Vtf > 0 ? 1.0 / Vtf : 0;
-
-  Ube = getOperatingPoint ("Vbe");
-  Ubc = getOperatingPoint ("Vbc");
-  Ucs = getOperatingPoint ("Vcs");
-  Ubx = getOperatingPoint ("Vbx");
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
@@ -663,10 +664,6 @@ void bjt::calcTR (nr_double_t t) {
   saveOperatingPoints ();
   calcOperatingPoints ();
 
-  nr_double_t Ube  = getOperatingPoint ("Vbe");
-  nr_double_t Ubc  = getOperatingPoint ("Vbc");
-  nr_double_t Ucs  = getOperatingPoint ("Vcs");
-  nr_double_t Ubx  = getOperatingPoint ("Vbx");
   nr_double_t Cbe  = getOperatingPoint ("Cbe");
   nr_double_t Ccs  = getOperatingPoint ("Ccs");
   nr_double_t Cbci = getOperatingPoint ("Cbci");

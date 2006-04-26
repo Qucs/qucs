@@ -1,3 +1,11 @@
+2006-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Finished HB callbacks.
+
+	* devices/bjt.cpp: New function loadOperatingPoints()
+	implemented, thus difference between exact operating
+	points and those used for next iteration possible.
+
 2006-04-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Fixed a bug during transient analysis due

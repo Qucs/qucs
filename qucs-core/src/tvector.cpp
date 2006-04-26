@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.16 2006/04/24 08:25:46 raimi Exp $
+ * $Id: tvector.cpp,v 1.17 2006/04/26 09:06:09 raimi Exp $
  *
  */
 
@@ -234,6 +234,22 @@ tvector<nr_type_t> tvector<nr_type_t>::operator -= (tvector<nr_type_t> a) {
   nr_type_t * src = a.getData ();
   nr_type_t * dst = data;
   for (int i = 0; i < size; i++) *dst++ -= *src++;
+  return *this;
+}
+
+// Intrinsic scalar multiplication.
+template <class nr_type_t>
+tvector<nr_type_t> tvector<nr_type_t>::operator *= (nr_double_t s) {
+  nr_type_t * dst = data;
+  for (int i = 0; i < size; i++) *dst++ *= s;
+  return *this;
+}
+
+// Intrinsic scalar division.
+template <class nr_type_t>
+tvector<nr_type_t> tvector<nr_type_t>::operator /= (nr_double_t s) {
+  nr_type_t * dst = data;
+  for (int i = 0; i < size; i++) *dst++ /= s;
   return *this;
 }
 

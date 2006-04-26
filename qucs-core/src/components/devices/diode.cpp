@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.34 2006/04/19 07:03:26 raimi Exp $
+ * $Id: diode.cpp,v 1.35 2006/04/26 09:06:10 raimi Exp $
  *
  */
 
@@ -49,10 +49,10 @@
 #define StateVars 1 // state variables
 
 // state variable indices
-#define _Uprev 0
+#define _UdPrev 0
 
 // state variable shortcuts
-#define Uprev deviceVar (_Uprev)
+#define UdPrev deviceVar (_UdPrev)
 
 using namespace device;
 
@@ -188,10 +188,10 @@ void diode::prepareDC (void) {
   initModel ();
 
   // initialize starting values
-  nr_double_t Ud = real (getV (NODE_A) - getV (NODE_C));
+  Ud = real (getV (NODE_A) - getV (NODE_C));
   for (int i = 0; i < deviceStates (); i++) {
     deviceState (i);
-    Uprev = Ud;
+    UdPrev = Ud;
   }
 
   // get device temperature
@@ -264,7 +264,7 @@ void diode::calcDC (void) {
   nr_double_t Nr  = getPropertyDouble ("Nr");
   nr_double_t T   = getPropertyDouble ("Temp");
 
-  nr_double_t Ud, Ut, Ieq, Ucrit, gtiny;
+  nr_double_t Ut, Ieq, Ucrit, gtiny;
 
   T = kelvin (T);
   Ut = T * kBoverQ;
@@ -274,13 +274,13 @@ void diode::calcDC (void) {
   Ucrit = pnCriticalVoltage (Is, N * Ut);
   if (Bv != 0 && Ud < MIN (0, -Bv + 10 * N * Ut)) {
     nr_double_t V = -(Ud + Bv);
-    V = pnVoltage (V, -(Uprev + Bv), Ut * N, Ucrit);
+    V = pnVoltage (V, -(UdPrev + Bv), Ut * N, Ucrit);
     Ud = -(V + Bv);
   }
   else {
-    Ud = pnVoltage (Ud, Uprev, Ut * N, Ucrit);
+    Ud = pnVoltage (Ud, UdPrev, Ut * N, Ucrit);
   }
-  Uprev = Ud;
+  UdPrev = Ud;
 
   // tiny derivative for little junction voltage
   gtiny = (Ud < - 10 * Ut * N && Bv != 0) ? (Is + Isr) : 0;
@@ -322,8 +322,13 @@ void diode::calcDC (void) {
 
 // Saves operating points (voltages).
 void diode::saveOperatingPoints (void) {
-  nr_double_t Ud = real (getV (NODE_A) - getV (NODE_C));
-  setOperatingPoint ("Vd", Ud);
+  nr_double_t Vd = real (getV (NODE_A) - getV (NODE_C));
+  setOperatingPoint ("Vd", Vd);
+}
+
+// Loads operating points (voltages).
+void diode::loadOperatingPoints (void) {
+  Ud = getOperatingPoint ("Vd");
 }
 
 // Calculates and saves operating points.
@@ -336,8 +341,7 @@ void diode::calcOperatingPoints (void) {
   nr_double_t Tt  = getScaledProperty ("Tt");
   
   // calculate capacitances and charges
-  nr_double_t Ud, Cd;
-  Ud = getOperatingPoint ("Vd");
+  nr_double_t Cd;
   Cd = pnCapacitance (Ud, Cj0, Vj, M, Fc) + Tt * gd + Cp;
   Qd = pnCharge (Ud, Cj0, Vj, M, Fc) + Tt * Id + Cp * Ud;
 
@@ -381,7 +385,6 @@ void diode::calcTR (nr_double_t) {
   saveOperatingPoints ();
   calcOperatingPoints ();
 
-  nr_double_t Ud = getOperatingPoint ("Vd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
   transientCapacitance (qState, NODE_A, NODE_C, Cd, Ud, Qd);
@@ -408,7 +411,6 @@ void diode::calcHB (int frequency) {
   calcOperatingPoints ();
 
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_double_t Ud = getOperatingPoint ("Vd");
 
   // fill in Q's in Q-Vector
   setQ (NODE_C, +Qd);
