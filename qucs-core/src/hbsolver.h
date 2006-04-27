@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.11 2006-04-26 09:06:09 raimi Exp $
+ * $Id: hbsolver.h,v 1.12 2006-04-27 07:02:48 raimi Exp $
  *
  */
 
@@ -74,7 +74,8 @@ class hbsolver : public analysis
   void MatrixFFT (tmatrix<complex> *);
   void calcJacobian (void);
   void solveVoltages (void);
-  tvector<complex> expandVector (tvector<complex>);
+  tvector<complex> expandVector (tvector<complex>, int);
+  tmatrix<complex> expandMatrix (tmatrix<complex>, int);
   void saveNodeVoltages (circuit *, int);
 
  private:

@@ -1,3 +1,12 @@
+2006-04-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Tried to fix the final solution after
+	balancing correctly.  Not yet working...
+
+	* fourier.cpp: Fixed a bug in the FFT routine.  Also added
+	a 1d-FFT and 1d-IFFT for two real valued vectors handled in
+	a single FFT run.
+
 2006-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.cpp: Added '*=' and '/=' operators for scalar
