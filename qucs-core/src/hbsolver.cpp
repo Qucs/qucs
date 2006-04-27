@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.12 2006/04/26 09:06:09 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.13 2006/04/27 07:02:48 raimi Exp $
  *
  */
 
@@ -567,7 +567,8 @@ void hbsolver::createMatrixLinearA (void) {
   }
 
   // save a copy of the original MNA matrix
-  NA = new tmatrix<complex> (*A);
+  NA = new tmatrix<complex> ((N + M) * nlfreqs);
+  *NA = expandMatrix (*A, N + M);
 }
 
 // some definitions for the linear matrix filler
@@ -805,23 +806,9 @@ void hbsolver::createMatrixLinearY (void) {
   // substract the 100 Ohm resistor
   for (c = 0; c < sy * lnfreqs; c++) Y_(c, c) -= 0.01;
 
-  // extract the variable transadmittance matrix, expand it conjugate
+  // extract the variable transadmittance matrix
   YV = new tmatrix<complex> (sv * nlfreqs);
-  int rf, rt, cf, ct, ff;
-  for (r = 0; r < nbanodes; r++) {
-    for (c = 0; c < nbanodes; c++) {
-      rf = r * lnfreqs;
-      rt = r * nlfreqs;
-      cf = c * lnfreqs;
-      ct = c * nlfreqs;
-      for (ff = 0; ff < lnfreqs; ff++, cf++, ct++, rf++, rt++) {
-	YV_(rt, ct) = Y_(rf, cf);
-      }
-      for (cf -= 2, rf -= 2; ff < nlfreqs; ff++, cf--, ct++, rf--, rt++) {
-	YV_(rt, ct) = conj (Y_(rf, cf));
-      }
-    }
-  }
+  *YV = expandMatrix (*Y, sv);
 
   // delete overall temporary MNA matrix
   delete A; A = NULL;
@@ -846,7 +833,7 @@ complex hbsolver::excitationZ (tvector<complex> * V, circuit * vs, int f) {
    voltage of the excitations and the transadmittance matrix
    entries. */
 void hbsolver::calcConstantCurrent (void) {
-  int se = excitations.length () * lnfreqs;
+  int se = nnlvsrcs * lnfreqs;
   int sn = nbanodes * lnfreqs;
   int r, c, vsrc = 0;
 
@@ -876,7 +863,7 @@ void hbsolver::calcConstantCurrent (void) {
     IC->set (r, i);
   }
   // expand it conjugate
-  *IC = expandVector (*IC);
+  *IC = expandVector (*IC, nbanodes);
 
   // compute constant current vector for sources itself
   IS = new tvector<complex> (se);
@@ -890,6 +877,7 @@ void hbsolver::calcConstantCurrent (void) {
     }
     IS->set (r, i);
   }
+  *IS = expandVector (*IS, nnlvsrcs);
 
   // delete overall transadmittance matrix
   delete Y; Y = NULL;
@@ -1191,17 +1179,43 @@ void hbsolver::calcJacobian (void) {
 
 /* The function expands the given vector in the frequency domain to
    make it a real valued signal in the time domain. */
-tvector<complex> hbsolver::expandVector (tvector<complex> V) {
-  tvector<complex> res (nbanodes * nlfreqs);
-  for (int n = 0; n < nbanodes; n++) {
-    int ft, ff;
-    // copy first part
-    for (ff = 0; ff < lnfreqs; ff++) {
-      res (n * nlfreqs + ff) = V (n * lnfreqs + ff);
+tvector<complex> hbsolver::expandVector (tvector<complex> V, int nodes) {
+  tvector<complex> res (nodes * nlfreqs);
+  int r, ff, rf, rt;
+  for (r = 0; r < nodes; r++) {
+    rt = r * nlfreqs;
+    rf = r * lnfreqs;
+    // copy first part of vector
+    for (ff = 0; ff < lnfreqs; ff++, rf++, rt++) {
+      res (rt) = V (rf);
     }
     // continue vector conjugated
-    for (ff = lnfreqs - 2, ft = lnfreqs; ft < nlfreqs; ft++, ff--) {
-      res (n * nlfreqs + ft) = conj (V (n * lnfreqs + ff));
+    for (rf -= 2; ff < nlfreqs; ff++, rf--, rt++) {
+      res (rt) = conj (V (rf));
+    }
+  }
+  return res;
+}
+
+/* The function expands the given matrix in the frequency domain to
+   make it a real valued signal in the time domain. */
+tmatrix<complex> hbsolver::expandMatrix (tmatrix<complex> M, int nodes) {
+  tmatrix<complex> res (nodes * nlfreqs);
+  int r, c, rf, rt, cf, ct, ff;
+  for (r = 0; r < nodes; r++) {
+    for (c = 0; c < nodes; c++) {
+      rf = r * lnfreqs;
+      rt = r * nlfreqs;
+      cf = c * lnfreqs;
+      ct = c * nlfreqs;
+      // copy first part of diagonal
+      for (ff = 0; ff < lnfreqs; ff++, cf++, ct++, rf++, rt++) {
+	res (rt, ct) = M (rf, cf);
+      }
+      // continue diagonal conjugated
+      for (cf -= 2, rf -= 2; ff < nlfreqs; ff++, cf--, ct++, rf--, rt++) {
+	res (rt, ct) = conj (M (rf, cf));
+      }
     }
   }
   return res;
@@ -1237,7 +1251,7 @@ void hbsolver::solveVoltages (void) {
 /* The function calculates and saves the final solution. */
 void hbsolver::finalSolution (void) {
   int S = NA->getCols ();
-  int N = nnanodes * lnfreqs;
+  int N = nnanodes * nlfreqs;
 
   // right hand side vector
   tvector<complex> * I = new tvector<complex> (S);
@@ -1254,36 +1268,40 @@ void hbsolver::finalSolution (void) {
     // get nodes of original HB sources
     int pnode = vs->getNode(NODE_1)->getNode ();
     int nnode = vs->getNode(NODE_2)->getNode ();
-    for (f = 0; f < lnfreqs; f++) { // for each frequency
-      complex i = IS->get (vsrc * lnfreqs + f);
-      int pn = (pnode - 1) * lnfreqs + f;
-      int nn = (nnode - 1) * lnfreqs + f;
+    for (f = 0; f < nlfreqs; f++) { // for each frequency
+      complex i = IS->get (vsrc * nlfreqs + f);
+      int pn = (pnode - 1) * nlfreqs + f;
+      int nn = (nnode - 1) * nlfreqs + f;
       if (pnode) I_(pn) += +i;
       if (nnode) I_(nn) += -i;
     }
   }
 
+#if 1
   // put currents through balanced nodes into right hand side
   for (n = 0; n < nbanodes; n++) {
-    for (f = 0; f < lnfreqs; f++) {
-      I_(n * lnfreqs + f) += IL->get (n * nlfreqs + f);
+    for (f = 0; f < nlfreqs; f++) {
+      I_(n * nlfreqs + f) += IL->get (n * nlfreqs + f);
       // ThinkME: positive or negative?
     }
   }
+#endif
 
+#if 1
   // ThinkME: put Jacobian into MNA ??
   int r, c, rf, cf;
   *JF -= *YV;
   for (c = 0; c < nbanodes ; c++) {
-    for (cf = 0; cf < lnfreqs ; cf++) {
+    for (cf = 0; cf < nlfreqs ; cf++) {
       for (r = 0; r < nbanodes; r++) {
-	for (rf = 0; rf < lnfreqs ; rf++) {
-	  NA_(r * lnfreqs + rf, c * lnfreqs + cf) +=
+	for (rf = 0; rf < nlfreqs ; rf++) {
+	  NA_(r * nlfreqs + rf, c * nlfreqs + cf) +=
 	    JF_(r * nlfreqs + rf, c * nlfreqs + cf);
 	}
       }
     }
   }
+#endif
 
   // use QR decomposition for the final solution
   try_running () {
@@ -1322,7 +1340,7 @@ void hbsolver::saveResults (void) {
     char * n = (char *) malloc (l + 4);
     sprintf (n, "%s.Vb", *it);
     for (int i = 0; i < lnfreqs; i++) {
-      saveVariable (n, x->get (i + nanode * lnfreqs), f);
+      saveVariable (n, x->get (i + nanode * nlfreqs), f);
     }
   }
 }

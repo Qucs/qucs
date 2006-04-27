@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.4 2006/04/05 08:27:06 raimi Exp $
+ * $Id: fourier.cpp,v 1.5 2006/04/27 07:02:48 raimi Exp $
  *
  */
 
@@ -56,7 +56,7 @@ void fourier::_fft_1d (nr_double_t * data, int len, int isign) {
       Swap (data[j], data[i]);     // swap real part
       Swap (data[j+1], data[i+1]); // swap imaginary part
     }
-    m = n / 2;
+    m = len;
     while (m >= 2 && j >= m) {     // calculate next swap index
       j -= m;
       m >>= 1;
@@ -79,17 +79,76 @@ void fourier::_fft_1d (nr_double_t * data, int len, int isign) {
     for (m = 1; m < mmax; m += 2) {
       for (i = m; i <= n; i += istep) {
 	j = i + mmax;
-	tr = wr * data[j-1] - wi * data[j];
-	ti = wr * data[j] + wi * data[j-1];
-	data[j-1] = data[i-1] - tr;
-	data[j] = data[i] - ti;
-	data[i-1] += tr;
-	data[i] += ti;
+	tr = wr * data[j] - wi * data[j-1];
+	ti = wr * data[j-1] + wi * data[j];
+	data[j] = data[i] - tr;
+	data[j-1] = data[i-1] - ti;
+	data[i] += tr;
+	data[i-1] += ti;
       }
       wr = (wt = wr) * wpr - wi * wpi + wr;
       wi = wi * wpr + wt * wpi + wi;
     }
     mmax = istep;
+  }
+}
+
+/* The function transforms two real vectors using a single fast
+   fourier transformation step.  The routine works in place. */
+void fourier::_fft_1d_2r (nr_double_t * r1, nr_double_t * r2, int len) {
+  int n3, n2, j;
+  nr_double_t rep, rem, aip, aim;
+  n3 = 1 + (n2 = len + len);
+
+  // put the two real vectors into one complex vector
+  for (j = 1; j <= n2; j += 2) {
+    r1[j] = r2[j-1];
+  }
+
+  // transform the complex vector
+  _fft_1d (r1, len, 1);
+
+  // separate the two transforms
+  r2[0] = r1[1];
+  r1[1] = r2[1] = 0.0;
+  for (j = 2; j <= len; j += 2) {
+    // use symmetries to separate the two transforms
+    rep = 0.5 * (r1[j] + r1[n2-j]);
+    rem = 0.5 * (r1[j] - r1[n2-j]);
+    aip = 0.5 * (r1[j+1] + r1[n3-j]);
+    aim = 0.5 * (r1[j+1] - r1[n3-j]);
+    // ship them out in two complex vectors
+    r1[j+1] = aim;
+    r2[j+1] = -rem;
+    r1[j] = r1[n2-j] = rep;
+    r2[j] = r2[n2-j] = aip;
+    r1[n3-j] = -aim;
+    r2[n3-j] = rem;
+  }
+}
+
+/* The following function transforms two vectors yielding real valued
+   vectors using a single inverse fast fourier transformation step.
+   The routine works in place as well. */
+void fourier::_ifft_1d_2r (nr_double_t * r1, nr_double_t * r2, int len) {
+  nr_double_t r, i;
+  int j, jj, nn = len + len;
+
+  // put the two complex vectors into one complex vector
+  for (j = 0, jj = 0; j < nn; j += 2) {
+    r = r1[j] - r2[j+1];
+    i = r1[j+1] + r2[j];
+    r1[jj++] = r;
+    r1[jj++] = i;
+  }
+
+  // transform the complex vector
+  _fft_1d (r1, len, -1);
+
+  // split the transforms into two real vectors
+  for (j = 0; j < nn; j += 2) {
+    r2[j] = r1[j+1];
+    r1[j+1] = r2[j+1] = 0.0;
   }
 }
 
