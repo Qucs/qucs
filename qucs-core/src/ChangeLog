@@ -1,3 +1,14 @@
+2006-04-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Tried and applied yet another algorithm to
+	find the final solution of the balanced network.  Seems like
+	working now.  Using an extended MNA matrix with the excitation
+	voltage sources in the matrix as well.
+
+	* trsolver.cpp: Activated the 'relaxTSR' option.  Can be set to
+	relax the exact breakpoint (for the requested time step raster)
+	targeting.
+
 2006-04-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* hbsolver.cpp: Tried to fix the final solution after

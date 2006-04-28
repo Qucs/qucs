@@ -1,3 +1,9 @@
+2006-04-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* spfile.cpp: Implemented new 'duringDC' property.  The
+	component represents now either an open (default) or a short
+	during a DC simulation.
+
 2006-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Finished HB callbacks.

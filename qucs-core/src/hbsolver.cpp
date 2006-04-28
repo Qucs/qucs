@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.13 2006-04-27 07:02:48 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.14 2006-04-28 07:08:26 raimi Exp $
  *
  */
 
@@ -567,8 +567,7 @@ void hbsolver::createMatrixLinearA (void) {
   }
 
   // save a copy of the original MNA matrix
-  NA = new tmatrix<complex> ((N + M) * nlfreqs);
-  *NA = expandMatrix (*A, N + M);
+  NA = new tmatrix<complex> (*A);
 }
 
 // some definitions for the linear matrix filler
@@ -862,7 +861,7 @@ void hbsolver::calcConstantCurrent (void) {
     }
     IC->set (r, i);
   }
-  // expand it conjugate
+  // expand the constant current conjugate
   *IC = expandVector (*IC, nbanodes);
 
   // compute constant current vector for sources itself
@@ -877,7 +876,6 @@ void hbsolver::calcConstantCurrent (void) {
     }
     IS->set (r, i);
   }
-  *IS = expandVector (*IS, nnlvsrcs);
 
   // delete overall transadmittance matrix
   delete Y; Y = NULL;
@@ -1232,7 +1230,7 @@ void hbsolver::solveVoltages (void) {
   eqnsys<complex> eqns;
   try_running () {
     // use LU decomposition for solving
-    eqns.setAlgo (ALGO_QR_DECOMPOSITION);
+    eqns.setAlgo (ALGO_LU_DECOMPOSITION);
     eqns.passEquationSys (JF, VS, RH);
     eqns.solve ();
   }
@@ -1248,10 +1246,63 @@ void hbsolver::solveVoltages (void) {
   *vs = *VS;
 }
 
+/* The following function extends the existing linear MNA matrix to
+   contain the additional rows and columns for the excitation voltage
+   sources. */
+tmatrix<complex> hbsolver::extendMatrixLinear (tmatrix<complex> M, int nodes) {
+  int no = M.getCols ();
+  tmatrix<complex> res (no + nodes * lnfreqs);
+  // copy the existing part
+  for (int r = 0; r < no; r++) {
+    for (int c = 0; c < no; c++) {
+      res (r, c) = M (r, c);
+    }
+  }
+  return res;
+}
+
+/* The function fills in the missing MNA entries for the excitation
+   voltage sources into the extended rows and columns as well as the
+   actual voltage values into the right hand side vector. */
+void hbsolver::fillMatrixLinearExtended (tmatrix<complex> * Y,
+					 tvector<complex> * I) {
+  // through each excitation source
+  int of = lnfreqs * (nlnvsrcs + nnanodes);
+  int sc = of;
+
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it) {
+    circuit * vs = it.current ();
+    // get positive and negative node
+    int pnode = vs->getNode(NODE_1)->getNode ();
+    int nnode = vs->getNode(NODE_2)->getNode ();
+    for (int f = 0; f < lnfreqs; f++, sc++) { // for each frequency
+      // fill right hand side vector
+      nr_double_t freq = rfreqs (f);
+      vs->calcHB (freq);
+      I_(sc) = vs->getE (VSRC_1);
+      // fill MNA entries
+      int pn = (pnode - 1) * lnfreqs + f;
+      int nn = (nnode - 1) * lnfreqs + f;
+      if (pnode) {
+	Y_(pn, sc) = +1.0;
+	Y_(sc, pn) = +1.0;
+      }
+      if (nnode) {
+	Y_(nn, sc) = -1.0;
+	Y_(sc, nn) = -1.0;
+      }
+    }
+  }
+}
+
 /* The function calculates and saves the final solution. */
 void hbsolver::finalSolution (void) {
+
+  // extend the linear MNA matrix
+  *NA = extendMatrixLinear (*NA, nnlvsrcs);
+
   int S = NA->getCols ();
-  int N = nnanodes * nlfreqs;
+  int N = nnanodes * lnfreqs;
 
   // right hand side vector
   tvector<complex> * I = new tvector<complex> (S);
@@ -1260,53 +1311,20 @@ void hbsolver::finalSolution (void) {
   // final solution
   x = new tvector<complex> (N);
 
-  // put computed currents caused by the HB sources into the right
-  // hand side (already saved in IS)
-  int vsrc = 0, n, f;
-  for (ptrlistiterator<circuit> it (excitations); *it; ++it, vsrc++) {
-    circuit * vs = it.current ();
-    // get nodes of original HB sources
-    int pnode = vs->getNode(NODE_1)->getNode ();
-    int nnode = vs->getNode(NODE_2)->getNode ();
-    for (f = 0; f < nlfreqs; f++) { // for each frequency
-      complex i = IS->get (vsrc * nlfreqs + f);
-      int pn = (pnode - 1) * nlfreqs + f;
-      int nn = (nnode - 1) * nlfreqs + f;
-      if (pnode) I_(pn) += +i;
-      if (nnode) I_(nn) += -i;
-    }
-  }
+  // fill in missing MNA entries
+  fillMatrixLinearExtended (NA, I);
 
-#if 1
   // put currents through balanced nodes into right hand side
-  for (n = 0; n < nbanodes; n++) {
-    for (f = 0; f < nlfreqs; f++) {
-      I_(n * nlfreqs + f) += IL->get (n * nlfreqs + f);
-      // ThinkME: positive or negative?
+  for (int n = 0; n < nbanodes; n++) {
+    for (int f = 0; f < lnfreqs; f++) {
+      I_(n * lnfreqs + f) += IL->get (n * nlfreqs + f);
     }
   }
-#endif
-
-#if 1
-  // ThinkME: put Jacobian into MNA ??
-  int r, c, rf, cf;
-  *JF -= *YV;
-  for (c = 0; c < nbanodes ; c++) {
-    for (cf = 0; cf < nlfreqs ; cf++) {
-      for (r = 0; r < nbanodes; r++) {
-	for (rf = 0; rf < nlfreqs ; rf++) {
-	  NA_(r * nlfreqs + rf, c * nlfreqs + cf) +=
-	    JF_(r * nlfreqs + rf, c * nlfreqs + cf);
-	}
-      }
-    }
-  }
-#endif
 
   // use QR decomposition for the final solution
   try_running () {
     eqnsys<complex> eqns;
-    eqns.setAlgo (ALGO_QR_DECOMPOSITION);
+    eqns.setAlgo (ALGO_LU_DECOMPOSITION);
     eqns.passEquationSys (NA, V, I);
     eqns.solve ();
   }
@@ -1340,7 +1358,7 @@ void hbsolver::saveResults (void) {
     char * n = (char *) malloc (l + 4);
     sprintf (n, "%s.Vb", *it);
     for (int i = 0; i < lnfreqs; i++) {
-      saveVariable (n, x->get (i + nanode * nlfreqs), f);
+      saveVariable (n, x->get (i + nanode * lnfreqs), f);
     }
   }
 }

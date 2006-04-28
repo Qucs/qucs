@@ -26,6 +26,7 @@ files.
 Version 0.0.9
 -------------
 
+ * selectable open/short in S-parameter component during DC
  * implementation of delay times of digital components during
    transient analysis
  * support for two-argument functions: arctan(), min() and max()

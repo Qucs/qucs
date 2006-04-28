@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.45 2006-04-26 09:06:09 raimi Exp $
+ * $Id: qucsdefs.h,v 1.46 2006-04-28 07:08:26 raimi Exp $
  *
  */
 
@@ -311,6 +311,7 @@ struct define_t qucs_definition_available[] =
     { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
       { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* amplifier */
@@ -824,6 +825,7 @@ struct define_t qucs_definition_available[] =
       { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 16, ']' } },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
+      { "relaxTSR", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* harmonic balance analysis */

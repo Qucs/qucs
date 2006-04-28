@@ -1,7 +1,7 @@
 /*
  * spfile.h - S-parameter file class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.12 2005-10-17 08:41:23 raimi Exp $
+ * $Id: spfile.h,v 1.13 2006-04-28 07:08:26 raimi Exp $
  *
  */
 
@@ -48,6 +48,7 @@ class spfile : public circuit
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
   void initDC (void);
+  void initTR (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
