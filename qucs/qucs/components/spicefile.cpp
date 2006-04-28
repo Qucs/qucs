@@ -38,22 +38,20 @@ SpiceFile::SpiceFile()
   Props.append(new Property("File", "", true, QString("x")));
   Props.append(new Property("Ports", "", false, QString("x")));
   Props.append(new Property("Sim", "yes", false, QString("x")));
-  recreate(0);
+  withSim = false;
+  createSymbol();
 
   Model = "SPICE";
   Name  = "X";
-  withSim = false;
 }
 
-SpiceFile::~SpiceFile()
-{
-}
-
+// -------------------------------------------------------
 Component* SpiceFile::newOne()
 {
   return new SpiceFile();
 }
 
+// -------------------------------------------------------
 Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("SPICE netlist");
@@ -63,16 +61,9 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-void SpiceFile::recreate(Schematic *Doc)
+// -------------------------------------------------------
+void SpiceFile::createSymbol()
 {
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Lines.clear();
-  Texts.clear();
-  Ports.clear();
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
   int fHeight = metrics.lineSpacing();
 
@@ -129,14 +120,6 @@ void SpiceFile::recreate(Schematic *Doc)
   tx = x1+4;
   ty = y1 - fHeight - 4;
   if(Props.first()->display) ty -= fHeight;
-
-  // rotate and mirror
-  performModification();
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }
 
 // ---------------------------------------------------

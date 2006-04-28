@@ -21,15 +21,17 @@
 #include "component.h"
 
 
-class MOSFET_sub : public Component  {
+class MOSFET_sub : public MultiViewComponent  {
 public:
   MOSFET_sub();
-  ~MOSFET_sub();
+ ~MOSFET_sub() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_p(QString&, char* &, bool getNewOne=false);
   static Element* info_depl(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+
+protected:
+  void createSymbol();
 };
 
 #endif

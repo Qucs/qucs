@@ -22,38 +22,6 @@ MOSFET_sub::MOSFET_sub()
 {
   Description = QObject::tr("MOS field-effect transistor");
 
-  Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 11,  0, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,  0, 20,  0,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
-
-  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
-
-  // These three lines must be the last.
-  Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-  Ports.append(new Port( 20,  0));
-
-  x1 = -30; y1 = -30;
-  x2 =  30; y2 =  30;
-
-  tx = x2+4;
-  ty = y1+4;
-  Model = "MOSFET";
-  Name  = "T";
-
   // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
 	QObject::tr("polarity")+" [nfet, pfet]"));
@@ -153,12 +121,15 @@ MOSFET_sub::MOSFET_sub()
 	QObject::tr("simulation temperature in degree Celsius")));
   Props.append(new Property("Tnom", "26.85", false,
 	QObject::tr("parameter measurement temperature")));
+
+  createSymbol();
+  tx = x2+4;
+  ty = y1+4;
+  Model = "MOSFET";
+  Name  = "T";
 }
 
-MOSFET_sub::~MOSFET_sub()
-{
-}
-
+// -------------------------------------------------------
 Component* MOSFET_sub::newOne()
 {
   MOSFET_sub* p = new MOSFET_sub();
@@ -168,6 +139,7 @@ Component* MOSFET_sub::newOne()
   return p;
 }
 
+// -------------------------------------------------------
 Element* MOSFET_sub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-MOSFET");
@@ -177,8 +149,9 @@ Element* MOSFET_sub::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* MOSFET_sub::info_p(QString& Name,
-			      char* &BitmapFile, bool getNewOne)
+			char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("p-MOSFET");
   BitmapFile = "pmosfet_sub";
@@ -193,8 +166,9 @@ Element* MOSFET_sub::info_p(QString& Name,
   return 0;
 }
 
+// -------------------------------------------------------
 Element* MOSFET_sub::info_depl(QString& Name,
-				 char* &BitmapFile, bool getNewOne)
+			char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("depletion MOSFET");
   BitmapFile = "dmosfet_sub";
@@ -209,62 +183,43 @@ Element* MOSFET_sub::info_depl(QString& Name,
   return 0;
 }
 
-// Makes the schematic symbol a n-type, p-type or depletion MOSFET (according
-// to the "Type" and "Vt0" properties).
-void MOSFET_sub::recreate(Schematic*)
+// -------------------------------------------------------
+void MOSFET_sub::createSymbol()
 {
-  Line *pl2 = Lines.last();
-  Line *pl1 = Lines.prev();
-  Line *pl3 = Lines.prev();
+  Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 11,  0, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  0, 20,  0,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
+
+  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
 
   if(Props.first()->Value == "nfet") {
-    pl1->x1 = -9;  pl1->y1 = 0;  pl1->x2 = -4; pl1->y2 = -5;
-    pl2->x1 = -9;  pl2->y1 = 0;  pl2->x2 = -4; pl2->y2 =  5;
+    Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
   }
   else {
-    pl1->x1 = -1;  pl1->y1 = 0;  pl1->x2 = -6; pl1->y2 = -5;
-    pl2->x1 = -1;  pl2->y1 = 0;  pl2->x2 = -6; pl2->y2 =  5;
+    Lines.append(new Line( -1,  0, -6, -5,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -1,  0, -6,  5,QPen(QPen::darkBlue,2)));
   }
 
-  // depletion or enhancement MOSFET ?
   if((Props.next()->Value.stripWhiteSpace().at(0) == '-') ==
-     (Props.first()->Value == "nfet")) {
-    pl3->x1 = -10;  pl3->y1 = -8;  pl3->x2 = -10; pl3->y2 = 8;
-  }
-  else {
-    pl3->x1 = -10;  pl3->y1 = -4;  pl3->x2 = -10; pl3->y2 = 4;
-  }
+     (Props.first()->Value == "nfet"))
+    Lines.append(new Line(-10, -8,-10,  8,QPen(QPen::darkBlue,3)));
+  else
+    Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
 
-  if(mirroredX) {
-    pl1->y1 = -pl1->y1;
-    pl1->y2 = -pl1->y2;
-    pl2->y1 = -pl2->y1;
-    pl2->y2 = -pl2->y2;
-    pl3->y1 = -pl3->y1;
-    pl3->y2 = -pl3->y2;
-  }
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port(  0,-30));
+  Ports.append(new Port(  0, 30));
+  Ports.append(new Port( 20,  0));
 
-  int tmp;
-  for(int z=0; z<rotated; z++) {
-    tmp = -pl1->x1;
-    pl1->x1 = pl1->y1;
-    pl1->y1 = tmp;
-    tmp = -pl1->x2;
-    pl1->x2 = pl1->y2;
-    pl1->y2 = tmp;
-
-    tmp = -pl2->x1;
-    pl2->x1 = pl2->y1;
-    pl2->y1 = tmp;
-    tmp = -pl2->x2;
-    pl2->x2 = pl2->y2;
-    pl2->y2 = tmp;
-
-    tmp = -pl3->x1;
-    pl3->x1 = pl3->y1;
-    pl3->y1 = tmp;
-    tmp = -pl3->x2;
-    pl3->x2 = pl3->y2;
-    pl3->y2 = tmp;
-  }
+  x1 = -30; y1 = -30;
+  x2 =  30; y2 =  30;
 }

@@ -38,10 +38,7 @@ VHDL_File::VHDL_File()
   Name  = "X";
 }
 
-VHDL_File::~VHDL_File()
-{
-}
-
+// -------------------------------------------------------
 Component* VHDL_File::newOne()
 {
   VHDL_File *p = new VHDL_File();
@@ -103,7 +100,6 @@ QString VHDL_File::loadFile()
       File = File.left(i);             //  allowed in entity headers, it ...
     else                               //  does not matter.)
       File.remove(i, j-i);
-    i--;
   }
 
   
@@ -216,24 +212,4 @@ void VHDL_File::createSymbol()
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
-}
-
-// -------------------------------------------------------
-void VHDL_File::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Ports.clear();
-  Lines.clear();
-  Texts.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }

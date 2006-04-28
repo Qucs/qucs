@@ -40,10 +40,7 @@ SubCirPort::SubCirPort()
   Name  = "P";
 }
 
-SubCirPort::~SubCirPort()
-{
-}
-
+// -------------------------------------------------------
 void SubCirPort::createSymbol()
 {
   x1 = -27; y1 = -8;
@@ -85,6 +82,7 @@ void SubCirPort::createSymbol()
   Ports.append(new Port(  0,  0));
 }
 
+// -------------------------------------------------------
 Component* SubCirPort::newOne()
 {
   return new SubCirPort();
@@ -117,24 +115,4 @@ QString SubCirPort::VHDL_Code(int)
   s += pn->Name + " <= ";
   s += pn->Name + " or '0';";
   return s;
-}
-
-// -------------------------------------------------------
-void SubCirPort::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Arcs.clear();
-  Ports.clear();
-  Lines.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }

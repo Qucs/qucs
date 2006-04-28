@@ -42,10 +42,7 @@ Switch::Switch()
   Name  = "S";
 }
 
-Switch::~Switch()
-{
-}
-
+// -------------------------------------------------------
 Component* Switch::newOne()
 {
   Switch *p = new Switch();
@@ -78,7 +75,7 @@ QString Switch::NetList()
   s += " "+p2->Name+"=\""+p2->Value+"\"";
   p2 = Props.next();
   s += " "+p2->Name+"=\"["+p2->Value+"]\"";
-  for(; p2 != 0; p2 = Props.next())
+  for(p2 = Props.next(); p2 != 0; p2 = Props.next())
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s;
@@ -107,25 +104,4 @@ void Switch::createSymbol()
 
   x1 = -30;
   x2 =  30; y2 =   7;
-}
-
-// -------------------------------------------------------
-void Switch::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Ellips.clear();
-  Ports.clear();
-  Lines.clear();
-  Arcs.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }

@@ -49,10 +49,6 @@ LibComp::LibComp()
 		QObject::tr("name of component in library")));
 }
 
-LibComp::~LibComp()
-{
-}
-
 // ---------------------------------------------------------------------
 Component* LibComp::newOne()
 {
@@ -66,52 +62,27 @@ Component* LibComp::newOne()
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
-void LibComp::recreate(Schematic *Doc)
+void LibComp::createSymbol()
 {
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
   tx = INT_MIN;
   ty = INT_MIN;
   if(loadSymbol() > 0) {
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
-    performModification();
   }
-  else
-    remakeSymbol();
+  else {
+    // only paint a rectangle
+    Lines.append(new Line(-15, -15, 15, -15, QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 15, -15, 15,  15, QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-15,  15, 15,  15, QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-15, -15,-15,  15, QPen(QPen::darkBlue,2)));
 
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
+    x1 = -18; y1 = -18;
+    x2 =  18; y2 =  18;
+
+    tx = x1+4;
+    ty = y2+4;
   }
-}
-
-// ---------------------------------------------------------------------
-// only paint a rectangle
-void LibComp::remakeSymbol()
-{
-  Arcs.clear();
-  Lines.clear();
-  Rects.clear();
-  Ellips.clear();
-  Texts.clear();
-  Ports.clear();
-
-  Lines.append(new Line(-15, -15, 15, -15, QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 15, -15, 15,  15, QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15,  15, 15,  15, QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15, -15,-15,  15, QPen(QPen::darkBlue,2)));
-
-  x1 = -18; y1 = -18;
-  x2 =  18; y2 =  18;
-
-  tx = x1+4;
-  ty = y2+4;
-
-  performModification();
 }
 
 // ---------------------------------------------------------------------
@@ -178,13 +149,6 @@ int LibComp::loadSection(const QString& Name, QString& Section)
 // returns the number of painting elements.
 int LibComp::loadSymbol()
 {
-  Arcs.clear();
-  Lines.clear();
-  Rects.clear();
-  Ellips.clear();
-  Texts.clear();
-  Ports.clear();
-
   int z, Result;
   QString FileString, Line;
   z = loadSection("Symbol", FileString);
