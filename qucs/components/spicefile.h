@@ -21,16 +21,18 @@
 #include "component.h"
 
 
-class SpiceFile : public Component  {
+class SpiceFile : public MultiViewComponent  {
 public:
   SpiceFile();
- ~SpiceFile();
+ ~SpiceFile() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
   QString NetList();
 
   bool withSim;
+
+protected:
+  void createSymbol();
 };
 
 #endif

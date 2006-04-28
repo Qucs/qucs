@@ -21,16 +21,15 @@
 #include "component.h"
 
 
-class Logical_Inv : public Component  {
+class Logical_Inv : public MultiViewComponent  {
 public:
   Logical_Inv();
  ~Logical_Inv() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
   QString VHDL_Code(int);
 
-private:
+protected:
   void createSymbol();
 };
 

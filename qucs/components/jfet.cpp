@@ -22,31 +22,6 @@ JFET::JFET()
 {
   Description = QObject::tr("junction field-effect transistor");
 
-  Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,-10,  0,-10,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,-10,  0,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, 10,  0, 10,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 10,  0, 30,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
-
-  // these two lines must be the last ones !
-  Lines.append(new Line(-16, -5,-11,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16,  5,-11,  0,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-
-  x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
-
-  tx = x2+4;
-  ty = y1+4;
-  Model = "JFET";
-  Name  = "T";
-
   // this must be the first property in the list !!!
   Props.append(new Property("Type", "nfet", true,
 	QObject::tr("polarity")+" [nfet, pfet]"));
@@ -96,12 +71,15 @@ JFET::JFET()
 	QObject::tr("temperature at which parameters were extracted")));
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for JFET")));
+
+  createSymbol();
+  tx = x2+4;
+  ty = y1+4;
+  Model = "JFET";
+  Name  = "T";
 }
 
-JFET::~JFET()
-{
-}
-
+// -------------------------------------------------------
 Component* JFET::newOne()
 {
   JFET* p = new JFET();
@@ -110,6 +88,7 @@ Component* JFET::newOne()
   return p;
 }
 
+// -------------------------------------------------------
 Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-JFET");
@@ -119,6 +98,7 @@ Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("p-JFET");
@@ -133,43 +113,31 @@ Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-// Makes the schematic symbol a n-type or a p-type transistor (according
-// to the "Type" property).
-void JFET::recreate(Schematic*)
+// -------------------------------------------------------
+void JFET::createSymbol()
 {
-  Line *pl2 = Lines.last();
-  Line *pl1 = Lines.prev();
+  Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,-10,  0,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-10,  0,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 10,  0, 10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 10,  0, 30,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
 
   if(Props.getFirst()->Value == "nfet") {
-    pl1->x1 = -16;  pl1->y1 = -5;  pl1->x2 = -11; pl1->y2 = 0;
-    pl2->x1 = -16;  pl2->y1 =  5;  pl2->x2 = -11; pl2->y2 = 0;
+    Lines.append(new Line(-16, -5,-11,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-16,  5,-11,  0,QPen(QPen::darkBlue,2)));
   }
   else {
-    pl1->x1 = -18;  pl1->y1 = 0;  pl1->x2 = -13; pl1->y2 = -5;
-    pl2->x1 = -18;  pl2->y1 = 0;  pl2->x2 = -13; pl2->y2 =  5;
+    Lines.append(new Line(-18,  0,-13, -5,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-18,  0,-13,  5,QPen(QPen::darkBlue,2)));
   }
 
-  if(mirroredX) {
-    pl1->y1 = -pl1->y1;
-    pl1->y2 = -pl1->y2;
-    pl2->y1 = -pl2->y1;
-    pl2->y2 = -pl2->y2;
-  }
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port(  0,-30));
+  Ports.append(new Port(  0, 30));
 
-  int tmp;
-  for(int z=0; z<rotated; z++) {
-    tmp = -pl1->x1;
-    pl1->x1 = pl1->y1;
-    pl1->y1 = tmp;
-    tmp = -pl1->x2;
-    pl1->x2 = pl1->y2;
-    pl1->y2 = tmp;
-
-    tmp = -pl2->x1;
-    pl2->x1 = pl2->y1;
-    pl2->y1 = tmp;
-    tmp = -pl2->x2;
-    pl2->x2 = pl2->y2;
-    pl2->y2 = tmp;
-  }
+  x1 = -30; y1 = -30;
+  x2 =   4; y2 =  30;
 }

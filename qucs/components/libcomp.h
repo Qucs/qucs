@@ -21,19 +21,19 @@
 #include "component.h"
 
 
-class LibComp : public Component  {
+class LibComp : public MultiViewComponent  {
 public:
   LibComp();
- ~LibComp();
+ ~LibComp() {};
   Component* newOne();
   QString NetList();
   bool outputSubNetlist(QTextStream*);
-  void recreate(Schematic*);
+
+protected:
+  void createSymbol();
 
 private:
-  void remakeSymbol();
   int  loadSymbol();
-
   int  loadSection(const QString&, QString&);
 };
 

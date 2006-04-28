@@ -21,16 +21,15 @@
 #include "component.h"
 
 
-class VHDL_File : public Component  {
+class VHDL_File : public MultiViewComponent  {
 public:
   VHDL_File();
- ~VHDL_File();
+ ~VHDL_File() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
   QString VHDL_Code(int);
 
-private:
+protected:
   void createSymbol();
   QString loadFile();
 

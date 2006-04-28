@@ -262,6 +262,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   prop->setSorting(-1);   // no sorting
 
   QVBox *v1 = new QVBox(PropertyBox);
+  v1->setSpacing(3);
 
   Name = new QLabel(v1);
 
@@ -285,6 +286,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 	  SLOT(slotApplyChange(const QString&)));
 
   QHBox *h3 = new QHBox(v1);
+  h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
   EditButt = new QPushButton(tr("Edit"),h3);
   EditButt->setEnabled(false);
   EditButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

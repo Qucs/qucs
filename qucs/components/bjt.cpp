@@ -22,28 +22,6 @@ BJT::BJT()
 {
   Description = QObject::tr("bipolar junction transistor");
 
-  Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,-15,  0,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0,-30));
-  Ports.append(new Port(  0, 30));
-
-  x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
-
-  tx = x2+4;
-  ty = y1+4;
-  Model = "_BJT";
-  Name  = "T";
-
   // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
 	QObject::tr("polarity")+" [npn, pnp]"));
@@ -141,12 +119,15 @@ BJT::BJT()
 	QObject::tr("temperature at which parameters were extracted")));
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for bipolar transistor")));
+
+  createSymbol();
+  tx = x2+4;
+  ty = y1+4;
+  Model = "_BJT";
+  Name  = "T";
 }
 
-BJT::~BJT()
-{
-}
-
+// -------------------------------------------------------
 Component* BJT::newOne()
 {
   BJT* p = new BJT();
@@ -155,6 +136,7 @@ Component* BJT::newOne()
   return p;
 }
 
+// -------------------------------------------------------
 Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn transistor");
@@ -164,6 +146,7 @@ Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp transistor");
@@ -178,43 +161,29 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-// Makes the schematic symbol a npn or a pnp transistor (according
-// to the "Type" property).
-void BJT::recreate(Schematic*)
+// -------------------------------------------------------
+void BJT::createSymbol()
 {
-  Line *pl2 = Lines.last();
-  Line *pl1 = Lines.prev();
+  Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-15,  0,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
 
   if(Props.getFirst()->Value == "npn") {
-    pl1->x1 = -6;  pl1->y1 = 15;  pl1->x2 = 0; pl1->y2 = 15;
-    pl2->x1 = 0;  pl2->y1 = 9;  pl2->x2 = 0; pl2->y2 = 15;
+    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
   }
   else {
-    pl1->x1 = -5;  pl1->y1 = 10;  pl1->x2 = -5; pl1->y2 = 16;
-    pl2->x1 = -5;  pl2->y1 = 10;  pl2->x2 = 1; pl2->y2 = 10;
+    Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
   }
 
-  if(mirroredX) {
-    pl1->y1 = -pl1->y1;
-    pl1->y2 = -pl1->y2;
-    pl2->y1 = -pl2->y1;
-    pl2->y2 = -pl2->y2;
-  }
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port(  0,-30));
+  Ports.append(new Port(  0, 30));
 
-  int tmp;
-  for(int z=0; z<rotated; z++) {
-    tmp = -pl1->x1;
-    pl1->x1 = pl1->y1;
-    pl1->y1 = tmp;
-    tmp = -pl1->x2;
-    pl1->x2 = pl1->y2;
-    pl1->y2 = tmp;
-
-    tmp = -pl2->x1;
-    pl2->x1 = pl2->y1;
-    pl2->y1 = tmp;
-    tmp = -pl2->x2;
-    pl2->x2 = pl2->y2;
-    pl2->y2 = tmp;
-  }
+  x1 = -30; y1 = -30;
+  x2 =   4; y2 =  30;
 }

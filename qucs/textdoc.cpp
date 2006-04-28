@@ -63,6 +63,12 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 
     syntaxHighlight = new SyntaxHighlighter(this);
   }
+
+  tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
+  Scale = (float)QucsSettings.font.pointSize();
+
+  undoIsAvailable = redoIsAvailable = false;
+  setUndoDepth(QucsSettings.maxUndo);
 }
 
 TextDoc::~TextDoc()
@@ -126,6 +132,20 @@ void TextDoc::slotSetChanged()
     App->DocumentTab->setTabIconSet(this, QPixmap(empty_xpm));
     DocChanged = false;
   }
+}
+
+// ---------------------------------------------------
+void TextDoc::slotChangeUndo(bool available)
+{
+  undoIsAvailable = available;
+  App->undo->setEnabled(undoIsAvailable);
+}
+
+// ---------------------------------------------------
+void TextDoc::slotChangeRedo(bool available)
+{
+  redoIsAvailable = available;
+  App->redo->setEnabled(redoIsAvailable);
 }
 
 // ---------------------------------------------------
@@ -251,20 +271,6 @@ bool TextDoc::loadSimulationTime(QString& Time)
   }
 
   return false;
-}
-
-// ---------------------------------------------------
-void TextDoc::slotChangeUndo(bool available)
-{
-  undoIsAvailable = available;
-  App->undo->setEnabled(undoIsAvailable);
-}
-
-// ---------------------------------------------------
-void TextDoc::slotChangeRedo(bool available)
-{
-  redoIsAvailable = available;
-  App->redo->setEnabled(redoIsAvailable);
 }
 
 // ---------------------------------------------------
