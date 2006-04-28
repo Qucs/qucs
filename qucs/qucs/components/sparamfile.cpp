@@ -38,6 +38,9 @@ SParamFile::SParamFile()
 		QObject::tr("data type")+" [rectangular, polar]"));
   Props.append(new Property("Interpolator", "linear", false,
 		QObject::tr("interpolation type")+" [linear, cubic]"));
+  Props.append(new Property("duringDC", "open", false,
+		QObject::tr("representation during DC analysis")+
+			    " [open, short, unspecified]"));
 
   // must be the last property !!!
   Props.append(new Property("Ports", "1", false,
@@ -117,6 +120,10 @@ QString SParamFile::NetList()
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   // interpolator type
+  p2 = Props.next();
+  s += " "+p2->Name+"=\""+p2->Value+"\"";
+
+  // DC property
   p2 = Props.next();
   s += " "+p2->Name+"=\""+p2->Value+"\"";
 

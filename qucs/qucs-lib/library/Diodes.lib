@@ -1,4 +1,4 @@
-<Qucs Library 0.0.8 "Diodes">
+<Qucs Library 0.0.9 "Diodes">
 
 <Component 1N4148>
   <Description>
@@ -1364,5 +1364,25 @@
   </Description>
   <Model>
     <Diode D_BAS70_ 1 0 0 -26 13 0 0 "99.5p" 0 "1.7" 0 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.6" 0 "7.2n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "70" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component BAS40_Philips>
+  <Description>
+    schottky diode
+    Manufacturer: Philips
+  </Description>
+  <Model>
+    <Diode BAS40_ 1 0 0 -26 13 0 0 "1.419e-08" 0 "1.025" 0 "4.046e-12" 0 "0.4154" 0 "0.323" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "4.942" 0 "0" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "44" 0 "1.255e-07" 0 "2" 0 "0.69" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component BAS70_Philips>
+  <Description>
+    schottky diode
+    Manufacturer: Philips
+  </Description>
+  <Model>
+    <Diode BAS70_ 1 0 0 -26 13 0 0 "3.22e-09" 0 "1.018" 0 "1.655e-12" 0 "0.3583" 0 "0.349" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "20.89" 0 "0" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "77" 0 "1.67e-07" 0 "2" 0 "0.69" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "26.85" 0 "1" 0>
   </Model>
 </Component>
