@@ -3445,6 +3445,14 @@ Use:  qucsedit [-r] archivo
         <source>vhdl</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>representation during DC analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relax time step raster</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
