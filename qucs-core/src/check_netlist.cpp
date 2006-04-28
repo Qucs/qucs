@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.90 2006/03/24 14:30:05 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.91 2006/04/28 07:08:26 raimi Exp $
  *
  */
 
@@ -208,6 +208,7 @@ static struct special_t checker_specials[] = {
     { "Euler", "Trapezoidal", "Gear", "AdamsMoulton", NULL } },
   { "TR",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
 			       "HouseholderLQ", NULL } },
+  { "TR",     "relaxTSR",    { "yes", "no", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
@@ -220,6 +221,7 @@ static struct special_t checker_specials[] = {
   { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
   { "SPfile", "Interpolator",{ "linear", "cubic", NULL } },
+  { "SPfile", "duringDC",    { "open", "short", "unspecified", NULL } },
   { "DigiSource", "init",    { "low", "high", NULL } },
   { "Switch", "init",        { "on", "off", NULL } },
   { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",

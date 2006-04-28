@@ -1,7 +1,7 @@
 /*
  * spfile.cpp - S-parameter file class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.22 2005/11/25 08:27:05 raimi Exp $
+ * $Id: spfile.cpp,v 1.23 2006/04/28 07:08:26 raimi Exp $
  *
  */
 
@@ -328,7 +328,6 @@ void spfile::prepare (void) {
 }
 
 void spfile::initSP (void) {
-
   // allocate S-parameter matrix
   allocMatrixS ();
   // initialize data
@@ -574,11 +573,35 @@ complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
 }
 
 void spfile::initDC (void) {
-  allocMatrixMNA ();
-  clearY ();
+  // get appropriate property value
+  char * dc = getPropertyString ("duringDC");
+
+  // a short during DC
+  if (!strcmp (dc, "short")) {
+    int v, n, refnode = getSize () - 1;
+    setVoltageSources (refnode);
+    allocMatrixMNA ();
+    // place zero voltage sources
+    for (v = VSRC_1, n = NODE_1; n < refnode; n++, v++) {
+      voltageSource (v, n, refnode);
+    }
+    return;
+  }
+  // an open during DC
+  else if (!strcmp (dc, "open")) {
+    setVoltageSources (0);
+    allocMatrixMNA ();
+    return;
+  }
+  // none specified, DC value of IDFT ?
+  else {
+    setVoltageSources (0);
+    allocMatrixMNA ();
+  }
 }
 
 void spfile::initAC (void) {
+  setVoltageSources (0);
   allocMatrixMNA ();
   initSP ();
 }
@@ -596,4 +619,8 @@ void spfile::calcNoiseAC (nr_double_t frequency) {
   // nothing to do if the given file type had errors
   if (spara == NULL || nfreq == NULL) return;
   setMatrixN (cstocy (calcMatrixCs (frequency), getMatrixY () * z0) / z0);
+}
+
+void spfile::initTR (void) {
+  initDC ();
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.45 2006/04/24 08:25:46 raimi Exp $
+ * $Id: trsolver.cpp,v 1.46 2006/04/28 07:08:26 raimi Exp $
  *
  */
 
@@ -107,6 +107,8 @@ void trsolver::solve (void) {
   nr_double_t time, saveCurrent;
   int error = 0, convError = 0;
   char * solver = getPropertyString ("Solver");
+  relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
+
   runs++;
   saveCurrent = current = 0;
   stepDelta = -1;
