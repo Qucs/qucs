@@ -21,16 +21,16 @@
 #include "component.h"
 
 
-class Subcircuit : public Component  {
+class Subcircuit : public MultiViewComponent  {
 public:
   Subcircuit();
-  ~Subcircuit();
+ ~Subcircuit() {};
   Component* newOne();
   QString NetList();
   QString VHDL_Code(int);
-  void recreate(Schematic*);
 
-private:
+protected:
+  void createSymbol();
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
 };

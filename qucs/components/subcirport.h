@@ -21,17 +21,16 @@
 #include "component.h"
 
 
-class SubCirPort : public Component  {
+class SubCirPort : public MultiViewComponent  {
 public:
   SubCirPort();
-  ~SubCirPort();
+ ~SubCirPort() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   QString NetList();
   QString VHDL_Code(int);
-  void recreate(Schematic*);
 
-private:
+protected:
   void createSymbol();
 };
 

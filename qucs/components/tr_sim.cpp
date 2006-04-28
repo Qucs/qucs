@@ -56,6 +56,8 @@ TR_Sim::TR_Sim()
 	QObject::tr("initial step size in seconds")));
   Props.append(new Property("MinStep", "1e-16", false,
 	QObject::tr("minimum step size in seconds")));
+  Props.append(new Property("relaxTSR", "no", false,
+	QObject::tr("relax time step raster")));
   Props.append(new Property("MaxIter", "150", false,
 	QObject::tr("maximum number of iterations until error")));
   Props.append(new Property("reltol", "0.001", false,

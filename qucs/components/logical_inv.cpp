@@ -116,25 +116,3 @@ Element* Logical_Inv::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Logical_Inv();
   return 0;
 }
-
-// -------------------------------------------------------
-void Logical_Inv::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Ellips.clear();
-  Ports.clear();
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
-}

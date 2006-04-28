@@ -21,14 +21,16 @@
 #include "component.h"
 
 
-class JFET : public Component  {
+class JFET : public MultiViewComponent {
 public:
   JFET();
-  ~JFET();
+ ~JFET() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_p(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+
+protected:
+  void createSymbol();
 };
 
 #endif

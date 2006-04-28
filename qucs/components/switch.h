@@ -21,16 +21,15 @@
 #include "component.h"
 
 
-class Switch : public Component  {
+class Switch : public MultiViewComponent  {
 public:
   Switch();
- ~Switch();
+ ~Switch() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
   QString NetList();
 
-private:
+protected:
   void createSymbol();
 };
 

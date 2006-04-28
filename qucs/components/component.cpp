@@ -60,10 +60,7 @@ Component::Component()
   Props.setAutoDelete(true);
 }
 
-Component::~Component()
-{
-}
-
+// -------------------------------------------------------
 Component* Component::newOne()
 {
   return new Component();
@@ -1016,9 +1013,27 @@ bool Component::getBrush(const QString& s, QBrush& Brush, int i)
   return true;
 }
 
-// ---------------------------------------------------------------------
-void Component::performModification()
+
+// ***********************************************************************
+// ********                                                       ********
+// ********          Functions of class MultiViewComponent        ********
+// ********                                                       ********
+// ***********************************************************************
+void MultiViewComponent::recreate(Schematic *Doc)
 {
+  if(Doc) {
+    Doc->Components->setAutoDelete(false);
+    Doc->deleteComp(this);
+  }
+
+  Ellips.clear();
+  Texts.clear();
+  Ports.clear();
+  Lines.clear();
+  Rects.clear();
+  Arcs.clear();
+  createSymbol();
+  
   bool mmir = mirroredX;
   int  rrot = rotated;
   if(mmir)  mirrorX();   // mirror
@@ -1026,6 +1041,11 @@ void Component::performModification()
 
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
+
+  if(Doc) {
+    Doc->insertRawComponent(this);
+    Doc->Components->setAutoDelete(true);
+  }
 }
 
 
@@ -1184,28 +1204,6 @@ void GateComponent::createSymbol()
       continue;
     }
     Lines.append(new Line(-30, y, xl, y,QPen(QPen::darkBlue,2)));
-  }
-}
-
-// -------------------------------------------------------
-void GateComponent::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Ellips.clear();
-  Ports.clear();
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
   }
 }
 
