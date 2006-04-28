@@ -33,7 +33,7 @@ class QString;
 class Component : public Element {
 public:
   Component();
-  virtual ~Component();
+  virtual ~Component() {};
 
   virtual Component* newOne();
   virtual void recreate(Schematic*) {};
@@ -79,15 +79,28 @@ protected:
 		   int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
-  void performModification();
 };
 
-class GateComponent : public Component {
+
+class MultiViewComponent : public Component {
+public:
+  MultiViewComponent() {};
+  virtual ~MultiViewComponent() {};
+
+  void recreate(Schematic*);
+
+protected:
+  virtual void createSymbol() {};
+};
+
+
+class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
   QString NetList();
   QString VHDL_Code(int);
-  void recreate(Schematic*);
+
+protected:
   void createSymbol();
 };
 

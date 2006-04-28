@@ -46,10 +46,7 @@ SParamFile::SParamFile()
   createSymbol();
 }
 
-SParamFile::~SParamFile()
-{
-}
-
+// -------------------------------------------------------
 Component* SParamFile::newOne()
 {
   SParamFile* p = new SParamFile();
@@ -58,6 +55,7 @@ Component* SParamFile::newOne()
   return p;
 }
 
+// -------------------------------------------------------
 Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port S parameter file");
@@ -73,6 +71,7 @@ Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1-port S parameter file");
@@ -82,6 +81,7 @@ Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2-port S parameter file");
@@ -168,24 +168,4 @@ void SParamFile::createSymbol()
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
-}
-
-// -------------------------------------------------------
-void SParamFile::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Ports.clear();
-  Lines.clear();
-  Texts.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }

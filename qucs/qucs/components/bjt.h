@@ -21,14 +21,16 @@
 #include "component.h"
 
 
-class BJT : public Component  {
+class BJT : public MultiViewComponent  {
 public:
   BJT();
- ~BJT();
+ ~BJT() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_pnp(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
+
+protected:
+  void createSymbol();
 };
 
 #endif

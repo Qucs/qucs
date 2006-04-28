@@ -318,7 +318,8 @@ pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
    &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
    &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
-   &D_FlipFlop::info, &JK_FlipFlop::info, &VHDL_File::info, 0};
+   &D_FlipFlop::info, &JK_FlipFlop::info, &VHDL_File::info,
+   &Digi_Sim::info, 0};
 
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
@@ -1860,6 +1861,8 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
 }
 
 // ---------------------------------------------------------
+// This function is called if the document type changes, i.e.
+// from schematic to text document or vice versa.
 void QucsApp::switchSchematicDoc(bool SchematicMode)
 {
   mainAccel->setEnabled(SchematicMode);
@@ -1871,7 +1874,15 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
       activeAction->blockSignals(false);
     }
     activeAction = select;
+    select->blockSignals(true);
     select->setOn(true);
+    select->blockSignals(false);
+  }
+  else {
+    MouseMoveAction = 0;
+    MousePressAction = &MouseActions::MPressSelect;
+    MouseReleaseAction = &MouseActions::MReleaseSelect;
+    MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
   }
 
   symEdit->setEnabled(SchematicMode);

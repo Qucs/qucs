@@ -21,17 +21,18 @@
 #include "component.h"
 
 
-class SParamFile : public Component  {
+class SParamFile : public MultiViewComponent  {
 public:
   SParamFile();
- ~SParamFile();
+ ~SParamFile() {};
   Component* newOne();
   QString NetList();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info1(QString&, char* &, bool getNewOne=false);
   static Element* info2(QString&, char* &, bool getNewOne=false);
+
+protected:
   void createSymbol();
-  void recreate(Schematic*);
 };
 
 #endif

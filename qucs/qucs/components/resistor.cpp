@@ -47,10 +47,13 @@ Resistor::Resistor(bool european)
   Name  = "R";
 }
 
-Resistor::~Resistor()
+// -------------------------------------------------------
+Component* Resistor::newOne()
 {
+  return new Resistor(Props.getLast()->Value != "US");
 }
 
+// -------------------------------------------------------
 void Resistor::createSymbol()
 {
   if(Props.getLast()->Value != "US") {
@@ -80,12 +83,7 @@ void Resistor::createSymbol()
   x2 =  30; y2 =  11;
 }
 
-Component* Resistor::newOne()
-{
-  Resistor* p = new Resistor(Props.getLast()->Value != "US");
-  return p;
-}
-
+// -------------------------------------------------------
 Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor");
@@ -95,6 +93,7 @@ Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+// -------------------------------------------------------
 Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor US");
@@ -102,22 +101,4 @@ Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Resistor(false);
   return 0;
-}
-
-void Resistor::recreate(Schematic *Doc)
-{
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
-  Lines.clear();
-  Ports.clear();
-  createSymbol();
-  performModification();  // rotate and mirror
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }

@@ -95,7 +95,7 @@ void SearchDialog::searchText(bool fromCursor, int Offset)
     return;
   if(!Doc->find(SearchEdit->text(), CaseBox->isChecked(),
          WordBox->isChecked(), !BackwardBox->isChecked(), &Line, &Column)) {
-    QMessageBox::information(Doc, tr("Search..."),
+    QMessageBox::information(this, tr("Search..."),
                  tr("Could not find search string!"));
   }
 }

@@ -21,16 +21,15 @@
 #include "component.h"
 
 
-class Resistor : public Component  {
+class Resistor : public MultiViewComponent  {
 public:
   Resistor(bool european=true);
-  ~Resistor();
+ ~Resistor() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
-  void recreate(Schematic*);
 
-private:
+protected:
   void createSymbol();
 };
 

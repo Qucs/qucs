@@ -278,6 +278,10 @@ void QucsApp::slotInsertEntity()
   Doc->clearParagraphBackground(Doc->tmpPosX);
   Doc->insert("entity  is\n  port ( : in bit);\nend;\n"
               "architecture  of  is\n  signal : bit;\nbegin\n\nend;\n\n");
+
+  int x, y;
+  Doc->getCursorPosition(&x, &y);
+  Doc->slotCursorPosChanged(x, y);
 }
   
 // -----------------------------------------------------------------------

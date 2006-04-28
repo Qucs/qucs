@@ -48,10 +48,6 @@ Subcircuit::Subcircuit()
 		QObject::tr("name of qucs schematic file")));
 }
 
-Subcircuit::~Subcircuit()
-{
-}
-
 // ---------------------------------------------------------------------
 Component* Subcircuit::newOne()
 {
@@ -65,13 +61,8 @@ Component* Subcircuit::newOne()
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
-void Subcircuit::recreate(Schematic *Doc)
+void Subcircuit::createSymbol()
 {
-  if(Doc) {
-    Doc->Components->setAutoDelete(false);
-    Doc->deleteComp(this);
-  }
-
   int No;
   QString FileName(Props.getFirst()->Value);
   QFileInfo Info(FileName);
@@ -83,7 +74,6 @@ void Subcircuit::recreate(Schematic *Doc)
   if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
-    performModification();
   }
   else {
     No = QucsApp::testFile(FileName);
@@ -91,23 +81,11 @@ void Subcircuit::recreate(Schematic *Doc)
 
     remakeSymbol(No);  // no symbol was found -> create standard symbol
   }
-
-  if(Doc) {
-    Doc->insertRawComponent(this);
-    Doc->Components->setAutoDelete(true);
-  }
 }
 
 // ---------------------------------------------------------------------
 void Subcircuit::remakeSymbol(int No)
 {
-  Arcs.clear();
-  Lines.clear();
-  Rects.clear();
-  Ellips.clear();
-  Texts.clear();
-  Ports.clear();
-
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
@@ -135,8 +113,6 @@ void Subcircuit::remakeSymbol(int No)
 
   tx = x1+4;
   ty = y2+4;
-
-  performModification();
 }
 
 // ---------------------------------------------------------------------
@@ -144,13 +120,6 @@ void Subcircuit::remakeSymbol(int No)
 // returns the number of painting elements.
 int Subcircuit::loadSymbol(const QString& DocName)
 {
-  Arcs.clear();
-  Lines.clear();
-  Rects.clear();
-  Ellips.clear();
-  Texts.clear();
-  Ports.clear();
-
   QFile file(DocName);
   if(!file.open(IO_ReadOnly)) {
     return -1;

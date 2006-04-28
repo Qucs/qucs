@@ -39,9 +39,15 @@ HB_Sim::HB_Sim()
   Name  = "HB";
 
   Props.append(new Property("f", "1 GHz", true,
-			QObject::tr("frequency in Hertz")));
+		QObject::tr("frequency in Hertz")));
   Props.append(new Property("n", "4", true,
-			QObject::tr("number of harmonics")));
+		QObject::tr("number of harmonics")));
+  Props.append(new Property("abstol", "1 pA", true,
+		QObject::tr("absolute tolerance for currents")));
+  Props.append(new Property("reltol", "0.001", true,
+		QObject::tr("relative tolerance for convergence")));
+  Props.append(new Property("MaxIter", "150", true,
+		QObject::tr("maximum number of iterations until error")));
 }
 
 HB_Sim::~HB_Sim()
