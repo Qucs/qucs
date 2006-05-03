@@ -5717,7 +5717,11 @@ Un petit éditeur sans prétention pour Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation>Ligne : %1  -  Colonne : %2</translation>
+        <translation type="obsolete">Ligne : %1  -  Colonne : %2</translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

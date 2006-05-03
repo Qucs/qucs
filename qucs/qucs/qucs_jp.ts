@@ -5573,7 +5573,7 @@ Very simple text editor for Qucs
         <translation>キャンセル(&amp;C)</translation>
     </message>
     <message>
-        <source>Row: %1  -  Column: %2</source>
+        <source>Line: %1  -  Column: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

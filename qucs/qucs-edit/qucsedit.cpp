@@ -57,7 +57,7 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   ButtSave->setDisabled(readOnly);
 
   h->setStretchFactor(new QWidget(h),5); // stretchable placeholder
-  PosText = new QLabel(tr("Row: %1  -  Column: %2").arg(1).arg(1), h);
+  PosText = new QLabel(tr("Line: %1  -  Column: %2").arg(1).arg(1), h);
   h->setStretchFactor(new QWidget(h),5); // stretchable placeholder
 
   QPushButton *ButtAbout = new QPushButton(tr("About"),h);
@@ -87,7 +87,7 @@ QucsEdit::~QucsEdit()
 // ************************************************************
 void QucsEdit::slotPrintCursorPosition(int Para, int Pos)
 {
-  PosText->setText(tr("Row: %1  -  Column: %2").arg(Para+1).arg(Pos+1));
+  PosText->setText(tr("Line: %1  -  Column: %2").arg(Para+1).arg(Pos+1));
 }
 
 // ************************************************************
