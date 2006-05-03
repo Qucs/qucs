@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.h,v 1.12 2006-01-30 07:45:34 raimi Exp $
+ * $Id: dcsolver.h,v 1.13 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@ class dcsolver : public nasolver<nr_double_t>
   void solve (void);
   static void calc (dcsolver *);
   void init (void);
+  void restart (void);
   void saveOperatingPoints (void);
 
  private:

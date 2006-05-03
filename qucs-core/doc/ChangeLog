@@ -1,3 +1,8 @@
+2006-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.1: Documented the --correct (or -c) command line
+	option of the qucsconv tool.
+
 2005-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsator.1: Added --gui (or -g) help text.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.35 2006-04-26 09:06:10 raimi Exp $
+ * $Id: diode.cpp,v 1.36 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -255,6 +255,12 @@ void diode::initDC (void) {
   prepareDC ();
 }
 
+// Callback for restarting the DC analysis.
+void diode::restartDC (void) {
+  // apply starting value to previous iteration value
+  UdPrev = real (getV (NODE_A) - getV (NODE_C));
+}
+
 // Callback for DC analysis.
 void diode::calcDC (void) {
   // get device properties
@@ -383,6 +389,7 @@ void diode::initTR (void) {
 void diode::calcTR (nr_double_t) {
   calcDC ();
   saveOperatingPoints ();
+  loadOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Cd = getOperatingPoint ("Cd");

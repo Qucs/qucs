@@ -1,7 +1,7 @@
 /*
  * mosfet.h - mosfet class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.h,v 1.16 2005-06-02 18:17:55 raimi Exp $
+ * $Id: mosfet.h,v 1.17 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -33,9 +33,11 @@ class mosfet : public circuit
   void calcNoiseSP (nr_double_t);
   void calcDC (void);
   void initDC (void);
+  void restartDC (void);
   void initModel (void);
   void saveOperatingPoints (void);
   void calcOperatingPoints (void);
+  void loadOperatingPoints (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
@@ -53,6 +55,7 @@ class mosfet : public circuit
   nr_double_t gbs, gbd, gm, gds, gmb, Ids, DrainControl, SourceControl;
   nr_double_t Leff, MOSdir, beta, Cox, Phi, Ga, Vto, Rs, Rd;
   nr_double_t Qgd, Qgs, Qbd, Qbs, Qgb, Ibs, Ibd;
+  nr_double_t Ugd, Ugs, Ubs, Ubd, Uds, Ugb;
   int transientMode;
   circuit * rs;
   circuit * rd;

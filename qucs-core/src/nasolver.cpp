@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.42 2006-02-20 18:02:11 raimi Exp $
+ * $Id: nasolver.cpp,v 1.43 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -290,7 +290,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_gMin (void) {
 	break;
       }
       gMin = MAX (gPrev - gStep, 0);
-    } 
+    }
     // converged, increased the gMin-step
     else {
       gPrev = gMin;

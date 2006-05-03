@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.34 2006-02-17 07:24:06 raimi Exp $
+ * $Id: mosfet.cpp,v 1.35 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -132,17 +132,22 @@ matrix mosfet::calcMatrixCy (nr_double_t frequency) {
   return cy;
 }
 
+void mosfet::restartDC (void) {
+  // apply starting values to previous iteration values
+  UgdPrev = real (getV (NODE_G) - getV (NODE_D));
+  UgsPrev = real (getV (NODE_G) - getV (NODE_S));
+  UbsPrev = real (getV (NODE_B) - getV (NODE_S));
+  UbdPrev = real (getV (NODE_B) - getV (NODE_D));
+  UdsPrev = UgsPrev - UgdPrev;
+}
+
 void mosfet::initDC (void) {
 
   // allocate MNA matrices
   allocMatrixMNA ();
 
   // initialize starting values
-  UgdPrev = real (getV (NODE_G) - getV (NODE_D));
-  UgsPrev = real (getV (NODE_G) - getV (NODE_S));
-  UbsPrev = real (getV (NODE_B) - getV (NODE_S));
-  UbdPrev = real (getV (NODE_B) - getV (NODE_D));
-  UdsPrev = UgsPrev - UgdPrev;
+  restartDC ();
 
   // initialize the MOSFET
   initModel ();
@@ -392,8 +397,7 @@ void mosfet::calcDC (void) {
   nr_double_t l   = getPropertyDouble ("Lambda");
   nr_double_t T   = getPropertyDouble ("Temp");
 
-  nr_double_t Ugs, Ugd, Ut, IeqBS, IeqBD, IeqDS, UbsCrit, UbdCrit;
-  nr_double_t Uds, gtiny, Ubs, Ubd;
+  nr_double_t Ut, IeqBS, IeqBD, IeqDS, UbsCrit, UbdCrit, gtiny;
 
   T = kelvin (T);
   Ut = T * kBoverQ;
@@ -549,16 +553,26 @@ void mosfet::calcDC (void) {
 #define cgbState 15 // gate-bulk capacitance state
 
 void mosfet::saveOperatingPoints (void) {
-  nr_double_t Ugs, Ugd, Ubs, Ubd;
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
-  Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
-  Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
-  setOperatingPoint ("Vgs", Ugs);
-  setOperatingPoint ("Vgd", Ugd);
-  setOperatingPoint ("Vbs", Ubs);
-  setOperatingPoint ("Vbd", Ubd);
-  setOperatingPoint ("Vds", Ugs - Ugd);
+  nr_double_t Vgs, Vgd, Vbs, Vbd;
+  Vgd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Vgs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  Vbs = real (getV (NODE_B) - getV (NODE_S)) * pol;
+  Vbd = real (getV (NODE_B) - getV (NODE_D)) * pol;
+  setOperatingPoint ("Vgs", Vgs);
+  setOperatingPoint ("Vgd", Vgd);
+  setOperatingPoint ("Vbs", Vbs);
+  setOperatingPoint ("Vbd", Vbd);
+  setOperatingPoint ("Vds", Vgs - Vgd);
+  setOperatingPoint ("Vgb", Vgs - Vbs);
+}
+
+void mosfet::loadOperatingPoints (void) {
+  Ugs = getOperatingPoint ("Vgs");
+  Ugd = getOperatingPoint ("Vgd");
+  Ubs = getOperatingPoint ("Vbs");
+  Ubd = getOperatingPoint ("Vbd");
+  Uds = getOperatingPoint ("Vds");
+  Ugb = getOperatingPoint ("Vgb");
 }
 
 void mosfet::calcOperatingPoints (void) {
@@ -578,15 +592,7 @@ void mosfet::calcOperatingPoints (void) {
   nr_double_t Tt   = getPropertyDouble ("Tt");
   nr_double_t W    = getPropertyDouble ("W");
   
-  nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds, Ugb;
-  nr_double_t Cgd, Cgb, Cgs;
-
-  Ugd = getOperatingPoint ("Vgd");
-  Ugs = getOperatingPoint ("Vgs");
-  Ubs = getOperatingPoint ("Vbs");
-  Ubd = getOperatingPoint ("Vbd");
-  Uds = Ugs - Ugd;
-  Ugb = Ugs - Ubs;
+  nr_double_t Cbs, Cbd, Cgd, Cgb, Cgs;
 
   // capacitance of bulk-drain diode
   Cbd = gbd * Tt + pnCapacitance (Ubd, Cbd0, Pb, M, Fc) +
@@ -648,7 +654,6 @@ void mosfet::calcOperatingPoints (void) {
 
 void mosfet::initAC (void) {
   allocMatrixMNA ();
-  clearI ();
 }
 
 void mosfet::calcAC (nr_double_t frequency) {
@@ -668,6 +673,7 @@ void mosfet::calcTR (nr_double_t) {
   calcDC ();
   transientMode = getPropertyInteger ("capModel");
   saveOperatingPoints ();
+  loadOperatingPoints ();
   calcOperatingPoints ();
   transientMode = 0;
 
@@ -676,11 +682,9 @@ void mosfet::calcTR (nr_double_t) {
   nr_double_t Cbd = getOperatingPoint ("Cbd");
   nr_double_t Cbs = getOperatingPoint ("Cbs");
   nr_double_t Cgb = getOperatingPoint ("Cgb");
-  nr_double_t Ugd = getOperatingPoint ("Vgd");
-  nr_double_t Ugs = getOperatingPoint ("Vgs");
-  nr_double_t Ubd = getOperatingPoint ("Vbd");
-  nr_double_t Ubs = getOperatingPoint ("Vbs");
-  nr_double_t Ugb = Ugs - Ubs;
+
+  Uds = Ugs - Ugd;
+  Ugb = Ugs - Ubs;
 
   transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd, Qbd);
   transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs, Qbs);

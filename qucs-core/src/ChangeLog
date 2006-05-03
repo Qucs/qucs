@@ -1,3 +1,23 @@
+2006-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Fixed calculation of the requested number
+	of harmonics.
+	Excitation sources must be shunted by a 100 Ohm resistor in
+	parallel, not just shunting the ports of the sources to ground.
+	Dividing constant excitation currents by 2 (except DC), 
+	multiplying balanced current by 2 (except DC) for the final
+	solution.
+	The FFT values must be physically interpreted for discrete
+	frequencies, those divided by the number of complex samples.  The
+	IFFT value are left as is.
+
+	* dcsolver.cpp: Running restartDC() for each non-linear circuit
+	if a fallback algorithm is used to solve the netlist.
+
+	* circuit.h (class circuit): Allow non-linear circuits to
+	re-initialize their DC iteration properly by a restartDC()
+	callback.
+
 2006-04-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* hbsolver.cpp: Tried and applied yet another algorithm to

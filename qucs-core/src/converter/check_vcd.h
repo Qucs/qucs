@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.5 2006-01-11 09:50:07 raimi Exp $
+ * $Id: check_vcd.h,v 1.6 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@ __BEGIN_DECLS
 /* Externalize variables used by the scanner, parser, checker and producer. */
 extern struct vcd_file * vcd;
 extern struct dataset_variable * dataset_root;
+extern int vcd_correct;
 
 /* Available functions of the checker. */
 int  vcd_checker (void);

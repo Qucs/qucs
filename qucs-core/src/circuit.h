@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.49 2006-04-19 07:03:26 raimi Exp $
+ * $Id: circuit.h,v 1.50 2006-05-03 09:43:56 raimi Exp $
  *
  */
 
@@ -76,6 +76,7 @@ class circuit : public object, public integrator
   virtual void calcSP (nr_double_t) { }
   virtual void initDC (void) { allocMatrixMNA (); }
   virtual void calcDC (void) { }
+  virtual void restartDC (void) { }
   virtual void initNoiseSP (void) { allocMatrixN (); }
   virtual void calcNoiseSP (nr_double_t) { }
   virtual void initNoiseAC (void) { allocMatrixN (vsources); }
