@@ -6111,7 +6111,11 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation>Riga: %1  -  Colonna: %2</translation>
+        <translation type="obsolete">Riga: %1  -  Colonna: %2</translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

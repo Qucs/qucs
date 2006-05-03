@@ -7615,7 +7615,11 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation>Строка: %1  -  Стлб: %2</translation>
+        <translation type="obsolete">Строка: %1  -  Стлб: %2</translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
