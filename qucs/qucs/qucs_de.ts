@@ -3680,11 +3680,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>Representation während der DC-Analyse</translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungenauigkeiten bei den Zeitschritten zulassen</translation>
     </message>
 </context>
 <context>
@@ -7633,6 +7633,10 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
+        <translation type="obsolete">Zeile: %1  -  Spalte: %2</translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
         <translation>Zeile: %1  -  Spalte: %2</translation>
     </message>
 </context>

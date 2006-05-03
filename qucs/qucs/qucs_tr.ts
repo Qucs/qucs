@@ -5336,7 +5336,7 @@ Inserts the skeleton of a VHDL entity</source>
     </message>
     <message>
         <source>Row: %1  -  Column: %2</source>
-        <translation>Satır: %1  -  Sütun: %2</translation>
+        <translation type="obsolete">Satır: %1  -  Sütun: %2</translation>
     </message>
     <message>
         <source>About</source>
@@ -5413,6 +5413,10 @@ Qucs için çok basit bit metin düzenleyici
     <message>
         <source>&amp;Cancel</source>
         <translation>&amp;İptal</translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

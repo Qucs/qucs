@@ -4825,10 +4825,6 @@ Inserts the skeleton of a VHDL entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Row: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4894,6 +4890,10 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line: %1  -  Column: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
