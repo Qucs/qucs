@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.41 2006/04/26 09:06:10 raimi Exp $
+ * $Id: bjt.cpp,v 1.42 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -265,8 +265,7 @@ void bjt::initDC (void) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // initialize starting values
-  Ube = UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
-  Ubc = UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
+  restartDC ();
 
   // disable additional base-collector capacitance
   if (deviceEnabled (cbcx)) {
@@ -323,6 +322,12 @@ void bjt::initDC (void) {
     Rbb = 0.0;                 // set this operating point
     setProperty ("Xcjc", 1.0); // other than 1 is senseless here
   }
+}
+
+void bjt::restartDC (void) {
+  // apply starting values to previous iteration values
+  UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
 }
 
 void bjt::calcDC (void) {
@@ -662,6 +667,7 @@ void bjt::initTR (void) {
 void bjt::calcTR (nr_double_t t) {
   calcDC ();
   saveOperatingPoints ();
+  loadOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Cbe  = getOperatingPoint ("Cbe");

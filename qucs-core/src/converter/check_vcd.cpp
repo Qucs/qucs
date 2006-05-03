@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.7 2006/04/21 08:02:02 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.8 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -48,6 +48,7 @@
 struct vcd_file * vcd = NULL;
 int vcd_errors = 0;
 int vcd_freehdl = 1;
+int vcd_correct = 0;
 struct vcd_set * vcd_sets = NULL;
 struct dataset_variable * dataset_root = NULL;
 
@@ -168,7 +169,7 @@ vcd_prepend_scopes (struct vcd_vardef * var, char * ident) {
 }
 
 /* This function initially creates a dataset variable based on the
-   given VCD varaibale. */
+   given VCD variable. */
 static struct dataset_variable *
 vcd_create_variable (struct vcd_vardef * var) {
   struct dataset_variable * ds;
@@ -183,16 +184,26 @@ vcd_create_variable (struct vcd_vardef * var) {
 #endif
   char * id1, * id2 = (char *) malloc (len);
 
+  // using VCD produced by FreeHDL
   if (vcd_freehdl) {
+    // skip these
     if (strstr (var->ident, "implicit_wait_for"))
       ds->output = 0;
-    if (strstr (var->ident, "nnnet") == var->ident) {
-      id1 = strdup (&var->ident[1]);
-      id1[0] = '_';
-    } else {
+    // correct nodes
+    if (vcd_correct) {
+      if (strstr (var->ident, "net") == var->ident) {
+	id1 = strdup (&var->ident[3]);
+      } else {
+	id1 = strdup (var->ident);
+      }
+    }
+    // keep nodes
+    else {
       id1 = strdup (var->ident);
     }
-  } else {
+  }
+  // other than FreeHDL
+  else {
     id1 = strdup (var->ident);
   }
 

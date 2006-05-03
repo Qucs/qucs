@@ -1,3 +1,8 @@
+2006-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/mosfet.cpp, devices/jfet.cpp, devices/diode.cpp,
+	devices/bjt.cpp: Implemented restartDC() callback.
+
 2006-04-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* spfile.cpp: Implemented new 'duringDC' property.  The

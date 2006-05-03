@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.31 2006/02/17 07:24:06 raimi Exp $
+ * $Id: jfet.cpp,v 1.32 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -172,6 +172,12 @@ void jfet::initModel (void) {
   setScaledProperty ("Rd", Rd / A);
 }
 
+void jfet::restartDC (void) {
+  // apply starting values to previous iteration values
+  UgdPrev = real (getV (NODE_G) - getV (NODE_D));
+  UgsPrev = real (getV (NODE_G) - getV (NODE_S));
+}
+
 void jfet::initDC (void) {
 
   // allocate MNA matrices
@@ -181,8 +187,7 @@ void jfet::initDC (void) {
   initModel ();
 
   // initialize starting values
-  UgdPrev = real (getV (NODE_G) - getV (NODE_D));
-  UgsPrev = real (getV (NODE_G) - getV (NODE_S));
+  restartDC ();
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
@@ -234,8 +239,8 @@ void jfet::calcDC (void) {
   nr_double_t beta = getScaledProperty ("Beta");
   nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t Ugs, Ugd, Ut, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
-  nr_double_t Uds, Igs, Igd, gtiny;
+  nr_double_t Ut, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
+  nr_double_t Igs, Igd, gtiny;
 
   T = kelvin (T);
   Ut = T * kBoverQ;
@@ -335,13 +340,19 @@ void jfet::calcDC (void) {
   setY (NODE_S, NODE_S, ggs + gds + gm);
 }
 
+void jfet::loadOperatingPoints (void) {
+  Ugs = getOperatingPoint ("Vgs");
+  Ugd = getOperatingPoint ("Vgd");
+  Uds = getOperatingPoint ("Vds");
+}
+
 void jfet::saveOperatingPoints (void) {
-  nr_double_t Ugs, Ugd;
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
-  setOperatingPoint ("Vgs", Ugs);
-  setOperatingPoint ("Vgd", Ugd);
-  setOperatingPoint ("Vds", Ugs - Ugd);
+  nr_double_t Vgs, Vgd;
+  Vgd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Vgs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  setOperatingPoint ("Vgs", Vgs);
+  setOperatingPoint ("Vgd", Vgd);
+  setOperatingPoint ("Vds", Vgs - Vgd);
 }
 
 void jfet::calcOperatingPoints (void) {
@@ -352,14 +363,8 @@ void jfet::calcOperatingPoints (void) {
   nr_double_t Cgs0 = getScaledProperty ("Cgs");
   nr_double_t Pb   = getScaledProperty ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
-  nr_double_t T    = getPropertyDouble ("Temp");
   
-  nr_double_t Ugs, Ugd, Ut, Cgs, Cgd;
-
-  T = kelvin (T);
-  Ut = kB * T / Q;
-  Ugd = getOperatingPoint ("Vgd");
-  Ugs = getOperatingPoint ("Vgs");
+  nr_double_t Cgs, Cgd;
 
   // capacitance of gate-drain diode
   Cgd = pnCapacitance (Ugd, Cgd0, Pb, z, Fc);
@@ -405,10 +410,9 @@ void jfet::initTR (void) {
 void jfet::calcTR (nr_double_t) {
   calcDC ();
   saveOperatingPoints ();
+  loadOperatingPoints ();
   calcOperatingPoints ();
 
-  nr_double_t Ugs = getOperatingPoint ("Vgs");
-  nr_double_t Ugd = getOperatingPoint ("Vgd");
   nr_double_t Cgs = getOperatingPoint ("Cgs");
   nr_double_t Cgd = getOperatingPoint ("Cgd");
 

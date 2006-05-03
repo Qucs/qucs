@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.46 2006/04/28 07:08:26 raimi Exp $
+ * $Id: qucsdefs.h,v 1.47 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -830,7 +830,7 @@ struct define_t qucs_definition_available[] =
   },
   /* harmonic balance analysis */
   { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (0) },
+    { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
       PROP_NO_PROP },
     { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGEX },
       { "iabstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },

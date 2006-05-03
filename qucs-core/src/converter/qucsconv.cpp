@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.17 2006/04/07 07:11:23 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.18 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -109,6 +109,7 @@ int main (int argc, char ** argv) {
 	"  -a, --noaction  do not include netlist actions in the output\n"
 	"  -g  GNDNODE     replace ground node\n"
 	"  -d  DATANAME    data variable specification\n"
+	"  -c, --correct   enable node correction\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -132,6 +133,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-d")) {
       if (argv[++i]) csv_var = argv[i];
+    }
+    else if (!strcmp (argv[i], "-c") || !strcmp (argv[i], "--correct")) {
+      vcd_correct = 1;
     }
   }
 

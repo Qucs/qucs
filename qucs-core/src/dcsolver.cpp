@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.cpp,v 1.39 2006/01/30 07:45:34 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.40 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -142,6 +142,7 @@ void dcsolver::solve (void) {
 		  "#%d (%s)\n", getName (), getDescription (), fallback,
 		  getHelperDescription ());
 	retry++;
+	restart ();
       }
       else {
 	retry = -1;
@@ -177,6 +178,15 @@ void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->initDC ();
+  }
+}
+
+/* Goes through the list of non-linear circuit objects and runs its
+   restartDC() function. */
+void dcsolver::restart (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ()) c->restartDC ();
   }
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.h,v 1.19 2006/04/26 09:06:10 raimi Exp $
+ * $Id: bjt.h,v 1.20 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@ class bjt : public circuit
   void initSP (void);
   void calcDC (void);
   void initDC (void);
+  void restartDC (void);
   void saveOperatingPoints (void);
   void loadOperatingPoints (void);
   void calcOperatingPoints (void);

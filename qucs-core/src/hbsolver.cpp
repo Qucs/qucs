@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.14 2006/04/28 07:08:26 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.15 2006/05/03 09:43:56 raimi Exp $
  *
  */
 
@@ -348,7 +348,7 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
 
 // Calculates an order fulfilling the "power of two" requirement.
 int hbsolver::calcOrder (int n) {
-  int o, order = n * 2 + 1;        // current order + DC + negative freqencies
+  int o, order = n * 2;            // current order + DC + negative freqencies
   for (o = 1; o < order; o <<= 1); // a power of 2
   return o / 2 - 1;
 }
@@ -669,6 +669,8 @@ void hbsolver::invertMatrix (tmatrix<complex> * A, tmatrix<complex> * H) {
 // Some defines for matrix element access.
 #define V_(r) (*V) (r)
 #define I_(r) (*I) (r)
+#undef  A_
+#define A_(r,c) (*A) (r,c)
 
 #define Z_(r,c) (*Z) (r,c)
 #define Y_(r,c) (*Y) (r,c)
@@ -719,8 +721,26 @@ void hbsolver::createMatrixLinearY (void) {
   V = new tvector<complex> (sa);
   I = new tvector<complex> (sa);
 
-  // connect a 100 Ohm resistor (to ground) to each port in the MNA matrix
-  for (c = 0; c < sy * lnfreqs; c++) (*A) (c, c) += 0.01;
+  // connect a 100 Ohm resistor (to ground) to balanced node in the MNA matrix
+  for (c = 0; c < sv * lnfreqs; c++) A_(c, c) += 0.01;
+
+  // connect a 100 Ohm resistor (in parallel) to each excitation
+  for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite, r++) {
+    circuit * vs = ite.current ();
+    // get positive and negative node
+    int pnode = vs->getNode(NODE_1)->getNode ();
+    int nnode = vs->getNode(NODE_2)->getNode ();
+    for (f = 0; f < lnfreqs; f++) { // for each frequency
+      int pn = (pnode - 1) * lnfreqs + f;
+      int nn = (nnode - 1) * lnfreqs + f;
+      if (pnode) A_(pn, pn) += 0.01;
+      if (nnode) A_(nn, nn) += 0.01;
+      if (pnode && nnode) {
+	A_(pn, nn) -= 0.01;
+	A_(nn, pn) -= 0.01;
+      }
+    }
+  }
 
   // LU decompose the MNA matrix
   try_running () {
@@ -807,6 +827,8 @@ void hbsolver::createMatrixLinearY (void) {
 
   // extract the variable transadmittance matrix
   YV = new tmatrix<complex> (sv * nlfreqs);
+
+  // variable transadmittance matrix must be continued conjugately
   *YV = expandMatrix (*Y, sv);
 
   // delete overall temporary MNA matrix
@@ -859,6 +881,8 @@ void hbsolver::calcConstantCurrent (void) {
     for (c = 0; c < se; c++) {
       i += Y_(r, c + sn) * VC (c);
     }
+    int f = r % lnfreqs;
+    if (f != 0 && f != lnfreqs - 1) i /= 2;
     IC->set (r, i);
   }
   // expand the constant current conjugate
@@ -1061,7 +1085,7 @@ void hbsolver::VectorFFT (tvector<complex> * V, int isign) {
     for (k = i = 0; i < nodes; i++, k += 2 * n) {
       nr_double_t * dst = &d[k];
       _fft_1d (dst, n, isign);
-      if (isign < 0) for (r = 0; r < 2 * n; r++) *dst++ /= n;
+      if (isign > 0) for (r = 0; r < 2 * n; r++) *dst++ /= n;
     }
   }
   else {
@@ -1104,7 +1128,6 @@ void hbsolver::MatrixFFT (tmatrix<complex> * M) {
       // transform the sub-diagonal only
       for (fc = 0; fc < nlfreqs; fc++) V (fc) = M->get (nr + fc, nc + fc);
       VectorFFT (&V);
-      V /= nlfreqs;
       // fill in resulting sub-matrix for the node
       for (fc = 0; fc < nlfreqs; fc++) {
 	for (fi = nlfreqs - 1 - fc, fr = 0; fr < nlfreqs; fr++) {
@@ -1317,7 +1340,9 @@ void hbsolver::finalSolution (void) {
   // put currents through balanced nodes into right hand side
   for (int n = 0; n < nbanodes; n++) {
     for (int f = 0; f < lnfreqs; f++) {
-      I_(n * lnfreqs + f) += IL->get (n * nlfreqs + f);
+      complex i = IL->get (n * nlfreqs + f);
+      if (f != 0 && f != lnfreqs - 1) i *= 2;
+      I_(n * lnfreqs + f) = i;
     }
   }
 
