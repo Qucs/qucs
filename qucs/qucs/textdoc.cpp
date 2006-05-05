@@ -35,10 +35,8 @@
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 {
-  tmpPosX = tmpPosY = 0;
+  tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)QucsSettings.font.pointSize();
-
-  undoIsAvailable = redoIsAvailable = false;
   setUndoDepth(QucsSettings.maxUndo);
 
   QFileInfo Info(Name_);
@@ -63,12 +61,6 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 
     syntaxHighlight = new SyntaxHighlighter(this);
   }
-
-  tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
-  Scale = (float)QucsSettings.font.pointSize();
-
-  undoIsAvailable = redoIsAvailable = false;
-  setUndoDepth(QucsSettings.maxUndo);
 }
 
 TextDoc::~TextDoc()
@@ -100,9 +92,9 @@ void TextDoc::becomeCurrent(bool)
   slotCursorPosChanged(x, y);
   viewport()->setFocus();
 
-  if(undoIsAvailable)  App->undo->setEnabled(true);
+  if(isUndoAvailable())  App->undo->setEnabled(true);
   else  App->undo->setEnabled(false);
-  if(redoIsAvailable)  App->redo->setEnabled(true);
+  if(isRedoAvailable())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
 }
 
@@ -124,11 +116,14 @@ void TextDoc::slotCursorPosChanged(int x, int y)
 // ---------------------------------------------------
 void TextDoc::slotSetChanged()
 {
-  if((!DocChanged) && isModified()) {
-    App->DocumentTab->setTabIconSet(this, QPixmap(smallsave_xpm));
-    DocChanged = true;
+  if(isModified()) {
+    if(isUndoAvailable()) slotChangeUndo(true);  // fix Qt problem
+    if(!DocChanged) {
+      App->DocumentTab->setTabIconSet(this, QPixmap(smallsave_xpm));
+      DocChanged = true;
+    }
   }
-  else if(DocChanged && (!isModified())) {
+  else if(DocChanged) {
     App->DocumentTab->setTabIconSet(this, QPixmap(empty_xpm));
     DocChanged = false;
   }
@@ -137,15 +132,13 @@ void TextDoc::slotSetChanged()
 // ---------------------------------------------------
 void TextDoc::slotChangeUndo(bool available)
 {
-  undoIsAvailable = available;
-  App->undo->setEnabled(undoIsAvailable);
+  App->undo->setEnabled(available);
 }
 
 // ---------------------------------------------------
 void TextDoc::slotChangeRedo(bool available)
 {
-  redoIsAvailable = available;
-  App->redo->setEnabled(redoIsAvailable);
+  App->redo->setEnabled(available);
 }
 
 // ---------------------------------------------------

@@ -180,7 +180,7 @@ private:
   void readProjectFiles();
   void OpenProject(const QString&, const QString&);
   bool DeleteProject(const QString&, const QString&);
-  void updatePortNumber(int);
+  void updatePortNumber(QucsDoc*, int);
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);

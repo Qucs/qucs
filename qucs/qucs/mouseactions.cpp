@@ -654,10 +654,7 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
 
   if(drawn) {
-    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // erase old
-    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
-    painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
-    painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
+    painter.drawRect(MAx3, MAy3-9, 14, 10); // erase old
     painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
     painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
   }
@@ -666,10 +663,7 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
   MAx3  = Event->pos().x() - Doc->contentsX();
   MAy3  = Event->pos().y() - Doc->contentsY();
 
-  painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // paint new
-  painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
-  painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
-  painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
+  painter.drawRect(MAx3, MAy3-9, 14, 10); // paint new
   painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
   painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
 }
@@ -1046,7 +1040,7 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent*, int x, int y)
 {
   MAx1 = x;
   MAy1 = y;
-  if(!Doc->activateComponent(x, y)) {
+  if(!Doc->activateSpecifiedComponent(x, y)) {
 //    if(Event->button() != Qt::LeftButton) return;
     MAx2 = 0;  // if not clicking on a component => open a rectangle
     MAy2 = 0;
@@ -1474,7 +1468,7 @@ void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   // activates all components within the rectangle
-  Doc->activateComps(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
+  Doc->activateCompsWithinRect(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveActivate;
   QucsMain->MousePressAction = &MouseActions::MPressActivate;
