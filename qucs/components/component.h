@@ -39,6 +39,8 @@ public:
   virtual void recreate(Schematic*) {};
   virtual QString NetList();
   virtual QString VHDL_Code(int);
+  QString getShortenNetlist();
+  QString getShortenVHDL();
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*);
@@ -67,11 +69,14 @@ public:
   QPtrList<Text>     Texts;
   QPtrList<Property> Props;
 
-  bool     isActive; // should it be used in simulation or not ?
-  int      tx, ty;   // upper left corner of text (position)
-  QString  Description;
-  bool     showName;
+  #define COMP_IS_OPEN    0
+  #define COMP_IS_ACTIVE  1
+  #define COMP_IS_SHORTEN 2
+  int  isActive; // should it be used in simulation or not ?
+  int  tx, ty;   // upper left corner of text (position)
+  bool showName;
   QString  Model, Name;
+  QString  Description;
 
 protected:
   int  analyseLine(const QString&);

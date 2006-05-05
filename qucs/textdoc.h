@@ -53,7 +53,6 @@ public slots:
   void slotChangeRedo(bool);
 
 private:
-  bool undoIsAvailable, redoIsAvailable;
   SyntaxHighlighter *syntaxHighlight;
 };
 

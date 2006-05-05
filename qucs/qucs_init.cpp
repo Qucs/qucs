@@ -183,9 +183,9 @@ void QucsApp::initActions()
   moveText->setToggleAction(true);
   connect(moveText, SIGNAL(toggled(bool)), SLOT(slotMoveText(bool)));
 
-  changeProps = new QAction(tr("Change Property Values..."), Key_F7, this);
+  changeProps = new QAction(tr("Replace..."), Key_F7, this);
   changeProps->setWhatsThis(
-	tr("Change Property Values\n\nChange Property Value of Components"));
+	tr("Replace\n\nChange component properties\nor\ntext in VHDL code"));
   connect(changeProps, SIGNAL(activated()), SLOT(slotChangeProps()));
 
   editCut = new QAction(
@@ -383,9 +383,9 @@ void QucsApp::initActions()
 		QIconSet(QImage(QucsSettings.BitmapDir + "deactiv.png")),
 		tr("Deactivate/Activate"), CTRL+Key_D, this);
   editActivate->setStatusTip(
-	tr("Deactivate/Activate the selected item"));
+	tr("Deactivate/Activate selected components"));
   editActivate->setWhatsThis(
-	tr("Deactivate/Activate\n\nDeactivate/Activate the selected item"));
+	tr("Deactivate/Activate\n\nDeactivate/Activate the selected components"));
   editActivate->setToggleAction(true);
   connect(editActivate, SIGNAL(toggled(bool)), SLOT(slotEditActivate(bool)));
 
@@ -587,11 +587,11 @@ void QucsApp::initMenuBar()
   selectAll->addTo(editMenu);
   editFind->addTo(editMenu);
   editFindAgain->addTo(editMenu);
+  changeProps->addTo(editMenu);
   editRotate->addTo(editMenu);
   editMirror->addTo(editMenu);
   editMirrorY->addTo(editMenu);
   editActivate->addTo(editMenu);
-  changeProps->addTo(editMenu);
   editMenu->insertItem(tr("Align"), alignMenu);
   onGrid->addTo(editMenu);
   moveText->addTo(editMenu);

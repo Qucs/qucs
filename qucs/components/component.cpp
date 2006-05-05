@@ -46,7 +46,8 @@ Component::Component()
   mirroredX = false;
   rotated = 0;
   isSelected = false;
-  isActive = showName = true;
+  isActive = COMP_IS_ACTIVE;
+  showName = true;
 
   cx = 0;
   cy = 0;
@@ -276,8 +277,11 @@ void Component::paint(ViewPainter *p)
       y += p->LineSpacing;
     }
 
-  if(!isActive) {
+  if(isActive == COMP_IS_OPEN)
     p->Painter->setPen(QPen(QPen::red,0));
+  else if(isActive & COMP_IS_SHORTEN)
+    p->Painter->setPen(QPen(QPen::darkGreen,0));
+  if(isActive != COMP_IS_ACTIVE) {
     p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
@@ -612,9 +616,31 @@ QString Component::NetList()
 }
 
 // -------------------------------------------------------
+QString Component::getShortenNetlist()
+{
+  int z=0;
+  QString s;
+  QString Node1 = Ports.first()->Connection->Name;
+  for(Port *pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += "R:" + Name + "." + QString::number(z++) + " " +
+         Node1 + " " + pp->Connection->Name + " R=\"0\"\n";
+  return s;
+}
+
+// -------------------------------------------------------
 QString Component::VHDL_Code(int)
 {
   return QString("");   // no digital model
+}
+
+// -------------------------------------------------------
+QString Component::getShortenVHDL()
+{
+  QString s;
+  QString Node1 = Ports.first()->Connection->Name;
+  for(Port *pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += "  " + pp->Connection->Name + " <= " + Node1 + ";\n";
+  return s;
 }
 
 // -------------------------------------------------------
@@ -627,9 +653,8 @@ QString Component::save()
 
   int i=0;
   if(!showName)
-    i = 2;
-  if(isActive)
-    i |= 1;
+    i = 4;
+  i |= isActive;
   s += QString::number(i);
   s += " "+QString::number(cx)+" "+QString::number(cy);
   s += " "+QString::number(tx)+" "+QString::number(ty);
@@ -667,11 +692,9 @@ bool Component::load(const QString& _s)
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
   if(!ok) return false;
-  if(tmp & 1)
-    isActive = true;
-  else
-    isActive = false;
-  if(tmp & 2)
+  isActive = tmp & 3;
+
+  if(tmp & 4)
     showName = false;
   else
     showName = true;

@@ -802,99 +802,110 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   bool r;
   QString s;
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    if(pc->isActive) {
-      if(NumPorts < 0) {
-        if((pc->Type & isAnalogComponent) == 0) {
-          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->Name));
-          return false;
-        }
+  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+    if(pc->isActive != COMP_IS_ACTIVE) continue;
+
+    if(NumPorts < 0) {
+      if((pc->Type & isAnalogComponent) == 0) {
+        ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no analog model.").arg(pc->Name));
+        return false;
       }
-      else {
-        if((pc->Type & isDigitalComponent) == 0) {
-          ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
-          return false;
-        }
+    }
+    else {
+      if((pc->Type & isDigitalComponent) == 0) {
+        ErrText->insert(QObject::tr("ERROR: Component \"%1\" has no digital model.").arg(pc->Name));
+        return false;
+      }
+    }
+
+    if(pc->Model == "GND") {
+      pc->Ports.getFirst()->Connection->Name = "gnd";
+      continue;
+    }
+
+    if(pc->Model == "Sub") {
+      s = pc->Props.getFirst()->Value;
+      if(StringList.findIndex(s) >= 0)
+        continue;   // insert each subcircuit just one time
+
+      StringList.append(s);
+      Schematic *d = new Schematic(0, QucsWorkDir.filePath(s));
+      if(!d->loadDocument()) {  // load document if possible
+        delete d;
+        ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
+        return false;
+      }
+      d->DocName = s;
+      r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
+      delete d;
+      if(!r) return false;
+      continue;
+    }
+
+    if(pc->Model == "Lib") {
+      s  = pc->Props.first()->Value + "_";
+      s += pc->Props.next()->Value;
+      if(StringList.findIndex(s) >= 0)
+        continue;   // insert each subcircuit just one time
+
+      StringList.append(s);
+      r = ((LibComp*)pc)->outputSubNetlist(stream);
+      if(!r) {
+        ErrText->insert(
+        QObject::tr("ERROR: Cannot load library component \"%1\".").arg(pc->Name));
+        return false;
+      }
+      continue;
+    }
+
+    if(pc->Model == "SPICE") {
+      s = pc->Props.first()->Value;
+      if(s.isEmpty()) {
+        ErrText->insert(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
+                        arg(pc->Name));
+        return false;
+      }
+      if(StringList.findIndex(s) >= 0)
+        continue;   // insert each spice component just one time
+
+      StringList.append(s);
+      s += '"'+pc->Props.next()->Value;
+      if(pc->Props.next()->Value == "yes")  s = "SPICE \""+s;
+      else  s = "SPICEo\""+s;
+      Collect.append(s);
+      continue;
+    }
+
+    if(pc->Model == "VHDL") {
+      s = pc->Props.getFirst()->Value;
+      if(s.isEmpty()) {
+        ErrText->insert(QObject::tr("ERROR: No file name in VHDL component \"%1\".").
+                        arg(pc->Name));
+        return false;
+      }
+      if(StringList.findIndex(s) >= 0)
+        continue;   // insert each vhdl component just one time
+      StringList.append(s);
+
+      QFileInfo Info(s);
+      if(Info.isRelative())
+        s = QucsWorkDir.filePath(s);
+
+      QFile f(s);
+      if(!f.open(IO_ReadOnly)) {
+        ErrText->insert(
+           QObject::tr("ERROR: Cannot open VHDL file \"%1\".").arg(s));
+        return false;
       }
 
-      if(pc->Model == "GND") pc->Ports.getFirst()->Connection->Name = "gnd";
-      else if(pc->Model == "Sub") {
-	     s = pc->Props.getFirst()->Value;
-	     if(StringList.findIndex(s) >= 0)
-		continue;   // insert each subcircuit just one time
-
-	     StringList.append(s);
-	     Schematic *d = new Schematic(0, QucsWorkDir.filePath(s));
-             if(!d->loadDocument()) {  // load document if possible
-               delete d;
-               ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
-               return false;
-             }
-	     d->DocName = s;
-	     r = d->createSubNetlist(
-			stream, countInit, Collect, ErrText, NumPorts);
-	     delete d;
-	     if(!r) return false;
-           }
-      else if(pc->Model == "Lib") {
-	     s  = pc->Props.first()->Value + "_";
-	     s += pc->Props.next()->Value;
-	     if(StringList.findIndex(s) >= 0)
-		continue;   // insert each subcircuit just one time
-
-	     StringList.append(s);
-	     r = ((LibComp*)pc)->outputSubNetlist(stream);
-	     if(!r) {
-               ErrText->insert(
-	         QObject::tr("ERROR: Cannot load library component \"%1\".").arg(pc->Name));
-	       return false;
-	     }
-      }
-      else if(pc->Model == "SPICE") {
-	     s = pc->Props.first()->Value;
-	     if(s.isEmpty()) {
-               ErrText->insert(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
-			       arg(pc->Name));
-	       return false;
-	     }
-	     if(StringList.findIndex(s) >= 0)
-		continue;   // insert each spice component just one time
-
-	     StringList.append(s);
-	     s += '"'+pc->Props.next()->Value;
-	     if(pc->Props.next()->Value == "yes")  s = "SPICE \""+s;
-	     else  s = "SPICEo\""+s;
-	     Collect.append(s);
-	   }
-      else if(pc->Model == "VHDL") {
-	     s = pc->Props.getFirst()->Value;
-	     if(s.isEmpty()) {
-               ErrText->insert(QObject::tr("ERROR: No file name in VHDL component \"%1\".").
-			       arg(pc->Name));
-	       return false;
-	     }
-	     if(StringList.findIndex(s) >= 0)
-		continue;   // insert each vhdl component just one time
-	     StringList.append(s);
-
-	     QFileInfo Info(s);
-	     if(Info.isRelative())
-	       s = QucsWorkDir.filePath(s);
-
-	     QFile f(s);
-	     if(!f.open(IO_ReadOnly)) {
-               ErrText->insert(QObject::tr("ERROR: Cannot open VHDL file \"%1\".").
-			       arg(s));
-	       return false;
-	     }
-
-	     // Write the whole VHDL file into the netllist output.
-	     QTextStream streamVHDL(&f);
-	     s = streamVHDL.read();
-	     f.close();
-	     (*stream) << '\n' << s << '\n';
-	   }
-    }  // of "if(active)"
+      // Write the whole VHDL file into the netllist output.
+      QTextStream streamVHDL(&f);
+      s = streamVHDL.read();
+      f.close();
+      (*stream) << '\n' << s << '\n';
+      continue;
+    }
+  }
 
 
   // work on named nodes first in order to preserve the user given names
@@ -973,7 +984,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
   // write all components with node names into the netlist file
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(!pc->isActive) continue;   // should it be simulated ?
+    if(pc->isActive == COMP_IS_OPEN) continue;  // should it be simulated ?
   
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
       ErrText->insert(
@@ -986,10 +997,18 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
       continue;
     }
 
-    if(NumPorts < 0)
-      s = pc->NetList();
-    else
-      s = pc->VHDL_Code(NumPorts);
+    if(pc->isActive == COMP_IS_ACTIVE) {
+      if(NumPorts < 0)
+        s = pc->NetList();
+      else
+        s = pc->VHDL_Code(NumPorts);
+    }
+    else {
+      if(NumPorts < 0)
+        s = pc->getShortenNetlist();
+      else
+        s = pc->getShortenVHDL();
+    }
 
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       (*stream) << s << "\n";
@@ -1014,7 +1033,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   int allTypes = 0, NumPorts = 0;
   // Detect simulation domain (analog/digital) by looking at component types.
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(!pc->isActive) continue;
+    if(pc->isActive == COMP_IS_OPEN) continue;
     if(pc->Model.at(0) == '.') {
       if(pc->Model == ".Digi") {
         if(allTypes & isDigitalComponent) {
@@ -1102,10 +1121,14 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(!pc->isActive) continue;   // should it be simulated ?
+    if(pc->isActive == COMP_IS_OPEN) continue;  // should it be simulated ?
   
-    if(NumPorts < 0)
-      s = pc->NetList();
+    if(NumPorts < 0) {
+      if(pc->isActive == COMP_IS_ACTIVE)
+        s = pc->NetList();
+      else
+        s = pc->getShortenNetlist();
+    }
     else {
       if(pc->Model.at(0) == '.') {  // simulation component ?
         if(NumPorts > 0)  // truth table simulation ?
@@ -1115,7 +1138,10 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
           if(!VHDL_Time(Time, pc->Name))  return Time;  // wrong time format
         }
       }
-      s = pc->VHDL_Code(NumPorts);
+      if(pc->isActive == COMP_IS_ACTIVE)
+        s = pc->VHDL_Code(NumPorts);
+      else
+        s = pc->getShortenVHDL();
       if(s.at(0) == '§')  return s;   // return error
     }
 

@@ -23,6 +23,7 @@
 class QucsApp;
 class QLineEdit;
 class QCheckBox;
+class QVGroupBox;
 class QPushButton;
 
 
@@ -32,7 +33,7 @@ public:
   SearchDialog(QucsApp*);
  ~SearchDialog();
 
-  void initSearch();
+  void initSearch(bool replace=false);
   void searchText(bool, int);
 
 private slots:
@@ -40,8 +41,9 @@ private slots:
 
 private:
   QucsApp *App;
-  QLineEdit *SearchEdit;
-  QCheckBox *PositionBox, *CaseBox, *WordBox, *BackwardBox;
+  QLineEdit *SearchEdit, *ReplaceEdit;
+  QCheckBox *PositionBox, *CaseBox, *WordBox, *BackwardBox, *AskBox;
+  QVGroupBox *ReplaceGroup;
 };
 
 #endif

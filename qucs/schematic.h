@@ -167,9 +167,9 @@ public:
   void       insertRawComponent(Component*, bool noOptimize=true);
   void       recreateComponent(Component*);
   void       insertComponent(Component*);
-  void       activateComps(int, int, int, int);
-  bool       activateComponent(int, int);
-  bool       activateComponents();
+  void       activateCompsWithinRect(int, int, int, int);
+  bool       activateSpecifiedComponent(int, int);
+  bool       activateSelectedComponents();
   void       setCompPorts(Component*);
   Component* selectCompText(int, int, int&, int&);
   Component* searchSelSubcircuit();
