@@ -39,13 +39,12 @@ Subcircuit::Subcircuit()
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
-  Ports.append(new Port(0, 0));  // dummy port because of being device
-
-  Model = "Sub";
-  Name  = "SUB";
-
   Props.append(new Property("File", "", true,
 		QObject::tr("name of qucs schematic file")));
+
+  createSymbol();
+  Model = "Sub";
+  Name  = "SUB";
 }
 
 // ---------------------------------------------------------------------
@@ -56,6 +55,16 @@ Component* Subcircuit::newOne()
 //  p->remakeSymbol(Ports.count());
   p->recreate(0);
   return p;
+}
+
+// -------------------------------------------------------
+Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Subcircuit");
+  BitmapFile = "subcircuit";
+
+  if(getNewOne)  return new Subcircuit();
+  return 0;
 }
 
 // ---------------------------------------------------------------------

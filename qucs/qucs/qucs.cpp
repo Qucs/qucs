@@ -327,7 +327,7 @@ pInfoFunc Simulations[] =
 
 pInfoFunc FileComponents[] =
   {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2,
-   &SParamFile::info, 0};
+   &SParamFile::info, &Subcircuit::info, 0};
 
 pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
@@ -1069,7 +1069,7 @@ bool QucsApp::saveFile(QucsDoc *Doc)
   int Result = Doc->save();
   if(Result < 0)  return false;
 
-  updatePortNumber(Result);
+  updatePortNumber(Doc, Result);
   return true;
 }
 
@@ -1176,7 +1176,7 @@ bool QucsApp::saveAs()
   n = Doc->save();   // SAVE
   if(n < 0)  return false;
 
-  updatePortNumber(n);
+  updatePortNumber(Doc, n);
   return true;
 }
 
@@ -1215,6 +1215,9 @@ void QucsApp::slotFileSaveAll()
   }
 
   DocumentTab->blockSignals(false);
+  // Call update() to update subcircuit symbols in current document.
+  ((QScrollView*)DocumentTab->currentPage())->viewport()->update();
+  view->drawn = false;
   statusBar()->message(tr("Ready."));
 }
 
@@ -1362,37 +1365,42 @@ void QucsApp::slotApplSettings()
 
 
 // --------------------------------------------------------------
-void QucsApp::updatePortNumber(int No)
+void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 {
   if(No<0) return;
-  QWidget *w = DocumentTab->currentPage();
-  if(w->inherits("QTextEdit")) return;
 
-  QString pathName = ((Schematic*)w)->DocName;
+  QString pathName = currDoc->DocName;
   QFileInfo Info(pathName);
-  QString File, Name = Info.fileName();
+  QString Model, File, Name = Info.fileName();
 
-  // enter new port number into ListView
-  QListViewItem *p;
-  for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
-    if(p->text(0) == Name) {
-      if(No == 0) p->setText(1,"");
-      else p->setText(1,QString::number(No)+tr("-port"));
-      break;
+  if(Info.extension() == "sch") {
+    Model = "Sub";
+
+    // enter new port number into ListView
+    QListViewItem *p;
+    for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
+      if(p->text(0) == Name) {
+        if(No == 0) p->setText(1,"");
+        else p->setText(1,QString::number(No)+tr("-port"));
+        break;
+      }
     }
   }
-  if(No == 0) return;
+  else
+    Model = "VHDL";
+
 
   // update all occurencies of subcircuit in all open documents
   No = 0;
+  QWidget *w;
   Component *pc_tmp;
   while((w=DocumentTab->page(No++)) != 0) {
     if(w->inherits("QTextEdit"))  continue;
- 
-    // start from the last to avoid re-appended components
+
+    // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
     for(Component *pc=Doc->Components->last(); pc!=0; ) {
-      if(pc->Model == "Sub") {
+      if(pc->Model == Model) {
         File = pc->Props.getFirst()->Value;
         if((File == pathName) || (File == Name)) {
           pc_tmp = Doc->Components->prev();
@@ -1894,7 +1902,6 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   distrVert->setEnabled(SchematicMode);
   onGrid->setEnabled(SchematicMode);
   moveText->setEnabled(SchematicMode);
-  changeProps->setEnabled(SchematicMode);
   editFind->setEnabled(!SchematicMode);
   editFindAgain->setEnabled(!SchematicMode);
   editRotate->setEnabled(SchematicMode);

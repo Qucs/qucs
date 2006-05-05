@@ -135,8 +135,9 @@ void QucsApp::slotEditActivate(bool on)
     editActivate->blockSignals(false);
   }
   else
-    performToggleAction(on, editActivate, &Schematic::activateComponents,
-            &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
+    performToggleAction(on, editActivate,
+        &Schematic::activateSelectedComponents,
+        &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
 
 // ------------------------------------------------------------------------
@@ -517,20 +518,6 @@ void QucsApp::slotSelectAll()
   }
 }
 
-// ---------------------------------------------------------------------
-// Is called when the find action is activated.
-void QucsApp::slotEditFind()
-{
-  SearchDia->initSearch();
-}
-
-// ---------------------------------------------------------------------
-// Is called when the find-again action is activated.
-void QucsApp::slotEditFindAgain()
-{
-  SearchDia->searchText(true, 1);
-}
-
 // ------------------------------------------------------------------------
 // Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
 // component edit dialog.
@@ -660,14 +647,34 @@ void QucsApp::showHTML(const QString& Page)
   connect(this, SIGNAL(signalKillEmAll()), QucsHelp, SLOT(kill()));
 }
 
+// ---------------------------------------------------------------------
+// Is called when the find action is activated.
+void QucsApp::slotEditFind()
+{
+  SearchDia->initSearch();
+}
+
+// ---------------------------------------------------------------------
+// Is called when the find-again action is activated.
+void QucsApp::slotEditFindAgain()
+{
+  SearchDia->searchText(true, 1);
+}
+
 // --------------------------------------------------------------
 void QucsApp::slotChangeProps()
 {
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  ChangeDialog *d = new ChangeDialog(Doc);
-  if(d->exec() == QDialog::Accepted) {
-    Doc->setChanged(true, true);
-    Doc->viewport()->update();
+  QWidget *Doc = DocumentTab->currentPage();
+  if(Doc->inherits("QTextEdit")) {
+    ((TextDoc*)Doc)->viewport()->setFocus();
+    SearchDia->initSearch(true);
+  }
+  else {
+    ChangeDialog *d = new ChangeDialog((Schematic*)Doc);
+    if(d->exec() == QDialog::Accepted) {
+      ((Schematic*)Doc)->setChanged(true, true);
+      ((Schematic*)Doc)->viewport()->update();
+    }
   }
 }
 

@@ -1922,12 +1922,10 @@ void Schematic::insertComponent(Component *c)
 }
 
 // ---------------------------------------------------
-// Activates/deactivates components that lie within the
-// rectangle x1/y1, x2/y2.
-void Schematic::activateComps(int x1, int y1, int x2, int y2)
+void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 {
   bool changed = false;
-  int  cx1, cy1, cx2, cy2;
+  int  cx1, cy1, cx2, cy2, a;
   // exchange rectangle coordinates to obtain x1 < x2 and y1 < y2
   cx1 = (x1 < x2) ? x1 : x2; cx2 = (x1 > x2) ? x1 : x2;
   cy1 = (y1 < y2) ? y1 : y2; cy2 = (y1 > y2) ? y1 : y2;
@@ -1938,10 +1936,19 @@ void Schematic::activateComps(int x1, int y1, int x2, int y2)
   for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
     pc->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      pc->isActive ^= true;    // change "active status"
+      a = pc->isActive - 1;
+
+      if(pc->Ports.count() > 1) {
+        if(a < 0)  a = 2;
+      }
+      else {
+        a &= 1;
+        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+          if(pc->Model == "GND")  // if existing, delete label on wire line
+            oneLabel(pc->Ports.getFirst()->Connection);
+      }
+      pc->isActive = a;    // change "active status"
       changed = true;
-      if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
   }
 
@@ -1949,17 +1956,25 @@ void Schematic::activateComps(int x1, int y1, int x2, int y2)
 }
 
 // ---------------------------------------------------
-// Activate/deactivate component, if x/y lies within its boundings.
-bool Schematic::activateComponent(int x, int y)
+bool Schematic::activateSpecifiedComponent(int x, int y)
 {
-  int  x1, y1, x2, y2;
+  int x1, y1, x2, y2, a;
   for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
     pc->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
-      pc->isActive ^= true;    // change "active status"
+      a = pc->isActive - 1;
+
+      if(pc->Ports.count() > 1) {
+        if(a < 0)  a = 2;
+      }
+      else {
+        a &= 1;
+        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+          if(pc->Model == "GND")  // if existing, delete label on wire line
+            oneLabel(pc->Ports.getFirst()->Connection);
+      }
+      pc->isActive = a;    // change "active status"
       setChanged(true, true);
-      if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
       return true;
     }
   }
@@ -1967,17 +1982,25 @@ bool Schematic::activateComponent(int x, int y)
 }
 
 // ---------------------------------------------------
-// Activates/deactivates all selected components.
-bool Schematic::activateComponents()
+bool Schematic::activateSelectedComponents()
 {
+  int a;
   bool sel = false;
-
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected) {
-      pc->isActive ^= true;    // change "active status"
+      a = pc->isActive - 1;
+
+      if(pc->Ports.count() > 1) {
+        if(a < 0)  a = 2;
+      }
+      else {
+        a &= 1;
+        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+          if(pc->Model == "GND")  // if existing, delete label on wire line
+            oneLabel(pc->Ports.getFirst()->Connection);
+      }
+      pc->isActive = a;    // change "active status"
       sel = true;
-      if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
 
   if(sel) setChanged(true, true);
@@ -2169,7 +2192,7 @@ void Schematic::oneLabel(Node *n1)
 
     for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()) {
       if(pe->Type != isWire) {
-        if(((Component*)pe)->isActive)
+        if(((Component*)pe)->isActive == COMP_IS_ACTIVE)
 	  if(((Component*)pe)->Model == "GND") {
 	    named = true;
 	    if(pl) {
@@ -2249,7 +2272,7 @@ Element* Schematic::getWireLabel(Node *pn_)
     else
       for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()) {
         if(pe->Type != isWire) {
-	  if(((Component*)pe)->isActive)
+	  if(((Component*)pe)->isActive == COMP_IS_ACTIVE)
 	    if(((Component*)pe)->Model == "GND") return pe;
           continue;
         }
