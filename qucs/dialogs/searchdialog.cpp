@@ -25,23 +25,29 @@
 #include <qcheckbox.h>
 #include <qlineedit.h>
 #include <qtabwidget.h>
+#include <qvgroupbox.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
 
 
-SearchDialog::SearchDialog(QucsApp *App_) : QDialog(App_, 0, true)
+SearchDialog::SearchDialog(QucsApp *App_)
+            : QDialog(App_, 0, true)
 {
   App = App_;
-  setCaption(tr("Search Text"));
 
   QVBoxLayout *all = new QVBoxLayout(this);
   all->setMargin(5);
 
-  QLabel *Label1 = new QLabel(tr("Text to search for:"), this);
-  all->addWidget(Label1);
+  QVGroupBox *g1 = new QVGroupBox(tr("Text to search for"), this);
+  all->addWidget(g1);
+  SearchEdit = new QLineEdit(g1);
 
-  SearchEdit = new QLineEdit(this);
-  all->addWidget(SearchEdit);
+  ReplaceGroup = new QVGroupBox(tr("Text to replace with"), this);
+  all->addWidget(ReplaceGroup);
+  ReplaceEdit = new QLineEdit(ReplaceGroup);
+
+  AskBox = new QCheckBox(tr("Ask before replacing"), this);
+  all->addWidget(AskBox);
 
   PositionBox = new QCheckBox(tr("From cursor position"), this);
   all->addWidget(PositionBox);
@@ -67,13 +73,25 @@ SearchDialog::~SearchDialog()
 }
 
 // ---------------------------------------------------------------------
-void SearchDialog::initSearch()
+void SearchDialog::initSearch(bool replace)
 {
+  if(replace) {
+    setCaption(tr("Replace Text"));
+    AskBox->setHidden(false);
+    ReplaceGroup->setHidden(false);
+  }
+  else {
+    setCaption(tr("Search Text"));
+    AskBox->hide();
+    ReplaceGroup->hide();
+  }
+
   TextDoc *Doc = (TextDoc*)App->DocumentTab->currentPage();
+  ReplaceEdit->clear();
   SearchEdit->setText(Doc->selectedText());
   SearchEdit->selectAll();
 
-  setFocusProxy(SearchEdit);
+  SearchEdit->setFocus();
   exec();
 }
 
@@ -82,7 +100,7 @@ void SearchDialog::searchText(bool fromCursor, int Offset)
 {
   TextDoc *Doc = (TextDoc*)App->DocumentTab->currentPage();
 
-  int Line=0, Column=0;
+  int Line=0, Column=0, count=0, i;
   if(fromCursor)
     Doc->getCursorPosition(&Line, &Column);
   else if(BackwardBox->isChecked())
@@ -93,16 +111,45 @@ void SearchDialog::searchText(bool fromCursor, int Offset)
 
   if(SearchEdit->text().isEmpty())
     return;
-  if(!Doc->find(SearchEdit->text(), CaseBox->isChecked(),
+  while(Doc->find(SearchEdit->text(), CaseBox->isChecked(),
          WordBox->isChecked(), !BackwardBox->isChecked(), &Line, &Column)) {
-    QMessageBox::information(this, tr("Search..."),
-                 tr("Could not find search string!"));
+
+    count++;
+    if(AskBox->isHidden())  // search only ?
+      return;
+
+    i = QMessageBox::Yes;
+    if(AskBox->isChecked()) {
+      i = QMessageBox::question(this,
+             tr("Replace..."), tr("Replace occurrence ?"),
+             QMessageBox::Yes | QMessageBox::Default, QMessageBox::No,
+             QMessageBox::Cancel | QMessageBox::Escape);
+    }
+    switch(i) {
+      case QMessageBox::Yes:
+               Doc->insert(ReplaceEdit->text());
+               Column += ReplaceEdit->text().length();
+               break;
+      case QMessageBox::No:
+               Column += SearchEdit->text().length();
+               break;
+      default: return;
+    }
   }
+
+  if(count == 0)
+    QMessageBox::information(this, tr("Search..."),
+                   tr("Search string not found!"));
+  else
+    if(!AskBox->isHidden())  // replace ?
+      if(!AskBox->isChecked())  // only with that, "count" has correct number !!!
+        QMessageBox::information(this, tr("Replace..."),
+                     tr("Replaced %1 occurrences!").arg(count));
 }
 
 // ---------------------------------------------------------------------
 void SearchDialog::slotSearch()
 {
-  searchText(PositionBox->isChecked(), 0);
   accept();
+  searchText(PositionBox->isChecked(), 0);
 }
