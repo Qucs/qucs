@@ -1923,7 +1923,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="obsolete">Podukład</translation>
+        <translation type="unfinished">Podukład</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -4598,7 +4598,7 @@ Przesuwa tekst właściwości elementu</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished">Zmień właściwości...</translation>
+        <translation type="obsolete">Zmień właściwości...</translation>
     </message>
     <message>
         <source>Change Property Values</source>
@@ -4609,7 +4609,7 @@ Przesuwa tekst właściwości elementu</translation>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation type="unfinished">Zmień właściwości
+        <translation type="obsolete">Zmień właściwości
 
 Zmień właściwości elementów</translation>
     </message>
@@ -5004,13 +5004,13 @@ Wejście o jeden poziom hiearchi wyżej, opuszczenie podukładu </translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Dezaktzwuje/Uaktywnia zaznaczony element</translation>
+        <translation type="obsolete">Dezaktzwuje/Uaktywnia zaznaczony element</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Dezaktywować/Uaktywnić
+        <translation type="obsolete">Dezaktywować/Uaktywnić
 
 Dezaktzwowuje/aktywuje zaznaczony element</translation>
     </message>
@@ -5637,6 +5637,28 @@ Activates select mode</source>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace
+
+Change component properties
+or
+text in VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7869,10 +7891,6 @@ uwzględniono wszystkie biblioteki.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From cursor position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7897,7 +7915,35 @@ uwzględniono wszystkie biblioteki.</translation>
         <translation type="unfinished">Szukaj...</translation>
     </message>
     <message>
-        <source>Could not find search string!</source>
+        <source>Text to search for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask before replacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace occurrence ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrences!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
