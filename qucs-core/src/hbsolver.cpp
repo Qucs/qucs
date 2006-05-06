@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.16 2006-05-05 06:00:08 margraf Exp $
+ * $Id: hbsolver.cpp,v 1.17 2006-05-06 11:53:12 raimi Exp $
  *
  */
 
@@ -169,6 +169,11 @@ void hbsolver::solve (void) {
     // prepares the non-linear part
     prepareNonLinear ();
 
+#if HB_DEBUG
+      fprintf (stderr, "YV -- transY in f:\n"); YV->print ();
+      fprintf (stderr, "IC -- constant current in f:\n"); IC->print ();
+#endif
+
     // start iteration
     do {
       iterations++;
@@ -197,7 +202,6 @@ void hbsolver::solve (void) {
       VectorFFT (QR);
 
 #if HB_DEBUG
-      fprintf (stderr, "IC -- constant current in f:\n"); IC->print ();
       fprintf (stderr, "VS -- voltage in f:\n"); VS->print ();
       fprintf (stderr, "FQ -- charge in f:\n"); FQ->print ();
       fprintf (stderr, "IG -- current in f:\n"); IG->print ();
@@ -230,7 +234,6 @@ void hbsolver::solve (void) {
       MatrixFFT (JQ);
       
 #if HB_DEBUG
-      fprintf (stderr, "YV -- transY in f:\n"); YV->print ();
       fprintf (stderr, "JQ -- dQ/dV C-Jacobian in f:\n"); JQ->print ();
       fprintf (stderr, "JG -- dI/dV G-Jacobian in f:\n"); JG->print ();
 #endif
@@ -725,7 +728,7 @@ void hbsolver::createMatrixLinearY (void) {
   for (c = 0; c < sv * lnfreqs; c++) A_(c, c) += 0.01;
 
   // connect a 100 Ohm resistor (in parallel) to each excitation
-  for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite, r++) {
+  for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite) {
     circuit * vs = ite.current ();
     // get positive and negative node
     int pnode = vs->getNode(NODE_1)->getNode ();
