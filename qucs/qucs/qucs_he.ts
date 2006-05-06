@@ -3368,6 +3368,10 @@ Usage:  qucsedit [-r] file
         <source>relax time step raster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4436,16 +4440,6 @@ Moves the property text of components</source>
 מזיז את טקסט המאפיינים של הרכיב</translation>
     </message>
     <message>
-        <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cut</source>
         <translation type="obsolete">גזור</translation>
     </message>
@@ -4835,13 +4829,13 @@ Goes up one hierarchy level, i.e. leaves subcircuit</source>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished">מפעיל\מפסיק את הפריט הנבחר</translation>
+        <translation type="obsolete">מפעיל\מפסיק את הפריט הנבחר</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished">הפעל\הפסק
+        <translation type="obsolete">הפעל\הפסק
 
 הפעל\הפסק את הפריט הנבחר</translation>
     </message>
@@ -5451,6 +5445,28 @@ Activates select mode</source>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace
+
+Change component properties
+or
+text in VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7518,10 +7534,6 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From cursor position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7546,7 +7558,35 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Could not find search string!</source>
+        <source>Text to search for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask before replacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace occurrence ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrences!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
