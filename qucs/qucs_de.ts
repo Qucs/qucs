@@ -2060,7 +2060,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="obsolete">Schaltkreis</translation>
+        <translation type="unfinished">Schaltkreis</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -4976,7 +4976,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation>Eigenschaftswerte ändern...</translation>
+        <translation type="obsolete">Eigenschaftswerte ändern...</translation>
     </message>
     <message>
         <source>Change Property Values</source>
@@ -4986,7 +4986,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation>Eigenschaftswerte ändern
+        <translation type="obsolete">Eigenschaftswerte ändern
 
 Ändert die Eigenschaftswerte von Komponenten</translation>
     </message>
@@ -5340,13 +5340,13 @@ Verläßt den Unterschaltkreis, d.h. ein Hierarchieebene nach oben</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>Deaktiviert/Aktiviert die Auswahl</translation>
+        <translation type="obsolete">Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>Deaktivieren/Aktivieren
+        <translation type="obsolete">Deaktivieren/Aktivieren
 
 Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
@@ -6005,6 +6005,28 @@ Inserts the skeleton of a VHDL entity</source>
         <translation>VHDL-Entität
 
 Fügt das Gerüst einer VHDL-Entität ein</translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace
+
+Change component properties
+or
+text in VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9947,7 +9969,7 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Text to search for:</source>
-        <translation>Text nach dem gesucht wird:</translation>
+        <translation type="obsolete">Text nach dem gesucht wird:</translation>
     </message>
     <message>
         <source>From cursor position</source>
@@ -9975,7 +9997,39 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Could not find search string!</source>
-        <translation>Der Suchbegriff konnte nicht gefunden werden!</translation>
+        <translation type="obsolete">Der Suchbegriff konnte nicht gefunden werden!</translation>
+    </message>
+    <message>
+        <source>Text to search for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask before replacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace occurrence ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrences!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
