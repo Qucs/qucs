@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/Makefile.am
+# tutorial/ffmodels/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,26 +22,21 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels
+SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES) $(TEXFILES)
+EXTRA_DIST = $(SOURCES)
 
-TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
-  datasheet.tex
-TARGETS = workbook.pdf
-PICDIRS = coupler
+SOURCES = ffmodels.tex content.tex
+TARGETS = ffmodels.pdf
 
-pics-book:
-	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
-	done
+ffmodels.pdf: $(SOURCES)
 
-book: pics-book $(TARGETS)
+pics-tutorial:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
 
-tutorial:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
-	done
+tutorial: pics-tutorial $(TARGETS)
+
+book: pics-tutorial
 
 %.dvi: %.tex
 	$(LATEX) $<
@@ -49,15 +44,9 @@ tutorial:
 	$(LATEX) -interaction=batchmode $<
 
 %.pdf: %.tex
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
-
-%.eps: %.fig
-	$(FIG2DEV) -L eps $< > $@
-
-%.pdf: %.eps
-	$(EPSTOPDF) $< -o=$@
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 %.ps: %.dvi
 	$(DVIPS) $< -o $@

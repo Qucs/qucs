@@ -90,6 +90,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/lna/Makefile
 		 tutorial/digital/Makefile
 		 tutorial/digital/pics/Makefile
+		 tutorial/ffmodels/Makefile
+		 tutorial/ffmodels/pics/Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile])
 
