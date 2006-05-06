@@ -3453,6 +3453,10 @@ Use:  qucsedit [-r] archivo
         <source>relax time step raster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4550,16 +4554,6 @@ Moves the property text of components</source>
 Mueve la propiedad texto de los componentes</translation>
     </message>
     <message>
-        <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cut</source>
         <translation type="obsolete">Cortar</translation>
     </message>
@@ -4949,13 +4943,13 @@ Asciende un nivel de jerarquía, es decir, abandona el subcircuito</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Desactiva/Activa el elemento seleccionado</translation>
+        <translation type="obsolete">Desactiva/Activa el elemento seleccionado</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Desactivar/Activar
+        <translation type="obsolete">Desactivar/Activar
 
 Desactiva/Activa el elemento seleccionado</translation>
     </message>
@@ -5577,6 +5571,28 @@ Activates select mode</source>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace
+
+Change component properties
+or
+text in VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7822,10 +7838,6 @@ en la búsqueda.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From cursor position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7850,7 +7862,35 @@ en la búsqueda.</translation>
         <translation type="unfinished">Buscar...</translation>
     </message>
     <message>
-        <source>Could not find search string!</source>
+        <source>Text to search for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask before replacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace occurrence ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrences!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

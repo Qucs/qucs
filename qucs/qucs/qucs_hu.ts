@@ -3449,6 +3449,10 @@ Digitális szimuláció</translation>
         <source>relax time step raster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4604,7 +4608,7 @@ Mozgatja az alkatrészfeliratokat</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished">Tulajdonság értékeinek változtatása...</translation>
+        <translation type="obsolete">Tulajdonság értékeinek változtatása...</translation>
     </message>
     <message>
         <source>Change Property Values</source>
@@ -4614,7 +4618,7 @@ Mozgatja az alkatrészfeliratokat</translation>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation type="unfinished">Tulajdonság értékeinek változtatása
+        <translation type="obsolete">Tulajdonság értékeinek változtatása
 
 Az alkatrészek tulajdonság értékeit változtatja</translation>
     </message>
@@ -5014,13 +5018,13 @@ Kiugrik a beágyazott kapcsolásból</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Passziválja/Aktiválja a kiválasztott elemet</translation>
+        <translation type="obsolete">Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Passziválás/Aktiválás
+        <translation type="obsolete">Passziválás/Aktiválás
 
 Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
@@ -5649,6 +5653,28 @@ Activates select mode</source>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace
+
+Change component properties
+or
+text in VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7958,10 +7984,6 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to search for:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>From cursor position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7986,7 +8008,35 @@ are included in the search.</source>
         <translation type="unfinished">Keresés...</translation>
     </message>
     <message>
-        <source>Could not find search string!</source>
+        <source>Text to search for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text to replace with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask before replacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace occurrence ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replaced %1 occurrences!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
