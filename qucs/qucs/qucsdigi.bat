@@ -54,7 +54,7 @@ echo running VCD conversion...
 goto end
 
 :usage
-echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory> <convoption"
+echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory> <convoption>"
 echo Directory has to contain netlist.txt
 exit /b 1
 goto end
