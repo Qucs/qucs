@@ -615,7 +615,7 @@ void DiagramDialog::slotReadVars(int)
     return;
   }
 
-  QString Line, tmp;
+  QString Line, tmp, Var;
   QTextStream ReadWhole(&file);
   QString FileString = ReadWhole.read();   // read whole data file
   file.close();
@@ -628,15 +628,17 @@ void DiagramDialog::slotReadVars(int)
     j = FileString.find('>', i);
     Line = FileString.mid(i, j-i);
     i = FileString.find('<', j)+1;
+
+    Var = Line.section(' ', 1, 1).remove('>');
+    if(Var.at(0) == '_')  continue;
+
     if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'),
-			"dep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Var, "dep", tmp.remove('>'));
     }
     else if(Line.left(5) == "indep") {
       tmp = Line.section(' ', 2, 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'),
-			"indep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Var, "indep", tmp.remove('>'));
     }
   } while(i > 0);
 }

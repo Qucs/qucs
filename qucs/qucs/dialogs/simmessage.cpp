@@ -263,6 +263,7 @@ void SimMessage::startSimulator()
   if(DocWidget->inherits("QTextEdit")) {
     if(copyFile(DocName, QucsHomeDir.filePath("netlist.txt")) < 0) {
       ErrText->insert(tr("ERROR: Cannot copy \"%1\" !").arg(DocName));
+      FinishSimulation(-1);
       return;
     }
 
@@ -287,7 +288,7 @@ void SimMessage::startSimulator()
          << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
     else
       CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
-         << DataSet << SimTime << SimPath << QucsSettings.BinDir;
+         << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
   }
 
   SimProcess.setArguments(CommandLine);
