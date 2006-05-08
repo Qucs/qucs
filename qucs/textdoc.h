@@ -49,8 +49,6 @@ public:
 public slots:
   void slotCursorPosChanged(int, int);
   void slotSetChanged();
-  void slotChangeUndo(bool);
-  void slotChangeRedo(bool);
 
 private:
   SyntaxHighlighter *syntaxHighlight;

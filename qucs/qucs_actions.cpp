@@ -1008,8 +1008,17 @@ void QucsApp::slotApplyCompText()
   view->MAy2 += n*z;
   editText->setText(s);
   editText->setPaletteBackgroundColor(QucsSettings.BGColor);
-  editText->resize(editText->fontMetrics().width(s)+3*z, z);
+  editText->resize(editText->fontMetrics().width(s)+4, z);
   editText->setFocus();
   editText->selectAll();
   editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
+}
+
+// -----------------------------------------------------------
+// Is called if the text of the property edit changed, to match
+// the width of the edit field.
+void QucsApp::slotResizePropEdit(const QString& t)
+{
+  int z = editText->fontMetrics().lineSpacing();
+  editText->resize(editText->fontMetrics().width(t)+4, z);
 }

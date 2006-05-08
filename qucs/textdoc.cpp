@@ -56,8 +56,6 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
     connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
     connect(this, SIGNAL(cursorPositionChanged(int, int)),
             SLOT(slotCursorPosChanged(int, int)));
-    connect(this, SIGNAL(undoAvailable(bool)), SLOT(slotChangeUndo(bool)));
-    connect(this, SIGNAL(redoAvailable(bool)), SLOT(slotChangeRedo(bool)));
 
     syntaxHighlight = new SyntaxHighlighter(this);
   }
@@ -117,7 +115,6 @@ void TextDoc::slotCursorPosChanged(int x, int y)
 void TextDoc::slotSetChanged()
 {
   if(isModified()) {
-    if(isUndoAvailable()) slotChangeUndo(true);  // fix Qt problem
     if(!DocChanged) {
       App->DocumentTab->setTabIconSet(this, QPixmap(smallsave_xpm));
       DocChanged = true;
@@ -127,18 +124,9 @@ void TextDoc::slotSetChanged()
     App->DocumentTab->setTabIconSet(this, QPixmap(empty_xpm));
     DocChanged = false;
   }
-}
 
-// ---------------------------------------------------
-void TextDoc::slotChangeUndo(bool available)
-{
-  App->undo->setEnabled(available);
-}
-
-// ---------------------------------------------------
-void TextDoc::slotChangeRedo(bool available)
-{
-  App->redo->setEnabled(available);
+  App->undo->setEnabled(isUndoAvailable());
+  App->redo->setEnabled(isRedoAvailable());
 }
 
 // ---------------------------------------------------
