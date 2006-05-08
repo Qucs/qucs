@@ -7,6 +7,7 @@ set NAMEOUT=%2
 set TIME=%3
 set DIR=%4
 set BINDIR=%5
+set OPTION=%6
 
 REM Remove leading and trailing "
 set TIME=%TIME:~1,-1%
@@ -48,12 +49,12 @@ echo simulating...
 %NAME%.exe -cmd "dc -f %NAME%.vcd -q;d;run %TIME%;q;" > NUL
 
 echo running VCD conversion...
-%QUCSDIR%/bin/qucsconv.exe -if vcd -of qucsdata -i %NAME%.vcd -o %NAMEOUT%
+%QUCSDIR%/bin/qucsconv.exe %OPTION% -if vcd -of qucsdata -i %NAME%.vcd -o %NAMEOUT%
 
 goto end
 
 :usage
-echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory>"
+echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory> <convoption"
 echo Directory has to contain netlist.txt
 exit /b 1
 goto end

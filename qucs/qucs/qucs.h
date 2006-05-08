@@ -113,7 +113,6 @@ public slots:
   void slotCMenuDelete();
   void slotCMenuDelGroup();
 
-// ########################################################################
 private slots:
   void slotMenuOpenProject();
   void slotOpenProject(QListBoxItem*);
@@ -286,6 +285,7 @@ private slots:
   void slotCursorRight();
   void slotCursorUp();
   void slotCursorDown();
+  void slotResizePropEdit(const QString&);
 
 private:
   void showHTML(const QString&);

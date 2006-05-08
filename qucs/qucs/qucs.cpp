@@ -201,6 +201,8 @@ void QucsApp::initView()
   editText->setHidden(true);
   editText->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
+  connect(editText, SIGNAL(textChanged(const QString&)),
+          SLOT(slotResizePropEdit(const QString&)));
   connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
 
   // ----------------------------------------------------------

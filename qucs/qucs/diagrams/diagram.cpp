@@ -275,12 +275,14 @@ void Diagram::createAxisLabels()
     if(w > wmax)  wmax = w;
     Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
+  x -= x2;
   if(Bounding_x2 < x) Bounding_x2 = x;
 
   wmax -= y2 >> 1;
   if(wmax > 0) {
     Bounding_y2 = wmax;
-    if(wmax > Bounding_y1) Bounding_y1 = wmax;
+    wmax *= -1;
+    if(wmax < Bounding_y1) Bounding_y1 = wmax;
   }
 }
 
@@ -624,7 +626,7 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   _x1 = cx - Bounding_x1;
   _y1 = cy - y2 - Bounding_y2;
   _x2 = cx + x2 + Bounding_x2;
-  _y2 = cy + Bounding_y1;
+  _y2 = cy - Bounding_y1;
 }
 
 // -------------------------------------------------------
