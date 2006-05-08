@@ -478,27 +478,25 @@ float Schematic::zoom(float s)
 // ---------------------------------------------------
 void Schematic::showAll()
 {
-  int x1 = UsedX1;
-  int y1 = UsedY1;
-  int x2 = UsedX2;
-  int y2 = UsedY2;
+  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+  if(UsedX1 == 0)
+    if(UsedX2 == 0)
+      if(UsedY1 == 0)
+        if(UsedY2 == 0) {
+    UsedX1 = UsedY1 = INT_MAX;
+    UsedX2 = UsedY2 = INT_MIN;
+    return;
+  }
 
-  if(x1 == INT_MAX) return;
-  if(y1 == INT_MAX) return;
-  if(x2 == INT_MIN) return;
-  if(y2 == INT_MIN) return;
-  x1 -= 40;  y1 -= 40;
-  x2 += 40;  y2 += 40;
-
-  float xScale = float(visibleWidth()) / float(x2-x1);
-  float yScale = float(visibleHeight()) / float(y2-y1);
+  float xScale = float(visibleWidth()) / float(UsedX2-UsedX1+80);
+  float yScale = float(visibleHeight()) / float(UsedY2-UsedY1+80);
   if(xScale > yScale) xScale = yScale;
   xScale /= Scale;
 
-  ViewX1 = x1;
-  ViewY1 = y1;
-  ViewX2 = x2;
-  ViewY2 = y2;
+  ViewX1 = UsedX1 - 40;
+  ViewY1 = UsedY1 - 40;
+  ViewX2 = UsedX2 + 40;
+  ViewY2 = UsedY2 + 40;
   zoom(xScale);
 }
 

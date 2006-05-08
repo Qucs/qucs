@@ -275,8 +275,8 @@ bool Schematic::loadProperties(QTextStream *stream)
 		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
 		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
 		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		int PosX    = nstr.section(',',5,5).toInt(&ok); if(ok) {
-		int PosY    = nstr.section(',',6,6).toInt(&ok); if(ok)
+		int PosX = nstr.section(',',5,5).toInt(&ok); if(ok) {
+		int PosY = nstr.section(',',6,6).toInt(&ok); if(ok)
 		setContentsPos(PosX, PosY); }}}}}} }
     else if(cstr == "Grid") {
 		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
@@ -737,7 +737,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
     if(pn->Name.isEmpty() == User) continue;  // already named ?
     if(!User) {
       if(Analog)  pn->Name = "_net";
-      else  pn->Name = "nnnet";   // VHDL names must not begin with '_'
+      else  pn->Name = "net_";   // VHDL names must not begin with '_'
       pn->Name += QString::number(z++);  // create node name
     }
     else
@@ -791,13 +791,23 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   // delete the node names
   for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     pn->State = 0;
-    if(pn->Label)  pn->Name = pn->Label->Name;
+    if(pn->Label) {
+      if(NumPorts < 0)
+        pn->Name = pn->Label->Name;
+      else
+        pn->Name = "net" + pn->Label->Name;
+    }
     else pn->Name = "";
   }
 
   // set the wire names to the connected node
   for(Wire *pw = DocWires.first(); pw != 0; pw = DocWires.next())
-    if(pw->Label != 0) pw->Port1->Name = pw->Label->Name;
+    if(pw->Label != 0) {
+      if(NumPorts < 0)
+        pw->Port1->Name = pw->Label->Name;
+      else  // avoid to use reserved VHDL words
+        pw->Port1->Name = "net" + pw->Label->Name;
+    }
 
   bool r;
   QString s;

@@ -1,3 +1,11 @@
+2006-06-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* in diagram dialog: only show variables without '_' at beginning
+	* name node name system for digital simulation
+	* fixed bug setting wrong diagram boundings
+	* fixed bug enabling/disabling undo/redo icons
+	* match with of property edit on schematic with its text
+
 2006-03-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* replace function for text editor

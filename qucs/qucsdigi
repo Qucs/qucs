@@ -29,9 +29,12 @@ set -e
 #trap 'kill 0; exit 0' SIGTERM
 
 if [ "$#" != 5 ]; then
-    echo "Usage: $0 <netlist.txt> <output.dat> <time> <directory> <bindirectory>"
-    echo " Directory has to contain netlist.txt"
-    exit 1
+    if [ "$#" != 6 ]; then
+        echo "Usage: $0 <netlist.txt> <output.dat> <time> <directory> <bindirectory> [<convoption>]"
+        echo " Directory has to contain netlist.txt"
+        exit 1
+    fi
+    OPTION=$6
 fi
 
 NAME=$1
@@ -85,5 +88,5 @@ wait $!
 echo " done."
 
 echo -n "running VCD conversion..."
-$BINDIR/qucsconv -if vcd -of qucsdata -i $NAME.vcd -o $NAMEOUT
+$BINDIR/qucsconv $OPTION -if vcd -of qucsdata -i $NAME.vcd -o $NAMEOUT
 echo " done."
