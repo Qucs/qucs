@@ -1,3 +1,11 @@
+2006-05-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Give a warning for probably unphysical
+	model parameter 'M'.
+
+	* devices/bjt.cpp: Give a warning for probably unphysical
+	model parameters 'Nf' and 'Nr'.
+
 2006-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/mosfet.cpp, devices/jfet.cpp, devices/diode.cpp,

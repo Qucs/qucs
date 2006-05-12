@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.42 2006-05-03 09:43:56 raimi Exp $
+ * $Id: bjt.cpp,v 1.43 2006-05-12 14:32:10 raimi Exp $
  *
  */
 
@@ -31,6 +31,7 @@
 #include <math.h>
 #include <string.h>
 
+#include "logging.h"
 #include "complex.h"
 #include "matrix.h"
 #include "object.h"
@@ -213,6 +214,18 @@ void bjt::initModel (void) {
   Isc = Isc / F * F2;
   setScaledProperty ("Ise", Ise * A);
   setScaledProperty ("Isc", Isc * A);
+
+  // check unphysical parameters
+  nr_double_t Nf = getPropertyDouble ("Nf");
+  nr_double_t Nr = getPropertyDouble ("Nr");
+  if (Nf < 1.0) {
+    logprint (LOG_ERROR, "WARNING: Unphysical model parameter Nf = %g in "
+	      "BJT `%s'\n", Nf, getName ());
+  }
+  if (Nr < 1.0) {
+    logprint (LOG_ERROR, "WARNING: Unphysical model parameter Nr = %g in "
+	      "BJT `%s'\n", Nr, getName ());
+  }
 
   // compute Cje, Cjc and Cjs temperature and area dependencies
   nr_double_t Cje = getPropertyDouble ("Cje");
