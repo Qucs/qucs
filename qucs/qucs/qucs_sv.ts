@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget passande funnet!</translation>
     </message>
 </context>
 <context>
@@ -306,7 +306,7 @@
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-filer</translation>
     </message>
 </context>
 <context>
@@ -556,19 +556,19 @@
     <name>DigiSettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Dokumentsinställningar</translation>
+        <translation>Dokumentsinställningar</translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simuleringslängd:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -1784,7 +1784,7 @@ Felaktigt komponentsradsformat!</translation>
     </message>
     <message>
         <source>junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>övergångspotential</translation>
     </message>
     <message>
         <source>linear capacitance</source>
@@ -3075,231 +3075,231 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel: Fel tidsformat i &quot;%1&quot;. Använd positivt tal utan enhet</translation>
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>koaxioaltransmissionslinje</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>specifika resistans hos ledare</translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>diameter hos innerledrare</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>mekanisk längd på linjen</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished">Koaxialledning</translation>
+        <translation>Koaxialledning</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>toppström i A</translation>
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
+        <translation>skärmens innerdiameter</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>första ordningens temperaturkoefficient</translation>
     </message>
     <message>
         <source>second order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>andra ordningens temperaturkoefficient</translation>
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>spara karakteristiska värden i data</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>toppspänning i V</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>dielektrikats relativa permittivitet</translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningsprob</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Spänningsprob</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>antal portar</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>n-ports S-parameterfil</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished">2-ports S-parameterfil</translation>
+        <translation>2-ports S-parameterfil</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>porttyp (endast för digital simulering)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>växelströmsspänningskälla med amplitudmodulator</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">AM</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>modulationsnivå</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AM-modulationskälla</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>dämpningsfaktor (endast transient simulering)</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>växleströmsspänninsgkälla med fasmodulator</translation>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>modulationsindex</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>PM-modulerad källa</translation>
     </message>
     <message>
         <source>relais</source>
-        <translation type="unfinished"></translation>
+        <translation>relä</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistans vid &quot;on&quot;-tillstånd i ohm</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistans vid &quot;off&quot;-tillstånd i ohm</translation>
     </message>
     <message>
         <source>Relais</source>
-        <translation type="unfinished"></translation>
+        <translation>Relä</translation>
     </message>
     <message>
         <source>initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>initialtillstånd</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Omkopplare</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>dämpningsfaktor per längdenhet i 1/m</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>omkopplare (tidsstyrd)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>spänningströskel i V</translation>
     </message>
     <message>
         <source>hysteresis voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>hysteresspänning i V</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistans vid &quot;on&quot;-tillstånd i Ohm</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistans vid &quot;off&quot;-tillstånd i Ohm</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">Redigera egenskaper</translation>
+        <translation>Redigera egenskaper</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished">effektmatchning</translation>
+        <translation>effektmatchning</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished">brusmatchning</translation>
+        <translation>brusmatchning</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished">2-ports-matchning</translation>
+        <translation>2-ports-matchning</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished">Jordpotentialen kan ej få etikett!</translation>
+        <translation>Jordpotentialen kan ej få etikett!</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>tidpunkt när tillstånd ändras (semikolonseparerad lista möjlig)</translation>
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Inget filnamn i VHDL-komponent &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Kan ej öppna VHDL-fil &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-fil</translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn på VHDL-fil</translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>vhdl</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>representation vid DC-analys</translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Delkrets</translation>
     </message>
 </context>
 <context>
@@ -3693,7 +3693,7 @@ Vill du spara dessa innan filen stängs?</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished">inga varningar</translation>
+        <translation>inga varningar</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3837,151 +3837,153 @@ Redigerar schemat</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-källor</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>innehåll i projektmapp</translation>
     </message>
     <message>
         <source>content of current project</source>
-        <translation type="unfinished"></translation>
+        <translation>innehål i aktuellt projekt</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort dada display: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort datafil: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ej ta bort VHDL-källa: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapar ny textredigerare...</translation>
     </message>
     <message>
         <source>Printing selected...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utskrift vald...</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished">Kunde inte ladda [1,1].</translation>
+        <translation>Kunde inte ladda S[1,1].</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished">Kunde inte ladda [1,2].</translation>
+        <translation>Kunde inte ladda S[1,2].</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished">Kunde inte ladda [2,1].</translation>
+        <translation>Kunde inte ladda S[2,1].</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished">Kunde inte ladda [2,2].</translation>
+        <translation>Kunde inte ladda S[2,2].</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished">Fel beroende!</translation>
+        <translation>Fel beroende!</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">Åtminstone två element måste väljas!</translation>
+        <translation>Åtminstone två element måste väljas!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">Kan ej starta textredigerare!</translation>
+        <translation>Kan ej starta textredigerare!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished">Kan inte starta filtersyntesprogrammet!</translation>
+        <translation>Kan inte starta filtersyntesprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished">Kan inte starta ledningsberäkningsprogrammet!</translation>
+        <translation>Kan inte starta ledningsberäkningsprogrammet!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished">Kan inte starta biblioteksprogram!</translation>
+        <translation>Kan inte starta biblioteksprogram!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">Kan inte starta qusc-hjälpen!</translation>
+        <translation>Kan inte starta qusc-hjälpen!</translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished">Inget projekt öppnat!</translation>
+        <translation>Inget projekt öppnat!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished">Välj filer för kopiering</translation>
+        <translation>Välj filer för kopiering</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished">Inga filer kopierade.</translation>
+        <translation>Inga filer kopierade.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished">Kan ej öppna &quot;%1&quot; !</translation>
+        <translation>Kan ej öppna &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished">Skriv över</translation>
+        <translation>Skriv över</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished">Filen &quot;%1&quot; finns redan.
+        <translation>Filen &quot;%1&quot; finns redan.
 Skriva över?</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished">Kan ej skapa &quot;%1&quot; !</translation>
+        <translation>Kan ej skapa &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished">Kan ej läsa &quot;%1&quot; !</translation>
+        <translation>Kan ej läsa &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished">Kan ej skriva &quot;%1&quot; !</translation>
+        <translation>Kan ej skriva &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Ny</translation>
+        <translation>&amp;Ny</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished">Skapa ett nytt dokument</translation>
+        <translation>Skapa ett nytt dokument</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished">Nytt 
+        <translation>Nytt 
 
 Skapar ett nytt dokument eller &quot;data display&quot;-dokument</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny &amp;Text</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapar ett nytt textdokument</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny Text
+
+Skapar ett nytt textdokument</translation>
     </message>
     <message>
         <source>Open File</source>
@@ -3989,17 +3991,17 @@ Creates a new text document</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Öppna...</translation>
+        <translation>&amp;Öppna...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished">Öppnar ett befintligt dokument</translation>
+        <translation>Öppnar ett befintligt dokument</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished">Öppna fil
+        <translation>Öppna fil
 
 Öppnar ett befintligt dokument</translation>
     </message>
@@ -4009,13 +4011,13 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished">Sparar det aktuella dolumentet</translation>
+        <translation>Sparar det aktuella dolumentet</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished">Spara fil
+        <translation>Spara fil
 
 Sparar det aktuella dokumentet</translation>
     </message>
@@ -4025,17 +4027,17 @@ Sparar det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished">Sparar aktuellt dokument under ett nytt namn</translation>
+        <translation>Sparar aktuellt dokument under ett nytt namn</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished">Spara som
+        <translation>Spara som
 
 Spara det aktuella dokumentet under ett nytt namn</translation>
     </message>
@@ -4045,17 +4047,17 @@ Spara det aktuella dokumentet under ett nytt namn</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished">Spara &amp;allt</translation>
+        <translation>Spara &amp;allt</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished">Sparar alla öppna dokument</translation>
+        <translation>Sparar alla öppna dokument</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished">Spara alla filer
+        <translation>Spara alla filer
 
 Sparar alla öppna dokument</translation>
     </message>
@@ -4065,23 +4067,23 @@ Sparar alla öppna dokument</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Stäng</translation>
+        <translation>&amp;Stäng</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished">Stäng aktuellt dokument</translation>
+        <translation>Stäng aktuellt dokument</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished">Stäng fil
+        <translation>Stäng fil
 
 Stänger aktuellt dokument</translation>
     </message>
     <message>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>R&amp;edigera kretssymbol</translation>
     </message>
     <message>
         <source>Document Settings...</source>
@@ -4095,7 +4097,7 @@ Stänger aktuellt dokument</translation>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished">Inställningar
+        <translation>Inställningar
 
 Sätter filegenskaper</translation>
     </message>
@@ -4105,17 +4107,17 @@ Sätter filegenskaper</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Skriv...</translation>
+        <translation>&amp;Skriv...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished">Skriver ut aktuellt dokument</translation>
+        <translation>Skriver ut aktuellt dokument</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished">Skriv ut fil
+        <translation>Skriv ut fil
 
 Skriver ut det aktuella dokumentet</translation>
     </message>
@@ -4125,7 +4127,7 @@ Skriver ut det aktuella dokumentet</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished">Skriv ut det utvalda...</translation>
+        <translation>Skriv ut det utvalda...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
@@ -4135,7 +4137,7 @@ Skriver ut det aktuella dokumentet</translation>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished">Skriv ut utvalda element
+        <translation>Skriv ut utvalda element
 
 Skriver ut valda element i det aktuella dokumentet</translation>
     </message>
@@ -4145,17 +4147,17 @@ Skriver ut valda element i det aktuella dokumentet</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">A&amp;vsluta</translation>
+        <translation>A&amp;vsluta</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished">Avslutar tillämpningen</translation>
+        <translation>Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished">Avsluta
+        <translation>Avsluta
 
 Avslutar tillämpningen</translation>
     </message>
@@ -4165,133 +4167,133 @@ Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished">Tillämpningsinställningar...</translation>
+        <translation>Tillämpningsinställningar...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished">Qucs inställningar
+        <translation>Qucs inställningar
 
 Ställer in egenskaper för tillämpningen</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished">Rada upp överst</translation>
+        <translation>Rada upp överst</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished">Rada upp valda element</translation>
+        <translation>Rada upp valda element</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished">Rada upp överst
+        <translation>Rada upp överst
 
 Rada upp valda element i överkant</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished">Rada upp nertill</translation>
+        <translation>Rada upp nertill</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished">Rada upp nertill valda element</translation>
+        <translation>Rada upp nertill valda element</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished">Rad upp nertill
+        <translation>Rad upp nertill
 
 Rada upp valda element i underkant</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished">Rada upp till vänster</translation>
+        <translation>Rada upp till vänster</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished">Vänsterjustera valda element</translation>
+        <translation>Vänsterjustera valda element</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished">Vänsterjustera
+        <translation>Vänsterjustera
 
 Justera valda element längs dess vänstra kant</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished">Högerjustera</translation>
+        <translation>Högerjustera</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished">Högerjustera valda element</translation>
+        <translation>Högerjustera valda element</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished">Högerjustera
+        <translation>Högerjustera
 
 Justera valda element längs dess högra kant</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished">Fördela horisontellt</translation>
+        <translation>Fördela horisontellt</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished">Fördela lika horisontellt</translation>
+        <translation>Fördela lika horisontellt</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished">Fördela horisontellt
+        <translation>Fördela horisontellt
 
 Fördela valda element horisontellt</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished">Fördela vertikalt</translation>
+        <translation>Fördela vertikalt</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished">Fördela lika vertikalt</translation>
+        <translation>Fördela lika vertikalt</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished">Fördela vertikalt
+        <translation>Fördela vertikalt
 
 Fördela valda element vertikalt</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished">Placer på rutnät</translation>
+        <translation>Placera på rutnät</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished">Placera på rutnät
+        <translation>Placera på rutnät
 
 Placerar valda element på rutnät</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished">Flytta komponenttext</translation>
+        <translation>Flytta komponenttext</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished">Flytta komponenttext
+        <translation>Flytta komponenttext
 
 Flyttar komponenters egenskapstext</translation>
     </message>
@@ -4317,7 +4319,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Kli&amp;pp</translation>
+        <translation>Kli&amp;pp ut</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
@@ -4337,7 +4339,7 @@ Klipper ut den valda sektionen och lägger det i Urklipp</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiera</translation>
+        <translation>&amp;Kopiera</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
@@ -4357,33 +4359,33 @@ Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Klistra in</translation>
+        <translation>&amp;Klistra in</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Klistrar in innehållet i Urklipp vid markörspositionen</translation>
+        <translation>Klistrar in innehållet i Urklipp vid markörspositionen</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Klistra in
+        <translation>Klistra in
 
 Klistrar in innehållet i Urklipp vid markörspositionen</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Ta bort</translation>
+        <translation>&amp;Ta bort</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished">Tar bort de valda komponenterna</translation>
+        <translation>Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished">Ta bort
+        <translation>Ta bort
 
 Tar bort de valda komponenterna</translation>
     </message>
@@ -4393,17 +4395,17 @@ Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Ångra</translation>
+        <translation>&amp;Ångra</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished">Ångrar senaste kommando</translation>
+        <translation>Ångrar senaste kommando</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished">Ångra
+        <translation>Ångra
 
 Gör senaste åtgärden ogjord</translation>
     </message>
@@ -4413,17 +4415,17 @@ Gör senaste åtgärden ogjord</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Gör om</translation>
+        <translation>&amp;Gör om</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished">Gör om senaste kommando</translation>
+        <translation>Gör om senaste kommando</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished">Gör om
+        <translation>Gör om
 
 Repeterar senaste åtgärden en gång till</translation>
     </message>
@@ -4433,17 +4435,17 @@ Repeterar senaste åtgärden en gång till</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished">&amp;Nytt projekt...</translation>
+        <translation>&amp;Nytt projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished">Skapar ett nytt projekt</translation>
+        <translation>Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished">Nytt porjekt
+        <translation>Nytt projekt
 
 Skapar ett nytt projekt</translation>
     </message>
@@ -4453,7 +4455,7 @@ Skapar ett nytt projekt</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished">&amp;Öppna projekt...</translation>
+        <translation>&amp;Öppna projekt...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -4463,7 +4465,7 @@ Skapar ett nytt projekt</translation>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished">Öppna projekt
+        <translation>Öppna projekt
 
 Öppnar ett befintligt projekt</translation>
     </message>
@@ -4473,7 +4475,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished">&amp;Ta bort projekt...</translation>
+        <translation>&amp;Ta bort projekt...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
@@ -4483,7 +4485,7 @@ Opens an existing project</source>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished">Ta bort projekt
+        <translation>Ta bort projekt
 
 Tar bort ett befintligt projekt</translation>
     </message>
@@ -4493,7 +4495,7 @@ Tar bort ett befintligt projekt</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished">&amp;Stäng projekt</translation>
+        <translation>&amp;Stäng projekt</translation>
     </message>
     <message>
         <source>Close current project</source>
@@ -4503,7 +4505,7 @@ Tar bort ett befintligt projekt</translation>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished">Stäng projekt
+        <translation>Stäng projekt
 
 Stänger aktuellt projekt</translation>
     </message>
@@ -4513,23 +4515,23 @@ Stänger aktuellt projekt</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished">&amp;Lägg till filer till projekt...</translation>
+        <translation>&amp;Lägg till filer till projekt...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished">Kopierar filer till projektmapp</translation>
+        <translation>Kopierar filer till projektmapp</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished">Lägg till filer till projekt
+        <translation>Lägg till filer till projekt
 
 Kopierar filer till projektmapp</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished">Visa allt</translation>
+        <translation>Visa allt</translation>
     </message>
     <message>
         <source>Views the whole page</source>
@@ -4539,59 +4541,61 @@ Kopierar filer till projektmapp</translation>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished">Visa allt
+        <translation>Visa allt
 
 Visar hela sidans innehåll</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished">Visa i skala 1:1</translation>
+        <translation>Visa i skala 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished">Visar utan förstorning</translation>
+        <translation>Visar utan förstorning</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished">Visar i skala 1:1
+        <translation>Visar i skala 1:1
 
 Visar sidoinnhållet utan förstorning</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished">Zomma in</translation>
+        <translation>Zomma in</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished">Zoomar in aktuell vy</translation>
+        <translation>Zoomar in aktuell vy</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished">Zooma in
+        <translation>Zooma in
 
 Zoomar in aktuell vy</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished">Zooma ut</translation>
+        <translation>Zooma ut</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished">Zoomar ut aktuell vy</translation>
+        <translation>Zoomar ut aktuell vy</translation>
     </message>
     <message>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomar ut
+
+Zoomar ut aktuell vy</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Välj</translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <source>Select mode</source>
@@ -4607,39 +4611,39 @@ Välj läge</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Välj allt</translation>
+        <translation>Välj allt</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished">Väljer alla element</translation>
+        <translation>Väljer alla element</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished">Välj allt
+        <translation>Välj allt
 
 Väljer alla element i dokumentet</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished">Vrida</translation>
+        <translation>Vrida</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished">Vrider den valda komponenten 90°</translation>
+        <translation>Vrider den valda komponenten 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished">Rotera
+        <translation>Rotera
 
 Vrider den valda komponenten 90° motsols</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished">Spegla i X-axel</translation>
+        <translation>Spegla i X-axel</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
@@ -4649,13 +4653,13 @@ Vrider den valda komponenten 90° motsols</translation>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished">Spegla i X-axeln
+        <translation>Spegla i X-axeln
 
 Speglar den valda komponenten i X-axeln</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished">Spegla i Y-axeln</translation>
+        <translation>Spegla i Y-axeln</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
@@ -4665,13 +4669,13 @@ Speglar den valda komponenten i X-axeln</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished">Spegla  i Y-axeln
+        <translation>Spegla  i Y-axeln
 
 Speglar den valda komponenten i Y-axeln</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished">Gå in i delkrets</translation>
+        <translation>Gå in i delkrets</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
@@ -4681,29 +4685,29 @@ Speglar den valda komponenten i Y-axeln</translation>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished">Gå in i delkrets
+        <translation>Gå in i delkrets
 
 Går in i den valda delkretsen</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished">Hoppa ut</translation>
+        <translation>Hoppa ut</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished">Hoppa ut ur delkrets</translation>
+        <translation>Hoppa ut ur delkrets</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished">Hoppa ut
+        <translation>Hoppa ut
 
 Går upp en hierarkinivå, d. v. s. lämnar delkretsen</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished">Avaktivera/Aktivera</translation>
+        <translation>Avaktivera/Aktivera</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
@@ -4719,7 +4723,7 @@ Avaktiverar/Aktiverar det valda</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished">Skjut in ekvation</translation>
+        <translation>Skjut in ekvation</translation>
     </message>
     <message>
         <source>Inserts equation</source>
@@ -4729,13 +4733,13 @@ Avaktiverar/Aktiverar det valda</translation>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished">Skjut in ekvation
+        <translation>Skjut in ekvation
 
 Skjuter in en användardefinierad ekvation</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished">Skjut in jord</translation>
+        <translation>Skjut in jord</translation>
     </message>
     <message>
         <source>Inserts ground</source>
@@ -4745,13 +4749,13 @@ Skjuter in en användardefinierad ekvation</translation>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished">Skjut in jord
+        <translation>Skjut in jord
 
 Skjuter in en jordsymbol</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished">Skjut in port</translation>
+        <translation>Skjut in port</translation>
     </message>
     <message>
         <source>Inserts port</source>
@@ -4761,7 +4765,7 @@ Skjuter in en jordsymbol</translation>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished">Skjut in port
+        <translation>Skjut in port
 
 Skjuter in en portsymbol</translation>
     </message>
@@ -4771,7 +4775,7 @@ Skjuter in en portsymbol</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished">Ledare</translation>
+        <translation>Ledare</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
@@ -4781,7 +4785,7 @@ Skjuter in en portsymbol</translation>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished">Ledare
+        <translation>Ledare
 
 Skjuter in en ledare</translation>
     </message>
@@ -4791,17 +4795,17 @@ Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished">Ledaretikett</translation>
+        <translation>Ledaretikett</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished">Skjuter in en ledar- eller pinnetikett</translation>
+        <translation>Skjuter in en ledar- eller pinnetikett</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished">Ledaretikett
+        <translation>Ledaretikett
 
 Skjuter in en ledar- eller pinnetikett</translation>
     </message>
@@ -4811,129 +4815,129 @@ Skjuter in en ledar- eller pinnetikett</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished">Textredigerare</translation>
+        <translation>Textredigerare</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished">Startar Qucs textredigerare</translation>
+        <translation>Startar Qucs textredigerare</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished">Textredigerare
+        <translation>Textredigerare
 
 Startar Qucs textredigerare</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished">Filtersyntes</translation>
+        <translation>Filtersyntes</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished">Startar QucsFilter</translation>
+        <translation>Startar QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished">Filtersyntes
+        <translation>Filtersyntes
 
 Startar QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished">Ledningsberäkning</translation>
+        <translation>Ledningsberäkning</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished">Startar QucsTrans</translation>
+        <translation>Startar QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished">Ledningsberäkning
+        <translation>Ledningsberäkning
 
 Startar transmissionsledningsberäkning</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished">Komponentbibliotek</translation>
+        <translation>Komponentbibliotek</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished">Startar QucsLib</translation>
+        <translation>Startar QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished">Komponetbibliotek
+        <translation>Komponetbibliotek
 
 Startar komponetsbiblioteksprogrammet</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished">Matchande krets</translation>
+        <translation>Matchande krets</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished">Skapa matchande krets</translation>
+        <translation>Skapa matchande krets</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished">Matchande krets
+        <translation>Matchande krets
 
 Dialog för att skapa matchande krets</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished">Simulera</translation>
+        <translation>Simulera</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished">Simulerar aktuellt schema</translation>
+        <translation>Simulerar aktuellt schema</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished">Simulera
+        <translation>Simulera
 
 Simulerar aktuellt schema</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished">Visa datavisning/schema</translation>
+        <translation>Visa datavisning/schema</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished">Ändrar till datavisningssida eller schemasida</translation>
+        <translation>Ändrar till datavisningssida eller schemasida</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished">Visa datavisning/schema
+        <translation>Visa datavisning/schema
 
 </translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished">Beräkna DC-förspänning</translation>
+        <translation>Beräkna DC-förspänning</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished">Beräknar DC-förspänning och visar den</translation>
+        <translation>Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished">Beräkna DC-förspänning
+        <translation>Beräkna DC-förspänning
 
 Beräknar DC-förspänning och visar den</translation>
     </message>
@@ -4943,49 +4947,49 @@ Beräknar DC-förspänning och visar den</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished">Sätt markör i kurva</translation>
+        <translation>Sätt markör i kurva</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">Sätter en markör i ett diagrams kurva</translation>
+        <translation>Sätter en markör i ett diagrams kurva</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">Sätt markör
+        <translation>Sätt markör
 
 Sätter en markör i ett diagrams kurva</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished">Visa senaste meddelande</translation>
+        <translation>Visa senaste meddelande</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished">Visa senaste simuleringsmeddelande</translation>
+        <translation>Visa senaste simuleringsmeddelande</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished">Visa senaste meddelande
+        <translation>Visa senaste meddelande
 
 Visar senaste simuleringsmeddelandena</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished">Visa senaste nätlista</translation>
+        <translation>Visa senaste nätlista</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished">Visar senste simuleringens nätlista</translation>
+        <translation>Visar senste simuleringens nätlista</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished">Visa senaste nätlista
+        <translation>Visa senaste nätlista
 
 Visar senaste simuleringsens nätlista</translation>
     </message>
@@ -4995,17 +4999,17 @@ Visar senaste simuleringsens nätlista</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished">Ver&amp;ktygsrad</translation>
+        <translation>Ver&amp;ktygsrad</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished">Aktiverar/avaktiverar verktygsraden</translation>
+        <translation>Aktiverar/avaktiverar verktygsraden</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished">Verktygsrad
+        <translation>Verktygsrad
 
 Aktiverar/avaktiverar verktygsraden</translation>
     </message>
@@ -5015,17 +5019,17 @@ Aktiverar/avaktiverar verktygsraden</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">&amp;Statusrad</translation>
+        <translation>&amp;Statusrad</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished">Aktiverar/avaktiverar statusraden</translation>
+        <translation>Aktiverar/avaktiverar statusraden</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished">Statusrad
+        <translation>Statusrad
 
 Aktiverar/avaktiverar statusraden</translation>
     </message>
@@ -5035,17 +5039,17 @@ Aktiverar/avaktiverar statusraden</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished">Hjälpindex...</translation>
+        <translation>Hjälpindex...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished">Index för Qucs hjälp</translation>
+        <translation>Index för Qucs hjälp</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished">Hjälpindex
+        <translation>Hjälpindex
 
 Index för Qucs hjälp</translation>
     </message>
@@ -5055,17 +5059,17 @@ Index för Qucs hjälp</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished">Hur man börjar...</translation>
+        <translation>Hur man börjar...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished">Hur man börjar med Qucs</translation>
+        <translation>Hur man börjar med Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished">Hur man börjar
+        <translation>Hur man börjar
 
 Kort introduktion till Qucs</translation>
     </message>
@@ -5075,7 +5079,7 @@ Kort introduktion till Qucs</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished">&amp;Om Qucs...</translation>
+        <translation>&amp;Om Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
@@ -5085,265 +5089,275 @@ Kort introduktion till Qucs</translation>
         <source>About
 
 About the application</source>
-        <translation type="unfinished">Om
+        <translation>Om
 
 Om tillämpningen</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">Om Qt</translation>
+        <translation>Om Qt</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">Om Qt...</translation>
+        <translation>Om Qt...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished">Om Qt
+        <translation>Om Qt
 
 Om Qt från Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished">Rätta in</translation>
+        <translation>Rätta in</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fil</translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Redigera</translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished">&amp;Sätt in</translation>
+        <translation>&amp;Sätt in</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished">&amp;Projekt</translation>
+        <translation>&amp;Projekt</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;Verktyg</translation>
+        <translation>&amp;Verktyg</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished">&amp;Simulering</translation>
+        <translation>&amp;Simulering</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Vy</translation>
+        <translation>&amp;Vy</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Hjälp</translation>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished">Varningar i senaste simuleringen! Tryck F5</translation>
+        <translation>Varningar i senaste simuleringen! Tryck F5</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished">Växla verktygsrad...</translation>
+        <translation>Växla verktygsrad...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished">Växla statusrad...</translation>
+        <translation>Växla statusrad...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Om...</translation>
+        <translation>Om...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation type="unfinished">Quocs version</translation>
+        <translation>Quocs version</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
+        <translation>by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished">Simulator av Stefan Jahn</translation>
+        <translation>Simulator av Stefan Jahn</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-simulator &apos;FreeHDL&apos; av Edwin Naroska och Marius Vollmer</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished">Speciellt tack till Jens Flucke och Raimund Jacob</translation>
+        <translation>Speciellt tack till Jens Flucke och Raimund Jacob</translation>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation>Många tack till Mike Branson för rättning av VHDL-utdata</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished">Översättningar:</translation>
+        <translation>Översättningar:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation type="unfinished">Tyska av Stefan Jahn</translation>
+        <translation>Tyska av Stefan Jahn</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished">Polska av Dariusz Pienkowski</translation>
+        <translation>Polska av Dariusz Pienkowski</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation type="unfinished">Rumänska av Radu Circa</translation>
+        <translation>Rumänska av Radu Circa</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished">Franska av Vincent Habchi, F5RCS</translation>
+        <translation>Franska av Vincent Habchi, F5RCS</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished">Portugisiska av Luciano Franca</translation>
+        <translation>Portugisiska av Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished">Spanska av Jose L. Redrejo Rodriguez</translation>
+        <translation>Spanska av Jose L. Redrejo Rodriguez</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished">Japanska av Toyoyuki Ishikawa</translation>
+        <translation>Japanska av Toyoyuki Ishikawa</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished">Italienska av Giorgio Luparia och Claudio Girardi</translation>
+        <translation>Italienska av Giorgio Luparia och Claudio Girardi</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished">Hebreiska av Dotan Nahum</translation>
+        <translation>Hebreiska av Dotan Nahum</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished">Svenska av Peter Landgren</translation>
+        <translation>Svenska av Peter Landgren</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished">Turkiska av Onur och Ozgur Cobanoglu</translation>
+        <translation>Turkiska av Onur och Ozgur Cobanoglu</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished">Ungerska av Jozsef Bus</translation>
+        <translation>Ungerska av Jozsef Bus</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta efter ett stycke text</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta
+
+Letar efter ett stycke text</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta igen</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta efter samma text igen</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Leta
+
+Letar efter samma textstycke igen</translation>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentet har ändrats av ett annat program!</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du ladda om eller behålla denna version?</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda om</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>Behålla den</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dokumentinställningar...</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipper ut det valda och placerar det i klippbordet</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipper ut
+
+Klipper ut det valda och placerar det i klippbordet</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopierar det valda till klippbordet</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera
+
+Kopierar det valda till klippbordet</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa hela sidan</translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera valmod</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj
+
+Aktiverar valmod</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL-entitet</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>Ryska av Igor Gorbounov</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt ut...</translation>
     </message>
     <message>
         <source>Replace
@@ -5351,17 +5365,23 @@ Inserts the skeleton of a VHDL entity</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt ut
+
+Ändra komponentegenskaper
+eller
+text i VHDL-kod</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaktivera/aktivera valda komponenter</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaktivera/aktivera
+
+Avaktivera/aktivera valda komponenter</translation>
     </message>
 </context>
 <context>
@@ -5452,7 +5472,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad: %1  -  Kolumn: %2</translation>
     </message>
 </context>
 <context>
@@ -5601,15 +5621,15 @@ Filtersyntesprogram
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Passbandsfrekvens:</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Passbandsdämpning:</translation>
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2005, 2006 by</translation>
+        <translation>Copyright (C) 2005, 2006 by</translation>
     </message>
 </context>
 <context>
@@ -7131,71 +7151,71 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk (satt efter omstart):</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>systemspråk</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Engelska</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyska</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Franska</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanska</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienska</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polska</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japanska</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumänska</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebreiska</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Svenska</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turkiska</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungerska</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugisiska</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukrainska</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ryska</translation>
     </message>
 </context>
 <context>
@@ -7639,51 +7659,51 @@ ingår i sökningen.</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Söktext</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Från markörposition</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Shiftkänsligt</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Endast hela ord</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök baklänges</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Sök...</translation>
+        <translation>Sök...</translation>
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Text att leta efter</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Text att bytas mot</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fråga före utbyte</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt text</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
@@ -7691,11 +7711,11 @@ ingår i sökningen.</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökt text ej funnen!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bytt ut vid %1 tillfällen!</translation>
     </message>
 </context>
 <context>
@@ -7864,7 +7884,7 @@ Fel:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>FEL: Kan ej kopiera &quot;%1&quot; !</translation>
     </message>
 </context>
 <context>
@@ -7980,15 +8000,15 @@ Fel:
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns inget urval!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sida %1 av %2</translation>
     </message>
 </context>
 </TS>
