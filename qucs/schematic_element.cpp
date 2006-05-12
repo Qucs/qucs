@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <stdlib.h>
+
 #include "schematic.h"
 #include "node.h"
 #include "wire.h"

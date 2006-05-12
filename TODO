@@ -23,7 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- add an easy to use volt-meter (for differential voltages)
+	- add an easy to use volt-meter (for differential voltages)
 	- implementation of 3d cartesian diagram
 	- node/branch annotation of simulation results
 	- filter design tool
@@ -53,8 +53,8 @@ unfixed) have a look at the file BUGS.
 	- load/save/print schematics
 	- partial polar/smith chart
 - compatibility code and testing on other platforms as GNU/Linux
-- components: correlated noise sources, symbolically defined devices,
-  optimization
+- components: correlated noise sources, symbolically defined devices
+- optimization dialog box
 - snap mode for wire painting
 	- edit component parameters directly in schematic
 - equations for diagram input line
