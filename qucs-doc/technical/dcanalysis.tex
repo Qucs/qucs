@@ -544,6 +544,7 @@ electrical handiwork tend to produce the same results.
 
 \section{Solving linear equation systems}
 %\addcontentsline{toc}{section}{Solving linear equation systems}
+\label{sec:linEQS}
 
 When dealing with non-linear networks the number of equation systems
 to be solved depends on the required precision of the solution and the
@@ -2957,3 +2958,72 @@ curves are exactly modeled there is no standard strategy to achieve
 this.  Anyway, the threshold voltage $V_{Th}$ should play an important
 role as well as the direction which the current iteration step
 follows.
+
+\section{Overall solution algorithm for DC Analysis}
+%\addcontentsline{toc}{section}{Overall solution algorithm for DC Analysis}
+
+In this section an overall solution algorithm for a DC analysis for
+linear as well as non-linear networks is given.  With non-linear
+network elements at hand the Newton-Raphson (NR) algorithm is applied.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=1\linewidth]{dcalgo}
+\end{center}
+\caption{DC solution algorithm flow chart}
+\label{fig:dcalgo}
+\end{figure}
+\FloatBarrier
+
+The algorithm shown in fig. \ref{fig:dcalgo} has been proved to be
+able to find DC solutions for a large variety of networks.  It must be
+said that the application of any of the fallback convergence helpers
+indicates a nearly or definitely singular equation system
+(e.g. floating nodes or overdetermining sources).  The convergence
+problems are either due to an apparently ``wrong'' network topology or
+to the model implementation of non-linear components.  For some of the
+problems also refer to the facts mentioned in section \ref{sec:linEQS}
+on page \pageref{sec:linEQS}.  In some cases it may even occur that
+tiny numerical inaccuracies lead to non-convergences whereas the
+choice of a more accurate (but probably slower) equation system solver
+can help.  With network topologies having more than a single stable
+solution (e.g. bistable flip-flops) it is recommended to apply
+nodesets, i.e. forcing the Newton-Raphson iteration into a certain
+direction by initial values.
+
+\addvspace{12pt}
+
+When having problems to get a circuit have its DC solution the
+following actions can be taken to solve these problems.
+\begin{itemize}
+\item
+check circuit topology (e.g. floating nodes or overdetermining sources)
+\item
+check model parameters of non-linear components
+\item
+apply nodesets
+\item
+choose a more accurate equation system solver
+\item
+relax the convergence tolerances if possible
+\item
+increase the maximum iteration count
+\item
+choose the prefered fallback algorithm
+\end{itemize}
+
+The presented concepts are common to most circuit simulators each
+having to face the mentioned aspects.  And probably facing it in a
+different manner with more or less big differences in their
+implementation details especially regarding the (fallback) convergence
+helpers.  None of the algorithms based on Newton-Raphson ensures
+global convergence, thus very few documents have been published either
+for the complexity of the topic or for uncertainties in the detailed
+implementation each carrying the attribute ``can help'' or ``may
+help''.
+
+\addvspace{12pt}
+
+So for now the application of a circuit simulator to find the DC
+solution of a given network sometimes keeps being a task for people
+knowing what they want to achieve and what they can roughly expect.
