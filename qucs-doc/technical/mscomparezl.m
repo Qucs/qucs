@@ -68,7 +68,7 @@ u = linspace(0.01,5.01,101);
 er = 9.8;
 
 eXAxisSouthLabelText="normalised strip width W/h";
-eYAxisWestLabelText="deviation of impedance ZL in %";
+eYAxisWestLabelText="deviation of impedance ZL in percent";
 eAxesLabelTextFont=1;
 
 % apply legend layout

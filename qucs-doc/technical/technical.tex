@@ -29,8 +29,15 @@
 \ifx\pdfoutput\undefined
   \pdffalse
 \else
-  \pdfoutput=1
-  \pdftrue
+  \ifx\pdfoutput\relax
+    \pdffalse
+  \else
+    \ifcase\pdfoutput
+      \pdffalse
+    \else
+      \pdftrue
+    \fi
+  \fi
 \fi
 
 % Only evaluated if run using pdfTeX.

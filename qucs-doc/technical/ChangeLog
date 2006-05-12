@@ -1,3 +1,10 @@
+2006-05-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex: Fixed compatibility code for latex/pdftex.
+
+	* dcanalysis.tex (section{Overall solution algorithm for DC
+	Analysis}): Added section for DC solution flow chart.
+
 2006-04-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* transline.tex (section{Twisted pair}): Fixed formulas for
