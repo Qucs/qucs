@@ -26,6 +26,8 @@ files.
 Version 0.0.9
 -------------
 
+ * components can be either deactivated as short or open
+ * VHDL files can be used as subcircuits
  * VHDL text editor
  * translation into Russian
  * number of ports of S-parameter component not anymore limited

@@ -2060,7 +2060,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished">Schaltkreis</translation>
+        <translation>Schaltkreis</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -6008,7 +6008,7 @@ Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen...</translation>
     </message>
     <message>
         <source>Replace
@@ -6016,17 +6016,23 @@ Fügt das Gerüst einer VHDL-Entität ein</translation>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen
+
+Komponenteneigenschaften verändern
+oder
+Text im VHDL-Code ersetzen</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktivieren/Aktivieren der ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktivieren/Aktivieren
+
+Deaktivieren/Aktivieren der ausgewählten Komponenten</translation>
     </message>
 </context>
 <context>
@@ -10001,35 +10007,35 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Text, nach dem gesucht wird</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Text, durch den ersetzt wird</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätigung vor dem Ersetzen</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text ersetzen</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesen Text ersetzen ?</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Suchtext wurde nicht gefunden!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es wurden %1 Suchtexte ersetzt!</translation>
     </message>
 </context>
 <context>

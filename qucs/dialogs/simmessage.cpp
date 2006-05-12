@@ -15,11 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "simmessage.h"
-#include "main.h"
-#include "qucs.h"
-#include "textdoc.h"
-#include "schematic.h"
+#include <stdlib.h>
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -32,6 +28,12 @@
 #include <qtextedit.h>
 #include <qdatetime.h>
 #include <qregexp.h>
+
+#include "simmessage.h"
+#include "main.h"
+#include "qucs.h"
+#include "textdoc.h"
+#include "schematic.h"
 
 
 SimMessage::SimMessage(QWidget *w, QWidget *parent)
