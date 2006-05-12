@@ -1,3 +1,8 @@
+2006-05-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Allow diode's 'M'
+	parameter in the range 0..2.
+
 2006-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* hbsolver.cpp: Fixed calculation of the requested number

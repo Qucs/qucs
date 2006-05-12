@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.17 2006/05/06 11:53:12 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.18 2006/05/12 14:32:10 raimi Exp $
  *
  */
 
@@ -46,7 +46,7 @@
 #include "fourier.h"
 #include "hbsolver.h"
 
-#define HB_DEBUG 1
+#define HB_DEBUG 0
 
 using namespace fourier;
 
