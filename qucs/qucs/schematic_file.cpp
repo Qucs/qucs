@@ -736,9 +736,9 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     if(pn->Name.isEmpty() == User) continue;  // already named ?
     if(!User) {
-      if(Analog)  pn->Name = "_net";
-      else  pn->Name = "net_";   // VHDL names must not begin with '_'
-      pn->Name += QString::number(z++);  // create node name
+      if(Analog) pn->Name = "_net";
+      else  pn->Name = "net_net";   // VHDL names must not begin with '_'
+      pn->Name += QString::number(z++);  // create numbered node name
     }
     else
       if(pn->State)  continue;  // already worked on
@@ -908,7 +908,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         return false;
       }
 
-      // Write the whole VHDL file into the netllist output.
+      // Write the whole VHDL file into the netlist output.
       QTextStream streamVHDL(&f);
       s = streamVHDL.read();
       f.close();
