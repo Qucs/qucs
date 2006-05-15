@@ -36,6 +36,7 @@ nodist_qucsfilter_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) lc_filter.h qf_poly.h qf_filter.h qf_cauer.h \
   qf_matrix.h

@@ -15,13 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rect3ddiagram.h"
-#include "main.h"
-
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 
+#include "rect3ddiagram.h"
+#include "main.h"
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -962,6 +962,7 @@ void Rect3DDiagram::calcData(Graph *g)
           break;
         }
 
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
         if(pMem->done & 8)  *(p++) = BRANCHEND;  // new branch
 
         if(pMem->done & 4)   // point invisible ?

@@ -1,3 +1,8 @@
+2006-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* symbolwidget.cpp: Added "#include <limits.h>" where necessary
+	for SuSE installation.
+
 2006-04-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Diodes.lib: Added BAS40 and BAS70 models from

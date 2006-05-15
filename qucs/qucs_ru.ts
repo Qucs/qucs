@@ -318,7 +318,7 @@
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы VHDL</translation>
     </message>
 </context>
 <context>
@@ -3043,7 +3043,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>n-port OR</source>
-        <translation>n-портовое ИЛИ</translation>
+        <translation>n-входовое ИЛИ</translation>
     </message>
     <message>
         <source>logical AND</source>
@@ -3051,7 +3051,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>n-port AND</source>
-        <translation>n-портовое И</translation>
+        <translation>n-входовое И</translation>
     </message>
     <message>
         <source>logical NAND</source>
@@ -3059,11 +3059,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>n-port NAND</source>
-        <translation>n-портовое НЕ-И</translation>
+        <translation>n-входовое НЕ-И</translation>
     </message>
     <message>
         <source>n-port NOR</source>
-        <translation>n-портовое НЕ-ИЛИ</translation>
+        <translation>n-входовое НЕ-ИЛИ</translation>
     </message>
     <message>
         <source>logical XNOR</source>
@@ -3071,7 +3071,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>n-port XNOR</source>
-        <translation>n-портовое ИСКЛЮЧАЮЩЕЕ НЕ-ИЛИ</translation>
+        <translation>n-входовое ИСКЛЮЧАЮЩЕЕ НЕ-ИЛИ</translation>
     </message>
     <message>
         <source>logical XOR</source>
@@ -3079,7 +3079,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>n-port XOR</source>
-        <translation>n-портовое ИСКЛЮЧАЮЩЕЕ ИЛИ</translation>
+        <translation>n-входовое ИСКЛЮЧАЮЩЕЕ ИЛИ</translation>
     </message>
     <message>
         <source>logical inverter</source>
@@ -3659,31 +3659,31 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Нет имени файла в компоненте VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Невозможно открыть файл VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл VHDL</translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя файла VHDL</translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>изображение во время анализа на постоянном токе</translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>допустимые неточности шагов по времени</translation>
     </message>
 </context>
 <context>
@@ -5725,17 +5725,17 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>Как начать...</translation>
+        <translation>Начало...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>Как начать работать в Qucs</translation>
+        <translation>Начало работы в Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Как начать
+        <translation>Начало
 
 Краткое введение в Qucs</translation>
     </message>
@@ -5917,75 +5917,83 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот документ изменен другой программой!</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите перезагрузить или оставить эту версию?</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезагрузить</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>Оставить</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки &amp;документа...</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вырезает выделенное и помещает его в буфер обмена</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вырезать
+
+Вырезает выделенное и помещает его в буфер обмена</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирует выделенное в буфер обмена</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать
+
+Копирует выделенное в буфер обмена</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать всю страницу</translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Активировать режим выделения</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделить
+
+Активирует режим выделения</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Объект VHDL</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>Русский - Игорь Горбунов</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставляет каркас объекта VHDL</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Объект VHDL
+
+Вставляет каркас объекта VHDL</translation>
     </message>
     <message>
         <source>Replace...</source>
@@ -7641,7 +7649,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Строка: %1(sp)(sp)-(sp)(sp)Столбец: %2</translation>
     </message>
 </context>
 <context>
@@ -10184,7 +10192,7 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Невозможно скопировать &quot;%1&quot; !</translation>
     </message>
 </context>
 <context>

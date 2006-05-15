@@ -18,6 +18,7 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
+AC_CHECK_TOOL(AR, ar, :)
 
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
@@ -41,14 +42,24 @@ else
   if test "x$GCC" = xyes; then
     CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
     CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
+    LDFLAGS="$LDFLAGS -s"
   fi
 fi
 unset enable_debug
+
+dnl Check for Win32.
+case $host_os in
+  *mingw*) WIN32=yes ;;
+  *)       WIN32=no  ;;
+esac
 
 dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
   CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+  if test x$WIN32 = xyes; then
+    CXXFLAGS="$CXXFLAGS -fno-rtti"
+  fi
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
@@ -91,11 +102,15 @@ if test "$MOC" = ":"; then
 fi
 
 dnl Check for X11
-AC_PATH_XTRA
-X11_INCLUDES="$X_CFLAGS"
-X11_LDFLAGS="$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS"
-AC_SUBST(X11_INCLUDES)
-AC_SUBST(X11_LDFLAGS)
+if test x$WIN32 != xyes; then
+  AC_PATH_XTRA
+  X11_INCLUDES="$X_CFLAGS"
+  X11_LDFLAGS=""
+  X11_LIBS="$X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS"
+  AC_SUBST(X11_INCLUDES)
+  AC_SUBST(X11_LDFLAGS)
+  AC_SUBST(X11_LIBS)
+fi
 
 dnl Check include path to Qt.
 QT_INCLUDES=""
@@ -132,25 +147,33 @@ AC_ARG_ENABLE([mt],
      enable_mt="no"
    fi])
 if test "$enable_mt" = yes; then
+  QT_LDF=""
   QT_LIB="-lqt-mt"
-  [case $host_os in
-    *freebsd4* ) QT_LIB="$QT_LIB -pthread" ;;
-    *freebsd[567]* ) QT_LIB="$QT_LIB -lpthread" ;;
-  esac]
   QT_INC="$QT_DEF -DQT_THREAD_SUPPORT -D_REENTRANT"
+  [case $host_os in
+    *freebsd4*) QT_LIB="$QT_LIB -pthread" ;;
+    *freebsd[567]*) QT_LIB="$QT_LIB -lpthread" ;;
+    *mingw*) QT_INC="$QT_INC -mthreads"; QT_LDF="$QT_LDF -mthreads" ;;
+  esac]
   QT_MTS="multi-threaded"
 else
+  QT_LDF=""
   QT_LIB="-lqt"
   QT_INC="$QT_DEF"
   QT_MTS="non-threaded"
 fi
 case $host_os in
-  *mingw32* ) QT_LIB="$QT_LIB -lqtmain"; QT_INC="$QT_INC -DQT_DLL -DUNICODE" ;;
+  *mingw*)
+	QT_LIB="$QT_LIB -lqtmain"
+	QT_INC="$QT_INC -DQT_DLL -DUNICODE"
+	QT_LDF="$QT_LDF -mwindows"
+	;;
 esac
 unset enable_mt
 
 dnl Check library path to Qt.
 QT_LDFLAGS=""
+QT_LIBS=""
 AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
 AC_MSG_CHECKING([for Qt library])
 paths="$QTDIR/lib $QTDIR/lib64 /usr/local/qt/lib /usr/lib/qt /usr/lib \
@@ -158,10 +181,12 @@ paths="$QTDIR/lib $QTDIR/lib64 /usr/local/qt/lib /usr/lib/qt /usr/lib \
   /usr/X11R6/lib/qt2 /usr/X11R6/lib /usr/lib64/qt"
 AC_LANG(C++)
 for path in $paths; do
+  save_LIBS="$LIBS"
   save_LDFLAGS="$LDFLAGS"
   save_CXXFLAGS="$CXXFLAGS"
-  LDFLAGS="$LDFLAGS $X11_LDFLAGS -L$path $QT_LIB"
-  CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_INCLUDES"
+  LIBS="$LIBS $X11_LIBS $QT_LIB"
+  LDFLAGS="$LDFLAGS $X11_LDFLAGS -L$path $QT_LDF"
+  CXXFLAGS="$CXXFLAGS $X11_INCLUDES $QT_INCLUDES $QT_INC"
   AC_LINK_IFELSE(
     [#include <qapplication.h>
      int main (int argc, char ** argv) {
@@ -169,18 +194,22 @@ for path in $paths; do
     [QT_LDFLAGS="$path";
      QT_INCLUDES="$QT_INCLUDES $QT_INC";
      break;])
+  LIBS="$save_LIBS"
   LDFLAGS="$save_LDFLAGS"
   CXXFLAGS="$save_CXXFLAGS"
 done
+LIBS="$save_LIBS"
 LDFLAGS="$save_LDFLAGS"
 CXXFLAGS="$save_CXXFLAGS"
 if test "x$QT_LDFLAGS" != "x"; then
   AC_MSG_RESULT([found in $QT_LDFLAGS])
-  QT_LDFLAGS="-L$QT_LDFLAGS $QT_LIB"
+  QT_LDFLAGS="-L$QT_LDFLAGS $QT_LDF"
+  QT_LIBS="$QT_LIB"
 else
   AC_MSG_ERROR([not found])
 fi
 AC_SUBST(QT_LDFLAGS)
+AC_SUBST(QT_LIBS)
 AC_LANG(C)
 
 dnl Check for additional header files.
