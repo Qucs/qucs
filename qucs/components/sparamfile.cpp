@@ -40,7 +40,7 @@ SParamFile::SParamFile()
 		QObject::tr("interpolation type")+" [linear, cubic]"));
   Props.append(new Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
-			    " [open, short, unspecified]"));
+			    " [open, short, shortall, unspecified]"));
 
   // must be the last property !!!
   Props.append(new Property("Ports", "1", false,

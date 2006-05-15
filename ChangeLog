@@ -1,3 +1,14 @@
+2006-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac:  Added -s (strip) to linker flags when no
+	debugging enabled.
+	Put MinGW32 checks in place, thus it is now possible to cross-
+	compile the qucs package using a GNU/Linux box.  Had to separate
+	LDFLAGS and LIBS because linker command line order matters (-lqt-mt
+	-lqtmain *must* be at the end of the command line), otherwise
+	linking fails.  Changed rules in appropriate Makefile.am's.
+	Additionally checking for the 'ar' tool.
+
 2006-02-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-transcalc/main.cpp, qucs-lib/main.cpp,

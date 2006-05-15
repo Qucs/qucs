@@ -41,7 +41,8 @@ nodist_qucs_SOURCES = $(MOCFILES)
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
-  paintings/libpaintings.a dialogs/libdialogs.a
+  paintings/libpaintings.a dialogs/libdialogs.a \
+  $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h      \
   node.h wirelabel.h viewpainter.h mnemo.h mouseactions.h
