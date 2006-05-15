@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+#include <limits.h>
 
 #include <qaction.h>
 #include <qprocess.h>

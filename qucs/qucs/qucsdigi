@@ -82,7 +82,7 @@ freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS -o $NAME
 echo " done."
 
 echo -n "simulating..."
-./$NAME -cmd "dc -f $NAME.vcd -q;d;run $TIME;q;" >/dev/null
+./$NAME -cmd "dc -f $NAME.vcd -t 1 ps -q;d;run $TIME;q;" >/dev/null
 #/home/margrafm/Desktop/endlos &
 wait $!
 echo " done."
