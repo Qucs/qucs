@@ -77,6 +77,7 @@ else
   if test "x$GCC" = xyes; then
     CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
     CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
+    LDFLAGS="$LDFLAGS -s"
   fi
 fi
 unset enable_debug
