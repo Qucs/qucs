@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.91 2006/04/28 07:08:26 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.92 2006/05/15 06:45:42 raimi Exp $
  *
  */
 
@@ -221,7 +221,8 @@ static struct special_t checker_specials[] = {
   { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
   { "SPfile", "Interpolator",{ "linear", "cubic", NULL } },
-  { "SPfile", "duringDC",    { "open", "short", "unspecified", NULL } },
+  { "SPfile", "duringDC",    { "open", "short", "shortall", "unspecified",
+			       NULL } },
   { "DigiSource", "init",    { "low", "high", NULL } },
   { "Switch", "init",        { "on", "off", NULL } },
   { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",

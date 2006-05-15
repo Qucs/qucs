@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.18 2006/05/12 14:32:10 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.19 2006/05/15 06:45:42 raimi Exp $
  *
  */
 
@@ -1390,3 +1390,15 @@ void hbsolver::saveResults (void) {
     }
   }
 }
+
+/* TODO list for HB Solver:
+   - Take care about nodes with non-linear components only.
+   - AC Power Sources (extra Z and open loop voltage).
+   - Current sources.
+   - Balancing of multi-dimensional non-linear networks.
+   - Sources directly connected to non-linear components and no other
+     linear component (insert short).
+   - Bug: With capacitors at hand there is voltage convergence but no
+     current balancing.
+   - Output currents through voltage sources.
+ */

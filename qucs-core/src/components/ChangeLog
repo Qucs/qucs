@@ -1,3 +1,8 @@
+2006-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* spfile.cpp: Implemented 'shortall' and 'short'.  One including
+	and the other excluding the reference node.
+
 2006-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Give a warning for probably unphysical

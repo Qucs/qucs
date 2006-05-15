@@ -1,3 +1,7 @@
+2006-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbsolver.cpp: Added TODO list for the HB solver.
+
 2006-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Allow diode's 'M'

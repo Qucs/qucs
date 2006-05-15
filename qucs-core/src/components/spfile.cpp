@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.23 2006/04/28 07:08:26 raimi Exp $
+ * $Id: spfile.cpp,v 1.24 2006/05/15 06:45:42 raimi Exp $
  *
  */
 
@@ -576,14 +576,25 @@ void spfile::initDC (void) {
   // get appropriate property value
   char * dc = getPropertyString ("duringDC");
 
-  // a short during DC
-  if (!strcmp (dc, "short")) {
-    int v, n, refnode = getSize () - 1;
-    setVoltageSources (refnode);
+  // a short during DC including the reference node
+  if (!strcmp (dc, "shortall")) {
+    int v, n, lastnode = getSize () - 1;
+    setVoltageSources (lastnode);
     allocMatrixMNA ();
     // place zero voltage sources
-    for (v = VSRC_1, n = NODE_1; n < refnode; n++, v++) {
-      voltageSource (v, n, refnode);
+    for (v = VSRC_1, n = NODE_1; n < lastnode; n++, v++) {
+      voltageSource (v, n, lastnode);
+    }
+    return;
+  }
+  // a short during DC excluding the reference node
+  if (!strcmp (dc, "short")) {
+    int v, n, lastnode = getSize () - 2;
+    setVoltageSources (lastnode);
+    allocMatrixMNA ();
+    // place zero voltage sources
+    for (v = VSRC_1, n = NODE_1; n < lastnode; n++, v++) {
+      voltageSource (v, n, lastnode);
     }
     return;
   }
