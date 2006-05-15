@@ -1,3 +1,15 @@
+2006-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/rect3ddiagram.cpp (calcData): Fixed a memory
+	overflow when computing the 3D diagram data.
+
+	* qucsdigi: Set time raster for VCD file to 1ps.
+
+	* qucs_ru.ts: Updated Russian translations.  Thanks to Igor.
+
+	* qucs_actions.cpp, diagrams/rect3ddiagram.cpp: Added "#include
+	<limits.h>" where necessary for SuSE installation.
+
 2006-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_sv.ts, qucs_fr.ts: Applied translation updates.

@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucstrans_SOURCES = main.cpp qucstrans.cpp helpdialog.cpp optionsdialog.cpp
 
-qucstrans_LDADD = libtranscalc.a
+qucstrans_LDADD = libtranscalc.a $(X11_LIBS) $(QT_LIBS)
 
 nodist_qucstrans_SOURCES = $(MOCFILES)
 

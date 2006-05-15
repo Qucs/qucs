@@ -16,13 +16,13 @@
  ***************************************************************************/
 
 #include <math.h>
-
-#include "symbolwidget.h"
-#include "qucslib.h"
+#include <limits.h>
 
 #include <qpainter.h>
 #include <qtextstream.h>
 
+#include "symbolwidget.h"
+#include "qucslib.h"
 
 SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
 {
