@@ -140,7 +140,9 @@ QucsApp::QucsApp()
   // default settings of the printer
   Printer = new QPrinter(QPrinter::PrinterResolution);
 //  Printer->setOrientation(QPrinter::Landscape);
+#if defined (QT_VERSION) && QT_VERSION > 0x030200
   Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
+#endif
   Printer->setColorMode(QPrinter::Color);
   Printer->setFullPage(true);
 
