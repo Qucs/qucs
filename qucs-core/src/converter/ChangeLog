@@ -1,3 +1,10 @@
+2006-05-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.cpp: Fixed segfault bug when there is no vcd
+	input file but standard input only.
+
+	* scan_vcd.l: Fixed a bug while scanning bit vectors.
+
 2006-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp: Added --correct (or -c) command line option.
