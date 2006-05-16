@@ -120,7 +120,7 @@ void SearchDialog::searchText(bool fromCursor, int Offset)
 
     i = QMessageBox::Yes;
     if(AskBox->isChecked()) {
-      i = QMessageBox::question(this,
+      i = QMessageBox::information(this,
              tr("Replace..."), tr("Replace occurrence ?"),
              QMessageBox::Yes | QMessageBox::Default, QMessageBox::No,
              QMessageBox::Cancel | QMessageBox::Escape);

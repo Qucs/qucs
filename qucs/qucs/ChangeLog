@@ -1,3 +1,11 @@
+2006-05-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (%.qm): Changed 'lrelease' step so that it can
+	be made using 'make -j 8'.
+
+	* qucs_init.cpp, qucs.cpp, dialogs/searchdialog.cpp: Some
+	changes for backward compatibility with Qt < 3.2.
+
 2006-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/rect3ddiagram.cpp (calcData): Fixed a memory

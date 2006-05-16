@@ -30,6 +30,7 @@
 #include <qpainter.h>
 #include <qptrlist.h>
 #include <qfile.h>
+#include <qstringlist.h>
 
 class QTextEdit;
 
