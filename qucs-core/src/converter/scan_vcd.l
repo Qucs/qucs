@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.3 2006-01-09 09:11:07 raimi Exp $
+ * $Id: scan_vcd.l,v 1.4 2006-05-16 11:40:25 raimi Exp $
  *
  */
 
@@ -183,7 +183,7 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
   return Real;
 }
 
-<BIN>{SCALAR} {
+<BIN>{BINARY} {
   vcd_lval.value = strdup (vcd_text);
   char * p = vcd_lval.value;
   while (*p) { *p = toupper (*p); p++; }

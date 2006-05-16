@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.18 2006-05-03 09:43:56 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.19 2006-05-16 11:40:25 raimi Exp $
  *
  */
 
@@ -210,7 +210,8 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
     ret = -1;
   }
   vcd_lex_destroy ();
-  fclose (vcd_in);
+  if (vcd_in)
+    fclose (vcd_in);
   if (ret) {
     vcd_destroy ();
     return -1;

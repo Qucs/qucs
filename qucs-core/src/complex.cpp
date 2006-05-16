@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.30 2006-04-18 08:03:11 raimi Exp $
+ * $Id: complex.cpp,v 1.31 2006-05-16 11:40:25 raimi Exp $
  *
  */
 
@@ -162,8 +162,7 @@ complex pow (const complex z1, const complex z2) {
 complex sin (const complex z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return (polar (exp (-i), r - M_PI_2) -
-          polar (exp (i), -r - M_PI_2)) / 2.0;
+  return (polar (exp (-i), r - M_PI_2) - polar (exp (i), -r - M_PI_2)) / 2.0;
 }
 
 complex arcsin (const complex z) {
@@ -179,7 +178,7 @@ complex cos (const complex z) {
 }
 
 complex arccos (const complex z) {
-#if 1
+#if 0
   return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
 #else
   complex y = sqrt (z * z - 1.0);
