@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include <stdlib.h>
+#include <limits.h>
 
 #include "schematic.h"
 #include "node.h"

@@ -69,18 +69,20 @@ qucs_%.ts: $(qucs_SOURCES)
 	done
 
 %.qm: %.ts
-	@qucsfile=$<; tmpfile="tmp.ts"; \
+	@qucsfile=$<; \
 	genfile=`echo $< | sed -e 's/qucs_\(..\)\.ts/qtgeneric_\1\.ts/'`; \
+	ts_file=`echo $< | sed -e 's/qucs_\(..\)\.ts/tmp_\1\.ts/'`; \
+	qm_file=`echo $< | sed -e 's/qucs_\(..\)\.ts/tmp_\1\.qm/'`; \
 	if test -f $$genfile; then \
 	  echo "Incorporating '$$genfile'..."; \
-	  grep -v "</TS>" $$qucsfile > $$tmpfile; \
-	  grep -v "<\!DOCTYPE TS><TS>" $$genfile >> $$tmpfile; \
+	  grep -v "</TS>" $$qucsfile > $$ts_file; \
+	  grep -v "<\!DOCTYPE TS><TS>" $$genfile >> $$ts_file; \
 	else \
-	  cp -f $$qucsfile $$tmpfile; \
+	  cp -f $$qucsfile $$ts_file; \
 	fi; \
 	echo "$(LRELEASE) $$qucsfile"; \
-	$(LRELEASE) $$tmpfile; test -f tmp.qm && mv -f tmp.qm $@; \
-	rm -f $$tmpfile
+	$(LRELEASE) $$ts_file; test -f $$qm_file && mv -f $$qm_file $@; \
+	rm -f $$ts_file
 
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang
