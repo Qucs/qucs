@@ -658,6 +658,7 @@ Wire* Schematic::selectedWire(int x, int y)
 Wire* Schematic::splitWire(Wire *pw, Node *pn)
 {
   Wire *newWire = new Wire(pn->cx, pn->cy, pw->x2, pw->y2, pn, pw->Port2);
+  newWire->isSelected = pw->isSelected;
 
   pw->x2 = pn->cx;
   pw->y2 = pn->cy;

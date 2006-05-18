@@ -1480,11 +1480,17 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 void QucsApp::slotEditCut()
 {
   statusBar()->message(tr("Cutting selection..."));
-  editText->setHidden(true); // disable text edit of component property
-
-  QClipboard *cb = QApplication::clipboard();  // get system clipboard
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  if(Doc->inherits("QTextEdit")) {
+    ((TextDoc*)Doc)->viewport()->setFocus();
+    ((TextDoc*)Doc)->cut();
+    return;
+  }
+
+  editText->setHidden(true); // disable text edit of component property
+  QClipboard *cb = QApplication::clipboard();  // get system clipboard
+
   QString s = Doc->copySelected(true);
   if(!s.isEmpty()) {
     cb->setText(s, QClipboard::Clipboard);
@@ -1498,11 +1504,17 @@ void QucsApp::slotEditCut()
 void QucsApp::slotEditCopy()
 {
   statusBar()->message(tr("Copying selection to clipboard..."));
-  editText->setHidden(true); // disable text edit of component property
-
-  QClipboard *cb = QApplication::clipboard();  // get system clipboard
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  if(Doc->inherits("QTextEdit")) {
+    ((TextDoc*)Doc)->viewport()->setFocus();
+    ((TextDoc*)Doc)->copy();
+    return;
+  }
+  
+  editText->setHidden(true); // disable text edit of component property
+  QClipboard *cb = QApplication::clipboard();  // get system clipboard
+
   QString s = Doc->copySelected(false);
   if(!s.isEmpty())
     cb->setText(s, QClipboard::Clipboard);
