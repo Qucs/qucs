@@ -962,7 +962,7 @@ void Rect3DDiagram::calcData(Graph *g)
           break;
         }
 
-	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+        FIT_MEMORY_SIZE;  // need to enlarge memory block ?
         if(pMem->done & 8)  *(p++) = BRANCHEND;  // new branch
 
         if(pMem->done & 4)   // point invisible ?
@@ -999,6 +999,7 @@ void Rect3DDiagram::calcData(Graph *g)
           break;
         }
 
+        FIT_MEMORY_SIZE;  // need to enlarge memory block ?
         if(pMem->done & 8)  *(p++) = BRANCHEND;  // new branch
       } while(((pMem++)->done & 256) == 0);
       *p = GRAPHEND;

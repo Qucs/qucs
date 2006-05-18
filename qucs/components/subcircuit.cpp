@@ -42,9 +42,11 @@ Subcircuit::Subcircuit()
   Props.append(new Property("File", "", true,
 		QObject::tr("name of qucs schematic file")));
 
-  createSymbol();
   Model = "Sub";
   Name  = "SUB";
+
+  // Do NOT call createSymbol() here. But create port to let it rotate.
+  Ports.append(new Port(0, 0));
 }
 
 // ---------------------------------------------------------------------
@@ -52,7 +54,6 @@ Component* Subcircuit::newOne()
 {
   Subcircuit *p = new Subcircuit();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
-//  p->remakeSymbol(Ports.count());
   p->recreate(0);
   return p;
 }
@@ -63,7 +64,11 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
   Name = QObject::tr("Subcircuit");
   BitmapFile = "subcircuit";
 
-  if(getNewOne)  return new Subcircuit();
+  if(getNewOne) {
+    Subcircuit *p = new Subcircuit();
+    p->recreate(0);   // createSymbol() is NOT called in constructor !!!
+    return p;
+  }
   return 0;
 }
 
@@ -88,6 +93,7 @@ void Subcircuit::createSymbol()
     No = QucsApp::testFile(FileName);
     if(No < 0)  No = 0;
 
+    Ports.clear();
     remakeSymbol(No);  // no symbol was found -> create standard symbol
   }
 }
@@ -119,7 +125,6 @@ void Subcircuit::remakeSymbol(int No)
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
-
   tx = x1+4;
   ty = y2+4;
 }
@@ -130,9 +135,8 @@ void Subcircuit::remakeSymbol(int No)
 int Subcircuit::loadSymbol(const QString& DocName)
 {
   QFile file(DocName);
-  if(!file.open(IO_ReadOnly)) {
+  if(!file.open(IO_ReadOnly))
     return -1;
-  }
 
   QString Line;
   // *****************************************************************
@@ -182,15 +186,15 @@ int Subcircuit::loadSymbol(const QString& DocName)
     }
 
     Line = Line.stripWhiteSpace();
-    if(Line.at(0) != '<') return -1;
-    if(Line.at(Line.length()-1) != '>') return -1;
+    if(Line.at(0) != '<') return -5;
+    if(Line.at(Line.length()-1) != '>') return -6;
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
     Result = analyseLine(Line);
-    if(Result < 0) return -6;   // line format error
+    if(Result < 0) return -7;   // line format error
     z += Result;
   }
 
-  return -5;   // field not closed
+  return -8;   // field not closed
 }
 
 // -------------------------------------------------------

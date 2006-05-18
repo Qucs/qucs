@@ -964,7 +964,8 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
           case 'a': (*it) += ": inout";  // attribut "analog" is "inout"
                     break;
           case 'o': Signals.append(*it);   // output ports need workaround
-                    (*it) = "nnout_" + (*it);  // no break here !!!
+                    (*it) = "net_out" + (*it);
+                    // no "break;" here !!!
           default:  (*it) += ": " + pc->Props.at(1)->Value;
         }
         (*it) += " bit";
