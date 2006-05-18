@@ -39,10 +39,12 @@ SpiceFile::SpiceFile()
   Props.append(new Property("Ports", "", false, QString("x")));
   Props.append(new Property("Sim", "yes", false, QString("x")));
   withSim = false;
-  createSymbol();
 
   Model = "SPICE";
   Name  = "X";
+
+  // Do NOT call createSymbol() here. But create port to let it rotate.
+  Ports.append(new Port(0, 0));
 }
 
 // -------------------------------------------------------
@@ -57,7 +59,11 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   Name = QObject::tr("SPICE netlist");
   BitmapFile = "spicefile";
 
-  if(getNewOne)  return new SpiceFile();
+  if(getNewOne) {
+    SpiceFile *p = new SpiceFile();
+    p->recreate(0);   // createSymbol() is NOT called in constructor !!!
+    return p;
+  }
   return 0;
 }
 
@@ -71,11 +77,12 @@ void SpiceFile::createSymbol()
   QString tmp, PortNames = Props.at(1)->Value;
   if(!PortNames.isEmpty())  No = PortNames.contains(',') + 1;
 
+  #define HALFWIDTH  17
   int h = 30*((No-1)/2) + 15;
-  Lines.append(new Line(-16, -h, 16, -h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 16, -h, 16,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16,  h, 16,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16, -h,-16,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
 
   int w, i = fHeight/2;
   if(withSim) {
@@ -92,15 +99,15 @@ void SpiceFile::createSymbol()
   i = 0;
   int y = 15-h;
   while(i<No) {
-    Lines.append(new Line(-30,  y,-16,  y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port(-30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
     w = metrics.width(tmp);
-    Texts.append(new Text(-19-w, y-fHeight-2, tmp));
+    Texts.append(new Text(-20-w, y-fHeight-2, tmp));
     i++;
 
     if(i == No) break;
-    Lines.append(new Line( 16,  y, 30,  y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port( 30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
     Texts.append(new Text( 20, y-fHeight-2, tmp));
@@ -111,7 +118,7 @@ void SpiceFile::createSymbol()
   if(No > 0) {
     Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
     Texts.append(new Text( 4, h,"Ref"));
-    Ports.append(new Port( 0,h+15));    // 'Ref' port
+    Ports.append(new Port( 0, h+15));    // 'Ref' port
   }
 
   x1 = -30; y1 = -h-2;

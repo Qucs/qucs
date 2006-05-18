@@ -31,11 +31,11 @@ VHDL_File::VHDL_File()
   Props.append(new Property("File", "sub.vhdl", false,
 		QObject::tr("Name of VHDL file")));
 
-  createSymbol();
-  tx = x1+4;
-  ty = y2+4;
   Model = "VHDL";
   Name  = "X";
+
+  // Do NOT call createSymbol() here. But create port to let it rotate.
+  Ports.append(new Port(0, 0));
 }
 
 // -------------------------------------------------------
@@ -53,7 +53,11 @@ Element* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
   Name = QObject::tr("VHDL file");
   BitmapFile = "vhdlfile";
 
-  if(getNewOne)  return new VHDL_File();
+  if(getNewOne) {
+    VHDL_File *p = new VHDL_File();
+    p->recreate(0);   // createSymbol() is NOT called in constructor !!!
+    return p;
+  }
   return 0;
 }
 
@@ -181,11 +185,12 @@ void VHDL_File::createSymbol()
     No = PortNames.contains(',') + 1;
 
 
+  #define HALFWIDTH  17
   int h = 30*((No-1)/2) + 15;
-  Lines.append(new Line(-16, -h, 16, -h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 16, -h, 16,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16,  h, 16,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16, -h,-16,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
 
   tmp = QObject::tr("vhdl");
   int w = metrics.width(tmp);
@@ -194,7 +199,7 @@ void VHDL_File::createSymbol()
 
   int y = 15-h, i = 0;
   while(i<No) {
-    Lines.append(new Line(-30,  y,-16,  y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port(-30,  y));
     tmp = PortNames.section(',', i, i);
     w = metrics.width(tmp);
@@ -202,7 +207,7 @@ void VHDL_File::createSymbol()
     i++;
 
     if(i == No) break;
-    Lines.append(new Line( 16,  y, 30,  y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port( 30,  y));
     tmp = PortNames.section(',', i, i);
     Texts.append(new Text( 20, y-fHeight-2, tmp));
@@ -212,4 +217,6 @@ void VHDL_File::createSymbol()
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
+  tx = x1+4;
+  ty = y2+4;
 }
