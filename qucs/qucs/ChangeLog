@@ -1,3 +1,9 @@
+2006-05-17  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed segfault with stars/circles in rect3ddiagram
+	* characters "[" and "]" can be entered in property edit
+	* avoid deselecting wires during wire-splitting
+
 2006-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (%.qm): Changed 'lrelease' step so that it can
@@ -22,7 +28,15 @@
 
 	* qucs_sv.ts, qucs_fr.ts: Applied translation updates.
 
-2006-06-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2006-05-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+ 
+	* fixed segfault of clicking on copy/cut toolbar of text editor
+	* fixed rotation problem for subcircuit etc. after loading
+	* fixed bug mirroring text in component symbols
+	* new VDHL name convention also for subcircuit output signal
+	* don't show text behind property edit on schematic
+
+2006-05-06  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* in diagram dialog: only show variables without '_' at beginning
 	* name node name system for digital simulation
@@ -30,7 +44,7 @@
 	* fixed bug enabling/disabling undo/redo icons
 	* match with of property edit on schematic with its text
 
-2006-03-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2006-05-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* replace function for text editor
 	* mark component as short circuit

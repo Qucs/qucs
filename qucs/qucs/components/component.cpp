@@ -505,7 +505,7 @@ void Component::mirrorX()
     f.setPointSizeFloat(pt->Size);
     QFontMetrics  smallMetrics(f);
     QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
-    pt->y = -pt->y - s.height();
+    pt->y = -pt->y - int(pt->mCos)*s.height() + int(pt->mSin)*s.width();
   }
 
   int tmp = y1;
@@ -564,7 +564,7 @@ void Component::mirrorY()
     f.setPointSizeFloat(pt->Size);
     QFontMetrics  smallMetrics(f);
     QSize s = smallMetrics.size(0, pt->s);   // use size for more lines
-    pt->x = -pt->x - s.width();
+    pt->x = -pt->x - int(pt->mSin)*s.height() - int(pt->mCos)*s.width();
   }
 
   tmp = x1;
@@ -940,6 +940,7 @@ int Component::analyseLine(const QString& Row)
     if(i4 < y1)  y1 = i4;
     if(i3 > x2)  x2 = i3;
     if(i4 > y2)  y2 = i4;
+    return 1;
   }
 
   return 0;

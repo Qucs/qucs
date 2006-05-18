@@ -110,7 +110,7 @@ QString SubCirPort::VHDL_Code(int)
   if(Props.at(1)->Value != "out")  return QString("");
 
   // Insert dummy buffer to avoid reading from an output port.
-  QString s = "  nnout_";
+  QString s = "  net_out";
   Node *pn = Ports.getFirst()->Connection;
   s += pn->Name + " <= ";
   s += pn->Name + " or '0';";

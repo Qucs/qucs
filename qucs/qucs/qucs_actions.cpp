@@ -986,6 +986,8 @@ void QucsApp::slotApplyCompText()
       }
     }
   }
+  else   // It is called the first time !!!
+    editText->setMinimumWidth(editText->fontMetrics().width(pp->Value)+4);
 
 
   Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
@@ -997,7 +999,7 @@ void QucsApp::slotApplyCompText()
     view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
     if(pp->Description.find('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
-    Expr_CompProp.setPattern("[^\"=\\x5B\\x5D]+");
+    Expr_CompProp.setPattern("[^\"=]+");
     if(!pc->showName) n--;
   }
   else   // it is the component name
@@ -1009,7 +1011,6 @@ void QucsApp::slotApplyCompText()
   view->MAy2 += n*z;
   editText->setText(s);
   editText->setPaletteBackgroundColor(QucsSettings.BGColor);
-  editText->resize(editText->fontMetrics().width(s)+4, z);
   editText->setFocus();
   editText->selectAll();
   editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
@@ -1020,6 +1021,6 @@ void QucsApp::slotApplyCompText()
 // the width of the edit field.
 void QucsApp::slotResizePropEdit(const QString& t)
 {
-  int z = editText->fontMetrics().lineSpacing();
-  editText->resize(editText->fontMetrics().width(t)+4, z);
+  editText->resize(editText->fontMetrics().width(t)+4,
+                   editText->fontMetrics().lineSpacing());
 }
