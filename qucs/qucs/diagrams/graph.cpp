@@ -103,6 +103,7 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
       }
       pp++;
     }
+    if(*pp < -99) break; // end of all lines ?
     pp++;
   }
 }

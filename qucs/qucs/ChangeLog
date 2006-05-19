@@ -1,3 +1,8 @@
+2006-05-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/graph.cpp (paintLines): Fixed a segfault bug
+	occuring when last line is hidden (3d diagram).
+
 2006-05-17  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed segfault with stars/circles in rect3ddiagram
