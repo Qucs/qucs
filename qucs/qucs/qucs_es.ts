@@ -5625,6 +5625,20 @@ Deactivate/Activate the selected components</source>
 
 Desactiva/Activa los componentes seleccionados</translation>
     </message>
+    <message>
+        <source>Select Markers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selects all markers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Markers
+
+Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
