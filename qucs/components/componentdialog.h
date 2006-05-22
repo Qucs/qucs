@@ -78,8 +78,6 @@ protected slots:
     void reject();
 
 private:
-  void correctDesc(QString &desc, QStringList *clst = 0);
-
   QVBoxLayout *all;   // the mother of all widgets
   QValidator  *Validator, *ValRestrict;
   QRegExp     Expr;

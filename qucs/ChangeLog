@@ -1,3 +1,13 @@
+2006-05-20  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new action: select all markers
+	* action "new text" is now "CTRL+SHIFT+V"
+	* action "print selection" is "CTRL+SHIFT+P"
+	* move markers only if no other element selected
+	* scrollbar of diagrams a little bit more beautiful
+	* added new mathematical functions to online help
+	* avoid wrong multiple-choice values in changedialog.cpp
+
 2006-05-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/graph.cpp (paintLines): Fixed a segfault bug

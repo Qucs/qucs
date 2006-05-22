@@ -54,7 +54,7 @@ void QucsApp::initActions()
 
   textNew = new QAction("New Text",
 		QIconSet(QImage(QucsSettings.BitmapDir + "textnew.png")),
-		tr("New &Text"), CTRL+SHIFT+Key_M, this);
+		tr("New &Text"), CTRL+SHIFT+Key_V, this);
   textNew->setStatusTip(tr("Creates a new text document"));
   textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
   connect(textNew, SIGNAL(activated()), SLOT(slotTextNew()));
@@ -119,7 +119,7 @@ void QucsApp::initActions()
   connect(filePrint, SIGNAL(activated()), SLOT(slotFilePrint()));
 
   filePrintSel = new QAction("Print Selection...",
-			     tr("Print Selection..."), 0, this);
+			     tr("Print Selection..."), CTRL+SHIFT+Key_P, this);
   filePrintSel->setWhatsThis(
 	tr("Print Selected Elements\n\n"
 	   "Prints selected elements of the current document"));
@@ -346,6 +346,12 @@ void QucsApp::initActions()
   selectAll->setWhatsThis(
 	tr("Select All\n\nSelects all elements of the document"));
   connect(selectAll, SIGNAL(activated()), SLOT(slotSelectAll()));
+
+  selectMarker = new QAction("Select Markers", tr("Select Markers"), CTRL+SHIFT+Key_M, this);
+  selectMarker->setStatusTip(tr("Selects all markers"));
+  selectMarker->setWhatsThis(
+	tr("Select Markers\n\nSelects all diagram markers of the document"));
+  connect(selectMarker, SIGNAL(activated()), SLOT(slotSelectMarker()));
 
   editRotate = new QAction("Rotate",
 		QIconSet(QImage(QucsSettings.BitmapDir + "rotate_ccw.png")),
@@ -603,6 +609,7 @@ void QucsApp::initMenuBar()
   editMenu->insertSeparator();
   select->addTo(editMenu);
   selectAll->addTo(editMenu);
+  selectMarker->addTo(editMenu);
   editFind->addTo(editMenu);
   editFindAgain->addTo(editMenu);
   changeProps->addTo(editMenu);

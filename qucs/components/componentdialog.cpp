@@ -337,9 +337,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     if(p == pp)  break;   // do not insert if already on first tab
     if(p->display) s = tr("yes");
     else s = tr("no");
-    QString str = p->Description;
-    correctDesc (str);
-    new QListViewItem(prop, p->Name, p->Value, s, str);
+    new QListViewItem(prop, p->Name, p->Value, s, p->Description);
   }
 
   if(prop->childCount() > 0) {
@@ -357,27 +355,6 @@ ComponentDialog::~ComponentDialog()
   delete Validator;
   delete ValRestrict;
   delete ValInteger;
-}
-
-// -------------------------------------------------------------------------
-// Used to correct the given property description to handle special combobox
-// items.  If 'clst' is not NULL, then an appropriate ComboBox string list
-// is returned.
-void ComponentDialog::correctDesc(QString &desc, QStringList *clst)
-{
-  int b, e;
-  QString str;
-  QStringList List;
-  b = desc.find('[');
-  e = desc.findRev(']');
-  if (e-b > 2) {
-    str = desc.mid(b+1, e-b-1);
-    List = List.split(',',str);
-    desc = desc.left(b)+"["+List.join(",")+"]"+desc.mid(e+1);
-    for (QStringList::Iterator it = List.begin(); it != List.end(); ++it )
-      (*it).replace( QRegExp("[^a-zA-Z0-9_]"), "" );
-  }
-  if(clst != 0) *clst = List;
 }
 
 // -------------------------------------------------------------------------
@@ -430,17 +407,22 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
 
     // handle special combobox items
     QStringList List;
-    correctDesc( PropDesc, &List );
-
-    QString s = PropDesc;
-    QFontMetrics  metrics(QucsSettings.font);   // get size of text
-    while(metrics.width(s) > 270) {  // if description too long, cut it
-      if (s.findRev(' ') != -1)
-	s = s.left(s.findRev(' ', -1)) + "....";
-      else
-	s = s.left(s.length()-5) + "....";
+    int b = PropDesc.find('[');
+    int e = PropDesc.findRev(']');
+    if (e-b > 2) {
+      QString str = PropDesc.mid(b+1, e-b-1);
+      str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );
+      List = List.split(',',str);
     }
-    Description->setText(s);
+
+    QFontMetrics  metrics(QucsSettings.font);   // get size of text
+    while(metrics.width(PropDesc) > 270) {  // if description too long, cut it
+      if (PropDesc.findRev(' ') != -1)
+	PropDesc = PropDesc.left(PropDesc.findRev(' ', -1)) + "....";
+      else
+	PropDesc = PropDesc.left(PropDesc.length()-5) + "....";
+    }
+    Description->setText(PropDesc);
 
     if(List.count() >= 1) {    // ComboBox with value list or line edit ?
       ComboEdit->clear();

@@ -165,6 +165,9 @@ void ChangeDialog::slotButtReplace()
   QPtrList<QCheckBox> pList;
   QCheckBox *pb;
   Component *pc;
+  QStringList List;
+  QString str;
+  int i1, i2;
   // search through all components
   for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next()) {
     if(matches(pc->Model)) {
@@ -174,6 +177,19 @@ void ChangeDialog::slotButtReplace()
             pb = new QCheckBox(pc->Name, Dia_Box);
             pList.append(pb);
             pb->setChecked(true);
+            i1 = pp->Description.find('[');
+            if(i1 < 0)  break;  // no multiple-choice property
+
+            i2 = pp->Description.findRev(']');
+            if(i2-i1 < 2)  break;
+            str = pp->Description.mid(i1+1, i2-i1-1);
+            str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );
+            List = List.split(',',str);
+            if(List.findIndex(NewValueEdit->text()) >= 0)
+              break;    // property value is okay
+
+            pb->setChecked(false);
+            pb->setEnabled(false);
             break;
           }
     }
