@@ -760,6 +760,23 @@ void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
       if(pw->y2 > y2) y2 = pw->y2;
 
       ElementCache->append(pw);
+
+      Node *pn;   // rescue non-selected node labels
+      pn = pw->Port1;
+      if(pn->Label)
+        if(pn->Connections.count() < 2) {
+          ElementCache->append(pn->Label);
+          pn->Label = 0;
+          // Don't set Label->pOwner=0 , so text position stays unchanged.
+        }
+      pn = pw->Port2;
+      if(pn->Label)
+        if(pn->Connections.count() < 2) {
+          ElementCache->append(pn->Label);
+          pn->Label = 0;
+          // Don't set pn->Label->pOwner=0 , so text position stays unchanged.
+        }
+
       pl = pw->Label;
       pw->Label = 0;
       deleteWire(pw);
@@ -800,40 +817,32 @@ Marker* Schematic::setMarker(int x, int y)
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
-bool Schematic::markerLeftRight(bool left)
+void Schematic::markerLeftRight(bool left, QPtrList<Element> *Elements)
 {
+  Marker *pm;
   bool acted = false;
-  bool selected = false;
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
-    for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
-      // test all markers of the graph
-      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
-	if(pm->isSelected) {
-	  selected = true;
-	  if(pm->moveLeftRight(left))  acted = true;
-	}
+  for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next()) {
+    pm->pGraph->Markers.append(pm);
+    if(pm->moveLeftRight(left))
+      acted = true;
+  }
 
   if(acted)  setChanged(true, true, 'm');
-  return selected;
 }
 
 // ---------------------------------------------------
 // Moves the marker pointer up/down on the more-dimensional graph.
-bool Schematic::markerUpDown(bool up)
+void Schematic::markerUpDown(bool up, QPtrList<Element> *Elements)
 {
+  Marker *pm;
   bool acted = false;
-  bool selected = false;
-  for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
-    for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
-      // test all markers of the graph
-      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
-	if(pm->isSelected) {
-	  selected = true;
-	  if(pm->moveUpDown(up))  acted = true;
-	}
+  for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next()) {
+    pm->pGraph->Markers.append(pm);
+    if(pm->moveUpDown(up))
+      acted = true;
+  }
 
   if(acted)  setChanged(true, true, 'm');
-  return selected;
 }
 
 
@@ -1138,6 +1147,16 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 }
 
 // ---------------------------------------------------
+// Selects all markers.
+void Schematic::selectMarkers()
+{
+  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
+         pm->isSelected = true;
+}
+
+// ---------------------------------------------------
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
@@ -1239,8 +1258,9 @@ void Schematic::newMovingWires(QPtrList<Element> *p, Node *pn)
 // ---------------------------------------------------
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
-void Schematic::copySelectedElements(QPtrList<Element> *p)
+int Schematic::copySelectedElements(QPtrList<Element> *p)
 {
+  int markerCount = 0;
   Port      *pp;
   Component *pc;
   Wire      *pw;
@@ -1290,6 +1310,7 @@ void Schematic::copySelectedElements(QPtrList<Element> *p)
       for(Graph *pg = pd->Graphs.first(); pg!=0; pg = pd->Graphs.next())
         for(Marker *pm = pg->Markers.first(); pm != 0; )
           if(pm->isSelected) {
+            markerCount++;
             p->append(pm);
             pg->Markers.take();
             pm = pg->Markers.current();
@@ -1363,6 +1384,7 @@ void Schematic::copySelectedElements(QPtrList<Element> *p)
     if(pn->Label) if(pn->Label->isSelected)
       p->append(pn->Label);
 
+  return markerCount;
 }
 
 // ---------------------------------------------------
@@ -1587,6 +1609,17 @@ bool Schematic::aligning(int Mode)
       case isPainting:
 	((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
 	((Painting*)pe)->setCenter(x1-(*bx), y1-(*by), true);
+/*
+      case isNodeLabel:
+	bx1 = ((WireLabel*)pe)->cx;
+	by1 = ((WireLabel*)pe)->cy;
+	bx2 = ((WireLabel*)pe)->cx;
+	by2 = ((WireLabel*)pe)->cy;
+	((WireLabel*)pe)->cx = x1-(*bx);
+	((WireLabel*)pe)->cy = y1-(*by);
+	insertNodeLabel((WireLabel*)pe);
+	break;
+*/
       default: ;
     }
 
@@ -1944,14 +1977,15 @@ void Schematic::activateCompsWithinRect(int x1, int y1, int x2, int y2)
 
       if(pc->Ports.count() > 1) {
         if(a < 0)  a = 2;
+        pc->isActive = a;    // change "active status"
       }
       else {
         a &= 1;
-        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+        pc->isActive = a;    // change "active status"
+        if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
           if(pc->Model == "GND")  // if existing, delete label on wire line
             oneLabel(pc->Ports.getFirst()->Connection);
       }
-      pc->isActive = a;    // change "active status"
       changed = true;
     }
   }
@@ -1970,14 +2004,15 @@ bool Schematic::activateSpecifiedComponent(int x, int y)
 
       if(pc->Ports.count() > 1) {
         if(a < 0)  a = 2;
+        pc->isActive = a;    // change "active status"
       }
       else {
         a &= 1;
-        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+        pc->isActive = a;    // change "active status"
+        if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
           if(pc->Model == "GND")  // if existing, delete label on wire line
             oneLabel(pc->Ports.getFirst()->Connection);
       }
-      pc->isActive = a;    // change "active status"
       setChanged(true, true);
       return true;
     }
@@ -1996,14 +2031,15 @@ bool Schematic::activateSelectedComponents()
 
       if(pc->Ports.count() > 1) {
         if(a < 0)  a = 2;
+        pc->isActive = a;    // change "active status"
       }
       else {
         a &= 1;
-        if(pc->isActive == COMP_IS_ACTIVE)  // only for active (not shorten)
+        pc->isActive = a;    // change "active status"
+        if(a == COMP_IS_ACTIVE)  // only for active (not shorten)
           if(pc->Model == "GND")  // if existing, delete label on wire line
             oneLabel(pc->Ports.getFirst()->Connection);
       }
-      pc->isActive = a;    // change "active status"
       sel = true;
     }
 
@@ -2128,6 +2164,17 @@ void Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
       if(by2 > y2) y2 = by2;
 
       ElementCache->append(pc);
+
+      Port *pp;   // rescue non-selected node labels
+      for(pp = pc->Ports.first(); pp != 0; pp = pc->Ports.next())
+        if(pp->Connection->Label)
+          if(pp->Connection->Connections.count() < 2) {
+            ElementCache->append(pp->Connection->Label);
+            pp->Connection->Label = 0;
+            // Don't set pp->Connection->Label->pOwner=0,
+            // so text position stays unchanged.
+          }
+
       deleteComp(pc);
       pc = Components->current();
       continue;
@@ -2151,6 +2198,17 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
       if(pc->cy > y2)  y2 = pc->cy;
 
       ElementCache->append(pc);
+
+      Port *pp;   // rescue non-selected node labels
+      for(pp = pc->Ports.first(); pp != 0; pp = pc->Ports.next())
+        if(pp->Connection->Label)
+          if(pp->Connection->Connections.count() < 2) {
+            ElementCache->append(pp->Connection->Label);
+            pp->Connection->Label = 0;
+            // Don't set pp->Connection->Label->pOwner=0,
+            // so text position stays unchanged.
+          }
+
       deleteComp(pc);
       pc = Components->current();
       continue;

@@ -502,7 +502,7 @@ void QucsApp::slotDistribVert()
 }
 
 // ---------------------------------------------------------------------
-// Is called when the select all action is activated.
+// Is called when the "select all" action is activated.
 void QucsApp::slotSelectAll()
 {
   editText->setHidden(true); // disable text edit of component property
@@ -517,6 +517,18 @@ void QucsApp::slotSelectAll()
     ((Schematic*)Doc)->viewport()->update();
     view->drawn = false;
   }
+}
+
+// ---------------------------------------------------------------------
+// Is called when the "select markers" action is activated.
+void QucsApp::slotSelectMarker()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  Doc->selectMarkers();
+  Doc->viewport()->update();
+  view->drawn = false;
 }
 
 // ------------------------------------------------------------------------
@@ -770,17 +782,20 @@ void QucsApp::slotCursorLeft()
 {
   if(!editText->isHidden()) return;  // for edit of component property ?
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->markerLeftRight(true)) {
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;   // if marker selected, do not move other elements
-  }
   QPtrList<Element> movingElements;
-  Doc->copySelectedElements(&movingElements);
-  if(movingElements.isEmpty()) {
-    if(Doc->scrollLeft(Doc->horizontalScrollBar()->lineStep()))
-      Doc->scrollBy(-Doc->horizontalScrollBar()->lineStep(), 0);
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  int markerCount = Doc->copySelectedElements(&movingElements);
+
+  if((movingElements.count() - markerCount) < 1) {
+    if(markerCount > 0) {  // only move marker if nothing else selected
+      Doc->markerLeftRight(true, &movingElements);
+      movingElements.clear();
+    }
+    else {
+      if(Doc->scrollLeft(Doc->horizontalScrollBar()->lineStep()))
+        Doc->scrollBy(-Doc->horizontalScrollBar()->lineStep(), 0);
+    }
+
     Doc->viewport()->update();
     view->drawn = false;
     return;
@@ -796,17 +811,20 @@ void QucsApp::slotCursorRight()
 {
   if(!editText->isHidden()) return;  // for edit of component property ?
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->markerLeftRight(false)) {
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;   // if marker selected, do not move other elements
-  }
   QPtrList<Element> movingElements;
-  Doc->copySelectedElements(&movingElements);
-  if(movingElements.isEmpty()) {
-    if(Doc->scrollRight(-Doc->horizontalScrollBar()->lineStep()))
-      Doc->scrollBy(Doc->horizontalScrollBar()->lineStep(), 0);
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  int markerCount = Doc->copySelectedElements(&movingElements);
+
+  if((movingElements.count() - markerCount) < 1) {
+    if(markerCount > 0) {  // only move marker if nothing else selected
+      Doc->markerLeftRight(false, &movingElements);
+      movingElements.clear();
+    }
+    else {
+      if(Doc->scrollRight(-Doc->horizontalScrollBar()->lineStep()))
+        Doc->scrollBy(Doc->horizontalScrollBar()->lineStep(), 0);
+    }
+
     Doc->viewport()->update();
     view->drawn = false;
     return;
@@ -840,17 +858,20 @@ void QucsApp::slotCursorUp()
     return;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->markerUpDown(true)) {
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;   // if marker selected, do not move other elements
-  }
   QPtrList<Element> movingElements;
-  Doc->copySelectedElements(&movingElements);
-  if(movingElements.isEmpty()) {
-    if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
-      Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  int markerCount = Doc->copySelectedElements(&movingElements);
+
+  if((movingElements.count() - markerCount) < 1) {
+    if(markerCount > 0) {  // only move marker if nothing else selected
+      Doc->markerUpDown(true, &movingElements);
+      movingElements.clear();
+    }
+    else {
+      if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
+        Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+    }
+
     Doc->viewport()->update();
     view->drawn = false;
     return;
@@ -886,17 +907,20 @@ void QucsApp::slotCursorDown()
     return;
   }
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->markerUpDown(false)) {
-    Doc->viewport()->update();
-    view->drawn = false;
-    return;   // if marker selected, do not move other elements
-  }
   QPtrList<Element> movingElements;
-  Doc->copySelectedElements(&movingElements);
-  if(movingElements.isEmpty()) {
-    if(Doc->scrollDown(-Doc->verticalScrollBar()->lineStep()))
-      Doc->scrollBy(0, Doc->verticalScrollBar()->lineStep());
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  int markerCount = Doc->copySelectedElements(&movingElements);
+
+  if((movingElements.count() - markerCount) < 1) {
+    if(markerCount > 0) {  // only move marker if nothing else selected
+      Doc->markerUpDown(false, &movingElements);
+      movingElements.clear();
+    }
+    else {
+      if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
+        Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+    }
+
     Doc->viewport()->update();
     view->drawn = false;
     return;

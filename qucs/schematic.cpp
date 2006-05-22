@@ -747,57 +747,59 @@ bool Schematic::rotateElements()
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-           pc = (Component*)pe;
-           pc->rotate();   //rotate component !before! rotating its center
-           pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
-           insertRawComponent(pc);
-           break;
+        pc = (Component*)pe;
+        pc->rotate();   //rotate component !before! rotating its center
+        pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
+        insertRawComponent(pc);
+        break;
 
       case isWire:
-           pw = (Wire*)pe;
-           x2 = pw->x1;
-           pw->x1 = pw->y1 - y1 + x1;
-           pw->y1 = x1 - x2 + y1;
-           x2 = pw->x2;
-           pw->x2 = pw->y2 - y1 + x1;
-           pw->y2 = x1 - x2 + y1;
-	   pl = pw->Label;
-           if(pl) {
-             x2 = pl->cx;
-             pl->cx = pl->cy - y1 + x1;
-             pl->cy = x1 - x2 + y1;
-             if(pl->Type == isHWireLabel)
-	       pl->Type = isVWireLabel;
-	     else pl->Type = isHWireLabel;
-           }
-           insertWire(pw);
-           break;
+        pw = (Wire*)pe;
+        x2 = pw->x1;
+        pw->x1 = pw->y1 - y1 + x1;
+        pw->y1 = x1 - x2 + y1;
+        x2 = pw->x2;
+        pw->x2 = pw->y2 - y1 + x1;
+        pw->y2 = x1 - x2 + y1;
+	pl = pw->Label;
+        if(pl) {
+          x2 = pl->cx;
+          pl->cx = pl->cy - y1 + x1;
+          pl->cy = x1 - x2 + y1;
+          if(pl->Type == isHWireLabel)
+	    pl->Type = isVWireLabel;
+	  else pl->Type = isHWireLabel;
+        }
+        insertWire(pw);
+        break;
 
       case isHWireLabel:
       case isVWireLabel:
-	   pl = (WireLabel*)pe;
-	   x2 = pl->x1;
-	   pl->x1 = pl->y1 - y1 + x1;
-	   pl->y1 = x1 - x2 + y1;
-	   break;
+	pl = (WireLabel*)pe;
+	x2 = pl->x1;
+	pl->x1 = pl->y1 - y1 + x1;
+	pl->y1 = x1 - x2 + y1;
+	break;
       case isNodeLabel:
-	   pl = (WireLabel*)pe;
-	   x2 = pl->x1;
-	   pl->x1 = pl->y1 - y1 + x1;
-	   pl->y1 = x1 - x2 + y1;
-	   x2 = pl->cx;
-	   pl->cx = pl->cy - y1 + x1;
-	   pl->cy = x1 - x2 + y1;
-	   insertNodeLabel(pl);
-	   break;
+	pl = (WireLabel*)pe;
+	if(pl->pOwner == 0) {
+	  x2 = pl->x1;
+	  pl->x1 = pl->y1 - y1 + x1;
+	  pl->y1 = x1 - x2 + y1;
+	}
+	x2 = pl->cx;
+	pl->cx = pl->cy - y1 + x1;
+	pl->cy = x1 - x2 + y1;
+	insertNodeLabel(pl);
+	break;
 
       case isPainting:
-           pp = (Painting*)pe;
-           pp->rotate();   // rotate painting !before! rotating its center
-           pp->getCenter(x2, y2);
-           pp->setCenter(y2-y1 + x1, x1-x2 + y1);
-           Paintings->append(pp);
-           break;
+        pp = (Painting*)pe;
+        pp->rotate();   // rotate painting !before! rotating its center
+        pp->getCenter(x2, y2);
+        pp->setCenter(y2-y1 + x1, x1-x2 + y1);
+        Paintings->append(pp);
+        break;
       default: ;
     }
 
@@ -855,7 +857,8 @@ bool Schematic::mirrorXComponents()
 	break;
       case isNodeLabel:
 	pl = (WireLabel*)pe;
-	pl->y1 = (y1<<1) - pl->y1;
+	if(pl->pOwner == 0)
+	  pl->y1 = (y1<<1) - pl->y1;
 	pl->cy = (y1<<1) - pl->cy;
 	insertNodeLabel(pl);
 	break;
@@ -922,7 +925,8 @@ bool Schematic::mirrorYComponents()
 	break;
       case isNodeLabel:
 	pl = (WireLabel*)pe;
-	pl->x1 = (x1<<1) - pl->x1;
+	if(pl->pOwner == 0)
+	  pl->x1 = (x1<<1) - pl->x1;
 	pl->cx = (x1<<1) - pl->cx;
 	insertNodeLabel(pl);
 	break;

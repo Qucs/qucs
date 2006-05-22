@@ -33,9 +33,20 @@ Qucs equations.<br><br>
 <tr><td><tt>x^y</tt></td><td>power</td></tr>
 <tr><td><tt>max(x[,range])</tt></td><td>maximum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
 <tr><td><tt>min(x[,range])</tt></td><td>minimum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>avg(x[,range])</tt></td><td>arithmetic average of values in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>cumavg(x)</tt></td><td>cumulative average of values in vector</td></tr>
+<tr><td><tt>runavg(x)</tt></td><td>running average of values in vector</td></tr>
+<tr><td><tt>stddev(x)</tt></td><td>standard deviation of values in vector</td></tr>
+<tr><td><tt>variance(x)</tt></td><td>variance of values in vector</td></tr>
+
 <tr><td><tt>sum(x)</tt></td><td>sum of values in vector</td></tr>
 <tr><td><tt>prod(x)</tt></td><td>product of values in vector</td></tr>
-<tr><td><tt>avg(x[,range])</tt></td><td>arithmetic average of values in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>cumsum(x)</tt></td><td>cumulative sum of values in vector</td></tr>
+<tr><td><tt>cumprod(x)</tt></td><td>cumulative product of values in vector</td></tr>
+<tr><td><tt>diff(y,x)</tt></td>
+<td>differentiates vector y with respect to x</td></tr>
+<tr><td><tt>diff(y,x,n)</tt></td>
+<td>differentiates vector y with respect to x n-times</td></tr>
 <tr><td><tt>real(x)</tt></td><td>real part of complex number</td></tr>
 <tr><td><tt>imag(x)</tt></td><td>imaginary part of complex number</td></tr>
 <tr><td><tt>abs(x)</tt></td><td>absolute value, magnitude of complex number</td></tr>
@@ -49,6 +60,11 @@ Qucs equations.<br><br>
 <tr><td><tt>rad2deg(x)</tt></td><td>converts radians to degrees</td></tr>
 <tr><td><tt>unwrap(rad[,tol])</tt></td><td>unwraps the angle (in radians) using the optional tolerance value (default is pi)</td></tr>
 <tr><td><tt>dB(x)</tt></td><td>voltage decibel</td></tr>
+<tr><td><tt>dbm(x)</tt></td><td>convert voltage to power in dB</td></tr>
+<tr><td><tt>dbm2w(x)</tt></td><td>convert power in dBm to power in Watts</td></tr>
+<tr><td><tt>w2dbm(x)</tt></td><td>convert power in Watts to power in dBm</td></tr>
+
+<tr><td><tt>sqr(x)</tt></td><td>square (x to the power of two)</td></tr>
 <tr><td><tt>sqrt(x)</tt></td><td>square root</td></tr>
 <tr><td><tt>exp(x)</tt></td><td>exponential function to basis e</td></tr>
 <tr><td><tt>ln(x)</tt></td><td>natural logarithm</td></tr>
@@ -74,6 +90,7 @@ Qucs equations.<br><br>
 <tr><td><tt>sech(x)</tt></td><td>secans hyperbolicus</td></tr>
 <tr><td><tt>cosech(x)</tt></td><td>cosecans hyperbolicus</td></tr>
 <tr><td><tt>coth(x)</tt></td><td>cotangent hyperbolicus</td></tr>
+
 <tr><td><tt>ztor(x[,zref])</tt></td>
 <td>converts impedance to reflexion coefficient (by default reference is 50 ohms)</td></tr>
 <tr><td><tt>rtoz(x[,zref])</tt></td>
@@ -85,10 +102,6 @@ Qucs equations.<br><br>
 <tr><td><tt>rtoswr(x)</tt></td>
 <td>converts reflexion coefficient to (voltage) standing wave ratio
 (SWR or VSWR)</td></tr>
-<tr><td><tt>diff(y,x)</tt></td>
-<td>differentiates vector y with respect to x</td></tr>
-<tr><td><tt>diff(y,x,n)</tt></td>
-<td>differentiates vector y with respect to x n-times</td></tr>
 <tr><td><tt>stos(s,zref[,z0])</tt></td>
 <td>converts s-parameter matrix to s-parameter matrix with different reference impedance(s)</td></tr>
 <tr><td><tt>stoy(s[,zref])</tt></td>
@@ -107,8 +120,22 @@ Qucs equations.<br><br>
 <td>converts the given 2-port matrix from one representation into another,
 possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 'A', 'S' and 'T'.</td></tr>
+
+<tr><td><tt>ceil(x)</tt></td><td>rounds to the next higher integer</td></tr>
+<tr><td><tt>fix(x)</tt></td><td>truncates decimal places from real number</td></tr>
+<tr><td><tt>floor(x)</tt></td><td>rounds to the next lower integer</td></tr>
+<tr><td><tt>round(x)</tt></td><td>rounds to nearest integer</td></tr>
+
 <tr><td><tt>sign(x)</tt></td><td>computes the signum function</td></tr>
 <tr><td><tt>sinc(x)</tt></td><td>returns sin(x)/x and one at x=0</td></tr>
+<tr><td><tt>step(x)</tt></td><td>step function</td></tr>
+<tr><td><tt>besseli0(x)</tt></td><td>modified Bessel function of order zero</td></tr>
+<tr><td><tt>besselj(n,x)</tt></td><td>Bessel function of n-th order</td></tr>
+<tr><td><tt>erf(x)</tt></td><td>error function</td></tr>
+<tr><td><tt>erfc(x)</tt></td><td>complementary error function</td></tr>
+<tr><td><tt>erfinv(x)</tt></td><td>inverse error function</td></tr>
+<tr><td><tt>erfcinv(x)</tt></td><td>inverse complementary error function</td></tr>
+
 <tr><td><tt>det(x)</tt></td><td>determinant of x</td></tr>
 <tr><td><tt>transpose(x)</tt></td><td>transposed matrix of x (rows and columns exchanged)</td></tr>
 <tr><td><tt>inverse(x)</tt></td><td>inverse matrix of x</td></tr>
@@ -120,16 +147,17 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>linspace(from,to,n)</tt></td><td>creates a vector with <tt>n</tt> linearly spaced elements between <tt>from</tt> and <tt>to</tt>, both inclusively</td></tr>
 <tr><td><tt>logspace(from,to,n)</tt></td><td>creates a vector with <tt>n</tt> logarithmically spaced elements between <tt>from</tt> and <tt>to</tt>, both inclusively</td></tr>
 <tr><td><tt>NoiseCircle(Sopt,<br>&nbsp;&nbsp;Fmin,Rn,F[,Arcs])</tt></td><td>circles with constant noise figure(s) <tt>F</tt> (can be a constant or a vector), <tt>Arcs</tt> specifies the angles in degree created by e.g. <tt>linspace(0,360,100)</tt>, if <tt>Arcs</tt> is a number it specifies the number of equally spaced circle segments, if it is omitted this number defaults to a reasonable value</td></tr>
-<tr><td><tt>StabCircleS(S[,Arcs])</tt></td><td>stability circle in the source plane</td></tr>
-<tr><td><tt>StabCircleL(S[,Arcs])</tt></td><td>stability circle in the load plane</td></tr>
-<tr><td><tt>GaCircle(S,Ga[,Arcs])</tt></td><td>circle(s) with constant available power gain <tt>Ga</tt> in the source plane</td></tr>
-<tr><td><tt>GpCircle(S,Gp[,Arcs])</tt></td><td>circle(s) with constant operating power gain <tt>Gp</tt> in the load plane</td></tr>
+<tr><td><tt>StabCircleS(S [,Arcs])</tt></td><td>stability circle in the source plane</td></tr>
+<tr><td><tt>StabCircleL(S [,Arcs])</tt></td><td>stability circle in the load plane</td></tr>
+<tr><td><tt>GaCircle(S,Ga [,Arcs])</tt></td><td>circle(s) with constant available power gain <tt>Ga</tt> in the source plane</td></tr>
+<tr><td><tt>GpCircle(S,Gp [,Arcs])</tt></td><td>circle(s) with constant operating power gain <tt>Gp</tt> in the load plane</td></tr>
 <tr><td><tt>PlotVs(data,dep)</tt></td><td>returns a data item based upon <tt>data</tt> (vector or matrix vector) with dependency on the given <tt>dep</tt> vector, e.g. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 <tr><td><tt>interpolate(f,x[,n])</tt></td><td>returns an interpolated data vector of the real function <tt>f(x)</tt>using <tt>n</tt> equidistant datapoints, the latter can be omitted and defaults to a reasonable value</td></tr>
 <tr><td><tt>fft(v,t)</tt></td><td>computes the fast fourier transformation (FFT) of the function <tt>v(t)</tt></td></tr>
 <tr><td><tt>ifft(V,f)</tt></td><td>computes the inverse fast fourier transformation (IFFT) of the function <tt>V(f)</tt></td></tr>
 <tr><td><tt>dft(v,t)</tt></td><td>computes the discrete fourier transformation (DFT) of the function <tt>v(t)</tt></td></tr>
 <tr><td><tt>idft(V,f)</tt></td><td>computes the inverse discrete fourier transformation (IDFT) of the function <tt>V(f)</tt></td></tr>
+<tr><td><tt>kbd(x [,n])</tt></td><td>Kaiser-Bessel derived window</td></tr>
 <tr><td><tt>yvalue(f,xval)</tt></td><td>returns the y-value of the given vector <tt>f</tt> which is located nearest to the x-value <tt>xval</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>
 <tr><td><tt>xvalue(f,yval)</tt></td><td>returns the x-value which is associated  with the y-value nearest to <tt>yval</tt> in the given vector <tt>f</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>
 
