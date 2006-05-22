@@ -1910,6 +1910,7 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   }
 
   symEdit->setEnabled(SchematicMode);
+  selectMarker->setEnabled(SchematicMode);
   alignTop->setEnabled(SchematicMode);
   alignBottom->setEnabled(SchematicMode);
   alignLeft->setEnabled(SchematicMode);
@@ -1961,6 +1962,7 @@ void QucsApp::switchEditMode(bool SchematicMode)
   insWire->setEnabled(SchematicMode);
   insLabel->setEnabled(SchematicMode);
   setMarker->setEnabled(SchematicMode);
+  selectMarker->setEnabled(SchematicMode);
   simulate->setEnabled(SchematicMode);
 }
 

@@ -149,16 +149,15 @@ public:
   void  copyWires(int&, int&, int&, int&, QPtrList<Element>*);
 
   Marker* setMarker(int, int);
-  bool    markerLeftRight(bool);
-  bool    markerUpDown(bool);
+  void    markerLeftRight(bool, QPtrList<Element>*);
+  void    markerUpDown(bool, QPtrList<Element>*);
 
   Element* selectElement(int, int, bool, int *index=0);
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
+  void     selectMarkers();
   void     newMovingWires(QPtrList<Element>*, Node*);
-  void     copySelectedElements(QPtrList<Element>*);
-  bool     copyComps2WiresPaints(int&, int&, int&, int&, QPtrList<Element>*);
-  int      copyElements(int&, int&, int&, int&, QPtrList<Element>*);
+  int      copySelectedElements(QPtrList<Element>*);
   bool     deleteElements();
   bool     aligning(int);
   bool     distribHoriz();
@@ -176,8 +175,6 @@ public:
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void       deleteComp(Component*);
-  void       copyComponents(int&, int&, int&, int&, QPtrList<Element>*);
-  void       copyComponents2(int&, int&, int&, int&, QPtrList<Element>*);
 
   void     oneLabel(Node*);
   int      placeNodeLabel(WireLabel*);
@@ -188,8 +185,12 @@ public:
   Painting* selectedPainting(int, int);
   void      copyPaintings(int&, int&, int&, int&, QPtrList<Element>*);
 
-public:
+private:
   void insertComponentNodes(Component*, bool);
+  void copyComponents(int&, int&, int&, int&, QPtrList<Element>*);
+  void copyComponents2(int&, int&, int&, int&, QPtrList<Element>*);
+  bool copyComps2WiresPaints(int&, int&, int&, int&, QPtrList<Element>*);
+  int  copyElements(int&, int&, int&, int&, QPtrList<Element>*);
 
 
 /* ********************************************************************

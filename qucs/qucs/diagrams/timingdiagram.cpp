@@ -56,8 +56,9 @@ void TimingDiagram::paint(ViewPainter *p)
     int   x, y, dx, dy;
     QPointArray Points;
     // draw scroll bar
-    p->fillRect(cx+yAxis.numGraphs, cy+2, zAxis.numGraphs, 14, Qt::gray);
+    p->fillRect(cx+yAxis.numGraphs, cy+2, zAxis.numGraphs, 14, QColor(192, 192, 192));
 
+    int bx = cx+yAxis.numGraphs+zAxis.numGraphs;
     // draw frame for scroll bar
     p->Painter->setPen(QPen(QPen::black,0));
     p->drawLine(cx+xAxis.numGraphs, cy, cx+xAxis.numGraphs, cy+17);
@@ -67,17 +68,29 @@ void TimingDiagram::paint(ViewPainter *p)
     p->drawLine(cx+x2-17, cy, cx+x2-17, cy+17);
 
     // draw the arrows above and below the scroll bar
-    p->Painter->setBrush(QBrush(Qt::gray));
+    p->Painter->setBrush(QColor(192, 192, 192));
+    p->Painter->setPen(QColor(152, 152, 152));
+    p->drawLine(cx+yAxis.numGraphs, cy+15, bx, cy+15);
+    p->drawLine(bx, cy+2, bx, cy+15);
 
     p->map(cx+xAxis.numGraphs+3,  cy+3, x, y);
     p->map(cx+xAxis.numGraphs+14, cy+14, dx, dy);
     Points.setPoints(3, x, (y+dy)>>1, dx, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
+    p->Painter->setPen(QColor(224, 224, 224));
+    p->drawLine(x, (y+dy)>>1, dx, y);
+    p->drawLine(cx+yAxis.numGraphs, cy+2, bx, cy+2);
+    p->drawLine(cx+yAxis.numGraphs, cy+2, cx+yAxis.numGraphs, cy+15);
 
+    p->Painter->setPen(QColor(152, 152, 152));
     dx -= x;
     p->map(cx+x2-3,  cy+3, x, y);
     Points.setPoints(3, x, (y+dy)>>1, x-dx, y, x-dx, dy);
     p->Painter->drawConvexPolygon(Points);
+    p->Painter->setPen(QColor(208, 208, 208));
+    p->drawLine(x-dx, y, x, (y+dy)>>1);
+    p->Painter->setPen(QColor(224, 224, 224));
+    p->drawLine(x-dx, y, x-dx, dy);
 
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
