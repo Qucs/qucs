@@ -236,7 +236,7 @@ public:
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *editFindAgain, *insEntity;
+          *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -267,6 +267,7 @@ public slots:
   void slotDistribHoriz();// distribute horizontally selected elements
   void slotDistribVert(); // distribute vertically selected elements
   void slotSelectAll();
+  void slotSelectMarker();
   void slotShowLastMsg();
   void slotShowLastNetlist();
   void slotCallEditor();

@@ -51,7 +51,8 @@ void TabDiagram::paint(ViewPainter *p)
     QPointArray Points;
     y = y2 - 20;
     // draw scroll bar
-    p->fillRect(cx-15, cy-y + yAxis.numGraphs, 14, zAxis.numGraphs, Qt::gray);
+    int by = cy-y + yAxis.numGraphs;
+    p->fillRect(cx-14, by+1, 12, zAxis.numGraphs-1, QColor(192, 192, 192));
 
     // draw frame for scroll bar
     p->Painter->setPen(QPen(QPen::black,0));
@@ -64,17 +65,29 @@ void TabDiagram::paint(ViewPainter *p)
     p->drawLine(cx-17, cy+y, cx, cy+y);
 
     // draw the arrows above and below the scroll bar
-    p->Painter->setBrush(QBrush(Qt::gray));
+    p->Painter->setBrush(QColor(192, 192, 192));
+    p->Painter->setPen(QColor(152, 152, 152));
+    p->drawLine(cx-2, by, cx-2, by + zAxis.numGraphs);
+    p->drawLine(cx-15, by + zAxis.numGraphs, cx-2, by + zAxis.numGraphs);
 
     p->map(cx-14, cy-y2+3, x, y);
     p->map(cx-3,  cy-y2+14, dx, dy);
     Points.setPoints(3, x, dy, (x+dx)>>1, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
+    p->Painter->setPen(QColor(224, 224, 224));
+    p->drawLine(x, dy, (x+dx)>>1, y);
+    p->drawLine(cx-15, by, cx-2, by);
+    p->drawLine(cx-15, by, cx-15, by + zAxis.numGraphs);
 
+    p->Painter->setPen(QColor(152, 152, 152));
     dy -= y;
     p->map(cx-14,  cy-3, x, y);
     Points.setPoints(3, x, y-dy, (x+dx)>>1, y, dx, y-dy);
     p->Painter->drawConvexPolygon(Points);
+    p->Painter->setPen(QColor(208, 208, 208));
+    p->drawLine(x, y-dy, (x+dx)>>1, y);
+    p->Painter->setPen(QColor(224, 224, 224));
+    p->drawLine(x, y-dy, dx, y-dy);
 
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
