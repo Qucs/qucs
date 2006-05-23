@@ -6036,17 +6036,19 @@ Deaktivieren/Aktivieren der ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Select Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierungen auswählen</translation>
     </message>
     <message>
         <source>Selects all markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählt alle Markierungen aus</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierungen auswählen
+
+Wählt alle Diagramm-Markierungen im Dokument aus</translation>
     </message>
 </context>
 <context>

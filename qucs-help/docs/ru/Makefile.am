@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs-help/docs/Makefile.am
+# qucs-help/docs/ru/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,9 +22,16 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = en es fr de ru
+HTML = index.html short.html start.html mathfunc.html subcircuit.html       \
+  programs.html internal.html characters.html matching.html start_digi.html
+PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png \
+  qucsdigi.png
 
-dist_man_MANS = qucs.1 qucsdigi.1
+EXTRA_DIST = $(HTML) $(PIC)
+
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/ru
+docdata_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in
