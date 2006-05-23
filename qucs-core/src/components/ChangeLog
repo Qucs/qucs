@@ -1,3 +1,10 @@
+2006-05-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* tline.cpp: Damping factor now in 1/m and not Neper anymore.
+
+	* vac.cpp, iac.cpp: Normalization of 'Theta' property regarding
+	frequency.
+
 2006-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* spfile.cpp: Implemented 'shortall' and 'short'.  One including

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.cpp,v 1.13 2006-03-02 08:06:03 raimi Exp $
+ * $Id: tline.cpp,v 1.14 2006-05-23 09:48:32 raimi Exp $
  *
  */
 
@@ -48,6 +48,7 @@ void tline::calcSP (nr_double_t frequency) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t b = 2 * M_PI * frequency / C0;
+  a = log (a) / 2;
   complex p = exp (-l * rect (a, b));
   complex s11 = r * (1 - p * p) / (1 - p * p * r * r);
   complex s21 = p * (1 - r * r) / (1 - p * p * r * r);
@@ -60,6 +61,7 @@ void tline::calcNoiseSP (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
+  a = log (a) / 2;
   a = exp (a * l);
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t f = (a - 1) * (r * r - 1) / sqr (a - r * r) * kelvin (T) / T0;
@@ -74,6 +76,7 @@ void tline::calcNoiseAC (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
+  a = log (a) / 2;
   if (a * l != 0.0) {
     a = exp (a * l);
     nr_double_t f = 4.0 * kelvin (T) / T0 / z / (a - 1);
@@ -88,6 +91,7 @@ void tline::initDC (void) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t l = getPropertyDouble ("L");
+  a = log (a) / 2;
   if (a * l != 0.0) {
     setVoltageSources (0);
     allocMatrixMNA ();
@@ -121,6 +125,7 @@ void tline::calcAC (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
+  a = log (a) / 2;
   if (l != 0.0) {
     complex y11 = +1 / z / tanh (rect (a, b) * l);
     complex y21 = -1 / z / sinh (rect (a, b) * l);
@@ -153,6 +158,7 @@ void tline::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t T = l / C0;
+  a = log (a) / 2;
   if (T > 0.0) {
     T = t - T;
     a = exp (-a / 2 * l);

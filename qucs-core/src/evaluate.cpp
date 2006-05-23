@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.48 2006-03-20 08:59:10 raimi Exp $
+ * $Id: evaluate.cpp,v 1.49 2006-05-23 09:48:32 raimi Exp $
  *
  */
 
@@ -1814,12 +1814,14 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
 }
 
 // ***************** fourier transformations *****************
-#define FOURIER_HELPER(cfunc,dep) \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_v) (constant * args) { \
+#define FOURIER_HELPER_1(efunc,cfunc,isign,dep) \
+constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   _ARV0 (v);							    \
   _ARV1 (t);							    \
   _DEFV ();							    \
   vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	    \
+  int k = val->getSize ();					    \
+  *val = isign > 0 ? *val / k : *val * k;			    \
   res->v = val;							    \
   int n = t->getSize ();					    \
   nr_double_t last  = real (t->get (n - 1));			    \
@@ -1837,10 +1839,22 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_v_v) (constant * args) { \
   return res;							    \
 }
 
-FOURIER_HELPER (fft, "Frequency");
-FOURIER_HELPER (ifft,"Time");
-FOURIER_HELPER (dft, "Frequency");
-FOURIER_HELPER (idft,"Time");
+#define FOURIER_HELPER_2(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	  \
+  res->v = val;							  \
+  res->dropdeps = 1;						  \
+  return res;							  \
+}
+
+FOURIER_HELPER_1 (time2freq,dft,1,"Frequency");
+FOURIER_HELPER_1 (freq2time,idft,-1,"Time");
+FOURIER_HELPER_2 (fft);
+FOURIER_HELPER_2 (ifft);
+FOURIER_HELPER_2 (dft);
+FOURIER_HELPER_2 (idft);
 
 // This is the stoz, ztos, ytos, stoy helper macro.
 #define MAKE_FUNC_DEFINITION_3(cfunc) \

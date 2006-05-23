@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.5 2006-04-27 07:02:48 raimi Exp $
+ * $Id: fourier.cpp,v 1.6 2006-05-23 09:48:32 raimi Exp $
  *
  */
 
@@ -177,7 +177,7 @@ vector fourier::fft_1d (vector var, int isign) {
   vector res = vector (size);
   for (n = i = 0; i < size; i++, n += 2) {
     res (i) = rect (data[n], data[n+1]);
-    if (isign > 0) res (i) /= size;
+    if (isign < 0) res (i) /= size;
   }
 
   // free temporary data array
@@ -216,7 +216,7 @@ vector fourier::dft_1d (vector var, int isign) {
     complex val = 0;
     for (k = 0; k < len; k++)
       val += var (k) * polar (1.0, th * k);
-    res (n) = isign > 0 ? val / len : val;
+    res (n) = isign < 0 ? val / len : val;
   }
   return res;
 }
