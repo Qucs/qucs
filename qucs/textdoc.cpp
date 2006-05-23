@@ -434,7 +434,8 @@ pChar List_Units[] = {"fs", "ps", "ns", "us", "ms", "sec", "min", "hr", 0};
 void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
   QString Word = text.mid(start, len).lower();
-  pChar *List = WordList[(int)(Word.at(0).latin1() - 'a')];
+  int idx = (int)(Word.at(0).latin1() - 'a');
+  pChar *List = (idx >= 0 && idx <= 25) ? WordList[idx] : NULL;
 
   if(List)
     for( ; *List != 0; List++)
