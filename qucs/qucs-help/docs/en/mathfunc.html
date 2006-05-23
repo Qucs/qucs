@@ -32,7 +32,9 @@ Qucs equations.<br><br>
 <tr><td><tt>x%y</tt></td><td>modulo (remainder of division)</td></tr>
 <tr><td><tt>x^y</tt></td><td>power</td></tr>
 <tr><td><tt>max(x[,range])</tt></td><td>maximum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>max(x,y)</tt></td><td>returns the greater of the values <tt>x</tt> and <tt>y</tt></td></tr>
 <tr><td><tt>min(x[,range])</tt></td><td>minimum value in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
+<tr><td><tt>min(x,y)</tt></td><td>returns the lesser of the values <tt>x</tt> and <tt>y</tt></td></tr>
 <tr><td><tt>avg(x[,range])</tt></td><td>arithmetic average of values in vector; if a <tt>range</tt> is given then <tt>x</tt> must have a single data dependency</td></tr>
 <tr><td><tt>cumavg(x)</tt></td><td>cumulative average of values in vector</td></tr>
 <tr><td><tt>runavg(x)</tt></td><td>running average of values in vector</td></tr>
@@ -78,7 +80,7 @@ Qucs equations.<br><br>
 <tr><td><tt>tanh(x)</tt></td><td>tangent hyperbolicus</td></tr>
 <tr><td><tt>arcsin(x)</tt></td><td>arcus sine</td></tr>
 <tr><td><tt>arccos(x)</tt></td><td>arcus cosine</td></tr>
-<tr><td><tt>arctan(x)</tt></td><td>arcus tangent</td></tr>
+<tr><td><tt>arctan(x[,y])</tt></td><td>arcus tangent</td></tr>
 <tr><td><tt>arccot(x)</tt></td><td>arcus cotangent</td></tr>
 <tr><td><tt>arsinh(x)</tt></td><td>area sine hyperbolicus</td></tr>
 <tr><td><tt>arcosh(x)</tt></td><td>area cosine hyperbolicus</td></tr>
@@ -153,10 +155,12 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>GpCircle(S,Gp [,Arcs])</tt></td><td>circle(s) with constant operating power gain <tt>Gp</tt> in the load plane</td></tr>
 <tr><td><tt>PlotVs(data,dep)</tt></td><td>returns a data item based upon <tt>data</tt> (vector or matrix vector) with dependency on the given <tt>dep</tt> vector, e.g. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 <tr><td><tt>interpolate(f,x[,n])</tt></td><td>returns an interpolated data vector of the real function <tt>f(x)</tt>using <tt>n</tt> equidistant datapoints, the latter can be omitted and defaults to a reasonable value</td></tr>
-<tr><td><tt>fft(v,t)</tt></td><td>computes the fast fourier transformation (FFT) of the function <tt>v(t)</tt></td></tr>
-<tr><td><tt>ifft(V,f)</tt></td><td>computes the inverse fast fourier transformation (IFFT) of the function <tt>V(f)</tt></td></tr>
-<tr><td><tt>dft(v,t)</tt></td><td>computes the discrete fourier transformation (DFT) of the function <tt>v(t)</tt></td></tr>
-<tr><td><tt>idft(V,f)</tt></td><td>computes the inverse discrete fourier transformation (IDFT) of the function <tt>V(f)</tt></td></tr>
+<tr><td><tt>fft(x)</tt></td><td>computes the fast fourier transformation (FFT) of the vector <tt>x</tt></td></tr>
+<tr><td><tt>ifft(x)</tt></td><td>computes the inverse fast fourier transformation (IFFT) of the vector <tt>x</tt></td></tr>
+<tr><td><tt>dft(x)</tt></td><td>computes the discrete fourier transformation (DFT) of the vector <tt>x</tt></td></tr>
+<tr><td><tt>idft(x)</tt></td><td>computes the inverse discrete fourier transformation (IDFT) of the vector <tt>x</tt></td></tr>
+<tr><td><tt>Time2Freq(v,t)</tt></td><td>computes the discrete fourier transformation of the function <tt>v(t)</tt> interpreting it physically</td></tr>
+<tr><td><tt>Freq2Time(V,f)</tt></td><td>computes the inverse discrete fourier transformation of the function <tt>V(f)</tt> interpreting it physically</td></tr>
 <tr><td><tt>kbd(x [,n])</tt></td><td>Kaiser-Bessel derived window</td></tr>
 <tr><td><tt>yvalue(f,xval)</tt></td><td>returns the y-value of the given vector <tt>f</tt> which is located nearest to the x-value <tt>xval</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>
 <tr><td><tt>xvalue(f,yval)</tt></td><td>returns the x-value which is associated  with the y-value nearest to <tt>yval</tt> in the given vector <tt>f</tt>; therefore the vector <tt>f</tt> must have a single data dependency</td></tr>

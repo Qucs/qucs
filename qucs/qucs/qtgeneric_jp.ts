@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>Incompatible Qt Library Error</source>
-        <translation></translation>
+        <translation>Qtライブラリの不整合エラー</translation>
     </message>
 </context>
 <context>
@@ -26,19 +26,19 @@
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation>&amp;Red:</translation>
+        <translation>赤(&amp;R):</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation>&amp;Green:</translation>
+        <translation>緑（&amp;G）:</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation>Bl&amp;ue:</translation>
+        <translation>青（l&amp;）:</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation>A&amp;lpha channel:</translation>
+        <translation>アルファチャネル（&amp;l）:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>

@@ -1,3 +1,12 @@
+2006-05-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/ru/index.html: Added Russian translations of the
+	internal help system.  Thanks to Igor.
+
+	* docs/en/mathfunc.html: Documented Freq2Time() and Time2Freq().
+	Also fixed descriptions of fft, iff, dft and idft.  Added the
+	two-argument descriptions of arctan, max and min.
+
 2006-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Documented new xvalue(), yvalue() and
