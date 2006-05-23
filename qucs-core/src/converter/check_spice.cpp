@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.19 2006/03/20 08:59:11 raimi Exp $
+ * $Id: check_spice.cpp,v 1.20 2006/05/23 09:48:32 raimi Exp $
  *
  */
 
@@ -1281,10 +1281,12 @@ spice_translate_source (struct definition_t * root,
       { { type == 'U' ? "U" : "I", "f", "Phase", "Theta", NULL } };
       spice_extract_properties (ac, prop, &field);
     }
-    double v;
-    v = spice_get_property_value (ac, "f");
-    v = spice_get_property_value (ac, "Phase") * v * 360;
-    spice_set_property_value (ac, "Phase", -v);
+    double v, f;
+    f = spice_get_property_value (ac, "f");
+    v = spice_get_property_value (ac, "Phase") * f * -360.0;
+    spice_set_property_value (ac, "Phase", v);
+    v = spice_get_property_value (ac, "Theta") / f;
+    spice_set_property_value (ac, "Theta", v);
   }
 
   // adjust the AC part of the source

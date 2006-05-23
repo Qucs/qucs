@@ -1,3 +1,13 @@
+2006-05-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* fourier.cpp: Fixed wrapper functions fft_1d() and dft_1d().
+
+	* evaluate.cpp: Added Time2Freq and Freq2Time implementation.
+	Fixed those of fft, ifft, dft and idft.
+
+	* applications.h: Added new definitions of fft, ifft, dft, idft,
+	Time2Freq and Freq2Time.
+
 2006-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* complex.cpp: Finally fixed the complex arccos() function.

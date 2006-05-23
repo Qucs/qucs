@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.8 2006/03/15 16:46:28 raimi Exp $
+ * $Id: applications.h,v 1.9 2006/05/23 09:48:32 raimi Exp $
  *
  */
 
@@ -564,13 +564,14 @@ struct application_t eqn::applications[] = {
   { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
-  { "fft", TAG_VECTOR, evaluate::fft_v_v, 2,
+  { "fft",  TAG_VECTOR, evaluate::fft_v,  1, { TAG_VECTOR } },
+  { "ifft", TAG_VECTOR, evaluate::ifft_v, 1, { TAG_VECTOR } },
+  { "dft",  TAG_VECTOR, evaluate::dft_v,  1, { TAG_VECTOR } },
+  { "idft", TAG_VECTOR, evaluate::idft_v, 1, { TAG_VECTOR } },
+
+  { "Time2Freq", TAG_VECTOR, evaluate::time2freq_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
-  { "ifft", TAG_VECTOR, evaluate::ifft_v_v, 2,
-    { TAG_VECTOR, TAG_VECTOR } },
-  { "dft", TAG_VECTOR, evaluate::dft_v_v, 2,
-    { TAG_VECTOR, TAG_VECTOR } },
-  { "idft", TAG_VECTOR, evaluate::idft_v_v, 2,
+  { "Freq2Time", TAG_VECTOR, evaluate::freq2time_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
 
   { "xvalue", TAG_COMPLEX, evaluate::xvalue_d, 2,
