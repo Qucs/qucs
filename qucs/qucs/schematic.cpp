@@ -761,14 +761,14 @@ bool Schematic::rotateElements()
         x2 = pw->x2;
         pw->x2 = pw->y2 - y1 + x1;
         pw->y2 = x1 - x2 + y1;
-	pl = pw->Label;
+        pl = pw->Label;
         if(pl) {
           x2 = pl->cx;
           pl->cx = pl->cy - y1 + x1;
           pl->cy = x1 - x2 + y1;
           if(pl->Type == isHWireLabel)
-	    pl->Type = isVWireLabel;
-	  else pl->Type = isHWireLabel;
+            pl->Type = isVWireLabel;
+          else pl->Type = isHWireLabel;
         }
         insertWire(pw);
         break;
@@ -825,6 +825,7 @@ bool Schematic::mirrorXComponents()
 
   y1 = (y1+y2) >> 1;   // axis for mirroring
   setOnGrid(y2, y1);
+  y1 <<= 1;
 
 
   Wire *pw;
@@ -839,34 +840,34 @@ bool Schematic::mirrorXComponents()
       case isDigitalComponent:
 	pc = (Component*)pe;
 	pc->mirrorX();   // mirror component !before! mirroring its center
-	pc->setCenter(pc->cx, (y1<<1) - pc->cy);
+	pc->setCenter(pc->cx, y1 - pc->cy);
 	insertRawComponent(pc);
 	break;
       case isWire:
 	pw = (Wire*)pe;
-	pw->y1 = (y1<<1) - pw->y1;
-	pw->y2 = (y1<<1) - pw->y2;
+	pw->y1 = y1 - pw->y1;
+	pw->y2 = y1 - pw->y2;
 	pl = pw->Label;
-	if(pl)  pl->cy = (y1<<1) - pl->cy;
+	if(pl)  pl->cy = y1 - pl->cy;
 	insertWire(pw);
 	break;
       case isHWireLabel:
       case isVWireLabel:
 	pl = (WireLabel*)pe;
-	pl->y1 = (y1<<1) - pl->y1;
+	pl->y1 = y1 - pl->y1;
 	break;
       case isNodeLabel:
 	pl = (WireLabel*)pe;
 	if(pl->pOwner == 0)
-	  pl->y1 = (y1<<1) - pl->y1;
-	pl->cy = (y1<<1) - pl->cy;
+	  pl->y1 = y1 - pl->y1;
+	pl->cy = y1 - pl->cy;
 	insertNodeLabel(pl);
 	break;
       case isPainting:
 	pp = (Painting*)pe;
 	pp->getCenter(x2, y2);
 	pp->mirrorX();   // mirror painting !before! mirroring its center
-	pp->setCenter(x2, (y1<<1) - y2);
+	pp->setCenter(x2, y1 - y2);
 	Paintings->append(pp);
 	break;
       default: ;
@@ -893,7 +894,7 @@ bool Schematic::mirrorYComponents()
 
   x1 = (x1+x2) >> 1;   // axis for mirroring
   setOnGrid(x1, x2);
-
+  x1 <<= 1;
 
   Wire *pw;
   Painting  *pp;
@@ -905,38 +906,38 @@ bool Schematic::mirrorYComponents()
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	pc = (Component*)pe;
-	pc->mirrorY();   // mirror component !before! mirroring its center
-	pc->setCenter((x1<<1) - pc->cx, pc->cy);
-	insertRawComponent(pc);
-	break;
+        pc = (Component*)pe;
+        pc->mirrorY();   // mirror component !before! mirroring its center
+        pc->setCenter(x1 - pc->cx, pc->cy);
+        insertRawComponent(pc);
+        break;
       case isWire:
-	pw = (Wire*)pe;
-	pw->x1 = (x1<<1) - pw->x1;
-	pw->x2 = (x1<<1) - pw->x2;
-	pl = pw->Label;
-	if(pl)  pl->cx = (x1<<1) - pl->cx;
-	insertWire(pw);
-	break;
+        pw = (Wire*)pe;
+        pw->x1 = x1 - pw->x1;
+        pw->x2 = x1 - pw->x2;
+        pl = pw->Label;
+        if(pl)  pl->cx = x1 - pl->cx;
+        insertWire(pw);
+        break;
       case isHWireLabel:
       case isVWireLabel:
-	pl = (WireLabel*)pe;
-	pl->x1 = (x1<<1) - pl->x1;
-	break;
+        pl = (WireLabel*)pe;
+        pl->x1 = x1 - pl->x1;
+        break;
       case isNodeLabel:
-	pl = (WireLabel*)pe;
-	if(pl->pOwner == 0)
-	  pl->x1 = (x1<<1) - pl->x1;
-	pl->cx = (x1<<1) - pl->cx;
-	insertNodeLabel(pl);
-	break;
+        pl = (WireLabel*)pe;
+        if(pl->pOwner == 0)
+          pl->x1 = x1 - pl->x1;
+        pl->cx = x1 - pl->cx;
+        insertNodeLabel(pl);
+        break;
       case isPainting:
-	pp = (Painting*)pe;
-	pp->getCenter(x2, y2);
-	pp->mirrorY();   // mirror painting !before! mirroring its center
-	pp->setCenter((x1<<1) - x2, y2);
-	Paintings->append(pp);
-	break;
+        pp = (Painting*)pe;
+        pp->getCenter(x2, y2);
+        pp->mirrorY();   // mirror painting !before! mirroring its center
+        pp->setCenter(x1 - x2, y2);
+        Paintings->append(pp);
+        break;
       default: ;
     }
 
