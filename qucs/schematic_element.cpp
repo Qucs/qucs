@@ -750,6 +750,7 @@ void Schematic::deleteWire(Wire *w)
 void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
 			QPtrList<Element> *ElementCache)
 {
+  Node *pn;
   Wire *pw;
   WireLabel *pl;
   for(pw = Wires->first(); pw != 0; )  // find bounds of all selected wires
@@ -761,20 +762,26 @@ void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
 
       ElementCache->append(pw);
 
-      Node *pn;   // rescue non-selected node labels
+      // rescue non-selected node labels
       pn = pw->Port1;
       if(pn->Label)
         if(pn->Connections.count() < 2) {
           ElementCache->append(pn->Label);
+
+          // Don't set pn->Label->pOwner=0 , so text position stays unchanged.
+          // But remember its wire.
+          pn->Label->pOwner = (Node*)pw;
           pn->Label = 0;
-          // Don't set Label->pOwner=0 , so text position stays unchanged.
         }
       pn = pw->Port2;
       if(pn->Label)
         if(pn->Connections.count() < 2) {
           ElementCache->append(pn->Label);
-          pn->Label = 0;
+
           // Don't set pn->Label->pOwner=0 , so text position stays unchanged.
+          // But remember its wire.
+          pn->Label->pOwner = (Node*)pw;
+          pn->Label = 0;
         }
 
       pl = pw->Label;
@@ -1579,7 +1586,8 @@ bool Schematic::aligning(int Mode)
   Wire *pw;
   Component *pc;
   // re-insert elements
-  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
+  // Go backwards in order to insert node labels before its component.
+  for(Element *pe = ElementCache.last(); pe != 0; pe = ElementCache.prev())
     switch(pe->Type) {
       case isComponent:
       case isAnalogComponent:
@@ -1607,19 +1615,25 @@ bool Schematic::aligning(int Mode)
 	break;
 
       case isPainting:
-	((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
-	((Painting*)pe)->setCenter(x1-(*bx), y1-(*by), true);
-/*
+        ((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
+        ((Painting*)pe)->setCenter(x1-(*bx), y1-(*by), true);
+        break;
+
       case isNodeLabel:
-	bx1 = ((WireLabel*)pe)->cx;
-	by1 = ((WireLabel*)pe)->cy;
-	bx2 = ((WireLabel*)pe)->cx;
-	by2 = ((WireLabel*)pe)->cy;
-	((WireLabel*)pe)->cx = x1-(*bx);
-	((WireLabel*)pe)->cy = y1-(*by);
-	insertNodeLabel((WireLabel*)pe);
-	break;
-*/
+        if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent) {
+          pc = (Component*)(((WireLabel*)pe)->pOwner);
+          pc->Bounding(bx1, by1, bx2, by2);
+        }
+        else {
+          pw = (Wire*)(((WireLabel*)pe)->pOwner);
+          bx1 = pw->x1;  by1 = pw->y1;
+          bx2 = pw->x2;  by2 = pw->y2;
+        }
+        ((WireLabel*)pe)->cx += x1-(*bx);
+        ((WireLabel*)pe)->cy += y1-(*by);
+        insertNodeLabel((WireLabel*)pe);
+        break;
+
       default: ;
     }
 
@@ -1668,7 +1682,7 @@ if(count > 1)
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	((Component*)pe)->cx = x;
+	pe->cx = x;
 	insertRawComponent((Component*)pe);
 	break;
 
@@ -1677,7 +1691,7 @@ if(count > 1)
 	if(pw->isHorizontal()) {
 	  x1 = pw->x2 - pw->x1;
 	  pw->x1 = x - (x1 >> 1);
-	  pw->x2 = pe->x1 + x1;
+	  pw->x2 = pw->x1 + x1;
 	}
 	else  pw->x1 = pw->x2 = x;
 //	if(pw->Label) {	}
@@ -1685,12 +1699,29 @@ if(count > 1)
 	break;
 
       case isDiagram:
-	((Diagram*)pe)->cx = x - (((Diagram*)pe)->x2 >> 1);
+	pe->cx = x - (pe->x2 >> 1);
 	break;
 
       case isPainting:
 	pe->getCenter(bx1, by1);
 	pe->setCenter(x, by1, false);
+	break;
+
+      case isNodeLabel:
+        if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
+          pe->cx += x - ((Component*)(((WireLabel*)pe)->pOwner))->cx;
+        else {
+          pw = (Wire*)(((WireLabel*)pe)->pOwner);
+          if(pw->isHorizontal()) {
+            x1 = pw->x2 - pw->x1;
+            pe->cx += x - (x1 >> 1) - pw->x1;
+          }
+          else  pe->cx += x - pw->x1;
+        }
+        insertNodeLabel((WireLabel*)pe);
+        x -= dx;
+        break;
+
       default: ;
     }
     x += dx;
@@ -2170,9 +2201,13 @@ void Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
         if(pp->Connection->Label)
           if(pp->Connection->Connections.count() < 2) {
             ElementCache->append(pp->Connection->Label);
-            pp->Connection->Label = 0;
+
             // Don't set pp->Connection->Label->pOwner=0,
-            // so text position stays unchanged.
+            // so text position stays unchanged, but
+            // remember component for align/distribute.
+            pp->Connection->Label->pOwner = (Node*)pc;
+
+            pp->Connection->Label = 0;
           }
 
       deleteComp(pc);

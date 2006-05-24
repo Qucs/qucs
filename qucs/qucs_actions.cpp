@@ -1010,8 +1010,11 @@ void QucsApp::slotApplyCompText()
       }
     }
   }
-  else   // It is called the first time !!!
-    editText->setMinimumWidth(editText->fontMetrics().width(pp->Value)+4);
+
+  // avoid seeing the property text behind the line edit
+  if(pp)  // Is it first property or component name ?
+    s = pp->Value;
+  editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
 
 
   Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
