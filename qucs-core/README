@@ -74,8 +74,8 @@ You can always get the latest Qucsator version from our CVS
 repository.  Please use an official release if you want to work with
 Qucsator.  The CVS version might not even compile.
 
-    $ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/qucs \
-      co qucs-core
+$ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
+  co qucs-core
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently
