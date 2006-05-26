@@ -810,7 +810,8 @@ bool Schematic::rotateElements()
 }
 
 // ---------------------------------------------------
-// Mirrors all selected components. First copy them to 'ElementCache', then mirror and insert again.
+// Mirrors all selected components.
+// First copy them to 'ElementCache', then mirror and insert again.
 bool Schematic::mirrorXComponents()
 {
   Wires->setAutoDelete(false);
@@ -1199,46 +1200,105 @@ bool Schematic::redo()
 // Sets selected elements on grid.
 bool Schematic::elementsOnGrid()
 {
+  int x, y, No;
   bool count = false;
-  int x, y;
+  Port *pp;
+  WireLabel *pl, *pLabel;
+  QPtrList<WireLabel> LabelCache;
+
   // test all components
   Components->setAutoDelete(false);
   for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
     if(pc->isSelected) {
-      x = Components->at();
+
+      // rescue non-selected node labels
+      for(pp = pc->Ports.first(); pp != 0; pp = pc->Ports.next())
+        if(pp->Connection->Label)
+          if(pp->Connection->Connections.count() < 2) {
+            LabelCache.append(pp->Connection->Label);
+            pp->Connection->Label->pOwner = 0;
+            pp->Connection->Label = 0;
+          }
+
+      x = pc->cx;
+      y = pc->cy;
+      No = Components->at();
       deleteComp(pc);
       setOnGrid(pc->cx, pc->cy);
       insertRawComponent(pc);
-      Components->at(x);   // restore current list position
+      Components->at(No);   // restore current list position
       pc->isSelected = false;
       count = true;
+
+      x -= pc->cx;
+      y -= pc->cy;    // re-insert node labels and correct position
+      for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next()) {
+        pl->cx -= x;
+        pl->cy -= y;
+        insertNodeLabel(pl);
+      }
+      LabelCache.clear();
     }
   Components->setAutoDelete(true);
 
-  WireLabel *pl;
   Wires->setAutoDelete(false);
   // test all wires and wire labels
   for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
+    pl = pw->Label;
+    pw->Label = 0;
+
     if(pw->isSelected) {
-      x = Wires->at();
+      // rescue non-selected node label
+      pLabel = 0;
+      if(pw->Port1->Label) {
+        if(pw->Port1->Connections.count() < 2) {
+            pLabel = pw->Port1->Label;
+            pw->Port1->Label = 0;
+        }
+      }
+      else if(pw->Port2->Label) {
+        if(pw->Port2->Connections.count() < 2) {
+            pLabel = pw->Port2->Label;
+            pw->Port2->Label = 0;
+        }
+      }
+
+      No = Wires->at();
       deleteWire(pw);
       setOnGrid(pw->x1, pw->y1);
       setOnGrid(pw->x2, pw->y2);
       insertWire(pw);
-      Wires->at(x);   // restore current list position
+      Wires->at(No);   // restore current list position
       pw->isSelected = false;
       count = true;
+      if(pl)
+        setOnGrid(pl->cx, pl->cy);
+
+      if(pLabel) {
+        setOnGrid(pLabel->cx, pLabel->cy);
+        insertNodeLabel(pLabel);
+      }
     }
 
-    pl = pw->Label;
-    if(pl)
+    if(pl) {
+      pw->Label = pl;
       if(pl->isSelected) {
-	setOnGrid(pl->x1, pl->y1);
-	pl->isSelected = false;
-	count = true;
+        setOnGrid(pl->x1, pl->y1);
+        pl->isSelected = false;
+        count = true;
       }
+    }
   }
   Wires->setAutoDelete(true);
+
+  // test all node labels
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+    if(pn->Label)
+      if(pn->Label->isSelected) {
+        setOnGrid(pn->Label->x1, pn->Label->y1);
+        pn->Label->isSelected = false;
+        count = true;
+      }
 
   // test all diagrams
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {

@@ -742,14 +742,18 @@ void Schematic::deleteWire(Wire *w)
       oneTwoWires(w->Port2);  // two wires -> one wire
   }
 
-  if(w->Label) delete w->Label;
+  if(w->Label) {
+    delete w->Label;
+    w->Label = 0;
+  }
   Wires->removeRef(w);
 }
 
 // ---------------------------------------------------
-void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
+int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
 			QPtrList<Element> *ElementCache)
 {
+  int count=0;
   Node *pn;
   Wire *pw;
   WireLabel *pl;
@@ -760,6 +764,7 @@ void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
       if(pw->y1 < y1) y1 = pw->y1;
       if(pw->y2 > y2) y2 = pw->y2;
 
+      count++;
       ElementCache->append(pw);
 
       // rescue non-selected node labels
@@ -791,6 +796,8 @@ void Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
       pw = Wires->current();
     }
     else pw = Wires->next();
+
+  return count;
 }
 
 
@@ -1412,7 +1419,7 @@ bool Schematic::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
 }
 
 // ---------------------------------------------------
-// Used in "aligning()", "distribHoriz()" and "distribVert()".
+// Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
 int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
 			QPtrList<Element> *ElementCache)
 {
@@ -1425,9 +1432,8 @@ int Schematic::copyElements(int& x1, int& y1, int& x2, int& y2,
   x2=INT_MIN;
   y2=INT_MIN;
   // take components and wires out of list, check their boundings
-  copyComponents(x1, y1, x2, y2, ElementCache);
-  copyWires(x1, y1, x2, y2, ElementCache);
-  int number = ElementCache->count();
+  int number = copyComponents(x1, y1, x2, y2, ElementCache);
+  number += copyWires(x1, y1, x2, y2, ElementCache);
 
   Wires->setAutoDelete(true);
   Components->setAutoDelete(true);
@@ -1645,7 +1651,7 @@ bool Schematic::aligning(int Mode)
 }
 
 // ---------------------------------------------------
-bool Schematic::distribHoriz()
+bool Schematic::distributeHorizontal()
 {
   int x1, y1, x2, y2;
   int bx1, by1, bx2, by2;
@@ -1653,78 +1659,88 @@ bool Schematic::distribHoriz()
   int count = copyElements(x1, y1, x2, y2, &ElementCache);
   if(count < 1) return false;
 
-  // using bubble sort to get elements x ordered
   Element *pe;
-if(count > 1)
-  for(int i = count-1; i>0; i--) {
-    pe = ElementCache.first();
-    for(int j=0; j<i; j++) {
-      pe->getCenter(bx1, by1);
-      pe=ElementCache.next();
-      pe->getCenter(bx2, by2);
-      if(bx1 > bx2) {  // change two elements ?
-	ElementCache.replace(j+1, ElementCache.prev());
-	ElementCache.replace(j, pe);
-	pe = ElementCache.at(j+1);
+  WireLabel *pl;
+  // Node labels are not counted for, so put them to the end.
+/*  for(pe = ElementCache.last(); pe != 0; pe = ElementCache.prev())
+    if(pe->Type == isNodeLabel) {
+      ElementCache.append(pe);
+      ElementCache.removeRef(pe);
+    }*/
+
+  // using bubble sort to get elements x ordered
+  if(count > 1)
+    for(int i = count-1; i>0; i--) {
+      pe = ElementCache.first();
+      for(int j=0; j<i; j++) {
+        pe->getCenter(bx1, by1);
+        pe=ElementCache.next();
+        pe->getCenter(bx2, by2);
+        if(bx1 > bx2) {  // change two elements ?
+          ElementCache.replace(j+1, ElementCache.prev());
+          ElementCache.replace(j, pe);
+          pe = ElementCache.next();
+        }
       }
     }
-  }
 
   ElementCache.getLast()->getCenter(x2, y2);
   ElementCache.getFirst()->getCenter(x1, y1);
-  // re-insert elements and put them at right position
   Wire *pw;
-  int x  = x1;
+  int x = x2;
   int dx=0;
   if(count > 1) dx = (x2-x1)/(count-1);
-  for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
+  // re-insert elements and put them at right position
+  // Go backwards in order to insert node labels before its component.
+  for(pe = ElementCache.last(); pe != 0; pe = ElementCache.prev()) {
     switch(pe->Type) {
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	pe->cx = x;
-	insertRawComponent((Component*)pe);
-	break;
+        pe->cx = x;
+        insertRawComponent((Component*)pe);
+        break;
 
       case isWire:
-	pw = (Wire*)pe;
-	if(pw->isHorizontal()) {
-	  x1 = pw->x2 - pw->x1;
-	  pw->x1 = x - (x1 >> 1);
-	  pw->x2 = pw->x1 + x1;
-	}
-	else  pw->x1 = pw->x2 = x;
-//	if(pw->Label) {	}
-	insertWire(pw);
-	break;
+        pw = (Wire*)pe;
+        if(pw->isHorizontal()) {
+          x1 = pw->x2 - pw->x1;
+          pw->x1 = x - (x1 >> 1);
+          pw->x2 = pw->x1 + x1;
+        }
+        else  pw->x1 = pw->x2 = x;
+//        if(pw->Label) {	}
+        insertWire(pw);
+        break;
 
       case isDiagram:
-	pe->cx = x - (pe->x2 >> 1);
-	break;
+        pe->cx = x - (pe->x2 >> 1);
+        break;
 
       case isPainting:
-	pe->getCenter(bx1, by1);
-	pe->setCenter(x, by1, false);
-	break;
+        pe->getCenter(bx1, by1);
+        pe->setCenter(x, by1, false);
+        break;
 
       case isNodeLabel:
-        if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
-          pe->cx += x - ((Component*)(((WireLabel*)pe)->pOwner))->cx;
+        pl = (WireLabel*)pe;
+        if(((Element*)(pl->pOwner))->Type & isComponent)
+          pe->cx += x - ((Component*)(pl->pOwner))->cx;
         else {
-          pw = (Wire*)(((WireLabel*)pe)->pOwner);
+          pw = (Wire*)(pl->pOwner);
           if(pw->isHorizontal()) {
             x1 = pw->x2 - pw->x1;
             pe->cx += x - (x1 >> 1) - pw->x1;
           }
           else  pe->cx += x - pw->x1;
         }
-        insertNodeLabel((WireLabel*)pe);
-        x -= dx;
+        insertNodeLabel(pl);
+        x += dx;
         break;
 
       default: ;
     }
-    x += dx;
+    x -= dx;
   }
 
   ElementCache.clear();
@@ -1735,7 +1751,7 @@ if(count > 1)
 }
 
 // ---------------------------------------------------
-bool Schematic::distribVert()
+bool Schematic::distributeVertical()
 {
   int x1, y1, x2, y2;
   int bx1, by1, bx2, by2;
@@ -1745,59 +1761,76 @@ bool Schematic::distribVert()
 
   // using bubble sort to get elements x ordered
   Element *pe;
-if(count > 1)
-  for(int i = count-1; i>0; i--) {
-    pe = ElementCache.first();
-    for(int j=0; j<i; j++) {
-      pe->getCenter(bx1, by1);
-      pe=ElementCache.next();
-      pe->getCenter(bx2, by2);
-      if(by1 > by2) {  // change two elements ?
-	ElementCache.replace(j+1, ElementCache.prev());
-	ElementCache.replace(j, pe);
-	pe = ElementCache.at(j+1);
+  if(count > 1)
+    for(int i = count-1; i>0; i--) {
+      pe = ElementCache.first();
+      for(int j=0; j<i; j++) {
+        pe->getCenter(bx1, by1);
+        pe=ElementCache.next();
+        pe->getCenter(bx2, by2);
+        if(by1 > by2) {  // change two elements ?
+          ElementCache.replace(j+1, ElementCache.prev());
+          ElementCache.replace(j, pe);
+          pe = ElementCache.next();
+        }
       }
     }
-  }
 
   ElementCache.getLast()->getCenter(x2, y2);
   ElementCache.getFirst()->getCenter(x1, y1);
-  // re-insert elements and put them at right position
   Wire *pw;
-  int y  = y1;
+  int y  = y2;
   int dy=0;
   if(count > 1) dy = (y2-y1)/(count-1);
-  for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
+  // re-insert elements and put them at right position
+  // Go backwards in order to insert node labels before its component.
+  for(pe = ElementCache.last(); pe != 0; pe = ElementCache.prev()) {
     switch(pe->Type) {
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	pe->cy = y;
-	insertRawComponent((Component*)pe);
-	break;
+        pe->cy = y;
+        insertRawComponent((Component*)pe);
+        break;
 
       case isWire:
-	pw = (Wire*)pe;
-	if(pw->isHorizontal())  pw->y1 = pw->y2 = y;
-	else {
-	  y1 = pw->y2 - pw->y1;
-	  pw->y1 = y - (y1 >> 1);
-	  pw->y2 = pe->y1 + y1;
-	}
-//	if(pw->Label) {	}
-	insertWire(pw);
-	break;
+        pw = (Wire*)pe;
+        if(pw->isHorizontal())  pw->y1 = pw->y2 = y;
+        else {
+          y1 = pw->y2 - pw->y1;
+          pw->y1 = y - (y1 >> 1);
+          pw->y2 = pe->y1 + y1;
+        }
+//        if(pw->Label) {	}
+        insertWire(pw);
+        break;
 
       case isDiagram:
-	pe->cy = y + (pe->y2 >> 1);
-	break;
+        pe->cy = y + (pe->y2 >> 1);
+        break;
 
       case isPainting:
-	pe->getCenter(bx1, by1);
-	pe->setCenter(bx1, y, false);
+        pe->getCenter(bx1, by1);
+        pe->setCenter(bx1, y, false);
+
+      case isNodeLabel:
+        if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
+          pe->cy += y - ((Component*)(((WireLabel*)pe)->pOwner))->cy;
+        else {
+          pw = (Wire*)(((WireLabel*)pe)->pOwner);
+          if(!pw->isHorizontal()) {
+            y1 = pw->y2 - pw->y1;
+            pe->cy += y - (y1 >> 1) - pw->y1;
+          }
+          else  pe->cy += y - pw->y1;
+        }
+        insertNodeLabel((WireLabel*)pe);
+        y += dy;
+        break;
+
       default: ;
     }
-    y += dy;
+    y -= dy;
   }
 
   ElementCache.clear();
@@ -2082,28 +2115,35 @@ bool Schematic::activateSelectedComponents()
 // Sets the component ports anew. Used after rotate, mirror etc.
 void Schematic::setCompPorts(Component *pc)
 {
-  WireLabel *pl=0;
-  for(Port *pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
+  Port *pp;
+  WireLabel *pl;
+  QPtrList<WireLabel> LabelCache;
+
+  for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
     pp->Connection->Connections.removeRef((Element*)pc);// delete connections
     switch(pp->Connection->Connections.count()) {
-      case 0: pl = pp->Connection->Label;
-              Nodes->removeRef(pp->Connection);
-              break;
-      case 2: oneTwoWires(pp->Connection); // try to connect two wires to one
-              pl = 0;
+      case 0:
+        pl = pp->Connection->Label;
+        if(pl) {
+          LabelCache.append(pl);
+          pl->cx = pp->x + pc->cx;
+          pl->cy = pp->y + pc->cy;
+        }
+        Nodes->removeRef(pp->Connection);
+        break;
+      case 2:
+        oneTwoWires(pp->Connection); // try to connect two wires to one
       default: ;
     }
-    // connect component node to schematic node
-    pp->Connection = insertNode(pp->x+pc->cx, pp->y+pc->cy, pc);
-    if(pl) {
-      if(!getWireLabel(pp->Connection)) {
-        pl->cx = pp->Connection->cx;
-        pl->cy = pp->Connection->cy;
-        pp->Connection->Label = pl;   // restore node label if unlabeled
-      }
-      else delete pl;
-    }
   }
+
+  // Re-connect component node to schematic node. This must be done completely
+  // after the first loop in order to avoid problems with node labels.
+  for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+    pp->Connection = insertNode(pp->x+pc->cx, pp->y+pc->cy, pc);
+
+  for(pl = LabelCache.first(); pl != 0; pl = LabelCache.next())
+    insertNodeLabel(pl);
 }
 
 // ---------------------------------------------------
@@ -2180,11 +2220,11 @@ void Schematic::deleteComp(Component *c)
 }
 
 // ---------------------------------------------------
-void Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
+int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
 			QPtrList<Element> *ElementCache)
 {
   Component *pc;
-  int bx1, by1, bx2, by2;
+  int bx1, by1, bx2, by2, count=0;
   // find bounds of all selected components
   for(pc = Components->first(); pc != 0; ) {
     if(pc->isSelected) {
@@ -2194,6 +2234,7 @@ void Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
       if(by1 < y1) y1 = by1;
       if(by2 > y2) y2 = by2;
 
+      count++;
       ElementCache->append(pc);
 
       Port *pp;   // rescue non-selected node labels
@@ -2216,6 +2257,7 @@ void Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
     }
     pc = Components->next();
   }
+  return count;
 }
 
 // ---------------------------------------------------

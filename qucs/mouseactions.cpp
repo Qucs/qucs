@@ -1367,6 +1367,8 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, int x, int y)
   Element *pe = Doc->selectElement(x, y, false);
   if(pe) {
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
+
+    // onGrid is toggle action -> no other element can be selected
     pe->isSelected = true;
     Doc->elementsOnGrid();
 
