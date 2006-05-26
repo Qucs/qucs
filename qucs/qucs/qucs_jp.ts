@@ -5286,7 +5286,7 @@ TrolltechによるQtについて</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>整列</translation>
+        <translation type="obsolete">整列</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -5568,6 +5568,10 @@ Selects all diagram markers of the document</source>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,4 +1,11 @@
+2006-05-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/mathfunc.html: Completed German translation for math
+	functions.
+
 2006-05-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/Makefile.am (SUBDIRS): Added ru sub-directory.
 
 	* docs/ru/index.html: Added Russian translations of the
 	internal help system.  Thanks to Igor.
