@@ -5351,7 +5351,7 @@ Acerca de Qt por Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>Alinear</translation>
+        <translation type="obsolete">Alinear</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -5637,6 +5637,10 @@ Desactiva/Activa los componentes seleccionados</translation>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

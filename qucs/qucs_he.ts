@@ -5209,7 +5209,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished">סדר</translation>
+        <translation type="obsolete">סדר</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -5481,6 +5481,10 @@ Deactivate/Activate the selected components</source>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

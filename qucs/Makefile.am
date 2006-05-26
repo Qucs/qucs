@@ -71,8 +71,8 @@ qucs_%.ts: $(qucs_SOURCES)
 %.qm: %.ts
 	@qucsfile=$<; \
 	genfile=`echo $< | sed -e 's/qucs_\(..\)\.ts/qtgeneric_\1\.ts/'`; \
-	ts_file=`echo $< | sed -e 's/qucs_\(..\)\.ts/tmp_\1\.ts/'`; \
-	qm_file=`echo $< | sed -e 's/qucs_\(..\)\.ts/tmp_\1\.qm/'`; \
+	ts_file=`echo $< | sed -e 's/\(.*\)qucs_\(..\)\.ts/tmp_\2\.ts/'`; \
+	qm_file=`echo $< | sed -e 's/\(.*\)qucs_\(..\)\.ts/tmp_\2\.qm/'`; \
 	if test -f $$genfile; then \
 	  echo "Incorporating '$$genfile'..."; \
 	  grep -v "</TS>" $$qucsfile > $$ts_file; \

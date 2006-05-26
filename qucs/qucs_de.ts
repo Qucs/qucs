@@ -5740,7 +5740,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Align</source>
-        <translation>Ausrichten</translation>
+        <translation type="obsolete">Ausrichten</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -6049,6 +6049,10 @@ Selects all diagram markers of the document</source>
         <translation>Markierungen auswählen
 
 Wählt alle Diagramm-Markierungen im Dokument aus</translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
