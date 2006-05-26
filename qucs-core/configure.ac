@@ -18,6 +18,7 @@ dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
+AC_CHECK_TOOL(AR, ar, :)
 
 dnl Check for parser and lexer generators.
 AC_PROG_YACC
