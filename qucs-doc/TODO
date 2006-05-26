@@ -23,4 +23,9 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Put the parts together: Integrate Thierry's tutorials.
+- Write a user manual with detailed descriptions of the netlist format
+  for each available feature.
+- Flowcharts for all kinds of simulations in the technical manual.
+- Doxygen source code documentation: Apply documentation rules in source
+  code files.
+	- Put the parts together: Integrate Thierry's tutorials.

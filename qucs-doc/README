@@ -72,8 +72,8 @@ Getting the latest CVS snapshot
 You can always get the latest documentation version from our CVS
 repository.
 
-    $ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/qucs \
-      co qucs-doc
+ $ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
+   co qucs-doc
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently

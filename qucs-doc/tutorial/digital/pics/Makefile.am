@@ -29,7 +29,12 @@ PDFS = comb1s.pdf g2bitsch.pdf mux21.pdf prim1tt.pdf regt.pdf dffl.pdf \
   mux2to1.pdf prim2tt.pdf tcomb1.pdf dtut1.pdf lone.pdf mux2to1sch.pdf \
   quadmux.pdf tcomb1s.pdf fadder2bit.pdf lonesch.pdf mux4to1.pdf \
   quadmuxsch.pdf tdex1.pdf fadder2bitsch.pdf lzero.pdf mux4to1sch.pdf \
-  reg4bit.pdf testrtl.pdf g2bit.pdf lzerosch.pdf prim1sch.pdf reg4bitsch.pdf
+  reg4bit.pdf testrtl.pdf g2bit.pdf lzerosch.pdf prim1sch.pdf reg4bitsch.pdf \
+  \
+  digital_ud1_fa.pdf dig_ud1_ex1_dpl.pdf dig_ud1_ex2_dpl.pdf \
+  dig_ud1_ex3_dpl.pdf dig_ud1_sex1_sch.pdf dig_ud1_sex2_sch.pdf \
+  dig_ud1_sex3_sch.pdf dig_ud1_sex4_sch.pdf dig_ud1_sex5_sch.pdf \
+  dig_ud1_sex6_sch.pdf mult_dpl.pdf mult_sch.pdf
 
 tutorial: $(XPDF)
 
