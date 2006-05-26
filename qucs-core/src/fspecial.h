@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.h,v 1.3 2006/03/15 16:46:28 raimi Exp $
+ * $Id: fspecial.h,v 1.4 2006/05/26 11:47:44 raimi Exp $
  *
  */
 
@@ -27,9 +27,13 @@
 
 namespace fspecial {
 
-#ifdef _MSC_VER
+#ifndef HAVE_ROUND
   nr_double_t   round (nr_double_t);
+#endif
+#ifndef HAVE_ERF
   nr_double_t     erf (nr_double_t);
+#endif
+#ifndef HAVE_ERFC
   nr_double_t    erfc (nr_double_t);
 #endif
   nr_double_t  erfinv (nr_double_t);
