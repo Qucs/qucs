@@ -1323,10 +1323,10 @@ bool Schematic::elementsOnGrid()
   }
 
   // test all paintings
-  for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev())
-    if(pp->isSelected) {
-      setOnGrid(pp->cx, pp->cy);
-      pp->isSelected = false;
+  for(Painting *pa = Paintings->last(); pa != 0; pa = Paintings->prev())
+    if(pa->isSelected) {
+      setOnGrid(pa->cx, pa->cy);
+      pa->isSelected = false;
       count = true;
     }
 
