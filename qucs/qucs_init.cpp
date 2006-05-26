@@ -617,7 +617,7 @@ void QucsApp::initMenuBar()
   editMirror->addTo(editMenu);
   editMirrorY->addTo(editMenu);
   editActivate->addTo(editMenu);
-  editMenu->insertItem(tr("Align"), alignMenu);
+  editMenu->insertItem(tr("Align/Distribute"), alignMenu);
   onGrid->addTo(editMenu);
   moveText->addTo(editMenu);
   editMenu->insertSeparator();

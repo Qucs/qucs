@@ -435,7 +435,9 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
   QString Word = text.mid(start, len).lower();
   int idx = (int)(Word.at(0).latin1() - 'a');
-  pChar *List = (idx >= 0 && idx <= 25) ? WordList[idx] : NULL;
+  if(idx < 0 || idx > 25)
+    return;
+  pChar *List = WordList[idx];
 
   if(List)
     for( ; *List != 0; List++)

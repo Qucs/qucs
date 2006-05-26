@@ -146,7 +146,6 @@ public:
   Wire* splitWire(Wire*, Node*);
   bool  oneTwoWires(Node*);
   void  deleteWire(Wire*);
-  void  copyWires(int&, int&, int&, int&, QPtrList<Element>*);
 
   Marker* setMarker(int, int);
   void    markerLeftRight(bool, QPtrList<Element>*);
@@ -160,8 +159,8 @@ public:
   int      copySelectedElements(QPtrList<Element>*);
   bool     deleteElements();
   bool     aligning(int);
-  bool     distribHoriz();
-  bool     distribVert();
+  bool     distributeHorizontal();
+  bool     distributeVertical();
 
   void       setComponentNumber(Component*);
   void       insertRawComponent(Component*, bool noOptimize=true);
@@ -187,7 +186,8 @@ public:
 
 private:
   void insertComponentNodes(Component*, bool);
-  void copyComponents(int&, int&, int&, int&, QPtrList<Element>*);
+  int  copyWires(int&, int&, int&, int&, QPtrList<Element>*);
+  int  copyComponents(int&, int&, int&, int&, QPtrList<Element>*);
   void copyComponents2(int&, int&, int&, int&, QPtrList<Element>*);
   bool copyComps2WiresPaints(int&, int&, int&, int&, QPtrList<Element>*);
   int  copyElements(int&, int&, int&, int&, QPtrList<Element>*);
