@@ -5401,7 +5401,7 @@ O bibliotece QT firmy Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished">Wyrównaj</translation>
+        <translation type="obsolete">Wyrównaj</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -5673,6 +5673,10 @@ Deactivate/Activate the selected components</source>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
