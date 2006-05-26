@@ -27,9 +27,9 @@
 On 21 January 2006 Qucs 0.0.8 was released by the Qucs development
 team.  This is the first version of the package to include digital
 circuit simulation based on VHDL.  FreeHDL\footnote{The FreeHDL
-Project, http://www.freehdl.seul.org/} being chosen as the VHDL
-engine.  In the period following the release of Qucs 0.0.8 there has
-been considerable activity centred around finding and correcting a
+Project, \url{http://www.freehdl.seul.org/}. } being chosen as the
+VHDL engine.  In the period following the release of Qucs 0.0.8 there
+has been considerable activity centred around finding and correcting a
 number of bugs in the Qucs digital simulation code.  Many of these
 fixes are now included in the latest CVS code and will eventually form
 part of the next Qucs release.  This tutorial note is an attempt on my
@@ -98,8 +98,6 @@ schematic.
 \item
 Digital subcircuits may also be nested; nesting has been tested to a
 depth of four.
-
-
 \end{itemize}
 
 \tutsection{Simulating simple digital circuits}
@@ -124,7 +122,7 @@ A & B & C & F \\
 1 & 1 & 0 & 1 \\ 
 1 & 1 & 1 & 0
 \end{tabular}
-\caption{Truth table for a logic circuit with inputs A, B, C and output F}
+\caption{Truth table for a logic circuit with inputs A, B, C and output F.}
 \label{tab:tab1}
 \end{table}
 %\FloatBarrier
@@ -179,7 +177,7 @@ gates are shown on the schematic.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.9\linewidth]{dtut1}
-  \caption{Qucs schematic for minimised logic function F}
+  \caption{Qucs schematic for minimised logic function F.}
   \label{fig:dtut1}
 \end{figure} 
 %\FloatBarrier
@@ -195,7 +193,9 @@ F6. The VHDL code produced by Qucs for the circuit shown in
 Fig.~\ref{fig:dtut1} is presented in Table~\ref{tab:tab2}.
 
 \begin{table}
-\begin{lstlisting}[language=VHDL]
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
 -- Qucs 0.0.9  tut1_ex1.sch
 entity TestBench is
 end entity;
@@ -233,7 +233,7 @@ begin
 
 end architecture;
 \end{lstlisting}
-\caption{VHDL code for the circuit shown in Fig.~\ref{fig:dtut1}}
+\caption{VHDL code for the circuit shown in Fig.~\ref{fig:dtut1}.}
 \label{tab:tab2}
 \end{table}
 %\FloatBarrier
@@ -268,7 +268,7 @@ schematic includes more than one ground symbol.}.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1\linewidth]{tdex1}
-  \caption{Digital functional waveforms for the circuit shown in Fig.~\ref{fig:dtut1}}
+  \caption{Digital functional waveforms for the circuit shown in Fig.~\ref{fig:dtut1}.}
   \label{fig:tdex1}
 \end{figure}
 \FloatBarrier
@@ -282,14 +282,15 @@ feature is particularly useful when checking minimised logic designs
 for errors.  Lets consider a simple but instructive example: A logic
 circuit has four binary inputs A, B, C, and D, and one output P.
 Output P is logic '1' when inputs ABCD are numbers in the decimal 
-sequence 3, 5, 7, 11 and 13. In Boolean sum of product form \\
+sequence 3, 5, 7, 11 and 13. In Boolean sum of product form
+
 \begin{center}
 \begin{large}$P=\overline{A}.\overline{B}.C.D+
 \overline{A}.B.\overline{C}.D+\overline{A}.B.C.D+A.\overline{B}.C.D+
 A.B.\overline{C}.D$
 \end{large}\end{center}
 
-This simplifies to\\
+This simplifies to
 \begin{center}
 \begin{large}$P=D.(A.B+B \oplus C )$\end{large}
 \end{center}
@@ -368,7 +369,7 @@ combinational circuit.
   \centering
   \includegraphics[width=0.8\linewidth]{t1ex2sch}
 % tcomb1.png: 99.9998dpi, width=11.35cm, height=3.35cm, bb=0 0 447 132
-  \caption{Combinational logic circuit with inputs W, X, Y, Z, and output G}
+  \caption{Combinational logic circuit with inputs W, X, Y, Z, and output G.}
   \label{fig:t1ex2sch}
 \end{figure}
 %\FloatBarrier
@@ -376,14 +377,14 @@ combinational circuit.
 \addvspace{12pt}
 
 After drawing a subcircuit schematic, input and output\footnote{Qucs
-  0.0.8 has a bug which causes a VHDL compile error when subcircuit
-  pins are specified as type out. A work around for this bug is to
-  specify subcircuit output pins as type analog.  The Qucs routines
-  that generate the circuit VHDL code convert pin type analog into
-  VHDL type inout. FreeHDL is then able to compile the generated VHDL
-  code without error. This bug has been corrected in Qucs 0.0.9} pins
-are attached to signal ports.  Input port pins of type in are shown on
-circuit diagrams as a green symbol, signals W, X, Y, and Z, in
+0.0.8 has a bug which causes a VHDL compile error when subcircuit pins
+are specified as type out. A work around for this bug is to specify
+subcircuit output pins as type analog.  The Qucs routines that
+generate the circuit VHDL code convert pin type analog into VHDL type
+inout. FreeHDL is then able to compile the generated VHDL code without
+error. This bug has been corrected in Qucs 0.0.9.} pins are attached
+to signal ports.  Input port pins of type in are shown on circuit
+diagrams as a green symbol, signals W, X, Y, and Z, in
 Fig.~\ref{fig:t1ex2sch}.  Ouput port pins of type out are coloured
 red, signal G in Fig.~\ref{fig:t1ex2sch}. Signal flow through a port
 is indicated by the direction of the port symbol arrow
@@ -397,16 +398,16 @@ the original subcircuit schematic.  Fig.~\ref{fig:comb1s} shows the
 finished symbol for subcircuit COMB1. In these notes, symbol outlines
 are shown drawn in accordance with the international code for logic
 symbols\footnote{Ian, Kampel, A practical introduction to the new
-  logic symbols, Butterworths, 1985, ISBN 0-408-01461-X}. To test our
+logic symbols, Butterworths, 1985, ISBN 0-408-01461-X.}. To test our
 new subcircuit we place it's symbol on a blank drawing sheet and apply
 test signals to the input pins and observe the signals at the output
 pin.  Fig.~\ref{fig:tcomb1s} shows a typical test circuit.  Subcircuit
 Gen4bit generates a 4 bit test pattern synchronised to the input of a
 digital clock. The specification for Gen4bit is given in the next
 section of these notes\footnote{Subcircuit Gen4bit includes other
-  nested subcircuits.  Qucs 0.0.8 has a bug that causes VHDL compile
-  errors with some configurations of nested subcircuits. This has been
-  fixed in version 0.0.9 }.  The test pattern waveform and output
+nested subcircuits.  Qucs 0.0.8 has a bug that causes VHDL compile
+errors with some configurations of nested subcircuits. This has been
+fixed in version 0.0.9. }.  The test pattern waveform and output
 signal G are shown plotted as a function of time in
 Fig.~\ref{fig:tcomb1}.
 
@@ -414,7 +415,7 @@ Fig.~\ref{fig:tcomb1}.
   \centering
   \includegraphics[width=0.2\linewidth]{comb1s}
 % comb1s.png: 399.999dpi, width=2.72cm, height=3.92cm, bb=0 0 428 617
-  \caption{Qucs symbol for a logic circuit with inputs W, X, Y, Z, and output G}
+  \caption{Qucs symbol for a logic circuit with inputs W, X, Y, Z, and output G.}
   \label{fig:comb1s}
 \end{figure}
 \FloatBarrier
@@ -423,7 +424,7 @@ Fig.~\ref{fig:tcomb1}.
   \centering
   \includegraphics[width=0.8\linewidth]{tcomb1s}
 % tcomb1s.png: 399.999dpi, width=7.44cm, height=4.72cm, bb=0 0 1172 743
-  \caption{Test schematic for a logic circuit with inputs W, X, Y, Z, and output G}
+  \caption{Test schematic for a logic circuit with inputs W, X, Y, Z, and output G.}
   \label{fig:tcomb1s}
 \end{figure}
 \FloatBarrier
@@ -432,7 +433,7 @@ Fig.~\ref{fig:tcomb1}.
   \centering
   \includegraphics[width=0.9\linewidth]{tcomb1}
 % tcomb1w.png: 399.999dpi, width=7.94cm, height=3.24cm, bb=0 0 1250 510
-  \caption{Digital functional waveforms for a logic circuit with inputs W, X, Y, Z, and output G}
+  \caption{Digital functional waveforms for a logic circuit with inputs W, X, Y, Z, and output G.}
   \label{fig:tcomb1}
 \end{figure}
 \FloatBarrier
@@ -545,11 +546,13 @@ X & X & 1 & 0 \\
 Qucs generates a separate entity-architecture model for each
 subcircuit.  These component definitions are compiled into the work
 library by FreeHDL.  Here is the VHDL code from two of the previous
-examples.\\
-\\
+examples.
 
 \tutsubsection{Gen2bit}
-\begin{lstlisting}[language=VHDL]
+
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
 entity Sub_gen2bit is
   port (CLK: in bit;
         R: in bit;
@@ -594,7 +597,9 @@ end architecture;
 
 \tutsubsection{2 bit adder}
 
-\begin{lstlisting}[language=VHDL]
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
 entity Sub_fadd_2bit is
   port (A1: in bit;
         B1: in bit;
@@ -634,9 +639,8 @@ begin
 end architecture;
 \end{lstlisting}
 
-\newpage 
-
 \tutsubsection{Notes on subcircuit VHDL generation}
+
 \begin{itemize}
 \item
 Qucs predefined digital components generate concurrent data flow
@@ -684,7 +688,7 @@ register transfer operation are illustrated in Fig.~\ref{fig:testrtl}.
   \centering
   \includegraphics[width=1\linewidth]{regt}
 % regt.png: 99.9998dpi, width=14.05cm, height=9.98cm, bb=0 0 553 393
-  \caption{Top level schematic}
+  \caption{Top level schematic.}
   \label{fig:regt}
 \end{figure} 
 \FloatBarrier
@@ -734,19 +738,1076 @@ register transfer operation are illustrated in Fig.~\ref{fig:testrtl}.
   \centering
   \includegraphics[width=0.9\linewidth]{testrtl}
 % quadmuxdpl.png: 99.9998dpi, width=11.40cm, height=6.63cm, bb=0 0 449 261
-  \caption{Sample simulation waveforms for RTL design}
+  \caption{Sample simulation waveforms for RTL design.}
   \label{fig:testrtl}
 \end{figure} 
 \FloatBarrier
 
+\tutsection{Update number one: May 2006}
+
+Although it is only a short time since the first version of these
+digital tutorial notes was posted on the Qucs Sourceforge Web site,
+much has happened in the world of Qucs digital simulation.  Bugs in
+the Qucs code have been found, and fixed, and a range of new features
+added to the software. These expand the power of Qucs digital
+simulation and give users a glimpse of how the package will evolve in
+the future.  The purpose of these notes is firstly to update readers
+as to the changes to Qucs digital simulation and secondly to explain
+how to use the new Qucs features.  Please note however, they are not
+intended to teach readers how to program using VHDL.\footnote{A good
+introduction to the VHDL language and it's application in digital
+system design can be found in \textbf{\textit{Digital System Design
+using VHDL}} by Charles H. Roth, Jr, PWS Publishing Company, 1997,
+ISBN 0-534-95099-X. }
+
+\tutsubsection{Bugs, corrections and small changes to the Qucs digital simulation code}
+
+All the bugs reported in the first version of these notes have been
+corrected in the latest Qucs CVS code.  These corrections are, of
+course, also included in Qucs release 0.0.9. During testing a number
+of other annoying, but significant, bugs have also been found and
+eliminated, these include
+
+\begin{itemize}
+\item
+Multiple input gates (three or more inputs) of types nand and nor
+failed at the FreeHDL compile stage due to an error in the VHDL code
+generated by Qucs.
+\item
+Signals names and, for example, component names constructed from a
+single letter that was an abbreviation for a physical unit failed to
+compile.
+\item
+Changing digital component time delays caused component connections on
+a sche\-ma\-tic to be removed.
+\item
+GUI problems caused by errors in the symbol rotation and mirror code.
+\item
+Qucsconv code conversion errors caused the Qucs digital simulation
+cycle to fail before plotting TimeList waveforms.
+\end{itemize}
+
+A number of changes to either the VHDL code generated by Qucs or the
+schematic capture GUI have been introduced, these include
+
+\begin{itemize}
+\item The VHDL code generated by Qucs for the ground symbol has been changed from
+\begin{lstlisting}[language=VHDL]
+gnd <= gnd and '0';
+\end{lstlisting}
+to
+\begin{lstlisting}[language=VHDL]
+gnd <= '0';
+\end{lstlisting}
+\item The symbol for digital inout ports has been changed from the analogue pin symbol to one that consists of the digital in and out pins drawn back-to-back.  This reflects the bidirectional status of an inout port.
+\end{itemize}
+
+A more complete list of all the bug corrections and other program
+modifications can be found in the Qucs change log files.
+
+\tutsubsection{New digital simulation features}
+
+The flow diagram illustrated in Fig.~\ref{fig:digital_ud1_fa} shows a
+number of different simulation routes for a digital circuit under
+test.  The Qucs digital simulation facilities have been improved to
+include direct simulation of VHDL testbench code and the simulation of
+circuit schematics that include digital components specified by VHDL
+entity-architecture models.  The various combinations that users can
+adopt for Qucs digital circuit entry are as follows:
+
+\begin{enumerate}
+\item Schematic circuit entry using predefined digital component symbols, subcircuits generated using the same symbols and a copy of the digital simulation icon; this is the approach described in the first version of these tutorial notes.
+\item Circuit entry identical to 1 plus symbols for digital components specified by VHDL entity-architecture models.
+\item Circuit entry using the Qucs VHDL code editor. The text entered describes both the circuit under test and the test vectors needed to drive the circuit inputs during simulation. 
+\end{enumerate}
+Once the circuit under test has been entered into Qucs, clicking the
+Simulate menu button, or pressing key F2, starts the Qucs digital
+simulation process.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.99\linewidth]{digital_ud1_fa}
+  \caption{Flow diagram of Qucs digital simulation routes.}
+  \label{fig:digital_ud1_fa}
+\end{figure} 
+
+\tutsubsection{Limitations}
+
+Before describing the new digital simulation features it is important
+that readers understand the limitations that are inherent in the
+various digital simulation routes described in the last section and
+illustrated in the flow diagram shown in
+Fig.~\ref{fig:digital_ud1_fa}.  Qucs schematic capture allows users to
+draw circuits consisting of predefined component symbols and
+subcircuit symbols.  At this stage in the development of the GUI
+digital signals must be of type bit (as defined in the VHDL standard
+library - library STD in the FreeHDL package) where individual signals
+flow through a single wire.  Qucs schematic drawing bus structures of
+VHDL type bit-vector, for example, have not been implemented yet.
+This implies that the device symbol port pins must represent single
+signals.  Similarly the nets connecting pins on more than one device
+can only be single signal nets and not bus structures.  It is
+anticipated that this will change in a future Qucs release.
+
+\addvspace{12pt}
+
+Although the current release of FreeHDL is 0.0.1 the package
+implements a substantial subset of the entire VHDL language\footnote{A
+complete description of the 1987 and 1993 specifications of the VHDL
+language can be found in The Designer's Guide to VHDL by Peter J
+Ashenden, second edition 2002, Morgan Kaufmann Publishers, ISBN
+1-55860-674-2. }.  The major features not supported by release 0.0.1
+are:
+\begin{itemize}
+\item Shared variables.
+\item The following attributes; transaction, quiet, stable and delayed.
+\item User defined attributes.
+\item Groups.
+\item Guarded signal assignments.
+\item Currently drivers cannot be switched off.
+\end{itemize}
+
+The Qucs TimeList plotting program uses signal data output by the
+machine code simulation program generated by the FreeHDL
+package\footnote{The machine code simulation program outputs signal
+data in VCD format.  This is then converted to the Qucs TimeList data
+format by the qucsconv utility program.}.  A current limitation of the
+TimeList plotting program is that it can only display signals of type
+bit. Bus signal waveforms cannot be displayed.
+
+\addvspace{12pt}
+
+Given the above limitations it is therefore possible to write VHDL
+code that can be compiled by FreeHDL but will cause problems at either
+the schematic drawing or output waveform plotting stages in the Qucs
+simulation cycle.  As Qucs develops it is expected that these
+limitations will be removed.  On the subject of limitations one final
+point to note: FreeHDL can simulate circuits described by the data
+types and other features found in the
+\begin{verbatim}
+  IEEE.std_logic_1164
+\end{verbatim} 
+library and other predefined libraries.  However, at this stage in the
+development of the Qucs software only the VHDL standard library may be
+used, implying that data type bit must be used to represent logic
+signals.
+
+\tutsubsection{Using the Qucs VHDL editor}
+
+Qucs release 0.0.9 includes a VHDL text editor\footnote{To launch the
+new VHDL editor click on the second icon from the left on the Qucs
+toolbar. It can also be activated using the key sequence
+Ctrl+Shift+V.} that has all the usual edit features plus colour coding
+of the various VHDL language statements.  One unusual feature of this
+editor is a zoom control that allows the text size to be increased or
+decreased in a similar way to the schematic drawing zoom.  The VHDL
+editor is included in the Qucs package for two primary purposes,
+firstly for purely text file VHDL simulation\footnote{This is still
+the preferred method amongst many experienced users of VHDL.  However,
+the circuit schematic drawing approach does seem to be growing in
+popularity.  } and secondly for the development of VHDL
+entity-architecture models that can be linked to schematic capture
+symbols.  The latter increases significantly the capabilities of the
+Qucs software in that it allows libraries of hand-crafted device
+models to be constructed.  These new library devices will, given
+support by the general Qucs user community, greatly expand the
+potential use of the Qucs package.  In this section the use of the
+VHDL text editor is demonstrated through a series of digital circuit
+simulation examples. The included VHDL listings indicate typical Qucs
+use of a number of the basic VHDL data types. The text also outlines
+any limitations imposed by Qucs.
+ 
+\begin{itemize}
+\item Example 1: A sum of products (SOP) combinational digital circuit.
+
+The Boolean equation\footnote{The Boolean equation for function f has
+not been minimised.  It is in a form derived directly from a truth
+table and is introduced purely as an example to demonstrate the use of
+the Qucs VHDL editor.} for a SOP combinational circuit is:
+\begin{center}
+\begin{large}$f=\overline{W}.X.\overline{Y}.\overline{Z}+\overline{W}.\overline{X}.\overline{Y}.\overline{Z}+W.\overline{Y}.\overline{Z}+W.X.Y.Z$\end{large}
+\end{center}
+
+The VHDL code for a structural model of this combinational circuit and
+its associated testbench is given in the following listing.
+
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+-- Qucs VHDL editor example 1
+--
+entity test_vector is  -- Test vector generator.
+	port( z, y, x, w : out bit
+	      );
+end entity test_vector;
+--
+architecture behavioural of test_vector is
+begin 
+pz : process is
+	begin 
+		z <= '0' ; wait for 20 ns;
+		z <= '1' ; wait for 20 ns;
+      end process pz;
+py : process is
+	begin 
+		y <= '0' ; wait for 40 ns;
+		y <= '1' ; wait for 40 ns;
+      end process py;
+px : process is
+	begin 
+		x <= '0' ; wait for 80 ns;
+		x <= '1' ; wait for 80 ns;
+      end process px;
+pw : process is
+	begin 
+		w <= '0' ; wait for 160 ns;
+		w <= '1' ; wait for 160 ns;
+      end process pw;
+end architecture behavioural;
+--
+entity and4 is -- 4 input and gate.
+	port( in1, in2, in3, in4 : in bit;
+	        out1 : out bit
+	       );
+end entity and4;
+--
+architecture dataflow of and4 is
+begin 
+	out1 <= in1 and in2 and in3 and in4;
+end architecture dataflow;
+--
+entity and3 is -- 3 input and gate.
+	port( in1, in2, in3  : in bit;
+	        out1 : out bit
+	       );
+end entity and3;
+--
+architecture dataflow of and3 is
+begin 
+	out1 <= in1 and in2 and in3;
+end architecture dataflow;
+--
+entity or4 is -- 4 input or gate.
+	port( in1, in2, in3, in4 : in bit;
+	        out1 : out bit
+	       );
+end entity or4;
+--
+architecture dataflow of or4 is
+begin 
+	out1 <= in1 or in2 or in3 or in4;
+end architecture dataflow;
+
+entity inv is -- Inverter.
+	port( in1 : in bit;
+	        out1 : out bit
+	       );
+end entity inv;
+--
+architecture dataflow of inv is
+begin 
+	out1 <= not in1;
+end architecture dataflow;
+--
+entity testbench is  --  Test bench outer entity wrapper.
+end entity testbench;
+--
+library work;
+use work.all;
+--
+architecture structural of testbench is  -- Testbench architecture.
+signal b0, b1, b2, b3, zb, yb, xb, wb,a, b, c, d, f : bit;
+begin
+	d1 : entity test_vector port map(b0, b1, b2, b3);
+	d2 : entity inv port map(b0, wb);
+	d3 : entity inv port map(b1, xb);
+	d4 : entity inv port map(b2, yb);
+	d5 : entity inv port map(b3, zb);
+	d6 : entity and4 port map(zb, yb, b1, wb, a);
+	d7 : entity and4 port map(zb, yb, xb, wb, b);
+	d8 : entity and3 port map(zb, yb, b0, c);
+	d9 : entity and4 port map(b0, b1, b2, b3, d);
+	d10 : entity or4 port map(a, b, c, d, f);
+end architecture structural;
+\end{lstlisting}
+
+On entry of this code into the Qucs VHDL text editor the text is
+colour coded.  Unfortunately, the colour coding is lost when printed,
+or pasted into a word processor, or a layout package like LaTeX.  The
+structure of the VHDL listing follows the normal convention for text
+based VHDL simulation.  All component entity-architecture models must
+be defined before they are referenced in other component models. The
+simulation test bench must be the last entity-architecture model in
+the VHDL listing.  During the VHDL compile phase FreeHDL compiles the
+component entity-architecture models to the work library\footnote{In
+most VHDL implementations library work is always visible and there is
+no requirement to make it visible by using the library and use
+statements.  However, FreeHDL appears to need these statements at the
+linking phase otherwise the VHDL compiler fails.  }.  These compiled
+models are then made available to the simulation test bench through
+the use of the VHDL\textbf{\textit{ use}} statement inserted in the
+listing prior to the testbench architecture statement.  Once the VHDL
+listing for the simulation has been typed into the Qucs VHDL code
+editor, pressing key F2 starts the simulation process.  The simulation
+duration can be set using the Document Settings in the File dropdown
+menu (or by pressing the Ctrl+. keys).  Any VHDL syntax errors, or
+indeed typos, are written to file and can be viewed by pressing key
+F5.  Obviously if errors are reported these need to be corrected using
+the VHDL text editor and the simulation cycle restarted.  A typical
+TimeList output for editor example 1 is shown in
+Fig.~\ref{fig:dig_ud1_ex1_dpl}.
+
+ \begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{dig_ud1_ex1_dpl}
+  \caption{Sample simulation waveforms for VHDL editor example 1 design.}
+  \label{fig:dig_ud1_ex1_dpl}
+\end{figure} 
+
+\end{itemize}
+
+\begin{itemize}
+\item Example 2: VHDL editor example 1 modelled using dataflow VHDL statements.
+
+The VHDL code for the second example is given in the next listing.
+The VHDL style chosen to model the circuit is based on VHDL dataflow
+concurrent signal assignments.  The input text vectors are generated
+using a simple state machine rather than separate process statements.
+The test vector generator port specification uses entirely single
+signal bit types and can be easily interfaced, without problems, to
+other components connected on a Qucs schematic diagram.  The procedure
+for generating schematic capture component symbols from entity -
+architecture models is introduced in a later section of these notes.
+The use of bit vector bus constructions is also illustrated in this
+example.  Qucs allows the use of bit vectors as signals or variables
+in VHDL models provided all signals in the port statement of entity
+declaration are of type bit only.\footnote{This is a restriction of
+Qucs 0.0.9 and will be removed in a later release of the package. Also
+note signals of type bit vector that are declared in architecture
+definitions are listed in the TimeList plot signal dialogue. However,
+a text message saying no data results if an attempt is made to display
+them.  Again this limitation will be removed in a later release of
+Qucs.}  A typical TimeList output for editor example 2 is shown in
+Fig.~\ref{fig:dig_ud1_ex2_dpl}.
+
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+-- Qucs VHDL editor example 2
+--
+entity test_vector_a is
+	port( RESET, CLOCK : in bit;
+	      B0, B1, B2, B3 : out  bit
+	    );
+end entity test_vector_a;
+--
+architecture behavioural of test_vector_a is
+signal present_state, next_state : bit_vector(3 downto 0):="1111";
+begin
+--
+p1 : process(CLOCK ) is
+        begin
+          if  (CLOCK'event and CLOCK='1') then
+             present_state <= next_state;
+          end if;
+       end process p1;
+--      
+p2 : process(RESET,  present_state) is
+        begin	
+         if (RESET = '1' ) then next_state <= "1111"; 
+         end if;
+        case present_state is
+	 when "0000" =>  next_state <= "0001";   
+	 when "0001"  =>  next_state <= "0010"; 
+	 when "0010"  =>  next_state <= "0011";  
+	 when "0011"  =>  next_state <= "0100";   
+	 when "0100"  =>  next_state <= "0101";   
+	 when "0101"  =>  next_state <= "0110";   
+	 when "0110"  =>  next_state <= "0111";   
+	 when "0111"  =>  next_state <= "1000";   
+	 when "1000"  =>  next_state <= "1001";   
+	 when "1001"  =>  next_state <= "1010"; 
+	 when "1010"  =>  next_state <= "1011"; 
+	 when "1011"  =>  next_state <= "1100"; 
+	 when "1100"  =>  next_state <= "1101"; 
+	 when "1101"  =>  next_state <= "1110"; 
+	 when "1110"  =>  next_state <= "1111"; 
+	 when "1111"  =>  next_state <= "0000";
+	end case;
+          B3 <= next_state(3); B2 <= next_state(2); 
+          B1 <= next_state(1); B0 <= next_state(0);
+     end process p2;
+end architecture behavioural;
+--
+library work;
+use work.all;
+--
+entity testbench is
+end entity testbench;
+--
+architecture dataflow of testbench is 
+signal  reset, clk, b0, b1, b2, b3, zb : bit;
+signal  yb, xb, wb,a, b, c, d, f : bit;
+begin
+p1 : process is
+        begin
+         clk <= '0'; wait for 10 ns;
+         clk <= '1'; wait for 10 ns;
+      end process p1;
+--
+p2 : process is
+        begin
+          reset <= '1'; wait for 10 ns;
+          reset <= '0'; wait for 2000 ns;
+     end process p2;	
+--
+d1 : entity test_vector_a  port map(reset, clk, b0, b1, b2, b3);
+--
+--    Data flow model of combinational circuit
+      wb <= not b0;  xb  <= not b1;  yb  <= not b2; zb <= not b3; 
+       a <= (wb and b1) and (yb and zb);
+       b <= (wb and xb) and (yb and zb);
+       c <= b0 and (yb and zb);
+       d <= (b0 and b1) and (b2 and b3);
+       f  <= a or b or c or d;
+end architecture dataflow;
+\end{lstlisting}
+
+ \begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{dig_ud1_ex2_dpl}
+  \caption{Sample simulation waveforms for VHDL editor example 2 design.}
+  \label{fig:dig_ud1_ex2_dpl}
+\end{figure} 
+
+\item Example 3: VHDL editor example 1 modelled using VHDL process statements and variables.
+
+The VHDL code for the third example is given in the listing at the end
+of this paragraph.  In this example the use of VHDL variables is
+illustrated.  The VHDL code for the vector generator is a little
+unusual in that rather than using the traditional two process design
+employing signals, a single process statement employing variables
+undertakes both the calculation of the next state data and the
+transfer of the next state information to the present state.  This
+approach is necessary because FreeHDL does not allowed shared
+variables. Once again in this example only single bit data is passed
+via the entity statement to the device under test.  The device under
+test is represented by a truth table encoded in a process statement.
+This is not the most elegant code but it does serve the purpose of
+demonstrating the use of different VHDL constructions and data types
+in Qucs digital simulation. A typical TimeList plot for VHDL editor
+example 3 is shown in Fig.~\ref{fig:dig_ud1_ex3_dpl}.  Comparison of
+the three output plots for the VHDL editor examples indicates that all
+the simulation results are very similar with some slight differences
+in the start up phase following the RESET pulse changing from logic
+'1' to logic '0'. This is probably an effect due to the different
+initialisation sequences for each of the test vector models.
+
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+-- Qucs VHDL editor example 3
+--
+entity test_vector_b is
+	port( RESET, CLOCK : in bit;
+	      B0, B1, B2, B3 : out  bit
+	    );
+end entity test_vector_b;
+--
+architecture behavioural of test_vector_b is
+begin
+p1 : process(RESET,  CLOCK) is
+     variable present_state, next_state :
+                bit_vector(3 downto 0):="0000";
+          begin	
+            if (RESET = '1' ) then next_state := "0000";
+            elsif (CLOCK'event and CLOCK='1') then
+              present_state := next_state;
+            case present_state is
+	     when "0000"  =>  next_state := "0001";   
+	     when "0001"  =>  next_state := "0010"; 
+	     when "0010"  =>  next_state := "0011";  
+	     when "0011"  =>  next_state := "0100";   
+	     when "0100"  =>  next_state := "0101";   
+	     when "0101"  =>  next_state := "0110";   
+	     when "0110"  =>  next_state := "0111";   
+	     when "0111"  =>  next_state := "1000";   
+	     when "1000"  =>  next_state := "1001";   
+	     when "1001"  =>  next_state := "1010"; 
+	     when "1010"  =>  next_state := "1011"; 
+	     when "1011"  =>  next_state := "1100"; 
+	     when "1100"  =>  next_state := "1101"; 
+	     when "1101"  =>  next_state := "1110"; 
+	     when "1110"  =>  next_state := "1111"; 
+	     when "1111"  =>  next_state := "0000";
+            end case;
+            end if;
+           B3 <= next_state(3); B2 <= next_state(2); 
+           B1 <= next_state(1); B0 <= next_state(0);
+        end process p1;
+end architecture behavioural;
+--
+library work;
+use work.all;
+--
+entity testbench is
+end entity testbench;
+--
+architecture dataflow of testbench is  
+signal  reset, clk, b0, b1, b2, b3,  f : bit;
+begin
+p1 : process is
+         begin
+	    clk <= '0'; wait for 10 ns;
+            clk <= '1'; wait for 10 ns;
+          end process p1;
+--
+p2 : process is
+        begin
+          reset <= '1'; wait for 10 ns;
+          reset <= '0'; wait for 2000 ns;
+       end process p2;	
+--
+d1 : entity test_vector_b  port map(reset, clk, b0, b1, b2, b3);
+--
+--  Behavioural model of combinational circuit
+p3: process(b3, b2, b1, b0) is
+       variable SEL : bit_vector (3 downto 0);
+          begin
+            SEL := b3&b2&b1&b0 ;
+	    if (SEL = "0010") then f <= '1';
+            elsif (SEL = "0000") then f <= '1';
+            elsif (SEL = "1111") then f <= '1';
+	    elsif (SEL = "0001") then f <= '1';
+	    elsif (SEL = "0011") then f <= '1';
+            else f <= '0';
+            end if;   
+      end process p3;
+end architecture dataflow;
+\end{lstlisting}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{dig_ud1_ex3_dpl}
+  \caption{Sample simulation waveforms for VHDL editor example 3 design.}
+  \label{fig:dig_ud1_ex3_dpl}
+\end{figure} 
+
+\end{itemize}
+
+\tutsubsection{Linking VHDL entity-architecture models to Qucs schematic device symbols}
+
+VHDL was originally developed as a hardware description language for
+specifying digital systems.  Indeed many engineers still prefer to
+describe digital systems entirely in VHDL statements rather than use
+schematic drawings.  Once written VHDL code is saved as a text file
+and becomes the input data for a VHDL compiler/simulation
+package. Through popular demand a number of digital
+synthesis/simulator CAD tools\footnote{See for example the XILINX,
+WebPACK software at
+\url{http//www.xilinx.com/ise/logic_design_prod/webpack.htm}. } have
+started to include a facility that links VHDL model code to a
+schematic capture symbol. It is then, of course, possible to use a
+schematic diagram as the main entry media\footnote{Please note that at
+the start of the VHDL simulation process schematic drawings are
+converted into a VHDL text file. } when designing and simulating a
+digital design.  Qucs release 0.0.9 has such a facility, allowing VHDL
+code models to be linked to schematic symbols. When drawing digital
+design schematics, these user defined symbols may be mixed with the
+Qucs predefined digital symbols and other user defined subcircuit
+symbols.  The process for linking VHDL code to Qucs schematic drawing
+symbols is straightforward and will be illustrated in these notes
+through two examples.
+
+\begin{itemize}
+\item Example 4: A 4 bit test vector pattern generator.
+
+Shown in Table~\ref{tab:patgen} is the VHDL entity-architecture model
+listing for a 4 bit binary pattern generator.  The VHDL code is
+identical to the test vector code introduced in the third VHDL editor
+example. After entering the VHDL entity-architecture model code using
+the Qucs VHDL editor the finished text is saved in a file with a
+suitable name and file extension vhdl. Qucs then lists the model under
+the VHDL project category. Simply clicking on a model name in the VHDL
+category, with the left hand mouse button, then moving the mouse
+pointer to a suitable position on a schematic, causes Qucs to move a
+symbol that represents the model onto the schematic drawing
+sheet. Placement of the symbol at the position located by the mouse
+pointer is achieved by clicking the left hand mouse button. The
+procedure is identical to that used to select and place the Qucs
+predefined symbols on a schematic drawing. Qucs automatically
+generates a rectangular symbol with a name called VHDL that has the
+same number of pins as the port statement listed in the VHDL model
+entity statement.  Each of the pins is given a name that corresponds
+to a name in the entity statement.  Qucs fixes the order of the pins
+on the generated symbol.  It appears that it is not possible to edit
+this symbol.  However, subcircuit in, out or inout port symbols can be
+attached to symbol VHDL and a user edited symbol generated.
+Fig.~\ref{fig:dig_ud1_sex1_sch} shows the Qucs generated VHDL symbol
+with attached ports for the model listed in Table~\ref{tab:patgen}.
+The edited symbol for the 4 bit binary pattern generator is
+illustrated in Fig.~\ref{fig:dig_ud1_sex2_sch}.  Notice that in
+Fig.~\ref{fig:dig_ud1_sex2_sch} the order of the pins has been changed
+to reflect the natural order for a device with it's input pins on the
+left and output pins on the right.  VHDL model symbols can also be
+generated by placing the VHDL file component, this is located in the
+digital components viewlist, on a schematic. On editing the VHDL file
+name property of this device to the name of a VHDL entity-architecture
+model file, Qucs automatically generates a VHDL symbol. Defining your
+own symbol then proceeds in a similar fashion to the way described
+above.
+
+\begin{table}
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+entity patgen_4bit is
+	port( RESET, CLOCK : in bit;
+	        B0, B1, B2, B3 : out  bit
+	      );
+end entity patgen_4bit;
+--
+architecture behavioural of patgen_4bit is
+begin
+p1 : process(RESET,  CLOCK) is
+     variable present_state, next_state : 
+	       bit_vector(3 downto 0):="0000";
+     begin	
+      if (RESET = '1' ) then next_state := "0000";
+      elsif (CLOCK'event and CLOCK='1') then
+      present_state := next_state;
+      case present_state is
+       when "0000"  =>  next_state := "0001";   
+       when "0001"  =>  next_state := "0010"; 
+       when "0010"  =>  next_state := "0011";  
+       when "0011"  =>  next_state := "0100";   
+       when "0100"  =>  next_state := "0101";   
+       when "0101"  =>  next_state := "0110";   
+       when "0110"  =>  next_state := "0111";   
+       when "0111"  =>  next_state := "1000";   
+       when "1000"  =>  next_state := "1001";   
+       when "1001"  =>  next_state := "1010"; 
+       when "1010"  =>  next_state := "1011"; 
+       when "1011"  =>  next_state := "1100"; 
+       when "1100"  =>  next_state := "1101"; 
+       when "1101"  =>  next_state := "1110"; 
+       when "1110"  =>  next_state := "1111"; 
+       when "1111"  =>  next_state := "0000";
+      end case;
+      end if;
+      B3 <= next_state(3); B2 <= next_state(2); 
+      B1 <= next_state(1); B0 <= next_state(0);
+     end process p1;
+end architecture behavioural;
+\end{lstlisting}
+\caption{VHDL code for a 4 bit pattern generator.}
+\label{tab:patgen}
+\end{table}
+
+ \begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{dig_ud1_sex1_sch}
+  \caption{Qucs generated VHDL symbol with subcircuit ports for test pattern generator.}
+  \label{fig:dig_ud1_sex1_sch}
+\end{figure} 
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{dig_ud1_sex2_sch}
+  \caption{User defined 4 bit pattern generator symbol.}
+  \label{fig:dig_ud1_sex2_sch}
+\end{figure} 
+
+\item Example 5: A 4 bit full adder.
+
+VHDL model symbols may be combined with either the Qucs predefined
+digital component symbols or other subcircuit symbols.  In this
+example a VHDL model for a simple one bit full adder is connected four
+times in a serial fashion to form a 4 bit full adder.  The VHDL model
+code for a simple one bit full adder is given in
+Table~\ref{tab:full_adder_1bit}.  The associated symbol diagrams for
+the one bit full adder are illustrated in
+Fig.~\ref{fig:dig_ud1_sex3_sch} and Fig.~\ref{fig:dig_ud1_sex4_sch}.
+
+\begin{table}
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+
+--  Full adder - 1 bit
+entity fulladder is
+	port (a, b, cin : in bit;
+	        sum, cout : out bit
+	       );
+end entity fulladder;
+--
+architecture dataflow of fulladder is
+begin
+	sum <= (a xor b) xor cin;
+	cout <= (a and b) or (a and cin) or (b and cin);
+end architecture dataflow;
+\end{lstlisting}
+\caption{VHDL code for a 1 bit full adder.}
+\label{tab:full_adder_1bit}
+\end{table}
+
+ \begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{dig_ud1_sex3_sch}
+  \caption{Qucs generated VHDL symbol with subcircuit ports for one bit full adder.}
+  \label{fig:dig_ud1_sex3_sch}
+\end{figure} 
+\FloatBarrier
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.4\linewidth]{dig_ud1_sex4_sch}
+  \caption{User defined one bit full symbol.}
+  \label{fig:dig_ud1_sex4_sch}
+\end{figure} 
+
+Figure~\ref{fig:dig_ud1_sex5_sch} shows the schematic for a simple 4
+bit ripple adder.  The corresponding user defined symbol for the 4 bit
+full adder is given in Fig.~\ref{fig:dig_ud1_sex6_sch}.
+
+\FloatBarrier
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.4\linewidth]{dig_ud1_sex5_sch}
+  \caption{4 bit full adder schematic.}
+  \label{fig:dig_ud1_sex5_sch}
+\end{figure} 
+\FloatBarrier
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.3\linewidth]{dig_ud1_sex6_sch}
+  \caption{User defined 4 bit full adder symbol.}
+  \label{fig:dig_ud1_sex6_sch}
+\end{figure} 
+
+ \end{itemize}
+
+\tutsubsection{Generating VHDL code from Qucs schematic drawings}
+
+Pressing key F2 causes Qucs to simulate the design entered by the Qucs
+user. The input data for a simulation is either a VHDL text file,
+saved from the VHDL text editor, or a VHDL code file generated by Qucs
+using the information encoded on a schematic drawing.  In this section
+of these tutorial notes a larger design is introduced and the
+resulting VHDL code and simulation results are discussed.  The example
+chosen for this purpose is a 4 bit by 4 bit combinational digital
+multiplier.  Both the 4 bit pattern generator and the 4 bit full adder
+outlined in the last section form part of the central core of the 4
+bit multiplier design and it's associated testbench.
+Table~\ref{tab:mult1} shows the multiplication product table for a 4
+bit by 4 bit combinational binary multiplier.  Inputs to the device
+are binary bits a3 a2 a1 a0 and b3 b2 b1 b0.  The 4 by 4 multiplier
+device requires 16 and gates (to generate the multiplier product
+terms), three four bit full adders (to sum the output r terms) and two
+4 bit pattern generators to test the 256 possible input states. The
+multiplier output is represented in Table~\ref{tab:mult1} by r7 r6 r5
+r4 r3 r2 r1 and r0. The circuit schematic for the 4 bit by 4 bit
+multiplier and test bench are given in Fig.~\ref{fig:mult_sch}.
+
+\begin{table}
+\centering
+% use packages: array
+\begin{tabular}{llllllll}
+ &   &   &   & b3 & b2 & b1 & b0 \\ 
+  &   &   &   & a3 & a2 & a1 & a0 \\ 
+  &   &   &   & a0b3 & a0b2 & a0b1 & a0b0 \\ 
+  &   &   & a1b3 & a1b2 & a1b1 & a1b0 &   \\ 
+  &   & a2b3 & a2b2 & a2b1 & a2b0 &   &   \\ 
+  & a3b3 & a3b2 & a3b1 & a3b0 &   &   &   \\ 
+r7 & r6 & r5 & r4 & r3 & r2 & r1 & r0
+\end{tabular}
+\caption{Product table for a 4 bit by 4 bit combinational multiplier.}
+\label{tab:mult1}
+\end{table}
+
+\FloatBarrier
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{mult_sch}
+  \caption{A 4 bit by 4 bit combinational digital multiplier.}
+  \label{fig:mult_sch}
+\end{figure} 
+
+\addvspace{12pt}
+
+The VHDL code for this example is presented in the following listing.
+This listing was generated by Qucs\footnote{Some readers will have
+noticed that the naming scheme for internal signal nets is different
+in the multiplier VHDL listing when compared to the VHDL listings in
+the first version of these notes. Towards the end of the 0.0.9
+development phase the naming convention employed by Qucs was changed
+to give a more flexible structure.}. A small section of the TimeList
+waveform plot for the digital multiplier is shown in
+Fig.~\ref{fig:mult_dpl}.  At 1.74 micro seconds input a is "0101",
+input b is "0111" and the output r is "00100011" which is 35 in
+decimal.  Taking a few random checks of the simulation results
+indicates that the 4 bit by 4 bit multiplier design works correctly.
+Notice that the VHDL code generated by Qucs for the 4 bit multiplier
+does not contain any propagation delay timing data.  This could be
+added to the and gates, if required.  However, at this stage in the
+development of Qucs digital simulation passing timing data, and other
+parameters, from device symbols generated from VHDL models has not
+been implemented yet. The use of VHDL generics is an obvious way this
+could be done. Generics are allowed, of course, in text based VHDL
+simulations.
+
+\FloatBarrier
+\begin{lstlisting}[
+    language=VHDL,
+    basicstyle=\small]
+-- Qucs 0.0.9  
+--  /mnt/hda2/vhdl_comp_lib_prj/multiplier_4bx4bit.sch
+
+entity patgen_4bit is
+	port( RESET, CLOCK : in bit;
+	        B0, B1, B2, B3 : out  bit
+	      );
+end entity patgen_4bit;
+--
+architecture behavioural of patgen_4bit is
+begin
+ p1 : process(RESET,  CLOCK) is
+        variable present_state, next_state : 
+             bit_vector(3 downto 0) := "0000";
+          begin	
+            if (RESET = '1' ) then next_state := "0000";
+            elsif (CLOCK'event and CLOCK='1') then
+              present_state := next_state;
+              case present_state is
+	    when "0000" =>  next_state := "0001";   
+	    when "0001"  =>  next_state := "0010"; 
+	    when "0010"  =>  next_state := "0011";  
+	    when "0011"  =>  next_state := "0100";   
+	    when "0100"  =>  next_state := "0101";   
+	    when "0101"  =>  next_state := "0110";   
+	    when "0110"  =>  next_state := "0111";   
+	    when "0111"  =>  next_state := "1000";   
+	    when "1000"  =>  next_state := "1001";   
+	    when "1001"  =>  next_state := "1010"; 
+	    when "1010"  =>  next_state := "1011"; 
+	    when "1011"  =>  next_state := "1100"; 
+	    when "1100"  =>  next_state := "1101"; 
+	    when "1101"  =>  next_state := "1110"; 
+	    when "1110"  =>  next_state := "1111"; 
+	    when "1111"  =>  next_state := "0000";
+              end case;
+             end if;
+           B3 <= next_state(3); B2 <= next_state(2); 
+           B1 <= next_state(1); B0 <= next_state(0);
+        end process p1;
+end architecture behavioural;
+
+entity Sub_patgen_4bit is
+  port (net_net0: in bit;
+        net_net5: in bit;
+        net_outnet_net1: out bit;
+        net_outnet_net3: out bit;
+        net_outnet_net2: out bit;
+        net_outnet_net4: out bit);
+end entity;
+use work.all;
+architecture Arch_Sub_patgen_4bit of Sub_patgen_4bit is
+  signal net_net1,
+         net_net2,
+         net_net3,
+         net_net4 : bit;
+begin
+  net_outnet_net1 <= net_net1 or '0';
+  net_outnet_net2 <= net_net2 or '0';
+  net_outnet_net3 <= net_net3 or '0';
+  net_outnet_net4 <= net_net4 or '0';
+  X1: entity patgen_4bit port map (net_net0, net_net5, 
+        net_net1, net_net3, net_net2, net_net4);
+end architecture;
+
+
+--  logic_zero.vhdl
+entity logic_zero is
+	port( Y : out bit
+	      );
+end entity logic_zero;
+--
+architecture dataflow of logic_zero is
+begin
+	Y <= '0';
+end architecture  dataflow;
+
+
+entity Sub_logic_zero is
+  port (net_outnetY: out bit);
+end entity;
+use work.all;
+architecture Arch_Sub_logic_zero of Sub_logic_zero is
+  signal netY : bit;
+begin
+  X1: entity logic_zero port map (netY);
+  net_outnetY <= netY or '0';
+end architecture;
+
+
+--  Full adder - 1 bit
+entity fulladder is
+	port (a, b, cin : in bit;
+	        sum, cout : out bit
+	       );
+end entity fulladder;
+--
+architecture dataflow of fulladder is
+begin
+	sum <= (a xor b) xor cin;
+	cout <= (a and b) or (a and cin) or (b and cin);
+end architecture dataflow;
+
+
+entity Sub_full_adder_1bit is
+  port (net_net0: in bit;
+        net_net1: in bit;
+        net_net2: in bit;
+        net_outnet_net3: out bit;
+        net_outnet_net4: out bit);
+end entity;
+use work.all;
+architecture Arch_Sub_full_adder_1bit of Sub_full_adder_1bit is
+  signal net_net3,
+         net_net4 : bit;
+begin
+  X1: entity fulladder port map (net_net0, net_net1, 
+           net_net2, net_net3, net_net4);
+  net_outnet_net3 <= net_net3 or '0';
+  net_outnet_net4 <= net_net4 or '0';
+end architecture;
+
+
+entity Sub_full_adder_4bit is
+  port (net_net0: in bit;
+        net_net1: in bit;
+        net_net2: in bit;
+        net_net3: in bit;
+        net_net4: in bit;
+        net_net5: in bit;
+        net_net6: in bit;
+        net_net13: in bit;
+        net_net7: in bit;
+        net_outnet_net8: out bit;
+        net_outnet_net9: out bit;
+        net_outnet_net10: out bit;
+        net_outnet_net11: out bit;
+        net_outnet_net12: out bit);
+end entity;
+use work.all;
+architecture Arch_Sub_full_adder_4bit of Sub_full_adder_4bit is
+  signal net_net14,
+         net_net15,
+         net_net16,
+         net_net8,
+         net_net9,
+         net_net10,
+         net_net11,
+         net_net12 : bit;
+begin
+  net_outnet_net8 <= net_net8 or '0';
+  net_outnet_net9 <= net_net9 or '0';
+  net_outnet_net10 <= net_net10 or '0';
+  net_outnet_net11 <= net_net11 or '0';
+  net_outnet_net12 <= net_net12 or '0';
+  SUB4: entity Sub_full_adder_1bit port map (net_net3, net_net13, 
+               net_net14, net_net11, net_net12);
+  SUB3: entity Sub_full_adder_1bit port map (net_net2, net_net6, 
+               net_net15, net_net10, net_net14);
+  SUB2: entity Sub_full_adder_1bit port map (net_net1, net_net5, 
+               net_net16, net_net9, net_net15);
+  SUB1: entity Sub_full_adder_1bit port map (net_net0, net_net4, 
+               net_net7, net_net8, net_net16);
+end architecture;
+
+entity TestBench is
+end entity;
+use work.all;
+
+architecture Arch_TestBench of TestBench is
+  signal netA0, netA1, netA2, netA3, netR,  netB0,
+         netB1, netB2, netB3, netR0, netR1, netR2,
+         netR3, netR4, netR5, netR6, netR7, netCLOCK,
+         net_net0, net_net1, net_net2, net_net3, net_net4,
+         net_net5, net_net6, net_net7, net_net8, net_net9,
+         net_net10,net_net11, net_net12, net_net13, net_net14,
+         net_net15, net_net16, net_net17, net_net18, net_net19,
+         net_net20, net_net21, net_net22, net_net23,
+         net_net24 : bit;
+begin
+  SUB3: entity Sub_patgen_4bit port map (netR, net_net0, 
+              netA0, netA1, netA2, netA3);
+  SUB1: entity Sub_patgen_4bit port map (netR, netCLOCK, 
+              netB0, netB1, netB2, netB3);
+
+  R:process
+  begin
+    netR <= '1';  wait for 10 ns;
+    netR <= '0';  wait for 2000 ns;
+  end process;
+
+
+  CLOCK:process
+  begin
+    netCLOCK <= '0';  wait for 10 ns;
+    netCLOCK <= '1';  wait for 10 ns;
+  end process;
+
+  net_net0 <= not netB3;
+  netR0 <= netA0 and netB0;
+  net_net1 <= netA0 and netB1;
+  net_net2 <= netA0 and netB2;
+  net_net3 <= netA0 and netB3;
+  SUB5: entity Sub_logic_zero port map (net_net4);
+  net_net5 <= netA1 and netB0;
+  net_net6 <= netA1 and netB1;
+  net_net7 <= netA1 and netB2;
+  net_net8 <= netA1 and netB3;
+  net_net9 <= netA2 and netB0;
+  net_net10 <= netA2 and netB1;
+  net_net11 <= netA2 and netB2;
+  net_net12 <= netA2 and netB3;
+  SUB4: entity Sub_full_adder_4bit port map (net_net1, net_net2, 
+               net_net3, net_net4, net_net5, net_net6, net_net7, 
+               net_net8, net_net4, netR1, net_net13, net_net14, 
+               net_net15, net_net16);
+  SUB6: entity Sub_full_adder_4bit port map (net_net13, net_net14, 
+               net_net15, net_net16, net_net9, net_net10, net_net11, 
+               net_net12, net_net4, netR2, net_net17, net_net18, 
+               net_net19, net_net20);
+  net_net21 <= netA3 and netB0;
+  net_net22 <= netA3 and netB1;
+  net_net23 <= netA3 and netB2;
+  net_net24 <= netA3 and netB3;
+  SUB7: entity Sub_full_adder_4bit port map (net_net17, net_net18, 
+               net_net19, net_net20, net_net21, net_net22, 
+               net_net23, net_net24, net_net4, netR3, netR4, 
+               netR5, netR6, netR7);
+end architecture;
+\end{lstlisting}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{mult_dpl}
+  \caption{A section of the 4 bit by 4 bit combinational digital multiplier TimeList output waveforms.}
+  \label{fig:mult_dpl}
+\end{figure} 
+
 \tutsection{End note}
 
-Qucs 0.0.8 adds digital simulation to the impressive list of features
-already available in Qucs.  This release represents a significant step
-forward in the development of the Qucs project.  The fact that there
-are bugs in the first version of the digital simulator is not
-surprising given the complexity of the software.  Release 0.0.9 should
-go a long way to correcting the most annoying of these bugs.  My
-thanks to Michael Margraf and Stefan Jahn for all their encouragement
-during the period I tested the Qucs 0.0.8 VHDL generation routines and
-the subsequent writing of these notes.
+Qucs 0.0.8 added digital simulation to the impressive list of features
+already available in the Qucs package.  The 0.0.8 release represented
+a significant step forward in the development of the Qucs project.
+The fact that there were bugs in the first version of the digital
+simulator was not surprising given the complexity of the software.
+Release 0.0.9 goes a long way to correcting the most annoying of these
+bugs.  It also adds a number of new features, the most notable being
+the new VHDL editor and the automatic generation of component symbols
+from hand crafted VHDL model code. My thanks to Michael Margraf and
+Stefan Jahn for all their encouragement during the period that I have
+been testing the Qucs VHDL generation routines and the subsequent
+writing of these notes.

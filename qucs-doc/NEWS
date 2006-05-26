@@ -1,7 +1,7 @@
 -- 
 -- NEWS
 -- 
--- Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -25,6 +25,12 @@ files.
 
 Version 0.0.9
 -------------
+
+ * added description of how to simulate components defined in the frequency
+   domain in the time domain
+ * improved and fixed description of the harmonic balance
+ * tutorial: mixed signal simulations using gate components
+ * tutorial: introduction into digital simulations using FreeHDL
 
 Version 0.0.8
 -------------
