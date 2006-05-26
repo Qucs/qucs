@@ -484,7 +484,7 @@ void QucsApp::slotDistribHoriz()
   editText->setHidden(true); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  Doc->distribHoriz();
+  Doc->distributeHorizontal();
   Doc->viewport()->update();
   view->drawn = false;
 }
@@ -496,7 +496,7 @@ void QucsApp::slotDistribVert()
   editText->setHidden(true); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  Doc->distribVert();
+  Doc->distributeVertical();
   Doc->viewport()->update();
   view->drawn = false;
 }
