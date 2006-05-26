@@ -40,7 +40,7 @@ Qucs equations.<br><br>
 <tr><td><tt>runavg(x)</tt></td><td>running average of values in vector</td></tr>
 <tr><td><tt>stddev(x)</tt></td><td>standard deviation of values in vector</td></tr>
 <tr><td><tt>variance(x)</tt></td><td>variance of values in vector</td></tr>
-
+<tr><td><tt>rms(x)</tt></td><td>root mean square of a vector</td></tr>
 <tr><td><tt>sum(x)</tt></td><td>sum of values in vector</td></tr>
 <tr><td><tt>prod(x)</tt></td><td>product of values in vector</td></tr>
 <tr><td><tt>cumsum(x)</tt></td><td>cumulative sum of values in vector</td></tr>
@@ -49,10 +49,12 @@ Qucs equations.<br><br>
 <td>differentiates vector y with respect to x</td></tr>
 <tr><td><tt>diff(y,x,n)</tt></td>
 <td>differentiates vector y with respect to x n-times</td></tr>
+<tr><td><tt>integrate(x,h)</tt></td><td>integrates vector <tt>x</tt> numerically assuming a constant step-size <tt>h</tt></td></tr>
 <tr><td><tt>real(x)</tt></td><td>real part of complex number</td></tr>
 <tr><td><tt>imag(x)</tt></td><td>imaginary part of complex number</td></tr>
 <tr><td><tt>abs(x)</tt></td><td>absolute value, magnitude of complex number</td></tr>
 <tr><td><tt>mag(x)</tt></td><td>same as abs(x)</td></tr>
+<tr><td><tt>polar(m,p)</tt></td><td>returns complex number based on magnitude and phase</td></tr>
 <tr><td><tt>norm(x)</tt></td><td>square of mag(x)</td></tr>
 <tr><td><tt>conj(x)</tt></td><td>conjugate complex</td></tr>
 <tr><td><tt>phase(x)</tt></td><td>phase in degree</td></tr>
@@ -132,7 +134,8 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>sinc(x)</tt></td><td>returns sin(x)/x and one at x=0</td></tr>
 <tr><td><tt>step(x)</tt></td><td>step function</td></tr>
 <tr><td><tt>besseli0(x)</tt></td><td>modified Bessel function of order zero</td></tr>
-<tr><td><tt>besselj(n,x)</tt></td><td>Bessel function of n-th order</td></tr>
+<tr><td><tt>besselj(n,x)</tt></td><td>1st kind Bessel function of n-th order</td></tr>
+<tr><td><tt>bessely(n,x)</tt></td><td>2nd kind Bessel function of n-th order</td></tr>
 <tr><td><tt>erf(x)</tt></td><td>error function</td></tr>
 <tr><td><tt>erfc(x)</tt></td><td>complementary error function</td></tr>
 <tr><td><tt>erfinv(x)</tt></td><td>inverse error function</td></tr>

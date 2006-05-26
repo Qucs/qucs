@@ -79,8 +79,8 @@ You can always get the latest Qucs version from our CVS repository.
 Please use an official release if you want to work with Qucs.  The CVS
 version might not even compile.
 
-    $ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/qucs \
-      co qucs
+ $ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
+   co qucs
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently

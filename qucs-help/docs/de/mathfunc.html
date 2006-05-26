@@ -32,14 +32,29 @@ benutzt werden.<br><br>
 <tr><td><tt>x%y</tt></td><td>Modulo-Operation (Nachkommateil einer Division)</td></tr>
 <tr><td><tt>x^y</tt></td><td>Potenz</td></tr>
 <tr><td><tt>max(x[,range])</tt></td><td>Maximaler Wert in einem Vektor x; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
+<tr><td><tt>max(x,y)</tt></td><td>Liefert den gr&ouml;&szlig;eren der beiden Werte <tt>x</tt> und <tt>y</tt></td></tr>
 <tr><td><tt>min(x[,range])</tt></td><td>Minimaler Wert in einem Vektor x; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
-<tr><td><tt>sum(x)</tt></td><td>Summe der Werte in einem Vektors</td></tr>
-<tr><td><tt>prod(x)</tt></td><td>Produkt der Werte in einem Vektor</td></tr>
+<tr><td><tt>min(x,y)</tt></td><td>Liefert den kleineren der beiden Werte <tt>x</tt> und <tt>y</tt></td></tr>
 <tr><td><tt>avg(x[,range])</tt></td><td>Arithmetischer Mittelwert aus den Werten in einem Vektor; wenn ein Bereich <tt>range</tt> angegeben wird, dann muss <tt>x</tt> eine einfache Datenabh&auml;ngigkeit aufweisen</td></tr>
+<tr><td><tt>cumavg(x)</tt></td><td>kumulativer Mittelwert der Werte eines Vektors</td></tr>
+<tr><td><tt>runavg(x)</tt></td><td>gleitender Mittelwert der Werte eines Vektors</td></tr>
+<tr><td><tt>stddev(x)</tt></td><td>Standardabweichung der Werte eines Vektors</td></tr>
+<tr><td><tt>variance(x)</tt></td><td>Varianz der Werte eines Vektors</td></tr>
+<tr><td><tt>rms(x)</tt></td><td>Effektivwert der Werte eines Vektors</td></tr>
+<tr><td><tt>sum(x)</tt></td><td>Summe der Werte in einem Vektor</td></tr>
+<tr><td><tt>prod(x)</tt></td><td>Produkt der Werte in einem Vektor</td></tr>
+<tr><td><tt>cumsum(x)</tt></td><td>kumulative Summe der Werte in einem Vektor</td></tr>
+<tr><td><tt>cumprod(x)</tt></td><td>kumulatives Produkt der Werte in einem Vektor</td></tr>
+<tr><td><tt>diff(y,x)</tt></td>
+<td>Differenziert den Vektor y in Bezug auf x</td></tr>
+<tr><td><tt>diff(y,x,n)</tt></td>
+<td>Differenziert den Vektor y in Bezug auf x n-fach</td></tr>
+<tr><td><tt>integrate(x,h)</tt></td><td>integriert den Vektor <tt>x</tt> numerisch bei angenommener konstanter Schrittweite <tt>h</tt></td></tr>
 <tr><td><tt>real(x)</tt></td><td>Realteil einer komplexen Zahl</td></tr>
 <tr><td><tt>imag(x)</tt></td><td>Imagin&auml;rteil einer komplexen Zahl</td></tr>
 <tr><td><tt>abs(x)</tt></td><td>absoluter Wert, Betrag einer komplexen Zahl</td></tr>
 <tr><td><tt>mag(x)</tt></td><td>gleicher Ausdruck wie abs(x)</td></tr>
+<tr><td><tt>polar(m,p)</tt></td><td>liefert komplexe Zahl mit gegebenem Betrag und Phase</td></tr>
 <tr><td><tt>norm(x)</tt></td><td>Quadrat von mag(x)</td></tr>
 <tr><td><tt>conj(x)</tt></td><td>Konjungiert komplexe Werte der Zahl x</td></tr>
 <tr><td><tt>phase(x)</tt></td><td>Phase in Grad</td></tr>
@@ -49,6 +64,11 @@ benutzt werden.<br><br>
 <tr><td><tt>rad2deg(x)</tt></td><td>Umrechnung von Bogenma&szlig; nach Grad</td></tr>
 <tr><td><tt>unwrap(rad[,tol])</tt></td><td>gleicht Phasenspr&uuml;nge (im Bogenma&szlig;) aus und verwendet dabei die optionale Toleranzschwelle (Standardwert ist pi)</td></tr>
 <tr><td><tt>dB(x)</tt></td><td>Spannungsdezibel</td></tr>
+<tr><td><tt>dbm(x)</tt></td><td>Wandelt Spannung in Leistung in dBm um</td></tr>
+<tr><td><tt>dbm2w(x)</tt></td><td>Wandelt Leistung in dBm in Leistung in Watt um</td></tr>
+<tr><td><tt>w2dbm(x)</tt></td><td>Wandelt Leistung in Watt in Leistung in dBm um</td></tr>
+
+<tr><td><tt>sqr(x)</tt></td><td>Quadrat (x zur Potenz zwei)</td></tr>
 <tr><td><tt>sqrt(x)</tt></td><td>Quadratwurzel</td></tr>
 <tr><td><tt>exp(x)</tt></td><td>Exponentialfunktion zur Basis e</td></tr>
 <tr><td><tt>ln(x)</tt></td><td>Nat&uuml;rlicher Logarithmus</td></tr>
@@ -62,7 +82,7 @@ benutzt werden.<br><br>
 <tr><td><tt>tanh(x)</tt></td><td>Tangenshyperbolikus von x</td></tr>
 <tr><td><tt>arcsin(x)</tt></td><td>Arkussinus von x</td></tr>
 <tr><td><tt>arccos(x)</tt></td><td>Arkuskosinus von x</td></tr>
-<tr><td><tt>arctan(x)</tt></td><td>Arkustangens von x</td></tr>
+<tr><td><tt>arctan(x[,y])</tt></td><td>Arkustangens von x</td></tr>
 <tr><td><tt>arccot(x)</tt></td><td>Arkuskotangens von x</td></tr>
 <tr><td><tt>arsinh(x)</tt></td><td>Area Sinushyperbolikus von x</td></tr>
 <tr><td><tt>arcosh(x)</tt></td><td>Area Kosinushyperbolikus von x</td></tr>
@@ -84,10 +104,6 @@ benutzt werden.<br><br>
 <td>Konvertiert einen Reflexionsfaktor (Referenzimpedanz ist standardm&auml;&szlig;ig 50 Ohm) in eine Admittanz</td></tr>
 <tr><td><tt>rtoswr(x)</tt></td>
 <td>Konvertiert einen Reflexionsfaktor in das (Spannungs-)Stehwellenverh&auml;ltnis</td></tr>
-<tr><td><tt>diff(y,x)</tt></td>
-<td>Differenziert den Vektor y in Bezug auf x</td></tr>
-<tr><td><tt>diff(y,x,n)</tt></td>
-<td>Differenziert den Vektor y in Bezug auf x n-fach</td></tr>
 <tr><td><tt>stos(s,zref[,z0])</tt></td>
 <td>Konvertiert die S-Parameter-Matrix in eine S-Parameter-Matrix mit unterschiedliche(r/n) Referenzimpedanz(en)</td></tr>
 <tr><td><tt>stoy(s[,zref])</tt></td>
@@ -106,8 +122,21 @@ benutzt werden.<br><br>
 <td>Konvertiert eine gegebene 2-Port-Matrix von einer Darstellungsform in eine andere,
 m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", "G",
 "A", "S" und "T".</td></tr>
-<tr><td><tt>sign(x)</tt></td><td>Berechnet die Sprungfunktion</td></tr>
+<tr><td><tt>ceil(x)</tt></td><td>Rundet zur n&auml;chstgr&ouml;&szlig;eren Ganzzahl</td></tr>
+<tr><td><tt>fix(x)</tt></td><td>Schneidet Nachkommastellen von reellen Zahlen ab</td></tr>
+<tr><td><tt>floor(x)</tt></td><td>Rundet zur n&auml;chstkleineren Ganzzahl</td></tr>
+<tr><td><tt>round(x)</tt></td><td>Rundet zur n&auml;chsten Ganzzahl</td></tr>
+
+<tr><td><tt>sign(x)</tt></td><td>Berechnet die Signumfunktion</td></tr>
 <tr><td><tt>sinc(x)</tt></td><td>Berechnet sin(x)/x und 1 bei x=0</td></tr>
+<tr><td><tt>step(x)</tt></td><td>Berechnet die Sprungfunktion</td></tr>
+<tr><td><tt>besseli0(x)</tt></td><td>Modifizierte Besselfunktion 0-ter Ordnung</td></tr>
+<tr><td><tt>besselj(n,x)</tt></td><td>Besselfunktion erster Art und n-ter Ordnung</td></tr>
+<tr><td><tt>bessely(n,x)</tt></td><td>Besselfunktion zweiter Art und n-ter Ordnung</td></tr>
+<tr><td><tt>erf(x)</tt></td><td>Fehlerfunktion</td></tr>
+<tr><td><tt>erfc(x)</tt></td><td>komplement&auml;re Fehlerfunktion</td></tr>
+<tr><td><tt>erfinv(x)</tt></td><td>inverse Fehlerfunktion</td></tr>
+<tr><td><tt>erfcinv(x)</tt></td><td>inverse komplement&auml;re Fehlerfunktion</td></tr>
 <tr><td><tt>det(x)</tt></td><td>Determinante von x</td></tr>
 <tr><td><tt>transpose(x)</tt></td><td>Transponierte Matrix x (Zeilen und Spalten vertauscht)</td></tr>
 <tr><td><tt>inverse(x)</tt></td><td>Inverse Matrix von x</td></tr>
@@ -125,10 +154,13 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>GpCircle(S,Gp[,Winkel])</tt></td><td>Kreis(e) mit konstanter Leistungsverst&auml;rkung <tt>Gp</tt> in der Lastebene</td></tr>
 <tr><td><tt>PlotVs(data,dep)</tt></td><td>Liefert Daten zur&uuml;ck, die auf <tt>data</tt> basieren (Vektor oder Matrizenvektor) mit der Abh&auml;ngigkeit von dem gegebenen <tt>dep</tt> Vektor, also z.B. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 <tr><td><tt>interpolate(f,x[,n])</tt></td><td>Berechnet eine Interpolation der reellen Funktion <tt>f(x)</tt>an <tt>n</tt> &auml;quidistanten Punkten, letzterer Parameter kann weggelassen werden und erh&auml;lt dann einen vern&uuml;nftigen Standardwert</td></tr>
-<tr><td><tt>fft(v,t)</tt></td><td>Berechnet die schnelle Fourier-Transformation (FFT) der Funktion <tt>v(t)</tt></td></tr>
-<tr><td><tt>ifft(V,f)</tt></td><td>Berechnet die inverse schnelle Fourier-Transformation (IFFT) der Funktion <tt>V(f)</tt></td></tr>
-<tr><td><tt>dft(v,t)</tt></td><td>Berechnet die diskrete Fourier-Transformation (DFT) der Funktion <tt>v(t)</tt></td></tr>
-<tr><td><tt>idft(V,f)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation (IDFT) der Funktion <tt>V(f)</tt></td></tr>
+<tr><td><tt>fft(x)</tt></td><td>Berechnet die schnelle Fourier-Transformation (FFT) des Vektors <tt>x</tt></td></tr>
+<tr><td><tt>ifft(x)</tt></td><td>Berechnet die inverse schnelle Fourier-Transformation (IFFT) des Vektors <tt>x</tt></td></tr>
+<tr><td><tt>dft(x)</tt></td><td>Berechnet die diskrete Fourier-Transformation (DFT) des Vektors <tt>x</tt></td></tr>
+<tr><td><tt>idft(x)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation (IDFT) des Vektors <tt>x</tt></td></tr>
+<tr><td><tt>Time2Freq(v,t)</tt></td><td>Berechnet die diskrete Fourier-Transformation der Funktion <tt>v(t)</tt> und interpretiert die Werte physikalisch</td></tr>
+<tr><td><tt>Freq2Time(V,f)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation der Funktion <tt>V(f)</tt> und interpretiert die Werte physikalisch</td></tr>
+<tr><td><tt>kbd(x [,n])</tt></td><td>Kaiser-Bessel Fensterfunktion</td></tr>
 <tr><td><tt>yvalue(f,xval)</tt></td><td>Liefert den Y-Wert des gegebenen Vektors <tt>f</tt>, der dem X-Wert <tt>xval</tt> am n&auml;chsten liegt; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
 <tr><td><tt>xvalue(f,yval)</tt></td><td>Liefert den X-Wert, der mit dem n&auml;chstliegenden Y-Wert zu <tt>yval</tt> aus dem Vektor <tt>f</tt> assoziiert ist; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
 

@@ -5412,7 +5412,7 @@ Informations sur le toolkit Qt de Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>Aligner</translation>
+        <translation type="obsolete">Aligner</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -5684,6 +5684,10 @@ Inserts the skeleton of a VHDL entity</source>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
