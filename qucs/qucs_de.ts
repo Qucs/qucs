@@ -6052,7 +6052,7 @@ Wählt alle Diagramm-Markierungen im Dokument aus</translation>
     </message>
     <message>
         <source>Align/Distribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten/Verteilen</translation>
     </message>
 </context>
 <context>
