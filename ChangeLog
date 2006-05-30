@@ -1,3 +1,8 @@
+2006-05-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.9 and bumped up to version
+	0.0.10.
+
 2006-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac:  Added -s (strip) to linker flags when no
