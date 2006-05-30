@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>inductors</source>
-        <translation>bobinler</translation>
+        <translation>sargılar</translation>
     </message>
     <message>
         <source>transistors</source>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Karşılık bulunamadı!</translation>
     </message>
 </context>
 <context>
@@ -182,7 +182,7 @@
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation>Süpürülen Parametre:</translation>
+        <translation>Süpürülen Değişken:</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -286,7 +286,7 @@
     </message>
     <message>
         <source>All Files</source>
-        <translation>Tüm Dosyalar</translation>
+        <translation>Tüm Kütükler</translation>
     </message>
     <message>
         <source>Select a file</source>
@@ -298,15 +298,15 @@
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>Touchstone kütükleri</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE kütükleri</translation>
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL kütükleri</translation>
     </message>
 </context>
 <context>
@@ -409,7 +409,7 @@
     </message>
     <message>
         <source>Dataset</source>
-        <translation>Veri Grubu/Seti</translation>
+        <translation>Veri Grubu</translation>
     </message>
     <message>
         <source>Name</source>
@@ -552,19 +552,19 @@
     <name>DigiSettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Belge Ayarları</translation>
+        <translation>Belge Ayarları</translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simülasyon Süresi:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Tamam</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
 </context>
 <context>
@@ -732,7 +732,7 @@
     <name>HelpDialog</name>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilter bir filtre tasarım yazılımıdır. Bir filtre oluşturmak için, sadece tüm parametreleri girmek ve ana pencerenin altındaki büyük düğmeye basmak yeterli. Filitrenin şeması hemen hesaplanır ve not tahtasına konur. Şimdi Qucs&apos; ta bir boş şema girdi penceresi açın ve CTRL-V&apos; ye basın (not tahtasından kopyala). Bundan sonra filitre şeması başka bir devre içine konabilir ve simulasyona tabi tutulabilir. Tadını çıkarın !</translation>
+        <translation>QucsFilter bir süzgeç tasarım yazılımıdır. Bir süzgeç oluşturmak için, sadece tüm değişkenleri girmek ve ana pencerenin altındaki büyük düğmeye basmak yeterli. Süzgecin şeması hemen hesaplanır ve not tahtasına konur. Şimdi Qucs&apos; ta bir boş şema girdi penceresi açın ve CTRL-V&apos; ye basın (not tahtasından kopyala). Bundan sonra sèzgeç şeması başka bir devre içine konabilir ve benzetime tabi tutulabilir. Tadını çıkarın !</translation>
     </message>
     <message>
         <source>Close</source>
@@ -748,7 +748,7 @@
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation>Her bir çeşit iletim hattı için -iletişim pencerelerini kullanmak yolu ile- çeşitli parametreler için değerler girebilir, elektriksel özelliklerini hesaplayabilir ya da verilen elektriksel gereksinimlere göre istenen iletim hattının fiziksel özelliklerini hesaplayabilir/tasarlayabilirsiniz.</translation>
+        <translation>Her bir çeşit iletim hattı için -iletişim pencerelerini kullanmak yolu ile- çeşitli değişkenler için değerler girebilir, elektriksel özelliklerini hesaplayabilir ya da verilen elektriksel gereksinimlere göre istenen iletim hattının fiziksel özelliklerini hesaplayabilir/tasarlayabilirsiniz.</translation>
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
@@ -856,15 +856,15 @@
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation>karşılıklı iki-ayak (two-port) hesabı yap</translation>
+        <translation>karşılıklı iki-uç (two-port) hesabı yap</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
-        <translation>Referans Zahiri Direnç</translation>
+        <translation>Referans Sanal Direnç</translation>
     </message>
     <message>
         <source>Port 1</source>
-        <translation>1. Ayak</translation>
+        <translation>1. Uç</translation>
     </message>
     <message>
         <source>ohms</source>
@@ -872,11 +872,11 @@
     </message>
     <message>
         <source>Port 2</source>
-        <translation>2. Ayak</translation>
+        <translation>2. Uç</translation>
     </message>
     <message>
         <source>S Parameter</source>
-        <translation>S Parametresi</translation>
+        <translation>S Degişkeni</translation>
     </message>
     <message>
         <source>Input format</source>
@@ -908,7 +908,7 @@
     </message>
     <message>
         <source>Frequency:</source>
-        <translation>Frekans:</translation>
+        <translation>Sıklık:</translation>
     </message>
     <message>
         <source>Create</source>
@@ -972,7 +972,7 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation>Frekans</translation>
+        <translation>Sıklık</translation>
     </message>
     <message>
         <source>Length</source>
@@ -1131,7 +1131,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
-        <translation type="obsolete">HATA: Dijital simülasyonda toprak simgesi kullanılamaz.</translation>
+        <translation type="obsolete">HATA: Dijital benzetimde toprak simgesi kullanılamaz.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
@@ -1151,7 +1151,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation>UYARI: &quot;%1&quot; alt-devresindeki simülasyon bileşenini gözardı et.</translation>
+        <translation>UYARI: &quot;%1&quot; alt-devresindeki benzetim bileşenini gözardı et.</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
@@ -1159,19 +1159,19 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation>HATA: Sadece bir tek dijital simulasyon yapılabilir.</translation>
+        <translation>HATA: Sadece bir tek dijital benzetim yapılabilir.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation>HATA: Analog ve dijital simülasyonlar aynı anda kullanılamaz.</translation>
+        <translation>HATA: Analog ve dijital benzetimler aynı anda kullanılamaz.</translation>
     </message>
     <message>
         <source>ERROR: No simulation specified on this page.</source>
-        <translation type="obsolete">HATA: Bu sayfada herhangi bir simulasyon belirtilmedi.</translation>
+        <translation type="obsolete">HATA: Bu sayfada herhangi bir benzetim belirtilmedi.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation>HATA: Dijital simulasyon için en az bir dijital kaynak gerekli. </translation>
+        <translation>HATA: Dijital benzetim için en az bir dijital kaynak gerekli. </translation>
     </message>
     <message>
         <source>Arrow</source>
@@ -1283,7 +1283,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation>ac simulasyonu</translation>
+        <translation>ac benzetimi</translation>
     </message>
     <message>
         <source>sweep type</source>
@@ -1291,15 +1291,15 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation>Hertz cinsinden başlangıç frekansı</translation>
+        <translation>Hertz cinsinden başlangıç sıklığı</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation>Hertz cinsinden bitiş frekansı</translation>
+        <translation>Hertz cinsinden bitiş sıklığı</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation>simulasyon adım sayısı</translation>
+        <translation>benzetim adım sayısı</translation>
     </message>
     <message>
         <source>calculate noise voltages</source>
@@ -1315,11 +1315,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation>Hertz cinsinden frekans</translation>
+        <translation>Hertz cinsinden sıklık</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation>derece cinsinden başlangıç fazı</translation>
+        <translation>derece cinsinden başlangıç açısı</translation>
     </message>
     <message>
         <source>ac Current Source</source>
@@ -1327,7 +1327,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation>ideal dc akım kaynağı</translation>
+        <translation>fikirsel dc akım kaynağı</translation>
     </message>
     <message>
         <source>dc Current Source</source>
@@ -1339,19 +1339,19 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation>akım gücü spektral yoğunluğu A^2/Hz</translation>
+        <translation>akım gücü yelpaze yoğunluğu A^2/Hz</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation>frekans üsteli</translation>
+        <translation>sıklık üsteli</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation>frekans sabiti</translation>
+        <translation>sıklık sabiti</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation>additive frequency term</translation>
+        <translation>eklenecek sıklık terimi</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
@@ -1359,7 +1359,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation>ideal yükselteç</translation>
+        <translation>fikirsel yükselteç</translation>
     </message>
     <message>
         <source>voltage gain</source>
@@ -1391,7 +1391,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation>Santigrad cinsinden simülasyon sıcaklığı</translation>
+        <translation>Santigrad cinsinden benzetim sıcaklığı</translation>
     </message>
     <message>
         <source>Attenuator</source>
@@ -1403,11 +1403,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation>transient simülasyon için: Henri cinsinden endüktans</translation>
+        <translation>geçici benzetim için: Henri cinsinden sargı etkisi</translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation>transient simülasyon için: Farad cinsinden sığa</translation>
+        <translation>geçici benzetim için: Farad cinsinden sığa</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -1427,11 +1427,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation>düz emisyon katsayısı</translation>
+        <translation>düz yayım katsayısı</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation>ters emisyon katsayısı</translation>
+        <translation>ters yayım katsayısı</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
@@ -1455,7 +1455,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation>baz-emetör kaçak emisyon sabiti</translation>
+        <translation>baz-emetör kaçak yayım sabiti</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
@@ -1463,7 +1463,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation>baz-emetör kaçak emisyon sabiti</translation>
+        <translation>baz-emetör kaçak yayım sabiti</translation>
     </message>
     <message>
         <source>forward beta</source>
@@ -1475,7 +1475,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation>yüksek akımlar için minimum baz direnci</translation>
+        <translation>yüksek akımlar için en küçük baz direnci</translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
@@ -1495,55 +1495,55 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation>baz-emetör sıfır-bias depletion sığası</translation>
+        <translation>baz-emetör sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation>baz-emetör eklem potansiyeli</translation>
+        <translation>baz-emetör eklem gerilimi</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
-        <translation>baz-emetör eklemi üstel faktörü</translation>
+        <translation>baz-emetör eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation>baz-kollektör sıfır-bias depletion sığası</translation>
+        <translation>baz-kollektör sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
-        <translation>baz-kollektör eklem potansiyeli</translation>
+        <translation>baz-kollektör eklem gerilimi</translation>
     </message>
     <message>
         <source>base-collector junction exponential factor</source>
-        <translation>baz-kollektör eklemi üstel faktörü</translation>
+        <translation>baz-kollektör eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation>baz pinine giden Cjc oranı</translation>
+        <translation>baz ucuna giden Cjc oranı</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation>sıfır-bias kollektör-substrat sığası</translation>
+        <translation>sıfır-kutuplama kollektör-alttabaka sığası</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
-        <translation>substrat eklem potansiyeli</translation>
+        <translation>alttabaka eklem gerilimi</translation>
     </message>
     <message>
         <source>substrate junction exponential factor</source>
-        <translation>substrat eklem üstel faktörü</translation>
+        <translation>alttabaka eklem üstel çarpanı</translation>
     </message>
     <message>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation>düz-kutuplanma(bias) depletion sığa sabiti</translation>
+        <translation>düz-kutuplanma tüketim bölgesi sığa sabiti</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation>ideal düz transient zaman</translation>
+        <translation>fikirsel düz geçici zaman</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation>Tf için bias-bağımlılığı sabiti</translation>
+        <translation>Tf için kutuplama-bağımlılığı sabiti</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
@@ -1555,7 +1555,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation>ideal ters transient zaman</translation>
+        <translation>fikirsel ters geçici zaman</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
@@ -1567,23 +1567,23 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation>flicker gürültü frekans üsteli</translation>
+        <translation>flicker gürültü sıklık üsteli</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation>burst gürültü sabiti</translation>
+        <translation>ani gürültü sabiti</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation>burst gürültü üsteli</translation>
+        <translation>ani gürültü üsteli</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation>Hertz cinsinden burst gürültü köşe frekansı</translation>
+        <translation>Hertz cinsinden burst gürültü köşe sıklığı</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
-        <translation>derece cinsinden aşkın faz</translation>
+        <translation>derece cinsinden aşkın açı</translation>
     </message>
     <message>
         <source>npn transistor</source>
@@ -1595,7 +1595,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation>substratlı bipolar eklem transistör</translation>
+        <translation>alttabakalı çift kutuplu eklem transistör</translation>
     </message>
     <message>
         <source>capacitor</source>
@@ -1611,11 +1611,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation>akım kontrollü akım kaynağı</translation>
+        <translation>akımla yönetilen akım kaynağı</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation>düz transfer faktörü</translation>
+        <translation>düz geçirme çarpanı</translation>
     </message>
     <message>
         <source>delay time</source>
@@ -1623,43 +1623,43 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation>Akım Kontrollü Akım Kaynağı</translation>
+        <translation>Akım Yönetimli Akım Kaynağı</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation>akım kontrollü gerilim kaynağı</translation>
+        <translation>akım yönetimli gerilim kaynağı</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation>Akım Kontrollü Gerilim Kaynağı</translation>
+        <translation>Akım Yönetimli Gerilim Kaynağı</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation>circulatör</translation>
+        <translation>devrettirici</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation>1. portun zahiri direnci</translation>
+        <translation>1. ucun sanal direnci</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation>2. portun zahiri direnci</translation>
+        <translation>2. ucun sanal direnci</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation>3. portun zahiri direnci</translation>
+        <translation>3. ucun sanal direnci</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation>Circulatör</translation>
+        <translation>Devrettirici</translation>
     </message>
     <message>
         <source>number of input ports</source>
-        <translation>giriş portlarının sayısı</translation>
+        <translation>giriş uçlarının sayısı</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation>dijital yüksek gerilimi</translation>
+        <translation>kesikli yüksek gerilimi</translation>
     </message>
     <message>
         <source>schematic symbol</source>
@@ -1689,11 +1689,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation>substrat tanımının adı</translation>
+        <translation>alttabaka tanımının adı</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation>hat kalınlığı</translation>
+        <translation>çizgi kalınlığı</translation>
     </message>
     <message>
         <source>width of a gap</source>
@@ -1701,11 +1701,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation>hat uzunluğu</translation>
+        <translation>çizgi uzunluğu</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation>substratın arka yüzündeki malzeme</translation>
+        <translation>alttabaka arka yüzündeki malzeme</translation>
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
@@ -1713,7 +1713,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation>Eşyüzey Hattı</translation>
+        <translation>Eşyüzey Çizgisi</translation>
     </message>
     <message>
         <source>coplanar gap</source>
@@ -1721,7 +1721,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>width of gap between the two lines</source>
-        <translation>iki hat arasındaki aralığın genişliği</translation>
+        <translation>iki çizgi arasındaki aralığın genişliği</translation>
     </message>
     <message>
         <source>Coplanar Gap</source>
@@ -1733,7 +1733,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>width of gap at end of line</source>
-        <translation>hattın sonundaki aralığın genişliği</translation>
+        <translation>çizginin sonundaki aralığın genişliği</translation>
     </message>
     <message>
         <source>Coplanar Open</source>
@@ -1753,11 +1753,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation>1. hattın genişliği</translation>
+        <translation>1. çizginin genişliği</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation>2. hattın genişliği</translation>
+        <translation>2. çizginin genişliği</translation>
     </message>
     <message>
         <source>distance between ground planes</source>
@@ -1769,31 +1769,31 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation>dc simülasyon</translation>
+        <translation>dc benzetim</translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
-        <translation>yakınsama için göreli tolerans</translation>
+        <translation>yakınsama için göreli hoşgörü</translation>
     </message>
     <message>
         <source>absolute tolerance for currents</source>
-        <translation>akımlar için mutlak tolerans</translation>
+        <translation>akımlar için mutlak hoşgörü</translation>
     </message>
     <message>
         <source>absolute tolerance for voltages</source>
-        <translation>gerilimler için mutlak tolerans</translation>
+        <translation>gerilimler için mutlak hoşgörü</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation>çalışma noktaları bilgisini verisetine koy</translation>
+        <translation>çalışma noktaları bilgisini veri grubuna koy</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation>hataya kadar en büyük iterasyon sayısı</translation>
+        <translation>hataya kadar en büyük deneme sayısı</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation>alt-devre düğümlerini verisetine kaydet</translation>
+        <translation>alt-devre düğümlerini veri grubuna kaydet</translation>
     </message>
     <message>
         <source>preferred convergence algorithm</source>
@@ -1801,7 +1801,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>method for solving the circuit matrix</source>
-        <translation>devre matrisi çözüm yöntemi</translation>
+        <translation>devre tablosu çözüm yöntemi</translation>
     </message>
     <message>
         <source>dc block</source>
@@ -1821,15 +1821,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>digital simulation</source>
-        <translation>dijital simülasyon</translation>
+        <translation>dijital benzetim</translation>
     </message>
     <message>
         <source>type of simulation</source>
-        <translation>simülasyon çeşidi</translation>
+        <translation>benzetim çeşidi</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation>ZamanListesi-TimeList simülasyon süresi</translation>
+        <translation>ZamanListesi-TimeList benzetim süresi</translation>
     </message>
     <message>
         <source>digital source</source>
@@ -1837,7 +1837,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation>port numarası</translation>
+        <translation>uç numarası</translation>
     </message>
     <message>
         <source>initial output value</source>
@@ -1853,11 +1853,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation>emisyon katsayısı</translation>
+        <translation>yayım katsayısı</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation>sıfır-bias eklem sığası</translation>
+        <translation>sıfır-kutuplama eklem sığası</translation>
     </message>
     <message>
         <source>grading coefficient</source>
@@ -1865,7 +1865,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>junction potential</source>
-        <translation>eklem potansiyeli</translation>
+        <translation>eklem gerilimi</translation>
     </message>
     <message>
         <source>linear capacitance</source>
@@ -1873,11 +1873,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation>recombination current parameter</translation>
+        <translation>tekrar birleşim akımı değişkeni</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation>Isr için emisyon katsayısı</translation>
+        <translation>Isr için yayım katsayısı</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
@@ -1885,7 +1885,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation>transient zaman</translation>
+        <translation>geçici zaman</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
@@ -1917,7 +1917,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation>Tt kuadratik sıcaklık katsayısı</translation>
+        <translation>Tt ikinci dereceden sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
@@ -1925,11 +1925,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation>M kuadratik sıcaklık katsayısı</translation>
+        <translation>M ikinci dereceden sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation>parametrelerin çıkarıldığı sıcaklık</translation>
+        <translation>değişkenlerin elde edildiği sıcaklık</translation>
     </message>
     <message>
         <source>default area for diode</source>
@@ -1949,11 +1949,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation>sonucu verisetine koy</translation>
+        <translation>sonucu veritopluluğuna koy</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation>toprak (referans potansiyeli)</translation>
+        <translation>toprak (referans gerilimi)</translation>
     </message>
     <message>
         <source>Ground</source>
@@ -1973,7 +1973,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation>Harmonik denge simülasyonu</translation>
+        <translation>Harmonik denge benzetimi</translation>
     </message>
     <message>
         <source>number of harmonics</source>
@@ -1985,43 +1985,43 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation>bobin</translation>
+        <translation>sargı</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation>Henry cinsinden endüktans</translation>
+        <translation>Henry cinsinden sargı etkisi</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation>Bobin</translation>
+        <translation>Sargı</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation>akım probu</translation>
+        <translation>akım algılama ucu</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation>Akım Probu</translation>
+        <translation>Akım Algılama Ucu</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation>ideal akım pals kaynağı</translation>
+        <translation>fikirsel akım atkı kaynağı</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation>palstan önce ve sonraki akım</translation>
+        <translation>atkıdan önce ve sonraki akım</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation>palsın akımı</translation>
+        <translation>atkının akımı</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation>pals başlangıç zamanı</translation>
+        <translation>atkı başlangıç zamanı</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation>palsın bitiş zamanı</translation>
+        <translation>atkının bitiş zamanı</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
@@ -2033,23 +2033,23 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation>Akım Palsı</translation>
+        <translation>Akım Atkısı</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation>ideal kare akım kaynağı</translation>
+        <translation>fikirsel kare akım kaynağı</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation>yüksek palsın akımı</translation>
+        <translation>yüksek atkının akımı</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation>yüksek palsların süresi</translation>
+        <translation>yüksek atkıların süresi</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation>düşük palsların süresi</translation>
+        <translation>düşük atkıların süresi</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
@@ -2073,19 +2073,19 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation>transkondüktans parametresi</translation>
+        <translation>transkondüktans değişkeni</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation>kanal-uzunluğu modulasyon parametresi</translation>
+        <translation>kanal-uzunluğu modulasyon değişkeni</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation>parazitik oluk direnci</translation>
+        <translation>asalaksal oluk direnci</translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation>parazitik kaynak direnci</translation>
+        <translation>asalaksal kaynak direnci</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
@@ -2093,31 +2093,31 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>gate-junction emission coefficient</source>
-        <translation>kapı-eklem emisyon kaysayısı</translation>
+        <translation>kapı-eklem yayım kaysayısı</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
-        <translation>kapı-eklem rekombinasyon akım parametresi</translation>
+        <translation>kapı-eklem tekrar birleşim akım değişkeni</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
-        <translation>Isr emisyon katsayısı</translation>
+        <translation>Isr yayım katsayısı</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation>sıfır-bias kapı-kaynak eklem sığası</translation>
+        <translation>sıfır-kutuplama kapı-kaynak eklem sığası</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation>sıfır-bias kapı-oluk eklem sığası</translation>
+        <translation>sıfır-kutuplama kapı-oluk eklem sığası</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation>kapı-eklem potansiyeli</translation>
+        <translation>kapı-eklem gerilimi</translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation>ileri-kutuplama(bias) eklem sığa katsayısı</translation>
+        <translation>ileri-kutuplama eklem sığa katsayısı</translation>
     </message>
     <message>
         <source>gate P-N grading coefficient</source>
@@ -2205,23 +2205,23 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation>sıfır-bias eşik gerilimi</translation>
+        <translation>sıfır-kutuplama eşik gerilimi</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation>A/V^2 cinsinden transkondüktans katsayısı</translation>
+        <translation>A/V^2 cinsinden tersiletkenlik katsayısı</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
-        <translation>sqrt(V) cinsinden balk eşiği</translation>
+        <translation>sqrt(V) cinsinden alttabaka eşiği</translation>
     </message>
     <message>
         <source>surface potential</source>
-        <translation>yüzey potansiyeli</translation>
+        <translation>yüzey gerilimi</translation>
     </message>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation>1/V cinsinden kanal-uzunluğu modülasyon parametresi</translation>
+        <translation>1/V cinsinden kanal-uzunluğu modülasyon değişken</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
@@ -2237,11 +2237,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
-        <translation>balk eklem doyum akımı</translation>
+        <translation>alttabaka eklem doyum akımı</translation>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation>balk eklem emiyson katsayısı</translation>
+        <translation>alttabaka eklem emiyson katsayısı</translation>
     </message>
     <message>
         <source>channel width</source>
@@ -2253,7 +2253,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
-        <translation>yanal difüzyon uzunluğu</translation>
+        <translation>yanal yayılma uzunluğu</translation>
     </message>
     <message>
         <source>oxide thickness</source>
@@ -2269,51 +2269,51 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation>metre cinsinden kanal uzunluğu başına kapı-balk kesişim sığası [F/m]</translation>
+        <translation>metre cinsinden kanal uzunluğu başına kapı-alttabaka kesişim sığası [F/m]</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>sıfır-bias balk-oluk eklem sığası</translation>
+        <translation>sıfır-kutuplama alttabaka-oluk eklem sığası</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>sıfır-bias balk-kaynak eklem sığası</translation>
+        <translation>sıfır-kutuplama alttabaka-kaynak eklem sığası</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
-        <translation>balk eklem potansiyeli</translation>
+        <translation>alttabaka eklem gerilimi</translation>
     </message>
     <message>
         <source>bulk junction bottom grading coefficient</source>
-        <translation>bulk junction bottom grading coefficient</translation>
+        <translation>alttabaka eklem taban grading katsayısı</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation>bulk junction forward-bias depletion capacitance coefficient</translation>
+        <translation>alttabaka eklem düz kutuplama tüketim bölgesi sığa katsayısı</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</translation>
+        <translation>F/m cinsinden sıfır-kutuplama alttabaka eklem çevresel sığası</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
-        <translation>bulk junction periphery grading coefficient</translation>
+        <translation>alttabaka eklem çevresi grading katsayısı</translation>
     </message>
     <message>
         <source>bulk transit time</source>
-        <translation>balk transient zamanı</translation>
+        <translation>alttabaka geçici zamanı</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation>1/cm^3 cinsinden substrat balk katkılama yoğunluğu</translation>
+        <translation>1/cm^3 cinsinden alttabaka katkılama yoğunluğu</translation>
     </message>
     <message>
         <source>surface state density in 1/cm^2</source>
-        <translation>surface state density in 1/cm^2</translation>
+        <translation>1/cm^2 cinsinden yüzey durum yoğunluğu</translation>
     </message>
     <message>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation>kapı malzeme çeşidi: 0 = alüminyum; -1 = balkla aynı; 1 = balkın tersi</translation>
+        <translation>kapı malzeme çeşidi: 0 = alüminyum; -1 = alttabakayla aynı; 1 = alttabakanın tersi</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
@@ -2321,7 +2321,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
-        <translation>birim kare başına Ohm cinsinden oluk ve kaynak difüzyon tabaka direnci</translation>
+        <translation>birim kare başına Ohm cinsinden oluk ve kaynak yayılım tabaka direnci</translation>
     </message>
     <message>
         <source>number of equivalent drain squares</source>
@@ -2333,7 +2333,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</translation>
+        <translation>F/m^2 cinsinden, sıfır-kutuplama alttabaka eklem taban sığası</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
@@ -2341,11 +2341,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>drain diffusion area in m^2</source>
-        <translation>m^2 cinsinden oluk difüzyon alanı</translation>
+        <translation>m^2 cinsinden oluk yayılım alanı</translation>
     </message>
     <message>
         <source>source diffusion area in m^2</source>
-        <translation>m^2 cinsinden kaynak difüzyon alanı</translation>
+        <translation>m^2 cinsinden kaynak yayılım alanı</translation>
     </message>
     <message>
         <source>drain junction perimeter</source>
@@ -2513,43 +2513,43 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation>mutual iki bobin</translation>
+        <translation>karşılıklı iki bobin</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation>nüve 1&apos; in endüktansı</translation>
+        <translation>sargı 1&apos; in endüktansı</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation>nüve 2&apos; nin endüktansı</translation>
+        <translation>sargı 2&apos; nin endüktansı</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation>nüve 1 ve 2 arasındaki çiftlenim faktörü</translation>
+        <translation>sargı 1 ve 2 arasındaki çiftlenim çarpanı</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation>Mutual Bobinler</translation>
+        <translation>Karşılıklı Sargılar</translation>
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation>mutual üç bobin</translation>
+        <translation>karşılıklı üç sargı</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation>nüve 3&apos; ün endüktansı</translation>
+        <translation>sargı 3&apos; ün endüktansı</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation>nüve 1 ve 3 arasındaki çiftlenim faktörü</translation>
+        <translation>sargı 1 ve 3 arasındaki çiftlenim çarpanı</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation>nüve 2 ve 3 arasındaki çiftlenim faktörü</translation>
+        <translation>sargı 2 ve 3 arasındaki çiftlenim çarpanı</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation>3 Mutual Bobin</translation>
+        <translation>3 Karşılıklı Sargılar</translation>
     </message>
     <message>
         <source>correlated current sources</source>
@@ -2557,15 +2557,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
-        <translation>1. kaynağın akım gücü spektral yoğunluğu</translation>
+        <translation>1. kaynağın akım gücü yelpaze yoğunluğu</translation>
     </message>
     <message>
         <source>current power spectral density of source 2</source>
-        <translation>2. kaynağın akım gücü spektral yoğunluğu</translation>
+        <translation>2. kaynağın akım gücü yelpaze yoğunluğu</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation>normalize korelasyon sabiti</translation>
+        <translation>normalize ilişki sabiti</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
@@ -2573,11 +2573,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
-        <translation>kaynak 2 deki gerilim gücü spektral yoğunluk</translation>
+        <translation>kaynak 2 deki gerilim gücü yelpaze yoğunluğu</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 1</source>
-        <translation>kaynak 1 deki gerilim gücü spektral yoğunluk</translation>
+        <translation>kaynak 1 deki gerilim gücü yelpaze yoğunluğu</translation>
     </message>
     <message>
         <source>operational amplifier</source>
@@ -2593,15 +2593,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation>Parametre Süpürüm</translation>
+        <translation>Değişken Süpürüm</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation>üzerinde parametre süpürümünün uygulanacağı simülasyon</translation>
+        <translation>üzerinde değişken süpürümünün uygulanacağı benzetim</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation>süpürülecek parametre</translation>
+        <translation>süpürülecek değişken</translation>
     </message>
     <message>
         <source>start value for sweep</source>
@@ -2613,15 +2613,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation>faz kaydırıcı</translation>
+        <translation>açı kaydırıcı</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation>derece cinsinden faz kayması</translation>
+        <translation>derece cinsinden açı kayması</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation>Faz Kaydırıcı</translation>
+        <translation>Açı Kaydırıcı</translation>
     </message>
     <message>
         <source>resistor</source>
@@ -2657,27 +2657,27 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation>S parametre simülasyonu</translation>
+        <translation>S değişken benzetimi</translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation>gürültü parametrelerini hesapla</translation>
+        <translation>gürültü değişkenlerini hesapla</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation>gürültü figürü için giriş portu</translation>
+        <translation>gürültü figürü için giriş ucu</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation>gürültü figürü için çıkış portu</translation>
+        <translation>gürültü figürü için çıkış ucu</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation>S-parametre simülasyonu</translation>
+        <translation>S-değişken benzetimi</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation>S parametre kütüğü</translation>
+        <translation>S değişken kütüğü</translation>
     </message>
     <message>
         <source>file</source>
@@ -2685,7 +2685,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation>s parametre kütüğünün ismi</translation>
+        <translation>s değişken kütüğünün ismi</translation>
     </message>
     <message>
         <source>data type</source>
@@ -2697,7 +2697,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-port S parametre kütüğü</translation>
+        <translation>1-port S değişken kütüğü</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
@@ -2729,7 +2729,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation>alt-devredeki port/ayak sayısı</translation>
+        <translation>alt-devredeki ucun numarası</translation>
     </message>
     <message>
         <source>type of the port</source>
@@ -2737,7 +2737,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>Alt-devre port/ayak</translation>
+        <translation>Alt-devre Ucu</translation>
     </message>
     <message>
         <source>substrate definition</source>
@@ -2745,7 +2745,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation>göreli permitivite</translation>
+        <translation>göreli geçirgenlik</translation>
     </message>
     <message>
         <source>thickness in meters</source>
@@ -2753,7 +2753,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation>metalizasyon kalınlığı</translation>
+        <translation>metalleme kalınlığı</translation>
     </message>
     <message>
         <source>loss tangent</source>
@@ -2765,7 +2765,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation>rms substrat kabalığı/pürüzü</translation>
+        <translation>rms alttabaka kabalığı/pürüzü</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -2773,27 +2773,27 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation>ideal simetrik trafo (transformatör)</translation>
+        <translation>fikirsel benzeşimli dönüştürücü (transformatör)</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation>1. nüvenin gerilim dönüşüm oranı</translation>
+        <translation>1. sargının gerilim dönüşüm oranı</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation>2. nüvenin gerilim dönüşüm oranı</translation>
+        <translation>2. sargının gerilim dönüşüm oranı</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation>simetrik Trafo (transformatör)</translation>
+        <translation>benzeşimli dönüştürücü (transformatör)</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation>ideal iletim hattı</translation>
+        <translation>fikirsel iletim hattı</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation>karakteristik empedans</translation>
+        <translation>öz empedans</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
@@ -2805,7 +2805,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation>transient simülasyon</translation>
+        <translation>geçici benzetim</translation>
     </message>
     <message>
         <source>start time in seconds</source>
@@ -2817,15 +2817,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation>simulasyon zaman adımlarının sayısı</translation>
+        <translation>benzetim zaman adımlarının sayısı</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation>entegrasyon metodu</translation>
+        <translation>sürekli toplam yöntemi</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation>entegrasyon metodu mertebesi</translation>
+        <translation>sürekli toplam yönteminin mertebesi</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
@@ -2837,23 +2837,23 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
-        <translation>yerel kesme hatasının göreli toleransı</translation>
+        <translation>yerel kesme hatasının göreli hoşgörüsü</translation>
     </message>
     <message>
         <source>absolute tolerance of local truncation error</source>
-        <translation>yerel kesme hatasının mutlak toleransı</translation>
+        <translation>yerel kesme hatasının mutlak hoşgörüsü</translation>
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation>yerel kesme hatasının overestimation&apos; ı</translation>
+        <translation>yerel kesme hatasının abartısı</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation>Transient simülasyon</translation>
+        <translation>Geçici benzetim</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation>ideal trafo (transformatör)</translation>
+        <translation>fikirsel dönüştürücü (transformatör)</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
@@ -2861,31 +2861,31 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation>Trafo (transformatör)</translation>
+        <translation>Dönüştürücü (transformatör)</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation>gerilim kontrollü akım kaynağı</translation>
+        <translation>gerilim yönetimli akım kaynağı</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation>ileri transkondüktans</translation>
+        <translation>ileri tersiletkenlik</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation>Gerilim Kontrollü Akım Kaynağı</translation>
+        <translation>Gerilim Yönetimli Akım Kaynağı</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation>gerilim kontrollü gerilim kaynağı</translation>
+        <translation>gerilim yönetimli gerilim kaynağı</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>Gerilim Kontrollü Gerilim Kaynağı</translation>
+        <translation>Gerilim Yönetimli Gerilim Kaynağı</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation>ideal ac gerilim kaynağı</translation>
+        <translation>fikirsel ac gerilim kaynağı</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
@@ -2897,7 +2897,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation>ideal dc gerilim kaynağı</translation>
+        <translation>fikirsel dc gerilim kaynağı</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
@@ -2913,7 +2913,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation>V^2/Hz cinsinden gerilim gücü spektral yoğunluğu</translation>
+        <translation>V^2/Hz cinsinden gerilim gücü yelpaze yoğunluğu</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
@@ -2921,23 +2921,23 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation>ideal gerilim pals kaynağı</translation>
+        <translation>fikirsel gerilim atkı kaynağı</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation>palstan önceki ve sonraki gerilim</translation>
+        <translation>atkıdan önceki ve sonraki gerilim</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation>palsın gerilimi</translation>
+        <translation>atkının gerilimi</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation>Gerilim Palsı</translation>
+        <translation>Gerilim Atkısı</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation>ideal kare dalga gerilim üreteci</translation>
+        <translation>fikirsel kare dalga gerilim üreteci</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
@@ -2962,7 +2962,7 @@ Qucs için çok basit bit metin düzenleyici
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Kopyahakkı/Telif (K) 2004, 2005, Michael Margraf
+        <translation>Çogggaltma hakkı/Telif (Ç) 2004, 2005, Michael Margraf
 </translation>
     </message>
     <message>
@@ -3011,291 +3011,291 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>düy ve ters beta için sıcaklık üsteli</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>çift kutuplu eklem transistör (bjt) için varsayılan alan</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vt0 sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Beta üstel sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>JFET için varsayılan alan</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>değişken ölçüm sıcaklığı</translation>
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>fikirsel çiftleyici</translation>
     </message>
     <message>
         <source>coupling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>çiftlenim faktörü</translation>
     </message>
     <message>
         <source>phase shift of coupling path in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>derece cinsinden, çiftlenim yolunun açı kayması</translation>
     </message>
     <message>
         <source>Coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>Çiftleyici</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
+        <translation>RS flip flop</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşzamanlı Olmayan resetli D tipi flip flop</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşzamanlı Olmayan set ve resetli JK tipi flip flop</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>D-FlipFlop</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>JK-FlipFlop</translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>RS-FlipFlop</translation>
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata: &quot;%1&quot; de zaman biçimi yanlış. Birimi olan artı değerlikli sayı kulanın</translation>
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>eşeksenli iletim hattı</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>sığanın özdirenci</translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>sığanın göreceli geçirgenliği</translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>içteki iletkenin çapı</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>hattın mekanik uzunluğu</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished">Eşeksenli Hat</translation>
+        <translation>Eşeksenli Hat</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>Amper cinsinden en yüksek akım değeri</translation>
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
+        <translation>zırhın iç çapı</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>birinci derece sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>second order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ikinci derece sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>karakteristik değerleri veri grubuna koy</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>alt devre karakteristik değerlerini veri grubuna kaydet</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Volt cinsinden en yüksek gerilim değeri</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>dielektriğin göreceli geçirgenliği</translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>gerilim algılayıcı uç</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerilim algılayıcı uç</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>giriş/çıkış uç sayısı</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>n-uçlu S değişken kütüğü</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished">2 girişli S parametre kütüğü</translation>
+        <translation>2 girişli S değişken kütüğü</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>uç çeşidi (sadece dijital/kesikli benzetim için)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>genlik modülasyonlu değişken gerilim kaynağı</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>GM</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>modülasyon seviyesi</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>GM modülasyonlu Kaynak</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>sönüm çarpanı (sadece geçici benzetim)</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı değiştiricili değişken gerilim kaynağı</translation>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>değişim (modülasyon) indisi</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AM modülasyonlu Kaynak</translation>
     </message>
     <message>
         <source>relais</source>
-        <translation type="unfinished"></translation>
+        <translation>röle</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;açık&quot; durumunun ohm cinsinden direnci</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;kapalı&quot; durumunun ohm cinsinden direnci</translation>
     </message>
     <message>
         <source>Relais</source>
-        <translation type="unfinished"></translation>
+        <translation>Röle</translation>
     </message>
     <message>
         <source>initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>ilk durum</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>1/m cinsinden uzunluk başına zayıflama katsayısı</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>anahtar (zaman yönetimli)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Volt cinsinden eşik gerilimi</translation>
     </message>
     <message>
         <source>hysteresis voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Volt cinsinden gecikme gerilimi</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;açık&quot; durumunun Ohm cinsinden direnci</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;kapalı&quot; durumunun Ohm cinsinden direnci</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">Özellikleri Düzenle</translation>
+        <translation>Özellikleri Düzenle</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished">power matching</translation>
+        <translation>power matching</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished">noise matching</translation>
+        <translation>noise matching</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished">2-port matching</translation>
+        <translation>2-uç matching</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Bilgi</translation>
+        <translation>Bilgi</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished">Toprak potansiyeli etiketlenemiyor!</translation>
+        <translation>Toprak gerilimi etiketlenemez!</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>durum değişikliğindeki zaman (noktalı virgül ile ayrılmış değerler verilebilir)</translation>
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; VHDL bileşeninde kütük ismi yok.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; VHDL kütüğü açılamıyor.</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL kütüğü</translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL kütüğünün ismi</translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>vhdl</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>DC hesabı süresince gösterim</translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>gevşeme zamanı adım uzunluğu</translation>
     </message>
     <message>
         <source>Subcircuit</source>
@@ -3483,7 +3483,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simülasyonlar</translation>
+        <translation>benzetimler</translation>
     </message>
     <message>
         <source>diagrams</source>
@@ -3595,7 +3595,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation>-ayak(port)</translation>
+        <translation>-uç</translation>
     </message>
     <message>
         <source>Saving file...</source>
@@ -3697,7 +3697,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation>Seçili not tahtasına kopyalanıyor...</translation>
+        <translation>Seçili not tahtasına çoğaltılıyor...</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3829,151 +3829,153 @@ Edits the schematic</source>
     </message>
     <message>
         <source>VHDL Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL Kaynakları</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>proje dizininin içeriği</translation>
     </message>
     <message>
         <source>content of current project</source>
-        <translation type="unfinished"></translation>
+        <translation>geçerli projenin içeriği</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
+        <translation>Veri göstergesi silinemiyor: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Veri kütüğü silinemiyor: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL kütüğü silinemiyor: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni metin düzenleyici oluşturuluyor...</translation>
     </message>
     <message>
         <source>Printing selected...</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili yazdırılıyor...</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished">Yüklenemiyor S(1.1).</translation>
+        <translation>Yüklenemiyor S(1.1).</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished">Yüklenemiyor S(1.2).</translation>
+        <translation>Yüklenemiyor S(1.2).</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished">Yüklenemiyor S(2.1).</translation>
+        <translation>Yüklenemiyor S(2.1).</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished">Yüklenemiyor S(2.2).</translation>
+        <translation>Yüklenemiyor S(2.2).</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished">Yanlış dayanak!</translation>
+        <translation>Yanlış dayanak!</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">En az iki eleman seçilmeli !</translation>
+        <translation>En az iki eleman seçilmeli !</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">Metin düzenleyici başlatılamıyor!</translation>
+        <translation>Metin düzenleyici başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished">Filtre tasarım programı başlatılamıyor!</translation>
+        <translation>Süzgeç tasarım programı başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished">Hat hesaplayıcı uygulama başlatılamıyor!</translation>
+        <translation>iletim hattı hesaplayıcı uygulama başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished">Kütüphane yazılımı başlatılamıyor!</translation>
+        <translation>Kütüphane yazılımı başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">Qucs yardım (qucshelp) açılamıyor!</translation>
+        <translation>Qucs yardım (qucshelp) açılamıyor!</translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished">Hiçbir proje açık değil!</translation>
+        <translation>Açık proje yok!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished">Kopyalanacak kütükleri seçin</translation>
+        <translation>Kopyalanacak kütükleri seçin</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished">Hiçbir kütük kopyalanmadı.</translation>
+        <translation>Hiçbir kütük kopyalanmadı.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished">&quot;%1&quot; açılamıyor !</translation>
+        <translation>&quot;%1&quot; açılamıyor !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished">Üzerine yaz</translation>
+        <translation>Üzerine yaz</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished">&quot;%1&quot; dosyası zaten var.
+        <translation>&quot;%1&quot; dosyası zaten var.
 Üzerine yazılsın mı ?</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished">&quot;%1&quot; oluşturulamıyor !</translation>
+        <translation>&quot;%1&quot; oluşturulamıyor !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished">&quot;%1&quot; okunamıyor !</translation>
+        <translation>&quot;%1&quot; okunamıyor !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished">&quot;%1&quot; yazılamıyor !</translation>
+        <translation>&quot;%1&quot; yazılamıyor !</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Yeni</translation>
+        <translation>&amp;Yeni</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished">Yeni belge oluşturur</translation>
+        <translation>Yeni belge oluşturur</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished">Yeni
+        <translation>Yeni
 
 Veri görüntüleme ya da şema belgesi oluşturur</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Yani &amp;Metin</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir metin belgesi oluşturur</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Metin
+
+Yeni bir metin belgesi oluşturur</translation>
     </message>
     <message>
         <source>Open File</source>
@@ -3981,17 +3983,17 @@ Creates a new text document</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Aç...</translation>
+        <translation>&amp;Aç...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished">Varolan bir belgeyi açar</translation>
+        <translation>Varolan bir belgeyi açar</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished">Kütük Aç
+        <translation>Kütük Aç
 
 Varolan bir belgeyi açar</translation>
     </message>
@@ -4001,13 +4003,13 @@ Varolan bir belgeyi açar</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished">Geçerli belgeyi kaydeder</translation>
+        <translation>Geçerli belgeyi kaydeder</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished">Kütük Kaydet
+        <translation>Kütük Kaydet
 
 Geçerli belgeyi kaydeder</translation>
     </message>
@@ -4017,17 +4019,17 @@ Geçerli belgeyi kaydeder</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Farklı kaydet...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished">Geçerli dokümanı yeni dosya adı altında kaydet</translation>
+        <translation>Geçerli belgeyi yeni adı altında kaydet</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished">Farklı kaydet
+        <translation>Farklı kaydet
 
 Geçerli belgeyi yeni bir ad altında kaydeder</translation>
     </message>
@@ -4037,17 +4039,17 @@ Geçerli belgeyi yeni bir ad altında kaydeder</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished">Tümünü &amp;Kaydet</translation>
+        <translation>Tümünü &amp;Kaydet</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished">Tüm açık belgeleri kaydeder</translation>
+        <translation>Tüm açık belgeleri kaydeder</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished">Tüm kütükleri kaydet
+        <translation>Tüm kütükleri kaydet
 
 Tüm açık belgeleri kaydeder</translation>
     </message>
@@ -4057,23 +4059,23 @@ Tüm açık belgeleri kaydeder</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Kapat</translation>
+        <translation>&amp;Kapat</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished">Geçerli belgeyi kapatır</translation>
+        <translation>Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished">Kütük Kapat
+        <translation>Kütük Kapat
 
 Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Devre &amp;Simgesini Değiştir</translation>
     </message>
     <message>
         <source>Document Settings...</source>
@@ -4087,9 +4089,9 @@ Geçerli belgeyi kapatır</translation>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished">Ayarlar
+        <translation>Ayarlar
 
-Kütük ayarlarını yap</translation>
+Kütük ayarlarını yapar</translation>
     </message>
     <message>
         <source>Print File</source>
@@ -4097,17 +4099,17 @@ Kütük ayarlarını yap</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Yazdır...</translation>
+        <translation>&amp;Yazdır...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished">Geçerli belgeyi yazdır</translation>
+        <translation>Geçerli belgeyi yazdır</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished">Kütük Yazdır
+        <translation>Kütük Yazdır
 
 Geçerli belgeyi yazdırır</translation>
     </message>
@@ -4117,7 +4119,7 @@ Geçerli belgeyi yazdırır</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished">Seçimi Yazdır...</translation>
+        <translation>Seçimi Yazdır...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
@@ -4127,7 +4129,7 @@ Geçerli belgeyi yazdırır</translation>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished">Seçili Elemanları Yazdırır
+        <translation>Seçili Elemanları Yazdırır
 
 Geçerli belgede seçili elemanları yazdırır</translation>
     </message>
@@ -4137,17 +4139,17 @@ Geçerli belgede seçili elemanları yazdırır</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ç&amp;ık</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished">Uygulamadan çık</translation>
+        <translation>Uygulamadan çık</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished">Çıkış
+        <translation>Çıkış
 
 Uygulamadan çıkar</translation>
     </message>
@@ -4157,133 +4159,133 @@ Uygulamadan çıkar</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished">Uygulama Ayarları ...</translation>
+        <translation>Uygulama Ayarları ...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished">Qucs Ayarları
+        <translation>Qucs Ayarları
 
-Uygulama ayarlarını kur</translation>
+Uygulama ayarlarını yapar</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished">Yukarı hizala</translation>
+        <translation>Yukarı hizala</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished">Seçili elementleri yukarı hizala</translation>
+        <translation>Seçili elementleri yukarı hizala</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished">Yukarı hizala
+        <translation>Yukarı hizala
 
 Seçili elementleri üst köşelerine hizala</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished">Alta hizala</translation>
+        <translation>Alta hizala</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished">Seçili elementleri alta hizala</translation>
+        <translation>Seçili elementleri alta hizala</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished">Alta hizala
+        <translation>Alta hizala
 
 Seçili elementleri alt köşelerine hizala</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished">Sola hizala</translation>
+        <translation>Sola hizala</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished">Seçili elementleri sola hizala</translation>
+        <translation>Seçili elementleri sola hizala</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished">Sola hizala
+        <translation>Sola hizala
 
 Seçili elementleri sol köşelerine hizala</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished">Sağa hizala</translation>
+        <translation>Sağa hizala</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished">Seçili elementleri sağa hizala</translation>
+        <translation>Seçili elementleri sağa hizala</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished">Sağa hizala
+        <translation>Sağa hizala
 
 Seçili öğeleri sağ köşelerine hizala</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished">Yatay Dağıt</translation>
+        <translation>Yatay Dağıt</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished">Yatay ve eşit dağıt</translation>
+        <translation>Yatay ve eşit dağıt</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished">Yatay dağıt
+        <translation>Yatay dağıt
 
 Seçili elementleri yatay dağıt</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished">Dikey dağıt</translation>
+        <translation>Dikey dağıt</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished">Dikey ve eşit dağıt</translation>
+        <translation>Dikey ve eşit dağıt</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished">Dikey dağıt
+        <translation>Dikey dağıt
 
 Seçili elementleri dikey dağıt</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished">Izgaranın üzerine kur</translation>
+        <translation>Izgaranın üzerine kur</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished">Izgaranın üzerine kur
+        <translation>Izgaranın üzerine kur
 
 Seçili elementleri ızgaranın üzerine kurar</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished">Bileşen Metnini Taşı</translation>
+        <translation>Bileşen Metnini Taşı</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished">Bileşen Metnini Taşı
+        <translation>Bileşen Metnini Taşı
 
 Bileşenlerin özellik yazısını taşır</translation>
     </message>
@@ -4301,7 +4303,7 @@ Bileşenlerin özellik yazısını taşır</translation>
 Change Property Value of Components</source>
         <translation type="obsolete">Özellik Değerlerini Değiştir
 
-Özellik Değerlerini Değiştirir</translation>
+Bileşenlerşin özelliklerini değiştirir</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -4309,7 +4311,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">K&amp;es</translation>
+        <translation>K&amp;es</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
@@ -4329,7 +4331,7 @@ Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopyala</translation>
+        <translation>&amp;Kopyala</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
@@ -4349,33 +4351,33 @@ Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Yapıştır</translation>
+        <translation>&amp;Yapıştır</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
+        <translation>Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Yapıştır
+        <translation>Yapıştır
 
 Not tahtası içeriğini işaretleyicinin bulunduğu yere yapıştırır</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Sil</translation>
+        <translation>&amp;Sil</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished">Seçili bilşenleri siler</translation>
+        <translation>Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished">Sil
+        <translation>Sil
 
 Seçili bilşenleri siler</translation>
     </message>
@@ -4385,17 +4387,17 @@ Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Geri Al</translation>
+        <translation>&amp;Geri Al</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished">Son komutu geri alır</translation>
+        <translation>Son komutu geri alır</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished">Geri Al
+        <translation>Geri Al
 
 Son komutu geri alır</translation>
     </message>
@@ -4405,17 +4407,17 @@ Son komutu geri alır</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Tekrarla</translation>
+        <translation>&amp;Tekrarla</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished">Son komutu tekrarlar</translation>
+        <translation>Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished">Tekrarla
+        <translation>Tekrarla
 
 Son komutu tekrarlar</translation>
     </message>
@@ -4425,17 +4427,17 @@ Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished">&amp;Yeni Proje...</translation>
+        <translation>&amp;Yeni Proje...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished">Yeni bir proje oluşturur</translation>
+        <translation>Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished">Yeni Proje
+        <translation>Yeni Proje
 
 Yeni bir proje oluşturur</translation>
     </message>
@@ -4445,7 +4447,7 @@ Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished">&amp;Proje Aç...</translation>
+        <translation>&amp;Proje Aç...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -4455,7 +4457,7 @@ Yeni bir proje oluşturur</translation>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished">Proje Aç
+        <translation>Proje Aç
 
 Varolan bir projeyi açar</translation>
     </message>
@@ -4465,7 +4467,7 @@ Varolan bir projeyi açar</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished">Proje &amp;Sil...</translation>
+        <translation>Proje &amp;Sil...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
@@ -4475,7 +4477,7 @@ Varolan bir projeyi açar</translation>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished">Proje Sil
+        <translation>Proje Sil
 
 Varolan bir projeyi siler</translation>
     </message>
@@ -4485,7 +4487,7 @@ Varolan bir projeyi siler</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished">Proje &amp;Kapat</translation>
+        <translation>Proje &amp;Kapat</translation>
     </message>
     <message>
         <source>Close current project</source>
@@ -4495,7 +4497,7 @@ Varolan bir projeyi siler</translation>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished">Proje Kapat
+        <translation>Proje Kapat
 
 Geçerli olan projeyi kapatır</translation>
     </message>
@@ -4505,23 +4507,23 @@ Geçerli olan projeyi kapatır</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished">&amp;Kütükleri Projeye Ekle...</translation>
+        <translation>&amp;Kütükleri Projeye Ekle...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished">Kütükleri proje dizinine kopyalar</translation>
+        <translation>Kütükleri proje dizinine kopyalar</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished">Projeye Kütük Ekle
+        <translation>Projeye Kütük Ekle
 
 Kütükleri proje dizinine kopyalar</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished">Tümünü Görüntüle</translation>
+        <translation>Tümünü Görüntüle</translation>
     </message>
     <message>
         <source>Views the whole page</source>
@@ -4531,59 +4533,61 @@ Kütükleri proje dizinine kopyalar</translation>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished">Tümünü Görüntüle
+        <translation>Tümünü Görüntüle
 
 Tüm sayfa içeriğini görüntüler</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished">Görüntüle 1:1</translation>
+        <translation>Görüntüle 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished">Büyütme olmaksızın görüntüler</translation>
+        <translation>Büyütme olmaksızın görüntüler</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished">Görüntüle 1:1
+        <translation>Görüntüle 1:1
 
 Sayfa içeriğini büyütme olmaksızın görüntüler</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished">Büyüt</translation>
+        <translation>Büyüt</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished">Geçerli görünümü büyütür</translation>
+        <translation>Geçerli görünümü büyütür</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished">Büyüt
+        <translation>Büyüt
 
 Geçerli görünümü büyütür</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished">Küçült</translation>
+        <translation>Küçült</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished">Geçerli görünümü küçültür</translation>
+        <translation>Geçerli görünümü küçültür</translation>
     </message>
     <message>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzaklaştır
+
+Geçerli manzarayı uzaklaştırır</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Seç</translation>
+        <translation>Seç</translation>
     </message>
     <message>
         <source>Select mode</source>
@@ -4599,37 +4603,39 @@ Seçme durumu</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Tümünü Seç</translation>
+        <translation>Tümünü Seç</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished">Tüm elemanları seçer</translation>
+        <translation>Tüm elemanları seçer</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished">Tümünü Seç
+        <translation>Tümünü Seç
 
 Belgenin tüm elemanlarını seçer</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished">Döndür</translation>
+        <translation>Döndür</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili bilşeni 90° çevirir</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>DÖndür
+
+Seçili bileşeni saatin tersi yÖnde 90° çeviriri</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished">X Ekseni Etrafında Aynala</translation>
+        <translation>X Ekseni Etrafında Aynala</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
@@ -4639,13 +4645,13 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished">X Ekseni Etrafında Aynala
+        <translation>X Ekseni Etrafında Aynala
 
 Seçili elemanı x ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished">Y Ekseni Etrafında Aynala</translation>
+        <translation>Y Ekseni Etrafında Aynala</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
@@ -4655,13 +4661,13 @@ Seçili elemanı x ekseni etrafında aynalar</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished">Y Ekseni Etrafında Aynalar
+        <translation>Y Ekseni Etrafında Aynalar
 
 Seçili elemanı y ekseni etrafında aynalar</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished">Alt-Devreye Git</translation>
+        <translation>Alt-Devreye Git</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
@@ -4671,29 +4677,29 @@ Seçili elemanı y ekseni etrafında aynalar</translation>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished">Alt-Devreye Git
+        <translation>Alt-Devreye Git
 
 Alt-devrenin içine girer</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished">Bir Üst Katmana</translation>
+        <translation>Bir Üst Katmana</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished">Bir üst katmana çık</translation>
+        <translation>Bir üst katmana çık</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished">Bir üst katmana
+        <translation>Bir üst katmana
 
 Devre hiyerarşisinde bir üst katmana çıkar, yani alt-devreyi terkeder</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished">Kapat/Etkinleştir</translation>
+        <translation>Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
@@ -4709,7 +4715,7 @@ Seçili elemanı Kapat/Etkinleştir</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished">Eşitlik Ekle</translation>
+        <translation>Eşitlik Ekle</translation>
     </message>
     <message>
         <source>Inserts equation</source>
@@ -4719,13 +4725,13 @@ Seçili elemanı Kapat/Etkinleştir</translation>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished">Eşitlik Ekle
+        <translation>Eşitlik Ekle
 
 Kullanıcı tarafından belirlenen bit eşitlik ekler</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished">Toprak Ekle</translation>
+        <translation>Toprak Ekle</translation>
     </message>
     <message>
         <source>Inserts ground</source>
@@ -4735,13 +4741,13 @@ Kullanıcı tarafından belirlenen bit eşitlik ekler</translation>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished">Toprak Ekle
+        <translation>Toprak Ekle
 
 Toprak simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished">Ayak Ekle</translation>
+        <translation>Ayak Ekle</translation>
     </message>
     <message>
         <source>Inserts port</source>
@@ -4751,7 +4757,7 @@ Toprak simgesi ekler</translation>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished">Ayak Ekle
+        <translation>Ayak Ekle
 
 Giriş/çıkış ayak(port) simgesi ekler</translation>
     </message>
@@ -4761,7 +4767,7 @@ Giriş/çıkış ayak(port) simgesi ekler</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished">Bağlantı Hattı</translation>
+        <translation>Bağlantı Hattı</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
@@ -4771,7 +4777,7 @@ Giriş/çıkış ayak(port) simgesi ekler</translation>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished">Bağlantı Hattı
+        <translation>Bağlantı Hattı
 
 Bağlantı hattı ekler</translation>
     </message>
@@ -4781,17 +4787,17 @@ Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished">Bağlantı Hattı Etiketi</translation>
+        <translation>Bağlantı Hattı Etiketi</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished">Bağlantı Hattı/Ayak Etiketi Ekler</translation>
+        <translation>Bağlantı Hattı/Ayak Etiketi Ekler</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished">Bağlantı Hattı Etiketi
+        <translation>Bağlantı Hattı Etiketi
 
 Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
     </message>
@@ -4801,129 +4807,129 @@ Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished">Metin düzenleyici</translation>
+        <translation>Metin düzenleyici</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished">Qucs metin düzenleyiciyisini başlatır</translation>
+        <translation>Qucs metin düzenleyiciyisini başlatır</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished">Metin düzenleyici
+        <translation>Metin düzenleyici
 
 Qucs metin düzenleyicisini başlatır</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished">Filitre tasarımı</translation>
+        <translation>Süzgeç tasarımı</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished">QucsFilter uygulamasını başlatır</translation>
+        <translation>QucsFilter uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished">Filitre Tasarımı
+        <translation>Süzgeç Tasarımı
 
 QucsFilter uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished">Hat hesabı</translation>
+        <translation>iletim hattı hesabı</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished">QucsTrans uygulamasını başlatır</translation>
+        <translation>QucsTrans uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished">Hat hesabı
+        <translation>Hat hesabı
 
 İletim hattı hesaplayıcısını başlatır</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished">Bileşen Kütüphanesi</translation>
+        <translation>Bileşen Kütüphanesi</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished">QucsLib uygulamasını başlatır</translation>
+        <translation>QucsLib uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished">Bileşen Kütüphanesi
+        <translation>Bileşen Kütüphanesi
 
 Bileşen Kütüphanesi uygulamasını başlatır</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished">Karşılaştırma Devresi</translation>
+        <translation>Karşılaştırma Devresi</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished">Karşılaştırma Devresi Oluşturur</translation>
+        <translation>Karşılaştırma Devresi Oluşturur</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished">Karşılaştırma Devresi
+        <translation>Karşılaştırma Devresi
 
 Karşılaştırma Devresi Oluşturma İletişim Penceresi</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished">Simüle Et</translation>
+        <translation>Simülasyonu Başlat</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished">Geçerli şemayı simüle eder</translation>
+        <translation>Geçerli şemayı benzetime tabi tutar</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished">Simüle et
+        <translation>Simülasyonu başlat
 
-Geçerli şemayı simüle eder</translation>
+Geçerli şemayı benzetime tabi tutar</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished">Veri Göstergesi/Şema Görüntüle</translation>
+        <translation>Veri Göstergesi/Şema Görüntüle</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished">Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
+        <translation>Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished">Veri Göstergesi/Şema Görüntüle
+        <translation>Veri Göstergesi/Şema Görüntüle
 
 </translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished">DC bias hesapla</translation>
+        <translation>DC kutuplama hesapla</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished">DC kutuplanma durumunu hesaplar ve gösterir</translation>
+        <translation>DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished">DC bias hesapla
+        <translation>DC kutuplama hesapla
 
 DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
@@ -4933,51 +4939,51 @@ DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished">Grafik Üzerine İşaretçi Koy</translation>
+        <translation>Grafik Üzerine İşaretçi Koy</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">Diyagramın grafiği üzerine bir işaretçi koyar</translation>
+        <translation>Diyagramın grafiği üzerine bir işaretçi koyar</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">İşaretçi Koy
+        <translation>İşaretçi Koy
 
 Diyagramın grafiği üzerine işaretçi koyar</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished">Son Mesajları Göster</translation>
+        <translation>Son Mesajları Göster</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished">Son simülasyon mesajlarını gösterir</translation>
+        <translation>Son benzetim mesajlarını gösterir</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished">Son Mesajları Göster
+        <translation>Son Mesajları Göster
 
-Son simülasyondan olan mesajları gösterir</translation>
+Son benzetimden olan mesajları gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished">Son Bağlantı Listesini Göster</translation>
+        <translation>Son Bağlantı Listesini Göster</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished">Son simülasyondan son bağlantı listesini gösterir</translation>
+        <translation>Son benzetim bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished">Son Bağlantı Listesini Göster
+        <translation>Son Bağlantı Listesini Göster
 
-Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
+Son benzetimde hazırlanan son bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Toolbar</source>
@@ -4985,17 +4991,17 @@ Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished">&amp;Araç Çubuğu</translation>
+        <translation>&amp;Araç Çubuğu</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished">Araç çubuğunu etkinleştir/kapat</translation>
+        <translation>Araç çubuğunu etkinleştir/kapat</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished">Araç Çubuğu
+        <translation>Araç Çubuğu
 
 Araç çubuğunu etkinleştir/kapat</translation>
     </message>
@@ -5005,33 +5011,33 @@ Araç çubuğunu etkinleştir/kapat</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">&amp;Durumçubuğu</translation>
+        <translation>&amp;Durumçubuğu</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished">Durumçubuğunu etkinleştirir veya kapatır</translation>
+        <translation>Durumçubuğunu etkinleştirir veya kapatır</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished">Durumçubuğu
+        <translation>Durumçubuğu
 
 Durumçubuğunu Etkinleştirir/kapatır</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished">Yardım - İçindekiler...</translation>
+        <translation>Yardım - İçindekiler...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished">İçindekiler - Qucs Yardım</translation>
+        <translation>İçindekiler - Qucs Yardım</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished">Yardım - İçindekiler
+        <translation>Yardım - İçindekiler
 
 Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translation>
     </message>
@@ -5041,17 +5047,17 @@ Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translatio
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished">Başlarken...</translation>
+        <translation>Başlarken...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished">Qucs İle Başlarken</translation>
+        <translation>Qucs İle Başlarken</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished">Başlarken
+        <translation>Başlarken
 
 Qucs hakkında kısa tanıtım</translation>
     </message>
@@ -5061,7 +5067,7 @@ Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished">&amp;Qucs Hakkında...</translation>
+        <translation>&amp;Qucs Hakkında...</translation>
     </message>
     <message>
         <source>About the application</source>
@@ -5071,23 +5077,23 @@ Qucs hakkında kısa tanıtım</translation>
         <source>About
 
 About the application</source>
-        <translation type="unfinished">Hakkında
+        <translation>Hakkında
 
 Uygulama hakkında</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">Qt Hakkında</translation>
+        <translation>Qt Hakkında</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">Qt Hakkında...</translation>
+        <translation>Qt Hakkında...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished">Qt Hakkında
+        <translation>Qt Hakkında
 
 Trolltech tarafından Qt hakkında</translation>
     </message>
@@ -5097,239 +5103,251 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Kütük</translation>
+        <translation>&amp;Kütük</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Düzen</translation>
+        <translation>&amp;Düzen</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished">&amp;Ekle</translation>
+        <translation>&amp;Ekle</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished">&amp;Proje</translation>
+        <translation>&amp;Proje</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;Araçlar</translation>
+        <translation>&amp;Araçlar</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished">&amp;Simülasyon</translation>
+        <translation>&amp;Simülasyon</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Görünüm</translation>
+        <translation>&amp;Görünüm</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Yardım</translation>
+        <translation>&amp;Yardım</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished">Son simülasyondaki uyarılar ! için f5&apos;e basınız</translation>
+        <translation>Son benzetimdeki uyarılar ! için F5&apos;e basınız</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished">uyarı yok</translation>
+        <translation>uyarı yok</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished">Araç çubuğunu aç/kapa...</translation>
+        <translation>Araç çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished">Durum çubuğunu aç/kapa...</translation>
+        <translation>Durum çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Hakkında...</translation>
+        <translation>Hakkında...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation type="unfinished">Qucs Sürümü</translation>
+        <translation>Qucs Sürümü</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished">Quite Universal Circuit Simulator (Bayağı Evrensel Devre Simülatötü)</translation>
+        <translation>Quite Universal Circuit Simulator (Pek Evrensel Devre Simülatötü)</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğaltma hakkı (Ç)</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished">by Michael Margraf</translation>
+        <translation>by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished">Simülatör, Stefan Jahn tarafından</translation>
+        <translation>Simülatör, Stefan Jahn tarafından</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL simülatör &apos;FreeHDL&apos;, Edwin Naroska ve Marius Vollmer tarafından</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished">Jens Flucke ve Raimund Jacob&apos; a özel teşekkürler</translation>
+        <translation>Jens Flucke ve Raimund Jacob&apos; a özel teşekkürler</translation>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation>Mike Brinson&apos; a çok teşekkürler, VHDL cıktısını düzelttiği için</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished">Çevirmenler:</translation>
+        <translation>Çevirmenler:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation type="unfinished">Almanca, Stefan Jahn tarafından</translation>
+        <translation>Almanca, Stefan Jahn tarafından</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished">Polyaca, Dariusz Pienkowski tarafından</translation>
+        <translation>Polyaca, Dariusz Pienkowski tarafından</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation type="unfinished">Romence, Radu Circa tarafından</translation>
+        <translation>Romence, Radu Circa tarafından</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished">Fransızca, Vincent Habchi, F5RCS tarafından</translation>
+        <translation>Fransızca, Vincent Habchi, F5RCS tarafından</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished">Portekizce, Luciano Franca tarafından</translation>
+        <translation>Portekizce, Luciano Franca tarafından</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished">İspanyolca, Jose L. Redrejo Rodriguez tarafından</translation>
+        <translation>İspanyolca, Jose L. Redrejo Rodriguez tarafından</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished">Japonca, Toyoyuki Ishikawa tarafından</translation>
+        <translation>Japonca, Toyoyuki Ishikawa tarafından</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished">İtalyanca, Giorgio Luparia ve Claudio Girardi tarafından</translation>
+        <translation>İtalyanca, Giorgio Luparia ve Claudio Girardi tarafından</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished">İbranice, Dotan Nahum tarafından</translation>
+        <translation>İbranice, Dotan Nahum tarafından</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished">İsveççe, Peter Landgren tarafından</translation>
+        <translation>İsveççe, Peter Landgren tarafından</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished">Türkçe, Onur Çobanoğlu ve Özgür Çobanoğlu tarafından</translation>
+        <translation>Türkçe, Onur Çobanoğlu ve Özgür Çobanoğlu tarafından</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished">Macarca, Jozsef Bus tarafından</translation>
+        <translation>Macarca, Jozsef Bus tarafından</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir metin parçasını ara</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara
+
+Bir metin parçasını arar</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrar Ara</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynı metin parçasını tekrar ara</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara
+
+Aynı metin parçasını tekrar arar</translation>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>Belge başka bir yazılım tarafından değiştirilmiş !</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sürümü tekrar yüklemek mi yoksa tutmak mı istiyorsunuz ?</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrar yükle</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>Tut</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Belge Ayarları...</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kes
+
+Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili kısmı not tahtasına çoğaltır</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğalt
+
+Seçili kısmı not tahtasına çoğaltır</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm sayfayı gÖster</translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçme durumunu etkinleştirir</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Seç
+
+Seçme durumunu etkinleştirir</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL varlığı</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>Rusça, Igor Gorbounov tarafından</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir VHDL varlığı iskeleti koyar</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL varlığı
+
+Bir VHDL varlığı iskeleti koyar</translation>
     </message>
     <message>
         <source>Replace...</source>
@@ -5344,16 +5362,6 @@ text in VHDL code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deactivate/Activate
-
-Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select Markers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5365,6 +5373,16 @@ Deactivate/Activate the selected components</source>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate selected components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate/Activate
+
+Deactivate/Activate the selected components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5409,12 +5427,12 @@ Qucs için çok basit bit metin düzenleyici
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Kopyahakkı/Telif (K) 2004, 2005 by Michael Margraf
+        <translation>Çoğaltma hakkı/Telif (K) 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation>Dosya Adı Giriniz</translation>
+        <translation>Kütük Adı Giriniz</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
@@ -5439,7 +5457,7 @@ Qucs için çok basit bit metin düzenleyici
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation>Metin kaydedilmemiş değişiklikler içeriyor!
+        <translation>Metin, kaydedilmemiş değişiklikler içeriyor!
 </translation>
     </message>
     <message>
@@ -5460,7 +5478,7 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır: %1  -  Sütun: %2</translation>
     </message>
 </context>
 <context>
@@ -5491,11 +5509,11 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>Filter type:</source>
-        <translation>Filitre çeşidi:</translation>
+        <translation>Süzgeç çeşidi:</translation>
     </message>
     <message>
         <source>Filter class:</source>
-        <translation>Filitre sınıfı:</translation>
+        <translation>Süzgeç sınıfı:</translation>
     </message>
     <message>
         <source>Low pass</source>
@@ -5519,11 +5537,11 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>Corner frequency:</source>
-        <translation>Köşe frekansı:</translation>
+        <translation>Köşe sıklığı:</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
-        <translation>Bitiş frekansı:</translation>
+        <translation>Bitiş sıklığı:</translation>
     </message>
     <message>
         <source>Pass band ripple:</source>
@@ -5531,7 +5549,7 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>Impedance:</source>
-        <translation>Zahiri/Sanal Direnç:</translation>
+        <translation>Sanal Direnç:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
@@ -5550,7 +5568,7 @@ Qucs için çok basit bit metin düzenleyici
 Filter synthesis program
 </source>
         <translation>
-Filitre tasarım yazılımı
+Süzgeç tasarım yazılımı
 </translation>
     </message>
     <message>
@@ -5571,15 +5589,15 @@ Filitre tasarım yazılımı
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation>Bitiş frekansı başlangıç frekansından büyük olmadı.</translation>
+        <translation>Bitiş sıklığı başlangıç sıklığından büyük olmadı.</translation>
     </message>
     <message>
         <source>Filter order must not be less than two.</source>
-        <translation>Filitre derecesi 2&apos; den az olmamalı.</translation>
+        <translation>Süzgeç derecesi 2&apos; den az olmamalı.</translation>
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation>Bessel filitre derecesi 19&apos; dan büyük olmamalı.</translation>
+        <translation>Bessel süzgeç derecesi 19&apos; dan büyük olmamalı.</translation>
     </message>
     <message>
         <source>Successful</source>
@@ -5591,27 +5609,27 @@ Filitre tasarım yazılımı
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation>Başlangıç frekansı:</translation>
+        <translation>Başlangıç sıklık değeri:</translation>
     </message>
     <message>
         <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durdurma aralığı için sıklık:</translation>
     </message>
     <message>
         <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aralık sonu zayıflama miktarı:</translation>
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçecek olan aralığın sıklık değeri:</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçecek olan aralığın zayıflama miktarı:</translation>
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished">Kopyahakkı/Telif (K) 2005, 2006 by</translation>
+        <translation>Çoğaltma hakkı/Telif (Ç) 2005, 2006 </translation>
     </message>
 </context>
 <context>
@@ -6653,7 +6671,7 @@ Diyagramın grafiği üzerine işaretçi koyar</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="obsolete">Son simülasyon mesajlarını gösterir</translation>
+        <translation type="obsolete">Son benzetim mesajlarını gösterir</translation>
     </message>
     <message>
         <source>Show Last Messages
@@ -6661,7 +6679,7 @@ Diyagramın grafiği üzerine işaretçi koyar</translation>
 Shows the messages of the last simulation</source>
         <translation type="obsolete">Son Mesajları Göster
 
-Son simülasyondan olan mesajları gösterir</translation>
+Son benzetimden olan mesajları gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
@@ -6669,7 +6687,7 @@ Son simülasyondan olan mesajları gösterir</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="obsolete">Son simülasyondan son bağlantı listesini gösterir</translation>
+        <translation type="obsolete">Son benzetimden bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist
@@ -6677,7 +6695,7 @@ Son simülasyondan olan mesajları gösterir</translation>
 Shows the netlist of the last simulation</source>
         <translation type="obsolete">Son Bağlantı Listesini Göster
 
-Son simülasyonda hazırlanan son bağlantı listesini gösterir</translation>
+Son benzetimde hazırlanan bağlantı listesini gösterir</translation>
     </message>
     <message>
         <source>Toolbar</source>
@@ -6833,7 +6851,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="obsolete">Son simülasyondaki uyarılar ! için f5&apos;e basınız</translation>
+        <translation type="obsolete">Son benzetimdeki uyarılar ! için f5&apos;e basınız</translation>
     </message>
     <message>
         <source>no warnings</source>
@@ -6991,7 +7009,7 @@ Trolltech tarafından Qt hakkında</translation>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation>Kopyahakkı/Telif (C) 2005, Michael Margraf
+        <translation>Çoğaltma hakkı/Telif (Ç) 2005, Michael Margraf
 </translation>
     </message>
     <message>
@@ -7109,71 +7127,71 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dil (tekrar yüklemeden sonra etkinleşmek üzere):</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>sistem dili</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>İngilizce</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Almanca</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Fransızca</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>İspanyolca</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>İtalyanca</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polonyaca</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japonca</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumence</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>İbranice</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>İsveççe</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Türkçe</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Macarca</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portekizce</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukraynaca</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rusça</translation>
     </message>
 </context>
 <context>
@@ -7212,27 +7230,27 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation>Not Tahtasına Kopyala</translation>
+        <translation>Not Tahtasına Çoğalt</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation>&amp;Not tahtasına kopyala</translation>
+        <translation>&amp;Not tahtasına çoğalt</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation>Analiz et</translation>
+        <translation>Ayrıştır</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation>&amp;Analiz et</translation>
+        <translation>&amp;Ayrıştır</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation>Sentezle</translation>
+        <translation>Birleştir</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation>&amp;Sentezle</translation>
+        <translation>&amp;Birleştir</translation>
     </message>
     <message>
         <source>Help</source>
@@ -7276,27 +7294,27 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation>Substrat(alt tabaka) Parametreleri</translation>
+        <translation>Alttabaka Değişkenleri</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation>Bileşen Parametreleri</translation>
+        <translation>Bileşen Değişkenleri</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation>Fiziksel Parametreler</translation>
+        <translation>Fiziksel Değişkenler</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation>Elektriksel Parametreleri Türet</translation>
+        <translation>Elektriksel Değiskenleri Türet</translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation>Fiziksel Parametreleri Hesapla</translation>
+        <translation>Fiziksel Değişkenleri Hesapla</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation>Elektriksel Parametreler</translation>
+        <translation>Elektriksel Değişkenler</translation>
     </message>
     <message>
         <source>Calculated Results</source>
@@ -7360,11 +7378,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation>Göreceli Permeabilite</translation>
+        <translation>Göreceli Geçirgenlik</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation>Alt Tabakanın (substrat) Yüksekliği</translation>
+        <translation>Alttabakanın Yüksekliği</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
@@ -7388,7 +7406,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation>Frekans</translation>
+        <translation>Sıklık</translation>
     </message>
     <message>
         <source>Line Width</source>
@@ -7400,7 +7418,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation>Karakteristik Empedans</translation>
+        <translation>Öz Sanal Direnç</translation>
     </message>
     <message>
         <source>Electrical Length</source>
@@ -7444,11 +7462,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation>Çift-Durum (Even-mode) Empedans</translation>
+        <translation>Çift-Durum (Even-mode) Sanal Direnci</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation>Tek-Durum (Odd-Mode) Empedans</translation>
+        <translation>Tek-Durum (Odd-Mode) Sanal Direnci</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
@@ -7471,19 +7489,19 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation>Kopyahakkı/Telif (K) 2001, Gopal Narayanan
+        <translation>Çoğaltma hakkı/Telif (K) 2001, Gopal Narayanan
 </translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation>Kopyahakkı/Telif (K) 2002, Claudio Girardi
+        <translation>Çoğaltma hakkı/Telif (K) 2002, Claudio Girardi
 </translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation>Kopyahakkı/Telif (K) 2005, Stefan Jahn
+        <translation>Çoğaltma hakkı/Telif (K) 2005, Stefan Jahn
 </translation>
     </message>
     <message>
@@ -7532,11 +7550,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation>Şema not tahtasına kopyalandı.</translation>
+        <translation>Şema not tahtasına çoğaltıldı.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
-        <translation>İletim hattı çeşidi mümkün değil.</translation>
+        <translation>İletim hattı çeşidi kullanılabilir değil.</translation>
     </message>
 </context>
 <context>
@@ -7618,31 +7636,39 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin Ara</translation>
+    </message>
+    <message>
+        <source>Text to search for:</source>
+        <translation type="obsolete">Aranacak metin:</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaretçiden bulunduğu yerden</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Büyük/Küçük harfe hassas</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca tüm kelimeler</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Geriye doğru ara</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Ara...</translation>
+        <translation>Ara...</translation>
+    </message>
+    <message>
+        <source>Could not find search string!</source>
+        <translation type="obsolete">Aranan metin bulunamıyor!</translation>
     </message>
     <message>
         <source>Text to search for</source>
@@ -7693,7 +7719,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation>simülasyondan sonra dosyayı aç</translation>
+        <translation>benzetimden sonra veri göstericiyi aç</translation>
     </message>
     <message>
         <source>Simulation</source>
@@ -7752,7 +7778,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Yeni simülasyon başlatılıyor</translation>
+        <translation>Yeni benzetim başlatılıyor</translation>
     </message>
     <message>
         <source> at </source>
@@ -7840,7 +7866,7 @@ Hatalar:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: %1 çoğaltılamıyor !</translation>
     </message>
 </context>
 <context>
@@ -7871,7 +7897,7 @@ Hatalar:
     </message>
     <message>
         <source>include SPICE simulations</source>
-        <translation>SPICE simülasyonlarını kapsa</translation>
+        <translation>SPICE benzetimlerini kapsa</translation>
     </message>
     <message>
         <source>SPICE net nodes:</source>
@@ -7938,7 +7964,7 @@ Hatalar:
     <name>SweepDialog</name>
     <message>
         <source>Bias Points</source>
-        <translation>Kutuplama (bias) Noktaları</translation>
+        <translation>Kutuplama Noktaları</translation>
     </message>
     <message>
         <source>Close</source>
@@ -7956,15 +7982,15 @@ Hatalar:
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hata</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili yok!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa %2&apos; nin %1 &apos;i</translation>
     </message>
 </context>
 </TS>
