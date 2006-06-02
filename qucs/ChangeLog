@@ -1,3 +1,20 @@
+2006-05-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (startSimulator): Investigation
+	about path names under Win32.  It looks like only one
+	argument can be quoted on the command line of a batch
+	file.  Do not know (yet) if this also applies to other
+	binaries (*.exe files).
+
+	* qucsdigi (IEEELIBS): Linking with IEEE libraries.  Thus
+	it is now possible to the IEEE libraries shipped with
+	FreeHDL as well.  Also made this modification in the
+	'qucsdigi.bat' batch file for Win32.
+
+	* main.cpp (checkVersion): Added a convenience function for
+	version checks which was broken due to the 0.0.10 bump.
+	Using the function several times throughout the code.
+
 2006-05-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed several bugs of disappearing node labels
