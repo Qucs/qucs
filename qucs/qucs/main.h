@@ -71,5 +71,6 @@ QString StringNiceNum(double);
 void    convert2Unicode(QString&);
 QString properName (const QString&);
 bool    VHDL_Time(QString&, const QString&);
+bool    checkVersion(QString&);
 
 #endif

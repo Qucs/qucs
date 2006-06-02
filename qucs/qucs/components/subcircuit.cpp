@@ -158,11 +158,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
   if(Line.left(16) != "<Qucs Schematic ")  // wrong file type ?
     return -3;
 
-  QString s = PACKAGE_VERSION;
-  s.remove('.');
   Line = Line.mid(16, Line.length()-17);
-  Line.remove('.');
-  if(Line > s)   // wrong version number ? (only backward compatible)
+  if(!checkVersion(Line)) // wrong version number ?
     return -4;
 
   // read content *************************
