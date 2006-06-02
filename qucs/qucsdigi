@@ -3,7 +3,7 @@
 # qucsdigi - wrapper script for digital simulation
 #
 # Copyright (C) 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
 # Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
@@ -31,7 +31,7 @@ set -e
 if [ "$#" != 5 ]; then
     if [ "$#" != 6 ]; then
         echo "Usage: $0 <netlist.txt> <output.dat> <time> <directory> <bindirectory> [<convoption>]"
-        echo " Directory has to contain netlist.txt"
+        echo "Directory has to contain the file 'netlist.txt'."
         exit 1
     fi
     OPTION=$6
@@ -58,6 +58,7 @@ fi
 CXX=`freehdl-config --cxx`
 CXXFLAGS=`freehdl-config --cxxflags`
 LIBS=`freehdl-config --libtool`
+IEEELIBS=`freehdl-config --ieee`
 LDFLAGS=`freehdl-config --ldflags`
 
 cp $NAME digi.vhdl
@@ -78,12 +79,11 @@ $CXX $CXXFLAGS -c $NAME._main_.cc
 echo " done."
 
 echo -n "linking..."
-freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS -o $NAME
+freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS -o $NAME
 echo " done."
 
 echo -n "simulating..."
 ./$NAME -cmd "dc -f $NAME.vcd -t 1 ps -q;d;run $TIME;q;" >/dev/null
-#/home/margrafm/Desktop/endlos &
 wait $!
 echo " done."
 
