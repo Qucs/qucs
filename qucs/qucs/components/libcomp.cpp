@@ -101,11 +101,8 @@ int LibComp::loadSection(const QString& Name, QString& Section)
   if(Section.left(14) != "<Qucs Library ")  // wrong file type ?
     return -2;
 
-  QString s = PACKAGE_VERSION;
-  s.remove('.');
-  QString Line = Section.mid(14, 5);
-  Line.remove('.');
-  if(Line > s)   // wrong version number ? (only backward compatible)
+  QString Line = Section.mid(14, Line.length()-15);
+  if(!checkVersion(Line)) // wrong version number ?
     return -3;
 
   int Start, End;

@@ -25,16 +25,16 @@ REM set MINGWDIR=H:/Daten/Misc/mingw
 REM set FREEHDL=H:/Daten/Misc/freehdl
 REM set QUCSDIR=H:/Daten/Misc/Qucs
 
-set CXX=%MINGWDIR%/bin/g++
-set CXXFLAGS=-O2 -g -I"%FREEHDL%/include"
+set CXX=g++
+set CXXFLAGS=-O2 -I"%FREEHDL%/include"
 REM set NAMEOUT=digi.dat
-set LDFLAGS=-L"%FREEHDL%/lib" -Wl,--enable-auto-import -s
-set LIBS=-lfreehdl-kernel -lfreehdl-std -lregex
+set LDFLAGS=-L"%FREEHDL%/lib" -L"%FREEHDL%/lib/freehdl" -Wl,--enable-auto-import -s
+set LIBS=-lfreehdl-kernel -lfreehdl-std -lieee -lregex
 
-set PATH=%PATH%;%FREEHDL%/bin;%MINGWDIR%/bin
+set PATH=%PATH%;%FREEHDL%/bin;%MINGWDIR%/bin;%QUCSDIR%/bin
 
 echo running C++ conversion...
-%FREEHDL%/bin/freehdl-v2cc -m %NAME%._main_.cc -L "%FREEHDL%/share/freehdl/lib" -o %NAME%.cc %NAME%.vhdl
+freehdl-v2cc -m %NAME%._main_.cc -L"%FREEHDL%/share/freehdl/lib" -o %NAME%.cc %NAME%.vhdl
 
 echo compiling functions...
 %CXX% %CXXFLAGS% -c %NAME%.cc
@@ -49,7 +49,7 @@ echo simulating...
 %NAME%.exe -cmd "dc -f %NAME%.vcd -t 1 ps -q;d;run %TIME%;q;" > NUL
 
 echo running VCD conversion...
-%QUCSDIR%/bin/qucsconv.exe %OPTION% -if vcd -of qucsdata -i %NAME%.vcd -o %NAMEOUT%
+qucsconv %OPTION% -if vcd -of qucsdata -i %NAME%.vcd -o %NAMEOUT%
 
 goto end
 

@@ -55,6 +55,7 @@
 #include <qmenubar.h>
 #include <qprocess.h>
 #include <qlineedit.h>
+#include <qstringlist.h>
 
 #include "main.h"
 #include "qucs.h"
@@ -738,11 +739,8 @@ int QucsApp::testFile(const QString& DocName)
     return -3;
   }
 
-  QString s = PACKAGE_VERSION;
-  s.remove('.');
   Line = Line.mid(16, Line.length()-17);
-  Line.remove('.');
-  if(Line > s) {  // wrong version number ? (only backward compatible)
+  if(!checkVersion(Line)) { // wrong version number ?
     file.close();
     return -4;
   }
@@ -762,7 +760,7 @@ int QucsApp::testFile(const QString& DocName)
     }
 
     Line = Line.stripWhiteSpace();
-    s    = Line.section(' ',0,0);    // component type
+    QString s = Line.section(' ',0,0);    // component type
     if(s == "<Port") z++;
   }
   return -5;  // component field not closed
