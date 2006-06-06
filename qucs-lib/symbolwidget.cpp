@@ -87,7 +87,7 @@ void SymbolWidget::paintEvent(QPaintEvent*)
     Font.setPointSizeFloat(pt->Size);
     Painter.setFont(Font);
     Painter.setPen(pt->Color);
-    Painter.drawText(cx+pt->x, cy+pt->y, pt->s);
+    Painter.drawText(cx+pt->x, cy+pt->y, 0, 0, Qt::DontClip, pt->s);
   }
 }
 

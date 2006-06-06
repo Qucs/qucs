@@ -68,6 +68,8 @@ private:
   double calcY_2D(double, double, double);
   double calcZ_2D(double, double, double);
 
+  static int comparePoint3D(const void*, const void*);
+  static int comparePointZ(const void*, const void*);
   bool isHidden(int, int, tBound*, char*);
   void enlargeMemoryBlock(tPoint3D* &);
   void calcLine(tPoint3D* &, tPoint3D* &, tBound*, char*);

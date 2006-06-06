@@ -68,6 +68,7 @@ private slots:
 private:
   void closeEvent(QCloseEvent*);
 
+  int UserLibCount;
   SymbolWidget *Symbol;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;

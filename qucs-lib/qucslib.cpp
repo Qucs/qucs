@@ -41,12 +41,15 @@
 #include "searchdialog.h"
 
 
+QDir QucsHomeDir;  // Qucs user directory where all projects are located
+
 /* Constructor setups the GUI. */
 QucsLib::QucsLib()
 {
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption("Qucs Library Tool " PACKAGE_VERSION);
+  QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
   QMenuBar * menuBar = new QMenuBar (this);
 
@@ -120,10 +123,21 @@ QucsLib::QucsLib()
 
   // ......................................................
   // Put all available libraries into ComboBox.
-  QDir LibDir(QucsSettings.LibDir);
-  QStringList LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
-
+  UserLibCount = 0;
+  QStringList LibFiles;
   QStringList::iterator it;
+  QDir LibDir(QucsHomeDir);
+  if(LibDir.cd("user_lib")) { // user library directory exists ?
+    LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
+    UserLibCount = LibFiles.count();
+
+    for(it = LibFiles.begin(); it != LibFiles.end(); it++)
+      Library->insertItem((*it).left((*it).length()-4));
+  }
+
+  LibDir = QucsSettings.LibDir;
+  LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
+
   for(it = LibFiles.begin(); it != LibFiles.end(); it++)
     Library->insertItem((*it).left((*it).length()-4));
 
@@ -228,7 +242,12 @@ void QucsLib::slotSelectLibrary(int Index)
   LibraryComps.clear();
   DefaultSymbol = "";
 
-  QFile file(QucsSettings.LibDir + Library->text(Index) + ".lib");
+  QFile file;
+  if(Index < UserLibCount)  // Is it user library ?
+    file.setName(QucsHomeDir.absPath() + "/user_lib/" + Library->text(Index) + ".lib");
+  else
+    file.setName(QucsSettings.LibDir + Library->text(Index) + ".lib");
+
   if(!file.open(IO_ReadOnly)) {
     QMessageBox::critical(this, tr("Error"),
         tr("Cannot open \"%1\".").arg(
@@ -296,9 +315,14 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
   if(!Item) return;
 
   QStringList::Iterator CompString = LibraryComps.at(CompList->index(Item));
+  QString LibName = (*CompString).section('\n', 0, 0);
   CompDescr->setText("Name: " + Item->text());
-  CompDescr->append("Library: " + (*CompString).section('\n', 0, 0));
+  CompDescr->append("Library: " + LibName);
   CompDescr->append("----------------------------");
+
+  if(Library->currentItem() < UserLibCount)
+    LibName = QucsHomeDir.absPath() + "/user_lib/" + LibName;
+
 
   int Start, End;
   Start = (*CompString).find("<Description>");
@@ -326,8 +350,7 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
       (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
 
     if(ModelString.contains('\n') < 2)
-      Symbol->createSymbol(ModelString,
-                           (*CompString).section('\n', 0, 0), Item->text());
+      Symbol->createSymbol(ModelString, LibName, Item->text());
   }
 
 
@@ -340,10 +363,8 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
       return;
     }
     Symbol->setSymbol((*CompString).mid(Start, End-Start),
-                      (*CompString).section('\n', 0, 0), Item->text());
+                      LibName, Item->text());
   }
-  else if(!DefaultSymbol.isEmpty()) {  // has library a default symbol ?
-    Symbol->setSymbol(DefaultSymbol,
-                      (*CompString).section('\n', 0, 0), Item->text());
-  }
+  else if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
+    Symbol->setSymbol(DefaultSymbol, LibName, Item->text());
 }

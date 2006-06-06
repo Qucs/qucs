@@ -24,6 +24,7 @@
 
 #include <qcolor.h>
 #include <qptrlist.h>
+#include <qdatetime.h>
 
 
 // meaning of the values in a graph "Points" list
@@ -61,6 +62,7 @@ public:
   int     getSelected(int, int);
   Graph*  sameNewOne();
 
+  QDateTime lastLoaded;  // when it was loaded into memory
   int     yAxisNo;   // which y axis is used
   QPtrList<DataX>  cPointsX;
   double *cPointsY;

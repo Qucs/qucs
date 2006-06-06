@@ -236,7 +236,8 @@ public:
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker;
+          *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker,
+          *createLib;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -287,6 +288,7 @@ private slots:
   void slotCursorUp();
   void slotCursorDown();
   void slotResizePropEdit(const QString&);
+  void slotCreateLib();
 
 private:
   void showHTML(const QString&);
