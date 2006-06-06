@@ -16,4 +16,6 @@ gperfappgen
 gperfappgen.h
 gperfapphash.cpp
 gperfapphash.gph
-
+scan_citi.cpp
+parse_citi.cpp
+tokens_citi.h
