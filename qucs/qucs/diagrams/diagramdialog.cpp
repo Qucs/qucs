@@ -900,15 +900,18 @@ void DiagramDialog::slotApply()
       Diag->xAxis.autoScale = !(manualX->isChecked());
       changed = true;
     }
-    if(Diag->xAxis.limit_min != startX->text().toDouble()) {
+
+    // Use string compares for all floating point numbers, in
+    // order to avoid rounding problems.
+    if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
       Diag->xAxis.limit_min = startX->text().toDouble();
       changed = true;
     }
-    if(Diag->xAxis.step != stepX->text().toDouble()) {
+    if(QString::number(Diag->xAxis.step) != stepX->text()) {
       Diag->xAxis.step = stepX->text().toDouble();
       changed = true;
     }
-    if(Diag->xAxis.limit_max != stopX->text().toDouble()) {
+    if(QString::number(Diag->xAxis.limit_max) != stopX->text()) {
       Diag->xAxis.limit_max = stopX->text().toDouble();
       changed = true;
     }
@@ -916,15 +919,15 @@ void DiagramDialog::slotApply()
       Diag->yAxis.autoScale = !(manualY->isChecked());
       changed = true;
     }
-    if(Diag->yAxis.limit_min != startY->text().toDouble()) {
+    if(QString::number(Diag->yAxis.limit_min) != startY->text()) {
       Diag->yAxis.limit_min = startY->text().toDouble();
       changed = true;
     }
-    if(Diag->yAxis.step != stepY->text().toDouble()) {
+    if(QString::number(Diag->yAxis.step) != stepY->text()) {
       Diag->yAxis.step = stepY->text().toDouble();
       changed = true;
     }
-    if(Diag->yAxis.limit_max != stopY->text().toDouble()) {
+    if(QString::number(Diag->yAxis.limit_max) != stopY->text()) {
       Diag->yAxis.limit_max = stopY->text().toDouble();
       changed = true;
     }
@@ -932,15 +935,15 @@ void DiagramDialog::slotApply()
       Diag->zAxis.autoScale = !(manualZ->isChecked());
       changed = true;
     }
-    if(Diag->zAxis.limit_min != startZ->text().toDouble()) {
+    if(QString::number(Diag->zAxis.limit_min) != startZ->text()) {
       Diag->zAxis.limit_min = startZ->text().toDouble();
       changed = true;
     }
-    if(Diag->zAxis.step != stepZ->text().toDouble()) {
+    if(QString::number(Diag->zAxis.step) != stepZ->text()) {
       Diag->zAxis.step = stepZ->text().toDouble();
       changed = true;
     }
-    if(Diag->zAxis.limit_max != stopZ->text().toDouble()) {
+    if(QString::number(Diag->zAxis.limit_max) != stopZ->text()) {
       Diag->zAxis.limit_max = stopZ->text().toDouble();
       changed = true;
     }

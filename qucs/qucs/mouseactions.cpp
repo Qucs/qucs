@@ -1837,6 +1837,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
 {
   Doc->releaseKeyboard();  // allow keyboard inputs again
+  QucsMain->editText->setHidden(true);
   editElement(Doc, Event);
 }
 

@@ -303,6 +303,13 @@ void QucsApp::initActions()
 	tr("Add Files to Project\n\nCopies files to project directory"));
   connect(addToProj, SIGNAL(activated()), SLOT(slotAddToProject()));
 
+  createLib = new QAction("Create Library...",
+		 tr("Create &Library..."), CTRL+SHIFT+Key_L, this);
+  createLib->setStatusTip(tr("Create Library from Subcircuits"));
+  createLib->setWhatsThis(
+	tr("Create Library\n\nCreate Library from Subcircuits"));
+  connect(createLib, SIGNAL(activated()), SLOT(slotCreateLib()));
+
   magAll = new QAction("View All",
                 QIconSet(QImage(QucsSettings.BitmapDir + "viewmagfit.png")),
                 tr("View All"), Key_0, this);
@@ -639,6 +646,8 @@ void QucsApp::initMenuBar()
   addToProj->addTo(projMenu);
   projClose->addTo(projMenu);
   projDel->addTo(projMenu);
+  projMenu->insertSeparator();
+  createLib->addTo(projMenu);
 
   toolMenu = new QPopupMenu();  // menuBar entry toolMenu
   callEditor->addTo(toolMenu);

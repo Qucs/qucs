@@ -321,6 +321,19 @@ void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D* &MemEnd,
 }
 
 // --------------------------------------------------------------
+// Compare functions for GNU qsort routine.
+int Rect3DDiagram::comparePoint3D(const void *Point1, const void *Point2)
+{
+  return ((tPoint3D*)Point1)->No - ((tPoint3D*)Point2)->No;
+}
+int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
+{
+  if((((tPointZ*)Point2)->z - ((tPointZ*)Point1)->z) < 0.0f)
+    return -1;
+  return 1;
+}
+
+// --------------------------------------------------------------
 // Removes the invisible parts of the graph.
 void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
@@ -447,21 +460,10 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
 
   // ..........................................
-  // bubble sort algorithm -> sort z-coordinates (greatest first).
+  // Sort z-coordinates (greatest first).
   // After this the polygons that have the smallest distance to the
   // viewer are on top of the list and thus, will be processed first.
-  tPointZ vPZ;
-  for(i=1; i<=Size; i++) {
-    zp = zMem;
-    for(j=0; j<(Size-i); j++) {
-      if(zp->z < (zp+1)->z) {
-	vPZ = *zp;
-	*zp = *(zp+1);
-	*(zp+1) = vPZ;
-      }
-      zp++;
-    }
-  }
+  qsort(zMem, Size, sizeof(tPointZ), comparePointZ);
 
 #if 0
   qDebug("--------------------------- z sorting");
@@ -524,20 +526,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
   free(zMem);
 
-  // bubble sort algorithm -> sort "No" (least one first)
-  Size = pMem - Mem;
-  tPoint3D v3D;
-  for(i=1; i<=Size; i++) {
-    p = Mem;
-    for(j=0; j<(Size-i); j++) {
-      if(p->No > (p+1)->No) {
-	v3D = *p;
-	*p = *(p+1);
-	*(p+1) = v3D;
-      }
-      p++;
-    }
-  }
+  // sort "No" (least one first)
+  qsort(Mem, pMem - Mem, sizeof(tPoint3D), comparePoint3D);
 
 #if 0
   qDebug("--------------------------- last sorting %d", pMem-Mem);

@@ -1023,7 +1023,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
   }
 
   if(NumPorts < 0)
-    (*stream) << ".Def:End\n\n";
+    (*stream) << ".Def:End\n";
   else
     (*stream) << "end architecture;\n\n";
 
@@ -1098,7 +1098,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 //    stream << "library ieee;\nuse ieee.std_logic_1164.all;\n\n";
 
 
-  int countInit = 0;
+  int countInit = 0;  // counts the nodesets to give them unique names
   if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
     return -10;
 
