@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.h,v 1.6 2006-02-06 09:50:15 raimi Exp $
+ * $Id: check_touchstone.h,v 1.7 2006-06-06 07:45:51 raimi Exp $
  *
  */
 
@@ -36,6 +36,10 @@
    information from Agilent Corporation (the originator of Touchstone), is
    a formal specification of the Touchstone file format, intended for use
    with documents and specifications produced by the EIA/IBIS Open Forum. */
+
+class dataset;
+class vector;
+class strlist;
 
 extern dataset * touchstone_result;
 extern vector  * touchstone_vector;
@@ -68,6 +72,8 @@ int touchstone_error (char *);
 int touchstone_lex (void);
 int touchstone_lex_destroy (void);
 int touchstone_check (void);
+void touchstone_init (void);
+void touchstone_destroy (void);
 
 __END_DECLS
 

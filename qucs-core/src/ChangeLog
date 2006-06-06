@@ -1,3 +1,15 @@
+2006-06-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_citi.y, scan_citi.l, check_citi.cpp, check_citi.h:
+	New files implementing the parser, lexer and checker for
+	CITIfiles.
+
+	* dataset.cpp (load_citi): New function which is able to load
+	a CITIfile into a dataset.
+
+	* check_touchstone.cpp: Added touchstone_init() and 
+	touchstone_destroy() functions for use in the converter.
+
 2006-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* fourier.cpp: Fixed wrapper functions fft_1d() and dft_1d().

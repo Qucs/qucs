@@ -26,6 +26,9 @@ files.
 Version 0.0.10
 --------------
 
+ * support for CITIfile and Touchstone as an import file format in
+   qucsconv
+
 Version 0.0.9
 -------------
 

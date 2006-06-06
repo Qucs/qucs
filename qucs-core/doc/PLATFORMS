@@ -7,6 +7,7 @@ i686-pc-linux-gnu		gcc 2.95.4	0.0.2	ok
 i586-pc-linux-gnu		gcc 2.95.3	0.0.2	ok
 x86_64-unknown-linux-gnu	gcc 3.3.4	0.0.4	ok
 x86_64-unknown-freebsd6.0	gcc 3.4.4	0.0.8	ok
+x86_64-unknown-freebsd6.1	gcc 3.4.4	0.0.9	ok
 x86_64-pc-linux-gnu		gcc 3.4.3	0.0.5	ok
 i686-pc-cygwin			gcc 2.95.3-10	0.0.2	ok
 i386-pc-mingw32			gcc 2.95.3-10	0.0.2	ok, using -mno-cygwin
