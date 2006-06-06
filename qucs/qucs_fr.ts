@@ -871,6 +871,78 @@
     </message>
 </context>
 <context>
+    <name>LibraryDialog</name>
+    <message>
+        <source>Create Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose subcircuits:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Créer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No subcircuits!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Please insert a library name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose at least one subcircuit!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Attention</translation>
+    </message>
+    <message>
+        <source>Cannot create user library directory !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A system library with this name already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A library with this name already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Error: Cannot create library!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Successfully created library.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -5688,6 +5760,24 @@ Selects all diagram markers of the document</source>
     </message>
     <message>
         <source>Align/Distribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please open project with subcircuits!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create &amp;Library...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Library from Subcircuits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Library
+
+Create Library from Subcircuits</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
