@@ -61,6 +61,7 @@ public:
   void  switchPaintMode();
   int   adjustPortNumbers();
   void  reloadGraphs();
+  bool  createSubcircuitSymbol();
 
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);
@@ -203,11 +204,10 @@ public:
   bool createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*, int);
   int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
   QString createNetlist(QTextStream&, int);
-
+  bool loadDocument();
 
 private:
   int  saveDocument();
-  bool loadDocument();
 
   bool loadProperties(QTextStream*);
   void simpleInsertComponent(Component*);

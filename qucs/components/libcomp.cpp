@@ -89,7 +89,8 @@ void LibComp::createSymbol()
 // Loads the section with name "Name" from library file into "Section".
 int LibComp::loadSection(const QString& Name, QString& Section)
 {
-  QFile file(QucsSettings.LibDir + Props.first()->Value + ".lib");
+  QDir Directory(QucsSettings.LibDir);
+  QFile file(Directory.absFilePath(Props.first()->Value + ".lib"));
   if(!file.open(IO_ReadOnly))
     return -1;
 
@@ -195,6 +196,10 @@ QString LibComp::NetList()
 
   // output property
   QString Type = Props.first()->Value;
+  if(!QDir::isRelativePath(Type)) {
+    QFileInfo Info(Type);
+    Type = Info.fileName();
+  }
   Type += "_" + Props.next()->Value;
   Type.replace(QRegExp("\\W"), "_");
   s += " Type=\""+Type+"\"";   // type for subcircuit

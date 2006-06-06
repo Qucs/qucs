@@ -663,13 +663,14 @@ void QucsApp::slotCMenuDelGroup()
 void QucsApp::readProjects()
 {
   QDir ProjDir(QDir::homeDirPath());
-  if(!ProjDir.cd(".qucs")) // work directory exists ?
+  if(!ProjDir.cd(".qucs")) { // work directory exists ?
     if(!ProjDir.mkdir(".qucs")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
-			tr("Cannot create work directory !"));
+                   tr("Cannot create work directory !"));
       return;
     }
-  ProjDir.cd(".qucs");
+    ProjDir.cd(".qucs");
+  }
 
   // get all directories
   QStringList PrDirs = ProjDir.entryList("*", QDir::Dirs, QDir::Name);

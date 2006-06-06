@@ -664,8 +664,15 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    loadVarData(defaultDataSet, pg);  // load data, determine max/min values
+  int No = 0;
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+    if(loadVarData(defaultDataSet, pg) != 1)   // load data, determine max/min values
+      No++;
+    pg->lastLoaded = QDateTime::currentDateTime();
+  }
+
+  if(No < 1)   // Are dataset files unchanged ?
+    return;    // -> no update neccessary
 
   if(xAxis.min > xAxis.max)
     xAxis.min = xAxis.max = 0.0;
@@ -786,27 +793,34 @@ void Diagram::updateGraphData()
 }
 
 // --------------------------------------------------------------------------
-bool Diagram::loadVarData(const QString& fileName, Graph *g)
+int Diagram::loadVarData(const QString& fileName, Graph *g)
 {
-  g->countY = 0;
-  g->cPointsX.clear();
-  if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
-  if(g->Var.isEmpty()) return false;
-
   QFile file;
   QString Variable;
+  QFileInfo Info(fileName);
+
   int pos = g->Var.find(':');
   if(pos <= 0) {
     file.setName(fileName);
     Variable = g->Var;
   }
   else {
-    QFileInfo Info(fileName);
     file.setName(Info.dirPath()+QDir::separator() + g->Var.left(pos)+".dat");
     Variable = g->Var.mid(pos+1);
   }
 
-  if(!file.open(IO_ReadOnly))  return false;
+  Info.setFile(file);
+  if(g->lastLoaded.isValid())
+    if(g->lastLoaded > Info.lastModified())
+      return 1;
+
+  g->countY = 0;
+  g->cPointsX.clear();
+  if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
+  if(g->Var.isEmpty()) return 0;
+
+
+  if(!file.open(IO_ReadOnly))  return 0;
 
   // *****************************************************************
   // To strongly speed up the file read operation the whole file is
@@ -815,9 +829,9 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   FileContent = file.readAll();
   file.close();
   char *FileString = FileContent.data();
-  if(!FileString)  return false;
+  if(!FileString)  return 0;
   char *pPos = FileString+FileContent.size()-1;
-  if(*pPos > ' ')  if(*pPos != '>')  return false;
+  if(*pPos > ' ')  if(*pPos != '>')  return 0;
   *pPos = 0;
 
 
@@ -838,12 +852,12 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     pFile = strstr(pFile+4, Variable.latin1());
   }
 
-  if(!pFile)  return false;   // data not found
+  if(!pFile)  return 0;   // data not found
 
   QString Line, tmp;
   pFile += Variable.length();
   pPos = strchr(pFile, '>');
-  if(!pPos)  return false;   // file corrupt
+  if(!pPos)  return 0;   // file corrupt
   *pPos = 0;
   Line = QString(pFile);
   *pPos = '>';
@@ -867,7 +881,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   if(isIndep) {    // create independent variable by myself ?
     counting = Line.toInt(&ok);  // get number of values
     g->cPointsX.append(new DataX("number", 0, counting));
-    if(!ok)  return false;
+    if(!ok)  return 0;
 
     p = new double[counting];  // memory of new independent variable
     g->countY = 1;
@@ -886,12 +900,12 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
       pa = &xAxis;
       if(pD == g->cPointsX.getFirst()) {
-	xAxis.min = min_tmp;    // only count first independent variable
-	xAxis.max = max_tmp;
+        xAxis.min = min_tmp;    // only count first independent variable
+        xAxis.max = max_tmp;
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
       counting = loadIndepVarData(pD->Var, FileString, pa, g);
-      if(counting <= 0)  return false;
+      if(counting <= 0)  return 0;
 
       g->countY *= counting;
     }
@@ -923,7 +937,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     else {
       if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) {
         delete[] g->cPointsY;  g->cPointsY = 0;
-        return false;
+        return 0;
       }
       *pPos = *pEnd;  // overwrite 'j' with sign
       pEnd = 0;
@@ -954,7 +968,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
   }
 
-  return true;
+  return 2;
 }
 
 // --------------------------------------------------------------------------

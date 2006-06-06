@@ -39,6 +39,7 @@
 #include "dialogs/matchdialog.h"
 #include "dialogs/changedialog.h"
 #include "dialogs/searchdialog.h"
+#include "dialogs/librarydialog.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -917,8 +918,8 @@ void QucsApp::slotCursorDown()
       movingElements.clear();
     }
     else {
-      if(Doc->scrollUp(Doc->verticalScrollBar()->lineStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->lineStep());
+      if(Doc->scrollDown(-Doc->verticalScrollBar()->lineStep()))
+        Doc->scrollBy(0, Doc->verticalScrollBar()->lineStep());
     }
 
     Doc->viewport()->update();
@@ -1050,4 +1051,16 @@ void QucsApp::slotResizePropEdit(const QString& t)
 {
   editText->resize(editText->fontMetrics().width(t)+4,
                    editText->fontMetrics().lineSpacing());
+}
+
+// -----------------------------------------------------------
+void QucsApp::slotCreateLib()
+{
+  if(ProjName.isEmpty()) {
+    QMessageBox::critical(this, tr("Error"), tr("Please open project with subcircuits!"));
+    return;
+  }
+
+  LibraryDialog *d = new LibraryDialog(this, ConSchematics);
+  d->exec();
 }
