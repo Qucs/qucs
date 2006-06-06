@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.19 2006/05/16 11:40:25 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.20 2006/06/06 07:45:51 raimi Exp $
  *
  */
 
@@ -35,6 +35,8 @@
 #include "precision.h"
 #include "check_spice.h"
 #include "check_vcd.h"
+#include "check_citi.h"
+#include "check_touchstone.h"
 #include "qucs_producer.h"
 #include "csv_producer.h"
 
@@ -49,15 +51,19 @@ struct actionset_t {
 
 /* required forward declarations */
 int spice2qucs (struct actionset_t *, char *, char *);
-int vcd2qucs (struct actionset_t *, char *, char *);
-int qucs2csv (struct actionset_t *, char *, char *);
+int vcd2qucs   (struct actionset_t *, char *, char *);
+int qucs2csv   (struct actionset_t *, char *, char *);
+int citi2qucs  (struct actionset_t *, char *, char *);
+int touch2qucs (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
-  { "spice",    "qucs",     spice2qucs },
-  { "spice",    "qucslib",  spice2qucs },
-  { "vcd",      "qucsdata", vcd2qucs },
-  { "qucsdata", "csv",      qucs2csv },
+  { "spice",    "  qucs",     spice2qucs },
+  { "spice",      "qucslib",  spice2qucs },
+  { "vcd",        "qucsdata", vcd2qucs   },
+  { "qucsdata",   "csv",      qucs2csv   },
+  { "citi",       "qucsdata", citi2qucs  },
+  { "touchstone", "qucsdata", touch2qucs },
   { NULL, NULL, NULL}
 };
 
@@ -220,7 +226,7 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
   if ((qucs_out = open_file (outfile, "w")) == NULL)
     return -1;
   if (!strcmp (action->out, "qucsdata"))
-    qucsdata_producer ();
+    qucsdata_producer_vcd ();
   fclose (qucs_out);
   vcd_destroy ();
   return 0;
@@ -244,4 +250,58 @@ int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
     return ret;
   }
   return -1;
+}
+
+// CITIfile to Qucs conversion.
+int citi2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  citi_init ();
+  if ((citi_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (citi_parse () != 0) {
+    ret = -1;
+  } else if (citi_check () != 0) {
+    ret = -1;
+  }
+  citi_lex_destroy ();
+  if (citi_in)
+    fclose (citi_in);
+  if (ret) {
+    citi_destroy ();
+    return -1;
+  }
+
+  if (!strcmp (action->out, "qucsdata")) {
+    citi_result->setFile (outfile);
+    qucsdata_producer (citi_result);
+  }
+  citi_destroy ();
+  return 0;
+}
+
+// Touchstone to Qucs conversion.
+int touch2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  touchstone_init ();
+  if ((touchstone_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (touchstone_parse () != 0) {
+    ret = -1;
+  } else if (touchstone_check () != 0) {
+    ret = -1;
+  }
+  touchstone_lex_destroy ();
+  if (touchstone_in)
+    fclose (touchstone_in);
+  if (ret) {
+    touchstone_destroy ();
+    return -1;
+  }
+
+  if (!strcmp (action->out, "qucsdata")) {
+    touchstone_result->setFile (outfile);
+    qucsdata_producer (touchstone_result);
+  }
+  touchstone_destroy ();
+  return 0;
 }

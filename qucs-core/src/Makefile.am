@@ -23,7 +23,8 @@
 #
 
 EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
-	parse_touchstone.y scan_touchstone.l gperfapphash.cpp
+	parse_touchstone.y scan_touchstone.l parse_citi.y scan_citi.l \
+	gperfapphash.cpp
 
 SUBDIRS = components . converter
 
@@ -59,7 +60,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
 	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
 	valuelist.h pair.h characteristic.h range.h history.h fspecial.h      \
-	devstates.h
+	devstates.h tokens_citi.h check_citi.h 
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -67,12 +68,14 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp matrix.cpp fspecial.cpp precision.c
+	matvec.cpp matrix.cpp fspecial.cpp precision.c parse_citi.cpp       \
+	scan_citi.cpp check_citi.cpp
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 	parse_dataset.cpp tokens_dataset.h tokens_netlist.h           \
-	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp
+	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp  \
+	parse_citi.cpp tokens_citi.h scan_citi.cpp
 
 scan_netlist.cpp: scan_netlist.l
 	$(LEX) -o$@ $<
@@ -83,6 +86,9 @@ scan_dataset.cpp: scan_dataset.l
 scan_touchstone.cpp: scan_touchstone.l
 	$(LEX) -o$@ $<
 
+scan_citi.cpp: scan_citi.l
+	$(LEX) -o$@ $<
+
 parse_netlist.cpp: parse_netlist.y
 	$(YACC) -v -o $@ --defines=tokens_netlist.h $<
 
@@ -91,6 +97,9 @@ parse_dataset.cpp: parse_dataset.y
 
 parse_touchstone.cpp: parse_touchstone.y
 	$(YACC) -v -o $@ --defines=tokens_touchstone.h $<
+
+parse_citi.cpp: parse_citi.y
+	$(YACC) -v -o $@ --defines=tokens_citi.h $<
 else
 generated_FILES = 
 endif

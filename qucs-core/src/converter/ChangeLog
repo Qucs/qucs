@@ -1,3 +1,10 @@
+2006-06-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Adapted the qucs dataset producer.
+
+	* qucsconv.cpp: Added touchstone->qucsdata and citi->qucsdata
+	wrapper functions.
+
 2006-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed 'Theta' damping factor of sinusoidal

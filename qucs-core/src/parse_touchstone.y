@@ -2,7 +2,7 @@
 
 %{
 /*
- * parse_touchstone.y - parser for Touchstone Files
+ * parse_touchstone.y - parser for Touchstone files
  *
  * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
  *
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_touchstone.y,v 1.4 2005/10/24 09:10:25 raimi Exp $
+ * $Id: parse_touchstone.y,v 1.5 2006/06/06 07:45:51 raimi Exp $
  *
  */
 

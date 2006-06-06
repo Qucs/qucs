@@ -31,7 +31,8 @@ unfixed) have a look at the file BUGS.
 - Translate switches in spice netlists in the netlist converter.
 - Support for equation defined voltage/current sources or components.
 - Allow equations in subcircuits.
-- Support for Citi-files as an export file format in the Qucs Converter.
+	- Support for CITIfiles as an import file format in the Qucs
+	  Converter.
 	- Support for comma separated values (CSV) as an export
 	  file format in the Qucs Converter.
 	- Implement yval(values,xval) and xval(values,yval) evaluation

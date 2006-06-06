@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.17 2006/03/27 09:55:49 raimi Exp $
+ * $Id: dataset.cpp,v 1.18 2006/06/06 07:45:51 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "dataset.h"
 #include "check_dataset.h"
 #include "check_touchstone.h"
+#include "check_citi.h"
 
 // Constructor creates an unnamed instance of the dataset class.
 dataset::dataset () : object () {
@@ -421,4 +422,29 @@ dataset * dataset::load_touchstone (const char * file) {
   touchstone_lex_destroy ();
   touchstone_result->setFile (file);
   return touchstone_result;
+}
+
+/* The function read a full dataset from the given CITIfile and
+   returns it.  On failure the function emits appropriate error
+   messages and returns NULL. */
+dataset * dataset::load_citi (const char * file) {
+  FILE * f;
+  if ((f = fopen (file, "r")) == NULL) {
+    logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
+    return NULL;
+  }
+  citi_in = f;
+  citi_restart (citi_in);
+  if (citi_parse () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  if (citi_check () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  fclose (f);
+  citi_lex_destroy ();
+  citi_result->setFile (file);
+  return citi_result;
 }

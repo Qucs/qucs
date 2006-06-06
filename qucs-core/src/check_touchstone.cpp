@@ -1,7 +1,7 @@
 /*
  * check_touchstone.cpp - checker for Touchstone files
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.13 2005/12/12 07:46:52 raimi Exp $
+ * $Id: check_touchstone.cpp,v 1.14 2006/06/06 07:45:51 raimi Exp $
  *
  */
 
@@ -505,4 +505,24 @@ int touchstone_check (void) {
   touchstone_finalize ();
 
   return errors ? -1 : 0;
+}
+
+// Destroys data used by the Touchstone file lexer, parser and checker.
+void touchstone_destroy (void) {
+  if (touchstone_result != NULL) {
+    // delete associated dataset
+    delete touchstone_result;
+    touchstone_result = NULL;
+  }
+  if (touchstone_vector != NULL) {
+    touchstone_finalize ();
+    touchstone_vector = NULL;
+  }
+}
+
+// Initializes the Touchstone file checker.
+void touchstone_init (void) {
+  touchstone_result = NULL;
+  touchstone_vector = NULL;
+  touchstone_idents = NULL;
 }

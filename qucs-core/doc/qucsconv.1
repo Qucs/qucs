@@ -1,4 +1,4 @@
-.TH QucsConverter "1" "November 2004" "Debian/GNU Linux" "User Commands"
+.TH QucsConverter "1" "June 2006" "Debian/GNU Linux" "User Commands"
 .SH NAME
 QucsConverter \- Command line tool for data conversion.
 .SH SYNOPSIS
@@ -11,9 +11,9 @@ netlists, data files and schematics from other software into data
 formats used by \fBQucs\fR and its simulation backend.
 
 The software aims to support a variety of data formats and currently
-supports Qucs datasets, SPICE netlists and VCD files as input data
-format and CSV files, Qucs netlists, libraries and datasets as output
-data format.
+supports Qucs datasets, SPICE netlists, CITIfiles, Touchstone and VCD
+files as input data format and CSV files, Qucs netlists, libraries and
+datasets as output data format.
 
 .SH OPTIONS
 .TP
@@ -30,7 +30,7 @@ use file as input file (default stdin)
 use file as output file (default stdout)
 .TP
 \fB\-if\fR FORMAT
-input data specification (e.g. \fBqucsdata\fR, \fBspice\fR or \fBvcd\fR)
+input data specification (e.g. \fBtouchstone\fR, \fBciti\fR, \fBqucsdata\fR, \fBspice\fR or \fBvcd\fR)
 .TP
 \fB\-of\fR FORMAT
 output data specification (e.g. \fBcsv\fR, \fBqucs\fR, \fBqucsdata\fR or \fBqucslib\fR)

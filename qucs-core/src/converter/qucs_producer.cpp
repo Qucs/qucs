@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.16 2006/01/09 09:11:07 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.17 2006/06/06 07:45:51 raimi Exp $
  *
  */
 
@@ -31,6 +31,10 @@
 #include <time.h>
 #include <string.h>
 
+#include "object.h"
+#include "complex.h"
+#include "vector.h"
+#include "dataset.h"
 #include "netdefs.h"
 #include "check_spice.h"
 #include "check_vcd.h"
@@ -389,8 +393,8 @@ void qucslib_producer (void) {
   }
 }
 
-/* This function is the overall Qucs dataset producer. */
-void qucsdata_producer (void) {
+/* This function is the Qucs dataset producer for VCD files. */
+void qucsdata_producer_vcd (void) {
   struct dataset_variable * ds;
   struct dataset_value * dv;
   fprintf (qucs_out, "<Qucs Dataset " PACKAGE_VERSION ">\n");
@@ -409,4 +413,9 @@ void qucsdata_producer (void) {
     else if (ds->type == DATA_DEPENDENT)
       fprintf (qucs_out, "</dep>\n");
   }
+}
+
+/* This function is the Qucs dataset producer. */
+void qucsdata_producer (dataset * data) {
+  data->print ();
 }
