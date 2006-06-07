@@ -602,6 +602,10 @@
         <source>Cancel</source>
         <translation type="unfinished">בטל</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">שגיאה</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>

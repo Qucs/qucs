@@ -626,6 +626,10 @@
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hiba</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>

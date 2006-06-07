@@ -1,8 +1,16 @@
+2006-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (startSimulator): Applying correct
+	command line for Win32 systems as well.
+
+	* dialogs/digisettingsdialog.cpp: Checking for correct
+	simulation time settings.
+
 2006-06-04  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* speed up 3D calculation
 	* reload diagram graphes only if dataset is newer
-	* fixed bug scrooling with cursor down key
+	* fixed bug scrolling with cursor down key
 	* fixed small bug setting wrong changed status
 	* fixed bug loosing some mouse actions
 	* new feature: creating user library from subcircuits

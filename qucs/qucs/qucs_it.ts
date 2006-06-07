@@ -638,6 +638,10 @@
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
