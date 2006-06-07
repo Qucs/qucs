@@ -594,6 +594,10 @@
         <source>Cancel</source>
         <translation type="unfinished">Porzuć</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Błąd</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>

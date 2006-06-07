@@ -589,6 +589,10 @@
         <source>Cancel</source>
         <translation type="unfinished">Revocare</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
