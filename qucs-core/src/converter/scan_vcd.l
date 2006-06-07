@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.4 2006-05-16 11:40:25 raimi Exp $
+ * $Id: scan_vcd.l,v 1.5 2006-06-07 08:34:37 raimi Exp $
  *
  */
 
@@ -56,6 +56,7 @@
 WS       [ \t\n\r]
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
+INT      [+-]?{DIGIT}+
 REAL     [+-]?{DIGIT}+("."{DIGIT}+)?{EXPONENT}?
 BINARY   [01xXzZ]+
 DECIMAL  {DIGIT}+
@@ -167,17 +168,17 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
   return PositiveInteger;
 }
 
-<INITIAL>[rR] {
+<INITIAL,DUMP>[rR] {
   BEGIN(FLOAT);
   return 'R';
 }
 
-<INITIAL>[bB] {
+<INITIAL,DUMP>[bB] {
   BEGIN(BIN);
   return 'B';
 }
 
-<FLOAT>{REAL} {
+<FLOAT>{REAL}|{INT} {
   vcd_lval.value = strdup (vcd_text);
   BEGIN(CHANGE);
   return Real;

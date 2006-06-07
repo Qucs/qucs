@@ -4,7 +4,7 @@
 /*
  * parse_touchstone.y - parser for Touchstone files
  *
- * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_touchstone.y,v 1.5 2006-06-06 07:45:51 raimi Exp $
+ * $Id: parse_touchstone.y,v 1.6 2006-06-07 08:34:37 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
+#define YYMAXDEPTH 1000000
 
 #include "logging.h"
 #include "complex.h"

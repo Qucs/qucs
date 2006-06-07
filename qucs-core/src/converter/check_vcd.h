@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.6 2006-05-03 09:43:56 raimi Exp $
+ * $Id: check_vcd.h,v 1.7 2006-06-07 08:34:37 raimi Exp $
  *
  */
 
@@ -176,6 +176,7 @@ struct dataset_variable {
   int size;                      // length of the vector
   char * ident;                  // variable identifier
   char * dependencies;           // variable dependencies (if dependent)
+  int isreal;                    // indicates type of values
   struct dataset_value * values; // list of values
   struct dataset_variable * next;
 };

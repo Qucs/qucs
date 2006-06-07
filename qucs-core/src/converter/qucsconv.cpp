@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.20 2006-06-06 07:45:51 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.21 2006-06-07 08:34:37 raimi Exp $
  *
  */
 
@@ -58,7 +58,7 @@ int touch2qucs (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
-  { "spice",    "  qucs",     spice2qucs },
+  { "spice",      "qucs",     spice2qucs },
   { "spice",      "qucslib",  spice2qucs },
   { "vcd",        "qucsdata", vcd2qucs   },
   { "qucsdata",   "csv",      qucs2csv   },

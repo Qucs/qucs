@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.8 2006-05-03 09:43:56 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.9 2006-06-07 08:34:37 raimi Exp $
  *
  */
 
@@ -278,6 +278,8 @@ vcd_create_dataset (struct vcd_vardef * var) {
 	dv = (struct dataset_value *)
 	  calloc (1, sizeof (struct dataset_value));
 	dv->value = vcd_create_value (vv, var->size);
+	// get value attribute
+	ds->isreal = vv->isreal;
 	// chain the list of values
 	if (!current)
 	  ds->values = dv;
