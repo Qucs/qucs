@@ -1,3 +1,10 @@
+2006-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_touchstone.y: Raised stack limit of parser.
+
+	* check_netlist.cpp: Fixed a segfault bug if there is an
+	wrongly referenced subcircuit.
+
 2006-06-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_citi.y, scan_citi.l, check_citi.cpp, check_citi.h:

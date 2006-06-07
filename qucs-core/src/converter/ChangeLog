@@ -1,3 +1,12 @@
+2006-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_vcd.l: Fixed yet another bug in the VCD lexer.
+
+	* qucs_producer.cpp: Differentiating between binary data (X)
+	and real data (R) saved in VCD files.
+
+	* check_vcd.cpp: Saving value attributes in dataset structure.
+
 2006-06-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Adapted the qucs dataset producer.

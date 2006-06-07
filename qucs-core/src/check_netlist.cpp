@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.92 2006/05/15 06:45:42 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.93 2006/06/07 08:34:37 raimi Exp $
  *
  */
 
@@ -1306,8 +1306,11 @@ static int checker_validate_sub_cycles (struct definition_t * root,
 	  strlist * copy = new strlist (*(*deps));
 	  // validate subcircuit
 	  sub = checker_find_subcircuit (val->ident);
-	  error = checker_validate_sub_cycles (sub, sub->instance,
-					       instance, deps);
+	  if (sub != NULL) // if possible
+	    error = checker_validate_sub_cycles (sub, sub->instance,
+						 instance, deps);
+	  else
+	    error = 1;
 	  // on errors: go on
 	  if (error) {
 	    errors += error;

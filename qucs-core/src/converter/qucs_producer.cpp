@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.17 2006/06/06 07:45:51 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.18 2006/06/07 08:34:37 raimi Exp $
  *
  */
 
@@ -404,7 +404,8 @@ void qucsdata_producer_vcd (void) {
     if (ds->type == DATA_INDEPENDENT)
       fprintf (qucs_out, "<indep %s %d>\n", ds->ident, ds->size);
     else if (ds->type == DATA_DEPENDENT)
-      fprintf (qucs_out, "<dep %s.X %s>\n", ds->ident, ds->dependencies);
+      fprintf (qucs_out, "<dep %s.%s %s>\n", ds->ident, ds->isreal ? "R" : "X",
+	       ds->dependencies);
     for (dv = ds->values; dv; dv = dv->next) {
       fprintf (qucs_out, "  %s\n", dv->value);
     }
