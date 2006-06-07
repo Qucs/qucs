@@ -15,15 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "digisettingsdialog.h"
-#include "textdoc.h"
-
 #include <qhbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qvalidator.h>
 #include <qpushbutton.h>
+#include <qmessagebox.h>
+
+#include "digisettingsdialog.h"
+#include "textdoc.h"
+#include "main.h"
 
 
 DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
@@ -53,9 +55,9 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   QHBox *Buttons = new QHBox(this);
   all->addWidget(Buttons);
   QPushButton *ButtonOk = new QPushButton(tr("Ok"), Buttons);
+  QPushButton *ButtonCancel = new QPushButton(tr("Cancel"), Buttons);
   connect(ButtonOk, SIGNAL(clicked()), SLOT(slotOk()));
-  connect(new QPushButton(tr("Cancel"), Buttons),
-          SIGNAL(clicked()), SLOT(reject()));
+  connect(ButtonCancel, SIGNAL(clicked()), SLOT(reject()));
 
   ButtonOk->setDefault(true);
   setFocusProxy(TimeEdit);
@@ -70,8 +72,15 @@ void DigiSettingsDialog::slotOk()
 {
   bool changed = false;
   if(SimTime != TimeEdit->text()) {
-    Doc->SimTime = TimeEdit->text();
-    changed = true;
+    QString s = TimeEdit->text();
+    if(!VHDL_Time(s, tr("Document Settings"))) {
+      QMessageBox::critical(this, tr("Error"), s.mid(1));
+      reject();
+      return;
+    } else {
+      Doc->SimTime = s;
+      changed = true;
+    }
   }
 
   if(changed)

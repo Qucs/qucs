@@ -268,10 +268,9 @@ void SimMessage::startSimulator()
       FinishSimulation(-1);
       return;
     }
-
+    SimTime = ((TextDoc*)DocWidget)->SimTime;
     CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
-       << ((TextDoc*)DocWidget)->SimTime << QucsHomeDir.absPath()
-       << QucsSettings.BinDir;
+       << SimTime << SimPath << QucsSettings.BinDir;
   }
   else {
     // output NodeSets, SPICE simulations etc.
