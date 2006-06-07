@@ -625,6 +625,10 @@
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">エラー</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>

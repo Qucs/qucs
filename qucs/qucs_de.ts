@@ -630,6 +630,10 @@
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>

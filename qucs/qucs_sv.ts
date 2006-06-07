@@ -570,6 +570,10 @@
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fel</translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
