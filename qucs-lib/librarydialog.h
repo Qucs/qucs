@@ -18,20 +18,16 @@
 #ifndef LIBRARYDIALOG_H
 #define LIBRARYDIALOG_H
 
-#include <qfile.h>
 #include <qdialog.h>
 #include <qregexp.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
 
 class QLabel;
-class QucsApp;
 class QLineEdit;
-class QTextEdit;
-class QCheckBox;
 class QPushButton;
 class QVBoxLayout;
-class QListViewItem;
+class QRadioButton;
 class QVButtonGroup;
 class QRegExpValidator;
 
@@ -39,25 +35,21 @@ class QRegExpValidator;
 class LibraryDialog : public QDialog {
    Q_OBJECT
 public:
-  LibraryDialog(QucsApp*, QListViewItem*);
+  LibraryDialog(QWidget*);
  ~LibraryDialog();
 
 private slots:
-  void slotCreate();
-  void slotNext();
+  void slotDelete();
+  void slotRename();
 
 private:
   QVBoxLayout *all;   // the mother of all widgets
   QLabel *theLabel;
   QLineEdit *NameEdit;
-  QTextEdit *ErrText;
   QVButtonGroup *Group;
-  QPushButton *ButtCreate, *ButtCancel;
-  QPtrList<QCheckBox> BoxList;
-  QStringList Descriptions;
+  QPushButton *ButtDelete, *ButtRename, *ButtClose;
+  QPtrList<QRadioButton> LibList;
 
-  QucsApp *App;
-  QFile LibFile;
   QRegExp Expr;
   QRegExpValidator *Validator;
 };

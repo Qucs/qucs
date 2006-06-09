@@ -34,7 +34,7 @@
 #include "qucslib.h"
 
 tQucsSettings QucsSettings;
-QDir QucsWorkDir;
+QDir UserLibDir;
 
 // Loads the settings file and stores the settings.
 bool loadSettings()
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     QucsSettings.LangDir = LANGUAGEDIR;
     QucsSettings.LibDir = LIBRARYDIR;
   }
-  QucsWorkDir.setPath (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  UserLibDir.setPath (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/user_lib"));
   loadSettings();
 
   QApplication a(argc, argv);
