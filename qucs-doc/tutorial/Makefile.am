@@ -22,7 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels
+SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
+  functions
 
 EXTRA_DIST = $(SOURCES) $(TEXFILES)
 
@@ -62,6 +63,6 @@ tutorial:
 %.ps: %.dvi
 	$(DVIPS) $< -o $@
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf

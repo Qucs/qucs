@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/modelbjt/Makefile.am
+# tutorial/functions/pics/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,28 +22,20 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = pics
+EXTRA_DIST = $(PNGS) $(PDFS) $(XFIG)
 
-EXTRA_DIST = $(SOURCES)
+PNGS = qucsformula2.png qucsformula3.png qucs_formula1_orig.png
 
-SOURCES = modelbjt.tex content.tex bfg425s2p.tex bfg425.tex
-TARGETS = modelbjt.pdf
+PDFS = interpolate_example.pdf
 
-tutorial: $(TARGETS)
+XFIG = qucs_formula1.fig
 
-%.dvi: %.tex
-	$(LATEX) $<
-	$(LATEX) $<
-	$(LATEX) -interaction=batchmode $<
+XPDF = $(XFIG:.fig=.pdf)
 
-%.pdf: %.tex
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+tutorial: $(XPDF)
 
-%.ps: %.dvi
-	$(DVIPS) $< -o $@
+%.pdf: %.fig
+	$(FIG2DEV) -L pdf $< > $@
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej
 MAINTAINERCLEANFILES = Makefile.in
-DISTCLEANFILES = *.ps *.pdf
