@@ -35,6 +35,7 @@ clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp 
+	rm -f qucs/qucsdigi.bat
 
 	-$(MAKE) distclean
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
