@@ -1061,6 +1061,5 @@ void QucsApp::slotCreateLib()
     return;
   }
 
-  LibraryDialog *d = new LibraryDialog(this, ConSchematics);
-  d->exec();
+  (new LibraryDialog(this, ConSchematics))->exec();
 }
