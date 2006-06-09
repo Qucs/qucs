@@ -32,16 +32,14 @@
 #include <qmessagebox.h>
 #include <qtextedit.h>
 #include <qlistbox.h>
-#include <qdir.h>
 #include <qregexp.h>
 
 #include "qucslib.h"
+#include "librarydialog.h"
 #include "displaydialog.h"
 #include "symbolwidget.h"
 #include "searchdialog.h"
 
-
-QDir QucsHomeDir;  // Qucs user directory where all projects are located
 
 /* Constructor setups the GUI. */
 QucsLib::QucsLib()
@@ -49,14 +47,20 @@ QucsLib::QucsLib()
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption("Qucs Library Tool " PACKAGE_VERSION);
-  QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
   QMenuBar * menuBar = new QMenuBar (this);
 
   // create file menu
   QPopupMenu * fileMenu = new QPopupMenu ();
+  QAction * manageLib =
+    new QAction ("Manage User Libraries...", tr("Manage User &Libraries..."), CTRL+Key_M, this);
+  manageLib->addTo (fileMenu);
+  connect(manageLib, SIGNAL(activated()), SLOT(slotManageLib()));
+
+  fileMenu->insertSeparator();
+
   QAction * fileQuit =
-    new QAction (tr("Quit"), tr("&Quit"), CTRL+Key_Q, this);
+    new QAction ("Quit", tr("&Quit"), CTRL+Key_Q, this);
   fileQuit->addTo (fileMenu);
   connect(fileQuit, SIGNAL(activated()), SLOT(slotQuit()));
 
@@ -126,16 +130,15 @@ QucsLib::QucsLib()
   UserLibCount = 0;
   QStringList LibFiles;
   QStringList::iterator it;
-  QDir LibDir(QucsHomeDir);
-  if(LibDir.cd("user_lib")) { // user library directory exists ?
-    LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
+  if(UserLibDir.cd(".")) { // user library directory exists ?
+    LibFiles = UserLibDir.entryList("*.lib", QDir::Files, QDir::Name);
     UserLibCount = LibFiles.count();
 
     for(it = LibFiles.begin(); it != LibFiles.end(); it++)
       Library->insertItem((*it).left((*it).length()-4));
   }
 
-  LibDir = QucsSettings.LibDir;
+  QDir LibDir(QucsSettings.LibDir);
   LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
 
   for(it = LibFiles.begin(); it != LibFiles.end(); it++)
@@ -149,6 +152,7 @@ QucsLib::~QucsLib()
 {
 }
 
+// ----------------------------------------------------
 void QucsLib::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
@@ -160,6 +164,7 @@ void QucsLib::slotAbout()
     "\nFITNESS FOR A PARTICULAR PURPOSE.");
 }
 
+// ----------------------------------------------------
 void QucsLib::slotQuit()
 {
   int tmp;
@@ -171,6 +176,7 @@ void QucsLib::slotQuit()
   accept();
 }
 
+// ----------------------------------------------------
 void QucsLib::closeEvent(QCloseEvent *Event)
 {
   int tmp;
@@ -182,6 +188,13 @@ void QucsLib::closeEvent(QCloseEvent *Event)
   Event->accept();
 }
 
+// ----------------------------------------------------
+void QucsLib::slotManageLib()
+{
+  (new LibraryDialog(this))->exec();
+}
+
+// ----------------------------------------------------
 void QucsLib::slotHelp()
 {
   DisplayDialog *d = new DisplayDialog(this);
@@ -200,6 +213,7 @@ void QucsLib::slotHelp()
   d->show();
 }
 
+// ----------------------------------------------------
 void QucsLib::slotCopyToClipBoard()
 {
   QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
@@ -218,6 +232,7 @@ void QucsLib::slotCopyToClipBoard()
   cb->setText(s);
 }
 
+// ----------------------------------------------------
 void QucsLib::slotShowModel()
 {
   DisplayDialog *d = new DisplayDialog(this);
@@ -228,6 +243,7 @@ void QucsLib::slotShowModel()
   d->show();
 }
 
+// ----------------------------------------------------
 void QucsLib::slotSelectLibrary(int Index)
 {
   int Start, End, NameStart, NameEnd;
@@ -244,7 +260,7 @@ void QucsLib::slotSelectLibrary(int Index)
 
   QFile file;
   if(Index < UserLibCount)  // Is it user library ?
-    file.setName(QucsHomeDir.absPath() + "/user_lib/" + Library->text(Index) + ".lib");
+    file.setName(UserLibDir.absPath() + QDir::separator() + Library->text(Index) + ".lib");
   else
     file.setName(QucsSettings.LibDir + Library->text(Index) + ".lib");
 
@@ -302,6 +318,7 @@ void QucsLib::slotSelectLibrary(int Index)
   CompList->setSelected(0, true);  // select first item
 }
 
+// ----------------------------------------------------
 void QucsLib::slotSearchComponent()
 {
   SearchDialog *d = new SearchDialog(this);
@@ -310,6 +327,7 @@ void QucsLib::slotSearchComponent()
                              tr("No appropriate component found."));
 }
 
+// ----------------------------------------------------
 void QucsLib::slotShowComponent(QListBoxItem *Item)
 {
   if(!Item) return;
@@ -321,7 +339,7 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
   CompDescr->append("----------------------------");
 
   if(Library->currentItem() < UserLibCount)
-    LibName = QucsHomeDir.absPath() + "/user_lib/" + LibName;
+    LibName = UserLibDir.absPath() + QDir::separator() + LibName;
 
 
   int Start, End;

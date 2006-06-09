@@ -373,9 +373,9 @@ bool checkVersion(QString& Line)
   QStringList ll = QStringList::split('.',Line);
   if (ll.count() != 3 || sl.count() != 3)
     return false;
-  int sv = (*sl.at(1)).toInt() * 1000 + (*sl.at(2)).toInt() * 10 +
+  int sv = (*sl.at(1)).toInt() * 10000 + (*sl.at(2)).toInt() * 100 +
     (*sl.at(3)).toInt();
-  int lv = (*ll.at(1)).toInt() * 1000 + (*ll.at(2)).toInt() * 10 +
+  int lv = (*ll.at(1)).toInt() * 10000 + (*ll.at(2)).toInt() * 100 +
     (*ll.at(3)).toInt();
   if(lv > sv) // wrong version number ? (only backward compatible)
     return false;
