@@ -1,3 +1,12 @@
+qucs (0.0.9-1) unstable; urgency=low
+
+  * New upstream release (Closes: #357111).
+  * debian/control:
+   - added upstream url to the long description
+  * Bumped Standards-Version to 3.7.2. No changes needed.
+
+ -- José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>  Sun, 4 Jun 2006 12:00:12 +0200
+
 qucs (0.0.8-1) unstable; urgency=low
 
   * New upstream release
