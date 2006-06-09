@@ -3,7 +3,7 @@ Section: electronics
 Priority: optional
 Maintainer: José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>
 Build-Depends: debhelper (>> 4.0.0), autotools-dev, libqt3-compat-headers, libqt3-mt-dev
-Standards-Version: 3.6.2
+Standards-Version: 3.7.2
 
 Package: qucs
 Architecture: any
@@ -14,3 +14,5 @@ Description: Quite Universal Circuit Simulator
  the large-signal, small-signal and noise behaviour of the circuit.
  After that simulation has finished you can view the simulation
  results on a presentation page or window.
+ .
+  Homepage: http://qucs.sourceforge.net
