@@ -32,6 +32,11 @@
   \usepackage{relsize}
   \usepackage[section]{placeins}
   \usepackage{listings}
+  \iftutbook
+  \else
+    \usepackage{makeidx}
+    \makeindex
+  \fi
 }
 
 % Compatibility code for LaTeX and pdfTeX.

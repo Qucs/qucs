@@ -23,6 +23,7 @@ AC_PATH_PROG(EPSTOPDF, epstopdf, :)
 AC_PATH_PROG(OCTAVE, octave, :)
 AC_PATH_PROG(LATEX2HTML, latex2html, :)
 AC_PATH_PROG(TEX2PDF, tex2pdf, :)
+AC_PATH_PROG(MAKEINDEX, makeindex, :)
 
 dnl Define the check for doxygen.
 AC_DEFUN([CHECK_DOXYGEN],
@@ -92,6 +93,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/digital/pics/Makefile
 		 tutorial/ffmodels/Makefile
 		 tutorial/ffmodels/pics/Makefile
+		 tutorial/functions/Makefile
+		 tutorial/functions/pics/Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile])
 

@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/modelbjt/Makefile.am
+# tutorial/functions/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,10 +26,16 @@ SUBDIRS = pics
 
 EXTRA_DIST = $(SOURCES)
 
-SOURCES = modelbjt.tex content.tex bfg425s2p.tex bfg425.tex
-TARGETS = modelbjt.pdf
+SOURCES = appendix.ist math.tex use.tex electronics.tex intro.tex syntaxoverview.tex functions.tex content.tex
 
-tutorial: $(TARGETS)
+TARGETS = functions.pdf
+
+pics-tutorial:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
+
+tutorial: pics-tutorial $(TARGETS)
+
+book: pics-tutorial
 
 %.dvi: %.tex
 	$(LATEX) $<
@@ -38,12 +44,16 @@ tutorial: $(TARGETS)
 
 %.pdf: %.tex
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	$(MAKEINDEX) functions.idx -o functions.ind -s appendix.ist
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 %.ps: %.dvi
 	$(DVIPS) $< -o $@
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+%.ind: %.idx
+	$(MAKEINDEX) $< -o $@ -s appendix.ist
+
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.ind *.ilg
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf
