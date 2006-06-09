@@ -884,6 +884,50 @@
 Successfully created library.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Next &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter description for &quot;%1&quot;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manage User Libraries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose library:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Sil</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Yeniden Adlandır</translation>
+    </message>
+    <message>
+        <source>No user library!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please insert a new library name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a library!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete library &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MarkerDialog</name>
@@ -7048,7 +7092,7 @@ Trolltech tarafından Qt hakkında</translation>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
-        <translation>Çıkış</translation>
+        <translation type="obsolete">Çıkış</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -7133,6 +7177,10 @@ Trolltech tarafından Qt hakkında</translation>
     <message>
         <source>No appropriate component found.</source>
         <translation>Uygun bileşen bulunamadı.</translation>
+    </message>
+    <message>
+        <source>Manage User &amp;Libraries...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
