@@ -55,7 +55,7 @@ LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
 
   QHBox *h1 = new QHBox(this);
   all->addWidget(h1);
-  new QLabel(tr("Library Name:"), h1);
+  theLabel = new QLabel(tr("Library Name:"), h1);
   NameEdit = new QLineEdit(h1);
   NameEdit->setValidator(Validator);
 
@@ -70,17 +70,17 @@ LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
   ErrText = new QTextEdit(this);
   ErrText->setHidden(true);
   ErrText->setTextFormat(Qt::PlainText);
-  ErrText->setReadOnly(true);
   ErrText->setWordWrap(QTextEdit::NoWrap);
   all->addWidget(ErrText);
   
   // ...........................................................
   QHBox *h2 = new QHBox(this);
   all->addWidget(h2);
-  ButtCreate = new QPushButton(tr("Create"), h2);
-  connect(ButtCreate, SIGNAL(clicked()), SLOT(slotCreate()));
   ButtCancel = new QPushButton(tr("Cancel"), h2);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
+  ButtCreate = new QPushButton(tr("Next >>"), h2);
+  connect(ButtCreate, SIGNAL(clicked()), SLOT(slotCreate()));
+  ButtCreate->setDefault(true);
 
   // ...........................................................
   // insert all subcircuits of current project
@@ -140,7 +140,7 @@ void LibraryDialog::slotCreate()
   }
 
 
-  QFile LibFile(QucsSettings.LibDir + NameEdit->text() + ".lib");
+  LibFile.setName(QucsSettings.LibDir + NameEdit->text() + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;
@@ -152,12 +152,46 @@ void LibraryDialog::slotCreate()
     return;
   }
 
-
-  // ==> point of no return -> dialog can only be closed now
   Group->setHidden(true);
   ErrText->setHidden(false);
-  ButtCreate->setEnabled(false);
-  ButtCancel->setText(tr("Close"));
+  NameEdit->setHidden(true);
+  disconnect(ButtCreate, SIGNAL(clicked()), 0, 0);
+  connect(ButtCreate, SIGNAL(clicked()), SLOT(slotNext()));
+
+  for(p = BoxList.first(); p != 0; p = BoxList.next())
+    if(p->isChecked())
+      break;
+  theLabel->setText(tr("Enter description for \"%1\":").arg(p->text()));
+
+  for(p = BoxList.next(); p != 0; p = BoxList.next())
+    if(p->isChecked())
+      break;
+  if(p == 0)
+    ButtCreate->setText(tr("Create"));
+}
+
+// ---------------------------------------------------------------
+void LibraryDialog::slotNext()
+{
+  Descriptions.append(ErrText->text());
+  ErrText->clear();
+
+  QCheckBox *p = BoxList.current();
+  if(p) {
+    theLabel->setText(tr("Enter description for \"%1\":").arg(p->text()));
+    for(p = BoxList.next(); p != 0; p = BoxList.next())
+      if(p->isChecked())
+        break;
+    if(p == 0)
+      ButtCreate->setText(tr("Create"));
+    return;
+  }
+
+  ErrText->setReadOnly(true);
+  ButtCancel->setEnabled(false);
+  ButtCreate->setText(tr("Close"));
+  disconnect(ButtCreate, SIGNAL(clicked()), 0, 0);
+  connect(ButtCreate, SIGNAL(clicked()), SLOT(accept()));
 
   if(!LibFile.open(IO_WriteOnly)) {
     ErrText->insert(tr("Error: Cannot create library!"));
@@ -171,11 +205,13 @@ void LibraryDialog::slotCreate()
   int countInit = 0;
   bool Success = true;
   QStringList Collect;
+  QStringList::Iterator it = Descriptions.begin();
   for(p = BoxList.first(); p != 0; p = BoxList.next())
     if(p->isChecked()) {
       Stream << "<Component " + p->text().section('.',0,0) + ">\n"
              << "  <Description>\n"
-             << "  </Description>\n"
+             << *(it++)
+             << "\n  </Description>\n"
              << "  <Model>";
 
       Schematic *Doc = new Schematic(0, QucsWorkDir.filePath(p->text()));

@@ -19,6 +19,7 @@
 #define QUCSLIB_H
 
 #include <qdialog.h>
+#include <qdir.h>
 #include <qfont.h>
 #include <qstring.h>
 #include <qstringlist.h>
@@ -43,7 +44,7 @@ struct tQucsSettings {
 };
 
 extern tQucsSettings QucsSettings;
-
+extern QDir UserLibDir;
 
 class QucsLib : public QDialog  {
    Q_OBJECT
@@ -64,6 +65,7 @@ private slots:
   void slotSelectLibrary(int);
   void slotSearchComponent();
   void slotShowComponent(QListBoxItem*);
+  void slotManageLib();
 
 private:
   void closeEvent(QCloseEvent*);
@@ -73,6 +75,8 @@ private:
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
   QString       ModelString, DefaultSymbol;
+
+  QDir QucsHomeDir;  // Qucs user directory where all projects are located
 };
 
 #endif /* QUCSLIB_H */
