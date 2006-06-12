@@ -106,7 +106,7 @@ void TextDoc::slotCursorPosChanged(int x, int y)
       clearParagraphBackground(z);
   if(tmpPosX != x)
     setParagraphBackgroundColor(x, QColor(240, 240, 255));
-  App->printCursorPosition(x, y);
+  App->printCursorPosition(x+1, y+1);
   tmpPosX = x;
   tmpPosY = y;
 }
@@ -317,7 +317,14 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
         continue;
       if(c == '_')
         continue;
-      markWord(text, iWord, i-iWord);
+      do {
+        if(iWord > 0)
+          if(text.at(iWord-1) == '\'') {
+            markAttribute(text, iWord, i-iWord);
+            break;
+          }
+        markWord(text, iWord, i-iWord);
+      } while(false);
       iWord = -1;
     }
     // ----- integer or floating point number --------------
@@ -426,35 +433,86 @@ ppChar WordList[] =
    0, 0, (char**)&List_L, (char**)&List_M, (char**)&List_N,
    (char**)&List_O, (char**)&List_P, 0, (char**)&List_R, (char**)&List_S,
    (char**)&List_T, (char**)&List_U, (char**)&List_V, (char**)&List_W,
-   (char**)&List_X, 0, 0};
+   (char**)&List_X};
 
 pChar List_Units[] = {"fs", "ps", "ns", "us", "ms", "sec", "min", "hr", 0};
+
+pChar List_DataTypes[] = {
+   "bit", "bit_vector", "boolean", "std_logic", "std_logic_vector",
+   "std_ulogic", "std_ulogic_vector", "signed", "unsigned", "integer",
+   "real", "time", "character", "natural", 0};
 
 // ---------------------------------------------------
 void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
   QString Word = text.mid(start, len).lower();
   int idx = (int)(Word.at(0).latin1() - 'a');
-  if(idx < 0 || idx > 25)
+  if(idx < 0 || idx > 23)
     return;
   pChar *List = WordList[idx];
+
+  QFont newFont = QucsSettings.font;
+  newFont.setPointSize((int)Doc->Scale);
 
   if(List)
     for( ; *List != 0; List++)
       if(Word == *List) {
-        QFont boldFont = QucsSettings.font;
-        boldFont.setPointSize((int)Doc->Scale);
-        boldFont.setWeight(QFont::Bold);
-        setFormat(start, len, boldFont);
+        newFont.setWeight(QFont::Bold);
+        setFormat(start, len, newFont);
         return;
       }
 
-  for(List = List_Units; *List != 0; List++)
+  for(List = List_DataTypes; *List != 0; List++)
     if(Word == *List) {
-      QFont boldFont = QucsSettings.font;
-      boldFont.setWeight(QFont::Bold);
-      boldFont.setPointSize((int)Doc->Scale);
-      setFormat(start, len, boldFont, Qt::darkMagenta);
+      setFormat(start, len, newFont, Qt::darkRed);
       return;
     }
+
+  for(List = List_Units; *List != 0; List++)
+    if(Word == *List) {
+      newFont.setWeight(QFont::Bold);
+      setFormat(start, len, newFont, Qt::darkMagenta);
+      return;
+    }
+}
+
+// ---------------------------------------------------
+pChar List_Attrib_A[] = {"active", "ascending", 0};
+pChar List_Attrib_B[] = {"base", 0};
+pChar List_Attrib_D[] = {"delayed", 0};
+pChar List_Attrib_E[] = {"event", 0};
+pChar List_Attrib_H[] = {"high", 0};
+pChar List_Attrib_I[] = {"image", 0};
+pChar List_Attrib_L[] =
+   {"last_active", "last_event", "last_value", "left", "leftof", "length", "low", 0};
+pChar List_Attrib_P[] = {"pos", "pred", 0};
+pChar List_Attrib_Q[] = {"quiet", 0};
+pChar List_Attrib_R[] = {"range", "reverse_range", "right", "rightof", 0};
+pChar List_Attrib_S[] = {"stable", "succ", 0};
+pChar List_Attrib_T[] = {"transaction", 0};
+pChar List_Attrib_V[] = {"val", "value", 0};
+
+ppChar Attribute_List[] =
+  {(char**)&List_Attrib_A, (char**)&List_Attrib_B, 0, (char**)&List_Attrib_D,
+   (char**)&List_Attrib_E, 0, 0, (char**)&List_Attrib_H, (char**)&List_Attrib_I,
+   0, 0, (char**)&List_Attrib_L, 0, 0, 0, (char**)&List_Attrib_P,
+   (char**)&List_Attrib_Q, (char**)&List_Attrib_R, (char**)&List_Attrib_S,
+   (char**)&List_Attrib_T, 0, (char**)&List_Attrib_V};
+
+void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
+{
+  QString Word = text.mid(start, len).lower();
+  int idx = (int)(Word.at(0).latin1() - 'a');
+  if(idx < 0 || idx > 22)
+    return;
+  pChar *List = Attribute_List[idx];
+
+  if(List)
+    for(; *List != 0; List++)
+      if(Word == *List) {
+        QFont newFont = QucsSettings.font;
+        newFont.setPointSize((int)Doc->Scale);
+        setFormat(start-1, len+1, newFont, Qt::darkCyan);
+        return;
+      }
 }

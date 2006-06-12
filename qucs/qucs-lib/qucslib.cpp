@@ -126,7 +126,20 @@ QucsLib::QucsLib()
   connect(ShowButton, SIGNAL(clicked()), SLOT(slotShowModel()));
 
   // ......................................................
-  // Put all available libraries into ComboBox.
+  putLibrariesIntoCombobox();
+}
+
+/* Destructor destroys the application. */
+QucsLib::~QucsLib()
+{
+}
+
+// ----------------------------------------------------
+// Put all available libraries into ComboBox.
+void QucsLib::putLibrariesIntoCombobox()
+{
+  Library->clear();
+
   UserLibCount = 0;
   QStringList LibFiles;
   QStringList::iterator it;
@@ -145,11 +158,6 @@ QucsLib::QucsLib()
     Library->insertItem((*it).left((*it).length()-4));
 
   slotSelectLibrary(0);
-}
-
-/* Destructor destroys the application. */
-QucsLib::~QucsLib()
-{
 }
 
 // ----------------------------------------------------
@@ -192,6 +200,7 @@ void QucsLib::closeEvent(QCloseEvent *Event)
 void QucsLib::slotManageLib()
 {
   (new LibraryDialog(this))->exec();
+  putLibrariesIntoCombobox();
 }
 
 // ----------------------------------------------------

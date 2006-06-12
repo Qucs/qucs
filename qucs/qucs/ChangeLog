@@ -1,3 +1,10 @@
+2006-06-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* row and column in VHDL editor start with one
+	* user libraries can be deleted and renamed with library tool
+	* syntax highlighting for VHDL data types and attributes
+	* digital diagrams can display nine-valued logic
+
 2006-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/simmessage.cpp (startSimulator): Applying correct

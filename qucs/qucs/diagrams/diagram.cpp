@@ -800,6 +800,10 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   QFileInfo Info(fileName);
 
   int pos = g->Var.find(':');
+  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
+    if(pos > g->Var.find('['))
+      pos = -1;
+
   if(pos <= 0) {
     file.setName(fileName);
     Variable = g->Var;
@@ -925,11 +929,12 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   char *pEnd;
   double x, y;
   pPos = pFile;
-  // find first position containing no whitespace
-  while((*pPos) && (*pPos <= ' '))  pPos++;
+
+if(Variable.right(3) != ".X ")
 
   for(int z=counting; z>0; z--) {
     pEnd = 0;
+    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
     x = strtod(pPos, &pEnd);  // real part
     pPos = pEnd + 1;
     if(*pEnd < ' ')   // is there an imaginary part ?
@@ -964,9 +969,48 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
         if(y < pa->min) pa->min = y;
       }
     }
+  }
+
+
+else {  // of "if not digital"
+
+  // for digital variables (e.g. 100ZX0):
+  long long lx;
+  for(int z=counting; z>0; z--) {
 
     while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
+    if(*pPos == 0) {
+      delete[] g->cPointsY;  g->cPointsY = 0;
+      return 0;
+    }
+    pEnd = pPos;
+    while(*pEnd  > ' ')  pEnd++; // find end of number
+
+    lx = 0;
+    while(pPos < pEnd) {
+      lx <<= 4;
+      switch(*pPos) {
+        case '0':  lx |= 1; break;
+        case '1':  lx |= 2; break;
+        case 'Z':  lx |= 3; break;
+        case 'X':  lx |= 4; break;
+        case 'U':  lx |= 5; break;
+        case 'W':  lx |= 6; break;
+        case 'L':  lx |= 7; break;
+        case 'H':  lx |= 8; break;
+        case '-':  lx |= 9; break;
+        default: 
+          delete[] g->cPointsY;  g->cPointsY = 0;
+          return 0;
+      }
+      pPos++;
+    }
+
+    *((long long*)(p++)) = lx;
+    *((long long*)(p++)) = 0;
   }
+
+}  // of "if not digital"
 
   return 2;
 }
