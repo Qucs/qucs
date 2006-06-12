@@ -69,6 +69,7 @@ private slots:
 
 private:
   void closeEvent(QCloseEvent*);
+  void putLibrariesIntoCombobox();
 
   int UserLibCount;
   SymbolWidget *Symbol;

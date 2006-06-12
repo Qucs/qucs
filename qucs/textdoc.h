@@ -65,6 +65,7 @@ public:
 private:
   TextDoc *Doc;
   void markWord(const QString&, int, int);
+  void markAttribute(const QString&, int, int);
 };
 
 #endif
