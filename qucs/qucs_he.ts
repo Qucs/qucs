@@ -961,7 +961,27 @@ Successfully created library.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete library &quot;%1&quot;.</source>
+        <source>Cannot open library!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to modify library!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing new library not successful!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete old library.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library file is corrupt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to delete library &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
