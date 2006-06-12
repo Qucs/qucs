@@ -54,7 +54,7 @@ LibraryDialog::LibraryDialog(QWidget *App_)
   
   QScrollView *Dia_Scroll = new QScrollView(Group);
   Dia_Scroll->setMargin(5);
-  QVBox *Dia_Box = new QVBox(Dia_Scroll->viewport());
+  Dia_Box = new QVBox(Dia_Scroll->viewport());
   Dia_Scroll->addChild(Dia_Box);
 
   QHBox *h1 = new QHBox(this);
@@ -78,21 +78,24 @@ LibraryDialog::LibraryDialog(QWidget *App_)
   // insert all user libraries
   QStringList LibFiles = UserLibDir.entryList("*.lib", QDir::Files, QDir::Name);
 
+  toggleGroup = new QVButtonGroup();  // only to handle exclusive toggling
 
+  previousLib = 0;
   QStringList::iterator it;
   // inserts all project directories
   for(it = LibFiles.begin(); it != LibFiles.end(); it++)
-    LibList.append(new QRadioButton((*it).left((*it).length()-4), Dia_Box));
+    toggleGroup->insert(new QRadioButton((*it).left((*it).length()-4), Dia_Box));
 
   QColor theColor;
-  if(LibList.isEmpty()) {
+  QButton *rButton = toggleGroup->find(0);
+  if(rButton)
+    theColor = rButton->paletteBackgroundColor();
+  else {
     ButtDelete->setEnabled(false);
     ButtRename->setEnabled(false);
     theColor =
        (new QLabel(tr("No user library!"), Dia_Box))->paletteBackgroundColor();
   }
-  else
-    theColor = LibList.current()->paletteBackgroundColor();
   Dia_Scroll->viewport()->setPaletteBackgroundColor(theColor);
 }
 
@@ -102,6 +105,7 @@ LibraryDialog::~LibraryDialog()
 }
 
 // ---------------------------------------------------------------
+// Renames selected user library.
 void LibraryDialog::slotRename()
 {
   if(NameEdit->text().isEmpty()) {
@@ -109,38 +113,90 @@ void LibraryDialog::slotRename()
     return;
   }
 
-  QRadioButton *p;
-  for(p = LibList.first(); p != 0; p = LibList.next())
-    if(p->isOn()) {
-      QFile LibFile(UserLibDir.absFilePath(p->text() + ".lib"));
-      if(!LibFile.open(IO_ReadWrite)) {
-    QMessageBox::critical(this, tr("Error"), tr("Error: Cannot create library!"));
+  QRadioButton *rButton = (QRadioButton*)toggleGroup->selected();
+  if(rButton == 0) {
+    QMessageBox::critical(this, tr("Error"), tr("Please choose a library!"));
     return;
   }
-  QTextStream Stream;
-  Stream.setDevice(&LibFile);
-  Stream << "<Qucs Library " PACKAGE_VERSION " \"" << NameEdit->text() << "\">\n\n";
 
-  LibFile.close();
+  QFile NewLibFile(QucsSettings.LibDir + NameEdit->text() + ".lib");
+  if(NewLibFile.exists()) {
+    QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
+    return;
+  }
+
+  NewLibFile.setName(UserLibDir.absFilePath(NameEdit->text() + ".lib"));
+  if(NewLibFile.exists()) {
+    QMessageBox::critical(this, tr("Error"), tr("A library with this name already exists!"));
+    return;
+  }
+
+  QFile LibFile(UserLibDir.absFilePath(rButton->text() + ".lib"));
+  if(!LibFile.open(IO_ReadOnly)) {
+    QMessageBox::critical(this, tr("Error"), tr("Cannot open library!"));
+    return;
+  }
+
+  QByteArray FileContent = LibFile.readAll();
+//  LibFile.close();
+
+  // rename library name within file
+  char *p, *Name;
+  char *Config = FileContent.data();
+  for(;;) {
+    p = strstr(Config, "<Qucs Library ");
+    if(p == 0) break;
+    Name = strstr(p, " \"");
+    if(Name == 0) break;
+    Name += 2;
+    p = strstr(Name, "\">");
+    if(p == 0) break;
+
+    if(!NewLibFile.open(IO_WriteOnly)) {
+      QMessageBox::critical(this, tr("Error"), tr("No permission to modify library!"));
+      return;
+    }
+    int count = 0;
+    count += NewLibFile.writeBlock(Config, Name-Config);
+    count += NewLibFile.writeBlock(NameEdit->text().latin1(), NameEdit->text().length());
+    count += NewLibFile.writeBlock(p, FileContent.count() - (p-Config) );
+    NewLibFile.close();
+    count -= FileContent.count() + NameEdit->text().length() - (p-Name);
+    if(count != 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Writing new library not successful!"));
+      return;
     }
 
-  if(p == 0)
-    QMessageBox::critical(this, tr("Error"), tr("Please choose a library!"));
+    if(!LibFile.remove()) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot delete old library."));
+      toggleGroup->insert(new QRadioButton(NameEdit->text(), Dia_Box));
+      NameEdit->clear();
+      return;
+    }
+
+    rButton->setText(NameEdit->text());
+    NameEdit->clear();
+    return;
+  }
+
+  QMessageBox::critical(this, tr("Error"), tr("Library file is corrupt!"));
 }
 
 // ---------------------------------------------------------------
+// Deletes the selected user library.
 void LibraryDialog::slotDelete()
 {
-  QRadioButton *p;
-  for(p = LibList.first(); p != 0; p = LibList.next())
-    if(p->isOn()) {
-      QFile LibFile(UserLibDir.absFilePath(p->text() + ".lib"));
-      if(!LibFile.remove()) {
-        QMessageBox::critical(this, tr("Error"), tr("Cannot delete library \"%1\".").arg(p->text()));
-        return;
-      }
-    }
-
-  if(p == 0)
+  QRadioButton *rButton = (QRadioButton*)toggleGroup->selected();
+  if(rButton == 0) {
     QMessageBox::critical(this, tr("Error"), tr("Please choose a library!"));
+    return;
+  }
+
+  QFile LibFile(UserLibDir.absFilePath(rButton->text() + ".lib"));
+  if(!LibFile.remove()) {
+    QMessageBox::critical(this, tr("Error"),
+                 tr("No permission to delete library \"%1\".").arg(rButton->text()));
+    return;
+  }
+  delete rButton;
 }
