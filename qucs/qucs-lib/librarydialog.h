@@ -20,9 +20,9 @@
 
 #include <qdialog.h>
 #include <qregexp.h>
-#include <qptrlist.h>
 #include <qstringlist.h>
 
+class QVBox;
 class QLabel;
 class QLineEdit;
 class QPushButton;
@@ -43,12 +43,14 @@ private slots:
   void slotRename();
 
 private:
+  QRadioButton *previousLib;
+
   QVBoxLayout *all;   // the mother of all widgets
+  QVBox *Dia_Box;
   QLabel *theLabel;
   QLineEdit *NameEdit;
-  QVButtonGroup *Group;
+  QVButtonGroup *Group, *toggleGroup;
   QPushButton *ButtDelete, *ButtRename, *ButtClose;
-  QPtrList<QRadioButton> LibList;
 
   QRegExp Expr;
   QRegExpValidator *Validator;

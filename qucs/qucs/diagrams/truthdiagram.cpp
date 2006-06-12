@@ -128,14 +128,15 @@ if(g) if(!g->cPointsX.isEmpty()) {
 }  // of "if no data in graphs"
 
 
+  int digitWidth;
   firstGraph = g;
   // ................................................
-  for(g = Graphs.first(); g!=0; g = Graphs.next()) {// all dependent variables
+  // all dependent variables
+  for(g = Graphs.first(); g!=0; g = Graphs.next()) {
     y = y2-tHeight-5;
-    colWidth = 0;
 
     Str = g->Var;
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, 0, x, y2);
     if(colWidth < 0)  goto funcEnd;
     Texts.append(new Text(x, y2-2, Str));  // dependent variable
 
@@ -145,19 +146,46 @@ if(g) if(!g->cPointsX.isEmpty()) {
     if(g->cPointsX.getFirst()) {
 
       if(sameDependencies(g, firstGraph)) {
+
+        counting = 0;
+        long long Value = *((long long*)(py+2));
+        while((Value & 15) != 0) {
+          counting++;     // count number of "bits"
+          Value >>= 4;
+        }
+        digitWidth = metrics.width("X") + 2;
+        if((x+digitWidth*counting) >= x2) {    // enough space for "bit vector" ?
+          checkColumnWidth("0", metrics, 0, x2, y);
+          goto funcEnd;
+        }
+
         for(z = NumAll; z>0; z--) {
           py += 2;
           if(startWriting-- > 0) continue; // reached visible area ?
           if(y < tHeight) break;           // no room for more rows ?
-          if(*py > 0.5) Str = "1";
-          else Str = "0";
 
-          colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
-          if(colWidth < 0)  goto funcEnd;
-
-          Texts.append(new Text(x, y, Str));
+          Value = *((long long*)py);
+          for(int zi=counting-1; zi>=0; zi--) {
+            switch(Value & 15) {
+              case 1: Str = "0"; break;
+              case 2: Str = "1"; break;
+              case 3: Str = "Z"; break;
+              case 4: Str = "X"; break;
+              case 5: Str = "U"; break;
+              case 6: Str = "W"; break;
+              case 7: Str = "L"; break;
+              case 8: Str = "H"; break;
+              case 9: Str = "-"; break;
+              default: Str = "*";
+            }
+            Texts.append(new Text( x + zi*digitWidth, y, Str));
+            Value >>= 4;
+          }
           y -= tHeight;
         }
+        digitWidth *= counting;
+        if(colWidth < digitWidth)
+          colWidth = digitWidth;
 //        if(z > NumLeft)  NumLeft = z;
       }  // of "if(sameDeps)"
       else {

@@ -391,6 +391,17 @@ bool checkVersion(QString& Line)
 
 int main(int argc, char *argv[])
 {
+/*double xyz = 0.0;
+long long *p = (long long*)(&xyz);
+qDebug("Zahl: %g -> %0llx", xyz, *p);
+xyz = -2.0;
+qDebug("Zahl: %g -> %0llx", xyz, *p);
+xyz = -2.0e1;
+qDebug("Zahl: %g -> %0llx", xyz, *p);
+xyz = -2.0e-1;
+qDebug("Zahl: %g -> %0llx", xyz, *p);
+return 0;*/
+
   // apply default settings
   QucsSettings.x = 0;
   QucsSettings.y = 0;
