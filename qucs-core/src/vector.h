@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.24 2006-03-15 16:46:28 raimi Exp $
+ * $Id: vector.h,v 1.25 2006-06-23 14:38:01 raimi Exp $
  *
  */
 
@@ -137,6 +137,7 @@ class vector : public object
   friend vector artanh  (vector);
   friend vector coth    (vector);
   friend vector arcoth  (vector);
+  friend vector signum  (vector);
   friend vector sign    (vector);
   friend vector sinc    (vector);
   friend vector ceil    (vector);

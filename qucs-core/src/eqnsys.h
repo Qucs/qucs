@@ -1,7 +1,7 @@
 /*
  * eqnsys.h - equations system solver class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.h,v 1.18 2005-06-02 18:17:49 raimi Exp $
+ * $Id: eqnsys.h,v 1.19 2006-06-23 14:38:00 raimi Exp $
  *
  */
 
@@ -41,7 +41,10 @@ enum algo_type {
   ALGO_GAUSS_SEIDEL               = 0x0100,
   ALGO_SOR                        = 0x0200,
   ALGO_QR_DECOMPOSITION           = 0x0400,
-  ALGO_QR_DECOMPOSITION_LS        = 0x0800
+  ALGO_QR_DECOMPOSITION_LS        = 0x0800,
+  ALGO_SV_DECOMPOSITION           = 0x1000,
+  // testing
+  ALGO_QR_DECOMPOSITION_2         = 0x2000,
 };
 
 // Definition of pivoting strategies.
@@ -77,10 +80,13 @@ class eqnsys
   nr_double_t * nPvt;
 
   tmatrix<nr_type_t> * A;
+  tmatrix<nr_type_t> * V;
   tvector<nr_type_t> * B;
   tvector<nr_type_t> * X;
   tvector<nr_type_t> * R;
   tvector<nr_type_t> * T;
+  tvector<nr_double_t> * S;
+  tvector<nr_double_t> * E;
 
   void solve_inverse (void);
   void solve_gauss (void);
@@ -93,12 +99,26 @@ class eqnsys
   void substitute_lu_doolittle (void);
   void solve_qr (void);
   void solve_qr_ls (void);
+  void solve_qrh (void);
   void factorize_qrh (void);
   void substitute_qrh (void);
   void factorize_qr_householder (void);
   void substitute_qr_householder (void);
   void substitute_qr_householder_ls (void);
-  nr_double_t euclidianCol (int, int r = 1);
+  nr_type_t householder_create_left (int);
+  void householder_apply_left (int, nr_type_t);
+  nr_type_t householder_left (int);
+  nr_type_t householder_create_right (int);
+  void householder_apply_right (int, nr_type_t);
+  void householder_apply_right_extern (int, nr_type_t);
+  nr_type_t householder_right (int);
+  nr_double_t euclidian_c (int, int r = 1);
+  nr_double_t euclidian_r (int, int c = 1);
+  void solve_svd (void);
+  void chop_svd (void);
+  void factorize_svd (void);
+  void substitute_svd (void);
+  void diagonalize_svd (void);
   void solve_iterative (void);
   void solve_sor (void);
   nr_double_t convergence_criteria (void);

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.9 2006-05-23 09:48:32 raimi Exp $
+ * $Id: applications.h,v 1.10 2006-06-23 14:38:00 raimi Exp $
  *
  */
 
@@ -488,6 +488,10 @@ struct application_t eqn::applications[] = {
   { "eye",       TAG_MATRIX,  evaluate::eye_m,        1, { TAG_DOUBLE } },
   { "adjoint",   TAG_MATRIX,  evaluate::adjoint_m,    1, { TAG_MATRIX } },
   { "adjoint",   TAG_MATVEC,  evaluate::adjoint_mv,   1, { TAG_MATVEC } },
+
+  { "signum", TAG_DOUBLE,  evaluate::signum_d, 1, { TAG_DOUBLE  } },
+  { "signum", TAG_COMPLEX, evaluate::signum_c, 1, { TAG_COMPLEX } },
+  { "signum", TAG_VECTOR,  evaluate::signum_v, 1, { TAG_VECTOR  } },
 
   { "sign", TAG_DOUBLE,  evaluate::sign_d, 1, { TAG_DOUBLE  } },
   { "sign", TAG_COMPLEX, evaluate::sign_c, 1, { TAG_COMPLEX } },

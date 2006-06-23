@@ -1,7 +1,7 @@
 /*
  * eqnsys.cpp - equation system solver class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.36 2006-03-29 08:02:03 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.37 2006-06-23 14:38:00 raimi Exp $
  *
  */
 
@@ -58,8 +58,9 @@ using namespace qucs;
 // Constructor creates an unnamed instance of the eqnsys class.
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
-  A = NULL;
+  A = V = NULL;
   B = X = NULL;
+  S = E = NULL;
   T = R = NULL;
   nPvt = NULL;
   cMap = rMap = NULL;
@@ -74,6 +75,9 @@ eqnsys<nr_type_t>::~eqnsys () {
   if (R != NULL) delete R;
   if (T != NULL) delete T;
   if (B != NULL) delete B;
+  if (S != NULL) delete S;
+  if (E != NULL) delete E;
+  if (V != NULL) delete V;
   if (rMap != NULL) delete[] rMap;
   if (cMap != NULL) delete[] cMap;
   if (nPvt != NULL) delete[] nPvt;
@@ -84,6 +88,8 @@ eqnsys<nr_type_t>::~eqnsys () {
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   A = e.A;
+  V = NULL;
+  S = E = NULL;
   T = R = NULL;
   B = e.B ? new tvector<nr_type_t> (*(e.B)) : NULL;
   cMap = rMap = NULL;
@@ -167,6 +173,12 @@ void eqnsys<nr_type_t>::solve (void) {
     break;
   case ALGO_QR_DECOMPOSITION_LS:
     solve_qr_ls ();
+    break;
+  case ALGO_SV_DECOMPOSITION:
+    solve_svd ();
+    break;
+  case ALGO_QR_DECOMPOSITION_2:
+    solve_qrh ();
     break;
   }
 #if DEBUG && 0
@@ -803,18 +815,24 @@ void eqnsys<nr_type_t>::preconditioner (void) {
 #define R_ (*R)
 #define T_ (*T)
 
-/* This function uses QR decomposition using householder
+/* This function uses the QR decomposition using householder
+   transformations in order to solve the given equation system. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_qrh (void) {
+  factorize_qrh ();
+  substitute_qrh ();
+}
+
+/* This function uses the QR decomposition using householder
    transformations in order to solve the given equation system. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_qr (void) {
   factorize_qr_householder ();
   substitute_qr_householder ();
-  //factorize_qrh ();
-  //substitute_qrh ();
 }
 
-/* The function uses QR decomposition using householder
-   transformations in order to solve the given under-determinded
+/* The function uses the QR decomposition using householder
+   transformations in order to solve the given under-determined
    equation system in its minimum norm (least square) sense. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_qr_ls (void) {
@@ -823,36 +841,44 @@ void eqnsys<nr_type_t>::solve_qr_ls (void) {
   substitute_qr_householder_ls ();
 }
 
+/* Helper function for the euclidian norm calculators. */
+static void
+euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
+  nr_double_t x, ax;
+  if ((x = a) != 0) {
+    ax = fabs (x);
+    if (scale < ax) {
+      x = scale / ax;
+      n = 1 + n * x * x;
+      scale = ax;
+    }
+    else {
+      x = ax / scale;
+      n += x * x;
+    }
+  }
+}
+
 /* The following function computes the euclidian norm of the given
    column vector of the matrix A starting from the given row. */
 template <class nr_type_t>
-nr_double_t eqnsys<nr_type_t>::euclidianCol (int c, int r) {
-  nr_double_t scale = 0, n = 1, x, ax;
+nr_double_t eqnsys<nr_type_t>::euclidian_c (int c, int r) {
+  nr_double_t scale = 0, n = 1;
   for (int i = r; i < N; i++) {
-    if ((x = real (A_(i, c))) != 0) {
-      ax = fabs (x);
-      if (scale < ax) {
-	x = scale / ax;
-	n = 1 + n * x * x;
-	scale = ax;
-      }
-      else {
-	x = ax / scale;
-	n += x * x;
-      }
-    }
-    if ((x = imag (A_(i, c))) != 0) {
-      ax = fabs (x);
-      if (scale < ax) {
-	x = scale / ax;
-	n = 1 + n * x * x;
-	scale = ax;
-      }
-      else {
-	x = ax / scale;
-	n += x * x;
-      }
-    }
+    euclidian_update (real (A_(i, c)), n, scale);
+    euclidian_update (imag (A_(i, c)), n, scale);
+  }
+  return scale * sqrt (n);
+}
+
+/* The following function computes the euclidian norm of the given
+   row vector of the matrix A starting from the given column. */
+template <class nr_type_t>
+nr_double_t eqnsys<nr_type_t>::euclidian_r (int r, int c) {
+  nr_double_t scale = 0, n = 1;
+  for (int i = c; i < N; i++) {
+    euclidian_update (real (A_(r, i)), n, scale);
+    euclidian_update (imag (A_(r, i)), n, scale);
   }
   return scale * sqrt (n);
 }
@@ -872,7 +898,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
-    nPvt[c] = euclidianCol (c);
+    nPvt[c] = euclidian_c (c);
     cMap[c] = c; // initialize permutation vector
   }
 
@@ -894,12 +920,11 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
 
     // compute householder vector
     if (c < N) {
-      nr_type_t a, b, l;
-      s = euclidianCol (c, c + 1);
+      nr_type_t a, b;
+      s = euclidian_c (c, c + 1);
       a = A_(c, c);
-      l = a != 0 ? sign (a) : nr_type_t (1);
-      b = - l * xhypot (a, s); // Wj
-      t = xhypot (s, a - b);   // || Vi - Wi ||
+      b = -sign (a) * xhypot (a, s); // Wj
+      t = xhypot (s, a - b);         // || Vi - Wi ||
       R_(c) = b;
       // householder vector entries Ui
       A_(c, c) = (a - b) / t;
@@ -917,7 +942,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
 
     // update norms of remaining columns too
     for (r = c + 1; r < N; r++) {
-      nPvt[r] = euclidianCol (r, c + 1);
+      nPvt[r] = euclidian_c (r, c + 1);
     }
   }
 }
@@ -926,19 +951,18 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
    orthonormal matrix Q and the upper triangular matrix R.  The
    original matrix is replaced by the householder vectors in the lower
    triangular and the upper triangular R matrix (including the
-   diagonal).  The householder vectors are normalized to have in its
-   first position. */
+   diagonal).  The householder vectors are normalized to have one in
+   their first position. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::factorize_qr_householder (void) {
-  int c, r, k, pivot;
-  nr_type_t f, t;
+  int c, r, pivot;
   nr_double_t s, MaxPivot;
 
   if (T) delete T; T = new tvector<nr_type_t> (N);
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
-    nPvt[c] = euclidianCol (c);
+    nPvt[c] = euclidian_c (c);
     cMap[c] = c; // initialize permutation vector
   }
 
@@ -946,51 +970,29 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
 
     // put column with largest norm into pivot position
     MaxPivot = nPvt[c]; pivot = c;
-    for (r = c + 1; r < N; r++) {
+    for (r = c + 1; r < N; r++)
       if ((s = nPvt[r]) > MaxPivot) {
 	pivot = r;
 	MaxPivot = s;
       }
-    }
     if (pivot != c) {
       A->exchangeCols (pivot, c);
       Swap (int, cMap[pivot], cMap[c]);
       Swap (nr_double_t, nPvt[pivot], nPvt[c]);
     }
 
-    // compute householder vector
-    {
-      nr_type_t a, b, l;
-      s = euclidianCol (c, c + 1);
-      if (s == 0) {
-	t = T_(c) = 0;
-      } else {
-	a = A_(c, c);
-	l = a != 0 ? sign (a) : nr_type_t (1);
-	b = - l * xhypot (a, s); // Wj
-	t = T_(c) = (b - a) / b;
-	// householder vector entries Ui
-	for (f = a - b, r = c + 1; r < N; r++) A_(r, c) /= f;
-	A_(c, c) = b;
-      }
-    }
-
-    // apply householder transformation to remaining columns
-    if (t != 0) for (r = c + 1; r < N; r++) {
-      for (f = A_(c, r), k = c + 1; k < N; k++)
-	f += conj (A_(k, c)) * A_(k, r);
-      A_(c, r) -= t * f;
-      for (k = c + 1; k < N; k++) A_(k, r) -= t * f * A_(k, c);
-    }
+    // compute and apply householder vector
+    T_(c) = householder_left (c);
 
     // update norms of remaining columns too
     for (r = c + 1; r < N; r++) {
       if ((s = nPvt[r]) > 0) {
 	nr_double_t y = 0;
-	t = A_(c, r) / s;
-	if (norm (t) < 1) y = s * sqrt (1 - norm (t));
+	nr_double_t t = norm (A_(c, r) / s);
+	if (t < 1)
+	  y = s * sqrt (1 - t);
 	if (fabs (y / s) < NR_TINY)
-	  nPvt[r] = euclidianCol (r, c + 1);
+	  nPvt[r] = euclidian_c (r, c + 1);
 	else
 	  nPvt[r] = y;
       }
@@ -1032,13 +1034,13 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   nr_type_t f;
 
   // form the new right hand side Q'B
-  for (c = 0; c < N - 1; c++) {
+  for (c = 0; c < N; c++) {
     if (T_(c) != 0) {
-      // scalar product u_k^T * B
+      // scalar product u' * B
       for (f = B_(c), r = c + 1; r < N; r++) f += conj (A_(r, c)) * B_(r);
-      B_(c) -= T_(c) * f;
-      // z - 2 * f * u_k
-      for (r = c + 1; r < N; r++) B_(r) -= T_(c) * f * A_(r, c);
+      // z - T * f * u
+      f *= conj (T_(c)); B_(c) -= f;
+      for (r = c + 1; r < N; r++) B_(r) -= f * A_(r, c);
     }
   }
 
@@ -1071,16 +1073,408 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   }
 
   // compute the least square solution QX
-  for (c = N - 2; c >= 0; c--) {
+  for (c = N - 1; c >= 0; c--) {
     if (T_(c) != 0) {
-      // scalar product u_k^T * B
+      // scalar product u' * B
       for (f = B_(c), r = c + 1; r < N; r++) f += conj (A_(r, c)) * B_(r);
-      B_(c) -= T_(c) * f;
-      // z - 2 * f * u_k
-      for (r = c + 1; r < N; r++) B_(r) -= T_(c) * f * A_(r, c);
+      // z - T * f * u_k
+      f *= T_(c); B_(c) -= f;
+      for (r = c + 1; r < N; r++) B_(r) -= f * A_(r, c);
     }
   }
 
   // permute solution vector
   for (r = 0; r < N; r++) X_(cMap[r]) = B_(r);
 }
+
+#define sign_(a) (real (a) < 0 ? -1 : 1)
+
+/* The function creates the left-hand householder vector for a given
+   column which eliminates the column except the first element.  The
+   householder vector is normalized to have one in the first position.
+   The diagonal element is replaced by the applied householder vector
+   and the vector itself is located in the free matrix positions.  The
+   function returns the normalization factor. */
+template <class nr_type_t>
+nr_type_t eqnsys<nr_type_t>::householder_create_left (int c) {
+  nr_type_t a, b, t;
+  nr_double_t s, g;
+  s = euclidian_c (c, c + 1);
+  if (s == 0 && imag (A_(c, c)) == 0) {
+    // no reflection necessary
+    t = 0;
+  }
+  else {
+    // calculate householder reflection
+    a = A_(c, c);
+    g = sign_(a) * xhypot (a, s);
+    b = a + g;
+    t = b / g;
+    // store householder vector
+    for (int r = c + 1; r < N; r++) A_(r, c) /= b;
+    A_(c, c) = -g;
+  }
+  return t;
+}
+
+/* The function computes a Householder vector to zero-out the matrix
+   entries in the given column, stores it in the annihilated vector
+   space (in a packed form) and applies the transformation to the
+   remaining right-hand columns. */
+template <class nr_type_t>
+nr_type_t eqnsys<nr_type_t>::householder_left (int c) {
+  // compute householder vector
+  nr_type_t t = householder_create_left (c);
+  // apply householder transformation to remaining columns if necessary
+  if (t != 0) {
+    householder_apply_left (c, t);
+  }
+  return t;
+}
+
+/* The function computes a Householder vector to zero-out the matrix
+   entries in the given row, stores it in the annihilated vector space
+   (in a packed form) and applies the transformation to the remaining
+   downward rows. */
+template <class nr_type_t>
+nr_type_t eqnsys<nr_type_t>::householder_right (int r) {
+  // compute householder vector
+  nr_type_t t = householder_create_right (r);
+  // apply householder transformation to remaining rows if necessary
+  if (t != 0) {
+    householder_apply_right (r, t);
+  }
+  return t;
+}
+
+/* The function creates the right-hand householder vector for a given
+   row which eliminates the row except the first element.  The
+   householder vector is normalized to have one in the first position.
+   The super-diagonal element is replaced by the applied householder
+   vector and the vector itself is located in the free matrix
+   positions.  The function returns the normalization factor. */
+template <class nr_type_t>
+nr_type_t eqnsys<nr_type_t>::householder_create_right (int r) {
+  nr_type_t a, b, t;
+  nr_double_t s, g;
+  s = euclidian_r (r, r + 2);
+  if (s == 0 && imag (A_(r, r + 1)) == 0) {
+    // no reflection necessary
+    t = 0;
+  }
+  else {
+    // calculate householder reflection
+    a = A_(r, r + 1);
+    g = sign_(a) * xhypot (a, s);
+    b = a + g;
+    t = b / g;
+    // store householder vector
+    for (int c = r + 2; c < N; c++) A_(r, c) /= b;
+    A_(r, r + 1) = -g;
+  }
+  return t;
+}
+
+/* Applies the householder vector stored in the given column to the
+   right-hand columns using the given normalization factor. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::householder_apply_left (int c, nr_type_t t) {
+  nr_type_t f;
+  int k, r;
+  // apply the householder vector to each right-hand column
+  for (r = c + 1; r < N; r++) {
+    // calculate f = u' * A (a scalar product)
+    f = A_(c, r);
+    for (k = c + 1; k < N; k++) f += conj (A_(k, c)) * A_(k, r);
+    // calculate A -= T * f * u
+    f *= conj (t); A_(c, r) -= f;
+    for (k = c + 1; k < N; k++) A_(k, r) -= f * A_(k, c);
+  }
+}
+
+/* Applies the householder vector stored in the given row to the
+   downward rows using the given normalization factor. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::householder_apply_right (int r, nr_type_t t) {
+  nr_type_t f;
+  int k, c;
+  // apply the householder vector to each downward row
+  for (c = r + 1; c < N; c++) {
+    // calculate f = u' * A (a scalar product)
+    f = A_(c, r + 1);
+    for (k = r + 2; k < N; k++) f += conj (A_(r, k)) * A_(c, k);
+    // calculate A -= T * f * u
+    f *= conj (t); A_(c, r + 1) -= f;
+    for (k = r + 2; k < N; k++) A_(c, k) -= f * A_(r, k);
+  }
+}
+
+// Some helper defines for SVD.
+#define V_ (*V)
+#define S_ (*S)
+#define E_ (*E)
+#define U_ (*A)
+
+/* The function does exactly the same as householder_apply_right()
+   except that it applies the householder transformations to another
+   matrix. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::householder_apply_right_extern (int r, nr_type_t t) {
+  nr_type_t f;
+  int k, c;
+  // apply the householder vector to each downward row
+  for (c = r + 1; c < N; c++) {
+    // calculate f = u' * A (a scalar product)
+    f = V_(c, r + 1);
+    for (k = r + 2; k < N; k++) f += conj (A_(r, k)) * V_(c, k);
+    // calculate A -= T * f * u
+    f *= conj (t); V_(c, r + 1) -= f;
+    for (k = r + 2; k < N; k++) V_(c, k) -= f * A_(r, k);
+  }
+}
+
+/* This function solves the equation system AX = B using the singular
+   value decomposition (Golub-Reinsch-SVD). */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_svd (void) {
+  factorize_svd ();
+  chop_svd ();
+  substitute_svd ();
+}
+
+// Annihilates near-zero singular values.
+template <class nr_type_t>
+void eqnsys<nr_type_t>::chop_svd (void) {
+  int c;
+  nr_double_t Max, Min;
+  Max = 0.0;
+  for (c = 0; c < N; c++) if (fabs (S_(c)) > Max) Max = fabs (S_(c));
+  Min = Max * NR_EPSI;
+  for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
+}
+
+/* The function uses the singular value decomposition A = USV' to
+   solve the equation system AX = B by simple matrix multiplications.
+   Remember that the factorization actually computed U, S and V'. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::substitute_svd (void) {
+  int c, r;
+  nr_type_t f;
+  // calculate U'B
+  for (c = 0; c < N; c++) {
+    f = 0.0;
+    // non-zero result only if S is non-zero
+    if (S_(c) != 0.0) {
+      for (r = 0; r < N; r++) f += conj (U_(r, c)) * B_(r);
+      // this is the divide by S
+      f /= S_(c);
+    }
+    R_(c) = f;
+  }
+  // matrix multiply by V to get the final solution
+  for (r = 0; r < N; r++) {
+    for (f = 0.0, c = 0; c < N; c++) f += conj (V_(c, r)) * R_(c);
+    X_(r) = f;
+  }
+}
+
+/* The function decomposes the matrix A into three other matrices U, S
+   and V'.  The matrix A is overwritten by the U matrix, S is stored
+   in a separate vector and V in a separate matrix. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::factorize_svd (void) {
+  int i, j, l;
+  nr_type_t t;
+
+  // allocate space for vectors and matrices
+  if (R) delete R; R = new tvector<nr_type_t> (N);
+  if (T) delete T; T = new tvector<nr_type_t> (N);
+  if (V) delete V; V = new tmatrix<nr_type_t> (N);
+  if (S) delete S; S = new tvector<nr_double_t> (N);
+  if (E) delete E; E = new tvector<nr_double_t> (N);
+
+  // bidiagonalization through householder transformations
+  for (i = 0; i < N; i++) {
+    T_(i) = householder_left (i);
+    if (i < N - 1) R_(i) = householder_right (i);
+  }
+
+  // copy over the real valued bidiagonal values
+  for (i = 0; i < N; i++) S_(i) = real (A_(i, i));
+  for (E_(0) = 0, i = 1; i < N; i++) E_(i) = real (A_(i - 1, i));
+
+  // backward accumulation of right-hand householder transformations
+  // yields the V' matrix
+  for (l = N, i = N - 1; i >= 0; l = i--) {
+    if (i < N - 1) {
+      if ((t = R_(i)) != 0.0) {
+	householder_apply_right_extern (i, conj (t));
+      }
+      else for (j = l; j < N; j++) // cleanup this row
+	V_(i, j) = V_(j, i) = 0.0;
+    }
+    V_(i, i) = 1.0;
+  }
+
+  // backward accumulation of left-hand householder transformations
+  // yields the U matrix in place of the A matrix
+  for (l = N, i = N - 1; i >= 0; l = i--) {
+    for (j = l; j < N; j++) // cleanup upper row
+      A_(i, j) = 0.0;
+    if ((t = T_(i)) != 0.0) {
+      householder_apply_left (i, conj (t));
+      for (j = l; j < N; j++) A_(j, i) *= -t;
+    }
+    else for (j = l; j < N; j++) // cleanup this column
+      A_(j, i) = 0.0;
+    A_(i, i) = 1.0 - t;
+  }
+
+  // S and E contain diagonal and super-diagonal, A contains U, V'
+  // calculated; now diagonalization can begin
+  diagonalize_svd ();
+}
+
+#ifndef MAX
+# define MAX(x,y) (((x) > (y)) ? (x) : (y))
+#endif
+
+// Helper function computes Givens rotation.
+static nr_double_t
+givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
+  nr_double_t z = xhypot (a, b);
+  c = a / z;
+  s = b / z;
+  return z;
+}
+
+/* This function diagonalizes the upper bidiagonal matrix fromed by
+   the diagonal S and the super-diagonal vector E.  Both vectors are
+   real valued.  Thus real valued calculations even when solving a
+   complex valued equation systems is possible except for the matrix
+   updates of U and V'. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::diagonalize_svd (void) {
+  bool split;
+  int i, l, j, its, p, k, n;
+  nr_double_t an, f, g, h, d, c, s, b, a;
+  nr_type_t y, z;
+
+  // find largest bidiagonal value
+  for (an = 0, i = 0; i < N; i++)
+    an = MAX (an, fabs (S_(i)) + fabs (E_(i)));
+
+  // diagonalize the bidiagonal matrix (stored as super-diagonal
+  // vector R and diagonal vector S)
+  for (k = N - 1; k >= 0; k--) {
+    // loop over singular values
+    for (its = 0; its <= 30; its++) {
+      split = true;
+      // check for a zero entry along the super-diagonal R, if there
+      // is one, it is possible to QR iterate on two separate matrices
+      // above and below it
+      for (n = 0, l = k; l >= 1; l--) {
+	// note that E_(0) is always zero
+	n = l - 1;
+	if (fabs (E_(l)) + an == an) {
+	  split = false;
+	  break;
+	}
+	if (fabs (S_(n)) + an == an) break;
+      }
+      // if there is a zero on the diagonal S, it is possible to zero
+      // out the corresponding super-diagonal R entry to its right
+      if (split) {
+	// cancellation of E_(l), if l > 0
+	c = 0.0;
+	s = 1.0;
+	for (i = l; i <= k; i++) {
+	  f = -s * E_(i);
+	  E_(i) *= c;
+	  if (fabs (f) + an == an) break;
+	  g = S_(i);
+	  S_(i) = givens (f, g, c, s);
+	  // apply inverse rotation to U
+	  for (j = 0; j < N; j++) {
+            y = U_(j, n);
+            z = U_(j, i);
+            U_(j, n) = y * c + z * s;
+            U_(j, i) = z * c - y * s;
+	  }
+	}
+      }
+
+      d = S_(k);
+      // convergence
+      if (l == k) {
+	// singular value is made non-negative
+	if (d < 0.0) {
+	  S_(k) = -d;
+	  for (j = 0; j < N; j++) V_(k, j) = -V_(k, j);
+	}
+	break;
+      }
+      if (its == 30) {
+	logprint (LOG_ERROR, "WARNING: no convergence in 30 SVD iterations\n");
+      }
+
+      // shift from bottom 2-by-2 minor
+      a = S_(l);
+      n = k - 1;
+      b = S_(n);
+      g = E_(n);
+      h = E_(k);
+
+      // compute QR shift value (as close as possible to the largest
+      // eigenvalue of the 2-by-2 minor matrix)
+      f  = (b - d) * (b + d) + (g - h) * (g + h);
+      f /= 2.0 * h * b;
+      f += sign (f) * xhypot (f, 1.0);
+      f  = ((a - d) * (a + d) + h * (b / f - h)) / a;
+
+      // next QR transformation
+      c = s = 1.0;
+      for (j = l; j <= n; j++) {
+	i = j + 1;
+	g = E_(i);
+	b = S_(i);
+	h = s * g;
+	g *= c;
+	E_(j) = givens (f, h, c, s);
+	// perform the rotation
+	f = a * c + g * s;
+	g = g * c - a * s;
+	h = b * s;
+	b *= c;
+	// accumulate the rotation in V'
+	for (p = 0; p < N; p++) {
+	  y = V_(j, p);
+	  z = V_(i, p);
+	  V_(j, p) = y * c + z * s;
+	  V_(i, p) = z * c - y * s;
+	}
+	d = S_(j) = xhypot (f, h);
+	// rotation can be arbitrary if d = 0
+	if (d != 0.0) {
+	  d = 1.0 / d;
+	  c = f * d;
+	  s = h * d;
+	}
+	f = c * g + s * b;
+	a = c * b - s * g;
+	// accumulate rotation into U
+	for (p = 0; p < N; p++) {
+	  y = U_(p, j);
+	  z = U_(p, i);
+	  U_(p, j) = y * c + z * s;
+	  U_(p, i) = z * c - y * s;
+	}
+      }
+      E_(l) = 0;
+      E_(k) = f;
+      S_(k) = a;
+    }
+  }
+}
+
+#undef V_
