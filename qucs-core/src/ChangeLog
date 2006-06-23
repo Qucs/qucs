@@ -1,3 +1,15 @@
+2006-06-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp, dcsolver.cpp: Allowing 'GolubSVD' as solver.
+
+	* eqnsys.cpp: Reworked the QR decomposition code.  Also added the
+	first working version of the SVD (both real and complex).  More
+	to come about this code...
+
+	* vector.cpp, evaluate.cpp, complex.cpp: Renamed sign() into
+	signum() and added slightly different sign() function which
+	returns 1 with zero arguments.
+
 2006-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_touchstone.y: Raised stack limit of parser.

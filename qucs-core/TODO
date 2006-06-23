@@ -64,7 +64,8 @@ unfixed) have a look at the file BUGS.
 	- Spline interpolation for touchstone S-parameters.  Implement
 	  general interpolation functionality for all kind of data.  Make
 	  this available in equation solver as well.
-- Singular value decomposition (SVD) for solving linear equation systems.
+	- Singular value decomposition (SVD) for solving linear equation
+	  systems.
 	- Automatic variable generation in equation solver (plotvs,
 	  circles).
 	- QR decomposition algorithm for solving linear equation systems.

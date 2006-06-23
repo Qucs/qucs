@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.50 2006/05/26 12:11:40 raimi Exp $
+ * $Id: evaluate.cpp,v 1.51 2006/06/23 14:38:00 raimi Exp $
  *
  */
 
@@ -192,7 +192,8 @@ MAKE_FUNC_DEFINITION_0 (tanh);   // tangent hyperbolicus
 MAKE_FUNC_DEFINITION_0 (coth);   // cotangent hyperbolicus
 MAKE_FUNC_DEFINITION_0 (sech);   // secans hyperbolicus
 MAKE_FUNC_DEFINITION_0 (cosech); // cosecans hyperbolicus
-MAKE_FUNC_DEFINITION_0 (sign);   // signum function
+MAKE_FUNC_DEFINITION_0 (signum); // signum function
+MAKE_FUNC_DEFINITION_0 (sign);   // sign function
 MAKE_FUNC_DEFINITION_0 (sinc);   // sin(x)/x aka sinc function
 MAKE_FUNC_DEFINITION_0 (sqr);    // square value
 

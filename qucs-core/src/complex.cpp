@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.31 2006/05/16 11:40:25 raimi Exp $
+ * $Id: complex.cpp,v 1.32 2006/06/23 14:38:00 raimi Exp $
  *
  */
 
@@ -276,8 +276,13 @@ complex floor (const complex z) {
   return rect (floor (real (z)), floor (imag (z)));
 }
 
-complex sign (const complex z) {
+complex signum (const complex z) {
   if (z == 0) return 0;
+  return z / abs (z);
+}
+
+complex sign (const complex z) {
+  if (z == 0) return complex (1);
   return z / abs (z);
 }
 
@@ -307,8 +312,12 @@ nr_double_t xhypot (const complex a, const complex b) {
     return abs (b) * sqrt (1 + c / d);
 }
 
-nr_double_t sign (const nr_double_t d) {
+nr_double_t signum (const nr_double_t d) {
   if (d == 0) return 0;
+  return d < 0 ? -1 : 1;
+}
+
+nr_double_t sign (const nr_double_t d) {
   return d < 0 ? -1 : 1;
 }
 

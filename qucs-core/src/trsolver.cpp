@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.46 2006/04/28 07:08:26 raimi Exp $
+ * $Id: trsolver.cpp,v 1.47 2006/06/23 14:38:01 raimi Exp $
  *
  */
 
@@ -135,6 +135,8 @@ void trsolver::solve (void) {
     eqnAlgo = ALGO_QR_DECOMPOSITION;
   else if (!strcmp (solver, "HouseholderLQ"))
     eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
+  else if (!strcmp (solver, "GolubSVD"))
+    eqnAlgo = ALGO_SV_DECOMPOSITION;
 
   // Run the DC solver once.
   try_running () {

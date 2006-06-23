@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.28 2006/03/15 16:46:28 raimi Exp $
+ * $Id: vector.cpp,v 1.29 2006/06/23 14:38:01 raimi Exp $
  *
  */
 
@@ -258,6 +258,12 @@ complex avg (vector v) {
   complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result / v.getSize ();
+}
+
+vector signum (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (signum (v.get (i)), i);
+  return result;
 }
 
 vector sign (vector v) {

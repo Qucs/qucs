@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.24 2006/03/15 16:46:28 raimi Exp $
+ * $Id: complex.h,v 1.25 2006/06/23 14:38:00 raimi Exp $
  *
  */
 
@@ -49,6 +49,7 @@ nr_double_t  step (const nr_double_t);
 // overloaded math functions
 nr_double_t xhypot (const nr_double_t, const nr_double_t);
 nr_double_t    abs (const nr_double_t);
+nr_double_t signum (const nr_double_t);
 nr_double_t   sign (const nr_double_t);
 nr_double_t   sinc (const nr_double_t);
 
@@ -107,6 +108,7 @@ class complex
   friend complex       ytor (const complex, complex zref = 50.0);
   friend complex       rtoy (const complex, complex zref = 50.0);
   friend nr_double_t    abs (const complex);
+  friend complex     signum (const complex);
   friend complex       sign (const complex);
   friend complex       sinc (const complex);
   friend nr_double_t xhypot (const complex, const complex);

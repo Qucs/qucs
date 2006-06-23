@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.cpp,v 1.40 2006/05/03 09:43:56 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.41 2006/06/23 14:38:00 raimi Exp $
  *
  */
 
@@ -85,6 +85,8 @@ void dcsolver::solve (void) {
     eqnAlgo = ALGO_QR_DECOMPOSITION;
   else if (!strcmp (solver, "HouseholderLQ"))
     eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
+  else if (!strcmp (solver, "GolubSVD"))
+    eqnAlgo = ALGO_SV_DECOMPOSITION;
 
   // local variables for the fallback thingies
   int retry = -1, error, fallback = 0, preferred;
