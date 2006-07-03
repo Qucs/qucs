@@ -57,7 +57,7 @@ BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
-  hbnoise.tex synthesis.tex transline.tex
+  hbnoise.tex synthesis.tex transline.tex maths.tex
 
 technical: technical.dvi technical.ps
 	$(TEX2PDF) technical
