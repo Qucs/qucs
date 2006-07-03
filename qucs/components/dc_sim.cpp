@@ -58,14 +58,14 @@ DC_Sim::DC_Sim()
   Props.append(new Property("MaxIter", "150", false,
 		QObject::tr("maximum number of iterations until error")));
   Props.append(new Property("saveAll", "no", false,
-		QObject::tr("save subcircuit nodes into dataset")+
-		" [yes, no]"));
+	QObject::tr("save subcircuit nodes into dataset")+
+	" [yes, no]"));
   Props.append(new Property("convHelper", "none", false,
-		QObject::tr("preferred convergence algorithm")+
-		" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
+	QObject::tr("preferred convergence algorithm")+
+	" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
   Props.append(new Property("Solver", "CroutLU", false,
 	QObject::tr("method for solving the circuit matrix")+
-	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ]"));
+	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ, GolubSVD]"));
 }
 
 DC_Sim::~DC_Sim()
