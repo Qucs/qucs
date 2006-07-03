@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.10 2006-07-03 06:02:09 margraf Exp $
+ * $Id: check_vcd.cpp,v 1.11 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -135,6 +135,7 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 	// add variable to set
 	vv = (struct vcd_variable *) calloc (1, sizeof (struct vcd_variable));
 	vv->ident = vc->var->ident;
+	vv->type = vc->var->type;
 	vv->value = vc->value;
 	vv->isreal = vc->isreal;
 	vv->code = vc->code;
@@ -235,12 +236,25 @@ static char * vcd_create_value (struct vcd_variable * vv, int size) {
   int i, len = strlen (vv->value);
   char * value;
 
-  if (vv->isreal) {
+  if (vv->type == VAR_REAL) {
     // a real
     char txt[64];
     double val = strtod (vv->value, NULL);
     sprintf (txt, "%+.11e", val);
     value = strdup (txt);
+  } else if (vv->type == VAR_INTEGER) {
+    // an integer
+    char txt[64];
+    long val = 0, bit, i = strlen (vv->value) - 1;
+    for (bit = 1; i >= 0; i--, bit <<= 1) {
+      if (vv->value[i] == '1')
+	val |= bit;
+      else if (vv->value[i] == '0')
+	val &= ~bit;
+    }
+    sprintf (txt, "%+ld", val);
+    value = strdup (txt);
+    vv->isreal = 1;
   } else if (size == len) {
     // already good
     value = strdup (vv->value);

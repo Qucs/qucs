@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.27 2006-03-13 08:26:25 raimi Exp $
+ * $Id: matrix.cpp,v 1.28 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -199,6 +199,14 @@ matrix operator / (matrix a, complex z) {
   return res;
 }
 
+matrix operator / (matrix a, nr_double_t d) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, a.get (r, c) / d);
+  return res;
+}
+
 // Matrix scaling in different order.
 matrix operator * (complex z, matrix a) {
   return a * z;
@@ -217,6 +225,51 @@ matrix operator * (matrix a, matrix b) {
     }
   }
   return res;
+}
+
+// Complex scalar addition.
+matrix operator + (matrix a, complex z) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, a.get (r, c) + z);
+  return res;
+}
+
+// Real scalar addition.
+matrix operator + (matrix a, nr_double_t d) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, a.get (r, c) + d);
+  return res;
+}
+
+// Scalar addition in different order.
+matrix operator + (complex z, matrix a) {
+  return a + z;
+}
+
+matrix operator + (nr_double_t d, matrix a) {
+  return a + d;
+}
+
+// Scalar subtraction.
+matrix operator - (matrix a, complex z) {
+  return -z + a;
+}
+
+matrix operator - (matrix a, nr_double_t d) {
+  return -d + a;
+}
+
+// Scalar subtraction in different order.
+matrix operator - (complex z, matrix a) {
+  return -a + z;
+}
+
+matrix operator - (nr_double_t d, matrix a) {
+  return -a + d;
 }
 
 // Transpose the matrix.

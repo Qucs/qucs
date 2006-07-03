@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.12 2006-03-13 08:26:25 raimi Exp $
+ * $Id: matvec.h,v 1.13 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -52,9 +52,21 @@ class matvec
   friend matvec operator + (matvec, matvec);
   friend matvec operator + (matvec, matrix);
   friend matvec operator + (matrix, matvec);
+  friend matvec operator + (matvec, complex);
+  friend matvec operator + (complex, matvec);
+  friend matvec operator + (matvec, nr_double_t);
+  friend matvec operator + (nr_double_t, matvec);
+  friend matvec operator + (matvec, vector);
+  friend matvec operator + (vector, matvec);
   friend matvec operator - (matvec, matvec);
   friend matvec operator - (matvec, matrix);
   friend matvec operator - (matrix, matvec);
+  friend matvec operator - (matvec, complex);
+  friend matvec operator - (complex, matvec);
+  friend matvec operator - (matvec, nr_double_t);
+  friend matvec operator - (nr_double_t, matvec);
+  friend matvec operator - (matvec, vector);
+  friend matvec operator - (vector, matvec);
   friend matvec operator / (matvec, complex);
   friend matvec operator / (matvec, nr_double_t);
   friend matvec operator / (matvec, vector);

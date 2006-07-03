@@ -1,7 +1,7 @@
 /*
  * matvec.cpp - matrix vector class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.19 2005-10-31 16:15:31 ela Exp $
+ * $Id: matvec.cpp,v 1.20 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -199,9 +199,78 @@ matvec operator + (matvec a, matrix b) {
   return res;
 }
 
+// Matrix vector addition with vector.
+matvec operator + (matvec a, vector b) {
+  assert (a.getSize () == b.getSize ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + b.get (i), i);
+  return res;
+}
+
+// Matrix vector addition with vector in different order.
+matvec operator + (vector b, matvec a) {
+  return a + b;
+}
+
 // Matrix vector addition with single matrix in different order.
 matvec operator + (matrix a, matvec b) {
   return b + a;
+}
+
+// Matrix vector scalar addition.
+matvec operator + (matvec a, complex z) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + z, i);
+  return res;
+}
+
+// Matrix vector scalar addition in different order.
+matvec operator + (complex z, matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (z + a.get (i), i);
+  return res;
+}
+
+// Matrix vector scalar addition.
+matvec operator + (matvec a, nr_double_t d) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + d, i);
+  return res;
+}
+
+// Matrix vector scalar addition in different order.
+matvec operator + (nr_double_t d, matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (d + a.get (i), i);
+  return res;
+}
+
+// Matrix vector scalar subtraction.
+matvec operator - (matvec a, complex z) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - z, i);
+  return res;
+}
+
+// Matrix vector scalar subtraction in different order.
+matvec operator - (complex z, matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (z - a.get (i), i);
+  return res;
+}
+
+// Matrix vector scalar subtraction.
+matvec operator - (matvec a, nr_double_t d) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - d, i);
+  return res;
+}
+
+// Matrix vector scalar subtraction in different order.
+matvec operator - (nr_double_t d, matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (d - a.get (i), i);
+  return res;
 }
 
 // Intrinsic matrix vector addition.
@@ -232,6 +301,16 @@ matvec operator - (matvec a, matrix b) {
 // Matrix vector subtraction with single matrix in different order.
 matvec operator - (matrix a, matvec b) {
   return -b + a;
+}
+
+// Matrix vector subtraction with vector.
+matvec operator - (matvec a, vector b) {
+  return -b + a;
+}
+
+// Matrix vector subtraction with vector in different order.
+matvec operator - (vector b, matvec a) {
+  return -a + b;
 }
 
 // Unary minus.

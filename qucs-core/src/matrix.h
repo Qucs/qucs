@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.17 2006-02-17 07:24:06 raimi Exp $
+ * $Id: matrix.h,v 1.18 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -51,8 +51,17 @@ class matrix
 
   // operator functions
   friend matrix operator + (matrix, matrix);
+  friend matrix operator + (complex, matrix);
+  friend matrix operator + (matrix, complex);
+  friend matrix operator + (nr_double_t, matrix);
+  friend matrix operator + (matrix, nr_double_t);
   friend matrix operator - (matrix, matrix);
+  friend matrix operator - (complex, matrix);
+  friend matrix operator - (matrix, complex);
+  friend matrix operator - (nr_double_t, matrix);
+  friend matrix operator - (matrix, nr_double_t);
   friend matrix operator / (matrix, complex);
+  friend matrix operator / (matrix, nr_double_t);
   friend matrix operator * (complex, matrix);
   friend matrix operator * (matrix, complex);
   friend matrix operator * (nr_double_t, matrix);

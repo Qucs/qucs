@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.30 2006-06-23 14:38:01 raimi Exp $
+ * $Id: evaluate.h,v 1.31 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -51,12 +51,22 @@ public:
   static constant * plus_c_v (constant *);
   static constant * plus_v_v (constant *);
   static constant * plus_m_m (constant *);
+  static constant * plus_m_d (constant *);
+  static constant * plus_d_m (constant *);
+  static constant * plus_m_c (constant *);
+  static constant * plus_c_m (constant *);
   static constant * plus_s_s (constant *);
   static constant * plus_c_s (constant *);
   static constant * plus_s_c (constant *);
   static constant * plus_mv_mv (constant *);
   static constant * plus_mv_m (constant *);
   static constant * plus_m_mv (constant *);
+  static constant * plus_mv_d (constant *);
+  static constant * plus_d_mv (constant *);
+  static constant * plus_mv_c (constant *);
+  static constant * plus_c_mv (constant *);
+  static constant * plus_mv_v (constant *);
+  static constant * plus_v_mv (constant *);
 
   static constant * minus_d (constant *);
   static constant * minus_c (constant *);
@@ -74,9 +84,19 @@ public:
   static constant * minus_c_v (constant *);
   static constant * minus_v_v (constant *);
   static constant * minus_m_m (constant *);
+  static constant * minus_m_d (constant *);
+  static constant * minus_d_m (constant *);
+  static constant * minus_m_c (constant *);
+  static constant * minus_c_m (constant *);
   static constant * minus_mv_mv (constant *);
   static constant * minus_mv_m (constant *);
   static constant * minus_m_mv (constant *);
+  static constant * minus_mv_d (constant *);
+  static constant * minus_d_mv (constant *);
+  static constant * minus_mv_c (constant *);
+  static constant * minus_c_mv (constant *);
+  static constant * minus_mv_v (constant *);
+  static constant * minus_v_mv (constant *);
 
   static constant * times_d_d (constant *);
   static constant * times_c_c (constant *);

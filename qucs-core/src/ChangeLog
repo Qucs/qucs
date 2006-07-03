@@ -1,3 +1,14 @@
+2006-07-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* matvec.cpp, matrix.cpp: Added scalar additions and
+	subtractions.
+
+	* evaluate.cpp: Added scalar additions and subtractions for
+	matrices and matrix vectors.
+
+	* eqnsys.cpp: Replaced set/get syntax wherever possible to
+	read A() instead of A->get()/set().
+
 2006-06-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp, dcsolver.cpp: Allowing 'GolubSVD' as solver.

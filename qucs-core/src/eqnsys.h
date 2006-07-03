@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.h,v 1.19 2006-06-23 14:38:00 raimi Exp $
+ * $Id: eqnsys.h,v 1.20 2006-07-03 08:52:23 raimi Exp $
  *
  */
 
@@ -114,6 +114,8 @@ class eqnsys
   nr_type_t householder_right (int);
   nr_double_t euclidian_c (int, int r = 1);
   nr_double_t euclidian_r (int, int c = 1);
+  void givens_apply_u (int, int, nr_double_t, nr_double_t);
+  void givens_apply_v (int, int, nr_double_t, nr_double_t);
   void solve_svd (void);
   void chop_svd (void);
   void factorize_svd (void);
