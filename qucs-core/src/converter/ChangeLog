@@ -1,3 +1,9 @@
+2006-07-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp (VCD_INCLUDE_RANGE): Disabled output of range
+	specifications in bit-vector variable names.  Integer values are
+	now written as signed integers instead of bit-vectors.
+
 2006-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_vcd.l: Fixed yet another bug in the VCD lexer.

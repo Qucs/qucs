@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.7 2006/06/07 08:34:37 raimi Exp $
+ * $Id: check_vcd.h,v 1.8 2006/07/03 08:52:23 raimi Exp $
  *
  */
 
@@ -144,6 +144,7 @@ struct vcd_variable {
   char * ident; // variable identifer
   char * value; // the value
   int isreal;   // indicates type of value
+  int type;     // variable type
   struct vcd_variable * next;
 };
 

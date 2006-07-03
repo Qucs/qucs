@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.10 2006/06/23 14:38:00 raimi Exp $
+ * $Id: applications.h,v 1.11 2006/07/03 08:52:23 raimi Exp $
  *
  */
 
@@ -44,12 +44,22 @@ struct application_t eqn::applications[] = {
   { "+", TAG_VECTOR,  evaluate::plus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
   { "+", TAG_MATRIX,  evaluate::plus_m_m, 2, { TAG_MATRIX,  TAG_MATRIX  } },
+  { "+", TAG_MATRIX,  evaluate::plus_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
+  { "+", TAG_MATRIX,  evaluate::plus_d_m, 2, { TAG_DOUBLE,  TAG_MATRIX  } },
+  { "+", TAG_MATRIX,  evaluate::plus_m_c, 2, { TAG_MATRIX,  TAG_COMPLEX } },
+  { "+", TAG_MATRIX,  evaluate::plus_c_m, 2, { TAG_COMPLEX, TAG_MATRIX  } },
   { "+", TAG_STRING,  evaluate::plus_s_s, 2, { TAG_STRING,  TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_c_s, 2, { TAG_CHAR,    TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_s_c, 2, { TAG_STRING,  TAG_CHAR    } },
-  { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC,TAG_MATVEC  } },
   { "+", TAG_MATVEC,  evaluate::plus_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
   { "+", TAG_MATVEC,  evaluate::plus_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },
+  { "+", TAG_MATVEC,  evaluate::plus_d_mv, 2, { TAG_DOUBLE, TAG_MATVEC  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "+", TAG_MATVEC,  evaluate::plus_c_mv, 2, { TAG_COMPLEX,TAG_MATVEC  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_v, 2, { TAG_MATVEC, TAG_VECTOR  } },
+  { "+", TAG_MATVEC,  evaluate::plus_v_mv, 2, { TAG_VECTOR, TAG_MATVEC  } },
 
   { "-", TAG_DOUBLE,  evaluate::minus_d, 1, { TAG_DOUBLE  } },
   { "-", TAG_COMPLEX, evaluate::minus_c, 1, { TAG_COMPLEX } },
@@ -67,9 +77,19 @@ struct application_t eqn::applications[] = {
   { "-", TAG_VECTOR,  evaluate::minus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "-", TAG_VECTOR,  evaluate::minus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
   { "-", TAG_MATRIX,  evaluate::minus_m_m, 2, { TAG_MATRIX,  TAG_MATRIX  } },
-  { "-", TAG_MATVEC,  evaluate::minus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC } },
+  { "-", TAG_MATRIX,  evaluate::minus_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
+  { "-", TAG_MATRIX,  evaluate::minus_d_m, 2, { TAG_DOUBLE,  TAG_MATRIX  } },
+  { "-", TAG_MATRIX,  evaluate::minus_m_c, 2, { TAG_MATRIX,  TAG_COMPLEX } },
+  { "-", TAG_MATRIX,  evaluate::minus_c_m, 2, { TAG_COMPLEX, TAG_MATRIX  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_mv, 2, { TAG_MATVEC,TAG_MATVEC  } },
   { "-", TAG_MATVEC,  evaluate::minus_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
   { "-", TAG_MATVEC,  evaluate::minus_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },
+  { "-", TAG_MATVEC,  evaluate::minus_d_mv, 2, { TAG_DOUBLE, TAG_MATVEC  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "-", TAG_MATVEC,  evaluate::minus_c_mv, 2, { TAG_COMPLEX,TAG_MATVEC  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_v, 2, { TAG_MATVEC, TAG_VECTOR  } },
+  { "-", TAG_MATVEC,  evaluate::minus_v_mv, 2, { TAG_VECTOR, TAG_MATVEC  } },
 
   { "*", TAG_DOUBLE,  evaluate::times_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "*", TAG_COMPLEX, evaluate::times_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -86,6 +106,8 @@ struct application_t eqn::applications[] = {
   { "*", TAG_MATRIX,  evaluate::times_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
   { "*", TAG_MATRIX,  evaluate::times_d_m, 2, { TAG_DOUBLE,  TAG_MATRIX  } },
   { "*", TAG_MATVEC,  evaluate::times_mv_mv, 2, { TAG_MATVEC,TAG_MATVEC  } },
+  { "*", TAG_MATVEC,  evaluate::times_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
+  { "*", TAG_MATVEC,  evaluate::times_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
   { "*", TAG_MATVEC,  evaluate::times_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
   { "*", TAG_MATVEC,  evaluate::times_c_mv, 2, { TAG_COMPLEX,TAG_MATVEC  } },
   { "*", TAG_MATVEC,  evaluate::times_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },

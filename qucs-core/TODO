@@ -23,6 +23,9 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Support for ZVR ascii data (R&S network analyzer) as an import file
+  format in the Qucs Converter.
+- Allow input parameters of components, e.g. Q1.Bf, in equations.
 - Implementation of some basic binary operations for binary data like
   and, or, xor, etc. in the equation solver.
 - Support for binary (digital simulation) data in datasets.

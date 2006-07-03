@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.37 2006/06/23 14:38:00 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.38 2006/07/03 08:52:23 raimi Exp $
  *
  */
 
@@ -193,6 +193,10 @@ void eqnsys<nr_type_t>::solve_inverse (void) {
   *X = inverse (*A) * *B;
 }
 
+#define A_ (*A)
+#define X_ (*X)
+#define B_ (*B)
+
 /* The function solves the equation system applying Gaussian
    elimination with full column pivoting only (no row pivoting). */
 template <class nr_type_t>
@@ -205,8 +209,8 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
   for (i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < N; r++) {
-      if (abs (A->get (r, i)) > MaxPivot) {
-	MaxPivot = abs (A->get (r, i));
+      if (abs (A_(r, i)) > MaxPivot) {
+	MaxPivot = abs (A_(r, i));
 	pivot = r;
       }
     }
@@ -218,22 +222,17 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
     }
     // compute new rows and columns
     for (r = i + 1; r < N; r++) {
-      f = A->get (r, i) / A->get (i, i);
-      for (c = i + 1; c < N; c++) {
-	A->set (r, c, A->get (r, c) - f * A->get (i, c));
-      }
-      B->set (r, B->get (r) - f * B->get (i));
+      f = A_(r, i) / A_(i, i);
+      for (c = i + 1; c < N; c++) A_(r, c) -= f * A_(i, c);
+      B_(r) -= f * B_(i);
     }
   }
 
   // backward substitution
   for (i = N - 1; i >= 0; i--) {
-    f = B->get (i);
-    for (c = i + 1; c < N; c++) {
-      f -= A->get (i, c) * X->get (c);
-    }
-    f /= A->get (i, i);
-    X->set (i, f);
+    f = B_(i);
+    for (c = i + 1; c < N; c++) f -= A_(i, c) * X_(c);
+    X_(i) = f / A_(i, i);
   }
 }
 
@@ -250,8 +249,8 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   for (i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < N; r++) {
-      if (abs (A->get (r, i)) > MaxPivot) {
-	MaxPivot = abs (A->get (r, i));
+      if (abs (A_(r, i)) > MaxPivot) {
+	MaxPivot = abs (A_(r, i));
 	pivot = r;
       }
     }
@@ -263,20 +262,16 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
     }
 
     // compute current row
-    f = A->get (i, i);
-    for (c = i + 1; c < N; c++) {
-      A->set (i, c, A->get (i, c) / f);
-    }
-    B->set (i, B->get (i) / f);
+    f = A_(i, i);
+    for (c = i + 1; c < N; c++) A_(i, c) /= f;
+    B_(i) /= f;
 
     // compute new rows and columns
     for (r = 0; r < N; r++) {
       if (r != i) {
-	f = A->get (r, i);
-        for (c = i + 1; c < N; c++) {
-          A->set (r, c, A->get (r, c) - f * A->get (i, c));
-        }
-        B->set (r, B->get (r) - f * B->get (i));
+	f = A_(r, i);
+        for (c = i + 1; c < N; c++) A_(r, c) -= f * A_(i, c);
+        B_(r) -= f * B_(i);
       }
     }
   }
@@ -285,16 +280,12 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   *X = *B;
 }
 
-#define A_ (*A)
-#define X_ (*X)
-#define B_ (*B)
-
 #define LU_FAILURE 0
 #define VIRTUAL_RES(txt,i) {					  \
   qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR); \
   e->setText (txt);						  \
   e->setData (rMap[i]);						  \
-  A->set (i, i, NR_TINY); /* virtual resistance to ground */	  \
+  A_(i, i) = NR_TINY; /* virtual resistance to ground */	  \
   throw_exception (e); }
 
 /* The function uses LU decomposition and the appropriate forward and
@@ -550,10 +541,10 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 
   // normalize the equation system to have ones on its diagonal
   for (r = 0; r < N; r++) {
-    f = A->get (r, r);
+    f = A_(r, r);
     assert (f != 0); // singular matrix
-    for (c = 0; c < N; c++) A->set (r, c, A->get (r, c) / f);
-    B->set (r, B->get (r) / f);
+    for (c = 0; c < N; c++) A_(r, c) /= f;
+    B_(r) /= f;
   }
 
   // the current X vector is a good initial guess for the iteration
@@ -567,20 +558,20 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
       for (f = 0, c = 0; c < N; c++) {
 	if (algo == ALGO_GAUSS_SEIDEL) {
 	  // Gauss-Seidel
-	  if (c < r)      f += A->get (r, c) * X->get (c);
-	  else if (c > r) f += A->get (r, c) * Xprev->get (c);
+	  if (c < r)      f += A_(r, c) * X_(c);
+	  else if (c > r) f += A_(r, c) * Xprev->get (c);
 	}
 	else {
 	  // Jacobi
-	  if (c != r) f += A->get (r, c) * Xprev->get (c);
+	  if (c != r) f += A_(r, c) * Xprev->get (c);
 	}
       }
-      X->set (r, B->get (r) - f);
+      X_(r) = B_(r) - f;
     }
     // check for convergence
     for (conv = 1, r = 0; r < N; r++) {
-      diff = abs (X->get (r) - Xprev->get (r));
-      if (diff >= abstol + reltol * abs (X->get (r))) {
+      diff = abs (X_(r) - Xprev->get (r));
+      if (diff >= abstol + reltol * abs (X_(r))) {
 	conv = 0;
 	break;
       }
@@ -639,10 +630,10 @@ void eqnsys<nr_type_t>::solve_sor (void) {
 
   // normalize the equation system to have ones on its diagonal
   for (r = 0; r < N; r++) {
-    f = A->get (r, r);
+    f = A_(r, r);
     assert (f != 0); // singular matrix
-    for (c = 0; c < N; c++) A->set (r, c, A->get (r, c) / f);
-    B->set (r, B->get (r) / f);
+    for (c = 0; c < N; c++) A_(r, c) /= f;
+    B_(r) /= f;
   }
 
   // the current X vector is a good initial guess for the iteration
@@ -654,19 +645,19 @@ void eqnsys<nr_type_t>::solve_sor (void) {
     // compute new solution vector
     for (r = 0; r < N; r++) {
       for (f = 0, c = 0; c < N; c++) {
-	if (c < r)      f += A->get (r, c) * X->get (c);
-	else if (c > r) f += A->get (r, c) * Xprev->get (c);
+	if (c < r)      f += A_(r, c) * X_(c);
+	else if (c > r) f += A_(r, c) * Xprev->get (c);
       }
-      X->set (r, (1 - l) * Xprev->get (r) + l * (B->get (r) - f));
+      X_(r) = (1 - l) * Xprev->get (r) + l * (B_(r) - f);
     }
     // check for convergence
     for (s = 0, d = 0, conv = 1, r = 0; r < N; r++) {
-      diff = abs (X->get (r) - Xprev->get (r));
-      if (diff >= abstol + reltol * abs (X->get (r))) {
+      diff = abs (X_(r) - Xprev->get (r));
+      if (diff >= abstol + reltol * abs (X_(r))) {
 	conv = 0;
 	break;
       }
-      d += diff; s += abs (X->get (r));
+      d += diff; s += abs (X_(r));
       if (!finite (diff)) { error++; break; }
     }
     if (!error) {
@@ -711,7 +702,7 @@ nr_double_t eqnsys<nr_type_t>::convergence_criteria (void) {
   nr_double_t f = 0;
   for (int r = 0; r < A->getCols (); r++) {
     for (int c = 0; c < A->getCols (); c++) {
-      if (r != c) f += norm (A->get (r, c) / A->get (r, r));
+      if (r != c) f += norm (A_(r, c) / A_(r, r));
     }
   }
   return sqrt (f);
@@ -739,7 +730,7 @@ void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
     restart = exchanged = 0;
     /* search for zero diagonals with lone pairs */
     for (i = begin; i < N; i++) {
-      if (A->get (i, i) == 0) {
+      if (A_(i, i) == 0) {
 	pairs = countPairs (i, pivot1, pivot2);
 	if (pairs == 1) { /* lone pair found, substitute rows */
 	  A->exchangeRows (i, pivot1);
@@ -756,7 +747,7 @@ void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
     /* all lone pairs are gone, look for zero diagonals with multiple pairs */
     if (restart) {
       for (i = begin; !exchanged && i < N; i++) {
-	if (A->get (i, i) == 0) {
+	if (A_(i, i) == 0) {
 	  pairs = countPairs (i, pivot1, pivot2);
 	  A->exchangeRows (i, pivot1);
 	  B->exchangeRows (i, pivot1);
@@ -774,11 +765,11 @@ template <class nr_type_t>
 int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
   int pairs = 0;
   for (int r = 0; r < N; r++) {
-    if (fabs (real (A->get (r, i))) == 1.0) {
+    if (fabs (real (A_(r, i))) == 1.0) {
       r1 = r;
       pairs++;
       for (r++; r < N; r++) {
-	if (fabs (real (A->get (r, i))) == 1.0) {
+	if (fabs (real (A_(r, i))) == 1.0) {
 	  r2 = r;
 	  if (++pairs >= 2) return pairs;
 	}
@@ -798,9 +789,9 @@ void eqnsys<nr_type_t>::preconditioner (void) {
   for (int i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = i, r = 0; r < N; r++) {
-      if (abs (A->get (r, i)) > MaxPivot && 
-	  abs (A->get (i, r)) >= abs (A->get (r, r))) {
-        MaxPivot = abs (A->get (r, i));
+      if (abs (A_(r, i)) > MaxPivot && 
+	  abs (A_(i, r)) >= abs (A_(r, r))) {
+        MaxPivot = abs (A_(r, i));
         pivot = r;
       }
     }
@@ -1348,6 +1339,28 @@ givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
   return z;
 }
 
+template <class nr_type_t>
+void eqnsys<nr_type_t>::givens_apply_u (int c1, int c2,
+					nr_double_t c, nr_double_t s) {
+  for (int i = 0; i < N; i++) {
+    nr_type_t y = U_(i, c1);
+    nr_type_t z = U_(i, c2);
+    U_(i, c1) = y * c + z * s;
+    U_(i, c2) = z * c - y * s;
+  }
+}
+
+template <class nr_type_t>
+void eqnsys<nr_type_t>::givens_apply_v (int r1, int r2,
+					nr_double_t c, nr_double_t s) {
+  for (int i = 0; i < N; i++) {
+    nr_type_t y = V_(r1, i);
+    nr_type_t z = V_(r2, i);
+    V_(r1, i) = y * c + z * s;
+    V_(r2, i) = z * c - y * s;
+  }
+}
+
 /* This function diagonalizes the upper bidiagonal matrix fromed by
    the diagonal S and the super-diagonal vector E.  Both vectors are
    real valued.  Thus real valued calculations even when solving a
@@ -1356,34 +1369,30 @@ givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::diagonalize_svd (void) {
   bool split;
-  int i, l, j, its, p, k, n;
+  int i, l, j, its, k, n;
   nr_double_t an, f, g, h, d, c, s, b, a;
-  nr_type_t y, z;
 
   // find largest bidiagonal value
   for (an = 0, i = 0; i < N; i++)
     an = MAX (an, fabs (S_(i)) + fabs (E_(i)));
 
   // diagonalize the bidiagonal matrix (stored as super-diagonal
-  // vector R and diagonal vector S)
+  // vector E and diagonal vector S)
   for (k = N - 1; k >= 0; k--) {
     // loop over singular values
     for (its = 0; its <= 30; its++) {
       split = true;
-      // check for a zero entry along the super-diagonal R, if there
+      // check for a zero entry along the super-diagonal E, if there
       // is one, it is possible to QR iterate on two separate matrices
       // above and below it
       for (n = 0, l = k; l >= 1; l--) {
 	// note that E_(0) is always zero
 	n = l - 1;
-	if (fabs (E_(l)) + an == an) {
-	  split = false;
-	  break;
-	}
+	if (fabs (E_(l)) + an == an) { split = false; break; }
 	if (fabs (S_(n)) + an == an) break;
       }
       // if there is a zero on the diagonal S, it is possible to zero
-      // out the corresponding super-diagonal R entry to its right
+      // out the corresponding super-diagonal E entry to its right
       if (split) {
 	// cancellation of E_(l), if l > 0
 	c = 0.0;
@@ -1395,12 +1404,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	  g = S_(i);
 	  S_(i) = givens (f, g, c, s);
 	  // apply inverse rotation to U
-	  for (j = 0; j < N; j++) {
-            y = U_(j, n);
-            z = U_(j, i);
-            U_(j, n) = y * c + z * s;
-            U_(j, i) = z * c - y * s;
-	  }
+	  givens_apply_u (n, i, c, s);
 	}
       }
 
@@ -1429,7 +1433,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
       // eigenvalue of the 2-by-2 minor matrix)
       f  = (b - d) * (b + d) + (g - h) * (g + h);
       f /= 2.0 * h * b;
-      f += sign (f) * xhypot (f, 1.0);
+      f += sign_(f) * xhypot (f, 1.0);
       f  = ((a - d) * (a + d) + h * (b / f - h)) / a;
 
       // next QR transformation
@@ -1447,12 +1451,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	h = b * s;
 	b *= c;
 	// accumulate the rotation in V'
-	for (p = 0; p < N; p++) {
-	  y = V_(j, p);
-	  z = V_(i, p);
-	  V_(j, p) = y * c + z * s;
-	  V_(i, p) = z * c - y * s;
-	}
+	givens_apply_v (j, i, c, s);
 	d = S_(j) = xhypot (f, h);
 	// rotation can be arbitrary if d = 0
 	if (d != 0.0) {
@@ -1463,12 +1462,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	f = c * g + s * b;
 	a = c * b - s * g;
 	// accumulate rotation into U
-	for (p = 0; p < N; p++) {
-	  y = U_(p, j);
-	  z = U_(p, i);
-	  U_(p, j) = y * c + z * s;
-	  U_(p, i) = z * c - y * s;
-	}
+	givens_apply_u (j, i, c, s);
       }
       E_(l) = 0;
       E_(k) = f;

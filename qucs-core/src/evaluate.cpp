@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.51 2006/06/23 14:38:00 raimi Exp $
+ * $Id: evaluate.cpp,v 1.52 2006/07/03 08:52:23 raimi Exp $
  *
  */
 
@@ -314,6 +314,76 @@ constant * evaluate::plus_m_mv (constant * args) {
   _RETMV (*m1 + *v2);
 }
 
+constant * evaluate::plus_m_d (constant * args) {
+  _ARM0 (m1);
+  _ARD1 (d2);
+  _DEFM ();
+  _RETM (*m1 + d2);
+}
+
+constant * evaluate::plus_d_m (constant * args) {
+  _ARD0 (d1);
+  _ARM1 (m2);
+  _DEFM ();
+  _RETM (d1 + *m2);
+}
+
+constant * evaluate::plus_m_c (constant * args) {
+  _ARM0 (m1);
+  _ARC1 (c2);
+  _DEFM ();
+  _RETM (*m1 + *c2);
+}
+
+constant * evaluate::plus_c_m (constant * args) {
+  _ARC0 (c1);
+  _ARM1 (m2);
+  _DEFM ();
+  _RETM (*c1 + *m2);
+}
+
+constant * evaluate::plus_mv_d (constant * args) {
+  _ARMV0 (m1);
+  _ARD1  (d2);
+  _DEFMV ();
+  _RETMV (*m1 + d2);
+}
+
+constant * evaluate::plus_d_mv (constant * args) {
+  _ARD0  (d1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (d1 + *m2);
+}
+
+constant * evaluate::plus_mv_c (constant * args) {
+  _ARMV0 (m1);
+  _ARC1  (c2);
+  _DEFMV ();
+  _RETMV (*m1 + *c2);
+}
+
+constant * evaluate::plus_c_mv (constant * args) {
+  _ARC0  (c1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (*c1 + *m2);
+}
+
+constant * evaluate::plus_mv_v (constant * args) {
+  _ARMV0 (m1);
+  _ARV1  (v2);
+  _DEFMV ();
+  _RETMV (*m1 + *v2);
+}
+
+constant * evaluate::plus_v_mv (constant * args) {
+  _ARV0  (v1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (*v1 + *m2);
+}
+
 constant * evaluate::plus_s_s (constant * args) {
   char * s1 = STR (_ARES(0));
   char * s2 = STR (_ARES(1));
@@ -455,6 +525,76 @@ constant * evaluate::minus_m_mv (constant * args) {
   _ARMV1 (v2);
   _DEFMV ();
   _RETMV (*m1 - *v2);
+}
+
+constant * evaluate::minus_m_d (constant * args) {
+  _ARM0 (m1);
+  _ARD1 (d2);
+  _DEFM ();
+  _RETM (*m1 - d2);
+}
+
+constant * evaluate::minus_d_m (constant * args) {
+  _ARD0 (d1);
+  _ARM1 (m2);
+  _DEFM ();
+  _RETM (d1 - *m2);
+}
+
+constant * evaluate::minus_m_c (constant * args) {
+  _ARM0 (m1);
+  _ARC1 (c2);
+  _DEFM ();
+  _RETM (*m1 - *c2);
+}
+
+constant * evaluate::minus_c_m (constant * args) {
+  _ARC0 (c1);
+  _ARM1 (m2);
+  _DEFM ();
+  _RETM (*c1 - *m2);
+}
+
+constant * evaluate::minus_mv_d (constant * args) {
+  _ARMV0 (m1);
+  _ARD1  (d2);
+  _DEFMV ();
+  _RETMV (*m1 - d2);
+}
+
+constant * evaluate::minus_d_mv (constant * args) {
+  _ARD0  (d1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (d1 - *m2);
+}
+
+constant * evaluate::minus_mv_c (constant * args) {
+  _ARMV0 (m1);
+  _ARC1  (c2);
+  _DEFMV ();
+  _RETMV (*m1 - *c2);
+}
+
+constant * evaluate::minus_c_mv (constant * args) {
+  _ARC0  (c1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (*c1 - *m2);
+}
+
+constant * evaluate::minus_mv_v (constant * args) {
+  _ARMV0 (m1);
+  _ARV1  (v2);
+  _DEFMV ();
+  _RETMV (*m1 - *v2);
+}
+
+constant * evaluate::minus_v_mv (constant * args) {
+  _ARV0  (v1);
+  _ARMV1 (m2);
+  _DEFMV ();
+  _RETMV (*v1 - *m2);
 }
 
 // ****************** multiplication *************************
