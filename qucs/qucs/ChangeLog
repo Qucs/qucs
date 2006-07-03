@@ -1,3 +1,8 @@
+2006-07-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* main.cpp (main): Setting up locale to "C" for numeric
+	values, such that strtod() does not fail.
+
 2006-06-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug showing no scrollbar

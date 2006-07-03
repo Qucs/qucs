@@ -75,7 +75,7 @@ TR_Sim::TR_Sim()
 	QObject::tr("overestimation of local truncation error")));
   Props.append(new Property("Solver", "CroutLU", false,
 	QObject::tr("method for solving the circuit matrix")+
-	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ]"));
+	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ, GolubSVD]"));
   Props.append(new Property("relaxTSR", "no", false,
 	QObject::tr("relax time step raster")+" [no, yes]"));
 }

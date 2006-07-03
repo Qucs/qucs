@@ -47,13 +47,13 @@
 // strtod() appears to be so sloooooooo under Win32...
 static double strtod_faster (char * pPos, char ** pEnd) {
   *pEnd = pPos;
-  while((**pEnd) && (**pEnd > ' ') && (**pEnd != 'j') && (**pEnd != 'i'))
+  while ((**pEnd) && (**pEnd > ' ') && (**pEnd != 'j') && (**pEnd != 'i'))
     (*pEnd)++;
   if ((**pEnd == 'j') || (**pEnd == 'i'))
     (*pEnd)--;
   QCString str = QCString (pPos, *pEnd - pPos + 1);
   bool ok;
-  double x = str.toDouble(&ok);
+  double x = str.toDouble (&ok);
   if (!ok) *pEnd = pPos;
   return x;
 }
