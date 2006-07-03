@@ -22,8 +22,8 @@ Gyrator::Gyrator()
 {
   Description = QObject::tr("gyrator (impedance inverter)");
 
-  Arcs.append(new Arc(  2, -9, 19, 19, 16*90, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-21, -9, 19, 19,16*270, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  3, -9, 18, 18, 16*90, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-21, -9, 18, 18,16*270, 16*180,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line(-30,-30,-12,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-12, 30,QPen(QPen::darkBlue,2)));

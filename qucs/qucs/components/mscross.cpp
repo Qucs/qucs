@@ -22,6 +22,46 @@ MScross::MScross()
 {
   Description = QObject::tr("microstrip cross");
 
+  Model = "MCROSS";
+  Name  = "MS";
+
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true,
+		QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "2 mm", true,
+		QObject::tr("width of line 2")));
+  Props.append(new Property("W3", "1 mm", true,
+		QObject::tr("width of line 3")));
+  Props.append(new Property("W4", "2 mm", true,
+		QObject::tr("width of line 4")));
+  Props.append(new Property("Symbol", "showNumbers", false,
+	QObject::tr("show port numbers in symbol or not")+
+	" [showNumbers, noNumbers]"));
+
+  createSymbol();
+}
+
+MScross::~MScross()
+{
+}
+
+Component* MScross::newOne()
+{
+  return new MScross();
+}
+
+Element* MScross::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Cross");
+  BitmapFile = "mscross";
+
+  if(getNewOne)  return new MScross();
+  return 0;
+}
+
+void MScross::createSymbol()
+{
   Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0, 18,  0, 30,QPen(QPen::darkBlue,2)));
@@ -43,7 +83,12 @@ MScross::MScross()
   Lines.append(new Line(  8,-18,  8, -8,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -8,-18,  8,-18,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-22, -4,-26,  4,QPen(QPen::darkBlue,2)));
+  if(Props.getLast()->Value.at(0) != 'n') {
+    Texts.append(new Text(-26,  3, "1"));
+    Texts.append(new Text(-10,-30, "2"));
+    Texts.append(new Text( 21,-13, "3"));
+    Texts.append(new Text(  4, 18, "4"));
+  }
 
   Ports.append(new Port(-30,  0));
   Ports.append(new Port(  0,-30));
@@ -55,35 +100,4 @@ MScross::MScross()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "MCROSS";
-  Name  = "MS";
-
-  Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true,
-		QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "2 mm", true,
-		QObject::tr("width of line 2")));
-  Props.append(new Property("W3", "1 mm", true,
-		QObject::tr("width of line 3")));
-  Props.append(new Property("W4", "2 mm", true,
-		QObject::tr("width of line 4")));
-}
-
-MScross::~MScross()
-{
-}
-
-Component* MScross::newOne()
-{
-  return new MScross();
-}
-
-Element* MScross::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("Microstrip Cross");
-  BitmapFile = "mscross";
-
-  if(getNewOne)  return new MScross();
-  return 0;
 }

@@ -208,7 +208,7 @@ void QucsLib::slotHelp()
 {
   DisplayDialog *d = new DisplayDialog(this);
   d->setCaption("QucsLib Help");
-  d->resize(250, 300);
+  d->resize(250, 325);
   d->Text->setText(
      tr("QucsLib is a program to manage Qucs component libraries. "
 	"On the left side of the application window the available "
@@ -218,7 +218,9 @@ void QucsLib::slotHelp()
 	"transported to the Qucs application by clicking on the "
 	"button \"Copy to Clipboard\". Being back in the schematic "
 	"window the component can be inserted by pressing CTRL-V "
-	" (paste from clipboard)."));
+	" (paste from clipboard).") + "\n" +
+     tr("A more comfortable way: The component can also be placed "
+        "onto the schematic by using Drag n'Drop."));
   d->show();
 }
 
@@ -226,15 +228,9 @@ void QucsLib::slotHelp()
 void QucsLib::slotCopyToClipBoard()
 {
   QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-  s += "<Components>\n  ";
-  if(ModelString.contains('\n') < 2)
-    s += ModelString;
-  else
-    s += "<Lib " + Symbol->Prefix + " 1 0 0 " +
-         QString::number(Symbol->Text_x) + " " +
-         QString::number(Symbol->Text_y) + " 0 0 \"" +
-         Symbol->LibraryName + "\" 0 \"" + Symbol->ComponentName + "\" 0>\n";
-  s += "</Components>\n";
+  s += "<Components>\n  " +
+       Symbol->theModel() +
+       "\n</Components>\n";
 
   // put resulting schematic into clipboard
   QClipboard *cb = QApplication::clipboard();
@@ -247,7 +243,7 @@ void QucsLib::slotShowModel()
   DisplayDialog *d = new DisplayDialog(this);
   d->setCaption("Model");
   d->resize(500, 150);
-  d->Text->setText(ModelString);
+  d->Text->setText(Symbol->ModelString);
   d->Text->setWordWrap(QTextEdit::NoWrap);
   d->show();
 }
@@ -373,11 +369,11 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
       QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
       return;
     }
-    ModelString =
+    Symbol->ModelString =
       (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
 
-    if(ModelString.contains('\n') < 2)
-      Symbol->createSymbol(ModelString, LibName, Item->text());
+    if(Symbol->ModelString.contains('\n') < 2)
+      Symbol->createSymbol(LibName, Item->text());
   }
 
 

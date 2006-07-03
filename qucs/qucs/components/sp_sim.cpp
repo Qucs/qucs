@@ -31,8 +31,9 @@ SP_Sim::SP_Sim()
   }
   if (b != -1) s[b] = '\n';
 
-  Texts.append(new Text(0, 0, s.left(b)));
-  if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
+  Texts.append(new Text(0, 0, s.left(b), QPen::darkBlue, QucsSettings.largeFontSize));
+  if (b != -1)
+    Texts.append(new Text(0, 0, s.mid(b+1), QPen::darkBlue, QucsSettings.largeFontSize));
 
   x1 = -10; y1 = -9;
   x2 = x1+121; y2 = y1+59;

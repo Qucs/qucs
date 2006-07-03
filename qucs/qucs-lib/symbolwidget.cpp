@@ -19,13 +19,20 @@
 #include <limits.h>
 
 #include <qpainter.h>
+#include <qdragobject.h>
 #include <qtextstream.h>
 
 #include "symbolwidget.h"
 #include "qucslib.h"
 
+
+const char *empty_xpm[] = {  // for drag n'drop
+"1 1 1 1", "  c None", " "};
+
+
 SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
 {
+  myDragObject = 0;
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
   Rects.setAutoDelete(true);
@@ -34,10 +41,13 @@ SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
 
   Text_x = Text_y = 0;
   PaintText = tr("Symbol:");
-  QFont Font(QucsSettings.font);
-  QFontMetrics  metrics(Font);
+  QFontMetrics  metrics(QucsSettings.font);
   TextWidth = metrics.width(PaintText) + 4;    // get size of text
 
+  DragNDropText = tr("! Drag n'Drop me !");
+  DragNDropWidth = metrics.width(DragNDropText);    // get size of text
+  TextHeight = metrics.lineSpacing();
+  
   setPaletteBackgroundColor(Qt::white);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
@@ -47,10 +57,34 @@ SymbolWidget::~SymbolWidget()
 }
 
 // ************************************************************
+QString SymbolWidget::theModel()
+{
+  if(ModelString.contains('\n') < 2)
+    return ModelString.remove('\n');
+
+  return "<Lib " + Prefix + " 1 0 0 " +
+         QString::number(Text_x) + " " +
+         QString::number(Text_y) + " 0 0 \"" +
+         LibraryName + "\" 0 \"" + ComponentName + "\" 0>";
+}
+
+// ************************************************************
+void SymbolWidget::mouseMoveEvent(QMouseEvent*)
+{
+  myDragObject = new QTextDrag("QucsComponent:"+theModel(), this);
+  myDragObject->setPixmap( QPixmap(empty_xpm), QPoint(0, 0) );
+  myDragObject->dragCopy();
+}
+
+// ************************************************************
 void SymbolWidget::paintEvent(QPaintEvent*)
 {
   QPainter Painter(this);
   Painter.drawText(2, 2, 0, 0, Qt::AlignAuto | Qt::DontClip, PaintText);
+
+  int dx = (x2-x1)/2 + TextWidth - DragNDropWidth/2;
+  if(dx < 2)  dx = 2;
+  Painter.drawText(dx, y2-y1+2, 0, 0, Qt::AlignAuto | Qt::DontClip, DragNDropText);
 
   // paint all lines
   for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
@@ -93,8 +127,7 @@ void SymbolWidget::paintEvent(QPaintEvent*)
 
 // ************************************************************
 // Creates a symbol from the model name of a component.
-int SymbolWidget::createSymbol(const QString& ModelString,
-                               const QString& Lib_, const QString& Comp_)
+int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
 {
   Arcs.clear();
   Lines.clear();
@@ -261,10 +294,15 @@ int SymbolWidget::createSymbol(const QString& ModelString,
   y2 += 4;
   cx  = -x1 + TextWidth;
   cy  = -y1;
+
   int dx = x2-x1 + TextWidth;
-  setMinimumSize(dx, y2-y1);
+  if((x2-x1) < DragNDropWidth)
+    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
+  if(dx < DragNDropWidth)
+    dx = DragNDropWidth;
+  setMinimumSize(dx, y2-y1 + TextHeight+4);
   if(width() > dx)  dx = width();
-  resize(dx, y2-y1);
+  resize(dx, y2-y1 + TextHeight+4);
   update();
   return PortNo;
 }
@@ -309,10 +347,15 @@ int SymbolWidget::setSymbol(const QString& SymbolString,
   y2 += 4;
   cx  = -x1 + TextWidth;
   cy  = -y1;
+
   int dx = x2-x1 + TextWidth;
-  setMinimumSize(dx, y2-y1);
+  if((x2-x1) < DragNDropWidth)
+    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
+  if(dx < DragNDropWidth)
+    dx = DragNDropWidth;
+  setMinimumSize(dx, y2-y1 + TextHeight+4);
   if(width() > dx)  dx = width();
-  resize(dx, y2-y1);
+  resize(dx, y2-y1 + TextHeight+4);
   update();
   return z;      // return number of ports
 }

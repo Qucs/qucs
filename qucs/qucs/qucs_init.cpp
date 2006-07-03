@@ -118,12 +118,12 @@ void QucsApp::initActions()
 	tr("Print File\n\nPrints the current document"));
   connect(filePrint, SIGNAL(activated()), SLOT(slotFilePrint()));
 
-  filePrintSel = new QAction("Print Selection...",
-			     tr("Print Selection..."), CTRL+SHIFT+Key_P, this);
-  filePrintSel->setWhatsThis(
-	tr("Print Selected Elements\n\n"
-	   "Prints selected elements of the current document"));
-  connect(filePrintSel, SIGNAL(activated()), SLOT(slotFilePrintSelected()));
+  filePrintFit = new QAction("Print Fit to Page...",
+		tr("Print Fit to Page..."), CTRL+SHIFT+Key_P, this);
+  filePrintFit->setWhatsThis(
+	tr("Print Fit to Page\n\n"
+	   "Print and fit content to the page size"));
+  connect(filePrintFit, SIGNAL(activated()), SLOT(slotFilePrintFit()));
 
   fileQuit = new QAction("Exit", tr("E&xit"), CTRL+Key_Q, this);
   fileQuit->setStatusTip(tr("Quits the application"));
@@ -309,6 +309,34 @@ void QucsApp::initActions()
   createLib->setWhatsThis(
 	tr("Create Library\n\nCreate Library from Subcircuits"));
   connect(createLib, SIGNAL(activated()), SLOT(slotCreateLib()));
+
+  createPkg = new QAction("Create Package...",
+		 tr("Create &Package..."), CTRL+SHIFT+Key_Z, this);
+  createPkg->setStatusTip(tr("Create compressed Package from Projects"));
+  createPkg->setWhatsThis(
+	tr("Create Package\n\nCreate compressed Package from complete Projects"));
+  connect(createPkg, SIGNAL(activated()), SLOT(slotCreatePackage()));
+
+  extractPkg = new QAction("Extract Package...",
+		 tr("E&xtract Package..."), CTRL+SHIFT+Key_X, this);
+  extractPkg->setStatusTip(tr("Install Content of a Package"));
+  extractPkg->setWhatsThis(
+	tr("Extract Package\n\nInstall Content of a Package"));
+  connect(extractPkg, SIGNAL(activated()), SLOT(slotExtractPackage()));
+
+  importData = new QAction("Import Data...",
+		 tr("&Import Data..."), CTRL+SHIFT+Key_I, this);
+  importData->setStatusTip(tr("Convert file to Qucs data file"));
+  importData->setWhatsThis(
+	tr("Import Data\n\nConvert data file to Qucs data file"));
+  connect(importData, SIGNAL(activated()), SLOT(slotImportData()));
+
+  graph2csv = new QAction("Export to CSV...",
+		 tr("Export to &CSV..."), CTRL+SHIFT+Key_C, this);
+  graph2csv->setStatusTip(tr("Convert graph data to CSV file"));
+  graph2csv->setWhatsThis(
+	tr("Export to CSV\n\nConvert graph data to CSV file"));
+  connect(graph2csv, SIGNAL(activated()), SLOT(slotExportGraphAsCsv()));
 
   magAll = new QAction("View All",
                 QIconSet(QImage(QucsSettings.BitmapDir + "viewmagfit.png")),
@@ -587,7 +615,7 @@ void QucsApp::initMenuBar()
   fileSaveAll->addTo(fileMenu);
   fileSaveAs->addTo(fileMenu);
   filePrint->addTo(fileMenu);
-  filePrintSel->addTo(fileMenu);
+  filePrintFit->addTo(fileMenu);
   fileMenu->insertSeparator();
   fileSettings->addTo(fileMenu);
   symEdit->addTo(fileMenu);
@@ -648,6 +676,10 @@ void QucsApp::initMenuBar()
   projDel->addTo(projMenu);
   projMenu->insertSeparator();
   createLib->addTo(projMenu);
+  createPkg->addTo(projMenu);
+  extractPkg->addTo(projMenu);
+  importData->addTo(projMenu);
+  graph2csv->addTo(projMenu);
 
   toolMenu = new QPopupMenu();  // menuBar entry toolMenu
   callEditor->addTo(toolMenu);

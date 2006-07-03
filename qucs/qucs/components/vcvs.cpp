@@ -22,7 +22,7 @@ VCVS::VCVS()
 {
   Description = QObject::tr("voltage controlled voltage source");
 
-  Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line(-30,-30,-12,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-12, 30,QPen(QPen::darkBlue,2)));
@@ -34,9 +34,9 @@ VCVS::VCVS()
   Lines.append(new Line( 11,-30, 11,-11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, 30, 11, 11,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,-18,-12, 18,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 18,-17,  9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 18, -8,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,-18,-12, 18,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-12, 18,-17,  9,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-12, 18, -7,  9,QPen(QPen::darkBlue,1)));
 
   Lines.append(new Line( 19,-21, 19,-15,QPen(QPen::red,1)));
   Lines.append(new Line( 16,-18, 22,-18,QPen(QPen::red,1)));

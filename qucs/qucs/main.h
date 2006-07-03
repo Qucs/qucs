@@ -43,6 +43,10 @@ struct tQucsSettings {
   QColor BGColor;      // background color of view area
   QString Language;
 
+  // VHDL syntax highlighting
+  QColor VHDL_Comment, VHDL_String, VHDL_Integer, VHDL_Real,
+         VHDL_Character, VHDL_Types, VHDL_Attributes;
+
   unsigned int maxUndo;    // size of undo stack
   QString Editor;
   QString BinDir;
@@ -57,7 +61,8 @@ struct tQucsSettings {
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
 extern QFont savingFont;       // to remember which font to save in "qucsrc"
 
-extern QucsApp *QucsMain;    // the Qucs application itself
+extern QucsApp *QucsMain;  // the Qucs application itself
+extern QString lastDir;    // to remember last directory for several dialogs
 
 bool saveApplSettings(QucsApp*);
 

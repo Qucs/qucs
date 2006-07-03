@@ -36,7 +36,7 @@ public:
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
-  virtual void  print(QPrinter*, bool) {};
+  virtual void  print(QPrinter*, bool, bool) {};
   virtual void  becomeCurrent(bool) {};
   virtual float zoom(float) { return 1.0; };
   virtual void  showAll() {};

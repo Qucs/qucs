@@ -26,7 +26,7 @@ Phaseshifter::Phaseshifter()
   Lines.append(new Line(-14, 14, 14, 14,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-14,-14,-14, 14,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 14,-14, 14, 14,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( -9, -9, 18, 18, 0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -9, -9, 17, 17, 0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 10, 10,-10,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));

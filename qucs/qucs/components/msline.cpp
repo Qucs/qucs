@@ -29,8 +29,6 @@ MSline::MSline()
   Lines.append(new Line(-13, -8,-23,  8,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 23, -8, 13,  8,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-22, -4,-26,  4,QPen(QPen::darkBlue,2)));
-
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
 

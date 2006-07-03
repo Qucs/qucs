@@ -1,8 +1,8 @@
 /***************************************************************************
-                               mscross.h
-                              -----------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                              importdialog.h
+                             ----------------
+    begin                : Fri Jun 23 2006
+    copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,21 +15,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MSCROSS_H
-#define MSCROSS_H
+#ifndef IMPORTDIALOG_H
+#define IMPORTDIALOG_H
 
-#include "component.h"
+#include <qdialog.h>
+#include <qprocess.h>
+
+class QTextEdit;
+class QLineEdit;
+class QGridLayout;
+class QPushButton;
 
 
-class MScross : public MultiViewComponent  {
+class ImportDialog : public QDialog  {
+   Q_OBJECT
 public:
-  MScross();
- ~MScross();
-  Component* newOne();
-  static Element* info(QString&, char* &, bool getNewOne=false);
+  ImportDialog(QWidget*);
+ ~ImportDialog();
 
-protected:
-  void createSymbol();
+private slots:
+  void slotDisplayMsg();
+  void slotDisplayErr();
+  void slotProcessEnded();
+  void slotImport();
+  void slotBrowse();
+
+private:
+  void startSimulator();
+
+public:
+  QGridLayout *all;
+
+  QProcess Process;
+  QTextEdit *MsgText;
+  QLineEdit *ImportEdit, *OutputEdit;
+  QPushButton *ImportButt, *CancelButt;
 };
 
 #endif

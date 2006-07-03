@@ -38,7 +38,7 @@ iProbe::iProbe()
   Lines.append(new Line(-16,-27,-16, -9,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 16,-27, 16, -9,QPen(QPen::darkBlue,2)));
 
-  Arcs.append(new Arc(-20,-23, 40, 40, 16*50, 16*80,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-20,-23, 39, 39, 16*50, 16*80,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-11,-24, -2, -9,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));

@@ -44,7 +44,7 @@ public:
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
   void paintGrid(ViewPainter*, int, int, int, int);
-  void print(QPrinter*, bool);
+  void print(QPrinter*, bool, bool);
 
   float textCorr();
   void  sizeOfAll(int&, int&, int&, int&);

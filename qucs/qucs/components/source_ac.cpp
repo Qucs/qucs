@@ -27,9 +27,9 @@ Source_ac::Source_ac()
   Lines.append(new Line(-22,-11,-22, 11,QPen(QPen::darkGray,0)));
   Lines.append(new Line( 22,-11, 22, 11,QPen(QPen::darkGray,0)));
 
-  Arcs.append(new Arc(-19, -9, 19, 19,     0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-13, -6,  7,  7,16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-13,  0,  7,  7, 16*90, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-19, -9, 18, 18,     0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-13, -6,  6,  6,16*270, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-13,  0,  6,  6, 16*90, 16*180,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-19,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,  0, 19,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -1,  0,  3,  0,QPen(QPen::darkBlue,2)));

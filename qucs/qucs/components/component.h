@@ -43,7 +43,7 @@ public:
   QString getShortenVHDL();
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
-  void    print(ViewPainter*);
+  void    print(ViewPainter*, float);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);

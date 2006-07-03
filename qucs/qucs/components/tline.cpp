@@ -22,11 +22,11 @@ TLine::TLine()
 {
   Description = QObject::tr("ideal transmission line");
 
-  Arcs.append(new Arc(-20, -9, 9, 19,     0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 11, -9, 9, 19,16*270, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-20, -9, 8, 18,     0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 11, -9, 8, 18,16*270, 16*180,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line(-30,  0,-16,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 19,  0, 30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16, -9, 16, -9,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16,  9, 16,  9,QPen(QPen::darkBlue,2)));
 

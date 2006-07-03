@@ -40,8 +40,6 @@ MScoupled::MScoupled()
   Lines.append(new Line(-15,  4,-25, 20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 21,  4, 11, 20,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-22,-16,-26, -8,QPen(QPen::darkBlue,2)));
-
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
   Ports.append(new Port( 30, 30));
