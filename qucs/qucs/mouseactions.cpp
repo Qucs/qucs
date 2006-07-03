@@ -828,10 +828,13 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, int x, int
       ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,
                                 SLOT(slot2PortMatching()));
   }
-  while(true) {
+  do {
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
-      if(focusElement->Type == isGraph) break;
+      if(focusElement->Type == isGraph) {
+        QucsMain->graph2csv->addTo(ComponentMenu);
+        break;
+      }
     }
     ComponentMenu->insertSeparator();
     if(focusElement) if(focusElement->Type & isComponent)
@@ -843,9 +846,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, int x, int
       QucsMain->editMirror->addTo(ComponentMenu);
     if(!QucsMain->editMirrorY->isOn())
       QucsMain->editMirrorY->addTo(ComponentMenu);
-    break;
-  }
-
+  } while(false);
 
   *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
@@ -1814,8 +1815,8 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
     case isNodeLabel:
     case isHWireLabel:
     case isVWireLabel:
-	 editLabel(Doc, (WireLabel*)focusElement);
-	 break;
+         editLabel(Doc, (WireLabel*)focusElement);
+         break;
 
     case isPainting:
          if( ((Painting*)focusElement)->Dialog() )
@@ -1828,6 +1829,12 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            Doc->setChanged(true, true);
          break;
   }
+
+  // Very strange: Now an open VHDL editor gets all the keyboard input !?!
+  // I don't know why it only happens here, nor am I sure whether it only
+  // happens here. Anyway, I hope the best and give the focus back to the
+  // current document.
+  Doc->setFocus();
 
   Doc->viewport()->update();
   drawn = false;

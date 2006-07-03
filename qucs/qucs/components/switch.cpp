@@ -95,7 +95,7 @@ void Switch::createSymbol()
 
   Lines.append(new Line(-30,  0,-15,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 17,  0, 30,  0,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 12, -3, 6, 6, 0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 12, -3, 5, 5, 0, 16*360,QPen(QPen::darkBlue,2)));
   Ellips.append(new Area(-18, -3, 6, 6, QPen(QPen::darkBlue,2),
                 QBrush(Qt::darkBlue, Qt::SolidPattern)));
 

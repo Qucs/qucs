@@ -185,12 +185,19 @@ void SimMessage::nextSPICE()
   com << (QucsSettings.BinDir + "qucsconv");
   if(makeSubcircuit)
     com << "-g" << "_ref";
-  com << "-if" << "spice" << "-of" << "qucs" << "-i";
-  if(FileName.find(QDir::separator()) < 0)  // add path ?
-    com << QucsWorkDir.path() + QDir::separator() + FileName;
-  else
-    com << FileName;
+  com << "-if" << "spice" << "-of" << "qucs";
   SimProcess.setArguments(com);
+
+  QFile SpiceFile;
+  if(FileName.find(QDir::separator()) < 0)  // add path ?
+    SpiceFile.setName(QucsWorkDir.path() + QDir::separator() + FileName);
+  else
+    SpiceFile.setName(FileName);
+  if(!SpiceFile.open(IO_ReadOnly)) {
+    ErrText->insert(tr("ERROR: Cannot open SPICE file \"%1\".").arg(FileName));
+    FinishSimulation(-1);
+    return;
+  }
 
 
   if(makeSubcircuit) {
@@ -209,7 +216,18 @@ void SimMessage::nextSPICE()
     FinishSimulation(-1);
     return;
   }
+
+  QByteArray SpiceContent = SpiceFile.readAll();
+  SimProcess.writeToStdin(SpiceContent);
+  connect(&SimProcess, SIGNAL(wroteToStdin()), SLOT(slotCloseStdin()));
+  SpiceFile.close();
+}
+
+// ------------------------------------------------------------------------
+void SimMessage::slotCloseStdin()
+{
   SimProcess.closeStdin();
+  disconnect(&SimProcess, SIGNAL(wroteToStdin()), 0, 0);
 }
 
 // ------------------------------------------------------------------------

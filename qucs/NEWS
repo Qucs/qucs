@@ -26,6 +26,13 @@ files.
 Version 0.0.10
 --------------
 
+ * many, many small bug fixes and improvements
+ * support for nine-valued VHDL logic
+ * support for user libraries created from subcircuits
+ * import of Touchstone, CITI and VCD data files
+ * export data to CSV files
+ * creation of project package file for data exchange
+
 Version 0.0.9
 -------------
 

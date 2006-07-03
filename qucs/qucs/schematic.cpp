@@ -32,15 +32,16 @@
 #include <qiconview.h>
 #include <qtabwidget.h>
 #include <qdragobject.h>
+#include <qpaintdevicemetrics.h>
 
 #include "qucs.h"
-#include "schematic.h"
-#include "mouseactions.h"
-#include "viewpainter.h"
-#include "diagrams/diagrams.h"
-#include "paintings/paintings.h"
 #include "main.h"
 #include "node.h"
+#include "schematic.h"
+#include "viewpainter.h"
+#include "mouseactions.h"
+#include "diagrams/diagrams.h"
+#include "paintings/paintings.h"
 
 // just dummies for empty lists
 QPtrList<Wire>      SymbolWires;
@@ -381,21 +382,40 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::print(QPrinter *Printer, bool printAll)
+void Schematic::print(QPrinter *Printer, bool printAll, bool fitToPage)
 {
   QPainter painter(Printer);
   if(!painter.device())   // valid device available ?
     return;
 
+  QPaintDeviceMetrics metrics(painter.device());
+  float PrintScale = 0.5;
+  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+  int marginX = 40 * metrics.logicalDpiX() / 72;
+  int marginY = 40 * metrics.logicalDpiY() / 72;
+
+  if(fitToPage) {
+    float ScaleX = float(metrics.width() - 2*marginX) /
+                   float((UsedX2-UsedX1) * metrics.logicalDpiX()) * 72.0;
+    float ScaleY = float(metrics.height() - 2*marginY) /
+                   float((UsedY2-UsedY1) * metrics.logicalDpiY()) * 72.0;
+    if(ScaleX > ScaleY)
+      PrintScale = ScaleY;
+    else
+      PrintScale = ScaleX;
+  }
+
+
   bool selected;
   ViewPainter p;
-  p.init(&painter, 1.0, 0, 0, UsedX1-20, UsedY1-20);
+  p.init(&painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
+         -UsedX1, -UsedY1, -marginX, -marginY, PrintScale);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected || printAll) {
       selected = pc->isSelected;
       pc->isSelected = false;
-      pc->print(&p);   // paint all selected components
+      pc->print(&p, 72.0 / float(metrics.logicalDpiX()));
       pc->isSelected = selected;
     }
 
@@ -1593,20 +1613,39 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
       return;
     }
 
+  // drag library component
+  if(Event->provides("text/plain")) {
+    QString s;
+    if(QTextDrag::decode(Event, s))
+      if(s.left(15) == "QucsComponent:<") {
+        s = s.mid(14);
+        App->view->selElem = getComponentFromName(s);
+        if(App->view->selElem) {
+          Event->accept();
+          return;
+        }
+      }
+    Event->ignore();
+    return;
+  }
 
-  if(Event->format(1) == 0)   // only one MIME type ?
+
+  if(Event->format(1) == 0) {  // only one MIME type ?
+
+    // drag component from listview
     if(Event->provides("application/x-qiconlist")) {
       QIconViewItem *Item = App->CompComps->currentItem();
       if(Item) {
-	App->view->labeledWire = (Wire*)App->activeAction; // misuse variable
-	App->slotSelectComponent(Item);  // also sets drawn=false
-	App->MouseMoveAction = 0;
-	App->MousePressAction = 0;
+        App->view->labeledWire = (Wire*)App->activeAction; // misuse variable
+        App->slotSelectComponent(Item);  // also sets drawn=false
+        App->MouseMoveAction = 0;
+        App->MousePressAction = 0;
 
-	Event->accept();
-	return;
+        Event->accept();
+        return;
       }
     }
+  }
 
   Event->ignore();
 }

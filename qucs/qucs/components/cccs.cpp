@@ -22,7 +22,7 @@ CCCS::CCCS()
 {
   Description = QObject::tr("current controlled current source");
 
-  Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, -7, 11,  7,QPen(QPen::darkBlue,3)));
   Lines.append(new Line( 11,  6, 15,  1,QPen(QPen::darkBlue,3)));
   Lines.append(new Line( 11,  6,  7,  1,QPen(QPen::darkBlue,3)));

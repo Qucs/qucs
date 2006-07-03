@@ -22,28 +22,10 @@ MStee::MStee()
 {
   Description = QObject::tr("microstrip tee");
 
-  Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 18,  0, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-18, -8, 18, -8,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-18,  8, -8,  8,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  8,  8, 18,  8,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-18, -8,-18,  8,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 18, -8, 18,  8,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -8,  8, -8, 18,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  8,  8,  8, 18,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -8, 18,  8, 18,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line(-22, -4,-26,  4,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
-  Ports.append(new Port(  0,30));
-
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  30;
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics metrics(QucsSettings.font);   // get size of text
   tx = x1+4;
   ty = y1 - 5*metrics.lineSpacing() - 4;
   Model = "MTEE";
@@ -65,6 +47,11 @@ MStee::MStee()
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("temperature in degree Celsius")));
+  Props.append(new Property("Symbol", "showNumbers", false,
+	QObject::tr("show port numbers in symbol or not")+
+	" [showNumbers, noNumbers]"));
+
+  createSymbol();
 }
 
 MStee::~MStee()
@@ -83,4 +70,29 @@ Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new MStee();
   return 0;
+}
+
+void MStee::createSymbol()
+{
+  Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 18,  0, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-18, -8, 18, -8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-18,  8, -8,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  8,  8, 18,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-18, -8,-18,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 18, -8, 18,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -8,  8, -8, 18,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  8,  8,  8, 18,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -8, 18,  8, 18,QPen(QPen::darkBlue,2)));
+
+  if(Props.getLast()->Value.at(0) != 'n') {
+    Texts.append(new Text(-26, 3, "1"));
+    Texts.append(new Text( 21, 3, "2"));
+    Texts.append(new Text(  4,18, "3"));
+  }
+
+  Ports.append(new Port(-30, 0));
+  Ports.append(new Port( 30, 0));
+  Ports.append(new Port(  0,30));
 }

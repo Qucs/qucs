@@ -49,7 +49,7 @@ LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
   Validator = new QRegExpValidator(Expr, this);
 
   // ...........................................................
-  QVBoxLayout *all = new QVBoxLayout(this);
+  all = new QVBoxLayout(this);
   all->setMargin(5);
   all->setSpacing(6);
 
@@ -106,6 +106,7 @@ LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
 
 LibraryDialog::~LibraryDialog()
 {
+  delete all;
   delete Validator;
 }
 
@@ -194,7 +195,7 @@ void LibraryDialog::slotNext()
   connect(ButtCreate, SIGNAL(clicked()), SLOT(accept()));
 
   if(!LibFile.open(IO_WriteOnly)) {
-    ErrText->insert(tr("Error: Cannot create library!"));
+    ErrText->append(tr("Error: Cannot create library!"));
     return;
   }
   QTextStream Stream;
@@ -217,7 +218,7 @@ void LibraryDialog::slotNext()
       Schematic *Doc = new Schematic(0, QucsWorkDir.filePath(p->text()));
       if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;
-        ErrText->insert(tr("Error: Cannot load subcircuit \"%1\".").arg(p->text()));
+        ErrText->append(tr("Error: Cannot load subcircuit \"%1\".").arg(p->text()));
         break;
       }
       Doc->DocName = NameEdit->text() + "_" + p->text();
@@ -244,5 +245,5 @@ void LibraryDialog::slotNext()
     return;
   }
 
-  ErrText->insert(tr("\nSuccessfully created library."));
+  ErrText->append(tr("\nSuccessfully created library."));
 }

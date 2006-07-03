@@ -22,7 +22,7 @@ vRect::vRect()
 {
   Description = QObject::tr("ideal rectangle voltage source");
 
-  Arcs.append(new Arc(-12,-12, 25, 25,     0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,  0, 12,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18,  5, 18, 11,QPen(QPen::red,1)));

@@ -30,7 +30,7 @@ ViewPainter::~ViewPainter()
 }
 
 // -------------------------------------------------------------
-void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int dy_)
+void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int dy_, float FontScale_)
 {
   Painter = p;
   Scale = Scale_;
@@ -38,7 +38,10 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int
   DY = floor(float(DY_) * Scale) - float(dy_);
 
   QFont f = p->font();
-  f.setPointSizeFloat( Scale * float(f.pointSize()) );
+  if(FontScale_ != 0.0)
+    f.setPointSizeFloat( FontScale_ * float(f.pointSize()) );
+  else
+    f.setPointSizeFloat( Scale * float(f.pointSize()) );
   p->setFont(f);
   LineSpacing = p->fontMetrics().lineSpacing();
   p->setWorldXForm(false);   // we use our own coordinate transformation
@@ -169,12 +172,11 @@ void ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
   z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
-  z = float(w)*Scale;
-  w  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = float(h)*Scale;
-  h  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-
-  Painter->drawArc(x1, y1, w, h, Angle, ArcLen);
+  // Width and height get a different treatment due to some alaising artefacts.
+  // The following procedure was found empirically.
+  w  = int(float(w)*Scale);
+  h  = int(float(h)*Scale);
+  Painter->drawArc(x1, y1, w+1, h+1, Angle, ArcLen);
 }
 
 // -------------------------------------------------------------

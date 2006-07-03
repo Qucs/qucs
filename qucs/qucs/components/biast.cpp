@@ -22,9 +22,9 @@ BiasT::BiasT()
 {
   Description = QObject::tr("bias t");
 
-  Arcs.append(new Arc( -3,  2, 7, 7, 16*270, 16*180,QPen(QPen::darkBlue,1)));
-  Arcs.append(new Arc( -3,  8, 7, 7, 16*270, 16*180,QPen(QPen::darkBlue,1)));
-  Arcs.append(new Arc( -3, 14, 7, 7, 16*270, 16*180,QPen(QPen::darkBlue,1)));
+  Arcs.append(new Arc( -3,  2, 6, 6, 16*270, 16*180,QPen(QPen::darkBlue,1)));
+  Arcs.append(new Arc( -3,  8, 6, 6, 16*270, 16*180,QPen(QPen::darkBlue,1)));
+  Arcs.append(new Arc( -3, 14, 6, 6, 16*270, 16*180,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(-22,-10, 22,-10,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(-22,-10,-22, 22,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(-22, 22, 22, 22,QPen(QPen::darkBlue,1)));

@@ -22,12 +22,12 @@ Mutual::Mutual()
 {
   Description = QObject::tr("two mutual inductors");
 
-  Arcs.append(new Arc(-16,-18,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, -6,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16,  6,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,-18,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4, -6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,  6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,-18,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, -6,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,  6,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,-18,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4, -6,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,  6,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-18,-10,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-30,-30,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-18, 10,-30,QPen(QPen::darkBlue,2)));

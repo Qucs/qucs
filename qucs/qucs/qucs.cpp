@@ -139,9 +139,9 @@ QucsApp::QucsApp()
   HierarchyHistory.setAutoDelete(true);
 
   // default settings of the printer
-  Printer = new QPrinter(QPrinter::PrinterResolution);
-//  Printer->setOrientation(QPrinter::Landscape);
+  Printer = new QPrinter(QPrinter::HighResolution);
 #if defined (QT_VERSION) && QT_VERSION > 0x030200
+  Printer->setOptionEnabled(QPrinter::PrintSelection, true);
   Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
 #endif
   Printer->setColorMode(QPrinter::Color);
@@ -559,6 +559,7 @@ void QucsApp::slotCMenuDelGroup()
   QString NameDPL = QucsWorkDir.filePath(s+".dpl");
   QString NameDAT = QucsWorkDir.filePath(s+".dat");
   QString NameDIG = QucsWorkDir.filePath(s+".vhdl");
+  QString NameVHD = QucsWorkDir.filePath(s+".vhd");
 
   int No=0;
   QucsDoc *d;  // search, if files are open
@@ -578,6 +579,11 @@ void QucsApp::slotCMenuDelGroup()
                    tr("Cannot delete the open file: ")+NameDIG);
       return;
     }
+    if(d->DocName == NameVHD) {
+      QMessageBox::critical(this, tr("Error"),
+                   tr("Cannot delete the open file: ")+NameVHD);
+      return;
+    }
   }
 
 
@@ -585,12 +591,14 @@ void QucsApp::slotCMenuDelGroup()
   bool DPL_exists = QFile::exists(NameDPL);
   bool DAT_exists = QFile::exists(NameDAT);
   bool DIG_exists = QFile::exists(NameDIG);
+  bool VHD_exists = QFile::exists(NameVHD);
 
   QString Str;
   if(SCH_exists)  Str += s+".sch\n";
   if(DPL_exists)  Str += s+".dpl\n";
   if(DAT_exists)  Str += s+".dat\n";
   if(DIG_exists)  Str += s+".vhdl\n";
+  if(VHD_exists)  Str += s+".vhd\n";
 
   No = QMessageBox::warning(this, tr("Warning"),
 	tr("This will delete the files\n")+Str+tr("permanently! Continue ?"),
@@ -622,6 +630,12 @@ void QucsApp::slotCMenuDelGroup()
 		tr("Cannot delete VHDL source: ")+s+".vhdl");
       return;
     }
+  if(VHD_exists)
+    if(!QFile::remove(NameVHD)) {
+      QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete VHDL source: ")+s+".vhd");
+      return;
+    }
 
   // remove items from listview ........
   if(SCH_exists) {
@@ -647,6 +661,13 @@ void QucsApp::slotCMenuDelGroup()
   }
   if(DIG_exists) {
     item = Content->findItem(s+".vhdl", 0);
+    if(item) {
+      item->parent()->takeItem(item);
+      delete item;
+    }
+  }
+  if(VHD_exists) {
+    item = Content->findItem(s+".vhd", 0);
     if(item) {
       item->parent()->takeItem(item);
       delete item;
@@ -794,7 +815,7 @@ void QucsApp::readProjectFiles()
       new QListViewItem(ConDisplays, (*it).ascii());
     else if(Str == "dat")
       new QListViewItem(ConDatasets, (*it).ascii());
-    else if(Str == "vhdl")
+    else if((Str == "vhdl") || (Str == "vhd"))
       new QListViewItem(ConSources, (*it).ascii());
     else
       new QListViewItem(ConOthers, (*it).ascii());
@@ -805,7 +826,7 @@ void QucsApp::readProjectFiles()
 
 // ----------------------------------------------------------
 // Opens an existing project.
-void QucsApp::OpenProject(const QString& Path, const QString& Name)
+void QucsApp::openProject(const QString& Path, const QString& Name)
 {
   editText->setHidden(true); // disable text edit of component property
 
@@ -850,7 +871,7 @@ void QucsApp::slotMenuOpenProject()
   int i = s.findRev('/');
   if(i > 0) s = s.mid(i+1);   // cut out the last subdirectory
   s.remove("_prj");
-  OpenProject(d->selectedFile(), s);
+  openProject(d->selectedFile(), s);
 }
 
 // ----------------------------------------------------------
@@ -869,7 +890,7 @@ void QucsApp::slotProjOpenButt()
 // Is called when project is double-clicked to open it.
 void QucsApp::slotOpenProject(QListBoxItem *item)
 {
-  OpenProject(QucsHomeDir.filePath(item->text()+"_prj"), item->text());
+  openProject(QucsHomeDir.filePath(item->text()+"_prj"), item->text());
 }
 
 // ----------------------------------------------------------
@@ -894,7 +915,40 @@ void QucsApp::slotMenuCloseProject()
 }
 
 // ----------------------------------------------------------
-bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
+bool QucsApp::deleteDirectoryContent(QDir& Dir)
+{
+  // removes every file, remove("*") does not work
+  QStringList Files = Dir.entryList("*", QDir::Files);  // all files
+  QStringList::iterator it;
+  for(it = Files.begin(); it != Files.end(); it++) {
+     if(!Dir.remove(*it)) {
+       QMessageBox::information(this, tr("Info"),
+				tr("Cannot delete file: ")+(*it));
+       return false;
+     }
+  }
+
+  QDir myDir(Dir);
+  // Remove all directories recursively.
+  Files = Dir.entryList("*", QDir::Dirs);
+  Files.pop_front();  // delete "." from list
+  Files.pop_front();  // delete ".." from list
+  for(it = Files.begin(); it != Files.end(); it++) {
+     myDir.cd(*it);
+     if(!deleteDirectoryContent(myDir))
+       return false;
+     myDir.cdUp();
+     if(!myDir.rmdir(*it)) {
+       QMessageBox::information(this, tr("Info"),
+				tr("Cannot remove directory: ")+(*it));
+       return false;
+    }
+  }
+  return true;
+}
+
+// ----------------------------------------------------------
+bool QucsApp::deleteProject(const QString& Path, const QString& Name)
 {
   editText->setHidden(true); // disable text edit of component property
 
@@ -910,17 +964,8 @@ bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
      tr("&Yes"), tr("&No"), 0,1,1))  return false;
 
   QDir projDir = QDir(Path);
-  QStringList ProjFiles = projDir.entryList("*", QDir::Files);  // all files
-
-  // removes every file, remove("*") does not work
-  QStringList::iterator it;
-  for(it = ProjFiles.begin(); it != ProjFiles.end(); it++) {
-     if(!projDir.remove(*it)) {
-       QMessageBox::information(this, tr("Info"),
-				tr("Cannot remove project file: ")+(*it));
-       return false;
-     }
-  }
+  if(!deleteDirectoryContent(projDir))
+    return false;
 
   projDir.cdUp();  // leave project directory for deleting
   if(!projDir.rmdir(Name+"_prj")) {
@@ -949,7 +994,7 @@ void QucsApp::slotMenuDelProject()
   int i = s.findRev('/');
   if(i > 0) s = s.mid(i+1);  // cut out the last subdirectory
   s = s.left(s.length()-4);  // remove "_prj" from name
-  DeleteProject(d->selectedFile(), s);
+  deleteProject(d->selectedFile(), s);
   readProjects();   // re-reads all projects and inserts them into the ListBox
 }
 
@@ -964,7 +1009,7 @@ void QucsApp::slotProjDelButt()
     return;
   }
 
-  if(!DeleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
+  if(!deleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
 }
@@ -1169,7 +1214,7 @@ bool QucsApp::saveAs()
           Content->setSelected(new QListViewItem(ConDisplays, s), true);
         else if(Info.extension(false) == "dat")
           Content->setSelected(new QListViewItem(ConDatasets, s), true);
-        else if(Info.extension(false) == "vhdl")
+        else if((Info.extension(false) == "vhdl") || (Info.extension(false) == "vhd"))
           Content->setSelected(new QListViewItem(ConSources, s), true);
         else
           Content->setSelected(new QListViewItem(ConOthers, s), true);
@@ -1421,27 +1466,33 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
 
 // --------------------------------------------------------------
-void QucsApp::slotFilePrint()
+void QucsApp::printCurrentDocument(bool fitToPage)
 {
   statusBar()->message(tr("Printing..."));
   editText->setHidden(true); // disable text edit of component property
 
+  if(DocumentTab->currentPage()->inherits("QTextEdit"))
+    Printer->setOrientation(QPrinter::Portrait);
+  else
+    Printer->setOrientation(QPrinter::Landscape);
+
   if(Printer->setup(this))   // printer dialog
-    getDoc()->print(Printer, true);
+    getDoc()->print(Printer, Printer->printRange() == QPrinter::AllPages, fitToPage);
 
   statusBar()->message(tr("Ready."));
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotFilePrintSelected()
+void QucsApp::slotFilePrint()
 {
-  statusBar()->message(tr("Printing selected..."));
-  editText->setHidden(true); // disable text edit of component property
+  printCurrentDocument(false);
+}
 
-  if(Printer->setup(this))   // printer dialog
-    getDoc()->print(Printer, false);
-
-  statusBar()->message(tr("Ready."));
+// --------------------------------------------------------------
+// Fit printed content to page size.
+void QucsApp::slotFilePrintFit()
+{
+  printCurrentDocument(true);
 }
 
 // --------------------------------------------------------------------
@@ -1706,7 +1757,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   if(d)
     DocumentTab->setCurrentPage(z-1);
   else {   // no open page found ?
-    if(DataDisplay.section('.',1) != "vhdl")
+    if(DataDisplay.section('.',1).left(3) != "vhd")
       d = new Schematic(this, Name);
     else
       d = new TextDoc(this, Name);
@@ -1783,11 +1834,11 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
   QString Suffix = Info.extension(false);
 
-  if((Suffix == "sch") || (Suffix == "dpl") || (Suffix == "vhdl")) {
+  if((Suffix == "sch") || (Suffix == "dpl") || (Suffix.left(3) == "vhd")) {
     gotoPage(Info.absFilePath());
 
     if(item->text(1).isEmpty())     // is subcircuit ?
-      if(Suffix != "vhdl") return;  // is VHDL subcircuit ?
+      if(Suffix.left(3) != "vhd") return;  // is VHDL subcircuit ?
 
     select->blockSignals(true);  // switch on the 'select' action ...
     select->setOn(true);
@@ -1918,6 +1969,7 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   distrVert->setEnabled(SchematicMode);
   onGrid->setEnabled(SchematicMode);
   moveText->setEnabled(SchematicMode);
+  filePrintFit->setEnabled(SchematicMode);
   editFind->setEnabled(!SchematicMode);
   editFindAgain->setEnabled(!SchematicMode);
   editRotate->setEnabled(SchematicMode);

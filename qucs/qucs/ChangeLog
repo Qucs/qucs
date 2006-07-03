@@ -1,3 +1,27 @@
+2006-06-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug showing no scrollbar
+	* support file extension "vhd" as VHDL text file
+	* fixed bug creating wrong version on loading library components
+	* library components can be placed onto the schematic via drag n'drop
+	* rework digital diagram data (vector length > 16 now possible)
+	* digital diagrams can display analog variables
+	* tabular can display digital data
+	* fixed bug in y-Smith chart with |r| > 1
+	* tried to compensate aliasing in round diagrams
+	* new action: import data file using qucsconv
+	* mstee and mscross with port numbers (can also be hidden)
+	* new action: export graph data to CSV file
+	* user can create project packages for data exchange
+	* fixed bug corrupting diagram scrollbar
+	* remembered last directory the same for most dialogs
+	* fixed bug missing symbol at second SPICE component
+	* also delete projects if there are subdirectories
+	* workaround to catch if SPICE file doesn't exit
+	* new function: print fit to page
+	* new print scaling (maybe print problems under MacOS are fixed ???)
+	* colours for VHDL syntax highlighting changeable in settings dialog
+
 2006-06-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* row and column in VHDL editor start with one

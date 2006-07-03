@@ -217,7 +217,6 @@ void SpiceDialog::slotButtApply()
   }
 }
 
-static QString lastDir;  // to remember last directory and file
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtBrowse()
 {
@@ -227,12 +226,12 @@ void SpiceDialog::slotButtBrowse()
 		this, "", tr("Select a file"));
   if(s.isEmpty()) return;
 
-  lastDir = s;   // remember last directory and file
+  QFileInfo Info(s);
+  lastDir = Info.dirPath(true);  // remember last directory
 
   // snip path if file in current directory
-  QFileInfo FileInfo(s);
-  if(QucsWorkDir.exists(FileInfo.fileName()) &&
-     QucsWorkDir.absPath() == FileInfo.dirPath(true)) s = FileInfo.fileName();
+  if(QucsWorkDir.exists(Info.fileName()) &&
+     QucsWorkDir.absPath() == Info.dirPath(true)) s = Info.fileName();
   FileEdit->setText(s);
 
   Comp->Props.at(1)->Value = "";

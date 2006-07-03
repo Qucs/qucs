@@ -23,12 +23,12 @@ Circulator::Circulator()
 {
   Description = QObject::tr("circulator");
 
-  Arcs.append(new Arc(-14,-14, 29, 29,  0,16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-14,-14, 28, 28,  0,16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,  0, 14,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0, 14,  0, 30,QPen(QPen::darkBlue,2)));
 
-  Arcs.append(new Arc( -8, -6, 17, 17,16*20,16*150,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -8, -6, 16, 16,16*20,16*150,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  8,  0,  9, -7,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  8,  0,  2, -1,QPen(QPen::darkBlue,2)));
 

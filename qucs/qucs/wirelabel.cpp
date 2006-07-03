@@ -154,7 +154,7 @@ void WireLabel::paint(ViewPainter *p)
       p->map(cx-xpaint, cy-ypaint, xpaint, ypaint);
     }
   }
-  if(phi)  p->drawArc(cx-4, cy-4, 9, 9, phi, 16*255);
+  if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
   p->Painter->drawLine(xpaint, ypaint, a, b);

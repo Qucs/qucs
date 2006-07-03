@@ -1,6 +1,6 @@
 /***************************************************************************
-                          marker.h  -  description
-                             -------------------
+                                marker.h
+                               ----------
     begin                : Sat Apr 10 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -25,18 +25,14 @@
 #include <qpainter.h>
 #include <qvaluelist.h>
 
-
 class Diagram;
 class Graph;
 
-/**
-  *@author Michael Margraf
-  */
 
 class Marker : public Element {
 public:
   Marker(Diagram *Diag_, Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
-  ~Marker();
+ ~Marker();
 
   void    initText(int);
   void    createText();
@@ -60,7 +56,6 @@ public:
   double VarPos[256];  // values the marker is pointing to
 
   QString Text;     // the string to be displayed in the marker text
-  int  lookNfeel;   // different marker designs possible
   bool transparent; // background shines through marker body
 
   int  Precision;   // number of digits to show

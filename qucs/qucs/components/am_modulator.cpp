@@ -22,9 +22,9 @@ AM_Modulator::AM_Modulator()
 {
   Description = QObject::tr("ac voltage source with amplitude modulator");
 
-  Arcs.append(new Arc(-12,-12, 25, 25,     0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( -7, -4,  8,  8,     0, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  0, -4,  8,  8,16*180, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -7, -4,  7,  7,     0, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  0, -4,  7,  7,16*180, 16*180,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0, 30,  0, 12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0,-30,  0,-12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  5,-18, 11,-18,QPen(QPen::red,1)));
