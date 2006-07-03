@@ -44,8 +44,8 @@ void PolarDiagram::calcCoordinate(double* &, double* &yD, double* &,
 {
   double yr = *(yD++);
   double yi = *(yD++);
-  *px = (x2>>1)+int(yr/yAxis.up*double(x2)/2.0 + 0.5);
-  *py = (y2>>1)+int(yi/yAxis.up*double(y2)/2.0 + 0.5);
+  *px = int((yr/yAxis.up + 1.0)*double(x2)/2.0 + 0.5);
+  *py = int((yi/yAxis.up + 1.0)*double(y2)/2.0 + 0.5);
 }
 
 // --------------------------------------------------------------

@@ -40,6 +40,8 @@
 #include "dialogs/changedialog.h"
 #include "dialogs/searchdialog.h"
 #include "dialogs/librarydialog.h"
+#include "dialogs/importdialog.h"
+#include "dialogs/packagedialog.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -695,7 +697,6 @@ void QucsApp::slotChangeProps()
 // --------------------------------------------------------------
 void QucsApp::slotAddToProject()
 {
-  static QString lastDir;  // to remember last directory and file
   editText->setHidden(true); // disable text edit of component property
 
   if(ProjName.isEmpty()) {
@@ -719,11 +720,11 @@ void QucsApp::slotAddToProject()
 
   QStringList FileList = List;  // make a copy as recommended by Qt
   QStringList::Iterator it = FileList.begin();
-  lastDir = (*it);   // remember last directory and file
+  QFileInfo Info(*it);
+  lastDir = Info.dirPath(true);  // remember last directory
 
   // copy all files to project directory
   int Num;
-  QFileInfo Info;
   QFile origFile, destFile;
   while(it != FileList.end()) {
     Info.setFile(*it);
@@ -1056,10 +1057,112 @@ void QucsApp::slotResizePropEdit(const QString& t)
 // -----------------------------------------------------------
 void QucsApp::slotCreateLib()
 {
+  editText->setHidden(true); // disable text edit of component property
+
   if(ProjName.isEmpty()) {
     QMessageBox::critical(this, tr("Error"), tr("Please open project with subcircuits!"));
     return;
   }
 
   (new LibraryDialog(this, ConSchematics))->exec();
+}
+
+// -----------------------------------------------------------
+void QucsApp::slotImportData()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  if(ProjName.isEmpty()) {
+    QMessageBox::critical(this, tr("Error"), tr("Please open project first!"));
+    return;
+  }
+
+  ImportDialog *d = new ImportDialog(this);
+  if(d->exec() == QDialog::Accepted)
+    readProjectFiles();  // re-read all project files
+}
+
+// -----------------------------------------------------------
+void QucsApp::slotExportGraphAsCsv()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  for(;;) {
+    if(view->focusElement)
+      if(view->focusElement->Type == isGraph)
+        break;
+
+    QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
+    return;
+  }
+
+  QString s = QFileDialog::getSaveFileName(
+     lastDir.isEmpty() ? QString(".") : lastDir,
+     tr("CSV file")+" (*.csv);;" + tr("Any File")+" (*)",
+     this, 0, tr("Enter an Output File Name"));
+  if(s.isEmpty())
+    return;
+
+  QFileInfo Info(s);
+  lastDir = Info.dirPath(true);  // remember last directory
+  if(Info.extension().isEmpty())
+    s += ".csv";
+
+  QFile File(s);
+  if(File.exists())
+    if(QMessageBox::information(this, tr("Info"),
+          tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
+          tr("&Yes"), tr("&No"), 0,1,1))
+      return;
+
+  if(!File.open(IO_WriteOnly)) {
+    QMessageBox::critical(this, QObject::tr("Error"),
+                          QObject::tr("Cannot create output file!"));
+    return;
+  }
+
+  QTextStream Stream(&File);
+
+
+  DataX *pD;
+  Graph *g = (Graph*)view->focusElement;
+  // First output the names of independent and dependent variables.
+  for(pD = g->cPointsX.first(); pD!=0; pD = g->cPointsX.next())
+    Stream << '\"' << pD->Var << "\";";
+  Stream << "\"" << g->Var << " (real)\";\"" << g->Var << " (imag)\"\n";
+
+
+  int n, m;
+  double *py = g->cPointsY;
+  int Count = g->countY * g->cPointsX.getFirst()->count;
+  for(n = 0; n < Count; n++) {
+    m = n;
+    for(pD = g->cPointsX.first(); pD!=0; pD = g->cPointsX.next()) {
+      Stream << *(pD->Points + m%pD->count) << ';';
+      m /= pD->count;
+    }
+
+    Stream << *(py++) << ';' << *(py++) << '\n';
+  }
+
+  File.close();
+}
+
+// ----------------------------------------------------------
+void QucsApp::slotCreatePackage()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  PackageDialog *d = new PackageDialog(this, true);
+  d->exec();
+}
+
+// ----------------------------------------------------------
+void QucsApp::slotExtractPackage()
+{
+  editText->setHidden(true); // disable text edit of component property
+  PackageDialog *d = new PackageDialog(this, false);
+  d->show();
+  d->extractPackage();
+  readProjects();
 }

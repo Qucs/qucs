@@ -1,6 +1,6 @@
 /***************************************************************************
-                          mstee.h  -  description
-                             -------------------
+                                mstee.h
+                               ---------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,12 +21,15 @@
 #include "component.h"
 
 
-class MStee : public Component  {
+class MStee : public MultiViewComponent  {
 public:
   MStee();
-  ~MStee();
+ ~MStee();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
 };
 
 #endif

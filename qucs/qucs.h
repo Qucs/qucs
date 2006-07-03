@@ -83,10 +83,10 @@ public slots:
   void slotFileSaveAs();  // save a document under a different filename
   void slotFileSaveAll(); // save all open documents
   void slotFileClose();   // close the actual file
-  void slotSymbolEdit();   // edit the symbol for the schematic
+  void slotSymbolEdit();  // edit the symbol for the schematic
   void slotFileSettings();// open dialog to change file settings
   void slotFilePrint();   // print the current file
-  void slotFilePrintSelected();  // Print selected elements
+  void slotFilePrintFit();// Print and fit to page
   void slotFileQuit();    // exits the application
   void slotEditCut();     // put marked object into clipboard and delete it
   void slotEditCopy();    // put the marked object into the clipboard
@@ -146,7 +146,7 @@ public:
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings,
-          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintSel,
+          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
 
   QAction *activeAction;    // pointer to the action selected by the user
@@ -173,17 +173,19 @@ private:
   void initCursorMenu();
   void initContentListView();
 
+  void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
   bool saveAs();
   void readProjects();
   void readProjectFiles();
-  void OpenProject(const QString&, const QString&);
-  bool DeleteProject(const QString&, const QString&);
+  void openProject(const QString&, const QString&);
+  bool deleteProject(const QString&, const QString&);
   void updatePortNumber(QucsDoc*, int);
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
   void changeSchematicSymbolMode(Schematic*);
+  bool deleteDirectoryContent(QDir& Dir);
 
 
 
@@ -196,12 +198,13 @@ public slots:
   void slotViewToolBar(bool toggle);    // toggle the toolbar
   void slotViewStatusBar(bool toggle);  // toggle the statusbar
 
-  void slotHelpAbout();       // shows an about dialog
-  void slotHelpAboutQt();     // shows the standard about dialog for Qt
-
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
+
+private slots:
+  void slotHelpAbout();     // shows an about dialog
+  void slotHelpAboutQt();   // shows the standard about dialog for Qt
 
 private:
   void initActions();    // initializes all QActions of the application
@@ -237,7 +240,7 @@ public:
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
           *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker,
-          *createLib;
+          *createLib, *importData, *graph2csv, *createPkg, *extractPkg;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -289,6 +292,10 @@ private slots:
   void slotCursorDown();
   void slotResizePropEdit(const QString&);
   void slotCreateLib();
+  void slotImportData();
+  void slotExportGraphAsCsv();
+  void slotCreatePackage();
+  void slotExtractPackage();
 
 private:
   void showHTML(const QString&);

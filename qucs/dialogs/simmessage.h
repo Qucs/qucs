@@ -49,6 +49,7 @@ public slots:
 private slots:
   void slotDisplayMsg();
   void slotDisplayErr();
+  void slotCloseStdin();
   void slotSimEnded();
   void slotDisplayButton();
 

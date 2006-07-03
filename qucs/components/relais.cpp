@@ -35,7 +35,7 @@ Relais::Relais()
   Lines.append(new Line( 30,-30, 30,-18,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30, 15, 30, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30, 15, 45,-15,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 27,-18, 6, 6, 0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 27,-18, 5, 5, 0, 16*360,QPen(QPen::darkBlue,2)));
   Ellips.append(new Area( 27, 12, 6, 6, QPen(QPen::darkBlue,2),
                          QBrush(Qt::darkBlue, Qt::SolidPattern)));
 

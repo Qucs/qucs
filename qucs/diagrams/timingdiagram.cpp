@@ -78,7 +78,7 @@ void TimingDiagram::paint(ViewPainter *p)
     Points.setPoints(3, x, (y+dy)>>1, dx, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(224, 224, 224));
-    p->drawLine(x, (y+dy)>>1, dx, y);
+    p->Painter->drawLine(x, (y+dy)>>1, dx, y);
     p->drawLine(cx+yAxis.numGraphs, cy+2, bx, cy+2);
     p->drawLine(cx+yAxis.numGraphs, cy+2, cx+yAxis.numGraphs, cy+15);
 
@@ -88,9 +88,9 @@ void TimingDiagram::paint(ViewPainter *p)
     Points.setPoints(3, x, (y+dy)>>1, x-dx, y, x-dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(208, 208, 208));
-    p->drawLine(x-dx, y, x, (y+dy)>>1);
+    p->Painter->drawLine(x-dx, y, x, (y+dy)>>1);
     p->Painter->setPen(QColor(224, 224, 224));
-    p->drawLine(x-dx, y, x-dx, dy);
+    p->Painter->drawLine(x-dx, y, x-dx, dy);
 
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
@@ -159,23 +159,24 @@ int TimingDiagram::calcDiagram()
 
   // First check the maximum bit number of all vectors.
   colWidth = 0;
-  long long Value;
   for(g = Graphs.first(); g!=0; g = Graphs.next())
-    if(g->cPointsY) {
-      z = 0;
-      Value = *((long long*)g->cPointsY);
-      while((Value & 15) != 0) {
-        z++;     // count number of "bits"
-        Value >>= 4;
+    if(g->cPointsY)
+      if(g->Var.right(2) == ".X") {
+        z = strlen((char*)g->cPointsY);
+        if(z > colWidth)
+          colWidth = z;
       }
-      if(z > colWidth)
-        colWidth = z;
-    }
+      else {
+        z = 8;
+        if(z > colWidth)
+          colWidth = z;
+      }
   int TimeStepWidth = colWidth * metrics.width("X") + 8;
   if(TimeStepWidth < 40)
     TimeStepWidth = 40;
 
 
+  colWidth = 0;
 if(!firstGraph->cPointsX.isEmpty()) {
   // ................................................
   if(firstGraph->cPointsX.count() > 1) {
@@ -196,7 +197,7 @@ if(!firstGraph->cPointsX.isEmpty()) {
   Texts.append(new Text(x, y2-2, Str));
   
 
-  y -= 3;
+  y -= 5;
   // write all dependent variable names to get width of first column
   for(g = Graphs.first(); g!=0; g = Graphs.next()) {
     if(y < tHeight)  break;
@@ -204,7 +205,7 @@ if(!firstGraph->cPointsX.isEmpty()) {
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
     if(colWidth < 0)  return 1;
     Texts.append(new Text(x, y, Str));  // dependent variable
-    y -= tHeight;
+    y -= tHeight + 2;
   }
   x += colWidth + 13;
   xAxis.numGraphs = x -6;
@@ -258,130 +259,134 @@ if(!firstGraph->cPointsX.isEmpty()) {
     x = xStart + 5;
     colWidth = 0;
 
-    if(g->cPointsY) {
-      px = g->cPointsY;
-
-      if(sameDependencies(g, firstGraph)) {
-
-        Pen = QPen(g->Color, g->Thick);  // default is solid line
-        switch(g->Style) {
-          case 1: Pen.setStyle(Qt::DashLine); break;
-          case 2: Pen.setStyle(Qt::DotLine);  break;
-        }
-
-        z = int(xAxis.limit_min);
-        px += 2*z;
-
-        if(g->Var.right(3) != "].X") {   // vector or single bit ?
-
-          // It is single "bit".
-          yLast = 0;
-          if(z > 0)  yLast += 2; // vertical line before first value ?
-          switch(*((long long*)(px-yLast)) & 15) {  // high or low ?
-            case 1:  // low
-              yLast = tHeight - 5;
-              break;
-            case 2:  // high
-              yLast = 1;
-              break;
-            default:
-              yLast = 1 + ((tHeight - 6) >> 1);
-          }
-
-          z = g->cPointsX.getFirst()->count - z;
-          for( ; z>0; z--) {
-            Value = *((long long*)px) & 15;
-            yNow = 1 + ((tHeight - 6) >> 1);
-            switch(Value) {
-              case 1:  // low
-                yNow = tHeight - 5;
-                break;
-              case 2:  // high
-                yNow = 1;
-                break;
-              case 3: Str = "Z"; break;
-              case 4: Str = "X"; break;
-              case 5: Str = "U"; break;
-              case 6: Str = "W"; break;
-              case 7: Str = "L"; break;
-              case 8: Str = "H"; break;
-              case 9: Str = "-"; break;
-              default: Str = "*";
-            } 
-
-            if(yLast != yNow)
-              Lines.append(new Line(x, y-yLast, x, y-yNow, Pen));
-            if(x+TimeStepWidth >= x2) break;
-            if(Value < 3)
-              Lines.append(new Line(x, y-yNow, x+TimeStepWidth, y-yNow, Pen));
-            else {
-              Texts.append(new Text(x+(TimeStepWidth>>1)-3, y, Str));
-              Lines.append(new Line(x+3, y-1, x+TimeStepWidth-3, y-1, Pen));
-              Lines.append(new Line(x+3, y-tHeight+5, x+TimeStepWidth-3, y-tHeight+5, Pen));
-              Lines.append(new Line(x, y-yNow, x+3, y-1, Pen));
-              Lines.append(new Line(x, y-yNow, x+3, y-tHeight+5, Pen));
-              Lines.append(new Line(x+TimeStepWidth-3, y-1, x+TimeStepWidth, y-yNow, Pen));
-              Lines.append(new Line(x+TimeStepWidth-3, y-tHeight+5, x+TimeStepWidth, y-yNow, Pen));
-            }
-
-            yLast = yNow;
-            x += TimeStepWidth;
-            px += 2;
-          }
-
-        }
-        else {  // It is a bit vector.
-          z = g->cPointsX.getFirst()->count - z;
-          yNow = 1 + ((tHeight - 6) >> 1);
-          Lines.append(new Line(x, y-yNow, x+2, y-1, Pen));
-          Lines.append(new Line(x+2, y-tHeight+5, x, y-yNow, Pen));
-          for( ; z>0; z--) {
-            if(x+TimeStepWidth >= x2) break;
-            Lines.append(new Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
-            Lines.append(new Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
-
-            Str = "";
-            Value = *((long long*)px);
-            while((Value & 15) != 0) {
-              switch(Value & 15) {
-                case 1: Str = "0" + Str; break;
-                case 2: Str = "1" + Str; break;
-                case 3: Str = "Z" + Str; break;
-                case 4: Str = "X" + Str; break;
-                case 5: Str = "U" + Str; break;
-                case 6: Str = "W" + Str; break;
-                case 7: Str = "L" + Str; break;
-                case 8: Str = "H" + Str; break;
-                case 9: Str = "-" + Str; break;
-                default: Str = "*" + Str;
-              }
-              Value >>= 4;
-            }
-            Texts.append(new Text(x+3, y, Str));
-
-            x += TimeStepWidth;
-            px += 2;
-            Lines.append(new Line(x-2, y-tHeight+5, x+2, y-1, Pen));
-            Lines.append(new Line(x+2, y-tHeight+5, x-2, y-1, Pen));
-          }
-        }
-
-      }  // of "if(sameDeps)"
-      else {
-        Str = QObject::tr("wrong dependency");
-        colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
-        if(colWidth < 0)  goto funcEnd;
-        Texts.append(new Text(x, y, Str));
-      }
-    }
-    else {   // no data in graph
+    if(g->cPointsY == 0) {
       Str = QObject::tr("no data");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
       Texts.append(new Text(x, y, Str));
+      y -= tHeight;
+      continue;
     }
+
+    if(!sameDependencies(g, firstGraph)) {
+      Str = QObject::tr("wrong dependency");
+      colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
+      if(colWidth < 0)  goto funcEnd;
+      Texts.append(new Text(x, y, Str));
+      y -= tHeight;
+      continue;
+    }
+
+    Pen = QPen(g->Color, g->Thick);  // default is solid line
+    switch(g->Style) {
+      case 1: Pen.setStyle(Qt::DashLine); break;
+      case 2: Pen.setStyle(Qt::DotLine);  break;
+    }
+
+    z = int(xAxis.limit_min);
+    if(g->Var.right(2) != ".X") {  // not digital variable ?
+      px = g->cPointsY;
+      px += 2 * z;
+      z = g->cPointsX.getFirst()->count - z;
+      yNow = 1 + ((tHeight - 6) >> 1);
+      Lines.append(new Line(x, y-yNow, x+2, y-1, Pen));
+      Lines.append(new Line(x+2, y-tHeight+5, x, y-yNow, Pen));
+      for( ; z>0; z--) {
+        if(x+TimeStepWidth >= x2) break;
+        Lines.append(new Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
+        Lines.append(new Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
+
+        // output magnitude of (complex) number
+        Texts.append(new Text(x+3, y,
+              QString::number(sqrt((*px)*(*px) + (*(px+1))*(*(px+1))))));
+
+        px += 2;
+        x += TimeStepWidth;
+        Lines.append(new Line(x-2, y-tHeight+5, x+2, y-1, Pen));
+        Lines.append(new Line(x+2, y-tHeight+5, x-2, y-1, Pen));
+      }
+      y -= tHeight;
+      continue;
+    }
+
+
+    // digital variable !!!
+    char *pcx = (char*)g->cPointsY;
+    pcx += z * (strlen(pcx)+1);
+
+    if(strlen(pcx) < 2) {   // vector or single bit ?
+
+      // It is single "bit".
+      yLast = 0;
+      if(z > 0)  yLast += 2; // vertical line before first value ?
+      switch(*(pcx-yLast)) {  // high or low ?
+        case '0':  // low
+          yLast = tHeight - 5;
+          break;
+        case '1':  // high
+          yLast = 1;
+          break;
+        default:
+          yLast = 1 + ((tHeight - 6) >> 1);
+      }
+
+      z = g->cPointsX.getFirst()->count - z;
+      for( ; z>0; z--) {
+
+        switch(*pcx) {
+          case '0':  // low
+            yNow = tHeight - 5;
+            break;
+          case '1':  // high
+            yNow = 1;
+            break;
+          default:
+            yNow = 1 + ((tHeight - 6) >> 1);
+        } 
+
+        if(yLast != yNow)
+          Lines.append(new Line(x, y-yLast, x, y-yNow, Pen));
+        if(x+TimeStepWidth >= x2) break;
+        if((*pcx & 254) == '0')
+          Lines.append(new Line(x, y-yNow, x+TimeStepWidth, y-yNow, Pen));
+        else {
+          Texts.append(new Text(x+(TimeStepWidth>>1)-3, y, QString(pcx)));
+          Lines.append(new Line(x+3, y-1, x+TimeStepWidth-3, y-1, Pen));
+          Lines.append(new Line(x+3, y-tHeight+5, x+TimeStepWidth-3, y-tHeight+5, Pen));
+          Lines.append(new Line(x, y-yNow, x+3, y-1, Pen));
+          Lines.append(new Line(x, y-yNow, x+3, y-tHeight+5, Pen));
+          Lines.append(new Line(x+TimeStepWidth-3, y-1, x+TimeStepWidth, y-yNow, Pen));
+          Lines.append(new Line(x+TimeStepWidth-3, y-tHeight+5, x+TimeStepWidth, y-yNow, Pen));
+        }
+
+        yLast = yNow;
+        x += TimeStepWidth;
+        pcx += 2;
+      }
+
+    }
+    else {  // It is a bit vector !!!
+
+      z = g->cPointsX.getFirst()->count - z;
+      yNow = 1 + ((tHeight - 6) >> 1);
+      Lines.append(new Line(x, y-yNow, x+2, y-1, Pen));
+      Lines.append(new Line(x+2, y-tHeight+5, x, y-yNow, Pen));
+      for( ; z>0; z--) {
+        if(x+TimeStepWidth >= x2) break;
+        Lines.append(new Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
+        Lines.append(new Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
+
+        Texts.append(new Text(x+3, y, QString(pcx)));
+
+        x += TimeStepWidth;
+        pcx += strlen(pcx) + 1;
+        Lines.append(new Line(x-2, y-tHeight+5, x+2, y-1, Pen));
+        Lines.append(new Line(x+2, y-tHeight+5, x-2, y-1, Pen));
+      }
+    }
+
     y -= tHeight;
-  }
+  }  // of "for(Graphs...)"
 
 
 funcEnd:

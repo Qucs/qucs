@@ -40,7 +40,8 @@ tQucsSettings QucsSettings;
 
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
-QucsApp *QucsMain;   // the Qucs application itself
+QucsApp *QucsMain;  // the Qucs application itself
+QString lastDir;    // to remember last directory for several dialogs
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -71,9 +72,7 @@ bool loadSettings()
 		= floor(4.0/3.0 * QucsSettings.font.pointSize());
 	}
     else if(Setting == "BGColor") {
-	QucsSettings.BGColor.setNamedColor(Line);
-	if(!QucsSettings.BGColor.isValid())
-	  QucsSettings.BGColor.setRgb(255, 250, 225); }
+	QucsSettings.BGColor.setNamedColor(Line); }
     else if(Setting == "maxUndo") {
 	QucsSettings.maxUndo = Line.toInt(&ok); }
     else if(Setting == "Editor") {
@@ -82,6 +81,15 @@ bool loadSettings()
 	QucsSettings.FileTypes.append(Line); }
     else if(Setting == "Language") {
 	QucsSettings.Language = Line; }
+    else if(Setting == "SyntaxColor") {
+	QucsSettings.VHDL_Comment.setNamedColor(Line.section(",", 0,0));
+	QucsSettings.VHDL_String.setNamedColor(Line.section(",", 1,1));
+	QucsSettings.VHDL_Integer.setNamedColor(Line.section(",", 2,2));
+	QucsSettings.VHDL_Real.setNamedColor(Line.section(",", 3,3));
+	QucsSettings.VHDL_Character.setNamedColor(Line.section(",", 4,4));
+	QucsSettings.VHDL_Types.setNamedColor(Line.section(",", 5,5));
+	QucsSettings.VHDL_Attributes.setNamedColor(Line.section(",", 6,6));
+    }
   }
 
   file.close();
@@ -109,7 +117,15 @@ bool saveApplSettings(QucsApp *qucs)
     << "Language=" << QucsSettings.Language << "\n"
     << "BGColor=" << QucsSettings.BGColor.name() << "\n"
     << "maxUndo=" << QucsSettings.maxUndo << "\n"
-    << "Editor=" << QucsSettings.Editor << "\n";
+    << "Editor=" << QucsSettings.Editor << "\n"
+    << "SyntaxColor="
+    << QucsSettings.VHDL_Comment.name() << ","
+    << QucsSettings.VHDL_String.name() << ","
+    << QucsSettings.VHDL_Integer.name() << ","
+    << QucsSettings.VHDL_Real.name() << ","
+    << QucsSettings.VHDL_Character.name() << ","
+    << QucsSettings.VHDL_Types.name() << ","
+    << QucsSettings.VHDL_Attributes.name() << "\n";
 
   QStringList::Iterator it = QucsSettings.FileTypes.begin();
   while(it != QucsSettings.FileTypes.end())
@@ -391,17 +407,6 @@ bool checkVersion(QString& Line)
 
 int main(int argc, char *argv[])
 {
-/*double xyz = 0.0;
-long long *p = (long long*)(&xyz);
-qDebug("Zahl: %g -> %0llx", xyz, *p);
-xyz = -2.0;
-qDebug("Zahl: %g -> %0llx", xyz, *p);
-xyz = -2.0e1;
-qDebug("Zahl: %g -> %0llx", xyz, *p);
-xyz = -2.0e-1;
-qDebug("Zahl: %g -> %0llx", xyz, *p);
-return 0;*/
-
   // apply default settings
   QucsSettings.x = 0;
   QucsSettings.y = 0;
@@ -409,7 +414,6 @@ return 0;*/
   QucsSettings.dy = 400;
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;
-  QucsSettings.BGColor = QColor(255, 250, 225);
   QucsSettings.maxUndo = 20;
 
   // is application relocated?
@@ -436,6 +440,26 @@ return 0;*/
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   loadSettings();
+
+  if(!QucsSettings.BGColor.isValid())
+    QucsSettings.BGColor.setRgb(255, 250, 225);
+
+  // VHDL syntax highlighting
+  if(!QucsSettings.VHDL_Comment.isValid())
+    QucsSettings.VHDL_Comment = Qt::gray;
+  if(!QucsSettings.VHDL_String.isValid())
+    QucsSettings.VHDL_String = Qt::red;
+  if(!QucsSettings.VHDL_Integer.isValid())
+    QucsSettings.VHDL_Integer = Qt::blue;
+  if(!QucsSettings.VHDL_Real.isValid())
+    QucsSettings.VHDL_Real = Qt::darkMagenta;
+  if(!QucsSettings.VHDL_Character.isValid())
+    QucsSettings.VHDL_Character = Qt::magenta;
+  if(!QucsSettings.VHDL_Types.isValid())
+    QucsSettings.VHDL_Types = Qt::darkRed;
+  if(!QucsSettings.VHDL_Attributes.isValid())
+    QucsSettings.VHDL_Attributes = Qt::darkCyan;
+
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);

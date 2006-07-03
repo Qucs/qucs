@@ -26,6 +26,7 @@
 #include <qstring.h>
 #include <qptrlist.h>
 
+class QDragObject;
 class QPaintEvent;
 class QSizePolicy;
 
@@ -72,12 +73,16 @@ public:
   SymbolWidget(QWidget *parent = 0);
  ~SymbolWidget();
 
+  QString theModel();
   int setSymbol(const QString&, const QString&, const QString&);
-  int createSymbol(const QString&, const QString&, const QString&);
+  int createSymbol(const QString&, const QString&);
 
   // component properties
   int Text_x, Text_y;
-  QString Prefix, LibraryName, ComponentName;
+  QString Prefix, LibraryName, ComponentName, ModelString;
+
+protected:
+  void mouseMoveEvent(QMouseEvent*);
 
 private:
   void  paintEvent(QPaintEvent*);
@@ -88,8 +93,11 @@ private:
   bool getPen  (const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
 
-  QString PaintText;
-  int TextWidth, cx, cy, x1, x2, y1, y2;
+  QDragObject *myDragObject;
+
+  QString PaintText, DragNDropText;
+  int TextWidth, DragNDropWidth, TextHeight;
+  int cx, cy, x1, x2, y1, y2;
   QPtrList<Line>       Lines;
   QPtrList<struct Arc> Arcs;
   QPtrList<Area>       Rects, Ellips;

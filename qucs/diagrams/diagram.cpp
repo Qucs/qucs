@@ -115,7 +115,7 @@ void Diagram::paint(ViewPainter *p)
   // paint all arcs (1 pixel larger to compensate for strange circle method)
   for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->Painter->setPen(pa->style);
-    p->drawArc(cx+pa->x, cy-pa->y, pa->w+1, pa->h+1, pa->angle, pa->arclen);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
 
   Graph *pg;
@@ -660,19 +660,24 @@ bool Diagram::ResizeTouched(int x, int y)
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
+  int yNum = yAxis.numGraphs;
+  int zNum = zAxis.numGraphs;
   yAxis.numGraphs = zAxis.numGraphs = 0;
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
-  int No = 0;
+  int No=0;
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-    if(loadVarData(defaultDataSet, pg) != 1)   // load data, determine max/min values
+    if(loadVarData(defaultDataSet, pg) == 1)   // load data, determine max/min values
       No++;
     pg->lastLoaded = QDateTime::currentDateTime();
   }
 
-  if(No < 1)   // Are dataset files unchanged ?
+  if(No > 0) {   // Are dataset files unchanged ?
+    yAxis.numGraphs = yNum;  // rebuild scrollbar position
+    zAxis.numGraphs = zNum;
     return;    // -> no update neccessary
+  }
 
   if(xAxis.min > xAxis.max)
     xAxis.min = xAxis.max = 0.0;
@@ -800,9 +805,9 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   QFileInfo Info(fileName);
 
   int pos = g->Var.find(':');
-  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
-    if(pos > g->Var.find('['))
-      pos = -1;
+//  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
+//    if(pos > g->Var.find('['))
+//      pos = -1;
 
   if(pos <= 0) {
     file.setName(fileName);
@@ -816,12 +821,16 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   Info.setFile(file);
   if(g->lastLoaded.isValid())
     if(g->lastLoaded > Info.lastModified())
-      return 1;
+      return 1;    // dataset unchanged -> no update neccessary
 
   g->countY = 0;
   g->cPointsX.clear();
   if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
-  if(g->Var.isEmpty()) return 0;
+  if(Variable.isEmpty()) return 0;
+
+  if(Variable.right(2) == ".X")
+    if(Name.at(0) != 'T')
+      return 0;  // digital variables only for tabulars and ziming diagram
 
 
   if(!file.open(IO_ReadOnly))  return 0;
@@ -974,40 +983,28 @@ if(Variable.right(3) != ".X ")
 
 else {  // of "if not digital"
 
+  char *pc = (char*)p;
+  pEnd = pc + 2*(counting-1)*sizeof(double);
   // for digital variables (e.g. 100ZX0):
-  long long lx;
   for(int z=counting; z>0; z--) {
 
-    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
+    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next bit vector
     if(*pPos == 0) {
       delete[] g->cPointsY;  g->cPointsY = 0;
       return 0;
     }
-    pEnd = pPos;
-    while(*pEnd  > ' ')  pEnd++; // find end of number
 
-    lx = 0;
-    while(pPos < pEnd) {
-      lx <<= 4;
-      switch(*pPos) {
-        case '0':  lx |= 1; break;
-        case '1':  lx |= 2; break;
-        case 'Z':  lx |= 3; break;
-        case 'X':  lx |= 4; break;
-        case 'U':  lx |= 5; break;
-        case 'W':  lx |= 6; break;
-        case 'L':  lx |= 7; break;
-        case 'H':  lx |= 8; break;
-        case '-':  lx |= 9; break;
-        default: 
-          delete[] g->cPointsY;  g->cPointsY = 0;
-          return 0;
+    while(*pPos > ' ') {    // copy bit vector
+      *(pc++) = *(pPos++);
+      if(pEnd <= pc) {
+        counting = pc - (char*)g->cPointsY;
+        pEnd = pc = (char*)g->cPointsY =
+          (char*)realloc(g->cPointsY, counting+1024);
+        pc += counting;
+        pEnd += counting+1020;
       }
-      pPos++;
     }
-
-    *((long long*)(p++)) = lx;
-    *((long long*)(p++)) = 0;
+    *(pc++) = 0;   // terminate each vector with NULL
   }
 
 }  // of "if not digital"
@@ -1396,44 +1393,43 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   double rMAXq = Axis->up*Axis->up;
   int    theta, beta, phi, len, m, x, y;
 
+  int R1 = int(x2/Axis->up + 0.5);
   // ....................................................
   // draw arcs with im(z)=const
-
   for(m=1; m<GridY; m++) {
     n_sin = M_PI*double(m)/double(GridY);
     n_cos = cos(n_sin);
     n_sin = sin(n_sin);
-    im = (1-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
-    x  = int((1-im)/Axis->up*dx2);
-    y  = int(im/Axis->up*x2);
+    im = (1.0-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
+    y  = int(im/Axis->up*x2 + 0.5);  // diameter
 
     if(Axis->up <= 1.0) {       // Smith chart with |r|=1
-      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI - 0.5);
+      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1.0)/M_PI - 0.5);
       if(beta<0) beta += 16*360;
       theta = 16*270-beta;
     }
     else {         // Smith chart with |r|>1
-      im = 1/im;
-      real = (rMAXq+1)/(rMAXq-1);
-      root =  real*real - im*im-1;
-      if(root<0) {       // circle lies completely within the Smith chart ?
-        beta = 0;        // yes, ...
-        theta = 16*360;  // ... draw whole circle
+      im = 1.0/im;
+      real = (rMAXq+1.0)/(rMAXq-1.0);
+      root =  real*real - im*im - 1.0;
+      if(root < 0.0) {  // circle lies completely within the Smith chart ?
+        beta = 0;       // yes, ...
+        theta = 16*360; // ... draw whole circle
       }
       else {
 	// calculate both intersections with most outer circle
 	real1 =  sqrt(root)-real;
 	real2 = -sqrt(root)-real;
 
-	root  = (real1+1)*(real1+1) + im*im;
-	n_cos = (real1*real1 + im*im - 1) / root;
-	n_sin = 2*im / root;
-	beta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
+	root  = (real1+1.0)*(real1+1.0) + im*im;
+	n_cos = (real1*real1 + im*im - 1.0) / root;
+	n_sin = 2.0*im / root;
+	beta  = int(16.0*180.0*atan2(n_sin-1.0/im,n_cos-1.0)/M_PI);
 	if(beta<0) beta += 16*360;
 
-	root  = (real2+1)*(real2+1) + im*im;
-	n_cos = (real2*real2 + im*im - 1) / root;
-	n_sin = 2*im / root;
+	root  = (real2+1.0)*(real2+1.0) + im*im;
+	n_cos = (real2*real2 + im*im - 1.0) / root;
+	n_sin = 2.0*im / root;
 	theta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
 	if(theta<0) theta += 16*360;
 	theta = theta - beta;   // arc length
@@ -1442,9 +1438,9 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     }
 
     if(Zplane)
-      x += dx2;
+      x = (x2 + R1 - y) >> 1;
     else {
-      x -= dx2;
+      x = (x2 - R1 - y) >> 1;
       beta = 16*180 - beta - theta;  // mirror
       if(beta < 0) beta += 16*360;   // angle has to be > 0
     }
@@ -1464,13 +1460,14 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   for(m=1; m<GridX; m++) {
     im = m*(Axis->up+1.0)/GridX - Axis->up;
-    x  = int(im/Axis->up*double(dx2) + 0.5);  // center
-    y  = int((1.0-im)/Axis->up*double(dx2));  // diameter
+    y  = int((1.0-im)/Axis->up*double(dx2) + 0.5);  // diameter
 
-    if(Zplane)  x += dx2;
-    else  x = 0;
+    if(Zplane)
+      x = ((x2+R1)>>1) - y;
+    else
+      x = (x2-R1)>>1;
     if(fabs(fabs(im)-1.0) > 0.2)   // if too near to |r|=1, it looks ugly
-      Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+      Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
 
     if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
       im = 1.0-im;
@@ -1478,14 +1475,14 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
       if(Zplane)  x += y;
       else  x -= y;
       if(im >= 1.0)
-	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+        Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
       else {
-	phi = int(16.0*180.0/M_PI*acos(im));
-	len = 16*180-phi;
-	if(Above && Below)  len += len;
-	else if(Below)  phi = 16*180;
-	if(!Zplane)  phi += 16*180;
-	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, phi, len, GridPen));
+        phi = int(16.0*180.0/M_PI*acos(im));
+        len = 16*180-phi;
+        if(Above && Below)  len += len;
+        else if(Below)  phi = 16*180;
+        if(!Zplane)  phi += 16*180;
+        Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, phi, len, GridPen));
       }
     }
   }
@@ -1493,15 +1490,13 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   // ....................................................
   if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
-    x = int(x2/Axis->up + 0.5);
-    Arcs.append(new struct Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
-			QPen(QPen::black,0)));
+    x = (x2-R1) >> 1;
+    y = (x2+R1) >> 1;
+    Arcs.append(new struct Arc(x, y, R1, R1, beta, theta, QPen(QPen::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
-    x = int(x2/Axis->up + 0.5) >> 1;
+    if(Zplane)  x = y;
     y = int(sqrt(rMAXq-1)/Axis->up*dx2 + 0.5);
-    if(Zplane)  x += dx2;
-    else  x = dx2 - x;
     if(Above)  m = y;
     else  m = 0;
     if(!Below)  y = 0;

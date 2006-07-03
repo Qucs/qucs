@@ -22,12 +22,12 @@ Transformer::Transformer()
 {
   Description = QObject::tr("ideal transformer");
 
-  Arcs.append(new Arc(-16,-18,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, -6,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16,  6,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,-18,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4, -6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,  6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,-18,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, -6,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,  6,12,12, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,-18,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4, -6,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,  6,12,12,  16*90,16*180, QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-18,-10,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-30,-30,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-18, 10,-30,QPen(QPen::darkBlue,2)));
@@ -40,8 +40,8 @@ Transformer::Transformer()
   Lines.append(new Line(  1,-20,  1, 20,QPen(QPen::darkBlue,1)));
 
   Texts.append(new Text(-21, -18,"T"));
-  Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-21,-24,  5,  5,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 15,-24,  5,  5,  0, 16*360,QPen(QPen::darkBlue,2)));
 
 
   Ports.append(new Port(-30,-30));

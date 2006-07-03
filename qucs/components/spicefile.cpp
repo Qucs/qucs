@@ -50,7 +50,9 @@ SpiceFile::SpiceFile()
 // -------------------------------------------------------
 Component* SpiceFile::newOne()
 {
-  return new SpiceFile();
+  SpiceFile *p = new SpiceFile();
+  p->recreate(0);   // createSymbol() is NOT called in constructor !!!
+  return p;
 }
 
 // -------------------------------------------------------

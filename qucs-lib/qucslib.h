@@ -75,7 +75,7 @@ private:
   SymbolWidget *Symbol;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
-  QString       ModelString, DefaultSymbol;
+  QString       DefaultSymbol;
 
   QDir QucsHomeDir;  // Qucs user directory where all projects are located
 };
