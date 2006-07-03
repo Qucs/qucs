@@ -1,3 +1,8 @@
+2006-07-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* dc_sim.cpp (DC_Sim), tr_sim.cpp (TR_Sim): Allow choosing
+	'GolubSVD' as equation solver.
+
 2006-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* tline.cpp (TLine): Changed default value of 'Alpha' to "0 dB".
