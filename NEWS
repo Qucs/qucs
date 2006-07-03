@@ -33,6 +33,10 @@ Version 0.0.10
  * export data to CSV files
  * creation of project package file for data exchange
 
+ * support for user-defined subcircuit libraries
+ * syntax highlighting for VHDL data types and attributes
+ * digital diagrams can display nine-valued logic
+
 Version 0.0.9
 -------------
 

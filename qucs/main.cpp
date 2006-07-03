@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <locale.h>
 
 #include <qapplication.h>
 #include <qstring.h>
@@ -471,6 +472,7 @@ int main(int argc, char *argv[])
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
+  setlocale (LC_NUMERIC, "C");
   QucsMain = new QucsApp();
   a.setMainWidget(QucsMain);
   QucsMain->show();
