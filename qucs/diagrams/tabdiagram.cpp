@@ -75,7 +75,7 @@ void TabDiagram::paint(ViewPainter *p)
     Points.setPoints(3, x, dy, (x+dx)>>1, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(224, 224, 224));
-    p->drawLine(x, dy, (x+dx)>>1, y);
+    p->Painter->drawLine(x, dy, (x+dx)>>1, y);
     p->drawLine(cx-15, by, cx-2, by);
     p->drawLine(cx-15, by, cx-15, by + zAxis.numGraphs);
 
@@ -85,9 +85,9 @@ void TabDiagram::paint(ViewPainter *p)
     Points.setPoints(3, x, y-dy, (x+dx)>>1, y, dx, y-dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(208, 208, 208));
-    p->drawLine(x, y-dy, (x+dx)>>1, y);
+    p->Painter->drawLine(x, y-dy, (x+dx)>>1, y);
     p->Painter->setPen(QColor(224, 224, 224));
-    p->drawLine(x, y-dy, dx, y-dy);
+    p->Painter->drawLine(x, y-dy, dx, y-dy);
 
     p->Painter->setBrush(QBrush(Qt::NoBrush));
   }
@@ -211,7 +211,8 @@ if(g) if(!g->cPointsX.isEmpty()) {
 
   firstGraph = g;
   // ................................................
-  for(g = Graphs.first(); g!=0; g = Graphs.next()) {// all dependent variables
+  // all dependent variables
+  for(g = Graphs.first(); g!=0; g = Graphs.next()) {
     y = y2-tHeight-5;
     colWidth = 0;
 
@@ -228,22 +229,44 @@ if(g) if(!g->cPointsX.isEmpty()) {
       if(sameDependencies(g, firstGraph)) {
         int z=g->cPointsX.getFirst()->count * g->countY;
         if(z > NumAll)  NumAll = z;
-        for(; z>0; z--) {
-          py += 2;
-          if(startWriting-- > 0) continue; // reached visible area ?
-          if(y < tHeight) break;           // no room for more rows ?
-          switch(g->numMode) {
-            case 0: Str = complexRect(*py, *(py+1), g->Precision); break;
-            case 1: Str = complexDeg (*py, *(py+1), g->Precision); break;
-            case 2: Str = complexRad (*py, *(py+1), g->Precision); break;
+
+        if(g->Var.right(2) != ".X")
+          for(; z>0; z--) {
+            py += 2;
+            if(startWriting-- > 0) continue; // reached visible area ?
+            if(y < tHeight) break;           // no room for more rows ?
+            switch(g->numMode) {
+              case 0: Str = complexRect(*py, *(py+1), g->Precision); break;
+              case 1: Str = complexDeg (*py, *(py+1), g->Precision); break;
+              case 2: Str = complexRad (*py, *(py+1), g->Precision); break;
+            }
+
+            colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
+            if(colWidth < 0)  goto funcEnd;
+
+            Texts.append(new Text(x, y, Str));
+            y -= tHeight;
           }
 
-          colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
-          if(colWidth < 0)  goto funcEnd;
+        else {  // digital data
+          char *pcy = (char*)g->cPointsY;
+          for(; z>0; z--) {
+            if(startWriting-- > 0) {  // reached visible area ?
+              pcy += strlen(pcy) + 1;
+              continue;
+            }
+            if(y < tHeight) break;           // no room for more rows ?
+            Str = QString(pcy);
 
-          Texts.append(new Text(x, y, Str));
-          y -= tHeight;
+            colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
+            if(colWidth < 0)  goto funcEnd;
+
+            Texts.append(new Text(x, y, Str));
+            pcy += strlen(pcy) + 1;
+            y -= tHeight;
+          }
         }
+
         if(z > NumLeft)  NumLeft = z;
       }  // of "if(sameDeps)"
       else {

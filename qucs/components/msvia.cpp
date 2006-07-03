@@ -22,7 +22,7 @@ MSvia::MSvia()
 {
   Description = QObject::tr("microstrip via");
 
-  Arcs.append(new Arc(-5,-4, 10, 8, 0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-5,-4, 10,  7,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-20,  0, -5,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -5,  0, -5, 14,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  5,  0,  5, 14,QPen(QPen::darkBlue,2)));

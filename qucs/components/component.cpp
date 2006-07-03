@@ -187,7 +187,7 @@ void Component::paint(ViewPainter *p)
   QFont newFont = f;
 
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    newFont.setPointSizeFloat(float(p->Scale) * QucsSettings.largeFontSize);
+    newFont.setPointSizeFloat(p->Scale * Texts.getFirst()->Size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
     p->map(cx, cy, x, y);
@@ -351,20 +351,16 @@ void Component::paintScheme(QPainter *p)
 
 // -------------------------------------------------------
 // For output on a printer device.
-void Component::print(ViewPainter *p)
+void Component::print(ViewPainter *p, float FontScale)
 {
-  Arc *pa;
-  for(pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
-    pa->w -= 1;   // to look nice after printing, arcs have to be
-    pa->h -= 1;   // made smaller
-  }
+  Text *pt;
+  for(pt = Texts.first(); pt != 0; pt = Texts.next())
+    pt->Size *= FontScale;
 
   paint(p);
 
-  for(pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
-    pa->w += 1;   // back to old size
-    pa->h += 1;
-  }
+  for(pt = Texts.first(); pt != 0; pt = Texts.next())
+    pt->Size /= FontScale;
 }
 
 // -------------------------------------------------------
@@ -395,7 +391,7 @@ void Component::rotate()
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {
     tmp = -p3->x;
     p3->x = p3->y;
-    p3->y = tmp - p3->w +1; // +1 is beauty correction
+    p3->y = tmp - p3->w;
     tmp = p3->w;
     p3->w = p3->h;
     p3->h = tmp;
@@ -483,7 +479,7 @@ void Component::mirrorX()
 
   // mirror all arcs
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {
-    p3->y = -p3->y - p3->h + 1;   // +1 is beauty correction
+    p3->y = -p3->y - p3->h;
     if(p3->angle > 16*180) p3->angle -= 16*360;
     p3->angle  = -p3->angle;    // mirror
     p3->angle -= p3->arclen;    // go back to end of arc
@@ -543,7 +539,7 @@ void Component::mirrorY()
 
   // mirror all arcs
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {
-    p3->x = -p3->x - p3->w + 1;   // +1 is beauty correction
+    p3->x = -p3->x - p3->w;
     p3->angle = 16*180 - p3->angle - p3->arclen;  // mirror
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
   }
@@ -1208,7 +1204,7 @@ void GateComponent::createSymbol()
         Lines.append(new Line(-5, 3, 5, 3,QPen(QPen::darkBlue,1)));
       }
       else {
-        Arcs.append(new Arc(-6,-6, 12, 12, 0, 16*360,QPen(QPen::darkBlue,1)));
+        Arcs.append(new Arc(-5,-5, 10, 10, 0, 16*360,QPen(QPen::darkBlue,1)));
         Lines.append(new Line( 0,-5, 0, 5,QPen(QPen::darkBlue,1)));
       }
     }

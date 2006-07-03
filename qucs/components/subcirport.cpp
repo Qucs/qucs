@@ -47,8 +47,8 @@ void SubCirPort::createSymbol()
   x2 =   0; y2 =  8;
 
   if(Props.at(1)->Value.at(0) == 'a') {
-    Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
+    Arcs.append(new Arc(-25, -6, 12, 12,  0, 16*360,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-13,  0,  0,  0,QPen(QPen::darkBlue,2)));
   }
   else {
     Lines.append(new Line( -9,  0,  0,  0,QPen(QPen::darkBlue,2)));

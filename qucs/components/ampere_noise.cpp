@@ -22,7 +22,7 @@ Ampere_noise::Ampere_noise()
 {
   Description = QObject::tr("noise current source");
 
-  Arcs.append(new Arc(-12,-12, 25, 25,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,  0, 12,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -7,  0,  7,  0,QPen(QPen::darkBlue,3)));

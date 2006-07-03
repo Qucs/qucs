@@ -23,7 +23,7 @@ Noise_vv::Noise_vv()
   Description = QObject::tr("correlated current sources");
 
   // left noise source
-  Arcs.append(new Arc(-42,-12, 25, 25,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-42,-12, 24, 24,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-30, 12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,-30,-30,-12,QPen(QPen::darkBlue,2)));
 
@@ -33,7 +33,7 @@ Noise_vv::Noise_vv()
   Lines.append(new Line(-18,  2,-32,-12,QPen(QPen::darkBlue,2)));
 
   // right noise source
-  Arcs.append(new Arc( 18,-12, 25, 25,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 18,-12, 24, 24,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30, 30, 30, 12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,-30, 30,-12,QPen(QPen::darkBlue,2)));
 

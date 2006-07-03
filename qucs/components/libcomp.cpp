@@ -102,11 +102,12 @@ int LibComp::loadSection(const QString& Name, QString& Section)
   if(Section.left(14) != "<Qucs Library ")  // wrong file type ?
     return -2;
 
-  QString Line = Section.mid(14, Line.length()-15);
+  int Start, End = Section.find(' ', 14);
+  if(End < 15) return -3;
+  QString Line = Section.mid(14, End-14);
   if(!checkVersion(Line)) // wrong version number ?
     return -3;
 
-  int Start, End;
   if(Name == "Symbol") {
     Start = Section.find("\n<", 14); // if library has default symbol, take it
     if(Start > 0)

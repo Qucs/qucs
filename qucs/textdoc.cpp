@@ -162,7 +162,7 @@ int TextDoc::save()
 }
 
 // -----------------------------------------------------------
-void TextDoc::print(QPrinter *Printer, bool printAll)
+void TextDoc::print(QPrinter *Printer, bool printAll, bool)
 {
   QPainter p(Printer);
   if(!p.device())   // valid device available ?
@@ -179,7 +179,7 @@ void TextDoc::print(QPrinter *Printer, bool printAll)
           marginX, marginY, metrics.width() - 2*marginX,
           metrics.height() - 2*marginY - p.fontMetrics().lineSpacing());
 
-  int linesPerPage =printArea.height() / p.fontMetrics().lineSpacing();
+  int linesPerPage = printArea.height() / p.fontMetrics().lineSpacing();
 
   int PageCount, PageNo = 1;
   QString s, printText;
@@ -306,7 +306,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
 
   for(c = text.at(i); !c.isNull(); c = text.at(++i)) {
     if(iString >= 0) {
-      setFormat(iString, i-iString+1, Qt::red);
+      setFormat(iString, i-iString+1, QucsSettings.VHDL_String);
       if(c == '"')
         iString = -1;
       continue;
@@ -357,9 +357,9 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
       if(c != '_')
         if(!c.isLetter()) {
           if(isFloat)
-            setFormat(iNumber, i-iNumber, Qt::darkMagenta);
+            setFormat(iNumber, i-iNumber, QucsSettings.VHDL_Real);
           else
-            setFormat(iNumber, i-iNumber, Qt::blue);
+            setFormat(iNumber, i-iNumber, QucsSettings.VHDL_Integer);
         }
       iNumber = -1;
     }
@@ -367,7 +367,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
     else if(c == '-') {
       if(i > 0)
         if(text.at(i-1) == '-') {  // VHDL comment starts with --
-          setFormat(i-1, text.length()-i, Qt::gray);
+          setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
           return 0;
         }
       continue;
@@ -389,7 +389,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
     if(c == '\'') {
       if(i > 1)
         if(text.at(i-2) == '\'')
-          setFormat(i-2, 3, Qt::magenta);
+          setFormat(i-2, 3, QucsSettings.VHDL_Character);
     }
     else if(c == '"')
       iString = i;
@@ -464,14 +464,14 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 
   for(List = List_DataTypes; *List != 0; List++)
     if(Word == *List) {
-      setFormat(start, len, newFont, Qt::darkRed);
+      setFormat(start, len, QucsSettings.VHDL_Types);
       return;
     }
 
   for(List = List_Units; *List != 0; List++)
     if(Word == *List) {
       newFont.setWeight(QFont::Bold);
-      setFormat(start, len, newFont, Qt::darkMagenta);
+      setFormat(start, len, newFont, QucsSettings.VHDL_Real);
       return;
     }
 }
@@ -510,9 +510,7 @@ void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
   if(List)
     for(; *List != 0; List++)
       if(Word == *List) {
-        QFont newFont = QucsSettings.font;
-        newFont.setPointSize((int)Doc->Scale);
-        setFormat(start-1, len+1, newFont, Qt::darkCyan);
+        setFormat(start-1, len+1, QucsSettings.VHDL_Attributes);
         return;
       }
 }
