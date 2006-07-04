@@ -823,6 +823,10 @@
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
         <translation>Pour chaque type de transmission, dans les boîtes de dialogue, saisissez les valeurs des différents paramètres, puis calculez soit les caractéristiques électriques, ou, à partir des caractéristiques électriques, calculez les paramètres physiques correspondants.</translation>
     </message>
+    <message>
+        <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted.Have lots of fun!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ID_Dialog</name>
@@ -841,6 +845,101 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>ImportDialog</name>
+    <message>
+        <source>Import Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Choisir</translation>
+    </message>
+    <message>
+        <source>Output File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All known</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CITI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="unfinished">Tous les fichiers</translation>
+    </message>
+    <message>
+        <source>Enter a Data File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>Output file already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;Oui</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;Non</translation>
+    </message>
+    <message>
+        <source>ERROR: Unknown file format! Please check file name extension!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">ERREUR : Ne peut lancer le simulateur !</translation>
+    </message>
+    <message>
+        <source>Successfully imported file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Converter ended with errors!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1217,6 +1316,165 @@ or elle vaut %1 !</translation>
     <message>
         <source>Dismiss</source>
         <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>PackageDialog</name>
+    <message>
+        <source>Create Project Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Choisir</translation>
+    </message>
+    <message>
+        <source>include user libraries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose projects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Créer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No projects!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extract Project Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Qucs Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="unfinished">Tous les fichiers</translation>
+    </message>
+    <message>
+        <source>Enter a Package File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please insert a package name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose at least one project!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>Output file already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;Oui</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;Non</translation>
+    </message>
+    <message>
+        <source>Cannot create package!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully created Qucs package!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open package!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: File contains wrong header!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Wrong version number!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Checksum mismatch!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Leave directory &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Package is corrupt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully extracted package!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create and enter directory &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create file &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: User library &quot;%1&quot; already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create library &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create library &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3599,6 +3857,14 @@ Invocation :  qucsedit [-r] fichier
         <source>vhdl</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot create output file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>show port numbers in symbol or not</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4056,7 +4322,7 @@ Erreurs :
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation>Ne peut effacer le fichier projet :</translation>
+        <translation type="obsolete">Ne peut effacer le fichier projet :</translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
@@ -4320,7 +4586,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Printing selected...</source>
-        <translation>Impression choisie…</translation>
+        <translation type="obsolete">Impression choisie…</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
@@ -4570,7 +4836,7 @@ Imprime la feuille de travail</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>Imprimer sélection…</translation>
+        <translation type="obsolete">Imprimer sélection…</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
@@ -4580,7 +4846,7 @@ Imprime la feuille de travail</translation>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>Imprimer les élements sélectionnés
+        <translation type="obsolete">Imprimer les élements sélectionnés
 
 Imprime les élements sélectionnés de la feuille</translation>
     </message>
@@ -5847,6 +6113,205 @@ Selects all diagram markers of the document</source>
 
 Create Library from Subcircuits</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot remove directory: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please open project first!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a diagram graph!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an Output File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output file already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page
+
+Print and fit content to the page size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create &amp;Package...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create compressed Package from Projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Package
+
+Create compressed Package from complete Projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E&amp;xtract Package...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install Content of a Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extract Package
+
+Install Content of a Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert file to Qucs data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Data
+
+Convert data file to Qucs data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to &amp;CSV...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to CSV
+
+Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsAttenuator</name>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help...</source>
+        <translation type="unfinished">Aide…</translation>
+    </message>
+    <message>
+        <source>&amp;About QucsAttenuator...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished">À propos de Qt…</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Fichier</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Aide</translation>
+    </message>
+    <message>
+        <source>Topology:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zin:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>50</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zout:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate and put into Clipboard</source>
+        <translation type="unfinished">Sythétiser et placer dans le presse-papier</translation>
+    </message>
+    <message>
+        <source>R1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>--</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R3:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result:</source>
+        <translation type="unfinished">Résultat :</translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">Info Qt</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Attenuator synthesis program
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2006 by</source>
+        <translation type="unfinished">Copyright © 2006 </translation>
     </message>
 </context>
 <context>
@@ -7638,6 +8103,10 @@ Copie les fichiers dans le répertoire du projet</translation>
         <source>Manage User &amp;Libraries...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
@@ -7793,6 +8262,42 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>Russian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors for Syntax Highlighting:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Integer Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8479,6 +8984,10 @@ Erreurs :
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
@@ -8587,6 +9096,10 @@ Erreurs :
     <message>
         <source>Symbol:</source>
         <translation>Symbole :</translation>
+    </message>
+    <message>
+        <source>! Drag n&apos;Drop me !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
