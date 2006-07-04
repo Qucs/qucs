@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs-attenuator/bitmaps/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,12 +22,17 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib \
-	qucs-attenuator $(RELEASEDIRS)
+XPMS = 
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+PNGS = pix_pi.png pix_tee.png
 
-CLEANFILES = *~ *.rej *.orig
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+ICONS = 
+
+EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS)
+
+# installation of pictures
+picdatadir = ${prefix}/share/qucs/bitmaps
+picdata_DATA = $(EXTRA_DIST)
+
+CLEANFILES = *~
+MAINTAINERCLEANFILES = Makefile.in

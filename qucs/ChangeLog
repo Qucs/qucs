@@ -1,3 +1,7 @@
+2006-07-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/diagram.cpp (loadVarData): Fixed compile time error.
+
 2006-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* main.cpp (main): Setting up locale to "C" for numeric
