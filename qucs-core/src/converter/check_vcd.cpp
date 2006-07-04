@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.11 2006/07/03 08:52:23 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.12 2006/07/04 09:30:48 raimi Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 #define VCD_DEBUG 0
 
 // Some more definitions.
-//#define VCD_INCLUDE_RANGE 1
+#define VCD_INCLUDE_RANGE 0
 #define VCD_TIMEVAR "dtime"
 
 // Global variables.
