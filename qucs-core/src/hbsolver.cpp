@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.20 2006-07-03 06:02:09 margraf Exp $
+ * $Id: hbsolver.cpp,v 1.21 2006-07-04 09:30:48 raimi Exp $
  *
  */
 
@@ -46,7 +46,7 @@
 #include "fourier.h"
 #include "hbsolver.h"
 
-#define HB_DEBUG 1
+#define HB_DEBUG 0
 
 using namespace fourier;
 
@@ -187,7 +187,7 @@ void hbsolver::solve (void) {
       loadMatrices ();
 
 #if HB_DEBUG
-//      fprintf (stderr, "FQ -- charge in t:\n"); FQ->print ();
+      fprintf (stderr, "FQ -- charge in t:\n"); FQ->print ();
       fprintf (stderr, "IG -- current in t:\n"); IG->print ();
 #endif
 
@@ -202,10 +202,10 @@ void hbsolver::solve (void) {
       VectorFFT (QR);
 
 #if HB_DEBUG
-//      fprintf (stderr, "VS -- voltage in f:\n"); VS->print ();
-//      fprintf (stderr, "FQ -- charge in f:\n"); FQ->print ();
-//      fprintf (stderr, "IG -- current in f:\n"); IG->print ();
-      fprintf (stderr, "IR -- new old Jacobi current in f:\n"); IR->print ();
+      fprintf (stderr, "VS -- voltage in f:\n"); VS->print ();
+      fprintf (stderr, "FQ -- charge in f:\n"); FQ->print ();
+      fprintf (stderr, "IG -- current in f:\n"); IG->print ();
+      fprintf (stderr, "IR -- corrected Jacobi current in f:\n"); IR->print ();
 #endif
       
       // solve HB equation --> FV = IC + [YV] * VS + j[O] * FQ + IG
@@ -226,7 +226,7 @@ void hbsolver::solve (void) {
 
 #if HB_DEBUG
       fprintf (stderr, "JG -- G-Jacobian in t:\n"); JG->print ();
-//      fprintf (stderr, "JQ -- C-Jacobian in t:\n"); JQ->print ();
+      fprintf (stderr, "JQ -- C-Jacobian in t:\n"); JQ->print ();
 #endif
 
       // G-Jacobian into frequency domain
@@ -236,7 +236,7 @@ void hbsolver::solve (void) {
       MatrixFFT (JQ);
       
 #if HB_DEBUG
-//      fprintf (stderr, "JQ -- dQ/dV C-Jacobian in f:\n"); JQ->print ();
+      fprintf (stderr, "JQ -- dQ/dV C-Jacobian in f:\n"); JQ->print ();
       fprintf (stderr, "JG -- dI/dV G-Jacobian in f:\n"); JG->print ();
 #endif
       
