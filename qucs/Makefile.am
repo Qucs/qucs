@@ -64,7 +64,8 @@ qucs_%.ts: $(qucs_SOURCES)
 	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
 	  $(srcdir)/dialogs/*.cpp  $(top_srcdir)/qucs-help/*.cpp \
 	  $(top_srcdir)/qucs-edit/*.cpp $(top_srcdir)/qucs-filter/*.cpp \
-	  $(top_srcdir)/qucs-transcalc/*.cpp $(top_srcdir)/qucs-lib/*.cpp` \
+	  $(top_srcdir)/qucs-transcalc/*.cpp $(top_srcdir)/qucs-lib/*.cpp \
+	  $(top_srcdir)/qucs-attenuator/*.cpp` \
 	  -ts $(srcdir)/$$file; \
 	done
 
