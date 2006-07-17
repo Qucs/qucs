@@ -22,6 +22,7 @@
 
 class Schematic;
 class QLineEdit;
+class QTextEdit;
 class QCheckBox;
 class QVBoxLayout;
 class QRegExpValidator;
@@ -40,9 +41,11 @@ private slots:
 public:
   Schematic *Doc;
 
+  QTextEdit *Input_Frame0;
+  QLineEdit *Input_Frame1, *Input_Frame2, *Input_Frame3;
   QLineEdit *Input_DataSet, *Input_DataDisplay;
   QLineEdit *Input_GridX, *Input_GridY;
-  QCheckBox *Check_OpenDpl, *Check_GridOn;
+  QCheckBox *Check_OpenDpl, *Check_GridOn, *Check_showFrame;
 
   QVBoxLayout *all;
   QRegExpValidator *valExpr;

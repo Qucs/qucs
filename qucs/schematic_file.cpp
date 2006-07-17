@@ -208,6 +208,15 @@ int Schematic::saveDocument()
   stream << "  <DataSet=" << DataSet << ">\n";
   stream << "  <DataDisplay=" << DataDisplay << ">\n";
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
+  stream << "  <showFrame=" << showFrame << ">\n";
+
+  QString t = Frame_Text0;
+  t.replace('\\', "\\\\");
+  t.replace('\n', "\\n");
+  stream << "  <FrameText0=" << t << ">\n";
+  stream << "  <FrameText1=" << Frame_Text1 << ">\n";
+  stream << "  <FrameText2=" << Frame_Text2 << ">\n";
+  stream << "  <FrameText3=" << Frame_Text3 << ">\n";
   stream << "</Properties>\n";
 
   Painting *pp;
@@ -288,6 +297,16 @@ bool Schematic::loadProperties(QTextStream *stream)
     else if(cstr == "OpenDisplay")
 		if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
 		else SimOpenDpl = true;
+    else if(cstr == "showFrame")
+		if(nstr.at(0) == '1') showFrame = true;
+		else showFrame = false;
+    else if(cstr == "FrameText0") {
+                Frame_Text0 = nstr;
+                Frame_Text0.replace("\\n", "\n");
+                Frame_Text0.replace("\\\\", "\\"); }
+    else if(cstr == "FrameText1") Frame_Text1 = nstr;
+    else if(cstr == "FrameText2") Frame_Text2 = nstr;
+    else if(cstr == "FrameText3") Frame_Text3 = nstr;
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);

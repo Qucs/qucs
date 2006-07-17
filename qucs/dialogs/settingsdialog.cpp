@@ -17,20 +17,21 @@
 
 #include "settingsdialog.h"
 
+#include "node.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "node.h"
 
-#include <qwidget.h>
-#include <qlabel.h>
 #include <qhbox.h>
-#include <qpushbutton.h>
-#include <qtabwidget.h>
+#include <qlabel.h>
+#include <qwidget.h>
 #include <qlayout.h>
-#include <qvalidator.h>
 #include <qregexp.h>
 #include <qlineedit.h>
+#include <qtextedit.h>
 #include <qcheckbox.h>
+#include <qtabwidget.h>
+#include <qvalidator.h>
+#include <qpushbutton.h>
 
 
 SettingsDialog::SettingsDialog(Schematic *Doc_)
@@ -86,6 +87,27 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   t->addTab(Tab2, tr("Grid"));
 
   // ...........................................................
+  QWidget *Tab3 = new QWidget(t);
+  QGridLayout *gp3 = new QGridLayout(Tab3,5,2,5,5);
+  Check_showFrame = new QCheckBox(tr("show Frame"),Tab3);
+  gp3->addMultiCellWidget(Check_showFrame,0,0,0,1);
+
+  Input_Frame0 = new QTextEdit(Tab3);
+  Input_Frame0->setTextFormat(Qt::PlainText);
+  Input_Frame0->setWordWrap(QTextEdit::NoWrap);
+  gp3->addMultiCellWidget(Input_Frame0,1,2,0,1);
+
+  Input_Frame1 = new QLineEdit(Tab3);
+  gp3->addMultiCellWidget(Input_Frame1,3,3,0,1);
+
+  Input_Frame2 = new QLineEdit(Tab3);
+  gp3->addWidget(Input_Frame2,4,0);
+  Input_Frame3 = new QLineEdit(Tab3);
+  gp3->addWidget(Input_Frame3,4,1);
+
+  t->addTab(Tab3, tr("Frame"));
+
+  // ...........................................................
   // buttons on the bottom of the dialog (independent of the TabWidget)
   QHBox *Butts = new QHBox(this);
   Butts->setSpacing(5);
@@ -110,6 +132,13 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   Check_GridOn->setChecked(Doc->GridOn);
   Input_GridX->setText(QString::number(Doc->GridX));
   Input_GridY->setText(QString::number(Doc->GridY));
+  Check_showFrame->setChecked(Doc->showFrame);
+  Input_Frame0->setText(Doc->Frame_Text0);
+  Input_Frame1->setText(Doc->Frame_Text1);
+  Input_Frame2->setText(Doc->Frame_Text2);
+  Input_Frame3->setText(Doc->Frame_Text3);
+
+  resize(250, 200);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -157,6 +186,31 @@ void SettingsDialog::slotApply()
 
   if(Doc->GridY != Input_GridY->text()) {
     Doc->GridY = Input_GridY->text().toInt();
+    changed = true;
+  }
+
+  if(Doc->showFrame != Check_showFrame->isChecked()) {
+    Doc->showFrame = Check_showFrame->isChecked();
+    changed = true;
+  }
+
+  if(Doc->Frame_Text0 != Input_Frame0->text()) {
+    Doc->Frame_Text0 = Input_Frame0->text();
+    changed = true;
+  }
+
+  if(Doc->Frame_Text1 != Input_Frame1->text()) {
+    Doc->Frame_Text1 = Input_Frame1->text();
+    changed = true;
+  }
+
+  if(Doc->Frame_Text2 != Input_Frame2->text()) {
+    Doc->Frame_Text2 = Input_Frame2->text();
+    changed = true;
+  }
+
+  if(Doc->Frame_Text3 != Input_Frame3->text()) {
+    Doc->Frame_Text3 = Input_Frame3->text();
     changed = true;
   }
 
