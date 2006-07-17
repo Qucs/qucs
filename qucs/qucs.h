@@ -155,6 +155,7 @@ private:
   QPrinter  *Printer; // printer is global (to remember the user settings)
 
 // ********* Widgets on the main area **********************************
+  QDockWindow   *dock;
   QTabWidget    *TabView;
 
   QListBox      *Projects;
@@ -195,14 +196,15 @@ private:
    ************************************************** */
 
 public slots:
-  void slotViewToolBar(bool toggle);    // toggle the toolbar
-  void slotViewStatusBar(bool toggle);  // toggle the statusbar
-
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
 
 private slots:
+  void slotViewToolBar(bool toggle);    // toggle the toolbar
+  void slotViewStatusBar(bool toggle);  // toggle the statusbar
+  void slotViewBrowseDock(bool toggle); // toggle the dock window
+  void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
   void slotHelpAboutQt();   // shows the standard about dialog for Qt
 
@@ -212,7 +214,8 @@ private:
   void initToolBar();    // creates the toolbars
   void initStatusBar();  // setup the statusbar
 
-  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar;
+  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
+          *viewBrowseDock;
 
   // menus contain the items of their menubar
   QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,

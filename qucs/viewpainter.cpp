@@ -38,10 +38,9 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int
   DY = floor(float(DY_) * Scale) - float(dy_);
 
   QFont f = p->font();
-  if(FontScale_ != 0.0)
-    f.setPointSizeFloat( FontScale_ * float(f.pointSize()) );
-  else
-    f.setPointSizeFloat( Scale * float(f.pointSize()) );
+  if(FontScale_ == 0.0)
+    FontScale_ = Scale;
+  f.setPointSizeFloat( FontScale_ * float(f.pointSize()) );
   p->setFont(f);
   LineSpacing = p->fontMetrics().lineSpacing();
   p->setWorldXForm(false);   // we use our own coordinate transformation

@@ -132,9 +132,10 @@ QucsApp::QucsApp()
   initActions();
   initMenuBar();
   initToolBar();
-  viewToolBar->setOn(true);
   initStatusBar();
+  viewToolBar->setOn(true);
   viewStatusBar->setOn(true);
+  viewBrowseDock->setOn(true);
   initCursorMenu();
   HierarchyHistory.setAutoDelete(true);
 
@@ -187,15 +188,19 @@ void QucsApp::initView()
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
 
-  QVBox *all = new QVBox(this);   // only to fill the entire view area
-  QSplitter *Hsplit = new QSplitter(QSplitter::Horizontal, all);
-  TabView     = new QTabWidget(Hsplit);  // tabs on the left side
-  DocumentTab = new QTabWidget(Hsplit);  // tab on the right side
+  DocumentTab = new QTabWidget(this);
+  setCentralWidget(DocumentTab);
   connect(DocumentTab,
           SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeView(QWidget*)));
 
-  Hsplit->setResizeMode(TabView, QSplitter::KeepSize);
-  setCentralWidget(all);
+  dock = new QDockWindow(QDockWindow::InDock, this);
+  TabView = new QTabWidget(dock);  // tabs on the left side
+  dock->setWidget(TabView);
+  dock->setResizeEnabled(true);
+  dock->setHorizontallyStretchable(true);
+  dock->setCloseMode(QDockWindow::Always);
+  moveDockWindow(dock, Left);  // initial position
+  connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
   view = new MouseActions();
 

@@ -1,3 +1,10 @@
+2006-07-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug at "zoom 1" on empty page
+	* new document property: schematic page frame
+	* browse window on left-hand side is dockable
+	* fixed segfault on drag n'drop library components
+
 2006-07-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/diagram.cpp (loadVarData): Fixed compile time error.
