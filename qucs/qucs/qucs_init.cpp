@@ -570,16 +570,20 @@ void QucsApp::initActions()
   viewToolBar->setToggleAction(true);
   viewToolBar->setStatusTip(tr("Enables/disables the toolbar"));
   viewToolBar->setWhatsThis(tr("Toolbar\n\nEnables/disables the toolbar"));
-  connect(viewToolBar, SIGNAL(toggled(bool)),
-	  this, SLOT(slotViewToolBar(bool)));
+  connect(viewToolBar, SIGNAL(toggled(bool)), SLOT(slotViewToolBar(bool)));
 
   viewStatusBar = new QAction("Statusbar", tr("&Statusbar"), 0, this);
   viewStatusBar->setToggleAction(true);
   viewStatusBar->setStatusTip(tr("Enables/disables the statusbar"));
   viewStatusBar->setWhatsThis(
 	tr("Statusbar\n\nEnables/disables the statusbar"));
-  connect(viewStatusBar, SIGNAL(toggled(bool)),
-	  this, SLOT(slotViewStatusBar(bool)));
+  connect(viewStatusBar, SIGNAL(toggled(bool)), SLOT(slotViewStatusBar(bool)));
+
+  viewBrowseDock = new QAction("Dock Window", tr("&Dock Window"), 0, this);
+  viewBrowseDock->setToggleAction(true);
+  viewBrowseDock->setStatusTip(tr("Enables/disables the browse dock window"));
+  viewBrowseDock->setWhatsThis(tr("Browse Window\n\nEnables/disables the browse dock window"));
+  connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotViewBrowseDock(bool)));
 
   helpIndex = new QAction("Help Index...", tr("Help Index..."), Key_F1, this);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
@@ -704,6 +708,7 @@ void QucsApp::initMenuBar()
   viewMenu->setCheckable(true);
   viewToolBar->addTo(viewMenu);
   viewStatusBar->addTo(viewMenu);
+  viewBrowseDock->addTo(viewMenu);
 
   helpMenu = new QPopupMenu();  // menuBar entry helpMenu
   helpIndex->addTo(helpMenu);
@@ -830,8 +835,6 @@ void QucsApp::printCursorPosition(int x, int y)
 // turn Toolbar on or off
 void QucsApp::slotViewToolBar(bool toggle)
 {
-  statusBar()->message(tr("Toggle toolbar..."));
-
   if (toggle== false) {
     fileToolbar->hide();
     editToolbar->hide();
@@ -844,20 +847,34 @@ void QucsApp::slotViewToolBar(bool toggle)
     viewToolbar->show();
     workToolbar->show();
   }
-
-  statusBar()->message(tr("Ready."));
 }
 
 // ----------------------------------------------------------
 // turn Statusbar on or off
 void QucsApp::slotViewStatusBar(bool toggle)
 {
-  statusBar()->message(tr("Toggle statusbar..."));
+  if (toggle == false)
+    statusBar()->hide();
+  else
+    statusBar()->show();
+}
 
-  if (toggle == false) statusBar()->hide();
-  else statusBar()->show();
+// ----------------------------------------------------------
+// turn Brwose Dock Window on or off
+void QucsApp::slotViewBrowseDock(bool toggle)
+{
+  if (toggle == false)
+    dock->hide();
+  else
+    dock->show();
+}
 
-  statusBar()->message(tr("Ready."));
+// ----------------------------------------------------------
+void QucsApp::slotToggleDock(bool on)
+{
+  viewBrowseDock->blockSignals(true);
+  viewBrowseDock->setOn(on);
+  viewBrowseDock->blockSignals(false);
 }
 
 // ----------------------------------------------------------

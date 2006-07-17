@@ -33,6 +33,7 @@ Version 0.0.10
  * import of Touchstone, CITI and VCD data files
  * export data to CSV files
  * creation of project package file for data exchange
+ * schematic frame as document property
  * syntax highlighting for VHDL data types and attributes
 
 Version 0.0.9

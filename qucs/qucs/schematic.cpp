@@ -91,6 +91,12 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
     // calls indirectly "becomeCurrent"
     App->DocumentTab->setCurrentPage(App->DocumentTab->indexOf(this));
 
+    showFrame = false;
+    Frame_Text0 = tr("Title");
+    Frame_Text1 = tr("Drawn By:");
+    Frame_Text2 = tr("Date:");
+    Frame_Text3 = tr("Revision:");
+
     setVScrollBarMode(QScrollView::AlwaysOn);
     setHScrollBarMode(QScrollView::AlwaysOn);
     viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
@@ -280,6 +286,71 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 }
 
 // -----------------------------------------------------------
+void Schematic::paintFrame(ViewPainter *p)
+{
+  if(!showFrame) return;
+  p->Painter->setPen(QPen(QPen::black,0));
+
+  // dimensions:  X cm / 2.54 * 144
+  int xall = 1530;
+  int yall = 1020;
+  int d = p->LineSpacing + int(4.0 * p->Scale);
+  int x1_, y1_, x2_, y2_;
+  p->map(xall, yall, x1_, y1_);
+  x2_ = int(xall * p->Scale) + 1;
+  y2_ = int(yall * p->Scale) + 1;
+  p->Painter->drawRect(x1_, y1_, -x2_, -y2_);
+  p->Painter->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
+
+  int z;
+  for(z=255; z<xall; z+=255) {
+    p->map(z, 0, x2_, y2_);
+    p->Painter->drawLine(x2_, y2_, x2_, y2_+d);
+    p->Painter->drawLine(x2_, y1_-d, x2_, y1_);
+  }
+  for(z=255; z<yall; z+=255) {
+    p->map(0, z, x2_, y2_);
+    p->Painter->drawLine(x2_, y2_, x2_+d, y2_);
+    p->Painter->drawLine(x1_-d, y2_, x1_, y2_);
+  }
+
+  char Letter[2] = "1";
+  for(z=125; z<xall; z+=255) {
+    p->drawText(Letter, z, 3, 0);
+    p->map(z, yall+3, x2_, y2_);
+    p->Painter->drawText(x2_, y2_-d, 0, 0, Qt::DontClip, Letter);
+    Letter[0]++;
+  }
+  Letter[0] = 'A';
+  for(z=125; z<yall; z+=255) {
+    p->drawText(Letter, 5, z, 0);
+    p->map(xall+5, z, x2_, y2_);
+    p->Painter->drawText(x2_-d, y2_, 0, 0, Qt::DontClip, Letter);
+    Letter[0]++;
+  }
+
+
+  // draw text box with text
+  p->map(xall-340, yall-3, x1_, y1_);
+  p->map(xall-3,   yall-3, x2_, y2_);
+  x1_ -= d;  x2_ -= d;
+  y1_ -= d;  y2_ -= d;
+  d = int(6.0 * p->Scale);
+  z = int(200.0 * p->Scale);
+  y1_ -= p->LineSpacing + d;
+  p->Painter->drawLine(x1_, y1_, x2_, y1_);
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::DontClip, Frame_Text2);
+  p->Painter->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
+  p->Painter->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::DontClip, Frame_Text3);
+  y1_ -= p->LineSpacing + d;
+  p->Painter->drawLine(x1_, y1_, x2_, y1_);
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::DontClip, Frame_Text1);
+  y1_ -= (Frame_Text0.contains('\n')+1) * p->LineSpacing + d;
+  p->Painter->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
+  p->Painter->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::DontClip, Frame_Text0);
+}
+
+// -----------------------------------------------------------
 // Is called when the content (schematic or data display) has to be drawn.
 void Schematic::drawContents(QPainter *p, int, int, int, int)
 {
@@ -287,7 +358,9 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(), contentsY());
 
   paintGrid(&Painter, contentsX(), contentsY(),
-		visibleWidth(), visibleHeight());
+            visibleWidth(), visibleHeight());
+
+  paintFrame(&Painter);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     pc->paint(&Painter);
@@ -408,8 +481,16 @@ void Schematic::print(QPrinter *Printer, bool printAll, bool fitToPage)
 
   bool selected;
   ViewPainter p;
+  int StartX = UsedX1;
+  int StartY = UsedY1;
+  if(showFrame) {
+    if(UsedX1 > 0)  StartX = 0;
+    if(UsedY1 > 0)  StartY = 0;
+  }
   p.init(&painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
-         -UsedX1, -UsedY1, -marginX, -marginY, PrintScale);
+         -StartX, -StartY, -marginX, -marginY, PrintScale);
+
+  paintFrame(&p);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected || printAll) {
@@ -539,7 +620,14 @@ void Schematic::showNoZoom()
   int x2 = UsedX2;
   int y2 = UsedY2;
 
-//  sizeOfAll(x1, y1, x2, y2);
+  if(x1 > x2) {  // happens e.g. if untitled without changes
+    x1 = 0;
+    x2 = 800;
+  }
+  if(y1 > y2) {
+    y1 = 0;
+    y2 = 800;
+  }
   if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
 
   ViewX1 = x1-40;
@@ -596,7 +684,7 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 {
   if(!GridOn) return;
 
-  p->Painter->setPen(QPen(QPen::black,1));
+  p->Painter->setPen(QPen(QPen::black,0));
   int dx = -int(Scale*float(ViewX1)) - cX;
   int dy = -int(Scale*float(ViewY1)) - cY;
   p->Painter->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
@@ -1573,6 +1661,8 @@ void Schematic::slotScrollRight()
 // **********                                                 **********
 // *********************************************************************
 
+QAction *formerAction;   // remember action before drag n'drop
+
 // Is called if an object is dropped (after drag'n drop).
 void Schematic::contentsDropEvent(QDropEvent *Event)
 {
@@ -1598,15 +1688,18 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
   if(App->view->selElem) delete App->view->selElem;
   App->view->selElem = 0;  // no component selected
 
-  if(App->view->labeledWire)
-    ((QAction*)App->view->labeledWire)->setOn(true);  // restore old action
+  if(formerAction)
+    formerAction->setOn(true);  // restore old action
 }
 
 // ---------------------------------------------------
 void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
 {
+  formerAction = 0;
   dragIsOkay = false;
-  if(Event->provides("text/uri-list"))  // file dragged in ?
+
+  // file dragged in ?
+  if(Event->provides("text/uri-list"))
     if(QUriDrag::canDecode(Event)) {
       dragIsOkay = true;
       Event->accept();
@@ -1636,7 +1729,7 @@ void Schematic::contentsDragEnterEvent(QDragEnterEvent *Event)
     if(Event->provides("application/x-qiconlist")) {
       QIconViewItem *Item = App->CompComps->currentItem();
       if(Item) {
-        App->view->labeledWire = (Wire*)App->activeAction; // misuse variable
+        formerAction = App->activeAction;
         App->slotSelectComponent(Item);  // also sets drawn=false
         App->MouseMoveAction = 0;
         App->MousePressAction = 0;
@@ -1663,8 +1756,8 @@ void Schematic::contentsDragLeaveEvent(QDragLeaveEvent*)
         App->view->drawn = false;
       }
 
-  if(App->view->labeledWire)
-    ((QAction*)App->view->labeledWire)->setOn(true);  // restore old action
+  if(formerAction)
+    formerAction->setOn(true);  // restore old action
 }
 
 // ---------------------------------------------------
