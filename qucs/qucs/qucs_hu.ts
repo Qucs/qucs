@@ -876,7 +876,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>All known</source>
@@ -5870,11 +5870,11 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Eszköztár kapcsoló...</translation>
+        <translation type="obsolete">Eszköztár kapcsoló...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Státuszsor kapcsoló...</translation>
+        <translation type="obsolete">Státuszsor kapcsoló...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -6228,6 +6228,20 @@ Convert data file to Qucs data file</source>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Dock Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables/disables the browse dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse Window
+
+Enables/disables the browse dock window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8654,6 +8668,25 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
 </context>
 <context>
+    <name>Schematic</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawn By:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchDialog</name>
     <message>
         <source>The search result contains all components whose
@@ -8796,6 +8829,14 @@ Rács megjelenítése</translation>
     <message>
         <source>Cancel</source>
         <translation>Mégsem</translation>
+    </message>
+    <message>
+        <source>show Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

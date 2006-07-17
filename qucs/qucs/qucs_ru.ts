@@ -929,7 +929,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="obsolete">Отменить</translation>
     </message>
     <message>
         <source>All known</source>
@@ -6227,11 +6227,11 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Переключение панели инструментов...</translation>
+        <translation type="obsolete">Переключение панели инструментов...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Переключение панели инструментов...</translation>
+        <translation type="obsolete">Переключение панели инструментов...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -6555,6 +6555,20 @@ Convert data file to Qucs data file</source>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Dock Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables/disables the browse dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse Window
+
+Enables/disables the browse dock window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10604,6 +10618,25 @@ open files with an appropriate program.</source>
     </message>
 </context>
 <context>
+    <name>Schematic</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawn By:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchDialog</name>
     <message>
         <source>The search result contains all components whose
@@ -10745,6 +10778,14 @@ are included in the search.</source>
     <message>
         <source>Grid</source>
         <translation>Сетка</translation>
+    </message>
+    <message>
+        <source>show Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
