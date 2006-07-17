@@ -1,3 +1,10 @@
+2006-07-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_zvr.l, parse_zvr.y, check_zvr.cpp: Implemented scanner,
+	parser and checker for the ZVR data file format.
+
+	* dataset.cpp: New functions: delDependency() and load_zvr().
+
 2006-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp, matrix.cpp: Added scalar additions and

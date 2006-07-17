@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.18 2006-06-06 07:45:51 raimi Exp $
+ * $Id: dataset.cpp,v 1.19 2006-07-17 21:53:13 raimi Exp $
  *
  */
 
@@ -42,6 +42,7 @@
 #include "check_dataset.h"
 #include "check_touchstone.h"
 #include "check_citi.h"
+#include "check_zvr.h"
 
 // Constructor creates an unnamed instance of the dataset class.
 dataset::dataset () : object () {
@@ -92,6 +93,21 @@ void dataset::addDependency (vector * v) {
   v->setNext (dependencies);
   v->setPrev (NULL);
   dependencies = v;
+}
+
+// This function removes a dependency vector from the current dataset.
+void dataset::delDependency (vector * v) {
+  if (dependencies == v) {
+    dependencies = (vector *) v->getNext ();
+    dependencies->setPrev (NULL);
+  }
+  else {
+    vector * next = (vector *) v->getNext ();
+    vector * prev = (vector *) v->getPrev ();
+    prev->setNext (next);
+    if (next) next->setPrev (prev);
+  }
+  delete v;
 }
 
 /* The function adds the given list of vectors to the dependency set
@@ -447,4 +463,29 @@ dataset * dataset::load_citi (const char * file) {
   citi_lex_destroy ();
   citi_result->setFile (file);
   return citi_result;
+}
+
+/* The function read a full dataset from the given ZVR file and
+   returns it.  On failure the function emits appropriate error
+   messages and returns NULL. */
+dataset * dataset::load_zvr (const char * file) {
+  FILE * f;
+  if ((f = fopen (file, "r")) == NULL) {
+    logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
+    return NULL;
+  }
+  zvr_in = f;
+  zvr_restart (zvr_in);
+  if (zvr_parse () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  if (zvr_check () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  fclose (f);
+  zvr_lex_destroy ();
+  if (zvr_result) zvr_result->setFile (file);
+  return zvr_result;
 }
