@@ -1,3 +1,8 @@
+2006-07-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.cpp (zvr2qucs): Added ZVR to Qucs dataset converter
+	using the functionality in the qucsator library.
+
 2006-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_vcd.cpp (VCD_INCLUDE_RANGE): Disabled output of range

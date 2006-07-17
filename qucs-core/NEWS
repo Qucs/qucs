@@ -26,6 +26,8 @@ files.
 Version 0.0.10
 --------------
 
+ * support for ZVR ascii data (R&S network analyzer) as an import file
+   format in qucsconv
  * new function in equation solver: signum()
  * SVD algorithm as equation system solver available
  * support for CITIfile and Touchstone as an import file format in
