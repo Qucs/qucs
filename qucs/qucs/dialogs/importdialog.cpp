@@ -64,7 +64,7 @@ ImportDialog::ImportDialog(QWidget *parent)
   
   ImportButt = new QPushButton(tr("Import"), Butts);
   connect(ImportButt, SIGNAL(clicked()), SLOT(slotImport()));
-  CancelButt = new QPushButton(tr("Cancel"), Butts);
+  CancelButt = new QPushButton(tr("Close"), Butts);
   connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
 }
 
@@ -100,6 +100,7 @@ void ImportDialog::slotBrowse()
 void ImportDialog::slotImport()
 {
   MsgText->clear();
+  ImportButt->setDisabled(true);
 
   QFile File(QucsWorkDir.filePath(OutputEdit->text()));
   if(File.exists())
@@ -169,10 +170,11 @@ void ImportDialog::slotDisplayErr()
 void ImportDialog::slotProcessEnded()
 {
   MsgText->append(" ");
-  if(Process.normalExit()) {
+  ImportButt->setDisabled(false);
+
+  if(Process.normalExit() && (Process.exitStatus() == 0)) {
     MsgText->append(tr("Successfully imported file!"));
-    ImportButt->setDisabled(true);
-    CancelButt->setText(tr("Close"));
+    OutputEdit->clear();
 
     disconnect(CancelButt, SIGNAL(clicked()), 0, 0);
     connect(CancelButt, SIGNAL(clicked()), SLOT(accept()));

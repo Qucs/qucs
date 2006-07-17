@@ -44,7 +44,6 @@ public:
   Element *selElem;  // component/diagram/painting selected in IconView
   Element *focusElement;
   QMouseEvent *focusMEvent;
-  Wire *labeledWire;    // remember the wire whose label is moving
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   QPtrList<Element> movingElements;
