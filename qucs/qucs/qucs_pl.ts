@@ -863,7 +863,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation type="obsolete">Porzuć</translation>
     </message>
     <message>
         <source>All known</source>
@@ -5847,11 +5847,11 @@ O bibliotece QT firmy Trolltech</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished">Przełącz pasek narzędzi...</translation>
+        <translation type="obsolete">Przełącz pasek narzędzi...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished">Przełącz pasek statusu...</translation>
+        <translation type="obsolete">Przełącz pasek statusu...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -6195,6 +6195,20 @@ Convert data file to Qucs data file</source>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Dock Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables/disables the browse dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse Window
+
+Enables/disables the browse dock window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8542,6 +8556,25 @@ open files with an appropriate program.</source>
     </message>
 </context>
 <context>
+    <name>Schematic</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawn By:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchDialog</name>
     <message>
         <source>The search result contains all components whose
@@ -8677,6 +8710,14 @@ uwzględniono wszystkie biblioteki.</translation>
     <message>
         <source>Cancel</source>
         <translation>Porzuć</translation>
+    </message>
+    <message>
+        <source>show Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

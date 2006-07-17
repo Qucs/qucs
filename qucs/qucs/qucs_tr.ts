@@ -813,10 +813,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All known</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5549,11 +5545,11 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Araç çubuğunu aç/kapa...</translation>
+        <translation type="obsolete">Araç çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Durum çubuğunu aç/kapa...</translation>
+        <translation type="obsolete">Durum çubuğunu aç/kapa...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -5909,6 +5905,20 @@ Convert data file to Qucs data file</source>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Dock Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables/disables the browse dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse Window
+
+Enables/disables the browse dock window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8276,6 +8286,25 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
 </context>
 <context>
+    <name>Schematic</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawn By:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchDialog</name>
     <message>
         <source>The search result contains all components whose
@@ -8419,6 +8448,14 @@ Bütün kütüphaneler aranır.</translation>
     <message>
         <source>Cancel</source>
         <translation>İptal Et</translation>
+    </message>
+    <message>
+        <source>show Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
