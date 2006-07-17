@@ -237,158 +237,14 @@ recommended:
 \addvspace{12pt}
 
 One further thing must be mentioned: Because the non-linear
-components are missing in the linear MNA matrix, there are often
-components that are completely disconnected from the rest of the
-circuit. The resulting MNA matrix cannot be solved. To avoid
-this problem, shunt each port with a $100\Omega$ resistor. The
-effect of these resistors can be easily removed by subtracting
-0.01S from the first main diagonal of the transadmittance matrix.
-
-
-\subsection{Starting Values}
-
-A difficult question is how to find appropriate start values for the
-harmonic balance simulation. It is recommended to first perform a DC
-analysis and start the algorithm with this result. In many situation
-(perhaps always) an even better starting point can be achieved by
-also using the result of a linear AC simulation. However with a large
-signal strength and strong non-linearities, convergence may still
-fail. Then, the following procedure might succeed: Perform HB
-simulation by applying half of the desired signal levels. If convergence
-is reached, the result can be used as start values for the simulation
-with the full signal levels. Otherwise the amplitude of the signals can
-be further decreased in order to repeat the above-mentioned procedure.
-
-
-\subsection{Solution algorithm}
-
-To perform a HB simulation, the multi-dimensional, non-linear function
-\ref{eqn:HBeqn} has to be solved. One of the best possibilities to
-do so is the Newton method:
-\begin{equation}
-\textbf{V}_{n+1} = \textbf{V}_n - \textbf{J}_F (\textbf{V}_n)^{-1}
-                   \cdot \textbf{F} (\textbf{V}_n)
-\end{equation}
-\begin{equation}
-\Rightarrow \qquad \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_{n+1}
-    = \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_n - \textbf{F} (\textbf{V}_n)
-\end{equation}
-with $\textbf{J}_F$ being the Jacobian matrix. DC and transient
-simulation also use this technique, but here a problem appears:
-The derivatives of the component models are not given in frequency
-domain. Thus, the Jacobian must be calculated starting at the HB
-equation \ref{eqn:HBeqn}:
-\begin{equation}
-\boldsymbol{J}_F (\boldsymbol{V}_n) = \frac{d\boldsymbol{F} (\boldsymbol{V})}{d\boldsymbol{V}}
-    = \boldsymbol{\hat{Y}}_{N \times N} + \frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
-     + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{Q}}{\partial \boldsymbol{V}}
-    = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,G}
-     + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{J}_{F,Q}
-\end{equation}
-So, two Jacobian matrices have to be built, one for the current
-$\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
-from a Fourier Transformation. The two operations (Fourier Transformation
-and differentiation) are linear and thus, can be exchanged. Hence, the
-Jacobian matrices
-are built in time domain and transformed into frequency domain afterwards.
-
-\addvspace{12pt}
-
-To obtain a practical algorithm of this procedure, the DFT is best written
-as matrix equation. By having a look at equation \ref{eqn:DFT} and
-\ref{eqn:IDFT}, it becomes clear how this works. The harmonic factors
-$\exp(j\omega_k t_n)$ build the matrix $\boldsymbol{\Gamma}$:
-\begin{align}
-\text{DFT:}  \qquad & \boldsymbol{U}(j\omega) = \boldsymbol{\Gamma}\cdot \boldsymbol{u}(t) \\
-\text{IDFT:} \qquad & \boldsymbol{u}(t) = \boldsymbol{\Gamma}^{-1}\cdot \boldsymbol{U}(j\omega)
-\end{align}
-with $\boldsymbol{u}$ and $\boldsymbol{U}$ being the vectors of the time
-and frequency values, respectively. Now, it is possible to transform the
-desired Jacobian matrix into frequency domain:
-\begin{equation}
-\label{eqn:HB_jacobi}
-\boldsymbol{J}_{F,G}
-  = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
-  = \frac{\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{i})}
-         {\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{v})}
-  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
-    \cdot\boldsymbol{\Gamma}^{-1}
-\end{equation}
-Here $\boldsymbol{i}$ is a vector with length $K\cdot N$, i.e. first all
-time values of the first node are inserted, then all time values of the
-second node etc. The Jacobi matrix of $\boldsymbol{i}$ is defined as:
-\begin{equation}
-\boldsymbol{J}_{F,G}(\boldsymbol{u}) =
-\begin{bmatrix}
-\dfrac{\partial i_1}{\partial u_1} & \hdots & \dfrac{\partial i_1}{\partial u_n} \\
-\vdots & \ddots & \vdots\\
-\dfrac{\partial i_n}{\partial u_1} & \hdots & \dfrac{\partial i_n}{\partial u_n} \\
-\end{bmatrix}
-\end{equation}
-Hence this matrix consists of
-$K \times K$ blocks (one for each node) that are diagonal matrices with
-time values of the derivatives in it. (Components exists that create
-non-diagonal blocks, but these are so special ones that they do not appear
-in this document.)
-
-\addvspace{12pt}
-
-The formula \ref{eqn:HB_jacobi} seems to be quite clear, but it has to be pointed out how
-this works with FFT algorithm. With
-$\boldsymbol{\Gamma}^{-1} = (\boldsymbol{\Gamma}^{-1})^T$
-(see equation \ref{eqn:IDFT}) and
-$(\boldsymbol{A}\cdot\boldsymbol{B})^T = \boldsymbol{B}^T\cdot \boldsymbol{A}^T$,
-it follows:
-\begin{equation}
-\boldsymbol{J}_{F,G}
-  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
-    \cdot\boldsymbol{\Gamma}^{-1}
-  = \left( \boldsymbol{\Gamma}^{-1}\cdot \left( \boldsymbol{\Gamma} \cdot
-    \frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}} \right)^T \right)^T
-\end{equation}
-So, there are two steps to perform an FFT-based transformation of the time
-domain Jacobian matrix into the frequency domain Jacobian:
-\begin{enumerate}
-\item Perform an FFT on every column of the Jacobian and build a new matrix
-      $\boldsymbol{A}$ with this result, i.e. the first column of
-      $\boldsymbol{A}$ is the FFTed first column of the Jacobian and so on.
-\item Perform an IFFT on every row of the matrix $\boldsymbol{A}$ and build
-      a new matrix $\boldsymbol{B}$ with this result, i.e. the first row of
-      $\boldsymbol{B}$ is the IFFTed first row of $\boldsymbol{A}$ and so on.
-\end{enumerate}
-As the Fourier transformation has to be applied to diagonal sub-matrices,
-the whole above-mentioned process can be performed by one single FFT. This
-is done by taking the $\partial\boldsymbol{i} / \partial\boldsymbol{v}$
-values in a vector $\boldsymbol{J}_i$ and calculating:
-\begin{equation}
-\dfrac{1}{K}\cdot\text{FFT}\left(\boldsymbol{J}_i\right)
-\end{equation}
-The result is the first column of $\boldsymbol{J}_{F,G}$. The second column
-equals the first one rotated down by one element. The third column is the
-second one rotated down by one element etc.
-
-
-\subsection{Termination Criteria}
-
-Frequency components with very different magnitude appear in harmonic
-balance simulation. In order to detect when the solver has found an
-accurate solution, an absolute as well as relative criteria must be
-used on all nodes and at all frequencies. The analysis is regarded as
-finished if one of the criteria is satisfied.
-
-\addvspace{12pt}
-
-The absolute and relative criteria write as follows:
-\begin{align}
-\left| \tilde{I}_{n,k} + \hat{I}_{n,k} \right| &< \varepsilon_{abs}
-   &\forall \quad n, k\\
-2\cdot \left| \frac{\tilde{I}_{n,k} + \hat{I}_{n,k}}
-                   {\tilde{I}_{n,k} - \hat{I}_{n,k}} \right|
-  &< \varepsilon_{rel}  &\forall \quad n, k
-\end{align}
-where $\tilde{I}_{n,k}$ is the current of the linear circuit
-partition for node $n$ and frequency $k$ and $\hat{I}_{n,k}$
-is the current of the non-linear circuit partition.
+components and the sources are missing in the linear MNA matrix,
+there are often components that are completely disconnected from
+the rest of the circuit. The resulting MNA matrix cannot be
+solved. To avoid this problem, shunt each port with a $100\Omega$
+resistor, i.e. place a resistor in parallel to each non-linear
+component and to each source. The effect of these resistors can
+be easily removed by subtracting 10mS from the first main diagonal
+of the transadmittance matrix.
 
 
 \subsection{Frequency-Time Domain Transformation}
@@ -523,10 +379,27 @@ $\underline{U}_n$.
 \end{figure}
 \FloatBarrier
 
-Finally, a complete FFT source code should be presented. It was taken
-from \cite{Press} and contains only a
-few changes. (The function \texttt{SWAP(X, Y)} exchanges the values in
-\texttt{X} and \texttt{Y}.)
+This scheme alone gives no advantage. But it can compute all output
+values within, i.e. no temporary memory is needed and the periocity
+of $W_{n,N}$ is best exploited. To understand this, let's have a look
+on the first Danielson-Lanczos step in figure \ref{fig:fft}. The four
+multiplications and additions have to be performed for each output
+value (here 8 times!). But indeed this is not true, because $W_{n,2}$
+is 2-periodical in $n$ and furthermore $W_{n,2} = -W_{n+1,2}$. So now,
+$u_0 + W_{0,2}\cdot u_4$ replaces the old $u_0$ value and
+$u_0 - W_{0,2}\cdot u_4$ replaces the old $u_4$ value. Doing this for
+all values, four multiplications and eight additions were performed
+in order to calculate the first Danielson-Lanczos step for all (!!!)
+output values. This goes on, as $W_{n,4}$ is 4-periodical in $n$ and
+$W_{n,4} = -W_{n+2,4}$. So this time, two loop iterations (for $W_{n,4}$
+and for $W_{n+1,4}$) are necessary to compute the current
+Danielson-Lanczos step for all output values. This concept continues
+until the last step.
+
+Finally, a complete FFT source code should be presented. The original
+version was taken from \cite{Press}. Several improvements were added
+that gain about 10\% more speed. The function \texttt{SWAP(X, Y)}
+exchanges the values in \texttt{X} and \texttt{Y}.
 
 \addvspace{12pt}
 
@@ -546,32 +419,42 @@ Parameters:\\
     basicstyle=\small,
     frame=single,
     fontadjust]
-// bit reversal method
 int i, j, m, n;
 n = 2*num;
 j = 0;
-for (i=0; i<n; i+=2) {
-  if(j > i) {   // was index already swapped ?
-    SWAP(data[j], data[i]);   // swap real part
-    SWAP(data[j+1], data[i+1]);   // swap imaginary part
-  }
+
+// bit reversal method
+// 1) index 0 need not to be swapped
+//    -> start at i=2
+// 2) swap scheme is symmetrical
+//    -> swap first and second half in one iteration
+for (i=2; i<num; i+=2) {
   m = n/2;
-  while (m >= 2 && j >= m) {  // calculate next swap index
+  while (m >= 2 && j >= m) {  // calculate swap index
     j -= m;
     m >>= 1;
   }
   j += m;
+
+  if(j > i) {   // was index already swapped ?
+    SWAP(data[j], data[i]);   // swap real part
+    SWAP(data[j+1], data[i+1]);   // swap imaginary part
+
+    if(j < num) {  // swap second half ?
+      Swap (data[n-j-2], data[n-i-2]); // swap real part
+      Swap (data[n-j-1], data[n-i-1]); // swap imaginary part
+    }
+  }
  }
 
 // Danielson-Lanzcos algorithm
 int mmax, istep;
-double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr;
+double wt, theta, wr, wi, wpr, wpi, tempi, tempr;
 mmax = 2;
-while (n > mmax) { // each value of the other domain
+while (n > mmax) { // each Danielson-Lanzcos step
   istep = mmax << 1;
   theta = isign * (2*pi/mmax);
-  wtemp = sin(0.5*theta);
-  wpr = -2.0*wtemp*wtemp;
+  wpr = cos(theta);
   wpi = sin(theta);
   wr = 1.0;
   wi = 0.0;
@@ -582,10 +465,12 @@ while (n > mmax) { // each value of the other domain
       tempi = wr*data[j] + wi*data[j-1];
       data[j-1] = data[i-1] - tempr;
       data[j] = data[i] - tempi;
-      data[i-1] += tempr; data[i] += tempi;
+      data[i-1] += tempr;
+      data[i] += tempi;
     }
-    wr = (wtemp=wr)*wpr - wi*wpi + wr;
-    wi = wi*wpr + wtemp*wpi + wi;
+    wt = wr;
+    wr = wt*wpr - wi*wpi;
+    wi = wi*wpr + wt*wpi;
   }
   mmax = istep;
 }
@@ -595,7 +480,7 @@ while (n > mmax) { // each value of the other domain
 
 If real time values should be transformed, then the second half
 of the frequency values are the conjugate complex of the first half.
-Therefore, \texttt{n} in line line 22 can be replaced be \texttt{num}.
+Therefore, \texttt{n} in line line 30 can be replaced be \texttt{num}.
 
 \addvspace{12pt}
 
@@ -722,6 +607,183 @@ for (idim=ndim-1; idim>=0; idim--) { // main loop over the dimensions
 }
 \end{lstlisting}
 
+
+\subsection{Starting Values}
+
+A difficult question is how to find appropriate start values for the
+harmonic balance simulation. It is recommended to first perform a DC
+analysis and start the algorithm with this result. In many situation
+(perhaps always) an even better starting point can be achieved by
+also using the result of a linear AC simulation. However with a large
+signal strength and strong non-linearities, convergence may still
+fail. Then, the following procedure might succeed: Perform HB
+simulation by applying half of the desired signal levels. If convergence
+is reached, the result can be used as start values for the simulation
+with the full signal levels. Otherwise the amplitude of the signals can
+be further decreased in order to repeat the above-mentioned procedure.
+
+
+\subsection{Solution algorithm}
+
+To perform a HB simulation, the multi-dimensional, non-linear function
+\ref{eqn:HBeqn} has to be solved. One of the best possibilities to
+do so is the Newton method:
+\begin{equation}
+\textbf{V}_{n+1} = \textbf{V}_n - \textbf{J}_F (\textbf{V}_n)^{-1}
+                   \cdot \textbf{F} (\textbf{V}_n)
+\end{equation}
+\begin{equation}
+\label{eqn:HBnewton}
+\Rightarrow \qquad \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_{n+1}
+    = \textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_n - \textbf{F} (\textbf{V}_n)
+\end{equation}
+with $\textbf{J}_F$ being the Jacobian matrix. DC and transient
+simulation also use this technique, but here a problem appears:
+The derivatives of the component models are not given in frequency
+domain. Thus, the Jacobian must be calculated starting at the HB
+equation \ref{eqn:HBeqn}:
+\begin{equation}
+\label{eqn:HBjacobi}
+\boldsymbol{J}_F (\boldsymbol{V}_n) = \frac{d\boldsymbol{F} (\boldsymbol{V})}{d\boldsymbol{V}}
+    = \boldsymbol{\hat{Y}}_{N \times N} + \frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
+     + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{Q}}{\partial \boldsymbol{V}}
+    = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,G}
+     + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{J}_{F,Q}
+\end{equation}
+So, two Jacobian matrices have to be built, one for the current
+$\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
+from a Fourier Transformation. The two operations (Fourier Transformation
+and differentiation) are linear and thus, can be exchanged. Hence, the
+Jacobian matrices
+are built in time domain and transformed into frequency domain afterwards.
+
+\addvspace{12pt}
+
+To obtain a practical algorithm of this procedure, the DFT is best written
+as matrix equation. By having a look at equation \ref{eqn:DFT} and
+\ref{eqn:IDFT}, it becomes clear how this works. The harmonic factors
+$\exp(j\omega_k t_n)$ build the matrix $\boldsymbol{\Gamma}$:
+\begin{align}
+\text{DFT:}  \qquad & \boldsymbol{U}(j\omega) = \boldsymbol{\Gamma}\cdot \boldsymbol{u}(t) \\
+\text{IDFT:} \qquad & \boldsymbol{u}(t) = \boldsymbol{\Gamma}^{-1}\cdot \boldsymbol{U}(j\omega)
+\end{align}
+with $\boldsymbol{u}$ and $\boldsymbol{U}$ being the vectors of the time
+and frequency values, respectively. Now, it is possible to transform the
+desired Jacobian matrix into frequency domain:
+\begin{equation}
+\label{eqn:HB_jacobi}
+\boldsymbol{J}_{F,G}
+  = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
+  = \frac{\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{i})}
+         {\partial(\boldsymbol{\Gamma}\cdot\boldsymbol{v})}
+  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
+    \cdot\boldsymbol{\Gamma}^{-1}
+\end{equation}
+Here $\boldsymbol{i}$ is a vector with length $K\cdot N$, i.e. first all
+time values of the first node are inserted, then all time values of the
+second node etc. The Jacobi matrix of $\boldsymbol{i}$ is defined as:
+\begin{equation}
+\boldsymbol{J}_{F,G}(\boldsymbol{u}) =
+\begin{bmatrix}
+\dfrac{\partial i_1}{\partial u_1} & \hdots & \dfrac{\partial i_1}{\partial u_n} \\
+\vdots & \ddots & \vdots\\
+\dfrac{\partial i_n}{\partial u_1} & \hdots & \dfrac{\partial i_n}{\partial u_n} \\
+\end{bmatrix}
+\end{equation}
+Hence this matrix consists of
+$K \times K$ blocks (one for each node) that are diagonal matrices with
+time values of the derivatives in it. (Components exists that create
+non-diagonal blocks, but these are so special ones that they do not appear
+in this document.)
+
+\addvspace{12pt}
+
+The formula \ref{eqn:HB_jacobi} seems to be quite clear, but it has to be pointed out how
+this works with FFT algorithm. With
+$\boldsymbol{\Gamma}^{-1} = (\boldsymbol{\Gamma}^{-1})^T$
+(see equation \ref{eqn:IDFT}) and
+$(\boldsymbol{A}\cdot\boldsymbol{B})^T = \boldsymbol{B}^T\cdot \boldsymbol{A}^T$,
+it follows:
+\begin{equation}
+\boldsymbol{J}_{F,G}
+  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
+    \cdot\boldsymbol{\Gamma}^{-1}
+  = \left( \boldsymbol{\Gamma}^{-1}\cdot \left( \boldsymbol{\Gamma} \cdot
+    \frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}} \right)^T \right)^T
+\end{equation}
+So, there are two steps to perform an FFT-based transformation of the time
+domain Jacobian matrix into the frequency domain Jacobian:
+\begin{enumerate}
+\item Perform an FFT on every column of the Jacobian and build a new matrix
+      $\boldsymbol{A}$ with this result, i.e. the first column of
+      $\boldsymbol{A}$ is the FFTed first column of the Jacobian and so on.
+\item Perform an IFFT on every row of the matrix $\boldsymbol{A}$ and build
+      a new matrix $\boldsymbol{B}$ with this result, i.e. the first row of
+      $\boldsymbol{B}$ is the IFFTed first row of $\boldsymbol{A}$ and so on.
+\end{enumerate}
+As the Fourier transformation has to be applied to diagonal sub-matrices,
+the whole above-mentioned process can be performed by one single FFT. This
+is done by taking the $\partial\boldsymbol{i} / \partial\boldsymbol{v}$
+values in a vector $\boldsymbol{J}_i$ and calculating:
+\begin{equation}
+\dfrac{1}{K}\cdot\text{FFT}\left(\boldsymbol{J}_i\right)
+\end{equation}
+The result is the first column of $\boldsymbol{J}_{F,G}$. The second column
+equals the first one rotated down by one element. The third column is the
+second one rotated down by one element etc.
+
+\addvspace{12pt}
+
+So, finally the complete HB Newton iteration step can be written down.
+Putting \ref{eqn:HBeqn} and \ref{eqn:HBjacobi} into  \ref{eqn:HBnewton}
+leads to
+\begin{equation}
+\textbf{J}_F (\textbf{V}_n) \cdot \textbf{V}_{n+1}
+  = \textbf{J}_{F,G} \cdot \textbf{V}_n - \textbf{I}_G +
+    j\cdot \boldsymbol{\Omega}\cdot (\textbf{J}_{F,Q}\cdot\textbf{V}_n - \textbf{Q}) -
+    \textbf{I}_S
+\end{equation}
+This is important to notice, because many non-linear components
+cannot be processed at every bias point (see figure \ref{fig:NewtonBad}).
+These components create a new voltage estimate across their nodes,
+whereas the new estimated absolute voltages at their nodes are not
+known. Thus, the term $\textbf{J}_{F,G} \cdot \textbf{V}_n$ can
+only be created in one single step, leading to the vector
+$\textbf{I}_{G,J}$. Luckily, this procedure also saves computation
+time, as the matrix multiplication need not to be performed.
+The same is true for the term $\textbf{J}_{F,Q}\cdot\textbf{V}_n$,
+leading to the vector $\textbf{Q}_J$. So it is:
+\begin{equation}
+\textbf{J}_F \cdot \textbf{V}_{n+1}
+  = \textbf{I}_{G,J} - \textbf{I}_G +
+    j\cdot \boldsymbol{\Omega}\cdot (\textbf{Q}_J - \textbf{Q}) -
+    \textbf{I}_S
+\end{equation}
+
+
+\subsection{Termination Criteria}
+
+Frequency components with very different magnitude appear in harmonic
+balance simulation. In order to detect when the solver has found an
+accurate solution, an absolute as well as relative criteria must be
+used on all nodes and at all frequencies. The analysis is regarded as
+finished if one of the criteria is satisfied.
+
+\addvspace{12pt}
+
+The absolute and relative criteria write as follows:
+\begin{align}
+\left| \tilde{I}_{n,k} + \hat{I}_{n,k} \right| &< \varepsilon_{abs}
+   &\forall \quad n, k\\
+2\cdot \left| \frac{\tilde{I}_{n,k} + \hat{I}_{n,k}}
+                   {\tilde{I}_{n,k} - \hat{I}_{n,k}} \right|
+  &< \varepsilon_{rel}  &\forall \quad n, k
+\end{align}
+where $\tilde{I}_{n,k}$ is the current of the linear circuit
+partition for node $n$ and frequency $k$ and $\hat{I}_{n,k}$
+is the current of the non-linear circuit partition.
+
+
 \section{A Symbolic HB Algorithm}
 
 In this final section, a harmonic balance algorithm in symbolic language is
@@ -788,11 +850,18 @@ An algorithm in symbolic language should describe the whole LSSP:
 
 \addvspace{12pt}
 
-\texttt{>\quad for n=1 to $NumberOfPorts$ \{} \\
-\texttt{>\quad \qquad Set power of port $n$ to $P_n$.} \\
-\texttt{>\quad \qquad Set power of ports $\ne n$ to 0.} \\
-\texttt{>\quad \qquad Perform Harmonic Balance.} \\
-\texttt{>\quad \qquad } \\
-\texttt{>\quad \qquad for m=1 to $NumberOfPorts$} \\
-\texttt{>\quad \qquad \qquad Calculate $\underline{S}_{mn}$ according to equation \ref{eqn:ui2s}.} \\
-\texttt{>\quad }\}
+\begin{lstlisting}[language=C++,
+    caption={symbolic HB algorithm},
+    basicstyle=\small,
+    frame=single,
+    mathescape=true,
+    fontadjust]
+for n=1 to $NumberOfPorts$ {
+  Set power of port $n$ to $P_n$.
+  Set power of ports $\ne n$ to 0.
+  Perform Harmonic Balance.
+
+  for m=1 to $NumberOfPorts$
+    Calculate $\underline{S}_{mn}$ according to above-mentioned equation.
+}
+\end{lstlisting}
