@@ -238,8 +238,9 @@ This function calculates the adjoint matrix \textit{Y} of a matrix
 \textit{X}:
 
 \medskip{}
-$Y=X^{H}=\left(X^{*}\right)^{T}$ , where $X^{*}$ is the complex
-conjugate matrix of \textit{X}.
+$Y=X^{H}=\left(X^{*}\right)^{T}$, where $X^{*}$ is the complex
+conjugate matrix of \textit{X} and $X^{T}$ is the transposed of the
+matrix $X$.
 \medskip{}
 
 \begin{description}
@@ -663,7 +664,7 @@ is equivalent to exchanging rows and columns according to
 $Y=X^{T}=\left(x_{ij}\right)^{T}=\left(x_{ji}\right)$ with $1\leq i\leq m,\;1\leq j\leq n$
 \medskip{}
 
-\noindent The generated matrix \textit{Y} is a \textit{n} x \textit{m}
+The generated matrix \textit{Y} is a \textit{n} x \textit{m}
 matrix.
 
 \begin{description}
@@ -992,7 +993,7 @@ For $x\in\mathbb{R}$: $y={\displaystyle \frac{\pi}{180}}\, x$
 For $x\mathbb{\mathbb{\in C}}:$ $y={\displaystyle \frac{\pi}{180}}\, Re\left\{ x\right\} $
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1341,7 +1342,7 @@ the corresponding complex number:
 $x+i\, y=a\, e^{ip}=a\,\cos p+i\, a\,\sin p$
 \medskip{}
 
-\noindent For \textit{a} or \textit{p} being vectors the equation
+For \textit{a} or \textit{p} being vectors the equation
 above is applied to the components of \textit{a} or \textit{p}.
 
 \begin{description}
@@ -1403,7 +1404,7 @@ For $x\in\mathbb{R}$: $y={\displaystyle \frac{180}{\pi}}\, x$
 For $x\mathbb{\mathbb{\in C}}:$ $y={\displaystyle \frac{180}{\pi}}\, Re\left\{ x\right\} $
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1483,7 +1484,7 @@ are applied to the components of \textit{x}.
 
 
 \newpage
-\subsubsection*{\hypertarget{sign}{}{\Large sign\index{sign}()}}
+\subsubsection*{\hypertarget{signum}{}{\Large signum\index{signum}()}}
 
 
 \paragraph{\label{par:Signum}Signum function.}
@@ -1491,7 +1492,7 @@ are applied to the components of \textit{x}.
 \begin{description}
 \item [Syntax]~
 \end{description}
-y=sign(x)
+y=signum(x)
 
 \begin{description}
 \item [Arguments]~
@@ -1528,7 +1529,68 @@ For $x\in\mathbb{C}$: $y=\left\{ \begin{array}{l}
 0\quad for\: x=0\end{array}\right.$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
+applied to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=signum(-4)}]returns -1,
+\item [\texttt{y=signum(3+4{*}i)}]returns 0.6+j0.8.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{abs}{abs()}}, \textcolor{blue}{\hyperlink{sign}{sign()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{sign}{}{\Large sign\index{sign}()}}
+
+
+\paragraph{\label{par:Sign}Sign function.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=sign(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the sign of a real or complex number or vector.
+
+\medskip{}
+For $x\in\mathbb{R}$: $y=\left\{ \begin{array}{l}
+1\quad for\: x>=0\\
+-1\: for\: x<0\end{array}\right.$ 
+\medskip{}
+
+For $x\in\mathbb{C}$: $y=\left\{ \begin{array}{l}
+{\displaystyle \frac{x}{\left|x\right|}}\, for\: x\neq0\\
+1\quad for\: x=0\end{array}\right.$
+\medskip{}
+
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1541,7 +1603,7 @@ applied to the components of \textit{x}.
 \begin{description}
 \item [See~also]~
 \end{description}
-\textcolor{blue}{\hyperlink{abs}{abs()}}
+\textcolor{blue}{\hyperlink{abs}{abs()}}, \textcolor{blue}{\hyperlink{signum}{signum()}}
 
 
 \newpage
@@ -1583,7 +1645,7 @@ or vector.
 $y=x^{2}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1644,7 +1706,7 @@ For $x\in\mathbb{C}$: $y=\sqrt{\left|x\right|}\, e^{i\frac{\varphi}{2}}$with
 $\varphi=\arg\left(x\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1671,7 +1733,7 @@ applied to the components of \textit{x}.
 \end{description}
 y=unwrap(x)
 
-\noindent y=unwrap(x, t)
+y=unwrap(x, t)
 
 \begin{description}
 \item [Arguments]~
@@ -1718,7 +1780,7 @@ the optional parameter \textit{t} is $\pi$.
 \texttt{y=unwrap(2{*}linspace(-2,2,5),1)} returns -4, -8.28, -12.6,
 -16.8, -21.1,
 
-\noindent \texttt{y=unwrap(2{*}linspace(-2,2,5),3)} returns -4, -2,
+\texttt{y=unwrap(2{*}linspace(-2,2,5),3)} returns -4, -2,
 0, 2, 4.
 
 \begin{description}
@@ -1777,7 +1839,7 @@ For $\mathbb{\mathbb{C}}\ni x\,:=a+i\, b\,\wedge\, a,b\in\mathbb{R}$:
 $y=e^{x}=e^{a+i\, b}=e^{a}\,\left(\cos b+i\,\sin b\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1839,7 +1901,7 @@ For $x\in\mathbb{R}$: $y=\left\{ \begin{array}{cc}
 For $x\in\mathbb{C}$: $y={\displaystyle \frac{\ln\left(\left|x\right|\right)}{\ln\left(10\right)}}+i\,{\displaystyle \frac{\arg\left(x\right)}{\ln\left(10\right)}}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1900,7 +1962,7 @@ For $x\in\mathbb{R}$: $y=\left\{ \begin{array}{cc}
 For $x\in\mathbb{C}$: $y={\displaystyle \frac{\ln\left(\left|x\right|\right)}{\ln\left(2\right)}}+i\,{\displaystyle \frac{\arg\left(x\right)}{\ln\left(2\right)}}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -1913,7 +1975,7 @@ applied to the components of \textit{x}.
 \begin{description}
 \item [See~also]~
 \end{description}
-\noindent \textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{log10}{log10()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{exp}{exp()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arg}{arg()}}
 
@@ -1962,7 +2024,7 @@ For $x\in\mathbb{R}$: $y=\left\{ \begin{array}{cc}
 For $x\in\mathbb{C}$: $y=\ln\left(\left|x\right|\right)+i\,\arg\left(x\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2024,7 +2086,7 @@ For $x\in\mathbb{R}$: $y=\cos\left(x\right)$ with $y\in\left[-1,\,1\right]$
 For $x\in\mathbb{C}$: $y=\frac{1}{2}\,\left(\exp\left(i\, x\right)+\exp\left(-i\, x\right)\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2080,7 +2142,7 @@ or vector.
 $y=$$\textrm{\, cosec}\, x\,$$={\displaystyle \frac{1}{\sin\, x}}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2138,7 +2200,7 @@ with $y\in\left[-\infty,\,+\infty\right]$
 For $x\in\mathbb{C}$: $y=i\,{\displaystyle \left(\frac{\exp\left(i\, x\right)^{2}+1}{\exp\left(i\, x\right)^{2}-1}\right)}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2195,7 +2257,7 @@ vector.
 $y=$$\sec\, x$$={\displaystyle \frac{1}{\cos\, x}}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2251,7 +2313,7 @@ For $x\in\mathbb{R}$: $y=\sin\left(x\right)$ with $y\in\left[-1,\,1\right]$
 For $x\in\mathbb{C}$: $y=\frac{1}{2}\, i\,\left(\exp\left(-i\, x\right)-\exp\left(i\, x\right)\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2310,7 +2372,7 @@ For $x\in\mathbb{R}$: $y=\tan\left(x\right)$ with $y\in\left[-\infty,\,+\infty\r
 For $x\in\mathbb{C}$: $y=-i\,{\displaystyle \left(\frac{\exp\left(i\, x\right)^{2}-1}{\exp\left(i\, x\right)^{2}+1}\right)}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2374,7 +2436,7 @@ For $x\in\mathbb{R}$: $y=\arccos\left(x\right)$ with $y\in\left[0,\,\pi\right]$
 For $x\in\mathbb{C}$: $y=-i\,\ln\left(x+\sqrt{x^{2}-1}\,\right)$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2434,7 +2496,7 @@ For $x\in\mathbb{R}$: $y=$arccot$\left(x\right)$ with $y\in\left[0,\,\pi\right]$
 For $x\in\mathbb{C}$: $y=$${\displaystyle \frac{i}{2}\,\ln\left(\frac{x-i}{x+i}\right)}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2495,7 +2557,7 @@ For $x\in\mathbb{R}$: $y=\arcsin\left(x\right)$ with $y\in\left[-\frac{\pi}{2},\
 For $x\in\mathbb{C}$: $y=-i\,\ln\left[i\, x+\sqrt{1-x^{2}}\right]$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
 \begin{description}
@@ -2524,7 +2586,7 @@ applied to the components of \textit{x}.
 \end{description}
 z=arctan(x)
 
-\noindent z=arctan(y,x)
+z=arctan(y,x)
 
 \begin{description}
 \item [Arguments]~
@@ -2563,17 +2625,17 @@ For $x\in\mathbb{R}$: $y=\arctan\left(x\right)$ with $y\in\left[-\frac{\pi}{2},\
 For $x\in\mathbb{C}$: $y={\displaystyle -\frac{1}{2}\, i\,\ln\left[\frac{2\, i}{x+i}-1\right]}$
 \medskip{}
 
-\noindent For \textit{x} being a vector the two equations above are
+For \textit{x} being a vector the two equations above are
 applied to the components of \textit{x}.
 
-\noindent If the second syntax ( \textit{z}=arctan(\textit{y, x})
+If the second syntax ( \textit{z}=arctan(\textit{y, x})
 ) finds application, the expression
 
 \medskip{}
 $z=\pm\arctan\left(y/x\right)$
 \medskip{}
 
-\noindent (with the arctan() function defined above) is evaluated.
+(with the arctan() function defined above) is evaluated.
 The sign of \textit{z} is determined by
 
 \medskip{}
@@ -2582,7 +2644,7 @@ $\textrm{sign}(z)$=$\left\{ \begin{array}{cc}
 - & for\, Re\left\{ x\right\} >0\end{array}\right.$.
 \medskip{}
 
-\noindent Note that for the second syntax the case \textit{x} = \textit{y}
+Note that for the second syntax the case \textit{x} = \textit{y}
 = 0 is not defined.
 
 \begin{description}
@@ -2643,7 +2705,7 @@ number or vector.
 $y=\frac{1}{2}\left(e^{x}+e^{-x}\right)$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2699,7 +2761,7 @@ number or vector.
 $y={\displaystyle \frac{1}{\sinh\, x}}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2755,7 +2817,7 @@ number or vector.
 $y={\displaystyle \frac{1}{\tanh\, x}=\frac{e^{x}+e^{-x}}{e^{x}-e^{-x}}}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2812,7 +2874,7 @@ number or vector.
 $y={\displaystyle \frac{1}{\cosh\, x}}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2869,7 +2931,7 @@ number or vector.
 $y=\frac{1}{2}\left(e^{x}-e^{-x}\right)$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2925,7 +2987,7 @@ number or vector.
 $y={\displaystyle \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -2986,7 +3048,7 @@ function.
 $y=\textrm{arcosh\,}x=\ln\left(x+\sqrt{x^{2}-1}\right)$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3045,7 +3107,7 @@ function.
 $y=\textrm{arcoth\,}x={\displaystyle \frac{1}{2}\,\ln\left(\frac{x+1}{x-1}\right)}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3104,7 +3166,7 @@ function.
 $y=\textrm{arsinh\,}x=\ln\left(x+\sqrt{x^{2}+1}\right)$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3163,7 +3225,7 @@ function.
 $y=\textrm{artanh\,}x={\displaystyle \frac{1}{2}\,\ln\left(\frac{1+x}{1-x}\right)}$ 
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3444,7 +3506,7 @@ where $J_{0}\left(x\right)$is the Bessel function of order zero and
 $\Gamma\left(x\right)$denotes the gamma function.
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3507,7 +3569,7 @@ $J_{n}\left(x\right)={\displaystyle \sum\limits _{k=0}^{\infty}\frac{\left(-1\ri
 where $\Gamma\left(x\right)$denotes the gamma function.
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3572,7 +3634,7 @@ where $J_{m}\left(x\right)$denotes the Bessel function of first kind
 and n-th order.
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3627,7 +3689,7 @@ or vector. For $x\in\mathbb{R}$,
 $y={\displaystyle \frac{2}{\sqrt{\pi}}\,\int\limits _{0}^{x}e^{-t^{2}}dt}$
 \medskip{}
 
-\noindent If \textit{x} is a complex number both real part and imaginary
+If \textit{x} is a complex number both real part and imaginary
 part are subjected to the equation above. For \textit{x} being a vector
 the equation is applied to the components of \textit{x}.
 
@@ -3684,7 +3746,7 @@ or complex number or vector. For $x\in\mathbb{R}$,
 $y={\displaystyle 1-\frac{2}{\sqrt{\pi}}\,\int\limits _{0}^{x}e^{-t^{2}}dt}$
 \medskip{}
 
-\noindent If \textit{x} is a complex number both real part and imaginary
+If \textit{x} is a complex number both real part and imaginary
 part are subjected to the equation above. For \textit{x} being a vector
 the equation is applied to the components of \textit{x}.
 
@@ -3741,7 +3803,7 @@ or complex number or vector. For $-1<x<1$,
 $y=\mathit{\mathrm{erf^{-1}}}(x)$
 \medskip{}
 
-\noindent If \textit{x} is a complex number both real part and imaginary
+If \textit{x} is a complex number both real part and imaginary
 part are subjected to the equation above. For \textit{x} being a vector
 the equation is applied to the components of \textit{x}.
 
@@ -3799,7 +3861,7 @@ of a real or complex number or vector. For $0<x<2$,
 $y=\mathit{\mathrm{erfc^{-1}}}(x)$
 \medskip{}
 
-\noindent If \textit{x} is a complex number both real part and imaginary
+If \textit{x} is a complex number both real part and imaginary
 part are subjected to the equation above. For \textit{x} being a vector
 the equation is applied to the components of \textit{x}.
 
@@ -3858,7 +3920,7 @@ $y=\left\{ \begin{array}{cc}
 1 & for\: x=0\end{array}\right.$
 \medskip{}
 
-\noindent For \textit{x} being a vector the equation above is applied
+For \textit{x} being a vector the equation above is applied
 to the components of \textit{x}.
 
 \begin{description}
@@ -3916,7 +3978,7 @@ $y=\left\{ \begin{array}{cc}
 1 & for\, x>0\end{array}\right.$
 \medskip{}
 
-\noindent If \textit{x} is a complex number both real part and imaginary
+If \textit{x} is a complex number both real part and imaginary
 part are subjected to the equation above. For \textit{x} being a vector
 the equation is applied to the components of \textit{x}.
 
@@ -3977,7 +4039,7 @@ For $x\in$$\mathbb{C}^{n}$: $y={\displaystyle \frac{1}{n}}\,$$\sum\limits _{i=1}
 (for vectors) or $xs\leq i\leq xe$ (for ranges)
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number, \textit{x}
+For \textit{x} being a real or complex number, \textit{x}
 itself is returned.
 
 \begin{description}
@@ -4101,7 +4163,7 @@ with sign $\left\{ \begin{array}{l}
 -\quad else\end{array}\right.$
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number: that is the
+For \textit{x} being a real or complex number: that is the
 case $n=1$.
 
 \begin{description}
@@ -4165,7 +4227,7 @@ with sign $\left\{ \begin{array}{l}
 -\quad else\end{array}\right.$
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number: that is the
+For \textit{x} being a real or complex number: that is the
 case $n=1$.
 
 \begin{description}
@@ -4222,7 +4284,7 @@ for $x\in$$\mathbb{C}^{n}$: $y=\sqrt{{\displaystyle \frac{1}{n}}\,\sum\limits _{
 \frac{1}{2} & \mathrm{for}\: i=1\:\mathrm{or}\: i=n\end{array}\right.$
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number, \textit{$\left|x\right|$}
+For \textit{x} being a real or complex number, \textit{$\left|x\right|$}
 itself is returned.
 
 \begin{description}
@@ -4284,7 +4346,7 @@ For $x\in$$\mathbb{C}^{n}$: $y_{k}=$${\displaystyle \frac{1}{m}}$$\sum\limits _{
 $1\leq k\leq n$
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number, \textit{x}
+For \textit{x} being a real or complex number, \textit{x}
 itself is returned.
 
 \begin{description}
@@ -4340,7 +4402,7 @@ vector \textit{x}.
 For $x\in$$\mathbb{C}^{n}$: $y=$$\sqrt{\textrm{variance}(x)}$
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number, 0 is returned.
+For \textit{x} being a real or complex number, 0 is returned.
 
 \begin{description}
 \item [Example]~
@@ -4396,7 +4458,7 @@ For $x\in$$\mathbb{C}^{n}$: $y={\displaystyle \frac{1}{n-1}}\,$$\sum\limits _{i=
 where $\overline{x}$ denotes mean (average) value of \textit{x}.
 \medskip{}
 
-\noindent For \textit{x} being a real or complex number, 0 is returned.
+For \textit{x} being a real or complex number, 0 is returned.
 
 \begin{description}
 \item [Example]~
@@ -4545,7 +4607,7 @@ of data vector.}
 \end{description}
 z=interpolate(y,t,m)
 
-\noindent z=interpolate(y,t)
+z=interpolate(y,t)
 
 \begin{description}
 \item [Arguments]~
@@ -4895,7 +4957,7 @@ ${\displaystyle \frac{\Delta y_{i}}{\Delta x_{i}}}=$$\left\{ \begin{array}{cc}
 {\displaystyle \frac{y_{i}-y_{i-1}}{x_{i}-x_{i-1}}} & \textrm{for}\: i=N-1\end{array}\right.$
 \medskip{}
 
-\noindent If \textit{n>1}, the result of the differentiation above
+If \textit{n>1}, the result of the differentiation above
 is assigned to \textit{y} and the aforementioned differentiation step
 is repeated until the number of those steps is equal to \textit{n}.
 
@@ -4961,7 +5023,7 @@ $\int f\left(t\right)dt\approx h\,\left({\displaystyle \frac{y_{0}}{2}}+y_{1}+y_
 \begin{description}
 \item [Example]~
 \end{description}
-\noindent Calculate an approximation of the integral $\int\limits _{1}^{3}t\, dt$
+Calculate an approximation of the integral $\int\limits _{1}^{3}t\, dt$
 using 105 points:
 
 \begin{lyxlist}{00.00.0000}
@@ -4987,7 +5049,291 @@ using 105 points:
 \begin{description}
 \item [Syntax]~
 \end{description}
-y=dft(v,t)
+y=dft(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+
+This function computes the Discrete Fourier Transform (DFT) of a
+vector \textit{v}. The advantage of this function compared to
+\textcolor{blue}{\hyperlink{fft}{fft()}} \textcolor{black}{is that}
+the number \textit{n} of components of
+\textit{v} is arbitrary, while for the latter \textit{n} must be a
+power of 2. The drawbacks are that dft() is slower and less accurate
+than \textcolor{blue}{\hyperlink{fft}{fft()}}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+This calculates the spectrum $y$ of a DC signal:
+
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=dft(linspace(1,1,7))}]returns \begin{tabular}{|c|}
+\hline 
+y\tabularnewline
+\hline
+\hline 
+1\tabularnewline
+\hline 
+-1.59e-17+j1.59e-17\tabularnewline
+\hline 
+$\vdots$\tabularnewline
+\hline 
+2.22e-16-j1.11e-16\tabularnewline
+\hline
+\end{tabular}
+\end{lyxlist}
+Please note that in this example 7 points are used for the time vector
+v. Since 7 is not a power of 2, the same expression used together with
+the fft() function would lead to wrong results. Note also the rounding
+errors where {}``0'' would be the correct value.
+
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+
+
+
+
+\newpage
+\subsubsection*{\hypertarget{fft}{}{\Large fft\index{fft}()}}
+
+
+\paragraph{\label{par:Fast-Fourier-Transform}Fast Fourier Transform.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=fft(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function computes the Fast Fourier Transform (FFT) of a vector
+\textit{v}. The number \textit{n} of components of \textit{v} must be
+a power of 2.
+
+\begin{description}
+\item [Example]~
+\end{description}
+This calculates the spectrum $y$ of a DC signal:
+
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=fft(linspace(1,1,8))}]returns \begin{tabular}{|c|}
+\hline 
+y\tabularnewline
+\hline
+\hline 
+1\tabularnewline
+\hline 
+0\tabularnewline
+\hline 
+$\vdots$\tabularnewline
+\hline 
+0\tabularnewline
+\hline
+\end{tabular}
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{idft}{}{\Large idft\index{idft}()}}
+
+
+\paragraph{\label{par:Inverse-Discrete-Fourier}Inverse Discrete Fourier Transform.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=idft(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function computes the Inverse Discrete Fourier Transform (IDFT)
+of a vector \textit{v}.  The advantage of this function compared to
+\textcolor{blue}{\hyperlink{ifft}{ifft()}}
+\textcolor{black}{is that} the number \textit{n} of components of
+\textit{v} is arbitrary, while for the latter \textit{n} must be a
+power of 2. The drawbacks are that idft() is slower and less accurate
+than \textcolor{blue}{\hyperlink{ifft}{ifft()}}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+This calculates the time function $y$ belonging to a white spectrum:
+
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=idft(linspace(1,1,7))}]returns \begin{tabular}{|c|}
+\hline 
+y\tabularnewline
+\hline
+\hline 
+7\tabularnewline
+\hline 
+-1.11e-16-j1.11e-16\tabularnewline
+\hline 
+$\vdots$\tabularnewline
+\hline 
+1.55e-15+j7.77e-16\tabularnewline
+\hline
+\end{tabular}
+\end{lyxlist}
+Please note that in this example 7 points are used for the spectrum
+vector v. Since 7 is not a power of 2, the same expression used
+together with the ifft() function would lead to wrong results. Note
+also the rounding errors where {}``0'' would be the correct value.
+
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{ifft}{}{\Large ifft\index{ifft}()}}
+
+
+\paragraph{\label{par:Inverse-Fast-Fourier}Inverse Fast Fourier Transform.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=ifft(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function computes the Inverse Fast Fourier Transform (IFFT) of a
+vector \textit{v}.  The number \textit{n} of components of \textit{v}
+must be a power of 2.
+
+\begin{description}
+\item [Example]~
+\end{description}
+This calculates the time function $y$ belonging to a white spectrum:
+
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=ifft(linspace(1,1,8))}]returns \begin{tabular}{|c|}
+\hline 
+y\tabularnewline
+\hline
+\hline 
+8\tabularnewline
+\hline 
+0\tabularnewline
+\hline 
+$\vdots$\tabularnewline
+\hline 
+0\tabularnewline
+\hline
+\end{tabular}
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+
+\newpage
+\subsubsection*{\hypertarget{Time2Freq}{}{\Large Time2Freq\index{Time2Freq}()}}
+
+
+\paragraph{\label{par:Interpreted-Discrete-Fourier-Transform}Interpreted Discrete Fourier Transform.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=Time2Freq(v,t)
 
 \begin{description}
 \item [Arguments]~
@@ -5016,12 +5362,7 @@ $\surd$\tabularnewline
 \item [Description]~
 \end{description}
 This function computes the Discrete Fourier Transform (DFT) of a vector
-\textit{v} with respect to a time vector \textit{t}. The advantage
-of this function compared to \textcolor{blue}{\hyperlink{fft}{fft()}}
-\textcolor{black}{is that} the number \textit{n} of components of
-\textit{v} is arbitrary, while for the latter \textit{n} must be a
-power of 2. The drawbacks are that dft() is slower and less accurate
-than \textcolor{blue}{\hyperlink{fft}{fft()}}.
+\textit{v} with respect to a time vector \textit{t}.
 
 \begin{description}
 \item [Example]~
@@ -5029,7 +5370,9 @@ than \textcolor{blue}{\hyperlink{fft}{fft()}}.
 This calculates the spectrum y(f) of a DC signal:
 
 \begin{lyxlist}{00.00.0000}
-\item [\texttt{y=dft(linspace(1,1,7),linspace(0,1,2))}]returns \begin{tabular}{|c|c|}
+\item [\texttt{y=Time2Freq(linspace(1,1,7),linspace(0,1,2))}]returns\\
+
+\begin{tabular}{|c|c|}
 \hline 
 Frequency&
 y\tabularnewline
@@ -5050,101 +5393,26 @@ $\vdots$\tabularnewline
 \end{tabular}
 \end{lyxlist}
 Please note that in this example 7 points are used for the time vector
-v. Since 7 is not a power of 2, the same expression used together
-with the fft() function would lead to wrong results. Note also the
-rounding errors at t>0, where {}``0'' would be the correct value.
+$v$.  Note also the rounding errors at t>0, where {}``0'' would be the
+correct value.
 
 \begin{description}
 \item [See~also]~
 \end{description}
 \textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{ifft}{ifft()}}
-
+\textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}
 
 \newpage
-\subsubsection*{\hypertarget{fft}{}{\Large fft\index{fft}()}}
+\subsubsection*{\hypertarget{Freq2Time}{}{\Large Freq2Time\index{Freq2Time}()}}
 
 
-\paragraph{\label{par:Fast-Fourier-Transform}Fast Fourier Transform.}
+\paragraph{\label{par:Interpreted-Inverse-Discrete-Fourier}Interpreted Inverse Discrete Fourier Transform.}
 
 \begin{description}
 \item [Syntax]~
 \end{description}
-y=fft(v,t)
-
-\begin{description}
-\item [Arguments]~
-\end{description}
-\begin{tabular}{|c|c|c|c|}
-\hline 
-Name&
-Type&
-Def. Range&
-Required\tabularnewline
-\hline
-\hline 
-v&
-$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
-$\left]-\infty,+\infty\right[$&
-$\surd$\tabularnewline
-\hline 
-t&
-$\mathbb{R}^{k}$, $\mathbb{C}^{k}$&
-$\left]-\infty,+\infty\right[$&
-$\surd$\tabularnewline
-\hline
-\end{tabular}
-
-\begin{description}
-\item [Description]~
-\end{description}
-This function computes the Fast Fourier Transform (FFT) of a vector
-\textit{v} with respect to a time vector \textit{t}. The number \textit{n}
-of components of \textit{v} must be a power of 2.
-
-\begin{description}
-\item [Example]~
-\end{description}
-This calculates the spectrum y(f) of a DC signal:
-
-\begin{lyxlist}{00.00.0000}
-\item [\texttt{y=fft(linspace(1,1,8),linspace(0,1,2))}]returns \begin{tabular}{|c|c|}
-\hline 
-Frequency&
-y\tabularnewline
-\hline
-\hline 
-0&
-1\tabularnewline
-\hline 
-0.143&
-0\tabularnewline
-\hline 
-$\vdots$&
-$\vdots$\tabularnewline
-\hline 
-1&
-0\tabularnewline
-\hline
-\end{tabular}
-\end{lyxlist}
-\begin{description}
-\item [See~also]~
-\end{description}
-\textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{idft}{idft()}}
-
-
-\newpage
-\subsubsection*{\hypertarget{idft}{}{\Large idft\index{idft}()}}
-
-
-\paragraph{\label{par:Inverse-Discrete-Fourier}Inverse Discrete Fourier Transform.}
-
-\begin{description}
-\item [Syntax]~
-\end{description}
-y=idft(v,f)
+y=Freq2Time(v,f)
 
 \begin{description}
 \item [Arguments]~
@@ -5174,11 +5442,6 @@ $\surd$\tabularnewline
 \end{description}
 This function computes the Inverse Discrete Fourier Transform (IDFT)
 of a vector \textit{v} with respect to a frequency vector \textit{f}.
-The advantage of this function compared to \textcolor{blue}{\hyperlink{ifft}{ifft()}}
-\textcolor{black}{is that} the number \textit{n} of components of
-\textit{v} is arbitrary, while for the latter \textit{n} must be a
-power of 2. The drawbacks are that idft() is slower and less accurate
-than \textcolor{blue}{\hyperlink{ifft}{ifft()}}.
 
 \begin{description}
 \item [Example]~
@@ -5186,7 +5449,9 @@ than \textcolor{blue}{\hyperlink{ifft}{ifft()}}.
 This calculates the time function y(t) belonging to a white spectrum:
 
 \begin{lyxlist}{00.00.0000}
-\item [\texttt{y=idft(linspace(1,1,7),linspace(0,1,2))}]returns \begin{tabular}{|c|c|}
+\item [\texttt{y=Freq2Time(linspace(1,1,7),linspace(0,1,2))}]returns\\
+
+\begin{tabular}{|c|c|}
 \hline 
 Frequency&
 y\tabularnewline
@@ -5207,91 +5472,15 @@ $\vdots$\tabularnewline
 \end{tabular}
 \end{lyxlist}
 Please note that in this example 7 points are used for the spectrum
-vector v. Since 7 is not a power of 2, the same expression used together
-with the ifft() function would lead to wrong results. Note also the
-rounding errors at t>0, where {}``0'' would be the correct value.
+vector $v$.  Note also the rounding errors at t>0, where {}``0'' would
+be the correct value.
 
 \begin{description}
 \item [See~also]~
 \end{description}
 \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{fft}{fft()}}
-
-
-\newpage
-\subsubsection*{\hypertarget{ifft}{}{\Large ifft\index{ifft}()}}
-
-
-\paragraph{\label{par:Inverse-Fast-Fourier}Inverse Fast Fourier Transform.}
-
-\begin{description}
-\item [Syntax]~
-\end{description}
-y=ifft(v,f)
-
-\begin{description}
-\item [Arguments]~
-\end{description}
-\begin{tabular}{|c|c|c|c|}
-\hline 
-Name&
-Type&
-Def. Range&
-Required\tabularnewline
-\hline
-\hline 
-v&
-$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
-$\left]-\infty,+\infty\right[$&
-$\surd$\tabularnewline
-\hline 
-f&
-$\mathbb{R}^{k}$, $\mathbb{C}^{k}$&
-$\left]-\infty,+\infty\right[$&
-$\surd$\tabularnewline
-\hline
-\end{tabular}
-
-\begin{description}
-\item [Description]~
-\end{description}
-This function computes the Inverse Fast Fourier Transform (IFFT) of
-a vector \textit{v} with respect to a frequency vector \textit{f}.
-The number \textit{n} of components of \textit{v} must be a power
-of 2.
-
-\begin{description}
-\item [Example]~
-\end{description}
-This calculates the time function y(t) belonging to a white spectrum:
-
-\begin{lyxlist}{00.00.0000}
-\item [\texttt{y=ifft(linspace(1,1,8),linspace(0,1,2))}]returns \begin{tabular}{|c|c|}
-\hline 
-Frequency&
-y\tabularnewline
-\hline
-\hline 
-0&
-8\tabularnewline
-\hline 
-0.143&
-0\tabularnewline
-\hline 
-$\vdots$&
-$\vdots$\tabularnewline
-\hline 
-1&
-0\tabularnewline
-\hline
-\end{tabular}
-\end{lyxlist}
-\begin{description}
-\item [See~also]~
-\end{description}
-\textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{idft}{idft()}}
-
+\textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
 
 \newpage
 \subsubsection*{\hypertarget{kbd}{}{\Large kbd\index{kbd}()}}
@@ -5304,7 +5493,7 @@ $\vdots$\tabularnewline
 \end{description}
 y=kbd(a,n)
 
-\noindent y=kbd(a)
+y=kbd(a)
 
 \begin{description}
 \item [Arguments]~
@@ -5347,7 +5536,7 @@ $y_{n-k-1}=\: y_{k}$
 for $0\leq k<\frac{n}{2}$
 \medskip{}
 
-\noindent If the parameter \textit{n} is not specified, \textit{n}=64
+If the parameter \textit{n} is not specified, \textit{n}=64
 is assumed.
 
 \begin{description}

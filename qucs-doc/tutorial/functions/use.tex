@@ -5,12 +5,18 @@
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
 
+The chapter describes the usage of mathematical expressions for post
+processing simulation data in ``Qucs'', how to enter formulas and
+modifying them.  It gives a brief description of the overall syntax of
+those expressions.
+
 \tutsubsection{Entering Measurement Expressions}
 
 Measurement expressions generate new datasets by function or operator
-driven evaluation of simulation results. Those new datasets are accessible
-in the data display tab. The related equations can be entered into
-the schematic editor by the following means:
+driven evaluation of simulation results. Those new datasets are
+accessible in the data display tab after simulation. The related
+equations can be entered into the schematic editor by the following
+means:
 
 \begin{itemize}
 \item Using the equation icon in the {}``Tools'' bar (see fig. \ref{cap:Entering})
@@ -27,8 +33,9 @@ icon}
 \end{figure}
 
 
-\noindent You can now place the equation symbol by mouse click anywhere
-in the schematic. Each mouse click creates a new equation instance.
+You can now place the equation symbol by mouse click anywhere
+in the schematic. Each mouse click creates a new equation instance
+each consisting of a variable number of measurement expressions.
 Press the <ESC> key if you do not like further equations.
 
 Another option is to select an existing equation, copy it (either
@@ -38,8 +45,8 @@ simultaneously.%
 }) and paste it (either by menu item {}``Edit'' $\rightarrow$ ''Paste'' or
 by <CTRL>+V).
 
-After having successfully created an equation, you are now able to
-modify it.
+After having successfully created an equation instance, you are now
+able to modify it.
 
 
 \tutsubsection{Changing Measurement Expressions}
@@ -61,20 +68,21 @@ Thus, the excerpt of your schematic surface looks like that in fig.
 \end{figure}
 
 
-You can now manipulate the current name of the equation. Simply click
-onto {}``Eqn1'', which becomes highlighted. Then type in a new name
-for it and finalise your inputs with the <RETURN> key.
+You can now manipulate the current name of the equation
+instance. Simply click onto {}``Eqn1'', which becomes
+highlighted. Then type in a new name for it and finalise your inputs
+with the <RETURN> key.
 
 After that, you can enter a new equation. Again, click onto {}``y=1''.
 Only the {}``1'' is marked, and you can enter a new expression there.
 Please use the variables, operators and constants described in chapter
-\ref{sec:Syntax}. Note that you can also refer to results (dependents)
-of other equations. But how to change the name of the current dependent
-{}``y'' ? Right click onto the equation, and a context menu opens.
-Select the first item called {}``Edit properties''. A sub window
-appears, which should look like the one in fig. \ref{cap:Editing-equation-properties}.
-The alternative for entering equations is to double click onto the
-equation.
+\textit{``\nameref{sec:Syntax}''}.  Note that you can also refer to
+results (dependents) of other equations.  But how to change the name
+of the current dependent {}``y''?  Right click onto the equation, and
+a context menu opens.  Select the first item called {}``Edit
+properties''.  A sub window appears, which should look like the one in
+fig. \ref{cap:Editing-equation-properties}.  The alternative for
+entering equations is to double click onto the equation.
 
 %
 \begin{figure}
@@ -99,7 +107,7 @@ Function names, variable names, and constant names are all case sensitive
 in measurement expressions - it is distinguished between lowercase
 and uppercase letters such as 'a' and 'A'.
 
-\noindent In functions, commas are used to separate arguments.
+In functions, commas are used to separate arguments.
 
 
 \tutsubsubsection{Variable Names}
@@ -108,8 +116,9 @@ User defined variable names consist of a letter, followed by any number
 of letters, digits, or underscores.
 
 The syntax of variable names created by the \char`\"{}Qucs\char`\"{}
-simulator is as specified in table \ref{table:var_names}. Please
-note that all voltages and currents in {}``Qucs'' are peak values.
+simulator is as specified in table~\ref{table:var_names}.  Please note
+that all voltages and currents in {}``Qucs'' are peak values except
+the noise voltages and currents which are rms values at 1Hz bandwidth.
 
 %
 \begin{table}[ht]
@@ -194,7 +203,7 @@ given in table \ref{table:constants}.
 \begin{table}[ht]
 \begin{center}\begin{tabular}{|c|c|c|}
 \hline 
-Operator&
+Constant&
 Description&
 Value\tabularnewline
 \hline
@@ -218,7 +227,7 @@ $\pi$&
 \end{tabular}\end{center}
 
 
-\caption{\noindent \label{table:constants}Built-in Constants}
+\caption{\label{table:constants}Built-in Constants}
 \end{table}
 
 
