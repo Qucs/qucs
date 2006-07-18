@@ -1,3 +1,9 @@
+2006-07-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* tutorial/functions/math.tex: Added documentation of Time2Freq,
+	Freq2Time and fixed those of fft, dft, idft and ifft.  Added
+	description of the signum function.
+
 2006-06-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Checking for the 'makeindex' program and added
