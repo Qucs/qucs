@@ -1142,7 +1142,8 @@ void QucsApp::slotExportGraphAsCsv()
       m /= pD->count;
     }
 
-    Stream << *(py++) << ';' << *(py++) << '\n';
+    Stream << *(py) << ';' << *(py+1) << '\n';
+    py += 2;
   }
 
   File.close();
