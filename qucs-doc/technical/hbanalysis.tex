@@ -343,7 +343,7 @@ u_{k1,even} + W_{n,x}\cdot u_{k2,odd}
 to get one data of $\underline{U}_n$. This is called the
 Danielson-Lanzcos algorithm.
 The question now arises which data values of $u_k$
-needs to be combined according to equation \ref{eqn:FFTstep}.
+needs to be combined according to equation \eqref{eqn:FFTstep}.
 The answer is quite easy. The data array must be reordered by the
 bit-reversal method. This means the value at index $k_1$ is swapped
 with the value at index $k_2$ where $k_2$ is obtained by mirroring
@@ -395,6 +395,8 @@ $W_{n,4} = -W_{n+2,4}$. So this time, two loop iterations (for $W_{n,4}$
 and for $W_{n+1,4}$) are necessary to compute the current
 Danielson-Lanczos step for all output values. This concept continues
 until the last step.
+
+\addvspace{12pt}
 
 Finally, a complete FFT source code should be presented. The original
 version was taken from \cite{Press}. Several improvements were added
