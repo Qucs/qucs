@@ -33,6 +33,7 @@
 #include <qtabwidget.h>
 #include <qdragobject.h>
 #include <qpaintdevicemetrics.h>
+#include <qdir.h>
 
 #include "qucs.h"
 #include "main.h"
@@ -1671,8 +1672,11 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
     QUriDrag::decode(Event, List);
 
     // URI:  file:/home/linuxuser/Desktop/example.sch
-    for(unsigned int i=0; i < List.count(); i++)
-      App->gotoPage(QString(List.at(i)).section(':',1));
+    for(unsigned int i=0; i < List.count(); i++) {
+      QString filename =
+	QDir::convertSeparators(QUriDrag::uriToLocalFile(List.at(i)));
+      App->gotoPage(filename);
+    }
 
     return;
   }
