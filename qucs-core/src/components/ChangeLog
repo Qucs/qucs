@@ -1,3 +1,11 @@
+2006-07-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* inductor.cpp:  Added initial condition 'I' (current through
+	inductor) for transient	analysis.
+
+	* capacitor.cpp: Added initial condition 'V' (voltage across
+	capacitor) for transient analysis.
+
 2006-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* tline.cpp: Damping factor now in 1/m and not Neper anymore.

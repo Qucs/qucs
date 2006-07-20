@@ -1,3 +1,8 @@
+2006-07-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_dataset.y (YYMAXDEPTH): Increased stack size for *very*
+	big dataset files.
+
 2006-07-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_zvr.l, parse_zvr.y, check_zvr.cpp: Implemented scanner,
