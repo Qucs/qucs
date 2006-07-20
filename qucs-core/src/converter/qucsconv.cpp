@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.22 2006-07-17 21:53:13 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.23 2006-07-20 10:47:36 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 #include "check_citi.h"
 #include "check_touchstone.h"
 #include "check_zvr.h"
+#include "check_dataset.h"
 #include "qucs_producer.h"
 #include "csv_producer.h"
 
@@ -238,16 +239,33 @@ int vcd2qucs (struct actionset_t * action, char * infile, char * outfile) {
 // Qucs dataset to CSV conversion.
 int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
   int ret = 0;
-  if ((qucs_data = dataset::load (infile)) != NULL) {
-    if ((csv_out = open_file (outfile, "w")) == NULL)
-      return -1;
-    if (!strcmp (action->out, "csv")) {
-      if (csv_var != NULL)
-	csv_producer (csv_var, ";");
-      else {
-	fprintf (stderr, "no data variable given (passed by -d option)\n");
-	ret = -1;
-      }
+  if ((dataset_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (dataset_parse () != 0) {
+    ret = -1;
+  } else if (dataset_result == NULL) {
+    ret = -1;
+  } else if (dataset_check (dataset_result) != 0) {
+    delete dataset_result;
+    dataset_result = NULL;
+    ret = -1;
+  }
+  qucs_data = dataset_result;
+  dataset_result = NULL;
+  dataset_lex_destroy ();
+  if (dataset_in)
+    fclose (dataset_in);
+  if (ret)
+    return -1;
+
+  if ((csv_out = open_file (outfile, "w")) == NULL)
+    return -1;
+  if (!strcmp (action->out, "csv")) {
+    if (csv_var != NULL)
+      csv_producer (csv_var, ";");
+    else {
+      fprintf (stderr, "no data variable given (passed by -d option)\n");
+      ret = -1;
     }
     fclose (csv_out);
     return ret;

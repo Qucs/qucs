@@ -1,3 +1,8 @@
+2006-07-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.cpp: Fixed Qucs dataset loading in order to be
+	able to handle stdin input.
+
 2006-07-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp (zvr2qucs): Added ZVR to Qucs dataset converter

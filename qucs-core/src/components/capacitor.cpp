@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.cpp,v 1.18 2006-03-27 09:55:50 raimi Exp $
+ * $Id: capacitor.cpp,v 1.19 2006-07-20 10:47:36 raimi Exp $
  *
  */
 
@@ -84,6 +84,12 @@ void capacitor::calcTR (nr_double_t) {
   nr_double_t c = getPropertyDouble ("C");
   nr_double_t g, i;
   nr_double_t v = real (getV (NODE_1) - getV (NODE_2));
+
+  /* apply initial condition if requested */
+  if (getMode () == MODE_INIT) {
+    nr_double_t ic = getPropertyDouble ("V");
+    if (ic != 0) v = ic;
+  }
 
   setState (qState, c * v);
   integrate (qState, c, g, i);
