@@ -1,3 +1,8 @@
+2006-07-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic.cpp (contentsDropEvent): Fixed file name conversion
+	from URI object.
+
 2006-07-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdigi, qucsdigi.bat: Added -q argument to enable quiet
