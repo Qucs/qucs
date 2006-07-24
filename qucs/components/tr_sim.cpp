@@ -78,6 +78,8 @@ TR_Sim::TR_Sim()
 	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ, GolubSVD]"));
   Props.append(new Property("relaxTSR", "no", false,
 	QObject::tr("relax time step raster")+" [no, yes]"));
+  Props.append(new Property("initialDC", "yes", false,
+	QObject::tr("perform an initial DC analysis")+" [yes, no]"));
 }
 
 TR_Sim::~TR_Sim()
