@@ -92,7 +92,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
     // calls indirectly "becomeCurrent"
     App->DocumentTab->setCurrentPage(App->DocumentTab->indexOf(this));
 
-    showFrame = false;
+    showFrame = 0;  // don't show
     Frame_Text0 = tr("Title");
     Frame_Text1 = tr("Drawn By:");
     Frame_Text2 = tr("Date:");
@@ -289,12 +289,19 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 // -----------------------------------------------------------
 void Schematic::paintFrame(ViewPainter *p)
 {
-  if(!showFrame) return;
-  p->Painter->setPen(QPen(QPen::black,0));
-
   // dimensions:  X cm / 2.54 * 144
-  int xall = 1530;
-  int yall = 1020;
+  int xall, yall;
+  switch(showFrame) {
+    case 1:  xall = 1020; yall =  765; break;  // DIN A5 landscape
+    case 2:  xall =  765; yall = 1020; break;  // DIN A5 portrait
+    case 3:  xall = 1530; yall = 1020; break;  // DIN A4 landscape
+    case 4:  xall = 1020; yall = 1530; break;  // DIN A4 portrait
+    case 5:  xall = 2295; yall = 1530; break;  // DIN A3 landscape
+    case 6:  xall = 1530; yall = 2295; break;  // DIN A3 portrait
+    default:  return;
+  }
+
+  p->Painter->setPen(QPen(QPen::black,0));
   int d = p->LineSpacing + int(4.0 * p->Scale);
   int x1_, y1_, x2_, y2_;
   p->map(xall, yall, x1_, y1_);
@@ -456,13 +463,9 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void Schematic::print(QPrinter *Printer, bool printAll, bool fitToPage)
+void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
-  QPainter painter(Printer);
-  if(!painter.device())   // valid device available ?
-    return;
-
-  QPaintDeviceMetrics metrics(painter.device());
+  QPaintDeviceMetrics metrics(Painter->device());
   float PrintScale = 0.5;
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   int marginX = 40 * metrics.logicalDpiX() / 72;
@@ -488,7 +491,9 @@ void Schematic::print(QPrinter *Printer, bool printAll, bool fitToPage)
     if(UsedX1 > 0)  StartX = 0;
     if(UsedY1 > 0)  StartY = 0;
   }
-  p.init(&painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
+
+  QFont oldFont = Painter->font();
+  p.init(Painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
          -StartX, -StartY, -marginX, -marginY, PrintScale);
 
   paintFrame(&p);
@@ -570,6 +575,8 @@ void Schematic::print(QPrinter *Printer, bool printAll, bool fitToPage)
       pp->paint(&p);   // paint all selected paintings
       pp->isSelected = selected;
     }
+
+  Painter->setFont(oldFont);
 }
 
 // -----------------------------------------------------------

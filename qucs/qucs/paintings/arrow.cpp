@@ -208,14 +208,14 @@ QString Arrow::save()
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool Arrow::ResizeTouched(int x, int y)
+bool Arrow::ResizeTouched(int x, int y, int len)
 {
-  if(x < cx+5) if(x > cx-5) if(y < cy+5) if(y > cy-5) {
+  if(x < cx+len) if(x > cx-len) if(y < cy+len) if(y > cy-len) {
     State = 1;
     return true;
   }
 
-  if(x < cx+x2+5) if(x > cx+x2-5) if(y < cy+y2+5) if(y > cy+y2-5) {
+  if(x < cx+x2+len) if(x > cx+x2-len) if(y < cy+y2+len) if(y > cy+y2-len) {
     State = 2;
     return true;
   }

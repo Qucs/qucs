@@ -24,8 +24,8 @@
 class GraphicLine : public Painting  {
 public:
   GraphicLine(int cx_=0, int cy_=0, int x2_=0, int y2_=0,
-		QPen Pen_=QPen(QColor()));
-  ~GraphicLine();
+              QPen Pen_=QPen(QColor()));
+ ~GraphicLine();
 
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
@@ -40,7 +40,7 @@ public:
   bool MousePressing();
   bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
-  bool ResizeTouched(int, int);
+  bool ResizeTouched(int, int, int);
   void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();

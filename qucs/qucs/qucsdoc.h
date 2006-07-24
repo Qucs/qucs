@@ -23,6 +23,7 @@
 
 class QucsApp;
 class QPrinter;
+class QPainter;
 
 extern const char *smallsave_xpm[];// icon for unsaved files (diskette)
 extern const char *empty_xpm[];    // provides same height than "smallsave_xpm"
@@ -36,7 +37,7 @@ public:
   virtual void  setName(const QString&) {};
   virtual bool  load() { return true; };
   virtual int   save() { return 0; };
-  virtual void  print(QPrinter*, bool, bool) {};
+  virtual void  print(QPrinter*, QPainter*, bool, bool) {};
   virtual void  becomeCurrent(bool) {};
   virtual float zoom(float) { return 1.0; };
   virtual void  showAll() {};
