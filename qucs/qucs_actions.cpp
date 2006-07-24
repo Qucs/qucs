@@ -634,6 +634,23 @@ void QucsApp::slotCallMatch()
   d->exec();
 }
 
+// ------------------------------------------------------------------------
+// Is called to start the attenuator calculation program.
+void QucsApp::slotCallAtt()
+{
+  QProcess *QucsAtt =
+    new QProcess(QString(QucsSettings.BinDir + "qucsattenuator"));
+  if(!QucsAtt->start()) {
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Cannot start attenuator calculation program!"));
+    delete QucsAtt;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), QucsAtt, SLOT(kill()));
+}
+
 // --------------------------------------------------------------
 void QucsApp::slotHelpIndex()
 {

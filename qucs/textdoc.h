@@ -38,7 +38,7 @@ public:
   void  setName(const QString&);
   bool  load();
   int   save();
-  void  print(QPrinter*, bool, bool);
+  void  print(QPrinter*, QPainter*, bool, bool);
   float zoom(float);
   void  showAll();
   void  showNoZoom();

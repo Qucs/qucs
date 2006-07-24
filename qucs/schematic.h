@@ -44,7 +44,7 @@ public:
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
   void paintGrid(ViewPainter*, int, int, int, int);
-  void print(QPrinter*, bool, bool);
+  void print(QPrinter*, QPainter*, bool, bool);
 
   float textCorr();
   void  sizeOfAll(int&, int&, int&, int&);
@@ -92,7 +92,7 @@ public:
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
-  bool showFrame;
+  int showFrame;
   QString Frame_Text0, Frame_Text1, Frame_Text2, Frame_Text3;
 
   // Two of those data sets are needed for Schematic and for symbol.

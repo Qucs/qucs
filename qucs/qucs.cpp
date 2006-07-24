@@ -333,7 +333,8 @@ pInfoFunc digitalComps[] =
 
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
+   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, &Optimize_Sim::info,
+   0};
 
 pInfoFunc FileComponents[] =
   {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2,
@@ -1481,10 +1482,29 @@ void QucsApp::printCurrentDocument(bool fitToPage)
   else
     Printer->setOrientation(QPrinter::Landscape);
 
-  if(Printer->setup(this))   // printer dialog
-    getDoc()->print(Printer, Printer->printRange() == QPrinter::AllPages, fitToPage);
+  if(Printer->setup(this)) {   // printer dialog
+
+    QPainter Painter(Printer);
+    if(!Painter.device())   // valid device available ?
+      goto Error;
+
+    for(int z=Printer->numCopies(); z>0 ; z--) {
+      if(Printer->aborted())
+        break;
+
+      getDoc()->print(Printer, &Painter,
+              Printer->printRange() == QPrinter::AllPages, fitToPage);
+      if(z > 1)
+        if(!Printer->newPage())
+          goto Error;
+    }
+  }
 
   statusBar()->message(tr("Ready."));
+  return;
+
+Error:
+  statusBar()->message(tr("Printer Error."));
 }
 
 // --------------------------------------------------------------

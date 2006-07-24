@@ -40,6 +40,8 @@ Capacitor::Capacitor()
 
   Props.append(new Property("C", "1 pF", true,
 		QObject::tr("capacitance in Farad")));
+  Props.append(new Property("V", "", false,
+		QObject::tr("initial voltage for transient simulation (t=0)")));
 }
 
 Capacitor::~Capacitor()

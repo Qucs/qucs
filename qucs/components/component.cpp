@@ -1364,6 +1364,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "HB") c = new HB_Sim();
         else if(cstr == "SW") c = new Param_Sweep();
         else if(cstr == "Digi") c = new Digi_Sim();
+        else if(cstr == "Opt") c = new Optimize_Sim();
         break;
   case '_' : if(cstr == "BJT") c = new BJT();
 	else if(cstr == "MOSFET") c = new MOSFET();

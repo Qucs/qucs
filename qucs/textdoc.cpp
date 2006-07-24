@@ -162,24 +162,21 @@ int TextDoc::save()
 }
 
 // -----------------------------------------------------------
-void TextDoc::print(QPrinter *Printer, bool printAll, bool)
+void TextDoc::print(QPrinter *Printer, QPainter *Painter, bool printAll, bool)
 {
-  QPainter p(Printer);
-  if(!p.device())   // valid device available ?
-    return;
-  p.setFont(QucsSettings.font);
+  Painter->setFont(QucsSettings.font);
 
   sync();   // formatting whole text
 
-  QPaintDeviceMetrics metrics(p.device());
+  QPaintDeviceMetrics metrics(Painter->device());
   int margin  = 54;    // margin at each side (unit is point)
   int marginX = margin * metrics.logicalDpiX() / 72;
   int marginY = margin * metrics.logicalDpiY() / 72;
   QRect printArea(
           marginX, marginY, metrics.width() - 2*marginX,
-          metrics.height() - 2*marginY - p.fontMetrics().lineSpacing());
+          metrics.height() - 2*marginY - Painter->fontMetrics().lineSpacing());
 
-  int linesPerPage = printArea.height() / p.fontMetrics().lineSpacing();
+  int linesPerPage = printArea.height() / Painter->fontMetrics().lineSpacing();
 
   int PageCount, PageNo = 1;
   QString s, printText;
@@ -202,12 +199,12 @@ void TextDoc::print(QPrinter *Printer, bool printAll, bool)
   for(;;) {
     if(Printer->aborted())
       break;
-    p.drawText(printArea, 0, printText.section('\n', 0, linesPerPage-1));
+    Painter->drawText(printArea, 0, printText.section('\n', 0, linesPerPage-1));
     printText = printText.section('\n', linesPerPage);
 
     s = tr("Page %1 of %2").arg(PageNo).arg(PageCount);
-    p.drawText(printArea.right() - p.fontMetrics().width(s),
-               printArea.bottom() + p.fontMetrics().lineSpacing(), s);
+    Painter->drawText(printArea.right() - Painter->fontMetrics().width(s),
+               printArea.bottom() + Painter->fontMetrics().lineSpacing(), s);
     if(printText.isEmpty())
       break;
     Printer->newPage();
