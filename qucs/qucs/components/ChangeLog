@@ -1,3 +1,7 @@
+2006-07-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* tr_sim.cpp (TR_Sim): Added new property 'initialDC'.
+
 2006-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* dc_sim.cpp (DC_Sim), tr_sim.cpp (TR_Sim): Allow choosing
