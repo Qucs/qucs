@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.cpp,v 1.12 2006-01-30 07:45:34 raimi Exp $
+ * $Id: object.cpp,v 1.13 2006-07-24 08:07:41 raimi Exp $
  *
  */
 
@@ -90,8 +90,10 @@ void object::addProperty (property * p) {
 
 /* This function adds a property consisting of a key and a string
    value to the object. */
-void object::addProperty (char * n, char * val) {
-  addProperty (new property (n, val));
+property * object::addProperty (char * n, char * val) {
+  property * p = new property (n, val);
+  addProperty (p);
+  return p;
 }
 
 /* This function sets the specified property consisting of a key and a
@@ -106,8 +108,10 @@ void object::setProperty (char * n, char * val) {
 
 /* This function adds a property consisting of a key and a double
    value to the object. */
-void object::addProperty (char * n, nr_double_t val) {
-  addProperty (new property (n, val));
+property * object::addProperty (char * n, nr_double_t val) {
+  property * p = new property (n, val);
+  addProperty (p);
+  return p;
 }
 
 /* This function sets the specified property consisting of a key and a
@@ -131,8 +135,10 @@ void object::setScaledProperty (char * n, nr_double_t val) {
 
 /* This function adds a property consisting of a key and a variable
    value to the object. */
-void object::addProperty (char * n, variable * val) {
-  addProperty (new property (n, val));
+property * object::addProperty (char * n, variable * val) {
+  property * p = new property (n, val);
+  addProperty (p);
+  return p;
 }
 
 /* Returns the requested property value which has been previously
@@ -186,8 +192,19 @@ int object::getPropertyInteger (char * n) {
 
 /* The function checks whether the object has got a certain property
    value.  If so it returns non-zero, otherwise it returns zero. */
-int object::hasProperty (char * n) {
-  return (prop && prop->findProperty (n)) ? 1 : 0;
+bool object::hasProperty (char * n) {
+  return (prop && prop->findProperty (n)) ? true : false;
+}
+
+/* The function checks whether the object has got a certain property
+   value and if this has its default value.  If so it returns  non-zero,
+   otherwise it returns zero. */
+bool object::isPropertyGiven (char * n) {
+  if (prop != NULL) {
+    property * p = prop->findProperty (n);
+    if (p != NULL && !p->isDefault ()) return true;
+  }
+  return false;
 }
 
 /* This function copies all properties in the given property list into

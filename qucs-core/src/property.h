@@ -1,7 +1,7 @@
 /*
  * property.h - generic property class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.h,v 1.5 2005-06-02 18:17:51 raimi Exp $
+ * $Id: property.h,v 1.6 2006-07-24 08:07:42 raimi Exp $
  *
  */
 
@@ -60,8 +60,11 @@ class property
   void set (variable *);
   property * findProperty (char *);
   char * toString (void);
+  bool isDefault (void) { return def; }
+  void setDefault (bool d) { def = d; }
 
  private:
+  bool def;
   int type;
   char * name;
   char * str;

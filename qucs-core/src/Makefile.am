@@ -47,7 +47,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	range.cpp devstates.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
-	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp
+	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
@@ -60,7 +60,8 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
 	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
 	valuelist.h pair.h characteristic.h range.h history.h fspecial.h      \
-	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h 
+	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
+	nasolution.h
 
 noinst_LIBRARIES = libqucsator.a
 

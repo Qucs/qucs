@@ -1,3 +1,40 @@
+2006-07-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolution.h (class nasolution): Implemented a storage
+	class for a nodal analysis solution.  Used by the transient
+	solver.
+
+	* vector.cpp: Each two-vector operation, e.g. +, -, polar, *,
+	/, %, arctan2 and pow can now be performed on vectors with
+	unequal length as long as the size of the longer vector is
+	a multiple of the shorter vector.
+
+	* valuelist.cpp: Added new clear() function.
+
+	* trsolver.cpp: Dealing with new property 'initialDC'
+	indicating whether an initial DC analysis should be performed
+	or not.  The results of this DC analysis are now also used
+	as starting values for the successive transient analyses.
+	This was meant to be implemented, but did not work.
+
+	* property.h (class property): New functions setDefault() and
+	isDefault indicating a property's default value.
+
+	* parse_netlist.y: The netlist parser can now skip empty
+	properties, e.g. k="", and handles it as if it was not
+	given at all.
+
+	* object.cpp: Each object can now indicate whether one of its
+	properties was actually given in the netlist or if has got its
+	default value.  The addProperty() functions now return the
+	created property instance.
+
+	* nasolver.cpp: Implemented a store/recall mechanismen for
+	solutions.
+
+	* input.cpp: Marking properties which were not given in the
+	netlist as default values.
+
 2006-07-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_dataset.y (YYMAXDEPTH): Increased stack size for *very*

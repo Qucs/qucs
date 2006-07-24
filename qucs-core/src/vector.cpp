@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.29 2006-06-23 14:38:01 raimi Exp $
+ * $Id: vector.cpp,v 1.30 2006-07-24 08:07:42 raimi Exp $
  *
  */
 
@@ -376,11 +376,20 @@ vector pow (const nr_double_t d, vector v) {
 }
 
 vector pow (vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  for (int i = 0; i < v1.getSize (); i++)
-    result.set (pow (v1.get (i), v2.get (i)), i);
-  return result;
+  int j, i, n, len, len1 = v1.getSize (), len2 = v2.getSize ();
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    len = len1;
+  } else {
+    assert (len2 % len1 == 0);
+    len = len2;
+  }
+  vector res (len);
+  for (j = i = n = 0; n < len; n++) {
+    res (n) = pow (v1 (i), v2 (j));
+    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+  }
+  return res;
 }
 
 vector sin (vector v) {
@@ -546,35 +555,42 @@ vector diff (vector var, vector dep, int n) {
 }
 
 vector vector::operator=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] = c;
+  for (int i = 0; i < size; i++) data[i] = c;
   return *this;
 }
 
 vector vector::operator=(const nr_double_t d) {
-  for (int i = 0; i < getSize (); i++) data[i] = d;
+  for (int i = 0; i < size; i++) data[i] = d;
   return *this;
 }
 
 vector vector::operator+=(vector v) {
-  if (checkSizes (*this, v))
-    for (int i = 0; i < getSize (); i++) data[i] += v.get (i);
+  int i, n, len = v.getSize ();
+  assert (size % len == 0);
+  for (i = n = 0; i < size; i++) { data[i] += v (n); if (++n >= len) n = 0; }
   return *this;
 }
 
 vector vector::operator+=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] += c;
+  for (int i = 0; i < size; i++) data[i] += c;
   return *this;
 }
 
 vector vector::operator+=(const nr_double_t d) {
-  for (int i = 0; i < getSize (); i++) data[i] += d;
+  for (int i = 0; i < size; i++) data[i] += d;
   return *this;
 }
 
 vector operator+(vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  result += v2;
+  int len1 = v1.getSize (), len2 = v2.getSize ();
+  vector result;
+  if (len1 >= len2) {
+    result  = v1;
+    result += v2;
+  } else {
+    result  = v2;
+    result += v1;
+  }
   return result;
 }
 
@@ -599,31 +615,38 @@ vector operator+(const nr_double_t d, vector v) {
 }
 
 vector vector::operator-() {
-  vector result (*this);
-  for (int i = 0; i < getSize (); i++) result.set (-get (i), i);
+  vector result (size);
+  for (int i = 0; i < size; i++) result (i) = -data[i];
   return result;
 }
 
 vector vector::operator-=(vector v) {
-  if (checkSizes (*this, v))
-    for (int i = 0; i < getSize (); i++) data[i] -= v.get (i);
+  int i, n, len = v.getSize ();
+  assert (size % len == 0);
+  for (i = n = 0; i < size; i++) { data[i] -= v (n); if (++n >= len) n = 0; }
   return *this;
 }
 
 vector vector::operator-=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] -= c;
+  for (int i = 0; i < size; i++) data[i] -= c;
   return *this;
 }
 
 vector vector::operator-=(const nr_double_t d) {
-  for (int i = 0; i < getSize (); i++) data[i] -= d;
+  for (int i = 0; i < size; i++) data[i] -= d;
   return *this;
 }
 
 vector operator-(vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  result -= v2;
+  int len1 = v1.getSize (), len2 = v2.getSize ();
+  vector result;
+  if (len1 >= len2) {
+    result  = v1;
+    result -= v2;
+  } else {
+    result  = -v2;
+    result += v1;
+  }
   return result;
 }
 
@@ -640,39 +663,44 @@ vector operator-(vector v, const nr_double_t d) {
 }
 
 vector operator-(const complex c, vector v) {
-  vector result (v);
-  result *= -1.0;
+  vector result (-v);
   result += c;
   return result;
 }
 
 vector operator-(const nr_double_t d, vector v) {
-  vector result (v);
-  result *= -1.0;
+  vector result (-v);
   result += d;
   return result;
 }
 
 vector vector::operator*=(vector v) {
-  if (checkSizes (*this, v))
-    for (int i = 0; i < getSize (); i++) data[i] *= v.get (i);
+  int i, n, len = v.getSize ();
+  assert (size % len == 0);
+  for (i = n = 0; i < size; i++) { data[i] *= v (n); if (++n >= len) n = 0; }
   return *this;
 }
 
 vector vector::operator*=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] *= c;
+  for (int i = 0; i < size; i++) data[i] *= c;
   return *this;
 }
 
 vector vector::operator*=(const nr_double_t d) {
-  for (int i = 0; i < getSize (); i++) data[i] *= d;
+  for (int i = 0; i < size; i++) data[i] *= d;
   return *this;
 }
 
 vector operator*(vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  result *= v2;
+  int len1 = v1.getSize (), len2 = v2.getSize ();
+  vector result;
+  if (len1 >= len2) {
+    result  = v1;
+    result *= v2;
+  } else {
+    result  = v2;
+    result *= v1;
+  }
   return result;
 }
 
@@ -697,25 +725,34 @@ vector operator*(const nr_double_t d, vector v) {
 }
 
 vector vector::operator/=(vector v) {
-  if (checkSizes (*this, v))
-    for (int i = 0; i < getSize (); i++) data[i] /= v.get (i);
+  int i, n, len = v.getSize ();
+  assert (size % len == 0);
+  for (i = n = 0; i < size; i++) { data[i] /= v (n); if (++n >= len) n = 0; }
   return *this;
 }
 
 vector vector::operator/=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] /= c;
+  for (int i = 0; i < size; i++) data[i] /= c;
   return *this;
 }
 
 vector vector::operator/=(const nr_double_t d) {
-  for (int i = 0; i < getSize (); i++) data[i] /= d;
+  for (int i = 0; i < size; i++) data[i] /= d;
   return *this;
 }
 
 vector operator/(vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  result /= v2;
+  int len1 = v1.getSize (), len2 = v2.getSize ();
+  vector result;
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    result  = v1;
+    result /= v2;
+  } else {
+    assert (len2 % len1 == 0);
+    result  = 1 / v2;
+    result *= v1;
+  }
   return result;
 }
 
@@ -746,35 +783,48 @@ vector operator/(const nr_double_t d, vector v) {
 }
 
 vector operator%(vector v, const complex z) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (v.get (i) % z, i);
+  int len = v.getSize ();
+  vector result (len);
+  for (int i = 0; i < len; i++) result (i) = v (i) % z;
   return result;
 }
 
 vector operator%(vector v, const nr_double_t d) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (v.get (i) % d, i);
+  int len = v.getSize ();
+  vector result (len);
+  for (int i = 0; i < len; i++) result (i) = v (i) % d;
   return result;
 }
 
 vector operator%(const complex z, vector v) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (z % v.get (i), i);
+  int len = v.getSize ();
+  vector result (len);
+  for (int i = 0; i < len; i++) result (i) = z % v (i);
   return result;
 }
 
 vector operator%(const nr_double_t d, vector v) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (d % v.get (i), i);
+  int len = v.getSize ();
+  vector result (len);
+  for (int i = 0; i < len; i++) result (i) = d % v (i);
   return result;
 }
 
 vector operator%(vector v1, vector v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector result (v1);
-  for (int i = 0; i < v1.getSize (); i++)
-    result.set (v1.get (i) % v2.get (i), i);
-  return result;
+  int j, i, n, len, len1 = v1.getSize (), len2 = v2.getSize ();
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    len = len1;
+  } else {
+    assert (len2 % len1 == 0);
+    len = len2;
+  }
+  vector res (len);
+  for (j = i = n = 0; n < len; n++) {
+    res (n) = v1 (i) % v2 (j);
+    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+  }
+  return res;
 }
 
 /* This function reverses the order of the data list. */
@@ -1010,11 +1060,20 @@ vector polar (vector v, const complex p) {
 }
 
 vector polar (vector a, vector p) {
-  assert (a.checkSizes (a, p));
-  int n = a.getSize () < p.getSize () ? a.getSize () : p.getSize ();
-  vector result (n);
-  for (int i = 0; i < n; i++) result.set (polar (a.get (i), p.get (i)), i);
-  return result;
+  int j, i, n, len, len1 = a.getSize (), len2 = p.getSize ();
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    len = len1;
+  } else {
+    assert (len2 % len1 == 0);
+    len = len2;
+  }
+  vector res (len);
+  for (j = i = n = 0; n < len; n++) {
+    res (n) = polar (a (i), p (j));
+    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+  }
+  return res;
 }
 
 vector arctan2 (const nr_double_t y, vector v) {
@@ -1032,12 +1091,20 @@ vector arctan2 (vector v, const nr_double_t x) {
 }
 
 vector arctan2 (vector y, vector x) {
-  assert (y.checkSizes (y, x));
-  int n = y.getSize () < x.getSize () ? y.getSize () : x.getSize ();
-  vector result (n);
-  for (int i = 0; i < n; i++)
-    result.set (arctan2 (y.get (i), x.get (i)), i);
-  return result;
+  int j, i, n, len, len1 = y.getSize (), len2 = x.getSize ();
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    len = len1;
+  } else {
+    assert (len2 % len1 == 0);
+    len = len2;
+  }
+  vector res (len);
+  for (j = i = n = 0; n < len; n++) {
+    res (n) = arctan2 (y (i), x (j));
+    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+  }
+  return res;
 }
 
 vector w2dbm (vector v) {

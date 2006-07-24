@@ -1,7 +1,7 @@
 /*
  * property.cpp - generic property class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.8 2005-06-02 18:17:51 raimi Exp $
+ * $Id: property.cpp,v 1.9 2006-07-24 08:07:42 raimi Exp $
  *
  */
 
@@ -44,6 +44,7 @@ property::property () {
   txt = NULL;
   var = NULL;
   next = NULL;
+  def = false;
 }
 
 // Constructor creates a named instance of the property class.
@@ -55,6 +56,7 @@ property::property (char * n) {
   txt = NULL;
   var = NULL;
   next = NULL;
+  def = false;
 }
 
 /* This full qualified constructor creates an instance of the property
@@ -67,6 +69,7 @@ property::property (char * n, char * val) {
   txt = NULL;
   var = NULL;
   next = NULL;
+  def = false;
 }
 
 /* This full qualified constructor creates an instance of the property
@@ -79,6 +82,7 @@ property::property (char * n, nr_double_t val) {
   txt = NULL;
   var = NULL;
   next = NULL;
+  def = false;
 }
 
 /* This full qualified constructor creates an instance of the property
@@ -91,6 +95,7 @@ property::property (char * n, variable * val) {
   txt = NULL;
   str = NULL;
   next = NULL;
+  def = false;
 }
 
 /* The copy constructor creates a new instance of the property class
@@ -103,6 +108,7 @@ property::property (const property & p) {
   txt = p.txt ? strdup (p.txt) : NULL;
   next = p.next;
   var = p.var;
+  def = p.def;
 }
 
 // Destructor deletes the property object.

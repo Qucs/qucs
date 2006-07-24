@@ -1,3 +1,8 @@
+2006-07-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* capacitor.cpp, inductor.cpp: Use initil condition only if
+	it is really given in the netlist.
+
 2006-07-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* inductor.cpp:  Added initial condition 'I' (current through

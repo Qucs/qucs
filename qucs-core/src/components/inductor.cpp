@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.cpp,v 1.16 2006-07-20 10:47:36 raimi Exp $
+ * $Id: inductor.cpp,v 1.17 2006-07-24 08:07:42 raimi Exp $
  *
  */
 
@@ -102,9 +102,8 @@ void inductor::calcTR (nr_double_t) {
   nr_double_t i = real (getJ (VSRC_1));
 
   /* apply initial condition if requested */
-  if (getMode () == MODE_INIT) {
-    nr_double_t ic = getPropertyDouble ("I");
-    if (ic != 0) i = ic;
+  if (getMode () == MODE_INIT && isPropertyGiven ("I")) {
+    i = getPropertyDouble ("I");
   }
 
   setState (fState, i * l);
