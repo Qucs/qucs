@@ -180,19 +180,19 @@ QString Ellipse::save()
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool Ellipse::ResizeTouched(int x, int y)
+bool Ellipse::ResizeTouched(int x, int y, int len)
 {
   State = -1;
-  if(x < cx-5) return false;
-  if(y < cy-5) return false;
-  if(x > cx+x2+5) return false;
-  if(y > cy+y2+5) return false;
+  if(x < cx-len) return false;
+  if(y < cy-len) return false;
+  if(x > cx+x2+len) return false;
+  if(y > cy+y2+len) return false;
 
   State = 0;
-  if(x < cx+5) State = 1;
-  else if(x <= cx+x2-5) { State = -1; return false; }
-  if(y < cy+5)  State |= 2;
-  else if(y <= cy+y2-5) { State = -1; return false; }
+  if(x < cx+len) State = 1;
+  else if(x <= cx+x2-len) { State = -1; return false; }
+  if(y < cy+len)  State |= 2;
+  else if(y <= cy+y2-len) { State = -1; return false; }
 
   return true;
 }

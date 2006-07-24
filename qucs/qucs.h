@@ -243,7 +243,8 @@ public:
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
           *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker,
-          *createLib, *importData, *graph2csv, *createPkg, *extractPkg;
+          *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
+          *callAtt;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -282,6 +283,7 @@ public slots:
   void slotCallLine();
   void slotCallLibrary();
   void slotCallMatch();
+  void slotCallAtt();
   void slotHelpIndex();       // shows a HTML docu: Help Index
   void slotGettingStarted();  // shows a HTML docu: Getting started
   void slotChangeProps();

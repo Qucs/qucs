@@ -41,6 +41,8 @@ Inductor::Inductor()
 
   Props.append(new Property("L", "1 nH", true,
 		QObject::tr("inductance in Henry")));
+  Props.append(new Property("I", "", false,
+		QObject::tr("initial current for transient simulation (t=0)")));
 }
 
 Inductor::~Inductor()

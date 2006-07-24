@@ -519,6 +519,13 @@ void QucsApp::initActions()
 		tr("Matching Circuit\n\nDialog for Creating Matching Circuit"));
   connect(callMatch, SIGNAL(activated()), SLOT(slotCallMatch()));
 
+  callAtt = new QAction("Attenuator synthesis",
+			tr("Attenuator synthesis"), CTRL+Key_6, this);
+  callAtt->setStatusTip(tr("Starts QucsAttenuator"));
+  callAtt->setWhatsThis(
+		tr("Attenuator synthesis\n\nStarts attenuator calculation program"));
+  connect(callAtt, SIGNAL(activated()), SLOT(slotCallAtt()));
+
   simulate = new QAction("Simulate",
 		QIconSet(QImage(QucsSettings.BitmapDir + "gear.png")),
 		tr("Simulate"), Key_F2, this);
@@ -691,6 +698,7 @@ void QucsApp::initMenuBar()
   callLine->addTo(toolMenu);
   callLib->addTo(toolMenu);
   callMatch->addTo(toolMenu);
+  callAtt->addTo(toolMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   simulate->addTo(simMenu);

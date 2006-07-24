@@ -298,8 +298,7 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
 		else SimOpenDpl = true;
     else if(cstr == "showFrame")
-		if(nstr.at(0) == '1') showFrame = true;
-		else showFrame = false;
+		showFrame = nstr.at(0).latin1() - '0';
     else if(cstr == "FrameText0") {
                 Frame_Text0 = nstr;
                 Frame_Text0.replace("\\n", "\n");

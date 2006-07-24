@@ -26,7 +26,7 @@
 class EllipseArc : public Painting  {
 public:
   EllipseArc();
-  ~EllipseArc();
+ ~EllipseArc();
 
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
@@ -41,7 +41,7 @@ public:
   bool MousePressing();
   bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
-  bool ResizeTouched(int, int);
+  bool ResizeTouched(int, int, int);
   void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();
