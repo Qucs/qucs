@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.47 2006/06/23 14:38:01 raimi Exp $
+ * $Id: trsolver.cpp,v 1.48 2006/07/24 08:07:42 raimi Exp $
  *
  */
 
@@ -62,6 +62,7 @@ trsolver::trsolver ()
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = NULL;
   relaxTSR = false;
+  initialDC = true;
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -73,6 +74,7 @@ trsolver::trsolver (char * n)
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = NULL;
   relaxTSR = false;
+  initialDC = true;
 }
 
 // Destructor deletes the trsolver class object.
@@ -90,6 +92,7 @@ trsolver::trsolver (trsolver & o)
   for (int i = 0; i < 8; i++) solution[i] = NULL;
   tHistory = o.tHistory ? new history (*o.tHistory) : NULL;
   relaxTSR = o.relaxTSR;
+  initialDC = o.initialDC;
 }
 
 // This function creates the time sweep if necessary.
@@ -101,23 +104,10 @@ void trsolver::initSteps (void) {
 // Macro for the n-th state of the solution vector history.
 #define SOL(state) (solution[(int) getState (sState, (state))])
 
-/* This is the transient netlist solver.  It prepares the circuit list
-   for each requested time and solves it then. */
-void trsolver::solve (void) {
-  nr_double_t time, saveCurrent;
-  int error = 0, convError = 0;
-  char * solver = getPropertyString ("Solver");
-  relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
 
-  runs++;
-  saveCurrent = current = 0;
-  stepDelta = -1;
-  converged = 0;
-  fixpoint = 0;
-  statRejected = statSteps = statIterations = statConvergence = 0;
-
-  // Create time sweep if necessary.
-  initSteps ();
+// Performs the initial DC analysis.
+int trsolver::dcAnalysis (void) {
+  int error = 0;
 
   // First calculate a initial state using the non-linear DC analysis.
   setDescription ("initial DC");
@@ -125,18 +115,6 @@ void trsolver::solve (void) {
   setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
   applyNodeset ();
-
-  // Choose a solver.
-  if (!strcmp (solver, "CroutLU"))
-    eqnAlgo = ALGO_LU_DECOMPOSITION;
-  else if (!strcmp (solver, "DoolittleLU"))
-    eqnAlgo = ALGO_LU_DECOMPOSITION_DOOLITTLE;
-  else if (!strcmp (solver, "HouseholderQR"))
-    eqnAlgo = ALGO_QR_DECOMPOSITION;
-  else if (!strcmp (solver, "HouseholderLQ"))
-    eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
-  else if (!strcmp (solver, "GolubSVD"))
-    eqnAlgo = ALGO_SV_DECOMPOSITION;
 
   // Run the DC solver once.
   try_running () {
@@ -157,21 +135,68 @@ void trsolver::solve (void) {
     error++;
     break;
   }
+
+  // Save the DC solution.
+  storeSolution ();
+
+  // Cleanup nodal analysis solver.
   solve_post ();
 
   // Really failed to find initial DC solution?
   if (error) {
     logprint (LOG_ERROR, "ERROR: %s: %s analysis failed\n",
 	      getName (), getDescription ());
-    return;
+  }
+  return error;
+}
+
+/* This is the transient netlist solver.  It prepares the circuit list
+   for each requested time and solves it then. */
+void trsolver::solve (void) {
+  nr_double_t time, saveCurrent;
+  int error = 0, convError = 0;
+  char * solver = getPropertyString ("Solver");
+  relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
+  initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
+
+  runs++;
+  saveCurrent = current = 0;
+  stepDelta = -1;
+  converged = 0;
+  fixpoint = 0;
+  statRejected = statSteps = statIterations = statConvergence = 0;
+
+  // Create time sweep if necessary.
+  initSteps ();
+
+  // Choose a solver.
+  if (!strcmp (solver, "CroutLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION;
+  else if (!strcmp (solver, "DoolittleLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION_DOOLITTLE;
+  else if (!strcmp (solver, "HouseholderQR"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION;
+  else if (!strcmp (solver, "HouseholderLQ"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
+  else if (!strcmp (solver, "GolubSVD"))
+    eqnAlgo = ALGO_SV_DECOMPOSITION;
+
+  // Perform initial DC analysis.
+  if (initialDC) {
+    error = dcAnalysis ();
+    if (error)
+      return;
   }
 
   // Initialize transient analysis.
   setDescription ("transient");
-  initTR ();
   setCalculation ((calculate_func_t) &calcTR);
   solve_pre ();
+  initTR ();
   swp->reset ();
+
+  // Recall the DC solution.
+  recallSolution ();
 
   // Apply the nodesets and adjust previous solutions.
   applyNodeset (false);

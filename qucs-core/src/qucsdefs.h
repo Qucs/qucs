@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.50 2006/07/20 10:47:34 raimi Exp $
+ * $Id: qucsdefs.h,v 1.51 2006/07/24 08:07:42 raimi Exp $
  *
  */
 
@@ -828,6 +828,7 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
       { "relaxTSR", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "initialDC", PROP_STR, { PROP_NO_VAL, "yes" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* harmonic balance analysis */

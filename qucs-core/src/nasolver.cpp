@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.43 2006/05/03 09:43:56 raimi Exp $
+ * $Id: nasolver.cpp,v 1.44 2006/07/24 08:07:41 raimi Exp $
  *
  */
 
@@ -124,6 +124,7 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   gMin = o.gMin;
   srcFactor = o.srcFactor;
   eqns = new eqnsys<nr_type_t> (*(o.eqns));
+  solution = nasolution<nr_type_t> (o.solution);
 }
 
 /* The function runs the nodal analysis solver once, reports errors if
@@ -1059,6 +1060,47 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::saveSolution (void) {
   saveNodeVoltages ();
   saveBranchCurrents ();
+}
+
+// This function stores the solution (node voltages and branch currents).
+template <class nr_type_t>
+void nasolver<nr_type_t>::storeSolution (void) {
+  // cleanup solution previously
+  solution.clear ();
+  int N = countNodes ();
+  int M = countVoltageSources ();
+  // store all nodes except reference node
+  for (int r = 0; r < N; r++) {
+    struct nodelist_t * n = nlist->getNode (r);
+    solution.add (n->name, x->get (r), 0);
+  }
+  // store all branch currents of voltage sources
+  for (int r = 0; r < M; r++) {
+    circuit * vs = findVoltageSource (r);
+    int vn = r - vs->getVoltageSource () + 1;
+    solution.add (vs->getName (), x->get (r + N), vn);
+  }
+}
+
+// This function recalls the solution (node voltages and branch currents).
+template <class nr_type_t>
+void nasolver<nr_type_t>::recallSolution (void) {
+  int N = countNodes ();
+  int M = countVoltageSources ();
+  naentry<nr_type_t> * na;
+  // store all nodes except reference node
+  for (int r = 0; r < N; r++) {
+    struct nodelist_t * n = nlist->getNode (r);
+    if ((na = solution.find (n->name, 0)) != NULL)
+      x->set (r, na->value);
+  }
+  // store all branch currents of voltage sources
+  for (int r = 0; r < M; r++) {
+    circuit * vs = findVoltageSource (r);
+    int vn = r - vs->getVoltageSource () + 1;
+    if ((na = solution.find (vs->getName (), vn)) != NULL)
+      x->set (r + N, na->value);
+  }
 }
 
 /* This function saves the results of a single solve() functionality

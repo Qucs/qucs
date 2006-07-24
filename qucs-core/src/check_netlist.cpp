@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.94 2006/06/23 14:38:00 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.95 2006/07/24 08:07:41 raimi Exp $
  *
  */
 
@@ -209,6 +209,7 @@ static struct special_t checker_specials[] = {
   { "TR",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
 			       "HouseholderLQ", "GolubSVD", NULL } },
   { "TR",     "relaxTSR",    { "yes", "no", NULL } },
+  { "TR",     "initialDC",   { "yes", "no", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },

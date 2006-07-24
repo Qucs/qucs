@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.21 2006/02/20 18:02:11 raimi Exp $
+ * $Id: nasolver.h,v 1.22 2006/07/24 08:07:41 raimi Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
+#include "nasolution.h"
 
 // Convergence helper definitions.
 #define CONV_None            0
@@ -77,6 +78,8 @@ class nasolver : public analysis
   void createNoiseMatrix (void);
   void runMNA (void);
   void createMatrix (void);
+  void storeSolution (void);
+  void recallSolution (void);
 
  private:
   void assignVoltageSources (void);
@@ -119,6 +122,7 @@ class nasolver : public analysis
   nr_double_t reltol;
   nr_double_t abstol;
   nr_double_t vntol;
+  nasolution<nr_type_t> solution;
 
  private:
   char * desc;

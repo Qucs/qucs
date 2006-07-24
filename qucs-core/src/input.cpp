@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.57 2006/03/24 14:30:05 raimi Exp $
+ * $Id: input.cpp,v 1.58 2006/07/24 08:07:41 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "trsolver.h"
 #include "hbsolver.h"
 #include "variable.h"
+#include "property.h"
 #include "environment.h"
 #include "nodeset.h"
 #include "input.h"
@@ -293,13 +294,18 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
   for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
     // is the property already assigned ?
     if (!obj->hasProperty (def->optional[i].key)) {
+      property * p;
       if (PROP_IS_VAL (def->optional[i])) {
 	// add double property
-	obj->addProperty (def->optional[i].key, def->optional[i].defaultval.d);
+	p = obj->addProperty (def->optional[i].key,
+			      def->optional[i].defaultval.d);
+	p->setDefault (true);
       }
       else {
 	// add string property
-	obj->addProperty (def->optional[i].key, def->optional[i].defaultval.s);
+	p = obj->addProperty (def->optional[i].key,
+			      def->optional[i].defaultval.s);
+	p->setDefault (true);
       }
     }
   }

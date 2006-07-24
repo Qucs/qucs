@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.20 2006/04/24 08:25:46 raimi Exp $
+ * $Id: parse_netlist.y,v 1.21 2006/07/24 08:07:42 raimi Exp $
  *
  */
 
@@ -177,6 +177,21 @@ PairList: /* nothing */ { $$ = NULL; }
     $$->value = $2;
     $$->next = $3;
   }    
+  | Assign NoneValue PairList {
+    if (0) {
+      $$ = (struct pair_t *) calloc (sizeof (struct pair_t), 1);
+      $$->key = $1;
+      $$->value = NULL;
+      $$->next = $3;
+    } else {
+      free ($1);
+      $$ = $3;
+    }
+  }    
+;
+
+NoneValue:  { /* nothing */ }
+  | '"' '"' { /* also nothing */ }
 ;
 
 Value:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: valuelist.cpp,v 1.1 2006/01/09 09:11:07 raimi Exp $
+ * $Id: valuelist.cpp,v 1.2 2006/07/24 08:07:42 raimi Exp $
  *
  */
 
@@ -54,12 +54,20 @@ valuelist<type_t>::valuelist (const valuelist<type_t> & p) {
 // Destructor deletes a valuelist object.
 template <class type_t>
 valuelist<type_t>::~valuelist () {
+  clear ();
+}
+
+// Resets the value list.
+template <class type_t>
+void valuelist<type_t>::clear (void) {
   valentry<type_t> * next;
   while (root) {
     next = root->next;
     delete root;
     root = next;
   }
+  size = 0;
+  last = NULL;
 }
 
 // Puts a new entry at the beginning of the value list.

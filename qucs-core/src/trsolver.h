@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.22 2006/04/24 08:25:46 raimi Exp $
+ * $Id: trsolver.h,v 1.23 2006/07/24 08:07:42 raimi Exp $
  *
  */
 
@@ -65,6 +65,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void predictGear (void);
   void initCircuitTR (circuit *);
   void fillSolution (tvector<nr_double_t> *);
+  int  dcAnalysis (void);
 
  private:
   sweep * swp;
@@ -94,6 +95,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int statConvergence;
   history * tHistory;
   bool relaxTSR;
+  bool initialDC;
 };
 
 #endif /* __TRSOLVER_H__ */
