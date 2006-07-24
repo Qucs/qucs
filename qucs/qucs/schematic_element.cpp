@@ -934,6 +934,7 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
   }
 
   Graph *pg;
+  n = int(5.0 / Scale);  // size if area for resizing
   // test all diagrams
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
 
@@ -952,7 +953,7 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
 
     // resize area clicked ?
     if(pd->isSelected)
-      if(pd->ResizeTouched(x, y))
+      if(pd->ResizeTouched(x, y, n))
 	if(pe_1st == 0) {
 	  pd->Type = isDiagramResize;
 	  return pd;
@@ -1000,7 +1001,7 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
   // test all paintings
   for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev()) {
     if(pp->isSelected)
-      if(pp->ResizeTouched(x, y))
+      if(pp->ResizeTouched(x, y, n))
 	if(pe_1st == 0) {
 	  pp->Type = isPaintingResize;
 	  return pp;

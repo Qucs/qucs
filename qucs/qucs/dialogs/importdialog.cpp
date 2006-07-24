@@ -79,10 +79,11 @@ void ImportDialog::slotBrowse()
 {
   QString s = QFileDialog::getOpenFileName(
      lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("All known")+" (*.s?p *.citi *.cit *.vcd);;"+
-     tr("Touchstone")+" (*.s?p);;"+
-     tr("CITI")+" (*.citi *.cit);;"+
-     tr("VCD")+" (*.vcd);;"+
+     tr("All known")+" (*.s?p *.citi *.cit *.asc *.vcd);;"+
+     tr("Touchstone files")+" (*.s?p);;"+
+     tr("CITI files")+" (*.citi *.cit);;"+
+     tr("ZVR ASCII files")+" (*.asc);;"+
+     tr("VCD files")+" (*.vcd);;"+
      tr("Any File")+" (*)",
      this, 0, tr("Enter a Data File Name"));
 
@@ -119,6 +120,8 @@ void ImportDialog::slotImport()
     CommandLine << "citi";
   else if(Prefix == "vcd")
     CommandLine << "vcd";
+  else if(Prefix == "asc")
+    CommandLine << "zvr";
   else for(;;) {
     if(Prefix.at(0) == 's')
       if(Prefix.at(2) == 'p')

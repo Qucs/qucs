@@ -10,6 +10,14 @@
 
 2006-07-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
+	* new import file format: ZVR ASCII format
+	* resize rectangles are scale-independent
+	* number of print copies
+	* label dialog rejects two "_" together
+	* several frame formats
+
+2006-07-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
 	* fixed bug at "zoom 1" on empty page
 	* new document property: schematic page frame
 	* browse window on left-hand side is dockable

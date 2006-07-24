@@ -641,18 +641,18 @@ bool Diagram::getSelected(int x_, int y_)
 // ------------------------------------------------------------
 // Checks if the resize area was clicked. If so return "true" and sets
 // x1/y1 and x2/y2 to the border coordinates to draw a rectangle.
-bool Diagram::ResizeTouched(int x, int y)
+bool Diagram::ResizeTouched(int x, int y, int len)
 {
-  if(x < cx-5) return false;
-  if(x > cx+x2+5) return false;
-  if(y < cy-y2-5) return false;
-  if(y > cy+5) return false;
+  if(x < cx-len) return false;
+  if(x > cx+x2+len) return false;
+  if(y < cy-y2-len) return false;
+  if(y > cy+len) return false;
 
   State = 0;
-  if(x < cx+5) State = 1;
-  else  if(x <= cx+x2-5) return false;
-  if(y > cy-5) State |= 2;
-  else  if(y >= cy-y2+5) return false;
+  if(x < cx+len) State = 1;
+  else  if(x <= cx+x2-len) return false;
+  if(y > cy-len) State |= 2;
+  else  if(y >= cy-y2+len) return false;
 
   return true;
 }
@@ -998,8 +998,8 @@ else {  // of "if not digital"
       *(pc++) = *(pPos++);
       if(pEnd <= pc) {
         counting = pc - (char*)g->cPointsY;
-        g->cPointsY = (double*)realloc(g->cPointsY, counting+1024);
-	pEnd = pc = (char*)g->cPointsY;
+        pc = (char*)realloc(g->cPointsY, counting+1024);
+        (char*)g->cPointsY = pEnd = pc;
         pc += counting;
         pEnd += counting+1020;
       }

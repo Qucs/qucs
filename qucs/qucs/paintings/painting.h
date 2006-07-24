@@ -37,10 +37,10 @@ public:
   virtual QString save();
   virtual void paint(ViewPainter*) {};
   virtual void MouseMoving(QPainter*, int, int, int, int,
-			   QPainter*, int, int, bool) {};
+                           QPainter*, int, int, bool) {};
   virtual bool MousePressing() { return false; };
   virtual void Bounding(int&, int&, int&, int&) {};
-  virtual bool ResizeTouched(int, int) { return false; };
+  virtual bool ResizeTouched(int, int, int) { return false; };
   virtual void MouseResizeMoving(int, int, QPainter*) {};
 
   virtual void rotate() {};

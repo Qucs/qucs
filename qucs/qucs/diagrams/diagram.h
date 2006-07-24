@@ -70,7 +70,7 @@ public:
   void    paintScheme(QPainter*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
-  bool    ResizeTouched(int, int);
+  bool    ResizeTouched(int, int, int);
   QString save();
   bool    load(const QString&, QTextStream*);
 

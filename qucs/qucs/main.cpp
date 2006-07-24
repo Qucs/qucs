@@ -472,7 +472,10 @@ int main(int argc, char *argv[])
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   a.installTranslator( &tor );
 
+  // This seems to be neccessary on a few system to make strtod()
+  // work properly !???!
   setlocale (LC_NUMERIC, "C");
+
   QucsMain = new QucsApp();
   a.setMainWidget(QucsMain);
   QucsMain->show();

@@ -26,7 +26,7 @@
 class Arrow : public Painting  {
 public:
   Arrow();
-  ~Arrow();
+ ~Arrow();
 
   void paint(ViewPainter*);
   void paintScheme(QPainter*);
@@ -41,7 +41,7 @@ public:
   bool MousePressing();
   bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
-  bool ResizeTouched(int, int);
+  bool ResizeTouched(int, int, int);
   void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();

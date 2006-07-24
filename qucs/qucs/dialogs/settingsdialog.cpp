@@ -29,6 +29,7 @@
 #include <qlineedit.h>
 #include <qtextedit.h>
 #include <qcheckbox.h>
+#include <qcombobox.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
 #include <qpushbutton.h>
@@ -89,8 +90,15 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   // ...........................................................
   QWidget *Tab3 = new QWidget(t);
   QGridLayout *gp3 = new QGridLayout(Tab3,5,2,5,5);
-  Check_showFrame = new QCheckBox(tr("show Frame"),Tab3);
-  gp3->addMultiCellWidget(Check_showFrame,0,0,0,1);
+  Combo_Frame = new QComboBox(Tab3);
+  Combo_Frame->insertItem(tr("no Frame"));
+  Combo_Frame->insertItem(tr("DIN A5 landscape"));
+  Combo_Frame->insertItem(tr("DIN A5 portrait"));
+  Combo_Frame->insertItem(tr("DIN A4 landscape"));
+  Combo_Frame->insertItem(tr("DIN A4 portrait"));
+  Combo_Frame->insertItem(tr("DIN A3 landscape"));
+  Combo_Frame->insertItem(tr("DIN A3 portrait"));
+  gp3->addMultiCellWidget(Combo_Frame,0,0,0,1);
 
   Input_Frame0 = new QTextEdit(Tab3);
   Input_Frame0->setTextFormat(Qt::PlainText);
@@ -132,7 +140,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   Check_GridOn->setChecked(Doc->GridOn);
   Input_GridX->setText(QString::number(Doc->GridX));
   Input_GridY->setText(QString::number(Doc->GridY));
-  Check_showFrame->setChecked(Doc->showFrame);
+  Combo_Frame->setCurrentItem(Doc->showFrame);
   Input_Frame0->setText(Doc->Frame_Text0);
   Input_Frame1->setText(Doc->Frame_Text1);
   Input_Frame2->setText(Doc->Frame_Text2);
@@ -189,8 +197,8 @@ void SettingsDialog::slotApply()
     changed = true;
   }
 
-  if(Doc->showFrame != Check_showFrame->isChecked()) {
-    Doc->showFrame = Check_showFrame->isChecked();
+  if(Doc->showFrame != Combo_Frame->currentItem()) {
+    Doc->showFrame = Combo_Frame->currentItem();
     changed = true;
   }
 
