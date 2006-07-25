@@ -940,18 +940,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Touchstone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CITI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VCD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Any File</source>
         <translation type="unfinished">Qualsiasi file</translation>
     </message>
@@ -997,6 +985,22 @@
     </message>
     <message>
         <source>Converter ended with errors!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone files</source>
+        <translation type="unfinished">File Touchstone</translation>
+    </message>
+    <message>
+        <source>CITI files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZVR ASCII files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCD files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4016,6 +4020,26 @@ Usage:  qucsedit [-r] file
         <source>show port numbers in symbol or not</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Optimization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optimization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>perform an initial DC analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial voltage for transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial current for transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4562,13 +4586,13 @@ Seleziona tutti gli elementi del documento</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation>Ruota il componente selezionato di 90°</translation>
+        <translation type="unfinished">Ruota il componente selezionato di 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation>Ruota
+        <translation type="unfinished">Ruota
 
 Ruota il componente selezionato di 90° in senso antiorario</translation>
     </message>
@@ -6608,6 +6632,28 @@ Convert graph data to CSV file</source>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer Error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start attenuator calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuator synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsAttenuator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuator synthesis
+
+Starts attenuator calculation program</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9289,11 +9335,35 @@ sono incluse nella ricerca.</translation>
         <translation>Annulla</translation>
     </message>
     <message>
-        <source>show Frame</source>
+        <source>Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Frame</source>
+        <source>no Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A5 landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A5 portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A4 landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A4 portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A3 landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIN A3 portrait</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
