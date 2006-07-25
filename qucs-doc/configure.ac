@@ -95,6 +95,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/ffmodels/pics/Makefile
 		 tutorial/functions/Makefile
 		 tutorial/functions/pics/Makefile
+		 tutorial/opamp/Makefile
+		 tutorial/opamp/pics/Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile])
 
