@@ -31,7 +31,7 @@
 
 #include "main.h"
 #include "qucs.h"
-
+#include "dialogs/vtabbeddockwidget.h"
 
 // ----------------------------------------------------------
 // initializes all QActions of the application
