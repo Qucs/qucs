@@ -77,6 +77,8 @@
 #include "dialogs/labeldialog.h"
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
+#include "dialogs/vtabwidget.h"
+#include "dialogs/vtabbeddockwidget.h"
 
 extern const char *empty_xpm[];
 
@@ -193,13 +195,10 @@ void QucsApp::initView()
   connect(DocumentTab,
           SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeView(QWidget*)));
 
-  dock = new QDockWindow(QDockWindow::InDock, this);
-  TabView = new QTabWidget(dock);  // tabs on the left side
-  dock->setWidget(TabView);
-  dock->setResizeEnabled(true);
-  dock->setHorizontallyStretchable(true);
-  dock->setCloseMode(QDockWindow::Always);
-  moveDockWindow(dock, Left);  // initial position
+  dock = new VTabbedDockWidget(QDockWindow::InDock, this);
+  TabView = new VTabWidget(VTabInterface::TabLeft,dock);  // tabs on the left side
+  
+  
   connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
   view = new MouseActions();
@@ -225,8 +224,8 @@ void QucsApp::initView()
   connect(ProjDel, SIGNAL(clicked()), SLOT(slotProjDelButt()));
 
   Projects = new QListBox(ProjGroup);
-  TabView->addTab(ProjGroup, tr("Projects"));
-  TabView->setTabToolTip(TabView->page(0),
+  TabView->addPage(ProjGroup, tr("Projects"));
+  TabView->setTabToolTip(TabView->id(ProjGroup),
 			 tr("content of project directory"));
 
   connect(Projects, SIGNAL(doubleClicked(QListBoxItem*)),
@@ -243,8 +242,8 @@ void QucsApp::initView()
   Content->setColumnWidth(0, 150);
 
   initContentListView();
-  TabView->addTab(Content,tr("Content"));
-  TabView->setTabToolTip(TabView->page(1), tr("content of current project"));
+  TabView->addPage(Content,tr("Content"));
+  TabView->setTabToolTip(TabView->id(Content), tr("content of current project"));
 
   connect(Content, SIGNAL(doubleClicked(QListViewItem*)),
 		   SLOT(slotOpenContent(QListViewItem*)));
@@ -256,14 +255,19 @@ void QucsApp::initView()
   QVBox *CompGroup  = new QVBox(this);
   CompChoose = new QComboBox(CompGroup);
   CompComps  = new myIconView(CompGroup);
-  TabView->addTab(CompGroup,tr("Components"));
-  TabView->setTabToolTip(TabView->page(2), tr("components and diagrams"));
+  TabView->addPage(CompGroup,tr("Components"));
+  TabView->setTabToolTip(TabView->id(CompGroup), tr("components and diagrams"));
   fillComboBox(true);
 
   slotSetCompView(0);
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
   connect(CompComps, SIGNAL(clicked(QIconViewItem*)),
 		     SLOT(slotSelectComponent(QIconViewItem*)));
+  dock->setWidget(TabView);
+  setDockEnabled(dock,DockTop,false);
+  setDockEnabled(dock,DockBottom,false);
+  moveDockWindow(dock,DockLeft);
+  TabView->setCurrentPage(0);
 
   // ............................................
   readProjects(); // reads all projects and inserts them into the ListBox
