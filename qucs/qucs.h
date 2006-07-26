@@ -41,6 +41,8 @@ class QListView;
 class QListViewItem;
 class QIconView;
 class QIconViewItem;
+class VTabbedDockWidget;
+class VTabWidget;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -155,8 +157,8 @@ private:
   QPrinter  *Printer; // printer is global (to remember the user settings)
 
 // ********* Widgets on the main area **********************************
-  QDockWindow   *dock;
-  QTabWidget    *TabView;
+  VTabbedDockWidget   *dock;
+  VTabWidget    *TabView;
 
   QListBox      *Projects;
   QListView     *Content;
