@@ -36,13 +36,13 @@ HelpDialog::HelpDialog(QWidget *parent)
   // --------  set help text into dialog  ------------
   QString s(tr("QucsAttenuator is an attenuator synthesis program. "
 	       "To create a attenuator, simply enter all "
-	       "parameters and press the big button at the "
-	       "bottom of the main window. Immediatly, the "
+	       "the input parameters and press the calculation button. "
+	       "Immediatly, the "
 	       "schematic of the attenuator is calculated and "
 	       "put into the clipboard. Now go to Qucs, "
 	       "open an schematic and press "
 	       "CTRL-V (paste from clipboard). The attenuator "
-	       "schematic can now be inserted."
+	       "schematic can now be inserted. "
 	       "Have lots of fun!"));
 
 
