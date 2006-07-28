@@ -52,10 +52,10 @@ class QucsAttenuator : public QDialog
   void slotQuit();
 
  private:
-  QGridLayout *gbox;
   QComboBox *ComboTopology;
   QLabel *LabelTopology, *LabelAtten, *LabelImp1, *LabelImp2;
   QLabel *LabelR1, *LabelR2, *LabelR3, *pixTopology, *LabelResult;
+  QLabel *LabelR3_Ohm;
   QLineEdit *lineEdit_Attvalue, *lineEdit_Zin, *lineEdit_Zout;
   QLineEdit *lineEdit_R1, *lineEdit_R2, *lineEdit_R3, *lineEdit_Results;
   QPushButton *Calculate;

@@ -17,8 +17,10 @@
  * Boston, MA 02110-1301, USA.                                             *
  ***************************************************************************/
 
-#include "vtabwidget.h"
+#include "vtabbutton.h"
 #include "vtabbar.h"
+#include "vtabwidget.h"
+
 #include <qlayout.h>
 #include <qwidgetstack.h>
 
@@ -102,13 +104,21 @@ QSize VTabWidget::sizeHint() const
 void VTabWidget::setCurrentPage(int id)
 {
   if(!m_wStack->isShown())
-    m_wStack->setShown(true);
+    {
+      m_wStack->setShown(true);
+      emit widgetStackShown();
+    }
   m_wStack->raiseWidget(id);
   QWidget *w = m_wStack->widget(id);
   if(w)
     emit activatedPage(w);
-  const VTabBar *b = dynamic_cast<const VTabBar*>(sender());
-  if(!b)
+  VTab *const t = m_bar->findTab(id);
+  if(t == 0l)
+    {
+      qWarning("BUG: Tab id and widget id mismatch");
+      return;
+    }
+  if(t->isOn())
     return;
   //else programatically called
   m_bar->blockSignals(true);

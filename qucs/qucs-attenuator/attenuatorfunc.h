@@ -15,6 +15,7 @@
 
 #define PI_TYPE 0
 #define TEE_TYPE 1
+#define BRIDGE_TYPE 2
 
 #include <math.h>
 
