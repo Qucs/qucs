@@ -886,7 +886,7 @@
         <translation>Per ogni tipo di linea di trasmissione, usando caselle di input, puoi inserire valori per i vari parametri e calcolare le sue caratteristiche elettriche, o usare i requisiti elettrici forniti per sintetizzare i parametri fisici della linea di trasmissione adatta.</translation>
     </message>
     <message>
-        <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted.Have lots of fun!</source>
+        <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6684,10 +6684,6 @@ Starts attenuator calculation program</source>
         <translation type="unfinished">&amp;Aiuto</translation>
     </message>
     <message>
-        <source>Topology:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Attenuation:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6757,6 +6753,26 @@ Attenuator synthesis program
         <source>Copyright (C) 2006 by</source>
         <translation type="unfinished">Copyright (C) 2006 di 
 </translation>
+    </message>
+    <message>
+        <source>Topology</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: Set Attenuation more than %1 dB</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

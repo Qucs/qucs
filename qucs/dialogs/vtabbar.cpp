@@ -116,7 +116,10 @@ void VTabBar::setTabState(int p_id,bool state)
     {
       c->blockSignals(true);
       if(c->id() == p_id && state == true)
-	current = c;
+	{
+	  current = c;
+	  current->setOn(true);
+	}
       else
 	c->setOn(false);
       c->blockSignals(false);

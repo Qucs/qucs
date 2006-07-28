@@ -24,7 +24,7 @@
 
 XPMS = 
 
-PNGS = pix_pi.png pix_tee.png
+PNGS = att_pi.png att_tee.png att_bridge.png
 
 ICONS = 
 
