@@ -107,7 +107,6 @@ void WireLabel::paint(ViewPainter *p)
   p->Painter->setPen(QPen(QPen::black,1));
   x2 = p->drawText(Name, x1, y1, &y2);
 
-  p->Painter->setPen(QPen(QPen::darkMagenta,0));
   int xpaint=0, ypaint=4, phi=0;
   switch(Type) {
     case isVWireLabel:  ypaint=0; xpaint=4; phi=16*140; break;
@@ -154,6 +153,12 @@ void WireLabel::paint(ViewPainter *p)
       p->map(cx-xpaint, cy-ypaint, xpaint, ypaint);
     }
   }
+
+  if(initValue.isEmpty())
+    p->Painter->setPen(QPen(QPen::darkMagenta,0));
+  else
+    p->Painter->setPen(QPen(QPen::red,0));
+
   if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
