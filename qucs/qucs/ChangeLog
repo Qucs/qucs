@@ -1,3 +1,10 @@
+2006-07-29  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* wire label frame becomes red if initial voltage is set
+	* update content list when expanding ListViewItem
+	* dialog for optimization component (still unfinished)
+	* fixed segfault after dropping document on untitled page
+
 2006-07-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic.cpp (contentsDropEvent): Fixed file name conversion

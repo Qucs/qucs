@@ -22,6 +22,7 @@
 #include "mouseactions.h"
 #include "components/component.h"
 #include "components/spicedialog.h"
+#include "components/optimizedialog.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
@@ -1747,19 +1748,23 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
 
-	 if(c->Model == "SPICE") {
-	   SpiceDialog *sd = new SpiceDialog((SpiceFile*)c, Doc);
+         if(c->Model == "SPICE") {
+           SpiceDialog *sd = new SpiceDialog((SpiceFile*)c, Doc);
            if(sd->exec() != 1) break;   // dialog is WDestructiveClose
-	 }
-	 else {
-	   ComponentDialog * cd = new ComponentDialog(c, Doc);
-	   if(cd->exec() != 1) break;   // dialog is WDestructiveClose
+         }
+         else if(c->Model == ".Opt") {
+           OptimizeDialog *od = new OptimizeDialog((Optimize_Sim*)c, Doc);
+           if(od->exec() != 1) break;   // dialog is WDestructiveClose
+         }
+         else {
+           ComponentDialog * cd = new ComponentDialog(c, Doc);
+           if(cd->exec() != 1) break;   // dialog is WDestructiveClose
 
            Doc->Components->findRef(c);
            Doc->Components->take();
            Doc->setComponentNumber(c); // for ports/power sources
            Doc->Components->append(c);
-	 }
+         }
 
          Doc->setChanged(true, true);
          c->entireBounds(x1,y1,x2,y2, Doc->textCorr());

@@ -1678,13 +1678,16 @@ void Schematic::contentsDropEvent(QDropEvent *Event)
     QStrList List;
     QUriDrag::decode(Event, List);
 
-    // URI:  file:/home/linuxuser/Desktop/example.sch
-    for(unsigned int i=0; i < List.count(); i++) {
-      QString filename =
-	QDir::convertSeparators(QUriDrag::uriToLocalFile(List.at(i)));
-      App->gotoPage(filename);
-    }
+    // do not close untitled document to avoid segfault
+    QucsDoc *d = QucsMain->getDoc(0);
+    bool changed = d->DocChanged;
+    d->DocChanged = true;
 
+    // URI:  file:/home/linuxuser/Desktop/example.sch
+    for(unsigned int i=0; i < List.count(); i++)
+      App->gotoPage(QDir::convertSeparators(QUriDrag::uriToLocalFile(List.at(i))));
+
+    d->DocChanged = changed;
     return;
   }
 
