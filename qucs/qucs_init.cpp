@@ -689,6 +689,7 @@ void QucsApp::initMenuBar()
   createLib->addTo(projMenu);
   createPkg->addTo(projMenu);
   extractPkg->addTo(projMenu);
+  projMenu->insertSeparator();
   importData->addTo(projMenu);
   graph2csv->addTo(projMenu);
 

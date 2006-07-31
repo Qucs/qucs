@@ -249,6 +249,8 @@ void QucsApp::initView()
 		   SLOT(slotOpenContent(QListViewItem*)));
   connect(Content, SIGNAL(clicked(QListViewItem*)),
 		   SLOT(slotSelectSubcircuit(QListViewItem*)));
+  connect(Content, SIGNAL(expanded(QListViewItem*)),
+		   SLOT(slotExpandContentList(QListViewItem*)));
 
   // ----------------------------------------------------------
   // "Component Tab" of the left QTabWidget
@@ -730,7 +732,8 @@ void QucsApp::slotProjNewButt()
   QDir projDir(QucsHomeDir.path());
   if(projDir.mkdir(d->ProjName->text()+"_prj")) {
     Projects->insertItem(d->ProjName->text(),0);  // at first position
-    if(d->OpenProj->isChecked()) slotOpenProject(Projects->firstItem());
+    if(d->OpenProj->isChecked())
+      slotOpenProject(Projects->firstItem());
   }
   else QMessageBox::information(this, tr("Info"),
                     tr("Cannot create project directory !"));
@@ -803,7 +806,18 @@ int QucsApp::testFile(const QString& DocName)
 // content ListView
 void QucsApp::readProjectFiles()
 {
-  initContentListView();
+  // Delete the content files, but don't delete the parent items !!!
+  while(ConSchematics->firstChild())
+    delete ConSchematics->firstChild();
+  while(ConDisplays->firstChild())
+    delete ConDisplays->firstChild();
+  while(ConDatasets->firstChild())
+    delete ConDatasets->firstChild();
+  while(ConSources->firstChild())
+    delete ConSources->firstChild();
+  while(ConOthers->firstChild())
+    delete ConOthers->firstChild();
+
 
   int n;
   // put all files into "Content"-ListView
@@ -817,7 +831,7 @@ void QucsApp::readProjectFiles()
       if(n >= 0) {
         if(n > 0)
           new QListViewItem(ConSchematics, (*it).ascii(),
-				QString::number(n)+tr("-port"));
+                            QString::number(n)+tr("-port"));
         else new QListViewItem(ConSchematics, (*it).ascii());
       }
     }
@@ -830,8 +844,6 @@ void QucsApp::readProjectFiles()
     else
       new QListViewItem(ConOthers, (*it).ascii());
   }
-
-  Content->firstChild()->setOpen(true);  // show schematics
 }
 
 // ----------------------------------------------------------
@@ -855,7 +867,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
   QucsWorkDir.setPath(ProjDir.path());
 
   Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
-  readProjectFiles();
+  ConSchematics->setOpen(true);  // also calls readProjectFiles()
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   ProjName = Name;   // remember the name of project
@@ -1085,10 +1097,9 @@ bool QucsApp::gotoPage(const QString& Name)
   slotChangeView(DocumentTab->currentPage());
 
   // if only an untitled document was open -> close it
-  if(DocumentTab->count() == 2)
-    if(getDoc(0)->DocName.isEmpty())
-      if(!getDoc(0)->DocChanged)
-        delete DocumentTab->page(0);
+  if(getDoc(0)->DocName.isEmpty())
+    if(!getDoc(0)->DocChanged)
+      delete DocumentTab->page(0);
 
   view->drawn = false;
   return true;
@@ -1961,6 +1972,14 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
+}
+
+// ---------------------------------------------------------
+// Is called when one of the Content ListView parents was expanded
+// to show the files. It re-reads all files.
+void QucsApp::slotExpandContentList(QListViewItem*)
+{
+  readProjectFiles();
 }
 
 // ---------------------------------------------------------

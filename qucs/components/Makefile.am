@@ -24,7 +24,7 @@
 
 noinst_LIBRARIES = libcomponents.a
 
-MOCHEADERS = componentdialog.h spicedialog.h
+MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
@@ -44,7 +44,8 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp coupler.cpp   \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
-  switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp
+  switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp         \
+  optimizedialog.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
