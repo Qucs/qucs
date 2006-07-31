@@ -120,6 +120,7 @@ private slots:
   void slotOpenProject(QListBoxItem*);
   void slotMenuCloseProject();
   void slotSelectSubcircuit(QListViewItem*);
+  void slotExpandContentList(QListViewItem*);
   void slotOpenContent(QListViewItem*);
   void slotSetCompView(int);
   void slotProjNewButt();

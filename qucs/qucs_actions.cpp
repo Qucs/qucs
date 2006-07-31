@@ -1045,7 +1045,7 @@ void QucsApp::slotApplyCompText()
     view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
     if(pp->Description.find('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
-    Expr_CompProp.setPattern("[^\"=]+");
+    Expr_CompProp.setPattern("[^\"=]*");
     if(!pc->showName) n--;
   }
   else   // it is the component name
