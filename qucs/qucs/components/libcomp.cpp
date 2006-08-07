@@ -151,7 +151,31 @@ int LibComp::loadSymbol()
   int z, Result;
   QString FileString, Line;
   z = loadSection("Symbol", FileString);
-  if(z < 0)  return z;
+  if(z < 0) {
+    if(z != -7)  return z;
+
+    // If library component not defined as subcircuit, then load
+    // new component and transfer data to this component.
+    z = loadSection("Model", Line);
+    if(z < 0)  return z;
+
+    Component *pc = getComponentFromName(Line);
+    if(pc == 0)  return -20;
+
+    copyComponent(pc);
+
+    pc->Arcs.setAutoDelete(false);
+    pc->Lines.setAutoDelete(false);
+    pc->Rects.setAutoDelete(false);
+    pc->Ellips.setAutoDelete(false);
+    pc->Ports.setAutoDelete(false);
+    pc->Texts.setAutoDelete(false);
+    pc->Props.setAutoDelete(false);
+    delete pc;
+
+    return 1;
+  }
+
 
   z  = 0;
   x1 = y1 = INT_MAX;
