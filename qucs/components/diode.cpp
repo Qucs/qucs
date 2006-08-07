@@ -31,8 +31,8 @@ Diode::Diode()
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
 
-  x1 = -30; y1 = -9;
-  x2 =  30; y2 =  9;
+  x1 = -30; y1 = -11;
+  x2 =  30; y2 =  11;
 
   tx = x1+4;
   ty = y2+4;
