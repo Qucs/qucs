@@ -46,7 +46,6 @@
 #include <qlistbox.h>
 #include <qprinter.h>
 #include <qfiledialog.h>
-#include <qmessagebox.h>
 #include <qpixmap.h>
 #include <qtoolbutton.h>
 #include <qstatusbar.h>
@@ -867,6 +866,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
   QucsWorkDir.setPath(ProjDir.path());
 
   Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
+  ConSchematics->setOpen(false); // get sure to have it closed
   ConSchematics->setOpen(true);  // also calls readProjectFiles()
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab

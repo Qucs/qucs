@@ -84,6 +84,8 @@ protected:
 		   int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
+
+  void copyComponent(Component*);
 };
 
 

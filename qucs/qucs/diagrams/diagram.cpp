@@ -1000,7 +1000,7 @@ else {  // of "if not digital"
         counting = pc - (char*)g->cPointsY;
         pc = (char*)realloc(g->cPointsY, counting+1024);
         pEnd = pc;
-	g->cPointsY = (double*)pEnd;
+        g->cPointsY = (double*)pEnd;
         pc += counting;
         pEnd += counting+1020;
       }
