@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.9 2005/06/02 18:17:52 raimi Exp $
+ * $Id: phaseshifter.cpp,v 1.10 2006/08/07 06:07:57 margraf Exp $
  *
  */
 
@@ -73,7 +73,7 @@ void phaseshifter::initAC (void) {
     setVoltageSources (0);
     allocMatrixMNA ();
     nr_double_t z = getPropertyDouble ("Zref");
-    nr_double_t y11 = -1 / z / tan (p);
+    nr_double_t y11 =  1 / z / tan (p);
     nr_double_t y21 = -1 / z / sin (p);
     setY (NODE_1, NODE_1, rect (0, y11)); setY (NODE_2, NODE_2, rect (0, y11));
     setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
