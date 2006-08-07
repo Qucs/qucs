@@ -1,3 +1,8 @@
+2006-08-06  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* library/Transistors.lib: Added new transistor components
+	by Gunther Kraut
+
 2006-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* symbolwidget.cpp: Added "#include <limits.h>" where necessary

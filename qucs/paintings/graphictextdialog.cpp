@@ -19,14 +19,15 @@
 
 #include "qucs.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
 #include <qhbox.h>
-#include <qvalidator.h>
-#include <qcolordialog.h>
+#include <qlabel.h>
+#include <qlayout.h>
 #include <qlineedit.h>
-#include <qpushbutton.h>
 #include <qtextedit.h>
+#include <qvalidator.h>
+#include <qpushbutton.h>
+#include <qmessagebox.h>
+#include <qcolordialog.h>
 
 
 GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
@@ -63,7 +64,7 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
-  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
+  connect(ButtOK, SIGNAL(clicked()), SLOT(slotOkButton()));
   QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
@@ -107,4 +108,15 @@ void GraphicTextDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
   if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
+}
+
+// --------------------------------------------------------------------------
+void GraphicTextDialog::slotOkButton()
+{
+  if(text->length() < 1) {
+    QMessageBox::critical(this, tr("Error"), tr("The text must not be empty!"));
+    return;
+  }
+
+  accept();
 }

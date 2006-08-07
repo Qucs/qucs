@@ -1033,6 +1033,35 @@ bool Component::getBrush(const QString& s, QBrush& Brush, int i)
   return true;
 }
 
+// ---------------------------------------------------------------------
+void Component::copyComponent(Component *pc)
+{
+  Type = pc->Type;
+  x1 = pc->x1;
+  y1 = pc->y1;
+  x2 = pc->x2;
+  y2 = pc->y2;
+
+  Model = pc->Model;
+  Name  = pc->Name;
+  showName = pc->showName;
+  Description = pc->Description;
+
+  isActive = pc->isActive;
+  rotated  = pc->rotated;
+  mirroredX = pc->mirroredX;
+  tx = pc->tx;
+  ty = pc->ty;
+
+  Props  = pc->Props;
+  Ports  = pc->Ports;
+  Lines  = pc->Lines;
+  Arcs   = pc->Arcs;
+  Rects  = pc->Rects;
+  Ellips = pc->Ellips;
+  Texts  = pc->Texts;
+}
+
 
 // ***********************************************************************
 // ********                                                       ********
