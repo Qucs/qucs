@@ -1,3 +1,9 @@
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* tutorial/functions/math.tex: Fixed typo in arccot()
+	description.  Documented two-argument functions for the
+	min() and max() functions.
+
 2006-07-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* tutorial/opamp/opamp.tex: Added tutorial about modelling
