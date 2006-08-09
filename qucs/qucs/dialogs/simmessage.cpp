@@ -50,7 +50,8 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   DocName = Doc->DocName;
   DataDisplay = Doc->DataDisplay;
   QFileInfo Info(DocName);
-  DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
+  DataSet = QDir::convertSeparators(Info.dirPath()) +
+    QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
 
@@ -265,6 +266,18 @@ void SimMessage::slotFinishSpiceNetlist()
 }
 
 // ------------------------------------------------------------------------
+#ifdef __MINGW32__
+#include <windows.h>
+static QString getShortPathName(QString longpath) {
+  const char * lpath = QDir::convertSeparators(longpath).ascii();
+  char spath[2048];
+  int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
+  spath[len] = '\0';
+  return QString(spath);
+}
+#endif
+
+// ------------------------------------------------------------------------
 void SimMessage::startSimulator()
 {
   // Using the Doc pointer here is risky as the user may have closed
@@ -287,8 +300,15 @@ void SimMessage::startSimulator()
       return;
     }
     SimTime = ((TextDoc*)DocWidget)->SimTime;
+#ifdef __MINGW32__
+    CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
+		<< "netlist.txt" << DataSet
+		<< SimTime << getShortPathName(SimPath)
+		<< getShortPathName(QucsSettings.BinDir);
+#else
     CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
        << SimTime << SimPath << QucsSettings.BinDir;
+#endif
   }
   else {
     // output NodeSets, SPICE simulations etc.
@@ -306,8 +326,15 @@ void SimMessage::startSimulator()
       CommandLine << QucsSettings.BinDir + "qucsator" << "-b" << "-g"
          << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
     else
+#ifdef __MINGW32__
+      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
+		  << "netlist.txt" << DataSet
+		  << SimTime << getShortPathName(SimPath)
+		  << getShortPathName(QucsSettings.BinDir) << "-c";
+#else
       CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
          << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
+#endif
   }
 
   SimProcess.setArguments(CommandLine);

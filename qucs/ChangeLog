@@ -1,3 +1,11 @@
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-attenuator/qucsattenuator.cpp (slotSetText_Zin): 
+	Synchronized Zout and Zin when specifying a bridged-tee.
+
+	* qucs-attenuator/attenuatorfunc.cpp (Calc): Fixed computation
+	routine for bridged-tee topology.
+
 2006-05-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.9 and bumped up to version
