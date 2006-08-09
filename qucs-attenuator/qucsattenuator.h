@@ -50,6 +50,8 @@ class QucsAttenuator : public QDialog
   void slotTopologyChanged();
   void slotCalculate();
   void slotQuit();
+  void slotSetText_Zin(const QString &);
+  void slotSetText_Zout(const QString &);
 
  private:
   QComboBox *ComboTopology;

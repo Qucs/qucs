@@ -64,8 +64,8 @@ int QUCS_Att::Calc(tagATT *ATT)
 	case BRIDGE_TYPE:
 	  {
 	    L = pow(10, ATT->Attenuation / 20);
-	    ATT->R1 = 50 * (L - 1);
-	    ATT->R2 = 50 / (L - 1);
+	    ATT->R1 = ATT->Zin * (L - 1);
+	    ATT->R2 = ATT->Zin / (L - 1);
 	    break;
 	  }
 	}
@@ -125,8 +125,8 @@ QString* QUCS_Att::createSchematic(tagATT *ATT)
 
     case BRIDGE_TYPE:
       *s += QString("<R R1 1 210 130 -19 -42 0 0 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(ATT->R1);
-      *s += QString("<R R2 1 180 160 -30 -14 0 1 \"%1 Ohm\" 0 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(50);
-      *s += QString("<R R3 1 240 160 11 -14 0 1 \"%1 Ohm\" 0 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(50);
+      *s += QString("<R R2 1 180 160 -30 -14 0 1 \"%1 Ohm\" 0 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(ATT->Zin);
+      *s += QString("<R R3 1 240 160 11 -14 0 1 \"%1 Ohm\" 0 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(ATT->Zout);
       *s += QString("<R R4 1 210 220 11 -14 0 1 \"%1 Ohm\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"US\" 0>\n").arg(ATT->R2);
       *s += "<GND * 1 210 250 0 0 0 0>\n";
       *s += "</Components>\n";

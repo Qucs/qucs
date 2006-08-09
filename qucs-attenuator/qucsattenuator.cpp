@@ -54,7 +54,6 @@ QucsAttenuator::QucsAttenuator()
   bar->insertSeparator ();
   bar->insertItem(tr("&Help"), helpMenu);
 
-
   QVBoxLayout * v2 = new QVBoxLayout (this);
   QVBox * vm = new QVBox (this);
   vm->setSpacing(0);
@@ -111,6 +110,9 @@ QucsAttenuator::QucsAttenuator()
   ibox->addWidget(LabelImp1, 2,0);
   lineEdit_Zin = new QLineEdit(tr("50"), InputGroup);
   lineEdit_Zin->setValidator(DoubleVal);
+  connect(lineEdit_Zin, SIGNAL(textChanged(const QString&)), this,
+	  SLOT(slotSetText_Zin(const QString&)) );
+
   ibox->addWidget(lineEdit_Zin, 2,1);
   QLabel *Label2 = new QLabel(tr("Ohm"), InputGroup);
   ibox->addWidget(Label2, 2,2);
@@ -119,6 +121,8 @@ QucsAttenuator::QucsAttenuator()
   ibox->addWidget(LabelImp2, 3,0);
   lineEdit_Zout = new QLineEdit(tr("50"), InputGroup);
   lineEdit_Zout->setValidator(DoubleVal);
+  connect(lineEdit_Zout, SIGNAL(textChanged(const QString&)), this,
+	  SLOT(slotSetText_Zout(const QString&)) );
   ibox->addWidget(lineEdit_Zout, 3,1);
   QLabel *Label3 = new QLabel(tr("Ohm"), InputGroup);
   ibox->addWidget(Label3, 3,2);
@@ -203,6 +207,23 @@ void QucsAttenuator::slotQuit()
   close();
 }
 
+void QucsAttenuator::slotSetText_Zin( const QString &text )
+{
+  if(ComboTopology->currentItem() == BRIDGE_TYPE) {
+    lineEdit_Zout->blockSignals( TRUE );
+    lineEdit_Zout->setText( text );
+    lineEdit_Zout->blockSignals( FALSE );
+  }
+}
+
+void QucsAttenuator::slotSetText_Zout( const QString &text )
+{
+  if(ComboTopology->currentItem() == BRIDGE_TYPE) {
+    lineEdit_Zin->blockSignals( TRUE );
+    lineEdit_Zin->setText( text );
+    lineEdit_Zin->blockSignals( FALSE );
+  }
+}
 
 void QucsAttenuator::slotTopologyChanged()
 {
@@ -228,11 +249,11 @@ void QucsAttenuator::slotTopologyChanged()
       LabelR3->hide();
       lineEdit_R3->hide();
       LabelR3_Ohm->hide();
+      lineEdit_Zout->setText( lineEdit_Zin->text() );
       break;
     }
   adjustSize();
 }
-
 
 void QucsAttenuator::slotCalculate()
 {
