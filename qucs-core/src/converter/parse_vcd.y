@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.5 2006/01/11 09:50:07 raimi Exp $
+ * $Id: parse_vcd.y,v 1.6 2006/08/09 08:32:18 raimi Exp $
  *
  */
 
@@ -216,6 +216,11 @@ BitSelect: /* nothing */ { $$ = NULL; }
       $$ = (struct vcd_range *) calloc (1, sizeof (struct vcd_range));
       $$->l = $2;
       $$->h = $4;
+    }
+    | '(' PositiveInteger ')' {
+      $$ = (struct vcd_range *) calloc (1, sizeof (struct vcd_range));
+      $$->l = $2;
+      $$->h = -1;
     }
 ;
 

@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.5 2006/06/07 08:34:37 raimi Exp $
+ * $Id: scan_vcd.l,v 1.6 2006/08/09 08:32:18 raimi Exp $
  *
  */
 
@@ -251,6 +251,8 @@ IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
 <VAR4>"["   { /* pass the '[' to the parser */ return '['; }
 <VAR4>"]"   { /* pass the ']' to the parser */ return ']'; }
 <VAR4>":"   { /* pass the ':' to the parser */ return ':'; }
+<VAR4>"("   { /* pass the '(' to the parser */ return '('; }
+<VAR4>")"   { /* pass the ')' to the parser */ return ')'; }
 
 <VAR4>{DECIMAL} {
   vcd_lval.integer = atoi (vcd_text);

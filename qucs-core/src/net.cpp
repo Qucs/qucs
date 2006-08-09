@@ -1,7 +1,7 @@
 /*
  * net.cpp - net class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.29 2005/10/31 16:15:31 ela Exp $
+ * $Id: net.cpp,v 1.30 2006/08/09 08:32:18 raimi Exp $
  *
  */
 
@@ -354,6 +354,16 @@ analysis * net::findLastOrder (analysis * a) {
     return findLastOrder (child);
   }
   return child ? child : a;
+}
+
+// Returns the last order sweep being not an parameter sweep.
+ptrlist<analysis> * net::findLastOrderChildren (analysis * a) {
+  ptrlist<analysis> * alist = a->getAnalysis ();
+  analysis * child = alist ? alist->get (0) : NULL;
+  if (child != NULL && child->getType () == ANALYSIS_SWEEP) {
+    return findLastOrderChildren (child);
+  }
+  return alist;
 }
 
 /* The function re-shifts all circuits in the drop list to the actual

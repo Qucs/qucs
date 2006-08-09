@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.52 2006/07/03 08:52:23 raimi Exp $
+ * $Id: evaluate.cpp,v 1.53 2006/08/09 08:32:17 raimi Exp $
  *
  */
 
@@ -104,19 +104,27 @@ using namespace fspecial;
 #define _ARMV1(var) _MV (var,1)
 #define _ARMV2(var) _MV (var,2)
 
-// Return value macros.
+// Return value definition macros.
 #define _DEFD() constant * res = new constant (TAG_DOUBLE);
 #define _DEFC() constant * res = new constant (TAG_COMPLEX);
 #define _DEFV() constant * res = new constant (TAG_VECTOR);
 #define _DEFM() constant * res = new constant (TAG_MATRIX);
 #define _DEFMV() constant * res = new constant (TAG_MATVEC);
 #define _DEFR() constant * res = new constant (TAG_RANGE);
+
+// Return value macros.
 #define _RETD(var) res->d = (var); return res;
 #define _RETC(var) res->c = new complex (var); return res;
 #define _RETV(var) res->v = new vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
 #define _RETMV(var) res->mv = new matvec (var); return res;
 #define _RETR(var) res->r = (var); return res;
+
+// Return value macros without arguments.
+#define __RETC() res->c = new complex (); return res;
+#define __RETV() res->v = new vector (); return res;
+#define __RETM() res->m = new matrix (); return res;
+#define __RETMV() res->mv = new matvec (); return res;
 
 #define SOLVEE(idx) args->get(idx)->solvee
 
@@ -3387,7 +3395,7 @@ constant * evaluate::runavg_d_d (constant * args) {
   if (n < 1) {
     THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
 			  "larger or equal 1");
-    _RETV ();
+    __RETV ();
   }
   _RETV (runavg (rect (x, 0), n));
 }
@@ -3399,7 +3407,7 @@ constant * evaluate::runavg_c_d (constant * args) {
   if (n < 1) {
     THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
 			  "larger or equal 1");
-    _RETV ();
+    __RETV ();
   }
   _RETV (runavg (*x, n));
 }
@@ -3412,7 +3420,7 @@ constant * evaluate::runavg_v_d (constant * args) {
     THROW_MATH_EXCEPTION ("runavg: number n to be averaged over must be "
 			  "larger or equal 1 and less or equal than the "
 			  "number of vector elements");
-    _RETV ();
+    __RETV ();
   }
   _RETV (runavg (*x, n));
 }
@@ -3426,7 +3434,7 @@ constant * evaluate::kbd_d_d (constant * args) {
   nr_double_t sval = 0.0;
   if (size <= 0) {
     THROW_MATH_EXCEPTION ("kbd: vector length must be greater than zero");
-    _RETV ();
+    __RETV ();
   }
   vector v (size);
   for (i = 0; i < size / 2; i++) {
