@@ -2463,7 +2463,7 @@ applied to the components of \textit{x}.
 \begin{description}
 \item [Syntax]~
 \end{description}
-y=arctan(x)
+y=arccot(x)
 
 \begin{description}
 \item [Arguments]~
@@ -4117,13 +4117,14 @@ returned.
 \newpage
 \subsubsection*{\hypertarget{max}{}{\Large max\index{max}()}}
 
-
-\paragraph{\label{par:Maximum}Maximum value in vector.}
+\paragraph{\label{par:Maximum}Maximum value.}
 
 \begin{description}
 \item [Syntax]~
 \end{description}
 y=max(x)
+
+\begin{flushleft}y=max(a,b)\end{flushleft}
 
 \begin{description}
 \item [Arguments]~
@@ -4142,13 +4143,24 @@ Range $xs:xe$&
 $\left]-\infty,+\infty\right[$&
 $\surd$\tabularnewline
 \hline
+\hline 
+a&
+$\mathbb{R}$, $\mathbb{C}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+b&
+$\mathbb{R}$, $\mathbb{C}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
 \end{tabular}
 
 \begin{description}
 \item [Description]~
 \end{description}
-This function returns the maximum value of a real or complex vector
-or range.
+For the first syntax ( y=max(x) ), this function returns the maximum
+value of a real or complex vector or range.
 
 \medskip{}
 For $x\in$$\mathbb{R}^{n}$: $y=$$\max\left(x_{i}\right),\;1\leq i\leq n$
@@ -4166,11 +4178,33 @@ with sign $\left\{ \begin{array}{l}
 For \textit{x} being a real or complex number: that is the
 case $n=1$.
 
+The second syntax ( y=max(a,b) ) finds application, if two (generally
+complex) numbers \textit{a} and \textit{b} need to be compared. In
+principle, the maximum of the absolute values is selected, but it
+must be considered whether \textit{a} and \textit{b} are located in
+the right or left complex half plane. If the latter is the case, the
+negative absolute value of \textit{a} and \textit{b} needs to be regarded
+(for example, which is the case for negative real numbers), otherwise
+the positive absolute value is taken:
+
+\medskip{}
+$y=\max\left(\pm\left|a\right|,\pm\left|b\right|\right)$,
+
+with $\left|a\right|$ sign $\left\{ \begin{array}{l}
++\quad for\:\left|\arg\left(a\right)\right|\leq\frac{\pi}{2}\\
+-\quad else\end{array}\right.$and $\left|b\right|$ sign $\left\{ \begin{array}{l}
++\quad for\:\left|\arg\left(b\right)\right|\leq\frac{\pi}{2}\\
+-\quad else\end{array}\right.$
+\medskip{}
+
 \begin{description}
 \item [Example]~
 \end{description}
 \begin{lyxlist}{00.00.0000}
 \item [\texttt{y=max(linspace(1,3,10))}]returns 3.
+\item [\texttt{y=max(1,3)}]returns 3.
+\item [\texttt{y=max(1,1+i)}]returns 1+j1.
+\item [\texttt{y=max(1,-1+i)}]returns 1.
 \end{lyxlist}
 \begin{description}
 \item [See~also]~
@@ -4182,12 +4216,14 @@ case $n=1$.
 \subsubsection*{\hypertarget{min}{}{\Large min\index{min}()}}
 
 
-\paragraph{\label{par:Minimum}Minimum value in vector.}
+\paragraph{\label{par:Minimum}Minimum value.}
 
 \begin{description}
 \item [Syntax]~
 \end{description}
 y=min(x)
+
+\begin{flushleft}y=min(a,b)\end{flushleft}
 
 \begin{description}
 \item [Arguments]~
@@ -4206,13 +4242,23 @@ Range $xs:xe$&
 $\left]-\infty,+\infty\right[$&
 $\surd$\tabularnewline
 \hline
+\hline 
+a&
+$\mathbb{R}$, $\mathbb{C}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+b&
+$\mathbb{R}$, $\mathbb{C}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
 \end{tabular}
-
 \begin{description}
 \item [Description]~
 \end{description}
-This function returns the minimum value of a real or complex vector
-or range.
+For the first syntax ( y=min(x) ), this function returns the minimum
+value of a real or complex vector or range.
 
 \medskip{}
 For $x\in$$\mathbb{R}^{n}$: $y=$$\min\left(x_{i}\right),\;1\leq i\leq n$
@@ -4230,11 +4276,33 @@ with sign $\left\{ \begin{array}{l}
 For \textit{x} being a real or complex number: that is the
 case $n=1$.
 
+The second syntax ( y=min(a,b) ) finds application, if two (generally
+complex) numbers \textit{a} and \textit{b} need to be compared. In
+principle, the maximum of the absolute values is selected, but it
+must be considered whether \textit{a} and \textit{b} are located in
+the right or left complex half plane. If the latter is the case, the
+negative absolute value of \textit{a} and \textit{b} needs to be regarded
+(for example, which is the case for negative real numbers), otherwise
+the positive absolute value is taken:
+
+\medskip{}
+$y=\min\left(\pm\left|a\right|,\pm\left|b\right|\right)$,
+
+with $\left|a\right|$ sign $\left\{ \begin{array}{l}
++\quad for\:\left|\arg\left(a\right)\right|\leq\frac{\pi}{2}\\
+-\quad else\end{array}\right.$and $\left|b\right|$ sign $\left\{ \begin{array}{l}
++\quad for\:\left|\arg\left(b\right)\right|\leq\frac{\pi}{2}\\
+-\quad else\end{array}\right.$
+\medskip{}
+
 \begin{description}
 \item [Example]~
 \end{description}
 \begin{lyxlist}{00.00.0000}
 \item [\texttt{y=min(linspace(1,3,10))}]returns 1.
+\item [\texttt{y=min(1,3)}]returns 1.
+\item [\texttt{y=min(1,1+i)}]returns 1.
+\item [\texttt{y=min(1,-1+i)}]returns -1+j1.
 \end{lyxlist}
 \begin{description}
 \item [See~also]~
