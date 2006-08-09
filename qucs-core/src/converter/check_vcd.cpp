@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.12 2006-07-04 09:30:48 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.13 2006-08-09 08:32:18 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #define VCD_DEBUG 0
 
 // Some more definitions.
+#define VCD_SKIP_ARRAYS 1
 #define VCD_INCLUDE_RANGE 0
 #define VCD_TIMEVAR "dtime"
 
@@ -210,14 +211,26 @@ vcd_create_variable (struct vcd_vardef * var) {
 
 #if VCD_INCLUDE_RANGE
   if (!var->range) {
+    // no range
     sprintf (id2, "%s", id1);
   } else if (var->range->l == -1) {
+    // one bit
     sprintf (id2, "%s[%d]", id1, var->range->h);
+  } else if (var->range->h == -1) {
+    // arrays
+    sprintf (id2, "%s[%d]", id1, var->range->l);
   } else {
+    // bit range
     sprintf (id2, "%s[%d:%d]", id1, var->range->l, var->range->h);
   }
 #else
   sprintf (id2, "%s", id1);
+#endif
+
+#if VCD_SKIP_ARRAYS
+  if (var->range && var->range->h == -1 && var->range->l != -1) {
+    ds->output = 0;
+  }
 #endif
 
   ds->ident = strdup (id2);
@@ -287,7 +300,7 @@ vcd_create_dataset (struct vcd_vardef * var) {
     found = 0;
     // through all variables in the set 
     for (vv = vs->variables; vv; vv = vv->next) {
-      if (!strcmp (vv->ident, var->ident)) {
+      if (!strcmp (vv->code, var->code)) {
 	// found the variable in the set
 	dv = (struct dataset_value *)
 	  calloc (1, sizeof (struct dataset_value));

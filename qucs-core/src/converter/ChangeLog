@@ -1,3 +1,8 @@
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_vcd.y, check_vcd.cpp: Parsing and ignoring one-
+	dimensional memory arrays stored in VCD files.
+
 2006-07-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp: Fixed Qucs dataset loading in order to be

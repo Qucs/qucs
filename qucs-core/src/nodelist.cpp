@@ -1,7 +1,7 @@
 /*
  * nodelist.cpp - node list class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodelist.cpp,v 1.11 2005-06-02 18:17:51 raimi Exp $
+ * $Id: nodelist.cpp,v 1.12 2006-08-09 08:32:18 raimi Exp $
  *
  */
 
@@ -72,6 +72,8 @@ nodelist::nodelist (net * subnet) {
   for (struct nodelist_t * n = getRoot (); n != NULL; n = n->next) {
     for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
       for (int i = 0; i < c->getSize (); i++) {
+	assert (n->name != NULL);
+	assert (c->getNode(i)->getName () != NULL);
 	if (!strcmp (n->name, c->getNode(i)->getName ())) {
 	  addCircuitNode (n, c->getNode (i));
 	}

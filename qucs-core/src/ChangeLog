@@ -1,3 +1,16 @@
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* parasweep.cpp: Fixed a bug occuring with multi-dimensional
+	s-parameter sweeps which require a prior dc analysis.  Now the
+	data dependency tracking works again.
+
+	* net.cpp: New function returning the children in the last
+	order sweep.
+
+	* evaluate.cpp (__RETV): Using an extra macro for returning
+	default values (non-argument macros).  Some compilers complained
+	about these (FreeBSD4).
+
 2006-07-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolution.h (class nasolution): Implemented a storage
