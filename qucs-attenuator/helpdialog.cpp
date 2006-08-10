@@ -30,7 +30,7 @@
 HelpDialog::HelpDialog(QWidget *parent)
                      : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
-  setCaption("Qucs Attenuator Help");
+  setCaption(tr("Qucs Attenuator Help"));
 
 
   // --------  set help text into dialog  ------------
