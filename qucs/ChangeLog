@@ -1,3 +1,17 @@
+2006-08-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_es.ts: Updated spanish translations.  Thanks to Jose.
+
+	* qucs_de.ts: Updated german translations.
+
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdigi.bat: Unquoting the TIME argument correctly.
+
+	* dialogs/simmessage.cpp: Using short path equivalent to pass
+	it to the freehdl batch file under Win32.  This is a workaround
+	because of the limited quoting abilities for these batch files.
+
 2006-07-31  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* update content list after changing the project
