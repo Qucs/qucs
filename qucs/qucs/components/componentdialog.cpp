@@ -26,7 +26,6 @@
 #include <qhgroupbox.h>
 #include <qvalidator.h>
 #include <qtabwidget.h>
-#include <qmessagebox.h>
 #include <qfiledialog.h>
 
 #include <math.h>

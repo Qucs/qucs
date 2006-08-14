@@ -2091,12 +2091,6 @@ void QucsApp::slotSymbolEdit()
   changeSchematicSymbolMode(Doc);
   Doc->becomeCurrent(true);
 
-  // This can only be true when switching to the symbol the first time.
-  if(Doc->UndoSymbol.isEmpty()) {
-    Doc->setChanged(false, true); // "not changed" state, but put on undo stack
-    Doc->UndoSymbol.current()->at(1) = 'i';  // state of being unchanged
-  }
-
   Doc->viewport()->update();
   view->drawn = false;
 }
