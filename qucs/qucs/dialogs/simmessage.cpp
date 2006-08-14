@@ -121,17 +121,17 @@ bool SimMessage::startProcess()
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
+  ProgText->insert(tr("creating netlist... "));
+  NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
+   if(!NetlistFile.open(IO_WriteOnly)) {
+    ErrText->insert(tr("ERROR: Cannot write netlist file!"));
+    FinishSimulation(-1);
+    return false;
+  }
+
+  Stream.setDevice(&NetlistFile);
+
   if(!DocWidget->inherits("QTextEdit")) {
-    ProgText->insert(tr("creating netlist... "));
-    NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
-    if(!NetlistFile.open(IO_WriteOnly)) {
-      ErrText->insert(tr("ERROR: Cannot write netlist file!"));
-      FinishSimulation(-1);
-      return false;
-    }
-
-    Stream.setDevice(&NetlistFile);
-
     SimPorts =
        ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
@@ -294,11 +294,11 @@ void SimMessage::startSimulator()
 #endif
 
   if(DocWidget->inherits("QTextEdit")) {
-    if(copyFile(DocName, QucsHomeDir.filePath("netlist.txt")) < 0) {
-      ErrText->insert(tr("ERROR: Cannot copy \"%1\" !").arg(DocName));
-      FinishSimulation(-1);
-      return;
-    }
+    // Take VHDL file in memory as it could contain unsaved changes.
+    Stream << ((TextDoc*)DocWidget)->text();
+    NetlistFile.close();
+    ProgText->insert(tr("done.\n"));  // of "creating netlist... 
+
     SimTime = ((TextDoc*)DocWidget)->SimTime;
 #ifdef __MINGW32__
     CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
@@ -483,40 +483,4 @@ void SimMessage::slotDisplayButton()
 {
   emit displayDataPage(DocName, DataDisplay);
   accept();
-}
-
-// ------------------------------------------------------------------------
-int SimMessage::copyFile(const QString& SrcName, const QString& DestName)
-{
-  char *Buffer = (char*)malloc(0x10000);
-  if(!Buffer) return -10;  // should never happen
-
-  QFile origFile, destFile;
-  origFile.setName(SrcName);
-  destFile.setName(DestName);
-
-  if(!origFile.open(IO_ReadOnly)) {
-    free(Buffer);
-    return -1;
-  }
-
-  if(!destFile.open(IO_WriteOnly)) {
-    origFile.close();
-    free(Buffer);
-    return -2;
-  }
-
-  int Num;
-  do {     // copy data
-    Num = origFile.readBlock(Buffer, 0x10000);
-    if(Num < 0)  break;
-    Num = destFile.writeBlock(Buffer, Num);
-    if(Num < 0)  break;
-  } while(Num == 0x10000);
-
-  origFile.close();
-  destFile.close();
-  free(Buffer);
-  if(Num < 0)  return -3;
-  return 0;
 }
