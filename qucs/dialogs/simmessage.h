@@ -32,7 +32,7 @@ class QProgressBar;
 
 
 class SimMessage : public QDialog  {
-   Q_OBJECT
+Q_OBJECT
 public:
   SimMessage(QWidget*, QWidget *parent=0);
  ~SimMessage();
@@ -68,7 +68,6 @@ private:
   void FinishSimulation(int);
   void nextSPICE();
   void startSimulator();
-  int  copyFile(const QString&, const QString&);
 
 public:
   QWidget *DocWidget;

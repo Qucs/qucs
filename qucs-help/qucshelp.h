@@ -18,11 +18,11 @@
 #ifndef QUCSHELP_H
 #define QUCSHELP_H
 
-#include <qdialog.h>
+#include <qmainwindow.h>
 #include <qtextbrowser.h>
 #include <qdir.h>
 #include <qfont.h>
-#include <qstring.h>
+#include <qstringlist.h>
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
@@ -35,22 +35,29 @@ struct tQucsSettings {
 
 extern tQucsSettings QucsSettings;
 extern QDir QucsHelpDir;
+class QAction;
 
-
-class QucsHelp : public QDialog  {
+class QucsHelp : public QMainWindow  {
    Q_OBJECT
 public:
   QucsHelp(const QString& page);
  ~QucsHelp();
 
 private slots:
-  void slotGotoIndex();
-  void slotClose();
+  void slotSourceChanged(const QString& str);
+  void previousLink();
+  void nextLink();
 
 private:
   void closeEvent(QCloseEvent*);
+  void setupActions();
+  void initList();
 
   QTextBrowser *text;
+  unsigned int currentIndex;
+  QStringList links;
+  QAction *previousAction;
+  QAction *nextAction;
 };
 
 #endif

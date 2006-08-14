@@ -329,12 +329,9 @@ void Diagram::rectClip(int* &p)
     p++;
     *(p-5) = STROKEEND;
   }
-  if(code1 & code2) {   // line not visible at all ?
-    *(p-4) = x_2;
-    *(p-3) = y_2;
-    p -= 2;
-    return;
-  }
+  if(code1 & code2)   // line not visible at all ?
+    goto endWithHidden;
+
   if(code2 != 0) {
     *p = STROKEEND;
     *(p+1) = x_2;
@@ -349,7 +346,7 @@ void Diagram::rectClip(int* &p)
     if(code1)  code = code1;
     else  code = code2;
 
-    dx = x_2 - x_1;
+    dx = x_2 - x_1;  // dx and dy never equals zero !
     dy = y_2 - y_1;
     if(code & 1) {
       y = y_1 - dy * x_1 / dx;
@@ -378,6 +375,8 @@ void Diagram::rectClip(int* &p)
       y_2 = y;
       code2 = regionCode(x, y);
     }
+    if(code1 & code2)
+      goto endWithHidden; // line not visible at all ?
   }
 
   *(p-4) = x_1;
@@ -385,6 +384,12 @@ void Diagram::rectClip(int* &p)
   *(p-2) = x_2;
   *(p-1) = y_2;
   p += z;
+  return;
+
+endWithHidden:
+    *(p-4) = x_2;
+    *(p-3) = y_2;
+    p -= 2;
 }
 
 // ------------------------------------------------------------

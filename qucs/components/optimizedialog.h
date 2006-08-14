@@ -26,14 +26,16 @@ class Optimize_Sim;
 class QListView;
 class QListViewItem;
 class QCheckBox;
+class QComboBox;
 class QLineEdit;
 class QPushButton;
 class QVBoxLayout;
 class QRegExpValidator;
+class QDoubleValidator;
 
 
 class OptimizeDialog : public QDialog  {
-   Q_OBJECT
+Q_OBJECT
 public:
   OptimizeDialog(Optimize_Sim*, Schematic*);
  ~OptimizeDialog();
@@ -41,12 +43,17 @@ public:
 private slots:
   void slotOK();
   void slotApply();
+  void slotCancel();
   void slotAddVariable();
   void slotDeleteVariable();
   void slotAddGoal();
   void slotDeleteGoal();
   void slotEditGoal(QListViewItem*);
   void slotEditVariable(QListViewItem*);
+  void slotChangeVarName();
+  void slotChangeVarInit();
+  void slotChangeVarMin();
+  void slotChangeVarMax();
 
 public:
   Optimize_Sim *Comp;
@@ -55,12 +62,15 @@ public:
 
   QVBoxLayout *all;
   QLineEdit *NameEdit, *VarNameEdit,
-            *VarInitEdit, *VarMinEdit, *VarMaxEdit;
+            *VarInitEdit, *VarMinEdit, *VarMaxEdit,
+            *GoalNameEdit, *GoalNumEdit;
   QCheckBox *VarActiveCheck;
+  QComboBox *GoalTypeCombo;
   QListView *VarList, *GoalList;
 
   QRegExp Expr;
   QRegExpValidator *Validator;
+  QDoubleValidator *numVal;
 };
 
 #endif
