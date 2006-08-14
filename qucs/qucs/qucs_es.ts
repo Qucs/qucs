@@ -1361,16 +1361,12 @@ pero es %1!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Goal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set</source>
-        <translation type="unfinished">Fijar</translation>
+        <translation type="obsolete">Fijar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation type="obsolete">Borrar</translation>
     </message>
     <message>
         <source>Goals</source>
@@ -1387,6 +1383,54 @@ pero es %1!</translation>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Valor</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <source>Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>less</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>greater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">Sí</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Every text field must be non-empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">no</translation>
     </message>
 </context>
 <context>
@@ -6729,11 +6773,35 @@ Programa de síntexis de filtros</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Índice de la Ayuda</translation>
+        <translation type="obsolete">Índice de la Ayuda</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation type="obsolete">Cerrar</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished">&amp;Salir</translation>
+    </message>
+    <message>
+        <source>&amp;Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Next</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9031,7 +9099,7 @@ Errores:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation>ERROR: ¡No puedo copiar &quot;%1&quot;!</translation>
+        <translation type="obsolete">ERROR: ¡No puedo copiar &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
