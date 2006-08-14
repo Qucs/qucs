@@ -79,6 +79,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   UndoSymbol.setAutoDelete(true);
   // The 'i' means state for being unchanged.
   UndoStack.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
+  UndoSymbol.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
 
   QFileInfo Info(Name_);
   if(App) {
@@ -188,8 +189,10 @@ void Schematic::becomeCurrent(bool update)
     Components = &SymbolComps;
 
     // if no symbol yet exists -> create one
-    if(createSubcircuitSymbol())
+    if(createSubcircuitSymbol()) {
       sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+      setChanged(true, true);
+    }
     
     ps = UndoSymbol.current();
     if(ps != UndoSymbol.getFirst())  App->undo->setEnabled(true);
@@ -368,7 +371,8 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
   paintGrid(&Painter, contentsX(), contentsY(),
             visibleWidth(), visibleHeight());
 
-  paintFrame(&Painter);
+  if(!symbolMode)
+    paintFrame(&Painter);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     pc->paint(&Painter);
@@ -496,7 +500,8 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   p.init(Painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
          -StartX, -StartY, -marginX, -marginY, PrintScale);
 
-  paintFrame(&p);
+  if(!symbolMode)
+    paintFrame(&p);
 
   for(Component *pc = Components->first(); pc != 0; pc = Components->next())
     if(pc->isSelected || printAll) {
@@ -1111,6 +1116,11 @@ bool Schematic::load()
   if(!loadDocument()) return false;
   lastSaved = QDateTime::currentDateTime();
   UndoStack.clear();
+  UndoSymbol.clear();
+  symbolMode = true;
+  setChanged(false, true); // "not changed" state, but put on undo stack
+  UndoSymbol.current()->at(1) = 'i';
+  symbolMode = false;
   setChanged(false, true); // "not changed" state, but put on undo stack
   UndoStack.current()->at(1) = 'i';  // state of being unchanged
 
@@ -1142,7 +1152,6 @@ int Schematic::save()
     UndoStack.findRef(ps);  // back to current
 
     ps = UndoSymbol.current();
-    if(!ps)  return result;
     for(p = UndoSymbol.first(); p != 0; p = UndoSymbol.next())
       p->at(1) = ' ';  // state of being changed
     ps->at(1) = 'i';   // state of being unchanged

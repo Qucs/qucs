@@ -33,8 +33,8 @@ Optimize_Sim::Optimize_Sim()
   Model = ".Opt";
   Name  = "Opt";
 
-  Props.append(new Property("Type", "lin", true,
-			QObject::tr("sweep type")+" [lin, log, list, const]"));
+//  Props.append(new Property("Type", "lin", true,
+//			QObject::tr("sweep type")+" [lin, log, list, const]"));
 }
 
 Optimize_Sim::~Optimize_Sim()
