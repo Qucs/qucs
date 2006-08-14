@@ -1356,16 +1356,12 @@ but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Goal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Set</source>
-        <translation type="unfinished">セット</translation>
+        <translation type="obsolete">セット</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">削除</translation>
+        <translation type="obsolete">削除</translation>
     </message>
     <message>
         <source>Goals</source>
@@ -1382,6 +1378,54 @@ but is %1 !</source>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">値</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">タイプ</translation>
+    </message>
+    <message>
+        <source>Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>less</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>greater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">はい</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">エラー</translation>
+    </message>
+    <message>
+        <source>Every text field must be non-empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">いいえ</translation>
     </message>
 </context>
 <context>
@@ -6609,11 +6653,35 @@ Filter synthesis program
     </message>
     <message>
         <source>Help Index</source>
-        <translation>ヘルプ目次</translation>
+        <translation type="obsolete">ヘルプ目次</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation type="obsolete">閉じる</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished">閉じる(&amp;Q)</translation>
+    </message>
+    <message>
+        <source>&amp;Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Next</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8880,7 +8948,7 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation>エラー:&quot;%1&quot;をコピーできません!</translation>
+        <translation type="obsolete">エラー:&quot;%1&quot;をコピーできません!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
