@@ -26,6 +26,7 @@ files.
 Version 0.0.10
 --------------
 
+ * support for IC-CAP MDL files as an import file format in qucsconv
  * support for ZVR ascii data (R&S network analyzer) as an import file
    format in qucsconv
  * new function in equation solver: signum()

@@ -1,3 +1,8 @@
+2006-08-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.cpp (mdl2qucs): Added MDL to Qucs dataset converter
+	using the functionality in the qucsator library.
+
 2006-08-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_vcd.y, check_vcd.cpp: Parsing and ignoring one-

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.h,v 1.11 2006-07-17 21:53:13 raimi Exp $
+ * $Id: dataset.h,v 1.12 2006-08-18 08:20:17 raimi Exp $
  *
  */
 
@@ -63,6 +63,7 @@ class dataset : public object
   static dataset * load_touchstone (const char *);
   static dataset * load_citi (const char *);
   static dataset * load_zvr (const char *);
+  static dataset * load_mdl (const char *);
 
   int countDependencies (void);
   int countVariables (void);

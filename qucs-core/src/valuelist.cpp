@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: valuelist.cpp,v 1.2 2006-07-24 08:07:42 raimi Exp $
+ * $Id: valuelist.cpp,v 1.3 2006-08-18 08:20:17 raimi Exp $
  *
  */
 
@@ -103,6 +103,13 @@ void valuelist<type_t>::append (char * n, type_t * ptr) {
   }
   last = entry;
   size++;
+}
+
+// Appends another value list at the end of the value list.
+template <class type_t>
+void valuelist<type_t>::append (valuelist<type_t> * p) {
+  for (valentry<type_t> * ptr = p->root;  ptr != NULL; ptr = ptr->next)
+    append (ptr->key, new type_t (*(ptr->value)));
 }
 
 // Returns the size of the value list.

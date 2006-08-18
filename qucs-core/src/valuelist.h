@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: valuelist.h,v 1.2 2006-07-24 08:07:42 raimi Exp $
+ * $Id: valuelist.h,v 1.3 2006-08-18 08:20:17 raimi Exp $
  *
  */
 
@@ -56,6 +56,7 @@ class valuelist
   valuelist (const valuelist &);
   void add (char *, type_t *);
   void append (char *, type_t *);
+  void append (valuelist *);
   void del (char *);
   int  length (void);
   int  contains (char *);
