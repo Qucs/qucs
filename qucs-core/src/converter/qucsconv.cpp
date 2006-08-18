@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.23 2006/07/20 10:47:36 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.24 2006/08/18 08:20:17 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 #include "check_citi.h"
 #include "check_touchstone.h"
 #include "check_zvr.h"
+#include "check_mdl.h"
 #include "check_dataset.h"
 #include "qucs_producer.h"
 #include "csv_producer.h"
@@ -58,6 +59,7 @@ int qucs2csv   (struct actionset_t *, char *, char *);
 int citi2qucs  (struct actionset_t *, char *, char *);
 int touch2qucs (struct actionset_t *, char *, char *);
 int zvr2qucs   (struct actionset_t *, char *, char *);
+int mdl2qucs   (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
@@ -68,6 +70,7 @@ struct actionset_t actionset[] = {
   { "citi",       "qucsdata", citi2qucs  },
   { "touchstone", "qucsdata", touch2qucs },
   { "zvr",        "qucsdata", zvr2qucs   },
+  { "mdl",        "qucsdata", mdl2qucs   },
   { NULL, NULL, NULL}
 };
 
@@ -350,6 +353,32 @@ int zvr2qucs (struct actionset_t * action, char * infile, char * outfile) {
     qucsdata_producer (zvr_result);
   }
   zvr_destroy ();
+  return 0;
+}
+
+// MDL to Qucs conversion.
+int mdl2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  mdl_init ();
+  if ((mdl_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (mdl_parse () != 0) {
+    ret = -1;
+  } else if (mdl_check () != 0) {
+    ret = -1;
+  }
+  mdl_lex_destroy ();
+  if (mdl_in)
+    fclose (mdl_in);
+  if (ret) {
+    mdl_destroy ();
+    return -1;
+  }
+  if (!strcmp (action->out, "qucsdata")) {
+    mdl_result->setFile (outfile);
+    qucsdata_producer (mdl_result);
+  }
+  mdl_destroy ();
   return 0;
 }
 

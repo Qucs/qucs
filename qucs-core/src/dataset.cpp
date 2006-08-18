@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.19 2006/07/17 21:53:13 raimi Exp $
+ * $Id: dataset.cpp,v 1.20 2006/08/18 08:20:17 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "check_touchstone.h"
 #include "check_citi.h"
 #include "check_zvr.h"
+#include "check_mdl.h"
 
 // Constructor creates an unnamed instance of the dataset class.
 dataset::dataset () : object () {
@@ -488,4 +489,29 @@ dataset * dataset::load_zvr (const char * file) {
   zvr_lex_destroy ();
   if (zvr_result) zvr_result->setFile (file);
   return zvr_result;
+}
+
+/* The function read a full dataset from the given MDL file and
+   returns it.  On failure the function emits appropriate error
+   messages and returns NULL. */
+dataset * dataset::load_mdl (const char * file) {
+  FILE * f;
+  if ((f = fopen (file, "r")) == NULL) {
+    logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
+    return NULL;
+  }
+  mdl_in = f;
+  mdl_restart (mdl_in);
+  if (mdl_parse () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  if (mdl_check () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  fclose (f);
+  mdl_lex_destroy ();
+  if (mdl_result) mdl_result->setFile (file);
+  return mdl_result;
 }

@@ -1,3 +1,15 @@
+2006-08-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* valuelist.cpp: Added new function which can be used to
+	concatenate two valuelists.
+
+	* scan_mdl.l, parse_mdl.y, check_mdl.cpp: Implemented scanner,
+	parser and checker for the IC-CAP MDL file format.  The checker
+	works, but there is yet something to do...
+
+	* dataset.cpp (load_mdl): Included a static function to load
+	a IC-CAP MDL file as an dataset.
+
 2006-08-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* parasweep.cpp: Fixed a bug occuring with multi-dimensional
