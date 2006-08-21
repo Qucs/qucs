@@ -139,10 +139,10 @@ void VTabWidget::setPosition(VTabPosition p)
   if(m_position == p)
     return;
   m_position = p;
-  QHBoxLayout *l = dynamic_cast<QHBoxLayout*>(layout());
+  QHBoxLayout *l = (QHBoxLayout*)layout();
   if(!l)
     {
-      qDebug( "Error layout is null");
+      qWarning( "Error layout is null");
       return;
     }
   l->remove(m_wStack);
