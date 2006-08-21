@@ -12,7 +12,8 @@
 \chapter{Harmonic Balance Noise Analysis}
 \label{sec:hb_noise}
 
-Once a harmonic balance simulation is solved a noise analysis can
+Once a harmonic balance simulation is solved a cyclostationary
+noise analysis can
 be performed. This results in the sideband noise of each harmonic
 (including DC, i.e. base band noise). The method described here
 is based on the principle of small-signal noise. That is, the
@@ -43,12 +44,29 @@ stemming from the non-linear subcircuit.
 
 \section{The Linear Subcircuit}
 
-First, the noise stemming from the linear subcircuit has to be
-calculated. This results in the noise correlation matrix of the
-nodes connected to the non-linear subcircuit. The method is the
-same as in the AC noise analysis (see section
-\ref{sec:acnoise_algo}) and is not described here any
-further.
+The noise stemming from the linear subcircuit is calculated
+in two steps:
+
+\begin{enumerate}
+\item An AC noise analysis (see section \ref{sec:acnoise_algo}) is
+   performed for the interconnecting nodes of linear and non-linear
+   subcircuit. This results in the noise-voltage correlation matrix
+   $(\boldsymbol{\underline{C}}_{Z,lin})_{N\times N}$.
+\item The matrix $(\boldsymbol{\underline{C}}_{Z,lin})_{N\times N}$
+   is converted into a noise-current correlation matrix (see section
+   \ref{sec:noiseTrans}):
+   \begin{equation}
+     (\boldsymbol{\underline{C}}_{Y,lin})_{N\times N} =
+     \boldsymbol{\hat{Y}} \cdot
+     \boldsymbol{\underline{C}}_{Z,lin} \cdot
+     \boldsymbol{\hat{Y}}^+
+   \end{equation}
+   where $\boldsymbol{\hat{Y}}$ is taken from equation \ref{eqn:HBeqn}.
+\end{enumerate}
+
+Remark: If no explicit noise sources exist in the linear subcircuit,
+$(\boldsymbol{\underline{C}}_{Z,lin})_{N\times N}$ can be computed
+much faster by using Bosma's theorem (equation \ref{eqn:bosma}).
 
 
 \section{The Non-Linear Subcircuit}
@@ -58,3 +76,14 @@ by using the quasi-static approach, i.e. for every moment in
 time the voltages and currents are regarded as a time-dependend
 bias point. The noise properties of these bias points are
 used for the noise calculation.
+
+\addvspace{12pt}
+
+Remark: It is not clear whether this approach creates a valid result
+for noise with long-time correlation (e.g. 1/f noise), too. But up
+to now, no other methods were proposed and some publications
+reported to have achieved reasonable results with this approach
+and 1/f noise.
+
+\addvspace{12pt}
+

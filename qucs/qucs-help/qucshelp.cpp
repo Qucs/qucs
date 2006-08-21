@@ -75,7 +75,7 @@ void QucsHelp::setupActions()
   const QKeySequence ks = QKeySequence();
 
   QAction *quitAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "quit.png")),
-                                    tr("&Quit"), ALT+Key_Q, this);
+                                    tr("&Quit"), CTRL+Key_Q, this);
   QAction *backAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "back.png")),
                                     tr("&Back"), ALT+Key_Left, this);
   QAction *forwardAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "forward.png")),
