@@ -50,10 +50,14 @@ private slots:
   void slotDeleteGoal();
   void slotEditGoal(QListViewItem*);
   void slotEditVariable(QListViewItem*);
-  void slotChangeVarName();
-  void slotChangeVarInit();
-  void slotChangeVarMin();
-  void slotChangeVarMax();
+  void slotChangeVarName(const QString&);
+  void slotChangeVarActive(bool);
+  void slotChangeVarInit(const QString&);
+  void slotChangeVarMin(const QString&);
+  void slotChangeVarMax(const QString&);
+  void slotChangeGoalName(const QString&);
+  void slotChangeGoalNum(const QString&);
+  void slotChangeGoalType(const QString&);
 
 public:
   Optimize_Sim *Comp;
@@ -65,7 +69,7 @@ public:
             *VarInitEdit, *VarMinEdit, *VarMaxEdit,
             *GoalNameEdit, *GoalNumEdit;
   QCheckBox *VarActiveCheck;
-  QComboBox *GoalTypeCombo;
+  QComboBox *SimEdit, *GoalTypeCombo;
   QListView *VarList, *GoalList;
 
   QRegExp Expr;
