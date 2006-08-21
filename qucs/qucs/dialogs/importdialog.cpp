@@ -79,10 +79,11 @@ void ImportDialog::slotBrowse()
 {
   QString s = QFileDialog::getOpenFileName(
      lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("All known")+" (*.s?p *.citi *.cit *.asc *.vcd);;"+
+     tr("All known")+" (*.s?p *.citi *.cit *.asc *.mdl *.vcd);;"+
      tr("Touchstone files")+" (*.s?p);;"+
      tr("CITI files")+" (*.citi *.cit);;"+
      tr("ZVR ASCII files")+" (*.asc);;"+
+     tr("IC-CAP model files")+" (*.mdl);;"+
      tr("VCD files")+" (*.vcd);;"+
      tr("Any File")+" (*)",
      this, 0, tr("Enter a Data File Name"));
@@ -112,21 +113,23 @@ void ImportDialog::slotImport()
 
 
   QFileInfo Info(ImportEdit->text());
-  QString Prefix = Info.extension();
+  QString Suffix = Info.extension();
   QStringList CommandLine;
   CommandLine << QucsSettings.BinDir + "qucsconv" << "-if";
   
-  if((Prefix == "citi") || (Prefix == "cit"))
+  if((Suffix == "citi") || (Suffix == "cit"))
     CommandLine << "citi";
-  else if(Prefix == "vcd")
+  else if(Suffix == "vcd")
     CommandLine << "vcd";
-  else if(Prefix == "asc")
+  else if(Suffix == "asc")
     CommandLine << "zvr";
+  else if(Suffix == "mdl")
+    CommandLine << "mdl";
   else for(;;) {
-    if(Prefix.at(0) == 's')
-      if(Prefix.at(2) == 'p')
-        if(Prefix.length() == 3)
-          if(Prefix.at(1).isDigit()) {
+    if(Suffix.at(0) == 's')
+      if(Suffix.at(2) == 'p')
+        if(Suffix.length() == 3)
+          if(Suffix.at(1).isDigit()) {
             CommandLine << "touchstone";
             break;
           }

@@ -1,3 +1,12 @@
+2006-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* units.h (ZF0): Added definition for wave resistance in vacuum.
+
+	* coax.cpp (alphac_coax): Using 20/log(10) instead of 8.686.
+
+	* rectwaveguide.cpp, microstrip.cpp, coax.cpp, c_microstrip.cpp:
+	Using ZF0 instead of 120*PI wherever possible and necessary.
+
 2006-01-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucstrans.cpp (slotCopyToClipBoard): Added supportexport function

@@ -64,7 +64,7 @@ the tarballs created using `make distcheck'.
 * Ensure you hit the current requirements.
   - Autoconf version 2.57 (at least)
   - GNU automake 1.7.0 (at least)
-  - flex 2.5.31
+  - flex 2.5.31 (but at least 2.5.9)
   - GNU Bison 1.875d
   - Qt installation >= version 3.1 (by Trolltech)
 

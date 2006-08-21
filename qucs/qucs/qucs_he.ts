@@ -932,6 +932,10 @@
         <source>VCD files</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>IC-CAP model files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LabelDialog</name>
@@ -1398,6 +1402,18 @@ but is %1 !</source>
     <message>
         <source>no</source>
         <translation type="unfinished">לא</translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished">סימולציה:</translation>
+    </message>
+    <message>
+        <source>Variable &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3941,6 +3957,10 @@ Usage:  qucsedit [-r] file
         <source>initial current for transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>initial delay delay time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6202,6 +6222,10 @@ Enables/disables the browse dock window</source>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

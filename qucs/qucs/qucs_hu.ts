@@ -628,7 +628,7 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -793,11 +793,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>A szöveg nem lehet üres!</translation>
     </message>
 </context>
 <context>
@@ -834,11 +834,11 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator egy csillapító méretező program. A csillapítókészítéshez egyszerüen csak meg kell adnia a bemeneti paramétereket, és meg kell nyomni a kalkuláció gombot. Azonnal a vágólapra helyezi a kiszámolt csillapító kapcsolási rajzát. Ezután a Qucs-ba beilleszthető a rajz a Szerkesztés / Beillesztés menüben vagy a CTRL-V billenytükombinációval. így a csaillapítórajz beillesztkető és szimulálható. Jó szórakozást!</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Csillapító Help</translation>
     </message>
 </context>
 <context>
@@ -864,27 +864,27 @@ fizikai tulajdonságait számítja ki.</translation>
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Adat fájl import...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl import:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Kiválasztás</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <source>Output File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimeneti fájl:</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetek</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -892,55 +892,56 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>All known</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden ismert</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Bármelyik fájl</translation>
+        <translation>Bármelyik fájl</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Adat fájl név</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Infó</translation>
+        <translation>Infó</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>A kimeneti fájl már létezik!
+</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Felülírás?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Igen</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Nem</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Ismeretlen fájl formátum! Ellenőrizze a fájlnevet és a kiterjesztést!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished">HIBA: Szimuláció nem indítható!</translation>
+        <translation>HIBA: Szimuláció nem indítható!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl importálás sikeres!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <source>Converter ended with errors!</source>
-        <translation type="unfinished"></translation>
+        <translation>A konvertálás hibával ért véget!</translation>
     </message>
     <message>
         <source>Touchstone files</source>
@@ -948,14 +949,18 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>CITI files</source>
-        <translation type="unfinished"></translation>
+        <translation>CITI fájlok</translation>
     </message>
     <message>
         <source>ZVR ASCII files</source>
-        <translation type="unfinished"></translation>
+        <translation>ZVR ASCII fájlok</translation>
     </message>
     <message>
         <source>VCD files</source>
+        <translation>VCD fájlok</translation>
+    </message>
+    <message>
+        <source>IC-CAP model files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -994,136 +999,138 @@ fizikai tulajdonságait számítja ki.</translation>
     <name>LibraryDialog</name>
     <message>
         <source>Create Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész katalógus létrehozása</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész katalógus neve:</translation>
     </message>
     <message>
         <source>Choose subcircuits:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beágyazott kapcsolás választás:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Létrehozás</translation>
+        <translation>Létrehozás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs beágyazott kapcsolás!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Please insert a library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Adjon meg alkatrész katalógus nevet!</translation>
     </message>
     <message>
         <source>Please choose at least one subcircuit!</source>
-        <translation type="unfinished"></translation>
+        <translation>Először válasszon egy  beágyazott kapcsolást!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>A felhasználói alkatrész-katalógus könyvtára nem hozható létre!</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>A megadott rendszer alkatrész katalógus név már használt!</translation>
     </message>
     <message>
         <source>A library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>A megadott alkatrész katalógus név már használt!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Az alkatrész katalógus nem hozható létre!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot;  beágyazott kapcsolás nem tölthető be.</translation>
     </message>
     <message>
         <source>
 Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Az alkatrész katalógus létrehozása sikeres.</translation>
     </message>
     <message>
         <source>Next &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Következő &gt;&gt;</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; leírása:</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználói alkatrész-katalógust kezelő</translation>
     </message>
     <message>
         <source>Choose library:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész katalógus választás:</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Új név:</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Átnevezés</translation>
+        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs felhasználói alkatrész katalógus!</translation>
     </message>
     <message>
         <source>Please insert a new library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Adjon meg új alkatrész katalógus nevet!</translation>
     </message>
     <message>
         <source>Please choose a library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon alkatrész katalógust!</translation>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation type="unfinished"></translation>
+        <translation>A &quot;%1&quot; alkatrész katalógus megnyitása nem sikerült!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs joga a &quot;%1&quot; alkatrész katalógus módosításához! </translation>
     </message>
     <message>
         <source>Writing new library not successful!</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Az alkatrész katalógus írása sikertelen!</translation>
     </message>
     <message>
         <source>Cannot delete old library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Régi alkatrész katalógus nem törölhető.</translation>
     </message>
     <message>
         <source>Library file is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész katalógus fájl hibás!</translation>
     </message>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs joga a &quot;%1&quot; alkatrész katalógus törléséhez. </translation>
     </message>
 </context>
 <context>
@@ -1169,7 +1176,7 @@ Successfully created library.</source>
     <name>MatchDialog</name>
     <message>
         <source>Create Matching Circuit</source>
-        <translation>Illeszkedő áramkör létrehozása</translation>
+        <translation>Illesztő áramkör létrehozása</translation>
     </message>
     <message>
         <source>Ohm</source>
@@ -1203,7 +1210,7 @@ de %1 !</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation>két pontos illeszkedés számolása</translation>
+        <translation>két portos illesző számolása</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
@@ -1312,59 +1319,59 @@ de %1 !</translation>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Az optimizáció tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Név:</translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>aktív</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>max</translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>min:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>max:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Hozzáadás</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Változók</translation>
     </message>
     <message>
         <source>Set</source>
@@ -1376,67 +1383,79 @@ de %1 !</translation>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Cél</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Alkalmaz</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Érték</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Típus</translation>
+        <translation>Típus</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Érték:</translation>
     </message>
     <message>
         <source>minimum</source>
-        <translation type="unfinished"></translation>
+        <translation>minimum</translation>
     </message>
     <message>
         <source>maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>maximum</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>kisebb</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>nagyobb</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>egyenlő</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">igen</translation>
+        <translation>igen</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden szövegmező kitöltendő!</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">nem</translation>
+        <translation>nem</translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished">Szimuláció:</translation>
+    </message>
+    <message>
+        <source>Variable &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1478,159 +1497,160 @@ de %1 !</translation>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Új projekt csomag létrehozás</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation type="unfinished"></translation>
+        <translation>Csomag:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Kiválasztás</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <source>include user libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>felhasználói alkatrész-katalógus hozzáadása</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztott projekt:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Létrehozás</translation>
+        <translation>Létrehozás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincsenek projektek!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt csomag kibontása</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs csomag</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Bármelyik fájl</translation>
+        <translation>Bármelyik fájl</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Csomag fájl név</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; megnyitása nem sikerült!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Adjon meg csomag nevet!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation type="unfinished"></translation>
+        <translation>Először válasszon egy projektet!</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Infó</translation>
+        <translation>Infó</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>A kimeneti fájl már létezik!
+</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Felülírás?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Igen</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Nem</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation type="unfinished"></translation>
+        <translation>A csomag nem hozható létre!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation type="unfinished"></translation>
+        <translation>A Qucs csomag létrehozása sikeres!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A csomag nem nyitható meg!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A Fájl rossz fejlécet tartalmaz!</translation>
     </message>
     <message>
         <source>ERROR: Wrong version number!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Helytelen verziószám!</translation>
     </message>
     <message>
         <source>ERROR: Checksum mismatch!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Ellenörző-összeg eltérés!</translation>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; könvtár elhagyás</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A csomag hibás!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation type="unfinished"></translation>
+        <translation>A tömörített csomag kibontása sikeres! </translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; projekt konyvtár már használt!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; könyvtár nem hozható létre!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; könyvtár létrehozása és belépés</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; fájl nem hozható létre!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; fájl létrehozása</translation>
     </message>
     <message>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; alkatrész konyvtár már használt!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; alkatrész-katalógus nem hozható létre!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; alkatrész-katalógus létrehozása</translation>
     </message>
 </context>
 <context>
@@ -2243,7 +2263,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>emissziós együttható</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
@@ -2259,7 +2279,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>lineáris kapacitás</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
@@ -3371,20 +3391,20 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>Component taken from Qucs library</source>
-        <translation>Az alkatrész ki van véve a Qucs könyvtárból</translation>
+        <translation>Az alkatrész ki van véve a Qucs katalógusból</translation>
     </message>
     <message>
         <source>name of qucs library file</source>
-        <translation>qucs alkatrész-könyvtárfájl neve
+        <translation>qucs alkatrész-katalógus fájl neve
 </translation>
     </message>
     <message>
         <source>name of component in library</source>
-        <translation>alkatrész neve az alkatrészkönyvtárban</translation>
+        <translation>alkatrész neve az alkatrész-katalógusban</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>HIBA: A &quot;%1&quot; alkatrész nem tölthető be a könyvtárból.</translation>
+        <translation>HIBA: A &quot;%1&quot; alkatrész nem tölthető be a katalógusból.</translation>
     </message>
     <message>
         <source>Locus Curve</source>
@@ -3657,7 +3677,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished">TimeList szimuláció időtartama</translation>
+        <translation>TimeList szimuláció időtartama</translation>
     </message>
     <message>
         <source>ERROR: No ground symbol allowed in digital simulation.</source>
@@ -3833,39 +3853,39 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>feszültség próba</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Feszültség próba</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>kivezetések száma</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>n-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished">2-csatlakozós S paraméter fájl</translation>
+        <translation>2-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>a kivezetés típusa (csak digitális szimulációhoz)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>amplitúdó modulált AC feszültség generátor</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>modulációs szint</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
@@ -3877,11 +3897,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>fázis modulált AC feszültség generátor</translation>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <source>modulation index</source>
@@ -3913,7 +3933,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapcsoló</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
@@ -3945,15 +3965,15 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljesítmény illesztő</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaj illesztő</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>2-portos illesztő</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3997,11 +4017,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>beágyazott kapcsolás</translation>
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>A kimeneti fájl nem hozható létre!</translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
@@ -4009,15 +4029,15 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>Optimalizálás</translation>
     </message>
     <message>
         <source>optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>optimalizálás</translation>
     </message>
     <message>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti DC analízis végrehajtása</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
@@ -4025,6 +4045,10 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4797,7 +4821,7 @@ Nem indítható a tápvonal tervező program!
     <message>
         <source>Cannot start library program!</source>
         <translation>
-Nem indítható az alkatrészkönyvtár program!
+Nem indítható az alkatrész-katalógus program!
 </translation>
     </message>
     <message>
@@ -5512,13 +5536,13 @@ Kijelöl minden elemet a dokumnetumban</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished">Elforgatja a kiválasztott komponenst  90°-kal</translation>
+        <translation>Elforgatja a kiválasztott komponenst  90°-kal</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished">Forgatás
+        <translation>Forgatás
 
 Elforgatja a kiválasztott komponenst  90°-kal jobbra</translation>
     </message>
@@ -5744,7 +5768,7 @@ QucsTrans indítása</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation>Alkatrész könyvtár</translation>
+        <translation>Alkatrész katalógus</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
@@ -5754,9 +5778,9 @@ QucsTrans indítása</translation>
         <source>Component Library
 
 Starts component library program</source>
-        <translation>Alkatrész könyvtár
+        <translation>Alkatrész katalógus
 
-QucsLib indítása</translation>
+Alkatrész-katalógus kezelő indítása</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
@@ -6061,11 +6085,11 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation>by Michael Margraf</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation>Simulator by Stefan Jahn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
@@ -6233,17 +6257,19 @@ Kiválasztás aktiválása</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Váz illesztés a VHDL entitáshoz</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL entitás
+
+Váz illesztés a VHDL entitáshoz</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Csere...</translation>
     </message>
     <message>
         <source>Replace
@@ -6251,186 +6277,215 @@ Inserts the skeleton of a VHDL entity</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Csere
+
+Alkatrésztulajdonság megváltoztatása
+vagy
+szöveg csere VHDL kódban </translation>
     </message>
     <message>
         <source>Select Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagramjelzők kijelölése</translation>
     </message>
     <message>
         <source>Selects all markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes diagramjelző kijelölése</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagramjelzők kijelölése
+
+Összes diagramjelző kijelölése a dokumentumon</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>A kijelölt alkatrész Passziválása/Aktiválása </translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Passziválás/Aktiválás
+
+A kijelölt alkatrész Passziválása/Aktiválása </translation>
     </message>
     <message>
         <source>Align/Distribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Igazítás/Elterítés</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyisson projektet a beágyazott kapcsoláshoz!</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>Új alkatrész &amp;katalógus létrehozás...</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész-katalógus létrehozása a beágyazott kapcsoláshoz</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész-katalógus létrehozása
+
+Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
     </message>
     <message>
         <source>Cannot delete file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl nem törölhető: </translation>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet eltávolítani a könyvtárat: </translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Először nyisson meg egy projektet!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon diagram grafikont!</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>CVS fájl</translation>
     </message>
     <message>
         <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimemeti fájl név</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>A kimeneti fájl már létezik!
+</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Felülírás?</translation>
     </message>
     <message>
         <source>Print Fit to Page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás oldalra illesztve...</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás oldalra illesztve
+
+Nyomtatás a beállított lapméretre illesztve</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Új &amp;csomag létrehozás...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Tömörített csomag létrehozása a projektekből</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Új csomag létrehozás
+
+Tömörített csomag létrehozása a projektekből</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tömörített csomag &amp;kibontása...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Összetevők installálása a csomagból</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Tömörített csomag kibontása
+
+Összetevők installálása a csomagból</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Adat &amp;Importálás...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl Qucs adatfájlba konvertálása</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Adat importálás
+
+Fájl Qucs adatfájlba konvertálása</translation>
     </message>
     <message>
         <source>Export to &amp;CSV...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás &amp;CVS-be...</translation>
     </message>
     <message>
         <source>Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikon adatok CVS fájlba konvertálása</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás CVS-be
+
+Grafikon adatok CVS fájlba konvertálása</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Navigátor ablak</translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigátor ablak be/ki</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigátor ablak
+
+Bekapcsolja/Kikapcsolja a navigátor ablakot</translation>
     </message>
     <message>
         <source>Printer Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtató Hiba.</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Csillapító méretező program nem indítható!</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Csillapító méretező</translation>
     </message>
     <message>
         <source>Starts QucsAttenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator (Csillapító méretező) indítása</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
+        <translation>Csillapító méretező
+
+Csillapító méretező program indítása</translation>
+    </message>
+    <message>
+        <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6438,117 +6493,119 @@ Starts attenuator calculation program</source>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Kilépés</translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished">Súgó...</translation>
+        <translation>Súgó...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator (Csillapító méretező) &amp;Névjegy...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">Qt Névjegy...</translation>
+        <translation>Qt Névjegy...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fájl</translation>
+        <translation>&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Súgó</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
         <source>Attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Csillapítás:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished">dB</translation>
+        <translation>dB</translation>
     </message>
     <message>
         <source>Zin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbe:</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished"></translation>
+        <translation>50</translation>
     </message>
     <message>
         <source>Zout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zki:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished">Számolás és vágólapra helyezés</translation>
+        <translation>Számolás és vágólapra helyezés</translation>
     </message>
     <message>
         <source>R1:</source>
-        <translation type="unfinished"></translation>
+        <translation>R1:</translation>
     </message>
     <message>
         <source>--</source>
-        <translation type="unfinished"></translation>
+        <translation>--</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished">Ohm</translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>R2:</source>
-        <translation type="unfinished"></translation>
+        <translation>R2:</translation>
     </message>
     <message>
         <source>R3:</source>
-        <translation type="unfinished"></translation>
+        <translation>R3:</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished">Eredmény:</translation>
+        <translation>Eredmény:</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">Qt Névjegy</translation>
+        <translation>Qt Névjegy</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Névjegy...</translation>
+        <translation>Névjegy...</translation>
     </message>
     <message>
         <source>
 Attenuator synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Csillapító méretező program
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2006 by</translation>
+        <translation>Copyright (C) 2006 by</translation>
     </message>
     <message>
         <source>Topology</source>
-        <translation type="unfinished"></translation>
+        <translation>Topológia</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Bemenet</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimenet</translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikeres!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Állítsd a csillapítás nagyobbra mint %1 dB</translation>
     </message>
 </context>
 <context>
@@ -6857,27 +6914,27 @@ Szűrő méretező program
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Kilépés</translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vissza</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Előre</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kezdőlap</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Előző</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Következő</translation>
     </message>
 </context>
 <context>
@@ -8258,7 +8315,7 @@ Fájlok másolása a projekt könyvtárba</translation>
     <message>
         <source>Library Manager for Qucs
 </source>
-        <translation>Alkatrész-könyvtár kezelő a Qucs-hoz
+        <translation>Alkatrész-katalógus kezelő a Qucs-hoz
 </translation>
     </message>
     <message>
@@ -8269,7 +8326,7 @@ Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>A alkatrész-katalógus (QucsLib) egy alkatrész-katalógus kezelő program. A bal oldalon legördülő menüből lehet alkatrész csoportot választani, majd a listából lehet a kívánt alkatrészt kikeresni. Az alkatrész nevére klikkelve jobb oldalon megjelennek az alkatrész adatai. A &quot;Másolás vágólapra&quot; gombbal azonnal a vágólapra helyezi az alkatrészt. Ezután a Qucs-ba beilleszthető az alkatrész a Szerkesztés / Beillesztés menüben vagy a CTRL-V billenytükombinációval.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -8281,7 +8338,7 @@ Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
-        <translation>Alkatrész könyvtár hibás.</translation>
+        <translation>Alkatrész katalógus hibás.</translation>
     </message>
     <message>
         <source>Search result</source>
@@ -8297,11 +8354,11 @@ Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>Manage User &amp;Libraries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználói alkatrész-&amp;katalógust kezelő...</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation type="unfinished"></translation>
+        <translation>További lehetőség: Az alkatrész a jobb alsó &quot;Szimbólum:&quot; ablakból ! Húzd és Ejtsd ! módszerrel a kapcsolási rajz szerkesztőbe másolható.</translation>
     </message>
 </context>
 <context>
@@ -8462,39 +8519,39 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Colors for Syntax Highlighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>Színek a szintaxis kiemeléshez:</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjegyzés</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation>Szöveg</translation>
     </message>
     <message>
         <source>Integer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Egész szám</translation>
     </message>
     <message>
         <source>Real Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Tört szám</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakter</translation>
     </message>
     <message>
         <source>Data Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum típus</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulajdonság</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL Szerkesztő</translation>
     </message>
 </context>
 <context>
@@ -8900,19 +8957,19 @@ a fájlt a megfelelő program nyissa meg.</translation>
     <name>Schematic</name>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Cím</translation>
     </message>
     <message>
         <source>Drawn By:</source>
-        <translation type="unfinished"></translation>
+        <translation>Készítő:</translation>
     </message>
     <message>
         <source>Date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum:</translation>
     </message>
     <message>
         <source>Revision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrizve:</translation>
     </message>
 </context>
 <context>
@@ -8977,35 +9034,35 @@ are included in the search.</source>
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresett szöveg</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Csere erre</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Csere előtt rákérdez</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Szöveg csere</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Csere...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehet a csere?</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>A keresendő szöveg nem található!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>A keresési kulcs %1 helyen kicserélve!</translation>
     </message>
 </context>
 <context>
@@ -9061,35 +9118,35 @@ Rács megjelenítése</translation>
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>nincs Keret</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 fekvő</translation>
     </message>
     <message>
         <source>DIN A5 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 álló</translation>
     </message>
     <message>
         <source>DIN A4 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 fekvő</translation>
     </message>
     <message>
         <source>DIN A4 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 álló</translation>
     </message>
     <message>
         <source>DIN A3 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 fekvő</translation>
     </message>
     <message>
         <source>DIN A3 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 álló</translation>
     </message>
 </context>
 <context>
@@ -9219,7 +9276,7 @@ Hibák:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
     </message>
 </context>
 <context>
@@ -9332,7 +9389,7 @@ Hibák:
     </message>
     <message>
         <source>! Drag n&apos;Drop me !</source>
-        <translation type="unfinished"></translation>
+        <translation>! Húzd és ejtsd !</translation>
     </message>
 </context>
 <context>

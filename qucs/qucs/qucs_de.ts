@@ -1011,6 +1011,10 @@
         <source>VCD files</source>
         <translation>VCD Dateien</translation>
     </message>
+    <message>
+        <source>IC-CAP model files</source>
+        <translation>IC-CAP Modell Dateien</translation>
+    </message>
 </context>
 <context>
     <name>LabelDialog</name>
@@ -1493,51 +1497,63 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Wert</translation>
+        <translation>Wert</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wert:</translation>
     </message>
     <message>
         <source>minimum</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum</translation>
     </message>
     <message>
         <source>maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>kleiner</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>größer</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>gleich</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">ja</translation>
+        <translation>ja</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Keines der Textfelder darf leer sein!</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">nein</translation>
+        <translation>nein</translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished">Simulation:</translation>
+    </message>
+    <message>
+        <source>Variable &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4264,6 +4280,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>initial current for transient simulation</source>
         <translation>Anfangsstromwert für die Transientensimulation</translation>
     </message>
+    <message>
+        <source>initial delay delay time</source>
+        <translation>Anfangsverzögerungszeit</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6800,6 +6820,10 @@ Starts attenuator calculation program</source>
 
 Startet das Programm zur Berechnung von Dämpfungsgliedern</translation>
     </message>
+    <message>
+        <source>GUI improvements by Gopala Krishna A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -8722,27 +8746,27 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Beenden</translation>
+        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zurück</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vorwärts</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Startseite</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>V&amp;orherige</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nächste</translation>
     </message>
 </context>
 <context>

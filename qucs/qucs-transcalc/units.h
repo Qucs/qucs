@@ -2,7 +2,7 @@
  * units.h - some conversion definitions
  *
  * Copyright (C) 2001 Gopal Narayanan <gopal@astro.umass.edu>
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,15 +33,16 @@
 #endif
 
 #ifndef M_PI
-#define M_PI           3.14159265358979323846  /* pi */
-#endif
+#define M_PI           3.1415926535897932384626433832795029  /* pi */
+#endif                 
 
 #ifndef M_E
-#define M_E            2.7182818284590452354   /* e */
+#define M_E            2.7182818284590452353602874713526625   /* e */
 #endif
 
 #define MU0  12.566370614e-7          /* magnetic constant         */
 #define C0   299792458.0              /* speed of light in vacuum  */
+#define ZF0  376.73031346958504364963 /* wave resistance in vacuum */
 
 // Types of units.
 #define UNIT_FREQ   0
