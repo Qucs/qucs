@@ -2,7 +2,7 @@
  * rectwaveguide.cpp - rectangular waveguide class implementation
  *
  * Copyright (C) 2001 Gopal Narayanan <gopal@astro.umass.edu>
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -94,11 +94,11 @@ double rectwaveguide::alphac ()
       if (f > f_c) {
 	switch (n) {
 	case 0:
-	  ac += (Rs/(b * 120.0 * M_PI * sqrt(1.0 - pow((f_c/f),2.0)))) *
+	  ac += (Rs/(b * ZF0 * sqrt(1.0 - pow((f_c/f),2.0)))) *
 	    (1.0 + ((2 * b/a)*pow((f_c/f),2.0)));
 	  break;
 	default:
-	  ac += ((2. * Rs)/(b * 120.0 * M_PI * sqrt(1.0 - pow((f_c/f),2.0)))) *
+	  ac += ((2. * Rs)/(b * ZF0 * sqrt(1.0 - pow((f_c/f),2.0)))) *
 	    (((1. + (b/a))*pow((f_c/f),2.0)) + 
 	     ((1. - pow((f_c/f),2.0)) * (((b/a)*(((b/a)*pow(m,2.)) + pow(n,2.)))/
 					(pow((b*m/a),2.0) + pow(n,2.0)))));
@@ -113,7 +113,7 @@ double rectwaveguide::alphac ()
     for (m = 1; m<= mmax; m++) {
       f_c = fc(m, n);
       if (f > f_c) {
-	ac += ((2. * Rs)/(b * 120.0 * M_PI * sqrt(1.0 - pow((f_c/f),2.0)))) *
+	ac += ((2. * Rs)/(b * ZF0 * sqrt(1.0 - pow((f_c/f),2.0)))) *
 	  (((pow(m,2.0)*pow((b/a),3.0)) + pow(n,2.))/
 	   ((pow((m*b/a),2.)) + pow(n,2.0)));
       }
@@ -224,8 +224,8 @@ void rectwaveguide::analyze ()
     /*propagating modes */
     beta = sqrt(pow(k,2.) - pow(kc(1,0),2.0));
     lambda_g = (2. * M_PI)/beta;
-    /*	Z0 = (k * 120. * M_PI)/beta; */
-    Z0 = 2.0 * 120.0 * M_PI * (b/a) * 1/
+    /*	Z0 = (k * ZF0)/beta; */
+    Z0 = 2.0 * ZF0 * (b/a) * 1/
       sqrt(1.0 - pow((fc(1,0)/f),2.0));
 
     /* calculate electrical angle */
@@ -272,11 +272,11 @@ void rectwaveguide::synthesize ()
   if (isSelected ("b")) {
     /* solve for b */
     b = Z0 * a * sqrt(1.0 - pow((fc(1,0)/f),2.0))/
-      (2. * 120. * M_PI);
+      (2. * ZF0);
     setProperty ("b", b, UNIT_LENGTH, LENGTH_M);
   } else if (isSelected ("a")) {
     /* solve for a */
-    a = sqrt(pow((2.0 * 120. * M_PI * b/Z0), 2.0) + 
+    a = sqrt(pow((2.0 * ZF0 * b/Z0), 2.0) + 
 		 pow((C0/(2.0 * f)),2.0));
     setProperty ("a", a, UNIT_LENGTH, LENGTH_M);
   }

@@ -3,7 +3,7 @@
  * 
  * Copyright (C) 2001 Gopal Narayanan <gopal@astro.umass.edu>
  * Copyright (C) 2002 Claudio Girardi <claudio.girardi@ieee.org>
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ double microstrip::Z0_homogeneous(double u)
 {
   double f, Z0;
   f = 6.0 + (2.0 * M_PI - 6.0) * exp(-pow(30.666 / u, 0.7528));
-  Z0 = (377.0 / (2.0 * M_PI)) * log(f / u + sqrt(1.0 + 4.0 / (u * u)));
+  Z0 = (ZF0 / (2.0 * M_PI)) * log(f / u + sqrt(1.0 + 4.0 / (u * u)));
   return Z0;
 }
 
@@ -299,7 +299,7 @@ double microstrip::conductor_losses()
 
   if (f > 0.0) {
     /* current distribution factor */
-    K = exp(-1.2 * pow(Z0_h_1 / 377.0, 0.7));
+    K = exp(-1.2 * pow(Z0_h_1 / ZF0, 0.7));
     /* skin resistance */
     R_s = 1.0 / (sigma * delta);
     
@@ -371,8 +371,8 @@ double microstrip::synth_width()
   e_r = er;
 
 
-  a = ((Z0 / 60.) * sqrt((e_r + 1) / 2.)) + ((e_r - 1) / (e_r + 1) * (0.23 + (0.11 / e_r)));
-  b = 60. * pow(M_PI, 2) / (Z0 * sqrt(e_r));
+  a = ((Z0 / ZF0 / 2 / M_PI) * sqrt((e_r + 1) / 2.)) + ((e_r - 1) / (e_r + 1) * (0.23 + (0.11 / e_r)));
+  b = ZF0 / 2 * M_PI / (Z0 * sqrt(e_r));
 
   if (a > 1.52) {
     w_h = 8 * exp(a) / (exp(2. * a) - 2);

@@ -83,7 +83,7 @@ freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS 
 echo " done."
 
 echo "simulating..."
-./$NAME -q -cmd "dc -f $NAME.vcd -t 1 ps -q;d;run $TIME;q;"
+./$NAME -q -cmd "dc -f $NAME.vcd -t 1 ps -q;d;run $TIME;q;" <&-
 wait $!
 
 echo -n "running VCD conversion..."

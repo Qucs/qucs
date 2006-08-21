@@ -32,6 +32,7 @@ class QPushButton;
 class QVBoxLayout;
 class QRegExpValidator;
 class QDoubleValidator;
+class QIntValidator;
 
 
 class OptimizeDialog : public QDialog  {
@@ -58,6 +59,9 @@ private slots:
   void slotChangeGoalName(const QString&);
   void slotChangeGoalNum(const QString&);
   void slotChangeGoalType(const QString&);
+
+private:
+  void createASCOFiles();
 
 public:
   Optimize_Sim *Comp;

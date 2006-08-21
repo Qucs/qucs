@@ -219,9 +219,9 @@ void SimMessage::nextSPICE()
   }
 
   QByteArray SpiceContent = SpiceFile.readAll();
+  SpiceFile.close();
   SimProcess.writeToStdin(SpiceContent);
   connect(&SimProcess, SIGNAL(wroteToStdin()), SLOT(slotCloseStdin()));
-  SpiceFile.close();
 }
 
 // ------------------------------------------------------------------------
