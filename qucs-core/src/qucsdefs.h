@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.51 2006/07/24 08:07:42 raimi Exp $
+ * $Id: qucsdefs.h,v 1.52 2006/08/21 08:10:30 raimi Exp $
  *
  */
 
@@ -223,7 +223,10 @@ struct define_t qucs_definition_available[] =
       { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Td", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
   },
   /* rectangular pulse current source */
   { "Irect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -231,7 +234,10 @@ struct define_t qucs_definition_available[] =
       { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Td", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
   },
   /* phase shifter */
   { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

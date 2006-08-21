@@ -1,3 +1,17 @@
+2006-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added new
+	optional properties 'Td', 'Tr' and 'Tf' for rectangular current
+	and voltage sources.
+
+	* parse_mdl.y: Free'ing unused scanner items in the parser.
+
+	* dataset.cpp: New function delVariable() implemented.
+
+	* check_mdl.cpp: TODO list done: release internal data
+	structures, checking dependency list of XFORM's checking
+	SYNC sweeps, handling LIST sweeps correctly.
+
 2006-08-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* valuelist.cpp: Added new function which can be used to

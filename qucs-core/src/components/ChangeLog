@@ -1,3 +1,8 @@
+2006-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* vrect.cpp, irect.cpp: Added delay, fall and rise times
+	as properties.
+
 2006-07-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* capacitor.cpp, inductor.cpp: Use initil condition only if

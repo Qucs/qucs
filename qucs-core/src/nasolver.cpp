@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.44 2006/07/24 08:07:41 raimi Exp $
+ * $Id: nasolver.cpp,v 1.45 2006/08/21 08:10:30 raimi Exp $
  *
  */
 
@@ -1067,15 +1067,16 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::storeSolution (void) {
   // cleanup solution previously
   solution.clear ();
+  int r;
   int N = countNodes ();
   int M = countVoltageSources ();
   // store all nodes except reference node
-  for (int r = 0; r < N; r++) {
+  for (r = 0; r < N; r++) {
     struct nodelist_t * n = nlist->getNode (r);
     solution.add (n->name, x->get (r), 0);
   }
   // store all branch currents of voltage sources
-  for (int r = 0; r < M; r++) {
+  for (r = 0; r < M; r++) {
     circuit * vs = findVoltageSource (r);
     int vn = r - vs->getVoltageSource () + 1;
     solution.add (vs->getName (), x->get (r + N), vn);
@@ -1085,17 +1086,18 @@ void nasolver<nr_type_t>::storeSolution (void) {
 // This function recalls the solution (node voltages and branch currents).
 template <class nr_type_t>
 void nasolver<nr_type_t>::recallSolution (void) {
+  int r;
   int N = countNodes ();
   int M = countVoltageSources ();
   naentry<nr_type_t> * na;
   // store all nodes except reference node
-  for (int r = 0; r < N; r++) {
+  for (r = 0; r < N; r++) {
     struct nodelist_t * n = nlist->getNode (r);
     if ((na = solution.find (n->name, 0)) != NULL)
       x->set (r, na->value);
   }
   // store all branch currents of voltage sources
-  for (int r = 0; r < M; r++) {
+  for (r = 0; r < M; r++) {
     circuit * vs = findVoltageSource (r);
     int vn = r - vs->getVoltageSource () + 1;
     if ((na = solution.find (vs->getName (), vn)) != NULL)

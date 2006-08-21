@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.20 2006/08/18 08:20:17 raimi Exp $
+ * $Id: dataset.cpp,v 1.21 2006/08/21 08:10:30 raimi Exp $
  *
  */
 
@@ -152,6 +152,21 @@ void dataset::addVariable (vector * v) {
   v->setNext (variables);
   v->setPrev (NULL);
   variables = v;
+}
+
+// This function removes a variable vector from the current dataset.
+void dataset::delVariable (vector * v) {
+  if (variables == v) {
+    variables = (vector *) v->getNext ();
+    variables->setPrev (NULL);
+  }
+  else {
+    vector * next = (vector *) v->getNext ();
+    vector * prev = (vector *) v->getPrev ();
+    prev->setNext (next);
+    if (next) next->setPrev (prev);
+  }
+  delete v;
 }
 
 /* The function adds the given list of vectors to the variable set of

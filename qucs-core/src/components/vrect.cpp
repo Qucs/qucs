@@ -1,7 +1,7 @@
 /*
  * vrect.cpp - rectangular pulse voltage source class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vrect.cpp,v 1.4 2005/06/02 18:17:52 raimi Exp $
+ * $Id: vrect.cpp,v 1.5 2006/08/21 08:10:31 raimi Exp $
  *
  */
 
@@ -55,7 +55,12 @@ void vrect::initSP (void) {
 void vrect::initDC (void) {
   nr_double_t th = getPropertyDouble ("TH");
   nr_double_t tl = getPropertyDouble ("TL");
-  nr_double_t u  = getPropertyDouble ("U") * th / (th + tl);
+  nr_double_t tr = getPropertyDouble ("Tr");
+  nr_double_t tf = getPropertyDouble ("Tf");
+  if (tr > th) tr = th;
+  if (tf > tl) tf = tl;
+  nr_double_t a  = (th + (tf - tr) / 2) / (th + tl);
+  nr_double_t u  = getPropertyDouble ("U") * a;
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_1, NODE_2, u);
 }
@@ -73,11 +78,27 @@ void vrect::calcTR (nr_double_t t) {
   nr_double_t u  = getPropertyDouble ("U");
   nr_double_t th = getPropertyDouble ("TH");
   nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t tr = getPropertyDouble ("Tr");
+  nr_double_t tf = getPropertyDouble ("Tf");
+  nr_double_t td = getPropertyDouble ("Td");
   nr_double_t ut = 0;
 
-  t = t - (th + tl) * floor (t / (th + tl));
-  if (t < th) { // high pulse
-    ut = u;
+  if (tr > th) tr = th;
+  if (tf > tl) tf = tl;
+
+  if (t > td) { // after delay
+    t = t - td;
+    t = t - (th + tl) * floor (t / (th + tl));
+    if (t < tr) { // rising edge
+      ut = + u / tr * t;
+    }
+    else if (t < th) { // high pulse
+      ut = u;
+    }
+    else if (t < th + tf) { // falling edge
+      ut = - u / tf * (t - (th + tf));
+    }
   }
+
   setE (VSRC_1, ut);
 }
