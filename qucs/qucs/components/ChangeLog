@@ -1,3 +1,14 @@
+2006-08-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* optimizedialog.cpp (createASCOFiles): Added the DE properteries
+	to the dialog and implemented the creation of the configuration
+	files used by ASCO.
+
+2006-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* vrect.cpp (vRect), irect.cpp (iRect): Added new properties
+	for delay, rise and fall time.
+
 2006-07-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* tr_sim.cpp (TR_Sim): Added new property 'initialDC'.

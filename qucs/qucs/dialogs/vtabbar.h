@@ -21,6 +21,7 @@
 #define VERTICALTABBAR_H
 
 #include "vtabglobal.h"
+#include "vtabbutton.h"
 #include <qwidget.h>
 #include <qptrlist.h>
 

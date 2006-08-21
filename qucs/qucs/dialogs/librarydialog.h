@@ -23,6 +23,7 @@
 #include <qregexp.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
+#include <qcheckbox.h>
 
 class QLabel;
 class QucsApp;
