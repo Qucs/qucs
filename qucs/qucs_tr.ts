@@ -892,6 +892,10 @@
         <source>VCD files</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>IC-CAP model files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LabelDialog</name>
@@ -1340,6 +1344,18 @@ olmalı fakat şu anda %1 !</translation>
     <message>
         <source>no</source>
         <translation type="unfinished">hayır</translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished">Simülasyon:</translation>
+    </message>
+    <message>
+        <source>Variable &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3870,6 +3886,10 @@ Kullanım:  qucsedit -r kütük
         <source>initial current for transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>initial delay delay time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6113,6 +6133,10 @@ Starts attenuator calculation program</source>
     <message>
         <source>Rotates the selected component by 90</source>
         <translation type="obsolete">Seçili bileşeni 90 derece dönürür</translation>
+    </message>
+    <message>
+        <source>GUI improvements by Gopala Krishna A</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,3 +1,15 @@
+2006-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_hu.ts: Updated Hungarian translations.  Thanks to
+	Joszef Bus.
+
+	* qucsdigi: Closing stdin when simulating.
+
+	* qucs_de.ts: Updated German translations.
+
+	* dialogs/importdialog.cpp (slotBrowse): Added 'mdl' file type
+	to the available data import data formats.
+
 2006-08-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* no schematic frame during symbol edit

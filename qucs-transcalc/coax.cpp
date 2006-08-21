@@ -3,7 +3,7 @@
  * 
  * Copyright (C) 2001 Gopal Narayanan <gopal@astro.umass.edu>
  * Copyright (C) 2002 Claudio Girardi <claudio.girardi@ieee.org>
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ double coax::alphad_coax ()
 {
   double ad;
   ad = (M_PI/C0) * f * sqrt(er) * tand;
-  ad = ad * 8.686;
+  ad = ad * 20.0 / log(10.0);
   return ad;
 }
 
@@ -100,9 +100,8 @@ double coax::alphac_coax ()
 {
   double ac, Rs;
   Rs = sqrt((M_PI * f * mur* MU0)/sigma);
-  ac = (0.5 * sqrt(er)) * (((1/din) + (1/dout))/log(dout/din)) * 
-    (Rs/(120. * M_PI));
-  ac = ac * 8.686;
+  ac = (0.5 * sqrt(er)) * (((1/din) + (1/dout))/log(dout/din)) * (Rs/ZF0);
+  ac = ac * 20.0 / log(10.0);
   return ac;
 }
 
@@ -123,7 +122,7 @@ void coax::analyze ()
   get_coax_phys();
  
   if (din != 0.0){
-    Z0 = (60.0/sqrt(er))*log(dout/din);
+    Z0 = (ZF0/2/M_PI/sqrt(er))*log(dout/din);
   }
 
   lambda_g = (C0/(f))/sqrt(er * mur);
@@ -158,11 +157,11 @@ void coax::synthesize ()
       
   if (isSelected ("din")) {
     /* solve for din */
-    din = dout / exp(Z0*sqrt(er)/60.0);
+    din = dout / exp(Z0*sqrt(er)/ZF0/2/M_PI);
     setProperty ("din", din, UNIT_LENGTH, LENGTH_M);
   } else if (isSelected ("dout")) {
     /* solve for dout */
-    dout = din * exp(Z0*sqrt(er)/60.0);
+    dout = din * exp(Z0*sqrt(er)/ZF0/2/M_PI);
     setProperty ("dout", dout, UNIT_LENGTH, LENGTH_M);
   }
 

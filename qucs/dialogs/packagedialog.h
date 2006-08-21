@@ -22,6 +22,7 @@
 #include <qdialog.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
+#include <qcheckbox.h>
 
 class QucsApp;
 class QString;

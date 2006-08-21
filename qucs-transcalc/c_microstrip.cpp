@@ -2,7 +2,7 @@
  * c_microstrip.cpp - coupled microstrip class implementation
  * 
  * Copyright (C) 2002 Claudio Girardi <claudio.girardi@ieee.org>
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -361,7 +361,7 @@ void c_microstrip::Z0_even_odd()
   Q_3 = 0.1975 + pow((16.6 + pow((8.4 / g), 6.0)), -0.387) + log(pow(g, 10.0) / (1.0 + pow(g / 3.4, 10.0))) / 241.0;
   Q_4 = 2.0 * Q_1 / (Q_2 * (exp(-g) * pow(u_t_e, Q_3) + (2.0 - exp(-g)) * pow(u_t_e, -Q_3)));
   /* static even-mode impedance */
-  Z0_e_0 = Z0_single * sqrt(er_eff_single / er_eff) / (1.0 - sqrt(er_eff_single) * Q_4 * Z0_single / 377.0);
+  Z0_e_0 = Z0_single * sqrt(er_eff_single / er_eff) / (1.0 - sqrt(er_eff_single) * Q_4 * Z0_single / ZF0);
   /* correction for cover */
   delta_Z0_e_0 = delta_Z0_even_cover(g, u_t_e, h2h) / sqrt(er_eff);
 
@@ -377,7 +377,7 @@ void c_microstrip::Z0_even_odd()
   Q_10 = (Q_2 * Q_4 - Q_5 * exp(log(u_t_o) * Q_6 * pow(u_t_o, -Q_9))) / Q_2;
 
   /* static odd-mode impedance */
-  Z0_o_0 = Z0_single * sqrt(er_eff_single / er_eff) / (1.0 - sqrt(er_eff_single) * Q_10 * Z0_single / 377.0);
+  Z0_o_0 = Z0_single * sqrt(er_eff_single / er_eff) / (1.0 - sqrt(er_eff_single) * Q_10 * Z0_single / ZF0);
   /* correction for cover */
   delta_Z0_o_0 = delta_Z0_odd_cover(g, u_t_o, h2h) / sqrt(er_eff);
 
@@ -457,7 +457,7 @@ void c_microstrip::conductor_losses()
 
   if (f > 0.0) {
     /* current distribution factor (same for the two modes) */
-    K = exp(-1.2 * pow((Z0_h_e + Z0_h_o) / (2.0 * 377.0), 0.7));
+    K = exp(-1.2 * pow((Z0_h_e + Z0_h_o) / (2.0 * ZF0), 0.7));
     /* skin resistance */
     R_s = 1.0 / (sigma * delta);
     /* correction for surface roughness */
