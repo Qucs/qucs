@@ -23,15 +23,15 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- add an export to csv file feature as context menu item when clicking
-  on graphs in diagrams
+	- add an export to csv file feature as context menu item when clicking
+	  on graphs in diagrams
 	- add an easy to use volt-meter (for differential voltages)
 	- implementation of 3d cartesian diagram
 	- node/branch annotation of simulation results
 	- filter design tool
 - implement coplanar line synthesis/analysis in transmission line tool
 	- smith chart design tool for impedance and noise matching
-- attenuator design tool
+	- attenuator design tool
 - topology check (open ports) for schematics
 	- implement user-defined subcircuit paintings
 	- make tabdiagram 'scrollable' (for long value lists)
@@ -60,3 +60,12 @@ unfixed) have a look at the file BUGS.
 - snap mode for wire painting
 	- edit component parameters directly in schematic
 - equations for diagram input line
+- 3D clipping
+- legende for diagrams
+- syntax highlighting for VHDL printing
+- tune simulation parameters
+- simulation of tolerances (Monte Carlo)
+- aligning functions: center horizontal/vertically
+- property file for projects (revision, last opened, ...)
+- all coordinates as float
+- PCB layout documents
