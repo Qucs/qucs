@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.13 2006-03-20 08:59:11 raimi Exp $
+ * $Id: parse_spice.y,v 1.14 2006-08-21 08:10:31 raimi Exp $
  *
  */
 
@@ -251,13 +251,30 @@ DefinitionLine:
     spice_append_str_value ($$, $5, HINT_NODE);
     spice_append_val_value ($$, $6, HINT_NUMBER);
   }
+  | GE_Source Node Node Node Node Eol {
+    /* voltage controlled sources (default transconductance/gain) */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_val_value ($$, strdup ("1"), HINT_NUMBER);
+  }
   | FH_Source Node Node V_Source Value Eol {
-    /* voltage controlled sources */
+    /* current controlled sources */
     $$ = spice_create_device ($1);
     spice_append_str_value ($$, $2, HINT_NODE);
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_str_value ($$, $4, HINT_NAME);
     spice_append_val_value ($$, $5, HINT_NUMBER);
+  }
+  | FH_Source Node Node V_Source Eol {
+    /* current controlled sources (default transresistance/gain) */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NAME);
+    spice_append_val_value ($$, strdup ("1"), HINT_NUMBER);
   }
   | MODEL_Action MODEL_Ident MODEL_Spec MODEL_List Eol {
     /* device specification */

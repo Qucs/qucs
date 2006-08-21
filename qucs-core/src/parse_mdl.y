@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_mdl.y,v 1.1 2006-08-18 08:20:17 raimi Exp $
+ * $Id: parse_mdl.y,v 1.2 2006-08-21 08:10:30 raimi Exp $
  *
  */
 
@@ -304,7 +304,10 @@ ELEMENT_Line:
 ;
 
 VIEW_Line:
-  t_VIEW Identifier Real String
+  t_VIEW Identifier Real String {
+    free ($2);
+    free ($4);
+  }
 ;
 
 TABLE_Definition:
@@ -332,7 +335,9 @@ DATA_Definition:
 ;
 
 PSTABLE_Definition:
-  t_PSTABLE String '{' PSContentList '}'
+  t_PSTABLE String '{' PSContentList '}' {
+    free ($2);
+  }
 ;
 
 CIRCUITDECK_Definition:
@@ -340,11 +345,15 @@ CIRCUITDECK_Definition:
 ;
 
 BLKEDIT_Definition:
-  t_BLKEDIT String '{' '}'
+  t_BLKEDIT String '{' '}' {
+    free ($2);
+  }
 ;
 
 CNTABLE_Definition:
-  t_CNTABLE String '{' ConnTableContentList '}'
+  t_CNTABLE String '{' ConnTableContentList '}' {
+    free ($2);
+  }
 ;
 
 HYPTABLE_Definition:
@@ -389,27 +398,43 @@ POINT_Line:
 ;
 
 LIST_Line:
-  t_LIST t_LINK String
+  t_LIST t_LINK String {
+    free ($2);
+    free ($3);
+  }
 ;
 
 PLOTOPTIMIZEROPT_Line:
-  t_PLOTOPTIMIZEROPT Identifier Real
+  t_PLOTOPTIMIZEROPT Identifier Real {
+    free ($2);
+  }
 ;
 
 PLOTERROR_Line:
-  t_PLOTERROR Identifier Real
+  t_PLOTERROR Identifier Real {
+    free ($2);
+  }
 ;
 
 MEMBER_Line:
-  t_MEMBER t_LINK String
+  t_MEMBER t_LINK String {
+    free ($2);
+    free ($3);
+  }
 ;
 
 PARAM_Line:
-  t_PARAM Identifier String
+  t_PARAM Identifier String {
+    free ($2);
+    free ($3);
+  }
 ;
 
 CONNPAIR_Line:
-  t_CONNPAIR String String
+  t_CONNPAIR String String {
+    free ($2);
+    free ($3);
+  }
 ;
 
 %%

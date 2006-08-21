@@ -32,7 +32,7 @@ Distribution process:
   - Maintainance currently requires the following software packages:
      + Autoconf version 2.57 (at least)
      + GNU automake 1.7.0 (at least)
-     + flex 2.5.31
+     + flex 2.5.31 (but at least 2.5.9)
      + GNU M4 (any version)
      + GNU Bison 1.875d
      + GNU gperf 3.0.1

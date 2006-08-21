@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.h,v 1.12 2006-08-18 08:20:17 raimi Exp $
+ * $Id: dataset.h,v 1.13 2006-08-21 08:10:30 raimi Exp $
  *
  */
 
@@ -44,6 +44,7 @@ class dataset : public object
   void appendVariables (vector *);
   void applyDependencies (vector * v);
   void delDependency (vector *);
+  void delVariable (vector *);
 
   void assignDependency (char *, char *);
   char * getFile (void);

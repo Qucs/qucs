@@ -1,3 +1,9 @@
+2006-08-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_spice.y: When value for F/E/G/H controlled sources is
+	missing then using a default transconductance/transresistance/gain
+	of 1.
+
 2006-08-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp (mdl2qucs): Added MDL to Qucs dataset converter

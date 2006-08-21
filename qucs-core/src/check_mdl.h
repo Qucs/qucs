@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.h,v 1.1 2006-08-18 08:20:17 raimi Exp $
+ * $Id: check_mdl.h,v 1.2 2006-08-21 08:10:30 raimi Exp $
  *
  */
 
@@ -49,6 +49,7 @@ __END_DECLS
 /* Declaration of MDL data structures. */
 extern dataset * mdl_result;
 extern struct mdl_link_t * mdl_root;
+extern struct mdl_sync_t * mdl_sync_root;
 
 struct mdl_point_t {
   int n;
@@ -120,6 +121,14 @@ struct mdl_dcontent_t {
     struct mdl_hyptable_t * hyptable;
   };
   struct mdl_dcontent_t * next;
+};
+
+struct mdl_sync_t {
+  char * master;
+  char * name;
+  double ratio;
+  double offset;
+  struct mdl_sync_t * next;
 };
 
 #endif /* __CHECK_MDL_H__ */

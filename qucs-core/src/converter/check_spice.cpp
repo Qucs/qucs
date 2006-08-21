@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.20 2006-05-23 09:48:32 raimi Exp $
+ * $Id: check_spice.cpp,v 1.21 2006-08-21 08:10:31 raimi Exp $
  *
  */
 
@@ -2025,7 +2025,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
        - current sources
        - subcircuits
    - file includes
-   - transmission line (won't be possible)
+   - transmission lines
        - voltage dependent sources
        - current dependent sources
        - initial conditions
@@ -2034,6 +2034,8 @@ static struct definition_t * spice_translator (struct definition_t * root) {
    - mesfet if available in Qucs
    - other mosfet models if available in Qucs
        - three mutual inductors
+   - current controlled switch (gyrator + voltage controlled switch)
+   - single-frequency FM (using pm-modulator)
 */
 
 #if 0
