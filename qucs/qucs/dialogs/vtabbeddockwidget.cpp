@@ -35,9 +35,9 @@ VTabbedDockWidget::~VTabbedDockWidget()
 void VTabbedDockWidget::setWidget(QWidget *w)
 {
   QDockWindow::setWidget(w);
-  m_tabWidget = dynamic_cast<VTabWidget*>(w);
-  if(!m_tabWidget)
+  if(!(w->inherits("VTabWidget")))
     return;
+  m_tabWidget = (VTabWidget*)w;
   setResizeEnabled(false);
   setHorizontallyStretchable(false);
   connect(m_tabWidget,SIGNAL(widgetStackHidden()),this,SLOT(slotStackHidden()));
@@ -51,7 +51,6 @@ void VTabbedDockWidget::setWidget(QWidget *w)
 void VTabbedDockWidget::slotStackShown()
 {
   setFixedExtentWidth(m_tabWidget->sizeHint().width());
-  //setFixedExtentHeight(sizeHint().height());
   setHorizontallyStretchable(true);
   setResizeEnabled(true);
 }
@@ -62,7 +61,6 @@ void VTabbedDockWidget::slotStackShown()
 void VTabbedDockWidget::slotStackHidden()
 {
   setFixedExtentWidth(m_tabWidget->sizeHint().width());
-  //setFixedExtentHeight(bar->sizeHint().height());
   setHorizontallyStretchable(false);
   setResizeEnabled(false);
 }
@@ -74,7 +72,9 @@ void VTabbedDockWidget::updatePosition(QDockWindow::Place p)
 {
   if(p==OutsideDock)
     return;
-  QMainWindow *mainWin = dynamic_cast<QMainWindow*>(qApp->mainWidget());
+  if(!(qApp->mainWidget()->inherits("QMainWindow")))
+    return;
+  QMainWindow *mainWin = (QMainWindow*)(qApp->mainWidget());
   Dock dock;
   int ind,eo;//Not needed really
   bool nl;//Not needed really
