@@ -1545,15 +1545,83 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Simulation:</translation>
+        <translation>Simulation:</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Variable &quot;%1&quot; existiert bereits in der Liste!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
+        <translation>Das Ziel &quot;%1&quot; existiert bereits in der Liste!</translation>
+    </message>
+    <message>
+        <source>Method:</source>
+        <translation>Methode:</translation>
+    </message>
+    <message>
+        <source>Maximum number of iterations:</source>
+        <translation>Maximale Anzahl der Iterationen:</translation>
+    </message>
+    <message>
+        <source>Output refresh cycle:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parents:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Constant F:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing over factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pseudo random number seed:</source>
+        <translation>Anfangszahl für Zufallszahlen:</translation>
+    </message>
+    <message>
+        <source>Minimum cost variance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cost objectives:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cost constraints:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation>Algorithmus</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Typ:</translation>
+    </message>
+    <message>
+        <source>linear double</source>
+        <translation>linear reell</translation>
+    </message>
+    <message>
+        <source>logarithmic double</source>
+        <translation>logarithmisch reell</translation>
+    </message>
+    <message>
+        <source>linear integer</source>
+        <translation>linear ganzahlig</translation>
+    </message>
+    <message>
+        <source>logarithmic integer</source>
+        <translation>logarithmisch ganzzahlig</translation>
+    </message>
+    <message>
+        <source>monitor</source>
+        <translation>beobachten</translation>
     </message>
 </context>
 <context>
@@ -6822,7 +6890,7 @@ Startet das Programm zur Berechnung von Dämpfungsgliedern</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbesserungen an der GUI von Gopala Krishna A</translation>
     </message>
 </context>
 <context>
