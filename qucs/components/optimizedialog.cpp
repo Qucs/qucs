@@ -47,6 +47,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   Expr.setPattern("[\\w_]+");
   Validator = new QRegExpValidator(Expr, this);
   numVal = new QDoubleValidator(this);
+  intVal = new QIntValidator(this);
 
   all = new QVBoxLayout(this); // to provide the neccessary size
   QTabWidget *t = new QTabWidget(this);
@@ -66,8 +67,72 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   SimEdit->setEditable(true);
   gp1->addWidget(SimEdit,1,1);
 
-
   t->addTab(Tab1, tr("General"));
+
+  // ...........................................................
+  QWidget *Tab4 = new QWidget(t);
+  QGridLayout *gp4 = new QGridLayout(Tab4,11,2,3,3);
+
+  gp4->addWidget(new QLabel(tr("Method:"), Tab4), 0,0);
+  MethodCombo = new QComboBox(Tab4);
+  MethodCombo->insertItem("DE/best/1/exp");
+  MethodCombo->insertItem("DE/rand/1/exp");
+  MethodCombo->insertItem("DE/rand-to-best/1/exp");
+  MethodCombo->insertItem("DE/best/2/exp");
+  MethodCombo->insertItem("DE/rand/1/exp");
+  MethodCombo->insertItem("DE/best/1/bin");
+  MethodCombo->insertItem("DE/rand/1/bin");
+  MethodCombo->insertItem("DE/rand-to-best/1/bin");
+  MethodCombo->insertItem("DE/best/2/bin");
+  MethodCombo->insertItem("DE/rand/2/bin");
+  gp4->addWidget(MethodCombo,0,1);
+
+  gp4->addWidget(new QLabel(tr("Maximum number of iterations:"), Tab4), 1,0);
+  IterEdit = new QLineEdit(Tab4);
+  IterEdit->setValidator(intVal);
+  gp4->addWidget(IterEdit,1,1);
+
+  gp4->addWidget(new QLabel(tr("Output refresh cycle:"), Tab4), 2,0);
+  RefreshEdit = new QLineEdit(Tab4);
+  RefreshEdit->setValidator(intVal);
+  gp4->addWidget(RefreshEdit,2,1);
+
+  gp4->addWidget(new QLabel(tr("Number of parents:"), Tab4), 3,0);
+  ParentsEdit = new QLineEdit(Tab4);
+  ParentsEdit->setValidator(intVal);
+  gp4->addWidget(ParentsEdit,3,1);
+
+  gp4->addWidget(new QLabel(tr("Constant F:"), Tab4), 4,0);
+  ConstEdit = new QLineEdit(Tab4);
+  ConstEdit->setValidator(numVal);
+  gp4->addWidget(ConstEdit,4,1);
+
+  gp4->addWidget(new QLabel(tr("Crossing over factor:"), Tab4), 5,0);
+  CrossEdit = new QLineEdit(Tab4);
+  CrossEdit->setValidator(numVal);
+  gp4->addWidget(CrossEdit,5,1);
+
+  gp4->addWidget(new QLabel(tr("Pseudo random number seed:"), Tab4), 6,0);
+  SeedEdit = new QLineEdit(Tab4);
+  SeedEdit->setValidator(numVal);
+  gp4->addWidget(SeedEdit,6,1);
+
+  gp4->addWidget(new QLabel(tr("Minimum cost variance:"), Tab4), 7,0);
+  CostVarEdit = new QLineEdit(Tab4);
+  CostVarEdit->setValidator(numVal);
+  gp4->addWidget(CostVarEdit,7,1);
+
+  gp4->addWidget(new QLabel(tr("Cost objectives:"), Tab4), 8,0);
+  CostObjEdit = new QLineEdit(Tab4);
+  CostObjEdit->setValidator(numVal);
+  gp4->addWidget(CostObjEdit,8,1);
+
+  gp4->addWidget(new QLabel(tr("Cost constraints:"), Tab4), 9,0);
+  CostConEdit = new QLineEdit(Tab4);
+  CostConEdit->setValidator(numVal);
+  gp4->addWidget(CostConEdit,9,1);
+
+  t->addTab(Tab4, tr("Algorithm"));
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
@@ -120,12 +185,17 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   VarButtons->setSpacing(3);
   gp2->addMultiCellWidget(VarButtons, 4,4,0,2);
 
-  VarButtons->setStretchFactor(new QWidget(VarButtons),5);
+  new QLabel(tr("Type:"), VarButtons);
+  QComboBox *typeCombo = new QComboBox(VarButtons);
+  typeCombo->insertItem(tr("linear double"));
+  typeCombo->insertItem(tr("logarithmic double"));
+  typeCombo->insertItem(tr("linear integer"));
+  typeCombo->insertItem(tr("logarithmic integer"));
+  VarButtons->setStretchFactor(new QWidget(VarButtons), 10);
   QPushButton *AddVar_Butt = new QPushButton(tr("Add"), VarButtons);
   connect(AddVar_Butt, SIGNAL(clicked()), SLOT(slotAddVariable()));
   QPushButton *DelVar_Butt = new QPushButton(tr("Delete"), VarButtons);
   connect(DelVar_Butt, SIGNAL(clicked()), SLOT(slotDeleteVariable()));
-
 
   t->addTab(Tab2, tr("Variables"));
 
@@ -135,8 +205,8 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
 
   GoalList = new QListView(Tab3);
   GoalList->addColumn(tr("Name"));
-  GoalList->addColumn(tr("Value"));
   GoalList->addColumn(tr("Type"));
+  GoalList->addColumn(tr("Value"));
   gp3->addMultiCellWidget(GoalList,0,0,0,2);
   connect(GoalList, SIGNAL(clicked(QListViewItem*)),
                     SLOT(slotEditGoal(QListViewItem*)));
@@ -161,6 +231,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   GoalTypeCombo->insertItem(tr("less"));
   GoalTypeCombo->insertItem(tr("greater"));
   GoalTypeCombo->insertItem(tr("equal"));
+  GoalTypeCombo->insertItem(tr("monitor"));
   gp3->addWidget(GoalTypeCombo,2,2);
   connect(GoalTypeCombo, SIGNAL(activated(const QString&)),
           SLOT(slotChangeGoalType(const QString&)));
@@ -200,22 +271,45 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
     if(pc != Comp)
       if(pc->Model[0] == '.')
         SimEdit->insertItem(pc->Name);
-  if(!Comp->Props.getLast()->Value.isEmpty())
-    SimEdit->setCurrentText(Comp->Props.getLast()->Value);
+
+  Property *pp;
+  pp = Comp->Props.at(0);
+  if(!pp->Value.isEmpty())
+    SimEdit->setCurrentText(pp->Value);
+
+  pp = Comp->Props.at(1);
+  if(!pp->Value.isEmpty()) {
+    MethodCombo->setCurrentItem(pp->Value.section('|',0,0).toInt()-1);
+    IterEdit->setText(pp->Value.section('|',1,1));
+    RefreshEdit->setText(pp->Value.section('|',2,2));
+    ParentsEdit->setText(pp->Value.section('|',3,3));
+    ConstEdit->setText(pp->Value.section('|',4,4));
+    CrossEdit->setText(pp->Value.section('|',5,5));
+    SeedEdit->setText(pp->Value.section('|',6,6));
+    CostVarEdit->setText(pp->Value.section('|',7,7));
+    CostObjEdit->setText(pp->Value.section('|',8,8));
+    CostConEdit->setText(pp->Value.section('|',9,9));
+  }
 
   NameEdit->setText(Comp->Name);
 
-  Property *pp;
-  for(pp = Comp->Props.first(); pp != 0; pp = Comp->Props.next()) {
-    if(pp->Name != "Var") break;
-    new QListViewItem(VarList, pp->Value.section('|',0,0),
-        pp->Value.section('|',1,1), pp->Value.section('|',2,2),
+  for(pp = Comp->Props.at(2); pp != 0; pp = Comp->Props.next()) {
+    if(pp->Name == "Var") {
+      new QListViewItem(VarList, pp->Value.section('|',0,0),
+        pp->Value.section('|',1,1) == "yes" ? tr("yes") : tr("no"),
+	pp->Value.section('|',2,2),
         pp->Value.section('|',3,3), pp->Value.section('|',4,4));
-  }
-  for( ; pp != 0; pp = Comp->Props.next()) {
-    if(pp->Name != "Goal") break;
-    new QListViewItem(GoalList, pp->Value.section('|',0,0),
-        pp->Value.section('|',1,1), pp->Value.section('|',2,2));
+    }
+    if(pp->Name == "Goal") {
+      new QListViewItem(GoalList, pp->Value.section('|',0,0),
+        ((pp->Value.section('|',1,1) == "minimum") ? tr("minimum") :
+        ((pp->Value.section('|',1,1) == "maximum") ? tr("maximum") :
+        ((pp->Value.section('|',1,1) == "less") ? tr("less") :
+        ((pp->Value.section('|',1,1) == "greater") ? tr("greater") :
+        ((pp->Value.section('|',1,1) == "equal") ? tr("equal") :
+	 tr("monitor")))))),
+	pp->Value.section('|',2,2));
+    }
   }
 
   resize(300, 200);
@@ -225,6 +319,7 @@ OptimizeDialog::~OptimizeDialog()
 {
   delete all;
   delete numVal;
+  delete intVal;
   delete Validator;
 }
 
@@ -350,8 +445,8 @@ void OptimizeDialog::slotEditGoal(QListViewItem *Item)
   }
 
   GoalNameEdit->setText(Item->text(0));
-  GoalNumEdit->setText(Item->text(1));
-  GoalTypeCombo->setCurrentText(Item->text(2));
+  GoalTypeCombo->setCurrentText(Item->text(1));
+  GoalNumEdit->setText(Item->text(2));
   GoalNameEdit->blockSignals(false);
 }
 
@@ -374,7 +469,7 @@ void OptimizeDialog::slotAddGoal()
 
 
   new QListViewItem(GoalList, GoalNameEdit->text(),
-      GoalNumEdit->text(), GoalTypeCombo->currentText());
+      GoalTypeCombo->currentText(), GoalNumEdit->text());
 
   slotEditGoal(0);    // clear entry fields
   GoalList->clearSelection();
@@ -403,7 +498,7 @@ void OptimizeDialog::slotChangeGoalName(const QString&)
 }
 
 // -----------------------------------------------------------
-void OptimizeDialog::slotChangeGoalNum(const QString& Text)
+void OptimizeDialog::slotChangeGoalType(const QString& Text)
 {
   QListViewItem *Item = GoalList->selectedItem();
   if(Item == 0) return;
@@ -412,7 +507,7 @@ void OptimizeDialog::slotChangeGoalNum(const QString& Text)
 }
 
 // -----------------------------------------------------------
-void OptimizeDialog::slotChangeGoalType(const QString& Text)
+void OptimizeDialog::slotChangeGoalNum(const QString& Text)
 {
   QListViewItem *Item = GoalList->selectedItem();
   if(Item == 0) return;
@@ -446,17 +541,32 @@ void OptimizeDialog::slotApply()
     }
   }
 
-  if(SimEdit->currentText() != Comp->Props.last()->Value)
-    changed = true;
-  Comp->Props.remove();   // remove last property
-
-
   QString Prop;
+  if(SimEdit->currentText() != Comp->Props.at(0)->Value) {
+    Comp->Props.at(0)->Value = SimEdit->currentText();
+    changed = true;
+  }
+  Prop = QString::number(MethodCombo->currentItem()+1) + "|" +
+    IterEdit->text() + "|" +
+    RefreshEdit->text() + "|" +
+    ParentsEdit->text() + "|" +
+    ConstEdit->text() + "|" +
+    CrossEdit->text() + "|" +
+    SeedEdit->text() + "|" +
+    CostVarEdit->text() + "|" +
+    CostObjEdit->text() + "|" +
+    CostConEdit->text();
+  if(Prop != Comp->Props.at(1)->Value) {
+    Comp->Props.at(1)->Value = Prop;
+    changed = true;
+  }
+
   QListViewItem *item;
-  Property *pp = Comp->Props.first();
+  Property *pp = Comp->Props.at(2);
   // apply all the new property values in the ListView
   for(item = VarList->firstChild(); item != 0; item = item->itemBelow()) {
-    Prop = item->text(0) + "|" + item->text(1) + "|" +
+    Prop = item->text(0) + "|" + 
+           ((item->text(1) == tr("yes")) ? "yes" : "no") + "|" +
            item->text(2) + "|" + item->text(3) + "|" +
            item->text(4);
 
@@ -478,7 +588,12 @@ void OptimizeDialog::slotApply()
   }
 
   for(item = GoalList->firstChild(); item != 0; item = item->itemBelow()) {
-    Prop = item->text(0) + "|" + item->text(1) + "|" +
+    Prop = item->text(0) + "|" +
+           ((item->text(1) == tr("minimum")) ? "minimum" :
+           ((item->text(1) == tr("maximum")) ? "maximum" :
+           ((item->text(1) == tr("less")) ? "less" :
+           ((item->text(1) == tr("greater")) ? "greater" :
+           ((item->text(1) == tr("equal")) ? "equal" : "monitor"))))) + "|" +
            item->text(2);
 
     if(pp) {
@@ -506,8 +621,6 @@ void OptimizeDialog::slotApply()
       Comp->Props.remove();
     changed = true;
   }
-
-  Comp->Props.append(new Property("Sim", SimEdit->currentText(), false, ""));
 
   if(changed)
     Doc->viewport()->repaint();

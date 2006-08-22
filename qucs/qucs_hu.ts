@@ -1457,6 +1457,74 @@ de %1 !</translation>
         <source>Goal &quot;%1&quot; already in list!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Method:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum number of iterations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output refresh cycle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parents:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Constant F:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing over factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pseudo random number seed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum cost variance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cost objectives:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cost constraints:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Típus:</translation>
+    </message>
+    <message>
+        <source>linear double</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmic double</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linear integer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmic integer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
