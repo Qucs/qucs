@@ -31,7 +31,7 @@ dist_man_MANS = qucshelp.1
 MOCHEADERS = qucshelp.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucshelp_SOURCES = main.cpp qucshelp.cpp
+qucshelp_SOURCES = main.cpp qucshelp.cpp htmldatafetcher.cpp
 
 nodist_qucshelp_SOURCES = $(MOCFILES)
 

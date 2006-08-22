@@ -36,6 +36,10 @@ struct tQucsSettings {
 extern tQucsSettings QucsSettings;
 extern QDir QucsHelpDir;
 class QAction;
+class QListViewItem;
+class QListView;
+class HtmlDataFetcher;
+class QDockWindow;
 
 class QucsHelp : public QMainWindow  {
    Q_OBJECT
@@ -45,19 +49,23 @@ public:
 
 private slots:
   void slotSourceChanged(const QString& str);
+  void slotToggleSidebar(bool);
   void previousLink();
   void nextLink();
+  void displaySelectedChapter();
 
 private:
-  void closeEvent(QCloseEvent*);
   void setupActions();
-  void initList();
+  void createSidebar();
 
-  QTextBrowser *text;
+  QTextBrowser *textBrowser;
   unsigned int currentIndex;
   QStringList links;
   QAction *previousAction;
   QAction *nextAction;
+  QListView *chaptersView;
+  QDockWindow *dock;
+  HtmlDataFetcher *dataFetcher;
 };
 
 #endif
