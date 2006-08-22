@@ -20,6 +20,7 @@
 #endif
 
 #include "qucshelp.h"
+#include "htmldatafetcher.h"
 
 #include <qpushbutton.h>
 #include <qaction.h>
@@ -29,42 +30,33 @@
 #include <qpopupmenu.h>
 #include <qmenubar.h>
 #include <qapplication.h>
+#include <qlistview.h>
+
 
 QucsHelp::QucsHelp(const QString& page)
 {
+  currentIndex = 0;
+  dataFetcher = new HtmlDataFetcher();
+  links = dataFetcher->fetchLinksToFiles(QucsHelpDir.filePath("index.html"));
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption(tr("Qucs Help System"));
 
-  text = new QTextBrowser(this);
-  text->setMinimumSize(400,200);
-  setCentralWidget(text);
+  textBrowser = new QTextBrowser(this);
+  textBrowser->setMinimumSize(400,200);
+  setCentralWidget(textBrowser);
+  createSidebar();
   setupActions();
-  initList();
 
-  text->setSource(QucsHelpDir.filePath(links[0]));
+  textBrowser->setSource(QucsHelpDir.filePath(links[0]));
 
   // .......................................
   if(!page.isEmpty())
-    text->setSource(QucsHelpDir.filePath(page));
+    textBrowser->setSource(QucsHelpDir.filePath(page));
 }
 
 QucsHelp::~QucsHelp()
-{
-}
-
-//-----------------------------------------------------------------
-// To get all close events.
-void QucsHelp::closeEvent(QCloseEvent *Event)
-{
-  int tmp;
-  tmp = x();		// call size and position function in order to ...
-  tmp = y();		// ... set them correctly before closing the ...
-  tmp = width();	// dialog !!!  Otherwise the frame of the window ...
-  tmp = height();	// will not be recognized (a X11 problem).
-
-  Event->accept();
-}
+{}
 
 void QucsHelp::setupActions()
 {
@@ -86,21 +78,26 @@ void QucsHelp::setupActions()
                                ks, this);
   nextAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "next.png")),
                            tr("&Next"), ks, this);
+  QAction *viewBrowseDock = new QAction(tr("&Sidebar"), 0, this);
+  viewBrowseDock->setToggleAction(true);
+  viewBrowseDock->setOn(true);
+  viewBrowseDock->setStatusTip(tr("Enables/disables the sidebar"));
+  viewBrowseDock->setWhatsThis(tr("Sidebar\n\nEnables/disables the sidebar"));
 
   connect(quitAction,SIGNAL(activated()),qApp,SLOT(quit()));
 
-  connect(backAction,SIGNAL(activated()),text,SLOT(backward()));
-  connect(text,SIGNAL(backwardAvailable(bool)),backAction,SLOT(setEnabled(bool)));
+  connect(backAction,SIGNAL(activated()),textBrowser,SLOT(backward()));
+  connect(textBrowser,SIGNAL(backwardAvailable(bool)),backAction,SLOT(setEnabled(bool)));
 
-  connect(forwardAction,SIGNAL(activated()),text,SLOT(forward()));
-  connect(text,SIGNAL(forwardAvailable(bool)),forwardAction,SLOT(setEnabled(bool)));
+  connect(forwardAction,SIGNAL(activated()),textBrowser,SLOT(forward()));
+  connect(textBrowser,SIGNAL(forwardAvailable(bool)),forwardAction,SLOT(setEnabled(bool)));
 
-  connect(homeAction,SIGNAL(activated()),text,SLOT(home()));
+  connect(homeAction,SIGNAL(activated()),textBrowser,SLOT(home()));
 
-  connect(text,SIGNAL(sourceChanged(const QString &)),this,SLOT(slotSourceChanged(const QString&)));
+  connect(textBrowser,SIGNAL(sourceChanged(const QString &)),this,SLOT(slotSourceChanged(const QString&)));
   connect(previousAction,SIGNAL(activated()),this,SLOT(previousLink()));
   connect(nextAction,SIGNAL(activated()),this,SLOT(nextLink()));
-
+  connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotToggleSidebar(bool)));
 
   backAction->addTo(toolbar);
   forwardAction->addTo(toolbar);
@@ -120,49 +117,52 @@ void QucsHelp::setupActions()
   homeAction->addTo(viewMenu);
   previousAction->addTo(viewMenu);
   nextAction->addTo(viewMenu);
-  
+  viewMenu->insertSeparator();
+  viewBrowseDock->addTo(viewMenu);
+
   QPopupMenu *helpMenu = new QPopupMenu(this);
   helpMenu->insertItem("&About Qt",qApp,SLOT(aboutQt()));
-  
+
   bar->insertItem( "&File", fileMenu );
   bar->insertItem("&View",viewMenu);
   bar->insertSeparator();
   bar->insertItem("&Help",helpMenu);
+
 }
 
-//This function finds all links dynamically from "index.html"
-//This is used for next and back action
-void QucsHelp::initList()
+
+void QucsHelp::createSidebar()
 {
-  links << QString("index.html");
-  QFile file(QucsHelpDir.filePath("index.html"));
-  if(!file.open(IO_ReadOnly))
-    return;
-  QTextStream str(&file);
-  QString line,link;
-  int index = -1;
-  int end = -1;
-  while ( !str.atEnd() )
-  {
-    line = str.readLine();
-    index = line.find("href=\"");//find link to other file
-    if(index != -1)
-    {
-      index += 6;
-      end = line.find('"',index);
-      if(end == -1)
-      {
-        qWarning("can't find end quote. May be HTML error");
-        return;
-      }
-      link = line.mid(index,end-index);
-      if(link.startsWith("http"))//discard links to site
-        continue;
-      links << link;
-    }
-  }
+  dock = new QDockWindow(QDockWindow::InDock,this);
+  dock->setResizeEnabled(true);
+
+  chaptersView = new QListView(dock,"chapters_view");
+  chaptersView->setRootIsDecorated(false);
+  chaptersView->addColumn("Contents");
+  chaptersView->setSorting(-1);
+  chaptersView->setSelectionMode(QListView::Single);
+
+  dock->setWidget(chaptersView);
+  moveDockWindow(dock,QDockWindow::Left);
+
+
+  QStringList l = dataFetcher->fetchChapterTexts(QucsHelpDir.filePath("index.html"));
+  for(int i=l.count()-1;i>=0;i--)
+    chaptersView->insertItem(new QListViewItem(chaptersView,l[i],QString::number(i+1)));
+
+  QListViewItem *curItem = new QListViewItem(chaptersView,tr("Home"),QString::number(0));
+  chaptersView->insertItem(curItem);
+  chaptersView->setSelected(curItem,true);
+
+  connect(chaptersView,SIGNAL(selectionChanged()),this,SLOT(displaySelectedChapter()));
 }
 
+void QucsHelp::displaySelectedChapter()
+{
+  int y = chaptersView->selectedItem()->text(1).toInt();
+  Q_ASSERT(y >=0 && y < links.count());
+  textBrowser->setSource(QucsHelpDir.filePath(links[y]));
+}
 //This slot updates next and previous actions i.e enabling/disabling
 void QucsHelp::slotSourceChanged(const QString& str)
 {
@@ -174,17 +174,25 @@ void QucsHelp::slotSourceChanged(const QString& str)
       currentIndex = i;
       previousAction->setEnabled(bool(i!=0));
       nextAction->setEnabled(bool(i+1 != links.count()));
+      if(chaptersView->selectedItem()->text(1).toUInt() != i)
+      {
+        QListViewItem *item = chaptersView->findItem(QString::number(i),1);
+        if(item != 0l)
+        {
+          chaptersView->blockSignals(true);
+          chaptersView->setSelected(item,true);
+          chaptersView->blockSignals(false);
+        }
+      }
       found = true;
       break;
     }
   }
   if(found == false) // some error
   {
-    previousAction->setEnabled(bool(currentIndex!=0));
-    nextAction->setEnabled(bool(currentIndex+1 != links.count()));
-    text->blockSignals(true);
-    text->setSource(QucsHelpDir.filePath(links[currentIndex]));
-    text->blockSignals(false);
+    textBrowser->setSource(QucsHelpDir.filePath(links[0]));
+    qDebug("QucsHelp::slotSourceChanged():  Link mismatch");
+    return;
   }
 }
 
@@ -193,7 +201,7 @@ void QucsHelp::previousLink()
 {
   if(currentIndex > 0)
     --currentIndex;
-  text->setSource(QucsHelpDir.filePath(links[currentIndex]));
+  textBrowser->setSource(QucsHelpDir.filePath(links[currentIndex]));
 }
 
 void QucsHelp::nextLink()
@@ -201,5 +209,10 @@ void QucsHelp::nextLink()
   ++currentIndex;
   if(currentIndex >= links.count())
     currentIndex = links.count();
-  text->setSource(QucsHelpDir.filePath(links[currentIndex]));
+  textBrowser->setSource(QucsHelpDir.filePath(links[currentIndex]));
+}
+
+void QucsHelp::slotToggleSidebar(bool b)
+{
+  dock->setShown(b);
 }
