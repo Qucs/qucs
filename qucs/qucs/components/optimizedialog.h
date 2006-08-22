@@ -71,14 +71,17 @@ public:
   QVBoxLayout *all;
   QLineEdit *NameEdit, *VarNameEdit,
             *VarInitEdit, *VarMinEdit, *VarMaxEdit,
+            *IterEdit, *RefreshEdit, *ParentsEdit, *ConstEdit, *CrossEdit,
+            *SeedEdit, *CostVarEdit, *CostObjEdit, *CostConEdit,
             *GoalNameEdit, *GoalNumEdit;
   QCheckBox *VarActiveCheck;
-  QComboBox *SimEdit, *GoalTypeCombo;
+  QComboBox *SimEdit, *GoalTypeCombo, *MethodCombo;
   QListView *VarList, *GoalList;
 
   QRegExp Expr;
   QRegExpValidator *Validator;
   QDoubleValidator *numVal;
+  QIntValidator *intVal;
 };
 
 #endif
