@@ -33,7 +33,6 @@ class VTab : public QPushButton,public VTabInterface
   Q_OBJECT
 
 public:
-  VTab(VTabPosition pos = TabLeft,QWidget *parent=0l,const char* name=0l);
   VTab(VTabPosition pos = TabLeft,int p_id = -1,QWidget *parent=0l,const char* name=0l);
   VTabPosition position() const { return m_position; }
   int id() const;

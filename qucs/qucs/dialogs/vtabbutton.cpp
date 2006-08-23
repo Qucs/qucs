@@ -23,13 +23,6 @@
 #include <qpainter.h>
 #include <qapplication.h>
 
-VTab::VTab(VTabPosition pos,QWidget *p,const char* name) : QPushButton(p,name)
-{
-  m_position = pos;
-  m_id = -1;
-  init(); 
-}
-
 VTab::VTab(VTabPosition pos,int p_id,QWidget *p,const char* n) : QPushButton(p,n)
 {
   m_position = pos;
