@@ -39,7 +39,7 @@ INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucshelp_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucshelp_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS)
+noinst_HEADERS = htmldatafetcher.h $(MOCHEADERS)
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
