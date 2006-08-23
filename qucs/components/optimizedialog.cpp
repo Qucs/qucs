@@ -144,8 +144,9 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   VarList->addColumn(tr("initial"));
   VarList->addColumn(tr("min"));
   VarList->addColumn(tr("max"));
+  VarList->setSorting(-1);   // no sorting
   gp2->addMultiCellWidget(VarList,0,0,0,2);
-  connect(VarList, SIGNAL(clicked(QListViewItem*)),
+  connect(VarList, SIGNAL(selectionChanged(QListViewItem*)),
                    SLOT(slotEditVariable(QListViewItem*)));
 
   QHBox *VarLine = new QHBox(Tab2);
@@ -207,8 +208,9 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   GoalList->addColumn(tr("Name"));
   GoalList->addColumn(tr("Type"));
   GoalList->addColumn(tr("Value"));
+  GoalList->setSorting(-1);   // no sorting
   gp3->addMultiCellWidget(GoalList,0,0,0,2);
-  connect(GoalList, SIGNAL(clicked(QListViewItem*)),
+  connect(GoalList, SIGNAL(selectionChanged(QListViewItem*)),
                     SLOT(slotEditGoal(QListViewItem*)));
 
   gp3->addWidget(new QLabel(tr("Name:"), Tab3), 1,0);
@@ -312,7 +314,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
     }
   }
 
-  resize(300, 200);
+  resize(300, 250);
 }
 
 OptimizeDialog::~OptimizeDialog()
