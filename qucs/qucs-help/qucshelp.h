@@ -42,30 +42,32 @@ class HtmlDataFetcher;
 class QDockWindow;
 
 class QucsHelp : public QMainWindow  {
-   Q_OBJECT
-public:
-  QucsHelp(const QString& page);
- ~QucsHelp();
+  Q_OBJECT
+  public:
+    QucsHelp(const QString& page);
+    ~QucsHelp();
 
-private slots:
-  void slotSourceChanged(const QString& str);
-  void slotToggleSidebar(bool);
-  void previousLink();
-  void nextLink();
-  void displaySelectedChapter();
+  private slots:
+    void slotSourceChanged(const QString& str);
+    void slotToggleSidebar(bool);
+    void slotToggleSidebarAction(bool);
+    void previousLink();
+    void nextLink();
+    void displaySelectedChapter();
 
-private:
-  void setupActions();
-  void createSidebar();
+  private:
+    void setupActions();
+    void createSidebar();
 
-  QTextBrowser *textBrowser;
-  unsigned int currentIndex;
-  QStringList links;
-  QAction *previousAction;
-  QAction *nextAction;
-  QListView *chaptersView;
-  QDockWindow *dock;
-  HtmlDataFetcher *dataFetcher;
+    QTextBrowser *textBrowser;
+    uint currentIndex;
+    QStringList links;
+    QAction *previousAction;
+    QAction *nextAction;
+    QAction *viewBrowseDock;
+    QListView *chaptersView;
+    QDockWindow *dock;
+    HtmlDataFetcher *dataFetcher;
 };
 
 #endif

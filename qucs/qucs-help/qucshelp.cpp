@@ -45,8 +45,8 @@ QucsHelp::QucsHelp(const QString& page)
   textBrowser = new QTextBrowser(this);
   textBrowser->setMinimumSize(400,200);
   setCentralWidget(textBrowser);
-  createSidebar();
   setupActions();
+  createSidebar();
 
   textBrowser->setSource(QucsHelpDir.filePath(links[0]));
 
@@ -78,7 +78,7 @@ void QucsHelp::setupActions()
                                ks, this);
   nextAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "next.png")),
                            tr("&Next"), ks, this);
-  QAction *viewBrowseDock = new QAction(tr("&Sidebar"), 0, this);
+  viewBrowseDock = new QAction(tr("&Sidebar"), 0, this);
   viewBrowseDock->setToggleAction(true);
   viewBrowseDock->setOn(true);
   viewBrowseDock->setStatusTip(tr("Enables/disables the sidebar"));
@@ -135,6 +135,8 @@ void QucsHelp::createSidebar()
 {
   dock = new QDockWindow(QDockWindow::InDock,this);
   dock->setResizeEnabled(true);
+  dock->setCloseMode(QDockWindow::Always);
+  connect(dock,SIGNAL(visibilityChanged(bool)),this,SLOT(slotToggleSidebarAction(bool)));
 
   chaptersView = new QListView(dock,"chapters_view");
   chaptersView->setRootIsDecorated(false);
@@ -159,8 +161,8 @@ void QucsHelp::createSidebar()
 
 void QucsHelp::displaySelectedChapter()
 {
-  int y = chaptersView->selectedItem()->text(1).toInt();
-  Q_ASSERT(y >=0 && y < links.count());
+  uint y = chaptersView->selectedItem()->text(1).toUInt();
+  Q_ASSERT(y !=0 && y < links.count());
   textBrowser->setSource(QucsHelpDir.filePath(links[y]));
 }
 //This slot updates next and previous actions i.e enabling/disabling
@@ -215,4 +217,11 @@ void QucsHelp::nextLink()
 void QucsHelp::slotToggleSidebar(bool b)
 {
   dock->setShown(b);
+}
+
+void QucsHelp::slotToggleSidebarAction(bool b)
+{
+  viewBrowseDock->blockSignals(true);
+  viewBrowseDock->setOn(b);
+  viewBrowseDock->blockSignals(false);
 }
