@@ -127,7 +127,8 @@ void Optimize_Sim::createASCOFiles()
 	stream << val << ":";
 	val = pp->Value.section('|',4,4);
 	stream << val << ":";
-	stream << "LIN_DOUBLE" << ":";
+	val = pp->Value.section('|',5,5);
+	stream << val << ":";
 	val = pp->Value.section('|',1,1);
 	stream << ((val == "yes") ? "OPT" : "---") << "\n";
       }
@@ -140,27 +141,10 @@ void Optimize_Sim::createASCOFiles()
 	val = pp->Value.section('|',1,1);
 	QString Type, Value;
 	Value = pp->Value.section('|',2,2);
-	if (val == "minimum") {
-	  Type = "MIN";
+	if (val == "MIN" || val == "MAX" || val == "MON") {
 	  Value = "---";
 	}
-	else if (val == "maximum") {
-	  Type = "MAX";
-	  Value = "---";
-	}
-	else if (val == "less") {
-	  Type = "LE";
-	}
-	else if (val == "greater") {
-	  Type = "GE";
-	}
-	else if (val == "equal") {
-	  Type = "EQ";
-	}
-	else  {
-	  Type = "MON";
-	  Value = "---";
-	}
+	Type = val;
 	val = pp->Value.section('|',0,0);
 	stream << val <<  ":"
 	       << "---" << ":"

@@ -104,12 +104,12 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
 
   gp4->addWidget(new QLabel(tr("Constant F:"), Tab4), 4,0);
   ConstEdit = new QLineEdit(Tab4);
-  ConstEdit->setValidator(numVal);
+  ConstEdit->setValidator(new QDoubleValidator(0.0,2.0,20,ConstEdit));
   gp4->addWidget(ConstEdit,4,1);
 
   gp4->addWidget(new QLabel(tr("Crossing over factor:"), Tab4), 5,0);
   CrossEdit = new QLineEdit(Tab4);
-  CrossEdit->setValidator(numVal);
+  CrossEdit->setValidator(new QDoubleValidator(0.0,1.0,20,CrossEdit));
   gp4->addWidget(CrossEdit,5,1);
 
   gp4->addWidget(new QLabel(tr("Pseudo random number seed:"), Tab4), 6,0);
@@ -144,6 +144,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   VarList->addColumn(tr("initial"));
   VarList->addColumn(tr("min"));
   VarList->addColumn(tr("max"));
+  VarList->addColumn(tr("Type"));
   VarList->setSorting(-1);   // no sorting
   gp2->addMultiCellWidget(VarList,0,0,0,2);
   connect(VarList, SIGNAL(selectionChanged(QListViewItem*)),
@@ -187,11 +188,14 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   gp2->addMultiCellWidget(VarButtons, 4,4,0,2);
 
   new QLabel(tr("Type:"), VarButtons);
-  QComboBox *typeCombo = new QComboBox(VarButtons);
-  typeCombo->insertItem(tr("linear double"));
-  typeCombo->insertItem(tr("logarithmic double"));
-  typeCombo->insertItem(tr("linear integer"));
-  typeCombo->insertItem(tr("logarithmic integer"));
+  VarTypeCombo = new QComboBox(VarButtons);
+  VarTypeCombo->insertItem(tr("linear double"));
+  VarTypeCombo->insertItem(tr("logarithmic double"));
+  VarTypeCombo->insertItem(tr("linear integer"));
+  VarTypeCombo->insertItem(tr("logarithmic integer"));
+  connect(VarTypeCombo, SIGNAL(activated(const QString&)),
+          SLOT(slotChangeVarType(const QString&)));
+
   VarButtons->setStretchFactor(new QWidget(VarButtons), 10);
   QPushButton *AddVar_Butt = new QPushButton(tr("Add"), VarButtons);
   connect(AddVar_Butt, SIGNAL(clicked()), SLOT(slotAddVariable()));
@@ -300,15 +304,19 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
       new QListViewItem(VarList, pp->Value.section('|',0,0),
         pp->Value.section('|',1,1) == "yes" ? tr("yes") : tr("no"),
 	pp->Value.section('|',2,2),
-        pp->Value.section('|',3,3), pp->Value.section('|',4,4));
+        pp->Value.section('|',3,3), pp->Value.section('|',4,4),
+        ((pp->Value.section('|',5,5)=="LIN_DOUBLE")?tr("linear double") :
+        ((pp->Value.section('|',5,5)=="LOG_DOUBLE")?tr("logarithmic double") :
+        ((pp->Value.section('|',5,5)=="LIN_INT")?tr("linear integer") :
+	 tr("logarithmic integer")))));
     }
     if(pp->Name == "Goal") {
       new QListViewItem(GoalList, pp->Value.section('|',0,0),
-        ((pp->Value.section('|',1,1) == "minimum") ? tr("minimum") :
-        ((pp->Value.section('|',1,1) == "maximum") ? tr("maximum") :
-        ((pp->Value.section('|',1,1) == "less") ? tr("less") :
-        ((pp->Value.section('|',1,1) == "greater") ? tr("greater") :
-        ((pp->Value.section('|',1,1) == "equal") ? tr("equal") :
+        ((pp->Value.section('|',1,1) == "MIN") ? tr("minimum") :
+        ((pp->Value.section('|',1,1) == "MAX") ? tr("maximum") :
+        ((pp->Value.section('|',1,1) == "LE") ? tr("less") :
+        ((pp->Value.section('|',1,1) == "GE") ? tr("greater") :
+        ((pp->Value.section('|',1,1) == "EQ") ? tr("equal") :
 	 tr("monitor")))))),
 	pp->Value.section('|',2,2));
     }
@@ -336,6 +344,7 @@ void OptimizeDialog::slotEditVariable(QListViewItem *Item)
     VarInitEdit->clear();
     VarMinEdit->clear();
     VarMaxEdit->clear();
+    VarTypeCombo->setCurrentItem(0);
     VarNameEdit->blockSignals(false);
     return;
   }
@@ -345,6 +354,7 @@ void OptimizeDialog::slotEditVariable(QListViewItem *Item)
   VarInitEdit->setText(Item->text(2));
   VarMinEdit->setText(Item->text(3));
   VarMaxEdit->setText(Item->text(4));
+  VarTypeCombo->setCurrentText(Item->text(5));
   VarNameEdit->blockSignals(false);
 }
 
@@ -369,7 +379,8 @@ void OptimizeDialog::slotAddVariable()
 
   new QListViewItem(VarList, VarNameEdit->text(),
       VarActiveCheck->isChecked() ? tr("yes") : tr("no"),
-      VarInitEdit->text(), VarMinEdit->text(), VarMaxEdit->text());
+      VarInitEdit->text(), VarMinEdit->text(), VarMaxEdit->text(),
+      VarTypeCombo->currentText());
 
   slotEditVariable(0);   // clear entry fields
   VarList->clearSelection();
@@ -431,6 +442,15 @@ void OptimizeDialog::slotChangeVarMax(const QString& Text)
   if(Item == 0) return;
 
   Item->setText(4, Text);
+}
+
+// -----------------------------------------------------------
+void OptimizeDialog::slotChangeVarType(const QString& Text)
+{
+  QListViewItem *Item = VarList->selectedItem();
+  if(Item == 0) return;
+
+  Item->setText(5, Text);
 }
 
 // -----------------------------------------------------------
@@ -570,7 +590,10 @@ void OptimizeDialog::slotApply()
     Prop = item->text(0) + "|" + 
            ((item->text(1) == tr("yes")) ? "yes" : "no") + "|" +
            item->text(2) + "|" + item->text(3) + "|" +
-           item->text(4);
+           item->text(4) + "|" +
+           ((item->text(5) == tr("linear double")) ? "LIN_DOUBLE" :
+           ((item->text(5) == tr("logarithmic double")) ? "LOG_DOUBLE" :
+           ((item->text(5) == tr("linear integer")) ? "LIN_INT" : "LOG_INT")));
 
     if(pp) {
       if(pp->Name != "Var") {
@@ -591,11 +614,11 @@ void OptimizeDialog::slotApply()
 
   for(item = GoalList->firstChild(); item != 0; item = item->itemBelow()) {
     Prop = item->text(0) + "|" +
-           ((item->text(1) == tr("minimum")) ? "minimum" :
-           ((item->text(1) == tr("maximum")) ? "maximum" :
-           ((item->text(1) == tr("less")) ? "less" :
-           ((item->text(1) == tr("greater")) ? "greater" :
-           ((item->text(1) == tr("equal")) ? "equal" : "monitor"))))) + "|" +
+           ((item->text(1) == tr("minimum")) ? "MIN" :
+           ((item->text(1) == tr("maximum")) ? "MAX" :
+           ((item->text(1) == tr("less")) ? "LE" :
+           ((item->text(1) == tr("greater")) ? "GE" :
+           ((item->text(1) == tr("equal")) ? "EQ" : "MON"))))) + "|" +
            item->text(2);
 
     if(pp) {
