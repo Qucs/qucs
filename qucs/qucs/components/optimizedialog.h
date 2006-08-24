@@ -56,6 +56,7 @@ private slots:
   void slotChangeVarInit(const QString&);
   void slotChangeVarMin(const QString&);
   void slotChangeVarMax(const QString&);
+  void slotChangeVarType(const QString&);
   void slotChangeGoalName(const QString&);
   void slotChangeGoalNum(const QString&);
   void slotChangeGoalType(const QString&);
@@ -75,7 +76,7 @@ public:
             *SeedEdit, *CostVarEdit, *CostObjEdit, *CostConEdit,
             *GoalNameEdit, *GoalNumEdit;
   QCheckBox *VarActiveCheck;
-  QComboBox *SimEdit, *GoalTypeCombo, *MethodCombo;
+  QComboBox *SimEdit, *GoalTypeCombo, *MethodCombo, *VarTypeCombo;
   QListView *VarList, *GoalList;
 
   QRegExp Expr;
