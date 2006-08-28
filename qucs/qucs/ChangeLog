@@ -1,3 +1,13 @@
+2006-08-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdigi.bat: Closing stdin when running the simulator.
+
+	* qtgeneric_tr.ts, qucs_tr.ts: Updated Turkish translations.
+	Thanks to Ozgur.
+
+	* Makefile.am (bin_SCRIPTS): Care about the host system when
+	installing the qucsdigi script.
+
 2006-08-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_hu.ts: Updated Hungarian translations.  Thanks to
