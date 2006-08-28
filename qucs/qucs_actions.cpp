@@ -1146,7 +1146,7 @@ void QucsApp::slotExportGraphAsCsv()
   // First output the names of independent and dependent variables.
   for(pD = g->cPointsX.first(); pD!=0; pD = g->cPointsX.next())
     Stream << '\"' << pD->Var << "\";";
-  Stream << "\"" << g->Var << " (real)\";\"" << g->Var << " (imag)\"\n";
+  Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
 
 
   int n, m;

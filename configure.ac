@@ -52,6 +52,7 @@ case $host_os in
   *mingw*) WIN32=yes ;;
   *)       WIN32=no  ;;
 esac
+AM_CONDITIONAL(COND_WIN32, test x$WIN32 = xyes)
 
 dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
