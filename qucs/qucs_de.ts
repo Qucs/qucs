@@ -8836,6 +8836,46 @@ Filtersynthese-Programm
         <source>&amp;Next</source>
         <translation>&amp;Nächste</translation>
     </message>
+    <message>
+        <source>Home</source>
+        <translation>Startseite</translation>
+    </message>
+    <message>
+        <source>&amp;Table of Contents</source>
+        <translation>&amp;Inhaltsverzeichnis</translation>
+    </message>
+    <message>
+        <source>Enables/disables the table of contents</source>
+        <translation>Schaltet das Inhaltsverzeichnis ein/aus</translation>
+    </message>
+    <message>
+        <source>Table of Contents
+
+Enables/disables the table of contents</source>
+        <translation>Inhaltsverzeichnis
+
+Schaltet das Inhaltsverzeichnis ein/aus</translation>
+    </message>
+    <message>
+        <source>&amp;About Qt</source>
+        <translation>Über &amp;Qt</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Datei</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Ansicht</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Hilfe</translation>
+    </message>
+    <message>
+        <source>Contents</source>
+        <translation>Inhalte</translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>

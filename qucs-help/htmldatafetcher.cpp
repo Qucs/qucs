@@ -273,7 +273,7 @@ QChar HtmlDataFetcher::unicodeFor(QString placeHolder)
   placeHolder.remove(' ');
   placeHolder.remove('\t');
   Q_ASSERT(placeHolder[0] == '&');
-  Q_ASSERT(placeHolder[placeHolder.length() - 1] == ';');
+  Q_ASSERT(placeHolder[(int)placeHolder.length() - 1] == ';');
   placeHolder.remove(placeHolder.length() - 1,1);//remove ';'
   placeHolder.remove(0,1);// remove '&'
   if(placeHolder[0] == '#')

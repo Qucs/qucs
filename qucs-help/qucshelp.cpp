@@ -78,11 +78,11 @@ void QucsHelp::setupActions()
                                ks, this);
   nextAction = new QAction(QIconSet(QPixmap(QucsSettings.BitmapDir + "next.png")),
                            tr("&Next"), ks, this);
-  viewBrowseDock = new QAction(tr("&Sidebar"), 0, this);
+  viewBrowseDock = new QAction(tr("&Table of Contents"), 0, this);
   viewBrowseDock->setToggleAction(true);
   viewBrowseDock->setOn(true);
-  viewBrowseDock->setStatusTip(tr("Enables/disables the sidebar"));
-  viewBrowseDock->setWhatsThis(tr("Sidebar\n\nEnables/disables the sidebar"));
+  viewBrowseDock->setStatusTip(tr("Enables/disables the table of contents"));
+  viewBrowseDock->setWhatsThis(tr("Table of Contents\n\nEnables/disables the table of contents"));
 
   connect(quitAction,SIGNAL(activated()),qApp,SLOT(quit()));
 
@@ -121,12 +121,12 @@ void QucsHelp::setupActions()
   viewBrowseDock->addTo(viewMenu);
 
   QPopupMenu *helpMenu = new QPopupMenu(this);
-  helpMenu->insertItem("&About Qt",qApp,SLOT(aboutQt()));
+  helpMenu->insertItem(tr("&About Qt"),qApp,SLOT(aboutQt()));
 
-  bar->insertItem( "&File", fileMenu );
-  bar->insertItem("&View",viewMenu);
+  bar->insertItem(tr("&File"), fileMenu );
+  bar->insertItem(tr("&View"),viewMenu);
   bar->insertSeparator();
-  bar->insertItem("&Help",helpMenu);
+  bar->insertItem(tr("&Help"),helpMenu);
 
 }
 
@@ -140,7 +140,7 @@ void QucsHelp::createSidebar()
 
   chaptersView = new QListView(dock,"chapters_view");
   chaptersView->setRootIsDecorated(false);
-  chaptersView->addColumn("Contents");
+  chaptersView->addColumn(tr("Contents"));
   chaptersView->setSorting(-1);
   chaptersView->setSelectionMode(QListView::Single);
 
