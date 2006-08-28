@@ -3,7 +3,7 @@
     <name>QApplication</name>
     <message>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
-        <translation>Çalıştırılabilir dosya &apos;%1&apos;, Qt %2&apos; ye ihtiyaç duyarken varolan Qt %3.</translation>
+        <translation>Çalıştırılabilir kütük &apos;%1&apos;, Qt %2&apos; ye ihtiyaç duyarken varolan Qt %3.</translation>
     </message>
     <message>
         <source>Incompatible Qt Library Error</source>
@@ -14,15 +14,15 @@
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation>Hu&amp;e:</translation>
+        <translation>Ren&amp;k:</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation>&amp;Sat:</translation>
+        <translation>&amp;Doygunluk:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation>&amp;Val:</translation>
+        <translation>&amp;Değer:</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
@@ -38,7 +38,7 @@
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation>A&amp;lfa kanal:</translation>
+        <translation>A&amp;lfa kanalı:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
@@ -734,7 +734,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Number of copies:</source>
-        <translation>Kopya sayısı:</translation>
+        <translation>Çoğaltım sayısı:</translation>
     </message>
     <message>
         <source>Paper format</source>
@@ -766,7 +766,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>A4 (210x297 mm, 8.26x11.7 inches)</source>
-        <translation>A4 (210x297 mm, 8.26x11.7 inches)</translation>
+        <translation>A4 (210x297 mm, 8.26x11.7 inç)</translation>
     </message>
     <message>
         <source>A5 (148 x 210 mm)</source>
@@ -810,7 +810,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>B5 (176 x 250 mm, 6.93x9.84 inches)</source>
-        <translation>B5 (176 x 250 mm, 6.93x9.84 inches)</translation>
+        <translation>B5 (176 x 250 mm, 6.93x9.84 inç)</translation>
     </message>
     <message>
         <source>B6 (125 x 176 mm)</source>
@@ -842,7 +842,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Executive (7.5x10 inches, 191x254 mm)</source>
-        <translation>Executive (7.5x10 inches, 191x254 mm)</translation>
+        <translation>Executive (7.5x10 inç, 191x254 mm)</translation>
     </message>
     <message>
         <source>Folio (210 x 330 mm)</source>
@@ -866,7 +866,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope (105 x 241 mm)</source>
-        <translation>US Common #10 Envelope (105 x 241 mm)</translation>
+        <translation>ABD Genel #10 Zarfı (105 x 241 mm)</translation>
     </message>
     <message>
         <source>Setup Printer</source>

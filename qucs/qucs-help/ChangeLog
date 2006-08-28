@@ -1,3 +1,9 @@
+2006-08-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucshelp.cpp (setupActions): Made some more user visible
+	strings translatable.  Renamed the "Sidebar" into "Table of
+	Contents".
+
 2006-08-12  Gopala Krishna   <krishna.ggk@gmail.com>
 
 	* qucshelp is an application now
