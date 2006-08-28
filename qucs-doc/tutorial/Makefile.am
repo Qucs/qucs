@@ -30,7 +30,7 @@ EXTRA_DIST = $(SOURCES) $(TEXFILES)
 TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
   datasheet.tex
 TARGETS = workbook.pdf
-PICDIRS = coupler
+PICDIRS = coupler functions
 
 pics-book:
 	@for d in $(PICDIRS); do \
