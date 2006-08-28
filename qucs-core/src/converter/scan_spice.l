@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.17 2006-04-07 07:11:23 raimi Exp $
+ * $Id: scan_spice.l,v 1.18 2006-08-28 08:12:52 raimi Exp $
  *
  */
 
@@ -110,8 +110,15 @@ MOS1     ([lL]|[wW]|[aA][dDsS]|[pP][dDsS]|[nN][rR][dDsS]|[dD][eE][bB][uU][gG])
 MOS2     ([rR][gG][eE][oO][mM][oO][dD]|[tT][sSdD])
 MOS      ({MOS1}|{MOS2})
 
+     /* analog behavioural */
+TABLE    [tT][aA][bB][lL][eE]
+VALUE    [vV][aA][lL][uU][eE]
+FREQ     [fF][rR][eE][qQ]
+LAPLACE  [lL][aA][pP][lL][aA][cC][eE]
+POLY     [pP][oO][lL][yY]
+
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -178,6 +185,7 @@ MOS      ({MOS1}|{MOS2})
 <STARTUP,INITIAL>^[gGeE][A-Za-z0-9]* {
     /* voltage controlled source instances */
     spice_lval.ident = strdup (spice_text);
+    BEGIN(GEVALS);
     return GE_Source;
 }
 
@@ -481,16 +489,30 @@ MOS      ({MOS1}|{MOS2})
     return End;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH>{DIGIT}+ {
+<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,
+ GEVALS>{DIGIT}+ {
     /* identify node (containing digits) */
     spice_lval.ident = strdup (spice_text);
     return Digits;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE>{NUMBER} {
+<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS>{NUMBER} {
     /* identify float (any kind) */
     spice_lval.ident = strdup (spice_text);
     return Floats;
+}
+
+<GEVALS>{POLY} {
+    /* identify analog behaviour */
+    spice_lval.ident = strdup (spice_text);
+    return GE_Type;
+}
+
+<GEVALS>{TABLE}|{VALUE}|{FREQ}|{LAPLACE} {
+    /* identify analog behaviour */
+    spice_lval.ident = strdup (spice_text);
+    BEGIN(IGNORE);
+    return GE_Type;
 }
 
 <IVREF,FUNREF>{FUNCTION} { /* function specials (e.g. in sources) */
@@ -527,14 +549,14 @@ MOS      ({MOS1}|{MOS2})
     return OpFunc;
 }
 
-<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH>{NODE} {
+<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,GEVALS>{NODE} {
     /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Nodes;
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
- ISWITCH,VSWITCH>{EOL} {
+ ISWITCH,VSWITCH,GEVALS>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;

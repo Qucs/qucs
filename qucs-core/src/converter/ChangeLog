@@ -1,3 +1,9 @@
+2006-08-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l, parse_spice.y, check_spice.cpp: Parsing but
+	ignoring behavioural sources.  Translation of L's and C's
+	initial conditions.
+
 2006-08-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_spice.y: When value for F/E/G/H controlled sources is

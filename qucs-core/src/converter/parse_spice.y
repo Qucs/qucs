@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.14 2006-08-21 08:10:31 raimi Exp $
+ * $Id: parse_spice.y,v 1.15 2006-08-28 08:12:52 raimi Exp $
  *
  */
 
@@ -135,7 +135,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %token OFF_Special IC_Special SIM_Type TEMP_Special MOS_Special B_Source
 %token DISTO_Action INCLUDE_Action File BranchFunc NODESET_Action T_Device
 %token U_Device S_Device W_Device ON_Special TF_Action SENS_Action FOUR_Action
-%token OpFunc
+%token OpFunc GE_Type
 
 %union {
   char * ident;
@@ -153,7 +153,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <value> VOLTAGE_Output CURRENT_Output Output_Range PRINT_List
 %type <value> OPTIONS_List MODEL_List DEVICE_List_1 DEVICE_List_2 DEVICE_List_3
 %type <value> IC_Condition_1 IC_Condition_2 IC_Condition_3 NODESET_List
-%type <value> IC_Condition_4 SWITCH_State
+%type <value> IC_Condition_4 SWITCH_State NodeValueList
 
 %type <ident> Identifier Nodes Function Value Floats Digits Node
 %type <ident> RLC_Device K_Device L_Device IV_Source GE_Source FH_Source
@@ -197,8 +197,10 @@ InputLine:
   }
   | DefinitionLine {
     /* chain definition root */
-    $1->next = definition_root;
-    definition_root = $1;
+    if ($1) {
+      $1->next = definition_root;
+      definition_root = $1;
+    }
   }
   | Eol { /* nothing to do here */ }
 ;
@@ -241,6 +243,16 @@ DefinitionLine:
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_val_value ($$, $4, HINT_NUMBER);
     $$->values = netlist_append_values ($$->values, $5);
+  }
+  | GE_Source Node Node GE_Type Digits NodeValueList Eol {
+    /* voltage controlled source POLY */
+    fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
+    $$ = NULL;
+  }
+  | GE_Source Node Node GE_Type Eol {
+    /* voltage controlled sources OTHER behavioural */
+    fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
+    $$ = NULL;
   }
   | GE_Source Node Node Node Node Value Eol {
     /* voltage controlled sources */
@@ -769,6 +781,17 @@ ValueList: /* nothing */ { $$ = NULL; }
   }
 ;
 
+NodeValueList: /* nothing */ { $$ = NULL; }
+  | Node NodeValueList {
+    $$ = spice_create_str_value ($1, HINT_NODE);
+    $$->next = $2;
+  }
+  | Floats NodeValueList {
+    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$->next = $2;
+  }
+;
+
 NodeList: /* nothing */ { $$ = NULL; }
   | Node NodeList {
     $$ = spice_create_str_value ($1, HINT_NODE);
@@ -826,8 +849,10 @@ EndSub:
 
 SubBodyLine:
   DefinitionLine { /* chain definitions here */
-    $1->next = $$;
-    $$ = $1;
+    if ($1) {
+      $1->next = $$;
+      $$ = $1;
+    }
   }
   | Subcircuit { /* do nothing here, see subcircuit rule */ }
   | Eol {

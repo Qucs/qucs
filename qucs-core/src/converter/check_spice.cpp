@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.21 2006-08-21 08:10:31 raimi Exp $
+ * $Id: check_spice.cpp,v 1.22 2006-08-28 08:12:52 raimi Exp $
  *
  */
 
@@ -866,37 +866,45 @@ static void spice_adjust_optional_properties (struct definition_t * def) {
 
 // Helper structure for property translations and aliases in devices.
 struct property_translation_t {
+  char * type;
   char * key;
   char * trans;
 }
 property_translations[] = {
   /* BJT device */
-  { "CCS", "Cjs" },
-  { "VA",  "Vaf" },
-  { "VB",  "Var" },
-  { "IK",  "Ikf" },
-  { "PE",  "Vje" },
-  { "ME",  "Mje" },
-  { "PC",  "Vjc" },
-  { "MC",  "Mjc" },
-  { "PS",  "Vjs" },
-  { "MS",  "Mjs" },
+  { NULL, "CCS", "Cjs" },
+  { NULL, "VA",  "Vaf" },
+  { NULL, "VB",  "Var" },
+  { NULL, "IK",  "Ikf" },
+  { NULL, "PE",  "Vje" },
+  { NULL, "ME",  "Mje" },
+  { NULL, "PC",  "Vjc" },
+  { NULL, "MC",  "Mjc" },
+  { NULL, "PS",  "Vjs" },
+  { NULL, "MS",  "Mjs" },
   /* MOSFET device */
-  { "VTO", "Vt0" },
-  { "U0",  "Uo"  },
+  { NULL, "VTO", "Vt0" },
+  { NULL, "U0",  "Uo"  },
   /* DIODE device */
-  { "CJO", "Cj0" },
-  { NULL, NULL }
+  { NULL, "CJO", "Cj0" },
+  /* OTHER devices */
+  { "C",  "IC",  "V"   },
+  { "L",  "IC",  "I"   },
+  /* END of list */
+  { NULL, NULL,  NULL  }
 };
 
 /* The function translates property and aliases of devices in the list
    of key/value pairs of the given definition. */
-void spice_adjust_alias_properties (struct pair_t * pair) {
+void spice_adjust_alias_properties (struct definition_t * def,
+				    struct pair_t * pair) {
   struct property_translation_t * prop = property_translations;
   for (; prop->key != NULL; prop++) {
-    if (!strcasecmp (prop->key, pair->key)) {
-      free (pair->key);
-      pair->key = strdup (prop->trans);
+    if (!prop->type || !strcmp (prop->type, def->type)) {
+      if (!strcasecmp (prop->key, pair->key)) {
+	free (pair->key);
+	pair->key = strdup (prop->trans);
+      }
     }
   }
 }
@@ -929,7 +937,7 @@ void spice_adjust_properties (struct definition_t * def) {
 	}
       }
       // some other direct translations
-      if (!found) spice_adjust_alias_properties (pair);
+      if (!found) spice_adjust_alias_properties (def, pair);
     }
   }
 }
@@ -2036,6 +2044,8 @@ static struct definition_t * spice_translator (struct definition_t * root) {
        - three mutual inductors
    - current controlled switch (gyrator + voltage controlled switch)
    - single-frequency FM (using pm-modulator)
+   - analog behavioural B, E, G, F, and H sources
+   - piece-wise linear (PWL) voltage and current sources
 */
 
 #if 0
