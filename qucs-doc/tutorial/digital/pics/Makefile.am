@@ -34,7 +34,11 @@ PDFS = comb1s.pdf g2bitsch.pdf mux21.pdf prim1tt.pdf regt.pdf dffl.pdf \
   digital_ud1_fa.pdf dig_ud1_ex1_dpl.pdf dig_ud1_ex2_dpl.pdf \
   dig_ud1_ex3_dpl.pdf dig_ud1_sex1_sch.pdf dig_ud1_sex2_sch.pdf \
   dig_ud1_sex3_sch.pdf dig_ud1_sex4_sch.pdf dig_ud1_sex5_sch.pdf \
-  dig_ud1_sex6_sch.pdf mult_dpl.pdf mult_sch.pdf
+  dig_ud1_sex6_sch.pdf mult_dpl.pdf mult_sch.pdf \
+  \
+  dig_ud2_fig10.pdf dig_ud2_fig4.pdf dig_ud2_fig7.pdf dig_ud2_fig11.pdf \
+  dig_ud2_fig2.pdf dig_ud2_fig5.pdf dig_ud2_fig8.pdf dig_ud2_fig1.pdf \
+  dig_ud2_fig3.pdf dig_ud2_fig6.pdf dig_ud2_fig9.pdf
 
 tutorial: $(XPDF)
 
