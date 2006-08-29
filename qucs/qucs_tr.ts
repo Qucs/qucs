@@ -174,11 +174,11 @@
     </message>
     <message>
         <source>display in schematic</source>
-        <translation>Şemada göster</translation>
+        <translation>Tasarıda göster</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation>Simülasyon:</translation>
+        <translation>Benzetim:</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
@@ -194,11 +194,11 @@
     </message>
     <message>
         <source>logarithmic</source>
-        <translation>logaritmik</translation>
+        <translation>ters üstel (log)</translation>
     </message>
     <message>
         <source>list</source>
-        <translation>liste</translation>
+        <translation>dizelge</translation>
     </message>
     <message>
         <source>constant</source>
@@ -294,7 +294,7 @@
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation>Logaritma için nokta sayısı:</translation>
+        <translation>Ters üstel (log) için nokta sayısı:</translation>
     </message>
     <message>
         <source>Touchstone files</source>
@@ -409,7 +409,7 @@
     </message>
     <message>
         <source>Dataset</source>
-        <translation>Veri Grubu</translation>
+        <translation>Veri Toplulugu</translation>
     </message>
     <message>
         <source>Name</source>
@@ -473,11 +473,11 @@
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation>logaritmik x-Eksen Izgarası</translation>
+        <translation>ters üstel (log) x-Eksen Izgarası</translation>
     </message>
     <message>
         <source>logarithmical</source>
-        <translation>logaritmik</translation>
+        <translation>ters üstel (log)</translation>
     </message>
     <message>
         <source>Grid</source>
@@ -556,7 +556,7 @@
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation>Simülasyon Süresi:</translation>
+        <translation>Benzetim Süresi:</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -744,7 +744,7 @@
     <name>HelpDialog</name>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilter bir süzgeç tasarım yazılımıdır. Bir süzgeç oluşturmak için, sadece tüm değişkenleri girmek ve ana pencerenin altındaki büyük düğmeye basmak yeterli. Süzgecin şeması hemen hesaplanır ve not tahtasına konur. Şimdi Qucs&apos; ta bir boş şema girdi penceresi açın ve CTRL-V&apos; ye basın (not tahtasından kopyala). Bundan sonra sèzgeç şeması başka bir devre içine konabilir ve benzetime tabi tutulabilir. Tadını çıkarın !</translation>
+        <translation>QucsFilter bir süzgeç tasarım yazılımıdır. Bir süzgeç oluşturmak için, sadece tüm değişkenleri girmek ve ana pencerenin altındaki büyük düğmeye basmak yeterli. Süzgecin tasarısı hemen hesaplanır ve not tahtasına konur. Şimdi Qucs&apos; ta bir boş tasarı girdi penceresi açın ve CTRL-V&apos; ye basın (not tahtasından çogalt). Bundan sonra süzgeç tasarısı başka bir devre içine konabilir ve benzetime tabi tutulabilir. Tadını çıkarın !</translation>
     </message>
     <message>
         <source>Close</source>
@@ -756,7 +756,7 @@
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation>QucsTranscalc, farklı tipteki RF ve mikro dalga iletim hatlarının elektriksel ve fiziksel hesaplarını yapmak için geliştirilmiş bir analiz ve tasarım yazılımıdır.</translation>
+        <translation>QucsTranscalc, farklı tipteki RF ve mikro dalga iletim hatlarının elektriksel ve fiziksel hesaplarını yapmak için geliştirilmiş bir çözümleme (analiz) ve tasarım (dizayn) yazılımıdır.</translation>
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
@@ -772,7 +772,7 @@
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation>QucsAttenuator bir isaret zayıflatıcı hesaplama yazılımıdır. Bir isaret zayıflatıcı tasarlamak için, sadece tüm degiskenleri girin ve hesaplama dügmesine basın. Zayıflatıcınızın seması hemen üretilir ve not tahtasına asılır. Bundan sonra Qucs&apos;a dönüp, bir sema penceresi açıp CTRL-V (not tahtasından çogalt) tuslarına basın. Zayıflatıcı seması kullanımınıza hazır. Keyfini sürün!</translation>
+        <translation>QucsAttenuator bir isaret zayıflatıcı hesaplama yazılımıdır. Bir isaret zayıflatıcı tasarlamak için, sadece tüm degiskenleri girin ve hesaplama dügmesine basın. Zayıflatıcınızın tasarısı hemen üretilir ve not tahtasına asılır. Bundan sonra Qucs&apos;a dönüp, bir tasarı girdi penceresi açıp CTRL-V (not tahtasından çogalt) tuslarına basın. Zayıflatıcı tasarımı kullanımınıza hazır. Keyfini sürün!</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
@@ -905,7 +905,7 @@
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Etiketi Girin:</translation>
+        <translation>Yaftayı (Etiket) Girin:</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
@@ -1112,7 +1112,7 @@ Kütüphane basarıyla olusturuldu.</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation>karşılıklı iki-uç (two-port) hesabı yap</translation>
+        <translation>karşılıklı iki-uç hesabı yap</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
@@ -1180,7 +1180,7 @@ Kütüphane basarıyla olusturuldu.</translation>
     </message>
     <message>
         <source>Impedance (ohms)</source>
-        <translation>Zahiri Direnç (ohm)</translation>
+        <translation>Sanal Direnç (ohm)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1189,7 +1189,7 @@ Kütüphane basarıyla olusturuldu.</translation>
     <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation>Zahiri direncin gerçel kısmı sıfırdan büyük
+        <translation>Sanal direncin gerçel kısmı sıfırdan büyük
 olmalı fakat şu anda %1 !</translation>
     </message>
 </context>
@@ -1197,15 +1197,15 @@ olmalı fakat şu anda %1 !</translation>
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation>Yeni proje oluştur</translation>
+        <translation>Yeni tasarım oluştur</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Proje Adı:</translation>
+        <translation>Tasarımın Adı:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>yeni proje aç</translation>
+        <translation>yeni tasarım aç</translation>
     </message>
     <message>
         <source>Create</source>
@@ -1220,7 +1220,7 @@ olmalı fakat şu anda %1 !</translation>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation>Iyilestirme Degiskenlerini Düzenle</translation>
+        <translation>Iyilestirme Özelliklerini Düzenle</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -1304,7 +1304,7 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Simülasyon:</translation>
+        <translation type="unfinished">Benzetim:</translation>
     </message>
     <message>
         <source>Method:</source>
@@ -1470,11 +1470,11 @@ olmalı fakat şu anda %1 !</translation>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation>Proje Paketi Olustur</translation>
+        <translation>Tasarım Bohçası Olustur</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation>Paket:</translation>
+        <translation>Bohça:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -1486,7 +1486,7 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation>Proje seç:</translation>
+        <translation>Tasarım seç:</translation>
     </message>
     <message>
         <source>Create</source>
@@ -1498,11 +1498,11 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation>Proje yok!</translation>
+        <translation>Tasarım yok!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation>Proje Paketini Aç</translation>
+        <translation>Tasarım Bohçasını Aç</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1510,7 +1510,7 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation>Qucs Paketleri</translation>
+        <translation>Qucs Bohçaları</translation>
     </message>
     <message>
         <source>Any File</source>
@@ -1518,7 +1518,7 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation>Paket Kütük Adını Girin</translation>
+        <translation>Bohça Adını Girin</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1530,11 +1530,11 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation>Lütfen paketin ismini girin!</translation>
+        <translation>Lütfen bohçanın ismini girin!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation>Lütfen en azından bir proje seçiniz!</translation>
+        <translation>Lütfen en azından bir tasarım seçiniz!</translation>
     </message>
     <message>
         <source>Info</source>
@@ -1558,15 +1558,15 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation>Paket olusturulamıyor!</translation>
+        <translation>Bohça olusturulamıyor!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation>Qucs paketi basarıyla olusturuldu!</translation>
+        <translation>Qucs bohçası basarıyla olusturuldu!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation>HATA: Paket açılamıyor!</translation>
+        <translation>HATA: Bohça açılamıyor!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
@@ -1586,15 +1586,15 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation>HATA: Paket bozuk!</translation>
+        <translation>HATA: Bohça bozuk!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation>Paket basarıyla açıldı!</translation>
+        <translation>Bohça basarıyla açıldı!</translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation>HATA: &quot;%1&quot; proje dizini zaten var!</translation>
+        <translation>HATA: &quot;%1&quot; tasarım dizini zaten var!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
@@ -1685,7 +1685,7 @@ Sayı yazılması beklendi!</translation>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
         <translation>Biçim Hatası:
-&apos;Özellik&apos; alanı kapatılmadı!</translation>
+&apos;Özellik-Property&apos; alanı kapatılmadı!</translation>
     </message>
     <message>
         <source>Format Error:
@@ -1715,13 +1715,13 @@ Bilinmeyen diyagram!</translation>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
         <translation>Biçim Hatası:
-Yanlış &apos;diyagram&apos; satırı hatası!</translation>
+Yanlış &apos;çizge - diagram&apos; satırı hatası!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
         <translation>Biçim Hatası:
-&apos;Diyagram&apos; alanı kapatılmadı!</translation>
+&apos;Diyagram-diagram&apos; alanı kapatılmadı!</translation>
     </message>
     <message>
         <source>Format Error:
@@ -1821,11 +1821,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Elips şeklinde ark</translation>
+        <translation>Elips şeklinde yay</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation>Ark Özelliklerini Değiştir</translation>
+        <translation>Yay Özelliklerini Değiştir</translation>
     </message>
     <message>
         <source>Line</source>
@@ -1853,7 +1853,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation>Lokus Eğrisi</translation>
+        <translation>Gezenek (Lokus) Eğrisi</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -1865,11 +1865,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>Kutupsal-Smith Kombi</translation>
+        <translation>Kutupsal-Smith Bilesimi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>Smith-Kutupsal Kombi</translation>
+        <translation>Smith-Kutupsal Bilesimi</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
@@ -2017,7 +2017,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation>referans empedansı</translation>
+        <translation>referans sanal direnci</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
@@ -2029,23 +2029,23 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation>bias t</translation>
+        <translation>kutuplama t</translation>
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation>geçici benzetim için: Henri cinsinden sargı etkisi</translation>
+        <translation>kalımsız benzetim için: Henri cinsinden sargı etkisi</translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation>geçici benzetim için: Farad cinsinden sığa</translation>
+        <translation>kalımsız benzetim için: Farad cinsinden sığa</translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation>Bias T</translation>
+        <translation>Kutuplama T</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation>bipolar eklem transistör (bjt)</translation>
+        <translation>çift kutuplu eklem transistör (bjt)</translation>
     </message>
     <message>
         <source>polarity</source>
@@ -2101,7 +2101,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>reverse beta</source>
-        <translation>ters beta</translation>
+        <translation>ters/geri beta</translation>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
@@ -2113,15 +2113,15 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation>collektör omik direnç</translation>
+        <translation>collektör omik (Shotky etkisi yok) direnç</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation>emetör omik direnç</translation>
+        <translation>emetör omik (Shotky etkisi yok) direnç</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation>sıfır-bias baz direnci (yüksek-akıma bağlı olabilir)</translation>
+        <translation>sıfır-kutuplama baz direnci (yüksek-akıma bağlı olabilir)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
@@ -2169,7 +2169,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation>fikirsel düz geçici zaman</translation>
+        <translation>fikirsel düz geçis zamanı</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
@@ -2185,7 +2185,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation>fikirsel ters geçici zaman</translation>
+        <translation>fikirsel ters geçis zamanı</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
@@ -2209,7 +2209,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation>Hertz cinsinden burst gürültü köşe sıklığı</translation>
+        <translation>Hertz cinsinden ani gürültü köşe sıklığı</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
@@ -2241,7 +2241,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation>akımla yönetilen akım kaynağı</translation>
+        <translation>akımla denetlenen akım kaynağı</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
@@ -2253,15 +2253,15 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation>Akım Yönetimli Akım Kaynağı</translation>
+        <translation>Akım Denetimli Akım Kaynağı</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation>akım yönetimli gerilim kaynağı</translation>
+        <translation>akım denetimli gerilim kaynağı</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation>Akım Yönetimli Gerilim Kaynağı</translation>
+        <translation>Akım Denetimli Gerilim Kaynağı</translation>
     </message>
     <message>
         <source>circulator</source>
@@ -2289,11 +2289,11 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation>kesikli yüksek gerilimi</translation>
+        <translation>yüksek seviyenin gerilimi</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation>şematik simge</translation>
+        <translation>devre tasarı simgesi</translation>
     </message>
     <message>
         <source>Format Error:
@@ -2335,7 +2335,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation>alttabaka arka yüzündeki malzeme</translation>
+        <translation>alttabakanın arka yüzündeki malzeme</translation>
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
@@ -2415,15 +2415,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation>çalışma noktaları bilgisini veri grubuna koy</translation>
+        <translation>çalışma noktaları bilgisini veri topluluguna koy</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation>hataya kadar en büyük deneme sayısı</translation>
+        <translation>hataya kadar en çok deneme sayısı</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation>alt-devre düğümlerini veri grubuna kaydet</translation>
+        <translation>alt-devre düğümlerini veri topluluguna kaydet</translation>
     </message>
     <message>
         <source>preferred convergence algorithm</source>
@@ -2435,11 +2435,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation>dc blok</translation>
+        <translation>dc kalıp</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation>dc Blok</translation>
+        <translation>dc Kalıp</translation>
     </message>
     <message>
         <source>dc feed</source>
@@ -2459,7 +2459,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation>ZamanListesi-TimeList benzetim süresi</translation>
+        <translation>ZamanDizelgesi-TimeList benzetim süresi</translation>
     </message>
     <message>
         <source>digital source</source>
@@ -2475,7 +2475,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>list of times for changing output value</source>
-        <translation>list of times for changing output value</translation>
+        <translation>Degisen çıkıs degeri için zaman dizelgesi</translation>
     </message>
     <message>
         <source>diode</source>
@@ -2511,11 +2511,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation>omik seri direnç</translation>
+        <translation>omik (Shotky etkisi yok) seri direnç</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation>geçici zaman</translation>
+        <translation>geçis süresi</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
@@ -2531,7 +2531,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation>eV cinsinden enerji bant aralığı</translation>
+        <translation>eV cinsinden enerji aralığı</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
@@ -2579,7 +2579,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation>sonucu veritopluluğuna koy</translation>
+        <translation>sonucu veri topluluğuna koy</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
@@ -2591,7 +2591,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation>jiratör (empedans değilleyici)</translation>
+        <translation>jiratör (sanal direnç değilleyici)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
@@ -2603,15 +2603,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation>Harmonik denge benzetimi</translation>
+        <translation>Katsıklık (Harmonik) denge benzetimi</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation>harmonik sayısı</translation>
+        <translation>Katsıklık (harmonik) sayısı</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation>Harmonic denge</translation>
+        <translation>Harmonic (harmonik) denge</translation>
     </message>
     <message>
         <source>inductor</source>
@@ -2703,19 +2703,19 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation>transkondüktans değişkeni</translation>
+        <translation>ters iletkenlik (transconductance) değişkeni</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation>kanal-uzunluğu modulasyon değişkeni</translation>
+        <translation>oluk-uzunluğu değişim (modülasyon) katsayısı</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation>asalaksal oluk direnci</translation>
+        <translation>asalak oluk direnci</translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation>asalaksal kaynak direnci</translation>
+        <translation>asalak kaynak direnci</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
@@ -2851,19 +2851,19 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation>1/V cinsinden kanal-uzunluğu modülasyon değişken</translation>
+        <translation>1/V cinsinden olukl-uzunluğu degisim (modülasyon) değişkeni</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
-        <translation>oluk omik direnç</translation>
+        <translation>oluk omik (Shotky etkisi yok) direnci</translation>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation>kaynak omik direnç</translation>
+        <translation>kaynak omik (Shotky etkisi yok) direnç</translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
-        <translation>kapı omik direnç</translation>
+        <translation>kapı omik  (Shotky etkisi yok) direnç</translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
@@ -2871,15 +2871,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation>alttabaka eklem emiyson katsayısı</translation>
+        <translation>alttabaka eklem yayım katsayısı</translation>
     </message>
     <message>
         <source>channel width</source>
-        <translation>kanal genişliği</translation>
+        <translation>oluk genişliği</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation>kanal uzunluğu</translation>
+        <translation>oluk uzunluğu</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
@@ -2891,15 +2891,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
-        <translation>metre cinsinden kanal genişliği başına kapı-kaynak kesişim sığası [F/m]</translation>
+        <translation>metre cinsinden oluk genişliği başına kapı-kaynak kesişim sığası [F/m]</translation>
     </message>
     <message>
         <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
-        <translation>metre cinsinden kanal genişliği başına kapı-oluk kesişim sığası [F/m]</translation>
+        <translation>metre cinsinden oluk genişliği başına kapı-oluk kesişim sığası [F/m]</translation>
     </message>
     <message>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation>metre cinsinden kanal uzunluğu başına kapı-alttabaka kesişim sığası [F/m]</translation>
+        <translation>metre cinsinden oluk uzunluğu başına kapı-alttabaka kesişim sığası [F/m]</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
@@ -2915,11 +2915,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>bulk junction bottom grading coefficient</source>
-        <translation>alttabaka eklem taban grading katsayısı</translation>
+        <translation>alttabaka eklem taban dereceleme katsayısı</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation>alttabaka eklem düz kutuplama tüketim bölgesi sığa katsayısı</translation>
+        <translation>alttabaka eklem düz kutuplama bosaltım bölgesi sığa katsayısı</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
@@ -2927,11 +2927,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
-        <translation>alttabaka eklem çevresi grading katsayısı</translation>
+        <translation>alttabaka eklem çevresi dereceleme katsayısı</translation>
     </message>
     <message>
         <source>bulk transit time</source>
-        <translation>alttabaka geçici zamanı</translation>
+        <translation>alttabaka geçis zamanı</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
@@ -2947,7 +2947,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
-        <translation>cm^2/Vs cinsinden yüzey mobilitesi</translation>
+        <translation>cm^2/Vs cinsinden yüzey hareketliligi</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
@@ -2967,7 +2967,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
-        <translation>bulk junction saturation current per square meter of junction area in A/m^2</translation>
+        <translation>A/m^2 cinsinden, metre kare eklem alanı basına, alt tabaka eklem doyum akımı</translation>
     </message>
     <message>
         <source>drain diffusion area in m^2</source>
@@ -2995,7 +2995,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation>depletion MOSFET</translation>
+        <translation>bosaltım MOSFET</translation>
     </message>
     <message>
         <source>microstrip corner</source>
@@ -3023,11 +3023,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation>mikrostrip model</translation>
+        <translation>mikrostrip modeli</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation>mikrostrip dispersiyon modeli</translation>
+        <translation>mikrostrip dagılım (dispersiyon) modeli</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
@@ -3083,11 +3083,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation>mikrostrip mitered bend</translation>
+        <translation>mikrostrip destekli kırım</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation>Mikrostrip Mitered Bend</translation>
+        <translation>Mikrostrip Destekli Kıvrım</translation>
     </message>
     <message>
         <source>microstrip open</source>
@@ -3103,7 +3103,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation>miktrostrip empedans adımı</translation>
+        <translation>miktrostrip sanal direnç adımı</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
@@ -3119,7 +3119,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation>mikrostrip tee</translation>
+        <translation>mikrostrip baslangıcı</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
@@ -3127,7 +3127,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation>Mikrostrip Tee</translation>
+        <translation>Mikrostrip baslangıcı</translation>
     </message>
     <message>
         <source>microstrip via</source>
@@ -3135,7 +3135,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation>yuvarlak via iletkenin çapı</translation>
+        <translation>yuvarlak via iletkeninin çapı</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
@@ -3143,15 +3143,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation>karşılıklı iki bobin</translation>
+        <translation>karşılıklı iki sargı</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation>sargı 1&apos; in endüktansı</translation>
+        <translation>sargı 1&apos; in dogusturu etkisi (endüktans)</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation>sargı 2&apos; nin endüktansı</translation>
+        <translation>sargı 2&apos; nin dogusturu etkisi (endüktansı)</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
@@ -3167,7 +3167,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation>sargı 3&apos; ün endüktansı</translation>
+        <translation>sargı 3&apos; ün dogusturu etkisi (endüktansı)</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
@@ -3195,7 +3195,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation>normalize ilişki sabiti</translation>
+        <translation>düzgeleme (normalize) ilişki sabiti</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
@@ -3275,11 +3275,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation>port/ayak/uç empedansı</translation>
+        <translation>port/ayak/uç sanal direnci</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>Watt cinsinden ac güç</translation>
+        <translation>Watt cinsinden AC güç</translation>
     </message>
     <message>
         <source>Power Source</source>
@@ -3295,11 +3295,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation>gürültü figürü için giriş ucu</translation>
+        <translation>gürültü biçimleme için giriş ucu</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation>gürültü figürü için çıkış ucu</translation>
+        <translation>gürültü biçimleme için çıkış ucu</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
@@ -3323,7 +3323,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation>interpolasyon çeşidi</translation>
+        <translation>aradegerleme (interpolasyon) çeşidi</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -3331,15 +3331,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation>SPICE bağlantı listesi kütüğü</translation>
+        <translation>SPICE bağlantı dizelgesi kütüğü</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE bağlantı listesi</translation>
+        <translation>SPICE bağlantı dizelgesi</translation>
     </message>
     <message>
         <source>sim</source>
-        <translation>sim</translation>
+        <translation>bnz</translation>
     </message>
     <message>
         <source>spice</source>
@@ -3351,15 +3351,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation>qucs şema kütüğünün ismi</translation>
+        <translation>qucs tasarı kütüğünün ismi</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation>bir alt-devre portu (ayak)</translation>
+        <translation>bir alt-devre ucu (port/ayak)</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation>alt-devredeki ucun numarası</translation>
+        <translation>alt-devredeki ucun (ayak/port) numarası</translation>
     </message>
     <message>
         <source>type of the port</source>
@@ -3395,7 +3395,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation>rms alttabaka kabalığı/pürüzü</translation>
+        <translation>rms alttabaka kabalığı/pürüzlülügü</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -3423,7 +3423,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation>öz empedans</translation>
+        <translation>kendine has (karakteristik) özdirenç</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
@@ -3435,7 +3435,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation>geçici benzetim</translation>
+        <translation>kalımsız benzetim</translation>
     </message>
     <message>
         <source>start time in seconds</source>
@@ -3479,7 +3479,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation>Geçici benzetim</translation>
+        <translation>Kalımsız benzetim</translation>
     </message>
     <message>
         <source>ideal transformer</source>
@@ -3495,7 +3495,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation>gerilim yönetimli akım kaynağı</translation>
+        <translation>gerilim denetimli akım kaynağı</translation>
     </message>
     <message>
         <source>forward transconductance</source>
@@ -3503,15 +3503,15 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation>Gerilim Yönetimli Akım Kaynağı</translation>
+        <translation>Gerilim Denetimli Akım Kaynağı</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation>gerilim yönetimli gerilim kaynağı</translation>
+        <translation>gerilim denetimli gerilim kaynağı</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>Gerilim Yönetimli Gerilim Kaynağı</translation>
+        <translation>Gerilim Denetimli Gerilim Kaynağı</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
@@ -3567,11 +3567,11 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation>fikirsel kare dalga gerilim üreteci</translation>
+        <translation>fikirsel kare gerilim üreteci</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation>dijital yüksek gerilimi</translation>
+        <translation>yüksek seviyenin gerilimi</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
@@ -3592,7 +3592,7 @@ Qucs için çok basit bit metin düzenleyici
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Çogggaltma hakkı/Telif (Ç) 2004, 2005, Michael Margraf
+        <translation>Çoğaltma hakkı/Telif (Ç) 2004, 2005, Michael Margraf
 </translation>
     </message>
     <message>
@@ -3600,7 +3600,7 @@ Qucs için çok basit bit metin düzenleyici
 Usage:  qucsedit [-r] file
 </source>
         <translation>
-Kullanım:  qucsedit -r kütük
+Kullanım:  qucsedit [-r] kütük
 </translation>
     </message>
     <message>
@@ -3619,7 +3619,7 @@ Kullanım:  qucsedit -r kütük
         <source>Too long command line argument!
 
 </source>
-        <translation>Komut satırı argümanı çok uzun!
+        <translation>Komut satırı çok uzun!
 
 </translation>
     </message>
@@ -3627,7 +3627,7 @@ Kullanım:  qucsedit -r kütük
         <source>Wrong command line argument!
 
 </source>
-        <translation>Yanlış komut satırı argümanı!
+        <translation>Yanlış komut satırı anahtarı!
 
 </translation>
     </message>
@@ -3641,7 +3641,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation>düy ve ters beta için sıcaklık üsteli</translation>
+        <translation>düz ve ters beta için sıcaklık üsteli</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
@@ -3665,7 +3665,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation>fikirsel çiftleyici</translation>
+        <translation>fikirsel çiftleyici (kuplör)</translation>
     </message>
     <message>
         <source>coupling factor</source>
@@ -3677,31 +3677,31 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>Coupler</source>
-        <translation>Çiftleyici</translation>
+        <translation>Çiftleyici (Kuplör)</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation>RS flip flop</translation>
+        <translation>RS tetik devresi</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation>Eşzamanlı Olmayan resetli D tipi flip flop</translation>
+        <translation>Eşzamanlı Olmayan resetli D tipi tetik devresi</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation>Eşzamanlı Olmayan set ve resetli JK tipi flip flop</translation>
+        <translation>Eşzamanlı Olmayan set ve resetli JK tipi tetik devresi</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation>D-FlipFlop</translation>
+        <translation>D-TetikDevresi</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation>JK-FlipFlop</translation>
+        <translation>JK-TetikDevresi</translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation>RS-FlipFlop</translation>
+        <translation>RS-TetikDevresi</translation>
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
@@ -3737,7 +3737,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation>zırhın iç çapı</translation>
+        <translation>kalkanın iç çapı</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
@@ -3749,11 +3749,11 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation>karakteristik değerleri veri grubuna koy</translation>
+        <translation>karakteristik değerleri veri topluluguna koy</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation>alt devre karakteristik değerlerini veri grubuna kaydet</translation>
+        <translation>alt devre karakteristik değerlerini veri topluluguna kaydet</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
@@ -3789,23 +3789,23 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation>genlik modülasyonlu değişken gerilim kaynağı</translation>
+        <translation>genlik değişimli gerilim kaynağı</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation>GM</translation>
+        <translation>GM (AM)</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation>modülasyon seviyesi</translation>
+        <translation>degisim (modülasyon) seviyesi</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation>GM modülasyonlu Kaynak</translation>
+        <translation>Genlik degisimli (modülasyonlu) Kaynak</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation>sönüm çarpanı (sadece geçici benzetim)</translation>
+        <translation>sönüm çarpanı (sadece kalımsız benzetim)</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
@@ -3821,11 +3821,11 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation>AM modülasyonlu Kaynak</translation>
+        <translation>Açı degisimli Kaynak</translation>
     </message>
     <message>
         <source>relais</source>
-        <translation>röle</translation>
+        <translation>ara durak</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
@@ -3837,7 +3837,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>Relais</source>
-        <translation>Röle</translation>
+        <translation>Ara Durak</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -3853,7 +3853,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation>anahtar (zaman yönetimli)</translation>
+        <translation>anahtar (zaman denetimli)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
@@ -3877,15 +3877,15 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>power matching</source>
-        <translation>power matching</translation>
+        <translation>güç uyumu</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation>noise matching</translation>
+        <translation>gürültü uyumu</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation>2-uç matching</translation>
+        <translation>2-uç uyumu</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3893,7 +3893,7 @@ Kullanım:  qucsedit -r kütük
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>Toprak gerilimi etiketlenemez!</translation>
+        <translation>Toprak gerilimi yaftalanamaz!</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
@@ -4045,7 +4045,7 @@ Overwrite ?</source>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
-        <translation>Şema</translation>
+        <translation>Tasarım</translation>
     </message>
     <message>
         <source>Data Display</source>
@@ -4073,7 +4073,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Projects</source>
-        <translation>Proje</translation>
+        <translation>Tasarımlar</translation>
     </message>
     <message>
         <source>content of the project directory</source>
@@ -4093,7 +4093,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Datasets</source>
-        <translation>Verigrupları</translation>
+        <translation>Veri toplulukları</translation>
     </message>
     <message>
         <source>Data Displays</source>
@@ -4101,7 +4101,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Schematics</source>
-        <translation>Şemalar</translation>
+        <translation>Tasarılar</translation>
     </message>
     <message>
         <source>Content</source>
@@ -4117,7 +4117,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation>bileşenler ve diyagramlar</translation>
+        <translation>bileşenler ve çizgeler</translation>
     </message>
     <message>
         <source>lumped components</source>
@@ -4149,7 +4149,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diyagramlar</translation>
+        <translation>çizgeler</translation>
     </message>
     <message>
         <source>paintings</source>
@@ -4161,7 +4161,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation>Grubu Sil</translation>
+        <translation>Toplulugu Sil</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4169,7 +4169,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation>Açık dosya yeniden adlandırılamaz!</translation>
+        <translation>Açık kütük yeniden adlandırılamaz!</translation>
     </message>
     <message>
         <source>Rename file</source>
@@ -4205,7 +4205,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation>Şema silinemiyor:</translation>
+        <translation>Tasarı silinemiyor:</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
@@ -4237,7 +4237,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation>Yeni şema oluşturuluyor...</translation>
+        <translation>Yeni tasarı oluşturuluyor...</translation>
     </message>
     <message>
         <source>Ready.</source>
@@ -4249,7 +4249,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation>Şema Adı Giriniz</translation>
+        <translation>Tasarı Adı Giriniz</translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -4367,7 +4367,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation>Kurulu (set edilmiş) sayfa yok !</translation>
+        <translation>Kurulu sayfa yok !</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
@@ -4375,15 +4375,15 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation>- Proje:</translation>
+        <translation>- Tasarım:</translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation>Açılacak Proje Dizinini Seçin</translation>
+        <translation>Açılacak Tasarım Dizinini Seçin</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>Proje dizinine ulaşılamıyor:</translation>
+        <translation>Tasarım dizinine ulaşılamıyor:</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
@@ -4395,19 +4395,19 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation>Proje dizini oluşturulamıyor !</translation>
+        <translation>Tasarım dizini oluşturulamıyor !</translation>
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation>Seçili proje yok !</translation>
+        <translation>Seçili Tasarım yok !</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
-        <translation>Açık bir proje silinemez !</translation>
+        <translation>Açık bir tasarım silinemez !</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>Bu, tüm proje kütüklerini kalıcı olarak silecek ! Devam ?</translation>
+        <translation>Bu, tüm tasarım kütüklerini kalıcı olarak silecek ! Devam mı ?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
@@ -4423,11 +4423,11 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation>Proje dizini kaldırılamıyor !</translation>
+        <translation>Tasarım dizini kaldırılamıyor !</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation>Silinecek Proje Dizinini Seçin</translation>
+        <translation>Silinecek Tasarım Dizinini Seçin</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -4463,7 +4463,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>Bu şemanın simgesini düzenler</translation>
+        <translation>Bu tasarının simgesini düzenler</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
@@ -4471,23 +4471,23 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
 Edits the symbol for this schematic</source>
         <translation>Devre Simgesi Düzenle
 
-Bu şemanın simgesini düzenler</translation>
+Bu tasarının simgesini düzenler</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Şemayı Değiştir/Düzenle</translation>
+        <translation>Tasarıyı Değiştir/Düzenle</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Şemayı düzenler/değiştirir</translation>
+        <translation>Tasarıyı düzenler/değiştirir</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Şemayı Düzenle
+        <translation>Tasarıyı Düzenle
 
-Şemayı düzenler/değiştirir</translation>
+Tasarıyı düzenler/değiştirir</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
@@ -4499,11 +4499,11 @@ Edits the schematic</source>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation>proje dizininin içeriği</translation>
+        <translation>Tasarı dizininin içeriği</translation>
     </message>
     <message>
         <source>content of current project</source>
-        <translation>geçerli projenin içeriği</translation>
+        <translation>geçerli tasarının içeriği</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
@@ -4555,7 +4555,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Süzgeç tasarım programı başlatılamıyor!</translation>
+        <translation>Süzgeç tasarım yazılımı başlatılamıyor!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
@@ -4571,15 +4571,15 @@ Edits the schematic</source>
     </message>
     <message>
         <source>No project open!</source>
-        <translation>Açık proje yok!</translation>
+        <translation>Açık tasarım yok!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation>Kopyalanacak kütükleri seçin</translation>
+        <translation>Çogaltılacak kütükleri seçin</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation>Hiçbir kütük kopyalanmadı.</translation>
+        <translation>Hiçbir kütük çogaltılamadı.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
@@ -4592,7 +4592,7 @@ Edits the schematic</source>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>&quot;%1&quot; dosyası zaten var.
+        <translation>&quot;%1&quot; kütügü zaten var.
 Üzerine yazılsın mı ?</translation>
     </message>
     <message>
@@ -4621,11 +4621,11 @@ Overwrite ?</source>
 Creates a new schematic or data display document</source>
         <translation>Yeni
 
-Veri görüntüleme ya da şema belgesi oluşturur</translation>
+Veri görüntüleme ya da tasarı belgesi oluşturur</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
-        <translation>Yani &amp;Metin</translation>
+        <translation>Yeni &amp;Metin</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
@@ -4837,7 +4837,7 @@ Uygulama ayarlarını yapar</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>Seçili elementleri yukarı hizala</translation>
+        <translation>Seçili bilesenleri yukarı hizala</translation>
     </message>
     <message>
         <source>Align top
@@ -4845,7 +4845,7 @@ Uygulama ayarlarını yapar</translation>
 Align selected elements to their upper edge</source>
         <translation>Yukarı hizala
 
-Seçili elementleri üst köşelerine hizala</translation>
+Seçili bilesenleri üst köşelerine hizala</translation>
     </message>
     <message>
         <source>Align bottom</source>
@@ -4853,7 +4853,7 @@ Seçili elementleri üst köşelerine hizala</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>Seçili elementleri alta hizala</translation>
+        <translation>Seçili bilesenleri alta hizala</translation>
     </message>
     <message>
         <source>Align bottom
@@ -4861,7 +4861,7 @@ Seçili elementleri üst köşelerine hizala</translation>
 Align selected elements to their lower edge</source>
         <translation>Alta hizala
 
-Seçili elementleri alt köşelerine hizala</translation>
+Seçili bilesenleri alt köşelerine hizala</translation>
     </message>
     <message>
         <source>Align left</source>
@@ -4869,7 +4869,7 @@ Seçili elementleri alt köşelerine hizala</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>Seçili elementleri sola hizala</translation>
+        <translation>Seçili bilesenleri sola hizala</translation>
     </message>
     <message>
         <source>Align left
@@ -4877,7 +4877,7 @@ Seçili elementleri alt köşelerine hizala</translation>
 Align selected elements to their left edge</source>
         <translation>Sola hizala
 
-Seçili elementleri sol köşelerine hizala</translation>
+Seçili bilesenleri sol köşelerine hizala</translation>
     </message>
     <message>
         <source>Align right</source>
@@ -4885,7 +4885,7 @@ Seçili elementleri sol köşelerine hizala</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>Seçili elementleri sağa hizala</translation>
+        <translation>Seçili bilesenleri sağa hizala</translation>
     </message>
     <message>
         <source>Align right
@@ -4909,7 +4909,7 @@ Seçili öğeleri sağ köşelerine hizala</translation>
 Distribute horizontally selected elements</source>
         <translation>Yatay dağıt
 
-Seçili elementleri yatay dağıt</translation>
+Seçili bilesenleri yatay dağıt</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
@@ -4925,7 +4925,7 @@ Seçili elementleri yatay dağıt</translation>
 Distribute vertically selected elements</source>
         <translation>Dikey dağıt
 
-Seçili elementleri dikey dağıt</translation>
+Seçili bilesenleri dikey dağıt</translation>
     </message>
     <message>
         <source>Set on Grid</source>
@@ -4937,7 +4937,7 @@ Seçili elementleri dikey dağıt</translation>
 Sets selected elements on grid</source>
         <translation>Izgaranın üzerine kur
 
-Seçili elementleri ızgaranın üzerine kurar</translation>
+Seçili bilesenleri ızgaranın üzerine kurar</translation>
     </message>
     <message>
         <source>Move Component Text</source>
@@ -4993,7 +4993,7 @@ Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopyala</translation>
+        <translation>&amp;Çoğalt</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
@@ -5089,19 +5089,19 @@ Son komutu tekrarlar</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>&amp;Yeni Proje...</translation>
+        <translation>&amp;Yeni Tasarım...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>Yeni bir proje oluşturur</translation>
+        <translation>Yeni bir tasarım oluşturur</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>Yeni Proje
+        <translation>Yeni Tasarım
 
-Yeni bir proje oluşturur</translation>
+Yeni bir tasarım oluşturur</translation>
     </message>
     <message>
         <source>Open Project</source>
@@ -5109,7 +5109,7 @@ Yeni bir proje oluşturur</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>&amp;Proje Aç...</translation>
+        <translation>&amp;Tasarımı Aç...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -5119,9 +5119,9 @@ Yeni bir proje oluşturur</translation>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>Proje Aç
+        <translation>Tasarım Aç
 
-Varolan bir projeyi açar</translation>
+Varolan bir tasarımı açar</translation>
     </message>
     <message>
         <source>Delete Project</source>
@@ -5129,7 +5129,7 @@ Varolan bir projeyi açar</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>Proje &amp;Sil...</translation>
+        <translation>Tasarımı &amp;Sil...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
@@ -5139,9 +5139,9 @@ Varolan bir projeyi açar</translation>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>Proje Sil
+        <translation>Tasarımı Sil
 
-Varolan bir projeyi siler</translation>
+Varolan bir tasarımı siler</translation>
     </message>
     <message>
         <source>Close Project</source>
@@ -5149,7 +5149,7 @@ Varolan bir projeyi siler</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>Proje &amp;Kapat</translation>
+        <translation>Tasarımı &amp;Kapat</translation>
     </message>
     <message>
         <source>Close current project</source>
@@ -5159,9 +5159,9 @@ Varolan bir projeyi siler</translation>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>Proje Kapat
+        <translation>Tasarım Kapat
 
-Geçerli olan projeyi kapatır</translation>
+Geçerli olan tasarımı kapatır</translation>
     </message>
     <message>
         <source>Add Files to Project</source>
@@ -5169,19 +5169,19 @@ Geçerli olan projeyi kapatır</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation>&amp;Kütükleri Projeye Ekle...</translation>
+        <translation>&amp;Kütükleri Tasarıma Ekle...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation>Kütükleri proje dizinine kopyalar</translation>
+        <translation>Kütükleri tasarım dizinine kopyalar</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation>Projeye Kütük Ekle
+        <translation>Tasarıma Kütük Ekle
 
-Kütükleri proje dizinine kopyalar</translation>
+Kütükleri tasarım dizinine kopyalar</translation>
     </message>
     <message>
         <source>View All</source>
@@ -5269,7 +5269,7 @@ Seçme durumu</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>Tüm elemanları seçer</translation>
+        <translation>Tüm bilesenleri seçer</translation>
     </message>
     <message>
         <source>Select All
@@ -5277,7 +5277,7 @@ Seçme durumu</translation>
 Selects all elements of the document</source>
         <translation>Tümünü Seç
 
-Belgenin tüm elemanlarını seçer</translation>
+Belgenin tüm bilesenlerini seçer</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -5357,7 +5357,7 @@ Alt-devrenin içine girer</translation>
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
         <translation>Bir üst katmana
 
-Devre hiyerarşisinde bir üst katmana çıkar, yani alt-devreyi terkeder</translation>
+Devre sıradüzeninde (hiyerarsi) bir üst katmana çıkar, yani alt-devreyi terkeder</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
@@ -5409,7 +5409,7 @@ Toprak simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>Ayak Ekle</translation>
+        <translation>Uç Ekle</translation>
     </message>
     <message>
         <source>Inserts port</source>
@@ -5419,9 +5419,9 @@ Toprak simgesi ekler</translation>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Ayak Ekle
+        <translation>Uç Ekle
 
-Giriş/çıkış ayak(port) simgesi ekler</translation>
+Giriş/çıkış ayak(uç/port) simgesi ekler</translation>
     </message>
     <message>
         <source>Insert Wire</source>
@@ -5449,19 +5449,19 @@ Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>Bağlantı Hattı Etiketi</translation>
+        <translation>Bağlantı Hattı Yaftası</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>Bağlantı Hattı/Ayak Etiketi Ekler</translation>
+        <translation>Bağlantı Hattı ya da Ayak Yaftası Ekler</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>Bağlantı Hattı Etiketi
+        <translation>Bağlantı Hattı Yaftası
 
-Bağlantı Hattı veya Ayak Etiketi Ekler</translation>
+Bağlantı Hattı veya Ayak Yaftası Ekler</translation>
     </message>
     <message>
         <source>Text editor</source>
@@ -5549,33 +5549,33 @@ Karşılaştırma Devresi Oluşturma İletişim Penceresi</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>Simülasyonu Başlat</translation>
+        <translation>Benzetimi Başlat</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>Geçerli şemayı benzetime tabi tutar</translation>
+        <translation>Geçerli tasarıyı benzetime tabi tutar</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>Simülasyonu başlat
+        <translation>Benzetimi başlat
 
-Geçerli şemayı benzetime tabi tutar</translation>
+Geçerli tasarıyı benzetime tabi tutar</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>Veri Göstergesi/Şema Görüntüle</translation>
+        <translation>Veri Göstergesi/Tasarı Görüntüle</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>Veri göstergesi veya şema sayfasına yapılan değişiklikler</translation>
+        <translation>Veri göstergesi veya tasarı sayfasına yapılan değişiklikler</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>Veri Göstergesi/Şema Görüntüle
+        <translation>Veri Göstergesi/Tasarı Görüntüle
 
 </translation>
     </message>
@@ -5605,7 +5605,7 @@ DC kutuplanma durumunu hesaplar ve gösterir</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Diyagramın grafiği üzerine bir işaretçi koyar</translation>
+        <translation>Çizgenin grafiği üzerine bir işaretçi koyar</translation>
     </message>
     <message>
         <source>Set Marker
@@ -5613,39 +5613,39 @@ DC kutuplanma durumunu hesaplar ve gösterir</translation>
 Sets a marker on a diagram&apos;s graph</source>
         <translation>İşaretçi Koy
 
-Diyagramın grafiği üzerine işaretçi koyar</translation>
+Çizgenin grafiği üzerine işaretçi koyar</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>Son Mesajları Göster</translation>
+        <translation>Son îletileri Göster</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>Son benzetim mesajlarını gösterir</translation>
+        <translation>Son benzetim iletilerini gösterir</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>Son Mesajları Göster
+        <translation>Son îletileri Göster
 
-Son benzetimden olan mesajları gösterir</translation>
+Son benzetimden olan iletileri gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>Son Bağlantı Listesini Göster</translation>
+        <translation>Son Bağlantı Dizelgesini Göster</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>Son benzetim bağlantı listesini gösterir</translation>
+        <translation>Son benzetim bağlantı dizelgesini gösterir</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>Son Bağlantı Listesini Göster
+        <translation>Son Bağlantı Dizelgesini Göster
 
-Son benzetimde hazırlanan son bağlantı listesini gösterir</translation>
+Son benzetimde hazırlanan son bağlantı dizelgesini gösterir</translation>
     </message>
     <message>
         <source>Toolbar</source>
@@ -5701,7 +5701,7 @@ Durumçubuğunu Etkinleştirir/kapatır</translation>
 Index of intern Qucs help</source>
         <translation>Yardım - İçindekiler
 
-Qucs uygulaması içindeki yardım hizmetinin içindekiler bölümü</translation>
+Qucs uygulamasındaki gömülü yardım hizmetinin içindekiler bölümü</translation>
     </message>
     <message>
         <source>Getting Started</source>
@@ -5777,7 +5777,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>&amp;Proje</translation>
+        <translation>&amp;Tasarım</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -5785,7 +5785,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>&amp;Simülasyon</translation>
+        <translation>&amp;Benzetim</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -5821,7 +5821,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation>Quite Universal Circuit Simulator (Pek Evrensel Devre Simülatötü)</translation>
+        <translation>Quite Universal Circuit Simulator (Tamamen Evrensel Devre Benzetici)</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
@@ -5833,11 +5833,11 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation>Simülatör, Stefan Jahn tarafından</translation>
+        <translation>Benzetici, Stefan Jahn tarafından</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation>VHDL simülatör &apos;FreeHDL&apos;, Edwin Naroska ve Marius Vollmer tarafından</translation>
+        <translation>VHDL benzetici &apos;FreeHDL&apos;, Edwin Naroska ve Marius Vollmer tarafından</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
@@ -5845,7 +5845,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation>Mike Brinson&apos; a çok teşekkürler, VHDL cıktısını düzelttiği için</translation>
+        <translation>Mike Brinson&apos; a çok teşekkürler, VHDL çıktısını düzelttiği için</translation>
     </message>
     <message>
         <source>Translations:</source>
@@ -5857,7 +5857,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation>Polyaca, Dariusz Pienkowski tarafından</translation>
+        <translation>Polonyaca, Dariusz Pienkowski tarafından</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
@@ -5977,7 +5977,7 @@ Seçili kısmı not tahtasına çoğaltır</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation>Tüm sayfayı gÖster</translation>
+        <translation>Tüm sayfayı göster</translation>
     </message>
     <message>
         <source>Activate select mode</source>
@@ -6001,7 +6001,7 @@ Seçme durumunu etkinleştirir</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation>Bir VHDL varlığı iskeleti koyar</translation>
+        <translation>Bir &quot;VHDL varlığı&quot; iskeleti koyar</translation>
     </message>
     <message>
         <source>VHDL entity
@@ -6042,7 +6042,7 @@ degistir</translation>
 Selects all diagram markers of the document</source>
         <translation>Isaretleyici Seç
 
-Belgedeki tüm diyagram isaretleyicilerini seçer</translation>
+Belgedeki tüm çizge isaretleyicilerini seçer</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
@@ -6062,7 +6062,7 @@ Seçili bilesenleri Kapatır/Etkinlestirir</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation>Lütfen alt devre projesini açın!</translation>
+        <translation>Lütfen alt devre tasarımını açın!</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
@@ -6090,11 +6090,11 @@ Alt devrelerden bir kütüphane olusturur</translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation>Önce projeyi açın lütfen!</translation>
+        <translation>Önce tasarımı açın lütfen!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation>Lütfen bir diyagram grafigi seçin!</translation>
+        <translation>Lütfen bir çizge grafigi seçin!</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -6126,35 +6126,35 @@ içerigi sayfa büyüklügüne sıgdırır ve öyle yazdırır</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation>&amp;Paketle...</translation>
+        <translation>&amp;Bohça Yap...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation>Tamamlanmıs projeleri sıkıstırarak paketle</translation>
+        <translation>Tamamlanmıs tasarımları sıkıstırarak bohçaya koy</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation>Paketle
+        <translation>Bohçala
 
-Tamamlanmıs projeleri sıkıstırarak paketle</translation>
+Tamamlanmıs tasarımları sıkıstırarak bohçaya koyar</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation>&amp;Paketi Aç...</translation>
+        <translation>&amp;Bohçayı Aç...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation>Paketin içerigini yükle</translation>
+        <translation>Bohça içerigini yükle</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation>Paketi Aç
+        <translation>Bohçayı Açı
 
-Paketin içerigini yükle</translation>
+Bohça içerigini yükle</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
@@ -6511,7 +6511,7 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation>Pass band ripple:</translation>
+        <translation>Geçen aralık dalgalılıgı:</translation>
     </message>
     <message>
         <source>Impedance:</source>
@@ -6575,7 +6575,7 @@ Süzgeç tasarım yazılımı
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation>Başlangıç sıklık değeri:</translation>
+        <translation>Başlangıç sıklık (frekans) değeri:</translation>
     </message>
     <message>
         <source>Stop band frequency:</source>
@@ -6637,10 +6637,6 @@ Süzgeç tasarım yazılımı
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Table of Contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6672,6 +6668,10 @@ Enables/disables the table of contents</source>
     </message>
     <message>
         <source>Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8042,7 +8042,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation>QucsLib, Qucs bileşen kütüphanesi için bir düzenleyicidir. Uygulama penceresinin sol tarafında, istenen kütüphaneye gözatılabilir ve gerekli bileşen seçilebilir. Seçilen bileşenin özellikleri sağ tarafta görülebilir. Seçili bileşen Qucs uygulama ortamına &quot;Not Tahtasına Kopyala&quot; komutu ile alınabilir. Şema penceresine gelinerek CTRL-V (not tahtasından kopyala) ile kullanıma sokulabilir.</translation>
+        <translation>QucsLib, Qucs bileşen kütüphanesi için bir düzenleyicidir. Uygulama penceresinin sol tarafında, istenen kütüphaneye gözatılabilir ve gerekli bileşen seçilebilir. Seçilen bileşenin özellikleri sağ tarafta görülebilir. Seçili bileşen Qucs uygulama ortamına &quot;Not Tahtasına Çogalt&quot; komutu ile alınabilir. Tasarı penceresine gelinerek CTRL-V (not tahtasından çogalt) ile kullanıma sokulabilir.</translation>
     </message>
     <message>
         <source>Search result</source>
@@ -8074,7 +8074,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation>Daha kolay bir yol: Bilesen, semaya sürükle-bırak yöntemi ile de konabilir.</translation>
+        <translation>Daha kolay bir yol: Bilesen, tasarıya sürükle-bırak yöntemi ile de konabilir.</translation>
     </message>
 </context>
 <context>
@@ -8239,7 +8239,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>String</source>
-        <translation>Karakter Katarı</translation>
+        <translation>Harf Katarı</translation>
     </message>
     <message>
         <source>Integer Number</source>
@@ -8251,7 +8251,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation>Karakter</translation>
+        <translation>Harf</translation>
     </message>
     <message>
         <source>Data Type</source>
@@ -8318,11 +8318,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation>Birleştir</translation>
+        <translation>Olustur</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation>&amp;Birleştir</translation>
+        <translation>&amp;Olustur</translation>
     </message>
     <message>
         <source>Help</source>
@@ -8406,7 +8406,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation>Dielektrik Kayıtları</translation>
+        <translation>Dielektrik Kayıpları</translation>
     </message>
     <message>
         <source>Skin Depth</source>
@@ -8462,23 +8462,23 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation>Strip Kalınlığı</translation>
+        <translation>Serit Kalınlığı</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation>Strip İletkenliği</translation>
+        <translation>Serit İletkenliği</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation>Dielectric Loss Tangent</translation>
+        <translation>Dielectric Kayıp Tegeti</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation>İletken Kabalığı</translation>
+        <translation>İletken Kabalığı/Pürüzlülügü</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation>Sıklık</translation>
+        <translation>Sıklık (Frekans)</translation>
     </message>
     <message>
         <source>Line Width</source>
@@ -8490,7 +8490,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation>Öz Sanal Direnç</translation>
+        <translation>Kendine Has Sanal Direnç</translation>
     </message>
     <message>
         <source>Electrical Length</source>
@@ -8502,7 +8502,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation>Magnetic Loss Tangent</translation>
+        <translation>Magnetic Kayıp Tegeti</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
@@ -8534,11 +8534,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation>Çift-Durum (Even-mode) Sanal Direnci</translation>
+        <translation>Çift-Durum Sanal Direnci</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation>Tek-Durum (Odd-Mode) Sanal Direnci</translation>
+        <translation>Tek-Durum Sanal Direnci</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
@@ -8622,7 +8622,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation>Şema not tahtasına çoğaltıldı.</translation>
+        <translation>Tasarı not tahtasına çoğaltıldı.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
@@ -8806,7 +8806,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation>Veri Grubu:</translation>
+        <translation>Veri Toplulugu:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
@@ -8814,7 +8814,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation>Simülasyon</translation>
+        <translation>Benzetim</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -8881,7 +8881,7 @@ Bütün kütüphaneler aranır.</translation>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation>Qucs Simülasyon Mesajları</translation>
+        <translation>Qucs benzetim iletileri</translation>
     </message>
     <message>
         <source>Progress:</source>
@@ -8897,7 +8897,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation>Simülasyonu İptal Et</translation>
+        <translation>Benzetimi İptal Et</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -8909,15 +8909,15 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
-        <translation>HATA: Simülator hala çalışıyor!</translation>
+        <translation>HATA: Benzetici hala çalışıyor!</translation>
     </message>
     <message>
         <source>creating netlist... </source>
-        <translation>bağlantı listesi oluşturuluyor...</translation>
+        <translation>bağlantı dizelgesi oluşturuluyor...</translation>
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation>HATA: Bağlantı listesi kütüğü yazılamıyor!</translation>
+        <translation>HATA: Bağlantı dizelgesi kütüğü yazılamıyor!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
@@ -8931,7 +8931,7 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>HATA: Simülator başlatılamıyor!</translation>
+        <translation>HATA: Benzetici başlatılamıyor!</translation>
     </message>
     <message>
         <source>Close window</source>
@@ -8941,7 +8941,7 @@ Bütün kütüphaneler aranır.</translation>
         <source>
 Simulation ended on </source>
         <translation>
-Simülasyon bitti</translation>
+Benzetim bitti</translation>
     </message>
     <message>
         <source>Ready.
@@ -8953,7 +8953,7 @@ Simülasyon bitti</translation>
         <source>
 Errors occured during simulation on </source>
         <translation>
-Simülasyon başlarken hatalar oluştu</translation>
+Benzetim başlarken hatalar oluştu</translation>
     </message>
     <message>
         <source>Aborted.
@@ -9020,7 +9020,7 @@ Hatalar:
     </message>
     <message>
         <source>show file name in schematic</source>
-        <translation>kütük ismini şemada göster</translation>
+        <translation>kütük ismini tasarıda göster</translation>
     </message>
     <message>
         <source>include SPICE simulations</source>
@@ -9056,7 +9056,7 @@ Hatalar:
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation>SPICE bağlantı listesi</translation>
+        <translation>SPICE bağlantı dizelgesi</translation>
     </message>
     <message>
         <source>All Files</source>

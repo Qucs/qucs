@@ -38,7 +38,7 @@
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation>A&amp;lfa kanalı:</translation>
+        <translation>A&amp;lfa oluk:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
@@ -103,7 +103,7 @@
     <name>QFileDialog</name>
     <message>
         <source>Copy or Move a File</source>
-        <translation>Kütük Taşı veya Kopyala</translation>
+        <translation>Kütük Taşı veya Çogalt</translation>
     </message>
     <message>
         <source>Read: %1</source>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Özellikler</translation>
+        <translation>Nitelikler</translation>
     </message>
     <message>
         <source>OK</source>
@@ -171,11 +171,11 @@
     </message>
     <message>
         <source>List View</source>
-        <translation>Liste Görüntü</translation>
+        <translation>Dizelge Görünüm</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation>Ayrıntılı Görüntü</translation>
+        <translation>Ayrıntılı Görünüm</translation>
     </message>
     <message>
         <source>Preview File Info</source>
@@ -343,7 +343,7 @@ File not found.
 Check path and filename.</source>
         <translation>%1
 Kütük bulunamadı.
-Yolu ve kütük adını kontrol edin.</translation>
+Yolu ve kütük adını denetleyin.</translation>
     </message>
 </context>
 <context>
@@ -358,7 +358,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Cyrillic</source>
-        <translation>Rusça</translation>
+        <translation>Kiril (eski islav)</translation>
     </message>
     <message>
         <source>Armenian</source>
@@ -366,15 +366,15 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Georgian</source>
-        <translation>Georgian</translation>
+        <translation>Gürcüce</translation>
     </message>
     <message>
         <source>Runic</source>
-        <translation>Runic</translation>
+        <translation>Runik (kalın ve koyu yazı)</translation>
     </message>
     <message>
         <source>Ogham</source>
-        <translation>Ogham</translation>
+        <translation>Ogham (düz çizgilerden olusan yazı)</translation>
     </message>
     <message>
         <source>Hebrew</source>
@@ -394,7 +394,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Devanagari</source>
-        <translation>Devanagari</translation>
+        <translation>Sanskrit</translation>
     </message>
     <message>
         <source>Bengali</source>
@@ -406,27 +406,27 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Gujarati</source>
-        <translation>Gujarati</translation>
+        <translation>Gujarati (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Oriya</source>
-        <translation>Oriya</translation>
+        <translation>Oriya (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Tamil</source>
-        <translation>Tamil</translation>
+        <translation>Tamil (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Telugu</source>
-        <translation>Telugu</translation>
+        <translation>Telugu (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Kannada</source>
-        <translation>Kannada</translation>
+        <translation>Kannada (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Malayalam</source>
-        <translation>Malayalam</translation>
+        <translation>Malayalam (bir hindu yazısı)</translation>
     </message>
     <message>
         <source>Sinhala</source>
@@ -438,7 +438,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Lao</source>
-        <translation>Lao</translation>
+        <translation>Lao Dili</translation>
     </message>
     <message>
         <source>Tibetan</source>
@@ -486,7 +486,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Canadian Aboriginal</source>
-        <translation>Canadian Aboriginal</translation>
+        <translation>Kanada Aborijin</translation>
     </message>
     <message>
         <source>Mongolian</source>
@@ -502,15 +502,15 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Number Forms</source>
-        <translation>Sayı Şekiller</translation>
+        <translation>Sayı Şekilleri</translation>
     </message>
     <message>
         <source>Mathematical Operators</source>
-        <translation>Matematiksel İşlemler</translation>
+        <translation>Matematiksel İşlemciler</translation>
     </message>
     <message>
         <source>Technical Symbols</source>
-        <translation>Teknik Simgeler</translation>
+        <translation>Yöntembilimsel Simgeler</translation>
     </message>
     <message>
         <source>Geometric Symbols</source>
@@ -526,7 +526,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Braille</source>
-        <translation>Braille</translation>
+        <translation>Kabartma Yazı</translation>
     </message>
     <message>
         <source>Unicode</source>
@@ -623,7 +623,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>&amp;Abort</source>
-        <translation>&amp;Tamamen İptal</translation>
+        <translation>&amp;Görevi Bitirmeden İptal</translation>
     </message>
     <message>
         <source>&amp;Retry</source>
@@ -635,7 +635,7 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for multiplatform GUI &amp;amp; application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants.&lt;br&gt;Qt is also available for embedded devices.&lt;/p&gt;&lt;p&gt;Qt is a Trolltech product. See &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; for more information.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Qt Hakkında&lt;/h3&gt;&lt;p&gt;Bu yazılım, Qt sürümü %1&apos; kullanır.&lt;/p&gt;&lt;p&gt;Qt bir C++ kütüphanesidir ve pek çok farklı sistemde kullanıcı arayüzü (KA) geliştirmek için kullanılır.&lt;/p&gt;&lt;p&gt;Qt &apos;tekil kaynak kodu taşınabilirliği&apos; sunar ve MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, ve tüm büyük Unix çeşitleri için kullanılabilir.&lt;br&gt;Qt aynı zamanda gömülü sistemler için de kullanılabilir.&lt;/p&gt;&lt;p&gt;Qt bir Trolltech ürünüdür. Daha fazlabilgi için &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; sayfasını görün.&lt;/p&gt;</translation>
+        <translation>&lt;h3&gt;Qt Hakkında&lt;/h3&gt;&lt;p&gt;Bu yazılım, Qt sürümü %1&apos; kullanır.&lt;/p&gt;&lt;p&gt;Qt bir C++ kütüphanesidir ve pek çok farklı sistemde kullanıcı arayüzü (KA) geliştirmek için kullanılır.&lt;/p&gt;&lt;p&gt;Qt &apos;tekil kaynak metni taşınabilirliği&apos; getirir ve MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, ve tüm büyük Unix çeşitleri için kullanılabilir.&lt;br&gt;Qt aynı zamanda gömülü sistemler için de kullanılabilir.&lt;/p&gt;&lt;p&gt;Qt bir Trolltech ürünüdür. Daha fazlabilgi için &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; sayfasını görün.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -842,27 +842,27 @@ Yolu ve kütük adını kontrol edin.</translation>
     </message>
     <message>
         <source>Executive (7.5x10 inches, 191x254 mm)</source>
-        <translation>Executive (7.5x10 inç, 191x254 mm)</translation>
+        <translation>idari (7.5x10 inç, 191x254 mm)</translation>
     </message>
     <message>
         <source>Folio (210 x 330 mm)</source>
-        <translation>Folio (210 x 330 mm)</translation>
+        <translation>Katlı Kagıt (210 x 330 mm)</translation>
     </message>
     <message>
         <source>Ledger (432 x 279 mm)</source>
-        <translation>Ledger (432 x 279 mm)</translation>
+        <translation>Hesap defteri (432 x 279 mm)</translation>
     </message>
     <message>
         <source>Legal (8.5x14 inches, 216x356 mm)</source>
-        <translation>Legal (8.5x14 inches, 216x356 mm)</translation>
+        <translation>Resmi (8.5x14 inches, 216x356 mm)</translation>
     </message>
     <message>
         <source>Letter (8.5x11 inches, 216x279 mm)</source>
-        <translation>Letter (8.5x11 inches, 216x279 mm)</translation>
+        <translation>Mektup (8.5x11 inç, 216x279 mm)</translation>
     </message>
     <message>
         <source>Tabloid (279 x 432 mm)</source>
-        <translation>Tabloid (279 x 432 mm)</translation>
+        <translation>Küçük gazete (279 x 432 mm)</translation>
     </message>
     <message>
         <source>US Common #10 Envelope (105 x 241 mm)</source>
