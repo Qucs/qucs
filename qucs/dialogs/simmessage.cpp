@@ -34,6 +34,7 @@
 #include "qucs.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "components/opt_sim.h"
 
 
 SimMessage::SimMessage(QWidget *w, QWidget *parent)
@@ -292,6 +293,7 @@ void SimMessage::startSimulator()
 #else
   QString QucsDigi = "qucsdigi";
 #endif
+  SimOpt = NULL;
 
   if(DocWidget->inherits("QTextEdit")) {
     // Take VHDL file in memory as it could contain unsaved changes.
@@ -322,10 +324,17 @@ void SimMessage::startSimulator()
     }
     ProgText->insert(tr("done.\n"));  // of "creating netlist... 
 
-    if(SimPorts < 0)
-      CommandLine << QucsSettings.BinDir + "qucsator" << "-b" << "-g"
-         << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
-    else
+    if(SimPorts < 0) {
+      if((SimOpt = findOptimization((Schematic*)DocWidget))) {
+	((Optimize_Sim*)SimOpt)->createASCOnetlist();
+	CommandLine << QucsSettings.AscoDir + "asco" << "-qucs" <<
+	  QucsHomeDir.filePath("asco_netlist.txt") << "-o" << "asco_out";
+      }
+      else {
+	CommandLine << QucsSettings.BinDir + "qucsator" << "-b" << "-g"
+           << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
+      }
+    } else {
 #ifdef __MINGW32__
       CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
 		  << "netlist.txt" << DataSet
@@ -335,6 +344,7 @@ void SimMessage::startSimulator()
       CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
          << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
 #endif
+    }
   }
 
   SimProcess.setArguments(CommandLine);
@@ -355,6 +365,17 @@ void SimMessage::startSimulator()
     return;
   }
 }
+
+// ------------------------------------------------------------------------
+Component * SimMessage::findOptimization(Schematic *Doc) {
+  Component *pc;
+  for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
+    if(pc->isActive)
+      if(pc->Model == ".Opt")
+	return pc;
+  return NULL;
+}
+
 
 // ------------------------------------------------------------------------
 // Is called when the process sends an output to stdout.
@@ -466,6 +487,23 @@ void SimMessage::FinishSimulation(int Status)
     for(z=0; z<ErrText->paragraphs(); z++)
       stream << ErrText->text(z) << "\n";
     file.close();
+  }
+
+  if(Status == 0) {
+    if(SimOpt) { // save optimization data
+      QFile ifile(QucsHomeDir.filePath("asco_out.dat"));
+      QFile ofile(DataSet);
+      if(ifile.open(IO_ReadOnly)) {
+	if(ofile.open(IO_WriteOnly)) {
+	  QByteArray data = ifile.readAll();
+	  ofile.writeBlock(data);
+	  ofile.close();
+	}
+	ifile.close();
+      }
+      if(((Optimize_Sim*)SimOpt)->loadASCOout())
+	((Schematic*)DocWidget)->setChanged(true,true);
+    }
   }
 
   emit SimulationEnded(Status, this);

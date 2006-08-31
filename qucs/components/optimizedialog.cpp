@@ -275,7 +275,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   Component *pc;
   for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
     if(pc != Comp)
-      if(pc->Model[0] == '.')
+      if(pc->Model[0] == '.' && pc->Model != ".Opt")
         SimEdit->insertItem(pc->Name);
 
   Property *pp;

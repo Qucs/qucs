@@ -53,6 +53,7 @@ struct tQucsSettings {
   QString BitmapDir;
   QString LangDir;
   QString LibDir;
+  QString AscoDir;
 
   // registered filename extensions with program to open the file
   QStringList FileTypes;
