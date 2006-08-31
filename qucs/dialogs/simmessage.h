@@ -28,6 +28,9 @@ class QVBoxLayout;
 class QPushButton;
 class QProgressBar;
 
+class Component;
+class Schematic;
+
 // #define SPEEDUP_PROGRESSBAR
 
 
@@ -68,6 +71,7 @@ private:
   void FinishSimulation(int);
   void nextSPICE();
   void startSimulator();
+  Component * findOptimization(Schematic *);
 
 public:
   QWidget *DocWidget;
@@ -82,6 +86,7 @@ public:
   QProgressBar *SimProgress;
   QString       ProgressText;
 
+  Component    *SimOpt;
   int           SimPorts;
   bool          makeSubcircuit, insertSim;
   QStringList   Collect;

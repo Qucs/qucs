@@ -26,7 +26,7 @@ files.
 Version 0.0.10
 --------------
 
- * optimization dialog for ASCO added, creating config files
+ * optimization dialog for ASCO added, preliminary support
  * added an attenuator synthesis application
  * many, many small bug fixes and improvements
  * support for nine-valued VHDL logic

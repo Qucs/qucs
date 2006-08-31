@@ -28,7 +28,9 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   QString NetList();
-  void createASCOFiles();
+  bool createASCOFiles();
+  bool createASCOnetlist();
+  bool loadASCOout();
 };
 
 #endif

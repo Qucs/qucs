@@ -461,6 +461,15 @@ int main(int argc, char *argv[])
   if(!QucsSettings.VHDL_Attributes.isValid())
     QucsSettings.VHDL_Attributes = Qt::darkCyan;
 
+  var = getenv ("ASCODIR");
+  if (var != NULL) {
+    QDir AscoDir = QDir (var);
+    QString AscoDirStr = AscoDir.canonicalPath ();
+    QucsSettings.AscoDir =
+      QDir::convertSeparators (AscoDirStr + "/bin/");
+  } else {
+    QucsSettings.AscoDir = "";
+  }
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
