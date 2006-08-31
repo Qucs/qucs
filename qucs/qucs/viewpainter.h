@@ -49,7 +49,7 @@ public:
   void drawResizeRect(int, int);
 
   QPainter *Painter;
-  float Scale, DX , DY;
+  float Scale, FontScale, DX , DY;
   int LineSpacing;   // updated by init(), just for info
 };
 
