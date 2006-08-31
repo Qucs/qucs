@@ -17,6 +17,10 @@
 
 #include <qdir.h>
 #include <qfile.h>
+#include <qtextstream.h>
+#include <qregexp.h>
+#include <qstring.h>
+#include <qstringlist.h>
 
 #include "opt_sim.h"
 #include "main.h"
@@ -62,9 +66,12 @@ Element* Optimize_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString Optimize_Sim::NetList()
 {
   QString s = "";
-  createASCOFiles();
   s += "#\n";
-  s += "# ASCO configuration file(s) created\n";
+  if (createASCOFiles()) {
+    s += "# ASCO configuration file(s) created\n";
+  } else {
+    s += "# Failed to create ASCO configuration file(s)\n";
+  }
   s += "#\n";
   return s;
 }
@@ -72,10 +79,10 @@ QString Optimize_Sim::NetList()
 extern QDir QucsHomeDir;
  
 // -----------------------------------------------------------
-void Optimize_Sim::createASCOFiles()
+bool Optimize_Sim::createASCOFiles()
 {
   Property* pp;
-  QFile afile(QucsHomeDir.filePath("asco.cfg"));
+  QFile afile(QucsHomeDir.filePath("asco_netlist.cfg"));
   if(afile.open(IO_WriteOnly)) {
     QTextStream stream(&afile);
     stream << "*\n";
@@ -157,14 +164,14 @@ void Optimize_Sim::createASCOFiles()
     stream << "#\n\n";
 
     afile.close();
-  }
+  } else return false;
 
   QDir ExtractDir(QucsHomeDir);
   if(!ExtractDir.cd("extract")) {
     if(!ExtractDir.mkdir("extract"))
-      return;
+      return false;
     if(!ExtractDir.cd("extract"))
-      return;
+      return false;
   }      
 
   for(pp = Props.at(2); pp != 0; pp = Props.next()) {
@@ -183,6 +190,90 @@ void Optimize_Sim::createASCOFiles()
 	stream << "#\n\n";
 	efile.close();
       }
+      else return false;
     }
   }
+  return true;
+}
+
+// -----------------------------------------------------------
+bool Optimize_Sim::createASCOnetlist()
+{
+  Property* pp;
+  QStringList vars;
+  for(pp = Props.at(2); pp != 0; pp = Props.next()) {
+    if(pp->Name == "Var") {
+      vars += pp->Value.section('|',0,0);
+    }
+  }
+
+  QFile infile(QucsHomeDir.filePath("netlist.txt"));
+  QFile outfile(QucsHomeDir.filePath("asco_netlist.txt"));
+  if(!infile.open(IO_ReadOnly)) return false;
+  if(!outfile.open(IO_WriteOnly)) return false;
+  QTextStream instream(&infile);
+  QTextStream outstream(&outfile);
+  QString Line;
+  while(!instream.atEnd()) {
+    Line = instream.readLine();
+    for(QStringList::Iterator it = vars.begin(); it != vars.end(); ++it ) {
+      QRegExp reg = QRegExp("=\"(" + *it + ")\"");
+      Line.replace(reg, "=\"#\\1#\"");
+    }
+    outstream << Line << "\n";
+  }
+  outfile.close();
+  infile.close();
+  return true;
+}
+
+// -----------------------------------------------------------
+bool Optimize_Sim::loadASCOout()
+{
+  bool changed = false;
+  Property* pp;
+  QStringList vars;
+  for(pp = Props.at(2); pp != 0; pp = Props.next()) {
+    if(pp->Name == "Var") {
+      vars += pp->Value.section('|',0,0);
+    }
+  }
+
+  QFile infile(QucsHomeDir.filePath("asco_out.log"));
+  if(!infile.open(IO_ReadOnly)) return false;
+  QTextStream instream(&infile);
+  QString Line;
+  while(!instream.atEnd()) Line = instream.readLine();
+  infile.close();
+
+  QStringList entries = QStringList::split(':',Line);
+  QStringList::Iterator it;
+  for(it = entries.begin(); it != entries.end(); ++it ) {
+    QString Name = *it;
+    Name = Name.stripWhiteSpace();
+    if(vars.contains(Name)) {
+      for(pp = Props.at(2); pp != 0; pp = Props.next()) {
+	if(pp->Name == "Var") {
+	  QString val[6];
+	  val[0] = pp->Value.section('|',0,0);
+	  if(val[0]==Name) {
+	    val[1] = pp->Value.section('|',1,1);
+	    val[2] = pp->Value.section('|',2,2);
+	    val[3] = pp->Value.section('|',3,3);
+	    val[4] = pp->Value.section('|',4,4);
+	    val[5] = pp->Value.section('|',5,5);
+	    ++it;
+	    QString Value = *it;
+	    Value = Value.stripWhiteSpace();
+	    val[2] = Value;
+	    pp->Value = val[0] + "|" + val[1] + "|" + val[2] + "|" +
+	      val[3] + "|" + val[4] + "|" + val[5];
+	    changed = true;
+	    break;
+	  }
+	}
+      }
+    }
+  }
+  return changed;
 }

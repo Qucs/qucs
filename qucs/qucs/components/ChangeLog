@@ -1,3 +1,9 @@
+2006-08-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* opt_sim.cpp (loadASCOout): Evaluate output file of ASCO and
+	puts final values into initial values of the component.
+	(createASCOnetlist): Modifies netlist for use with ASCO.
+
 2006-08-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* opt_sim.cpp (createASCOFiles): Moved this function here from
