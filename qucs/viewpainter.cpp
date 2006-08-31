@@ -34,13 +34,14 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int
 {
   Painter = p;
   Scale = Scale_;
+  FontScale = FontScale_;
   DX = floor(float(DX_) * Scale) - float(dx_);
   DY = floor(float(DY_) * Scale) - float(dy_);
 
   QFont f = p->font();
-  if(FontScale_ == 0.0)
-    FontScale_ = Scale;
-  f.setPointSizeFloat( FontScale_ * float(f.pointSize()) );
+  if(FontScale == 0.0)
+    FontScale = Scale;
+  f.setPointSizeFloat( FontScale * float(f.pointSize()) );
   p->setFont(f);
   LineSpacing = p->fontMetrics().lineSpacing();
   p->setWorldXForm(false);   // we use our own coordinate transformation
