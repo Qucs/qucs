@@ -56,7 +56,7 @@ void GraphicText::paint(ViewPainter *p)
   p->Painter->rotate(-Angle);   // automatically enables transformation
 
   int Size = Font.pointSize();
-  Font.setPointSizeFloat( p->Scale * float(Size) );
+  Font.setPointSizeFloat( p->FontScale * float(Size) );
 
   QFont f = p->Painter->font();
   p->Painter->setPen(Color);

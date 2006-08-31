@@ -531,8 +531,8 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
     for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
       if(pe->isSelected || printAll) {
-	pn->paint(&p); // paint all nodes with selected elements
-	break;
+        pn->paint(&p); // paint all nodes with selected elements
+        break;
       }
     if(pn->Label)
       if(pn->Label->isSelected || printAll) {
