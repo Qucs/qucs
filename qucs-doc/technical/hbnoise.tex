@@ -18,11 +18,13 @@ be performed. This results in the sideband noise of each harmonic
 (including DC, i.e. base band noise). The method described here
 is based on the principle of small-signal noise. That is, the
 noise power is assumed small enough (compared to the signal power
-and its harmonics) to neglect the mixing of noise with noise.
+and its harmonics) to neglect the higher order mixing products.
 This procedure is the standard concept in CAE and allows for a
 quite simple and time-saving algorithm: Use the Jacobian to
 calculate a conversion matrix and then apply the noise correlation
-matrix to it.
+matrix to it. Two important publications for HB noise simulation
+exist that were used for the next subsection \cite{Roychowdhury},
+\cite{Rizzoli}.
 
 \addvspace{12pt}
 
@@ -85,5 +87,33 @@ to now, no other methods were proposed and some publications
 reported to have achieved reasonable results with this approach
 and 1/f noise.
 
+
+\section{Noise Conversion}
+
+As the noise of linear and non-linear components are uncorrelated,
+the noise-voltage correlation matrix at the interconnecting ports
+can now be calculated:
+
+\begin{equation}
+\boldsymbol{C_Z} = \boldsymbol{J}_F^{-1} \cdot (\boldsymbol{C}_{Y,lin} + \boldsymbol{C}_{Y,nl})
+       \cdot (\boldsymbol{J}_F^{-1})^+
+\end{equation}
+
+here $\boldsymbol{J}_F^{-1}$ is the inverse of the Jacobian matrix taken
+from the last HB iteration step (where it already was inverted). Note
+that it needs to be the precise Jacobian matrix. I.e. it must be taken
+from an iteration step very close to the solution, without any convergence
+helpers, and with a precise FFT algorithm (e.g. the multi-dimensional FFT).
+
 \addvspace{12pt}
+
+Finally, the noise voltages from the interconnecting ports have to be used
+to compute all other noise voltages. This is straight forward:
+
+\begin{enumerate}
+\item Convert the noise-voltage correlation matrix into the noise-current
+   correlation matrix.
+\item Expand the matrix to the whole circuit, i.e. fill it up with zeros.
+\item Perform an AC noise analysis for all nodes of interest.
+\end{enumerate}
 
