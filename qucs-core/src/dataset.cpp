@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.21 2006/08/21 08:10:30 raimi Exp $
+ * $Id: dataset.cpp,v 1.22 2006/09/04 08:05:39 raimi Exp $
  *
  */
 
@@ -100,7 +100,7 @@ void dataset::addDependency (vector * v) {
 void dataset::delDependency (vector * v) {
   if (dependencies == v) {
     dependencies = (vector *) v->getNext ();
-    dependencies->setPrev (NULL);
+    if (dependencies) dependencies->setPrev (NULL);
   }
   else {
     vector * next = (vector *) v->getNext ();
@@ -158,7 +158,7 @@ void dataset::addVariable (vector * v) {
 void dataset::delVariable (vector * v) {
   if (variables == v) {
     variables = (vector *) v->getNext ();
-    variables->setPrev (NULL);
+    if (variables) variables->setPrev (NULL);
   }
   else {
     vector * next = (vector *) v->getNext ();

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.cpp,v 1.2 2006/08/21 08:10:30 raimi Exp $
+ * $Id: check_mdl.cpp,v 1.3 2006/09/04 08:05:39 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include <float.h>
 #include <ctype.h>
 
+#include "logging.h"
 #include "strlist.h"
 #include "object.h"
 #include "complex.h"
@@ -151,9 +152,10 @@ static double
 mdl_telement_dvalue (struct mdl_link_t *, struct mdl_element_t *, char *);
 
 // The function resolves the given variable trying upscope resolving.
-static double mdl_resolve_variable (struct mdl_link_t * link, char * name) {
+static int mdl_resolve_variable (struct mdl_link_t * link, char * name,
+				 double &val) {
   int done = 0;
-  double val = 0.0;
+  val = 0.0;
   struct mdl_lcontent_t * root;
   // try finding variable in current link
   for (root = link->content; !done && root != NULL; root = root->next) {
@@ -167,10 +169,9 @@ static double mdl_resolve_variable (struct mdl_link_t * link, char * name) {
   }
   // resolve variable in upper scope recursively
   if (!done && link->parent) {
-    val = mdl_resolve_variable (link->parent, name);
-    done++;
+    done = mdl_resolve_variable (link->parent, name, val);
   }
-  return val;
+  return done;
 }
 
 // Converts a string into a valid value.  Uses variable substitutions.
@@ -184,7 +185,13 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
       double f = 1.0;
       if      (*txt == '-') { f = -1.0; txt++; }
       else if (*txt == '+') { f = +1.0; txt++; }
-      val = f * mdl_resolve_variable (link, txt);
+      if (!mdl_resolve_variable (link, txt, val)) {
+	logprint (LOG_ERROR,
+		  "checker error, unable to resolve `%s' variable in '%s'\n",
+		  txt, link->name);
+	val = 0.0;
+      }
+      val = f * val;
     }
     // normal value with probably a suffix
     else {
@@ -256,7 +263,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  stop = mdl_helement_dvalue (link, hyptab->data, "Stop");
 	  nof = mdl_helement_ivalue (link, hyptab->data, "# of Points");
 	  step = mdl_helement_dvalue (link, hyptab->data, "Step Size");
-	  if (nof <= 0) nof = (int) ((stop - start) / step) + 1;
+	  if (nof <= 0) nof = (int) fabs ((stop - start) / step) + 1;
 	  deps->append (name, new int (order));
 	  linsweep * sw = new linsweep ();
 	  sw->create (start, stop, nof);
@@ -274,6 +281,8 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  start = mdl_helement_dvalue (link, hyptab->data, "Start");
 	  stop = mdl_helement_dvalue (link, hyptab->data, "Stop");
 	  nof = mdl_helement_ivalue (link, hyptab->data, "Total Pts");
+	  if (nof <= 0)
+	    nof = mdl_helement_ivalue (link, hyptab->data, "# of Points");
 	  deps->append (name, new int (order));
 	  logsweep * sw = new logsweep ();
 	  sw->create (start, stop, nof);
@@ -618,9 +627,12 @@ static void mdl_check_xforms (void) {
    success, non-zero otherwise. */
 int mdl_check (void) {
   int errors = 0;
-  char * name = mdl_root->name;
   mdl_result = new dataset ();
-  mdl_find_link (mdl_root, name);
+  struct mdl_link_t * root;
+  for (root = mdl_root; root; root = root->next) {
+    char * name = root->name;
+    mdl_find_link (root, name);
+  }
   mdl_find_syncdatasets (mdl_sync_root);
   mdl_check_xforms ();
   return errors ? -1 : 0;
@@ -635,7 +647,11 @@ void mdl_destroy (void) {
   }
   if (mdl_root != NULL) {
     // release internal data structures
-    mdl_free_link (mdl_root);
+    struct mdl_link_t * root, * next;
+    for (root = mdl_root; root; root = next) {
+      next = root->next;
+      mdl_free_link (root);
+    }
     mdl_root = NULL;
   }
   if (mdl_sync_root != NULL) {
