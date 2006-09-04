@@ -162,7 +162,7 @@ void QucsHelp::createSidebar()
 void QucsHelp::displaySelectedChapter()
 {
   uint y = chaptersView->selectedItem()->text(1).toUInt();
-  Q_ASSERT(y !=0 && y < links.count());
+  Q_ASSERT(y < links.count());
   textBrowser->setSource(QucsHelpDir.filePath(links[y]));
 }
 //This slot updates next and previous actions i.e enabling/disabling
