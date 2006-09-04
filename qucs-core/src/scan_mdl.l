@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_mdl.l,v 1.1 2006-08-18 08:20:17 raimi Exp $
+ * $Id: scan_mdl.l,v 1.2 2006-09-04 08:05:39 raimi Exp $
  *
  */
 
@@ -60,20 +60,25 @@ REAL     [+-]?{DIGIT}+("."{DIGIT}+)?{EXPONENT}?
 DECIMAL  {DIGIT}+
 IDENT    [a-zA-Z][a-zA-Z0-9_]*
 DIGITS   {DIGIT}+
-PIDENT   {IDENT}("."{IDENT})+
+PIDENT   {IDENT}("."({IDENT}|{DECIMAL}))*
+AIDENT   {IDENT}("."{IDENT})*"["{DIGITS}","{DIGITS}"]"
+LINKS    "MODEL"|"CIRC"|"PS"|"DUT"|"DPS"|"DAT"|"OUT"|"SWEEP"|"XFORM"|"MACRO"|"TCIRC"|"CONN"|"PLOT"
 
-%x VERSION BLKEDIT BLKEDIT1 CIRCUIT CIRCUIT1
+%x VERSION BLKEDIT BLKEDIT1 CIRCUIT CIRCUIT1 PLINK PLIST PMEMBER
+%x TABDATA TABDATA1
 
 %option yylineno noyywrap nounput prefix="mdl_"
 
 %%
 
 <INITIAL>^"LINK" {
+  BEGIN(PLINK);
   return LINK;
 }
 
-<INITIAL>"MODEL"|"CIRC"|"PS"|"DUT"|"DPS"|"DAT"|"OUT"|"SWEEP"|"XFORM"|"MACRO"|"TCIRC"|"CONN"|"PLOT" {
+<PLINK,PLIST,PMEMBER>{LINKS} {
   mdl_lval.ident = strdup (mdl_text);
+  BEGIN(INITIAL);
   return t_LINK;
 }
 
@@ -92,6 +97,11 @@ PIDENT   {IDENT}("."{IDENT})+
   return t_TABLE;
 }
 
+<INITIAL>^"TABLE \"ICVIEWDATA\"" {
+  BEGIN(TABDATA);
+  return t_TABLE;
+}
+
 <INITIAL>^"PSTABLE" {
   return t_PSTABLE;
 }
@@ -103,6 +113,10 @@ PIDENT   {IDENT}("."{IDENT})+
 
 <INITIAL>^"CNTABLE" {
   return t_CNTABLE;
+}
+
+<INITIAL>^"OPTIMEDIT" {
+  return t_OPTIMEDIT;
 }
 
 <INITIAL>^"HYPTABLE" {
@@ -130,15 +144,29 @@ PIDENT   {IDENT}("."{IDENT})+
 }
 
 <INITIAL>^"member" {
+  BEGIN(PMEMBER);
   return t_MEMBER;
 }
 
 <INITIAL>^"list" {
+  BEGIN(PLIST);
   return t_LIST;
 }
 
 <INITIAL>^"PlotOptimizerOpt" {
   return t_PLOTOPTIMIZEROPT;
+}
+
+<INITIAL>^"PlotOptimizerTraceSet" {
+  return t_PLOTOPTIMIZERTRACESET;
+}
+
+<INITIAL>^"PlotOptimizerTraceRegSet" {
+  return t_PLOTOPTIMIZERTRACEREGSET;
+}
+
+<INITIAL>^"PlotOptimizerTraceNatRegSet" {
+  return t_PLOTOPTIMIZERTRACENATREGSET;
 }
 
 <INITIAL>^"PlotError" {
@@ -149,8 +177,44 @@ PIDENT   {IDENT}("."{IDENT})+
   return t_TYPE;
 }
 
+<INITIAL>^"editsize" {
+  return t_EDITSIZE;
+}
+
+<INITIAL>^"plotsize" {
+  return t_PLOTSIZE;
+}
+
+<INITIAL>^"optrange" {
+  return t_OPTRANGE;
+}
+
 <INITIAL>^"param" {
   return t_PARAM;
+}
+
+<INITIAL>^"range" {
+  return t_RANGE;
+}
+
+<INITIAL>^"term" {
+  return t_TERM;
+}
+
+<INITIAL>^"calset" {
+  return t_CALSET;
+}
+
+<INITIAL>^"caldata" {
+  return t_CALDATA;
+}
+
+<INITIAL>^"applic" {
+  return t_APPLIC;
+}
+
+<INITIAL>^"subapp" {
+  return t_SUBAPP;
 }
 
 <INITIAL>^"connpair" {
@@ -167,21 +231,22 @@ PIDENT   {IDENT}("."{IDENT})+
   return Real;
 }
 
-<INITIAL>{IDENT}|{PIDENT} {
+<INITIAL>{IDENT}|{PIDENT}|{AIDENT} {
   mdl_lval.ident = strdup (mdl_text);
   return Identifier;
 }
 
 <BLKEDIT>"{"   { BEGIN(BLKEDIT1); return '{'; }
 <CIRCUIT>"{"   { BEGIN(CIRCUIT1); return '{'; }
+<TABDATA>"{"   { BEGIN(TABDATA1); return '{'; }
 
 <INITIAL>"{"   { /* pass the '{' to the parser */ return '{'; }
 <INITIAL>"}"   { /* pass the '{' to the parser */ return '}'; }
 
 <*>\r?\n|{WS}  { /* skip end of line and spaces */ }
 
-<BLKEDIT1,CIRCUIT1>"}"  { BEGIN(INITIAL); return '}'; }
-<BLKEDIT1,CIRCUIT1>.    { /* ignore */ }
+<BLKEDIT1,CIRCUIT1,TABDATA1>^"}"  { BEGIN(INITIAL); return '}'; }
+<BLKEDIT1,CIRCUIT1,TABDATA1>.     { /* ignore */ }
 
 <*>. { /* any other character is invalid */
   fprintf (stderr, 

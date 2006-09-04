@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.h,v 1.2 2006-08-21 08:10:30 raimi Exp $
+ * $Id: check_mdl.h,v 1.3 2006-09-04 08:05:39 raimi Exp $
  *
  */
 
@@ -98,6 +98,7 @@ struct mdl_link_t {
   char * name;
   char * type;
   struct mdl_lcontent_t * content;
+  struct mdl_link_t * next;  
 };
 
 struct mdl_lcontent_t {

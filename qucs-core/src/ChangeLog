@@ -1,3 +1,15 @@
+2006-09-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_mdl.l, parse_mdl.y: Implemented many more of the MDL
+	grammar and syntax which I wasn't aware before.
+
+	* dataset.cpp: Fixed a bug when deleting the last variable or
+	dependency in a dataset.
+
+	* check_mdl.cpp: Emit warnings when variables cannot be
+	resolved (no equation solver implemented).
+	Consider list of root LINK's.
+
 2006-08-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added new

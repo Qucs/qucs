@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_mdl.y,v 1.2 2006-08-21 08:10:30 raimi Exp $
+ * $Id: parse_mdl.y,v 1.3 2006-09-04 08:05:39 raimi Exp $
  *
  */
 
@@ -57,6 +57,7 @@
 %token t_TABLE
 %token t_PSTABLE
 %token t_CNTABLE
+%token t_OPTIMEDIT
 %token t_BLKEDIT
 %token t_HYPTABLE
 %token t_ELEMENT
@@ -67,11 +68,23 @@
 %token t_MEMBER
 %token t_LIST
 %token t_PLOTOPTIMIZEROPT
+%token t_PLOTOPTIMIZERTRACESET
+%token t_PLOTOPTIMIZERTRACEREGSET
+%token t_PLOTOPTIMIZERTRACENATREGSET
 %token t_PLOTERROR
 %token t_TYPE
 %token t_CIRCUITDECK
 %token t_PARAM
+%token t_RANGE
 %token t_CONNPAIR
+%token t_CALDATA
+%token t_CALSET
+%token t_TERM
+%token t_APPLIC
+%token t_SUBAPP
+%token t_EDITSIZE
+%token t_PLOTSIZE
+%token t_OPTRANGE
 
 %union {
   char * ident;
@@ -92,7 +105,7 @@
 %type <point> POINT_Line PointList Point
 %type <f> Real
 %type <dset> DSContent DATASET_Definition
-%type <link> LINK_Definition
+%type <link> LINK_Definition LinkList
 %type <lcontent> LinkContent LinkContentList
 %type <dcontent> DataContent DataContentList
 %type <data> DATA_Definition
@@ -105,8 +118,15 @@
 %%
 
 Input:
-  LINK_Definition {
+  LinkList {
     mdl_root = $1;
+  }
+;
+
+LinkList: /* nothing */ { $$ = NULL; }
+  | LINK_Definition LinkList {
+    $1->next = $2;
+    $$ = $1;
   }
 ;
 
@@ -162,8 +182,24 @@ ConnTableContentList: /* nothing */ { }
   }
 ;
 
+OptEditContent:
+  VIEW_Line
+  | TABLE_Definition
+;
+
+OptEditContentList: /* nothing */ { }
+  | OptEditContent OptEditContentList {
+  }
+;
+
 LinkContent:
   VIEW_Line {
+    $$ = NULL;
+  }
+  | APPLIC_Line {
+    $$ = NULL;
+  }
+  | SUBAPP_Line {
     $$ = NULL;
   }
   | LIST_Line {
@@ -204,7 +240,22 @@ DataContent:
   PLOTOPTIMIZEROPT_Line {
     $$ = NULL;
   }
+  | PLOTOPTIMIZERTRACESET_Line {
+    $$ = NULL;
+  }
+  | PLOTOPTIMIZERTRACEREGSET_Line {
+    $$ = NULL;
+  }
+  | PLOTOPTIMIZERTRACENATREGSET_Line {
+    $$ = NULL;
+  }
   | PLOTERROR_Line {
+    $$ = NULL;
+  }
+  | EDITSIZE_Line {
+    $$ = NULL;
+  }
+  | PLOTSIZE_Line {
     $$ = NULL;
   }
   | TABLE_Definition {
@@ -214,6 +265,12 @@ DataContent:
     $$ = NULL;
   }
   | CNTABLE_Definition {
+    $$ = NULL;
+  }
+  | OPTIMEDIT_Definition {
+    $$ = NULL;
+  }
+  | CALSET_Definition {
     $$ = NULL;
   }
   | HYPTABLE_Definition {
@@ -247,6 +304,8 @@ DataContentList: /* nothing */ { $$ = NULL; }
 
 PSContent:
   PARAM_Line
+  | RANGE_Line
+  | OPTRANGE_Line
 ;
 
 PSContentList: /* nothing */ { }
@@ -316,6 +375,14 @@ TABLE_Definition:
     $$->name = $2;
     $$->data = $4;
   }
+  | t_TABLE String Real '{' TableContentList '}' {
+    $$ = (struct mdl_table_t *) calloc (sizeof (struct mdl_table_t), 1);
+    $$->name = $2;
+    $$->data = $5;
+  }
+  | t_TABLE '{'  '}' {
+    $$ = (struct mdl_table_t *) calloc (sizeof (struct mdl_table_t), 1);
+  }
 ;
 
 LINK_Definition:
@@ -352,6 +419,55 @@ BLKEDIT_Definition:
 
 CNTABLE_Definition:
   t_CNTABLE String '{' ConnTableContentList '}' {
+    free ($2);
+  }
+;
+
+OPTIMEDIT_Definition:
+  t_OPTIMEDIT '{' OptEditContentList '}' {
+  }
+;
+
+CALSET_Definition:
+  t_CALSET String '{' CalSetContent '}' {
+    free ($2);
+  }
+;
+
+CalSetContent:
+  Identifier Real Identifier Real Identifier Real
+  CALDATA_Definition {
+  }
+;
+
+CALDATA_Definition:
+  t_CALDATA '{' CalDataContentList '}' {
+  }
+;
+
+CalDataContentList: /* nothing */ { }
+  | CalDataContent CalDataContentList {
+  }
+;
+
+CalDataContent:
+  TERM_Line PointList {
+  }
+;
+
+TERM_Line:
+  t_TERM Real {
+  }
+;
+
+APPLIC_Line:
+  t_APPLIC String Real Real Real {
+    free ($2);
+  }
+;
+
+SUBAPP_Line:
+  t_SUBAPP String Real {
     free ($2);
   }
 ;
@@ -410,9 +526,51 @@ PLOTOPTIMIZEROPT_Line:
   }
 ;
 
+PLOTOPTIMIZERTRACESET_Line:
+  t_PLOTOPTIMIZERTRACESET String String String {
+    free ($2);
+    free ($3);
+    free ($4);
+  }
+  | t_PLOTOPTIMIZERTRACESET String String {
+    free ($2);
+    free ($3);
+  }
+;
+
+PLOTOPTIMIZERTRACEREGSET_Line:
+  t_PLOTOPTIMIZERTRACEREGSET String Real String String String String {
+    free ($2);
+    free ($4);
+    free ($5);
+    free ($6);
+    free ($7);
+  }
+;
+
+PLOTOPTIMIZERTRACENATREGSET_Line:
+  t_PLOTOPTIMIZERTRACENATREGSET String Real String String String String {
+    free ($2);
+    free ($4);
+    free ($5);
+    free ($6);
+    free ($7);
+  }
+;
+
 PLOTERROR_Line:
   t_PLOTERROR Identifier Real {
     free ($2);
+  }
+;
+
+EDITSIZE_Line:
+  t_EDITSIZE Real Real {
+  }
+;
+
+PLOTSIZE_Line:
+  t_PLOTSIZE Real Real {
   }
 ;
 
@@ -427,6 +585,22 @@ PARAM_Line:
   t_PARAM Identifier String {
     free ($2);
     free ($3);
+  }
+;
+
+RANGE_Line:
+  t_RANGE Identifier String String {
+    free ($2);
+    free ($3);
+    free ($4);
+  }
+;
+
+OPTRANGE_Line:
+  t_OPTRANGE Identifier String String {
+    free ($2);
+    free ($3);
+    free ($4);
   }
 ;
 
