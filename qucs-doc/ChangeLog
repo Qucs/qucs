@@ -1,3 +1,8 @@
+2006-09-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.10 and bumped up to version
+	0.0.11.
+
 2006-08-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* tutorial/functions/math.tex: Fixed typo in arccot()
