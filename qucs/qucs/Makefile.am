@@ -54,11 +54,11 @@ noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h      \
 # rules for translations
 TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \
   qucs_pt.ts qucs_es.ts qucs_jp.ts qucs_hu.ts qucs_he.ts qucs_sv.ts   \
-  qucs_tr.ts qucs_uk.ts qucs_ru.ts
+  qucs_tr.ts qucs_uk.ts qucs_ru.ts qucs_cz.ts
 GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts \
   qtgeneric_es.ts qtgeneric_ro.ts qtgeneric_jp.ts qtgeneric_hu.ts \
   qtgeneric_it.ts qtgeneric_he.ts qtgeneric_sv.ts qtgeneric_pl.ts \
-  qtgeneric_tr.ts qtgeneric_uk.ts qtgeneric_ru.ts
+  qtgeneric_tr.ts qtgeneric_uk.ts qtgeneric_ru.ts qtgeneric_cz.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 qucs_%.ts: $(qucs_SOURCES)
