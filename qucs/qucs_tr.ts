@@ -1383,14 +1383,6 @@ olmalı fakat şu anda %1 !</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>minimum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>maximum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>less</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1428,6 +1420,14 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6236,6 +6236,10 @@ Zayıflatıcı olusturma yazılımını baslatır</translation>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -8264,6 +8268,10 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <message>
         <source>VHDL Editor</source>
         <translation>VHDL metin düzenleyici</translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
