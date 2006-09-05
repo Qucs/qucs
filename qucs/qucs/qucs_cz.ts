@@ -1543,14 +1543,6 @@ je ale %1 !</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>minimum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>maximum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>less</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1604,6 +1596,14 @@ je ale %1 !</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6859,6 +6859,10 @@ Enables/disables the browse dock window</source>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -10562,6 +10566,10 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

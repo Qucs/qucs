@@ -1509,11 +1509,11 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>minimum</source>
-        <translation>Minimum</translation>
+        <translation type="obsolete">Minimum</translation>
     </message>
     <message>
         <source>maximum</source>
-        <translation>Maximum</translation>
+        <translation type="obsolete">Maximum</translation>
     </message>
     <message>
         <source>less</source>
@@ -1622,6 +1622,14 @@ ist aber %1 !</translation>
     <message>
         <source>monitor</source>
         <translation>beobachten</translation>
+    </message>
+    <message>
+        <source>minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximize</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6892,6 +6900,10 @@ Startet das Programm zur Berechnung von Dämpfungsgliedern</translation>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation>Verbesserungen an der GUI von Gopala Krishna A</translation>
     </message>
+    <message>
+        <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -10604,6 +10616,10 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     <message>
         <source>VHDL Editor</source>
         <translation>VHDL Editor</translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

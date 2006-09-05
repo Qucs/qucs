@@ -1411,11 +1411,11 @@ de %1 !</translation>
     </message>
     <message>
         <source>minimum</source>
-        <translation>minimum</translation>
+        <translation type="obsolete">minimum</translation>
     </message>
     <message>
         <source>maximum</source>
-        <translation>maximum</translation>
+        <translation type="obsolete">maximum</translation>
     </message>
     <message>
         <source>less</source>
@@ -1523,6 +1523,14 @@ de %1 !</translation>
     </message>
     <message>
         <source>monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6556,6 +6564,10 @@ Csillapító méretező program indítása</translation>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -8658,6 +8670,10 @@ a fájlt a megfelelő program nyissa meg.</translation>
     <message>
         <source>VHDL Editor</source>
         <translation>VHDL Szerkesztő</translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

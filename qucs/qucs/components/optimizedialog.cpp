@@ -232,8 +232,8 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
           SLOT(slotChangeGoalNum(const QString&)));
 
   GoalTypeCombo = new QComboBox(Tab3);
-  GoalTypeCombo->insertItem(tr("minimum"));
-  GoalTypeCombo->insertItem(tr("maximum"));
+  GoalTypeCombo->insertItem(tr("minimize"));
+  GoalTypeCombo->insertItem(tr("maximize"));
   GoalTypeCombo->insertItem(tr("less"));
   GoalTypeCombo->insertItem(tr("greater"));
   GoalTypeCombo->insertItem(tr("equal"));
@@ -312,8 +312,8 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
     }
     if(pp->Name == "Goal") {
       new QListViewItem(GoalList, pp->Value.section('|',0,0),
-        ((pp->Value.section('|',1,1) == "MIN") ? tr("minimum") :
-        ((pp->Value.section('|',1,1) == "MAX") ? tr("maximum") :
+        ((pp->Value.section('|',1,1) == "MIN") ? tr("minimize") :
+        ((pp->Value.section('|',1,1) == "MAX") ? tr("maximize") :
         ((pp->Value.section('|',1,1) == "LE") ? tr("less") :
         ((pp->Value.section('|',1,1) == "GE") ? tr("greater") :
         ((pp->Value.section('|',1,1) == "EQ") ? tr("equal") :
@@ -614,8 +614,8 @@ void OptimizeDialog::slotApply()
 
   for(item = GoalList->firstChild(); item != 0; item = item->itemBelow()) {
     Prop = item->text(0) + "|" +
-           ((item->text(1) == tr("minimum")) ? "MIN" :
-           ((item->text(1) == tr("maximum")) ? "MAX" :
+           ((item->text(1) == tr("minimize")) ? "MIN" :
+           ((item->text(1) == tr("maximize")) ? "MAX" :
            ((item->text(1) == tr("less")) ? "LE" :
            ((item->text(1) == tr("greater")) ? "GE" :
            ((item->text(1) == tr("equal")) ? "EQ" : "MON"))))) + "|" +

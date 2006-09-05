@@ -1351,14 +1351,6 @@ but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>minimum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>maximum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>less</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1464,6 +1456,14 @@ but is %1 !</source>
     </message>
     <message>
         <source>monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6259,6 +6259,10 @@ Starts attenuator calculation program</source>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -8057,6 +8061,10 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>VHDL Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
