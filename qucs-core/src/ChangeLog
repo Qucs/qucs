@@ -1,3 +1,15 @@
+2006-09-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.cpp, integrator.cpp (conductor): Added functionality
+	calculating the equivalent conductance separately.
+
+	* circuit.cpp: Implemented a one-node variant for the function
+	transientCapacitance().  Also added some variants of this function
+	which consider the possibility that a charge depends on a
+	different voltage than where it is located.  Then the
+	transientCapacitance() is split into transientCapacitanceQ() and
+	transientCapacitanceC().
+
 2006-09-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_mdl.l, parse_mdl.y: Implemented many more of the MDL

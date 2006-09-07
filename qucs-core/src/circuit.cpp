@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.46 2006-04-19 07:03:26 raimi Exp $
+ * $Id: circuit.cpp,v 1.47 2006-09-07 10:56:53 raimi Exp $
  *
  */
 
@@ -398,8 +398,13 @@ void circuit::setI (int port, complex z) {
 
 /* Modifies the circuits I-MNA matrix value of the current source
    built in the circuit depending on the port number. */
-void circuit::addI (int port, complex z) {
-  VectorI[port] += z;
+void circuit::addI (int port, complex i) {
+  VectorI[port] += i;
+}
+
+/* Same as above with different argument type. */
+void circuit::addI (int port, nr_double_t i) {
+  VectorI[port] += i;
 }
 
 /* Returns the circuits Q-HB vector value. */
@@ -449,6 +454,11 @@ void circuit::setY (int r, int c, complex y) {
 /* Modifies the circuits G-MNA matrix value depending on the port
    numbers. */
 void circuit::addY (int r, int c, complex y) {
+  MatrixY[r * size + c] += y;
+}
+
+/* Same as above with different argument type. */
+void circuit::addY (int r, int c, nr_double_t y) {
   MatrixY[r * size + c] += y;
 }
 
@@ -727,7 +737,8 @@ void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
 
 /* The function runs the necessary calculation in order to perform a
    single integration step of a voltage controlled capacitance placed
-   in between the given nodes. */
+   in between the given nodes.  It is assumed that the appropiate
+   charge only depends on the voltage between these nodes. */
 void circuit::transientCapacitance (int qstate, int pos, int neg,
 				    nr_double_t cap, nr_double_t voltage,
 				    nr_double_t charge) {
@@ -740,6 +751,101 @@ void circuit::transientCapacitance (int qstate, int pos, int neg,
   i = pol * (getState (cstate) - g * voltage);
   addI (pos , -i);
   addI (neg , +i);
+}
+
+/* This is the one-node variant of the above function.  It performs
+   the same steps for a single node related to ground. */
+void circuit::transientCapacitance (int qstate, int node, nr_double_t cap,
+				    nr_double_t voltage, nr_double_t charge) {
+  nr_double_t g, i;
+  int cstate = qstate + 1;
+  setState (qstate, charge);
+  integrate (qstate, cap, g, i);
+  addY (node, node, +g);
+  i = pol * (getState (cstate) - g * voltage);
+  addI (node , -i);
+}
+
+/* The function performs a single integration step of the given charge
+   located between the given nodes.  It saves the current
+   contributions of the charge itself and considers the polarity of
+   the circuit. */
+void circuit::transientCapacitanceQ (int qstate, int qpos, int qneg,
+				     nr_double_t charge) {
+  nr_double_t unused, i;
+  int cstate = qstate + 1;
+  setState (qstate, charge);
+  integrate (qstate, 0, unused, unused);
+  i = pol * getState (cstate);
+  addI (qpos , -i);
+  addI (qneg , +i);
+}
+
+/* This is the one-node variant of the above function.  It performs
+   the same steps for a single node related to ground. */
+void circuit::transientCapacitanceQ (int qstate, int qpos,
+				     nr_double_t charge) {
+  nr_double_t unused, i;
+  int cstate = qstate + 1;
+  setState (qstate, charge);
+  integrate (qstate, 0, unused, unused);
+  i = pol * getState (cstate);
+  addI (qpos , -i);
+}
+
+/* This function stores the Jacobian entries due to the C = dQ/dV
+   value.  The nodes where the charge is located as well as those of
+   the voltage dependency, the appropiate capacitance value and the
+   voltage across the the controlling branch must be given.  It also
+   saves the current contributions which are necessary for the NR
+   iteration and considers the polarity of the circuit. */
+void circuit::transientCapacitanceC (int qpos, int qneg, int vpos, int vneg,
+				     nr_double_t cap, nr_double_t voltage) {
+  nr_double_t g, i;
+  conductor (cap, g);
+  addY (qpos, vpos, +g); addY (qneg, vneg, +g);
+  addY (qpos, vneg, -g); addY (qneg, vpos, -g);
+  i = pol * (g * voltage);
+  addI (qpos , +i);
+  addI (qneg , -i);
+}
+
+/* This is the one-node variant of the transientCapacitanceC()
+   function.  It performs the same steps for a single charge node
+   related to ground. */
+void circuit::transientCapacitanceC2V (int qpos, int vpos, int vneg,
+				       nr_double_t cap, nr_double_t voltage) {
+  nr_double_t g, i;
+  conductor (cap, g);
+  addY (qpos, vpos, +g);
+  addY (qpos, vneg, -g);
+  i = pol * (g * voltage);
+  addI (qpos , +i);
+}
+
+/* This is the one-node variant of the transientCapacitanceC()
+   function.  It performs the same steps for a single voltage node
+   related to ground. */
+void circuit::transientCapacitanceC2Q (int qpos, int qneg, int vpos,
+				       nr_double_t cap, nr_double_t voltage) {
+  nr_double_t g, i;
+  conductor (cap, g);
+  addY (qpos, vpos, +g); addY (qneg, vpos, -g);
+  i = pol * (g * voltage);
+  addI (qpos , +i);
+  addI (qneg , -i);
+}
+
+/* This is the one-node variant of the transientCapacitanceC()
+   function.  It performs the same steps for a single voltage node and
+   charge node related to ground. */
+void circuit::transientCapacitanceC (int qpos, int vpos,
+				     nr_double_t cap, nr_double_t voltage) {
+  nr_double_t g, i;
+  conductor (cap, g);
+  addY (qpos, vpos, +g);
+  i = pol * (g * voltage);
+  addI (qpos , +i);
 }
 
 // The function initializes the histories of a circuit having the given age.
