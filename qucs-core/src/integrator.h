@@ -1,7 +1,7 @@
 /*
  * integrator.h - integrator class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: integrator.h,v 1.4 2005/06/02 18:17:50 raimi Exp $
+ * $Id: integrator.h,v 1.5 2006/09/07 10:56:53 raimi Exp $
  *
  */
 
@@ -42,7 +42,11 @@ class integrator : public states<nr_double_t>
   typedef void (* integrate_func_t)
     (integrator *, int, nr_double_t, nr_double_t&, nr_double_t&);
   void setIntegration (integrate_func_t f) { integrate_func = f; }
+  typedef void (* conductor_func_t)
+    (integrator *, nr_double_t, nr_double_t&);
+  void setConductance (conductor_func_t f) { conductor_func = f; }
   void integrate (int, nr_double_t, nr_double_t&, nr_double_t&);
+  void conductor (nr_double_t, nr_double_t&);
   void setOrder (int o) { order = o; }
   int  getOrder (void) { return order; }
   void setMode (int s) { state = s; }
@@ -55,6 +59,7 @@ class integrator : public states<nr_double_t>
   int state;
   nr_double_t * coefficients;
   integrate_func_t integrate_func;
+  conductor_func_t conductor_func;
 };
 
 #endif /* __INTEGRATOR_H__ */

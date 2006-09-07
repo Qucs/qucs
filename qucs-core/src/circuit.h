@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.50 2006/05/03 09:43:56 raimi Exp $
+ * $Id: circuit.h,v 1.51 2006/09/07 10:56:53 raimi Exp $
  *
  */
 
@@ -132,6 +132,13 @@ class circuit : public object, public integrator
   // transient analyses helpers
   void transientCapacitance (int, int, int, nr_double_t, nr_double_t,
 			     nr_double_t);
+  void transientCapacitance (int, int, nr_double_t, nr_double_t, nr_double_t);
+  void transientCapacitanceQ (int, int, int, nr_double_t);
+  void transientCapacitanceQ (int, int, nr_double_t);
+  void transientCapacitanceC (int, int, int, int, nr_double_t, nr_double_t);
+  void transientCapacitanceC (int, int, nr_double_t, nr_double_t);
+  void transientCapacitanceC2V (int, int, int, nr_double_t, nr_double_t);
+  void transientCapacitanceC2Q (int, int, int, nr_double_t, nr_double_t);
   void setDelta (nr_double_t * d) { deltas = d; }
   nr_double_t * getDelta (void) { return deltas; }
 
@@ -198,7 +205,9 @@ class circuit : public object, public integrator
   void clearV (void);
   void clearY (void);
   void addY (int, int, complex);
+  void addY (int, int, nr_double_t);
   void addI (int, complex);
+  void addI (int, nr_double_t);
 
   // operating point functionality
   void        addOperatingPoint (char *, nr_double_t);

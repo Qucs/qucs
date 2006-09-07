@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.h,v 1.8 2006/02/17 07:24:06 raimi Exp $
+ * $Id: transient.h,v 1.9 2006/09/07 10:56:53 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@ namespace transient {
 
   void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t *);
   void calcPredictorCoeff (int, int, nr_double_t *, nr_double_t *);
+  void getConductance (integrator *, nr_double_t, nr_double_t&);
   void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
 		       nr_double_t&);
   void integrateBilinear (integrator *, int, nr_double_t, nr_double_t&,

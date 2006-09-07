@@ -1,7 +1,7 @@
 /*
  * integrator.cpp - integrator class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: integrator.cpp,v 1.4 2005/06/02 18:17:50 raimi Exp $
+ * $Id: integrator.cpp,v 1.5 2006/09/07 10:56:53 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@ integrator::integrator () : states<nr_double_t> () {
   order = 0;
   state = 0;
   integrate_func = NULL;
+  conductor_func = NULL;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -52,6 +53,7 @@ integrator::integrator (const integrator & c) : states<nr_double_t> (c) {
   order = c.order;
   state = c.state;
   integrate_func = c.integrate_func;
+  conductor_func = c.conductor_func;
 }
 
 // Destructor deletes a integrator object.
@@ -66,4 +68,9 @@ void integrator::integrate (int qstate, nr_double_t cap, nr_double_t& geq,
   if (state & MODE_INIT) fillState (qstate, getState (qstate));
   (*integrate_func) (this, qstate, cap, geq, ceq);
   if (state & MODE_INIT) fillState (cstate, getState (cstate));
+}
+
+/* This function runs the appropriate conductor function. */
+void integrator::conductor (nr_double_t cap, nr_double_t& geq) {
+  (*conductor_func) (this, cap, geq);
 }

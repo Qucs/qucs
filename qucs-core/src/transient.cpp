@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.cpp,v 1.18 2006/02/17 07:24:06 raimi Exp $
+ * $Id: transient.cpp,v 1.19 2006/09/07 10:56:53 raimi Exp $
  *
  */
 
@@ -241,6 +241,13 @@ void transient::calcPredictorCoeff (int Method, int order,
   }
 }
 
+// Loads the equivalent conductance.
+void transient::getConductance (integrator * c, nr_double_t cap,
+				nr_double_t& geq) {
+  nr_double_t * coeff = c->getCoefficients ();
+  geq = cap * coeff[COEFF_G];
+}
+
 // This is the implicit Euler integrator.
 void transient::integrateEuler (integrator * c, int qstate, nr_double_t cap,
 				nr_double_t& geq, nr_double_t& ceq) {
@@ -314,6 +321,7 @@ void transient::setIntegrationMethod (circuit * c, int Method) {
     c->setIntegration (NULL);
     break;
   }
+  c->setConductance (getConductance);
 }
 
 /* Returns an appropriate integrator type identifier and the maximum
