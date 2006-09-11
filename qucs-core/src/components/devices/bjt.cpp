@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.43 2006/05/12 14:32:10 raimi Exp $
+ * $Id: bjt.cpp,v 1.44 2006/09/11 07:39:12 raimi Exp $
  *
  */
 
@@ -69,11 +69,11 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Cbci = getOperatingPoint ("Cbci");
   nr_double_t gbc  = getOperatingPoint ("gmu");
   nr_double_t Ccs  = getOperatingPoint ("Ccs");
-#if NEWSGP && 0
-  nr_double_t gmfr = getOperatingPoint ("gmf");
+#if NEWSGP
+  nr_double_t gm   = getOperatingPoint ("gmf");
   nr_double_t gmr  = getOperatingPoint ("gmr");
 #else
-  nr_double_t gmfr = getOperatingPoint ("gm");
+  nr_double_t gm   = getOperatingPoint ("gm");
   nr_double_t go   = getOperatingPoint ("go");
 #endif
   nr_double_t Ptf  = getPropertyDouble ("Ptf");
@@ -84,24 +84,27 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   complex Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
   complex Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
 
+  // admittance matrix entries for "transcapacitance"
+  complex Ybebc = rect (0.0, 2.0 * M_PI * frequency * dQbedUbc);
+
   // compute influence of excess pase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
-  complex gmf = polar (gmfr, -phase);
+  complex gmf = polar (gm, -phase);
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y (4);
-#if NEWSGP && 0
+#if NEWSGP
   // for some reason this small signal equivalent can't be used
-  y.set (NODE_B, NODE_B, Ybc + Ybe);
-  y.set (NODE_B, NODE_C, -Ybc);
+  y.set (NODE_B, NODE_B, Ybc + Ybe + Ybebc);
+  y.set (NODE_B, NODE_C, -Ybc - Ybebc);
   y.set (NODE_B, NODE_E, -Ybe);
   y.set (NODE_B, NODE_S, 0);
-  y.set (NODE_C, NODE_B, -Ybc + gmf - gmr);
-  y.set (NODE_C, NODE_C, Ybc + gmr + Ycs);
+  y.set (NODE_C, NODE_B, -Ybc + gmf + gmr);
+  y.set (NODE_C, NODE_C, Ybc - gmr + Ycs);
   y.set (NODE_C, NODE_E, -gmf);
   y.set (NODE_C, NODE_S, -Ycs);
-  y.set (NODE_E, NODE_B, -Ybe - gmf + gmr);
-  y.set (NODE_E, NODE_C, -gmr);
+  y.set (NODE_E, NODE_B, -Ybe - gmf - gmr - Ybebc);
+  y.set (NODE_E, NODE_C, gmr + Ybebc);
   y.set (NODE_E, NODE_E, Ybe + gmf);
   y.set (NODE_E, NODE_S, 0);
   y.set (NODE_S, NODE_B, 0);
@@ -109,16 +112,16 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   y.set (NODE_S, NODE_E, 0);
   y.set (NODE_S, NODE_S, Ycs);
 #else /* !NEWSGP */
-  y.set (NODE_B, NODE_B, Ybc + Ybe);
-  y.set (NODE_B, NODE_C, -Ybc);
+  y.set (NODE_B, NODE_B, Ybc + Ybe + Ybebc);
+  y.set (NODE_B, NODE_C, -Ybc - Ybebc);
   y.set (NODE_B, NODE_E, -Ybe);
   y.set (NODE_B, NODE_S, 0);
   y.set (NODE_C, NODE_B, -Ybc + gmf);
   y.set (NODE_C, NODE_C, Ybc + Ycs + go);
   y.set (NODE_C, NODE_E, -gmf - go);
   y.set (NODE_C, NODE_S, -Ycs);
-  y.set (NODE_E, NODE_B, -Ybe - gmf);
-  y.set (NODE_E, NODE_C, -go);
+  y.set (NODE_E, NODE_B, -Ybe - gmf - Ybebc);
+  y.set (NODE_E, NODE_C, -go + Ybebc);
   y.set (NODE_E, NODE_E, Ybe + gmf + go);
   y.set (NODE_E, NODE_S, 0);
   y.set (NODE_S, NODE_B, 0);
@@ -445,8 +448,8 @@ void bjt::calcDC (void) {
   It = (If - Ir) / Qb;
 
   // compute forward and backward transconductance
-  gitf = (gif - If * dQbdUbe / Qb) / Qb;
-  gitr = (gir - Ir * dQbdUbc / Qb) / Qb;
+  gitf = (+gif - It * dQbdUbe) / Qb;
+  gitr = (-gir - It * dQbdUbc) / Qb;
 
   // compute old SPICE values
   go = (gir + It * dQbdUbc) / Qb;
@@ -475,7 +478,7 @@ void bjt::calcDC (void) {
   IeqB = Ibe - Ube * gbe;
   IeqC = Ibc - Ubc * gbc;
 #if NEWSGP
-  IeqE = It - gitf * Ube + gitr * Ubc;
+  IeqE = It - Ube * gitf - Ubc * gitr;
 #else
   IeqE = It - Ube * gm - Uce * go;
 #endif
@@ -491,12 +494,12 @@ void bjt::calcDC (void) {
   setY (NODE_B, NODE_C, -gbc);
   setY (NODE_B, NODE_E, -gbe);
   setY (NODE_B, NODE_S, 0);
-  setY (NODE_C, NODE_B, -gbc + gitf - gitr);
-  setY (NODE_C, NODE_C, gbc + gitr);
+  setY (NODE_C, NODE_B, -gbc + gitf + gitr);
+  setY (NODE_C, NODE_C, gbc - gitr);
   setY (NODE_C, NODE_E, -gitf);
   setY (NODE_C, NODE_S, 0);
-  setY (NODE_E, NODE_B, -gbe - gitf + gitr);
-  setY (NODE_E, NODE_C, -gitr);
+  setY (NODE_E, NODE_B, -gbe - gitf - gitr);
+  setY (NODE_E, NODE_C, gitr);
   setY (NODE_E, NODE_E, gbe + gitf);
   setY (NODE_E, NODE_S, 0);
   setY (NODE_S, NODE_B, 0);
@@ -576,12 +579,15 @@ void bjt::calcOperatingPoints (void) {
 
   // diffusion capacitance of base-emitter diode
   if (If != 0.0) {
-    nr_double_t e, Tff, dTffdUbe;
+    nr_double_t e, Tff, dTffdUbe, dTffdUbc, a;
+    a = 1 / (1 + Itf / If);
     e = 2 * exp (MIN (Ubc * Vtf, 709));
-    Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
-    dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
+    Tff = Tf * (1 + Xtf * sqr (a) * e);
+    dTffdUbe = Tf * Xtf * 2 * gif * Itf * cubic (a) / sqr (If) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
     Qbe += If * Tff / Qb;
+    dTffdUbc = Tf * Xtf * Vtf * sqr (a) * e;
+    dQbedUbc = If / Qb * (dTffdUbc - Tff / Qb * dQbdUbc);
   }
 
   // depletion and diffusion capacitance of base-collector diode
@@ -700,7 +706,12 @@ void bjt::calcTR (nr_double_t t) {
   }
 
   // TODO: excess phase
+
+  // usual capacitances
   transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube, Qbe);
   transientCapacitance (qbcState, NODE_B, NODE_C, Cbci, Ubc, Qbci);
   transientCapacitance (qcsState, NODE_S, NODE_C, Ccs, Ucs, Qcs);
+
+  // trans-capacitances
+  transientCapacitanceC (NODE_B, NODE_E, NODE_B, NODE_C, dQbedUbc, Ubc);
 }
