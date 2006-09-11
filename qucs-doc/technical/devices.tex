@@ -628,12 +628,13 @@ Area & $A$ & default area for bipolar transistor & & $1.0$
 \end{figure}
 \FloatBarrier
 
-The SGP model is basically a transport model, i.e. the voltage
-dependent ideal transfer currents (forward $I_F$ and backward $I_R$)
-are reference currents in the model.  The ideal base current parts are
-defined dependent on the ideal transfer currents.  The ideal forward
-transfer current starts flowing when applying a positive control
-voltage at the base-emitter junction.  It is defined by:
+The SGP (\textbf{S}PICE \textbf{G}ummel-\textbf{P}oon) model is
+basically a transport model, i.e. the voltage dependent ideal transfer
+currents (forward $I_F$ and backward $I_R$) are reference currents in
+the model.  The ideal base current parts are defined dependent on the
+ideal transfer currents.  The ideal forward transfer current starts
+flowing when applying a positive control voltage at the base-emitter
+junction.  It is defined by:
 \begin{equation}
 I_F = I_S\cdot \left(e^{\frac{V_{BE}}{N_F\cdot V_T}} -1\right)
 \end{equation}
@@ -709,45 +710,31 @@ Q_1 = \frac{1}{1 - \dfrac{V_{BC}}{V_{AF}} - \dfrac{V_{BE}}{V_{AR}}}
 Q_2 = \frac{I_F}{I_{KF}} + \frac{I_R}{I_{KR}}
 \end{equation}
 
-The forward transconductance $g_{mf}$ of the forward transfer current
-$I_{TF}$ is obtained by differentiating $I_{TF}$ with respect to
-$V_{BE}$.  The reverse transconductance $g_{mr}$ can be calculated by
-differentiating $I_{TR}$ with respect to $V_{BC}$.
+The transfer current $I_T$ depends on $V_{BE}$ and $V_{BC}$ by the
+normalized base charge $Q_B$ and the forward transfer current $I_{F}$
+and the backward transfer current $I_R$.  That is why both of the
+partial derivatives are required.
+
+\addvspace{12pt}
+
+The forward transconductance $g_{mf}$ of the transfer current $I_{T}$
+is obtained by differentiating it with respect to $V_{BE}$.  The
+reverse transconductance $g_{mr}$ can be calculated by differentiating
+the transfer current with respect to $V_{BC}$.
 \begin{align}
 \label{eq:SGPgmf}
-g_{mf} &= \frac{\partial I_{TF}}{\partial V_{BE}} = \frac{1}{Q_B}\cdot\left(g_{IF} - \frac{I_F}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
+g_{mf} &= \frac{\partial I_{T}}{\partial V_{BE}} = \frac{\partial I_{TF}}{\partial V_{BE}} - \frac{\partial I_{TR}}{\partial V_{BE}} = \frac{1}{Q_B}\cdot\left(+g_{IF} - I_T\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
 \label{eq:SGPgmr}
-g_{mr} &= \frac{\partial I_{TR}}{\partial V_{BC}} = \frac{1}{Q_B}\cdot\left(g_{IR} - \frac{I_R}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BC}}\right)
+g_{mr} &= \frac{\partial I_{T}}{\partial V_{BC}} = \frac{\partial I_{TF}}{\partial V_{BC}} - \frac{\partial I_{TR}}{\partial V_{BC}} = \frac{1}{Q_B}\cdot\left(-g_{IR} - I_T\cdot \frac{\partial Q_B}{\partial V_{BC}}\right)
 \end{align}
 
-With $g_{IF}$ being the forward transconductance of the ideal forward
-transfer current and $g_{IR}$ being the reverse transconductance of
-the ideal backward transfer current.
+With $g_{IF}$ being the forward conductance of the ideal forward
+transfer current and $g_{IR}$ being the reverse conductance of the
+ideal backward transfer current.
 \begin{align}
 g_{IF} &= \frac{\partial I_F}{\partial V_{BE}} = g_{BEI}\cdot B_F\\
 g_{IR} &= \frac{\partial I_R}{\partial V_{BC}} = g_{BCI}\cdot B_R
 \end{align}
-
-Furthermore the SGP model defines the output conductance $g_0$ and the
-transconductance value $g_m$.  Thus the SPICE simulator is able to
-compute the BJT circuit using a single voltage controlled current
-source.  These definitions are given here.
-\begin{equation}
-\begin{split}
-g_0 &= - \dfrac{\partial I_{T}}{\partial V_{BC}} = \dfrac{\partial I_{TR}}{\partial V_{BC}} - \dfrac{\partial I_{TF}}{\partial V_{BC}} = g_{mr} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_F}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)\\
-&= \dfrac{1}{Q_B}\cdot\left(g_{IR} + \dfrac{\left(I_F - I_R\right)}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right) = \dfrac{1}{Q_B}\cdot\left(g_{IR} + I_{T}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)
-\end{split}
-\label{eq:SGPg0}
-\end{equation}
-
-\begin{equation}
-\begin{split}
-g_m &= \dfrac{\partial I_{T}}{\partial V_{BE}} + \dfrac{\partial I_{T}}{\partial V_{BC}} = \dfrac{\partial I_{TF}}{\partial V_{BE}} - \dfrac{\partial I_{TR}}{\partial V_{BE}} - g_0 = g_{mf} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_R}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0\\
-&= g_{mf} - g_{mr} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_R}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - \dfrac{1}{Q_B}\cdot\left(\dfrac{I_F}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)\\
-&= \dfrac{1}{Q_B}\cdot\left(g_{IF} - \dfrac{\left(I_F - I_R\right)}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0 = \dfrac{1}{Q_B}\cdot\left(g_{IF} - I_T\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0
-\end{split}
-\label{eq:SGPgm}
-\end{equation}
 
 The remaining derivatives in eq. \eqref{eq:SGPgmf}, \eqref{eq:SGPgmr},
 \eqref{eq:SGPg0} and \eqref{eq:SGPgm} can be written as
@@ -775,53 +762,6 @@ R_{Bm} + 3\cdot \left(R_B - R_{Bm}\right)\cdot \dfrac{\tan{z} - z}{z\cdot \tan^2
 \text{ with } \;\;\;\;
 z = \frac{\sqrt{1 + \dfrac{144}{\pi^2}\cdot\dfrac{I_B}{I_{RB}}} -1}{\dfrac{24}{\pi^2}\cdot\sqrt{\dfrac{I_B}{I_{RB}}}}
 \end{equation}
-
-As already mentioned there are two possible ways to compute the MNA
-matrix of the SGP model.  One using a single voltage controlled
-current source with an accompanied output conductance and the other
-using two independent voltage controlled current sources.  Both
-possibilities are equivalent.
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.5\linewidth]{dcsgp_spice}
-\end{center}
-\caption{accompanied DC model of intrinsic BJT in SPICE}
-\label{fig:dcsgp_spice}
-\end{figure}
-\FloatBarrier
-
-With the accompanied DC model shown in fig. \ref{fig:dcsgp_spice} it
-is possible to build the complete MNA matrix of the intrinsic BJT and
-the current vector.
-\begin{equation}
-\begin{bmatrix}
-g_{\mu} + g_{\pi} & -g_{\mu} & -g_{\pi} & 0\\
--g_{\mu} + g_{m} & g_{0} + g_{\mu} & -g_{0} - g_{m} & 0\\
--g_{\pi} - g_{m} & -g_{0} & g_{\pi} + g_{0} + g_{m} & 0\\
-0 & 0 & 0 & 0\\
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-V_{B}\\
-V_{C}\\
-V_{E}\\
-V_{S}\\
-\end{bmatrix}
-=
-\begin{bmatrix}
--I_{BE_{eq}} - I_{BC_{eq}}\\
-+I_{BC_{eq}} - I_{CE_{eq}}\\
-+I_{BE_{eq}} + I_{CE_{eq}}\\
-0\\
-\end{bmatrix}
-\end{equation}
-
-\begin{align}
-I_{BE_{eq}} &= I_{BE} - g_{\pi} \cdot V_{BE}\\
-I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
-I_{CE_{eq}} &= I_{T} - g_{m} \cdot V_{BE} - g_{0} \cdot V_{CE}
-\end{align}
 
 \begin{figure}[ht]
 \begin{center}
@@ -863,12 +803,72 @@ I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
 I_{CE_{eq}} &= I_{T} - g_{mf} \cdot V_{BE} + g_{mr} \cdot V_{BC}
 \end{align}
 
+\subsubsection{Original SPICE model}
+%\addcontentsline{toc}{subsubsection}{Original SPICE model}
+
+The original SGP model implementation defines the output conductance
+$g_0$ and the transconductance value $g_m$.  Thus the SPICE simulator
+is able to compute the BJT circuit using a single voltage controlled
+current source.  These definitions are given here.
+\begin{align}
+\label{eq:SGPg0}
+g_0 &= \left.\dfrac{\partial I_{T}}{\partial V_{CE}}\right|_{V_{BE} = const} = - \dfrac{\partial I_{T}}{\partial V_{BC}} = -g_{mr} = \dfrac{1}{Q_B}\cdot\left(g_{IR} + I_{T}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)\\
+\label{eq:SGPgm}
+g_m &= \left.\dfrac{\partial I_{T}}{\partial V_{BE}}\right|_{V_{CE} = const} = \dfrac{\partial I_{T}}{\partial V_{BE}} + \dfrac{\partial I_{T}}{\partial V_{BC}} = g_{mf} + g_{mr} = \dfrac{1}{Q_B}\cdot\left(g_{IF} - I_T\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0
+\end{align}
+
+There are two possible ways to compute the MNA matrix of the SGP
+model.  One using a single voltage controlled current source with an
+accompanied output conductance and the other using two independent
+voltage controlled current sources (see fig.\ref{fig:dcsgp}).  Both
+possibilities are equivalent.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{dcsgp_spice}
+\end{center}
+\caption{accompanied DC model of intrinsic BJT in SPICE}
+\label{fig:dcsgp_spice}
+\end{figure}
+\FloatBarrier
+
+With the accompanied DC model shown in fig. \ref{fig:dcsgp_spice} it
+is possible to build the complete MNA matrix of the intrinsic BJT and
+the current vector.
+\begin{equation}
+\begin{bmatrix}
+g_{\mu} + g_{\pi} & -g_{\mu} & -g_{\pi} & 0\\
+-g_{\mu} + g_{m} & g_{0} + g_{\mu} & -g_{0} - g_{m} & 0\\
+-g_{\pi} - g_{m} & -g_{0} & g_{\pi} + g_{0} + g_{m} & 0\\
+0 & 0 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{B}\\
+V_{C}\\
+V_{E}\\
+V_{S}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_{BE_{eq}} - I_{BC_{eq}}\\
++I_{BC_{eq}} - I_{CE_{eq}}\\
++I_{BE_{eq}} + I_{CE_{eq}}\\
+0\\
+\end{bmatrix}
+\end{equation}
+
+\begin{align}
+I_{BE_{eq}} &= I_{BE} - g_{\pi} \cdot V_{BE}\\
+I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
+I_{CE_{eq}} &= I_{T} - g_{m} \cdot V_{BE} - g_{0} \cdot V_{CE}
+\end{align}
+%---
+
 \subsection{Small signal model}
 %\addcontentsline{toc}{subsection}{Small signal model}
 
-Equations for the real conductances in both equivalent circuits for
-the intrinsic BJT have already been given.
-
+Equations for the real valued conductances in both equivalent circuits
+for the intrinsic BJT have already been given.
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=0.55\linewidth]{spsgp}
@@ -916,6 +916,7 @@ following equation.
 \begin{equation}
 C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}}
 \;\;\;\; \text{ with } \;\;\;\;
+\label{eq:Qbe}
 Q_{BE} = \dfrac{I_F}{Q_B}\cdot T_{FF}
 \end{equation}
 
@@ -933,6 +934,19 @@ With
 the base-emitter diffusion capacitance can finally be written as:
 \begin{equation}
 C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}} = \dfrac{1}{Q_B}\cdot \left(I_F\cdot \dfrac{\partial T_{FF}}{\partial V_{BE}} + T_{FF}\cdot\left(g_{IF} - \dfrac{I_F}{Q_B}\cdot \dfrac{\partial Q_B}{\partial V_{BE}}\right)\right)
+\end{equation}
+
+Because the base-emitter charge $Q_{BE}$ in eq. \eqref{eq:Qbe} also
+depends on the voltage across the base-collector junction, it is
+necessary to find the appropriate derivative as well:
+\begin{equation}
+C_{BE_{BC}} = \dfrac{\partial Q_{BE}}{\partial V_{BC}} = \dfrac{I_F}{Q_B}\cdot\left(\dfrac{\partial T_{FF}}{\partial V_{BC}} - \dfrac{T_{FF}}{Q_B} \cdot \dfrac{\partial Q_{B}}{\partial V_{BC}}\right)
+\end{equation}
+
+which turns out to be a so called transcapacitance.  It additionally
+requires:
+\begin{equation}
+\dfrac{\partial T_{FF}}{\partial V_{BC}} = \dfrac{T_F\cdot X_{TF}}{1.44\cdot V_{TF}} \cdot \left(\dfrac{I_F}{I_F + I_{TF}}\right)^2 \cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}
 \end{equation}
 
 The base-collector diffusion capacitance writes as follows:
@@ -954,9 +968,9 @@ be converted to S-parameters.
 \begin{equation}
 Y =
 \begin{bmatrix}
-Y_{BC} + Y_{BE} & -Y_{BC} & -Y_{BE} & 0\\
+Y_{BC} + Y_{BE} + Y_{BE_{BC}} & -Y_{BC} - Y_{BE_{BC}}& -Y_{BE} & 0\\
 g_{mf} - Y_{BC} - g_{mr} & Y_{CS} + Y_{BC} + g_{mr}& - g_{mf} & -Y_{CS}\\
-g_{mr} - g_{mf} - Y_{BE} & -g_{mr} & Y_{BE} + g_{mf} & 0\\
+g_{mr} - g_{mf} - Y_{BE} - Y_{BE_{BC}} & -g_{mr} + Y_{BE_{BC}} & Y_{BE} + g_{mf} & 0\\
 0 & -Y_{CS} & 0 & Y_{CS}\\
 \end{bmatrix}
 \end{equation}
@@ -965,18 +979,20 @@ with
 \begin{align}
 Y_{BC} &= g_{\mu} + j\omega \left(C_{BCI_{dep}} + C_{BC_{diff}}\right)\\
 Y_{BE} &= g_{\pi} + j\omega \left(C_{BE_{dep}} + C_{BE_{diff}}\right)\\
-Y_{CS} &= j\omega C_{CS_{dep}}
+Y_{CS} &= j\omega\cdot C_{CS_{dep}}\\
+Y_{BE_{BC}} &= j\omega\cdot C_{BE_{BC}}
 \end{align}
 
 The external capacitance $C_{BCX}$ connected between the internal
 collector node and the external base node is separately modeled if it
 is non-zero and if there is a non-zero base resistance.
 
-\addvspace{12pt}
+\subsubsection{Original SPICE model}
+%\addcontentsline{toc}{subsubsection}{Original SPICE model}
 
-The SPICE variant of the above small signal equivalent circuit with
-the transconductance $g_m$ and the output conductance $g_0$ is
-depicted in fig. \ref{fig:spsgp_spice}.
+The original SPICE variant of the above small signal equivalent
+circuit with the transconductance $g_m$ and the output conductance
+$g_0$ is depicted in fig. \ref{fig:spsgp_spice}.
 
 \begin{figure}[ht]
 \begin{center}
@@ -987,13 +1003,14 @@ depicted in fig. \ref{fig:spsgp_spice}.
 \end{figure}
 \FloatBarrier
 
-The appropriate MNA matrix (Y-parameters) can be written as
+The appropriate MNA matrix (Y-parameters) during the small signal
+analysis can be written as
 \begin{equation}
 Y =
 \begin{bmatrix}
-Y_{BC} + Y_{BE} & -Y_{BC} & -Y_{BE} & 0\\
+Y_{BC} + Y_{BE} +Y_{BE_{BC}} & -Y_{BC} - Y_{BE_{BC}} & -Y_{BE} & 0\\
 g_{m} - Y_{BC} & Y_{CS} + Y_{BC} + g_{0} & - g_{m} - g_{0} & -Y_{CS}\\
-- g_{m} - Y_{BE} & -g_{0} & Y_{BE} + g_{m} + g_{0} & 0\\
+- g_{m} - Y_{BE} - Y_{BE_{BC}} & -g_{0} + Y_{BE_{BC}} & Y_{BE} + g_{m} + g_{0} & 0\\
 0 & -Y_{CS} & 0 & Y_{CS}\\
 \end{bmatrix}
 \end{equation}

@@ -1,3 +1,10 @@
+2006-09-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices.tex (subsubsection{Original SPICE model}): Added
+	some more comments about the original SGP model implementation
+	and also fixed documentation regarding the transcapacitance
+	dQbe/dVbc.
+
 2006-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* maths.tex (chapter{Mathematical background}): Moved the
