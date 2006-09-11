@@ -1,3 +1,8 @@
+2006-09-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Fixed implementation of transcapacitance
+	dQbe/dVbc.  Also fixed NEWSGP model implementation.
+
 2006-08-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* vrect.cpp, irect.cpp: Added delay, fall and rise times

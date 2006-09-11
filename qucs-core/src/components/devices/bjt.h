@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.h,v 1.20 2006-05-03 09:43:56 raimi Exp $
+ * $Id: bjt.h,v 1.21 2006-09-11 07:39:13 raimi Exp $
  *
  */
 
@@ -56,7 +56,7 @@ class bjt : public circuit
   circuit * rc;
   circuit * rb;
   circuit * cbcx;
-  nr_double_t dQbdUbe, dQbdUbc, If, Qb, Ir, It;
+  nr_double_t dQbedUbc, dQbdUbe, dQbdUbc, If, Qb, Ir, It;
   nr_double_t gbei, gben, gbci, gbcn, gitf, gitr, gif, gir, Rbb, Ibe;
   nr_double_t Qbe, Qbci, Qbcx, Qcs;
 };
