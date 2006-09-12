@@ -38,11 +38,14 @@ if test "$enable_debug" = yes; then
   QT_DEF=""
 else
   AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
-  QT_DEF="-DQT_NO_DEBUG"
+  QT_DEF="-DQT_NO_DEBUG -DQT_NO_CHECK"
   if test "x$GCC" = xyes; then
     CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
     CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
-    LDFLAGS="$LDFLAGS -s"
+    case $host_os in
+      *darwin*) LDFLAGS="$LDFLAGS" ;;
+      *)        LDFLAGS="$LDFLAGS -s" ;;
+    esac
   fi
 fi
 unset enable_debug
@@ -88,12 +91,12 @@ dnl Release specific. Uncomment these as required.
 AC_SUBST(RELEASEDIRS)
 
 dnl Check for language support.
-AC_PATH_PROG(LRELEASE, lrelease, :, [$QTDIR/bin:$PATH])
-AC_PATH_PROG(LUPDATE, lupdate, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROGS(LRELEASE, lrelease-qt3 lrelease, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROGS(LUPDATE, lupdate-qt3 lupdate, :, [$QTDIR/bin:$PATH])
 
 dnl Check for MOC/UIC support.
-AC_PATH_PROG(MOC, moc, :, [$QTDIR/bin:$PATH])
-AC_PATH_PROG(UIC, uic, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROGS(MOC, moc-qt3 moc, :, [$QTDIR/bin:$PATH])
+AC_PATH_PROGS(UIC, uic-qt3 uic, :, [$QTDIR/bin:$PATH])
 if test "$MOC" = ":"; then
   AC_MSG_WARN([
   The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
@@ -119,7 +122,8 @@ QT_VER=2
 AC_MSG_CHECKING([for Qt headers])
 paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include/qt3 \
   /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt \
-  /usr/X11R6/include/qt /usr/X11R6/include/qt2 /usr/X11R6/include"
+  /usr/X11R6/include/qt /usr/X11R6/include /sw/include/qt \
+  /usr/X11R6/include/qt2"
 for path in $paths; do
   if test -f "$path/qapplication.h"; then
     QT_INCLUDES=$path
@@ -179,7 +183,7 @@ AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
 AC_MSG_CHECKING([for Qt library])
 paths="$QTDIR/lib $QTDIR/lib64 /usr/local/qt/lib /usr/lib/qt /usr/lib \
   /usr/X11R6/lib/X11/qt /usr/X11R6/lib/X11/qt /usr/X11R6/lib/qt \
-  /usr/X11R6/lib/qt2 /usr/X11R6/lib /usr/lib64/qt"
+  /usr/X11R6/lib /sw/lib /usr/lib64/qt /usr/X11R6/lib/qt2"
 AC_LANG(C++)
 for path in $paths; do
   save_LIBS="$LIBS"
