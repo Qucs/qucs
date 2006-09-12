@@ -1,3 +1,11 @@
+2006-09-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_zvr.y, parse_mdl.y (__NOEXTENSIONS__): Added this #define
+	for MacOSX systems to inhibit symbol clash.
+
+	* parse_netlist.y, check_netlist.cpp: Implemented definition of
+	subcircuit properties in the parser and checker.
+
 2006-09-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.cpp, integrator.cpp (conductor): Added functionality

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_mdl.y,v 1.3 2006/09/04 08:05:39 raimi Exp $
+ * $Id: parse_mdl.y,v 1.4 2006/09/12 08:08:03 raimi Exp $
  *
  */
 
@@ -37,6 +37,8 @@
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
 #define YYMAXDEPTH 1000000
+
+#define __NOEXTENSIONS__ 1
 
 #include "object.h"
 #include "complex.h"

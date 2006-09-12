@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.21 2006/07/24 08:07:42 raimi Exp $
+ * $Id: parse_netlist.y,v 1.22 2006/09/12 08:08:03 raimi Exp $
  *
  */
 
@@ -444,12 +444,13 @@ SubcircuitBody:
 ;
 
 DefBegin:
-  DefSub InstanceIdentifier NodeList Eol {
+  DefSub InstanceIdentifier NodeList PairList Eol {
     /* create subcircuit definition right here */
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->type = strdup ("Def");
     $$->instance = $2;
     $$->nodes = $3;
+    $$->pairs = $4;
     $$->action = PROP_ACTION;
     $$->line = netlist_lineno;
   }
