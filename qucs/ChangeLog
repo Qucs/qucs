@@ -1,3 +1,10 @@
+2006-09-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac:  Don't link using "-s" on MacOSX since it drops lazy
+	dynamic symbol information.  Also checking for {moc|uic|lrelease|
+	lupdate}-qt3 programs.  Added some more paths for Qt headers and
+	libraries.
+
 2006-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.10 and bumped up to version
