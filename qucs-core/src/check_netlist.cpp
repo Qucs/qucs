@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.95 2006-07-24 08:07:41 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.96 2006-09-12 08:08:03 raimi Exp $
  *
  */
 
@@ -1330,6 +1330,131 @@ static int checker_validate_sub_cycles (struct definition_t * root,
   return errors;
 }
 
+/* This function dynamically creates a circuit definition based on a
+   given subcircuit definition including type, number of nodes and the
+   properties. */
+static struct define_t * netlist_create_define (struct definition_t * def) {
+  int o, r;
+  struct pair_t * p;
+  struct define_t * d =
+    (struct define_t *) calloc (sizeof (struct define_t), 1);
+  d->type = strdup (def->instance);
+  d->nodes = checker_count_nodes (def);
+  d->action = PROP_COMPONENT;
+  for (o = r = 0, p = def->pairs; p != NULL; p = p->next) {
+    if (p->value == NULL) {
+      // required
+      d->required[r].key = strdup (p->key);
+      d->required[r].type = PROP_REAL;
+      d->required[r].defaultval.d = PROP_NO_VAL;
+      d->required[r].defaultval.s = PROP_NO_STR;
+      d->required[r].range.il = '.';
+      d->required[r].range.l = 0;
+      d->required[r].range.h = 0;
+      d->required[r].range.ih = '.';
+      r++;
+    } else {
+      // optional
+      d->optional[o].key = strdup (p->key);
+      d->optional[o].type = PROP_REAL;
+      d->optional[o].defaultval.d = p->value->value;
+      d->optional[o].defaultval.s = PROP_NO_STR;
+      d->optional[o].range.il = '.';
+      d->optional[o].range.l = 0;
+      d->optional[o].range.h = 0;
+      d->optional[o].range.ih = '.';
+      o++;
+    }
+  }
+
+  // extra required
+  d->required[r].key = strdup ("Type");
+  d->required[r].type = PROP_STR;
+  d->required[r].defaultval.d = PROP_NO_VAL;
+  d->required[r].defaultval.s = PROP_NO_STR;
+  d->required[r].range.il = '.';
+  d->required[r].range.l = 0;
+  d->required[r].range.h = 0;
+  d->required[r].range.ih = '.';
+  return d;
+}
+
+/* The function destroys the given circuit definition which must have
+   been dynamically created before. */
+static void netlist_free_define (struct define_t * d) {
+  int i;
+  struct property_t * p;
+  free (d->type);
+  // free required properties
+  for (i = 0, p = d->required; p[i].key != NULL; i++) {
+    free (p[i].key);
+  }
+  // free optional properties
+  for (i = 0, p = d->optional; p[i].key != NULL; i++) {
+    free (p[i].key);
+  }
+  free (d);
+}
+
+/* The function checks the presence of required and optional
+   properties as well as their content in the given definition.  It
+   returns zero on success and non-zero otherwise. */
+static int checker_validate_properties (struct definition_t * root,
+					struct definition_t * def,
+					struct define_t * available) {
+  struct pair_t * pair;
+  int i, n, errors = 0;
+
+  /* check whether the required properties are given */
+  for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
+    n = checker_find_property (available->required[i].key, def->pairs);
+    if (n != 1) {
+      logprint (LOG_ERROR, "line %d: checker error, required property "
+		"`%s' occurred %dx in `%s:%s'\n", def->line,
+		available->required[i].key, n, def->type, def->instance);
+      errors++;
+    }
+  }
+  /* check whether the optional properties are given zero/once */
+  for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
+    n = checker_find_property (available->optional[i].key, def->pairs);
+    if (n >= 2) {
+      logprint (LOG_ERROR, "line %d: checker error, optional property "
+		"`%s' occurred %dx in `%s:%s'\n", def->line,
+		available->optional[i].key, n, def->type, def->instance);
+      errors++;
+    }
+  }
+
+  /* check the property content */
+  for (pair = def->pairs; pair != NULL; pair = pair->next) {
+    /* check whether properties are either required or optional */
+    if (!checker_is_property (available, pair->key)) {
+      if (strcmp (def->type, "Def")) {
+	logprint (LOG_ERROR, 
+		  "line %d: checker error, extraneous property `%s' is "
+		  "invalid in `%s:%s'\n", def->line,
+		  pair->key, def->type, def->instance);
+	errors++;
+      }
+    }
+    // do not check zero-length lists
+    if (pair->value != NULL) {
+      /* check and evaluate the unit scale in a property */
+      if (!checker_evaluate_scale (pair->value))
+	errors++;
+      /* check whether properties are in range */
+      if (!checker_value_in_range (def->instance, available, pair)) {
+	errors++;
+      }
+      /* check variables in properties */
+      if (!checker_resolve_variable (root, def, pair->value))
+	errors++;
+    }
+  }
+  return errors;
+}
+
 /* This function is used by the netlist checker to validate the
    subcircuits.  It returns zero with no errors and non-zero on
    errors. */
@@ -1364,6 +1489,10 @@ static int checker_validate_subcircuits (struct definition_t * root) {
 		      def->type, def->instance, n1);
 	    errors++;
 	  }
+	  // check the subcircuit instance properties
+	  struct define_t * available = netlist_create_define (sub);
+	  errors += checker_validate_properties (root, def, available);
+	  netlist_free_define (available);
 	  // and finally check for cyclic definitions
 	  strlist * deps = new strlist ();
 	  int err = checker_validate_sub_cycles (sub, sub->instance,
@@ -1478,9 +1607,8 @@ checker_expand_subcircuits (struct definition_t * root) {
    errors. */
 static int netlist_checker_intern (struct definition_t * root) {
   struct definition_t * def;
-  struct pair_t * pair;
   struct define_t * available;
-  int i, n, errors = 0;
+  int n, errors = 0;
 
   /* go through all definitions */
   for (def = root; def != NULL; def = def->next) {
@@ -1520,49 +1648,9 @@ static int netlist_checker_intern (struct definition_t * root) {
 		  available->nodes, def->type, def->instance, n);
 	errors++;
       }
-      /* check whether the required properties are given */
-      for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
-	n = checker_find_property (available->required[i].key, def->pairs);
-	if (n != 1) {
-	  logprint (LOG_ERROR, "line %d: checker error, required property "
-		    "`%s' occurred %dx in `%s:%s'\n", def->line,
-		    available->required[i].key, n, def->type, def->instance);
-	  errors++;
-	}
-      }
-      /* check whether the optional properties are given zero/once */
-      for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
-	n = checker_find_property (available->optional[i].key, def->pairs);
-	if (n >= 2) {
-	  logprint (LOG_ERROR, "line %d: checker error, optional property "
-		    "`%s' occurred %dx in `%s:%s'\n", def->line,
-		    available->optional[i].key, n, def->type, def->instance);
-	  errors++;
-	}
-      }
-      /* check the properties */
-      for (pair = def->pairs; pair != NULL; pair = pair->next) {
-	/* check whether properties are either required or optional */
-	if (!checker_is_property (available, pair->key)) {
-	  logprint (LOG_ERROR, 
-		    "line %d: checker error, extraneous property `%s' is "
-		    "invalid in `%s:%s'\n", def->line,
-		    pair->key, def->type, def->instance);
-	  errors++;
-	}
-	// do not check zero-length lists
-	if (pair->value != NULL) {
-	  /* check and evaluate the unit scale in a property */
-	  if (!checker_evaluate_scale (pair->value))
-	    errors++;
-	  /* check whether properties are in range */
-	  if (!checker_value_in_range (def->instance, available, pair)) {
-	    errors++;
-	  }
-	  /* check variables in properties */
-	  if (!checker_resolve_variable (root, def, pair->value))
-	    errors++;
-	}
+      /* check the properties except for subcircuits */
+      if (strcmp (def->type, "Sub")) {
+	errors += checker_validate_properties (root, def, available);
       }
     }
     /* check the number of definitions */
@@ -1658,14 +1746,14 @@ int netlist_checker (void) {
   struct definition_t * def;
   // first create the subcircuit list
   definition_root = checker_build_subcircuits (definition_root);
-  // check global netlist
-  errors += netlist_checker_intern (definition_root);
   // check list of subcircuits
   errors += netlist_checker_intern (subcircuit_root);
   // then check each subcircuit list
   for (def = subcircuit_root; def != NULL; def = def->next) {
     errors += netlist_checker_intern (def->sub);
   }
+  // check global netlist
+  errors += netlist_checker_intern (definition_root);
   // check actions
   errors += checker_validate_actions (definition_root);
   if (!errors) {
