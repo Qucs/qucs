@@ -26,6 +26,9 @@ files.
 Version 0.0.11
 --------------
 
+ * new tutorial about modelling the 555 timer
+ * documented excess phase implementation for BJTs
+
 Version 0.0.10
 --------------
 
