@@ -1,3 +1,8 @@
+2006-09-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* tutorial/timer555/timer555.tex: Added 555 timer tutorial
+	provided by Mike Brinson.  Thanks a lot!
+
 2006-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.10 and bumped up to version

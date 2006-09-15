@@ -1,3 +1,8 @@
+2006-09-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices.tex (subsection{Large signal model}): Documented
+	the theory about the excess phase implementation in a BJT.
+
 2006-09-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices.tex (subsubsection{Original SPICE model}): Added
