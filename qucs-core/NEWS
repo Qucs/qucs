@@ -26,6 +26,8 @@ files.
 Version 0.0.11
 --------------
 
+ * implemented excess phase of BJT during transient analysis
+
 Version 0.0.10
 --------------
 

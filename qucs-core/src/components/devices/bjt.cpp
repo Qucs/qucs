@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.44 2006-09-11 07:39:12 raimi Exp $
+ * $Id: bjt.cpp,v 1.45 2006-09-15 08:14:42 raimi Exp $
  *
  */
 
@@ -58,6 +58,7 @@ bjt::bjt () : circuit (4) {
 }
 
 void bjt::calcSP (nr_double_t frequency) {
+  // build admittance matrix and convert it to S-parameter matrix
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
@@ -87,11 +88,15 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   // admittance matrix entries for "transcapacitance"
   complex Ybebc = rect (0.0, 2.0 * M_PI * frequency * dQbedUbc);
 
-  // compute influence of excess pase
+  // compute influence of excess phase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
+#if NEWSGP
   complex gmf = polar (gm, -phase);
+#else
+  complex gmf = polar (gm + go, -phase) - go;
+#endif
 
-  // build admittance matrix and convert it to S-parameter matrix
+  // build admittance matrix
   matrix y (4);
 #if NEWSGP
   // for some reason this small signal equivalent can't be used
@@ -267,6 +272,9 @@ void bjt::initModel (void) {
 
 void bjt::initDC (void) {
 
+  // no transient analysis
+  doTR = false;
+
   // allocate MNA matrices
   allocMatrixMNA ();
 
@@ -345,6 +353,8 @@ void bjt::restartDC (void) {
   UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
   UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
 }
+
+#define cexState 6 // extra excess phase state
 
 void bjt::calcDC (void) {
 
@@ -444,6 +454,14 @@ void bjt::calcDC (void) {
   dQbdUbe = Q1 * (Qb * Var + gif * Ikf / Sqrt);
   dQbdUbc = Q1 * (Qb * Vaf + gir * Ikr / Sqrt);
 
+  // during transient analysis only
+  if (doTR) {
+    // calculate excess phase influence
+    If /= Qb;
+    excessPhase (cexState, If, gif);
+    If *= Qb;
+  }
+
   // compute transfer current
   It = (If - Ir) / Qb;
 
@@ -452,8 +470,8 @@ void bjt::calcDC (void) {
   gitr = (-gir - It * dQbdUbc) / Qb;
 
   // compute old SPICE values
-  go = (gir + It * dQbdUbc) / Qb;
-  gm = (gif - It * dQbdUbe) / Qb - go;
+  go = -gitr;
+  gm = +gitf - go;
   setOperatingPoint ("gm", gm);
   setOperatingPoint ("go", go);
 
@@ -672,8 +690,9 @@ void bjt::calcNoiseAC (nr_double_t frequency) {
 #define cbxState 1 // external base-collector current state
 
 void bjt::initTR (void) {
-  setStates (6);
+  setStates (7);
   initDC ();
+  doTR = true;
 
   // handle external base-collector capacitance appropriately
   processCbcx ();
@@ -705,8 +724,6 @@ void bjt::calcTR (nr_double_t t) {
     }
   }
 
-  // TODO: excess phase
-
   // usual capacitances
   transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube, Qbe);
   transientCapacitance (qbcState, NODE_B, NODE_C, Cbci, Ubc, Qbci);
@@ -714,4 +731,35 @@ void bjt::calcTR (nr_double_t t) {
 
   // trans-capacitances
   transientCapacitanceC (NODE_B, NODE_E, NODE_B, NODE_C, dQbedUbc, Ubc);
+}
+
+void bjt::excessPhase (int istate, nr_double_t& i, nr_double_t& g) {
+
+  // fetch device properties
+  nr_double_t Ptf = getPropertyDouble ("Ptf");
+  nr_double_t Tf = getPropertyDouble ("Tf");
+  nr_double_t td = rad (Ptf) * Tf;
+
+  // return if nothing todo
+  if (td == 0.0) return;
+
+  // fill-in current history during initialization
+  if (getMode () & MODE_INIT) fillState (istate, i);
+
+  // calculate current coefficients C1, C2 and C3
+  nr_double_t * delta = getDelta ();
+  nr_double_t c3, c2, c1, dn, ra;
+  c1 = delta[0] / td;
+  c2 = 3 * c1;
+  c1 = c2 * c1;
+  dn = 1 + c1 + c2;
+  c1 = c1 / dn;
+  ra = delta[0] / delta[1];
+  c2 = (1 + ra + c2) / dn;
+  c3 = ra / dn;
+
+  // update and save current, update transconductance
+  i = i * c1 + getState (istate, 1) * c2 - getState (istate, 2) * c3;
+  setState (istate, i);
+  g = g * c1;
 }
