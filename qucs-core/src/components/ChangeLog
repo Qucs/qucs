@@ -1,3 +1,9 @@
+2006-09-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Implemented the excess phase Ptf during
+	transient analysis and also fixed the AC implementation of this
+	model parameter for !defined (NEWSGP).
+
 2006-09-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Fixed implementation of transcapacitance
