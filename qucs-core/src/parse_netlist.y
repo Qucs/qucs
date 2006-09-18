@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.22 2006-09-12 08:08:03 raimi Exp $
+ * $Id: parse_netlist.y,v 1.23 2006-09-18 07:16:57 raimi Exp $
  *
  */
 
@@ -95,7 +95,8 @@
 %type <c> COMPLEX
 %type <chr> Character
 %type <str> STRING
-%type <definition> DefinitionLine ActionLine DefBody DefBodyLine
+%type <definition> DefinitionLine ActionLine DefBody DefBodyLine EquationLine
+%type <definition> InputList InputLine
 %type <subcircuit> DefBegin SubcircuitBody
 %type <node> NodeList
 %type <pair> PairList
@@ -108,25 +109,33 @@
 
 %%
 
-Input: /* nothing */
-  | InputLine Input
+Input:
+  InputList {
+    definition_root = $1;
+  }
+;
+
+InputList: /* nothing */ { $$ = NULL; }
+  | InputLine InputList {
+    if ($1) {
+      $1->next = $2;
+      $$ = $1;
+    } else {
+      $$ = $2;
+    }
+  }
 ;
 
 InputLine:
-  SubcircuitBody   { /* chain definition root */
-    $1->next = definition_root;
-    definition_root = $1;
+  SubcircuitBody {
+    $$ = $1;
   }
-  | EquationLine   { /* nothing to do here */ }
-  | ActionLine     { /* chain definition root */
-    $1->next = definition_root;
-    definition_root = $1;
+  | EquationLine
+  | ActionLine
+  | DefinitionLine
+  | Eol {
+    $$ = NULL;
   }
-  | DefinitionLine { /* chain definition root */
-    $1->next = definition_root;
-    definition_root = $1;
-  }
-  | Eol            { }
 ;
 
 ActionLine:
@@ -247,17 +256,23 @@ ValueList: /* nothing */ { $$ = NULL; }
 
 EquationLine:
   Eqn ':' InstanceIdentifier Equation EquationList Eol {
-    $4->setInstance ($3); free ($3);
-    $4->setNext (eqn::equations);
+    /* create equation definition */
+    $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
+    $$->type = strdup ("Eqn");
+    $$->instance = $3;
+    $$->action = PROP_ACTION;
+    $$->line = netlist_lineno;
+    $4->setInstance ($3);
+    $4->setNext ($5);
     $4->applyInstance ();
-    eqn::equations = $4;
+    $$->eqns = $4;
   }
 ;
 
-EquationList: /* nothing */ { }
+EquationList: /* nothing */ { $$ = NULL; }
   | Equation EquationList { 
-    $1->setNext (eqn::equations);
-    eqn::equations = $1;
+    $1->setNext ($2);
+    $$ = $1;
   }
 ;
 
@@ -355,7 +370,6 @@ Application:
     $$->n = $1;
     $$->nargs = $3->count ();
     $$->args = $3;
-    eqn::expressions = NULL;
   }
   | Reference '[' ExpressionList ']' {
     $$ = new eqn::application ();
@@ -363,7 +377,6 @@ Application:
     $$->nargs = 1 + $3->count ();
     $1->setNext ($3);
     $$->args = $1;
-    eqn::expressions = NULL;
   }
   | Expression '+' Expression {
     $$ = new eqn::application ();
@@ -424,14 +437,13 @@ Application:
   }
 ;
 
-ExpressionList: /* nothing */ { $$ = eqn::expressions = NULL; }
+ExpressionList: /* nothing */ { $$ = NULL; }
   | Expression {
-    $1->setNext (eqn::expressions);
-    $$ = eqn::expressions = $1;
+    $$ = $1;
   }
   | Expression ',' ExpressionList {
-    $1->setNext (eqn::expressions);
-    $$ = eqn::expressions = $1;
+    $1->setNext ($3);
+    $$ = $1;
   }
 ;
 
@@ -474,6 +486,10 @@ DefEnd:
 
 DefBodyLine:
   DefinitionLine { /* chain definitions here */
+    $1->next = $$;
+    $$ = $1;
+  }
+  | EquationLine { /* chain definitions here */
     $1->next = $$;
     $$ = $1;
   }

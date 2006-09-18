@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.41 2006-03-24 14:30:05 raimi Exp $
+ * $Id: equation.cpp,v 1.42 2006-09-18 07:16:57 raimi Exp $
  *
  */
 
@@ -52,7 +52,6 @@ using namespace qucs;
 
 /* The global list of equations and expression lists. */
 node   * eqn::equations = NULL;
-node   * eqn::expressions = NULL;
 solver * eqn::solve = NULL;
 
 #define A(a) ((assignment *) (a))

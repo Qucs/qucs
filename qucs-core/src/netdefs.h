@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.7 2005-10-31 16:15:31 ela Exp $
+ * $Id: netdefs.h,v 1.8 2006-09-18 07:16:57 raimi Exp $
  *
  */
 
@@ -60,6 +60,7 @@ struct definition_t {
   struct pair_t * pairs;
   struct definition_t * next;
   struct definition_t * sub;
+  void * eqns;
   int duplicate;
   int action;
   int substrate;

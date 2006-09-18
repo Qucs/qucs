@@ -1,7 +1,7 @@
 /*
  * check_netlist.h - checker definitions for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.h,v 1.20 2005-10-31 16:15:30 ela Exp $
+ * $Id: check_netlist.h,v 1.21 2006-09-18 07:16:57 raimi Exp $
  *
  */
 
@@ -35,8 +35,6 @@ __BEGIN_DECLS
 
 /* Externalize variables used by the scanner and parser. */
 extern struct definition_t * definition_root;
-extern struct node_t * node_root;
-extern struct pair_t * pair_root;
 
 /* Available functions of the checker. */
 void netlist_status (void);

@@ -1,3 +1,8 @@
+2006-09-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y, check_netlist.cpp: Preparations to have
+	equations inside subcircuits.
+
 2006-09-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_zvr.y, parse_mdl.y (__NOEXTENSIONS__): Added this #define
