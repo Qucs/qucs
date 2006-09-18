@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.96 2006/09/12 08:08:03 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.97 2006/09/18 07:16:57 raimi Exp $
  *
  */
 
@@ -42,8 +42,6 @@
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
-struct node_t * node_root = NULL;
-struct pair_t * pair_root = NULL;
 
 // Include list of available components.
 #include "qucsdefs.h"
@@ -1739,6 +1737,37 @@ void netlist_status (void) {
   }
 }
 
+/* The function builds the equation list for a given list of
+   definition and removes the definition containing the equations from
+   the list. */
+static struct definition_t *
+checker_build_equations (struct definition_t * root, eqn::node ** eroot ) {
+  struct definition_t * def, * next, * prev;
+  eqn::node * eqns, * last;
+  *eroot = NULL;
+  // go through list of definitions
+  for (prev = NULL, def = root; def != NULL; def = next) {
+    next = def->next;
+    if (!strcmp (def->type, "Eqn")) {
+      // rechain definition list
+      if (prev) {
+	prev->next = next;
+      } else {
+	root = next;
+      }
+      // append equations
+      eqns = (eqn::node *) def->eqns;
+      last = eqn::checker::lastEquation (eqns);
+      last->setNext (*eroot);
+      *eroot = eqns;
+      // free this definition
+      netlist_free_definition (def);
+    }
+    else prev = def;
+  }
+  return root;
+}
+
 /* This is the global netlist checker.  It returns zero on success and
    non-zero on errors. */
 int netlist_checker (void) {
@@ -1746,6 +1775,8 @@ int netlist_checker (void) {
   struct definition_t * def;
   // first create the subcircuit list
   definition_root = checker_build_subcircuits (definition_root);
+  // get equation list
+  definition_root = checker_build_equations (definition_root, &eqn::equations);
   // check list of subcircuits
   errors += netlist_checker_intern (subcircuit_root);
   // then check each subcircuit list
@@ -1780,7 +1811,5 @@ void netlist_destroy (void) {
   }
   netlist_destroy_intern (subcircuit_root);
   definition_root = subcircuit_root = NULL;
-  node_root = NULL;
-  pair_root = NULL;
   netlist_lex_destroy ();
 }

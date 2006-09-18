@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.27 2006/02/21 20:56:17 raimi Exp $
+ * $Id: equation.h,v 1.28 2006/09/18 07:16:57 raimi Exp $
  *
  */
 
@@ -244,7 +244,7 @@ public:
   node * appendEquation (node *, node *);
   void dropEquation (node *);
   void reorderEquations (void);
-  node * lastEquation (node *);
+  static node * lastEquation (node *);
   int applyTypes (void);
   int checkExport (void);
 
@@ -289,7 +289,6 @@ private:
 
 /* The global list of equations and expression lists. */
 extern node   * equations;
-extern node   * expressions;
 extern solver * solve;
 
 } /* namespace */
