@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.42 2006/09/18 07:16:57 raimi Exp $
+ * $Id: equation.cpp,v 1.43 2006/09/19 08:22:20 raimi Exp $
  *
  */
 
@@ -49,10 +49,6 @@
 
 using namespace eqn;
 using namespace qucs;
-
-/* The global list of equations and expression lists. */
-node   * eqn::equations = NULL;
-solver * eqn::solve = NULL;
 
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
@@ -229,14 +225,16 @@ void reference::addDependencies (strlist * depends) {
 void reference::findVariable (void) {
   if (!ref) {
     node * eqn;
-    for (eqn = eqn::equations; eqn; eqn = eqn->getNext ()) {
-      if (!strcmp (n, A(eqn)->result)) {
-	ref = eqn;
-	break;
+    if (checkee != NULL) {
+      for (eqn = checkee->getEquations (); eqn; eqn = eqn->getNext ()) {
+	if (!strcmp (n, A(eqn)->result)) {
+	  ref = eqn;
+	  break;
+	}
       }
     }
-    if (eqn::solve && !ref) {
-      for (eqn = eqn::solve->getEquations (); eqn; eqn = eqn->getNext ()) {
+    if (solvee != NULL && !ref) {
+      for (eqn = solvee->getEquations (); eqn; eqn = eqn->getNext ()) {
 	if (!strcmp (n, A(eqn)->result)) {
 	  ref = eqn;
 	  break;
@@ -294,6 +292,7 @@ char * assignment::toString (void) {
 
 // Adds the right hand side of the assignment to the list of dependencies.
 void assignment::addDependencies (strlist * depends) {
+  body->checkee = checkee;
   body->addDependencies (depends);
 }
 
@@ -384,6 +383,7 @@ char * application::toString (void) {
 // Adds the arguments of the application to the list of dependencies.
 void application::addDependencies (strlist * depends) {
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    arg->checkee = checkee;
     arg->addDependencies (depends);
   }  
 }
@@ -530,6 +530,7 @@ node::node () {
   res = NULL;
   instance = NULL;
   solvee = NULL;
+  checkee = NULL;
 }
 
 // This constructor creates an typed instance of the equation node class.
@@ -544,6 +545,8 @@ node::node (int type) {
   txt = NULL;
   res = NULL;
   instance = NULL;
+  solvee = NULL;
+  checkee = NULL;
 }
 
 // Destructor deletes an instance of the equation node class.
@@ -738,6 +741,7 @@ strlist * node::collectDataDependencies (void) {
 // Constructor creates an instance of the checker class.
 checker::checker () {
   equations = NULL;
+  consts = false;
 }
 
 // Destructor deletes an instance of the checker class.
@@ -809,7 +813,6 @@ int checker::checkExport (void) {
       }
     }
   }
-  eqn::equations = equations;
   return errors;
 }
 
@@ -1026,6 +1029,14 @@ void checker::reorderEquations (void) {
   }
 }
 
+
+/* The function passes a list of equations to the checker and also
+   passes the checker instance to each equation. */
+void checker::setEquations (node * eqns) {
+  equations = eqns;
+  foreach_equation (eqn) { eqn->checkee = this; }
+}
+
 /* The function evaluates the types for each equation and recursively
    checks the availability of the appropriate function. */
 int checker::applyTypes (void) {
@@ -1043,31 +1054,27 @@ int checker::applyTypes (void) {
 /* This function is the checker routine for a parsed equations.  It
    returns zero on success or non-zero if the parsed equations
    contained errors. */
-int equation_checker (int noundefined) {
+int checker::check (int noundefined) {
   int err = 0;
-  eqn::checker * check = new eqn::checker ();
-  check->setEquations (eqn::equations);
-  err += check->checkExport ();
-  check->collectDependencies ();
-  err += check->findUndefined (noundefined);
-  err += check->findDuplicate ();
-  err += check->detectCycles ();
-  check->reorderEquations ();
-  err += check->applyTypes ();
+  err += checkExport ();
+  collectDependencies ();
+  err += findUndefined (noundefined);
+  err += findDuplicate ();
+  err += detectCycles ();
+  reorderEquations ();
+  err += applyTypes ();
 #if DEBUG && 0
-  check->list ();
+  list ();
 #endif /* DEBUG */
-  eqn::equations = check->getEquations ();
-  check->setEquations (NULL);
-  delete check;
   return err;
 }
 
 // Constructor creates an instance of the solver class.
-solver::solver () {
+solver::solver (checker * c) {
   equations = NULL;
   data = NULL;
   generated = 0;
+  checkee = c;
 }
 
 // Destructor deletes an instance of the solver class.
@@ -1080,7 +1087,7 @@ solver::~solver () {
 }
 
 // The function finally evaluates each equation passed to the solver.
-void solver::solve (void) {
+void solver::evaluate (void) {
   foreach_equation (eqn) {
     if (eqn->evalPossible && eqn->evaluated == 0) {
       // exception handling around evaluation
@@ -1335,7 +1342,7 @@ int solver::dataSize (constant * eqn) {
    variable name.  It must be ensured that the variable actually
    exists and is already evaluated. */
 int solver::getDataSize (char * var) {
-  node * eqn = checker::findEquation (eqn::equations, var);
+  node * eqn = checker::findEquation (equations, var);
   return dataSize (C (eqn));
 }
 
@@ -1388,7 +1395,7 @@ strlist * solver::collectDataDependencies (node * eqn) {
     datadeps = datadeps ? new strlist (*datadeps) : NULL;
     for (int i = 0; deps && i < deps->length (); i++) {
       char * var = deps->get (i);
-      node * n = checker::findEquation (eqn::equations, var);
+      node * n = checker::findEquation (equations, var);
       if (n == NULL && eqn->solvee != NULL)
 	n = checker::findEquation (eqn->solvee->getEquations (), var);
       if (n != NULL) {
@@ -1490,27 +1497,27 @@ int solver::findEquationResult (node * eqn) {
 /* This function is called in order to run the equation checker and
    the solver.  The optional dataset passed to the function receives
    the results of the calculations. */
-int equation_solver (dataset * data) {
-  if (!solve) solve = new solver ();
-  solve->setEquations (eqn::equations);
-  solve->setData (data);
-  solve->checkinDataset ();
-  eqn::equations = solve->getEquations ();
-  if (equation_checker (data ? 1 : 0) != 0) {
-    solve->setEquations (NULL);
+int solver::solve (dataset * data) {
+  // load additional dataset equations
+  setData (data);
+  checkinDataset ();
+  // put these into the checker
+  checkee->setEquations (equations);
+  // and check
+  if (checkee->check (data ? 1 : 0) != 0) {
     return -1;
   }
-  solve->setEquations (eqn::equations);
-  solve->solve ();
-  solve->checkoutDataset ();
-  eqn::equations = solve->getEquations ();
-  solve->setEquations (NULL);
+  equations = checkee->getEquations ();
+  // finally evaluate equations
+  evaluate ();
+  // put results into the dataset
+  checkoutDataset ();
   return 0;
 }
 
 /* Go through the list of equations and store the left hand side in
    a string list. */
-strlist * equation_variables (void) {
+strlist * checker::variables (void) {
   strlist * idents = new strlist ();
   foreach_equation (eqn) {
     idents->add (eqn->result);
@@ -1527,14 +1534,19 @@ struct pconstant {
 // List of global constant variables.
 static struct pconstant pconstants[] = {
   { "pi", M_PI },
-  { "e",  M_E },
-  { "kB", kB },
-  { NULL, 0 }
+  { "e",  M_E  },
+  { "kB", kB   },
+  { NULL, 0    }
 };
 
 /* The function should be called before parsing the netlist.  It
    appends the predefined constants to the list of equations. */
-void equation_constants (void) {
+void checker::constants (void) {
+
+  // return if nothing to do
+  if (consts) return;
+
+  // go through constants and add these to the equations
   for (int i = 0; pconstants[i].ident != NULL; i++) {
     // create constant double value
     constant * c = new constant (eqn::TAG_DOUBLE);
@@ -1546,23 +1558,10 @@ void equation_constants (void) {
     a->output = 0;
     a->setInstance ("#predefined");
     // append the assignment to equations
-    a->setNext (eqn::equations);
-    eqn::equations = a;
+    a->setNext (equations);
+    equations = a;
   }
-}
 
-/* This is the final destructor for the equation solver. */
-void equation_destructor (void) {
-  // delete solver
-  if (solve) {
-    delete solve;
-    solve = NULL;
-  }
-  // delete equations
-  node * next, * eqn;
-  for (eqn = eqn::equations; eqn != NULL; eqn = next) {
-    next = eqn->getNext ();
-    delete eqn;
-  }
-  equations = NULL;
+  // indicate that constants have been added
+  consts = true;
 }

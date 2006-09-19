@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.24 2006/01/04 10:40:32 raimi Exp $
+ * $Id: ucs.cpp,v 1.25 2006/09/19 08:22:20 raimi Exp $
  *
  */
 
@@ -54,6 +54,7 @@ int main (int argc, char ** argv) {
   circuit * gnd;
   dataset * out;
   environment * root;
+  int ret = 0;
 
   loginit ();
   precinit ();
@@ -134,8 +135,7 @@ int main (int argc, char ** argv) {
   out = subnet->runAnalysis ();
 
   // evaluate output dataset
-  equation_solver (out);
-  equation_destructor ();
+  ret |= root->equationSolver (out);
   out->setFile (outfile);
   out->print ();
 
@@ -145,5 +145,5 @@ int main (int argc, char ** argv) {
   delete in;
   delete out;
   delete root;
-  return 0;
+  return ret;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.97 2006/09/18 07:16:57 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.98 2006/09/19 08:22:20 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 #include "equation.h"
 #include "check_netlist.h"
 #include "constants.h"
+#include "environment.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
@@ -804,10 +805,11 @@ static int checker_validate_nodesets (struct definition_t * root) {
    list have been checked.  It verifies that parameter sweep
    definitions and equation variable identifiers are unique.  The
    function returns zero on success and non-zero otherwise. */
-static int netlist_checker_variables_intern (struct definition_t * root) {
+static int netlist_checker_variables_intern (struct definition_t * root,
+					     environment * env) {
   int errors = 0, pos;
   struct value_t * para, * ref;
-  strlist * eqnvars = equation_variables ();
+  strlist * eqnvars = env->getChecker()->variables ();
   strlist * instances = new strlist ();
   strlist * vars = new strlist ();
   strlist * refs = new strlist ();
@@ -863,8 +865,8 @@ static int netlist_checker_variables_intern (struct definition_t * root) {
 
 /* This is the overall variable checker for the parsed netlist.  See
    the above function for details. */
-int netlist_checker_variables (void) {
-  return netlist_checker_variables_intern (definition_root);
+int netlist_checker_variables (environment * env) {
+  return netlist_checker_variables_intern (definition_root, env);
 }
 
 /* The function checks whether the given key-value combination is
@@ -1770,13 +1772,15 @@ checker_build_equations (struct definition_t * root, eqn::node ** eroot ) {
 
 /* This is the global netlist checker.  It returns zero on success and
    non-zero on errors. */
-int netlist_checker (void) {
+int netlist_checker (environment * env) {
   int errors = 0;
+  eqn::node * eqns;
   struct definition_t * def;
+
   // first create the subcircuit list
   definition_root = checker_build_subcircuits (definition_root);
   // get equation list
-  definition_root = checker_build_equations (definition_root, &eqn::equations);
+  definition_root = checker_build_equations (definition_root, &eqns);
   // check list of subcircuits
   errors += netlist_checker_intern (subcircuit_root);
   // then check each subcircuit list
@@ -1791,6 +1795,20 @@ int netlist_checker (void) {
     // and finally expand the subcircuits into the global netlist
     definition_root = checker_expand_subcircuits (definition_root);
   }
+
+  // create equation checker
+  eqn::checker * checkee = new eqn::checker ();
+  // pass equations to the checker
+  checkee->setEquations (eqns);
+  // add constants to the list of equations
+  checkee->constants ();
+  // pass checker
+  env->setChecker (checkee);
+  // create equation solver
+  eqn::solver * solvee = new eqn::solver (checkee);
+  // pass solver
+  env->setSolver (solvee);
+
   return errors ? -1 : 0;
 }
 

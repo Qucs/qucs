@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.28 2006/09/18 07:16:57 raimi Exp $
+ * $Id: equation.h,v 1.29 2006/09/19 08:22:20 raimi Exp $
  *
  */
 
@@ -107,6 +107,7 @@ public:
   int output;
   int dropdeps;
   solver * solvee;
+  checker * checkee;
 
 private:
   int type;
@@ -230,7 +231,7 @@ public:
   checker ();
   ~checker ();
   void collectDependencies (void);
-  void setEquations (node * eqn) { equations = eqn; }
+  void setEquations (node *);
   node * getEquations (void) { return equations; }
   void list (void);
   int findUndefined (int);
@@ -247,22 +248,28 @@ public:
   static node * lastEquation (node *);
   int applyTypes (void);
   int checkExport (void);
+  void constants (void);
+  int check (int noundefined = 1);
+  strlist * variables (void);
 
 public:
   node * equations;
+
+ private:
+  bool consts;
 };
 
 /* The solver class is finally used to solve the list of equations. */
 class solver
 {
 public:
-  solver ();
+  solver (checker *);
   ~solver ();
   void setEquations (node * eqn) { equations = eqn; }
   node * getEquations (void) { return equations; }
   void setData (dataset * d) { data = d; }
   dataset * getDataset (void) { return data; }
-  void solve (void);
+  void evaluate (void);
   node * addEquationData (vector *, bool ref = false);
   node * addEquationData (matvec *);
   node * addGeneratedEquation (vector *, char *);
@@ -270,14 +277,15 @@ public:
   void checkinDataset (void);
   void checkoutDataset (void);
   static int dataSize (constant *);
-  static int getDependencySize (strlist *, int);
-  static int getDataSize (char *);
-  static strlist * collectDataDependencies (node *);
+  int getDependencySize (strlist *, int);
+  int getDataSize (char *);
+  strlist * collectDataDependencies (node *);
   int dataSize (strlist *);
   vector * getDataVector (char *);
   void findMatrixVectors (vector *);
   char * isMatrixVector (char *, int&, int&);
   int findEquationResult (node *);
+  int solve (dataset *);
 
 public:
   node * equations;
@@ -285,23 +293,9 @@ public:
 private:
   dataset * data;
   int generated;
+  checker * checkee;
 };
 
-/* The global list of equations and expression lists. */
-extern node   * equations;
-extern solver * solve;
-
 } /* namespace */
-
-__BEGIN_DECLS
-
-/* Available functions of the equation checker. */
-int equation_checker (int);
-int equation_solver (dataset *);
-strlist * equation_variables (void);
-void equation_constants (void);
-void equation_destructor (void);
-
-__END_DECLS
 
 #endif /* __EQUATION_H__ */

@@ -1,7 +1,7 @@
 /*
  * environment.cpp - variable environment class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.3 2005/10/31 16:15:31 ela Exp $
+ * $Id: environment.cpp,v 1.4 2006/09/19 08:22:20 raimi Exp $
  *
  */
 
@@ -31,18 +31,23 @@
 #include <string.h>
 
 #include "variable.h"
+#include "equation.h"
 #include "environment.h"
 
 // Constructor creates an unnamed instance of the environment class.
 environment::environment () {
   name = NULL;
   root = NULL;
+  solvee = NULL;
+  checkee = NULL;
 }
 
 // Constructor creates a named instance of the environment class.
 environment::environment (char * n) {
   name = strdup (n);
   root = NULL;
+  solvee = NULL;
+  checkee = NULL;
 }
 
 /* The copy constructor creates a new instance of the environment
@@ -51,12 +56,15 @@ environment::environment (const environment & e) {
   name = NULL;
   if (e.name) name = strdup (e.name);
   copyVariables (e.root);
+  solvee = e.solvee;
+  checkee = e.checkee;
 }
 
 // Destructor deletes the environment object.
 environment::~environment () {
   if (name) free (name);
   deleteVariables ();
+  if (solvee) delete solvee;
 }
 
 // Sets the name of the environment.
@@ -111,4 +119,17 @@ variable * environment::getVariable (char * n) {
       return var;
   }
   return NULL;
+}
+
+// The function runs the equation checker for this environment.
+int environment::equationChecker (int noundefined) {
+  return checkee->check (noundefined);
+}
+
+// The function runs the equation solver for this environment.
+int environment::equationSolver (dataset * data) {
+  solvee->setEquations (checkee->getEquations ());
+  int err = solvee->solve (data);
+  checkee->setEquations (solvee->getEquations ());
+  return err;
 }

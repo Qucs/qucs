@@ -1,3 +1,25 @@
+2006-09-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* ucs.cpp (main): Using new environment functionality in order
+	to solve the root environment equations.
+
+	* input.cpp: Passing the netlist checker its environment.
+
+	* evaluate.cpp: Replaced references to static functions of
+	the solver.
+
+	* equation.cpp: Removed all global data concerning the
+	equations.  Both checker and solver are now fully self-contained
+	and can be instantiated as many as needed.  This is one more
+	step to local equations in subcircuits.
+
+	* environment.cpp: Added functionality which enables an
+	environment to contains equations which can be checked and
+	solved.
+
+	* check_netlist.cpp: Passing equations, their checker and
+	solver to the root environment.
+
 2006-09-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y, check_netlist.cpp: Preparations to have
