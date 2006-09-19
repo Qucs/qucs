@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.53 2006-08-09 08:32:17 raimi Exp $
+ * $Id: evaluate.cpp,v 1.54 2006-09-19 08:22:20 raimi Exp $
  *
  */
 
@@ -1836,18 +1836,18 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   vector * vres;
   strlist * deps = _ARES(0)->getDataDependencies ();
   int didx = (deps ? deps->length () : 0) - idx;
-  int dsize = solver::getDependencySize (deps, idx);
+  int dsize = SOLVEE(0)->getDependencySize (deps, idx);
 
   // all of the data vector
   if (type == TAG_RANGE) {
     vres = new vector (*(res->v));
-    skip *= deps ? solver::getDataSize (deps->get (didx - 1)) : 1;
-    size *= deps ? solver::getDataSize (deps->get (didx)) : 1;
+    skip *= deps ? SOLVEE(0)->getDataSize (deps->get (didx - 1)) : 1;
+    size *= deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : 1;
   }
   // a subset
   else {
     vres = new vector (dsize * size);
-    int len = deps ? solver::getDataSize (deps->get (didx)) : v->getSize ();
+    int len = deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : v->getSize ();
     if (i < 0 || i >= len) {
       char txt[256];
       sprintf (txt, "vector index %d (%d) out of bounds [%d,%d]",

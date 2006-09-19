@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.58 2006-07-24 08:07:41 raimi Exp $
+ * $Id: input.cpp,v 1.59 2006-09-19 08:22:20 raimi Exp $
  *
  */
 
@@ -94,15 +94,14 @@ int input::netlist (net * netlist) {
     return -1;
 
   logprint (LOG_STATUS, "checking netlist...\n");
-  if (netlist_checker () != 0)
+  if (netlist_checker (env) != 0)
     return -1;
 
-  // add equation constants and then check the equations
-  equation_constants ();
+  // check the equations
   logprint (LOG_STATUS, "checking equations...\n");
-  if (equation_checker (0) != 0)
+  if (env->equationChecker (0) != 0)
     return -1;
-  if (netlist_checker_variables () != 0)
+  if (netlist_checker_variables (env) != 0)
     return -1;
 
 #if DEBUG

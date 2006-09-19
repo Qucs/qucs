@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.h,v 1.21 2006-09-18 07:16:57 raimi Exp $
+ * $Id: check_netlist.h,v 1.22 2006-09-19 08:22:20 raimi Exp $
  *
  */
 
@@ -26,6 +26,9 @@
 #define __CHECK_NETLIST_H__
 
 #include "netdefs.h"
+
+/* Forward declarations. */
+class environment;
 
 /* Externalize variables used by the scanner and parser. */
 extern int netlist_lineno;
@@ -40,12 +43,12 @@ extern struct definition_t * definition_root;
 void netlist_status (void);
 void netlist_list (void);
 void netlist_destroy (void);
-int  netlist_checker (void);
+int  netlist_checker (environment *);
 int  netlist_parse (void);
 int  netlist_error (char *);
 int  netlist_lex (void);
 int  netlist_lex_destroy (void);
-int  netlist_checker_variables (void);
+int  netlist_checker_variables (environment *);
 
 /* Some more functionality. */
 struct definition_t *

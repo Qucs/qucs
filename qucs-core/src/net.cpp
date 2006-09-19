@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.30 2006-08-09 08:32:18 raimi Exp $
+ * $Id: net.cpp,v 1.31 2006-09-19 08:22:20 raimi Exp $
  *
  */
 
@@ -47,6 +47,7 @@
 #include "analysis.h"
 #include "nodelist.h"
 #include "nodeset.h"
+#include "equation.h"
 #include "environment.h"
 #include "component_id.h"
 
