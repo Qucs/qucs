@@ -668,6 +668,9 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   int yNum = yAxis.numGraphs;
   int zNum = zAxis.numGraphs;
   yAxis.numGraphs = zAxis.numGraphs = 0;
+
+  double xmin = xAxis.min, ymin = yAxis.min, zmin = zAxis.min;
+  double xmax = xAxis.max, ymax = yAxis.max, zmax = zAxis.max;
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
@@ -681,6 +684,9 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   if(No > 0) {   // Are dataset files unchanged ?
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
     zAxis.numGraphs = zNum;
+
+    xAxis.min = xmin; yAxis.min = ymin; zAxis.min = zmin;
+    xAxis.max = xmax; yAxis.max = ymax; zAxis.max = zmax;
     return;    // -> no update neccessary
   }
 

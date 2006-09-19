@@ -1,3 +1,8 @@
+2006-09-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/diagram.cpp (loadGraphData): Fixed a minor bug in
+	computation of the diagram limits.  Thanks to Michael.
+
 2006-09-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* qtgeneric_cz.ts, qucs_cz.ts: Added Czech translations.
