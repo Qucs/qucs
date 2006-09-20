@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.cpp,v 1.3 2006/09/04 08:05:39 raimi Exp $
+ * $Id: check_mdl.cpp,v 1.4 2006/09/20 08:44:14 raimi Exp $
  *
  */
 
@@ -186,10 +186,17 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
       if      (*txt == '-') { f = -1.0; txt++; }
       else if (*txt == '+') { f = +1.0; txt++; }
       if (!mdl_resolve_variable (link, txt, val)) {
-	logprint (LOG_ERROR,
-		  "checker error, unable to resolve `%s' variable in '%s'\n",
-		  txt, link->name);
-	val = 0.0;
+	// special variables
+	if (!strcmp (txt, "PI")) {
+	  val = M_PI;
+	}
+	// no resolvable (probably equation)
+	else {
+	  logprint (LOG_ERROR,
+		    "checker error, unable to resolve `%s' variable in '%s'\n",
+		    txt, link->name);
+	  val = 0.0;
+	}
       }
       val = f * val;
     }
@@ -283,6 +290,10 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  nof = mdl_helement_ivalue (link, hyptab->data, "Total Pts");
 	  if (nof <= 0)
 	    nof = mdl_helement_ivalue (link, hyptab->data, "# of Points");
+	  if (start * stop == 0.0) {
+	    if (start == 0.0) start = 1.0;
+	    if (stop  == 0.0) stop  = 1.0;
+	  }
 	  deps->append (name, new int (order));
 	  logsweep * sw = new logsweep ();
 	  sw->create (start, stop, nof);
