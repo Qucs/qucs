@@ -1,3 +1,9 @@
+2006-09-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_mdl.cpp: Translating special variable 'PI'.  Defaulting
+	to logarithmic sweep from 1 to 1 if no start/stop can be
+	determined.
+
 2006-09-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* ucs.cpp (main): Using new environment functionality in order
