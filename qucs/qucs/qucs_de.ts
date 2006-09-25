@@ -4360,6 +4360,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>initial delay delay time</source>
         <translation>Anfangsverzögerungszeit</translation>
     </message>
+    <message>
+        <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

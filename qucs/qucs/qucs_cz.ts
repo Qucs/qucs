@@ -4335,6 +4335,10 @@ Použití:  qucsedit [-r] soubor
         <source>perform an initial DC analysis</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
