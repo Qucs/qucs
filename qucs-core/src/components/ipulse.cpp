@@ -1,7 +1,7 @@
 /*
  * ipulse.cpp - pulse current source class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ipulse.cpp,v 1.5 2005-06-02 18:17:52 raimi Exp $
+ * $Id: ipulse.cpp,v 1.6 2006-09-25 07:45:01 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "ipulse.h"
 
@@ -72,6 +73,7 @@ void ipulse::calcTR (nr_double_t t) {
   nr_double_t tr = getPropertyDouble ("Tr");
   nr_double_t tf = getPropertyDouble ("Tf");
   nr_double_t it = 0;
+  nr_double_t s  = getNet()->getSrcFactor ();
 
   if (t < t1) { // before pulse
     it = i1;
@@ -88,5 +90,5 @@ void ipulse::calcTR (nr_double_t t) {
   else { // after pulse
     it = i1;
   }
-  setI (NODE_1, +it); setI (NODE_2, -it);
+  setI (NODE_1, +it * s); setI (NODE_2, -it * s);
 }

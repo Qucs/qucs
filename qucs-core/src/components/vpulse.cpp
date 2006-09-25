@@ -1,7 +1,7 @@
 /*
  * vpulse.cpp - pulse voltage source class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vpulse.cpp,v 1.6 2005-10-24 09:10:25 raimi Exp $
+ * $Id: vpulse.cpp,v 1.7 2006-09-25 07:45:01 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "consts.h"
 #include "vpulse.h"
@@ -74,6 +75,7 @@ void vpulse::calcTR (nr_double_t t) {
   nr_double_t tr = getPropertyDouble ("Tr");
   nr_double_t tf = getPropertyDouble ("Tf");
   nr_double_t ut = 0;
+  nr_double_t s  = getNet()->getSrcFactor ();
 
   if (t < t1) { // before pulse
     ut = u1;
@@ -90,5 +92,5 @@ void vpulse::calcTR (nr_double_t t) {
   else { // after pulse
     ut = u1;
   }
-  setE (VSRC_1, ut);
+  setE (VSRC_1, ut * s);
 }

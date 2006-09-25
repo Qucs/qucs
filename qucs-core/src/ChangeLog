@@ -1,3 +1,8 @@
+2006-09-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added 'MaxStep' as
+	valid property in transient analysis.
+
 2006-09-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_mdl.cpp: Translating special variable 'PI'.  Defaulting

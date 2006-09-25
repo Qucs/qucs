@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.cpp,v 1.17 2006-05-23 09:48:32 raimi Exp $
+ * $Id: vac.cpp,v 1.18 2006-09-25 07:45:01 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "consts.h"
 #include "constants.h"
@@ -74,7 +75,8 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t p = getPropertyDouble ("Phase");
   nr_double_t d = getPropertyDouble ("Theta");
   nr_double_t a = getPropertyDouble ("U");
-  nr_double_t u = a * exp (-d * t * f) * sin (2 * M_PI * f * t + rad (p));
+  nr_double_t s = getNet()->getSrcFactor ();
+  nr_double_t u = s * a * exp (-d * t * f) * sin (2 * M_PI * f * t + rad (p));
   setE (VSRC_1, u);
 }
 
