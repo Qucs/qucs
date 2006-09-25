@@ -1,3 +1,9 @@
+2006-09-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* vrect.cpp, vpulse.cpp, vac.cpp, irect.cpp, ipulse.cpp,
+	iac.cpp: Consider source factor (for source stepping) during
+	transient analysis.
+
 2006-09-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Implemented the excess phase Ptf during

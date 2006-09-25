@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.52 2006/08/21 08:10:30 raimi Exp $
+ * $Id: qucsdefs.h,v 1.53 2006/09/25 07:45:00 raimi Exp $
  *
  */
 
@@ -824,6 +824,7 @@ struct define_t qucs_definition_available[] =
       { "Order", PROP_INT, { 2, PROP_NO_STR }, { '[', 1, 6, ']' } },
       { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MaxStep", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, { '[', 2, 10000, ']' } },
       { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
       { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },

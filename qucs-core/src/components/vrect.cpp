@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vrect.cpp,v 1.5 2006/08/21 08:10:31 raimi Exp $
+ * $Id: vrect.cpp,v 1.6 2006/09/25 07:45:01 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "consts.h"
 #include "vrect.h"
@@ -82,6 +83,7 @@ void vrect::calcTR (nr_double_t t) {
   nr_double_t tf = getPropertyDouble ("Tf");
   nr_double_t td = getPropertyDouble ("Td");
   nr_double_t ut = 0;
+  nr_double_t s  = getNet()->getSrcFactor ();
 
   if (tr > th) tr = th;
   if (tf > tl) tf = tl;
@@ -99,6 +101,5 @@ void vrect::calcTR (nr_double_t t) {
       ut = - u / tf * (t - (th + tf));
     }
   }
-
-  setE (VSRC_1, ut);
+  setE (VSRC_1, ut * s);
 }

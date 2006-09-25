@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: irect.cpp,v 1.5 2006/08/21 08:10:31 raimi Exp $
+ * $Id: irect.cpp,v 1.6 2006/09/25 07:45:01 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "irect.h"
 
@@ -80,6 +81,7 @@ void irect::calcTR (nr_double_t t) {
   nr_double_t tf = getPropertyDouble ("Tf");
   nr_double_t td = getPropertyDouble ("Td");
   nr_double_t it = 0;
+  nr_double_t s  = getNet()->getSrcFactor ();
 
   if (tr > th) tr = th;
   if (tf > tl) tf = tl;
@@ -97,6 +99,5 @@ void irect::calcTR (nr_double_t t) {
       it = - i / tf * (t - (th + tf));
     }
   }
-
-  setI (NODE_1, +it); setI (NODE_2, -it);
+  setI (NODE_1, +it * s); setI (NODE_2, -it * s);
 }
