@@ -1,3 +1,7 @@
+2006-09-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* tr_sim.cpp (TR_Sim): Added 'MaxStep' property.
+
 2006-09-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* opt_sim.cpp (createASCOFiles): Fixed a bug occuring when
