@@ -4156,6 +4156,10 @@ Stosowanie:  qucsedit [-r] plik
         <source>initial delay delay time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
