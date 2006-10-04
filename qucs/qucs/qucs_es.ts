@@ -3983,7 +3983,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>relais</source>
-        <translation>relé</translation>
+        <translation type="obsolete">relé</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
@@ -3995,7 +3995,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Relais</source>
-        <translation>Relés</translation>
+        <translation type="obsolete">Relés</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -4123,6 +4123,14 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

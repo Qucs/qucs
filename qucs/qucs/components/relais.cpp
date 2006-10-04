@@ -20,7 +20,7 @@
 
 Relais::Relais()
 {
-  Description = QObject::tr("relais");
+  Description = QObject::tr("relay");
 
   Lines.append(new Line(-30,-30,-30, -8,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  8,-30, 30,QPen(QPen::darkBlue,2)));
@@ -75,7 +75,7 @@ Component* Relais::newOne()
 
 Element* Relais::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Relais");
+  Name = QObject::tr("Relay");
   BitmapFile = "relais";
 
   if(getNewOne)  return new Relais();
