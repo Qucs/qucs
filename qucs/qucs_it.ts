@@ -4121,7 +4121,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>relais</source>
-        <translation>relè</translation>
+        <translation type="obsolete">relè</translation>
     </message>
     <message>
         <source>voltage to switch on the relais</source>
@@ -4141,7 +4141,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Relais</source>
-        <translation>Relè</translation>
+        <translation type="obsolete">Relè</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -4273,6 +4273,14 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

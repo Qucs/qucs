@@ -3974,7 +3974,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>relais</source>
-        <translation>relais</translation>
+        <translation type="obsolete">relais</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
@@ -3986,7 +3986,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>Relais</source>
-        <translation>Relais</translation>
+        <translation type="obsolete">Relais</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -4118,6 +4118,14 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
