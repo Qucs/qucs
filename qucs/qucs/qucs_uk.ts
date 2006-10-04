@@ -3761,19 +3761,11 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>relais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relais</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3902,6 +3894,14 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

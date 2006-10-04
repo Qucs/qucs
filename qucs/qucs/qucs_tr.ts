@@ -3825,7 +3825,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>relais</source>
-        <translation>ara durak</translation>
+        <translation type="obsolete">ara durak</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
@@ -3837,7 +3837,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Relais</source>
-        <translation>Ara Durak</translation>
+        <translation type="obsolete">Ara Durak</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -3965,6 +3965,14 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>maximum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
