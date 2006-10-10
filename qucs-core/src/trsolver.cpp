@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.48 2006/07/24 08:07:42 raimi Exp $
+ * $Id: trsolver.cpp,v 1.49 2006/10/10 07:54:53 raimi Exp $
  *
  */
 
@@ -190,9 +190,9 @@ void trsolver::solve (void) {
 
   // Initialize transient analysis.
   setDescription ("transient");
+  initTR ();
   setCalculation ((calculate_func_t) &calcTR);
   solve_pre ();
-  initTR ();
   swp->reset ();
 
   // Recall the DC solution.
@@ -673,7 +673,7 @@ void trsolver::initTR (void) {
 
   // initialize history of solution vectors (solutions)
   for (int i = 0; i < 8; i++) {
-    solution[i] = new tvector<nr_double_t> (*x);
+    solution[i] = new tvector<nr_double_t>;
     setState (sState, (nr_double_t) i, i);
   }
 

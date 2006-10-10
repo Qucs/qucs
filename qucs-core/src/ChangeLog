@@ -1,3 +1,9 @@
+2006-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Fixed a bug in the transient solver occuring
+	when a components MNA matrix changes during DC and TR (e.g.
+	transmission line).
+
 2006-09-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added 'MaxStep' as
