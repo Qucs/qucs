@@ -2,6 +2,8 @@
 % This document contains the chapter some mathematical background.
 %
 % Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2005, 2006
+%               Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -1477,3 +1479,576 @@ should rather be solved with iterative methods.
 
 \subsection{Cubic splines}
 %\addcontentsline{toc}{subsection}{Cubic splines}
+
+
+\section{Frequency-Time Domain Transformation}
+
+Any signal can completely be described in time or in frequency domain.
+As both representations are equivalent, it is possible to transform them
+into each other. This is done by the so-called Fourier Transformation and
+the inverse Fourier Transformation, respectively:
+\begin{eqnarray}
+\text{Fourier Transformation:} & \qquad &
+     \underline{U}(j\omega) =
+     \int\limits_{-\infty}^{\infty} u(t)\cdot e^{-j\omega\cdot t} \; dt \\
+\text{inverse Fourier Transformation:} & \qquad &
+     u(t) = \frac{1}{2\pi} \cdot \int\limits_{-\infty}^{\infty}
+            \underline{U}(j\omega)\cdot e^{j\omega\cdot t} \; d\omega
+\end{eqnarray}
+In digital systems the data $u(t)$ or $\underline{U}(j\omega)$,
+respectively, consists of a finite number $N$ of samples $u_k$ and
+$\underline{U}_n$. This leads to the discrete Fourier Transformation
+(DFT) and its inverse operation (IDFT):
+\begin{eqnarray}
+\label{eqn:DFT}
+\text{DFT:} & \qquad &
+     \underline{U}_n =
+     \sum_{k=0}^{N-1} u_k\cdot \exp\left( -j\cdot n\frac{2\pi\cdot k}{N} \right) \\
+\label{eqn:IDFT}
+\text{IDFT:} & \qquad &
+     u_k = \frac{1}{N} \cdot \sum_{n=0}^{N}
+            \underline{U}_n\cdot \exp\left( j\cdot k\frac{2\pi\cdot n}{N} \right)
+\end{eqnarray}
+The absolute time and frequency values do not appear anymore in the DFT.
+They depend on the sample frequency $f_T$ and the number of samples $N$.
+\begin{equation}
+\Delta f = \frac{1}{N\cdot\Delta t} = \frac{f_T}{N}
+\end{equation}
+Where $\Delta t$ is distance between time samples and $\Delta f$
+distance between frequency samples.
+
+\addvspace{12pt}
+
+With DFT the $N$ time samples are transformed into $N$ frequency samples.
+This also holds if the time data are real numbers, as is always
+the case in "real life": The complex frequency samples are conjugate
+complex symmetrical and so equalizing the score:
+\begin{equation}
+\underline{U}_{N-n} = \underline{U}_n^*
+\end{equation}
+
+\addvspace{12pt}
+
+That is, knowing the input data has no imaginary part, only half of
+the Fourier data must be computed.
+
+
+\subsection{Fast Fourier Transformation}
+
+As can be seen in equation \ref{eqn:DFT} the computing time of the
+DFT rises with $N^2$. This is really huge, so it is
+very important to reduce the time consumption. Using a strongly
+optimized algorithm, the so-called Fast Fourier Transformation (FFT),
+the DFT is reduced to an $N\cdot\log_2 N$ time rise.
+The following information stems from \cite{Press},
+where the theoretical background is explained comprehensively.
+
+\addvspace{12pt}
+
+The fundamental trick of the FFT is to cut the DFT into two parts,
+one with data having even indices and the other with odd indices:
+
+\begin{eqnarray}
+\underline{U}_n & = &
+  \sum_{k=0}^{N-1} u_k\cdot \exp\left( -j\cdot n\frac{2\pi\cdot k}{N} \right) \\
+  & = & \sum_{k=0}^{N/2-1} u_{2k}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot 2k}{N} \right) +
+        \sum_{k=0}^{N/2-1} u_{2k+1}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot (2k+1)}{N} \right) \\
+  & = & \underbrace{ \sum_{k=0}^{N/2-1} u_{2k}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{even}} +
+        W_{n,N}\cdot \underbrace{ \sum_{k=0}^{N/2-1} u_{2k+1}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{odd}} \\
+\text{with} & & W_{n,N} = \exp\left( 2\pi\cdot j\cdot \frac{n}{N} \right)
+        \qquad \text{(so-called 'twiddle factor')}
+\end{eqnarray}
+
+The new formula shows no speed advantages. The important thing is that
+the even as well as the odd part each is again a Fourier series. Thus
+the same procedure can be repeated again and again until the equation
+consists of $N$ terms. Then, each term contains only one data $u_k$
+with factor $e^0=1$. This works if the number of data is a power of
+two (2, 4, 8, 16, 32, ...).
+So finally, the FFT method performs $\log_2 N$ times the operation
+\begin{equation}
+\label{eqn:FFTstep}
+u_{k1,even} + W_{n,x}\cdot u_{k2,odd}
+\end{equation}
+
+to get one data of $\underline{U}_n$. This is called the
+Danielson-Lanzcos algorithm.
+The question now arises which data values of $u_k$
+needs to be combined according to equation \eqref{eqn:FFTstep}.
+The answer is quite easy. The data array must be reordered by the
+bit-reversal method. This means the value at index $k_1$ is swapped
+with the value at index $k_2$ where $k_2$ is obtained by mirroring
+the binary number $k_1$, i.e. the most significant bit becomes the
+least significant one and so on. Example for $N=8$:
+
+\addvspace{12pt}
+
+\begin{tabular}{ccccccccccc}
+000 & $\leftrightarrow$ & 000  & \qquad\qquad &  011 & $\leftrightarrow$ & 110  & \qquad\qquad &  110 & $\leftrightarrow$ & 011 \\
+001 & $\leftrightarrow$ & 100  & \qquad\qquad &  100 & $\leftrightarrow$ & 001  & \qquad\qquad &  111 & $\leftrightarrow$ & 111 \\
+010 & $\leftrightarrow$ & 010  & \qquad\qquad &  101 & $\leftrightarrow$ & 101 \\
+\end{tabular}
+
+\addvspace{12pt}
+
+Having this new indexing, the values to combine according to
+equation \ref{eqn:FFTstep} are the adjacent values. So, performing
+the Danielson-Lanzcos algorithm has now become very easy.
+
+\addvspace{12pt}
+
+Figure \ref{fig:fft} illustrates the whole FFT algorithm starting with the
+input data $u_k$ and ending with one value of the output data
+$\underline{U}_n$.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=13cm]{fft}
+\end{center}
+\caption{principle of a FFT with data length 8}
+\label{fig:fft}
+\end{figure}
+\FloatBarrier
+
+This scheme alone gives no advantage. But it can compute all output
+values within, i.e. no temporary memory is needed and the periocity
+of $W_{n,N}$ is best exploited. To understand this, let's have a look
+on the first Danielson-Lanczos step in figure \ref{fig:fft}. The four
+multiplications and additions have to be performed for each output
+value (here 8 times!). But indeed this is not true, because $W_{n,2}$
+is 2-periodical in $n$ and furthermore $W_{n,2} = -W_{n+1,2}$. So now,
+$u_0 + W_{0,2}\cdot u_4$ replaces the old $u_0$ value and
+$u_0 - W_{0,2}\cdot u_4$ replaces the old $u_4$ value. Doing this for
+all values, four multiplications and eight additions were performed
+in order to calculate the first Danielson-Lanczos step for all (!!!)
+output values. This goes on, as $W_{n,4}$ is 4-periodical in $n$ and
+$W_{n,4} = -W_{n+2,4}$. So this time, two loop iterations (for $W_{n,4}$
+and for $W_{n+1,4}$) are necessary to compute the current
+Danielson-Lanczos step for all output values. This concept continues
+until the last step.
+
+\addvspace{12pt}
+
+Finally, a complete FFT source code in C should be presented. The original
+version was taken from \cite{Press}. It is a radix-2 algorithem,
+known as the Cooley-Tukey Algorithm. Here, several changes were made
+that gain about 10\% speed improvement.
+
+\addvspace{12pt}
+
+\begin{lstlisting}[language=C++,
+    caption={1D-FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+// **************************************************************
+// Parameters:
+// num    - number of complex samples
+// data[] - array containing the data samples, real and imaginary
+//          part in alternating order (length: 2*num)
+// isign  - is 1 to calculate FFT and -1 to calculate inverse FFT
+// **************************************************************
+
+#define SWAP(a,b) { wr = a; a = b; b = wr; }
+
+void fft_radix2(int num, double *data, int isign)
+{
+  double wt, theta, wr, wi, wpr, wpi, tempi, tempr;
+  int i, j, m, n;
+  n = 2*num;
+  j = 0;
+
+  // bit reversal method
+  // 1) index 0 need not to be swapped
+  //    -> start at i=2
+  // 2) swap scheme is symmetrical
+  //    -> swap first and second half in one iteration
+  for (i=2; i<num; i+=2) {
+    m = num;
+    while (j >= m) {  // calculate swap index
+      j -= m;
+      m >>= 1;
+    }
+    j += m;
+
+    if(j > i) {   // was index already swapped ?
+      SWAP(data[j], data[i]);     // swap real part
+      SWAP(data[j+1], data[i+1]); // swap imaginary part
+
+      if(j < num) {  // swap second half ?
+        SWAP (data[n-j-2], data[n-i-2]); // swap real part
+        SWAP (data[n-j-1], data[n-i-1]); // swap imaginary part
+      }
+    }
+  }
+
+  // Danielson-Lanzcos algorithm
+  int mmax, istep;
+  mmax = 2;
+  while (n > mmax) { // each Danielson-Lanzcos step
+    istep = mmax << 1;
+    theta = isign * (2.0 * PI / mmax);
+    wpr = cos(theta);
+    wpi = sin(theta);
+    wr = 1.0;
+    wi = 0.0;
+    for (m=1; m<mmax; m+=2) {
+      for (i=m; i<=n; i+=istep) {
+        j = i+mmax;
+        tempr = wr*data[j-1] + wi*data[j];
+        tempi = wr*data[j] - wi*data[j-1];
+        data[j-1] = data[i-1] - tempr;
+        data[j] = data[i] - tempi;
+        data[i-1] += tempr;
+        data[i] += tempi;
+      }
+      wt = wr;
+      wr = wt*wpr - wi*wpi;
+      wi = wi*wpr + wt*wpi;
+    }
+    mmax = istep;
+  }
+
+  if (istep == -1)        // perform inverse FFT ?
+    for (i=0; i<num; i++)
+      data[i] /= num;     // normalize result
+}
+\end{lstlisting}
+
+\addvspace{12pt}
+
+There are many other FFT algorithms mainly aiming at higher speed
+(radix-8 FFT, split-radix FFT, Winograd FFT). These algorithms are
+much more complex, but on modern processors with numerical co-processors
+they gain no or hardly no speed advantage, because the reduced FLOPS
+are equaled by the far more complex indexing.
+
+
+\subsection{Real-Valued FFT}
+
+All physical systems are real-valued in time domain. As already
+mentioned above, this fact leads to a symmetry in frequency
+domain, which can be exploited to save 50\% memory usage and
+about 30\% computation time. Rewriting the C listing from above
+to a real-valued FFT routine creates the following function.
+As this scheme is not symmetric anymore, an extra procedure
+for the inverse transformation is needed. It is also depicted
+below.
+
+\begin{lstlisting}[language=C++,
+    caption={real-valued FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+// **************************************************************
+// Parameters:
+// num    - number of real-valued samples
+// data[] - array containing the data samples (length: num)
+//
+// Output:
+// data[] - r(0), r(1), i(1), .... , r(N/2-1), i(N/2-1), r(N/2)
+// **************************************************************
+
+#define SWAP(a,b) { wr = a; a = b; b = wr; }
+
+void real_fft_radix2(int num, double *data)
+{
+  int i, j, k, l, n1 = num >> 1, n2 = 1;
+  double t1, t2, t3, wr, wi, wpr, wpi;
+
+  // bit reversal method
+  // 1) index 0 need not to be swapped
+  //    -> start at i=1
+  // 2) swap scheme is symmetrical
+  //    -> swap first and second half in one iteration
+  j = 0;
+  for (i=1; i<n1; i++) {
+    k = n1;
+    while (j >= k) {  // calculate swap index
+      j -= k;
+      k >>= 1;
+    }
+    j += k;
+
+    if(j > i) {   // was index already swapped ?
+      SWAP(data[j], data[i]);
+
+      if(j < n1)  // swap second half ?
+        SWAP (data[num-j-1], data[num-i-1]);
+    }
+  }
+
+  // length two butterflies
+  for (i=0; i<num; i+=2) {
+    t1 = data[i+1];
+    data[i+1] = data[i] - t1;
+    data[i]  += t1;
+  }
+
+  while (n1 < num) {
+    n2 <<= 1;       // half a butterfly
+    n1 = n2 << 1;   // length of a butterfly
+
+    for (i=0; i<num; i+=n1) {
+      t1 = data[i+n2];
+      data[i+n2] = -data[i+n1-1];
+      data[i+n1-1] = data[i] - t1;
+      data[i] += t1;
+    }
+
+    t1 = 2.0*M_PI / ((double)n1);
+    wpr = cos(t1);  // real part of twiddle factor
+    wpi = sin(t1);  // imaginary part of twiddle factor
+    wr = 1.0;   // start of twiddle factor
+    wi = 0.0;
+
+    for (j=3; j<n2; j+=2) { // all complex lines of a butterfly
+      t1 = wr;
+      wr = t1*wpr - wi*wpi; // calculate next twiddle factor
+      wi = wi*wpr + t1*wpi;
+
+      for (i=0; i<num; i+=n1) {  // through all butterflies
+        k = i + j - 2;
+        l = i + n1 - j;
+        t1 = data[l]*wr + data[l+1]*wi;
+        t3 = data[k+1];
+        t2 = data[l+1]*wr - data[l]*wi;
+        data[l] = data[k];
+
+        if((i & n1) != 0) {  // index swap ?
+          t1 = -t1;
+          t3 = -t3;
+        }
+
+        data[k]  += t1;
+        data[k+1] = t2 + t3;
+        data[l]  -= t1;
+        data[l+1] = t2 - t3;
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++,
+    caption={real-valued inverse FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+// **************************************************************
+// Parameters:
+// num    - count of numbers in data
+// data[] - r(0), r(1), i(1), .... , r(N/2-1), i(N/2-1), r(N/2)
+//
+// Output:
+// data[] - array containing the data samples (length: num)
+// **************************************************************
+
+#define SWAP(a,b) { wr = a; a = b; b = wr; }
+
+void real_ifft_order_speed(int num, double *data)
+{
+  int i, j, k, l, n1, n2 = num;
+  double t1, t2, t3, wr, wi, wpr, wpi;
+
+  while (n2 > 2) {
+    n1 = n2;   // length of a butterfly
+    n2 >>= 1;  // half a butterfly
+
+    for (i=0; i<num; i+=n1) {  // through all butterflies
+      t1 = data[i+n1-1];
+      data[i+n1-1] = -2.0 * data[i+n2];
+      data[i+n2-1] *= 2.0;
+      data[i+n2] = data[i] - t1;
+      data[i] += t1;
+    }
+
+    t1 = 2.0*M_PI / ((double)n1);
+    wpr = cos(t1);  // real part of twiddle factor
+    wpi = sin(t1);  // imaginary part of twiddle factor
+    wr = 1.0;   // start of twiddle factor
+    wi = 0.0;
+
+    for (j=3; j<n2; j+=2) { // all complex lines of a butterfly
+      t1 = wr;
+      wr = t1*wpr + wi*wpi; // calculate next twiddle factor
+      wi = wi*wpr - t1*wpi;
+
+      for (i=0; i<num; i+=n1) {  // through all butterflies
+        k = i + j - 2;
+        l = i + n1 - j;
+        t1 = data[l] - data[k];
+        t2 = data[l+1] + data[k+1];
+        t3 = data[k+1] - data[l+1];
+        data[k] += data[l];
+
+        if((i & n1) != 0) {
+          t1 = -t1;
+          t3 = -t3;
+        }
+
+        data[k+1] = t3;
+        data[l]   = t2*wi - t1*wr;
+        data[l+1] = t2*wr + t1*wi;
+      }
+    }
+  }
+
+  // length two butterflies
+  for (i=0; i<num; i+=2) {
+    t1 = data[i+1];
+    data[i+1] = (data[i] - t1) / num;
+    data[i]   = (data[i] + t1) / num;
+  }
+
+  // bit reversal method
+  // 1) index 0 need not to be swapped
+  //    -> start at i=1
+  // 2) swap scheme is symmetrical
+  //    -> swap first and second half in one iteration
+  j = 0;
+  n1 = num >> 1;
+  for (i=1; i<n1; i++) {
+    k = n1;
+    while (j >= k) {  // calculate swap index
+      j -= k;
+      k >>= 1;
+    }
+    j += k;
+
+    if(j > i) {   // was index already swapped ?
+      SWAP(data[j], data[i]);
+
+      if(j < n1)  // swap second half ?
+        SWAP (data[num-j-1], data[num-i-1]);
+    }
+  }
+}
+\end{lstlisting}
+
+
+\subsection{More-Dimensional FFT}
+
+A standard Fourier Transformation is not useful in harmonic balance
+methods, because with multi-tone excitation many mixing products appear.
+The best way to cope with this problem is to use multi-dimensional
+FFT.
+
+\addvspace{12pt}
+
+Fourier Transformations in more than one dimension soon become
+very time consuming. Using FFT mechanisms is therefore mandatory.
+A more-dimensional Fourier Transformation consists of many
+one-dimensional Fourier Transformations (1D-FFT). First, 1D-FFTs
+are performed for the data of the first dimension at every index
+of the second dimension. The results are used as input data for
+the second dimension that is performed the same way with respect
+to the third dimension. This procedure is continued until all
+dimensions are calculated. The following equations shows this
+for two dimensions.
+
+\begin{eqnarray}
+\underline{U}_{n1,n2} & = & \sum_{k_2=0}^{N_2-1} \sum_{k_1=0}^{N_1-1}
+   u_{k_1,k_2}\cdot \exp\left( -j\cdot n_1\frac{2\pi\cdot k_1}{N_1} \right)
+              \cdot \exp\left( -j\cdot n_2\frac{2\pi\cdot k_2}{N_2} \right) \\
+ & = & \sum_{k_2=0}^{N_2-1} \exp\left( -j\cdot n_2\frac{2\pi\cdot k_2}{N_2} \right)
+       \cdot \underbrace{ \sum_{k_1=0}^{N_1-1}
+   u_{k_1,k_2}\cdot \exp\left( -j\cdot n_1\frac{2\pi\cdot k_1}{N_1} \right) }_\text{1D-FFT}
+\end{eqnarray}
+
+
+Finally, a complete $n$-dimensional FFT source code should be
+presented. It was taken from \cite{Press} and somewhat speed
+improved.
+
+\addvspace{12pt}
+
+Parameters:\\
+\begin{tabular}{lcl}
+\texttt{ndim}   & - & number of dimensions\\
+\texttt{num[]}  & - & array containing the number of complex samples for every dimension\\
+\texttt{data[]} & - & array containing the data samples,\\
+                &   & real and imaginary part in alternating order (length: 2*sum of \texttt{num[]}),\\
+                &   & going through the array, the first dimension changes least rapidly !\\
+                &   & all subscripts range from 1 to maximum value !\\
+\texttt{isign}  & - & is 1 to calculate FFT and -1 to calculate inverse FFT
+\end{tabular}
+
+\addvspace{12pt}
+
+\begin{lstlisting}[language=C++,
+    caption={multidimensional FFT algorithm in C},
+    numbers=left,
+    basicstyle=\small,
+    frame=single,
+    fontadjust]
+int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2;
+int ibit, k1, k2, n, nprev, nrem, ntot;
+double tempi, tempr, wt, theta, wr, wi, wpi, wpr;
+
+ntot = 1;
+for (idim=0; idim<ndim; idim++) // compute total number of complex values
+  ntot *= num[idim];
+
+nprev = 1;
+for (idim=ndim-1; idim>=0; idim--) { // main loop over the dimensions
+  n = num[idim];
+  nrem = ntot/(n*nprev);
+  ip1 = nprev << 1;
+  ip2 = ip1*n;
+  ip3 = ip2*nrem;
+  i2rev = 1;
+
+  for (i2=1; i2<=ip2; i2+=ip1) { // bit-reversal method
+    if (i2 < i2rev) {
+      for (i1=i2; i1<=i2+ip1-2; i1+=2) {
+	for (i3=i1; i3<=ip3; i3+=ip2) {
+	  i3rev = i2rev+i3-i2;
+	  SWAP(data[i3-1],data[i3rev-1]);
+	  SWAP(data[i3],data[i3rev]);
+	}
+      }
+    }
+    ibit=ip2 >> 1;
+    while (ibit >= ip1 && i2rev > ibit) {
+      i2rev -= ibit;
+      ibit >>= 1;
+    }
+    i2rev += ibit;
+  }
+
+  ifp1 = ip1;
+  while (ifp1 < ip2) { // Danielson-Lanzcos algorithm
+    ifp2 = ifp1 << 1;
+    theta = isign*2*pi/(ifp2/ip1);
+    wpr = cos(theta);
+    wpi = sin(theta);
+    wr = 1.0; wi = 0.0;
+    for (i3=1; i3<=ifp1; i3+=ip1) {
+      for (i1=i3; i1<=i3+ip1-2; i1+=2) {
+	for (i2=i1; i2<=ip3; i2+=ifp2) {
+	  k1 = i2;
+	  k2 = k1+ifp1;
+	  tempr = wr*data[k2-1] - wi*data[k2];
+	  tempi = wr*data[k2] + wi*data[k2-1];
+	  data[k2-1] = data[k1-1] - tempr;
+	  data[k2] = data[k1] - tempi;
+	  data[k1-1] += tempr; data[k1] += tempi;
+	}
+      }
+      wt = wr;
+      wr = wt*wpr - wi*wpi;
+      wi = wi*wpr + wt*wpi;
+    }
+    ifp1 = ifp2;
+  }
+  nprev *= n;
+}
+\end{lstlisting}

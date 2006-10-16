@@ -856,6 +856,70 @@
         <source>Cancel</source>
         <translation>キャンセル</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>display</source>
+        <translation type="unfinished">表示</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">説明</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">はい</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">いいえ</translation>
+    </message>
+    <message>
+        <source>display in schematic</source>
+        <translation type="unfinished">回路図に表示</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">名前 :</translation>
+    </message>
+    <message>
+        <source>Default Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">追加</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">削除</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">エラー</translation>
+    </message>
+    <message>
+        <source>Parameter must not be named &quot;File&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
@@ -3681,7 +3745,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation>警告:サブサーキット&quot;%1&quot;中の方程式は無視されます.</translation>
+        <translation type="obsolete">警告:サブサーキット&quot;%1&quot;中の方程式は無視されます.</translation>
     </message>
     <message>
         <source>Timing Diagram</source>

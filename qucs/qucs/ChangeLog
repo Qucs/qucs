@@ -1,3 +1,8 @@
+2006-10-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* put equations also in subcircuit netlists
+	* added parameters to subcircuits
+
 2006-09-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/diagram.cpp (loadGraphData): Fixed a minor bug in

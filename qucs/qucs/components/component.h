@@ -79,7 +79,7 @@ public:
   QString  Description;
 
 protected:
-  int  analyseLine(const QString&);
+  int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
 		   int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);

@@ -719,6 +719,7 @@ j\omega L + \dfrac{1}{j\omega C} & \dfrac{1}{j\omega C}\\
 
 Parallel coupled microstrip lines are defined by the characteristic
 impedance and the effective permittivity of the even and the odd mode.
+The y- and S-parameters are depicted in section \ref{sec:coupledtline}.
 
 \subsubsection{Kirschning and Jansen}
 %\addcontentsline{toc}{subsubsection}{Kirschning and Jansen}
@@ -1128,53 +1129,6 @@ eq. \eqref{eq:HandJKi}).
 K_{i,e} = K_{i,o} = \exp{\left(-1.2\cdot\left(\dfrac{Z_{L,e} + Z_{L,o}}{2\cdot Z_{F0}}\right)^{0.7}\right)}
 \end{equation}
 
-\subsection{S-parameters of parallel coupled microstrip lines}
-%\addcontentsline{toc}{subsection}{S-parameters of parallel coupled microstrip lines}
-
-After endless equations formulating the effective dielectric constant
-and the characte\-ris\-tic impe\-dance of the even and odd mode, the
-S-parameters (according to the port numbering in
-fig. \ref{fig:mscoupled}) can now be defined \cite{Edwards}.
-
-\addvspace{12pt}
-
-reflection coefficients
-\begin{equation}
-S_{11} = S_{22} = S_{33} = S_{44} = X_e + X_o
-\end{equation}
-through paths
-\begin{equation}
-S_{12} = S_{21} = S_{34} = S_{43} = Y_e + Y_o
-\end{equation}
-coupled paths
-\begin{equation}
-S_{14} = S_{41} = S_{23} = S_{32} = X_e - X_o
-\end{equation}
-isolated paths
-\begin{equation}
-S_{13} = S_{31} = S_{24} = S_{42} = Y_e - Y_o
-\end{equation}
-
-with the denominator
-\begin{equation}
-D_{e,o} = 2\cdot Z_{L,e,o}\cdot Z_0\cdot \cosh(\gamma_{e,o}\cdot l)
-         + \left(Z_{L,e,o}^2 + Z_0^2\right)\cdot \sinh\left(\gamma_{e,o}\cdot l\right)
-\end{equation}
-
-and
-\begin{align}
-X_{e,o} &= \frac{\left(Z_{L,e,o}^2 - Z_0^2\right)\cdot \sinh\left(\gamma_{e,o}\cdot l\right)}{2\cdot D_{e,o}}\\
-Y_{e,o} &= \frac{Z_{L,e,o}\cdot Z_0}{D_{e,o}}
-\end{align}
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.5\linewidth]{mscoupled}
-\end{center}
-\caption{coupled microstrip line}
-\label{fig:mscoupled}
-\end{figure}
-\FloatBarrier
 
 \section{Microstrip open}
 %\addcontentsline{toc}{section}{Microstrip open}

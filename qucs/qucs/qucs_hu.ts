@@ -859,6 +859,70 @@ fizikai tulajdonságait számítja ki.</translation>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>display</source>
+        <translation type="unfinished">Kijelezve</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Név</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Leírás</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">igen</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">nem</translation>
+    </message>
+    <message>
+        <source>display in schematic</source>
+        <translation type="unfinished">Kijelezve a kapcsolási rajzon</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Név:</translation>
+    </message>
+    <message>
+        <source>Default Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Hozzáadás</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Eltávolítás</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hiba</translation>
+    </message>
+    <message>
+        <source>Parameter must not be named &quot;File&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
@@ -3717,7 +3781,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation>FIGYELMEZTETÉS: Mellőzve a képlet a &quot;%1&quot; beágyazott kapcsolásban.</translation>
+        <translation type="obsolete">FIGYELMEZTETÉS: Mellőzve a képlet a &quot;%1&quot; beágyazott kapcsolásban.</translation>
     </message>
     <message>
         <source>type of the port</source>
