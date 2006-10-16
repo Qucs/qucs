@@ -18,7 +18,7 @@ Working with Subcircuits<br>
 
 Subcircuits are used to bring more clarity into a schematic. This is
 very useful in large circuits or in circuits, in which a component
-block appears several time.<br>
+block appears several times.<br>
 In Qucs, each schematic containing a subcircuit port is a subcircuit.
 You can get a subcircuit port by using the toolbar, the components
 listview (in lumped components) or the menu (Insert->Insert port).
@@ -52,8 +52,16 @@ and go to the menu: File->Edit Circuit Symbol. If you have not yet
 drawn a symbol for this circuit. A simple symbol is created
 automatically. You now can edit this symbol by painting lines and
 arcs. After finished, save it. Now place it on another schematic,
-et voila, you have a new symbol.
-<br>
+and you have a new symbol.
+<br><br>
+Just like all other components, subcircuits can have parameters.
+To create your own parameters, go back to the editor where you
+edited the subcircuit symbol and double-click on the subcircuit
+parameter text. A dialog apperas and you now can fill in parameters
+with default values and descriptions. When you are ready, close
+the dialog and save the subcircuit. In every schematic where the
+subcircuit is placed, it owns the new parameters which can be
+edited as in all other components.
 
 <br><a href="#top">back to the top</a><br>
 </body>

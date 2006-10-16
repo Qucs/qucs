@@ -1,6 +1,6 @@
 /***************************************************************************
-                        id_text.cpp  -  description
-                             -------------------
+                               id_text.cpp
+                              -------------
     begin                : Thu Oct 14 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -16,10 +16,7 @@
  ***************************************************************************/
 
 #include "id_text.h"
-
 #include "id_dialog.h"
-
-#include <qlineedit.h>
 
 
 ID_Text::ID_Text(int cx_, int cy_)
@@ -31,6 +28,7 @@ ID_Text::ID_Text(int cx_, int cy_)
   x2 = y2 = 20;
 
   Prefix = "SUB";
+  Parameter.setAutoDelete(true);
 }
 
 ID_Text::~ID_Text()
@@ -40,19 +38,26 @@ ID_Text::~ID_Text()
 // --------------------------------------------------------------------------
 void ID_Text::paint(ViewPainter *p)
 {
-  int Width1, x, y;
+  int x, y;
   p->Painter->setPen(QPen(QPen::black,1));
   p->map(cx, cy, x, y);
 
   QRect r;
   p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Prefix, -1, &r);
-  Width1 = r.width();
+  x2 = r.width();
   y2 = p->LineSpacing;
 
   p->Painter->drawText(x, y+y2, 0, 0, Qt::DontClip, "File=name", -1, &r);
-  y2 += y2;
-  if(Width1 > r.width())  x2 = Width1;
-  else  x2 = r.width();
+  if(x2 < r.width())  x2 = r.width();
+  y2 += p->LineSpacing;
+
+  SubParameter *pp;
+  for(pp = Parameter.first(); pp != 0; pp = Parameter.next())
+    if(pp->display) {
+      p->Painter->drawText(x, y+y2, 0, 0, Qt::DontClip, pp->Name, -1, &r);
+      if(x2 < r.width())  x2 = r.width();
+      y2 += p->LineSpacing;
+    }
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
@@ -98,6 +103,18 @@ bool ID_Text::load(const QString& s)
   Prefix = s.section(' ',3,3);    // Prefix
   if(Prefix.isEmpty()) return false;
 
+  int i = 1;
+  for(;;) {
+    n = s.section('"', i,i);
+    if(n.isEmpty())  break;
+
+    Parameter.append(new SubParameter(
+       (n.at(0) == '0') ? false : true,
+       n.section('=', 1,2), n.section('=', 3,3)));
+
+    i += 2;
+  }
+
   return true;
 }
 
@@ -106,6 +123,14 @@ QString ID_Text::save()
 {
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += Prefix;
+
+  SubParameter *pp;
+  for(pp = Parameter.first(); pp != 0; pp = Parameter.next()) {
+    if(pp->display)  s += " \"1=";
+    else  s += " \"0=";
+    s += pp->Name + "=" + pp->Description + "\"";
+  }
+
   return s;
 }
 
@@ -151,22 +176,12 @@ void ID_Text::mirrorY()
 // If there were changes, it returns 'true'.
 bool ID_Text::Dialog()
 {
-  bool changed = false;
-
-  ID_Dialog *d = new ID_Dialog();
-  d->Prefix->setText(Prefix);
-
+  ID_Dialog *d = new ID_Dialog(this);
   if(d->exec() == QDialog::Rejected) {
     delete d;
     return false;
   }
 
-  if(!d->Prefix->text().isEmpty())
-    if(Prefix  != d->Prefix->text()) {
-      Prefix = d->Prefix->text();
-      changed = true;
-    }
-
   delete d;
-  return changed;
+  return true;
 }

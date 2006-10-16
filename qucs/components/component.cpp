@@ -729,6 +729,15 @@ bool Component::load(const QString& _s)
   tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
 
   unsigned int z=0, counts = s.contains('"');
+  if(Model == "Sub")
+    tmp = 1;
+  else if(Model == "Lib")
+    tmp = 2;
+  else tmp = counts;
+
+  for(; tmp<=counts/2; tmp++)
+    Props.append(new Property("p", "", true, " "));
+
   // load all properties
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
@@ -758,9 +767,7 @@ bool Component::load(const QString& _s)
     p1->Value = n;
 
     n  = s.section('"',z,z);    // display
-    if(n.toInt(&ok) == 1) p1->display = true;
-    else p1->display = false;
-    if(!ok) return false;
+    p1->display = (n.at(1) == '1');
   }
 
   return true;
@@ -770,7 +777,7 @@ bool Component::load(const QString& _s)
 // ***  The following functions are used to load the schematic symbol
 // ***  from file. (e.g. subcircuit, library component)
 
-int Component::analyseLine(const QString& Row)
+int Component::analyseLine(const QString& Row, int numProps)
 {
   QPen Pen;
   QBrush Brush;
@@ -829,6 +836,30 @@ int Component::analyseLine(const QString& Row)
     ty = i2;
     Name = Row.section(' ',3,3);
     if(Name.isEmpty())  Name = "SUB";
+
+    i1 = 1;
+    Property *pp = Props.at(numProps-1);
+    for(;;) {
+      s = Row.section('"', i1,i1);
+      if(s.isEmpty())  break;
+
+      pp = Props.next();
+      if(pp == 0) {
+        pp = new Property();
+        Props.append(pp);
+
+        pp->display = (s.at(0) == '1');
+        pp->Value = s.section('=', 2,2);
+      }
+
+      pp->Name  = s.section('=', 1,1);
+      pp->Description = s.section('=', 3,3);
+
+      i1 += 2;
+    }
+
+    while(pp != Props.last())
+      Props.remove();
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {
