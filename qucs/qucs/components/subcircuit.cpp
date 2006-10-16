@@ -39,7 +39,7 @@ Subcircuit::Subcircuit()
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
-  Props.append(new Property("File", "", true,
+  Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
   Model = "Sub";
@@ -186,7 +186,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
     if(Line.at(0) != '<') return -5;
     if(Line.at(Line.length()-1) != '>') return -6;
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
-    Result = analyseLine(Line);
+    Result = analyseLine(Line, 1);
     if(Result < 0) return -7;   // line format error
     z += Result;
   }
@@ -204,7 +204,11 @@ QString Subcircuit::NetList()
     s += " "+p1->Connection->Name;   // node names
 
   // type for subcircuit
-  s += " Type=\""+properName(Props.getFirst()->Value)+"\"";
+  s += " Type=\""+properName(Props.first()->Value)+"\"";
+
+  // output all user defined properties
+  for(Property *pp = Props.next(); pp != 0; pp = Props.next())
+    s += " "+pp->Name+"=\""+pp->Value+"\"";
   return s;
 }
 

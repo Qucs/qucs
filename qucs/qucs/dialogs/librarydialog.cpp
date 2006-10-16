@@ -188,6 +188,7 @@ void LibraryDialog::slotNext()
     return;
   }
 
+  theLabel->setShown(false);
   ErrText->setReadOnly(true);
   ButtCancel->setEnabled(false);
   ButtCreate->setText(tr("Close"));

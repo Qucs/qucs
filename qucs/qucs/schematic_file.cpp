@@ -26,13 +26,13 @@
 #include <qprocess.h>
 #include <qtextedit.h>
 
+#include "main.h"
 #include "node.h"
+#include "schematic.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
 #include "components/libcomp.h"
-#include "schematic.h"
-#include "main.h"
 
 
 extern QDir QucsWorkDir;
@@ -989,8 +989,22 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
   QString  Type = properName(DocName);
 
-  if(NumPorts < 0)
-    (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ") << '\n';
+  Painting *pi;
+  // write subcircuit header into the netlist file
+  if(NumPorts < 0) {
+    (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ");
+    for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
+      if(pi->Name == ".ID ") {
+        SubParameter *pp;
+        ID_Text *pid = (ID_Text*)pi;
+        for(pp = pid->Parameter.first(); pp != 0; pp = pid->Parameter.next()) {
+          s = pp->Name;  // keep 'Name' unchanged
+          (*stream) << " " << s.replace("=", "=\"") << '"';
+        }
+        break;
+      }
+    (*stream) << '\n';
+  }
   else {
     (*stream) << "\nentity Sub_" << Type << " is\n"
               << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
@@ -1015,11 +1029,6 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
       ErrText->insert(
         QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName));
-      continue;
-    }
-    if(pc->Model == "Eqn") {  // no equations in subcircuits
-      ErrText->insert(
-        QObject::tr("WARNING: Ignore equation in subcircuit \"%1\".").arg(DocName));
       continue;
     }
 
