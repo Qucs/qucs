@@ -20,11 +20,22 @@
 
 #include "painting.h"
 
+#include <qstring.h>
+#include <qptrlist.h>
+
+struct SubParameter {
+  SubParameter(bool display_, const QString& Name_, const QString& Descr_)
+     : display(display_), Name(Name_), Description(Descr_) {};
+
+  QString Name, Description;
+  bool display;
+};
+
 
 class ID_Text : public Painting  {
 public:
   ID_Text(int cx_=0, int cy_=0);
-  ~ID_Text();
+ ~ID_Text();
 
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
@@ -42,6 +53,7 @@ public:
   bool Dialog();
 
   QString Prefix;
+  QPtrList<SubParameter> Parameter;
 };
 
 #endif

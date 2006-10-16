@@ -797,6 +797,70 @@
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>display</source>
+        <translation type="unfinished">gösterge</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">İsim</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Açıklama</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">evet</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">hayır</translation>
+    </message>
+    <message>
+        <source>display in schematic</source>
+        <translation type="unfinished">Tasarıda göster</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">İsim:</translation>
+    </message>
+    <message>
+        <source>Default Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Ekle</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Kaldır</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hata</translation>
+    </message>
+    <message>
+        <source>Parameter must not be named &quot;File&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
@@ -1785,7 +1849,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation>UYARI: &quot;%1&quot; alt-devresindeki eşitliği gözardı et.</translation>
+        <translation type="obsolete">UYARI: &quot;%1&quot; alt-devresindeki eşitliği gözardı et.</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>

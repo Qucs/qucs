@@ -1,6 +1,6 @@
 /***************************************************************************
-                          id_dialog.h  -  description
-                             -------------------
+                               id_dialog.h
+                              -------------
     begin                : Sat Oct 16 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -22,27 +22,43 @@
 #include <qregexp.h>
 
 
+class ID_Text;
+class QListView;
 class QLineEdit;
+class QCheckBox;
 class QVBoxLayout;
-class QRegExp;
+class QListViewItem;
 class QRegExpValidator;
 
-/**
-  *@author Michael Margraf
-  */
 
 class ID_Dialog : public QDialog  {
 Q_OBJECT
 public:
-  ID_Dialog(QWidget *parent=0);
-  ~ID_Dialog();
+  ID_Dialog(ID_Text*);
+ ~ID_Dialog();
 
-public:
-  QLineEdit   *Prefix;
+private:
+  ID_Text *idText;
+
   QVBoxLayout *v;
+  QLineEdit *Prefix;
 
-  QRegExp *rx;
-  QRegExpValidator *Validator;
+  QListView *ParamList;
+  QCheckBox *showCheck;
+  QLineEdit *ParamNameEdit, *ValueEdit, *DescriptionEdit;
+
+  QRegExp Expr;
+  QRegExpValidator *SubVal, *NameVal, *ValueVal, *DescrVal;
+
+private slots:
+  void slotOk();
+  void slotAddParameter();
+  void slotRemoveParameter();
+  void slotEditParameter(QListViewItem*);
+  void slotToggleShow(bool);
+  void slotNameChanged(const QString&);
+  void slotValueChanged(const QString&);
+  void slotDescrChanged(const QString&);
 };
 
 #endif

@@ -920,6 +920,70 @@
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>display</source>
+        <translation type="unfinished">mostra</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descrizione</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished">sì</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished">no</translation>
+    </message>
+    <message>
+        <source>display in schematic</source>
+        <translation type="unfinished">mostra nello schema</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Nome:</translation>
+    </message>
+    <message>
+        <source>Default Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Aggiungi</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Rimuovi</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
+    </message>
+    <message>
+        <source>Parameter must not be named &quot;File&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter &quot;%1&quot; already in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
@@ -3849,7 +3913,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation>ATTENZIONE: Ignorata equazione nel sottocircuito &quot;%1&quot;.</translation>
+        <translation type="obsolete">ATTENZIONE: Ignorata equazione nel sottocircuito &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>type of the port</source>

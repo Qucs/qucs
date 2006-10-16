@@ -189,7 +189,7 @@ int LibComp::loadSymbol()
     if(Line.at(0) != '<') return -11;
     if(Line.at(Line.length()-1) != '>') return -12;
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
-    Result = analyseLine(Line);
+    Result = analyseLine(Line, 2);
     if(Result < 0) return -13;   // line format error
     z += Result;
   }
@@ -228,6 +228,10 @@ QString LibComp::NetList()
   Type += "_" + Props.next()->Value;
   Type.replace(QRegExp("\\W"), "_");
   s += " Type=\""+Type+"\"";   // type for subcircuit
+
+  // output user defined parameters
+  for(Property *pp = Props.next(); pp != 0; pp = Props.next())
+    s += " "+pp->Name+"=\""+pp->Value+"\"";
 
   return s;
 }
