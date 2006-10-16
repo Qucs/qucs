@@ -29,7 +29,7 @@ MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
   stabbashford.m stabgearex.m coplanarzl.m
 MATHHELPS = zpoly.m econst.m Kapprox.m
 MPSFILES = $(MATHFILES:.m=.eps)
-FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
+FIGURES = differential.fig biast.fig \
   nconnect.fig sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
   actrafo.fig opamp.fig gyrator.fig msline.fig newton.fig jfet.fig dcjfet.fig \
   newtondiode.fig dcdiode.fig diode.fig spdiode.fig spjfet.fig newtonbad.fig  \
