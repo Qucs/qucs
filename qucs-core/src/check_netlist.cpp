@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.98 2006/09/19 08:22:20 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.99 2006/10/17 09:00:04 raimi Exp $
  *
  */
 
@@ -39,10 +39,12 @@
 #include "check_netlist.h"
 #include "constants.h"
 #include "environment.h"
+#include "variable.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
+environment * env_root = NULL;
 
 // Include list of available components.
 #include "qucsdefs.h"
@@ -334,7 +336,19 @@ static int checker_resolve_variable (struct definition_t * root,
     if ((val = checker_find_variable (root, "SPfile", "File", value->ident))) {
       found++;
     }
-    /* TODO: find variable in equations */
+    /* 7. find variable in equation */
+    if (root->env->getChecker()->containsVariable (value->ident)) {
+      variable * v;
+      if ((v = root->env->getVariable (value->ident)) == NULL) {
+	value->var = eqn::TAG_DOUBLE;
+	v = new variable (value->ident);
+	eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
+	v->setConstant (c);
+	root->env->addVariable (v);
+      }
+      found++;
+    }
+    /* not found */
     if (!found) {
       logprint (LOG_ERROR, "line %d: checker error, no such variable `%s' "
 		"used in a `%s:%s' property\n", def->line, value->ident,
@@ -1211,11 +1225,16 @@ static char * checker_subcircuit_instance (char * type, char * instances,
    circuit element list in reverse order. */
 static struct definition_t *
 checker_copy_subcircuits (struct definition_t * type,
-			  struct definition_t * inst, strlist * * instances) {
+			  struct definition_t * inst, strlist * * instances,
+			  environment * parent) {
   struct definition_t * def, * copy;
   struct definition_t * root = NULL;
   strlist * instcopy;
   char * list;
+
+  // create environment for subcircuit instance
+  environment * child = new environment (*(type->env));
+  parent->addChild (child);
 
   // go through element list of subcircuit
   for (def = type->sub; def != NULL; def = def->next) {
@@ -1232,7 +1251,7 @@ checker_copy_subcircuits (struct definition_t * type,
       instcopy = new strlist (*(*instances));
       // append instance name to recursive instance list
       (*instances)->append (inst->instance);
-      copy = checker_copy_subcircuits (sub, def, instances);
+      copy = checker_copy_subcircuits (sub, def, instances, child);
       // put the expanded definitions into the sublist
       if (copy) {
 	list = checker_subcircuit_instance_list (instcopy);
@@ -1568,7 +1587,7 @@ netlist_unchain_definition (struct definition_t * root,
    list and returns the expanded list with the subcircuit definitions
    removed. */
 static struct definition_t *
-checker_expand_subcircuits (struct definition_t * root) {
+checker_expand_subcircuits (struct definition_t * root, environment * parent) {
   struct definition_t * def, * sub, * copy, * next, * prev;
   strlist * instances = NULL;
 
@@ -1577,9 +1596,10 @@ checker_expand_subcircuits (struct definition_t * root) {
     next = def->next;
     // is this a subcircuit instance definition ?
     if (!strcmp (def->type, "Sub")) {
-      // get the subcircuit type definition and make a copy of it
+      // get the subcircuit type definition
       sub = checker_get_subcircuit (def);
-      copy = checker_copy_subcircuits (sub, def, &instances);
+      // and make a copy of it
+      copy = checker_copy_subcircuits (sub, def, &instances, parent);
       if (instances) { delete instances; instances = NULL; }
       // remove the subcircuit instance from the original list
       if (prev) {
@@ -1743,7 +1763,7 @@ void netlist_status (void) {
    definition and removes the definition containing the equations from
    the list. */
 static struct definition_t *
-checker_build_equations (struct definition_t * root, eqn::node ** eroot ) {
+checker_build_equations (struct definition_t * root, eqn::node ** eroot) {
   struct definition_t * def, * next, * prev;
   eqn::node * eqns, * last;
   *eroot = NULL;
@@ -1770,32 +1790,10 @@ checker_build_equations (struct definition_t * root, eqn::node ** eroot ) {
   return root;
 }
 
-/* This is the global netlist checker.  It returns zero on success and
-   non-zero on errors. */
-int netlist_checker (environment * env) {
-  int errors = 0;
-  eqn::node * eqns;
-  struct definition_t * def;
-
-  // first create the subcircuit list
-  definition_root = checker_build_subcircuits (definition_root);
-  // get equation list
-  definition_root = checker_build_equations (definition_root, &eqns);
-  // check list of subcircuits
-  errors += netlist_checker_intern (subcircuit_root);
-  // then check each subcircuit list
-  for (def = subcircuit_root; def != NULL; def = def->next) {
-    errors += netlist_checker_intern (def->sub);
-  }
-  // check global netlist
-  errors += netlist_checker_intern (definition_root);
-  // check actions
-  errors += checker_validate_actions (definition_root);
-  if (!errors) {
-    // and finally expand the subcircuits into the global netlist
-    definition_root = checker_expand_subcircuits (definition_root);
-  }
-
+/* The function creates an environment for the given definition root
+   including equation checker and solver. */
+static void checker_setup_env (struct definition_t * root,
+			       environment * env, eqn::node * eqns) {
   // create equation checker
   eqn::checker * checkee = new eqn::checker ();
   // pass equations to the checker
@@ -1808,6 +1806,69 @@ int netlist_checker (environment * env) {
   eqn::solver * solvee = new eqn::solver (checkee);
   // pass solver
   env->setSolver (solvee);
+  // apply environment to the netlist root
+  root->env = env;
+}
+
+/* Adds the arguments of a subcircuit into the equation checker of the
+   given environment. */
+static void checker_subcircuit_args (struct definition_t * def,
+				     environment * env) {
+  for (struct pair_t * pair = def->pairs; pair != NULL; pair = pair->next) {
+    if (strcmp (pair->key, "Type")) {
+      env->getChecker()->addDouble ("#subcircuit",
+				    pair->key, pair->value->value);
+    }
+  }
+}
+
+/* This is the global netlist checker.  It returns zero on success and
+   non-zero on errors. */
+int netlist_checker (environment * env) {
+  int errors = 0;
+  eqn::node * eqns;
+  struct definition_t * def;
+
+  // create top-level environment
+  environment * env_root = new environment ("root");
+  // create the subcircuit list
+  definition_root = checker_build_subcircuits (definition_root);
+  // get equation list
+  definition_root = checker_build_equations (definition_root, &eqns);
+  // setup the root environment
+  checker_setup_env (definition_root, env_root, eqns);
+  // check list of subcircuits
+  errors += netlist_checker_intern (subcircuit_root);
+  // check global netlist
+  errors += netlist_checker_intern (definition_root);
+  // check actions
+  errors += checker_validate_actions (definition_root);
+  // check equations in root
+  errors += env_root->equationChecker (0);
+
+  // then check each subcircuit list
+  for (def = subcircuit_root; def != NULL; def = def->next) {
+    // get equation list
+    def->sub = checker_build_equations (def->sub, &eqns);
+    // setup the subcircuit environment
+    environment * subenv = new environment (def->instance);
+    env_root->addChild (subenv);
+    checker_setup_env (def, subenv, eqns);
+    def->sub->env = subenv;
+    // add subcircuit parameters to equations
+    checker_subcircuit_args (def, subenv);
+    // check subcircuit netlist
+    errors += netlist_checker_intern (def->sub);
+    // check equations in subcircuit
+    errors += subenv->equationChecker (0);
+  }
+
+  if (!errors) {
+    // create actual root environment
+    *env = *env_root;
+    // and finally expand the subcircuits into the global netlist
+    definition_root = checker_expand_subcircuits (definition_root, env);
+  }
 
   return errors ? -1 : 0;
 }

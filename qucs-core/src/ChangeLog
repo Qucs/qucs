@@ -1,3 +1,17 @@
+2006-10-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* input.cpp: Removed equation checking here.  It's now done in
+	the netlist checker.
+
+	* equation.cpp: New function checking if a given variable name
+	is an equation.
+
+	* environment.cpp: Added children funtionality for environments.
+
+	* check_netlist.cpp: Resolving variables in equations.
+	Creating a real environment tree.  Checking equtions in all
+	subcircuits as well.
+
 2006-10-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Fixed a bug in the transient solver occuring

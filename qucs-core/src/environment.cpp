@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.4 2006/09/19 08:22:20 raimi Exp $
+ * $Id: environment.cpp,v 1.5 2006/10/17 09:00:04 raimi Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 
 #include "variable.h"
 #include "equation.h"
+#include "ptrlist.h"
 #include "environment.h"
 
 // Constructor creates an unnamed instance of the environment class.
@@ -40,6 +41,7 @@ environment::environment () {
   root = NULL;
   solvee = NULL;
   checkee = NULL;
+  children = new ptrlist<environment>;
 }
 
 // Constructor creates a named instance of the environment class.
@@ -48,16 +50,17 @@ environment::environment (char * n) {
   root = NULL;
   solvee = NULL;
   checkee = NULL;
+  children = new ptrlist<environment>;
 }
 
 /* The copy constructor creates a new instance of the environment
    class based on the given environment object. */
 environment::environment (const environment & e) {
-  name = NULL;
-  if (e.name) name = strdup (e.name);
+  name = e.name ? strdup (e.name) : NULL;
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
+  children = new ptrlist<environment>;
 }
 
 // Destructor deletes the environment object.
@@ -65,6 +68,7 @@ environment::~environment () {
   if (name) free (name);
   deleteVariables ();
   if (solvee) delete solvee;
+  delete children;
 }
 
 // Sets the name of the environment.
@@ -132,4 +136,26 @@ int environment::equationSolver (dataset * data) {
   int err = solvee->solve (data);
   checkee->setEquations (solvee->getEquations ());
   return err;
+}
+
+// Adds a child to the environment.
+void environment::addChild (environment * child) {
+  children->add (child);
+}
+
+// Removes a child from the environment.
+void environment::delChild (environment * child) {
+  children->del (child);
+}
+
+/* The function solves the equations of the current environment object
+   as well as these of its children, updates the variables and passes
+   the arguments to each children. */
+int environment::runSolver (void) {
+  int ret = 0;
+  ret |= equationSolver (NULL);
+  for (ptrlistiterator<environment> it (*children); *it; ++it) {
+    ret |= (*it)->runSolver ();
+  }
+  return ret;
 }

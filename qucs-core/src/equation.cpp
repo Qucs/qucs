@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.43 2006/09/19 08:22:20 raimi Exp $
+ * $Id: equation.cpp,v 1.44 2006/10/17 09:00:04 raimi Exp $
  *
  */
 
@@ -1525,6 +1525,15 @@ strlist * checker::variables (void) {
   return idents;
 }
 
+// Checks if the given variable name is an equation.
+bool checker::containsVariable (char * ident) {
+  foreach_equation (eqn) {
+    if (!strcmp (ident, eqn->result))
+      return true;
+  }
+  return false;
+}
+
 // Structure defining a predefined constant.
 struct pconstant {
   char * ident;
@@ -1548,20 +1557,27 @@ void checker::constants (void) {
 
   // go through constants and add these to the equations
   for (int i = 0; pconstants[i].ident != NULL; i++) {
-    // create constant double value
-    constant * c = new constant (eqn::TAG_DOUBLE);
-    c->d = pconstants[i].value;
-    // create the appropriate assignment
-    assignment * a = new assignment ();
-    a->result = strdup (pconstants[i].ident);
-    a->body = c;
-    a->output = 0;
-    a->setInstance ("#predefined");
-    // append the assignment to equations
-    a->setNext (equations);
-    equations = a;
+    addDouble ("#predefined", pconstants[i].ident, pconstants[i].value);
   }
 
   // indicate that constants have been added
   consts = true;
+}
+
+/* The function adds a new equation to the equation checker consisting
+   of an assignment of a double variable. */
+void checker::addDouble (char * type, char * ident, nr_double_t value) {
+
+  // create constant double value
+  constant * c = new constant (eqn::TAG_DOUBLE);
+  c->d = value;
+  // create the appropriate assignment
+  assignment * a = new assignment ();
+  a->result = strdup (ident);
+  a->body = c;
+  a->output = 0;
+  a->setInstance (type);
+  // append the assignment to equations
+  a->setNext (equations);
+  equations = a;
 }

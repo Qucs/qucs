@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.29 2006/09/19 08:22:20 raimi Exp $
+ * $Id: equation.h,v 1.30 2006/10/17 09:00:04 raimi Exp $
  *
  */
 
@@ -251,6 +251,8 @@ public:
   void constants (void);
   int check (int noundefined = 1);
   strlist * variables (void);
+  void addDouble (char *, char *, nr_double_t);
+  bool containsVariable (char *);
 
 public:
   node * equations;
