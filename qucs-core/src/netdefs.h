@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.8 2006-09-18 07:16:57 raimi Exp $
+ * $Id: netdefs.h,v 1.9 2006-10-17 09:00:08 raimi Exp $
  *
  */
 
 #ifndef __NETDEFS_H__
 #define __NETDEFS_H__
+
+class environment;
 
 /* Representation of a node list. */
 struct node_t {
@@ -60,6 +62,7 @@ struct definition_t {
   struct pair_t * pairs;
   struct definition_t * next;
   struct definition_t * sub;
+  environment * env;
   void * eqns;
   int duplicate;
   int action;

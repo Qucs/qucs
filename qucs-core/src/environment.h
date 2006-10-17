@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.3 2006-09-19 08:22:20 raimi Exp $
+ * $Id: environment.h,v 1.4 2006-10-17 09:00:04 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class variable;
 class checker;
 class solver;
 class dataset;
+template <class type_t> class ptrlist;
 
 class environment
 {
@@ -53,12 +54,17 @@ class environment
   eqn::solver * getSolver (void) { return solvee; }
   int equationChecker (int noundefined = 1);
   int equationSolver (dataset *);
+  int runSolver (void);
+
+  void delChild (environment *);
+  void addChild (environment *);
 
  private:
   char * name;
   variable * root;
   eqn::checker * checkee;
   eqn::solver * solvee;
+  ptrlist<environment> * children;
 };
 
 #endif /* __ENVIRONMENT_H__ */
