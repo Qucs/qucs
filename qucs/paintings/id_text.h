@@ -27,8 +27,8 @@ struct SubParameter {
   SubParameter(bool display_, const QString& Name_, const QString& Descr_)
      : display(display_), Name(Name_), Description(Descr_) {};
 
-  QString Name, Description;
   bool display;
+  QString Name, Description;
 };
 
 
