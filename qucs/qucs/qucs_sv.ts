@@ -8359,6 +8359,10 @@ open files with an appropriate program.</source>
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

@@ -10648,6 +10648,10 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Catalan</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
