@@ -735,7 +735,7 @@ bool Component::load(const QString& _s)
     tmp = 2;
   else tmp = counts;
 
-  for(; tmp<=counts/2; tmp++)
+  for(; tmp<=(int)counts/2; tmp++)
     Props.append(new Property("p", "", true, " "));
 
   // load all properties

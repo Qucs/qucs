@@ -632,7 +632,7 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
 </context>
 <context>
@@ -840,11 +840,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст не должен быть пустым!</translation>
     </message>
 </context>
 <context>
@@ -863,7 +863,7 @@
     </message>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilter - это программа синтеза фильтров.  Для создания фильтра просто введите все параметры и нажмите большую кнопку внизу главного окна. Сразу после этого фильтр рассчитывается и помещается в буфер обмена. Теперь перейдите в Qucs, откройте пустой схемный документ и нажмите CTRL-V (вставить из буфера обмена). Теперь схема фильтра может быть вставлена и использована для моделирования. Приятно позабавиться!</translation>
+        <translation>QucsFilter - это программа синтеза фильтров.  Для создания фильтра просто введите все параметры и нажмите большую кнопку внизу главного окна. Сразу после этого фильтр рассчитывается и помещается в буфер обмена. Теперь перейдите в Qucs, откройте пустой схемный документ и нажмите CTRL-V (вставить из буфера обмена). Теперь схема фильтра может быть вставлена и использована для моделирования. Удачи!</translation>
     </message>
     <message>
         <source>Help</source>
@@ -887,11 +887,11 @@
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator - это программа синтеза аттеньюаторов. Для создания аттеньюатора нужно просто ввести все входные параметры и нажать кнопку расчета. Сразу после этого схема аттеньюатора рассчитывается и помещается в буфер обмена. Теперь нужно перейти в Qucs, открыть схемный документ и нажать CTRL-V (вставить из буфера обмена). Схема аттеньюатра теперь может быть вставлена. Удачи!</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка по Qucs Attenuator</translation>
     </message>
 </context>
 <context>
@@ -906,7 +906,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>Готово</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -981,27 +981,27 @@
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать файл данных...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортируемый файл:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Просмотр</translation>
+        <translation>Просмотр</translation>
     </message>
     <message>
         <source>Output File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл:</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Сообщения</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1009,75 +1009,75 @@
     </message>
     <message>
         <source>All known</source>
-        <translation type="unfinished"></translation>
+        <translation>Все известные</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>Любой файл</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя файла данных</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Информация</translation>
+        <translation>Информация</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл уже существует!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить его?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Да</translation>
+        <translation>&amp;Да</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Нет</translation>
+        <translation>&amp;Нет</translation>
     </message>
     <message>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Неизвестный формат файла! Проверьте расширение имени файла!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished">ОШИБКА: Невозможно запустить симулятор!</translation>
+        <translation>ОШИБКА: Не удалось запустить симулятор!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл успешно импортирован!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Converter ended with errors!</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразователь завершил работу с ошибками!</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished">файлы Touchstone</translation>
+        <translation>файлы Touchstone</translation>
     </message>
     <message>
         <source>CITI files</source>
-        <translation type="unfinished"></translation>
+        <translation>файлы CITI</translation>
     </message>
     <message>
         <source>ZVR ASCII files</source>
-        <translation type="unfinished"></translation>
+        <translation>файлы ZVR ASCII</translation>
     </message>
     <message>
         <source>VCD files</source>
-        <translation type="unfinished"></translation>
+        <translation>файлы VCD</translation>
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>файлы моделей IC-CAP</translation>
     </message>
 </context>
 <context>
@@ -1115,136 +1115,137 @@
     <name>LibraryDialog</name>
     <message>
         <source>Create Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать библиотеку</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя библиотеки:</translation>
     </message>
     <message>
         <source>Choose subcircuits:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор подсхем:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Создать</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет подсхем!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Please insert a library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя библиотеки!</translation>
     </message>
     <message>
         <source>Please choose at least one subcircuit!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите хотя бы одну подсхему!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Предупреждение</translation>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось создать папку для библиотек пользователя!</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Системная библиотека с этим именем уже существует!</translation>
     </message>
     <message>
         <source>A library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Библиотека с этим именем уже существует!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Не удалось создать библиотеку!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Не удалось загрузить подсхему &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>
 Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Библиотека успешно создана.</translation>
     </message>
     <message>
         <source>Next &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Далее &gt;&gt;</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите описание для &quot;%1&quot;:</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>Ведение библиотек пользователя</translation>
     </message>
     <message>
         <source>Choose library:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор библиотеки:</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Новое имя:</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Переименовать</translation>
+        <translation>Переименовать</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет библиотеки пользователя!</translation>
     </message>
     <message>
         <source>Please insert a new library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя новой библиотеки!</translation>
     </message>
     <message>
         <source>Please choose a library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите библиотеку!</translation>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть библиотеку!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет прав на изменение библиотеки!</translation>
     </message>
     <message>
         <source>Writing new library not successful!</source>
-        <translation type="unfinished"></translation>
+        <translation>Новую библиотеку не удалось записать!</translation>
     </message>
     <message>
         <source>Cannot delete old library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно удалить старую библиотеку.</translation>
     </message>
     <message>
         <source>Library file is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл библиотеки поврежден!</translation>
     </message>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет прав на удаление библиотеки &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -1302,7 +1303,7 @@ Successfully created library.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>Готово</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1475,59 +1476,59 @@ but is %1 !</source>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение свойств оптимизации</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Имя:</translation>
+        <translation>Имя:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Общее</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>активно</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>начальное</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>мин</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>макс</translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>начальное:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>мин:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>макс:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Добавить</translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Переменные</translation>
     </message>
     <message>
         <source>Set</source>
@@ -1539,147 +1540,147 @@ but is %1 !</source>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Цели</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Применить</translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Значение</translation>
+        <translation>Значение</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Тип</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение:</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>меньше</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>больше</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>равно</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">да</translation>
+        <translation>да</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Все текстовые поля не должны быть пустыми!</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">нет</translation>
+        <translation>нет</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Моделирование:</translation>
+        <translation>Моделирование:</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Переменная &quot;%1&quot; уже есть в списке!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Цель &quot;%1&quot; уже есть в списке!</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Метод:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальное число итераций:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цикл обновления выхода:</translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Число источников:</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянная F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент скрещивания:</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Начальное число для генератора псевдослучайных чисел:</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Минимальное разброс стоимости:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоимостные цели:</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоимостные ограничения:</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Тип:</translation>
+        <translation>Тип:</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation>линейное вещественное</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>логарифмическое вещественное</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>линейное целое</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>логарифмическое целое</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>наблюдать</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>свести к минимуму</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>сделать максимальным</translation>
     </message>
 </context>
 <context>
@@ -1721,159 +1722,159 @@ but is %1 !</source>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать пакет проекта</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пакет:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Просмотр</translation>
+        <translation>Просмотр</translation>
     </message>
     <message>
         <source>include user libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>включить библиотеки пользователя</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор проектов:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Создать</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет проектов!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковать пакет проекта</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Пакеты Qucs</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>Любой файл</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя файла пакета</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя пакета!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите хотя бы один проект!</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Информация</translation>
+        <translation>Информация</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл уже существует!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить его?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Да</translation>
+        <translation>&amp;Да</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Нет</translation>
+        <translation>&amp;Нет</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось создать пакет!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Успешно создан пакет Qucs!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удалось открыть пакет!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Файл содержит неправильный заголовок!</translation>
     </message>
     <message>
         <source>ERROR: Wrong version number!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Неправильный номер версии!</translation>
     </message>
     <message>
         <source>ERROR: Checksum mismatch!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Несовпадение контрольной суммы!</translation>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из папки &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Пакет поврежден!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Успешно распакован пакет!</translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Папка &quot;%1&quot; проекта уже существует!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удалось создать папку &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать и войти в папку &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удалось создать файл &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать файл &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Библиотека &quot;%1&quot; пользователя уже существует!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удалось создать библиотеку &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать библиотеку &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -1898,7 +1899,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation>Невозможно сохранить документ!</translation>
+        <translation>Не удалось сохранить документ!</translation>
     </message>
     <message>
         <source>Format Error:
@@ -1992,7 +1993,7 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation>Невозможно загрузить документ: </translation>
+        <translation>Не удалось загрузить документ: </translation>
     </message>
     <message>
         <source>Wrong document type!</source>
@@ -2580,7 +2581,7 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation>Невозможно сохранить настройки !</translation>
+        <translation>Не удалось сохранить настройки !</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
@@ -2752,11 +2753,11 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished">Подцепь</translation>
+        <translation>Подсхема</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>Порт подцепи</translation>
+        <translation>Порт подсхемы</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -3804,11 +3805,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Подсхема &quot;%1&quot; не загружается.</translation>
+        <translation>ОШИБКА: Не удалось загрузить подсхему &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Библиотечный компонент &quot;%1&quot; не загружается.</translation>
+        <translation>ОШИБКА: Не удалось загрузить библиотечный компонент &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
@@ -4356,7 +4357,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Невозможно открыть файл VHDL &quot;%1&quot;.</translation>
+        <translation>ОШИБКА: Не удалось открыть файл VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>VHDL file</source>
@@ -4380,47 +4381,47 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось создать выходной файл!</translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
-        <translation type="unfinished"></translation>
+        <translation>показывать номера выводов в обозначении или нет</translation>
     </message>
     <message>
         <source>Optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>Оптимизация</translation>
     </message>
     <message>
         <source>optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>оптимизация</translation>
     </message>
     <message>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>выполнить начальный анализ на постоянном токе</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>начальное напряжение для моделирования переходных процессов</translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>начальный ток для моделирования переходных процессов</translation>
     </message>
     <message>
         <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>начальное время задержки</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальный размер шага в секундах</translation>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>реле</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>Реле</translation>
     </message>
 </context>
 <context>
@@ -5076,7 +5077,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation>Невозможно переименовать открытый файл!</translation>
+        <translation>Не удалось переименовать открытый файл!</translation>
     </message>
     <message>
         <source>Rename file</source>
@@ -5088,7 +5089,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation>Невозможно переименовать файл: </translation>
+        <translation>Не удалось переименовать файл: </translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
@@ -5130,7 +5131,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation>Невозможно создать рабочую папку !</translation>
+        <translation>Не удалось создать рабочую папку !</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
@@ -5212,7 +5213,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation>Невозможно перезаписать открытый документ</translation>
+        <translation>Не удалось перезаписать открытый документ</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
@@ -5266,7 +5267,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation>Невозможно создать </translation>
+        <translation>Не удалось создать </translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -5274,7 +5275,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>Невозможно получить доступ к папке проекта: </translation>
+        <translation>Не удалось получить доступ к папке проекта: </translation>
     </message>
     <message>
         <source> - Project: </source>
@@ -5294,7 +5295,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation>Невозможно создать папку проекта !</translation>
+        <translation>Не удалось создать папку проекта !</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -5394,7 +5395,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation>Невозможно запустить программу &quot;%1&quot;!</translation>
+        <translation>Не удалось запустить программу &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
@@ -5438,23 +5439,23 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Невозможно запустить текстовый редактор!</translation>
+        <translation>Не удалось запустить текстовый редактор!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Невозможно запустить программу синтеза фильтров!</translation>
+        <translation>Не удалось запустить программу синтеза фильтров!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>Невозможно запустить программу расчета линий передач!</translation>
+        <translation>Не удалось запустить программу расчета линий передач!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation>Невозможно запустить библиотечную программу!</translation>
+        <translation>Не удалось запустить библиотечную программу!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Невозможно запустить программу qucshelp!</translation>
+        <translation>Не удалось запустить программу qucshelp!</translation>
     </message>
     <message>
         <source>No project open!</source>
@@ -5470,7 +5471,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>Невозможно открыть файл &quot;%1&quot; !</translation>
+        <translation>Не удалось открыть файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
@@ -5484,15 +5485,15 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>Невозможно создать файл &quot;%1&quot; !</translation>
+        <translation>Не удалось создать файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>Невозможно прочитать файл &quot;%1&quot;!</translation>
+        <translation>Не удалось прочитать файл &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>Невозможно записать файл &quot;%1&quot; !</translation>
+        <translation>Не удалось записать файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
@@ -6034,13 +6035,13 @@ Selects all elements of the document</source>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished">Поворачивает выделенный компонент на 90°</translation>
+        <translation>Поворачивает выделенный компонент на 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished">Повернуть
+        <translation>Повернуть
 
 Поворачивает выделенный компонент на 90° против часовой стрелки</translation>
     </message>
@@ -6734,7 +6735,7 @@ Inserts the skeleton of a VHDL entity</source>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить...</translation>
     </message>
     <message>
         <source>Replace
@@ -6742,312 +6743,338 @@ Inserts the skeleton of a VHDL entity</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить
+
+Изменить свойства компонента
+или
+текст программы на VHDL</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить/Включить выделенные компоненты</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить/Включить
+
+Выключить/Включить выделенные компоненты</translation>
     </message>
     <message>
         <source>Select Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать маркеры</translation>
     </message>
     <message>
         <source>Selects all markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбирает все маркеры</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать маркеры
+
+Выбирает все диаграммные маркеры документа</translation>
     </message>
     <message>
         <source>Align/Distribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять/Распределить</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Откройте проект с подсхемами!</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать &amp;библиотеку...</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать библиотеку из подсхем</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать библиотеку
+
+Создать библиотеку из подсхем</translation>
     </message>
     <message>
         <source>Cannot delete file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно удалить файл:</translation>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно удалить папку: </translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала откройте проект!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите график диаграммы!</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл CSV</translation>
     </message>
     <message>
         <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите имя выходного файла</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходной файл уже существует!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить его?</translation>
     </message>
     <message>
         <source>Print Fit to Page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Печать по размеру страницы...</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Печать по размеру страницы
+
+Напечатать и согласовать содержимое с размером страницы</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать &amp;пакет...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать сжатый покет из проектов</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать пакет
+
+Создать сжатый пакет из завершенных проектов</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Распаковать пакет...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить содержимое пакета</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковать пакет
+
+Установить содержимое пакета</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Импортировать данные...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать файл в файл данных Qucs</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать данные
+
+Преобразовать файл данных в файл данных Qucs</translation>
     </message>
     <message>
         <source>Export to &amp;CSV...</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать в &amp;CSV...</translation>
     </message>
     <message>
         <source>Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать данные графика в файл CSV</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать в CSV
+
+Преобразовать данные графика в файл CSV</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Закрепить окно</translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Включает/выключает закрепленное окно просмотра</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Окно просмотра
+
+Включает/выключает закрепленное окно просмотра</translation>
     </message>
     <message>
         <source>Printer Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка печати.</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось запустить программу расчета аттеньюатора!</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Синтез аттеньюатора</translation>
     </message>
     <message>
         <source>Starts QucsAttenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускает QucsAttenuator</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation type="unfinished"></translation>
+        <translation>Синтез аттеньюатора
+
+Запускает программу расчета аттеньюатора</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>Переделка графического интерфейса - Gopala Krishna A</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>Чешский - Marek Straka</translation>
     </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>В&amp;ыход</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished">Справка...</translation>
+        <translation>Справка...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;О QucsAttenuator...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">О Qt...</translation>
+        <translation>О Qt...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Файл</translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Справка</translation>
+        <translation>&amp;Справка</translation>
     </message>
     <message>
         <source>Attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ослабление:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation>дБ</translation>
     </message>
     <message>
         <source>Zin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zin:</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished">50</translation>
+        <translation>50</translation>
     </message>
     <message>
         <source>Zout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zout:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished">Рассчитать и скопировать в буфер обмена</translation>
+        <translation>Рассчитать и скопировать в буфер обмена</translation>
     </message>
     <message>
         <source>R1:</source>
-        <translation type="unfinished"></translation>
+        <translation>R1:</translation>
     </message>
     <message>
         <source>--</source>
-        <translation type="unfinished"></translation>
+        <translation>--</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ом</translation>
     </message>
     <message>
         <source>R2:</source>
-        <translation type="unfinished"></translation>
+        <translation>R2:</translation>
     </message>
     <message>
         <source>R3:</source>
-        <translation type="unfinished"></translation>
+        <translation>R3:</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished">Итог:</translation>
+        <translation>Итог:</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">О Qt</translation>
+        <translation>О Qt</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">О...</translation>
+        <translation>О...</translation>
     </message>
     <message>
         <source>
 Attenuator synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Программа синтеза аттеньюаторов
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2006 </translation>
+        <translation>Copyright (C) 2006 </translation>
     </message>
     <message>
         <source>Topology</source>
-        <translation type="unfinished"></translation>
+        <translation>Топология</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Вход</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished"></translation>
+        <translation>Успешно!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Установите ослабление более %1 dB</translation>
     </message>
 </context>
 <context>
@@ -8633,11 +8660,11 @@ very simple text editor for Qucs
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation>Невозможно записать файл:</translation>
+        <translation>Не удалось записать файл:</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation>Невозможно прочитать файл:</translation>
+        <translation>Не удалось прочитать файл:</translation>
     </message>
     <message>
         <source>Closing document</source>
@@ -8853,65 +8880,67 @@ Filter synthesis program
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Закончить</translation>
+        <translation>&amp;Закончить</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Назад</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вперед</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>В &amp;начало</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Предыдущий</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Следующий</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>В начало</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Оглавление</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Включает/выключает оглавление</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Оглавление
+
+Включает/выключает оглавление</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;О Qt</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Файл</translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Вид</translation>
+        <translation>&amp;Вид</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Справка</translation>
+        <translation>&amp;Справка</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержание</translation>
     </message>
 </context>
 <context>
@@ -10407,7 +10436,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation>Невозможно открыть файл &quot;%1&quot;.</translation>
+        <translation>Не удалось открыть файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
@@ -10427,11 +10456,11 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Manage User &amp;Libraries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ведение &amp;библиотек пользователя...</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Более удобный способ: Компонент также может быть вставлен в схему с помощью перетаскивания.</translation>
     </message>
 </context>
 <context>
@@ -10450,7 +10479,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>Готово</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -10599,42 +10628,46 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Colors for Syntax Highlighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвета для подсветки синтаксиса:</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Комментарий</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation>Строка</translation>
     </message>
     <message>
         <source>Integer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Целое число</translation>
     </message>
     <message>
         <source>Real Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Вещественное число</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Символ</translation>
     </message>
     <message>
         <source>Data Type</source>
-        <translation type="unfinished"></translation>
+        <translation>тип данных</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрибут</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор VHDL</translation>
     </message>
     <message>
         <source>Czech</source>
+        <translation>Чешский</translation>
+    </message>
+    <message>
+        <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10962,7 +10995,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation>Невозможно загрузить файл:</translation>
+        <translation>Не удалось загрузить файл:</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
@@ -10974,7 +11007,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation>Невозможно сохранить файл:</translation>
+        <translation>Не удалось сохранить файл:</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
@@ -11064,19 +11097,19 @@ open files with an appropriate program.</source>
     <name>Schematic</name>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Drawn By:</source>
-        <translation type="unfinished"></translation>
+        <translation>Чертил:</translation>
     </message>
     <message>
         <source>Date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата:</translation>
     </message>
     <message>
         <source>Revision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия:</translation>
     </message>
 </context>
 <context>
@@ -11141,35 +11174,35 @@ are included in the search.</source>
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Найти</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить на</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Спрашивать перед заменой</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить текст</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Заменить?</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Строка не найдена!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>Замена произведена %1 раз!</translation>
     </message>
 </context>
 <context>
@@ -11200,7 +11233,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>Готово</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -11224,35 +11257,35 @@ are included in the search.</source>
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Рамка</translation>
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>без рамки</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>A5 ландшафт</translation>
     </message>
     <message>
         <source>DIN A5 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>A5 портрет</translation>
     </message>
     <message>
         <source>DIN A4 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>A4 ландшафт</translation>
     </message>
     <message>
         <source>DIN A4 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>A4 портрет</translation>
     </message>
     <message>
         <source>DIN A3 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>A3 ландшафт</translation>
     </message>
     <message>
         <source>DIN A3 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>A3 портрет</translation>
     </message>
 </context>
 <context>
@@ -11389,7 +11422,7 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удалось открыть SPICE-файл &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -11460,7 +11493,7 @@ Errors:
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Невозможно выполнить</translation>
+        <translation>Не удалось выполнить</translation>
     </message>
     <message>
         <source>Info</source>
@@ -11510,7 +11543,7 @@ Errors:
     </message>
     <message>
         <source>! Drag n&apos;Drop me !</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащи меня!</translation>
     </message>
 </context>
 <context>
