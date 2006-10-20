@@ -4182,10 +4182,6 @@ Use:  qucsedit [-r] archivo
         <translation></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4195,6 +4191,10 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6558,6 +6558,10 @@ Arranca el programa de cálculo de atenuadores</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

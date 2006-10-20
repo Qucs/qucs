@@ -4205,10 +4205,6 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4218,6 +4214,10 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6554,6 +6554,10 @@ Starts attenuator calculation program</source>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

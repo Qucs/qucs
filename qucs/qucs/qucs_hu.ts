@@ -4180,10 +4180,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4193,6 +4189,10 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6634,6 +6634,10 @@ Csillapító méretező program indítása</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

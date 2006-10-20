@@ -59,7 +59,7 @@ vRect::vRect()
   Props.append(new Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the trailing edge")));
   Props.append(new Property("Td", "0 ns", false,
-		QObject::tr("initial delay delay time")));
+		QObject::tr("initial delay time")));
 
   rotate();  // fix historical flaw
 }

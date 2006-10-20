@@ -4024,10 +4024,6 @@ Kullanım:  qucsedit [-r] kütük
         <translation>Kalımsız benzetim için ilk akım degeri</translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4037,6 +4033,10 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6314,6 +6314,10 @@ Zayıflatıcı olusturma yazılımını baslatır</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
