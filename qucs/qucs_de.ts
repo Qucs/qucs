@@ -4422,7 +4422,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>initial delay delay time</source>
-        <translation>Anfangsverzögerungszeit</translation>
+        <translation type="obsolete">Anfangsverzögerungszeit</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
@@ -4434,6 +4434,10 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6978,6 +6982,10 @@ Startet das Programm zur Berechnung von Dämpfungsgliedern</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
