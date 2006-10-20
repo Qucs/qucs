@@ -914,67 +914,67 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">показывать</translation>
+        <translation>показывать</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Описание</translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">да</translation>
+        <translation>да</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">нет</translation>
+        <translation>нет</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">показывать на схеме</translation>
+        <translation>показывать на схеме</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Имя:</translation>
+        <translation>Имя:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение по умолчанию:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Описание:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Добавить</translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметр не может иметь имя &quot;File&quot;!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметр &quot;%1&quot; уже есть в списке!</translation>
     </message>
 </context>
 <context>
@@ -4409,7 +4409,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>initial delay delay time</source>
-        <translation>начальное время задержки</translation>
+        <translation type="obsolete">начальное время задержки</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
@@ -4422,6 +4422,10 @@ Usage:  qucsedit [-r] file
     <message>
         <source>Relay</source>
         <translation>Реле</translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6956,6 +6960,10 @@ Starts attenuator calculation program</source>
     <message>
         <source>Czech by Marek Straka</source>
         <translation>Чешский - Marek Straka</translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10668,7 +10676,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталанский</translation>
     </message>
 </context>
 <context>
@@ -11398,11 +11406,11 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation>ОШИБКА: Невозможно записать схемный файл!</translation>
+        <translation>ОШИБКА: Не удалось записать схемный файл!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>ОШИБКА: Невозможно запустить программу QucsConv!</translation>
+        <translation>ОШИБКА: Не удалось запустить программу QucsConv!</translation>
     </message>
     <message>
         <source>ERROR: No time for simulation specified!</source>
