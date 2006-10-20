@@ -4078,10 +4078,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4091,6 +4087,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6362,6 +6362,10 @@ Starts attenuator calculation program</source>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

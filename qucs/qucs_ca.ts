@@ -2844,10 +2844,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rectangle Current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3962,6 +3958,10 @@ Usage:  qucsedit [-r] file
         <source>Only one filename allowed!
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5682,6 +5682,10 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

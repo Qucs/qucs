@@ -4380,10 +4380,6 @@ Použití:  qucsedit [-r] soubor
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>initial delay delay time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>show port numbers in symbol or not</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4409,6 +4405,10 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial delay time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6937,6 +6937,10 @@ Enables/disables the browse dock window</source>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
