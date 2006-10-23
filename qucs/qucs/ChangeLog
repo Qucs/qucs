@@ -1,3 +1,9 @@
+2006-10-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* set cursor keys free in id_text dialog
+	* fixed bug in loading components without properties
+	* fixed bug in viewport position of schematic after loading
+
 2006-10-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* put equations also in subcircuit netlists
