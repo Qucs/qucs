@@ -284,9 +284,8 @@ bool Schematic::loadProperties(QTextStream *stream)
 		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
 		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
 		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		int PosX = nstr.section(',',5,5).toInt(&ok); if(ok) {
-		int PosY = nstr.section(',',6,6).toInt(&ok); if(ok)
-		setContentsPos(PosX, PosY); }}}}}} }
+		tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
+		tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
     else if(cstr == "Grid") {
 		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
 		GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {

@@ -134,16 +134,12 @@ ID_Dialog::~ID_Dialog()
 // -----------------------------------------------------------
 void ID_Dialog::slotEditParameter(QListViewItem *Item)
 {
-  ParamNameEdit->setFocus();
-  ParamNameEdit->blockSignals(true);
-
   if(Item == 0) {
     ParamList->clearSelection();
     ParamNameEdit->clear();
     showCheck->setChecked(true);
     ValueEdit->clear();
     DescriptionEdit->clear();
-    ParamNameEdit->blockSignals(false);
     return;
   }
 
@@ -151,7 +147,6 @@ void ID_Dialog::slotEditParameter(QListViewItem *Item)
   ParamNameEdit->setText(Item->text(1));
   ValueEdit->setText(Item->text(2));
   DescriptionEdit->setText(Item->text(3));
-  ParamNameEdit->blockSignals(false);
 }
 
 // -----------------------------------------------------------

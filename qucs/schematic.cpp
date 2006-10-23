@@ -1130,9 +1130,11 @@ bool Schematic::load()
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   if(ViewX1 > UsedX1)  ViewX1 = UsedX1;
   if(ViewY1 > UsedY1)  ViewY1 = UsedY1;
-  if(ViewX2 > UsedX2)  ViewX2 = UsedX2;
-  if(ViewY2 > UsedY2)  ViewY2 = UsedY2;
+  if(ViewX2 < UsedX2)  ViewX2 = UsedX2;
+  if(ViewY2 < UsedY2)  ViewY2 = UsedY2;
   zoom(1.0f);
+  setContentsPos(tmpViewX1, tmpViewY1);
+  tmpViewX1 = tmpViewY1 = -200;   // was used as temporary cache
   return true;
 }
 
