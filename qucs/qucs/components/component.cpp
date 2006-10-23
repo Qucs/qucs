@@ -733,7 +733,7 @@ bool Component::load(const QString& _s)
     tmp = 1;
   else if(Model == "Lib")
     tmp = 2;
-  else tmp = counts;
+  else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   for(; tmp<=(int)counts/2; tmp++)
     Props.append(new Property("p", "", true, " "));

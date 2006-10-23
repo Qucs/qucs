@@ -32,9 +32,12 @@ C & D
 \end{bmatrix}
 \end{equation}
 
-Non-linear components have to be linearized at the bias point.
+Non-linear components have to be linearized at the DC bias point.
 That is, before an AC simulation with non-linear components can
 be performed, a DC simulation must be completed successfully.
 Then, the MNA stamp of the non-linear components equals their
 entries of the Jacobian matrix, which was already computed
-during the DC simulation.
+during the DC simulation. In addition to this real-valued elements,
+a further stamp has to be applied: The Jacobian matrix of the
+non-linear charges multiplied by $j\omega$ (see also section
+\ref{sec:eqn_def_models}).

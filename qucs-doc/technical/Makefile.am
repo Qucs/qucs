@@ -40,7 +40,7 @@ FIGURES = differential.fig biast.fig \
   noisejfet.fig noisediode.fig noisesgp.fig tcircuit.fig bridgecircuit.fig    \
   xcircuit.fig picircuit.fig mscoupled.fig msgap.fig mosphysical.fig          \
   mostypes.fig mosfet.fig mosband.fig dcmosfet.fig spmosfet.fig msgapphys.fig \
-  noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig transcap.fig       \
+  noisemosfet.fig mscoupledphys.fig spnfile.fig transcap.fig                  \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
@@ -57,7 +57,7 @@ BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
-  hbnoise.tex synthesis.tex transline.tex maths.tex
+  hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
 technical: technical.dvi technical.ps
 	$(TEX2PDF) technical

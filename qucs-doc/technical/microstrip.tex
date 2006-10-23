@@ -30,6 +30,7 @@ circuit design are impedance, attenuation, wavelength and propagation
 constant.  These parameters are interrelated for all microstrips
 assuming that the propagation mode is a transverse electromagnetic
 mode, or it can be approximated by a transverse electromagnetic mode.
+The Y and S parameters can be found in section \ref{sec:tl_yparameter}.
 
 \subsection{Quasi-static characteristic impedance}
 %\addcontentsline{toc}{subsection}{Quasi-static characteristic impedance}
@@ -618,40 +619,6 @@ $\Delta$& effective (rms) surface roughness of substrate\\
 $Z_{F0}$& wave impedance in vacuum
 \end{tabular}
 
-\subsection{S-parameters of the single microstrip line}
-%\addcontentsline{toc}{subsection}{S-parameters of the single microstrip line}
-\label{sec:ms_sparameter}
-
-The calculation of the scattering parameters for the single microstrip
-line requires the physical length $l$ of the component, its impedance
-$Z_L$ and propagation constant $\gamma$.  The complex propagation
-constant $\gamma$ is given by
-\begin{equation}
-\gamma = \alpha + j\beta
-\end{equation}
-
-where $\alpha$ is the attenuation factor and $\beta$ is the (real)
-propagation constant given by
-\begin{equation}
-\beta = \sqrt{\varepsilon_{r_{eff}}(\omega)} \cdot k_0
-\end{equation}
-
-where $\varepsilon_{r_{eff}}(\omega)$ is the effective dielectric
-constant and $k_0$ is the TEM propagation constant $k_0$ for the
-equivalent transmission line with an air dielectric.
-\begin{equation}
-k_0 = \omega \sqrt{\varepsilon_0 \mu_0}
-\end{equation}
-
-The expressions used to calculate the scattering parameters are given
-by
-\begin{align}
-S_{11} = S_{22} &= \dfrac{\left(z - y\right) \sinh{\gamma l}}{2\cosh{\gamma l} + \left(z + y\right) \sinh{\gamma l}}\\
-S_{12} = S_{21} &= \dfrac{2}{2\cosh{\gamma l} + \left(z + y\right) \sinh{\gamma l}}
-\end{align}
-
-with $z$ being the normalized impedance and $y$ is the normalized
-admittance.
 
 \section{Microstrip corner}
 %\addcontentsline{toc}{section}{Microstrip corner}
