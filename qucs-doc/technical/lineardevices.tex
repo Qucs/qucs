@@ -892,20 +892,11 @@ Z_{22} = Z_2
 A more useful MNA representation is with Y parameters.
 
 \begin{equation}
-\begin{bmatrix}
+(\underline{Y}) =
+\begin{pmatrix}
  \dfrac{1}{Z_1} & 0 \\
  \dfrac{-2}{\sqrt{Z_1\cdot Z_2}} & \dfrac{1}{Z_2}
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-V_{1}\\
-V_{2}
-\end{bmatrix}
-=
-\begin{bmatrix}
-I_{1}\\
-I_{2}
-\end{bmatrix}
+\end{pmatrix}
 \end{equation}
 
 Isolator with reference impedance $Z_1$ (input) and $Z_2$ (output) and
@@ -1249,9 +1240,9 @@ S_{12} = -S_{13} = -S_{21} = S_{24} = S_{31} = -S_{34} = -S_{42} = S_{43} = \fra
 \section{Voltage and current sources}
 
 For an AC analysis, DC sources are short circuit (voltage source)
-and open circuit (current source), respectively. Accordingly,
-For a DC analysis, AC sources are short circuit (voltage source)
-and open circuit (current source), respectively. As these
+or open circuit (current source), respectively. Accordingly,
+for a DC analysis, AC sources are short circuit (voltage source)
+or open circuit (current source), respectively. As these
 sources have no internal resistance, they are noisefree.
 
 \addvspace{12pt}
@@ -1461,7 +1452,7 @@ write as follows.
 For two correlated noise current sources the (normalized) correlation
 coefficient $K$ must be known (with $|K|=0\dots 1$). If the first
 noise source has the current power spectral
-density of $S_{i1}$ and is connected to node 1 and 2, and if furthermore
+density $S_{i1}$ and is connected to node 1 and 2, and if furthermore
 the second noise source has the spectral density $S_{i2}$ and is connected
 to node 3 and 4, then the correlation matrix writes:
 \begin{equation}
