@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<admst version="2.2.4" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+
+<!-- handling of device: starting point -->
+<admst:for-each select="/module">
+<!-- definition of variables -->
+<admst:value-of select="name"/>
+<admst:variable name="module" select="%s"/>
+<admst:count select="node"/>
+<admst:variable name="nbr_nodes" select="%s"/>
+</admst:for-each>
+    
+<admst:open file="$module.gui.cpp">
+/*
+ * $(module).cpp - device implementations for $(module) module
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ */
+
+<admst:text format="#include &quot;$module.h&quot;\n\n"/>
+<admst:text format="$module::$module()\n{\n"/>
+<admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
+
+<!--This file has been made for bipolar transistors, which is why this is the first line of the module function!-->
+<admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
+<admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[npn, pnp]&quot;));\n"/>
+
+<admst:for-each select="/module">
+<admst:for-each select="variable">
+  <admst:if test="[input='yes' and name!='npn' and name !='pnp']">
+    <admst:value-of select="name"/>  
+    <admst:text format="  Props.append (new Property (&quot;%s&quot;, &quot;"/> 
+    <admst:apply-templates select="default" match=":expression"/>
+    <admst:text format="&quot;, false,\n    QObject::tr (&quot;"/>
+    <admst:choose>
+      <admst:when test="attribute[name='info']">
+        <admst:for-each select="attribute[name='info']">
+          <admst:value-of select="value"/>
+	  <admst:text format="%s"/>
+	</admst:for-each>
+      </admst:when>
+      <admst:otherwise>-</admst:otherwise>
+    </admst:choose>
+    <admst:text format="&quot;)));\n"/>
+  </admst:if>
+</admst:for-each>
+</admst:for-each>
+
+
+<admst:text format="  Props.append (new Property (&quot;Temp&quot;, &quot;27&quot;, false,\n"/>
+<admst:text format="    QObject::tr (&quot;simulation temperature&quot;)));\n"/>
+
+<admst:text format="\n  createSymbol ();\n  tx = x2 + 4;\n  ty = y1 + 4;\n"/>
+<admst:text format="  Model = &quot;$module&quot;;\n  Name  = &quot;T&quot;;\n"/>
+
+<admst:text format="}\n\n"/>
+
+<admst:text format="Component * $module::newOne()\n{\n  $module * p = new $module();"/>
+  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->recreate(0); 
+  return p;
+}
+
+<admst:text format="Element * $module::info(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;npn $module&quot;);\n  BitmapFile = &quot;npnsub&quot;;\n"/>
+<admst:text format="\n  if(getNewOne) return new $module();\n  return 0;\n}\n\n"/>
+
+<admst:text format="Element * $module::info_pnp(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = &quot;pnpsub&quot;;\n\n"/>
+<admst:text format="  if(getNewOne)\n  {\n    $module* p = new "/>
+<admst:text format="$module();\n    p->Props.getFirst()->Value = &quot;pnp&quot;;\n    p->recreate(0);\n    return p;\n  }\n  return 0;\n}\n\n"/>
+
+<admst:text format="void $module::createSymbol()\n{"/>
+  // normal bipolar
+  Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-15,  0,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
+
+  // substrate node
+  Lines.append(new Line(  9,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  9, -7,  9,  7,QPen(QPen::darkBlue,3)));
+
+  // thermal node
+  Lines.append(new Line(-30, 20,-20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20, 17,-20, 23,QPen(QPen::darkBlue,2)));  
+
+  // arrow
+  if(Props.getFirst()->Value == "npn") {
+    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
+  } else {
+    Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
+  }
+
+  Ports.append(new Port(  0,-30)); // collector
+  Ports.append(new Port(-30,  0)); // base
+  Ports.append(new Port(  0, 30)); // emitter
+  Ports.append(new Port( 30,  0)); // substrate
+  Ports.append(new Port(-30, 20)); // thermal node
+
+  x1 = -30; y1 = -30;
+  x2 =  30; y2 =  30;
+<admst:text format="}\n"/>
+
+</admst:open>
+
+<admst:open file="$module.gui.h">
+/*
+ * $(module).h - device definitions for $(module) module
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ */
+
+<admst:text format="#ifndef $module"/>_H
+<admst:text format="#define $module"/>_H\n
+<admst:text format="#include &quot;component.h&quot;\n\n"/>
+
+<admst:text format="class $module : public MultiViewComponent\n{\n  public:\n"/>
+<admst:text format="    $module();\n"/>
+<admst:text format="    ~$module() { };\n"/>
+<admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
+<admst:text format="  protected:\n    void createSymbol();\n};\n\n"/>
+
+<admst:text format="#endif /* $(module)_H */\n"/>
+
+</admst:open>
+<admst:message format="$module.gui.cpp and $module.gui.h: files created\n"/>
+</admst>

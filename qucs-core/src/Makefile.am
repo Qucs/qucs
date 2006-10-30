@@ -36,7 +36,8 @@ qucsator_LDADD = libqucsator.a		      \
 	components/libcomponent.a	      \
 	components/microstrip/libmicrostrip.a \
 	components/devices/libdevices.a	      \
-	components/digital/libdigital.a
+	components/digital/libdigital.a       \
+	components/verilog/libverilog.a
 
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \

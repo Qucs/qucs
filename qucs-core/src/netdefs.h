@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.9 2006/10/17 09:00:08 raimi Exp $
+ * $Id: netdefs.h,v 1.10 2006/10/30 09:31:15 raimi Exp $
  *
  */
 
@@ -96,13 +96,13 @@ struct property_t {
 
 // Structure defining an available component type.
 struct define_t {
-  char * type;                    // component name
-  int nodes;                      // number of nodes
-  int action;                     // is that an action?
-  int substrate;                  // is that a substrate?
-  int nonlinear;                  // is the component linear?
-  struct property_t required[64]; // required properties
-  struct property_t optional[64]; // optional proberties
+  char * type;                     // component name
+  int nodes;                       // number of nodes
+  int action;                      // is that an action?
+  int substrate;                   // is that a substrate?
+  int nonlinear;                   // is the component linear?
+  struct property_t required[256]; // required properties
+  struct property_t optional[256]; // optional proberties
 };
 
 // Maximum number of S-parameter ports.
