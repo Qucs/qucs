@@ -24,7 +24,7 @@
 
 # the component library rules
 
-SUBDIRS = microstrip devices digital
+SUBDIRS = microstrip devices digital verilog
 
 noinst_LIBRARIES = libcomponent.a
 

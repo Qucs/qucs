@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE admst SYSTEM "admst.dtd">
+<admst version="2.2.4" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+
+
+<!-- handling of device: starting point -->
+<admst:for-each select="/module">
+<!-- definition of variables -->
+<admst:value-of select="name"/>
+<admst:variable name="module" select="%s"/>
+<admst:count select="node[location='external' and name!='GND']"/>
+<admst:variable name="nbr_nodes" select="%s"/>
+</admst:for-each>
+
+<admst:open file="$module.qucsdefs.h">
+<admst:for-each select="/module">
+<admst:text format="  /* $module verilog device */\n"/>
+<admst:text format="  { &quot;$module&quot;, $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,\n    {\n"/>
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:value-of select="name"/> 
+    <admst:text format="      { &quot;%s&quot;, PROP_REAL, { "/>
+    <admst:apply-templates select="default" match=":expression"/>
+    <admst:text format=", PROP_NO_STR }, PROP_POS_RANGE },\n"/>
+  </admst:if>
+</admst:for-each>
+<admst:text format="      { &quot;Type&quot;, PROP_STR, { PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
+<admst:text format="      { &quot;Temp&quot;, PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
+<admst:text format="      PROP_NO_PROP },\n"/>
+<admst:text format="    { PROP_NO_PROP }\n  },\n"/>
+</admst:for-each>
+</admst:open>
+<admst:message format="$module.qucsdefs.h: file created\n"/>
+</admst>

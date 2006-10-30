@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.60 2006-10-17 09:00:04 raimi Exp $
+ * $Id: input.cpp,v 1.61 2006-10-30 09:31:15 raimi Exp $
  *
  */
 
@@ -452,6 +452,10 @@ circuit * input::createCircuit (char * type) {
     return new logicxor ();
   else if (!strcmp (type, "DigiSource"))
     return new digisource ();
+  else if (!strcmp (type, "hicumL2p1"))
+    return new hicumL2p1 ();
+  else if (!strcmp (type, "HBT_X"))
+    return new HBT_X ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

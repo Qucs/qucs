@@ -115,6 +115,7 @@ if test $USE_MAINTAINER_MODE = yes; then
     AC_MSG_ERROR([The $PACKAGE package requires an installed gperf.])
   fi
 fi
+AC_PATH_PROG(ADMSXML, admsXml, :)
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
@@ -194,7 +195,8 @@ AC_CONFIG_FILES([Makefile
                  src/components/Makefile
                  src/components/microstrip/Makefile
                  src/components/devices/Makefile
-                 src/components/digital/Makefile])
+                 src/components/digital/Makefile
+                 src/components/verilog/Makefile])
 AC_OUTPUT
 
 dnl Print results.
