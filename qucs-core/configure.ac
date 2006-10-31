@@ -116,6 +116,11 @@ if test $USE_MAINTAINER_MODE = yes; then
   fi
 fi
 AC_PATH_PROG(ADMSXML, admsXml, :)
+if test $USE_MAINTAINER_MODE = yes; then
+  if test "$ADMSXML" = ":"; then
+    AC_MSG_ERROR([The $PACKAGE package requires an installed adms.])
+  fi
+fi
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)

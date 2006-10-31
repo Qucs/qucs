@@ -26,11 +26,11 @@
 
 noinst_LIBRARIES = libverilog.a
 
-libverilog_a_SOURCES = HBT_X.cpp HBT_X_analogfunction.cpp \
-	hicumL2p1.cpp hicumL2p1_analogfunction.cpp
+libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
+	hicumL2p1.analogfunction.cpp hicumL2p1.core.cpp
 
-noinst_HEADERS = HBT_X.h HBT_X_analogfunction.h \
-	hicumL2p1.h hicumL2p1_analogfunction.h
+noinst_HEADERS = HBT_X.core.h HBT_X.analogfunction.h \
+	hicumL2p1.core.h hicumL2p1.analogfunction.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va
@@ -43,18 +43,20 @@ EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 if MAINTAINER_MODE
-HBT_X.cpp: fbh_hbt-2_2a.va
+HBT_X.analogfunction.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e analogfunction.xml
+HBT_X.core.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
-hicumL2p1.cpp: hicumL2V2p11.va
+hicumL2p1.analogfunction.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e analogfunction.xml
+hicumL2p1.core.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
-GENERATED_FILES = HBT_X* hicumL2p1* .*.adms .*.xml
+GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
 else
 GENERATED_FILES =
 endif

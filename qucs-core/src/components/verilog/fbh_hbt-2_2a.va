@@ -587,15 +587,21 @@ module HBT_X(c,b,e,t);
         I(bii,bi)  <+ V(bii, bi)/(Rb2/N);
         I(bii,bi)  <+ white_noise( (FOUR_K*TjK)/(Rb2/N), "thermal");
 
-        V(b,bi) <+ I(b,bi)*(Rb/N);
-        V(b,bi) <+ ddt(I(b,bi) * Lb);
-        V(b,bi) <+ white_noise( (FOUR_K*TjK)*(Rb/N), "thermal")  ;
-        V(e,ei) <+ I(e,ei)*(Re/N);
-        V(e,ei) <+ ddt(I(e,ei) * Le);
-        V(e,ei) <+ white_noise( (FOUR_K*TjK)*(Re/N), "thermal")  ;
-        V(c,ci) <+ I(c,ci)*(Rc/N);
-        V(c,ci) <+ ddt(I(c,ci) * Lc);
-        V(c,ci) <+ white_noise( (FOUR_K*TjK)*(Rc/N), "thermal")  ;
+//        V(b,bi) <+ I(b,bi)*(Rb/N);
+//        V(b,bi) <+ ddt(I(b,bi) * Lb);
+//        V(b,bi) <+ white_noise( (FOUR_K*TjK)*(Rb/N), "thermal")  ;
+        I(b,bi) <+ V(b,bi)/(Rb/N);
+        I(b,bi) <+ white_noise( (FOUR_K*TjK)/(Rb/N), "thermal")  ;
+//        V(e,ei) <+ I(e,ei)*(Re/N);
+//        V(e,ei) <+ ddt(I(e,ei) * Le);
+//        V(e,ei) <+ white_noise( (FOUR_K*TjK)*(Re/N), "thermal")  ;
+        I(e,ei) <+ V(e,ei)/(Re/N);
+        I(e,ei) <+ white_noise( (FOUR_K*TjK)/(Re/N), "thermal")  ;
+//        V(c,ci) <+ I(c,ci)*(Rc/N);
+//        V(c,ci) <+ ddt(I(c,ci) * Lc);
+//        V(c,ci) <+ white_noise( (FOUR_K*TjK)*(Rc/N), "thermal")  ;
+        I(c,ci) <+ V(c,ci)/(Rc/N);
+        I(c,ci) <+ white_noise( (FOUR_K*TjK)/(Rc/N), "thermal")  ;
 
         if((Jse>0.0) && (ne>0)) begin
            I(ex, bii)  <+ V(ex,  bii)/(Rbxx/N);
@@ -682,7 +688,8 @@ module HBT_X(c,b,e,t);
         I(niv)    <+ flicker_noise(Area*Kfe , Ffee, "Hooge noise of emitter resistance"); 
         I(nivx)   <+ V(nivx);
         I(nivx)   <+ Inivx;
-        V(e,  ei) <+ V(niv)*V(nivx)*(Re/N); 
+//        V(e,  ei) <+ V(niv)*V(nivx)*(Re/N); 
+        I(e,  ei) <+ V(niv)*V(nivx)/(Re/N); 
 
    end
    //

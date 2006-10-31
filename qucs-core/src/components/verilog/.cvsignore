@@ -1,3 +1,9 @@
 Makefile
 Makefile.in
 .deps
+*.defs.*
+*.gui.*
+*.analogfunction.*
+*.core.*
+.adms.*
+*.adms

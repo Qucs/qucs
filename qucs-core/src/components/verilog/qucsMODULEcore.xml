@@ -16,9 +16,9 @@
 <admst:variable name="nbr_sources_flickernoise" select="%s"/>
 </admst:for-each>
 
-<admst:open file="$module.cpp">
+<admst:open file="$module.core.cpp">
 /*
- * $(module).cpp - device implementations for $(module) module
+ * $(module).core.cpp - device implementations for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
 #include &lt;math.h&gt;
 #include &lt;string.h&gt;
 
-<admst:text format="#include &quot;$(module)_analogfunction.h&quot;\n"/>
+<admst:text format="#include &quot;$(module).analogfunction.h&quot;\n"/>
 #include "logging.h"
 #include "complex.h"
 #include "matrix.h"
@@ -48,7 +48,7 @@
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
-<admst:text format="#include &quot;$module.h&quot;\n\n"/>
+<admst:text format="#include &quot;$module.core.h&quot;\n\n"/>
 <admst:text format="// external nodes\n"/>
 <admst:for-each select="node">
   <admst:if test="[location='external' and name!='GND']">
@@ -532,9 +532,9 @@ using namespace device;
 
 </admst:open>
 
-<admst:open file="$module.h">
+<admst:open file="$module.core.h">
 /*
- * $(module).h - device class definitions for $(module) module
+ * $(module).core.h - device class definitions for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -590,6 +590,6 @@ using namespace device;
 
 </admst:open>
 
-<admst:message format="$module.cpp and $module.h: files created\n"/>
+<admst:message format="$module.core.cpp and $module.core.h: files created\n"/>
 
 </admst>
