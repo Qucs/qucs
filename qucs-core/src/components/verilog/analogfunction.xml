@@ -1,123 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!--
-
-  Usage: admsXml <vafile> -e analogfunction.xml 
-
-  This file extracts all analog functions defined in file <vafile>
-  and transforms them into ready-to-compile C code. Two new files
-  - analogfunction.c and file analogfunction.h - are auto-created.
-
-  This file is made available as illustrative example on how to manipulate
-  the analog function element in the adms data tree.
-  It shows how to generate the partial derivatives of analog functions.
-  Its admst:template's can be freely re-used by other simulator xml interface.
-
-  A 'main' C routine is created and gives a way to print the partial derivatives
-  of analog functions using the 'xgraph' program.
-
-  You can compile the auto-created file as follows:
-    gcc -mno-cygwin analogfunction.c -o analogfunction.exe
-  This command will create an executable called analogfunction.exe. 
-  Running the executable will create two xgraph data files y.data and dy.data.
-  You can visualized the results by using the following command:
-    xgraph.exe -P  y.data dy.data
-
-  Summary:
-    1. admsXml analogfunction.va -e analogfunction.xml
-    2. gcc -mno-cygwin analogfunction.c -o analogfunction.exe
-    3. analogfunction.exe
-    4. xgraph.exe -P y.data dy.data
-
-  ** BEGIN-OF-FILE analogfunction.va ***************************************************************
-
-`include "discipline.h"
-
-module myanalogfunction (p,q);
-electrical p,q;
-real a,b;
-
-  analog   function real myfunction;
-    input x;
-    real  x;
-    begin
-      if(x<0.2)
-        myfunction =  abs(x);
-      else if(x<0.6)
-        myfunction =  cos(2*x);
-      else
-        myfunction =  sin(2*x);
-    end
-  endfunction
-
-  analog   function real norm;
-    input x, y, index;
-    real  x, y;
-    integer  index;
-
-    begin
-      case(index)
-        0: norm =  max(abs(x),abs(y));
-        1: norm =  abs(x)+abs(y);
-        2: norm =  sqrt(pow(x,2)+pow(y,2));
-        default: $strobe("Warning: norm does not exist"); 
-      endcase
-    end
-  endfunction
-
-`define VEXLIM  200.0
-  analog   function real expLin;
-    input x;
-    real  x;
-    real  expl;
-
-    begin
-      if (x < `VEXLIM)
-          expLin = exp(x);
-      else begin
-          expl = exp(`VEXLIM);
-          expLin = expl  * (1.0 + (x - `VEXLIM));
-      end
-    end
-  endfunction
-
-  analog   function real linLog;
-    input x;
-    real  x;
-    real  vlim;
-
-    begin
-      vlim=10.0;
-      if (x < vlim)
-          linLog = x;
-      else
-          linLog = vlim + ln(1.0 + (x - vlim));
-    end
-  endfunction
-
-analog
-  begin
-    case (a)
-      1,2: begin a=1; b=0; end
-      3,4: begin a=2; b=0; end
-      5,6: begin a=3; b=0; end
-      default : begin a=1234; b=5678; end
-    endcase
-  end
-endmodule
-  ** END-OF-FILE ***************************************************************
-
--->
-<!--
-  $Id: analogfunction.xml,v 1.1 2006-10-30 09:31:16 raimi Exp $
-  $Log: not supported by cvs2svn $
-  Revision 1.5  2006/09/04 08:51:05  r29173
-  tons of simplifications
-
-  Revision 1.4  2006/03/23 07:51:39  r29173
-  fixed bug in computation of ddx
-
--->
-
 
 <!DOCTYPE admst SYSTEM "admst.dtd">
 <admst version="2.2.5" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
@@ -1101,9 +982,9 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 </admst:template>
 
 <admst:variable name="globalanalogfunction"/>
-<admst:open file="$(module)_analogfunction.h">
+<admst:open file="$(module).analogfunction.h">
 /*
- * $(module)_analogfunction.h - analog function header
+ * $(module).analogfunction.h - analog function header
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1117,10 +998,10 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
   <admst:apply-templates select="/module" match="analogfunctionH"/>
 #endif
 </admst:open>
-<admst:message format="$(module)_analogfunction.h created\n"/>
-<admst:open file="$(module)_analogfunction.cpp">
+<admst:message format="$(module).analogfunction.h created\n"/>
+<admst:open file="$(module).analogfunction.cpp">
 /*
- * $(module)_analogfunction.cpp - analog function implementations
+ * $(module).analogfunction.cpp - analog function implementations
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1130,11 +1011,11 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
  */
 
 #include &lt;stdio.h&gt;
-#include &quot;$(module)_analogfunction.h&quot;
+#include &quot;$(module).analogfunction.h&quot;
 #include &lt;math.h&gt;
   <admst:apply-templates select="." match="c:math_h"/>
   <admst:apply-templates select="/module" match="analogfunctionC">
   </admst:apply-templates>
 </admst:open>
-<admst:message format="$(module)_analogfunction.cpp created\n"/>
+<admst:message format="$(module).analogfunction.cpp created\n"/>
 </admst>

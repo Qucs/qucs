@@ -13,7 +13,7 @@
 <admst:variable name="nbr_nodes" select="%s"/>
 </admst:for-each>
 
-<admst:open file="$module.qucsdefs.h">
+<admst:open file="$module.defs.h">
 <admst:for-each select="/module">
 <admst:text format="  /* $module verilog device */\n"/>
 <admst:text format="  { &quot;$module&quot;, $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,\n    {\n"/>
@@ -31,5 +31,5 @@
 <admst:text format="    { PROP_NO_PROP }\n  },\n"/>
 </admst:for-each>
 </admst:open>
-<admst:message format="$module.qucsdefs.h: file created\n"/>
+<admst:message format="$module.defs.h: file created\n"/>
 </admst>
