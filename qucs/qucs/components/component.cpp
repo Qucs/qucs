@@ -1432,6 +1432,10 @@ Component* getComponentFromName(QString& Line)
   case 'X' : if(cstr == "OR") c = new Logical_XOR();
         else if(cstr == "NOR") c = new Logical_XNOR();
         break;
+  case 'h' : if(cstr == "icumL2p1") c = new hicumL2p1();
+        break;
+  case 'H' : if(cstr == "BT_X") c = new HBT_X();
+        break;
   }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),
