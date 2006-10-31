@@ -157,11 +157,11 @@ void coax::synthesize ()
       
   if (isSelected ("din")) {
     /* solve for din */
-    din = dout / exp(Z0*sqrt(er)/ZF0/2/M_PI);
+    din = dout / exp(Z0*sqrt(er)/ZF0*2*M_PI);
     setProperty ("din", din, UNIT_LENGTH, LENGTH_M);
   } else if (isSelected ("dout")) {
     /* solve for dout */
-    dout = din * exp(Z0*sqrt(er)/ZF0/2/M_PI);
+    dout = din * exp(Z0*sqrt(er)/ZF0*2*M_PI);
     setProperty ("dout", dout, UNIT_LENGTH, LENGTH_M);
   }
 

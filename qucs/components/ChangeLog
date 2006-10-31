@@ -1,3 +1,9 @@
+2006-10-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL2p1.h (class hicumL2p1): Added HICUM L2 v2.1 model.
+
+	* HBT_X.h (class HBT_X): Added FBH HBT device model.
+
 2006-09-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* tr_sim.cpp (TR_Sim): Added 'MaxStep' property.

@@ -116,4 +116,7 @@
 #include "jk_flipflop.h"
 #include "vhdlfile.h"
 
+#include "hicumL2p1.h"
+#include "HBT_X.h"
+
 #endif
