@@ -226,7 +226,7 @@ void MouseActions::moveElements(QPtrList<Element> *movElements, int x, int y)
   Element *pe;
   for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
     if(pe->Type == isWire) {
-      pw = (Wire*)pe;   // connecting wires are not moved completely
+      pw = (Wire*)pe;   // connected wires are not moved completely
 
       if(((unsigned long)pw->Port1) > 3) {
 	pw->x1 += x;  pw->y1 += y;
