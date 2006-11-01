@@ -1,3 +1,8 @@
+2006-10-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* improved component/wire move algorithm
+	* fixed bug in distributing paintings
+
 2006-10-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* set cursor keys free in id_text dialog
