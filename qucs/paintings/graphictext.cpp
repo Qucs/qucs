@@ -107,7 +107,7 @@ void GraphicText::getCenter(int& x, int &y)
 void GraphicText::setCenter(int x, int y, bool relative)
 {
   if(relative) {  cx += x;  cy += y;  }
-  else {  cx = x;  cy = y;  }
+  else {  cx = x-(x2>>1);  cy = y-(y2>>1);  }
 }
 
 // -----------------------------------------------------------------------
