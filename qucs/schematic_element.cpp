@@ -1175,99 +1175,112 @@ void Schematic::selectMarkers()
 // For moving elements: If the moving element is connected to a not
 // moving element, insert two wires. If the connected element is already
 // a wire, use this wire. Otherwise create new wire.
-void Schematic::newMovingWires(QPtrList<Element> *p, Node *pn)
+void Schematic::newMovingWires(QPtrList<Element> *p, Node *pn, int pos)
 {
-  if(pn->Connections.count() < 1) return; // return, if connected node moves
-  Element *pe = pn->Connections.getFirst();
-  if(pe == (Element*)1) return; // return, if it was already treated this way
-  pn->Connections.prepend((Element*)1);  // to avoid doubling
+  Element *pe;
 
-  if(pn->Connections.count() == 2)    // 2, because of prepend (Element*)1
-    if(pe->Type == isWire) {    // is it connected to exactly one wire ?
+  if(pn->State & 8)  // Were new wires already inserted ?
+    return;
+  pn->State |= 8;
 
-      // .................................................
-      Wire *pw2=0, *pw = (Wire*)pe;
+  for (;;) {
+    if(pn->State & 16)  // node was already worked on
+      break;
 
-      Node *pn2 = pw->Port1;
-      if(pn2 == pn) pn2 = pw->Port2;
+    pe = pn->Connections.getFirst();
+    if(pe == 0)  return;
 
-      if(pn2->Connections.count() == 2) { // two existing wires connected ?
+    if(pn->Connections.count() > 1)
+      break;
+    if(pe->Type != isWire)  // is it connected to exactly one wire ?
+      break;
+
+    // .................................................
+    long  mask = 1, invMask = 3;
+    Wire *pw2=0, *pw = (Wire*)pe;
+
+    Node *pn2 = pw->Port1;
+    if(pn2 == pn) pn2 = pw->Port2;
+
+    if(pn2->Connections.count() == 2) // two existing wires connected ?
+      if((pn2->State & (8+4)) == 0) {
         Element *pe2 = pn2->Connections.getFirst();
         if(pe2 == pe) pe2 = pn2->Connections.getLast();
-        if(pe2 != (Element*)1)
-          if(pe2->Type == isWire)  // connected wire connected to ...
-            pw2  = (Wire*)pe2;     // ... exactly one wire ?
+        // connected wire connected to exactly one wire ?
+        if(pe2->Type == isWire)
+          pw2  = (Wire*)pe2;
       }
 
-      // .................................................
-      // reuse one wire
-      p->append(pw);
-      pw->Port1->Connections.removeRef(pw);   // remove connection 1
-      pw->Port2->Connections.removeRef(pw);   // remove connection 2
-      if(pw->Port1->Connections.getFirst() !=  (Element*)1)
-        pw->Port1->Connections.prepend((Element*)1);  // remember this action
-      if(pw->Port2->Connections.getFirst() !=  (Element*)1)
-        pw->Port2->Connections.prepend((Element*)1);  // remember this action
-      Wires->take(Wires->findRef(pw));
-      long mask = 1;
-      if(pw->isHorizontal()) mask = 2;
+    // .................................................
+    // reuse one wire
+    p->insert(pos, pw);
+    pw->Port1->Connections.removeRef(pw);   // remove connection 1
+    pw->Port1->State |= 16+4;
+    pw->Port2->Connections.removeRef(pw);   // remove connection 2
+    pw->Port2->State |= 16+4;
+    Wires->take(Wires->findRef(pw));
 
-      if(pw->Port1 != pn) {
-	pw->Port1->State = mask;
-	pw->Port1 = (Node*)mask;
-	pw->Port2->State = 3;
-	pw->Port2 = (Node*)3;    // move port 2 completely
-      }
-      else {
-	pw->Port1->State = 3;
-	pw->Port1 = (Node*)3;
-	pw->Port2->State = mask;
-	pw->Port2 = (Node*)mask;
-      }
+    if(pw->isHorizontal()) mask = 2;
 
-      // .................................................
-      // create new wire ?
-      if(pw2 == 0) {
-        if(pw->Port1 == (Node*)3)
-          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2,
-			     (Node*)mask, (Node*)0));
-        else
-          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1,
-			     (Node*)mask, (Node*)0));
-        return;
-      }
+    if(pw2 == 0) {  // place new wire between component and old wire
+      pn = pn2;
+      mask ^= 3;
+      invMask = 0;
+    }
 
+    if(pw->Port1 != pn) {
+      pw->Port1->State |= mask;
+      pw->Port1 = (Node*)mask;
+      pw->Port2->State |= invMask;
+      pw->Port2 = (Node*)invMask;  // move port 2 completely
+    }
+    else {
+      pw->Port1->State |= invMask;
+      pw->Port1 = (Node*)invMask;
+      pw->Port2->State |= mask;
+      pw->Port2 = (Node*)mask;
+    }
 
-      // .................................................
-      // reuse a second wire
-      p->append(pw2);
-      pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
-      pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
-      if(pw2->Port1->Connections.getFirst() !=  (Element*)1)
-        pw2->Port1->Connections.prepend((Element*)1); // remember this action
-      if(pw2->Port2->Connections.getFirst() !=  (Element*)1)
-        pw2->Port2->Connections.prepend((Element*)1); // remember this action
-      Wires->take(Wires->findRef(pw2));
-
-      if(pw2->Port1 != pn2) {
-	pw2->Port1->State = 0;
-	pw2->Port1 = (Node*)0;
-	pw2->Port2->State = mask;
-	pw2->Port2 = (Node*)mask;
-      }
-      else {
-	pw2->Port1->State = mask;
-	pw2->Port1 = (Node*)mask;
-	pw2->Port2->State = 0;
-	pw2->Port2 = (Node*)0;
-      }
+    invMask ^= 3;
+    // .................................................
+    // create new wire ?
+    if(pw2 == 0) {
+      if(pw->Port1 != (Node*)mask)
+        p->insert(pos,
+          new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)mask, (Node*)invMask));
+      else
+        p->insert(pos,
+          new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)mask, (Node*)invMask));
       return;
     }
 
+
+    // .................................................
+    // reuse a second wire
+    p->insert(pos, pw2);
+    pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
+    pw2->Port1->State |= 16+4;
+    pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
+    pw2->Port2->State |= 16+4;
+    Wires->take(Wires->findRef(pw2));
+
+    if(pw2->Port1 != pn2) {
+      pw2->Port1 = (Node*)0;
+      pw2->Port2->State |= mask;
+      pw2->Port2 = (Node*)mask;
+    }
+    else {
+      pw2->Port1->State |= mask;
+      pw2->Port1 = (Node*)mask;
+      pw2->Port2 = (Node*)0;
+    }
+    return;
+  }
+
   // only x2 moving
-  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));
+  p->insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));
   // x1, x2, y2 moving
-  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));
+  p->insert(pos, new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));
 }
 
 // ---------------------------------------------------
@@ -1275,7 +1288,7 @@ void Schematic::newMovingWires(QPtrList<Element> *p, Node *pn)
 // list 'p' and deletes them from the document.
 int Schematic::copySelectedElements(QPtrList<Element> *p)
 {
-  int markerCount = 0;
+  int i, count = 0;
   Port      *pp;
   Component *pc;
   Wire      *pw;
@@ -1285,13 +1298,17 @@ int Schematic::copySelectedElements(QPtrList<Element> *p)
 
 
   // test all components *********************************
+  // Insert components before wires in order to prevent short-cut removal.
   for(pc = Components->first(); pc != 0; )
     if(pc->isSelected) {
       p->append(pc);
+      count++;
 
       // delete all port connections
-      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
         pp->Connection->Connections.removeRef((Element*)pc);
+        pp->Connection->State = 4;
+      }
 
       Components->take();   // take component out of the document
       pc = Components->current();
@@ -1307,13 +1324,85 @@ int Schematic::copySelectedElements(QPtrList<Element> *p)
       p->append(pw);
 
       pw->Port1->Connections.removeRef(pw);   // remove connection 1
+      pw->Port1->State = 4;
       pw->Port2->Connections.removeRef(pw);   // remove connection 2
+      pw->Port2->State = 4;
       Wires->take();
       pw = Wires->current();
     }
     else pw = Wires->next();
   }
 
+  // ..............................................
+  // Inserts wires, if a connection to a not moving element is found.
+  // The order of the "for"-loops is important to guarantee a stable
+  // operation: components, new wires, old wires
+  pc = (Component*)p->first();
+  for(i=0; i<count; i++) {
+    for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+       newMovingWires(p, pp->Connection, count);
+
+    p->findRef(pc);   // back to the real current pointer
+    pc = (Component*)p->next();
+  }
+
+  for(pe = (Element*)pc; pe != 0; pe = p->next())  // new wires
+    if(pe->isSelected)
+      break;
+
+  for(pw = (Wire*)pe; pw != 0; pw = (Wire*)p->next())
+    if(pw->Type == isWire) {  // not working on labels
+      newMovingWires(p, pw->Port1, count);
+      newMovingWires(p, pw->Port2, count);
+      p->findRef(pw);   // back to the real current pointer
+    }
+
+
+  // ..............................................
+  // delete the unused nodes
+  for(pn = Nodes->first(); pn!=0; ) {
+    if(pn->State & 8)
+      if(pn->Connections.count() == 2)
+        if(oneTwoWires(pn)) {  // if possible, connect two wires to one
+          pn = Nodes->current();
+          continue;
+        }
+
+    if(pn->Connections.count() == 0) {
+      if(pn->Label) {
+        pn->Label->Type = isMovingLabel;
+        if(pn->State & 1) {
+          if(!(pn->State & 2)) pn->Label->Type = isHMovingLabel;
+        }
+        else if(pn->State & 2) pn->Label->Type = isVMovingLabel;
+        p->append(pn->Label);    // do not forget the node labels
+      }
+      Nodes->remove();
+      pn = Nodes->current();
+      continue;
+    }
+
+    pn->State = 0;
+    pn = Nodes->next();
+  }
+
+  // test all node labels
+  // do this last to avoid double copying
+  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
+    if(pn->Label) if(pn->Label->isSelected)
+      p->append(pn->Label);
+
+
+  // test all paintings **********************************
+  for(Painting *ppa = Paintings->first(); ppa != 0; )
+    if(ppa->isSelected) {
+      p->append(ppa);
+      Paintings->take();
+      ppa = Paintings->current();
+    }
+    else ppa = Paintings->next();
+
+  count = 0;  // count markers now
   // test all diagrams **********************************
   for(pd = Diagrams->first(); pd != 0; )
     if(pd->isSelected) {
@@ -1325,7 +1414,7 @@ int Schematic::copySelectedElements(QPtrList<Element> *p)
       for(Graph *pg = pd->Graphs.first(); pg!=0; pg = pd->Graphs.next())
         for(Marker *pm = pg->Markers.first(); pm != 0; )
           if(pm->isSelected) {
-            markerCount++;
+            count++;
             p->append(pm);
             pg->Markers.take();
             pm = pg->Markers.current();
@@ -1335,71 +1424,7 @@ int Schematic::copySelectedElements(QPtrList<Element> *p)
       pd = Diagrams->next();
     }
 
-  // test all paintings **********************************
-  for(Painting *ppa = Paintings->first(); ppa != 0; )
-    if(ppa->isSelected) {
-      p->append(ppa);
-      Paintings->take();
-      ppa = Paintings->current();
-    }
-    else ppa = Paintings->next();
-
-  // ..............................................
-  // Inserts wires, if a connection to a not moving element is found.
-  // Go backwards in order not to test the new insertions.
-  for(pe = p->last(); pe!=0; pe = p->prev())
-    if(pe->Type & isComponent) {
-      pc = (Component*)pe;
-      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
-         newMovingWires(p, pp->Connection);
-
-      p->findRef(pe);   // back to the real current pointer
-    }
-    else if(pe->Type == isWire) {
-      pw = (Wire*)pe;
-      newMovingWires(p, pw->Port1);
-      newMovingWires(p, pw->Port2);
-      p->findRef(pe);   // back to the real current pointer
-    }
-
-
-  // ..............................................
-  // delete the unused nodes
-  for(pn = Nodes->first(); pn!=0; ) {
-    if(pn->Connections.getFirst() == (Element*)1) {
-      pn->Connections.removeFirst();  // delete tag
-      if(pn->Connections.count() == 2)
-        if(oneTwoWires(pn)) {  // if possible, connect two wires to one
-          pn = Nodes->current();
-          continue;
-        }
-    }
-
-    if(pn->Connections.count() == 0) {
-      if(pn->Label) {
-	pn->Label->Type = isMovingLabel;
-	if(pn->State & 1) {
-	  if(!(pn->State & 2)) pn->Label->Type = isHMovingLabel;
-	}
-	else if(pn->State & 2) pn->Label->Type = isVMovingLabel;
-	pn->State = 0;
-	p->append(pn->Label);    // do not forget the node labels
-      }
-      Nodes->remove();
-      pn = Nodes->current();
-      continue;
-    }
-
-    pn = Nodes->next();
-  }
-
-  // test all node labels
-  // do this last to avoid double copying
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
-    if(pn->Label) if(pn->Label->isSelected)
-      p->append(pn->Label);
-
-  return markerCount;
+  return count;
 }
 
 // ---------------------------------------------------
@@ -1813,6 +1838,7 @@ bool Schematic::distributeVertical()
       case isPainting:
         pe->getCenter(bx1, by1);
         pe->setCenter(bx1, y, false);
+        break;
 
       case isNodeLabel:
         if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)

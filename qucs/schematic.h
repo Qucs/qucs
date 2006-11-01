@@ -160,7 +160,7 @@ public:
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
-  void     newMovingWires(QPtrList<Element>*, Node*);
+  void     newMovingWires(QPtrList<Element>*, Node*, int);
   int      copySelectedElements(QPtrList<Element>*);
   bool     deleteElements();
   bool     aligning(int);
