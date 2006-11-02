@@ -1,3 +1,16 @@
+<!--
+
+  Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
+  Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
+  Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+
+  This is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2, or (at your option)
+  any later version.
+
+-->
+
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst SYSTEM "admst.dtd">
@@ -98,7 +111,7 @@
 #define _load_dynamic_residual2(pnode,nnode,current)\\
 	if (doTR) _charges[pnode][nnode] += current;
 #define _load_dynamic_residual1(node,current)\\
-	if (doTR) _charges[node][<admst:text format="$nbr_nodes"/>] += current;
+	if (doTR) _charges[node][node] += current;
 #define _load_dynamic_jacobian4(pnode,nnode,vpnode,vnnode, conductance)\\
 	if (doAC) {\\
 	_jdyna[pnode][vpnode] += conductance;\\
@@ -115,7 +128,7 @@
 	_jdyna[nnode][vnode] -= conductance;\\
 	}\\
 	if (doTR) {\\
-	_caps[pnode][nnode][vnode][<admst:text format="$nbr_nodes"/>] += conductance;\\
+	_caps[pnode][nnode][vnode][vnode] += conductance;\\
 	}	
 #define _load_dynamic_jacobian2p(node,vpnode,vnnode,conductance)\\
 	if (doAC) {\\
@@ -123,14 +136,14 @@
         _jdyna[node][vnnode] -= conductance;\\
         }\\
 	if (doTR) {\\
-        _caps[node][<admst:text format="$nbr_nodes"/>][vpnode][vnnode] += conductance;\\
+        _caps[node][node][vpnode][vnnode] += conductance;\\
 	}
 #define _load_dynamic_jacobian1(node,vnode,conductance)\\
 	if (doAC) {\\
 	_jdyna[node][vnode] += conductance;\\
 	}\\
 	if (doTR) {\\
-	_caps[node][<admst:text format="$nbr_nodes"/>][vnode][<admst:text format="$nbr_nodes"/>] += conductance;\\
+	_caps[node][node][vnode][vnode] += conductance;\\
 	}
 
 #define _save_whitenoise1(n1,pwr,type)\\
@@ -268,12 +281,12 @@ using namespace device;
 
   // zero charges
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
-<admst:text format="  for (i2 = 0; i2 < $nbr_nodes + 1; i2++) {\n"/>
+<admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="    _charges[i1][i2] = 0.0;\n"/>
 <admst:text format="  } }\n"/>
   // zero capacitances
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
-<admst:text format="  for (i2 = 0; i2 < $nbr_nodes + 1; i2++) {\n"/>
+<admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="  for (i4 = 0; i4 < $nbr_nodes; i4++) {\n"/>
 <admst:text format="    _caps[i1][i2][i3][i4] = 0.0;\n"/>
@@ -414,7 +427,7 @@ using namespace device;
 
 <admst:text format="/* Initialization of transient analysis. */\n"/>
 <admst:text format="void $module::initTR (void)\n{"/>
-  setStates (2*$nbr_nodes*$nbr_nodes+2*$nbr_nodes);
+  setStates (2 * $nbr_nodes * $nbr_nodes);
   initDC ();
 <admst:text format="}\n\n"/>
 
@@ -429,45 +442,50 @@ using namespace device;
   int i1, i2, i3, i4, state;
 
   // 2-node charge integrations
-<admst:text format="  for (i1 = 0;i1 < $nbr_nodes; i1++) {\n"/>
+<admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
-<admst:text format="    state = 2*(i1+i2+($nbr_nodes-1)*i1);\n"/>
+<admst:text format="    state = 2 * (i2 + $nbr_nodes * i1);\n"/>
+<admst:text format="    if (i1 != i2)\n"/>
 <admst:text format="    if (_charges[i1][i2] != 0.0)\n"/>
 <admst:text format="      transientCapacitanceQ (state, i1, i2, _charges[i1][i2]);\n"/>
 <admst:text format="  } }\n"/>
   // 1-node charge integrations
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
-<admst:text format="    state = 2*(i1+$nbr_nodes+($nbr_nodes-1)*i1+1);\n"/>
-<admst:text format="    if (_charges[i1][$nbr_nodes] != 0.0)\n"/>
-<admst:text format="      transientCapacitanceQ (state, i1, _charges[i1][$nbr_nodes]);\n"/>
-<admst:text format="  }\n"/> 
+<admst:text format="    state = 2 * (i1 + $nbr_nodes * i1);\n"/>
+<admst:text format="    if (_charges[i1][i1] != 0.0)\n"/>
+<admst:text format="      transientCapacitanceQ (state, i1, _charges[i1][i1]);\n"/>
+<admst:text format="  }\n"/>
   // charge: 2-node, voltage: 2-node
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
+<admst:text format="  if (i1 != i2)\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="  for (i4 = 0; i4 < $nbr_nodes; i4++) {\n"/>
+<admst:text format="    if (i3 != i4)\n"/>
 <admst:text format="    if (_caps[i1][i2][i3][i4] != 0.0)\n"/>
 <admst:text format="      transientCapacitanceC (i1, i2, i3, i4, _caps[i1][i2][i3][i4], BP(i3,i4));\n"/>
-<admst:text format="  } } } }\n"/>               
+<admst:text format="  } } } }\n"/>
   // charge: 2-node, voltage: 1-node
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
+<admst:text format="  if (i1 != i2)\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
-<admst:text format="    if (_caps[i1][i2][i3][$nbr_nodes] != 0.0)\n"/>
-<admst:text format="      transientCapacitanceC2Q (i1, i2, i3, _caps[i1][i2][i3][$nbr_nodes], NP(i3));\n"/>
-<admst:text format="  } } }\n"/>     
+<admst:text format="    if (_caps[i1][i2][i3][i3] != 0.0)\n"/>
+<admst:text format="      transientCapacitanceC2Q (i1, i2, i3, _caps[i1][i2][i3][i3], NP(i3));\n"/>
+<admst:text format="  } } }\n"/>
   // charge: 1-node, voltage: 2-node
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="  for (i4 = 0; i4 < $nbr_nodes; i4++) {\n"/>
-<admst:text format="    if (_caps[i1][$nbr_nodes][i3][i4] != 0.0)\n"/>
-<admst:text format="      transientCapacitanceC2V (i1, i2, i3, _caps[i1][$nbr_nodes][i3][i4], BP(i3,i4));\n"/>
+<admst:text format="    if (i3 != i4)\n"/>
+<admst:text format="    if (_caps[i1][i1][i3][i4] != 0.0)\n"/>
+<admst:text format="      transientCapacitanceC2V (i1, i3, i4, _caps[i1][i1][i3][i4], BP(i3,i4));\n"/>
 <admst:text format="  } } }\n"/>     
   // charge: 1-node, voltage: 1-node
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>               
-<admst:text format="    if (_caps[i1][$nbr_nodes][i3][$nbr_nodes] != 0.0)\n"/>
-<admst:text format="      transientCapacitanceC (i1, i3, _caps[i1][$nbr_nodes][i3][$nbr_nodes], NP(i3));\n"/>
+<admst:text format="    if (_caps[i1][i1][i3][i3] != 0.0)\n"/>
+<admst:text format="      transientCapacitanceC (i1, i3, _caps[i1][i1][i3][i3], NP(i3));\n"/>
 <admst:text format="  } }\n"/> 
   
 <admst:text format="}\n\n"/>
@@ -526,7 +544,7 @@ using namespace device;
 <admst:text format="/* Perform S-parameter noise computations. */\n"/>
 <admst:text format="void $module::calcNoiseSP (nr_double_t frequency) \n{"/>
   setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
-<admst:text format="}\n\n"/>
+<admst:text format="}\n"/>
 
 </admst:for-each>
 
@@ -580,12 +598,11 @@ using namespace device;
 <admst:text format="  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];\n"/>
 <admst:text format="  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];\n"/>
 <admst:text format="  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _charges[$nbr_nodes][$nbr_nodes+1];\n"/>
-<admst:text format="  nr_double_t _caps[$nbr_nodes][$nbr_nodes+1][$nbr_nodes][$nbr_nodes+1];"/>
+<admst:text format="  nr_double_t _charges[$nbr_nodes][$nbr_nodes];\n"/>
+<admst:text format="  nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];"/>
 };
 
 #endif /* __<admst:text format="$module"/>_H__ */
-
 </admst:for-each>
 
 </admst:open>

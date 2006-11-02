@@ -1,3 +1,8 @@
+2006-11-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/qucsMODULEcore.xml: Optimized memory usage during
+	transient analysis.  Also fixed a bug in the transient analysis.
+
 2006-09-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* vrect.cpp, vpulse.cpp, vac.cpp, irect.cpp, ipulse.cpp,
