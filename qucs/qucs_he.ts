@@ -7084,6 +7084,10 @@ Starts attenuator calculation program</source>
         <source>Catalan by Antoni Subirats</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Verilog-AMS interface by Helene Parruitte</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>

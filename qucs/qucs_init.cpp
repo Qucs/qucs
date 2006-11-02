@@ -901,7 +901,8 @@ void QucsApp::slotHelpAbout()
     tr("VHDL simulator 'FreeHDL' by Edwin Naroska and Marius Vollmer")+"\n"+
     tr("Special thanks to Jens Flucke and Raimund Jacob")+"\n"+
     tr("Many thanks to Mike Brinson for correcting the VHDL output")+"\n"+
-    tr("GUI improvements by Gopala Krishna A")+"\n\n"+
+    tr("GUI improvements by Gopala Krishna A")+"\n"+
+    tr("Verilog-AMS interface by Helene Parruitte")+"\n\n"+
     tr("Translations:")+"\n"+
     tr("German by Stefan Jahn")+"\n"+
     tr("Polish by Dariusz Pienkowski")+"\n"+
