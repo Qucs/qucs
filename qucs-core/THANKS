@@ -37,3 +37,14 @@ Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
 
 Gunther Kraut <gn.kraut@t-online.de> for his contributions to the equation
 	solver evaluation.
+
+Helene Parruitte <parruit@enseirb.fr> for her Verilog-AMS interface using
+	the adms application.  Thanks for implementing the HICMU/L2 v2.11
+	and v2.22 device models and testing it.  Also for encouraging some
+	changes in the simulator including the concept of so-called
+	trans-capacitances in non-linear device models.
+
+Bertrand Ardouin <ardouin@xmodtech.com> for allowing Helene to spend
+	a significant amount of time of her internship at XMOD to implement
+	the Verilog-AMS interface.  Also for letting her work to be
+	published under the GPL.
