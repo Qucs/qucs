@@ -39,7 +39,7 @@ public:
   bool  load();
   int   save();
   void  print(QPrinter*, QPainter*, bool, bool);
-  float zoom(float);
+  float zoomBy(float);
   void  showAll();
   void  showNoZoom();
   void  becomeCurrent(bool);

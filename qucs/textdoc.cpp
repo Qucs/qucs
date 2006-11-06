@@ -213,7 +213,7 @@ void TextDoc::print(QPrinter *Printer, QPainter *Painter, bool printAll, bool)
 }
 
 // ---------------------------------------------------
-float TextDoc::zoom(float s)
+float TextDoc::zoomBy(float s)
 {
   if(s < 1.0f) s = -1.0f/s;
   Scale += s;

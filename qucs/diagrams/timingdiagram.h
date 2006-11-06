@@ -18,10 +18,10 @@
 #ifndef TIMINGDIAGRAM_H
 #define TIMINGDIAGRAM_H
 
-#include "diagram.h"
+#include "tabdiagram.h"
 
 
-class TimingDiagram : public Diagram  {
+class TimingDiagram : public TabDiagram  {
 public: 
   TimingDiagram(int _cx=0, int _cy=0);
  ~TimingDiagram();
@@ -29,13 +29,9 @@ public:
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   void paint(ViewPainter*);
-  int  calcDiagram();
-  bool scroll(int);
-
-  void createAxisLabels() {};   // no labels in this diagram
-
-protected:
-  void calcData(Graph*) {};  // no graph data
+  int calcDiagram();
+  int scroll(int);
+  bool scrollTo(int, int, int);
 };
 
 #endif

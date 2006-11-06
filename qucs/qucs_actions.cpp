@@ -198,7 +198,7 @@ void QucsApp::slotZoomIn(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
   if(Doc->inherits("QTextEdit")) {
-    Doc->zoom(2.0f);
+    Doc->zoomBy(2.0f);
     magPlus->blockSignals(true);
     magPlus->setOn(false);
     magPlus->blockSignals(false);
@@ -500,6 +500,34 @@ void QucsApp::slotDistribVert()
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   Doc->distributeVertical();
+  Doc->viewport()->update();
+  view->drawn = false;
+}
+
+// --------------------------------------------------------------
+// Is called, when "Center horizontally" action is activated.
+void QucsApp::slotCenterHorizontal()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  if(!Doc->aligning(4))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  Doc->viewport()->update();
+  view->drawn = false;
+}
+
+// --------------------------------------------------------------
+// Is called, when "Center vertically" action is activated.
+void QucsApp::slotCenterVertical()
+{
+  editText->setHidden(true); // disable text edit of component property
+
+  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
+  if(!Doc->aligning(5))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
   Doc->viewport()->update();
   view->drawn = false;
 }

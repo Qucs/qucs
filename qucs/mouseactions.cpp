@@ -500,6 +500,20 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+// Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
+void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
+{
+  int x = int(float(Event->pos().x())/Doc->Scale) + Doc->ViewX1;
+  int y = int(float(Event->pos().y())/Doc->Scale) + Doc->ViewY1;
+
+  if(((TabDiagram*)focusElement)->scrollTo(MAx2, x - MAx1, y - MAy1)) {
+    Doc->setChanged(true, true, 'm'); // 'm' = only the first time
+    Doc->viewport()->update();
+    drawn = false;
+  }
+}
+
+// -----------------------------------------------------------
 // Paints a cross under the mouse cursor to show the delete modus.
 void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
 {
@@ -975,16 +989,27 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, int x, int y
       Doc->grabKeyboard(); // no keyboard inputs during move actions
       return;
 
-    case isDiagramScroll:  // scroll in tabular ?
+    case isDiagramHScroll:  // scroll in tabular ?
+      MAy1 = MAx1;
+
+    case isDiagramVScroll:
       focusElement->Type = isDiagram;
 
-      if(((Diagram*)focusElement)->Name == "Time") {
-        if(((TimingDiagram*)focusElement)->scroll(MAx1))
+      No = ((TabDiagram*)focusElement)->scroll(MAy1);
+
+      switch(No) {
+        case 1:
           Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-      }
-      else {
-        if(((TabDiagram*)focusElement)->scroll(MAy1))
-          Doc->setChanged(true, true, 'm'); // 'm' = only the first time
+          break;
+        case 2:  // move scroll bar with mouse cursor
+          QucsMain->MouseMoveAction = &MouseActions::MMoveScrollBar;
+          QucsMain->MousePressAction = 0;
+          QucsMain->MouseDoubleClickAction = 0;
+          Doc->grabKeyboard();  // no keyboard inputs during move actions
+
+          // Remember inital scroll bar position.
+          MAx2 = int(((TabDiagram*)focusElement)->xAxis.limit_min);
+          return;
       }
       Doc->viewport()->update();
       drawn = false;
@@ -1696,9 +1721,12 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   float DX = float(abs(MAx2));
   float DY = float(abs(MAy2));
   if((Doc->Scale * DX) < 6.0) {
-    MAx1  = (MAx1<<1) - (Doc->visibleWidth()>>1)  - Doc->contentsX();
-    MAy1  = (MAy1<<1) - (Doc->visibleHeight()>>1) - Doc->contentsY();
-    Doc->zoom(1.5);    // a simple click zooms by constant factor
+    DX = 1.5;    // a simple click zooms by constant factor
+    Doc->zoom(DX);
+
+    DX -= 1.0;
+    MAx1 = int(DX * float(Event->pos().x()));
+    MAy1 = int(DX * float(Event->pos().y()));
   }
   else {
     float xScale = float(Doc->visibleWidth())  / DX;

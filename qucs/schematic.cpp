@@ -591,10 +591,27 @@ float Schematic::zoom(float s)
   if(Scale > 10.0) Scale = 10.0f;
   if(Scale < 0.01) Scale = 0.01f;
 
+  // "resizeContents()" performs an immediate repaint. So, set widget
+  // to hidden. This causes some flicker, but it is still nicer.
+  viewport()->setHidden(true);
+//  setHidden(true);
   resizeContents(int(Scale*float(ViewX2 - ViewX1)),
                  int(Scale*float(ViewY2 - ViewY1)));
+//  setHidden(false);
+  viewport()->setHidden(false);
+
   viewport()->update();
   App->view->drawn = false;
+  return Scale;
+}
+
+// -----------------------------------------------------------
+float Schematic::zoomBy(float s)
+{
+  zoom(s);
+  s -= 1.0;
+  scrollBy( int(s * float(contentsX()+visibleWidth()/2)),
+            int(s * float(contentsY()+visibleHeight()/2)) );
   return Scale;
 }
 
@@ -1515,10 +1532,12 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   // ...................................................................
   else if(Event->state() & Qt::ControlButton) {  // use mouse wheel to zoom ?
       float Scaling;
-      if(delta < 0) Scaling = float(-delta)/60.0/1.1;
+      if(delta < 0) Scaling = float(delta)/-60.0/1.1;
       else Scaling = 1.1*60.0/float(delta);
-      Scaling = zoom(Scaling);
-//      center(Event->x(), Event->y());
+      zoom(Scaling);
+      Scaling -= 1.0;
+      scrollBy( int(Scaling * float(Event->pos().x())),
+                int(Scaling * float(Event->pos().y())) );
   }
   // ...................................................................
   else {     // scroll vertically !
