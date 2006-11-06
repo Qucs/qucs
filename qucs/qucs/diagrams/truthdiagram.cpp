@@ -59,6 +59,9 @@ int TruthDiagram::calcDiagram()
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
+  if(xAxis.limit_min < 0.0)
+    xAxis.limit_min = 0.0;
+
   Graph *firstGraph;
   Graph *g = Graphs.first();
   if(g == 0) {  // no variables specified in diagram ?
@@ -216,6 +219,8 @@ if(g) if(!g->cPointsX.isEmpty()) {
 funcEnd:
   if(invisibleCount > 0) {  // could all numbers be written ?
     x1 = 18;   // extend the select area to the left
+
+    zAxis.limit_max = double(NumAll);  // number of data (rows) 
 
     // calculate data for painting scroll bar
     xAxis.numGraphs = int(xAxis.limit_min);

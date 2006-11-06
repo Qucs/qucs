@@ -964,13 +964,13 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
         if(pd->Name[1] == 'i') {
           if(y > pd->cy) {
             if(x < pd->cx+pd->xAxis.numGraphs) continue;
-            pd->Type = isDiagramScroll;
+            pd->Type = isDiagramHScroll;
             return pd;
           }
         }
         else {
           if(x < pd->cx) {      // clicked on scroll bar ?
-            pd->Type = isDiagramScroll;
+            pd->Type = isDiagramVScroll;
             return pd;
           }
         }
@@ -1587,33 +1587,54 @@ bool Schematic::deleteElements()
 bool Schematic::aligning(int Mode)
 {
   int x1, y1, x2, y2;
-  int bx1, by1, bx2, by2, *bx=0, *by=0;
+  int bx1, by1, bx2, by2, *bx=0, *by=0, *ax=0, *ay=0;
   QPtrList<Element> ElementCache;
   int count = copyElements(x1, y1, x2, y2, &ElementCache);
   if(count < 1) return false;
 
 
+  ax = ay = &x2;  // = 0
   switch(Mode) {
     case 0:  // align top
 	bx = &x1;
 	by = &by1;
+	y2 = 1;
 	break;
     case 1:  // align bottom
 	bx = &x1;
 	y1 = y2;
 	by = &by2;
+	y2 = 1;
 	break;
     case 2:  // align left
 	by = &y1;
 	bx = &bx1;
+	y2 = 1;
 	break;
     case 3:  // align right
 	by = &y1;
 	x1 = x2;
 	bx = &bx2;
+	y2 = 1;
+	break;
+    case 4:  // center horizontally
+	x1 = (x2+x1) / 2;
+	by = &x2;  // = 0
+	ax = &bx1;
+	bx = &bx2;
+	y1 = 0;
+	y2 = 2;
+	break;
+    case 5:  // center vertically
+	y1 = (y2+y1) / 2;
+	bx = &x2;  // = 0
+	ay = &by1;
+	by = &by2;
+	x1 = 0;
+	y2 = 2;
 	break;
   }
-
+  x2 = 0;
 
   Wire *pw;
   Component *pc;
@@ -1624,31 +1645,39 @@ bool Schematic::aligning(int Mode)
       case isComponent:
       case isAnalogComponent:
       case isDigitalComponent:
-	pc = (Component*)pe;
-	pc->Bounding(bx1, by1, bx2, by2);
-	pc->setCenter(x1-(*bx), y1-(*by), true);
-	insertRawComponent(pc);
-	break;
+        pc = (Component*)pe;
+        pc->Bounding(bx1, by1, bx2, by2);
+        pc->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+        insertRawComponent(pc);
+        break;
 
       case isWire:
-	pw = (Wire*)pe;
-	bx1 = pw->x1;
-	by1 = pw->y1;
-	bx2 = pw->x2;
-	by2 = pw->y2;
-	pw->setCenter(x1-(*bx), y1-(*by), true);
-//	if(pw->Label) {	}
-	insertWire(pw);
-	break;
+        pw = (Wire*)pe;
+        bx1 = pw->x1;
+        by1 = pw->y1;
+        bx2 = pw->x2;
+        by2 = pw->y2;
+        pw->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+//        if(pw->Label) {  }
+        insertWire(pw);
+        break;
 
       case isDiagram:
-	((Diagram*)pe)->Bounding(bx1, by1, bx2, by2);
-	((Diagram*)pe)->setCenter(x1-(*bx), y1-(*by), true);
-	break;
+        // Should the axis label be counted for ? I guess everyone
+        // has a different opinion.
+//        ((Diagram*)pe)->Bounding(bx1, by1, bx2, by2);
+
+        // Take size without axis label.
+        bx1 = ((Diagram*)pe)->cx;
+        by2 = ((Diagram*)pe)->cy;
+        bx2 = bx1 + ((Diagram*)pe)->x2;
+        by1 = by2 - ((Diagram*)pe)->y2;
+        ((Diagram*)pe)->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+        break;
 
       case isPainting:
         ((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
-        ((Painting*)pe)->setCenter(x1-(*bx), y1-(*by), true);
+        ((Painting*)pe)->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
         break;
 
       case isNodeLabel:
@@ -1661,8 +1690,8 @@ bool Schematic::aligning(int Mode)
           bx1 = pw->x1;  by1 = pw->y1;
           bx2 = pw->x2;  by2 = pw->y2;
         }
-        ((WireLabel*)pe)->cx += x1-(*bx);
-        ((WireLabel*)pe)->cy += y1-(*by);
+        ((WireLabel*)pe)->cx += x1-((*bx)+(*ax))/y2;
+        ((WireLabel*)pe)->cy += y1-((*by)+(*ay))/y2;
         insertNodeLabel((WireLabel*)pe);
         break;
 

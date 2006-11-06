@@ -176,6 +176,18 @@ void QucsApp::initActions()
 	   "Distribute vertically selected elements"));
   connect(distrVert, SIGNAL(activated()), SLOT(slotDistribVert()));
 
+  centerHor = new QAction("Center horizontally", tr("Center horizontally"), 0, this);
+  centerHor->setStatusTip(tr("Center horizontally selected elements"));
+  centerHor->setWhatsThis(
+	tr("Center horizontally\n\nCenter horizontally selected elements"));
+  connect(centerHor, SIGNAL(activated()), SLOT(slotCenterHorizontal()));
+
+  centerVert = new QAction("Center vertically", tr("Center vertically"), 0, this);
+  centerVert->setStatusTip(tr("Center vertically selected elements"));
+  centerVert->setWhatsThis(
+	tr("Center vertically\n\nCenter vertically selected elements"));
+  connect(centerVert, SIGNAL(activated()), SLOT(slotCenterVertical()));
+
   onGrid = new QAction("Set on Grid", tr("Set on Grid"), CTRL+Key_U, this);
   onGrid->setWhatsThis(
 	tr("Set on Grid\n\nSets selected elements on grid"));
@@ -635,15 +647,6 @@ void QucsApp::initMenuBar()
   fileMenu->insertSeparator();
   fileQuit->addTo(fileMenu);
 
-  alignMenu = new QPopupMenu();  // submenu for "editMenu"
-  alignTop->addTo(alignMenu);
-  alignBottom->addTo(alignMenu);
-  alignLeft->addTo(alignMenu);
-  alignRight->addTo(alignMenu);
-  alignMenu->insertSeparator();
-  distrHor->addTo(alignMenu);
-  distrVert->addTo(alignMenu);
-
   editMenu = new QPopupMenu();  // menuBar entry editMenu
   undo->addTo(editMenu);
   redo->addTo(editMenu);
@@ -663,12 +666,24 @@ void QucsApp::initMenuBar()
   editMirror->addTo(editMenu);
   editMirrorY->addTo(editMenu);
   editActivate->addTo(editMenu);
-  editMenu->insertItem(tr("Align/Distribute"), alignMenu);
-  onGrid->addTo(editMenu);
-  moveText->addTo(editMenu);
   editMenu->insertSeparator();
   intoH->addTo(editMenu);
   popH->addTo(editMenu);
+
+  alignMenu = new QPopupMenu();  // menuBar entry alignMenu
+  moveText->addTo(alignMenu);
+  onGrid->addTo(alignMenu);
+  alignMenu->insertSeparator();
+  centerHor->addTo(alignMenu);
+  centerVert->addTo(alignMenu);
+  alignMenu->insertSeparator();
+  alignTop->addTo(alignMenu);
+  alignBottom->addTo(alignMenu);
+  alignLeft->addTo(alignMenu);
+  alignRight->addTo(alignMenu);
+  alignMenu->insertSeparator();
+  distrHor->addTo(alignMenu);
+  distrVert->addTo(alignMenu);
 
   insMenu = new QPopupMenu();  // menuBar entry insMenu
   insWire->addTo(insMenu);
@@ -728,6 +743,7 @@ void QucsApp::initMenuBar()
 
   menuBar()->insertItem(tr("&File"), fileMenu);  // MENUBAR CONFIGURATION
   menuBar()->insertItem(tr("&Edit"), editMenu);
+  menuBar()->insertItem(tr("P&ositioning"), alignMenu);
   menuBar()->insertItem(tr("&Insert"), insMenu);
   menuBar()->insertItem(tr("&Project"), projMenu);
   menuBar()->insertItem(tr("&Tools"), toolMenu);
