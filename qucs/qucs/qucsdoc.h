@@ -39,7 +39,7 @@ public:
   virtual int   save() { return 0; };
   virtual void  print(QPrinter*, QPainter*, bool, bool) {};
   virtual void  becomeCurrent(bool) {};
-  virtual float zoom(float) { return 1.0; };
+  virtual float zoomBy(float) { return 1.0; };
   virtual void  showAll() {};
   virtual void  showNoZoom() {};
 

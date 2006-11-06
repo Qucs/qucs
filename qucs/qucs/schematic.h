@@ -55,6 +55,7 @@ public:
   bool  elementsOnGrid();
 
   float zoom(float);
+  float zoomBy(float);
   void  showAll();
   void  showNoZoom();
   void  enlargeView(int, int, int, int);

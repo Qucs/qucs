@@ -107,7 +107,8 @@ struct Property {
 
 #define isDiagram          0x8000
 #define isDiagramResize    0x8001
-#define isDiagramScroll    0x8002
+#define isDiagramHScroll   0x8002
+#define isDiagramVScroll   0x8003
 
 
 

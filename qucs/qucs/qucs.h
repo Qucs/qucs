@@ -247,7 +247,7 @@ public:
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
           *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
-          *callAtt;
+          *callAtt, *centerHor, *centerVert;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -277,6 +277,8 @@ public slots:
   void slotAlignRight();  // align selected elements with respect to right
   void slotDistribHoriz();// distribute horizontally selected elements
   void slotDistribVert(); // distribute vertically selected elements
+  void slotCenterHorizontal();
+  void slotCenterVertical();
   void slotSelectAll();
   void slotSelectMarker();
   void slotShowLastMsg();

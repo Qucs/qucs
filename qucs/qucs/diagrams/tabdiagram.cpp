@@ -132,6 +132,9 @@ int TabDiagram::calcDiagram()
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
+  if(xAxis.limit_min < 0.0)
+    xAxis.limit_min = 0.0;
+
   Graph *firstGraph;
   Graph *g = Graphs.first();
   if(g == 0) {  // no variables specified in diagram ?
@@ -291,6 +294,8 @@ funcEnd:
   if(invisibleCount > 0) {  // could all numbers be written ?
     x1 = 18;   // extend the select area to the left
 
+    zAxis.limit_max = double(NumAll);  // number of data (rows) 
+
     // calculate data for painting scroll bar
     xAxis.numGraphs = int(xAxis.limit_min);
     NumLeft = NumAll - NumLeft - xAxis.numGraphs;
@@ -309,10 +314,10 @@ funcEnd:
 }
 
 // ------------------------------------------------------------
-bool TabDiagram::scroll(int clickPos)
+int TabDiagram::scroll(int clickPos)
 {
-  if(x1 <= 0) return false;   // no scroll bar ?
-  double tmp = xAxis.limit_min;
+  if(x1 <= 0) return 0;   // no scroll bar ?
+  int tmp = int(xAxis.limit_min + 0.5);
 
   int y = cy;
   if(clickPos > (cy-20)) {  // scroll one line down ?
@@ -321,25 +326,41 @@ bool TabDiagram::scroll(int clickPos)
   else {
     y -= y2 - 20;
     if(clickPos < y) {  // scroll bar one line up ?
-      if(xAxis.limit_min <= 0)  return false;
+      if(xAxis.limit_min <= 0.0)  return 0;
       xAxis.limit_min--;
     }
     else {
       y += yAxis.numGraphs;
-      if(clickPos < y) {  // scroll bar one page up ?
+      if(clickPos < y)   // scroll bar one page up ?
         xAxis.limit_min -= double(xAxis.numGraphs);
-        if(xAxis.limit_min < 0.0)  xAxis.limit_min = 0.0;
-      }
       else {
         y += zAxis.numGraphs;
         if(clickPos > y)   // a page down?
           xAxis.limit_min += double(xAxis.numGraphs);
+        else
+          return 2;  // click on position bar
       }
     }
   }
 
   calcDiagram();
-  if(tmp == xAxis.limit_min)  return false;   // did anything change ?
+  if(tmp == int(xAxis.limit_min + 0.5))
+    return 0;   // did anything change ?
+
+  return 1;
+}
+
+// ------------------------------------------------------------
+bool TabDiagram::scrollTo(int initial, int, int dy)
+{
+  int tmp = int(xAxis.limit_min + 0.5);
+  xAxis.limit_min  = double(initial);
+  xAxis.limit_min += double(dy) / double(y2 - 39) * zAxis.limit_max;
+
+  calcDiagram();
+  if(tmp == int(xAxis.limit_min + 0.5))
+    return false;   // did anything change ?
+
   return true;
 }
 
