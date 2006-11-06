@@ -75,6 +75,7 @@ public:
   void MMoveMoveText(Schematic*, QMouseEvent*);
   void MMoveMoveTextB(Schematic*, QMouseEvent*);
   void MMoveZoomIn(Schematic*, QMouseEvent*);
+  void MMoveScrollBar(Schematic*, QMouseEvent*);
 
   void MPressSelect(Schematic*, QMouseEvent*, int, int);
   void MPressDelete(Schematic*, QMouseEvent*, int, int);

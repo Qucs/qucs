@@ -1675,7 +1675,7 @@ void QucsApp::slotShowOne()
 void QucsApp::slotZoomOut()
 {
   editText->setHidden(true); // disable text edit of component property
-  getDoc()->zoom(0.7f);
+  getDoc()->zoomBy(0.7f);
 }
 
 // -----------------------------------------------------------------------
@@ -2013,6 +2013,8 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   alignBottom->setEnabled(SchematicMode);
   alignLeft->setEnabled(SchematicMode);
   alignRight->setEnabled(SchematicMode);
+  centerHor->setEnabled(SchematicMode);
+  centerVert->setEnabled(SchematicMode);
   distrHor->setEnabled(SchematicMode);
   distrVert->setEnabled(SchematicMode);
   onGrid->setEnabled(SchematicMode);

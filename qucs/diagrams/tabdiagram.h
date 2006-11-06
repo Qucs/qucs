@@ -28,9 +28,10 @@ public:
 
   virtual Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void paint(ViewPainter*);
-  virtual int  calcDiagram();
-  bool scroll(int);
+  virtual void paint(ViewPainter*);
+  virtual int calcDiagram();
+  virtual int scroll(int);
+  virtual bool scrollTo(int, int, int);
 
   void createAxisLabels() {};   // no labels in this diagram
 

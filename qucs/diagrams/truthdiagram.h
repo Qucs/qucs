@@ -28,7 +28,7 @@ public:
 
   Diagram* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  int  calcDiagram();
+  int calcDiagram();
 };
 
 #endif

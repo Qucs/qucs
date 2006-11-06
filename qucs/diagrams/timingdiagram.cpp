@@ -21,7 +21,7 @@
 #include <math.h>
 
 
-TimingDiagram::TimingDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+TimingDiagram::TimingDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
@@ -130,6 +130,9 @@ int TimingDiagram::calcDiagram()
   Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,0)));
+
+  if(xAxis.limit_min < 0.0)
+    xAxis.limit_min = 0.0;
 
   Graph *firstGraph;
   Graph *g = Graphs.first();
@@ -397,6 +400,9 @@ funcEnd:
     if(NumLeft < 0) NumLeft = 0;
     y  = NumAll - NumLeft - z;
 
+    // number of data (times) 
+    zAxis.limit_max = double(firstGraph->cPointsX.getFirst()->count);
+
     // length of scroll bar
     zAxis.numGraphs = x * y / NumAll;
     if(zAxis.numGraphs < 3)  zAxis.numGraphs = 3;
@@ -411,10 +417,10 @@ funcEnd:
 }
 
 // ------------------------------------------------------------
-bool TimingDiagram::scroll(int clickPos)
+int TimingDiagram::scroll(int clickPos)
 {
-  if(y1 <= 0) return false;   // no scroll bar ?
-  double tmp = xAxis.limit_min;
+  if(y1 <= 0) return 0;   // no scroll bar ?
+  int tmp = int(xAxis.limit_min + 0.5);
 
   int x = cx;
   if(clickPos > (cx+x2-20)) {  // scroll one value to the right ?
@@ -423,25 +429,41 @@ bool TimingDiagram::scroll(int clickPos)
   else {
     x += xAxis.numGraphs + 20;
     if(clickPos < x) {  // scroll bar one value to the left ?
-      if(xAxis.limit_min <= 0)  return false;
+      if(xAxis.limit_min <= 0.0)  return 0;
       xAxis.limit_min--;
     }
     else {
       x = cx + yAxis.numGraphs;
-      if(clickPos < x) {  // scroll bar one page to the left ?
+      if(clickPos < x)   // scroll bar one page to the left ?
         xAxis.limit_min -= xAxis.limit_max;
-        if(xAxis.limit_min < 0.0)  xAxis.limit_min = 0.0;
-      }
       else {
         x += zAxis.numGraphs;
         if(clickPos > x)   // one page to the right ?
           xAxis.limit_min += xAxis.limit_max;
+        else
+          return 2;  // click on position bar
       }
     }
   }
 
   calcDiagram();
-  if(tmp == xAxis.limit_min)  return false;   // did anything change ?
+  if(tmp == int(xAxis.limit_min+0.5))
+    return 0;   // did anything change ?
+
+  return 1;
+}
+
+// ------------------------------------------------------------
+bool TimingDiagram::scrollTo(int initial, int dx, int)
+{
+  int tmp = int(xAxis.limit_min + 0.5);
+  xAxis.limit_min  = double(initial);
+  xAxis.limit_min += double(dx) / double(x2-xAxis.numGraphs-39) * zAxis.limit_max;
+
+  calcDiagram();
+  if(tmp == int(xAxis.limit_min + 0.5))
+    return false;   // did anything change ?
+
   return true;
 }
 
