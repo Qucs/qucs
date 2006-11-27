@@ -2161,8 +2161,8 @@ Therefore, it is useful to supply devices that are defined by an
 arbitrary equation. For example the user must enter an equation $i(V)$
 describing how the port current $I$ depends on the port voltage $V=V_1-V_2$
 and an equation $q(V)$ describing how much charge $Q$ is held due to
-the voltage $V$. The most simple way then is a device with two nodes.
-Defining
+the voltage $V$. These are time domain equations.  The most simple way
+then is a device with two nodes.  Defining
 
 \begin{equation}
 I = i(V) \qquad\text{and}\qquad
@@ -2227,7 +2227,7 @@ V_{2}^{(n+1,m+1)}
 For an AC analysis the MNA matrix writes.
 
 \begin{equation}
-A = (g + j\omega\cdot c)\cdot
+(\underline{Y}) = (g + j\omega\cdot c)\cdot
 \begin{bmatrix}
  1 & -1\\
 -1 &  1
@@ -2237,9 +2237,9 @@ A = (g + j\omega\cdot c)\cdot
 And the S-parameter matrix writes.
 
 \begin{align}
-S_{11} = S_{22} &= \frac{Z}{2\cdot Z_0+Z} \\
+S_{11} = S_{22} &= \frac{1}{2\cdot Z_0\cdot Y + 1} \\
 S_{12} = S_{21} &= 1-S_{11} \\
-Z &= g + j\omega\cdot c
+Y &= g + j\omega\cdot c
 \end{align}
 
 The simulator needs to create the derivatives $g$ and $c$ by his
@@ -2319,9 +2319,9 @@ I_{C22}^{n+1,m} &=
    \underbrace{- \dfrac{c_{22}(V_{34}^{n})}{h^n}\cdot V_{34}^{n}}_{I_{eq,22}}
 \end{align}
 So with $g_{tr} = g + g_{eq}$ it is:
-\begin{align}
-&
-\begin{bmatrix}
+\begin{equation}
+\begin{split}
+&\begin{bmatrix}
  g_{tr,11}^{(m)} & -g_{tr,11}^{(m)} &  g_{tr,12}^{(m)} & -g_{tr,12}^{(m)}\\
 -g_{tr,11}^{(m)} &  g_{tr,11}^{(m)} & -g_{tr,12}^{(m)} &  g_{tr,12}^{(m)}\\
  g_{tr,21}^{(m)} & -g_{tr,21}^{(m)} &  g_{tr,22}^{(m)} & -g_{tr,22}^{(m)}\\
@@ -2341,12 +2341,14 @@ V_{4}^{(n+1,m+1)}
 -I_2^{(m)} + g_{21}^{(m)}\cdot V_{12}^{(m)} + g_{22}^{(m)}\cdot V_{34}^{(m)} - I_{eq,21}^{(n)} - I_{eq,22}^{(n)}\\
  I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)} + I_{eq,21}^{(n)} + I_{eq,22}^{(n)}
 \end{bmatrix}
-\end{align}
+\end{split}
+\end{equation}
 
 For an AC analysis the MNA matrix writes:
 
 \begin{equation}
-A =
+\label{eqn:UDMmna}
+(\underline{Y}) =
 \begin{bmatrix}
  g_{11} + j\omega\cdot c_{11} & -g_{11} - j\omega\cdot c_{11} &  g_{12} + j\omega\cdot c_{12} & -g_{12} - j\omega\cdot c_{12}\\
 -g_{11} - j\omega\cdot c_{11} &  g_{11} + j\omega\cdot c_{11} & -g_{12} - j\omega\cdot c_{12} &  g_{12} + j\omega\cdot c_{12}\\
@@ -2357,7 +2359,9 @@ A =
 
 As can bee seen, this scheme can be expanded to any number of ports.
 The matrices soon become quite complex, but fortunately, modern
-computers are able to cope with this complexity.
+computers are able to cope with this complexity.  S-parameters must
+be obtained numerical by setting equation \ref{eqn:UDMmna} into
+equation \ref{eqn:Y2S}.
 
 
 \subsection{Models with Implicit Equations}
@@ -2376,3 +2380,77 @@ component the following formulas are defined by the user:
   g_I = \dfrac{\partial f(V, I)}{\partial I}
       = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V, I+h)) - f(V, I)}{h}
 \end{align}
+
+The MNA matrix for the AC analysis writes as follows:
+
+\begin{equation}
+\begin{bmatrix}
+ . & . &  1\\
+ . & . & -1\\
+g_V & -g_V &  g_I
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+As usual, for the DC analysis the last zero on the right hand side has
+to be replaced by the iteration formula:
+\begin{equation}
+g_V\cdot (V_1 - V_2) + g_I\cdot I_{out} - f(V_1-V_2, I_{out})
+\end{equation}
+
+The S-parameters are:
+\begin{align}
+S_{11} = S_{22} &= \dfrac{g_I}{g_I - 2\cdot Z_0\cdot g_V}\\
+S_{12} = S_{21} &= 1 - S_{11}
+\end{align}
+
+Consequently, for a two-port device two equation are necessary: One for
+first port and one for second port:
+\begin{align}
+0 &= f_1(V_{12}, V_{34}, I_1, I_2)\\
+0 &= f_2(V_{12}, V_{34}, I_1, I_2)
+\end{align}
+
+Building the MNA matrix is again straight forward:
+\begin{equation}
+\begin{split}
+&\begin{bmatrix}
+ . & . & . & . &  1 &  0\\
+ . & . & . & . & -1 &  0\\
+ . & . & . & . &  0 &  1\\
+ . & . & . & . &  0 & -1\\
+ g_{f1,V12} & -g_{f1,V12} &  g_{f1,V34} & -g_{f1,V34} & g_{f1,I1} & g_{f1,I2}\\
+ g_{f2,V12} & -g_{f2,V12} &  g_{f2,V34} & -g_{f2,V34} & g_{f2,I1} & g_{f2,I2}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}^{(m+1)}\\
+V_{2}^{(m+1)}\\
+V_{3}^{(m+1)}\\
+V_{4}^{(m+1)}\\
+I_{out1}^{(m+1)}\\
+I_{out2}^{(m+1)}
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+g_{f1,V12}\cdot V_{12} + g_{f1,V34}\cdot V_{34} + g_{f1,I1}\cdot I_{out1} + g_{f1,I2}\cdot I_{out2} - f_1(V_{12}, V_{34}, I_{out1}, I_{out2})\\
+g_{f2,V12}\cdot V_{12} + g_{f2,V34}\cdot V_{34} + g_{f2,I1}\cdot I_{out1} + g_{f2,I2}\cdot I_{out2} - f_2(V_{12}, V_{34}, I_{out1}, I_{out2})
+\end{bmatrix}
+\end{split}
+\end{equation}
+
+Once more, this concept can easily expanded to any number of ports.
+It is also possible mix implicit and explicit definitions, i.e. some
+ports of the device may be defined by explicit equations whereas the
+others are defined by implicit equations.

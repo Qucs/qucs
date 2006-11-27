@@ -87,6 +87,46 @@ to now, no other methods were proposed and some publications
 reported to have achieved reasonable results with this approach
 and 1/f noise.
 
+\addvspace{12pt}
+
+Calculating the noise-current correlation matrix $(\underline{C}_{Y,nl})_{N\times N}$
+needs several steps. The DC bias point taken from the result of the
+HB simulation is the beginning. Its values are the bias used to build
+the correlation matrix $(\underline{C}_{Y,DC})$. Each part is a $K\times K$
+diagonal submatrix. The values are the power-spectral densities (PSD)
+for each harmonic frequency:
+\begin{equation}
+C_{Y,DC}(\omega_R) \qquad C_{Y,DC}(\omega_0 + \omega_R) \qquad
+C_{Y,DC}(2\cdot\omega_0 + \omega_R) \qquad \dots
+\end{equation}
+where $\omega_R$ is the desired noise frequency.
+
+\addvspace{12pt}
+
+The second step creates the cyclostationary modulation that is applied
+to the DC correlation matrix. The modulation factor $M(t)$ originates
+from the current power spectral density $S_i$ of each time step
+normalized to its DC bias value:
+\begin{equation}
+M(t) = \dfrac{S_i\left( u(t) \right)}{S_i(u_{DC})}
+     = \dfrac{S_i\left( u(t) \right)}{C_{Y,DC}}
+\end{equation}
+Note that this equation only holds if the frequency dependency of
+$S_i$ is the same for every bias, so that $M(t)$ is frequency
+independent. This demand is fullfilled for all practical models.
+So the above-mentioned equation can be derived for an arbitrary
+noise frequency $\omega_R$.
+
+\addvspace{12pt}
+
+The third step transforms $M(t)$ into frequency domain. This is done
+by the procedure described in equation \ref{eqn:sMatFFT}, resulting
+in a Toeplitz matrix.\\
+The fourth and final step calculates the desired correlation matrix:
+\begin{equation}
+(\underline{C}_{Y,nl}) = M \cdot (\underline{C}_{Y,DC}) \cdot M^+
+\end{equation}
+
 
 \section{Noise Conversion}
 
@@ -117,3 +157,25 @@ to compute all other noise voltages. This is straight forward:
 \item Perform an AC noise analysis for all nodes of interest.
 \end{enumerate}
 
+The whole algorithm has to be performed for every noise frequency
+$\omega_R$ of interest.
+
+
+\section{Phase and Amplitude Noise}
+
+The harmonic balance noise analysis calculates the noise power spectral
+density $S_{uu,k}(\omega_R)$ at the noise frequency $\omega_R$ of the
+$k$-th harmonic. The SSB phase and amplitude noise normalized to the
+carrier can be obtained by using the symmetry between positive and
+negative harmonic numbers:
+\begin{equation}
+\left< \Phi_k \Phi_{-k}^* \right> =
+ \dfrac{S_{uu,k} + S_{uu,-k} - 2\cdot \text{Re}\left( C_{Z,k,-k}\cdot\exp(-j\cdot 2\cdot\phi_k) \right)}
+       {| U_k |^2}
+\end{equation}
+\begin{equation}
+\left< A_k A_{-k}^* \right> =
+ \dfrac{S_{uu,k} + S_{uu,-k} + 2\cdot \text{Re}\left( C_{Z,k,-k}\cdot\exp(-j\cdot 2\cdot\phi_k) \right)}
+       {| U_k |^2}
+\end{equation}
+with $U_k = |U_k| \cdot \exp(j\cdot\phi_k)$ being the $k$-th harmonic.

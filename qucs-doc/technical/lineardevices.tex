@@ -153,10 +153,10 @@ During AC simulation the y-parameter matrix of an ideal capacitor
 with the capacitance $C$ writes as follows.
 \begin{equation}
 Y =
-\begin{bmatrix}
+\begin{pmatrix}
 +j\omega C & -j\omega C\\
 -j\omega C & +j\omega C\\
-\end{bmatrix}
+\end{pmatrix}
 \end{equation}
 
 The scattering parameters (normalized to $Z_0$) of an ideal capacitor
@@ -194,16 +194,22 @@ I_1\\
 I_2\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 During AC simulation the Y-parameter matrix of an ideal inductor
 with the inductance $L$ writes as follows.
 \begin{equation}
 Y =
-\begin{bmatrix}
+\begin{pmatrix}
 +\dfrac{1}{j\omega L} & -\dfrac{1}{j\omega L}\\
 -\dfrac{1}{j\omega L} & +\dfrac{1}{j\omega L}\\
-\end{bmatrix}
+\end{pmatrix}
 \end{equation}
 
 The scattering parameters of an ideal inductor with inductance $L$
@@ -247,14 +253,17 @@ I_1\\
 I_2\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 The scattering parameters writes as follows.
 \begin{equation}
-\begin{pmatrix}
-S
-\end{pmatrix}
-=
+(S) =
 \begin{pmatrix}
 0 & 1\\
 1 & 0\\
@@ -289,6 +298,12 @@ I_1\\
 I_2\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 During AC simulation the DC feed is an open circuit. Thus, its MNA
@@ -298,10 +313,7 @@ entries are all zero.
 
 The scattering parameters writes as follows.
 \begin{equation}
-\begin{pmatrix}
-S
-\end{pmatrix}
-=
+(S) =
 \begin{pmatrix}
 1 & 0\\
 0 & 1\\
@@ -340,6 +352,13 @@ I_{2}\\
 I_{3}\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 \begin{figure}[ht]
@@ -374,15 +393,19 @@ I_{2}\\
 I_{3}\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 The scattering parameters writes as follows.
 
 \begin{equation}
-\begin{pmatrix}
-S
-\end{pmatrix}
-=
+(S) =
 \begin{pmatrix}
 0 & 1 & 0\\
 1 & 0 & 0\\
@@ -447,6 +470,14 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0
 \end{bmatrix}
 \end{equation}
@@ -545,6 +576,17 @@ I_{3}\\
 I_{4}\\
 I_{5}\\
 I_{6}\\
+0\\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
 0\\
 0
 \end{bmatrix}
@@ -748,7 +790,17 @@ I_1\\
 I_2\\
 I_3\\
 I_4\\
-0
+0\\
+0\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+0\\
+0\\
 \end{bmatrix}
 \end{equation}
 
@@ -775,21 +827,12 @@ The Z parameter representation is not very practical as new lines
 in the MNA matrix have to be added. More useful are the Y parameters.
 
 \begin{equation}
+(\underline{Y}) =
 \frac{1}{Z_{ref}\cdot (L-1)}\cdot
-\begin{bmatrix}
+\begin{pmatrix}
  L+1            & -2\cdot\sqrt{L} \\
 -2\cdot\sqrt{L} & L+1
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-V_{1}\\
-V_{2}
-\end{bmatrix}
-=
-\begin{bmatrix}
-I_{1}\\
-I_{2}
-\end{bmatrix}
+\end{pmatrix}
 \end{equation}
 
 Attenuator with (power) attenuation $L$, reference impedance $Z_{ref}$
@@ -1045,6 +1088,12 @@ I_1\\
 I_2\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 whence $I_{br}$ denote the branch current through the voltage source.
@@ -1117,6 +1166,15 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0\\
+0\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0\\
 0\\
 \end{bmatrix}
@@ -1416,6 +1474,12 @@ I_{1}\\
 I_{2}\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 The appropriate noise current correlation matrix yields:
@@ -1522,6 +1586,15 @@ I_{4}\\
 0\\
 0
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+0\\
+0
+\end{bmatrix}
 \end{equation}
 
 The appropriate noise current correlation matrix (with the noise
@@ -1589,6 +1662,14 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0
 \end{bmatrix}
 \end{equation}
@@ -1703,6 +1784,14 @@ I_{3}\\
 I_{4}\\
 0\\
 \end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+0\\
+\end{bmatrix}
 \end{equation}
 
 As you can see the last row which has been added by the VCCS
@@ -1735,6 +1824,13 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 \end{bmatrix}
 \end{equation}
 
@@ -1806,6 +1902,14 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0\\
 \end{bmatrix}
 \end{equation}
@@ -1880,6 +1984,14 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0\\
 \end{bmatrix}
 \end{equation}
@@ -1960,6 +2072,15 @@ I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
+0\\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
 0\\
 0
 \end{bmatrix}
@@ -2077,6 +2198,35 @@ S_{12} = S_{21} &= \dfrac{2}{2\cosh{\gamma l} + \left(z + y\right) \sinh{\gamma 
 
 with $z$ being the normalized impedance and $y$ is the normalized
 admittance.
+
+
+\section{Differential Transmission Line}
+
+A differential (4-port) transmission line is not referenced to ground
+potential, i.e. the wave from the input (port 1 and 4) is distributed
+to the output (port 2 and 3). Its admittance parameters are:
+\begin{equation}
+Y_{11} = Y_{22} = Y_{33} = Y_{44} = -Y_{14} = -Y_{41} = -Y_{23} = -Y_{32} = 
+  \dfrac{1}{Z_L \cdot \tanh(\gamma\cdot l)}
+\end{equation}
+\begin{equation}
+Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} = -Y_{21} = -Y_{34} = -Y_{43} = 
+  \dfrac{1}{Z_L \cdot \sinh(\gamma\cdot l)}
+\end{equation}
+The scattering parameters writes:
+\begin{equation}
+S_{11} = S_{22} = S_{33} = S_{44} =
+  Z_L \cdot \dfrac{(2\cdot Z_0 + Z_L)\cdot \exp(2\cdot\gamma) + (2\cdot Z_0 - Z_L)}
+                  {(2\cdot Z_0 + Z_L)^2\cdot \exp(2\cdot\gamma) - (2\cdot Z_0 - Z_L)^2}
+\end{equation}
+\begin{equation}
+S_{14} = S_{41} = S_{23} = S_{32} = 1 - S_{11}
+\end{equation}
+\begin{align}
+S_{12} &= S_{21} = S_{34} = S_{43} = -S_{13} = -S_{31} = -S_{24} = -S_{42} \\
+       &= \dfrac{4\cdot Z_L \cdot Z_0 \cdot \exp{\gamma}}
+          {(2\cdot Z_0 + Z_L)^2\cdot \exp(2\cdot\gamma) - (2\cdot Z_0 - Z_L)^2}
+\end{align}
 
 
 \section{Coupled transmission line}
@@ -2235,3 +2385,69 @@ S_{2m}\\
 S_{(m-1)m}
 \end{bmatrix}
 \end{align}
+
+
+\section{Real-Life Models}
+
+Non-ideal electronic components exhibit parasitic effects.
+Depending on the usage, they may show a very different behaviour than
+the ideal ones. More precise models can sometimes be obtained from their
+manufacturers or vendors. However, first oder approximations exists
+that can give satisfactory result in many cases. A few of these simple
+models are presented in this chapter.
+
+\addvspace{12pt}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=5cm]{real_r}
+\end{center}
+\caption{simple equivalent circuit of a 0603 resistor}
+\label{fig:real_r}
+\end{figure}
+\FloatBarrier
+
+A model for a resistor (case 0603) is depicted in figure \ref{fig:real_r}.
+Conclusion:
+\begin{itemize}
+\item useful up to 1GHz
+\item values around $150\Omega$ are useful up to 10GHz
+\end{itemize}
+
+\addvspace{12pt}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=5cm]{real_c}
+\end{center}
+\caption{simple equivalent circuit of a 0603 ceramic capacitor}
+\label{fig:real_c}
+\end{figure}
+\FloatBarrier
+
+A model for a (ceramic) capacitor (case 0603) is depicted in figure
+\ref{fig:real_c}. Conclusion:
+\begin{itemize}
+\item as coupling capacitor useful wide into GHz band
+\item as blocking capacitor a via is necessary, i.e. 10nF has resonance
+      at about 50MHz
+\end{itemize}
+
+\addvspace{12pt}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=9cm]{real_ec}
+\end{center}
+\caption{simple equivalent circuit of an electrolyte capacitor}
+\label{fig:real_ec}
+\end{figure}
+\FloatBarrier
+
+Electrolyte capacitors are quite complicate to model. They also show the
+biggest differences from sample to sample. Nonetheless, figure
+\ref{fig:real_ec} gives an idea how a model may look like. Conclusion:
+\begin{itemize}
+\item very broad resonance
+\item useful up to about 10MHz (strongly depending on capacitance)
+\end{itemize}
