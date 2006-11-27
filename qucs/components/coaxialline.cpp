@@ -29,7 +29,6 @@ CoaxialLine::CoaxialLine()
   Lines.append(new Line( 19,  0, 30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16, -9, 16, -9,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16,  9, 16,  9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-11,  0, 19,  0,QPen(QPen::darkBlue,1,Qt::DotLine)));
 
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));

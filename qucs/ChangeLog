@@ -1,3 +1,8 @@
+2006-11-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new symbol for ideal transmission line and coax line
+	* new component: 4-port transmission line
+
 2006-11-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new main menu: Positioning
