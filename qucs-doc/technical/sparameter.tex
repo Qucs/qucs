@@ -30,15 +30,15 @@ outgoing wave $\underline{b}$:
 \begin{equation}
 \underline{a} =
   \underbrace{\dfrac{\underline{u}+\underline{Z}_0\cdot \underline{i}}{2}}_{\underline{U}_{forward}}
-  \cdot \sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_0}\right)}
+  \cdot \dfrac{1}{\sqrt{|\text{Re}\underline{Z}_0)|}}
 \qquad\qquad
 \underline{b} =
-  \underbrace{\dfrac{\underline{u}-\underline{Z}_0\cdot \underline{i}}{2}}_{\underline{U}_{backward}}
-  \cdot \sqrt{\text{Re}\left(\dfrac{1}{\underline{Z}_0}\right)}
+  \underbrace{\dfrac{\underline{u}-\underline{Z}_0^*\cdot \underline{i}}{2}}_{\underline{U}_{backward}}
+  \cdot \dfrac{1}{\sqrt{|\text{Re}\underline{Z}_0)|}}
 \label{equ:waves}
 \end{equation}
 where $\underline{u}$ is (effective) voltage, $\underline{i}$
-(effective) current and $\underline{Z}_0$ reference
+(effective) current flowing into the device and $\underline{Z}_0$ reference
 impedance. The waves are related to power in the following way.
 \begin{equation}
 P = \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
@@ -68,6 +68,128 @@ Now, characterizing an n-port is straight-forward:
 \underline{a}_n\\
 \end{pmatrix}
 \end{equation}
+
+
+\section{Waves on Transmission Lines}
+
+This section should derive the existence of the voltage and current
+waves on a transmission line.  This way, it also proofs that the
+definitions from the last section make sense.\\
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{tlpiece}
+\end{center}
+\caption{Infinite short piece of transmission line}
+\label{fig:tlpiece}
+\end{figure}
+\FloatBarrier
+
+Figure \ref{fig:tlpiece} shows the equivalent circuit of an infinite
+short piece of an arbitrary transmission line.  The names of the
+components all carry a single quotation mark which indicates a per-length
+quantity. Thus, the units are ohms/m for $R'$, henry/m for $L'$,
+siemens/m for $G'$ and farad/m for $C'$. Writing down the change of
+voltage and current across a piece with length $\partial z$ results
+in the transmission line equations.
+
+\begin{equation}
+\dfrac{\partial u}{\partial z} = - R' \cdot i(z) - L' \cdot \dfrac{\partial i}{\partial t}
+\end{equation}
+\begin{equation}
+\dfrac{\partial i}{\partial z} = - G' \cdot u(z) - C' \cdot \dfrac{\partial u}{\partial t}
+\end{equation}
+
+Transforming these equations into frequency domain leads to:
+
+\begin{equation}
+\label{eqn:tlf1}
+\dfrac{\partial\underline{U}}{\partial z} = -\underline{I}(z)\cdot (R' + j\omega L')
+\end{equation}
+\begin{equation}
+\label{eqn:tlf2}
+\dfrac{\partial\underline{I}}{\partial z} = -\underline{U}(z)\cdot (G' + j\omega C')
+\end{equation}
+
+Taking equation \ref{eqn:tlf2} and setting it into the first derivative of
+equation \ref{eqn:tlf1} creates the wave equation:
+
+\begin{equation}
+\dfrac{\partial^2\underline{U}}{\partial z^2} = \underline{\gamma}^2 \cdot \underline{U}
+\end{equation}
+with $\underline{\gamma}^2 = (\alpha+j\beta)^2 = (R'+j\omega L')\cdot(G'+j\omega C')$.
+The complete solution of the wave equation is:
+\begin{equation}
+\label{eqn:usolution}
+\underline{U}(z) =
+   \underbrace{\underline{U}_1 \cdot \exp(-\underline{\gamma}\cdot z)}_{\underline{U}_f(z)}
+ + \underbrace{\underline{U}_2 \cdot \exp(\underline{\gamma}\cdot z)}_{\underline{U}_b(z)}
+\end{equation}
+As can be seen, there is a voltage wave $\underline{U}_f(z)$ traveling forward
+(in positive $z$ direction) and there is a voltage wave $\underline{U}_b(z)$
+traveling backwards (in negative $z$ direction). By setting equation
+\ref{eqn:usolution} into equation \ref{eqn:tlf1}, it becomes clear that
+the current behaves in the same way:
+
+\begin{equation}
+\label{eqn:isolution}
+\underline{I}(z) =
+  \underbrace{\dfrac{\underline{\gamma}}{R'+j\omega L'}}_{\underline{Y}_L} \cdot
+  \left( \underline{U}_f(z) - \underline{U}_b(z) \right)
+   =: \underline{I}_f(z) + \underline{I}_b(z)
+\end{equation}
+
+Note that both current waves are counted positive in positive $z$ direction.
+In literature, the backward flowing current wave $\underline{I}_b(z)$ is
+sometime counted the otherway around which would avoid the negative sign
+within some of the following equations.\\
+Equation \ref{eqn:isolution} introduces the characteristic admittance
+$\underline{Y}_L$.  The propagation constant $\underline{\gamma}$ and the
+characteristic impedance $\underline{Z}_L$ are the two fundamental properties
+describing a transmission line.
+
+\begin{equation}
+\underline{Z}_L = \dfrac{1}{\underline{Y}_L}
+ = \dfrac{\underline{U}_f}{\underline{I}_f} = -\dfrac{\underline{U}_b}{\underline{I}_b}
+ = \sqrt{\dfrac{R'+j\omega L'}{G'+j\omega C'}} \approx \sqrt{\dfrac{L'}{C'}}
+\end{equation}
+
+Note that $\underline{Z}_L$ is a real value if the line loss (due to
+$R'$ and $G'$) is small. This is often the case in reality.
+A further very important quantity is the reflexion coefficient
+$\underline{r}$ which is defined as follows:
+
+\begin{equation}
+\underline{r}
+ = \dfrac{\underline{U}_b}{\underline{U}_f} = -\dfrac{\underline{I}_b}{\underline{I}_f}
+ = \dfrac{\underline{Z}_e - \underline{Z}_L}{\underline{Z}_e + \underline{Z}_L}
+\end{equation}
+
+The equation shows that a part of the voltage and current wave is reflected
+back if the end of a transmission line is not terminated by an impedance
+that equals $\underline{Z}_L$. The same effect occurs in the middle of a
+transmission line, if its characteristic impedance changes.
+
+\addvspace{12pt}
+
+\begin{tabular}{|c|c|}
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{U} = \underline{U}_f + \underline{U}_b$} &
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{I} = \underline{I}_f + \underline{I}_b$}\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{U}_f = \frac{1}{2}\cdot (\underline{U} + \underline{I}\cdot\underline{Z}_L)$} &
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{I}_f = \frac{1}{2}\cdot (\underline{U}/\underline{Z}_L +  \underline{I})$}\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{U}_b = \frac{1}{2}\cdot (\underline{U} - \underline{I}\cdot\underline{Z}_L)$} &
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{I}_b = \frac{1}{2}\cdot (\underline{I} - \underline{U}/\underline{Z}_L)$}\\
+\hline
+\end{tabular}
 
 
 \section{Matrix conversions}
@@ -180,11 +302,11 @@ and back each matrix representation.
 
 Converting a scattering parameter matrix to an impedance matrix is
 done by the following formula.
-\begin{equation}
+\begin{align}
 \left[
 \underline{Z}
 \right]
-=
+&=
 \left[
 \underline{G}_{ref}
 \right]^{-1}
@@ -197,16 +319,30 @@ done by the following formula.
 \left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]
 \right)
 \cdot
-\left[\underline{G}_{ref}\right]
-\end{equation}
+\left[\underline{G}_{ref}\right]\\
+&=
+\left[
+\underline{G}_{ref}
+\right]^{-1}
+\cdot
+\left(
+\left[\underline{E}\right] - \left[\underline{S}\right]
+\right)^{-1}
+\cdot
+\left(
+\left[\underline{S}\right] + \left[\underline{E}\right]
+\right)
+\cdot \left[\underline{Z}_{ref}\right]
+\cdot \left[\underline{G}_{ref}\right]
+\end{align}
 
 Converting a scattering parameter matrix to an admittance matrix can
 be achieved by computing the following formula.
-\begin{equation}
+\begin{align}
 \left[
 \underline{Y}
 \right]
-=
+&=
 \left[
 \underline{G}_{ref}
 \right]^{-1}
@@ -219,8 +355,21 @@ be achieved by computing the following formula.
 \left[\underline{E}\right] - \left[\underline{S}\right]
 \right)
 \cdot
+\left[\underline{G}_{ref}\right]\\
+&=
+\left[\underline{G}_{ref}\right]^{-1}
+\cdot \left[\underline{Z}_{ref}\right]^{-1}
+\cdot
+\left(
+\left[\underline{S}\right] + \left[\underline{E}\right]
+\right)^{-1}
+\cdot
+\left(
+\left[\underline{E}\right] - \left[\underline{S}\right]
+\right)
+\cdot
 \left[\underline{G}_{ref}\right]
-\end{equation}
+\end{align}
 
 Converting an impedance matrix to a scattering parameter matrix is
 done by th following formula.
@@ -247,6 +396,7 @@ done by th following formula.
 Converting an admittance matrix to a scattering parameter matrix is
 done by the following formula.
 \begin{equation}
+\label{eqn:Y2S}
 \left[
 \underline{S}
 \right]
@@ -660,6 +810,41 @@ S_{12} &= \dfrac{-2\cdot G_{12}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(
 S_{21} &= \dfrac{2\cdot G_{21}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}\\
 S_{22} &= \dfrac{\left(G_{11} \cdot Z_{1} + 1\right)\cdot \left(G_{22} / Z_{2} - 1\right) - G_{12}\cdot G_{21}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}
 \end{align}
+
+Converting from scattering parameters to Y-parameters results in
+\begin{align}
+Y_{11} &= \dfrac{1}{Z_{1}}\cdot \dfrac{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}{\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}}\\
+Y_{12} &= \dfrac{1}{Z_{1}}\cdot \dfrac{-2\cdot S_{12}}{\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}}\\
+Y_{21} &= \dfrac{1}{Z_{2}}\cdot \dfrac{-2\cdot S_{21}}{\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}}\\
+Y_{22} &= \dfrac{1}{Z_{2}}\cdot \dfrac{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}{\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}}\\
+%\end{align}
+\intertext{
+Converting from Y-parameters to scattering parameters results in
+}
+%\begin{align}
+S_{11} &= \dfrac{\left(1 - Y_{11}\cdot Z_{1}\right)\cdot \left(1 + Y_{22}\cdot Z_{2}\right) + Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}{\left(1 + Y_{11}\cdot Z_{1}\right)\cdot \left(1 + Y_{22}\cdot Z_{2}\right) - Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}\\
+S_{12} &= \dfrac{-2\cdot Y_{12}\cdot Z_{1}}{\left(1 + Y_{11} \cdot Z_{1}\right)\cdot \left(1 + Y_{22}\cdot Z_{2}\right) - Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}\\
+S_{21} &= \dfrac{-2\cdot Y_{21}\cdot Z_{2}}{\left(1 + Y_{11} \cdot Z_{1}\right)\cdot \left(1 + Y_{22}\cdot Z_{2}\right) - Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}\\
+S_{22} &= \dfrac{\left(1 + Y_{11}\cdot Z_{1}\right)\cdot \left(1 - Y_{22}\cdot Z_{2}\right) + Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}{\left(1 + Y_{11}\cdot Z_{1}\right)\cdot \left(1 + Y_{22}\cdot Z_{2}\right) - Y_{12}\cdot Z_{1}\cdot Y_{21}\cdot Z_{2}}
+\end{align}
+
+Converting from scattering parameters to Z-parameters results in
+\begin{align}
+Z_{11} &= Z_{1}\cdot \dfrac{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}}\\
+Z_{12} &= Z_{1}\cdot \dfrac{2\cdot S_{12}}{\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}}\\
+Z_{21} &= Z_{2}\cdot \dfrac{2\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}}\\
+Z_{22} &= Z_{2}\cdot \dfrac{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}}\\
+%\end{align}
+\intertext{
+Converting from Z-parameters to scattering parameters results in
+}
+%\begin{align}
+S_{11} &= \dfrac{\left(Z_{11} - Z_{1}\right)\cdot \left(Z_{22} + Z_{2}\right) - Z_{12}\cdot Z_{21}}{\left(Z_{11} + Z_{1}\right)\cdot \left(Z_{22} + Z_{2}\right) - Z_{12}\cdot Z_{21}}\\
+S_{12} &= \dfrac{2\cdot Z_{12}\cdot Z_{1}}{\left(Z_{11} + Z_{1}\right)\cdot \left(Z_{22} + Z_{2}\right) - Z_{12}\cdot Z_{21}}\\
+S_{21} &= \dfrac{2\cdot Z_{21}\cdot Z_{2}}{\left(Z_{11} + Z_{1}\right)\cdot \left(Z_{22} + Z_{2}\right) - Z_{12}\cdot Z_{21}}\\
+S_{22} &= \dfrac{\left(Z_{11} + Z_{1}\right)\cdot \left(Z_{22} - Z_{2}\right) - Z_{12}\cdot Z_{21}}{\left(Z_{11} + Z_{1}\right)\cdot \left(Z_{22} + Z_{2}\right) - Z_{12}\cdot Z_{21}}
+\end{align}
+
 
 \subsubsection{Two-Port parameters of passive devices}
 %\addcontentsline{toc}{subsubsection}{Two-Port parameters of passive devices}
