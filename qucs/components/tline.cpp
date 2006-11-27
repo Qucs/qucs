@@ -1,6 +1,6 @@
 /***************************************************************************
-                          tline.cpp  -  description
-                             -------------------
+                                tline.cpp
+                               -----------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -22,19 +22,23 @@ TLine::TLine()
 {
   Description = QObject::tr("ideal transmission line");
 
-  Arcs.append(new Arc(-20, -9, 8, 18,     0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 11, -9, 8, 18,16*270, 16*180,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-28,  7, 28,  7,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-30,  0,-16,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 19,  0, 30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16, -9, 16, -9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-16,  9, 16,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-28, 14,-21,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-21, 14,-14,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14, 14, -7,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -7, 14,  0,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 14,  7,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  7, 14, 14,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 14, 14, 21,  7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 21, 14, 28,  7,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
 
-  x1 = -30; y1 =-12;
-  x2 =  30; y2 = 12;
+  x1 = -30; y1 = -4;
+  x2 =  30; y2 = 16;
 
   tx = x1+4;
   ty = y2+4;

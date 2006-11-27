@@ -42,7 +42,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   noise_iv.png or.png nor.png and.png nand.png xor.png xnor.png digi.png      \
   inverter.png digi_source.png timing.png truth.png rsflipflop.png            \
   dflipflop.png jkflipflop.png coupler.png coaxial.png am_mod.png pm_mod.png  \
-  vhdlfile.png subcircuit.png optimize.png
+  vhdlfile.png subcircuit.png optimize.png tline_4port.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
