@@ -4755,6 +4755,14 @@ Kullanım:  qucsedit [-r] kütük
         <source>Ambient temperature at which the parameters were determined</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideal 4-port transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-Port Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6850,7 +6858,7 @@ Seçili bilesenleri Kapatır/Etkinlestirir</translation>
     </message>
     <message>
         <source>Align/Distribute</source>
-        <translation>Hizala/Dagıt</translation>
+        <translation type="obsolete">Hizala/Dagıt</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
@@ -7038,6 +7046,38 @@ Zayıflatıcı olusturma yazılımını baslatır</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally
+
+Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically
+
+Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P&amp;ositioning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
