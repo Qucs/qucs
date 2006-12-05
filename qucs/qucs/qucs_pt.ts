@@ -4817,6 +4817,14 @@ Usage:  qucsedit [-r] file
         <source>Ambient temperature at which the parameters were determined</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideal 4-port transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-Port Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -6390,10 +6398,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Align/Distribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6539,6 +6543,42 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally
+
+Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically
+
+Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7040,10 +7080,6 @@ Enables/disables the table of contents</source>
     </message>
     <message>
         <source>No appropriate component found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

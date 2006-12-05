@@ -4909,6 +4909,14 @@ Invocation :  qucsedit [-r] fichier
         <source>Ambient temperature at which the parameters were determined</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideal 4-port transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-Port Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7160,7 +7168,7 @@ Sélectionne tous les indicateurs du document</translation>
     </message>
     <message>
         <source>Align/Distribute</source>
-        <translation>Aligne/Distribue</translation>
+        <translation type="obsolete">Aligne/Distribue</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
@@ -7342,6 +7350,38 @@ Lance l&apos;application de calcul d&apos;atténuateur</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally
+
+Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically
+
+Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P&amp;ositioning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
