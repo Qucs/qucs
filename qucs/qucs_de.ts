@@ -3964,648 +3964,8 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsApp</name>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project open!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No files copied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwrite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File &quot;%1&quot; already exists.
-Overwrite ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Any File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VHDL Sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Datasets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VHDL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Projects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>content of project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Content of</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>content of current project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lumped components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transmission lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>file components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="unfinished">-</translation>
-    </message>
-    <message>
-        <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Avalanche current factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>npn HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>FBH HBT verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FBH HBT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4904,9 +4264,665 @@ Overwrite ?</source>
         <source>Ambient temperature at which the parameters were determined</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>FBH HBT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM Level 2 v2.1 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GICCR constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zero-bias hole charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High-current correction for 2D and 3D effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emitter minority charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collector minority charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B-E depletion charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B-C depletion charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E recombination saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E recombination current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E recombination saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E recombination current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-ideality factor for III-V HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B-E tunneling saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Avalanche current factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for avalanche current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC for FAVL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC for QAVL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zero bias internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External base series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor for geometry dependence of emitter current crowding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Correction factor for modulation by B-E and B-C space charge layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ration of internal to total minority charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emitter series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External collector series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate transistor transfer saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward ideality factor of substrate transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C-S diode saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ideality factor of C-S diode current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transit time for forward operation of substrate transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate shunt capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-E grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peripheral B-E grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal B-C punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External B-C punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="unfinished">-</translation>
+    </message>
+    <message>
+        <source>C-S zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C-S built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C-S grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C-S punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low current forward transit time at VBC=0V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time constant for base and B-C space charge layer width modulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time constant for modelling carrier jam at low VCE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutral emitter storage time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for current dependence of neutral emitter storage time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation time constant at high current densities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence of base and collector transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor for base and collector portion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal collector resistance at low electric field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage separating ohmic and saturation velocity regime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal C-E saturation voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collector punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage time for inverse operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total parasitic B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total parasitic B-C capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor for additional delay time of minority charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor for additional delay time of transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flicker noise coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flicker noise exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scaling factor for collector minority charge in direction of emitter width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scaling factor for collector minority charge in direction of emitter length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap voltage extrapolated to 0 K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First order relative TC of parameter T0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second order relative TC of parameter T0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent for RCI0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent of mobility in substrate transistor transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC of saturation drift velocity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC of VCES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent of internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent of external base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent of external collector resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature exponent of emitter resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC of forward current gain for V2.1 model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thermal resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thermal capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature at which parameters are specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature change w.r.t. chip temperature for particular transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulation temperature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L2 v2.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pnp HICUM L2 v2.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal 4-port transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-Port Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
+</context>
+<context>
+    <name>QucsApp</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start attenuator calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No project open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No files copied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists.
+Overwrite ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write &quot;%1&quot; !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please open project with subcircuits!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please open project first!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a diagram graph!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an Output File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output file already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datasets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Displays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>components and diagrams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="obsolete">-</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>simulations</source>
         <translation type="unfinished"></translation>
@@ -5485,6 +5501,34 @@ Distribute horizontally selected elements</source>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center horizontally
+
+Center horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center vertically
+
+Center vertically selected elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6256,15 +6300,15 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Align/Distribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>P&amp;ositioning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6337,6 +6381,10 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7747,10 +7795,6 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
