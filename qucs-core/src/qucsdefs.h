@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.54 2006/10/30 09:31:15 raimi Exp $
+ * $Id: qucsdefs.h,v 1.55 2006/12/10 20:42:06 raimi Exp $
  *
  */
 
@@ -452,16 +452,16 @@ struct define_t qucs_definition_available[] =
   /* sgp bjt */
   { "BJT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "Is", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.9, 100, ']' } },
-      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.9, 100, ']' } },
+      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
+      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
       { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ikr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vaf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Var", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ise", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ne", PROP_REAL, { 1.5, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "Ne", PROP_REAL, { 1.5, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
       { "Isc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nc", PROP_REAL, { 2, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "Nc", PROP_REAL, { 2, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
       { "Bf", PROP_REAL, { 100, PROP_NO_STR }, PROP_POS_RANGEX },
       { "Br", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
       { "Rbm", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
