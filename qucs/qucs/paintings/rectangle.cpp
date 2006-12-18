@@ -189,9 +189,9 @@ bool Rectangle::ResizeTouched(int x, int y, int len)
 
   State = 0;
   if(x < cx+len)  State = 1;
-  else if(x <= cx+x2-len) { State = -1; return false; }
+  else if(x < cx+x2-len) { State = -1; return false; }
   if(y < cy+len)  State |= 2;
-  else if(y <= cy+y2-len) { State = -1; return false; }
+  else if(y < cy+y2-len) { State = -1; return false; }
 
   return true;
 }

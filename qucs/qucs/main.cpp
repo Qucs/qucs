@@ -340,6 +340,23 @@ void convert2Unicode(QString& Text)
 }
 
 // #########################################################################
+void convert2ASCII(QString& Text)
+{
+  Text.replace('\\', "\\\\");
+  Text.replace('\n', "\\n");
+
+  int i = 0;
+  QChar ch;
+  char Str[8];
+  while((ch=Text.at(i++)) != QChar(0)) {  // convert special characters
+    if(ch > QChar(0x7F)) {
+      sprintf(Str, "\\x%04X", ch.unicode());
+      Text.replace(ch, Str);
+    }
+  }
+}
+
+// #########################################################################
 // Takes a file name (with path) and replaces all special characters.
 QString properName (const QString& Name)
 {

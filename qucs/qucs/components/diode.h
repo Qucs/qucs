@@ -1,6 +1,6 @@
 /***************************************************************************
-                          diode.h  -  description
-                             -------------------
+                               diode.h
+                              ---------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,12 +21,15 @@
 #include "component.h"
 
 
-class Diode : public Component  {
+class Diode : public MultiViewComponent  {
 public:
   Diode();
-  ~Diode();
+ ~Diode() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+  void createSymbol();
 };
 
 #endif

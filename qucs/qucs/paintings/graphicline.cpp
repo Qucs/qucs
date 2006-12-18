@@ -149,12 +149,12 @@ QString GraphicLine::save()
 // Checks if the resize area was clicked.
 bool GraphicLine::ResizeTouched(int x, int y, int len)
 {
-  if(x < cx+len) if(x > cx-len) if(y < cy+len) if(y > cy-len) {
+  if(x <= cx+len) if(x >= cx-len) if(y <= cy+len) if(y >= cy-len) {
     State = 1;
     return true;
   }
 
-  if(x < cx+x2+len) if(x > cx+x2-len) if(y < cy+y2+len) if(y > cy+y2-len) {
+  if(x <= cx+x2+len) if(x >= cx+x2-len) if(y <= cy+y2+len) if(y >= cy+y2-len) {
     State = 2;
     return true;
   }

@@ -2454,3 +2454,84 @@ Once more, this concept can easily expanded to any number of ports.
 It is also possible mix implicit and explicit definitions, i.e. some
 ports of the device may be defined by explicit equations whereas the
 others are defined by implicit equations.
+
+\addvspace{12pt}
+
+The calculation of the S-parameters is not that trival. The Y-parameters as well
+as the Z-parameters might be infinite. A small trick can avoid this problem, as
+will be shown in the following 2-port example. First, the small-signal
+Y-parameters should be derived by using the law about implicit functions:
+
+\begin{equation}
+(\underline{J}) =
+\begin{pmatrix}
+y_{11} & y_{12}\\
+y_{21} & y_{22}
+\end{pmatrix}
+=
+-{\underbrace{
+\begin{pmatrix}
+\dfrac{\partial f_1}{\partial I_1} & \dfrac{\partial f_1}{\partial I_2}\\
+\dfrac{\partial f_2}{\partial I_1} & \dfrac{\partial f_2}{\partial I_2}
+\end{pmatrix}}_{J_i}}^{-1}\cdot
+\underbrace{
+\begin{pmatrix}
+\dfrac{\partial f_1}{\partial V_1} & \dfrac{\partial f_1}{\partial V_2}\\
+\dfrac{\partial f_2}{\partial V_1} & \dfrac{\partial f_2}{\partial V_2}
+\end{pmatrix}}_{J_v}
+\end{equation}
+
+The equation reveals immediately the difficulty: The inverse of the current
+Jocobi matrix $J_i$ may not exist. But this problem can be outsourced to
+one single scalar number by using Cramer's rule for matrix inversion:
+
+\begin{equation}
+J_i^{-1} = \dfrac{1}{\text{det} J_i}\cdot A_{Ji}
+\end{equation}
+
+The matrix $A_{Ji}$ is built of the sub-determinantes of $J_i$ in the way that
+$a_{(n,m)}$ is the determinante of $J_i$ without row $m$ and without column $n$
+but multiplied with $(-1)^{n+m}$. It therefore always exists, whereas dividing
+by the determinante of $J_i$ may become infinity. Now parameters can be
+defined as follows:
+
+\begin{equation}
+(\underline{J}') =
+\begin{pmatrix}
+y_{11}' & y_{12}'\\
+y_{21}' & y_{22}'
+\end{pmatrix}
+=
+-A_{Ji}\cdot J_v
+\end{equation}
+
+Before converting to S-parameters the matrix must be expanded to a 4-port
+matrix, because the 2-ports are not referenced to ground:
+
+\begin{equation}
+(\underline{J}'') =
+\begin{pmatrix}
+ y_{11}' & -y_{11}' &  y_{12}' & -y_{12}'\\
+-y_{11}' &  y_{11}' & -y_{12}' &  y_{12}'\\
+ y_{21}' & -y_{21}' &  y_{22}' & -y_{22}'\\
+-y_{21}' &  y_{21}' & -y_{22}' &  y_{22}'
+\end{pmatrix}
+=
+-A_{Ji}'\cdot J_v'
+\end{equation}
+
+Finally, equation \ref{eqn:Y2S} converts the parameters to S-parameters:
+
+\begin{align}
+(\underline{S})
+ &= \left( (E) + Z_0\cdot (\underline{Y}) \right) \cdot
+    \left( (E) - Z_0\cdot (\underline{Y}) \right)^{-1}\\
+ &= \left( (E) - Z_0\cdot \dfrac{1}{\text{det} J_i}\cdot A_{ji}'\cdot J_v' \right) \cdot
+    \left( (E) + Z_0\cdot \dfrac{1}{\text{det} J_i}\cdot A_{ji}'\cdot J_v' \right)^{-1}\\
+ &= \left( \text{det} J_i\cdot (E) - Z_0\cdot A_{ji}'\cdot J_v' \right) \cdot
+    \left( \text{det} J_i\cdot (E) + Z_0\cdot A_{ji}'\cdot J_v' \right)^{-1}
+\end{align}
+
+The calculations proofs that the critical factor $1/\text{det} J_i$
+disappears and a solution exists if and only if the S-parameters of this
+device exist.

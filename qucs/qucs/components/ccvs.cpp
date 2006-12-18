@@ -60,7 +60,7 @@ CCVS::CCVS()
 
   Props.append(new Property("G", "1 Ohm", true,
 		QObject::tr("forward transfer factor")));
-  Props.append(new Property("T", "0", true, QObject::tr("delay time")));
+  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
 }
 
 CCVS::~CCVS()
