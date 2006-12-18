@@ -4690,9 +4690,6 @@ Usage:  qucsedit [-r] file
     </message>
 </context>
 <context>
-    <name>QucsActions</name>
-</context>
-<context>
     <name>QucsApp</name>
     <message>
         <source>Info</source>
