@@ -210,13 +210,15 @@ int Schematic::saveDocument()
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "  <showFrame=" << showFrame << ">\n";
 
-  QString t = Frame_Text0;
-  t.replace('\\', "\\\\");
-  t.replace('\n', "\\n");
+  QString t;
+  convert2ASCII(t = Frame_Text0);
   stream << "  <FrameText0=" << t << ">\n";
-  stream << "  <FrameText1=" << Frame_Text1 << ">\n";
-  stream << "  <FrameText2=" << Frame_Text2 << ">\n";
-  stream << "  <FrameText3=" << Frame_Text3 << ">\n";
+  convert2ASCII(t = Frame_Text1);
+  stream << "  <FrameText1=" << t << ">\n";
+  convert2ASCII(t = Frame_Text2);
+  stream << "  <FrameText2=" << t << ">\n";
+  convert2ASCII(t = Frame_Text3);
+  stream << "  <FrameText3=" << t << ">\n";
   stream << "</Properties>\n";
 
   Painting *pp;
@@ -298,13 +300,10 @@ bool Schematic::loadProperties(QTextStream *stream)
 		else SimOpenDpl = true;
     else if(cstr == "showFrame")
 		showFrame = nstr.at(0).latin1() - '0';
-    else if(cstr == "FrameText0") {
-                Frame_Text0 = nstr;
-                Frame_Text0.replace("\\n", "\n");
-                Frame_Text0.replace("\\\\", "\\"); }
-    else if(cstr == "FrameText1") Frame_Text1 = nstr;
-    else if(cstr == "FrameText2") Frame_Text2 = nstr;
-    else if(cstr == "FrameText3") Frame_Text3 = nstr;
+    else if(cstr == "FrameText0") convert2Unicode(Frame_Text0 = nstr);
+    else if(cstr == "FrameText1") convert2Unicode(Frame_Text1 = nstr);
+    else if(cstr == "FrameText2") convert2Unicode(Frame_Text2 = nstr);
+    else if(cstr == "FrameText3") convert2Unicode(Frame_Text3 = nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
