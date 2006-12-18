@@ -15,17 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "main.h"
+#include "mnemo.h"
+#include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
-#include "main.h"
-#include "viewpainter.h"
-#include "mnemo.h"
 
 #include <qwidget.h>
 #include <qpainter.h>
-#include <qpushbutton.h>
 #include <qlineedit.h>
 #include <qtextedit.h>
+#include <qpushbutton.h>
 
 #include <math.h>
 
@@ -169,20 +169,9 @@ bool GraphicText::load(const QString& s)
 QString GraphicText::save()
 {
   QString t = Text;
-  t.replace('\\', "\\\\");
-  t.replace('\n', "\\n");
+  convert2ASCII(t);
 
-  int i = 0;
-  QChar ch;
-  char Str[8];
-  while((ch=t.at(i++)) != QChar(0)) {  // convert special characters
-    if(ch > QChar(0x7F)) {
-      sprintf(Str, "\\x%04X", ch.unicode());
-      t.replace(ch, Str);
-    }
-  }
-
-  // the 'Text' property has to be the last within the line !
+  // The 'Text' property has to be the last within the line !
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" "
 		+ QString::number(Font.pointSize())+" "+Color.name()+" "
 		+ QString::number(Angle) + " \""+t+"\"";

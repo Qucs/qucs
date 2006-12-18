@@ -25,6 +25,7 @@
 
 #include <qfile.h>
 
+#define MIN_SCROLLBAR_SIZE 8
 
 #define INVALID_STR QObject::tr(" <invalid>")
 

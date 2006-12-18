@@ -123,7 +123,14 @@ int TabDiagram::calcDiagram()
   QFontMetrics  metrics(QucsSettings.font);
   int tHeight = metrics.lineSpacing();
   QString Str;
-  int colWidth=0, x=8, y = y2-tHeight-6;
+  int colWidth=0, x=8, y;
+
+  if(y2 < (41 + MIN_SCROLLBAR_SIZE))
+    y2 = 41 + MIN_SCROLLBAR_SIZE;
+
+  if(y2 < (tHeight + 8))
+    y2 = tHeight + 8;
+  y = y2 - tHeight - 6;
 
   // outer frame
   Lines.append(new Line(0, y2, x2, y2, QPen(QPen::black,0)));
@@ -165,8 +172,8 @@ if(g) if(!g->cPointsX.isEmpty()) {
   invisibleCount = counting - y/tHeight;
   if(invisibleCount <= 0)  xAxis.limit_min = 0.0;// height bigger than needed
   else {
-    NumLeft = invisibleCount - int(xAxis.limit_min);
-    if(invisibleCount < int(xAxis.limit_min))
+    NumLeft = invisibleCount - int(xAxis.limit_min + 0.5);
+    if(invisibleCount < int(xAxis.limit_min + 0.5))
       xAxis.limit_min = double(invisibleCount); // adjust limit of scroll bar
   }
 
@@ -175,7 +182,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
     Str = pD->Var;
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth < 0)  goto funcEnd;
-    startWriting = int(xAxis.limit_min);  // when to reach visible area
+    startWriting = int(xAxis.limit_min + 0.5);  // when to reach visible area
 
     Texts.append(new Text(x-4, y2-2, Str)); // independent variable
     if(pD->count != 0) {
@@ -225,7 +232,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
     Texts.append(new Text(x, y2-2, Str));  // dependent variable
 
 
-    startWriting = int(xAxis.limit_min);  // when to reach visible area
+    startWriting = int(xAxis.limit_min + 0.5); // when to reach visible area
     py = g->cPointsY - 2;
     if(g->cPointsX.getFirst()) {
 
@@ -297,15 +304,19 @@ funcEnd:
     zAxis.limit_max = double(NumAll);  // number of data (rows) 
 
     // calculate data for painting scroll bar
-    xAxis.numGraphs = int(xAxis.limit_min);
-    NumLeft = NumAll - NumLeft - xAxis.numGraphs;
+    y = int(xAxis.limit_min + 0.5);
+    NumLeft = NumAll - NumLeft - y;
+
+    // position of scroll bar in pixel
+    yAxis.numGraphs = (y2 - 39) * y / NumAll;
 
     // height of scroll bar
     zAxis.numGraphs = (y2 - 39) * NumLeft / NumAll;
-    if(zAxis.numGraphs < 3)  zAxis.numGraphs = 3;
-
-    // position of scroll bar in pixel
-    yAxis.numGraphs = (y2 - 39) * xAxis.numGraphs / NumAll;
+    if(zAxis.numGraphs < MIN_SCROLLBAR_SIZE) {
+      yAxis.numGraphs -= (MIN_SCROLLBAR_SIZE - zAxis.numGraphs + 1)
+                         * y / NumAll;
+      zAxis.numGraphs = MIN_SCROLLBAR_SIZE;
+    }
 
     xAxis.numGraphs = NumLeft;  // number of lines in the diagram
   }
@@ -356,6 +367,7 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
   int tmp = int(xAxis.limit_min + 0.5);
   xAxis.limit_min  = double(initial);
   xAxis.limit_min += double(dy) / double(y2 - 39) * zAxis.limit_max;
+  xAxis.limit_min  = floor(xAxis.limit_min + 0.5);
 
   calcDiagram();
   if(tmp == int(xAxis.limit_min + 0.5))
