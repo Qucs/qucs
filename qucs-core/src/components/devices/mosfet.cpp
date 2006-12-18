@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.35 2006/05/03 09:43:56 raimi Exp $
+ * $Id: mosfet.cpp,v 1.36 2006/12/18 06:57:25 margraf Exp $
  *
  */
 
@@ -332,7 +332,7 @@ void mosfet::initModel (void) {
   Pb  = PbT;
   setScaledProperty ("Pb", Pb);
   if (Cj <= 0) {
-    if (Pb > 0 && Nsub > 0) {
+    if (Pb > 0 && Nsub >= 0) {
       Cj = sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
     }
     else {
