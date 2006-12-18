@@ -1364,6 +1364,7 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
+        else if(cstr == "LIN4P") c = new TLine_4Port();
         break;
   case 's' : if(cstr == "Tr") c = new symTrafo();
         break;

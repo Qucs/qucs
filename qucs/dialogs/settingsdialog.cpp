@@ -19,6 +19,7 @@
 
 #include "node.h"
 #include "qucs.h"
+#include "mnemo.h"
 #include "schematic.h"
 
 #include <qhbox.h>
@@ -141,10 +142,16 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   Input_GridX->setText(QString::number(Doc->GridX));
   Input_GridY->setText(QString::number(Doc->GridY));
   Combo_Frame->setCurrentItem(Doc->showFrame);
-  Input_Frame0->setText(Doc->Frame_Text0);
-  Input_Frame1->setText(Doc->Frame_Text1);
-  Input_Frame2->setText(Doc->Frame_Text2);
-  Input_Frame3->setText(Doc->Frame_Text3);
+
+  QString Text_;
+  decode_String(Text_ = Doc->Frame_Text0);
+  Input_Frame0->setText(Text_);
+  decode_String(Text_ = Doc->Frame_Text1);
+  Input_Frame1->setText(Text_);
+  decode_String(Text_ = Doc->Frame_Text2);
+  Input_Frame2->setText(Text_);
+  decode_String(Text_ = Doc->Frame_Text3);
+  Input_Frame3->setText(Text_);
 
   resize(250, 200);
 }
@@ -202,23 +209,28 @@ void SettingsDialog::slotApply()
     changed = true;
   }
 
-  if(Doc->Frame_Text0 != Input_Frame0->text()) {
-    Doc->Frame_Text0 = Input_Frame0->text();
+  QString t;
+  encode_String(Input_Frame0->text(), t);
+  if(Doc->Frame_Text0 != t) {
+    Doc->Frame_Text0 = t;
     changed = true;
   }
 
-  if(Doc->Frame_Text1 != Input_Frame1->text()) {
-    Doc->Frame_Text1 = Input_Frame1->text();
+  encode_String(Input_Frame1->text(), t);
+  if(Doc->Frame_Text1 != t) {
+    Doc->Frame_Text1 = t;
     changed = true;
   }
 
-  if(Doc->Frame_Text2 != Input_Frame2->text()) {
-    Doc->Frame_Text2 = Input_Frame2->text();
+  encode_String(Input_Frame2->text(), t);
+  if(Doc->Frame_Text2 != t) {
+    Doc->Frame_Text2 = t;
     changed = true;
   }
 
-  if(Doc->Frame_Text3 != Input_Frame3->text()) {
-    Doc->Frame_Text3 = Input_Frame3->text();
+  encode_String(Input_Frame3->text(), t);
+  if(Doc->Frame_Text3 != t) {
+    Doc->Frame_Text3 = t;
     changed = true;
   }
 

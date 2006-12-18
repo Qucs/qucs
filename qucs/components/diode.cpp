@@ -1,6 +1,6 @@
 /***************************************************************************
-                          diode.cpp  -  description
-                             -------------------
+                                diode.cpp
+                               -----------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -22,32 +22,15 @@ Diode::Diode()
 {
   Description = QObject::tr("diode");
 
-  Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -6, -9, -6,  9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  6, -9,  6,  9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -6,  0,  6, -9,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -6,  0,  6,  9,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30, 0));
-  Ports.append(new Port( 30, 0));
-
-  x1 = -30; y1 = -11;
-  x2 =  30; y2 =  11;
-
-  tx = x1+4;
-  ty = y2+4;
-  Model = "Diode";
-  Name  = "D";
-
   Props.append(new Property("Is", "1e-15 A", true,
 	QObject::tr("saturation current")));
   Props.append(new Property("N", "1", true,
 	QObject::tr("emission coefficient")));
   Props.append(new Property("Cj0", "10 fF", true,
 	QObject::tr("zero-bias junction capacitance")));
-  Props.append(new Property("M", "0.5", true,
+  Props.append(new Property("M", "0.5", false,
 	QObject::tr("grading coefficient")));
-  Props.append(new Property("Vj", "0.7 V", true,
+  Props.append(new Property("Vj", "0.7 V", false,
 	QObject::tr("junction potential")));
   Props.append(new Property("Fc", "0.5", false,
 	QObject::tr("forward-bias depletion capacitance coefficient")));
@@ -93,10 +76,14 @@ Diode::Diode()
 	QObject::tr("temperature at which parameters were extracted")));
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for diode")));
-}
+  Props.append(new Property("Symbol", "normal", false,
+	QObject::tr("schematic symbol")+" [normal, Schottky, Zener]"));
 
-Diode::~Diode()
-{
+  createSymbol();
+  tx = x1+4;
+  ty = y2+4;
+  Model = "Diode";
+  Name  = "D";
 }
 
 Component* Diode::newOne()
@@ -111,4 +98,28 @@ Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Diode();
   return 0;
+}
+
+// -------------------------------------------------------
+void Diode::createSymbol()
+{
+  Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -6, -9, -6,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  6, -9,  6,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -6,  0,  6, -9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -6,  0,  6,  9,QPen(QPen::darkBlue,2)));
+
+  if(Props.getLast()->Value.at(0) == 'S') {
+    Lines.append(new Line( -6, -9,-12,-12,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -6,  9,  0, 12,QPen(QPen::darkBlue,2)));
+  }
+  else if(Props.getLast()->Value.at(0) == 'Z') {
+    Lines.append(new Line( -6, 9, -1, 9,QPen(QPen::darkBlue,2)));
+  }
+
+  Ports.append(new Port(-30, 0));
+  Ports.append(new Port( 30, 0));
+
+  x1 = -30; y1 = -11;
+  x2 =  30; y2 =  11;
 }

@@ -503,13 +503,20 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 // Moves scroll bar of diagram (e.g. tabular) according the mouse cursor.
 void MouseActions::MMoveScrollBar(Schematic *Doc, QMouseEvent *Event)
 {
+  TabDiagram *d = (TabDiagram*)focusElement;
   int x = int(float(Event->pos().x())/Doc->Scale) + Doc->ViewX1;
   int y = int(float(Event->pos().y())/Doc->Scale) + Doc->ViewY1;
 
-  if(((TabDiagram*)focusElement)->scrollTo(MAx2, x - MAx1, y - MAy1)) {
+  if(d->scrollTo(MAx2, x - MAx1, y - MAy1)) {
     Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-    Doc->viewport()->update();
-    drawn = false;
+
+    QPainter p(Doc->viewport());
+    ViewPainter Painter;
+    Painter.init(&p, Doc->Scale, -Doc->ViewX1, -Doc->ViewY1,
+                 Doc->contentsX(), Doc->contentsY());
+    Painter.fillRect(d->cx-d->x1, d->cy-d->y2, d->x2+d->x1, d->y2+d->y1,
+                     QucsSettings.BGColor);
+    d->paint(&Painter);
   }
 }
 
@@ -1253,9 +1260,11 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, int, int)
     Doc->enlargeView(x1, y1, x2, y2);
     selElem = ((Painting*)selElem)->newOne();
 
-    drawn = false;
     Doc->viewport()->update();
     Doc->setChanged(true, true);
+
+    MMoveElement(Doc, Event);  // needed before next mouse pressing
+    drawn = false;
   }
 }
 
