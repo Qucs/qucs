@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.55 2006-12-10 20:42:06 raimi Exp $
+ * $Id: qucsdefs.h,v 1.56 2006-12-20 11:14:43 raimi Exp $
  *
  */
 
@@ -856,6 +856,19 @@ struct define_t qucs_definition_available[] =
   /* microstrip via hole */
   { "MVIA", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "D", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
+  /* bond wire */
+  { "BOND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "D", PROP_REAL, { 25e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "H", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "FREESPACE" }, PROP_NO_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },

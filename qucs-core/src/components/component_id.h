@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.35 2006-10-30 09:31:15 raimi Exp $
+ * $Id: component_id.h,v 1.36 2006-12-20 11:14:43 raimi Exp $
  *
  */
 
@@ -96,6 +96,7 @@ enum circuit_type {
   CIR_MSTEE,
   CIR_MSCROSS,
   CIR_MSVIA,
+  CIR_BONDWIRE,
 
   // coplanar components
   CIR_CPWLINE,

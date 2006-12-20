@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.39 2006-10-31 12:25:36 raimi Exp $
+ * $Id: component.h,v 1.40 2006-12-20 11:14:43 raimi Exp $
  *
  */
 
@@ -101,6 +101,7 @@
 #include "microstrip/mstee.h"
 #include "microstrip/mscross.h"
 #include "microstrip/msvia.h"
+#include "microstrip/bondwire.h"
 
 #include "microstrip/cpwline.h"
 #include "microstrip/cpwopen.h"

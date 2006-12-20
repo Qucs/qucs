@@ -28,11 +28,12 @@ noinst_LIBRARIES = libmicrostrip.a
 
 libmicrostrip_a_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp   \
 	msstep.cpp msopen.cpp msgap.cpp mscoupled.cpp mstee.cpp mscross.cpp   \
-	msvia.cpp cpwline.cpp cpwopen.cpp cpwshort.cpp cpwgap.cpp cpwstep.cpp
+	msvia.cpp cpwline.cpp cpwopen.cpp cpwshort.cpp cpwgap.cpp cpwstep.cpp \
+	bondwire.cpp
 
 noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h msstep.h msopen.h \
 	msgap.h mscoupled.h mstee.h mscross.h msvia.h cpwline.h cpwopen.h    \
-	cpwshort.h cpwgap.h cpwstep.h
+	cpwshort.h cpwgap.h cpwstep.h bondwire.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components \
  -I$(top_srcdir)/src/components/devices

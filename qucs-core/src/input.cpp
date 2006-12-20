@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.61 2006-10-30 09:31:15 raimi Exp $
+ * $Id: input.cpp,v 1.62 2006-12-20 11:14:43 raimi Exp $
  *
  */
 
@@ -396,6 +396,8 @@ circuit * input::createCircuit (char * type) {
     return new mscross ();
   else if (!strcmp (type, "MVIA"))
     return new msvia ();
+  else if (!strcmp (type, "BOND"))
+    return new bondwire ();
   else if (!strcmp (type, "CLIN"))
     return new cpwline ();
   else if (!strcmp (type, "COPEN"))
