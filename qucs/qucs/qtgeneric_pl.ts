@@ -18,7 +18,7 @@
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Na&amp;sycenie:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
@@ -38,7 +38,7 @@
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanał A&amp;lpha:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
@@ -80,7 +80,7 @@
     <name>QErrorMessage</name>
     <message>
         <source>Debug Message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komunikat debugera:</translation>
     </message>
     <message>
         <source>Warning:</source>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>Look &amp;in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szukaj &amp;w:</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -378,11 +378,11 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebrajski</translation>
     </message>
     <message>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabski</translation>
     </message>
     <message>
         <source>Syriac</source>
@@ -494,7 +494,7 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>Currency Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole walutowe</translation>
     </message>
     <message>
         <source>Letterlike Symbols</source>
@@ -506,31 +506,31 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>Mathematical Operators</source>
-        <translation type="unfinished"></translation>
+        <translation>Operatory matematyczne</translation>
     </message>
     <message>
         <source>Technical Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole techniczne</translation>
     </message>
     <message>
         <source>Geometric Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole geometryczne</translation>
     </message>
     <message>
         <source>Miscellaneous Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbole różne</translation>
     </message>
     <message>
         <source>Enclosed and Square</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamknięte i kwadraty</translation>
     </message>
     <message>
         <source>Braille</source>
-        <translation type="unfinished"></translation>
+        <translation>Braille</translation>
     </message>
     <message>
         <source>Unicode</source>
-        <translation type="unfinished"></translation>
+        <translation>Unicode</translation>
     </message>
 </context>
 <context>
@@ -553,7 +553,7 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>Stri&amp;keout</source>
-        <translation type="unfinished"></translation>
+        <translation>Prze&amp;kreślenie</translation>
     </message>
     <message>
         <source>&amp;Underline</source>
@@ -569,7 +569,7 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>Scr&amp;ipt</source>
-        <translation type="unfinished"></translation>
+        <translation>Skr&amp;ypt</translation>
     </message>
     <message>
         <source>OK</source>
@@ -635,7 +635,7 @@ Sprawdź ściężkę i nazwę pliku.</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for multiplatform GUI &amp;amp; application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants.&lt;br&gt;Qt is also available for embedded devices.&lt;/p&gt;&lt;p&gt;Qt is a Trolltech product. See &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; for more information.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3&gt;O Qt &lt;/h3&gt;&lt;p&gt; Ten program wymaga Qt wersji %1.&lt;/p&gt;&lt;p&gt;Qt to zestaw narzędzi C++ dla wieloplatforformego aplikacji GUI &amp;amp;.&lt;/p&gt;&lt;p&gt;Kod żródłowy Qt jest portowalny na MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, i inne ważniejsze warianty systemu Unix.&lt;br&gt;Qt jest również dostępne dla urządzeń wbudowanych.&lt;/p&gt;&lt;p&gt;Qt to produkt firmy Trolltech. Zajrzyj na &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; po więcej informacji.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
