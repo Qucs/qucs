@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono wzorca!</translation>
     </message>
 </context>
 <context>
@@ -310,15 +310,15 @@
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik Touchstone</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik SPICE</translation>
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik VHDL</translation>
     </message>
 </context>
 <context>
@@ -573,30 +573,30 @@
     </message>
     <message>
         <source>hide invisible lines</source>
-        <translation type="unfinished"></translation>
+        <translation>ukryj niewidoczne linie</translation>
     </message>
 </context>
 <context>
     <name>DigiSettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Ustawienia dokumentu</translation>
+        <translation>Ustawienia dokumentu</translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Czas trwania symulacji:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
 </context>
 <context>
@@ -781,11 +781,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz coś wpisać!</translation>
     </message>
 </context>
 <context>
@@ -821,11 +821,11 @@
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator to program do syntezy tłumików. Aby zaprojektować tłumik (PAD), wprowadź wsyzstkie wymagane parametry wejściowe i wciśnij przycisk &quot;Policz i umieść w schowku&quot;. Wartości elementów tłumika yostaną policzone i umiezczone w schowku. Następnie w oknie ze schematem wciśnij klawisze CTRL-V (wklej ze schowka). W ten sposób twój tłumik znajdzie się na schemacie. Miłej zabawy!</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoc progarmu Qusc Attenuator</translation>
     </message>
 </context>
 <context>
@@ -848,94 +848,94 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametry</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">wyświetlaj</translation>
+        <translation>wyświetlaj</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Domyślnie</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Opis</translation>
+        <translation>Opis</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">tak</translation>
+        <translation>tak</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">nie</translation>
+        <translation>nie</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">wyświetlaj na schemacie</translation>
+        <translation>wyświetlaj na schemacie</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nazwa:</translation>
+        <translation>Nazwa:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość domyślna:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Opis:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Dodaj</translation>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie możesz nazwać parametru &quot;File&quot;!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametr &quot;%1&quot; jest już użyty!</translation>
     </message>
 </context>
 <context>
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj plik z danymi...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj Plik:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Pokaż</translation>
+        <translation>Pokaż</translation>
     </message>
     <message>
         <source>Output File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik wyjściowy:</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Komunikaty</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -943,75 +943,75 @@
     </message>
     <message>
         <source>All known</source>
-        <translation type="unfinished"></translation>
+        <translation>Wsyzstkie znane typy</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Dowolny Plik</translation>
+        <translation>Dowolny Plik</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj nazwę pliku</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Informacja</translation>
+        <translation>Informacja</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik wyjściowy już istnieje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisać?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Tak</translation>
+        <translation>&amp;Tak</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Nie</translation>
+        <translation>&amp;Nie</translation>
     </message>
     <message>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄ|D: Nieznany format pliku. Sprawdź rozszerzenie pliku!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished">BŁĄD: Nie mogę uruchomić symulatora!</translation>
+        <translation>BŁĄD: Nie mogę uruchomić symulatora!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Importowanie pliku zakończone sukcesem!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Converter ended with errors!</source>
-        <translation type="unfinished"></translation>
+        <translation>Importowanie pliku zakończone błędem!</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik formatu Touchstone</translation>
     </message>
     <message>
         <source>CITI files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik w formacie CITI</translation>
     </message>
     <message>
         <source>ZVR ASCII files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki formatu ZVR ASCII</translation>
     </message>
     <message>
         <source>VCD files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik w formacie VCD</translation>
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>Model IC-CAP</translation>
     </message>
 </context>
 <context>
@@ -1049,136 +1049,137 @@
     <name>LibraryDialog</name>
     <message>
         <source>Create Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Stwórz bibliotekę</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa biblioteki:</translation>
     </message>
     <message>
         <source>Choose subcircuits:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz podukład:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Stwórz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie wybrano podukładu!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>Please insert a library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podać nazwę biblioteki!</translation>
     </message>
     <message>
         <source>Please choose at least one subcircuit!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę wybrać przynajmniej jeden podukład!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostrzeżenie</translation>
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można stworzyć katalogu z biblioteką użytkownika!</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotek systemowa o tej samej nazwie już istnieje!</translation>
     </message>
     <message>
         <source>A library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotek o tej samej nazwie już istnieje!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: Nie można utworzyć biblioteki!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: Nie można otworzyć podukładu  &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>
 Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Tworzenie biblioteki zakończone sukcesem.</translation>
     </message>
     <message>
         <source>Next &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Następny &gt;&gt;</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wprowadź opis dla &quot;%1&quot;:</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarządzaj bibliotekami uzytkownika</translation>
     </message>
     <message>
         <source>Choose library:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamknij bibliotekę:</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowa nazwa:</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Zmień nazwę</translation>
+        <translation>Zmień nazwę</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak biblioteki użytkownkia!</translation>
     </message>
     <message>
         <source>Please insert a new library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę podać nową nazwę biblioteki!</translation>
     </message>
     <message>
         <source>Please choose a library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę wybrać bibliotekę!</translation>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć biblioteki!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak uprawnień do zmiany biblioteki!</translation>
     </message>
     <message>
         <source>Writing new library not successful!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisanie nowej biblioteki nie powiodło się!</translation>
     </message>
     <message>
         <source>Cannot delete old library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można usunąć biblioteki.</translation>
     </message>
     <message>
         <source>Library file is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik biblioteki jest uszkodzony!</translation>
     </message>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brak uprawnień do usunięcia biblioteki &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -1367,59 +1368,59 @@ a jest %1 !</translation>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj parametry do optymalizacji</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nazwa:</translation>
+        <translation>Nazwa:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogólne</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>aktywne</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>początkowe</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>maks</translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>ppoczątkowe:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>min:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>maks:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Dodaj</translation>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienne</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1427,79 +1428,79 @@ a jest %1 !</translation>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Cele</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Zastosuj</translation>
+        <translation>Zastosuj</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Wartość</translation>
+        <translation>Wartość</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartość:</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>mniej niż</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>więcej niż</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>równe</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">tak</translation>
+        <translation>tak</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Musisz wypełnić wsyzstkie pola!</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">nie</translation>
+        <translation>nie</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Symulacja:</translation>
+        <translation>Symulacja:</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienna &quot;%1&quot; jest już zadeklarowana!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Cel &quot;%1&quot; już istnieje!</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metoda:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksymalna liczba iteracji:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
@@ -1511,7 +1512,7 @@ a jest %1 !</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stała F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
@@ -1531,43 +1532,43 @@ a jest %1 !</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ograniczenie kosztów:</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algorytm</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Typ:</translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation>podwójnie liniowa</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>podwójnie logarytmiczna</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>liniowa całkowita</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>logarytmiczna całkowita</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>monitor</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>minimalizuj</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>maksymalizuj</translation>
     </message>
 </context>
 <context>
@@ -1609,159 +1610,159 @@ a jest %1 !</translation>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz paczkę projektów</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczka:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Pokaż</translation>
+        <translation>Pokaż</translation>
     </message>
     <message>
         <source>include user libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>dołącz biblioteki użytkownika</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz projekty:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Stwórz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie wybrano projektów!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpakuj paczkę projektów</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczki</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Dowolny Plik</translation>
+        <translation>Dowolny Plik</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj nazwę paczki</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj nazwę paczki!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz co najmniej jeden projekt!</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Informacja</translation>
+        <translation>Informacja</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik wyjściowy już istnieje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisać?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Tak</translation>
+        <translation>&amp;Tak</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Nie</translation>
+        <translation>&amp;Nie</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można utworzyć paczki!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczka utworzona!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można otworzyć paczki!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Zły nagłówek pliku!</translation>
     </message>
     <message>
         <source>ERROR: Wrong version number!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nieodpowiednia wersja!</translation>
     </message>
     <message>
         <source>ERROR: Checksum mismatch!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Zła suma kontrolna!</translation>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opuszczam katalog &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Paczka uszkodzona!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Paczka rozpakowana!</translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Katalog projektowy &quot;%1&quot; już istnieje!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę utworzyć katalogu &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzę katolog &quot;%1&quot; i wchodzę do niego</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę utworzyć pliku &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzenie pliku &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Biblioteka &quot;%1&quot; już istnieje!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę utworzyć biblioteki &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzenie biblioteki &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -2612,7 +2613,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished">Podukład</translation>
+        <translation>Podukład</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -2936,7 +2937,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>idealny czas przelotu w przód</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
@@ -2952,7 +2953,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>idealny czas przelotu w tył</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
@@ -2980,31 +2981,31 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa prądu w A^2/Hz</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa napięcia w A^2/Hz</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>pojemność liniowa</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik prądu rekombinacji</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik emisji dla Isr</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>odstęp pomiędzy końcami linii mikropaskowej</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie progowe (zero-bias)</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -3012,7 +3013,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>surface potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potencjał powierzchniowy</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
@@ -3404,19 +3405,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>idealny wzmacniacz</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>wzmocnienie napięciowe</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Wzmacniacz</translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>przelotka linii mikropaskowej</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
@@ -3432,19 +3433,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>wzmacniacz operacyjny</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>OpAmp</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>moduł maksymalnej i minimalnej wartości napięcia wyjściowego</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zły typ dokumentu: </translation>
     </message>
     <message>
         <source>Insert Nodename</source>
@@ -3456,15 +3457,15 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>preferowany algorytm zbieżności</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>plik netlisty SPICE</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -3472,77 +3473,77 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>nie ma zmiennych</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>nie ma danych</translation>
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>oblicz napięcia szumowe</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>materiał z drugiej strony podłoża</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura w stopniach Celcsjusza</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
-        <translation type="unfinished"></translation>
+        <translation>użyj aproksymacji zamiast dokładnych równań</translation>
     </message>
     <message>
         <source>method for solving the circuit matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>metoda rozwiązania macierzy układu</translation>
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>dla symulacji czasowej: indukcyjność w Henrach</translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>dla symulacji czasowej: pojemność w Faradach</translation>
     </message>
     <message>
         <source>coplanar open</source>
-        <translation type="unfinished"></translation>
+        <translation>rozwarcie koplanarne</translation>
     </message>
     <message>
         <source>width of gap at end of line</source>
-        <translation type="unfinished"></translation>
+        <translation>szerokość przerwy na końcu linii</translation>
     </message>
     <message>
         <source>Coplanar Open</source>
-        <translation type="unfinished"></translation>
+        <translation>rozwarcie koplanarne</translation>
     </message>
     <message>
         <source>coplanar short</source>
-        <translation type="unfinished"></translation>
+        <translation>zwarcie koplanarne</translation>
     </message>
     <message>
         <source>Coplanar Short</source>
-        <translation type="unfinished"></translation>
+        <translation>zwarcie koplanarne</translation>
     </message>
     <message>
         <source>coplanar gap</source>
-        <translation type="unfinished"></translation>
+        <translation>przerwa koplanarna</translation>
     </message>
     <message>
         <source>width of gap between the two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>szerokość przerwy między liniami</translation>
     </message>
     <message>
         <source>Coplanar Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>przerwa koplanarna</translation>
     </message>
     <message>
         <source>sim</source>
@@ -3550,47 +3551,47 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>coplanar step</source>
-        <translation type="unfinished"></translation>
+        <translation>koplanarna skokowa zmiana impedancji</translation>
     </message>
     <message>
         <source>distance between ground planes</source>
-        <translation type="unfinished"></translation>
+        <translation>odstęp pomiędzy płaszczyznami masy</translation>
     </message>
     <message>
         <source>Coplanar Step</source>
-        <translation type="unfinished"></translation>
+        <translation>koplanarna skokowa zmiana impedancji</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>wsteczne napięcie przebicia</translation>
     </message>
     <message>
         <source>current at reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>prąd dla wstecznego napięcie przebicia</translation>
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: Nie można otworzyć podukładu  &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Komponent SPICE &quot;%1&quot; nie ma nazwy pliku.</translation>
     </message>
     <message>
         <source>Component taken from Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponent wyięty z biblioteki Qucs</translation>
     </message>
     <message>
         <source>name of qucs library file</source>
-        <translation type="unfinished"></translation>
+        <translation>nazwa biblioteki Qucs</translation>
     </message>
     <message>
         <source>name of component in library</source>
-        <translation type="unfinished"></translation>
+        <translation>nazwa komponentu w bibliotece</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mozna załadować elementu bibliotecznego &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Locus Curve</source>
@@ -3662,235 +3663,235 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>wrong dependency</source>
-        <translation type="unfinished"></translation>
+        <translation>zła zależność</translation>
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>trzy indukcyjności wzajemnie sprzężone</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>indukcyjnośc cewki 1</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>indukcyjnośc cewki 2</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation type="unfinished"></translation>
+        <translation>indukcyjnośc cewki 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik sprzężenie między 1 i 2</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik sprzężenie między 1 i 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik sprzężenie między 2 i 3</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>dwie indukcyjności wzajemnie sprzężone</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Indukcyjności wzajemnie sprzężone</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>3 Indukcyjności wzajemnie sprzężone</translation>
     </message>
     <message>
         <source>correlated current sources</source>
-        <translation type="unfinished"></translation>
+        <translation>skorelowane źródła prądowe</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa prądu źródła 1</translation>
     </message>
     <message>
         <source>current power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa prądu źródła 2</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>znormalizowany współczynnik korelacji</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Skorelowane źródła napięciowe</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa napięcia źródła 2</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>gęstość widmowa napięcia źródła 1</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka OR</translation>
     </message>
     <message>
         <source>number of input ports</source>
-        <translation type="unfinished"></translation>
+        <translation>liczba wejść</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie stanu wysokiego</translation>
     </message>
     <message>
         <source>logical NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka NOR</translation>
     </message>
     <message>
         <source>n-port OR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka OR</translation>
     </message>
     <message>
         <source>logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka AND</translation>
     </message>
     <message>
         <source>n-port AND</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka AND</translation>
     </message>
     <message>
         <source>logical NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka NAND</translation>
     </message>
     <message>
         <source>n-port NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka NAND</translation>
     </message>
     <message>
         <source>n-port NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka NOR</translation>
     </message>
     <message>
         <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka XNOR</translation>
     </message>
     <message>
         <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka XNOR</translation>
     </message>
     <message>
         <source>logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>bramka XOR</translation>
     </message>
     <message>
         <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>n-wejściowa bramka XOR</translation>
     </message>
     <message>
         <source>logical inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>inverter logiczny</translation>
     </message>
     <message>
         <source>Inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>inwerter</translation>
     </message>
     <message>
         <source>digital simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>symulacja cyfrowa</translation>
     </message>
     <message>
         <source>type of simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>typ symulacji</translation>
     </message>
     <message>
         <source>digital source</source>
-        <translation type="unfinished"></translation>
+        <translation>źródło cyfrowe</translation>
     </message>
     <message>
         <source>initial output value</source>
-        <translation type="unfinished"></translation>
+        <translation>początkowa wartość wyjściowa</translation>
     </message>
     <message>
         <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
+        <translation>lista czasów, dla których nastepuje zmiana wartości wyjściowej</translation>
     </message>
     <message>
         <source>data type</source>
-        <translation type="unfinished"></translation>
+        <translation>typ danej</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Komponent &quot;%1&quot; nie ma modelu analogowego.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Komponent &quot;%1&quot; nie ma modelu cyfrowego.</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSTRZEŻENIE: Pomijam element w podukładzie &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>Wykres czasowy</translation>
     </message>
     <message>
         <source>Truth Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabela prawdy</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Tylko jedna symulacja cyfrowa dozwolona.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można mieszać symulacji cyfrowej z analogową.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Symulacja cyfrowa wymaga przynajmniej jednego cyfrowego źródła.</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>czas trwania symulacji TimeList</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>współćzynnik temepraturowy prądu nasycenia</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation type="unfinished"></translation>
+        <translation>przerwa energetyczna w eV</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Bv liniowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>Rs linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Rs liniowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>Tt linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Tt liniowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Tt kwadratowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>M liniowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>M kwadratowy współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation>domyślny obszar diody</translation>
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
@@ -3902,11 +3903,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>domyślny obszar transystora bipolarnego</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vt0 współczynnik temepraturowy</translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
@@ -3914,151 +3915,151 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>domyślny obszar transystora JFET</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura, przy której zmierzono parametry</translation>
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>sprzęgacz idealny</translation>
     </message>
     <message>
         <source>coupling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik sprzeżenia</translation>
     </message>
     <message>
         <source>phase shift of coupling path in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>przesunięcie fazy odczepu w stopniach</translation>
     </message>
     <message>
         <source>Coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>sprzęgacz</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
+        <translation>przerzutnik RS</translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation type="unfinished"></translation>
+        <translation>przerzutnik D z asynchronicznym resetem</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation type="unfinished"></translation>
+        <translation>przerzutnik JK z asynchronicznym resetem i wejściem ustawiania</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerzutnik D</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerzutnik JK</translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerzutnik RS</translation>
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: Zły format czasu w &quot;%1&quot;. Użyj wartości dodatnich z jednostką</translation>
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>koncentryczna linia transmisyjna</translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja właściwa przewodnika</translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>wyględna przenikalność przewodnika</translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>średnica wewnętrznego przewodnika</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>fizyczna długość linii</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished">Linia koncentryczna</translation>
+        <translation>Linia koncentryczna</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>prąd szczytowy w Amperach</translation>
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
+        <translation>wewnętryna średnica płaszcza</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik temperaturowy pierwszego rzędu</translation>
     </message>
     <message>
         <source>second order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik temperaturowy drugiego rzędu</translation>
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>umieść wartości charakterystyczne w zbiorze wyników</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>zapisz wartości charakterystyczne w zbiorze wyników</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie szczytowe w Voltach</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>przenikalność elektryczna dielektryka</translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>próbnik napięcia</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>próbnik napięcia</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>liczba portów</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>plik z parametrami S n-wrotnika</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished">plik z parameterami S dwuwrotnika</translation>
+        <translation>plik z parameterami S dwuwrotnika</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>typ portu (tylko dla symulacji cyfrowej)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>źródło napięcia AC z modulacją amplitudy</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>wskaźnik modulacji</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>źródło modulowane AM</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
@@ -4066,179 +4067,179 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>źródło napięcia AC z modulacją fazy</translation>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>indeks modulacji</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>źródło modulowane PM</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja stanu włączenia w Ohmach</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja stanu wyłączenia w Ohmach</translation>
     </message>
     <message>
         <source>initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>stan początkowy</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>przełącznik</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>współćzynnik tłumienia na długość w 1/m</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>przełącznik (kontrolowany czasowo)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie progowe w Voltach</translation>
     </message>
     <message>
         <source>hysteresis voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie histerezy w Voltach</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja stanu włączenia w Ohmach</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja stanu wyłączenia w Ohmach</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">Edytuj właściwości</translation>
+        <translation>Edytuj właściwości</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished">dopasowanie mocy</translation>
+        <translation>dopasowanie mocy</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished">dopasowanie szumowe</translation>
+        <translation>dopasowanie szumowe</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished">dopasowanie dwuwrotowe</translation>
+        <translation>dopasowanie dwuwrotowe</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Informacja</translation>
+        <translation>Informacja</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished">Nie można przypisać nazwy do potencjału masy!</translation>
+        <translation>Nie można przypisać nazwy do potencjału masy!</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>czasy, w których bastępuje zmiana stanu (lista parametrów odzielonych przecinkami)</translation>
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Komponent VHDL &quot;%1&quot; nie ma nazwy pliku.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można otworzyć pliku VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik VHDL</translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa pliku VHDL</translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>reprezentacja w symulacji DC</translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>czas relaksacji</translation>
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę utworzyć pliku wyjściowego!</translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
-        <translation type="unfinished"></translation>
+        <translation>pokaż numery portów na symbolu lub nie</translation>
     </message>
     <message>
         <source>Optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>Optymalizacja</translation>
     </message>
     <message>
         <source>optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>Optymalizacja</translation>
     </message>
     <message>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>przeprowadź początkową analizę DC</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie początkowe dla symulacji czasowej</translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>prąd początkowy dla symulacji czasowej</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>maksymalny krok czasu w sekundach</translation>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>przekażnik</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>przekaźnik</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>początkowe opóźnienie</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>komponent HICUM Level 2 v2.1 veriloga</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation>stała GICCR</translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
+        <translation>ładunek dziury (zero-bias)</translation>
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Korekcja wielkoprądowa dla efektów 2D i 3D</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
@@ -4334,11 +4335,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>wewnętrzna rezystancja bazy (zero-bias)</translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>zewnętrzna rezystancja bazy</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
@@ -4358,11 +4359,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystancja szeregowa emitera</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>zewnętrzna rezystancja szeregowa kolektora</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
@@ -4374,7 +4375,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>prąd nasycenia diody C-S</translation>
     </message>
     <message>
         <source>Ideality factor of C-S diode current</source>
@@ -4606,11 +4607,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystancja termiczna</translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Pojemność termiczna</translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
@@ -4622,51 +4623,51 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura symulacji</translation>
     </message>
     <message>
         <source>npn HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>npn HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>FBH HBT verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>komponent FBH HBT veriloga</translation>
     </message>
     <message>
         <source>FBH HBT</source>
-        <translation type="unfinished"></translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieistotne</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura pracy przyrządu, Celsjusz</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystancja termiczna,K/W</translation>
     </message>
     <message>
         <source>Thermal capacitanc</source>
-        <translation type="unfinished"></translation>
+        <translation>Pojemność termiczna</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Współczynnik skalujący, liczba emiterów</translation>
     </message>
     <message>
         <source>Length of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Długość palca emitera, m</translation>
     </message>
     <message>
         <source>Width of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerokość palca emitera, m</translation>
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
@@ -4774,7 +4775,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
@@ -4838,7 +4839,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>nie używane</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
@@ -4886,15 +4887,15 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Indukcyjność kolektora, H</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Indukcyjność emitera, H</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>indukczjność bazy, H</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
@@ -4938,11 +4939,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ideal 4-port transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>idealna 4-wrotowa linia transmisyjna</translation>
     </message>
     <message>
         <source>4-Port Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>4-wrotowa linia transmisyjna</translation>
     </message>
 </context>
 <context>
@@ -5490,11 +5491,11 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">Nie mogę uruchomić qucshelp (systemu pomocy)!</translation>
+        <translation>Nie mogę uruchomić qucshelp (systemu pomocy)!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">Nie mogę uruchomić edytora tekstu!</translation>
+        <translation>Nie mogę uruchomić edytora tekstu!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -5502,7 +5503,7 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">Przynajmniej dwa elementy muszą być wybrane !</translation>
+        <translation>Przynajmniej dwa elementy muszą być wybrane !</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -5580,7 +5581,7 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
+        <translation>komponenty pliku</translation>
     </message>
     <message>
         <source>digital components</source>
@@ -5588,142 +5589,145 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Inne</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można uruchomić &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Źródła VHDL</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>zawartość katalogu projektowego</translation>
     </message>
     <message>
         <source>content of current project</source>
-        <translation type="unfinished"></translation>
+        <translation>zawartość aktaualnego projektu</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę usunąć prezentacji wyników: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę usunąć pliku z danymi: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę usunąć źródła VHDL: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzenie nowego tekstu...</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished">Nie można załadować S[1,1].</translation>
+        <translation>Nie można załadować S[1,1].</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished">Nie można załadować S[1,2].</translation>
+        <translation>Nie można załadować S[1,2].</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished">Nie można załadować S[2,1].</translation>
+        <translation>Nie można załadować S[2,1].</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished">Nie można załadować S[2,2].</translation>
+        <translation>Nie można załadować S[2,2].</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished">Zła zależność!</translation>
+        <translation>Zła zależność!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished">Nie mogę uruchomić programu syntezy filtrów!</translation>
+        <translation>Nie mogę uruchomić programu syntezy filtrów!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished">Nie mogę uruchomić programu obliczeń linii!</translation>
+        <translation>Nie mogę uruchomić programu obliczeń linii!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished">Nie mogę uruchomić programu bibliotecznego!</translation>
+        <translation>Nie mogę uruchomić programu bibliotecznego!</translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie otwarto projektu!</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>wybierz plik do skopiowania</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie skopiowano żadnego pliku.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisać</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik &quot;%1&quot; już istnieje.
+Nadpisać ?</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można stworzyć &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można otworzyć &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można pisać do &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Nowy</translation>
+        <translation>&amp;Nowy</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished">Tworzy nowy dokument</translation>
+        <translation>Tworzy nowy dokument</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished">Nowy
+        <translation>Nowy
 
 Tworzy nowy schemat lub prezentację wyników</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy &amp;Tekst</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzy nowy dokument</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy tekst
+
+Tworzy nowy dokument</translation>
     </message>
     <message>
         <source>Open File</source>
@@ -5731,17 +5735,17 @@ Creates a new text document</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Otwórz...</translation>
+        <translation>&amp;Otwórz...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished">Otwiera istniejący dokument</translation>
+        <translation>Otwiera istniejący dokument</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished">Otwórz plik
+        <translation>Otwórz plik
 
 otwiera istniejący dokument</translation>
     </message>
@@ -5751,13 +5755,13 @@ otwiera istniejący dokument</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished">Zapisz bieżący dokument</translation>
+        <translation>Zapisuje bieżący dokument</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished">Zapisz plik
+        <translation>Zapisz plik
 
 Zapisuje bieżący dokument</translation>
     </message>
@@ -5767,17 +5771,17 @@ Zapisuje bieżący dokument</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz jako...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished">Zapisuje bieżący dokument pod nową nazwą</translation>
+        <translation>Zapisuje bieżący dokument pod nową nazwą</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished">Zapisz plik jako
+        <translation>Zapisz jako
 
 Zapisuje bieżący dokument pod inną nazwą</translation>
     </message>
@@ -5787,17 +5791,17 @@ Zapisuje bieżący dokument pod inną nazwą</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished">Zapisz &amp;wszystko</translation>
+        <translation>Zapisz &amp;wszystko</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished">Zapisz otwarte dokumenty</translation>
+        <translation>Zapisz otwarte dokumenty</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished">Zapisz wsyzstkie pliki
+        <translation>Zapisz wszystkie pliki
 
 Zapisuje wszystkie otwarte dokumenty</translation>
     </message>
@@ -5807,23 +5811,23 @@ Zapisuje wszystkie otwarte dokumenty</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Zamknij</translation>
+        <translation>&amp;Zamknij</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished">Zamyka bieżący dokument</translation>
+        <translation>Zamyka bieżący dokument</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished">Zamknij plik
+        <translation>Zamknij plik
 
 Zamyka bieżący dokument</translation>
     </message>
     <message>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Edytuj symbol układu</translation>
     </message>
     <message>
         <source>Document Settings...</source>
@@ -5837,7 +5841,7 @@ Zamyka bieżący dokument</translation>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished">Ustawienia
+        <translation>Ustawienia
 
 Ustawienia właściwości pliku</translation>
     </message>
@@ -5847,17 +5851,17 @@ Ustawienia właściwości pliku</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Drukuj...</translation>
+        <translation>&amp;Drukuj...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished">Drukuj bieżący dokument</translation>
+        <translation>Drukuj bieżący dokument</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished">Drukuj plik
+        <translation>Drukuj plik
 
 Drukuje bieżący dokument</translation>
     </message>
@@ -5887,17 +5891,17 @@ Drukuje elementy zaznaczone w aktualnym dokumencie</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">Wy&amp;jście</translation>
+        <translation>Wy&amp;jście</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished">Zakończenie aplikacji</translation>
+        <translation>Zakończenie aplikacji</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished">Wyjście
+        <translation>Wyjście
 
 Zakończenie aplikacji</translation>
     </message>
@@ -5907,133 +5911,133 @@ Zakończenie aplikacji</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished">Ustawienia programu...</translation>
+        <translation>Ustawienia programu...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished">Ustawienia Qucs&apos;a
+        <translation>Ustawienia Qucs&apos;a
 
 Ustawiemnia programu Qucs</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished">Wyrównaj górne krawędzie</translation>
+        <translation>Wyrównaj górne krawędzie</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished">Wyrównaj górne krawędzie wzbranych elementów</translation>
+        <translation>Wyrównaj górne krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished">Wyrównaj górne krawędzie
+        <translation>Wyrównaj górne krawędzie
 
 Wyrównaj górne krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished">Wyrównaj dolne krawędzie</translation>
+        <translation>Wyrównaj dolne krawędzie</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished">Wyrównaj dolne krawędzie wybranych elementów</translation>
+        <translation>Wyrównaj dolne krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished">Wyrównaj dolne krawędzie
+        <translation>Wyrównaj dolne krawędzie
 
 Wyrównaj dolne krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished">Wyrównaj lewe krawędzie</translation>
+        <translation>Wyrównaj lewe krawędzie</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished">Wyrównaj lewe krawędzie wybranych elementów</translation>
+        <translation>Wyrównaj lewe krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished">Wyrównaj lewe krawędzie
+        <translation>Wyrównaj lewe krawędzie
 
 Wyrównaj lewe krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished">Wyrównaj prawe krawędzie</translation>
+        <translation>Wyrównaj prawe krawędzie</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished">Wyrównaj prawe krawędzie wybranych elementów</translation>
+        <translation>Wyrównaj prawe krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished">Wyrównaj prawe krawędzie
+        <translation>Wyrównaj prawe krawędzie
 
 Wyrównaj prawe krawędzie wybranych elementów</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished">Rozmieść w poziomie</translation>
+        <translation>Rozmieść w poziomie</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished">Rozmieść równomiernie w poziomie</translation>
+        <translation>Rozmieść równomiernie w poziomie</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished">Rozmieść w poziomie
+        <translation>Rozmieść w poziomie
 
 Rozmieść równomiernie w poziomie</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished">Rozmieść w pionie</translation>
+        <translation>Rozmieść w pionie</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished">Rozmieść równomiernie w pionie</translation>
+        <translation>Rozmieść równomiernie w pionie</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished">Rozmieść w pionie
+        <translation>Rozmieść w pionie
 
 Rozmieść równomiernie w pionie</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished">Przyciągnij do siatki</translation>
+        <translation>Przyciągnij do siatki</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished">Przyciągnij do siatki
+        <translation>Przyciągnij do siatki
 
 Przyciągnij wybrane elementy do siatki</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished">Przesun tekst elementu</translation>
+        <translation>Przesuń tekst elementu</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished">Przesuń Tekst Elementu
+        <translation>Przesuń Tekst Elementu
 
 Przesuwa tekst właściwości elementu</translation>
     </message>
@@ -6060,7 +6064,7 @@ Zmień właściwości elementów</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Wy&amp;tnij</translation>
+        <translation>Wy&amp;tnij</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
@@ -6080,7 +6084,7 @@ Wycina zaznaczenie i wkłada je do schowka</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiuj</translation>
+        <translation>&amp;Kopiuj</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
@@ -6100,33 +6104,33 @@ Kopiuje zaznaczenia do schowka</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Wklej</translation>
+        <translation>&amp;Wklej</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Wkleja zawartość schowka na poyzcję wskazaną przez kursor</translation>
+        <translation>Wkleja zawartość schowka na poyzcję wskazaną przez kursor</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Wklej
+        <translation>Wklej
 
 Wkleja zawartość schowka na poyzcję wskazaną przez kursor</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Usuń</translation>
+        <translation>&amp;Usuń</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished">Usuwa zaznaczone elementy</translation>
+        <translation>Usuwa zaznaczone elementy</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished">Usuń
+        <translation>Usuń
 
 Usuwa zaznaczone elementy</translation>
     </message>
@@ -6136,17 +6140,17 @@ Usuwa zaznaczone elementy</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">Co&amp;fnij</translation>
+        <translation>Co&amp;fnij</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished">Cofa ostatnio wykonaną operację</translation>
+        <translation>Cofa ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished">Cofnij
+        <translation>Cofnij
 
 Cofa ostatnio wykonaną operację</translation>
     </message>
@@ -6156,17 +6160,17 @@ Cofa ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">Po&amp;nów</translation>
+        <translation>Po&amp;nów</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished">Ponawia ostatnio wykonaną operację</translation>
+        <translation>Ponawia ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished">Ponów
+        <translation>Ponów
 
 Ponawia ostatnio wykonaną operację</translation>
     </message>
@@ -6176,17 +6180,17 @@ Ponawia ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished">&amp;Nowy projekt...</translation>
+        <translation>&amp;Nowy projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished">Tworzy nowy projekt</translation>
+        <translation>Tworzy nowy projekt</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished">Nowy projekt
+        <translation>Nowy projekt
 
 Tworzy nowy projekt</translation>
     </message>
@@ -6196,7 +6200,7 @@ Tworzy nowy projekt</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished">&amp;Otwórz projekt...</translation>
+        <translation>&amp;Otwórz projekt...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -6206,7 +6210,7 @@ Tworzy nowy projekt</translation>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished">Otwórz projekt
+        <translation>Otwórz projekt
 
 Otwiera istniejący projekt</translation>
     </message>
@@ -6216,7 +6220,7 @@ Otwiera istniejący projekt</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished">U&amp;suń projekt...</translation>
+        <translation>U&amp;suń projekt...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
@@ -6226,7 +6230,7 @@ Otwiera istniejący projekt</translation>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished">Usuń projekt
+        <translation>Usuń projekt
 
 Usuwa projekt</translation>
     </message>
@@ -6236,7 +6240,7 @@ Usuwa projekt</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished">&amp;Zamknij Projekt</translation>
+        <translation>&amp;Zamknij Projekt</translation>
     </message>
     <message>
         <source>Close current project</source>
@@ -6246,27 +6250,29 @@ Usuwa projekt</translation>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished">Zamknij Projekt
+        <translation>Zamknij Projekt
 
 Zamyka aktualny projekt</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dod&amp;aj pliki do projektu...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj pliki do katalogu projektowego</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj pliki do projektu
+
+Kopiuje pliki do katalogu projektowego</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished">Pokaż wszystko</translation>
+        <translation>Pokaż wszystko</translation>
     </message>
     <message>
         <source>Views the whole page</source>
@@ -6276,59 +6282,61 @@ Copies files to project directory</source>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished">Pokaż wszystko
+        <translation>Pokaż wszystko
 
 Pokazuje zawartość całej strony</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished">Podgląd w skali 1:1</translation>
+        <translation>Podgląd w skali 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished">Podgląd bez powiększenia</translation>
+        <translation>Podgląd bez powiększenia</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished">Podgląd w skali 1:1
+        <translation>Podgląd w skali 1:1
 
 Pokazuje zawartość strony bez powiększenia</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished">Powiększ</translation>
+        <translation>Powiększ</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished">Powiększenie zawartości bieżącego okna</translation>
+        <translation>Powiększenie zawartości bieżącego okna</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished">Powiększ
+        <translation>Powiększ
 
 Powiększenie zawartości bieżącego okna</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished">Zmniejsz</translation>
+        <translation>Zmniejsz</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished">Zmniejszenie zawartości bieżącego okna</translation>
+        <translation>Zmniejszenie zawartości bieżącego okna</translation>
     </message>
     <message>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmniejsz
+
+Zmniejszenie podglądu zawartości bieżącego okna</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Zaznacz</translation>
+        <translation>Zaznacz</translation>
     </message>
     <message>
         <source>Select mode</source>
@@ -6344,39 +6352,39 @@ Zaznacz rodzaj</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Zaznacz wszystko</translation>
+        <translation>Zaznacz wszystko</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished">Zaznacz wszystkie elementy</translation>
+        <translation>Zaznacz wszystkie elementy</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished">Zaznacz wszystko
+        <translation>Zaznacz wszystko
 
 Zaznacz wszystkie elementy w dokumencie</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished">Obróć</translation>
+        <translation>Obróć</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished">Obraca wybrany elelement o 90 stopni</translation>
+        <translation>Obraca wybrany elelement o 90 stopni</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished">Obróć
+        <translation>Obróć
 
 Obraca wybrany elelement o 90 stopni zgodnie z ruchem wskazówek zegara</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished">Odbicie wzdłuż osi X</translation>
+        <translation>Odbicie wzdłuż osi X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
@@ -6386,13 +6394,13 @@ Obraca wybrany elelement o 90 stopni zgodnie z ruchem wskazówek zegara</transla
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished">Odbicie wzdłuż osi X
+        <translation>Odbicie wzdłuż osi X
 
 Odbija lustrzanie wzbrany element wzdłuż osi X</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished">Odbicie wzdłuż osi Y</translation>
+        <translation>Odbicie wzdłuż osi Y</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
@@ -6402,13 +6410,13 @@ Odbija lustrzanie wzbrany element wzdłuż osi X</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished">Odbicie wzdłuż osi Y
+        <translation>Odbicie wzdłuż osi Y
 
 Odbija lustrzanie wzbrany element wzdłuż osi Y</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished">Poziom niżej</translation>
+        <translation>Poziom niżej (do podukładu)</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
@@ -6418,30 +6426,30 @@ Odbija lustrzanie wzbrany element wzdłuż osi Y</translation>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished">Poziom niżej
+        <translation>Poziom niżej
 
 Zejście o jeden poziom hiearchi niżej do zaznaczonego elementu</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished">Poziom wyżej</translation>
+        <translation>Poziom wyżej</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished">Wyjście z podukładu</translation>
+        <translation>Wyjście z podukładu</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished">Poziom wyżej
+        <translation>Poziom wyżej
 
 
 Wejście o jeden poziom hiearchi wyżej, opuszczenie podukładu </translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished">Dezaktzwować/Uaktywnić</translation>
+        <translation>Dezaktywuj/Uaktywnij</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
@@ -6457,7 +6465,7 @@ Dezaktzwowuje/aktywuje zaznaczony element</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished">Wstaw równanie</translation>
+        <translation>Wstaw równanie</translation>
     </message>
     <message>
         <source>Inserts equation</source>
@@ -6467,13 +6475,13 @@ Dezaktzwowuje/aktywuje zaznaczony element</translation>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished">Wstaw rownianie
+        <translation>Wstaw równanie
 
 Wstawia równanie zdefiniowane przez użytkownika</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished">Wstaw masę</translation>
+        <translation>Wstaw masę</translation>
     </message>
     <message>
         <source>Inserts ground</source>
@@ -6483,13 +6491,13 @@ Wstawia równanie zdefiniowane przez użytkownika</translation>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished">Wstaw masę
+        <translation>Wstaw masę
 
 Wstawia symbol masy</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished">Wstaw port</translation>
+        <translation>Wstaw port</translation>
     </message>
     <message>
         <source>Inserts port</source>
@@ -6499,7 +6507,7 @@ Wstawia symbol masy</translation>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished">Wstaw port
+        <translation>Wstaw port
 
 Wstawia symbol portu</translation>
     </message>
@@ -6509,7 +6517,7 @@ Wstawia symbol portu</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished">Drut</translation>
+        <translation>Drut</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
@@ -6519,7 +6527,7 @@ Wstawia symbol portu</translation>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished">Drut
+        <translation>Drut
 
 Wstaw drut</translation>
     </message>
@@ -6529,17 +6537,17 @@ Wstaw drut</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished">Nazwa drutu</translation>
+        <translation>Nazwa drutu</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished">Wstawia nazwę drutu lub końcówki</translation>
+        <translation>Wstawia nazwę drutu lub końcówki</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished">Nazwa drutu
+        <translation>Nazwa drutu
 
 Wstawia nazwę drutu lub końcówki</translation>
     </message>
@@ -6549,128 +6557,130 @@ Wstawia nazwę drutu lub końcówki</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished">Edytor tekstu</translation>
+        <translation>Edytor tekstu</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished">Uruchamia edytor tekstowy programu Qucs</translation>
+        <translation>Uruchamia edytor tekstowy programu Qucs</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished">Edytor tekstowy
+        <translation>Edytor tekstowy
 
 Uruchamia edytor tekstowy programu Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished">Synteza filtrów</translation>
+        <translation>Synteza filtrów</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished">Uruchamia program QucsFilter</translation>
+        <translation>Uruchamia program QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished">Synteza filtra
+        <translation>Synteza filtra
 
 Urochomienie progranu QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished">Obliczenie linii</translation>
+        <translation>Obliczenie linii</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished">Uruchom QucsTrans</translation>
+        <translation>Uruchom QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished">Obliczanie linii
+        <translation>Obliczanie linii
 
 Uruchamia kalkulator linii transmisyjnych</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished">Biblioteka elementów</translation>
+        <translation>Biblioteka elementów</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished">Uruchom QucsLib</translation>
+        <translation>Uruchom QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished">Biblioteka elementów
+        <translation>Biblioteka elementów
 
 Uruchomia program biblioteki elementów</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished">Układ dopasowujący</translation>
+        <translation>Układ dopasowujący</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished">Tworzy układ dopasowujący</translation>
+        <translation>Tworzy układ dopasowujący</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished">Układ dopasowujący
+        <translation>Układ dopasowujący
 
 Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished">Sumuluj</translation>
+        <translation>Sumuluj</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished">Symuluje bieżący schemat</translation>
+        <translation>Symuluje bieżący schemat</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished">Symuluj
+        <translation>Symuluj
 
 Symuluje bieżący schemat</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished">Podgląd prezentacji wyników / schematu</translation>
+        <translation>Podgląd prezentacji wyników / schematu</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished">Przełącza pomiędzy prezentacją wyników a schematem</translation>
+        <translation>Przełącza pomiędzy prezentacją wyników a schematem</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished">Podgląd prezentacji wyników / schematu
+        <translation>Podgląd prezentacji wyników / schematu
 </translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished">Oblicz punkt pracy</translation>
+        <translation>Oblicz punkt pracy</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished">Oblicza punkt pracy i wyświetla go</translation>
+        <translation>Oblicza punkt pracy i wyświetla go</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicz punkt pracy
+
+Oblicza punkt pracy i wyświetla go</translation>
     </message>
     <message>
         <source>Set Marker</source>
@@ -6678,49 +6688,49 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished">Ustaw znacznik na wykresie</translation>
+        <translation>Ustaw znacznik na wykresie</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">Ustawia znacznik na wykresie</translation>
+        <translation>Ustawia znacznik na wykresie</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished">Ustaw znacznik
+        <translation>Ustaw znacznik
 
 Ustawia znacznik na wykresie</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished">Pokaż ostatnie komunikaty</translation>
+        <translation>Pokaż ostatnie komunikaty</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished">Pokazuje ostatnie komunikaty</translation>
+        <translation>Pokazuje ostatnie komunikaty</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished">Pokaż ostatnie komunikaty
+        <translation>Pokaż ostatnie komunikaty
 
 Pokazuje ostatnie komunikaty</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished">Pokaż ostatnią netlistę</translation>
+        <translation>Pokaż ostatnią netlistę</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished">Pokazuje ostatnią symulowaną netlistę</translation>
+        <translation>Pokazuje ostatnią symulowaną netlistę</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished">Pokaż ostatnią netlistę
+        <translation>Pokaż ostatnią netlistę
 
 Pokazuje ostatnią symulowaną netlistę</translation>
     </message>
@@ -6730,17 +6740,17 @@ Pokazuje ostatnią symulowaną netlistę</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished">Pase&amp;k narzędziowy</translation>
+        <translation>Pase&amp;k narzędziowy</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished">Włącza/wyłącza pasek narzędziowy</translation>
+        <translation>Włącza/wyłącza pasek narzędziowy</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished">Pasek narzędziowy
+        <translation>Pasek narzędziowy
 
 Włącza/wyłącza pasek narzędziowy</translation>
     </message>
@@ -6750,17 +6760,17 @@ Włącza/wyłącza pasek narzędziowy</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">Pasek &amp;statusu</translation>
+        <translation>Pasek &amp;statusu</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished">Włącza/wyłącza pasek statusu</translation>
+        <translation>Włącza/wyłącza pasek statusu</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished">Pasek statusu
+        <translation>Pasek statusu
 
 Włącza/wyłącza pasek statusu</translation>
     </message>
@@ -6770,17 +6780,17 @@ Włącza/wyłącza pasek statusu</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished">Indeks pomocy...</translation>
+        <translation>Indeks pomocy...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished">Indeks pomocy programu Qucs</translation>
+        <translation>Indeks pomocy programu Qucs</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished">Indek pomocy
+        <translation>Indek pomocy
 
 Indeks pomocy programu Qucs</translation>
     </message>
@@ -6790,17 +6800,17 @@ Indeks pomocy programu Qucs</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished">Wprowadzenie...</translation>
+        <translation>Wprowadzenie...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished">Wprowadzenie do programu Qucs</translation>
+        <translation>Wprowadzenie do programu Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished">Wprowadzenie
+        <translation>Wprowadzenie
 
 Krótkie wprowadzenie do programu Qucs</translation>
     </message>
@@ -6810,7 +6820,7 @@ Krótkie wprowadzenie do programu Qucs</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished">&amp;O programie Qucs...</translation>
+        <translation>&amp;O programie Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
@@ -6820,23 +6830,23 @@ Krótkie wprowadzenie do programu Qucs</translation>
         <source>About
 
 About the application</source>
-        <translation type="unfinished">O programie
+        <translation>O programie
 
 Informacje o programie</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">O QT</translation>
+        <translation>O QT</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">O bibliotece QT...</translation>
+        <translation>O bibliotece QT...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished">O QT
+        <translation>O QT
 
 O bibliotece QT firmy Trolltech</translation>
     </message>
@@ -6846,43 +6856,43 @@ O bibliotece QT firmy Trolltech</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Plik</translation>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Edycja</translation>
+        <translation>&amp;Edycja</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished">&amp;Wstaw</translation>
+        <translation>&amp;Wstaw</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished">&amp;Projekt</translation>
+        <translation>&amp;Projekt</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp;Narzędzia</translation>
+        <translation>&amp;Narzędzia</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished">&amp;Symulacja</translation>
+        <translation>&amp;Symulacja</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Widok</translation>
+        <translation>&amp;Widok</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Pomoc</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished">Ostrzeżenia podczas ostatniej symulacji! Wciśnij F5</translation>
+        <translation>Ostrzeżenia podczas ostatniej symulacji! Wciśnij F5</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished">brak ostrzeżeń</translation>
+        <translation>brak ostrzeżeń</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
@@ -6894,163 +6904,172 @@ O bibliotece QT firmy Trolltech</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">O...</translation>
+        <translation>O...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Wersja Qucs&apos;a</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
+        <translation>by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>Symulator by Stefan Jahn</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL symulator &apos;FreeHDL&apos;  Edwin Naroska i Marius Vollmer</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished"></translation>
+        <translation>specjalne podziękowania dla Jens Flucke i Raimund Jacob</translation>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation>Podziękowania dla Mike Brinsona za poprawki w wyjściu VHDL</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tłumaczenia:</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>niemieckie Stefan Jahn</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished"></translation>
+        <translation>polskie Dariusz Pienkowski</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation type="unfinished"></translation>
+        <translation>rumuńskie Radu Circa</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished"></translation>
+        <translation>francuskie Vincent Habchi, F5RCS</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
+        <translation>portugalskie Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished"></translation>
+        <translation>hiszpańskie Jose L. Redrejo Rodriguez</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished"></translation>
+        <translation>japońskie Toyoyuki Ishikawa</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished"></translation>
+        <translation>włoskie Giorgio Luparia and Claudio Girardi</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished"></translation>
+        <translation>hebrajskie Dotan Nahum</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished"></translation>
+        <translation>szwedzkie Peter Landgren</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
+        <translation>tureckie Onur i Ozgur Cobanoglu</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished">Węgierskie Jozsef Bus</translation>
+        <translation>węgierskie Jozsef Bus</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź fragment tekstu</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź
+
+Znajdź fragment tekstu
+</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź ponownie</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź ponownie fragment tekstu</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Znajdź
+
+szuka ponownie tego samego tekstu</translation>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument został zmodyfikowany przez inny program !</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Odświeżyć czy pozostawić obecną wersję ?</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Odśwież</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozostaw</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia &amp;dokumentu...</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Wytnij zaznaczenie i wstaw do schowka</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Wytnij
+
+Wycina zaznaczenie i wstawia do schowka</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuje zaznacone elementy do schowka</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj
+
+Kopiuje zaznacone elementy do schowka</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż całą stronę</translation>
     </message>
     <message>
         <source>Activate select mode</source>
@@ -7064,25 +7083,27 @@ Activates select mode</source>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL entity</translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>rosyjskie Igor Gorbounov</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>wstaw szkielet VHDL entity</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL entity
+
+wstawia szkielet VHDL entity</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień...</translation>
     </message>
     <message>
         <source>Replace
@@ -7090,348 +7111,378 @@ Inserts the skeleton of a VHDL entity</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień
+
+zmienia właściwości elementu
+lub
+tekstu w kodzie VHDL</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Dezaktuwuj/Uaktywnij wybrane elementy</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktywuj/Dezaktywuj
+
+auaktywnia/dezaktywuje wybrane elementy</translation>
     </message>
     <message>
         <source>Select Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznacz znaczniki</translation>
     </message>
     <message>
         <source>Selects all markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznacz wsyzstkie znaczniki</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznacz znaczniki
+
+zaznacza wsyztkie ynaczniki w dokumencie</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę otworzyć projekt z podukładami!</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzy bib&amp;liotekę...</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzenie biblioteki z podukładów</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Stwórz bibliotekę
+
+tworzenie biblioteki z podukładów</translation>
     </message>
     <message>
         <source>Cannot delete file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można usunąć pliku: </translation>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę usunąć katalogu: </translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę najpierw otworzyć projekt!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę wybrać wykres!</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>plik CSV</translation>
     </message>
     <message>
         <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj nazwę pliku wyjściowego</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik wyjściowy już istnieje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadpisać?</translation>
     </message>
     <message>
         <source>Print Fit to Page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj dopasowując do wielkości strony...</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj dopasowując do wielkości strony
+
+Drukuj dopasowując do wielkości strony</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz &amp;paczkę...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzy skompresowaną paczkę z projektów</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Utwórz paczkę
+
+Tworzy skompresowaną paczkę z projektów</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rozpakuj paczkę...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Zainstaluj zawartość paczki</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpakuj paczkę
+
+instaluje zawartość paczki</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importuj dane...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Konwertuje plik do formatu danych Qucsa</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj dane
+
+Konwertuje plik do formatu danych Qucsa</translation>
     </message>
     <message>
         <source>Export to &amp;CSV...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportuj do &amp;CSV...</translation>
     </message>
     <message>
         <source>Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Konwertuj dane wykresu do formatu CSV</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportuj do CSV
+
+Konwertuje dane wykresu do formatu CSV</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Za&amp;dokuj okno</translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>włącza/wyłącza wyświetlanie zadokowanego okna</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż okno
+
+włącza/wyłącza wyświetlanie zadokowanego okna</translation>
     </message>
     <message>
         <source>Printer Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd drukarki.</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę uruchomić programu obliczeń tłumików!</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Synteza tłumików</translation>
     </message>
     <message>
         <source>Starts QucsAttenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruchamia program QucsAttenuator</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation type="unfinished"></translation>
+        <translation>Synteza tłumików
+
+Uruchamia program syntezy tłumików</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>poprawki GUI Gopala Krishna A</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>czeskie Marek Straka</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>katalońskie Antoni Subirats</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>interfejs Verilog-AMS Helene Parruitte</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyśrodkuj w poziomie</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>wyśrodkowuje w poziomie wybrane elementy</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyśrodkuj w poziomie
+
+wyśrodkowuje w poziomie wybrane elementy</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyśrodkuj w pionie</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>wyśrodkowuje w pionie wybrane elementy</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyśrodkuj w pionie
+
+wyśrodkowuje w pionie wybrane elementy</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Umiejsc&amp;owienie</translation>
     </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">Wy&amp;jście</translation>
+        <translation>Wy&amp;jście</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished">Pomoc...</translation>
+        <translation>Pomoc...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="unfinished"></translation>
+        <translation>O progr&amp;amie QucsAttenuator...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished">O bibliotece QT...</translation>
+        <translation>O bibliotece QT...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Plik</translation>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Pomoc</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
         <source>Attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tłumienie:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <source>Zin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zin:</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished"></translation>
+        <translation>50</translation>
     </message>
     <message>
         <source>Zout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zout:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished">Policz i umieść w schowku</translation>
+        <translation>Policz i umieść w schowku</translation>
     </message>
     <message>
         <source>R1:</source>
-        <translation type="unfinished"></translation>
+        <translation>R1:</translation>
     </message>
     <message>
         <source>--</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>R2:</source>
-        <translation type="unfinished"></translation>
+        <translation>R2:</translation>
     </message>
     <message>
         <source>R3:</source>
-        <translation type="unfinished"></translation>
+        <translation>R3:</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished">Wynik:</translation>
+        <translation>Wynik:</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">O QT</translation>
+        <translation>O QT</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">O...</translation>
+        <translation>O...</translation>
     </message>
     <message>
         <source>
 Attenuator synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Program syntezy tłumików
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2006 by</translation>
+        <translation>Copyright (C) 2006 by</translation>
     </message>
     <message>
         <source>Topology</source>
-        <translation type="unfinished"></translation>
+        <translation>Topologia</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Wejście</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyjście</translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukces!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd: Tłumienie musi być większe niż %1 dB</translation>
     </message>
 </context>
 <context>
@@ -7530,7 +7581,7 @@ Bardzo prosty edytor tekstowy programu Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia: %1  -  Kolumna: %2</translation>
     </message>
 </context>
 <context>
@@ -7667,27 +7718,27 @@ Program syntezy filtrów
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rząd filtra Bessela musi być większy niż 19.</translation>
     </message>
     <message>
         <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Częstotliwość graniczna poza pasmem przepustowym:</translation>
     </message>
     <message>
         <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tłumienie poza pasmem przepustowym:</translation>
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Częstotliwość pasma przepustowego:</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tłumienie pasma przepustowego:</translation>
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2005, 2006 by</translation>
+        <translation>Copyright (C) 2005, 2006 by</translation>
     </message>
 </context>
 <context>
@@ -7706,65 +7757,67 @@ Program syntezy filtrów
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Wyjście</translation>
+        <translation>&amp;Wyjście</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Wste&amp;cz</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>W&amp;przód</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Powró&amp;t</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Poprzed&amp;ni</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Następn&amp;y</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Powrót</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Spis &amp;treści</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>włacz/wyłacz spis treści</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawartość
+
+włącza/wyłącza wyświetlanie spisu treści</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;O QT</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Plik</translation>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Widok</translation>
+        <translation>&amp;Widok</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Pomoc</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Zawartość</translation>
     </message>
 </context>
 <context>
@@ -9097,7 +9150,7 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib to program do zarządzania bibliotekami elementów programu Qucs. Z lewej strony okna aplikacji wyświetlane są dostępne biblioteki, w ktorych można znależć syukanego elementu. Klikając na naywę elementu można uzyskać jego opis po prawej stronie. wybrany element można przenieść na schemat klikajać  &quot;Kopiuj do schowka&quot;. W oknie schematu należy wcisnąć CTRL-V.</translation>
     </message>
     <message>
         <source>Search result</source>
@@ -9125,11 +9178,11 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>Manage User &amp;Libraries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarządzaj bib&amp;liotekami użytkownika...</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation type="unfinished"></translation>
+        <translation>wygodnejsza metoda: Element można &quot;przeciągnąć i upuścić&quot;.</translation>
     </message>
 </context>
 <context>
@@ -9176,19 +9229,19 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>sufiks</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>Program</translation>
     </message>
     <message>
         <source>Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>sufiks:</translation>
     </message>
     <message>
         <source>Program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Program:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -9196,140 +9249,141 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>Typy plików</translation>
     </message>
     <message>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarejestruj rozszerzenie pliku tak by móc
+otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>This suffix is already registered!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten typ pliku jest już zarejestrowany!</translation>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Język (zmiana po ponowmym uruchomieniu):</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>język systemowy</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>angielski</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>niemiecki</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>francuski</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>hiszpański</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>włoski</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>polski</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>japoński</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>rumuński</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>hebrajski</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>szwedzki</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>turecki</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>węgierski</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>porugalski</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>ukraiński</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>rosyjski</translation>
     </message>
     <message>
         <source>Colors for Syntax Highlighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolor podświetlenia składni:</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Komentarz</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciąg znaków</translation>
     </message>
     <message>
         <source>Integer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba całkowita</translation>
     </message>
     <message>
         <source>Real Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba rzeczywista</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Znak</translation>
     </message>
     <message>
         <source>Data Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ danych</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrybut</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytor VHDL</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>czeski</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>kataloński</translation>
     </message>
 </context>
 <context>
@@ -9532,7 +9586,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>przewodność paska</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
@@ -9564,11 +9618,11 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>przewodność metalu</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>tangens kąta stratności</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
@@ -9608,7 +9662,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Selected for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>wybrane do obliczeń</translation>
     </message>
     <message>
         <source>Check item for Calculation</source>
@@ -9750,19 +9804,19 @@ open files with an appropriate program.</source>
     <name>Schematic</name>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Tytuł</translation>
     </message>
     <message>
         <source>Drawn By:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stworzona przez:</translation>
     </message>
     <message>
         <source>Date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Data:</translation>
     </message>
     <message>
         <source>Revision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rewizja:</translation>
     </message>
 </context>
 <context>
@@ -9793,63 +9847,63 @@ uwzględniono wszystkie biblioteki.</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Szukaj tekstu</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Od pozycji kursora</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozróżniaj wielkość liter</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Tylko całe wyrazy</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Szukaj wstecz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Porzuć</translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Szukaj...</translation>
+        <translation>Szukaj...</translation>
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst do znalezienia</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst do zamiany na</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Spytaj przed zamianą</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień tekst</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień wystąpienie ?</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie znaleziono szukanego ciąg znaków!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamieniono %1 wystąpień!</translation>
     </message>
 </context>
 <context>
@@ -9904,35 +9958,35 @@ uwzględniono wszystkie biblioteki.</translation>
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Ramka</translation>
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>bez Ramki</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 poziomo</translation>
     </message>
     <message>
         <source>DIN A5 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 pionowo</translation>
     </message>
     <message>
         <source>DIN A4 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 poziomo</translation>
     </message>
     <message>
         <source>DIN A4 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 pionowo</translation>
     </message>
     <message>
         <source>DIN A3 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 poziomo</translation>
     </message>
     <message>
         <source>DIN A3 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 pionowo</translation>
     </message>
 </context>
 <context>
@@ -10047,11 +10101,11 @@ Błędy:
     </message>
     <message>
         <source>creating netlist... </source>
-        <translation type="unfinished"></translation>
+        <translation>tworzenie netlisty... </translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można otworzyć pliku SPICE &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -10164,22 +10218,22 @@ Błędy:
     </message>
     <message>
         <source>! Drag n&apos;Drop me !</source>
-        <translation type="unfinished"></translation>
+        <translation>!Przeciągnij mnie i upuść!</translation>
     </message>
 </context>
 <context>
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nic nie wybrano!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Strona %1 z %2</translation>
     </message>
 </context>
 </TS>
