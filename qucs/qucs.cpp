@@ -66,7 +66,7 @@
 #include "components/components.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
-#include "dialogs/messagebox.h"
+#include "dialogs/savedialog.h"
 #include "dialogs/newprojdialog.h"
 #include "dialogs/settingsdialog.h"
 #include "dialogs/digisettingsdialog.h"
@@ -1319,39 +1319,29 @@ void QucsApp::slotFileClose()
 // --------------------------------------------------------------
 bool QucsApp::closeAllFiles()
 {
-  int  Result = 0;
-  bool notForAll = true;
-  CloseMessageBox *m = new CloseMessageBox(tr("Closing Qucs document"),
-	tr("This document contains unsaved changes!\n"
-	   "Do you want to save the changes before closing?"),this);
-
-  // close all files and ask to save changed ones
-  QucsDoc *Doc;
-  DocumentTab->setCurrentPage(0);
-  while ((Doc=getDoc()) != 0) {
-    if (Doc->DocChanged) {
-      if(notForAll)  Result = m->exec();
-      switch(Result) {
-	case 1: if(!saveFile(Doc))  return false;  // save button
-		break;
-	case 2: Result = 1;         // save all button
-		notForAll = false;
-		if(!saveFile(Doc))  return false;
-		break;
-	case 4: Result = 3;         // discard all button
-		notForAll = false;
-		break;
-	case 5: return false;       // cancel button
-      }
-    }
-
-    delete Doc;
-  }
-
-  delete m;
-  switchEditMode(true);   // set schematic edit mode
-  return true;
-}
+   SaveDialog *sd = new SaveDialog(this);
+   sd->setApp(this);
+   for(int i=0; i < DocumentTab->count(); ++i)
+   {
+      QucsDoc *doc = getDoc(i);
+      if(doc->DocChanged)
+	 sd->addUnsavedDoc(doc);
+   }
+   if(sd->isEmpty())
+      return true;
+   int  Result = sd->exec();
+   delete sd;
+   switchEditMode(true);   // set schematic edit mode
+   switch(Result)
+   {
+      case SaveDialog::AbortClosing:
+	 return false;
+      case SaveDialog::DontSave:
+      case SaveDialog::SaveSelected:
+      default:
+	 return true;
+   };
+}   
 
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
