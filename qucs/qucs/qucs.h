@@ -310,5 +310,6 @@ private slots:
 private:
   void showHTML(const QString&);
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
+  friend class SaveDialog;
 };
 #endif
