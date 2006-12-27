@@ -730,9 +730,9 @@ bool Component::load(const QString& _s)
 
   unsigned int z=0, counts = s.contains('"');
   if(Model == "Sub")
-    tmp = 1;
+    tmp = 2;   // first property (File) already exists
   else if(Model == "Lib")
-    tmp = 2;
+    tmp = 3;
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   for(; tmp<=(int)counts/2; tmp++)
@@ -854,6 +854,8 @@ int Component::analyseLine(const QString& Row, int numProps)
 
       pp->Name  = s.section('=', 1,1);
       pp->Description = s.section('=', 3,3);
+      if(pp->Description.isEmpty())
+        pp->Description = " ";
 
       i1 += 2;
     }
@@ -1365,6 +1367,7 @@ Component* getComponentFromName(QString& Line)
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
         else if(cstr == "LIN4P") c = new TLine_4Port();
+        else if(cstr == "WIST") c = new TwistedPair();
         break;
   case 's' : if(cstr == "Tr") c = new symTrafo();
         break;
@@ -1390,6 +1393,7 @@ Component* getComponentFromName(QString& Line)
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
         else if(cstr == "JT") c = new BJTsub();
+        else if(cstr == "ond") c = new BondWire();
         break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         else if(cstr == "mp") c = new Amplifier();
