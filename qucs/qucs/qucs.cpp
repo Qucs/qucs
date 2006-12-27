@@ -316,11 +316,11 @@ pInfoFunc Sources[] =
    &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, 0};
 
 pInfoFunc TransmissionLines[] =
-  {&TLine::info, &TLine_4Port::info, &CoaxialLine::info, &Substrate::info,
-   &MSline::info, &MScoupled::info, &MScorner::info, &MSmbend::info,
-   &MSstep::info, &MStee::info, &MScross::info, &MSopen::info, &MSgap::info,
-   &MSvia::info, &Coplanar::info, &CPWopen::info, &CPWshort::info,
-   &CPWgap::info, &CPWstep::info, 0};
+  {&TLine::info, &TLine_4Port::info, &TwistedPair::info, &CoaxialLine::info,
+   &Substrate::info, &MSline::info, &MScoupled::info, &MScorner::info,
+   &MSmbend::info, &MSstep::info, &MStee::info, &MScross::info, &MSopen::info,
+   &MSgap::info, &MSvia::info, &Coplanar::info, &CPWopen::info,
+   &CPWshort::info, &CPWgap::info, &CPWstep::info, &BondWire::info, 0};
 
 pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,

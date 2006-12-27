@@ -47,8 +47,8 @@ FIGURES = differential.fig biast.fig \
   lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig hbn_concept.fig        \
   coupler.fig coax.fig tline.fig vam.fig vpm.fig twisted.fig dcalgo.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
-  MNAnoise2.eps Unoise.eps MNAsingular.eps real_c.eps real_ec.eps  \
-  real_r.eps tlpiece.eps
+  MNAnoise2.eps Unoise.eps MNAsingular.eps Real_c.eps Real_ec.eps  \
+  Real_r.eps TLpiece.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
