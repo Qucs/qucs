@@ -125,7 +125,7 @@ methods.
 \subsection{Elementary Methods}
 %\addcontentsline{toc}{subsection}{Elementary Methods}
 
-\subsubsection{Backward Euler}
+\subsubsection{Implicit Euler Method (Backward Euler)}
 %\addcontentsline{toc}{subsubsection}{Backward Euler}
 
 In the implicit Euler method the right hand side of
@@ -141,7 +141,7 @@ x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
 The backward euler integration method is a first order single-step
 method.
 
-\subsubsection{Forward Euler}
+\subsubsection{Explicit Euler Method (Forward Euler)}
 %\addcontentsline{toc}{subsubsection}{Forward Euler}
 
 In the explicit Euler method the right hand side of
@@ -1104,12 +1104,13 @@ yielding a similar iterative algorithm as already used for the
 non-linear DC analysis described in section \ref{sec:NRmethod} on page
 \pageref{sec:NRmethod}.  The indices $~^{(m)}$ indicated the $m$-th
 Newton-Raphson iteration.  With this knowledge at hand it is possible
-to rewrite the explicit formula for the forward Euler integration
+to rewrite the explicit formula for the backward Euler integration
 \eqref{eq:EulerIC} as
 \begin{equation}
+\label{eqn:nl_cap_trans}
 \begin{split}
-I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
-&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
+I_C^{n+1,m+1} &= \dfrac{Q^{n+1,m+1}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
+&= \dfrac{1}{h}\cdot \left( Q^{n+1,m} + C^{n+1,m}\cdot (V_C^{n+1,m+1} - V_C^{n+1,m}) - Q^{n} \right)
 \end{split}
 \end{equation}
 
@@ -1158,17 +1159,8 @@ above formula can be rewritten as
 I_C(t) = \tau_D \dfrac{d I_D}{d V_C}\cdot \dfrac{d V_C}{d t} = \tau_D \cdot g_D \cdot \dfrac{d V_C}{d t}
 \end{equation}
 
-which means that eq. \eqref{eq:EulerIC} yields now
-\begin{equation}
-\begin{split}
-I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
-&= \dfrac{\tau_D\cdot g_D^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{\tau_D\cdot g_D^{n}}{h^{n}} V_C^{n}\\
-&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
-\end{split}
-\end{equation}
-
-Similar to the diffusion capacitance a Newton-Raphson iteration is
-necessary.  Also the formulas for the other integration methods can be
+which means that eq. \eqref{eqn:nl_cap_trans} can be used here, too.
+Also the formulas for the other integration methods can be
 easily rewritten and the equivalent companion model shown in
 fig. \ref{fig:TransCap} is valid as well.
 
