@@ -2244,10 +2244,9 @@ Y &= g + j\omega\cdot c
 
 The simulator needs to create the derivatives $g$ and $c$ by his
 own. This can be done numerically. One might ask why the non-linear
-capacitance is modeled as charge while the capacitance itself is
-needed. Indeed this may be changed, but the charge is needed for
-harmonic balance simulation and, being the most important and critical
-simulation, this should have the highest priority.
+capacitance is modeled as charge, not as capacitance. Indeed this
+may be changed, but with a computer algorithm, creating the
+derivative  is easier than to integrate.
 
 \addvspace{12pt}
 
