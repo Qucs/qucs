@@ -4763,6 +4763,62 @@ Kullanım:  qucsedit [-r] kütük
         <source>4-Port Transmission Line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>bond wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length of the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height above ground plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>specific resistance of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permeability of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bond wire model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bond Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>twisted pair transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of wire (conductor and insulator)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dielectric constant of insulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>twists per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Twisted-Pair</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5032,7 +5088,7 @@ Overwrite ?</source>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation>Bu belge kaydedilmemiş değişikliklere sahip!
+        <translation type="obsolete">Bu belge kaydedilmemiş değişikliklere sahip!
 Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
@@ -9530,6 +9586,37 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <message>
         <source>Wrong dependency!</source>
         <translation type="obsolete">Yanlış dayanak!</translation>
+    </message>
+</context>
+<context>
+    <name>SaveDialog</name>
+    <message>
+        <source>Modified Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the modified files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to be saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort Closing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dont Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Selected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -5135,6 +5135,62 @@ Použití:  qucsedit [-r] soubor
         <source>4-Port Transmission Line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>bond wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length of the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of the wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>height above ground plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>specific resistance of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permeability of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bond wire model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bond Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>twisted pair transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of wire (conductor and insulator)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dielectric constant of insulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>twists per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Twisted-Pair</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5852,7 +5908,7 @@ Zkopíruje vybranou oblast do schránky</translation>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation>tento dokument obsahuje neuložené změny!
+        <translation type="obsolete">tento dokument obsahuje neuložené změny!
 Chcete změny před uzavřením uložit?</translation>
     </message>
     <message>
@@ -11837,6 +11893,37 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     <message>
         <source>Wrong dependency!</source>
         <translation type="obsolete">Chybná závislost!</translation>
+    </message>
+</context>
+<context>
+    <name>SaveDialog</name>
+    <message>
+        <source>Modified Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the modified files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select files to be saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort Closing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dont Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Selected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
