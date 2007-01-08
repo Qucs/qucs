@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.22 2006-08-28 08:12:52 raimi Exp $
+ * $Id: check_spice.cpp,v 1.23 2007-01-08 07:35:39 margraf Exp $
  *
  */
 
@@ -633,6 +633,14 @@ node_translations[] = {
     { 1, 2, 3, -1 }
   },
   { "Diode", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "Iac", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "Idc", 0,
     { 2, 1, -1 },
     { 1, 2, -1 }
   },
