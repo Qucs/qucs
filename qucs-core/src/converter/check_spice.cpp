@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.23 2007/01/08 07:35:39 margraf Exp $
+ * $Id: check_spice.cpp,v 1.24 2007/01/11 10:09:47 raimi Exp $
  *
  */
 
@@ -385,6 +385,7 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
   // if there is a value given and no description (key), it is required
   foreach_value (def->values, val) {
     prop = &def->define->required[i];
+    // a float given ?
     if (val->hint & HINT_NUMBER && prop->key) {
       p = create_pair ();
       p->key = strdup (prop->key);
@@ -394,7 +395,13 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
       spice_value_done (val);
       i++;
     }
-    else break;
+    // skip identifier if next is a float again
+    else if (val->hint & HINT_NAME &&
+	     val->next && val->next->hint & HINT_NUMBER)
+      continue;
+    // break it here
+    else
+      break;
   }
   // other key/value pairs on that line
   foreach_value (def->values, val) {

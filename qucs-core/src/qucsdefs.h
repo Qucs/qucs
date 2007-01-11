@@ -1,7 +1,7 @@
 /*
  * qucsdefs.h - netlist definitions for the Qucs netlists
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.56 2006/12/20 11:14:43 raimi Exp $
+ * $Id: qucsdefs.h,v 1.57 2007/01/11 10:09:46 raimi Exp $
  *
  */
 
@@ -505,7 +505,7 @@ struct define_t qucs_definition_available[] =
   /* fet: level 1 */
   { "MOSFET", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
       { "Vt0", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
       { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Kp", PROP_REAL, { 2e-5, PROP_NO_STR }, PROP_POS_RANGE },

@@ -1,4 +1,9 @@
-2007-01-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2007-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed F and H source values (current controlled
+	sources).
+
+2007-01-07  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* check_spice.cpp: correct polarity of AC and DC current sources,
 	thanks to Rainer Wirtz
