@@ -19,9 +19,7 @@
 # include <config.h>
 #endif
 
-#include "packagedialog.h"
-#include "qucs.h"
-#include "main.h"
+#include <stdlib.h>
 
 #include <qhbox.h>
 #include <qvbox.h>
@@ -36,6 +34,10 @@
 #include <qscrollview.h>
 #include <qdatastream.h>
 #include <qvbuttongroup.h>
+
+#include "packagedialog.h"
+#include "qucs.h"
+#include "main.h"
 
 
 #define HEADER_LENGTH   32
