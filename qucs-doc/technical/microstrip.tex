@@ -1443,26 +1443,101 @@ is why the ratios are delimited to a minimum value.
 \section{Microstrip cross}
 %\addcontentsline{toc}{section}{Microstrip cross}
 
-There have been published several attempts \cite{Gupta1, Garg1,
-Akello} for closed expressions describing the non-ideal behaviour of a
-microstrip cross junction.  Some considering it as two parallel stubs,
-a combination of two microstrip tees and some with hard limitations
-for the dielectric constant and symmetric stub widths.  Also there are
-only few experimental results.
+The most useful model of a microstrip cross have been published in
+\cite{Gupta1, Garg1}. Fig. \ref{fig:mscross} shows the equivalent
+circuit (right-hand side) and the scheme with dimensions (left-hand
+side). The hatched area in the scheme marks the area modeled by the
+equivalent circuit. As can be seen the model require the microstrip
+width of line 1 and 3, as well as the one of line 2 and 4 to equal
+each other. Furthermore the permittivity of the substrat must be
+$\epsilon_r = 9.9$. The component values are calculated as follows:
+
+\begin{equation}
+\label{eqn:mscross_cx}
+X = \log_{10}\left(\dfrac{W_1}{h}\right)\cdot \left( 86.6\cdot\dfrac{W_2}{h}
+    -30.9\cdot\sqrt{\dfrac{W_2}{h}} + 367 \right) +
+    \left( \dfrac{W_2}{h} \right)^3 + 74\cdot\dfrac{W_2}{h} + 130
+\end{equation}
+\begin{equation}
+\label{eqn:mscross_c1}
+\begin{split}
+C_1 &= C_2 = C_3 = C_4 \\
+    &= 10^{-9}\cdot W_1\cdot \left(
+    0.25\cdot X\cdot\left( \dfrac{h}{W_1} \right)^{1/3} - 60 +
+    \dfrac{h}{2\cdot W_2} - 0.375\cdot\dfrac{W_1}{h}\cdot
+    \left( 1-\dfrac{W_2}{h} \right) \right)
+\end{split}
+\end{equation}
+\begin{equation}
+\label{eqn:mscross_ly}
+Y = 165.6\cdot\dfrac{W_2}{h} + 31.2\sqrt{\dfrac{W_2}{h}}
+    -11.8\cdot\left( \dfrac{W_2}{h} \right)^2
+\end{equation}
+\begin{equation}
+\label{eqn:mscross_l1}
+L_1 = 10^{-9}\cdot h\cdot \left( Y\cdot\dfrac{W_1}{h} 
+    - 32\cdot\dfrac{W_2}{h} + 3 \right) \cdot \left(
+    \dfrac{h}{W_1} \right)^{1.5}
+\end{equation}
+\begin{equation}
+\label{eqn:mscross_l3}
+L_3 = 10^{-9}\cdot h\cdot \left( 5\cdot\dfrac{W_2}{h}\cdot
+      \cos{\left( \dfrac{\pi}{2}\cdot \left( 1.5 - \dfrac{W_1}{h}
+      \right) \right)} - \left( 1+\dfrac{7\cdot h}{W_1}\right)\cdot
+      \dfrac{h}{W_2} - 337.5 \right)
+\end{equation}
+
+The equation of $L_2$ is obtained from the one of $L_1$ by
+exchanging the indices ($W_1$ and $W_2$). Note that $L_3$ is
+negative, so the model is unphysical without external microstrip
+lines. The above-mentioned equations are accurate to within 5\%
+for $0.3\le W_1/h \le 3$ and $0.1\le W_2/h \le 3$ (value of
+$C_1 \dots C_4$) or for $0.5\le W_{1,2}/h \le 2$ (value of
+$L_1 \dots L_3$), respectively.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=9cm]{mscross}
+\end{center}
+\caption{single-symmetrical microstrip cross and its model}
+\label{fig:mscross}
+\end{figure}
+\FloatBarrier
+
+Some improvement should be added to the original model:
+\begin{enumerate}
+\item Comparisons with real life show that the value of $L_3$ is
+      too large. Multiplying it by 0.8 leads to much better results.
+\item The model can be expanded for substrates with $\epsilon_r \neq 9.9$
+      by modifying the values of the capacitances:
+      \begin{equation}
+      C_x = C_x(\epsilon_r=9.9)\cdot
+          \dfrac{Z_0(\epsilon_r=9.9, W=W_x)}{Z_0(\epsilon_r=\epsilon_{r,sub}, W=W_x)}
+          \cdot
+          \sqrt{\dfrac{\epsilon_{eff}(\epsilon_r=\epsilon_{r,sub}, W=W_x)}
+               {\epsilon_{eff}(\epsilon_r=9.9, W=W_x)}}
+      \end{equation}
+      The equations of $Z_0$ and $\epsilon_{eff}$ are the ones from the
+      microstrip lines.
+\end{enumerate}
+
+A useful model for an unsymmetrical cross junction has never been
+published. Nonetheless, as long as the lines that lie opposite are not
+to different in width, the model described here can be used as a first
+order approximation. This is perfomred by replacing $W_1$ and $W_2$ by the
+arithmetic mean of the line widths that lie opposite. This is done:
+\begin{itemize}
+\item In equation \ref{eqn:mscross_cx} and \label{eqn:mscross_c1} for $W_2$
+      only, whereas $W_1$ is replaced by the width of the line.
+\item In equation \ref{eqn:mscross_ly} and \label{eqn:mscross_l1} for $W_2$
+      only, whereas $W_1$ is replaced by the width of the line.
+\item In equation \label{eqn:mscross_l3} for $W_1$ and $W_2$.
+\end{itemize}
 
 \addvspace{12pt}
 
-The S-parameters of the ideal cross section are:
-\begin{equation}
-S = \dfrac{1}{2}\cdot
-\begin{bmatrix}
- -1 & +1  & +1  &  +1\\
- +1 & -1  & +1  &  +1\\
- +1 & +1  & -1  &  +1\\
- +1 & +1  & +1  &  -1
-\end{bmatrix}
-\end{equation}
-
+Another closed-form expression describing the non-ideal behaviour of a
+microstrip cross junction was published by \cite{Akello}.
 Additionally there have been published papers \cite{Silvester1,
 Gopinath, Easter} giving analytic (but not closed-form) expressions or
 just simple equivalent circuits with only a few expressions for
