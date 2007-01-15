@@ -78,7 +78,7 @@ void SaveDialog::initDialog()
    buttonsLayout->addWidget( saveSelectedButton );
    SaveDialogLayout->addLayout( buttonsLayout );
    languageChange();
-   resize( QSize(500, 300).expandedTo(minimumSizeHint()) );
+   resize( QSize(542, 474).expandedTo(minimumSizeHint()) );
    clearWState( WState_Polished );
 
    connect(abortClosingButton,SIGNAL(clicked()),this,SLOT(abortClosingClicked()));
@@ -102,7 +102,7 @@ void SaveDialog::languageChange()
     label->setText( tr( "Select files to be saved" ) );
     filesView->header()->setLabel( 0, tr( "Modified Files" ) );
     abortClosingButton->setText( tr( "Abort Closing" ) );
-    dontSaveButton->setText( tr( "Don't Save" ) );
+    dontSaveButton->setText( tr( "Dont Save" ) );
     saveSelectedButton->setText( tr( "Save Selected" ) );
 }
 
@@ -124,19 +124,22 @@ void SaveDialog::saveSelectedClicked()
    {
       if ( it.data()->isOn() )
       {
-	 QucsDoc *doc = static_cast<QucsDoc*>(it.key());
-	 if(app->saveFile(doc) == false && doc->DocName.isEmpty())
-	    unsavables.append(doc);
-	 else
-	 {
-	    delete it.data();
-	    delete it.key();
-	    unsavedDocs.remove(it);
-	 }
+         QucsDoc *doc = static_cast<QucsDoc*>(it.key());
+         if(app->saveFile(doc) == false)
+            unsavables.append(doc);
+         else
+         {
+            Q_ASSERT(!doc->DocName.isEmpty());
+            delete it.data();
+            delete it.key();
+            unsavedDocs.remove(it);
+         }
       }
    }
    if(unsavables.isEmpty())
       done(int(SaveSelected));
+   else
+      done(int(AbortClosing));
 }
 
 bool SaveDialog::isEmpty() const
