@@ -1325,21 +1325,24 @@ bool QucsApp::closeAllFiles()
    {
       QucsDoc *doc = getDoc(i);
       if(doc->DocChanged)
-	 sd->addUnsavedDoc(doc);
+         sd->addUnsavedDoc(doc);
    }
-   if(sd->isEmpty())
-      return true;
-   int  Result = sd->exec();
+   int Result = SaveDialog::DontSave;
+   if(sd->isEmpty() == false)
+      sd->exec();
    delete sd;
    switchEditMode(true);   // set schematic edit mode
    switch(Result)
    {
       case SaveDialog::AbortClosing:
-	 return false;
+         return false;
       case SaveDialog::DontSave:
       case SaveDialog::SaveSelected:
       default:
-	 return true;
+         QucsDoc *doc = 0;
+         while((doc = getDoc()) != 0)
+            delete doc;
+         return true;
    };
 }   
 
@@ -1549,11 +1552,13 @@ void QucsApp::slotFileQuit()
 // To get all close events.
 void QucsApp::closeEvent(QCloseEvent* Event)
 {
-  Event->ignore();
-  if(closeAllFiles()) {
-    emit signalKillEmAll();   // kill all subprocesses
-    qApp->quit();
-  }
+   if(closeAllFiles()) {
+      emit signalKillEmAll();   // kill all subprocesses
+      Event->accept();
+      qApp->quit();
+   }
+   else
+      Event->ignore();
 }
 
 // --------------------------------------------------------------------
