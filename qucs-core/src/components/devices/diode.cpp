@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.37 2006-05-12 14:32:10 raimi Exp $
+ * $Id: diode.cpp,v 1.38 2007-01-15 08:33:27 raimi Exp $
  *
  */
 
@@ -139,6 +139,16 @@ void diode::initModel (void) {
   nr_double_t Nr  = getPropertyDouble ("Nr");
   Isr = pnCurrent_T (T1, T2, Isr, Eg, Nr, Xti);
   setScaledProperty ("Isr", Isr * A);
+
+  // check unphysical parameters
+  if (Nr < 1.0) {
+    logprint (LOG_ERROR, "WARNING: Unphysical model parameter Nr = %g in "
+	      "diode `%s'\n", Nr, getName ());
+  }
+  if (N < 1.0) {
+    logprint (LOG_ERROR, "WARNING: Unphysical model parameter N = %g in "
+	      "diode `%s'\n", N, getName ());
+  }
 
   // compute Vj temperature dependency
   nr_double_t Vj = getPropertyDouble ("Vj");

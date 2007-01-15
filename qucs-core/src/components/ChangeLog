@@ -1,3 +1,7 @@
+2007-01-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/bondwire.cpp: Fixed segfault in bondwire model.
+
 2006-12-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/bondwire.h (class bondwire): New bondwire model
