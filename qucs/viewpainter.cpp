@@ -19,6 +19,8 @@
 
 #include <math.h>
 
+#define TO_INT(f)   (f > 0.0 ? int(f + 0.5) : int(f - 0.5))
+
 ViewPainter::ViewPainter(QPainter *p)
 {
   Painter = p;
@@ -52,9 +54,9 @@ void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y = TO_INT(z);
 }
 
 // -------------------------------------------------------------
@@ -62,9 +64,9 @@ void ViewPainter::drawPoint(int x1, int y1)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   Painter->drawPoint(x1, y1);
 }
@@ -74,13 +76,13 @@ void ViewPainter::drawLine(int x1, int y1, int x2, int y2)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
   z = float(x2)*Scale + DX;
-  x2 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x2 = TO_INT(z);
   z = float(y2)*Scale + DY;
-  y2 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y2 = TO_INT(z);
 
   Painter->drawLine(x1, y1, x2, y2);
 }
@@ -90,13 +92,13 @@ void ViewPainter::drawRect(int x1, int y1, int dx, int dy)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
   z = float(dx)*Scale;
-  dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dx = TO_INT(z);
   z = float(dy)*Scale;
-  dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dy = TO_INT(z);
 
   Painter->drawRect(x1, y1, dx, dy);
 }
@@ -106,9 +108,9 @@ void ViewPainter::drawRectD(int x1, int y1, int dx, int dy)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   Painter->drawRect(x1, y1, dx, dy);
 }
@@ -118,13 +120,13 @@ void ViewPainter::drawRoundRect(int x1, int y1, int dx, int dy)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
   z = float(dx)*Scale;
-  dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dx = TO_INT(z);
   z = float(dy)*Scale;
-  dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dy = TO_INT(z);
 
   Painter->drawRoundRect(x1, y1, dx, dy);
 }
@@ -134,13 +136,13 @@ void ViewPainter::drawEllipse(int x1, int y1, int dx, int dy)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
   z = float(dx)*Scale;
-  dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dx = TO_INT(z);
   z = float(dy)*Scale;
-  dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dy = TO_INT(z);
 
   Painter->drawEllipse(x1, y1, dx, dy);
 }
@@ -151,9 +153,9 @@ int ViewPainter::drawText(const QString& Text, int x1, int y1, int *Height)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   QRect r;
   Painter->drawText(x1, y1, 0, 0, Qt::DontClip, Text, -1, &r);
@@ -168,14 +170,14 @@ void ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   // Width and height get a different treatment due to some alaising artefacts.
   // The following procedure was found empirically.
-  w  = int(float(w)*Scale);
-  h  = int(float(h)*Scale);
+  w = int(float(w)*Scale);
+  h = int(float(h)*Scale);
   Painter->drawArc(x1, y1, w+1, h+1, Angle, ArcLen);
 }
 
@@ -184,14 +186,14 @@ void ViewPainter::fillRect(int x1, int y1, int dx, int dy, const QColor& Color)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   z = float(dx)*Scale;
-  dx  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dx = TO_INT(z);
   z = float(dy)*Scale;
-  dy  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  dy = TO_INT(z);
 
   Painter->fillRect(x1, y1, dx, dy, QBrush(Color));
 }
@@ -201,9 +203,9 @@ void ViewPainter::eraseRect(int x1, int y1, int dx, int dy)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   Painter->eraseRect(x1, y1, dx, dy);
 }
@@ -215,9 +217,9 @@ void ViewPainter::drawResizeRect(int x1, int y1)
 {
   float z;
   z = float(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  x1 = TO_INT(z);
   z = float(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
+  y1 = TO_INT(z);
 
   Painter->drawRect(x1-5, y1-5, 10, 10);
 }
