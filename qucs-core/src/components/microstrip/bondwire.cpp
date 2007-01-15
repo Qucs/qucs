@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.1 2006/12/20 11:43:06 raimi Exp $
+ * $Id: bondwire.cpp,v 1.2 2007/01/15 08:33:28 raimi Exp $
  *
  */
 
@@ -114,7 +114,7 @@ void bondwire::getProperties (void) {
   char * Model  = getPropertyString ("Model");
   if (Model == NULL) {
     model = FREESPACE;
-    logprint (LOG_STATUS, "Model is not specified force FREESPACE");
+    logprint (LOG_STATUS, "Model is not specified force FREESPACE\n");
   } else {
     model = (enum bondwiremodel) -1;
     for (i = 0 ; i < ARRAY_SIZE (modeltable); i++) {
@@ -124,7 +124,7 @@ void bondwire::getProperties (void) {
 
     if (model == -1) 
       /* XXXX: how to abort ? */
-      logprint (LOG_ERROR, "Model %s not defined", Model);
+      logprint (LOG_ERROR, "Model %s not defined\n", Model);
   }
 
   /* For noise */
@@ -348,7 +348,8 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
 
 /*! Initialise S parameter simulation */
 void bondwire::initSP (void) {
-   getProperties ();
+  allocMatrixS ();
+  getProperties ();
 }
 
 /*! Compute S parameters 
