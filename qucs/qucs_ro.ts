@@ -142,23 +142,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salvează</translation>
+        <translation type="obsolete">Salvează</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">Salvează tot</translation>
+        <translation type="obsolete">Salvează tot</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">Renunţare</translation>
+        <translation type="obsolete">Renunţare</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">Renunţare totală</translation>
+        <translation type="obsolete">Renunţare totală</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Revocare</translation>
+        <translation type="obsolete">Revocare</translation>
     </message>
 </context>
 <context>
@@ -9562,11 +9562,11 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

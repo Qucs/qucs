@@ -142,23 +142,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salvar</translation>
+        <translation type="obsolete">Salvar</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">Salvar Todos</translation>
+        <translation type="obsolete">Salvar Todos</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">Descartar</translation>
+        <translation type="obsolete">Descartar</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">Descartar Todos</translation>
+        <translation type="obsolete">Descartar Todos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -7712,11 +7712,11 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

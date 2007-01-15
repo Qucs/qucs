@@ -142,23 +142,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="obsolete">保存</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>全て保存</translation>
+        <translation type="obsolete">全て保存</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>破棄</translation>
+        <translation type="obsolete">破棄</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>全て破棄</translation>
+        <translation type="obsolete">全て破棄</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation type="obsolete">キャンセル</translation>
     </message>
 </context>
 <context>
@@ -9682,11 +9682,11 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1393,7 +1393,7 @@ Component* getComponentFromName(QString& Line)
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
         else if(cstr == "JT") c = new BJTsub();
-        else if(cstr == "ond") c = new BondWire();
+        else if(cstr == "OND") c = new BondWire();
         break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         else if(cstr == "mp") c = new Amplifier();
