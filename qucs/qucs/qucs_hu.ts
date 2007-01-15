@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation type="obsolete">Mentés</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Mindent ment</translation>
+        <translation type="obsolete">Mindent ment</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Eldob</translation>
+        <translation type="obsolete">Eldob</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Mindent eldob</translation>
+        <translation type="obsolete">Mindent eldob</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
 </context>
 <context>
@@ -9990,11 +9990,11 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

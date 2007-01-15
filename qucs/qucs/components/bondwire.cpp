@@ -37,7 +37,7 @@ BondWire::BondWire()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "Bond";
+  Model = "BOND";
   Name  = "Line";
 
   Props.append(new Property("L", "3 mm", true,
@@ -51,7 +51,7 @@ BondWire::BondWire()
   Props.append(new Property("mur", "1", false,
 		QObject::tr("relative permeability of the metal")));
   Props.append(new Property("Model", "FREESPACE", false,
-	QObject::tr("bond wire model")+" [Freespace, Mirror, Descharles]"));
+	QObject::tr("bond wire model")+" [FREESPACE, MIRROR, DESCHARLES]"));
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));
   Props.append(new Property("Temp", "26.85", false,

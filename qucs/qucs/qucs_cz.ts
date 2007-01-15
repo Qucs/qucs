@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>uložit</translation>
+        <translation type="obsolete">uložit</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>uložit vše</translation>
+        <translation type="obsolete">uložit vše</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>neukládat</translation>
+        <translation type="obsolete">neukládat</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>neukládat nic</translation>
+        <translation type="obsolete">neukládat nic</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>zrušit</translation>
+        <translation type="obsolete">zrušit</translation>
     </message>
 </context>
 <context>
@@ -11918,11 +11918,11 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

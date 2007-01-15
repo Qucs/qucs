@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Spara</translation>
+        <translation type="obsolete">Spara</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Spara allt</translation>
+        <translation type="obsolete">Spara allt</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Kasta</translation>
+        <translation type="obsolete">Kasta</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Kasta allt</translation>
+        <translation type="obsolete">Kasta allt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Avbryt</translation>
+        <translation type="obsolete">Avbryt</translation>
     </message>
 </context>
 <context>
@@ -9616,11 +9616,11 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Kaydet</translation>
+        <translation type="obsolete">Kaydet</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Tümünü kaydet</translation>
+        <translation type="obsolete">Tümünü kaydet</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Gözardı et</translation>
+        <translation type="obsolete">Gözardı et</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Tümünü gözardı et</translation>
+        <translation type="obsolete">Tümünü gözardı et</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>İptal</translation>
+        <translation type="obsolete">İptal</translation>
     </message>
 </context>
 <context>
@@ -9611,11 +9611,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
