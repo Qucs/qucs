@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Salva</translation>
+        <translation type="obsolete">Salva</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Salva tutto</translation>
+        <translation type="obsolete">Salva tutto</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Abbandona</translation>
+        <translation type="obsolete">Abbandona</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Abbandona tutto</translation>
+        <translation type="obsolete">Abbandona tutto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
 </context>
 <context>
@@ -10417,11 +10417,11 @@ fine di aprirli utilizzando il programma appropriato.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

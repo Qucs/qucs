@@ -143,23 +143,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Enregistrer</translation>
+        <translation type="obsolete">Enregistrer</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Tout enregistrer</translation>
+        <translation type="obsolete">Tout enregistrer</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Jeter</translation>
+        <translation type="obsolete">Jeter</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Tout jeter</translation>
+        <translation type="obsolete">Tout jeter</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
 </context>
 <context>
@@ -10064,11 +10064,11 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -142,23 +142,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">שמור</translation>
+        <translation type="obsolete">שמור</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">שמור הכל</translation>
+        <translation type="obsolete">שמור הכל</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">התעלם</translation>
+        <translation type="obsolete">התעלם</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">התעלם מהכל</translation>
+        <translation type="obsolete">התעלם מהכל</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">בטל</translation>
+        <translation type="obsolete">בטל</translation>
     </message>
 </context>
 <context>
@@ -9470,11 +9470,11 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Save Selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Selected</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
