@@ -139,9 +139,6 @@
     </message>
 </context>
 <context>
-    <name>CloseMessageBox</name>
-</context>
-<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -7557,7 +7554,7 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Save</source>
+        <source>Dont Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

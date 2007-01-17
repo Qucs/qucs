@@ -9883,7 +9883,7 @@ otworzyć ten plik odpowiednim programem.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Save</source>
+        <source>Dont Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
