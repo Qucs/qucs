@@ -1160,7 +1160,8 @@ bool Schematic::load()
 int Schematic::save()
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
-  saveDocument();
+  if(saveDocument() < 0)
+     return -1;
   lastSaved = QDateTime::currentDateTime();
   if(result >= 0) {
     setChanged(false);

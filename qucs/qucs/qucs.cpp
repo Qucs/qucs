@@ -1328,10 +1328,11 @@ bool QucsApp::closeAllFiles()
          sd->addUnsavedDoc(doc);
    }
    int Result = SaveDialog::DontSave;
-   if(sd->isEmpty() == false)
-      sd->exec();
+   if(!sd->isEmpty())
+      Result = sd->exec();
    delete sd;
    switchEditMode(true);   // set schematic edit mode
+
    switch(Result)
    {
       case SaveDialog::AbortClosing:
