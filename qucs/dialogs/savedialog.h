@@ -41,11 +41,11 @@ class SaveDialog : public QDialog
    Q_OBJECT
    public:
       enum {
-	 AbortClosing = 0,
-	 DontSave,
-	 SaveSelected
+         AbortClosing = 0,
+         DontSave,
+         SaveSelected
       };
-      
+            
       SaveDialog(QWidget* p = 0, const char* n = 0, bool modal = true, WFlags fl = 0 );
       ~SaveDialog();
       void addUnsavedDoc(QucsDoc *doc);
@@ -53,10 +53,10 @@ class SaveDialog : public QDialog
       bool isEmpty() const;
 			     
    protected slots:
-      void abortClosingClicked();
       void dontSaveClicked();
       void saveSelectedClicked();
       void languageChange();
+      void reject();
       
    private:
       void initDialog();
