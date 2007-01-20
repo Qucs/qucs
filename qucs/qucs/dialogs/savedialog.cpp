@@ -33,12 +33,11 @@
 SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, WFlags fl )
    : QDialog( parent, name, modal, fl ),unsavedDocs()
 {
-    if ( !name )
-	setName( "SaveDialog" );
-    app = 0l;
-    initDialog();
+   if ( !name )
+      setName( "SaveDialog" );
+   app = 0l;
+   initDialog();
 }
-
 
 SaveDialog::~SaveDialog()
 {
@@ -75,13 +74,14 @@ void SaveDialog::initDialog()
    buttonsLayout->addWidget( dontSaveButton );
 
    saveSelectedButton = new QPushButton( this, "saveSelectedButton" );
+   saveSelectedButton->setDefault(true);
    buttonsLayout->addWidget( saveSelectedButton );
    SaveDialogLayout->addLayout( buttonsLayout );
    languageChange();
    resize( QSize(542, 474).expandedTo(minimumSizeHint()) );
    clearWState( WState_Polished );
 
-   connect(abortClosingButton,SIGNAL(clicked()),this,SLOT(abortClosingClicked()));
+   connect(abortClosingButton,SIGNAL(clicked()),this,SLOT(reject()));
    connect(dontSaveButton,SIGNAL(clicked()),this,SLOT(dontSaveClicked()));
    connect(saveSelectedButton,SIGNAL(clicked()),this,SLOT(saveSelectedClicked()));
 }
@@ -90,30 +90,25 @@ void SaveDialog::addUnsavedDoc(QucsDoc *doc)
 {
    QString text = (doc->DocName).isEmpty() ? tr("Untitled") : doc->DocName;
    QCheckListItem *item = new QCheckListItem(filesView,
-					     text,
-					     QCheckListItem::CheckBox );
+                                             text,
+                                             QCheckListItem::CheckBox );
    item->setOn( true );
    unsavedDocs.insert( doc, item );
 }
 
 void SaveDialog::languageChange()
 {
-    setCaption( tr( "Save the modified files" ) );
-    label->setText( tr( "Select files to be saved" ) );
-    filesView->header()->setLabel( 0, tr( "Modified Files" ) );
-    abortClosingButton->setText( tr( "Abort Closing" ) );
-    dontSaveButton->setText( tr( "Dont Save" ) );
-    saveSelectedButton->setText( tr( "Save Selected" ) );
-}
-
-void SaveDialog::abortClosingClicked()
-{
-   done(int(AbortClosing));
+   setCaption( tr( "Save the modified files" ) );
+   label->setText( tr( "Select files to be saved" ) );
+   filesView->header()->setLabel( 0, tr( "Modified Files" ) );
+   abortClosingButton->setText( tr( "Abort Closing" ) );
+   dontSaveButton->setText( tr( "Dont Save" ) );
+   saveSelectedButton->setText( tr( "Save Selected" ) );
 }
 
 void SaveDialog::dontSaveClicked()
 {
-   done(int(DontSave));
+   done(DontSave);
 }
 
 void SaveDialog::saveSelectedClicked()
@@ -129,7 +124,6 @@ void SaveDialog::saveSelectedClicked()
             unsavables.append(doc);
          else
          {
-            Q_ASSERT(!doc->DocName.isEmpty());
             delete it.data();
             delete it.key();
             unsavedDocs.remove(it);
@@ -137,9 +131,12 @@ void SaveDialog::saveSelectedClicked()
       }
    }
    if(unsavables.isEmpty())
-      done(int(SaveSelected));
-   else
-      done(int(AbortClosing));
+      done(SaveSelected);
+}
+
+void SaveDialog::reject()
+{
+   done(AbortClosing);
 }
 
 bool SaveDialog::isEmpty() const
