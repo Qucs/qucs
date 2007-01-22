@@ -1,3 +1,8 @@
+2007-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* lineardevices.tex: Fixed S-parameters for 4-port transmission
+	line.
+
 2006-09-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices.tex (subsection{Large signal model}): Documented
