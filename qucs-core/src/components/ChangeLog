@@ -1,3 +1,11 @@
+2007-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* twistedpair.h (class twistedpair): New component: twisted
+	pair transmission line.
+
+	* tline4p.h (class tline4p): New component: ideal differential
+	transmission line.
+
 2007-01-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/bondwire.cpp: Fixed segfault in bondwire model.

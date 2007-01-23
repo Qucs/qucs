@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.59 2007/01/15 08:33:27 raimi Exp $
+ * $Id: qucsdefs.h,v 1.60 2007/01/23 10:23:35 raimi Exp $
  *
  */
 
@@ -281,6 +281,15 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
+  /* ideal 4-port transmission line */
+  { "TLIN4P", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Alpha", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
   /* coaxial cable */
   { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
@@ -293,6 +302,16 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
+  },
+  /* twisted pair line */
+  { "TWIST", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "d", PROP_REAL, { 0.5e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "D", PROP_REAL, { 0.8e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "er", PROP_REAL, { 4, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "T", PROP_REAL, { 100, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
   },
   /* ideal coupler */
   { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -392,7 +411,7 @@ struct define_t qucs_definition_available[] =
   /* diode */
   { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", PROP_REAL, { 1, PROP_NO_STR }, { ']', 0.1, 100, ']' } },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
       { "M", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 2, ']' } },
       { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, { ']', 0, 10, ']' } },

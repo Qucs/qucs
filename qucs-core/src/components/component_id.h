@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.36 2006/12/20 11:14:43 raimi Exp $
+ * $Id: component_id.h,v 1.37 2007/01/23 10:23:35 raimi Exp $
  *
  */
 
@@ -68,6 +68,8 @@ enum circuit_type {
   CIR_RELAIS,
   CIR_TLINE,
   CIR_COAXLINE,
+  CIR_TWISTEDPAIR,
+  CIR_TLINE4P,
   CIR_IPROBE,
   CIR_VPROBE,
   CIR_SPFILE,
