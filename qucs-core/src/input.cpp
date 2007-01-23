@@ -1,7 +1,7 @@
 /*
  * input.cpp - input netlist class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.62 2006-12-20 11:14:43 raimi Exp $
+ * $Id: input.cpp,v 1.63 2007-01-23 10:23:35 raimi Exp $
  *
  */
 
@@ -370,8 +370,12 @@ circuit * input::createCircuit (char * type) {
     return new relais ();
   else if (!strcmp (type, "TLIN"))
     return new tline ();
+  else if (!strcmp (type, "TLIN4P"))
+    return new tline4p ();
   else if (!strcmp (type, "COAX"))
     return new coaxline ();
+  else if (!strcmp (type, "TWIST"))
+    return new twistedpair ();
   else if (!strcmp (type, "Coupler"))
     return new coupler ();
   else if (!strcmp (type, "Diode"))

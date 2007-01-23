@@ -1,7 +1,7 @@
 /*
  * component.h - global component header file
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.40 2006-12-20 11:14:43 raimi Exp $
+ * $Id: component.h,v 1.41 2007-01-23 10:23:35 raimi Exp $
  *
  */
 
@@ -67,6 +67,8 @@
 #include "relais.h"
 #include "tline.h"
 #include "coaxline.h"
+#include "twistedpair.h"
+#include "tline4p.h"
 #include "iprobe.h"
 #include "vprobe.h"
 #include "spfile.h"

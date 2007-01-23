@@ -1,7 +1,7 @@
 /*
  * ucs.cpp - main program implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.25 2006-09-19 08:22:20 raimi Exp $
+ * $Id: ucs.cpp,v 1.26 2007-01-23 10:23:35 raimi Exp $
  *
  */
 
@@ -64,7 +64,8 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
 	"Qucsator " PACKAGE_VERSION "\n"
-	"Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>\n"
+	"Copyright (C) 2003, 2004, 2005, 2006, 2007 "
+	"Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
 	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
