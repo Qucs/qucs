@@ -63,6 +63,8 @@ TwistedPair::TwistedPair()
 		QObject::tr("dielectric constant of insulator")));
   Props.append(new Property("T", "100", false,
 		QObject::tr("twists per length in 1/m")));
+  Props.append(new Property("L", "1.5", true,
+		QObject::tr("physical length of the line")));
 }
 
 TwistedPair::~TwistedPair()
