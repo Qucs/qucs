@@ -4957,6 +4957,10 @@ Folosire:  qucsedit [-r] file
         <source>Twisted-Pair</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
