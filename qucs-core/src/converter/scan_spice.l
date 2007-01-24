@@ -4,7 +4,7 @@
 /*
  * scan_spice.l - scanner for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.18 2006/08/28 08:12:52 raimi Exp $
+ * $Id: scan_spice.l,v 1.19 2007/01/24 09:33:24 raimi Exp $
  *
  */
 
@@ -118,7 +118,7 @@ LAPLACE  [lL][aA][pP][lL][aA][cC][eE]
 POLY     [pP][oO][lL][yY]
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -135,6 +135,10 @@ POLY     [pP][oO][lL][yY]
 
 <STARTUP,INITIAL>^"*" { /* ignored region begins here */
     BEGIN(COMMENT);
+  }
+
+<STARTUP,INITIAL>"*" { /* ignored inline region begins here */
+    BEGIN(INLINE);
   }
 
 <STARTUP,INITIAL>^"."[cC][oO][nN][tT][rR][oO][lL] {
@@ -570,6 +574,8 @@ POLY     [pP][oO][lL][yY]
 <COMMENT>. { /* skip any character in here */ }
 <IGNORE>.  { /* skip any character in here */ }
 
+<INLINE>{EOL} { BEGIN(STARTUP); return Eol; /* skipping ends here */ }
+<INLINE>.  { /* skip any character in here */ }
 <*>.       { /* skip any character in here */ }
 
 <*>. { /* any other character is invalid */

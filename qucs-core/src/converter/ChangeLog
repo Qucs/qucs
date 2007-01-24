@@ -1,3 +1,9 @@
+2007-01-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_spice.y: Accept end of file after .ENDS token.
+
+	* scan_spice.l: Ignore inlined comments.
+
 2007-01-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed F and H source values (current controlled
