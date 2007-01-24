@@ -1,3 +1,8 @@
+2007-01-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* tutorial/spicetoqucs/content.tex: Added tutorial about
+	simulation of SPICE netlists with Qucs.  Thanks to Mike Brinson.
+
 2006-09-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* tutorial/timer555/timer555.tex: Added 555 timer tutorial

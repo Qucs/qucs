@@ -99,6 +99,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/opamp/pics/Makefile
 		 tutorial/timer555/Makefile
 		 tutorial/timer555/pics/Makefile
+		 tutorial/spicetoqucs/Makefile
+		 tutorial/spicetoqucs/pics/Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile])
 
