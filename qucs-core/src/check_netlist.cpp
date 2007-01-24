@@ -1,7 +1,7 @@
 /*
  * check_netlist.cpp - checker for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.101 2006-12-20 11:14:43 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.102 2007-01-24 09:33:22 raimi Exp $
  *
  */
 
@@ -1856,7 +1856,7 @@ int netlist_checker (environment * env) {
     environment * subenv = new environment (def->instance);
     env_root->addChild (subenv);
     checker_setup_env (def, subenv, eqns);
-    def->sub->env = subenv;
+    if (def->sub) def->sub->env = subenv;
     // add subcircuit parameters to equations
     checker_subcircuit_args (def, subenv);
     // check subcircuit netlist
