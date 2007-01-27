@@ -11,3 +11,6 @@ Makefile.in
 *.brf
 *.out
 *.ps
+*.idx
+*.ilg
+*.ind
