@@ -1527,11 +1527,11 @@ to different in width, the model described here can be used as a first
 order approximation. This is perfomred by replacing $W_1$ and $W_2$ by the
 arithmetic mean of the line widths that lie opposite. This is done:
 \begin{itemize}
-\item In equation \ref{eqn:mscross_cx} and \label{eqn:mscross_c1} for $W_2$
+\item In equation \eqref{eqn:mscross_cx} and \eqref{eqn:mscross_c1} for $W_2$
       only, whereas $W_1$ is replaced by the width of the line.
-\item In equation \ref{eqn:mscross_ly} and \label{eqn:mscross_l1} for $W_2$
+\item In equation \eqref{eqn:mscross_ly} and \eqref{eqn:mscross_l1} for $W_2$
       only, whereas $W_1$ is replaced by the width of the line.
-\item In equation \label{eqn:mscross_l3} for $W_1$ and $W_2$.
+\item In equation \eqref{eqn:mscross_l3} for $W_1$ and $W_2$.
 \end{itemize}
 
 \addvspace{12pt}
@@ -1579,3 +1579,74 @@ The relationship for the via resistance can be used as a close
 approximation and is valid independent of the ratio of the
 metalization thickness $t$ to the skin depth.  In the formula $\rho$
 denotes the specific resistance of the conductor material.
+
+\section{Bondwire}
+%\addcontentsline{toc}{section}{Bondwire}
+
+Wire inductors, so called bond wire connections, are used to connect
+active and passive circuit components as well as micro devices to the
+real world.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=13.5cm]{bondwire}
+\end{center}
+\caption{bond wire and its equivalent circuit}
+\label{fig:BondWire}
+\end{figure}
+\FloatBarrier
+
+\subsection{Freespace model}
+%\addcontentsline{toc}{subsection}{Freespace model}
+
+The freespace inductance $L$ of a wire of diameter $d$ and length $l$
+is given \cite{Bahl,WikiBond} by
+\begin{equation}
+    L = \dfrac{\mu_0}{2\pi} \cdot l \left[ 
+               \ln\left\{ \frac{2l}{d} 
+	                  + \sqrt{1 + \left(\frac{2l}{d}\right)^2} \right\}
+	       + \frac{d}{2l} - \sqrt{1+\left(\frac{d}{2l}\right)^2}
+	       + C \right]
+\end{equation}
+
+where the frequency-dependent correction factor $C$ is a function of
+bond wire diameter and its material skin depth $\delta$ is expressed
+as
+\begin{equation}
+C = \dfrac{\mu_r}{4}\cdot \tanh\left( \dfrac{4\delta}{d} \right)
+\end{equation}
+\begin{equation}
+\delta = \dfrac{1}{\sqrt{\pi\cdot \sigma\cdot f\cdot \mu_0\cdot \mu_r}}
+\end{equation}
+
+where $\sigma$ is the conductivity of the wire material.  When
+$\delta/d$ is small, $C=\delta/d$.  The wire resistance $R$ is given
+by
+\begin{equation}
+R = \dfrac{\rho\cdot l}{\pi\cdot r^2}
+\end{equation}
+
+with $\rho = 1/\sigma$ and $r=d/2$.
+
+\subsection{Mirror model}
+%\addcontentsline{toc}{subsection}{Mirror model}
+
+The effect of the ground plane on the inductance valueof a wire has
+also been considered.  If the wire is at a distance $h$ above the
+ground plane, it sees its image at $2h$ from it.  The wire and its
+image result in a mutual inductance.  Since the image wire carries a
+current opposite to the current flow in the bond wire, the effective
+inductance of the bond wire becomes
+\begin{equation}
+    L = \dfrac{\mu_0}{2\pi}\cdot l \left[ 
+               \ln\left( \dfrac{4h}{d} \right)
+	       + \ln\left( \dfrac{l+\sqrt{l^2+d^2/4}}{l+\sqrt{l^2+4h^2}}\right)
+	       + \sqrt{1+\dfrac{4h^2}{l^2}} - \sqrt{1+\dfrac{d^2}{4l^2}}
+	       - 2 \dfrac{h}{l} + \dfrac{d}{2l}
+	       \right]			  
+\end{equation}
+
+Mirror is a strange model that is frequency independent.  Whereas
+computations are valid, hypothesis are arguable.  Indeed, they did the
+assumption that mass is perfect that is really a zero order model in
+high frequency.
