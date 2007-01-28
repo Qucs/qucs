@@ -2,6 +2,7 @@
  * bondwire.cpp - bondwire class implementation
  *
  * Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>
+ * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.2 2007-01-15 08:33:28 raimi Exp $
+ * $Id: bondwire.cpp,v 1.3 2007-01-28 10:49:17 ela Exp $
  *
  */
 
@@ -28,7 +29,7 @@
    Bibliography:
 
    [1] Microwave Solid State Circuit Design, 
-       Inder Bahl and Prakash Barthia  -- 2d edition
+       Inder Bahl and Prakash Barthia  -- 2nd edition
        2003 - Wiley interscience
        ISBN 9-471-20755-1
 
@@ -108,7 +109,7 @@ void bondwire::getProperties (void) {
   d = getPropertyDouble ("D");
   h = getPropertyDouble ("H");
   rho = getPropertyDouble ("rho");
-  mur =getPropertyDouble ("mur");
+  mur = getPropertyDouble ("mur");
   
   /* model used */
   char * Model  = getPropertyString ("Model");
@@ -160,10 +161,10 @@ static nr_double_t skindepth (const nr_double_t f,
  * than conductor (eg low frequency case)
  *
  * \todo Offer other resistance model for 
- *        instance exponential decay and bessel function exact
- *         computation. But it do not know it is worth the effort
+ *       instance exponential decay and bessel function exact
+ *       computation. But I do not know it is worth the effort.
  *
- *  \todo factorise the resistance model
+ * \todo factorise the resistance model
  */
 nr_double_t bondwire::resistance (const nr_double_t f) const {
   nr_double_t delta, rout, rin;
@@ -187,7 +188,7 @@ nr_double_t bondwire::resistance (const nr_double_t f) const {
  *  \f[
  *   C = 0.25 \tanh \frac{4\delta}{d}
  *  \f]
- *  Where \f$\delta\f$ is the well know skin depth
+ *  Where \f$\delta\f$ is the well known skin depth
  * 
  *  \param f frequency
  *  \param d bond wire diameter
@@ -213,7 +214,9 @@ static nr_double_t correctionfactor (const nr_double_t f,
 
   if (f > 0.0 && rho > 0.0) {
     delta = skindepth (f, rho, mur);
-    if (delta <= d /2)
+    if (delta / d < 1e-2)
+      return delta / d;
+    else
       return (mur / 4) * tanh ((4 * delta) / d);
   }
   return mur / 4;
@@ -221,7 +224,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
 
 /*! Compute free space inductance
     According to [1] pp63 (2.29) free space inductance (in nH)
-   is such as (\f$l\f$ in micrometers):
+    is such as (\f$l\f$ in micrometers):
 
    \f[
     L = 2\times10^{-4} l \left[ 
@@ -232,7 +235,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
 			  
    \f]
 
-   According to [2] self inductance is (in H with l im m):
+   According to [2] self inductance is (in H with l in m):
    \f[
     L = \frac{\mu_0}{2\pi} l\left[ 
                \ln\left\{ \frac{2l}{d} 
@@ -242,7 +245,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
 			  
    \f]
 
-   Finally we will use (in H with l im m)::
+   Finally we will use (in H with l in m)::
    \f[
     L = \frac{\mu_0}{2\pi} l\left[ 
                \ln\left\{ \frac{2l}{d} 
@@ -255,7 +258,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
    \param f frequency
    \param d bond wire diameter
    \param l bond wire length (in meter)
-   \param rho  bond wire resistivity
+   \param rho bond wire resistivity
    \param mur relative magnetic permeabillity
 */
 nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
@@ -279,23 +282,23 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
     L = 2\times10^{-4} l \left[ 
                \ln \frac{4h}{d} 
 	       + \ln \frac{l+\sqrt{l^2+d^2/4}}{l+\sqrt{l^2+4h^2}}
-	       + \sqrt{1+\frac{4h^2}{l^2}} - \sqrt{1-\frac{d^2}{4l^2}}
+	       + \sqrt{1+\frac{4h^2}{l^2}} - \sqrt{1+\frac{d^2}{4l^2}}
 	       - 2 \frac{h}{l} + \frac{d}{2l}
 	       \right]
 			  
    \f]
 
-   Finally we will use (in H with l im m):
+   Finally we will use (in H with l in m):
    \f[
     L = \frac{\mu_0}{2\pi} l \left[ 
                \ln \frac{4h}{d} 
 	       + \ln \frac{l+\sqrt{l^2+d^2/4}}{l+\sqrt{l^2+4h^2}}
-	       + \sqrt{1+\frac{4h^2}{l^2}} - \sqrt{1-\frac{d^2}{4l^2}}
+	       + \sqrt{1+\frac{4h^2}{l^2}} - \sqrt{1+\frac{d^2}{4l^2}}
 	       - 2 \frac{h}{l} + \frac{d}{2l}
 	       \right]			  
    \f]
 
-   \note Mirror is a strange model that is frequency independant. Whereas computation 
+   \note Mirror is a strange model that is frequency independent. Whereas computations 
         are valid, hypothesis are arguable. Indeed, they did the assumption that mass 
 	is perfect that is really a zero order model in high frequency.
 */
@@ -317,7 +320,8 @@ nr_double_t bondwire::Lmirror (void) const {
 /*! Compute Y matrix of bond wire
  */
 matrix bondwire::calcMatrixY (const nr_double_t f) {
-  nr_double_t L = 0, denom , Lw;
+  nr_double_t denom , Lw;
+  L = 0;
 
   switch (model) {
   case MIRROR:
@@ -332,11 +336,11 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
     break;
   }
 
-  Lw = L * 2 * M_PI;
+  Lw = L * 2 * M_PI * f;
   denom = R * R + Lw * Lw;
 
   /* build Y-parameter matrix */
-  complex yL = rect (R / denom, -Lw / denom);
+  complex yL = 1.0 / rect (R, Lw);
 
   matrix Y (2);
   Y.set (NODE_1, NODE_1, +yL);
@@ -357,6 +361,12 @@ void bondwire::initSP (void) {
  */
 void bondwire::calcSP (const nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+/*! Save self-inductance */
+void bondwire::saveCharacteristics (nr_double_t) {
+  setCharacteristic ("L", L);
+  setCharacteristic ("R", R);
 }
 
 /*! DC model initialisation 
