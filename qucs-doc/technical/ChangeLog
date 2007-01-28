@@ -1,3 +1,8 @@
+2007-01-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip.tex (section{Bondwire}): Documented the bondwire
+	model.
+
 2007-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* lineardevices.tex: Fixed S-parameters for 4-port transmission
