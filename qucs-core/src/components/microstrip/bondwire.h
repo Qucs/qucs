@@ -2,6 +2,7 @@
  * bondwire.h - bondwire class definitions
  *
  * Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>
+ * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.h,v 1.1 2006/12/20 11:43:06 raimi Exp $
+ * $Id: bondwire.h,v 1.2 2007/01/28 10:49:17 ela Exp $
  *
  */
 
@@ -38,6 +39,7 @@ class bondwire : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   matrix calcMatrixY (nr_double_t);
+  void saveCharacteristics (nr_double_t);
 
  private:
   void getProperties (void);    
@@ -51,7 +53,7 @@ class bondwire : public circuit
   nr_double_t rho;   /*!< resistivity */
   nr_double_t mur;   /*!< relative magnetic permeabilty */
   int model;         /*!< model number */
-  nr_double_t R;
+  nr_double_t R, L;
   nr_double_t temp;  /*!< ambient temperature */
 };
 
