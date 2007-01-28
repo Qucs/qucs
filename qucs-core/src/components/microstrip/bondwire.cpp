@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.3 2007/01/28 10:49:17 ela Exp $
+ * $Id: bondwire.cpp,v 1.4 2007/01/28 13:31:53 ela Exp $
  *
  */
 
@@ -158,7 +158,7 @@ static nr_double_t skindepth (const nr_double_t f,
 /*! Compute resitance of the wire
  * Resitance of the wire is computed using classical 
  * tube model enhanced for case where tube is greater
- * than conductor (eg low frequency case)
+ * than conductor (e.g. low frequency case)
  *
  * \todo Offer other resistance model for 
  *       instance exponential decay and bessel function exact
@@ -299,8 +299,8 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
    \f]
 
    \note Mirror is a strange model that is frequency independent. Whereas computations 
-        are valid, hypothesis are arguable. Indeed, they did the assumption that mass 
-	is perfect that is really a zero order model in high frequency.
+        are valid, hypothesis are arguable. Indeed, they did the assumption that the ground plane 
+	is perfect that is really a zero order model in the high frequency domain.
 */
 nr_double_t bondwire::Lmirror (void) const {
   nr_double_t tmp;
@@ -320,7 +320,7 @@ nr_double_t bondwire::Lmirror (void) const {
 /*! Compute Y matrix of bond wire
  */
 matrix bondwire::calcMatrixY (const nr_double_t f) {
-  nr_double_t denom , Lw;
+  nr_double_t Lw;
   L = 0;
 
   switch (model) {
@@ -337,7 +337,6 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
   }
 
   Lw = L * 2 * M_PI * f;
-  denom = R * R + Lw * Lw;
 
   /* build Y-parameter matrix */
   complex yL = 1.0 / rect (R, Lw);
