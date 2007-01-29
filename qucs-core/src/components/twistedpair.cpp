@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.1 2007-01-23 10:28:41 raimi Exp $
+ * $Id: twistedpair.cpp,v 1.2 2007-01-29 19:14:17 ela Exp $
  *
  */
 
@@ -48,14 +48,14 @@ void twistedpair::calcSP (nr_double_t frequency) {
   calcPropagation (frequency);
 
   complex g = rect (alpha, beta);
-  nr_double_t p = 2 * Z0 + zl;
-  nr_double_t n = 2 * Z0 - zl;
+  nr_double_t p = 2 * z0 + zl;
+  nr_double_t n = 2 * z0 - zl;
   complex e = exp (2 * g * l);
   complex d = p * p * e - n * n;
 
   complex s11 = zl * (p * e + n) / d;
   complex s14 = 1.0 - s11;
-  complex s12 = 4.0 * zl * Z0 * exp (g * l) / d;
+  complex s12 = 4.0 * zl * z0 * exp (g * l) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
