@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.cpp,v 1.1 2007/01/23 10:28:41 raimi Exp $
+ * $Id: tline4p.cpp,v 1.2 2007/01/29 19:14:16 ela Exp $
  *
  */
 
@@ -51,14 +51,14 @@ void tline4p::calcSP (nr_double_t frequency) {
   a = log (a) / 2;
 
   complex g = rect (a, b);
-  nr_double_t p = 2 * Z0 + z;
-  nr_double_t n = 2 * Z0 - z;
+  nr_double_t p = 2 * z0 + z;
+  nr_double_t n = 2 * z0 - z;
   complex e = exp (2 * g * l);
   complex d = p * p * e - n * n;
 
   complex s11 = z * (p * e + n) / d;
   complex s14 = 1.0 - s11;
-  complex s12 = 4.0 * z * Z0 * exp (g * l) / d;
+  complex s12 = 4.0 * z * z0 * exp (g * l) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
