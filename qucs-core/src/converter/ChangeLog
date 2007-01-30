@@ -1,3 +1,8 @@
+2007-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Adding subcircuit instance if the SPICE
+	file just contains a single subcircuit definition.
+
 2007-01-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_spice.y: Accept end of file after .ENDS token.

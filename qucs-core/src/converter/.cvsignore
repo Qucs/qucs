@@ -9,3 +9,4 @@ qucsconv
 tokens_vcd.h
 scan_vcd.cpp
 parse_vcd.cpp
+*.cir

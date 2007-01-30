@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.26 2007/01/23 10:23:35 raimi Exp $
+ * $Id: ucs.cpp,v 1.27 2007/01/30 18:54:14 ela Exp $
  *
  */
 
@@ -66,6 +66,8 @@ int main (int argc, char ** argv) {
 	"Qucsator " PACKAGE_VERSION "\n"
 	"Copyright (C) 2003, 2004, 2005, 2006, 2007 "
 	"Stefan Jahn <stefan@lkcc.org>\n"
+        "Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>\n"
+        "Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
 	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
