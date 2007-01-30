@@ -1,3 +1,7 @@
+2007-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* ucs.cpp (main): Updated copyright notice.
+
 2006-10-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp: Removed equation checking here.  It's now done in

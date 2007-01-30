@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.18 2006-06-07 08:34:37 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.19 2007-01-30 18:54:14 ela Exp $
  *
  */
 
@@ -196,6 +196,16 @@ static void netlist_list (void) {
     fprintf (qucs_out, ".Def:%s\n", def->instance);
     netlist_lister (def->sub, "  ");
     fprintf (qucs_out, ".Def:End\n");
+  }
+  /* Instantiate subcircuit if there is just a single definition. */
+  if (definition_root != NULL && subcircuit_root == NULL &&
+      definition_root->sub != NULL && definition_root->next == NULL) {
+    def = definition_root;
+    fprintf (qucs_out, "\n# no instance of subcircuit \"%s\" found, "
+	     "creating it\n", def->instance);
+    fprintf (qucs_out, "Sub:X1");
+    for (n = def->nodes; n; n = n->next) fprintf (qucs_out, " %s", n->node);
+    fprintf (qucs_out, " Type=\"%s\"\n", def->instance);
   }
   /* Print overall (toplevel only) node list. */
   qucs_collect_nodes (definition_root);
