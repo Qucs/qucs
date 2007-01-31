@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.17 2007/01/24 09:33:24 raimi Exp $
+ * $Id: parse_spice.y,v 1.18 2007/01/31 20:37:21 ela Exp $
  *
  */
 
@@ -214,13 +214,22 @@ DefinitionLine:
     spice_append_val_value ($$, $4, HINT_NUMBER);
     $$->values = netlist_append_values ($$->values, $5);
   }
-  | RLC_Device Node Node MODEL_Ident PairList Eol {
+  | RLC_Device Node Node Value MODEL_Ident PairList Eol {
     /* R, L and C definitions specified by a Model */
     $$ = spice_create_device ($1);
     spice_append_str_value ($$, $2, HINT_NODE);
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_val_value ($$, $4, HINT_NUMBER);
-    $$->values = netlist_append_values ($$->values, $5);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
+  }
+  | RLC_Device Node Node MODEL_Ident Value Eol {
+    /* R, L and C definitions specified by a Model, a variant */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $5, HINT_NUMBER);
+    spice_append_str_value ($$, $4, HINT_NAME);
   }
   | K_Device L_Device L_Device Value Eol {
     /* Mutual inductors */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.102 2007/01/24 09:33:22 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.103 2007/01/31 20:37:21 ela Exp $
  *
  */
 
@@ -1809,7 +1809,7 @@ static void checker_setup_env (struct definition_t * root,
   // pass solver
   env->setSolver (solvee);
   // apply environment to the netlist root
-  root->env = env;
+  if (root) root->env = env;
 }
 
 /* Adds the arguments of a subcircuit into the equation checker of the
