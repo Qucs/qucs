@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.24 2007-01-11 10:09:47 raimi Exp $
+ * $Id: check_spice.cpp,v 1.25 2007-01-31 20:37:21 ela Exp $
  *
  */
 
@@ -395,8 +395,9 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
       spice_value_done (val);
       i++;
     }
-    // skip identifier if next is a float again
-    else if (val->hint & HINT_NAME &&
+    // skip identifier if next is a float again (F and H sources)
+    else if ((def->type[0] == 'F' || def->type[0] == 'H') &&
+	     val->hint & HINT_NAME &&
 	     val->next && val->next->hint & HINT_NUMBER)
       continue;
     // break it here
@@ -458,6 +459,8 @@ spice_devices[] = {
   { "PMOS", "MOSFET", "pfet" },
   { "D",    "Diode",  NULL   },
   { "SW",   "Relais", NULL   },
+  { "RES",  "R",      NULL   },
+  { "R",    "R",      NULL   },
   { NULL, NULL, NULL }
 };
 
@@ -554,6 +557,10 @@ static void spice_adjust_device (struct definition_t * def,
 static void spice_translate_device (struct definition_t * root,
 				    struct definition_t * def) {
   struct value_t * inst = spice_find_device_instance (def);
+
+  // return if no Model given
+  if (inst == NULL) return;
+
   /* first look for the Model in the local definition root, then in
      the global definition root */
   struct definition_t * tran;
@@ -1285,8 +1292,10 @@ spice_translate_source (struct definition_t * root,
   if ((prop = spice_find_property (dc->values, "DC")) != NULL) {
     spice_value_done (prop);
     prop = prop->next;
-    spice_append_pair (def, type == 'U' ? "U" : "I", prop->ident, 1);
-    spice_value_done (prop);
+    if (VAL_IS_NUMBER (prop)) {
+      spice_append_pair (def, type == 'U' ? "U" : "I", prop->ident, 1);
+      spice_value_done (prop);
+    }
   }
   free (dc->type);
   dc->type = strdup (type == 'U' ? "Vdc" : "Idc");
@@ -2003,7 +2012,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
 	// devices
 	if (!strcasecmp (def->type, "Q") || !strcasecmp (def->type, "M") ||
 	    !strcasecmp (def->type, "J") || !strcasecmp (def->type, "D") ||
-	    !strcasecmp (def->type, "S")) {
+	    !strcasecmp (def->type, "S") || !strcasecmp (def->type, "R")) {
 	  spice_translate_device (root, def);
 	}
 	// voltage sources

@@ -1,3 +1,14 @@
+2007-01-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Allowing '_' in device identifiers.  Allowing
+	'/' and '-' in other identifiers (e.g. subcircuit) and translate
+	them into '_' for Qucs.
+
+	* parse_spice.y: Allowing resistor model to be referenced.
+
+	* check_spice.cpp: Added translations for resistor models.  Fixed
+	DC voltage source notation 'VDC 1 0 DC 2'.
+
 2007-01-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Adding subcircuit instance if the SPICE
