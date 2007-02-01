@@ -1,7 +1,7 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.19 2007-01-30 18:54:14 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.20 2007-02-01 20:02:24 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "object.h"
 #include "complex.h"
@@ -116,8 +117,8 @@ static void netlist_list_def (struct definition_t * def, char * prefix) {
       // skip specific actions if required
       if (def->action && strcmp (def->type, "Def")) return;
     }
-    fprintf (qucs_out, "%s%s%s:%s", prefix, def->action ? "." : "",
-	     def->type, def->instance);
+    fprintf (qucs_out, "%s%s%s:%s%s", prefix, def->action ? "." : "",
+	     def->type, isdigit (def->instance[0]) ? "X" : "", def->instance);
     for (node = def->nodes; node != NULL; node = node->next)
       fprintf (qucs_out, " %s", node->node);
     for (pair = def->pairs; pair != NULL; pair = pair->next) {
@@ -193,7 +194,8 @@ static void netlist_list (void) {
   }
   netlist_lister (definition_root, "");
   for (def = subcircuit_root; def != NULL; def = def->next) {
-    fprintf (qucs_out, ".Def:%s\n", def->instance);
+    fprintf (qucs_out, ".Def:%s%s\n", isdigit (def->instance[0]) ? "X" : "",
+	     def->instance);
     netlist_lister (def->sub, "  ");
     fprintf (qucs_out, ".Def:End\n");
   }
