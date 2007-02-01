@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.25 2007/01/31 20:37:21 ela Exp $
+ * $Id: check_spice.cpp,v 1.26 2007/02/01 20:02:24 ela Exp $
  *
  */
 
@@ -451,16 +451,17 @@ struct spice_device_t {
   char * trans_type_prop; // value of 'Type' in Qucs
 }
 spice_devices[] = {
-  { "NPN",  "BJT",    "npn"  },
-  { "PNP",  "BJT",    "pnp"  },
-  { "NJF",  "JFET",   "nfet" },
-  { "PJF",  "JFET",   "pfet" },
-  { "NMOS", "MOSFET", "nfet" },
-  { "PMOS", "MOSFET", "pfet" },
-  { "D",    "Diode",  NULL   },
-  { "SW",   "Relais", NULL   },
-  { "RES",  "R",      NULL   },
-  { "R",    "R",      NULL   },
+  { "NPN",     "BJT",    "npn"  },
+  { "PNP",     "BJT",    "pnp"  },
+  { "NJF",     "JFET",   "nfet" },
+  { "PJF",     "JFET",   "pfet" },
+  { "NMOS",    "MOSFET", "nfet" },
+  { "PMOS",    "MOSFET", "pfet" },
+  { "D",       "Diode",  NULL   },
+  { "SW",      "Relais", NULL   },
+  { "VSWITCH", "Relais", NULL   },
+  { "RES",     "R",      NULL   },
+  { "R",       "R",      NULL   },
   { NULL, NULL, NULL }
 };
 

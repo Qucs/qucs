@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.20 2007/01/31 20:37:21 ela Exp $
+ * $Id: scan_spice.l,v 1.21 2007/02/01 20:02:24 ela Exp $
  *
  */
 
@@ -50,6 +50,14 @@
 # define strrchr rindex
 #endif
 
+/* fixing invalid identifiers */
+static void spice_fix_identifier (char * ident) {
+  char * p;
+  for (p = ident; *p != '\0'; p++)
+    if (*p == '-' || *p == '/')
+      *p = '_';
+}
+
 %}
 
 WS       [ \t\n\r]
@@ -69,6 +77,7 @@ NUMBER   ({INT}|{FLOAT1}|{FLOAT2}|{FLOAT3}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     [A-Za-z0-9_#]+
 EOL      \r*\n
+CSFX     [A-Za-z0-9_]*
 
      /* Source functions */
 FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT]|[dD][cC]|[aA][cC])
@@ -80,7 +89,7 @@ FUNCTION ({FUN1}|{FUN2}|{FUN3})
 MODEL1   ([rR]|[cC]|[sS][wW]|[cC][sS][wW]|[uU][rR][cC]|[lL][tT][rR][aA])
 MODEL2   ([dD]|[nN][pP][nN]|[pP][nN][pP]|[nN][jJ][fF]|[pP][jJ][fF])
 MODEL3   ([nN][mM][oO][sS]|[pP][mM][oO][sS]|[nN][mM][fF]|[pP][mM][fF])
-MODEL4   ([rR][eE][sS])
+MODEL4   ([rR][eE][sS]|[vV][sS][wW][iI][tT][cC][hH])
 MODEL    ({MODEL1}|{MODEL2}|{MODEL3}|{MODEL4})
 
      /* Voltage derivatives */
@@ -119,7 +128,7 @@ LAPLACE  [lL][aA][pP][lL][aA][cC][eE]
 POLY     [pP][oO][lL][yY]
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -161,84 +170,85 @@ POLY     [pP][oO][lL][yY]
 <STARTUP,INITIAL>^"."[sS][uU][bB][cC][kK][tT] {
     /* subcircuit definition start */
     spice_lval.ident = strdup (&spice_text[1]);
-    BEGIN(STARTUP);
+    BEGIN(SUBCKT);
     return SUBCKT_Action;
 }
 
 <STARTUP>^"."[eE][nN][dD][sS] { /* subcircuit definition end */
+    BEGIN(SUBCKT);
     return ENDS_Action;
 }
 
-<STARTUP,INITIAL>^[rRlLcC][A-Za-z0-9_]* { /* R, L and C instances */
+<STARTUP,INITIAL>^[rRlLcC]{CSFX} { /* R, L and C instances */
     spice_lval.ident = strdup (spice_text);
     return RLC_Device;
 }
 
-<STARTUP,INITIAL>^[kK][A-Za-z0-9_]* { /* Mutual inductor instances */
+<STARTUP,INITIAL>^[kK]{CSFX} { /* Mutual inductor instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(LREF);
     return K_Device;
 }
 
-<STARTUP,INITIAL>^[iIvV][A-Za-z0-9_]* {
+<STARTUP,INITIAL>^[iIvV]{CSFX} {
     /* voltage and current source instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(FUNREF);
     return IV_Source;
 }
 
-<STARTUP,INITIAL>^[gGeE][A-Za-z0-9_]* {
+<STARTUP,INITIAL>^[gGeE]{CSFX} {
     /* voltage controlled source instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(GEVALS);
     return GE_Source;
 }
 
-<STARTUP,INITIAL>^[fFhH][A-Za-z0-9_]+ {
+<STARTUP,INITIAL>^[fFhH]{CSFX} {
     /* current controlled source instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(IVREF);
     return FH_Source;
 }
 
-<STARTUP,INITIAL>^[bB][A-Za-z0-9_]+ {
+<STARTUP,INITIAL>^[bB]{CSFX} {
     /* non-linear dependent source instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(IGNORE);
     return B_Source;
 }
 
-<STARTUP,INITIAL>^[xX][A-Za-z0-9_]+ { /* subcircuit instances */
+<STARTUP,INITIAL>^[xX]{CSFX} { /* subcircuit instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(STARTUP);
     return X_Device;
 }
 
-<STARTUP,INITIAL>^[oO][A-Za-z0-9_]+ { /* lossy transline */
+<STARTUP,INITIAL>^[oO]{CSFX} { /* lossy transline */
     spice_lval.ident = strdup (spice_text);
     BEGIN(STARTUP);
     return O_Device;
 }
 
-<STARTUP,INITIAL>^[tT][A-Za-z0-9_]+ { /* lossless transline */
+<STARTUP,INITIAL>^[tT]{CSFX} { /* lossless transline */
     spice_lval.ident = strdup (spice_text);
     BEGIN(STARTUP);
     return T_Device;
 }
 
-<STARTUP,INITIAL>^[uU][A-Za-z0-9_]+ { /* distributed lossy transline */
+<STARTUP,INITIAL>^[uU]{CSFX} { /* distributed lossy transline */
     spice_lval.ident = strdup (spice_text);
     BEGIN(STARTUP);
     return U_Device;
 }
 
-<STARTUP,INITIAL>^[sS][A-Za-z0-9_]+ { /* voltage controlled switch */
+<STARTUP,INITIAL>^[sS]{CSFX} { /* voltage controlled switch */
     spice_lval.ident = strdup (spice_text);
     BEGIN(VSWITCH);
     return S_Device;
 }
 
-<STARTUP,INITIAL>^[wW][A-Za-z0-9_]+ { /* current controlled switch */
+<STARTUP,INITIAL>^[wW]{CSFX} { /* current controlled switch */
     spice_lval.ident = strdup (spice_text);
     BEGIN(ISWITCH);
     return W_Device;
@@ -435,12 +445,12 @@ POLY     [pP][oO][lL][yY]
     return ModelProps;
 }
 
-<IVREF,VREF,ISWITCH>[vV][A-Za-z0-9_]+ { /* voltage source references */
+<IVREF,VREF,ISWITCH>[vV]{CSFX} { /* voltage source references */
     spice_lval.ident = strdup (spice_text);
     return V_Source;
 }
 
-<IVREF>[iI][A-Za-z0-9_]+ { /* current source references */
+<IVREF>[iI]{CSFX} { /* current source references */
     spice_lval.ident = strdup (spice_text);
     return I_Source;
 }
@@ -455,36 +465,36 @@ POLY     [pP][oO][lL][yY]
     return SIM_Type;
 }
 
-<LREF>[lL][A-Za-z0-9_]+ { /* inductor references */
+<LREF>[lL]{CSFX} { /* inductor references */
     spice_lval.ident = strdup (spice_text);
     return L_Device;
 }
 
-<STARTUP>^[dD][A-Za-z0-9_]+ { /* diode instances */
+<STARTUP>^[dD]{CSFX} { /* diode instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(DEVPROP);
     return Diode_Device;
 }
 
-<STARTUP>^[qQ][A-Za-z0-9_]+ { /* BJT instances */
+<STARTUP>^[qQ]{CSFX} { /* BJT instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(DEVPROP);
     return Bipolar_Device;
 }
 
-<STARTUP>^[jJ][A-Za-z0-9_]+ { /* JFET instances */
+<STARTUP>^[jJ]{CSFX} { /* JFET instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(DEVPROP);
     return JFET_Device;
 }
 
-<STARTUP>^[mM][A-Za-z0-9_]+ { /* MOSFET instances */
+<STARTUP>^[mM]{CSFX} { /* MOSFET instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(DEVPROP);
     return MOSFET_Device;
 }
 
-<STARTUP>^[zZ][A-Za-z0-9_]+ { /* MESFET instances */
+<STARTUP>^[zZ]{CSFX} { /* MESFET instances */
     spice_lval.ident = strdup (spice_text);
     BEGIN(DEVPROP);
     return MESFET_Device;
@@ -533,26 +543,31 @@ POLY     [pP][oO][lL][yY]
 
 <STARTUP,DEVPROP,MODREF2,ISWITCH,VSWITCH>{IDENT} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
-    for (char * p = spice_lval.ident; *p != '\0'; p++)
-      if (*p == '-' || *p == '/') *p = '_';
+    spice_fix_identifier (spice_lval.ident);
+    return Identifier;
+}
+
+<SUBCKT>{IDENT2} { /* arbitrary identifier */
+    spice_lval.ident = strdup (spice_text);
+    spice_fix_identifier (spice_lval.ident);
+    BEGIN(STARTUP);
     return Identifier;
 }
 
 <MODREF1>{IDENT2} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
-    for (char * p = spice_lval.ident; *p != '\0'; p++)
-      if (*p == '-' || *p == '/') *p = '_';
+    spice_fix_identifier (spice_lval.ident);
     BEGIN(MODREF2);
     return Identifier;
 }
 
-<IVREF,VREF>[vV][a-zA-Z0-9_]+#[bB][rR][aA][nN][cC][hH] {
+<IVREF,VREF>[vV]{CSFX}#[bB][rR][aA][nN][cC][hH] {
     /* I function (plotting and printing) */
     spice_lval.ident = strdup (spice_text);
     return BranchFunc;
 }
 
-<IVREF,VREF>@[a-zA-Z][a-zA-Z0-9_]+\[[a-zA-Z][a-zA-Z0-9_]+\] {
+<IVREF,VREF>@[a-zA-Z]{CSFX}\[[a-zA-Z]{CSFX}\] {
     /* operating point (plotting and printing) */
     spice_lval.ident = strdup (spice_text);
     return OpFunc;
@@ -565,7 +580,7 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
- ISWITCH,VSWITCH,GEVALS>{EOL} {
+ ISWITCH,VSWITCH,GEVALS,SUBCKT>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;
