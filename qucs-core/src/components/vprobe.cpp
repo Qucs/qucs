@@ -1,7 +1,7 @@
 /*
  * vprobe.cpp - AC/DC and transient voltage probe class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vprobe.cpp,v 1.1 2006-02-06 09:50:15 raimi Exp $
+ * $Id: vprobe.cpp,v 1.2 2007-02-03 12:21:27 ela Exp $
  *
  */
 
@@ -50,8 +50,10 @@ void vprobe::initDC (void) {
 }
 
 void vprobe::saveOperatingPoints (void) {
-  nr_double_t V = real (getV (NODE_1) - getV (NODE_2));
-  setOperatingPoint ("V", V);
+  nr_double_t Vr = real (getV (NODE_1) - getV (NODE_2));
+  nr_double_t Vi = imag (getV (NODE_1) - getV (NODE_2));
+  setOperatingPoint ("Vr", Vr);
+  setOperatingPoint ("Vi", Vi);
 }
 
 void vprobe::initAC (void) {
