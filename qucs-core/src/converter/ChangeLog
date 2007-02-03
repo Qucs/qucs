@@ -1,3 +1,9 @@
+2007-02-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Translating VON and VOFF properties of
+	switches into Vt and Vh.  Also fixing R value for resistors
+	whose value is also given in the resistor model it refers to.
+
 2007-02-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Allowing subcircuit identifiers to begin with

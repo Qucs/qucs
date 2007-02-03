@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.26 2007/02/01 20:02:24 ela Exp $
+ * $Id: check_spice.cpp,v 1.27 2007/02/03 12:21:28 ela Exp $
  *
  */
 
@@ -493,6 +493,28 @@ spice_find_property (struct definition_t * def, const char * prop) {
   struct pair_t * pair;
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     if (!strcmp (pair->key, prop))
+      return pair;
+  }
+  return NULL;
+}
+
+/* This function is the case-insensitive version of the above. */
+static struct pair_t *
+spice_find_property_nocase (struct definition_t * def, const char * prop) {
+  struct pair_t * pair;
+  for (pair = def->pairs; pair != NULL; pair = pair->next) {
+    if (!strcasecmp (pair->key, prop))
+      return pair;
+  }
+  return NULL;
+}
+
+/* The function starts at a given property pair and is otherwise
+   similar to the above function. */
+static struct pair_t *
+spice_find_property_nocase (struct pair_t * pair, const char * prop) {
+  for (; pair != NULL; pair = pair->next) {
+    if (!strcasecmp (pair->key, prop))
       return pair;
   }
   return NULL;
@@ -1096,6 +1118,25 @@ spice_del_definition (struct definition_t * root, struct definition_t * def) {
     if (prev != NULL) {
       prev->next = def->next;
       netlist_free_definition (def);
+    }
+  }
+  return root;
+}
+
+/* Unchains a property pair and deletes it. */
+struct pair_t *
+spice_del_property (struct pair_t * root, struct pair_t * pair) {
+  struct pair_t * prev;
+  if (pair == root) {
+    root = pair->next;
+    netlist_free_pair (pair);
+  }
+  else {
+    // find previous to the candidate to be deleted
+    for (prev = root; prev != NULL && prev->next != pair; prev = prev->next);
+    if (prev != NULL) {
+      prev->next = pair->next;
+      netlist_free_pair (pair);
     }
   }
   return root;
@@ -1810,6 +1851,29 @@ spice_post_translator (struct definition_t * root) {
 		 "referenced by the %s `%s' instance\n", def->type,
 		 def->instance, key);
 	spice_errors++;
+      }
+    }
+    // post-process switches
+    if (!def->action && !strcmp (def->type, "Relais")) {
+      struct pair_t * pon = spice_find_property_nocase (def, "VON");
+      struct pair_t * pof = spice_find_property_nocase (def, "VOFF");
+      if (pon != NULL && pof != NULL) {
+	nr_double_t von = spice_evaluate_value (pon->value);
+	nr_double_t vof = spice_evaluate_value (pof->value);
+	def->pairs = spice_del_property (def->pairs, pon);
+	def->pairs = spice_del_property (def->pairs, pof);
+	nr_double_t vh = (von - vof) / 2;
+	nr_double_t vt = (von + vof) / 2;
+	spice_set_property_value (def, "Vt", vt);
+	spice_set_property_value (def, "Vh", fabs (vh));
+      }
+    }
+    // post-process resistors
+    if (!def->action && !strcmp (def->type, "R")) {
+      struct pair_t * r1 = spice_find_property_nocase (def, "R");
+      struct pair_t * r2 = spice_find_property_nocase (r1->next, "R");
+      if (r2 != NULL) {
+	def->pairs = spice_del_property (def->pairs, r2);
       }
     }
     // post-process mutual inductors (transformer)
