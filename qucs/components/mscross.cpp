@@ -35,6 +35,12 @@ MScross::MScross()
 		QObject::tr("width of line 3")));
   Props.append(new Property("W4", "2 mm", true,
 		QObject::tr("width of line 4")));
+  Props.append(new Property("MSModel", "Hammerstad", false,
+	QObject::tr("quasi-static microstrip model")+
+	" [Hammerstad, Wheeler, Schneider]"));
+  Props.append(new Property("MSDispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Symbol", "showNumbers", false,
 	QObject::tr("show port numbers in symbol or not")+
 	" [showNumbers, noNumbers]"));
