@@ -1,3 +1,8 @@
+2007-02-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* mscross.cpp (MScross): Added microstrip model selctors
+	to the properties of the microstrip cross.
+
 2006-10-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL2p1.h (class hicumL2p1): Added HICUM L2 v2.1 model.
