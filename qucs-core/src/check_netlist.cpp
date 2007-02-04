@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.103 2007/01/31 20:37:21 ela Exp $
+ * $Id: check_netlist.cpp,v 1.104 2007/02/04 18:08:52 ela Exp $
  *
  */
 
@@ -247,6 +247,10 @@ static struct special_t checker_specials[] = {
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
   { "MTEE",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MCROSS", "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			       "Getsinger", "Schneider", "Pramanick",
+			       "Hammerstad", NULL } },
+  { "MCROSS", "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "hicumL2p1", "Type",     { "npn", "pnp", NULL } },
   { "BOND",   "Model",       { "FREESPACE", "MIRROR", "DESCHARLES", NULL } },
   { NULL, NULL, { NULL } }

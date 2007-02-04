@@ -1,7 +1,7 @@
 /*
  * circuit.h - circuit class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.51 2006/09/07 10:56:53 raimi Exp $
+ * $Id: circuit.h,v 1.52 2007/02/04 18:08:52 ela Exp $
  *
  */
 
@@ -46,6 +46,8 @@ enum circuit_flag {
 #define VSRC_1 0
 #define VSRC_2 1
 #define VSRC_3 2
+#define VSRC_4 3
+#define VSRC_5 4
 
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
 #define RETFLAG(bit)     ((flag & (bit)) != 0)
