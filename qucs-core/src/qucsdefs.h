@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.60 2007-01-23 10:23:35 raimi Exp $
+ * $Id: qucsdefs.h,v 1.61 2007-02-04 18:08:52 ela Exp $
  *
  */
 
@@ -869,6 +869,9 @@ struct define_t qucs_definition_available[] =
       { "W3", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "W4", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
