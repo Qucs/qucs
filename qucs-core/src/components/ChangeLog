@@ -1,3 +1,9 @@
+2007-02-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscross.cpp: Applied asymmetric corrections for
+	the microstrip cross junction model.  There is still an open
+	issue about the formulas...
+
 2007-02-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mscross.cpp: Started to implement the microstrip
