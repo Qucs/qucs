@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscross.cpp,v 1.6 2007-02-05 19:46:47 ela Exp $
+ * $Id: mscross.cpp,v 1.7 2007-02-07 19:06:54 ela Exp $
  *
  */
 
@@ -102,9 +102,9 @@ nr_double_t mscross::calcCap (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W2h = W2 / h;
   nr_double_t X = log10 (W1h) * (86.6 * W2h - 30.9 * sqrt (W2h) + 367) + 
     cubic (W2h) + 74 * W2h + 130;
-  return 1e-9 * W1 * 0.25 * (4 * X * pow (W1h, -1.0 / 3.0) - 60 +
-			     1 / W2h / 2 - 0.375 * W1h * (1 - W2h));
-}
+  return 1e-12 * W1 * 0.25 * (4 * X * pow (W1h, -1.0 / 3.0) - 60 +
+			      1 / W2h / 2 - 0.375 * W1h * (1 - W2h));
+ }
 
 nr_double_t mscross::calcInd (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W1h = W1 / h;
