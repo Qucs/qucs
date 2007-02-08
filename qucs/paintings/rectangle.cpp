@@ -179,19 +179,22 @@ QString Rectangle::save()
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool Rectangle::ResizeTouched(int x, int y, int len)
+bool Rectangle::resizeTouched(float fX, float fY, float len)
 {
+  float fCX = float(cx), fCY = float(cy);
+  float fX2 = float(cx+x2), fY2 = float(cy+y2);
+
   State = -1;
-  if(x < cx-len) return false;
-  if(y < cy-len) return false;
-  if(x > cx+x2+len) return false;
-  if(y > cy+y2+len) return false;
+  if(fX < fCX-len) return false;
+  if(fY < fCY-len) return false;
+  if(fX > fX2+len) return false;
+  if(fY > fY2+len) return false;
 
   State = 0;
-  if(x < cx+len)  State = 1;
-  else if(x < cx+x2-len) { State = -1; return false; }
-  if(y < cy+len)  State |= 2;
-  else if(y < cy+y2-len) { State = -1; return false; }
+  if(fX < fCX+len)  State = 1;
+  else if(fX < fX2-len) { State = -1; return false; }
+  if(fY < fCY+len)  State |= 2;
+  else if(fY < fY2-len) { State = -1; return false; }
 
   return true;
 }
@@ -276,35 +279,31 @@ bool Rectangle::MousePressing()
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-bool Rectangle::getSelected(int x, int y)
+bool Rectangle::getSelected(float fX, float fY, float w)
 {
   if(filled) {
-    if(x > (cx+x2)) return false;   // coordinates outside the rectangle ?
-    if(y > (cy+y2)) return false;
-    if(x < cx) return false;
-    if(y < cy) return false;
+    if(int(fX) > cx+x2) return false;   // coordinates outside the rectangle ?
+    if(int(fY) > cy+y2) return false;
+    if(int(fX) < cx) return false;
+    if(int(fY) < cy) return false;
+  }
+  else {
+    fX -= float(cx);
+    fY -= float(cy);
+    float fX2 = float(x2);
+    float fY2 = float(y2);
 
-    return true;
+    if(fX > fX2+w) return false;   // coordinates outside the rectangle ?
+    if(fY > fY2+w) return false;
+    if(fX < -w) return false;
+    if(fY < -w) return false;
+
+    // coordinates inside the rectangle ?
+    if(fX < fX2-w) if(fX > w) if(fY < fY2-w) if(fY > w)
+      return false;
   }
 
-  // 5 is the precision the user must point onto the rectangle
-  if(x > (cx+x2+5)) return false;   // coordinates outside the rectangle ?
-  if(y > (cy+y2+5)) return false;
-  if(x < (cx-5)) return false;
-  if(y < (cy-5)) return false;
-
-  // coordinates inside the rectangle ?
-  if(x < (cx+x2-5)) if(x > (cx+5)) if(y < (cy+y2-5)) if(y > (cy+5))
-    return false;
-
   return true;
-}
-
-// --------------------------------------------------------------------------
-void Rectangle::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{
-  _x1 = cx;     _y1 = cy;
-  _x2 = cx+x2;  _y2 = cy+y2;
 }
 
 // --------------------------------------------------------------------------

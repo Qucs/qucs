@@ -46,7 +46,7 @@ class VTabWidget;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, int, int);
+typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
 
 extern QDir QucsWorkDir;
 extern QDir QucsHomeDir;
@@ -70,7 +70,7 @@ public:
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, int, int);
+  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, float, float);
   void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
   void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
 

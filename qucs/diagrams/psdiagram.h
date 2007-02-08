@@ -33,7 +33,7 @@ public:
   static Element* info_sp(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
+  void calcCoordinate(double* &, double* &, double* &, float*, float*, Axis*);
 };
 
 #endif

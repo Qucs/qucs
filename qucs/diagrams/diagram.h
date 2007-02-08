@@ -34,8 +34,8 @@
 #define  FIT_MEMORY_SIZE  \
   if(p >= p_end) {     \
     Size += 256;        \
-    tmp = p - g->Points; \
-    p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int)); \
+    tmp = p - g->ScrPoints; \
+    p = p_end = g->ScrPoints = (float*)realloc(g->ScrPoints, Size*sizeof(float)); \
     p += tmp; \
     p_end += Size - 9; \
   } \
@@ -62,7 +62,7 @@ public:
   virtual Diagram* newOne();
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
-               (double* &, double* &, double* &, int*, int*, Axis*) {};
+               (double* &, double* &, double* &, float*, float*, Axis*) {};
   virtual void calcLimits() {};
   
   virtual void paint(ViewPainter*);
@@ -71,7 +71,7 @@ public:
   void    paintScheme(QPainter*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
-  bool    ResizeTouched(int, int, int);
+  bool    resizeTouched(float, float, float);
   QString save();
   bool    load(const QString&, QTextStream*);
 
@@ -83,7 +83,7 @@ public:
   bool sameDependencies(Graph*, Graph*);
   int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 
-  virtual bool insideDiagram(int, int);
+  virtual bool insideDiagram(float, float);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
@@ -112,9 +112,9 @@ protected:
   bool calcYAxis(Axis*, int);
   virtual void createAxisLabels();
 
-  int  regionCode(int, int);
-  virtual void clip(int* &);
-  void rectClip(int* &);
+  int  regionCode(float, float);
+  virtual void clip(float* &);
+  void rectClip(float* &);
 
   virtual void calcData(Graph*);
 

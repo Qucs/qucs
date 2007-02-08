@@ -165,12 +165,12 @@ QString PortSymbol::save()
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-bool PortSymbol::getSelected(int x, int y)
+bool PortSymbol::getSelected(float fX, float fY, float)
 {
-  if(x < cx+x1)  return false;
-  if(y < cy+y1)  return false;
-  if(x > cx+x1+x2)  return false;
-  if(y > cy+y1+y2)  return false;
+  if(int(fX) < cx+x1)  return false;
+  if(int(fY) < cy+y1)  return false;
+  if(int(fX) > cx+x1+x2)  return false;
+  if(int(fY) > cy+y1+y2)  return false;
 
   return true;
 }

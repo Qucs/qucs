@@ -31,11 +31,11 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
-  bool insideDiagram(int, int);
+  void calcCoordinate(double* &, double* &, double* &, float*, float*, Axis*);
+  bool insideDiagram(float, float);
 
 protected:
-  void clip(int* &);
+  void clip(float* &);
 };
 
 #endif

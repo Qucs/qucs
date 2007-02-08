@@ -43,12 +43,12 @@ SmithDiagram::~SmithDiagram()
 // ------------------------------------------------------------
 // calculate the screen coordinates for the graph data
 void SmithDiagram::calcCoordinate(double* &, double* &yD, double* &,
-				  int *px, int *py, Axis*)
+                                  float *px, float *py, Axis*)
 {
   double yr = *(yD++);
   double yi = *(yD++);
-  *px = int((yr/yAxis.up + 1.0)*double(x2)/2.0 + 0.5);
-  *py = int((yi/yAxis.up + 1.0)*double(y2)/2.0 + 0.5);
+  *px = float((yr/yAxis.up + 1.0)*double(x2)/2.0);
+  *py = float((yi/yAxis.up + 1.0)*double(y2)/2.0);
 }
 
 // ------------------------------------------------------------

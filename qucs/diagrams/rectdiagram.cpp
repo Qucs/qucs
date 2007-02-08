@@ -41,7 +41,7 @@ RectDiagram::~RectDiagram()
 
 // ------------------------------------------------------------
 void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
-				 int *px, int *py, Axis *pa)
+                                 float *px, float *py, Axis *pa)
 {
   double x  = *(xD++);
   double yr = *(yD++);
@@ -49,20 +49,20 @@ void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
   if(xAxis.log) {
     x /= xAxis.low;
     if(x <= 0.0)  *px = -100000;   // "negative infinity"
-    else  *px = int(log10(x)/log10(xAxis.up / xAxis.low) * double(x2) + 0.5);
+    else  *px = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
   }
-  else  *px = int((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
+  else  *px = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 
   if(pa->log) {
     yr = sqrt(yr*yr + yi*yi);
     if(yr <= 0.0)  *py = -100000;   // "negative infinity"
-    else *py = int(log10(yr/fabs(pa->low)) /
-		log10(pa->up/pa->low) * double(y2) + 0.5);
+    else *py = float(log10(yr/fabs(pa->low)) /
+		log10(pa->up/pa->low) * double(y2));
   }
   else {
     if(fabs(yi) > 1e-250)  // preserve negative values if not complex number
       yr = sqrt(yr*yr + yi*yi);
-    *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
+    *py = float((yr-pa->low)/(pa->up-pa->low)*double(y2));
   }
 }
 
@@ -207,13 +207,13 @@ Frame:
 }
 
 // ------------------------------------------------------------
-bool RectDiagram::insideDiagram(int x, int y)
+bool RectDiagram::insideDiagram(float x, float y)
 {
   return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------
-void RectDiagram::clip(int* &p)
+void RectDiagram::clip(float* &p)
 {
   rectClip(p);
 }

@@ -432,21 +432,19 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
   
-  int x = int(float(Event->pos().x())/Scale) + ViewX1;
-  int y = int(float(Event->pos().y())/Scale) + ViewY1;
+  float x = float(Event->pos().x())/Scale + float(ViewX1);
+  float y = float(Event->pos().y())/Scale + float(ViewY1);
 
-  if(Event->button() != Qt::LeftButton) {
-    if(App->MousePressAction == &MouseActions::MPressElement)
-      App->view->MPressElement(this, Event, x, y);
-    else if(App->MousePressAction == &MouseActions::MPressWire2)
-      App->view->MPressWire2(this, Event, x, y);
-    else {
-      App->view->rightPressMenu(this, Event, x, y); // show menu on right mouse button
-      if(App->MouseReleaseAction)
-        (App->view->*(App->MouseReleaseAction))(this, Event); // not called (menu has focus)
-    }
-    return;
-  }
+  if(Event->button() != Qt::LeftButton)
+    if(App->MousePressAction != &MouseActions::MPressElement)
+      if(App->MousePressAction != &MouseActions::MPressWire2) {
+        // show menu on right mouse button
+        App->view->rightPressMenu(this, Event, x, y);
+        if(App->MouseReleaseAction)
+           // Is not called automatically because menu has focus.
+          (App->view->*(App->MouseReleaseAction))(this, Event);
+        return;
+      }
 
   if(App->MousePressAction)
     (App->view->*(App->MousePressAction))(this, Event, x, y);

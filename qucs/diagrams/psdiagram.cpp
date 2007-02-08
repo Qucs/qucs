@@ -42,12 +42,12 @@ PSDiagram::~PSDiagram()
 
 // ------------------------------------------------------------
 void PSDiagram::calcCoordinate(double* &, double* &yD, double* &,
-			       int *px, int *py, Axis *pa)
+                               float *px, float *py, Axis *pa)
 {
   double yr = *(yD++);
   double yi = *(yD++);
-  *px = int((yr/pa->up + 1.0)*double(x2)/2.0 + 0.5);
-  *py = int((yi/pa->up + 1.0)*double(y2)/2.0 + 0.5);
+  *px = float((yr/pa->up + 1.0)*double(x2)/2.0);
+  *py = float((yi/pa->up + 1.0)*double(y2)/2.0);
 }
 
 // --------------------------------------------------------------
