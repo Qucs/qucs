@@ -869,9 +869,9 @@ void Schematic::markerUpDown(bool up, QPtrList<Element> *Elements)
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
 // If 'flag' is true, the element can be deselected.
-Element* Schematic::selectElement(int x, int y, bool flag, int *index)
+Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
 {
-  int n;
+  int n, x = int(fX), y = int(fY);
   Element *pe_1st=0, *pe_sel=0;
   float Corr = textCorr(); // for selecting text
 
@@ -880,8 +880,8 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
     if(pc->getSelected(x, y)) {
       if(flag) { pc->isSelected ^= flag; return pc; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pc;
+        pe_sel->isSelected = false;
+        return pc;
       }
       if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
       if(pc->isSelected) pe_sel = pc;
@@ -901,8 +901,8 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
     if(pw->getSelected(x, y)) {
       if(flag) { pw->isSelected ^= flag; return pw; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pw;
+        pe_sel->isSelected = false;
+        return pw;
       }
       if(pe_1st == 0) pe_1st = pw;  // give access to elements lying beneath
       if(pw->isSelected) pe_sel = pw;
@@ -911,8 +911,8 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pl;
+        pe_sel->isSelected = false;
+        return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
       if(pl->isSelected) pe_sel = pl;
@@ -925,8 +925,8 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pl;
+        pe_sel->isSelected = false;
+        return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
       if(pl->isSelected) pe_sel = pl;
@@ -934,7 +934,7 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
   }
 
   Graph *pg;
-  n = int(5.0 / Scale);  // size if area for resizing
+  Corr = 5.0 / Scale;  // size of line select and area for resizing
   // test all diagrams
   for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev()) {
 
@@ -944,19 +944,19 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
         if(pm->getSelected(x-pd->cx, y-pd->cy)) {
           if(flag) { pm->isSelected ^= flag; return pm; }
           if(pe_sel) {
-	    pe_sel->isSelected = false;
-	    return pm;
-	  }
+            pe_sel->isSelected = false;
+            return pm;
+          }
           if(pe_1st == 0) pe_1st = pm; // give access to elements beneath
           if(pm->isSelected) pe_sel = pm;
         }
 
     // resize area clicked ?
     if(pd->isSelected)
-      if(pd->ResizeTouched(x, y, n))
-	if(pe_1st == 0) {
-	  pd->Type = isDiagramResize;
-	  return pd;
+      if(pd->resizeTouched(fX, fY, Corr))
+        if(pe_1st == 0) {
+          pd->Type = isDiagramResize;
+          return pd;
         }
 
     if(pd->getSelected(x, y)) {
@@ -980,9 +980,9 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
         if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0) {
           if(flag) { pg->isSelected ^= flag; return pg; }
           if(pe_sel) {
-	    pe_sel->isSelected = false;
-	    return pg;
-	  }
+            pe_sel->isSelected = false;
+            return pg;
+          }
           if(pe_1st == 0) pe_1st = pg;  // access to elements lying beneath
           if(pg->isSelected) pe_sel = pg;
         }
@@ -990,8 +990,8 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
 
       if(flag) { pd->isSelected ^= flag; return pd; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pd;
+        pe_sel->isSelected = false;
+        return pd;
       }
       if(pe_1st == 0) pe_1st = pd;  // give access to elements lying beneath
       if(pd->isSelected) pe_sel = pd;
@@ -1001,17 +1001,17 @@ Element* Schematic::selectElement(int x, int y, bool flag, int *index)
   // test all paintings
   for(Painting *pp = Paintings->last(); pp != 0; pp = Paintings->prev()) {
     if(pp->isSelected)
-      if(pp->ResizeTouched(x, y, n))
-	if(pe_1st == 0) {
-	  pp->Type = isPaintingResize;
-	  return pp;
+      if(pp->resizeTouched(fX, fY, Corr))
+        if(pe_1st == 0) {
+          pp->Type = isPaintingResize;
+          return pp;
         }
 
-    if(pp->getSelected(x, y)) {
+    if(pp->getSelected(fX, fY, Corr)) {
       if(flag) { pp->isSelected ^= flag; return pp; }
       if(pe_sel) {
-	pe_sel->isSelected = false;
-	return pp;
+        pe_sel->isSelected = false;
+        return pp;
       }
       if(pe_1st == 0) pe_1st = pp;  // give access to elements lying beneath
       if(pp->isSelected) pe_sel = pp;
@@ -2544,11 +2544,12 @@ void Schematic::copyLabels(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
-Painting* Schematic::selectedPainting(int x, int y)
+Painting* Schematic::selectedPainting(float fX, float fY)
 {
-  // test all paintings
+  float Corr = 5.0 / Scale; // size of line select
+
   for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->getSelected(x,y))
+    if(pp->getSelected(fX, fY, Corr))
       return pp;
 
   return 0;

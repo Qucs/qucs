@@ -39,9 +39,8 @@ public:
   void paint(ViewPainter*);
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
   bool MousePressing();
-  bool getSelected(int, int);
-  void Bounding(int&, int&, int&, int&);
-  bool ResizeTouched(int, int, int);
+  bool getSelected(float, float, float);
+  bool resizeTouched(float, float, float);
   void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();

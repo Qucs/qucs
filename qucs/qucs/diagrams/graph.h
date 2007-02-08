@@ -29,12 +29,16 @@
 
 // meaning of the values in a graph "Points" list
 #define STROKEEND   -2
-#define GRAPHARROW  -5
-#define GRAPHCIRCLE -6
-#define GRAPHSTAR   -7
 #define BRANCHEND   -10
 #define GRAPHEND    -100
 
+#define GRAPHSTYLE_SOLID    0
+#define GRAPHSTYLE_DASH     1
+#define GRAPHSTYLE_DOT      2
+#define GRAPHSTYLE_LONGDASH 3
+#define GRAPHSTYLE_STAR     4
+#define GRAPHSTYLE_CIRCLE   5
+#define GRAPHSTYLE_ARROW    6
 
 class Diagram;
 class ViewPainter;
@@ -63,10 +67,11 @@ public:
   Graph*  sameNewOne();
 
   QDateTime lastLoaded;  // when it was loaded into memory
-  int     yAxisNo;   // which y axis is used
+  int     yAxisNo;       // which y axis is used
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
-  int    *Points, countY; // data in screen coordinates, countY = curves number
+  float  *ScrPoints; // data in screen coordinates
+  int     countY;    // number of curves
   QString Var;
   QColor  Color;
   int     Thick;

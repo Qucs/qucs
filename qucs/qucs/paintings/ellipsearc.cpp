@@ -156,19 +156,22 @@ QString EllipseArc::save()
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool EllipseArc::ResizeTouched(int x, int y, int len)
+bool EllipseArc::resizeTouched(float fX, float fY, float len)
 {
+  float fCX = float(cx), fCY = float(cy);
+  float fX2 = float(cx+x2), fY2 = float(cy+y2);
+
   State = -1;
-  if(x < cx-len) return false;
-  if(y < cy-len) return false;
-  if(x > cx+x2+len) return false;
-  if(y > cy+y2+len) return false;
+  if(fX < fCX-len) return false;
+  if(fY < fCY-len) return false;
+  if(fX > fX2+len) return false;
+  if(fY > fY2+len) return false;
 
   State = 0;
-  if(x < cx+len) State = 1;
-  else if(x <= cx+x2-len) { State = -1; return false; }
-  if(y < cy+len)  State |= 2;
-  else if(y <= cy+y2-len) { State = -1; return false; }
+  if(fX < fCX+len) State = 1;
+  else if(fX <= fX2-len) { State = -1; return false; }
+  if(fY < fCY+len)  State |= 2;
+  else if(fY <= fY2-len) { State = -1; return false; }
 
   return true;
 }
@@ -288,37 +291,31 @@ bool EllipseArc::MousePressing()
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-bool EllipseArc::getSelected(int x, int y)
+bool EllipseArc::getSelected(float fX, float fY, float w)
 {
-  int Phase = int(16.0*180.0/M_PI
-		* atan2(double(x2*(cy+(y2>>1) - y)),
-			double(y2*(x - cx-(x2>>1)))));
+  int Phase =
+      int(16.0*180.0/M_PI *
+          atan2(double(x2*cy + ((x2*y2)>>1)) - double(x2)*double(fY),
+                double(y2)*double(fX) - double(y2*cx-((y2*x2)>>1))));
   Phase -= Angle;
   while(Phase < 0) Phase += 16*360;
-  if(Phase > ArcLen) return false;
+  if(Phase > ArcLen)
+    return false;
 
-  x  = (x-cx-(x2>>1));  x *= x;
-  y  = (y-cy-(y2>>1));  y *= y;
+  float fX2 = float(x2);
+  float fY2 = float(y2);
+  fX -= float(cx) + fX2/2.0;
+  fY -= float(cy) + fY2/2.0;
 
-  int a1 = (x2-5)>>1;  a1 *= a1;
-  int a2 = (x2+5)>>1;  a2 *= a2;
-  int b1 = (y2-5)>>1;  b1 *= b1;
-  int b2 = (y2+5)>>1;  b2 *= b2;
+  float a1 = fX / (fX2/2.0 - w);  a1 *= a1;
+  float a2 = fX / (fX2/2.0 + w);  a2 *= a2;
+  float b1 = fY / (fY2/2.0 - w);  b1 *= b1;
+  float b2 = fY / (fY2/2.0 + w);  b2 *= b2;
 
-  double x_double = double(x);
-  double y_double = double(y);
-
-  if((x_double/double(a1) + y_double/double(b1)) < 1.0) return false;
-  if((x_double/double(a2) + y_double/double(b2)) > 1.0) return false;
+  if(a1+b1 < 1.0)  return false;
+  if(a2+b2 > 1.0)  return false;
 
   return true;
-}
-
-// --------------------------------------------------------------------------
-void EllipseArc::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{
-  _x1 = cx;     _y1 = cy;
-  _x2 = cx+x2;  _y2 = cy+y2;
 }
 
 // --------------------------------------------------------------------------

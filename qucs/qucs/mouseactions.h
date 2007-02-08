@@ -77,21 +77,21 @@ public:
   void MMoveZoomIn(Schematic*, QMouseEvent*);
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
-  void MPressSelect(Schematic*, QMouseEvent*, int, int);
-  void MPressDelete(Schematic*, QMouseEvent*, int, int);
-  void MPressActivate(Schematic*, QMouseEvent*, int, int);
-  void MPressMirrorX(Schematic*, QMouseEvent*, int, int);
-  void MPressMirrorY(Schematic*, QMouseEvent*, int, int);
-  void MPressRotate(Schematic*, QMouseEvent*, int, int);
-  void MPressElement(Schematic*, QMouseEvent*, int, int);
-  void MPressLabel(Schematic*, QMouseEvent*, int, int);
-  void MPressWire1(Schematic*, QMouseEvent*, int, int);
-  void MPressWire2(Schematic*, QMouseEvent*, int, int);
-  void MPressPainting(Schematic*, QMouseEvent*, int, int);
-  void MPressMarker(Schematic*, QMouseEvent*, int, int);
-  void MPressOnGrid(Schematic*, QMouseEvent*, int, int);
-  void MPressMoveText(Schematic*, QMouseEvent*, int, int);
-  void MPressZoomIn(Schematic*, QMouseEvent*, int, int);
+  void MPressSelect(Schematic*, QMouseEvent*, float, float);
+  void MPressDelete(Schematic*, QMouseEvent*, float, float);
+  void MPressActivate(Schematic*, QMouseEvent*, float, float);
+  void MPressMirrorX(Schematic*, QMouseEvent*, float, float);
+  void MPressMirrorY(Schematic*, QMouseEvent*, float, float);
+  void MPressRotate(Schematic*, QMouseEvent*, float, float);
+  void MPressElement(Schematic*, QMouseEvent*, float, float);
+  void MPressLabel(Schematic*, QMouseEvent*, float, float);
+  void MPressWire1(Schematic*, QMouseEvent*, float, float);
+  void MPressWire2(Schematic*, QMouseEvent*, float, float);
+  void MPressPainting(Schematic*, QMouseEvent*, float, float);
+  void MPressMarker(Schematic*, QMouseEvent*, float, float);
+  void MPressOnGrid(Schematic*, QMouseEvent*, float, float);
+  void MPressMoveText(Schematic*, QMouseEvent*, float, float);
+  void MPressZoomIn(Schematic*, QMouseEvent*, float, float);
 
   void MDoubleClickSelect(Schematic*, QMouseEvent*);
   void MDoubleClickWire2(Schematic*, QMouseEvent*);
@@ -108,7 +108,7 @@ public:
 
   void moveElements(QPtrList<Element>*, int, int);
   void endElementMoving(Schematic*, QPtrList<Element>*);
-  void rightPressMenu(Schematic*, QMouseEvent*, int, int);
+  void rightPressMenu(Schematic*, QMouseEvent*, float, float);
 };
 
 #endif

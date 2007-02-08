@@ -157,7 +157,7 @@ public:
   void    markerLeftRight(bool, QPtrList<Element>*);
   void    markerUpDown(bool, QPtrList<Element>*);
 
-  Element* selectElement(int, int, bool, int *index=0);
+  Element* selectElement(float, float, bool, int *index=0);
   void     deselectElements(Element*);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
@@ -187,7 +187,7 @@ public:
   void     insertNodeLabel(WireLabel*);
   void     copyLabels(int&, int&, int&, int&, QPtrList<Element>*);
 
-  Painting* selectedPainting(int, int);
+  Painting* selectedPainting(float, float);
   void      copyPaintings(int&, int&, int&, int&, QPtrList<Element>*);
 
 private:

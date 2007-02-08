@@ -63,6 +63,9 @@ void ID_Text::paint(ViewPainter *p)
     p->Painter->setPen(QPen(QPen::darkGray,3));
     p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }
+
+  x2 = int(float(x2)  / p->Scale);
+  y2 = int(float(y2) / p->Scale);
 }
 
 // --------------------------------------------------------------------------
@@ -136,21 +139,14 @@ QString ID_Text::save()
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-bool ID_Text::getSelected(int x, int y)
+bool ID_Text::getSelected(float fX, float fY, float)
 {
-  if(x < cx)  return false;
-  if(y < cy)  return false;
-  if(x > cx+x2)  return false;
-  if(y > cy+y2)  return false;
+  if(int(fX) < cx)  return false;
+  if(int(fY) < cy)  return false;
+  if(int(fX) > cx+x2)  return false;
+  if(int(fY) > cy+y2)  return false;
 
   return true;
-}
-
-// --------------------------------------------------------------------------
-void ID_Text::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{
-  _x1 = cx;     _y1 = cy;
-  _x2 = cx+x2;  _y2 = cy+y2;
 }
 
 // --------------------------------------------------------------------------

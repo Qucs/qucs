@@ -27,10 +27,10 @@ class QPainter;
 class Painting : public Element  {
 public:
   Painting();
- ~Painting();
+ ~Painting() {};
 
   virtual void getCenter(int&, int &) {};
-  virtual bool getSelected(int, int) { return false; };
+  virtual bool getSelected(float, float, float) { return false; };
 
   virtual Painting* newOne();
   virtual bool load(const QString&) { return true; };
@@ -39,8 +39,8 @@ public:
   virtual void MouseMoving(QPainter*, int, int, int, int,
                            QPainter*, int, int, bool) {};
   virtual bool MousePressing() { return false; };
-  virtual void Bounding(int&, int&, int&, int&) {};
-  virtual bool ResizeTouched(int, int, int) { return false; };
+  virtual void Bounding(int&, int&, int&, int&);
+  virtual bool resizeTouched(float, float, float) { return false; };
   virtual void MouseResizeMoving(int, int, QPainter*) {};
 
   virtual void rotate() {};
