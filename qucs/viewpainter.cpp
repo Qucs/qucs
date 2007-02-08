@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "viewpainter.h"
+#include "diagrams/graph.h"
 
 #include <math.h>
 
@@ -85,6 +86,138 @@ void ViewPainter::drawLine(int x1, int y1, int x2, int y2)
   y2 = TO_INT(z);
 
   Painter->drawLine(x1, y1, x2, y2);
+}
+
+// -------------------------------------------------------------
+void ViewPainter::drawLines(int x0, int y0, float *pp)
+{
+  float z, DX_, DY_;
+  int x1, x2, y1, y2;
+  if(*pp < 0)
+    pp++;
+
+  DX_ = DX + float(x0)*Scale;
+  DY_ = DY + float(y0)*Scale;
+
+  while(*pp > GRAPHEND) {
+    if(*pp >= 0) {
+      z = DX_ + (*pp)*Scale;
+      x1 = TO_INT(z);
+      z = DY_ - (*(pp+1))*Scale;
+      y1 = TO_INT(z);
+      Painter->drawPoint(x1, y1);
+    }
+    while(*pp > BRANCHEND) {   // until end of branch
+      z = DX_ + (*pp)*Scale;
+      x1 = TO_INT(z);
+      z = DY_ - (*(pp+1))*Scale;
+      y1 = TO_INT(z);
+      pp += 2;
+      while(*pp > STROKEEND) { // until end of stroke
+        z = DX_ + (*pp)*Scale;
+        x2 = TO_INT(z);
+        z = DY_ - (*(pp+1))*Scale;
+        y2 = TO_INT(z);
+        Painter->drawLine(x1, y1, x2, y2);
+        pp += 2;
+        if(*pp <= STROKEEND)  break;
+
+        z = DX_ + (*pp)*Scale;
+        x1 = TO_INT(z);
+        z = DY_ - (*(pp+1))*Scale;
+        y1 = TO_INT(z);
+        Painter->drawLine(x2, y2, x1, y1);
+        pp += 2;
+      }
+      if(*pp <= BRANCHEND)  break;   // end of line ?
+      pp++;
+    }
+    pp++;
+  }
+}
+
+// -------------------------------------------------------------
+void ViewPainter::drawStarSymbols(int x0, int y0, float *pp)
+{
+  int x3, x1, x2, y1, y2;
+  float z, DX_, DY_;
+  if(*pp < 0)
+    pp++;
+
+  DX_ = DX + float(x0)*Scale;
+  DY_ = DY + float(y0)*Scale;
+
+  while(*pp > GRAPHEND) {
+    if(*pp >= 0) {
+      z = DX_ + (*(pp++))*Scale;
+      x0 = TO_INT(z-5.0*Scale);
+      x3 = TO_INT(z+5.0*Scale);
+      x1 = TO_INT(z-4.0*Scale);
+      x2 = TO_INT(z+4.0*Scale);
+      z = DY_ - (*(pp++))*Scale;
+      y0 = TO_INT(z);
+      y1 = TO_INT(z-4.0*Scale);
+      y2 = TO_INT(z+4.0*Scale);
+      Painter->drawLine(x0, y0, x3, y0); // horizontal line
+      Painter->drawLine(x1, y2, x2, y1); // upper left to lower right
+      Painter->drawLine(x2, y2, x1, y1); // upper right to lower left
+    }
+    else  pp++;
+  }
+}
+
+// -------------------------------------------------------------
+void ViewPainter::drawCircleSymbols(int x0, int y0, float *pp)
+{
+  int d;
+  float z, DX_, DY_;
+  if(*pp < 0)
+    pp++;
+
+  z = 8.0*Scale;
+  d = TO_INT(z);
+  DX_ = DX + float(x0)*Scale;
+  DY_ = DY + float(y0)*Scale;
+
+  while(*pp > GRAPHEND) {
+    if(*pp >= 0) {
+      z = DX_ + (*(pp++)-4.0)*Scale;
+      x0 = TO_INT(z);
+      z = DY_ - (*(pp++)-4.0)*Scale;
+      y0 = TO_INT(z);
+      Painter->drawEllipse(x0, y0, d, d);
+    }
+    else  pp++;
+  }
+}
+
+// -------------------------------------------------------------
+void ViewPainter::drawArrowSymbols(int x0, int y0, float *pp)
+{
+  int x1, x2, y1, y2;
+  float z, DX_, DY_;
+  if(*pp < 0)
+    pp++;
+
+  DX_ = DX + float(x0)*Scale;
+  DY_ = DY + float(y0)*Scale;
+  y2 = TO_INT(DY_);
+
+  while(*pp > GRAPHEND) {
+    if(*pp >= 0) {
+      z = DX_ + (*(pp++))*Scale;
+      x0 = TO_INT(z);
+      x1 = TO_INT(z-4.0*Scale);
+      x2 = TO_INT(z+4.0*Scale);
+      z = DY_ - (*(pp++))*Scale;
+      y0 = TO_INT(z);
+      y1 = TO_INT(z+7.0*Scale);
+      Painter->drawLine(x0, y0, x0, y2);
+      Painter->drawLine(x1, y1, x0, y0);
+      Painter->drawLine(x2, y1, x0, y0);
+    }
+    else  pp++;
+  }
 }
 
 // -------------------------------------------------------------

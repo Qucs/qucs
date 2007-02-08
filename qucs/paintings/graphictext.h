@@ -24,7 +24,7 @@
 class GraphicText : public Painting  {
 public:
   GraphicText();
-  ~GraphicText();
+ ~GraphicText();
 
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
@@ -37,7 +37,7 @@ public:
   void paint(ViewPainter*);
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
   bool MousePressing();
-  bool getSelected(int, int);
+  bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
 
   void rotate();

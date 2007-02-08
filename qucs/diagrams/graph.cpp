@@ -27,7 +27,6 @@ Graph::Graph(const QString& _Line)
 
   Var    = _Line;
   countY = 0;    // no points in graph
-  Points = 0;
   Thick  = numMode = 0;
   Color  = 0x0000ff;   // blue
   Style  = 0;    // solid line
@@ -35,7 +34,7 @@ Graph::Graph(const QString& _Line)
   isSelected = false;
   yAxisNo = 0;   // left y axis
 
-  Points = 0;
+  ScrPoints = 0;
   cPointsY = 0;
 
   Markers.setAutoDelete(true);
@@ -44,14 +43,16 @@ Graph::Graph(const QString& _Line)
 
 Graph::~Graph()
 {
-  if(Points != 0) free(Points);
-  if(cPointsY != 0) delete[] cPointsY;
+  if(ScrPoints != 0)
+    free(ScrPoints);
+  if(cPointsY != 0)
+    delete[] cPointsY;
 }
 
 // ---------------------------------------------------------------------
 void Graph::paint(ViewPainter *p, int x0, int y0)
 {
-  if(Points == 0)
+  if(ScrPoints == 0)
     return;
 
   if(isSelected) {
@@ -71,40 +72,18 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
 // ---------------------------------------------------------------------
 void Graph::paintLines(ViewPainter *p, int x0, int y0)
 {
-  int x, y;
-  int *pp = Points;
-
-  if(*pp < 0)  pp++;
-  while(*pp > -99) {
-    if(*pp >= 0) if(*(pp+2) != GRAPHCIRCLE)
-      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-    while(*pp > -9) {   // until end of branch
-      pp += 2;
-      while(*pp > -2) {    // until end of stroke
-	p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	pp += 2;
-      }
-      if(*pp < -9)  break;   // end of line ?
-      else {
-	x = x0 + *(pp-2);
-	y = y0 - *(pp-1);
-	if(*pp == GRAPHSTAR) {    // paint star
-	  p->drawLine(x-5, y, x+5, y);     // horizontal line
-	  p->drawLine(x-4, y+4, x+4, y-4); // upper left to lower right
-	  p->drawLine(x+4, y+4, x-4, y-4); // upper right to lower left
-	}
-	else if(*pp == GRAPHCIRCLE)    // paint circle
-	  p->drawEllipse(x-4, y-4, 8, 8);
-	else if(*pp == GRAPHARROW) {  // paint arrow
-	  p->drawLine(x, y, x, y0);
-	  p->drawLine(x-4, y+7, x, y);
-	  p->drawLine(x+4, y+7, x, y);
-	}
-      }
-      pp++;
-    }
-//    if(*pp < -99) break; // end of all lines ?
-    pp++;
+  switch(Style) {
+    case GRAPHSTYLE_STAR:
+      p->drawStarSymbols(x0, y0, ScrPoints);
+      break;
+    case GRAPHSTYLE_CIRCLE:
+      p->drawCircleSymbols(x0, y0, ScrPoints);
+      break;
+    case GRAPHSTYLE_ARROW:
+      p->drawArrowSymbols(x0, y0, ScrPoints);
+      break;
+    default:
+      p->drawLines(x0, y0, ScrPoints);
   }
 }
 
@@ -168,7 +147,7 @@ bool Graph::load(const QString& _s)
 // diagram cx/cy. 5 is the precision the user must point onto the graph.
 int Graph::getSelected(int x, int y)
 {
-  int *pp = Points;
+  float *pp = ScrPoints;
   if(pp == 0) return -1;
 
   int A, z=0;
@@ -176,41 +155,60 @@ int Graph::getSelected(int x, int y)
   int dy, dy2, y1;
 
   int countX = cPointsX.getFirst()->count;
-  if(*pp < 0) {
-    if(*pp < -9) z++;
+  if(*pp <= STROKEEND) {
+    if(*pp <= BRANCHEND) z++;
     pp++;
-    if(*pp < -9) {
+    if(*pp <= BRANCHEND) {
       z++;
       pp++;
-      if(*pp < -10)  return -1;   // not even one point ?
+      if(*pp < BRANCHEND)  return -1;   // not even one point ?
     }
   }
 
-  while(*pp > -99) {
-    while(*pp > -5) {
-      x1 = *(pp++);  y1 = *(pp++);
+
+  if(Style >= GRAPHSTYLE_STAR) {
+    // for graph symbols
+    while(*pp > GRAPHEND) {
+      if(*pp > STROKEEND) {
+        dx  = x - int(*(pp++));
+        dy  = y - int(*(pp++));
+
+        if(dx < -5) continue;
+        if(dx >  5) continue;
+        if(dy < -5) continue;
+        if(dy >  5) continue;
+        return z*countX;   // points on graph symbol
+      }
+      else {
+        z++;   // next branch
+        pp++;
+      }
+    }
+
+    return -1;
+  }
+
+
+
+  // for graph lines
+  while(*pp > GRAPHEND) {
+    while(*pp >= STROKEEND) {
+      x1 = int(*(pp++));
+      y1 = int(*(pp++));
       dx  = x - x1;
       dy  = y - y1;
 
-      dx2 = (*pp);
-      if(dx2 < -1) {
-	if(dx2 < -9) break;
-	pp++;
-	if(dx2 < -2) {     // no line, but single point (e.g. star) ?
-	  if(*pp < -9) break;
-	  if(dx < -5) continue;
-	  if(dx >  5) continue;
-	  if(dy < -5) continue;
-	  if(dy >  5) continue;
-	  return z*countX;   // points on graph
-	}
-	dx2 = *pp;
-	if(dx2 < -9) break;
+      dx2 = int(*pp);
+      if(dx2 <= STROKEEND) {  // end of stroke ?
+        if(dx2 <= BRANCHEND) break;
+        pp++;
+        dx2 = int(*pp);  // go on as graph can also be selected between strokes
+        if(dx2 <= BRANCHEND) break;
       }
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
       else { if(x > 5) if(x > dx2+5) continue; }
 
-      dy2 = (*(pp+1));
+      dy2 = int(*(pp+1));
       if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
       else { if(y > 5) if(y > dy2+5) continue; }
 

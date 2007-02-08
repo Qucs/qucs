@@ -65,6 +65,7 @@ void Marker::initText(int n)
   Text = "";
   nVarPos = 0;
 
+  float fX, fY;
   bool isCross = false;
   int nn, nnn, m, x, y, d, dmin = INT_MAX;
   DataX *pD = pGraph->cPointsX.first();
@@ -90,14 +91,14 @@ void Marker::initText(int n)
   m  = nnn - 1;
   pz = pGraph->cPointsY + 2*n;
   for(nn=0; nn<nnn; nn++) {
-    Diag->calcCoordinate(px, pz, py, &x, &y, pa);
+    Diag->calcCoordinate(px, pz, py, &fX, &fY, pa);
     if(isCross) {
       px--;
       py++;
       pz += 2*(pD->count-1);
     }
-    x -= cx;
-    y -= cy;
+    x = int(fX+0.5) - cx;
+    y = int(fY+0.5) - cy;
     d = x*x + y*y;
     if(d < dmin) {
       dmin = d;
@@ -121,20 +122,22 @@ void Marker::initText(int n)
   Text += pGraph->Var + ": ";
   switch(numMode) {
     case 0: Text += complexRect(*pz, *(pz+1), Precision);
-	    break;
+            break;
     case 1: Text += complexDeg(*pz, *(pz+1), Precision);
-	    break;
+            break;
     case 2: Text += complexRad(*pz, *(pz+1), Precision);
-	    break;
+            break;
   }
   VarPos[nVarPos] = *pz;
   VarPos[nVarPos+1] = *(pz+1);
 
   px = VarPos;
   py = VarPos + 1;
-  Diag->calcCoordinate(px, pz, py, &cx, &cy, pa);
+  Diag->calcCoordinate(px, pz, py, &fX, &fY, pa);
+  cx = int(fX+0.5);
+  cy = int(fY+0.5);
 
-  if(!Diag->insideDiagram(cx, cy))
+  if(!Diag->insideDiagram(fX, fY))
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       cx = Diag->x2 >> 1;
@@ -191,11 +194,11 @@ void Marker::createText()
   Text += pGraph->Var + ": ";
   switch(numMode) {
     case 0: Text += complexRect(*pz, *(pz+1), Precision);
-	    break;
+            break;
     case 1: Text += complexDeg(*pz, *(pz+1), Precision);
-	    break;
+            break;
     case 2: Text += complexRad(*pz, *(pz+1), Precision);
-	    break;
+            break;
   }
   VarPos[nVarPos] = *pz;
   VarPos[nVarPos+1] = *(pz+1);
@@ -204,10 +207,13 @@ void Marker::createText()
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
   pp = &(VarPos[0]);
-  Diag->calcCoordinate(pp, pz, py, &cx, &cy, pa);
 
+  float fX, fY;
+  Diag->calcCoordinate(pp, pz, py, &fX, &fY, pa);
+  cx = int(fX+0.5);
+  cy = int(fY+0.5);
 
-  if(!Diag->insideDiagram(cx, cy))
+  if(!Diag->insideDiagram(fX, fY))
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       cx = Diag->x2 >> 1;

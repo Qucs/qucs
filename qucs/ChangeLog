@@ -1,5 +1,11 @@
 2006-12-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
+	* better resizing at zoom levels <> 1
+	* better selecting at zoom levels <> 1
+	* correct cursor cross before starting new wire
+
+2006-12-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
 	* new components: twisted-pair transmission line, bond wire
 	* new symbol for 4-port transmission line
 	* fixed bug on subcircuit parameters without description

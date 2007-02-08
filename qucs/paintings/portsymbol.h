@@ -34,7 +34,7 @@ public:
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);
-  bool getSelected(int, int);
+  bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
 
   void rotate();

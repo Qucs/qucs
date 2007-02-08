@@ -210,14 +210,19 @@ bool GraphicText::MousePressing()
 // ------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
 // 5 is the precision the user must point onto the painting.
-bool GraphicText::getSelected(int x, int y)
+bool GraphicText::getSelected(float fX, float fY, float)
 {
-  double phi = M_PI/180.0*double(Angle);
-  double sine = sin(phi), cosine = cos(phi);
-  int _x = int( double(x-cx)*cosine - double(y-cy)*sine );
-  int _y = int( double(y-cy)*cosine + double(x-cx)*sine );
+  double phi  = M_PI/180.0*double(Angle);
+  float  sine = sin(phi), cosine = cos(phi);
 
-  if(_x >= 0) if(_y >= 0) if(_x <= x2) if(_y <= y2) return true;
+  fX -= float(cx);
+  fY -= float(cy);
+  int _x = int( fX*cosine - fY*sine );
+  int _y = int( fY*cosine + fX*sine );
+
+  if(_x >= 0) if(_y >= 0) if(_x <= x2) if(_y <= y2)
+    return true;
+
   return false;
 }
 
