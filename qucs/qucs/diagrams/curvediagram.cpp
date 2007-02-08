@@ -40,19 +40,19 @@ CurveDiagram::~CurveDiagram()
 
 // ------------------------------------------------------------
 void CurveDiagram::calcCoordinate(double* &, double* &yD, double* &,
-				  int *px, int *py, Axis *pa)
+				  float *px, float *py, Axis *pa)
 {
   double yr = *(yD++);
   double yi = *(yD++);
   if(xAxis.log)
-    *px = int(log10(yr / xAxis.low)/log10(xAxis.up / xAxis.low)
-		*double(x2) + 0.5);
-  else  *px = int((yr-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
+    *px = float(log10(yr / xAxis.low)/log10(xAxis.up / xAxis.low)
+		*double(x2));
+  else  *px = float((yr-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 
   if(pa->log)
-    *py = int(log10(yi / pa->low)/log10(pa->up / pa->low)
-		*double(y2) + 0.5);
-  else  *py = int((yi-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
+    *py = float(log10(yi / pa->low)/log10(pa->up / pa->low)
+		*double(y2));
+  else  *py = float((yi-pa->low)/(pa->up-pa->low)*double(y2));
 }
 
 // --------------------------------------------------------------
@@ -207,13 +207,13 @@ Frame:
 }
 
 // ------------------------------------------------------------
-bool CurveDiagram::insideDiagram(int x, int y)
+bool CurveDiagram::insideDiagram(float x, float y)
 {
   return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------
-void CurveDiagram::clip(int* &p)
+void CurveDiagram::clip(float* &p)
 {
   rectClip(p);
 }

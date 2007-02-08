@@ -39,9 +39,9 @@ public:
   QString save();
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
   bool MousePressing();
-  bool getSelected(int, int);
+  bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
-  bool ResizeTouched(int, int, int);
+  bool resizeTouched(float, float, float);
   void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();

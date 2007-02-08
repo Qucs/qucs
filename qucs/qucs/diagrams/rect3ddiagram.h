@@ -46,10 +46,10 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
+  void calcCoordinate(double* &, double* &, double* &, float*, float*, Axis*);
 
   void createAxisLabels();
-  bool insideDiagram(int, int);
+  bool insideDiagram(float, float);
 
   tPoint3D *Mem;   // memory for all points during hidden line algorithm
   tPoint3D *pMem;  // current position in "Mem"
@@ -77,7 +77,7 @@ private:
   void removeHiddenLines(char*, tBound*);
   void removeHiddenCross(int, int, int, int, char*, tBound*);
 
-  int  xorig, yorig; // where is the 3D origin with respect to cx/cy
+  float  xorig, yorig; // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
   double scaleX, scaleY;
 };

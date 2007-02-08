@@ -44,8 +44,7 @@ public:
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);
-  bool getSelected(int, int);
-  void Bounding(int&, int&, int&, int&);
+  bool getSelected(float, float, float);
 
   void rotate();
   void mirrorX();

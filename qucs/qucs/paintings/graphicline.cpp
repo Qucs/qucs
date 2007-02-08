@@ -147,14 +147,18 @@ QString GraphicLine::save()
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool GraphicLine::ResizeTouched(int x, int y, int len)
+bool GraphicLine::resizeTouched(float fX, float fY, float len)
 {
-  if(x <= cx+len) if(x >= cx-len) if(y <= cy+len) if(y >= cy-len) {
+  float fCX = float(cx), fCY = float(cy);
+
+  if(fX <= fCX+len) if(fX >= fCX-len) if(fY <= fCY+len) if(fY >= fCY-len) {
     State = 1;
     return true;
   }
 
-  if(x <= cx+x2+len) if(x >= cx+x2-len) if(y <= cy+y2+len) if(y >= cy+y2-len) {
+  fCX += float(x2);
+  fCY += float(y2);
+  if(fX <= fCX+len) if(fX >= fCX-len) if(fY <= fCY+len) if(fY >= fCY-len) {
     State = 2;
     return true;
   }
@@ -220,21 +224,36 @@ bool GraphicLine::MousePressing()
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
 // 5 is the precision the user must point onto the painting.
-bool GraphicLine::getSelected(int x, int y)
+bool GraphicLine::getSelected(float fX, float fY, float w)
 {
-  x  -= cx;
-  if(x < -5) { if(x < x2-5) return false; } // is between x coordinates ?
-  else { if(x > 5) if(x > x2+5) return false; }
+  fX -= float(cx);
+  fY -= float(cy);
 
-  y  -= cy;
-  if(y < -5) { if(y < y2-5) return false; } // is between y coordinates ?
-  else { if(y > 5) if(y > y2+5) return false; }
+  if(fX < -w) {
+    if(fX < float(x2)-w)  // is point between x coordinates ?
+      return false;
+  }
+  else {
+    if(fX > w)
+      if(fX > float(x2)+w)
+        return false;
+  }
 
-  int A  = x2*y - x*y2;     // calculate the rectangle area spanned
-  A *= A;                   // avoid the need for square root
-  A -= 25*(x2*x2 + y2*y2);  // substract selectable area
+  if(fY < -w) {
+    if(fY < float(y2)-w)   // is point between y coordinates ?
+      return false;
+  }
+  else {
+    if(fY > w)
+      if(fY > float(y2)+w)
+        return false;
+  }
 
-  if(A <= 0)  return true;     // lies x/y onto the graph line ?
+  float A = float(x2)*fY - fX*float(y2); // calculate the rectangle area spanned
+  A *= A;               // avoid the need for square root
+
+  if(A <= w*w*float(x2*x2 + y2*y2))
+    return true;     // x/y lies on the graph line
 
   return false;
 }
