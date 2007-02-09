@@ -1,3 +1,8 @@
+2007-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed value of F and H (linear current
+	controlled sources).  Thanks Mike for pointing this out.
+
 2007-02-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Translating VON and VOFF properties of
