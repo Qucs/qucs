@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.27 2007-02-03 12:21:28 ela Exp $
+ * $Id: check_spice.cpp,v 1.28 2007-02-09 17:20:04 ela Exp $
  *
  */
 
@@ -1833,7 +1833,6 @@ spice_post_translator (struct definition_t * root) {
     if (!def->action && (!strcmp (def->type, "CCCS") ||
 			 !strcmp (def->type, "CCVS"))) {
       struct definition_t * target;
-      struct pair_t * prop;
       struct value_t * val = spice_find_device_instance (def);
       char * key = val->ident;
       target = spice_find_definition (root, "Vdc", key);
@@ -1841,10 +1840,6 @@ spice_post_translator (struct definition_t * root) {
 	// adjust the controlling nodes of the source
 	spice_adjust_vsource_nodes (def, target);      
 	spice_translate_nodes (def, 1);
-	// and the properties of the source
-	prop = spice_find_property (def, "G");
-	double v = spice_get_property_value (def, "G");
-	spice_set_property_value (def, "G", 1 / v);
       }
       else {
 	fprintf (stderr, "spice error, no such voltage source `%s' found as "
