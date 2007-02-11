@@ -1,3 +1,8 @@
+2007-02-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Added translation of lossless transmission
+	line component.
+
 2007-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed value of F and H (linear current

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.21 2007-02-01 20:02:24 ela Exp $
+ * $Id: scan_spice.l,v 1.22 2007-02-11 12:32:56 ela Exp $
  *
  */
 
@@ -128,7 +128,7 @@ LAPLACE  [lL][aA][pP][lL][aA][cC][eE]
 POLY     [pP][oO][lL][yY]
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -232,7 +232,7 @@ POLY     [pP][oO][lL][yY]
 
 <STARTUP,INITIAL>^[tT]{CSFX} { /* lossless transline */
     spice_lval.ident = strdup (spice_text);
-    BEGIN(STARTUP);
+    BEGIN(TLPROP);
     return T_Device;
 }
 
@@ -410,7 +410,7 @@ POLY     [pP][oO][lL][yY]
     return ON_Special;
 }
 
-<DEVPROP>[iI][cC] { /* another device special */
+<TLPROP,DEVPROP>[iI][cC] { /* another device special */
     spice_lval.ident = strdup (spice_text);
     return IC_Special;
 }
@@ -505,13 +505,13 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,
- GEVALS>{DIGIT}+ {
+ GEVALS,TLPROP>{DIGIT}+ {
     /* identify node (containing digits) */
     spice_lval.ident = strdup (spice_text);
     return Digits;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS>{NUMBER} {
+<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS,TLPROP>{NUMBER} {
     /* identify float (any kind) */
     spice_lval.ident = strdup (spice_text);
     return Floats;
@@ -541,7 +541,8 @@ POLY     [pP][oO][lL][yY]
     return MODEL_Spec;
 }
 
-<STARTUP,DEVPROP,MODREF2,ISWITCH,VSWITCH>{IDENT} { /* arbitrary identifier */
+<STARTUP,DEVPROP,MODREF2,ISWITCH,VSWITCH,
+ TLPROP>{IDENT} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
     spice_fix_identifier (spice_lval.ident);
     return Identifier;
@@ -573,14 +574,15 @@ POLY     [pP][oO][lL][yY]
     return OpFunc;
 }
 
-<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,GEVALS>{NODE} {
+<STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,GEVALS,
+ TLPROP>{NODE} {
     /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Nodes;
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
- ISWITCH,VSWITCH,GEVALS,SUBCKT>{EOL} {
+ ISWITCH,VSWITCH,GEVALS,SUBCKT,TLPROP>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;

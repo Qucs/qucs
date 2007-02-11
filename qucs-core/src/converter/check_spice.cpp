@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.28 2007-02-09 17:20:04 ela Exp $
+ * $Id: check_spice.cpp,v 1.29 2007-02-11 12:32:56 ela Exp $
  *
  */
 
@@ -129,6 +129,11 @@ struct define_t spice_definition_available[] =
   /* relais */
   { "S", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* lossless transmission line */
+  { "T", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Z0", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* transient analysis */
@@ -629,6 +634,7 @@ spice_device_table[] = {
   { "H", "CCVS"   },
   { "K", "Tr"     },
   { "S", "Relais" },
+  { "T", "TLIN4P" },
   { NULL, NULL }
 };
 
@@ -707,6 +713,10 @@ node_translations[] = {
   },
   { "Relais", 0,
     { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
+  },
+  { "TLIN4P", 0,
+    { 1, 3, 4, 2, -1 },
     { 1, 2, 3, 4, -1 }
   },
   { NULL, 0, { -1 }, { -1 } }
@@ -935,6 +945,7 @@ property_translations[] = {
   /* OTHER devices */
   { "C",  "IC",  "V"   },
   { "L",  "IC",  "I"   },
+  { NULL, "Z0",  "Z"   },
   /* END of list */
   { NULL, NULL,  NULL  }
 };
@@ -1869,6 +1880,40 @@ spice_post_translator (struct definition_t * root) {
       struct pair_t * r2 = spice_find_property_nocase (r1->next, "R");
       if (r2 != NULL) {
 	def->pairs = spice_del_property (def->pairs, r2);
+      }
+    }
+    // post-process lossless transmission line
+    if (!def->action && !strcmp (def->type, "TLIN4P")) {
+      struct pair_t * pt = spice_find_property (def, "TD");
+      struct pair_t * pf = spice_find_property (def, "F");
+      struct pair_t * pl = spice_find_property (def, "NL");
+      nr_double_t len = 1e-3;
+      if (pt != NULL) {
+	// delay given
+	len = spice_evaluate_value (pt->value) * C0;
+	def->pairs = spice_del_property (def->pairs, pt);
+	spice_set_property_value (def, "L", len);
+      }
+      else if (pf != NULL && pl != NULL) {
+	// frequency and normalized length given
+	nr_double_t f = spice_evaluate_value (pf->value);
+	nr_double_t l = spice_evaluate_value (pl->value);
+	def->pairs = spice_del_property (def->pairs, pf);
+	def->pairs = spice_del_property (def->pairs, pl);
+	len = C0 / f * l;
+	spice_set_property_value (def, "L", len);
+      }
+      else if (pf != NULL) {
+	// only frequency given, default normalized length
+	nr_double_t f = spice_evaluate_value (pf->value);
+	def->pairs = spice_del_property (def->pairs, pf);
+	len = C0 / f * 0.25;
+	spice_set_property_value (def, "L", len);
+      }
+      else {
+	fprintf (stderr, "spice error, either TD or F required in "
+		 "lossless `%s' line \n", def->instance);
+	spice_errors++;
       }
     }
     // post-process mutual inductors (transformer)
