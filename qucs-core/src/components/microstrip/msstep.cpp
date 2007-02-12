@@ -1,7 +1,7 @@
 /*
  * msstep.cpp - microstrip impedance step class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.cpp,v 1.10 2005-06-02 18:17:56 raimi Exp $
+ * $Id: msstep.cpp,v 1.11 2007-02-12 18:32:33 ela Exp $
  *
  */
 
@@ -93,7 +93,7 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   L2 *= Ls;
 
   // build Z-parameter matrix
-  complex z21 = rect (0.0, 0.5e12 / (M_PI * frequency * Cs));
+  complex z21 = rect (0.0, -0.5e12 / (M_PI * frequency * Cs));
   complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L1) + z21;
   complex z22 = rect (0.0, 2e-9 * M_PI * frequency * L2) + z21;
   matrix z (2);
@@ -120,4 +120,8 @@ void msstep::initAC (void) {
 
 void msstep::calcAC (nr_double_t frequency) {
   setMatrixY (ztoy (calcMatrixZ (frequency)));
+}
+
+void msstep::initTR (void) {
+  initDC ();
 }
