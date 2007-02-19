@@ -3343,7 +3343,7 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>Watt cinsinden AC güç</translation>
+        <translation type="obsolete">Watt cinsinden AC güç</translation>
     </message>
     <message>
         <source>Power Source</source>
@@ -4448,10 +4448,6 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FBH HBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4821,6 +4817,10 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9619,7 +9619,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

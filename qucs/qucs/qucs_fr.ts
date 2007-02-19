@@ -2207,7 +2207,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>puissance alternative en watts</translation>
+        <translation type="obsolete">puissance alternative en watts</translation>
     </message>
     <message>
         <source>S parameter file</source>
@@ -4602,10 +4602,6 @@ Invocation :  qucsedit [-r] fichier
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FBH HBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4975,6 +4971,10 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10072,7 +10072,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

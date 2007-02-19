@@ -99,20 +99,21 @@ Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SubCirPort::NetList()
+QString SubCirPort::netlist()
 {
   return QString("");
 }
 
 // -------------------------------------------------------
-QString SubCirPort::VHDL_Code(int)
+QString SubCirPort::vhdlCode(int)
 {
-  if(Props.at(1)->Value != "out")  return QString("");
+  if(Props.at(1)->Value != "out")
+    return QString("");
 
   // Insert dummy buffer to avoid reading from an output port.
   QString s = "  net_out";
   Node *pn = Ports.getFirst()->Connection;
   s += pn->Name + " <= ";
-  s += pn->Name + " or '0';";
+  s += pn->Name + " or '0';\n";
   return s;
 }

@@ -1,4 +1,12 @@
-2006-12-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2007-01-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* correct position for graph style "circles"
+	* somewhat fixed shorten for digital components
+	* some restructuring
+	* own bitmaps for HICUM and FBH HBT
+	* default graph style "arrows" for HB variables
+
+2007-01-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* better resizing at zoom levels <> 1
 	* better selecting at zoom levels <> 1

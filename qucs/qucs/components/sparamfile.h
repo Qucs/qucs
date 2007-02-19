@@ -26,12 +26,12 @@ public:
   SParamFile();
  ~SParamFile() {};
   Component* newOne();
-  QString NetList();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info1(QString&, char* &, bool getNewOne=false);
   static Element* info2(QString&, char* &, bool getNewOne=false);
 
 protected:
+  QString netlist();
   void createSymbol();
 };
 

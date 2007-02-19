@@ -62,7 +62,7 @@ Element* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString VHDL_File::VHDL_Code(int)
+QString VHDL_File::vhdlCode(int)
 {
   QString s;
   Port *pp = Ports.first();
@@ -74,7 +74,7 @@ QString VHDL_File::VHDL_Code(int)
     for(pp = Ports.next(); pp != 0; pp = Ports.next())
       s += ", "+pp->Connection->Name;   // node names
 
-    s += ");";
+    s += ");\n";
   }
   return s;
 }

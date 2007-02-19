@@ -101,7 +101,7 @@ Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SParamFile::NetList()
+QString SParamFile::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -125,7 +125,7 @@ QString SParamFile::NetList()
 
   // DC property
   p2 = Props.next();
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  s += " "+p2->Name+"=\""+p2->Value+"\"\n";
 
   return s;
 }

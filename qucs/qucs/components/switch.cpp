@@ -62,7 +62,7 @@ Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Switch::NetList()
+QString Switch::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -78,7 +78,7 @@ QString Switch::NetList()
   for(p2 = Props.next(); p2 != 0; p2 = Props.next())
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
-  return s;
+  return s + '\n';
 }
 
 // -------------------------------------------------------

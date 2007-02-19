@@ -27,11 +27,11 @@ public:
  ~SpiceFile() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString NetList();
 
   bool withSim;
 
 protected:
+  QString netlist();
   void createSymbol();
 };
 
