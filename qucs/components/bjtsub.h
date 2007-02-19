@@ -21,7 +21,13 @@
 #include "component.h"
 
 
-class BJTsub : public MultiViewComponent  {
+class Basic_BJT : public MultiViewComponent  {
+public:
+  Basic_BJT();
+ ~Basic_BJT() {};
+};
+
+class BJTsub : public Basic_BJT  {
 public:
   BJTsub();
  ~BJTsub() {};

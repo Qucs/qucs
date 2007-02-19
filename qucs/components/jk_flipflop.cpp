@@ -67,7 +67,7 @@ JK_FlipFlop::JK_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString JK_FlipFlop::VHDL_Code(int NumPorts)
+QString JK_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
@@ -91,7 +91,7 @@ QString JK_FlipFlop::VHDL_Code(int NumPorts)
       Ports.at(2)->Connection->Name + ")" + s +
       "    end if;\n  end process;\n  " +
       Ports.at(3)->Connection->Name + " <= not " +
-      Ports.at(2)->Connection->Name + ";\n";
+      Ports.at(2)->Connection->Name + ";\n\n";
   return s;
 }
 

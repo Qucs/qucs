@@ -132,7 +132,7 @@ void SpiceFile::createSymbol()
 }
 
 // ---------------------------------------------------
-QString SpiceFile::NetList()
+QString SpiceFile::netlist()
 {
   if(Props.at(1)->Value.isEmpty())
     return QString("");  // no ports, no subcircuit instance
@@ -141,6 +141,6 @@ QString SpiceFile::NetList()
   for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
     s += " "+pp->Connection->Name;   // output all node names
 
-  s += " Type=\""+properName(Props.first()->Value)+"\"";
+  s += " Type=\""+properName(Props.first()->Value)+"\"\n";
   return s;
 }

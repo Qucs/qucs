@@ -27,9 +27,9 @@ public:
  ~Switch() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString NetList();
 
 protected:
+  QString netlist();
   void createSymbol();
 };
 

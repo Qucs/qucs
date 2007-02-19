@@ -3513,10 +3513,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Power Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4654,10 +4650,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ideal 4-port transmission line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4723,6 +4715,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7566,7 +7562,7 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

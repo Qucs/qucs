@@ -27,7 +27,9 @@ public:
  ~Ground();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString NetList();
+
+protected:
+  QString netlist();
 };
 
 #endif

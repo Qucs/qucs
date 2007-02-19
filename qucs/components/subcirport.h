@@ -27,10 +27,10 @@ public:
  ~SubCirPort() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString NetList();
-  QString VHDL_Code(int);
 
 protected:
+  QString netlist();
+  QString vhdlCode(int);
   void createSymbol();
 };
 

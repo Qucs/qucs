@@ -46,7 +46,7 @@ Logical_Inv::Logical_Inv()
 }
 
 // -------------------------------------------------------
-QString Logical_Inv::VHDL_Code(int NumPorts)
+QString Logical_Inv::vhdlCode(int NumPorts)
 {
   QString s = "  " + Ports.getFirst()->Connection->Name + " <= not " +
               Ports.getLast()->Connection->Name;
@@ -60,7 +60,7 @@ QString Logical_Inv::VHDL_Code(int NumPorts)
       s += " after " + t;
     }
 
-  s += ';';
+  s += ";\n";
   return s;
 }
 

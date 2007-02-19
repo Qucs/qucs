@@ -1,6 +1,6 @@
 /***************************************************************************
-                          msvia.cpp  -  description
-                             -------------------
+                               msvia.cpp
+                              -----------
     begin                : Sat Oct 30 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "msvia.h"
+#include "node.h"
 
 
 MSvia::MSvia()
@@ -52,11 +53,13 @@ MSvia::~MSvia()
 {
 }
 
+// -------------------------------------------------------
 Component* MSvia::newOne()
 {
   return new MSvia();
 }
 
+// -------------------------------------------------------
 Element* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Via");
@@ -64,4 +67,19 @@ Element* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new MSvia();
   return 0;
+}
+
+// -------------------------------------------------------
+QString MSvia::netlist()
+{
+  QString s = Model+":"+Name;
+
+  // output node name and add ground node
+  s += " " + Ports.getFirst()->Connection->Name + " gnd";
+
+  // output all properties
+  for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
+    s += " "+p2->Name+"=\""+p2->Value+"\"";
+
+  return s + '\n';
 }

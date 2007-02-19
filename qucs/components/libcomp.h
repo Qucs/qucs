@@ -26,10 +26,10 @@ public:
   LibComp();
  ~LibComp() {};
   Component* newOne();
-  QString NetList();
   bool outputSubNetlist(QTextStream*);
 
 protected:
+  QString netlist();
   void createSymbol();
 
 private:

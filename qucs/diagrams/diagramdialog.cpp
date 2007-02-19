@@ -671,7 +671,10 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
         g->Color = ColorButt->paletteBackgroundColor();
         g->Thick = Property2->text().toInt();
         ColorButt->setPaletteBackgroundColor(
-		QColor(DefaultColors[GraphList->count()]));
+                   QColor(DefaultColors[GraphList->count()]));
+        if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
+          if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
+            PropertyBox->setCurrentItem(GRAPHSTYLE_ARROW);
         g->Style   = PropertyBox->currentItem();
         if(yAxisBox) {
           g->yAxisNo = yAxisBox->currentItem();

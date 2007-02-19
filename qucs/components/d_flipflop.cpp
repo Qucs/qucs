@@ -57,7 +57,7 @@ D_FlipFlop::D_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString D_FlipFlop::VHDL_Code(int NumPorts)
+QString D_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
@@ -72,7 +72,7 @@ QString D_FlipFlop::VHDL_Code(int NumPorts)
       Ports.at(1)->Connection->Name + "='1' and " +
       Ports.at(1)->Connection->Name + "'event) then\n      " +
       Ports.at(2)->Connection->Name + " <= " +
-      Ports.at(0)->Connection->Name + s + "    end if;\n  end process;\n";
+      Ports.at(0)->Connection->Name + s + "    end if;\n  end process;\n\n";
   return s;
 }
 

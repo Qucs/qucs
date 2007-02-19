@@ -237,24 +237,9 @@ Component * hicumL2p1::newOne()
 Element * hicumL2p1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn HICUM L2 v2.1");
-  BitmapFile = "npnsub";
+  BitmapFile = "npnsub_therm";
 
   if(getNewOne) return new hicumL2p1();
-  return 0;
-}
-
-Element * hicumL2p1::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("pnp HICUM L2 v2.1");
-  BitmapFile = "pnpsub";
-
-  if(getNewOne)
-  {
-    hicumL2p1* p = new hicumL2p1();
-    p->Props.getFirst()->Value = "pnp";
-    p->recreate(0);
-    return p;
-  }
   return 0;
 }
 
