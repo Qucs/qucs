@@ -1096,21 +1096,23 @@ d Q = C\cdot d V_C
 \end{equation}
 
 equation \eqref{eq:NRgeneral} can be written as
-\begin{equation}
-V_C^{(m + 1)} = V_C^{(m)} - \dfrac{Q\left(V_C^{(m)}\right)}{C^{(m)}}
-\end{equation}
+\begin{align}
+ & V_C^{(m + 1)} = V_C^{(m)} - \dfrac{Q\left(V_C^{(m)}\right)}{C^{(m)}} \\
+\Rightarrow\qquad & \left( V_C^{(m + 1)} - V_C^{(m)} \right) \cdot C^{(m)} = - Q^{(m)}
+\end{align}
 
 yielding a similar iterative algorithm as already used for the
 non-linear DC analysis described in section \ref{sec:NRmethod} on page
 \pageref{sec:NRmethod}.  The indices $~^{(m)}$ indicated the $m$-th
 Newton-Raphson iteration.  With this knowledge at hand it is possible
 to rewrite the explicit formula for the backward Euler integration
-\eqref{eq:EulerIC} as
+\eqref{eq:EulerIC}, i.e. the next iteration step $Q^{m+1}$ is replaced by
+the Newton-Raphson formula as follows.
 \begin{equation}
 \label{eqn:nl_cap_trans}
 \begin{split}
-I_C^{n+1,m+1} &= \dfrac{Q^{n+1,m+1}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
-&= \dfrac{1}{h}\cdot \left( Q^{n+1,m} + C^{n+1,m}\cdot (V_C^{n+1,m+1} - V_C^{n+1,m}) - Q^{n} \right)
+I_C^{n+1,m+1} &= \dfrac{Q^{n+1,m+1} - Q^{n}}{h^{n}}\\
+&= \dfrac{1}{h^{n}}\cdot \left( Q^{n+1,m} + C^{n+1,m}\cdot (V_C^{n+1,m+1} - V_C^{n+1,m}) - Q^{n} \right)
 \end{split}
 \end{equation}
 

@@ -771,33 +771,36 @@ part of the MNA matrix for the AC analysis:
 \boldsymbol{J}^{(m)}
   = \left.\frac{\partial\boldsymbol{f}( \boldsymbol{V} )}
                {\partial\boldsymbol{V}}\right|_{\boldsymbol{V}^{(m)}}
+  = \boldsymbol{G} - \left.\frac{\partial\boldsymbol{I}_{0}}
+               {\partial\boldsymbol{V}}\right|_{\boldsymbol{V}^{(m)}}
+  = \boldsymbol{G} - \boldsymbol{J}_{nl}^{(m)}
   = \text{Re}\left(\boldsymbol{G}_{AC}\right)
+\label{eq:ndimJacobi}
 \end{equation}
 
-The disadvantage of the formula \ref{eq:ndimNewton} is the fact
-that for each iteration the matrix $\boldsymbol{f}( \boldsymbol{V}^{(m)} )$
-has to be built even with the constant values of the linear
-components. This can be avoided. Multiplying equation
-\ref{eq:ndimNewton} with the Jacobian leads to
+where the index $nl$ denotes only the non-linear terms. Putting equation
+\ref{eq:ndimJacobi} into equation \ref{eq:ndimNewton} and multiplying it
+with the Jacobian matrix leads to
 
-\begin{equation}
+\begin{align}
 \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m+1)}
-  = \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
-    \boldsymbol{f}( \boldsymbol{V}^{(m)} )
-  = \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
-    \boldsymbol{G} \cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)}
-\end{equation}
+ &= \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
+    \boldsymbol{f}( \boldsymbol{V}^{(m)} ) \\
+ &= \left( \boldsymbol{G} - \boldsymbol{J}_{nl}^{(m)} \right) \cdot \boldsymbol{V}^{(m)} -
+    \boldsymbol{G} \cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)} \\
+ &= -\boldsymbol{J}_{nl}^{(m)} \cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)}
+\end{align}
 
-As can be seen, the linear terms on the right-hand side cancel
-each other, because they are identical in $\boldsymbol{G}$
-and $\boldsymbol{J}^{(m)}$. So, bringing the Jacobian back
-to the right side results in the new iteration formula:
+So, bringing the Jacobian back to the right side results in the new
+iteration formula:
+
 \begin{equation}
 \boldsymbol{V}^{(m+1)} = \left( \boldsymbol{J}^{(m)} \right)^{-1} \cdot
-  \left( \boldsymbol{J}_{nl}^{(m)}\cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)} \right)
+  \left( -\boldsymbol{J}_{nl}^{(m)}\cdot \boldsymbol{V}^{(m)} + \boldsymbol{I}_{0}^{(m)} \right)
 \end{equation}
 
-where the index $nl$ denotes only the non-linear terms. Note
+The negative sign in front of $\boldsymbol{J}_{nl}$ is due to the
+definition of $\boldsymbol{I}_{0}$ flowing out of the component. Note
 that $\boldsymbol{I}_{0}^{(m)}$ still contains contributions of linear
 and non-linear current sources.
 
