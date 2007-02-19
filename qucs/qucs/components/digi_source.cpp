@@ -81,7 +81,7 @@ Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Digi_Source::NetList()
+QString Digi_Source::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -95,13 +95,13 @@ QString Digi_Source::NetList()
   pp = Props.next();
   s += " "+pp->Name+"=\"["+pp->Value+"]\"";
   pp = Props.next();
-  s += " "+pp->Name+"=\""+pp->Value+"\"";
+  s += " "+pp->Name+"=\""+pp->Value+"\"\n";
 
   return s;
 }
 
 // -------------------------------------------------------
-QString Digi_Source::VHDL_Code(int NumPorts)
+QString Digi_Source::vhdlCode(int NumPorts)
 {
   QString s, t;
   QString Out("    " + Ports.getFirst()->Connection->Name + " <= '");
@@ -140,6 +140,6 @@ QString Digi_Source::VHDL_Code(int NumPorts)
     }
   }
 
-  s += "  end process;\n";
+  s += "  end process;\n\n";
   return s;
 }

@@ -1,3 +1,7 @@
+2007-02-18  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
+
+	* microstrip/mscross.cpp: fixed bug in calcCap() equation
+
 2007-02-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msstep.cpp: Fixed Z-parameter matrix calculation.

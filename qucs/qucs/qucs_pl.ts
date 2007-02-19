@@ -2207,7 +2207,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>moc ac w Wattach</translation>
+        <translation type="obsolete">moc ac w Wattach</translation>
     </message>
     <message>
         <source>S parameter file</source>
@@ -4631,7 +4631,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>pnp HICUM L2 v2.1</source>
-        <translation>pnp HICUM L2 v2.1</translation>
+        <translation type="obsolete">pnp HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>FBH HBT verilog device</source>
@@ -5003,6 +5003,10 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9887,7 +9891,7 @@ otworzyć ten plik odpowiednim programem.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -60,7 +60,7 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Ground::NetList()
+QString Ground::netlist()
 {
   return QString("");
 }

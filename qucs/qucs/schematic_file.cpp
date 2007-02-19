@@ -964,8 +964,13 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
   QStringList::Iterator it;
   Component *pc;
   // collect subcircuit ports and sort their node names into "SubcircuitPorts"
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-    if(pc->Model == "Port") {
+  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+    if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
+      ErrText->insert(
+        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName)+"\n");
+      continue;
+    }
+    else if(pc->Model == "Port") {
       i  = pc->Props.first()->Value.toInt();
       for(z=SubcircuitPorts.size(); z<i; z++)
         SubcircuitPorts.append(" ");
@@ -984,12 +989,13 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
         (*it) += " bit";
       }
     }
+  }
 
   QString  Type = properName(DocName);
 
   Painting *pi;
-  // write subcircuit header into the netlist file
   if(NumPorts < 0) {
+    // ..... analog subcircuit ...................................
     (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ");
     for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
       if(pi->Name == ".ID ") {
@@ -1002,8 +1008,16 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
         break;
       }
     (*stream) << '\n';
+
+    // write all components with node names into netlist file
+    for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
+      (*stream) << pc->getNetlist();
+
+    (*stream) << ".Def:End\n";
+
   }
   else {
+    // ..... digital subcircuit ...................................
     (*stream) << "\nentity Sub_" << Type << " is\n"
               << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
               << "end entity;\n"
@@ -1016,42 +1030,15 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
     if(Signals.findIndex("gnd") >= 0)
       (*stream) << "  gnd <= '0';\n";  // should appear only once
-  }
-  Signals.clear();  // was filled in "giveNodeNames()"
 
+    // write all components into netlist file
+    for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
+      (*stream) << pc->get_VHDL_Code(NumPorts);
 
-  // write all components with node names into the netlist file
-  for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(pc->isActive == COMP_IS_OPEN) continue;  // should it be simulated ?
-  
-    if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
-      ErrText->insert(
-        QObject::tr("WARNING: Ignore simulation component in subcircuit \"%1\".").arg(DocName));
-      continue;
-    }
-
-    if(pc->isActive == COMP_IS_ACTIVE) {
-      if(NumPorts < 0)
-        s = pc->NetList();
-      else
-        s = pc->VHDL_Code(NumPorts);
-    }
-    else {
-      if(NumPorts < 0)
-        s = pc->getShortenNetlist();
-      else
-        s = pc->getShortenVHDL();
-    }
-
-    if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
-      (*stream) << s << "\n";
-  }
-
-  if(NumPorts < 0)
-    (*stream) << ".Def:End\n";
-  else
     (*stream) << "end architecture;\n\n";
+  }
 
+  Signals.clear();  // was filled in "giveNodeNames()"
   return true;
 }
 
@@ -1154,13 +1141,8 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-    if(pc->isActive == COMP_IS_OPEN) continue;  // should it be simulated ?
-  
     if(NumPorts < 0) {
-      if(pc->isActive == COMP_IS_ACTIVE)
-        s = pc->NetList();
-      else
-        s = pc->getShortenNetlist();
+      s = pc->getNetlist();
     }
     else {
       if(pc->Model.at(0) == '.') {  // simulation component ?
@@ -1171,15 +1153,11 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
           if(!VHDL_Time(Time, pc->Name))  return Time;  // wrong time format
         }
       }
-      if(pc->isActive == COMP_IS_ACTIVE)
-        s = pc->VHDL_Code(NumPorts);
-      else
-        s = pc->getShortenVHDL();
+      s = pc->get_VHDL_Code(NumPorts);
       if(s.at(0) == '§')  return s;   // return error
     }
 
-    if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
-      stream << s << "\n";
+    stream << s;
   }
 
   if(NumPorts >= 0)

@@ -17,11 +17,9 @@ class HBT_X : public MultiViewComponent
 {
   public:
     HBT_X();
-    ~HBT_X() { };
+   ~HBT_X() { };
     Component* newOne();
     static Element* info(QString&, char* &, bool getNewOne=false);
-  protected:
-    void createSymbol();
 };
 
 #endif /* HBT_X_H */

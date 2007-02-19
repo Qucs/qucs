@@ -17,10 +17,9 @@ class hicumL2p1 : public MultiViewComponent
 {
   public:
     hicumL2p1();
-    ~hicumL2p1() { };
+   ~hicumL2p1() { };
     Component* newOne();
     static Element* info(QString&, char* &, bool getNewOne=false);
-    static Element* info_pnp(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
 };

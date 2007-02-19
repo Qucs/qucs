@@ -2200,29 +2200,10 @@ V_{2}^{(m+1)}
 \end{bmatrix}
 \end{equation}
 
-For a transient simulation, the DC equations have to be extended
-by the non-linear capacitance, e.g. for backward Euler:
-\begin{equation}
-I^{n+1,m} = \underbrace{\dfrac{c(V^{n+1,m})}{h^n}}_{g_{eq}}\cdot V^{n+1}
-            \underbrace{- \dfrac{c(V^{n})}{h^n}\cdot V^{n}}_{I_{eq}}
-\end{equation}
-So with $g_{tr} = g + g_{eq}$ it is:
-\begin{equation}
-\begin{bmatrix}
- g_{tr}^{(m)} & -g_{tr}^{(m)}\\
--g_{tr}^{(m)} &  g_{tr}^{(m)}
-\end{bmatrix}
-\cdot
-\begin{bmatrix}
-V_{1}^{(n+1,m+1)}\\
-V_{2}^{(n+1,m+1)}
-\end{bmatrix}
-=
-\begin{bmatrix}
--I^{(n+1,m)} + g^{(n+1,m)}\cdot V^{(n+1,m)} - I_{eq}^{(n)}\\
- I^{(n+1,m)} - g^{(n+1,m)}\cdot V^{(n+1,m)} + I_{eq}^{(n)}
-\end{bmatrix}
-\end{equation}
+For a transient simulation, equation \ref{eqn:nl_cap_trans} on page
+\pageref{eqn:nl_cap_trans} has to be used with $Q$ and $c$.
+
+\addvspace{12pt}
 
 For an AC analysis the MNA matrix writes.
 

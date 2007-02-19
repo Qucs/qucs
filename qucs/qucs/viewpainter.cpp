@@ -183,7 +183,7 @@ void ViewPainter::drawCircleSymbols(int x0, int y0, float *pp)
     if(*pp >= 0) {
       z = DX_ + (*(pp++)-4.0)*Scale;
       x0 = TO_INT(z);
-      z = DY_ - (*(pp++)-4.0)*Scale;
+      z = DY_ - (*(pp++)+4.0)*Scale;
       y0 = TO_INT(z);
       Painter->drawEllipse(x0, y0, d, d);
     }

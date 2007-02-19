@@ -586,34 +586,33 @@ void Component::mirrorY()
 }
 
 // -------------------------------------------------------
-QString Component::NetList()
+QString Component::netlist()
 {
   QString s = Model+":"+Name;
 
   // output all node names
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;   // node names
-  if(Model.at(0) == '_') {    // add port ? (e.g. BJT without substrate)
-    if(Model == "_BJT")
-      s += " "+Ports.at(1)->Connection->Name;
-    else
-      s += " "+Ports.at(2)->Connection->Name;
-    s.remove(0,1);  // remove leading '_'
-  }
-  else if(Model == "MVIA")
-    s += " gnd";   // add ground node
 
   // output all properties
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
     if(p2->Name != "Symbol")
       s += " "+p2->Name+"=\""+p2->Value+"\"";
 
-  return s;
+  return s + '\n';
 }
 
 // -------------------------------------------------------
-QString Component::getShortenNetlist()
+QString Component::getNetlist()
 {
+  switch(isActive) {
+    case COMP_IS_ACTIVE:
+      return netlist();
+    case COMP_IS_OPEN:
+      return QString("");
+  }
+
+  // Component is shortened.
   int z=0;
   QString s;
   QString Node1 = Ports.first()->Connection->Name;
@@ -624,19 +623,28 @@ QString Component::getShortenNetlist()
 }
 
 // -------------------------------------------------------
-QString Component::VHDL_Code(int)
+QString Component::vhdlCode(int)
 {
   return QString("");   // no digital model
 }
 
 // -------------------------------------------------------
-QString Component::getShortenVHDL()
+QString Component::get_VHDL_Code(int NumPorts)
 {
-  QString s;
+  switch(isActive) {
+    case COMP_IS_OPEN:
+      return QString("");
+    case COMP_IS_ACTIVE:
+      return vhdlCode(NumPorts);
+  }
+
+  // Component is shortened.
+  // This puts the signal of the second port onto the first port.
+  // This is locigally correct for the inverter only, but makes
+  // some sense for the gates (OR, AND etc.).
+  // Has anyone a better idea?
   QString Node1 = Ports.first()->Connection->Name;
-  for(Port *pp = Ports.next(); pp != 0; pp = Ports.next())
-    s += "  " + pp->Connection->Name + " <= " + Node1 + ";\n";
-  return s;
+  return "  " + Node1 + " <= " + Ports.next()->Connection->Name + ";\n";
 }
 
 // -------------------------------------------------------
@@ -1155,7 +1163,7 @@ GateComponent::GateComponent()
 }
 
 // -------------------------------------------------------
-QString GateComponent::NetList()
+QString GateComponent::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -1167,12 +1175,12 @@ QString GateComponent::NetList()
   Property *p = Props.at(1);
   s += " " + p->Name + "=\"" + p->Value + "\"";
   p = Props.next();
-  s += " " + p->Name + "=\"" + p->Value + "\"";
+  s += " " + p->Name + "=\"" + p->Value + "\"\n";
   return s;
 }
 
 // -------------------------------------------------------
-QString GateComponent::VHDL_Code(int NumPorts)
+QString GateComponent::vhdlCode(int NumPorts)
 {
   Port *pp = Ports.first();
   QString s = "  " + pp->Connection->Name + " <= ";  // output port
@@ -1201,7 +1209,7 @@ QString GateComponent::VHDL_Code(int NumPorts)
       s += " after " + t;
     }
 
-  s += ';';
+  s += ";\n";
   return s;
 }
 

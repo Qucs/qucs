@@ -1319,32 +1319,27 @@ void QucsApp::slotFileClose()
 // --------------------------------------------------------------
 bool QucsApp::closeAllFiles()
 {
-   SaveDialog *sd = new SaveDialog(this);
-   sd->setApp(this);
-   for(int i=0; i < DocumentTab->count(); ++i)
-   {
-      QucsDoc *doc = getDoc(i);
-      if(doc->DocChanged)
-         sd->addUnsavedDoc(doc);
-   }
-   int Result = SaveDialog::DontSave;
-   if(!sd->isEmpty())
-      Result = sd->exec();
-   delete sd;
-   switchEditMode(true);   // set schematic edit mode
+  SaveDialog *sd = new SaveDialog(this);
+  sd->setApp(this);
+  for(int i=0; i < DocumentTab->count(); ++i) {
+    QucsDoc *doc = getDoc(i);
+    if(doc->DocChanged)
+      sd->addUnsavedDoc(doc);
+  }
+  int Result = SaveDialog::DontSave;
+  if(!sd->isEmpty())
+     Result = sd->exec();
+  delete sd;
 
-   switch(Result)
-   {
-      case SaveDialog::AbortClosing:
-         return false;
-      case SaveDialog::DontSave:
-      case SaveDialog::SaveSelected:
-      default:
-         QucsDoc *doc = 0;
-         while((doc = getDoc()) != 0)
-            delete doc;
-         return true;
-   };
+  if(Result == SaveDialog::AbortClosing)
+    return false;
+
+  QucsDoc *doc = 0;
+  while((doc = getDoc()) != 0)
+    delete doc;
+
+  switchEditMode(true);   // set schematic edit mode
+  return true;
 }   
 
 // --------------------------------------------------------------

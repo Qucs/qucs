@@ -27,9 +27,9 @@ public:
  ~VHDL_File() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString VHDL_Code(int);
 
 protected:
+  QString vhdlCode(int);
   void createSymbol();
   QString loadFile();
 

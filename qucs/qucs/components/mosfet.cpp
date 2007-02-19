@@ -16,117 +16,16 @@
  ***************************************************************************/
 
 #include "mosfet.h"
+#include "node.h"
 
 
 MOSFET::MOSFET()
 {
   Description = QObject::tr("MOS field-effect transistor");
-
-  // these must be the first properties in the list !!!
-  Props.append(new Property("Type", "nfet", false,
-	QObject::tr("polarity")+" [nfet, pfet]"));
-  Props.append(new Property("Vt0", "1.0 V", true,
-	QObject::tr("zero-bias threshold voltage")));
-
-  Props.append(new Property("Kp", "2e-5", true,
-	QObject::tr("transconductance coefficient in A/V^2")));
-  Props.append(new Property("Gamma", "0.0", false,
-	QObject::tr("bulk threshold in sqrt(V)")));
-  Props.append(new Property("Phi", "0.6 V", false,
-	QObject::tr("surface potential")));
-  Props.append(new Property("Lambda", "0.0", true,
-	QObject::tr("channel-length modulation parameter in 1/V")));
-  Props.append(new Property("Rd", "0.0 Ohm", false,
-	QObject::tr("drain ohmic resistance")));
-  Props.append(new Property("Rs", "0.0 Ohm", false,
-	QObject::tr("source ohmic resistance")));
-  Props.append(new Property("Rg", "0.0 Ohm", false,
-	QObject::tr("gate ohmic resistance")));
-  Props.append(new Property("Is", "1e-14 A", false,
-	QObject::tr("bulk junction saturation current")));
-  Props.append(new Property("N", "1.0", false,
-	QObject::tr("bulk junction emission coefficient")));
-  Props.append(new Property("W", "1 um", false,
-	QObject::tr("channel width")));
-  Props.append(new Property("L", "1 um", false,
-	QObject::tr("channel length")));
-  Props.append(new Property("Ld", "0.0", false,
-	QObject::tr("lateral diffusion length")));
-  Props.append(new Property("Tox", "0.1 um", false,
-	QObject::tr("oxide thickness")));
-  Props.append(new Property("Cgso", "0.0", false,
-	QObject::tr("gate-source overlap capacitance per meter of "
-		    "channel width in F/m")));
-  Props.append(new Property("Cgdo", "0.0", false,
-	QObject::tr("gate-drain overlap capacitance per meter of "
-		    "channel width in F/m")));
-  Props.append(new Property("Cgbo", "0.0", false,
-	QObject::tr("gate-bulk overlap capacitance per meter of "
-		    "channel length in F/m")));
-  Props.append(new Property("Cbd", "0.0 F", false,
-	QObject::tr("zero-bias bulk-drain junction capacitance")));
-  Props.append(new Property("Cbs", "0.0 F", false,
-	QObject::tr("zero-bias bulk-source junction capacitance")));
-  Props.append(new Property("Pb", "0.8 V", false,
-	QObject::tr("bulk junction potential")));
-  Props.append(new Property("Mj", "0.5", false,
-	QObject::tr("bulk junction bottom grading coefficient")));
-  Props.append(new Property("Fc", "0.5", false,
-	QObject::tr("bulk junction forward-bias depletion capacitance "
-		    "coefficient")));
-  Props.append(new Property("Cjsw", "0.0", false,
-	QObject::tr("zero-bias bulk junction periphery capacitance per meter "
-		    "of junction perimeter in F/m")));
-  Props.append(new Property("Mjsw", "0.33", false,
-	QObject::tr("bulk junction periphery grading coefficient")));
-  Props.append(new Property("Tt", "0.0 ps", false,
-	QObject::tr("bulk transit time")));
-  Props.append(new Property("Nsub", "0.0", false,
-	QObject::tr("substrate bulk doping density in 1/cm^3")));
-  Props.append(new Property("Nss", "0.0", false,
-	QObject::tr("surface state density in 1/cm^2")));
-  Props.append(new Property("Tpg", "1", false,
-	QObject::tr("gate material type: 0 = alumina; -1 = same as bulk; "
-		    "1 = opposite to bulk")));
-  Props.append(new Property("Uo", "600.0", false,
-	QObject::tr("surface mobility in cm^2/Vs")));
-  Props.append(new Property("Rsh", "0.0", false,
-	QObject::tr("drain and source diffusion sheet resistance in "
-		    "Ohms/square")));
-  Props.append(new Property("Nrd", "1", false,
-	QObject::tr("number of equivalent drain squares")));
-  Props.append(new Property("Nrs", "1", false,
-	QObject::tr("number of equivalent source squares")));
-  Props.append(new Property("Cj", "0.0", false,
-	QObject::tr("zero-bias bulk junction bottom capacitance per square "
-		    "meter of junction area in F/m^2")));
-  Props.append(new Property("Js", "0.0", false,
-	QObject::tr("bulk junction saturation current per square "
-		    "meter of junction area in A/m^2")));
-  Props.append(new Property("Ad", "0.0", false,
-	QObject::tr("drain diffusion area in m^2")));
-  Props.append(new Property("As", "0.0", false,
-	QObject::tr("source diffusion area in m^2")));
-  Props.append(new Property("Pd", "0.0 m", false,
-	QObject::tr("drain junction perimeter")));
-  Props.append(new Property("Ps", "0.0 m", false,
-	QObject::tr("source junction perimeter")));
-  Props.append(new Property("Kf", "0.0", false,
-	QObject::tr("flicker noise coefficient")));
-  Props.append(new Property("Af", "1.0", false,
-	QObject::tr("flicker noise exponent")));
-  Props.append(new Property("Ffe", "1.0", false,
-	QObject::tr("flicker noise frequency exponent")));
-  Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
-  Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("parameter measurement temperature")));
-
   createSymbol();
   tx = x2+4;
   ty = y1+4;
   Model = "_MOSFET";
-  Name  = "T";
 }
 
 // -------------------------------------------------------
@@ -217,4 +116,21 @@ void MOSFET::createSymbol()
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;
+}
+
+// -------------------------------------------------------
+QString MOSFET::netlist()
+{
+  QString s = "MOSFET:"+Name;
+
+  // output all node names
+  for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
+    s += " "+p1->Connection->Name;   // node names
+  s += " "+Ports.at(2)->Connection->Name;  // connect substrate to source
+
+  // output all properties
+  for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
+    s += " "+p2->Name+"=\""+p2->Value+"\"";
+
+  return s + '\n';
 }
