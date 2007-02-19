@@ -63,16 +63,15 @@ Element* Optimize_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Optimize_Sim::NetList()
+QString Optimize_Sim::netlist()
 {
-  QString s = "";
-  s += "#\n";
+  QString s = "#\n";
   if (createASCOFiles()) {
     s += "# ASCO configuration file(s) created\n";
   } else {
     s += "# Failed to create ASCO configuration file(s)\n";
   }
-  s += "#\n";
+  s += "#\n\n";
   return s;
 }
 

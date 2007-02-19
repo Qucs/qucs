@@ -60,7 +60,7 @@ Source_ac::Source_ac()
   Props.append(new Property("Z", "50 Ohm", true,
 		QObject::tr("port impedance")));
   Props.append(new Property("P", "0 dBm", false,
-		QObject::tr("ac power in Watts")));
+		QObject::tr("(available) ac power in Watts")));
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
   Props.append(new Property("Temp", "26.85", false,

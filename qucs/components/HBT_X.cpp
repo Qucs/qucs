@@ -175,31 +175,7 @@ HBT_X::HBT_X()
   Props.append (new Property ("Tnom", "20.0", false,
     QObject::tr ("Ambient temperature at which the parameters were determined")));
 
-  createSymbol ();
-  tx = x2 + 4;
-  ty = y1 + 4;
-  Model = "HBT_X";
-  Name  = "T";
-}
 
-Component * HBT_X::newOne()
-{
-  HBT_X * p = new HBT_X();
-  p->recreate(0); 
-  return p;
-}
-
-Element * HBT_X::info(QString& Name, char * &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("FBH HBT");
-  BitmapFile = "npn";
-
-  if(getNewOne) return new HBT_X();
-  return 0;
-}
-
-void HBT_X::createSymbol()
-{
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
@@ -223,4 +199,26 @@ void HBT_X::createSymbol()
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;
+
+
+  tx = x2 + 4;
+  ty = y1 + 4;
+  Model = "HBT_X";
+  Name  = "T";
+}
+
+Component * HBT_X::newOne()
+{
+  HBT_X * p = new HBT_X();
+  p->recreate(0); 
+  return p;
+}
+
+Element * HBT_X::info(QString& Name, char * &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("FBH HBT");
+  BitmapFile = "npn_therm";
+
+  if(getNewOne) return new HBT_X();
+  return 0;
 }

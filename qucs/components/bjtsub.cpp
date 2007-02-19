@@ -18,10 +18,8 @@
 #include "bjtsub.h"
 
 
-BJTsub::BJTsub()
+Basic_BJT::Basic_BJT()
 {
-  Description = QObject::tr("bipolar junction transistor with substrate");
-
   // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
 	QObject::tr("polarity")+" [npn, pnp]"));
@@ -120,11 +118,16 @@ BJTsub::BJTsub()
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for bipolar transistor")));
 
+  Name  = "T";
+}
+
+BJTsub::BJTsub()
+{
+  Description = QObject::tr("bipolar junction transistor with substrate");
   createSymbol();
   tx = x2+4;
   ty = y1+4;
   Model = "BJT";
-  Name  = "T";
 }
 
 // -------------------------------------------------------

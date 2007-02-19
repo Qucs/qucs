@@ -2965,7 +2965,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>potencia ac en Vatios</translation>
+        <translation type="obsolete">potencia ac en Vatios</translation>
     </message>
     <message>
         <source>Power Source</source>
@@ -4606,10 +4606,6 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FBH HBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4979,6 +4975,10 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9856,7 +9856,7 @@ abrir los archivos con el programa apropiado.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

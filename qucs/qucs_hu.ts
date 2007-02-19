@@ -3007,7 +3007,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>AC teljesítmény Watt-ban</translation>
+        <translation type="obsolete">AC teljesítmény Watt-ban</translation>
     </message>
     <message>
         <source>Power Source</source>
@@ -4604,10 +4604,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FBH HBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4977,6 +4973,10 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9998,7 +9998,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dont Save</source>
+        <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

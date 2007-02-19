@@ -57,7 +57,7 @@ RS_FlipFlop::RS_FlipFlop()
 }
 
 // -------------------------------------------------------
-QString RS_FlipFlop::VHDL_Code(int NumPorts)
+QString RS_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
@@ -70,7 +70,7 @@ QString RS_FlipFlop::VHDL_Code(int NumPorts)
     Ports.at(3)->Connection->Name + s + "  " +
     Ports.at(3)->Connection->Name + " <= " +
     Ports.at(1)->Connection->Name + " nor " +
-    Ports.at(2)->Connection->Name + s;
+    Ports.at(2)->Connection->Name + s + '\n';
   return s;
 }
 

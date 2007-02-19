@@ -195,7 +195,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::NetList()
+QString Subcircuit::netlist()
 {
   QString s = Model+":"+Name;
 
@@ -209,11 +209,11 @@ QString Subcircuit::NetList()
   // output all user defined properties
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
     s += " "+pp->Name+"=\""+pp->Value+"\"";
-  return s;
+  return s + '\n';
 }
 
 // -------------------------------------------------------
-QString Subcircuit::VHDL_Code(int)
+QString Subcircuit::vhdlCode(int)
 {
   QString s = "  " + Name + ": entity Sub_" +
               properName(Props.getFirst()->Value) + " port map (";
@@ -224,6 +224,6 @@ QString Subcircuit::VHDL_Code(int)
   for(pp = Ports.next(); pp != 0; pp = Ports.next())
     s += ", "+pp->Connection->Name;   // node names
 
-  s += ");";
+  s += ");\n";
   return s;
 }

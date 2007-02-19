@@ -17,11 +17,8 @@
 
 #include "mosfet_sub.h"
 
-
-MOSFET_sub::MOSFET_sub()
+Basic_MOSFET::Basic_MOSFET()
 {
-  Description = QObject::tr("MOS field-effect transistor");
-
   // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
 	QObject::tr("polarity")+" [nfet, pfet]"));
@@ -122,11 +119,16 @@ MOSFET_sub::MOSFET_sub()
   Props.append(new Property("Tnom", "26.85", false,
 	QObject::tr("parameter measurement temperature")));
 
+  Name  = "T";
+}
+
+MOSFET_sub::MOSFET_sub()
+{
+  Description = QObject::tr("MOS field-effect transistor with substrate");
   createSymbol();
   tx = x2+4;
   ty = y1+4;
   Model = "MOSFET";
-  Name  = "T";
 }
 
 // -------------------------------------------------------

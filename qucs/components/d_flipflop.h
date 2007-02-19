@@ -27,7 +27,9 @@ public:
  ~D_FlipFlop() {};
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString VHDL_Code(int);
+
+protected:
+  QString vhdlCode(int);
 };
 
 #endif

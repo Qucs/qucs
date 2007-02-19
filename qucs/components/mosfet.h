@@ -18,10 +18,10 @@
 #ifndef MOSFET_H
 #define MOSFET_H
 
-#include "component.h"
+#include "mosfet_sub.h"
 
 
-class MOSFET : public MultiViewComponent {
+class MOSFET : public Basic_MOSFET {
 public:
   MOSFET();
  ~MOSFET() {};
@@ -32,6 +32,7 @@ public:
 
 protected:
   void createSymbol();
+  QString netlist();
 };
 
 #endif

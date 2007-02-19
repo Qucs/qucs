@@ -37,10 +37,8 @@ public:
 
   virtual Component* newOne();
   virtual void recreate(Schematic*) {};
-  virtual QString NetList();
-  virtual QString VHDL_Code(int);
-  QString getShortenNetlist();
-  QString getShortenVHDL();
+  QString getNetlist();
+  QString get_VHDL_Code(int);
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*, float);
@@ -79,9 +77,12 @@ public:
   QString  Description;
 
 protected:
+  virtual QString netlist();
+  virtual QString vhdlCode(int);
+
   int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
-		   int *i4=0, int *i5=0, int *i6=0);
+                   int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
 
@@ -104,8 +105,8 @@ protected:
 class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
-  QString NetList();
-  QString VHDL_Code(int);
+  QString netlist();
+  QString vhdlCode(int);
 
 protected:
   void createSymbol();

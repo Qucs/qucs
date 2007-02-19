@@ -211,7 +211,7 @@ bool LibComp::outputSubNetlist(QTextStream *stream)
 }
 
 // -------------------------------------------------------
-QString LibComp::NetList()
+QString LibComp::netlist()
 {
   QString s = "Sub:"+Name;   // output as subcircuit
 
@@ -233,5 +233,5 @@ QString LibComp::NetList()
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
     s += " "+pp->Name+"=\""+pp->Value+"\"";
 
-  return s;
+  return s + '\n';
 }

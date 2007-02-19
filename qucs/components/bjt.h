@@ -18,10 +18,10 @@
 #ifndef BJT_H
 #define BJT_H
 
-#include "component.h"
+#include "bjtsub.h"
 
 
-class BJT : public MultiViewComponent  {
+class BJT : public Basic_BJT  {
 public:
   BJT();
  ~BJT() {};
@@ -31,6 +31,7 @@ public:
 
 protected:
   void createSymbol();
+  QString netlist();
 };
 
 #endif

@@ -27,10 +27,12 @@ public:
  ~Optimize_Sim();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
-  QString NetList();
   bool createASCOFiles();
   bool createASCOnetlist();
   bool loadASCOout();
+
+protected:
+  QString netlist();
 };
 
 #endif

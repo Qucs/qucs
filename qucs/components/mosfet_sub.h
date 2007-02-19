@@ -21,7 +21,13 @@
 #include "component.h"
 
 
-class MOSFET_sub : public MultiViewComponent  {
+class Basic_MOSFET : public MultiViewComponent {
+public:
+  Basic_MOSFET();
+ ~Basic_MOSFET() {};
+};
+
+class MOSFET_sub : public Basic_MOSFET {
 public:
   MOSFET_sub();
  ~MOSFET_sub() {};
