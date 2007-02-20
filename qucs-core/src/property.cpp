@@ -1,7 +1,7 @@
 /*
  * property.cpp - generic property class implementation
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.9 2006-07-24 08:07:42 raimi Exp $
+ * $Id: property.cpp,v 1.10 2007-02-20 21:00:44 ela Exp $
  *
  */
 
@@ -158,7 +158,12 @@ char * property::getString (void) {
 
 // Returns the property's value as double.
 nr_double_t property::getDouble (void) {
-  if (var != NULL) return D (var->getConstant ());
+  if (var != NULL) {
+    if (var->getType () == VAR_CONSTANT)
+      return D (var->getConstant ());
+    else if (var->getType () == VAR_REFERENCE)
+      return D (var->getReference()->getResult ());
+  }
   return value;
 }
 

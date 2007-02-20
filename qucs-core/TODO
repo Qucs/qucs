@@ -33,7 +33,7 @@ unfixed) have a look at the file BUGS.
 - Support for touchstone as an export file format in the Qucs Converter.
 - Translate switches in spice netlists in the netlist converter.
 - Support for equation defined voltage/current sources or components.
-- Allow equations in subcircuits.
+	- Allow equations in subcircuits.
 	- Support for CITIfiles as an import file format in the Qucs
 	  Converter.
 	- Support for comma separated values (CSV) as an export
@@ -110,7 +110,7 @@ unfixed) have a look at the file BUGS.
 	- Transient models of non-linear devices.
 	- Implementation of transient models for capacitor, inductor and
 	  resistor.
-- Subcircuit definitions with properties.
+	- Subcircuit definitions with properties.
 	- Node-set functionality for DC and transient analysis.
 	- Coplanar line implementation.
 	- Microstrip via hole implementation.
@@ -157,7 +157,7 @@ unfixed) have a look at the file BUGS.
 	- Check for duplicate definitions in equations and parameter sweep
 	  variables.
 	- Add string constants to equation base class.
-- Allow equation variables in component properties.
+	- Allow equation variables in component properties.
 	- Implement class for vectors of matrices.
 	- Check for cyclic analysis definitions.
 	- Somehow merge the variable class and the equation base classes.

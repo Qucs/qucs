@@ -1,7 +1,7 @@
 /*
  * net.cpp - net class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.31 2006-09-19 08:22:20 raimi Exp $
+ * $Id: net.cpp,v 1.32 2007-02-20 21:00:44 ela Exp $
  *
  */
 
@@ -237,7 +237,6 @@ dataset * net::runAnalysis (void) {
   // apply some data to all analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    a->setEnv (env);
     a->setNet (this);
     a->setData (out);
   }
@@ -246,6 +245,7 @@ dataset * net::runAnalysis (void) {
   // solve the analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
+    a->getEnv()->runSolver ();
     a->solve ();
   }
   return out;

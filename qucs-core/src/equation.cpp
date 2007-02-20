@@ -1,7 +1,7 @@
 /*
  * equation.cpp - checker for the Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.44 2006-10-17 09:00:04 raimi Exp $
+ * $Id: equation.cpp,v 1.45 2007-02-20 21:00:43 ela Exp $
  *
  */
 
@@ -223,6 +223,7 @@ void reference::addDependencies (strlist * depends) {
 
 // Find and save the actual equation reference.
 void reference::findVariable (void) {
+  ref = NULL; // force reference to be updated
   if (!ref) {
     node * eqn;
     if (checkee != NULL) {
@@ -1089,7 +1090,8 @@ solver::~solver () {
 // The function finally evaluates each equation passed to the solver.
 void solver::evaluate (void) {
   foreach_equation (eqn) {
-    if (eqn->evalPossible && eqn->evaluated == 0) {
+    // FIXME: Can save evaluation of already evaluated equations?
+    if (eqn->evalPossible /* && eqn->evaluated == 0 */) {
       // exception handling around evaluation
       try_running () {
 	eqn->solvee = this;
@@ -1566,10 +1568,10 @@ void checker::constants (void) {
 
 /* The function adds a new equation to the equation checker consisting
    of an assignment of a double variable. */
-void checker::addDouble (char * type, char * ident, nr_double_t value) {
+node * checker::addDouble (char * type, char * ident, nr_double_t value) {
 
   // create constant double value
-  constant * c = new constant (eqn::TAG_DOUBLE);
+  constant * c = new constant (TAG_DOUBLE);
   c->d = value;
   // create the appropriate assignment
   assignment * a = new assignment ();
@@ -1580,4 +1582,34 @@ void checker::addDouble (char * type, char * ident, nr_double_t value) {
   // append the assignment to equations
   a->setNext (equations);
   equations = a;
+  return a;
+}
+
+/* The functions looks through the set of equations for a real valued
+   result and returns it.  If there is no such assignment, zero is
+   returned. */ 
+nr_double_t checker::getDouble (char * ident) {
+  foreach_equation (eqn) {
+    if (!strcmp (ident, eqn->result)) {
+      constant * c = C (eqn->getResult ());
+      if (c != NULL) {
+	if (c->type == TAG_DOUBLE)
+	  return c->d;
+	else if (c->type == TAG_COMPLEX)
+	  return real (*(c->c));
+      }
+    }
+  }
+  return 0.0;
+}
+
+/* The function goes through the equation set and looks for the
+   specified assigment.  If found the given value is set. */
+void checker::setDouble (char * ident, nr_double_t val) {
+  foreach_equation (eqn) {
+    if (!strcmp (ident, eqn->result)) {
+      constant * c = C (eqn->body);
+      if (c->type == TAG_DOUBLE) c->d = val;
+    }
+  }
 }
