@@ -1,7 +1,7 @@
 /*
  * variable.h - generic variable class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: variable.h,v 1.4 2005/06/02 18:17:51 raimi Exp $
+ * $Id: variable.h,v 1.5 2007/02/20 21:00:51 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@ using namespace eqn;
 enum variably_type {
   VAR_UNKNOWN = -1, // not yet defined
   VAR_CONSTANT,     // equation constant
+  VAR_REFERENCE,    // equation reference
   VAR_SUBSTRATE,    // substrate definition
   VAR_ANALYSIS      // analysis
 };
@@ -59,16 +60,21 @@ class variable
   int getType (void) { return type; }
   void setConstant (constant * c) { type = VAR_CONSTANT; value.c = c; }
   constant * getConstant (void) { return value.c; }
+  void setReference (reference * r) { type = VAR_REFERENCE; value.r = r; }
+  reference * getReference (void) { return value.r; }
   void setSubstrate (substrate * s) { type = VAR_SUBSTRATE; value.s = s; }
   substrate * getSubstrate (void) { return value.s; }
   void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
   analysis * getAnalysis (void) { return value.a; }
+  char * toString (void);
 
  private:
   char * name;
+  char * text;
   int type;
   union value_t {
     constant * c;  // equation constant
+    reference * r; // equation reference
     substrate * s; // substrate definition
     analysis * a;  // analysis
   } value;

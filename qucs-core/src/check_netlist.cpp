@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.104 2007/02/04 18:08:52 ela Exp $
+ * $Id: check_netlist.cpp,v 1.105 2007/02/20 21:00:41 ela Exp $
  *
  */
 
@@ -345,8 +345,9 @@ static int checker_resolve_variable (struct definition_t * root,
     /* 7. find variable in equation */
     if (root->env->getChecker()->containsVariable (value->ident)) {
       variable * v;
+      value->var = eqn::TAG_DOUBLE;
       if ((v = root->env->getVariable (value->ident)) == NULL) {
-	value->var = eqn::TAG_DOUBLE;
+	// put variable into the environment
 	v = new variable (value->ident);
 	eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
 	v->setConstant (c);
@@ -1242,6 +1243,22 @@ checker_copy_subcircuits (struct definition_t * type,
   environment * child = new environment (*(type->env));
   parent->addChild (child);
 
+  // put instance properties into subcircuit environment
+  for (struct pair_t * pair = inst->pairs; pair != NULL; pair = pair->next) {
+    // anything else than the 'Type'
+    if (strcmp (pair->key, "Type")) {
+      if (pair->value->ident == NULL) {
+	// simple value
+	child->setDoubleConstant (pair->key, pair->value->value);
+	child->setDouble (pair->key, pair->value->value);
+      }
+      else {
+	// reference to variable in upper environment
+	child->setDoubleReference (pair->key, pair->value->ident);
+      }
+    }
+  }
+
   // go through element list of subcircuit
   for (def = type->sub; def != NULL; def = def->next) {
 
@@ -1285,6 +1302,8 @@ checker_copy_subcircuits (struct definition_t * type,
       copy->subcircuit = strdup (type->instance);
       // assign node list
       checker_copy_subcircuit_nodes (type, inst, def, copy, list);
+      // apply environment
+      copy->env = child;
       // chain definition (circuit) list
       copy->next = root;
       root = copy;
@@ -1293,6 +1312,15 @@ checker_copy_subcircuits (struct definition_t * type,
     // cleanup translated nodes
     checker_cleanup_xlat_nodes (def);
   }
+
+  // try giving child environment a unique name
+  strlist * icopy = new strlist ();
+  icopy->append (type->instance);
+  icopy->append (*(instances));
+  icopy->append (inst->instance);
+  child->setName (icopy->toString ("."));
+  delete icopy;
+
   return root;
 }
 
@@ -1623,7 +1651,11 @@ checker_expand_subcircuits (struct definition_t * root, environment * parent) {
 	root = copy;
       }
     }
-    else prev = def;
+    // component in the root environment
+    else {
+      prev = def;
+      def->env = parent;
+    }
   }
   return root;
 }
@@ -1821,9 +1853,17 @@ static void checker_setup_env (struct definition_t * root,
 static void checker_subcircuit_args (struct definition_t * def,
 				     environment * env) {
   for (struct pair_t * pair = def->pairs; pair != NULL; pair = pair->next) {
+    // anything else than the 'Type'
     if (strcmp (pair->key, "Type")) {
+      // put it into the equation checker
       env->getChecker()->addDouble ("#subcircuit",
 				    pair->key, pair->value->value);
+      // also put it into the environment
+      variable * v = new variable (pair->key);
+      eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
+      c->d = pair->value->value;
+      v->setConstant (c);
+      env->addVariable (v);
     }
   }
 }
@@ -1836,7 +1876,7 @@ int netlist_checker (environment * env) {
   struct definition_t * def;
 
   // create top-level environment
-  environment * env_root = new environment ("root");
+  environment * env_root = new environment (env->getName ());
   // create the subcircuit list
   definition_root = checker_build_subcircuits (definition_root);
   // get equation list
@@ -1871,7 +1911,7 @@ int netlist_checker (environment * env) {
 
   if (!errors) {
     // create actual root environment
-    *env = *env_root;
+    env->copy (*env_root);
     // and finally expand the subcircuits into the global netlist
     definition_root = checker_expand_subcircuits (definition_root, env);
   }

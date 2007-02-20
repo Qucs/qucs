@@ -1,3 +1,28 @@
+2007-02-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* variable.h (class variable): Allowing variables to references
+	as well.
+
+	* variable.cpp (toString): New function which creates a textual
+	representation of a variable.
+
+	* property.cpp: Also allow properties which are references.
+
+	* net.cpp: Start equation solver once before each top-level
+	analysis.
+
+	* input.cpp: Ensure that component properties (if variables) are
+	referenced from the correct environment.
+
+	* equation.cpp: Some more functionality especially for double
+	values/assignments added.
+
+	* environment.cpp: The equation solver now updates equation
+	results and updates references across subcircuit boundaries.
+
+	* check_netlist.cpp: Putting subcircuit variables into the
+	appropriate environment.
+
 2007-02-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: Fixing probe functionality.

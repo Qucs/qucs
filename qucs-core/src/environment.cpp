@@ -1,7 +1,7 @@
 /*
  * environment.cpp - variable environment class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.5 2006/10/17 09:00:04 raimi Exp $
+ * $Id: environment.cpp,v 1.6 2007/02/20 21:00:41 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "variable.h"
 #include "equation.h"
 #include "ptrlist.h"
+#include "logging.h"
 #include "environment.h"
 
 // Constructor creates an unnamed instance of the environment class.
@@ -46,7 +47,7 @@ environment::environment () {
 
 // Constructor creates a named instance of the environment class.
 environment::environment (char * n) {
-  name = strdup (n);
+  name = n ? strdup (n) : NULL;
   root = NULL;
   solvee = NULL;
   checkee = NULL;
@@ -63,6 +64,19 @@ environment::environment (const environment & e) {
   children = new ptrlist<environment>;
 }
 
+/* Very alike the copy constructor the function copies the content of
+   the given environment into the calling environment. */
+void environment::copy (const environment & e) {
+  if (name) free (name);
+  name = e.name ? strdup (e.name) : NULL;
+  deleteVariables ();
+  copyVariables (e.root);
+  solvee = e.solvee;
+  checkee = e.checkee;
+  delete children;
+  children = new ptrlist<environment>;
+}
+
 // Destructor deletes the environment object.
 environment::~environment () {
   if (name) free (name);
@@ -74,7 +88,7 @@ environment::~environment () {
 // Sets the name of the environment.
 void environment::setName (char * n) {
   if (name) free (name);
-  name = strdup (n);
+  name = n ? strdup (n) : NULL;
 }
 
 // Returns the name of the environment.
@@ -104,6 +118,8 @@ void environment::deleteVariables (void) {
       delete var->getConstant ();
     else if (var->getType () == VAR_SUBSTRATE)
       delete var->getSubstrate ();
+    else if (var->getType () == VAR_REFERENCE)
+      delete var->getReference ();
     delete var;
   }
   root = NULL;
@@ -153,9 +169,116 @@ void environment::delChild (environment * child) {
    the arguments to each children. */
 int environment::runSolver (void) {
   int ret = 0;
+
+  // solve equations in current environment
   ret |= equationSolver (NULL);
+
+  // get values of variables from equation solver
+  for (variable * var = root; var != NULL; var = var->getNext ()) {
+    if (var->getType () == VAR_CONSTANT) {
+      constant * c = var->getConstant ();
+      c->d = getDouble (var->getName ());
+    }
+  }
+
+  // run the solver of the children
   for (ptrlistiterator<environment> it (*children); *it; ++it) {
+    (*it)->updateReferences (this);
     ret |= (*it)->runSolver ();
   }
+
   return ret;
+}
+
+/* This function looks through all variables which are references.  If
+   found the variable gets resolved in the upper (parent) environment
+   and the value put into the result of the reference as well as into
+   the equation checker of the current environment. */
+void environment::updateReferences (environment * up) {
+  for (variable * var = root; var != NULL; var = var->getNext ()) {
+    if (var->getType () == VAR_REFERENCE) {
+      reference * r = var->getReference ();
+      nr_double_t d = up->getDouble (r->n);
+      constant * c = r->getResult ();
+      c->d = d;
+      setDouble (var->getName (), d);
+    }
+  }
+}
+
+// Returns double value of an assignment in the equation checker.
+nr_double_t environment::getDouble (char * ident) {
+  return checkee->getDouble (ident);
+}
+
+// Sets the double value of an assignment in the equation checker.
+void environment::setDouble (char * ident, nr_double_t val) {
+  checkee->setDouble (ident, val);
+}
+
+// Return double value of a variable in the environment.
+nr_double_t environment::getDoubleConstant (char * ident) {
+  variable * var = getVariable (ident);
+  if (var != NULL && var->getType () == VAR_CONSTANT) {
+    constant * c = var->getConstant ();
+    return c->d;
+  }
+  return 0.0;
+}
+
+// Sets the double value of a variable in the environment.
+void environment::setDoubleConstant (char * ident, nr_double_t val) {
+  variable * var = getVariable (ident);
+  if (var != NULL && var->getType () == VAR_CONSTANT) {
+    constant * c = var->getConstant ();
+    c->d = val;
+  }
+}
+
+// Returns the referenced value of a variable in the environment. 
+char * environment::getDoubleReference (char * ident) {
+  variable * var = getVariable (ident);
+  if (var != NULL &&  var->getType () == VAR_REFERENCE) {
+    reference * r = var->getReference ();
+    return r->n;
+  }
+  return NULL;
+}
+
+// Sets the referenced value of a variable in the environment. 
+void environment::setDoubleReference (char * ident, char * val) {
+  variable * var = getVariable (ident);
+  if (var != NULL) {
+    if (var->getType () == VAR_CONSTANT) {
+      // its a constant, so make it a reference
+      delete var->getConstant ();
+      reference * r = new reference ();
+      r->n = strdup (val);
+      constant * c = new constant (TAG_DOUBLE);
+      r->setResult (c);
+      var->setReference (r);
+    }
+    else if (var->getType () == VAR_REFERENCE) {
+      // just apply the reference
+      reference * r = var->getReference ();
+      if (r->n) free (r->n);
+      r->n = strdup (val);
+    }
+  }
+}
+
+// Prints the environment.
+void environment::print (bool all) {
+  ptrlistiterator<environment> it;
+  logprint (LOG_STATUS, "environment %s\n", getName () ? getName () : "?env?");
+  for (variable * var = root; var != NULL; var = var->getNext ()) {
+    logprint (LOG_STATUS, "  %s [%s]\n", var->getName (), var->toString ());
+  }
+  for (it = ptrlistiterator<environment> (*children); *it; ++it) {
+    logprint (LOG_STATUS, "  %s\n", (*it)->getName ());
+  }
+  if (all) {
+    for (it = ptrlistiterator<environment> (*children); *it; ++it)
+      (*it)->print ();
+  }
 }

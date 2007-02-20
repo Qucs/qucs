@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.63 2007/01/23 10:23:35 raimi Exp $
+ * $Id: input.cpp,v 1.64 2007/02/20 21:00:44 ela Exp $
  *
  */
 
@@ -151,7 +151,7 @@ void input::factory (void) {
 	      constant * c = new constant (TAG_DOUBLE);
 	      c->d = 0; // initialize the variable
 	      v->setConstant (c);
-	      env->addVariable (v);
+	      def->env->addVariable (v);
 	    }
 	    a->addProperty (pairs->key, pairs->value->ident);
 	  } else {
@@ -169,7 +169,7 @@ void input::factory (void) {
 	  }
 	// additionally add missing optional properties
 	assignDefaultProperties (a, def->define);
-
+	a->setEnv (def->env);
 	subnet->insertAnalysis (a);
       }
       // remove this definition from the list
@@ -249,8 +249,9 @@ void input::factory (void) {
 	  if (pairs->value->var) {
 	    // at this stage it should be ensured that the variable is
 	    // already in the root environment
-	    variable * v = env->getVariable (pairs->value->ident);
+	    variable * v = def->env->getVariable (pairs->value->ident);
 	    o->addProperty (pairs->key, v);
+	    
 	  } else {
 	    if (pairs->value->subst) {
 	      variable * v = env->getVariable (pairs->value->ident);

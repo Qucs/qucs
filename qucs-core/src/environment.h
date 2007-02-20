@@ -1,7 +1,7 @@
 /*
  * environment.h - variable environment class definitions
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.4 2006/10/17 09:00:04 raimi Exp $
+ * $Id: environment.h,v 1.5 2007/02/20 21:00:43 ela Exp $
  *
  */
 
@@ -56,8 +56,19 @@ class environment
   int equationSolver (dataset *);
   int runSolver (void);
 
+  void setDoubleConstant (char *, nr_double_t);
+  nr_double_t getDoubleConstant (char *);
+  void setDouble (char *, nr_double_t);
+  nr_double_t getDouble (char *);
+  void setDoubleReference (char *, char *);
+  char * getDoubleReference (char *);
+  void updateReferences (environment *);
+
   void delChild (environment *);
   void addChild (environment *);
+
+  void print (bool all = false);
+  void copy (const environment &);
 
  private:
   char * name;

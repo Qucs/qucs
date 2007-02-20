@@ -1,7 +1,7 @@
 /*
  * parasweep.cpp - parameter sweep class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.12 2006/08/09 08:32:18 raimi Exp $
+ * $Id: parasweep.cpp,v 1.13 2007/02/20 21:00:44 ela Exp $
  *
  */
 
@@ -76,6 +76,7 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 void parasweep::solve (void) {
   char * n;
   constant * val;
+  eqn::node * eqn = NULL;
 
   runs++;
 
@@ -98,14 +99,24 @@ void parasweep::solve (void) {
   }
   else val = var->getConstant ();
 
+  // put variable also into equation checker if necessary
+  if (!env->getChecker()->containsVariable (n)) {
+    eqn = env->getChecker()->addDouble ("#sweep", n, 0);
+  }
+
   // run the parameter sweep
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
-    D (val) = swp->next ();
+    nr_double_t v = swp->next ();
+    // update environment and equation checker, then run solver
+    env->setDoubleConstant (n, v);
+    env->setDouble (n, v);
+    env->runSolver ();
+    // save results (swept parameter values)
     if (runs == 1) saveResults ();
 #if DEBUG
     logprint (LOG_STATUS, "NOTIFY: %s: running netlist for %s = %g\n",
-	      getName (), n, D (val));
+	      getName (), n, v);
 #endif
     for (int k = 0; k < actions->length (); k++) {
       analysis * a = actions->get (k);
@@ -116,6 +127,12 @@ void parasweep::solve (void) {
 	data->assignDependency ((*it)->getName (), var->getName ());
       }
     }
+  }
+
+  // remove additional equation from checker
+  if (eqn) {
+    env->getChecker()->dropEquation (eqn);
+    delete eqn;
   }
 }
 

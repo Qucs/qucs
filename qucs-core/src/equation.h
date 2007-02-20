@@ -1,7 +1,7 @@
 /*
  * equation.h - checker definitions for Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.30 2006/10/17 09:00:04 raimi Exp $
+ * $Id: equation.h,v 1.31 2007/02/20 21:00:44 ela Exp $
  *
  */
 
@@ -251,8 +251,10 @@ public:
   void constants (void);
   int check (int noundefined = 1);
   strlist * variables (void);
-  void addDouble (char *, char *, nr_double_t);
+  node * addDouble (char *, char *, nr_double_t);
   bool containsVariable (char *);
+  nr_double_t getDouble (char *);
+  void setDouble (char *, nr_double_t);
 
 public:
   node * equations;
