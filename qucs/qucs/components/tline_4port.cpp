@@ -20,7 +20,7 @@
 
 TLine_4Port::TLine_4Port()
 {
-  Description = QObject::tr("ideal 4-port transmission line");
+  Description = QObject::tr("ideal 4-terminal transmission line");
 
   Arcs.append(new Arc(-28,-40, 18, 38,16*232, 16*33,QPen(QPen::darkBlue,1)));
   Arcs.append(new Arc(-28,  2, 18, 38, 16*95, 16*33,QPen(QPen::darkBlue,1)));
@@ -70,7 +70,7 @@ Component* TLine_4Port::newOne()
 
 Element* TLine_4Port::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("4-Port Transmission Line");
+  Name = QObject::tr("4-Terminal Transmission Line");
   BitmapFile = "tline_4port";
 
   if(getNewOne)  return new TLine_4Port();
