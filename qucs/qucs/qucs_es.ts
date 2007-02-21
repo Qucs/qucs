@@ -4910,14 +4910,6 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ideal 4-port transmission line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4-Port Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>bond wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4983,6 +4975,14 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal 4-terminal transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-Terminal Transmission Line</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
