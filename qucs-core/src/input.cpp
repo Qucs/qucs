@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.64 2007/02/20 21:00:44 ela Exp $
+ * $Id: input.cpp,v 1.65 2007/02/21 09:41:28 ela Exp $
  *
  */
 
@@ -251,7 +251,6 @@ void input::factory (void) {
 	    // already in the root environment
 	    variable * v = def->env->getVariable (pairs->value->ident);
 	    o->addProperty (pairs->key, v);
-	    
 	  } else {
 	    if (pairs->value->subst) {
 	      variable * v = env->getVariable (pairs->value->ident);

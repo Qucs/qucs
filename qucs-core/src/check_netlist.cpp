@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.105 2007/02/20 21:00:41 ela Exp $
+ * $Id: check_netlist.cpp,v 1.106 2007/02/21 09:41:27 ela Exp $
  *
  */
 
@@ -1646,8 +1646,6 @@ checker_expand_subcircuits (struct definition_t * root, environment * parent) {
       if (copy) {
 	struct definition_t * last = checker_find_last_definition (copy);
 	last->next = root;
-	prev = last;
-	next = root;
 	root = copy;
       }
     }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.6 2007/02/20 21:00:41 ela Exp $
+ * $Id: environment.cpp,v 1.7 2007/02/21 09:41:28 ela Exp $
  *
  */
 
@@ -102,7 +102,22 @@ void environment::copyVariables (variable * org) {
   variable * var;
   root = NULL;
   while (org != NULL) {
+    // copy variable (references only)
     var = new variable (*org);
+    constant * c; reference * r;
+    // depending on variable type copy values too
+    switch (var->getType ()) {
+    case VAR_CONSTANT:
+      c = new constant (TAG_DOUBLE);
+      c->d = var->getConstant()->d;
+      var->setConstant (c);
+      break;
+    case VAR_REFERENCE:
+      r = new reference ();
+      r->n = strdup (var->getReference()->n);
+      var->setReference (r);
+      break;
+    }
     var->setNext (root);
     root = var;
     org = org->getNext ();
