@@ -4822,6 +4822,10 @@ Usage:  qucsedit [-r] file
         <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MOS field-effect transistor with substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
