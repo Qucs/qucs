@@ -1,5 +1,5 @@
 /*
- * tline4p.h - ideal 4-port transmission line class definitions
+ * tline4p.h - ideal 4-terminal transmission line class definitions
  *
  * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.h,v 1.1 2007/01/23 10:28:41 raimi Exp $
+ * $Id: tline4p.h,v 1.2 2007/02/21 14:57:19 ela Exp $
  *
  */
 
