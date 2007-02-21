@@ -1,5 +1,5 @@
 /*
- * tline4p.cpp - ideal 4-port transmission line class implementation
+ * tline4p.cpp - ideal 4-terminal transmission line class implementation
  *
  * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.cpp,v 1.2 2007-01-29 19:14:16 ela Exp $
+ * $Id: tline4p.cpp,v 1.3 2007-02-21 14:57:18 ela Exp $
  *
  */
 
@@ -130,8 +130,39 @@ void tline4p::calcAC (nr_double_t frequency) {
 }
 
 void tline4p::initTR (void) {
-  initDC ();
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t z = getPropertyDouble ("Z");
+  deleteHistory ();
+  if (l > 0.0) {
+    setVoltageSources (2);
+    allocMatrixMNA ();
+    setHistory (true);
+    initHistory (l / C0);
+    setB (NODE_1, VSRC_1, +1); setB (NODE_2, VSRC_2, +1);
+    setB (NODE_4, VSRC_1, -1); setB (NODE_3, VSRC_2, -1);
+    setC (VSRC_1, NODE_1, +1); setC (VSRC_2, NODE_2, +1);
+    setC (VSRC_1, NODE_4, -1); setC (VSRC_2, NODE_3, -1);
+    setD (VSRC_1, VSRC_1, -z); setD (VSRC_2, VSRC_2, -z); 
+  } else {
+    setVoltageSources (2);
+    allocMatrixMNA ();
+    voltageSource (VSRC_1, NODE_1, NODE_2);
+    voltageSource (VSRC_2, NODE_3, NODE_4);
+  }
 }
 
-void tline4p::calcTR (nr_double_t) {
+void tline4p::calcTR (nr_double_t t) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t a = getPropertyDouble ("Alpha");
+  nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t T = l / C0;
+  a = log (a) / 2;
+  if (T > 0.0) {
+    T = t - T;
+    a = exp (-a / 2 * l);
+    setE (VSRC_1, a * (getV (NODE_2, T) - getV (NODE_3, T) +
+		       z * getJ (VSRC_2, T)));
+    setE (VSRC_2, a * (getV (NODE_1, T) - getV (NODE_4, T) +
+		       z * getJ (VSRC_1, T)));
+  }
 }
