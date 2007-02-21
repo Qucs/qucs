@@ -5193,14 +5193,6 @@ Verwendung:  qucsedit [-r] Datei
         <translation>(verfügbare) AC-Leistung in Watt</translation>
     </message>
     <message>
-        <source>ideal 4-port transmission line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4-Port Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>twisted pair transmission line</source>
         <translation>verdrillte Leitung</translation>
     </message>
@@ -5227,6 +5219,14 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>Twisted-Pair</source>
         <translation>Verdrillte Leitung</translation>
+    </message>
+    <message>
+        <source>ideal 4-terminal transmission line</source>
+        <translation>ideale Leitung mit 4 Anschlüssen</translation>
+    </message>
+    <message>
+        <source>4-Terminal Transmission Line</source>
+        <translation>4-Anschluss Leitung</translation>
     </message>
 </context>
 <context>
