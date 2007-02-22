@@ -1,3 +1,9 @@
+2007-02-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* environment.cpp: Fixed a bug which was due to the fact that
+	different environments based on the same subcircuit share the
+	same equation checker and solver.
+
 2007-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* environment.cpp: Copy variable content if necessary.

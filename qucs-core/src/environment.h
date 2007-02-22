@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.5 2007/02/20 21:00:43 ela Exp $
+ * $Id: environment.h,v 1.6 2007/02/22 17:26:43 ela Exp $
  *
  */
 
@@ -63,6 +63,8 @@ class environment
   void setDoubleReference (char *, char *);
   char * getDoubleReference (char *);
   void updateReferences (environment *);
+  void passConstants (void);
+  void fetchConstants (void);
 
   void delChild (environment *);
   void addChild (environment *);

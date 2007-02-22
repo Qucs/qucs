@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.7 2007/02/21 09:41:28 ela Exp $
+ * $Id: environment.cpp,v 1.8 2007/02/22 17:26:43 ela Exp $
  *
  */
 
@@ -187,22 +187,41 @@ int environment::runSolver (void) {
 
   // solve equations in current environment
   ret |= equationSolver (NULL);
+  fetchConstants ();
 
-  // get values of variables from equation solver
+  // cycle through children
+  for (ptrlistiterator<environment> it (*children); *it; ++it) {
+    // pass constants to solver
+    (*it)->passConstants ();
+    // pass references
+    (*it)->updateReferences (this);
+    // actually run the solver
+    ret |= (*it)->runSolver ();
+  }
+
+  return ret;
+}
+
+/* Passes the constants of the environment to the equation solver.
+   This is necessary since equally typed environments use the same
+   equation checker and solver. */
+void environment::passConstants (void) {
+  for (variable * var = root; var != NULL; var = var->getNext ()) {
+    if (var->getType () == VAR_CONSTANT) {
+      constant * c = var->getConstant ();
+      setDouble (var->getName (), c->d);
+    }
+  }
+}
+
+/* Fetches the values of variables from the equation solver. */
+void environment::fetchConstants (void) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () == VAR_CONSTANT) {
       constant * c = var->getConstant ();
       c->d = getDouble (var->getName ());
     }
   }
-
-  // run the solver of the children
-  for (ptrlistiterator<environment> it (*children); *it; ++it) {
-    (*it)->updateReferences (this);
-    ret |= (*it)->runSolver ();
-  }
-
-  return ret;
 }
 
 /* This function looks through all variables which are references.  If
@@ -213,6 +232,7 @@ void environment::updateReferences (environment * up) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () == VAR_REFERENCE) {
       reference * r = var->getReference ();
+      // possible because no self-referring subcircuit types possible
       nr_double_t d = up->getDouble (r->n);
       constant * c = r->getResult ();
       c->d = d;
