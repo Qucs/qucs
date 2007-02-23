@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.31 2007/02/20 21:00:44 ela Exp $
+ * $Id: equation.h,v 1.32 2007/02/23 16:50:53 ela Exp $
  *
  */
 
@@ -231,6 +231,7 @@ public:
   checker ();
   ~checker ();
   void collectDependencies (void);
+  void collectDependencies (node *);
   void setEquations (node *);
   node * getEquations (void) { return equations; }
   void list (void);
@@ -252,15 +253,23 @@ public:
   int check (int noundefined = 1);
   strlist * variables (void);
   node * addDouble (char *, char *, nr_double_t);
+  node * createDouble (char *, char *, nr_double_t);
+  node * createReference (char *, char *, char *);
+  void appendEquation (node *);
+  void addEquation (node *);
   bool containsVariable (char *);
   nr_double_t getDouble (char *);
   void setDouble (char *, nr_double_t);
+  void setDefinitions (struct definition_t * d) { defs = d; }
+  struct definition_t * getDefinitions (void) { return defs; }
+  node * findProperty (char *);
 
 public:
   node * equations;
 
  private:
   bool consts;
+  struct definition_t * defs;
 };
 
 /* The solver class is finally used to solve the list of equations. */

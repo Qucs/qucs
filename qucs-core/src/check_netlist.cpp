@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.106 2007/02/21 09:41:27 ela Exp $
+ * $Id: check_netlist.cpp,v 1.107 2007/02/23 16:50:52 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 
 #include "logging.h"
 #include "strlist.h"
+#include "netdefs.h"
 #include "equation.h"
 #include "check_netlist.h"
 #include "constants.h"
@@ -1888,7 +1889,9 @@ int netlist_checker (environment * env) {
   // check actions
   errors += checker_validate_actions (definition_root);
   // check equations in root
+  env_root->setDefinitions (definition_root);
   errors += env_root->equationChecker (0);
+  env_root->setDefinitions (NULL);
 
   // then check each subcircuit list
   for (def = subcircuit_root; def != NULL; def = def->next) {
@@ -1904,7 +1907,9 @@ int netlist_checker (environment * env) {
     // check subcircuit netlist
     errors += netlist_checker_intern (def->sub);
     // check equations in subcircuit
+    subenv->setDefinitions (def->sub);
     errors += subenv->equationChecker (0);
+    subenv->setDefinitions (NULL);
   }
 
   if (!errors) {

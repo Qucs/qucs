@@ -26,6 +26,8 @@ files.
 Version 0.0.11
 --------------
 
+ * allow input parameters of components in equations
+ * implementation of non-ideal microstrip cross model
  * allow equation variables in component properties
  * equations in subcircuits
  * subcircuit parameters: from equations or sweep parameters

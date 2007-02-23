@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.6 2007/02/22 17:26:43 ela Exp $
+ * $Id: environment.h,v 1.7 2007/02/23 16:50:52 ela Exp $
  *
  */
 
@@ -38,8 +38,12 @@ class environment
   environment (char *);
   environment (const environment &);
   virtual ~environment ();
+  void copy (const environment &);
   void setName (char *);
   char * getName (void);
+  void print (bool all = false);
+  void setDefinitions (struct definition_t * d) { defs = d; }
+  struct definition_t * getDefinitions (void) { return defs; }
 
   // variable specific functionality
   void copyVariables (variable *);
@@ -56,6 +60,7 @@ class environment
   int equationSolver (dataset *);
   int runSolver (void);
 
+  // subcircuit specific
   void setDoubleConstant (char *, nr_double_t);
   nr_double_t getDoubleConstant (char *);
   void setDouble (char *, nr_double_t);
@@ -66,11 +71,9 @@ class environment
   void passConstants (void);
   void fetchConstants (void);
 
+  // children functionality
   void delChild (environment *);
   void addChild (environment *);
-
-  void print (bool all = false);
-  void copy (const environment &);
 
  private:
   char * name;
@@ -78,6 +81,7 @@ class environment
   eqn::checker * checkee;
   eqn::solver * solvee;
   ptrlist<environment> * children;
+  struct definition_t * defs;
 };
 
 #endif /* __ENVIRONMENT_H__ */

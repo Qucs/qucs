@@ -1,3 +1,20 @@
+2007-02-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Emit appropriate error message if it was
+	impossible to determine the type of an assignment equation.
+	If undefined dependencies are found in the equation checker
+	process; now trying to resolve that dependencies in the
+	component properties of the netlist.
+	Fixed a segfault bug when trying to detect variable chain of
+	an assigment which is actually not cyclic itself but involves
+	a variable which is cyclic.
+
+	* equation.h (class checker): Add a netlist entries to the
+	equation checker.
+
+	* environment.h (class environment): Add a netlist entries to
+	an environment.
+
 2007-02-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* environment.cpp: Fixed a bug which was due to the fact that
