@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.65 2007-02-21 09:41:28 ela Exp $
+ * $Id: input.cpp,v 1.66 2007-02-23 16:50:53 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 
 #include "logging.h"
 #include "component.h"
+#include "netdefs.h"
 #include "net.h"
 #include "analysis.h"
 #include "spsolver.h"

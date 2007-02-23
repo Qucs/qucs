@@ -25,7 +25,7 @@ unfixed) have a look at the file BUGS.
 
 	- Support for ZVR ascii data (R&S network analyzer) as an import
 	  file format in the Qucs Converter.
-- Allow input parameters of components, e.g. Q1.Bf, in equations.
+	- Allow input parameters of components, e.g. Q1.Bf, in equations.
 - Implementation of some basic binary operations for binary data like
   and, or, xor, etc. in the equation solver.
 - Support for binary (digital simulation) data in datasets.
@@ -115,7 +115,7 @@ unfixed) have a look at the file BUGS.
 	- Coplanar line implementation.
 	- Microstrip via hole implementation.
 	- Microstrip t-junction.
-- Microstrip cross.
+	- Microstrip cross.
 - Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.
 - MESFET (Curtize, Staatz) implementations.
 - BSIMv3 implementation.

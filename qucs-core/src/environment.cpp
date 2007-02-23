@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.8 2007-02-22 17:26:43 ela Exp $
+ * $Id: environment.cpp,v 1.9 2007-02-23 16:50:52 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ environment::environment () {
   root = NULL;
   solvee = NULL;
   checkee = NULL;
+  defs = NULL;
   children = new ptrlist<environment>;
 }
 
@@ -51,6 +52,7 @@ environment::environment (char * n) {
   root = NULL;
   solvee = NULL;
   checkee = NULL;
+  defs = NULL;
   children = new ptrlist<environment>;
 }
 
@@ -61,6 +63,7 @@ environment::environment (const environment & e) {
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
+  defs = e.defs;
   children = new ptrlist<environment>;
 }
 
@@ -73,6 +76,7 @@ void environment::copy (const environment & e) {
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
+  defs = e.defs;
   delete children;
   children = new ptrlist<environment>;
 }
@@ -158,6 +162,7 @@ variable * environment::getVariable (char * n) {
 
 // The function runs the equation checker for this environment.
 int environment::equationChecker (int noundefined) {
+  checkee->setDefinitions (defs);
   return checkee->check (noundefined);
 }
 

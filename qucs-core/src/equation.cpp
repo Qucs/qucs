@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.45 2007-02-20 21:00:43 ela Exp $
+ * $Id: equation.cpp,v 1.46 2007-02-23 16:50:52 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 #include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
+#include "netdefs.h"
 #include "equation.h"
 #include "evaluate.h"
 #include "constants.h"
@@ -663,7 +664,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps) {
 
   /* Recurse once again if the child equations revealed any more
      dependencies. */
-  if (sub && sub->length () > 0) {
+  if (cycle && sub && sub->length () > 0) {
     res = recurseDependencies (check, sub);
     delete sub;
     sub = res;
@@ -763,10 +764,15 @@ checker::~checker () {
    checker and applies the dependency list. */
 void checker::collectDependencies (void) {
   foreach_equation (eqn) {
-    strlist * depends = new strlist ();
-    eqn->addDependencies (depends);
-    eqn->setDependencies (depends);
+    collectDependencies (eqn);
   }
+}
+
+// Creates dependency list of given equation node.
+void checker::collectDependencies (node * eqn) {
+  strlist * depends = new strlist ();
+  eqn->addDependencies (depends);
+  eqn->setDependencies (depends);
 }
 
 /* The following function goes through the list of equations and
@@ -861,12 +867,24 @@ int checker::findUndefined (int noundefined) {
     for (int i = 0; i < depends->length (); i++) {
       char * var = depends->get (i);
       if (idents->contains (var) <= 0) {
+	// check if this is a circuit property
+	if (defs) {
+	  node * eqn = findProperty (var);
+	  if (eqn) {
+	    idents->append (var);
+	    eqn->collectDependencies ();
+	    continue;
+	  }
+	} 
+	// give an error
 	if (noundefined) {
-	  if (isGenerated (var)) continue;
+	  if (isGenerated (var)) // skip probably generated variables
+	    continue;
 	  logprint (LOG_ERROR, "checker error, undefined variable `%s' in "
 		    "equation `%s'\n", var, eqn->result);
 	  err++;
 	}
+	// give a notice only
 	else {
 	  logprint (LOG_STATUS, "checker notice, variable `%s' in "
 		    "equation `%s' not yet defined\n", var, eqn->result);
@@ -876,6 +894,54 @@ int checker::findUndefined (int noundefined) {
   }
   delete idents;
   return err;
+}
+
+/* This function tries to find the given variable name which occurred
+   in an equation dependency in the netlist.  If there is such a
+   circuit property it returns a new assignment equation. */
+node * checker::findProperty (char * var) {
+
+  node * eqn = NULL;
+  int found = 0;
+
+  // split into instance and property name
+  char * ret, * inst, * prop;
+  if ((ret = strchr (var, '.')) != NULL) {
+    int len = ret - var;
+    inst = (char *) calloc (1, len + 1);
+    memcpy (inst, var, len);
+    prop = &var[len + 1];
+  }
+  else return NULL;
+
+  // go through list of circuit elements
+  for (struct definition_t * def = defs; def; def = def->next) {
+    if (!def->action && !strcmp (def->instance, inst)) {
+      for (struct pair_t * pair = def->pairs; pair; pair = pair->next) {
+	if (!strcmp (pair->key, prop)) {
+	  if (++found == 1) {
+	    if (pair->value->ident != NULL) {
+	      // reference
+	      eqn = createReference ("#property", var, pair->value->ident);
+	    }
+	    else {
+	      // value
+	      eqn = createDouble ("#property", var, pair->value->value);
+	    }
+	  }
+	}
+      }
+    }
+  }
+  if (found > 1) {
+    logprint (LOG_ERROR, "checker error, desired property variable `%s' found "
+	      "%dx, is not unique'\n", var, found);
+    delete eqn; eqn = NULL;
+  }
+  else if (found == 1)
+    appendEquation (eqn);
+  free (inst);
+  return eqn;
 }
 
 /* Go through the list of equations and store the left hand side in
@@ -1044,8 +1110,11 @@ int checker::applyTypes (void) {
   int err = 0;
   foreach_equation (eqn) {
     if (eqn->evalPossible) {
-      if (eqn->evalType () == TAG_UNKNOWN)
+      if (eqn->evalType () == TAG_UNKNOWN) {
+	logprint (LOG_ERROR, "checker error, type of equation `%s' "
+		  "undefined\n", eqn->result);
 	err++;
+      }
     }
     else break;
   }
@@ -1569,19 +1638,58 @@ void checker::constants (void) {
 /* The function adds a new equation to the equation checker consisting
    of an assignment of a double variable. */
 node * checker::addDouble (char * type, char * ident, nr_double_t value) {
+  node * eqn = createDouble (type, ident, value);
+  addEquation (eqn);
+  return eqn;
+}
 
+// Adds given equation to the equation list.
+void checker::addEquation (node * eqn) {
+  eqn->setNext (equations);
+  equations = eqn;
+}
+
+// Appends the given equation to the equation list.
+void checker::appendEquation (node * eqn) {
+  eqn->setNext (NULL);
+  node * last = lastEquation (equations);
+  if (last != NULL)
+    last->setNext (eqn);
+  else
+    equations = eqn;
+}
+
+/* This function creates a equation consisting of an assignment of a
+   double variable. */
+node * checker::createDouble (char * type, char * ident, nr_double_t value) {
   // create constant double value
   constant * c = new constant (TAG_DOUBLE);
+  c->checkee = this;
   c->d = value;
   // create the appropriate assignment
   assignment * a = new assignment ();
+  a->checkee = this;
   a->result = strdup (ident);
   a->body = c;
   a->output = 0;
   a->setInstance (type);
-  // append the assignment to equations
-  a->setNext (equations);
-  equations = a;
+  return a;
+}
+
+/* This function creates a equation consisting of an assignment of a
+   reference. */
+node * checker::createReference (char * type, char * ident, char * value) {
+  // create reference value
+  reference * r = new reference ();
+  r->checkee = this;
+  r->n = strdup (value);
+  // create the appropriate assignment
+  assignment * a = new assignment ();
+  a->checkee = this;
+  a->result = strdup (ident);
+  a->body = r;
+  a->output = 0;
+  a->setInstance (type);
   return a;
 }
 
