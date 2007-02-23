@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.66 2007/02/23 16:50:53 ela Exp $
+ * $Id: input.cpp,v 1.67 2007/02/23 17:59:29 ela Exp $
  *
  */
 
@@ -197,9 +197,10 @@ void input::factory (void) {
 	assignDefaultProperties (s, def->define);
 
 	// put new substrate definition into environment
-	variable * v = new variable (def->instance);
+	char * n = strrchr (def->instance, '.');
+	variable * v = new variable (n ? n + 1 : def->instance);
 	v->setSubstrate (s);
-	env->addVariable (v);
+	def->env->addVariable (v);
       }
       // remove this definition from the list
       definition_root = netlist_unchain_definition (definition_root, def);
@@ -254,7 +255,7 @@ void input::factory (void) {
 	    o->addProperty (pairs->key, v);
 	  } else {
 	    if (pairs->value->subst) {
-	      variable * v = env->getVariable (pairs->value->ident);
+	      variable * v = def->env->getVariable (pairs->value->ident);
 	      c->setSubstrate (v->getSubstrate ());
 	    }
 	    o->addProperty (pairs->key, pairs->value->ident);
