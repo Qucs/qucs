@@ -1,5 +1,8 @@
 2007-02-23  Stefan Jahn  <stefan@lkcc.org>
 
+	* input.cpp: Fixed a bug regarding substrates which are now
+	also local to subcircuit environments.
+
 	* equation.cpp: Emit appropriate error message if it was
 	impossible to determine the type of an assignment equation.
 	If undefined dependencies are found in the equation checker
