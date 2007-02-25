@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.2 2007/01/29 19:14:17 ela Exp $
+ * $Id: twistedpair.cpp,v 1.3 2007/02/25 16:57:35 ela Exp $
  *
  */
 
@@ -38,6 +38,10 @@
 #include "constants.h"
 #include "matrix.h"
 #include "twistedpair.h"
+
+#ifdef __MINGW32__
+#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
+#endif
 
 twistedpair::twistedpair () : circuit (4) {
   type = CIR_TWISTEDPAIR;
