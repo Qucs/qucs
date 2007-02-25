@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.4 2007-01-28 13:31:53 ela Exp $
+ * $Id: bondwire.cpp,v 1.5 2007-02-25 16:57:35 ela Exp $
  *
  */
 
@@ -65,6 +65,10 @@
 #include "constants.h"
 #include "matrix.h"
 #include "bondwire.h"
+
+#ifdef __MINGW32__
+#define strcasecmp stricmp
+#endif
 
 bondwire::bondwire () : circuit (2) {
   type = CIR_BONDWIRE;

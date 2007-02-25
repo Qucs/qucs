@@ -1,7 +1,7 @@
 /*
  * netdefs.h - netlist definitions for arbitrary netlists
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.10 2006-10-30 09:31:15 raimi Exp $
+ * $Id: netdefs.h,v 1.11 2007-02-25 16:57:35 ela Exp $
  *
  */
 
@@ -101,8 +101,8 @@ struct define_t {
   int action;                      // is that an action?
   int substrate;                   // is that a substrate?
   int nonlinear;                   // is the component linear?
-  struct property_t required[256]; // required properties
-  struct property_t optional[256]; // optional proberties
+  struct property_t required[128]; // required properties
+  struct property_t optional[64];  // optional proberties
 };
 
 // Maximum number of S-parameter ports.
