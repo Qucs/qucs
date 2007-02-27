@@ -20,7 +20,6 @@
 
 #include <math.h>
 
-#define TO_INT(f)   (f > 0.0 ? int(f + 0.5) : int(f - 0.5))
 
 ViewPainter::ViewPainter(QPainter *p)
 {

@@ -164,6 +164,13 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 
   *px = float(calcX_2D(x3D, y3D, z3D)) + xorig;
   *py = float(calcY_2D(x3D, y3D, z3D)) + yorig;
+
+  if(finite(*px))
+    if(finite(*py))
+      return;
+
+  *px = float(xorig);
+  *py = float(yorig);
 }
 
 // ------------------------------------------------------------

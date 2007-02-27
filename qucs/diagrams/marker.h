@@ -52,14 +52,15 @@ public:
   Diagram *Diag;     // the corresponding diagram
   Graph   *pGraph;   // the corresponding graph
 
-  int    nVarPos;      // number of values in "VarPos"
-  double VarPos[256];  // values the marker is pointing to
+  int    nVarPos;   // number of values in "VarPos"
+  double *VarPos;   // values the marker is pointing to
+  float  fCX, fCY;  // coordinates for the line from graph to marker body
 
   QString Text;     // the string to be displayed in the marker text
   bool transparent; // background shines through marker body
 
-  int  Precision;   // number of digits to show
-  int  numMode;     // real/imag or polar (deg/rad)
+  int Precision; // number of digits to show
+  int numMode;   // real/imag or polar (deg/rad)
 };
 
 #endif

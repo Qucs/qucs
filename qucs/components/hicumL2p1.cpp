@@ -236,7 +236,7 @@ Component * hicumL2p1::newOne()
 
 Element * hicumL2p1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("npn HICUM L2 v2.1");
+  Name = QObject::tr("HICUM L2 v2.1");
   BitmapFile = "npnsub_therm";
 
   if(getNewOne) return new hicumL2p1();

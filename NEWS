@@ -30,6 +30,11 @@ Version 0.0.11
  * allow equations in subcircuits
  * subcircuits parameters
  * translation into Czech and Catalan
+ * tabular scrollbar can be moved directly with mouse cursor dragging
+ * better painting and doing with zoom factors > 1
+ * some bug fixes
+ * some internal restructuring
+ * new components in GUI and in library
 
 Version 0.0.10
 --------------

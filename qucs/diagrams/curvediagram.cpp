@@ -53,6 +53,12 @@ void CurveDiagram::calcCoordinate(double* &, double* &yD, double* &,
     *py = float(log10(yi / pa->low)/log10(pa->up / pa->low)
 		*double(y2));
   else  *py = float((yi-pa->low)/(pa->up-pa->low)*double(y2));
+
+  if(finite(*px))
+    if(finite(*py))
+      return;
+
+  *px = *py = 0.0;
 }
 
 // --------------------------------------------------------------
