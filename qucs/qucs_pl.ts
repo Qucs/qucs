@@ -4627,7 +4627,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>npn HICUM L2 v2.1</source>
-        <translation>npn HICUM L2 v2.1</translation>
+        <translation type="obsolete">npn HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>pnp HICUM L2 v2.1</source>
@@ -4635,7 +4635,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>FBH HBT verilog device</source>
-        <translation>komponent FBH HBT veriloga</translation>
+        <translation type="obsolete">komponent FBH HBT veriloga</translation>
     </message>
     <message>
         <source>FBH HBT</source>
@@ -4655,7 +4655,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Thermal capacitanc</source>
-        <translation>Pojemność termiczna</translation>
+        <translation type="obsolete">Pojemność termiczna</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
@@ -4791,10 +4791,6 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Extrinsic BC diffusion capacitance, s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5019,6 +5015,18 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extrinsic BC diffusion capacitance, F</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
