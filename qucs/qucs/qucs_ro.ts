@@ -4582,14 +4582,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>npn HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FBH HBT verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FBH HBT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4603,10 +4595,6 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Thermal capacitanc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4743,10 +4731,6 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Extrinsic BC diffusion capacitance, s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4963,6 +4947,18 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extrinsic BC diffusion capacitance, F</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
