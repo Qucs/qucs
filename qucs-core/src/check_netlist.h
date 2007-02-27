@@ -1,7 +1,7 @@
 /*
  * check_netlist.h - checker definitions for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.h,v 1.22 2006-09-19 08:22:20 raimi Exp $
+ * $Id: check_netlist.h,v 1.23 2007-02-27 12:05:27 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@ extern struct definition_t * definition_root;
 void netlist_status (void);
 void netlist_list (void);
 void netlist_destroy (void);
+void netlist_destroy_env (void);
 int  netlist_checker (environment *);
 int  netlist_parse (void);
 int  netlist_error (char *);

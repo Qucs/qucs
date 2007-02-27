@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.46 2007-02-23 16:50:52 ela Exp $
+ * $Id: equation.cpp,v 1.47 2007-02-27 12:05:27 ela Exp $
  *
  */
 
@@ -482,7 +482,8 @@ constant * application::evaluate (void) {
   int errors = 0;
   // first evaluate each argument
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
-    if (arg->evaluated == 0) {
+    // FIXME: Can save evaluation of already evaluated equations?
+    if (arg->evaluated == 0 || 1) {
       arg->solvee = solvee;
       arg->evaluate ();
       if (arg->getResult () == NULL) {
@@ -605,6 +606,11 @@ node * node::get (int pos) {
   node * n = this;
   for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
   return n;
+}
+
+// Sets the constant equation node result.
+void node::setResult (constant * r) {
+  res = r;
 }
 
 // Returns the constant equation node at the given argument position.
@@ -742,6 +748,7 @@ strlist * node::collectDataDependencies (void) {
 
 // Constructor creates an instance of the checker class.
 checker::checker () {
+  defs = NULL;
   equations = NULL;
   consts = false;
 }
@@ -1712,7 +1719,7 @@ nr_double_t checker::getDouble (char * ident) {
 }
 
 /* The function goes through the equation set and looks for the
-   specified assigment.  If found the given value is set. */
+   specified assignment.  If found the given value is set. */
 void checker::setDouble (char * ident, nr_double_t val) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {

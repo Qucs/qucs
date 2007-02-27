@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.27 2007-01-30 18:54:14 ela Exp $
+ * $Id: ucs.cpp,v 1.28 2007-02-27 12:05:28 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "equation.h"
 #include "environment.h"
 #include "exceptionstack.h"
+#include "check_netlist.h"
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -148,5 +149,6 @@ int main (int argc, char ** argv) {
   delete in;
   delete out;
   delete root;
+  netlist_destroy_env ();
   return ret;
 }

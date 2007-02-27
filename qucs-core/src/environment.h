@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.7 2007-02-23 16:50:52 ela Exp $
+ * $Id: environment.h,v 1.8 2007-02-27 12:05:27 ela Exp $
  *
  */
 
@@ -81,6 +81,7 @@ class environment
   eqn::checker * checkee;
   eqn::solver * solvee;
   ptrlist<environment> * children;
+  bool iscopy;
   struct definition_t * defs;
 };
 

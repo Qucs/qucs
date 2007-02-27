@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.9 2007-02-23 16:50:52 ela Exp $
+ * $Id: environment.cpp,v 1.10 2007-02-27 12:05:27 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@ environment::environment () {
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
+  iscopy = false;
   children = new ptrlist<environment>;
 }
 
@@ -53,6 +54,7 @@ environment::environment (char * n) {
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
+  iscopy = false;
   children = new ptrlist<environment>;
 }
 
@@ -64,6 +66,7 @@ environment::environment (const environment & e) {
   solvee = e.solvee;
   checkee = e.checkee;
   defs = e.defs;
+  iscopy = true;
   children = new ptrlist<environment>;
 }
 
@@ -78,6 +81,7 @@ void environment::copy (const environment & e) {
   checkee = e.checkee;
   defs = e.defs;
   delete children;
+  iscopy = true;
   children = new ptrlist<environment>;
 }
 
@@ -85,7 +89,19 @@ void environment::copy (const environment & e) {
 environment::~environment () {
   if (name) free (name);
   deleteVariables ();
-  if (solvee) delete solvee;
+  // delete solver and checker if this is not just a reference
+  if (!iscopy) {
+    if (solvee)
+      delete solvee;
+    if (checkee) {
+      checkee->setEquations (NULL);
+      delete checkee;
+    }
+  }
+  // delete children
+  for (ptrlistiterator<environment> it (*children); *it; ++it) {
+    delete (*it);
+  }
   delete children;
 }
 
@@ -137,8 +153,11 @@ void environment::deleteVariables (void) {
       delete var->getConstant ();
     else if (var->getType () == VAR_SUBSTRATE)
       delete var->getSubstrate ();
-    else if (var->getType () == VAR_REFERENCE)
+    else if (var->getType () == VAR_REFERENCE) {
+      constant * c = var->getReference()->getResult ();
+      if (c) delete c;
       delete var->getReference ();
+    }
     delete var;
   }
   root = NULL;
@@ -168,6 +187,7 @@ int environment::equationChecker (int noundefined) {
 
 // The function runs the equation solver for this environment.
 int environment::equationSolver (dataset * data) {
+  checkee->setDefinitions (defs);
   solvee->setEquations (checkee->getEquations ());
   int err = solvee->solve (data);
   checkee->setEquations (solvee->getEquations ());
