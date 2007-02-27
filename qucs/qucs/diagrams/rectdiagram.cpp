@@ -48,22 +48,25 @@ void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
   double yi = *(yD++);
   if(xAxis.log) {
     x /= xAxis.low;
-    if(x <= 0.0)  *px = -100000;   // "negative infinity"
+    if(x <= 0.0)  *px = -1e5;   // "negative infinity"
     else  *px = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
   }
   else  *px = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 
   if(pa->log) {
     yr = sqrt(yr*yr + yi*yi);
-    if(yr <= 0.0)  *py = -100000;   // "negative infinity"
+    if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
     else *py = float(log10(yr/fabs(pa->low)) /
-		log10(pa->up/pa->low) * double(y2));
+                     log10(pa->up/pa->low) * double(y2));
   }
   else {
     if(fabs(yi) > 1e-250)  // preserve negative values if not complex number
       yr = sqrt(yr*yr + yi*yi);
     *py = float((yr-pa->low)/(pa->up-pa->low)*double(y2));
   }
+
+  if(!finite(*px))  *px = 0.0;
+  if(!finite(*py))  *py = 0.0;
 }
 
 // --------------------------------------------------------------

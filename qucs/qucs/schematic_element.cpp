@@ -875,27 +875,26 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
   Element *pe_1st=0, *pe_sel=0;
   float Corr = textCorr(); // for selecting text
 
-  // test all components
-  for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
-    if(pc->getSelected(x, y)) {
-      if(flag) { pc->isSelected ^= flag; return pc; }
+  WireLabel *pl;
+  // test all nodes and their labels
+  for(Node *pn = Nodes->last(); pn != 0; pn = Nodes->prev()) {
+    if(!flag)
+      if(index)  // only true if called from MouseActions::MPressSelect()
+        if(pn->getSelected(x, y))
+          return pn;
+
+    pl = pn->Label;
+    if(pl) if(pl->getSelected(x, y)) {
+      if(flag) { pl->isSelected ^= flag; return pl; }
       if(pe_sel) {
         pe_sel->isSelected = false;
-        return pc;
+        return pl;
       }
-      if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
-      if(pc->isSelected) pe_sel = pc;
+      if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
+      if(pl->isSelected) pe_sel = pl;
     }
-    else {
-      n = pc->getTextSelected(x, y, Corr);
-      if(n >= 0) {   // was property text clicked ?
-        pc->Type = isComponentText;
-        if(index)  *index = n;
-        return pc;
-      }
-    }
+  }
 
-  WireLabel *pl;
   // test all wires and wire labels
   for(Wire *pw = Wires->last(); pw != 0; pw = Wires->prev()) {
     if(pw->getSelected(x, y)) {
@@ -919,19 +918,25 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
     }
   }
 
-  // test all node labels
-  for(Node *pn = Nodes->last(); pn != 0; pn = Nodes->prev()) {
-    pl = pn->Label;
-    if(pl) if(pl->getSelected(x, y)) {
-      if(flag) { pl->isSelected ^= flag; return pl; }
+  // test all components
+  for(Component *pc = Components->last(); pc != 0; pc = Components->prev())
+    if(pc->getSelected(x, y)) {
+      if(flag) { pc->isSelected ^= flag; return pc; }
       if(pe_sel) {
         pe_sel->isSelected = false;
-        return pl;
+        return pc;
       }
-      if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
-      if(pl->isSelected) pe_sel = pl;
+      if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
+      if(pc->isSelected) pe_sel = pc;
     }
-  }
+    else {
+      n = pc->getTextSelected(x, y, Corr);
+      if(n >= 0) {   // was property text clicked ?
+        pc->Type = isComponentText;
+        if(index)  *index = n;
+        return pc;
+      }
+    }
 
   Graph *pg;
   Corr = 5.0 / Scale;  // size of line select and area for resizing
