@@ -27,7 +27,7 @@ HBT_X::HBT_X()
   Props.append (new Property ("Rth", "0.1", false,
     QObject::tr ("Thermal resistance, K/W")));
   Props.append (new Property ("Cth", "700e-9", false,
-    QObject::tr ("Thermal capacitanc")));
+    QObject::tr ("Thermal capacitance")));
   Props.append (new Property ("N", "1", false,
     QObject::tr ("Scaling factor, number of emitter fingers")));
   Props.append (new Property ("L", "30e-6", false,
@@ -97,7 +97,7 @@ HBT_X::HBT_X()
   Props.append (new Property ("Tr", "1.0e-15", false,
     QObject::tr ("Ideal reverse transit time, s")));
   Props.append (new Property ("Trx", "1.0e-15", false,
-    QObject::tr ("Extrinsic BC diffusion capacitance, s")));
+    QObject::tr ("Extrinsic BC diffusion capacitance, F")));
   Props.append (new Property ("Tf", "1.0e-12", false,
     QObject::tr ("Ideal forward transit time, s")));
   Props.append (new Property ("Tft", "0.0", false,
