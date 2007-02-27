@@ -12,7 +12,7 @@
 
 HBT_X::HBT_X()
 {
-  Description = QObject::tr ("FBH HBT verilog device");
+  Description = QObject::tr ("HBT model by Ferdinand-Braun-Institut (FBH), Berlin");
 
   Props.append (new Property ("Mode", "1", false,
     QObject::tr ("Ignored")));

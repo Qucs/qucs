@@ -1,3 +1,10 @@
+2007-02-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* marker pointer with precize graph position at zoom >1
+	* fixed bug setting marker on 2D graph in 3D diagram
+	* fixed bug with nan values in diagrams
+	* enter wire mode when clicking on circuit node
+
 2007-01-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* correct position for graph style "circles"

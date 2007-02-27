@@ -1698,8 +1698,6 @@ void Schematic::slotScrollRight()
 // **********                                                 **********
 // *********************************************************************
 
-QAction *formerAction;   // remember action before drag n'drop
-
 // Is called if an object is dropped (after drag'n drop).
 void Schematic::contentsDropEvent(QDropEvent *Event)
 {
