@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.107 2007/02/23 16:50:52 ela Exp $
+ * $Id: check_netlist.cpp,v 1.108 2007/02/27 12:05:27 ela Exp $
  *
  */
 
@@ -1875,7 +1875,7 @@ int netlist_checker (environment * env) {
   struct definition_t * def;
 
   // create top-level environment
-  environment * env_root = new environment (env->getName ());
+  env_root = new environment (env->getName ());
   // create the subcircuit list
   definition_root = checker_build_subcircuits (definition_root);
   // get equation list
@@ -1940,4 +1940,12 @@ void netlist_destroy (void) {
   netlist_destroy_intern (subcircuit_root);
   definition_root = subcircuit_root = NULL;
   netlist_lex_destroy ();
+}
+
+/* Delete root environment(s) if necessary. */
+void netlist_destroy_env (void) {
+  if (env_root != NULL) {
+    delete env_root;
+    env_root = NULL;
+  }
 }

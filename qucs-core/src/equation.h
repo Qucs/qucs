@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.32 2007/02/23 16:50:53 ela Exp $
+ * $Id: equation.h,v 1.33 2007/02/27 12:05:27 ela Exp $
  *
  */
 
@@ -82,7 +82,7 @@ public:
   int getTag (void) { return tag; }
   void setType (int tag) { type = tag; }
   constant * getResult (void) { return res; } 
-  void setResult (constant * r) { res = r; }
+  void setResult (constant *);
   char * getInstance (void);
   void setInstance (char *);
   void applyInstance (void);
