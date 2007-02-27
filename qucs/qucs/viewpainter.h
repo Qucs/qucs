@@ -20,6 +20,7 @@
 
 #include <qpainter.h>
 
+#define TO_INT(f)   (f > 0.0 ? int(f + 0.5) : int(f - 0.5))
 
 /* This class is neccessary because scaled fonts looks very ungly.
    Avoiding this is unfortunately not easy.

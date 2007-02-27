@@ -51,6 +51,9 @@
 #define  SCR_X_POS(x)  int(float(x - Doc->ViewX1) * Doc->Scale)
 #define  SCR_Y_POS(y)  int(float(y - Doc->ViewY1) * Doc->Scale)
 
+QAction *formerAction;   // remember action before drag n'drop etc.
+
+
 MouseActions::MouseActions()
 {
   selElem  = 0;  // no component/diagram is selected
@@ -1038,6 +1041,27 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       MAx3 = No;
       QucsMain->slotApplyCompText();
       return;
+
+    case isNode:
+      MAx1 = 0;   // paint wire corner first up, then left/right
+      MAx3 = focusElement->cx;  // works even if node is not on grid
+      MAy3 = focusElement->cy;
+      QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
+      QucsMain->MousePressAction = &MouseActions::MPressWire2;
+      QucsMain->MouseReleaseAction = 0; // if function is called from elsewhere
+      QucsMain->MouseDoubleClickAction = 0;
+
+      formerAction = QucsMain->select; // to restore action afterwards
+      QucsMain->activeAction = QucsMain->insWire;
+
+      QucsMain->select->blockSignals(true);
+      QucsMain->select->setOn(false);
+      QucsMain->select->blockSignals(false);
+
+      QucsMain->insWire->blockSignals(true);
+      QucsMain->insWire->setOn(true);
+      QucsMain->insWire->blockSignals(false);
+      return;
   }
 
 
@@ -1297,6 +1321,7 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   MAy3 = int(fY);
   Doc->setOnGrid(MAx3, MAy3);
 
+  formerAction = 0; // keep wire action active after first wire finished
   QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
   QucsMain->MousePressAction = &MouseActions::MPressWire2;
   // Double-click action is set in "MMoveWire2" to not initiate it
@@ -1310,54 +1335,43 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
   QPainter painter(Doc->viewport());
   setPainter(Doc, &painter);
 
-  int set = 0;
+  int set1 = 0, set2 = 0;
   switch(Event->button()) {
   case Qt::LeftButton :
     if(MAx1 == 0) { // which wire direction first ?
+      if(MAy2 != MAy3)
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
       if(MAx2 != MAx3) {
-	set = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
-	if(set & 2) {
-	  // if last port is connected, then start a new wire
-	  QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-	  QucsMain->MousePressAction = &MouseActions::MPressWire1;
-	  QucsMain->MouseDoubleClickAction = 0;
-	}
-	if(MAy2 != MAy3)
-	  set |= Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
       }
-      else if(MAy2 != MAy3) {
-	set = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
-	if(set & 2) {
-	  // if last port is connected, then start a new wire
-	  QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-	  QucsMain->MousePressAction = &MouseActions::MPressWire1;
-	  QucsMain->MouseDoubleClickAction = 0;
-	} }
     }
     else {
+      if(MAx2 != MAx3)
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
       if(MAy2 != MAy3) {
-	set = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
-	if(set & 2) {
-	  // if last port is connected, then start a new wire
-	  QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-	  QucsMain->MousePressAction = &MouseActions::MPressWire1;
-	  QucsMain->MouseDoubleClickAction = 0;
-	}
-	if(MAx2 != MAx3)
-	  set |= Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
       }
-      else if(MAx2 != MAx3) {
-	set = Doc->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
-	if(set & 2) {
-	  // if last port is connected, then start a new wire
-	  QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-	  QucsMain->MousePressAction = &MouseActions::MPressWire1;
-	  QucsMain->MouseDoubleClickAction = 0;
-	} }
     }
+
+    if(set1 & 2) {
+      // if last port is connected, then...
+      if(formerAction) {
+        // ...restore old action
+        QucsMain->select->setOn(true);
+      }
+      else {
+        // ...start a new wire
+        QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
+        QucsMain->MousePressAction = &MouseActions::MPressWire1;
+        QucsMain->MouseDoubleClickAction = 0;
+      }
+    }
+
     Doc->viewport()->update();
     drawn = false;
-    if(set) Doc->setChanged(true, true);
+    if(set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
     break;
@@ -1905,7 +1919,11 @@ void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
 {
   MPressWire2(Doc, Event, DOC_X_FPOS, DOC_Y_FPOS);
 
-  QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
-  QucsMain->MousePressAction = &MouseActions::MPressWire1;
-  QucsMain->MouseDoubleClickAction = 0;
+  if(formerAction)
+    QucsMain->select->setOn(true);  // restore old action
+  else {
+    QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
+    QucsMain->MousePressAction = &MouseActions::MPressWire1;
+    QucsMain->MouseDoubleClickAction = 0;
+  }
 }

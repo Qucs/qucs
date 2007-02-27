@@ -29,6 +29,8 @@ class QPainter;
 class QPopupMenu;
 class QMouseEvent;
 
+extern QAction *formerAction;
+
 
 class MouseActions {
 public:

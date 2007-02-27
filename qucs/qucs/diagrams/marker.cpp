@@ -36,8 +36,12 @@ Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
   Diag   = Diag_;
   pGraph = pg_;
   Precision = 3;   // before createText()
+  VarPos = 0;
   numMode = nVarPos = 0;
-  cx = cx_;  cy = -cy_;
+  cx =  cx_;
+  cy = -cy_;
+  fCX = float(cx);
+  fCY = float(cy);
 
   if(!pGraph)  makeInvalid();
   else initText(_nn);   // finally create marker
@@ -48,6 +52,7 @@ Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
 
 Marker::~Marker()
 {
+  if(VarPos)  free(VarPos);
 }
 
 // ---------------------------------------------------------------------
@@ -61,11 +66,10 @@ void Marker::initText(int n)
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
-  double *px, *py=0, *pz;
+  double Dummy = 0.0;   // needed for 2D graph in 3D diagram
+  double *px, *py=&Dummy, *pz;
   Text = "";
-  nVarPos = 0;
 
-  float fX, fY;
   bool isCross = false;
   int nn, nnn, m, x, y, d, dmin = INT_MAX;
   DataX *pD = pGraph->cPointsX.first();
@@ -91,14 +95,14 @@ void Marker::initText(int n)
   m  = nnn - 1;
   pz = pGraph->cPointsY + 2*n;
   for(nn=0; nn<nnn; nn++) {
-    Diag->calcCoordinate(px, pz, py, &fX, &fY, pa);
+    Diag->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
     if(isCross) {
       px--;
       py++;
       pz += 2*(pD->count-1);
     }
-    x = int(fX+0.5) - cx;
-    y = int(fY+0.5) - cy;
+    x = int(fCX+0.5) - cx;
+    y = int(fCY+0.5) - cy;
     d = x*x + y*y;
     if(d < dmin) {
       dmin = d;
@@ -107,6 +111,13 @@ void Marker::initText(int n)
   }
   if(isCross) m *= pD->count;
   n += m;
+
+  nVarPos = 0;
+  nn = (pGraph->cPointsX.count() + 2) * sizeof(double);
+  if(VarPos)
+    VarPos = (double*)realloc(VarPos, nn);
+  else
+    VarPos = (double*)malloc(nn);
 
   // gather text of all independent variables
   nn = n;
@@ -118,7 +129,7 @@ void Marker::initText(int n)
   }
 
   // gather text of dependent variable
-  pz = (pGraph->cPointsY) + 2*n;
+  pz = pGraph->cPointsY + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
     case 0: Text += complexRect(*pz, *(pz+1), Precision);
@@ -132,22 +143,21 @@ void Marker::initText(int n)
   VarPos[nVarPos+1] = *(pz+1);
 
   px = VarPos;
-  py = VarPos + 1;
-  Diag->calcCoordinate(px, pz, py, &fX, &fY, pa);
-  cx = int(fX+0.5);
-  cy = int(fY+0.5);
+  if(py != &Dummy)   // 2D in 3D diagram ?
+    py = VarPos + 1;
+  Diag->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
 
-  if(!Diag->insideDiagram(fX, fY))
+  if(!Diag->insideDiagram(fCX, fCY))
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
-      cx = Diag->x2 >> 1;
-      cy = Diag->y2 >> 1;
+      fCX = float(Diag->x2 >> 1);
+      fCY = float(Diag->y2 >> 1);
     }
-    else {
-      cx = 0;
-      cy = 0;
-    }
+    else
+      fCX = fCY = 0.0;
 
+  cx = int(fCX+0.5);
+  cy = int(fCY+0.5);
   getTextSize(QucsSettings.font);
 }
 
@@ -159,13 +169,16 @@ void Marker::createText()
     return;
   }
 
-  Text = "";
-  double *pp, v;
+  VarPos = (double*)realloc(VarPos,
+              (pGraph->cPointsX.count() + 2) * sizeof(double));
+
   while((unsigned int)nVarPos < pGraph->cPointsX.count())
     VarPos[nVarPos++] = 0.0;   // fill up VarPos
 
 
   // independent variables
+  Text = "";
+  double *pp, v;
   int n = 0, m = 1, i;
   DataX *pD;
   nVarPos = 0;
@@ -184,7 +197,8 @@ void Marker::createText()
   }
 
 
-  double *py=0, *pz = pGraph->cPointsY + 2*n;
+  v = 0.0;   // needed for 2D graph in 3D diagram
+  double *py=&v, *pz = pGraph->cPointsY + 2*n;
   pD = pGraph->cPointsX.first();
   if(pGraph->cPointsX.next()) {
     py = pGraph->cPointsX.current()->Points;   // only for 3D diagram
@@ -208,22 +222,19 @@ void Marker::createText()
   else  pa = &(Diag->zAxis);
   pp = &(VarPos[0]);
 
-  float fX, fY;
-  Diag->calcCoordinate(pp, pz, py, &fX, &fY, pa);
-  cx = int(fX+0.5);
-  cy = int(fY+0.5);
+  Diag->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
 
-  if(!Diag->insideDiagram(fX, fY))
+  if(!Diag->insideDiagram(fCX, fCY))
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
-      cx = Diag->x2 >> 1;
-      cy = Diag->y2 >> 1;
+      fCX = float(Diag->x2 >> 1);
+      fCY = float(Diag->y2 >> 1);
     }
-    else {
-      cx = 0;
-      cy = 0;
-    }
+    else
+      fCX = fCY = 0.0;
 
+  cx = int(fCX+0.5);
+  cy = int(fCY+0.5);
   getTextSize(QucsSettings.font);
 }
 
@@ -238,6 +249,8 @@ void Marker::makeInvalid()
   }
   Text = QObject::tr("invalid");
 
+  fCX = float(cx);
+  fCY = float(cy);
   getTextSize(QucsSettings.font);
 }
 
@@ -363,19 +376,23 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   x2 = int(double(x2) / p->Scale);
   y2 = int(double(y2) / p->Scale);
 
+  int x1_ = x1;
+  int y1_ = y1;
+  float x2_, y2_;
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(-cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1);
-    else
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2);
+    if(-cy >= y1+(y2>>1))
+      y1_ += y2;
   }
   else {
-    if(-cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1);
-    else
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1+y2);
+    x1_ += x2;
+    if(-cy >= y1+(y2>>1))
+      y1_ += y2;
   }
+  p->map(x0+x1_, y0+y1_, x1_, y1_);
+  x2_ = (float(x0)+fCX)*p->Scale + p->DX;
+  y2_ = (float(y0)-fCY)*p->Scale + p->DY;
+  p->Painter->drawLine(x1_, y1_, TO_INT(x2_), TO_INT(y2_));
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
@@ -463,15 +480,20 @@ bool Marker::load(const QString& _s)
 
   if(s.section(' ',0,0) != "Mkr") return false;
 
-  QString n;
-  n  = s.section(' ',1,1);    // VarPos
-  nVarPos = 0;
   int i=0, j;
+  QString n = s.section(' ',1,1);    // VarPos
+
+  nVarPos = 0;
+  j = (n.contains('/') + 3) * sizeof(double);
+  if(VarPos)
+    VarPos = (double*)realloc(VarPos, j);
+  else
+    VarPos = (double*)malloc(j);
+
   do {
     j = n.find('/', i);
     VarPos[nVarPos++] = n.mid(i,j-i).toDouble(&ok);
     if(!ok) return false;
-    if(nVarPos > 255) return false;
     i = j+1;
   } while(j >= 0);
 
