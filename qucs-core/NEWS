@@ -26,6 +26,7 @@ files.
 Version 0.0.11
 --------------
 
+ * implemented knee current in diode model
  * allow input parameters of components in equations
  * implementation of non-ideal microstrip cross model
  * allow equation variables in component properties

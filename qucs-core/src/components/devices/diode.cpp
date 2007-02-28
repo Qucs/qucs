@@ -1,7 +1,7 @@
 /*
  * diode.cpp - diode class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.38 2007-01-15 08:33:27 raimi Exp $
+ * $Id: diode.cpp,v 1.39 2007-02-28 18:35:14 ela Exp $
  *
  */
 
@@ -284,6 +284,7 @@ void diode::calcDC (void) {
   nr_double_t N   = getPropertyDouble ("N");
   nr_double_t Isr = getScaledProperty ("Isr");
   nr_double_t Nr  = getPropertyDouble ("Nr");
+  nr_double_t Ikf = getPropertyDouble ("Ikf");
   nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ut, Ieq, Ucrit, gtiny;
@@ -308,28 +309,39 @@ void diode::calcDC (void) {
   gtiny = (Ud < - 10 * Ut * N && Bv != 0) ? (Is + Isr) : 0;
 
   if (Ud >= -3 * N * Ut) { // forward region
-    gd = pnConductance (Ud, Is, Ut * N) +
-      pnConductance (Ud, Isr, Ut * Nr) + gtiny;
-    Id = pnCurrent (Ud, Is, Ut * N) +
-      pnCurrent (Ud, Isr, Ut * Nr) + gtiny * Ud;
+    gd = pnConductance (Ud, Is, Ut * N) + pnConductance (Ud, Isr, Ut * Nr);
+    Id = pnCurrent (Ud, Is, Ut * N) + pnCurrent (Ud, Isr, Ut * Nr);
   }
   else if (Bv == 0 || Ud >= -Bv) { // reverse region
     nr_double_t a = 3 * N * Ut / (Ud * M_E);
     a = cubic (a);
-    Id = -Is * (1 + a) + gtiny * Ud;
-    gd = +Is * 3 * a / Ud + gtiny;
+    Id = -Is * (1 + a);
+    gd = +Is * 3 * a / Ud;
   }
   else { // middle region
     nr_double_t a = exp (-(Bv + Ud) / N / Ut);
-    Id = -Is * a + gtiny * Ud;
-    gd = +Is * a / Ut / N + gtiny;
+    Id = -Is * a;
+    gd = +Is * a / Ut / N;
   }
 
+  // knee current calculations
+  if (Ikf != 0.0) {
+    nr_double_t a = Ikf / (Ikf + Id);
+    Id *= sqrt (a);
+    gd *= 0.5 * (1 + a) * sqrt (a);
+  }
+
+  Id += gtiny * Ud;
+  gd += gtiny;
+
+  // HB simulation
   if (hb) {
     Ieq = Id;
     setGV (NODE_C, -gd * Ud);
     setGV (NODE_A, +gd * Ud);
-  } else {
+  }
+  // DC and transient simulation
+  else {
     Ieq = Id - Ud * gd;
   }
 
