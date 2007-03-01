@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.39 2007-02-28 18:35:14 ela Exp $
+ * $Id: diode.cpp,v 1.40 2007-03-01 11:36:53 ela Exp $
  *
  */
 
@@ -327,8 +327,8 @@ void diode::calcDC (void) {
   // knee current calculations
   if (Ikf != 0.0) {
     nr_double_t a = Ikf / (Ikf + Id);
+    gd *= 0.5 * (2 - Id * a / Ikf) * sqrt (a);
     Id *= sqrt (a);
-    gd *= 0.5 * (1 + a) * sqrt (a);
   }
 
   Id += gtiny * Ud;
