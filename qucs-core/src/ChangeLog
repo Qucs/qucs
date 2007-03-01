@@ -1,3 +1,14 @@
+2007-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Fixed memory leak.
+
+	* equation.cpp: Fixed memory leak when application is evaluated
+	twice or more times.
+
+	* check_netlist.cpp: Fixed a subcircuit expansion bug occurring
+	when at least 2 subcircuits are expanded at the top of the circuit
+	list.
+
 2007-02-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* ucs.cpp (main): Running the new netlist_destroy_env() function.

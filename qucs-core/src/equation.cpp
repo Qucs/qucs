@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.47 2007/02/27 12:05:27 ela Exp $
+ * $Id: equation.cpp,v 1.48 2007/03/01 09:15:19 ela Exp $
  *
  */
 
@@ -509,6 +509,9 @@ constant * application::evaluate (void) {
     }
   }
   if (!errors) {
+    node * res;
+    // delete previous result if necessary
+    if ((res = getResult ()) != NULL) delete res;
     // then evaluate the application
     setResult (eval (C (args)));
     // check the returned type once again

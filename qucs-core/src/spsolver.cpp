@@ -1,7 +1,7 @@
 /*
  * spsolver.cpp - S-parameter solver class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.46 2006/01/30 07:45:34 raimi Exp $
+ * $Id: spsolver.cpp,v 1.47 2007/03/01 09:15:19 ela Exp $
  *
  */
 
@@ -620,6 +620,9 @@ void spsolver::solve (void) {
   }
   logprogressclear (40);
   dropConnections ();
+#if SORTED_LIST
+  delete nlist; nlist = NULL;
+#endif
 }
 
 /* The function goes through the list of circuit objects and creates
