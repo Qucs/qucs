@@ -5010,7 +5010,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation>Zusätzliche Transitzeitkoeffizient bei Basisdurchdrückung</translation>
+        <translation>Zusätzliche Transitzeitkoeffizient bei Basisaufweitung</translation>
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
@@ -5058,11 +5058,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation>Beginn der Basisdurchdrückung bei niedrigen Spannungen, Ohm*µm² (0 == schaltet Basisdurchdrückung ab)</translation>
+        <translation>Beginn der Basisaufweitung bei niedrigen Spannungen, Ohm*µm² (0 == schaltet Basisaufweitung ab)</translation>
     </message>
     <message>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation>Beginn der Basisdurchdrückung bei hohen Spannungen, A/µm² (0 == schaltet Basisdurchdrückung ab)</translation>
+        <translation>Beginn der Basisaufweitung bei hohen Spannungen, A/µm² (0 == schaltet Basisaufweitung ab)</translation>
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
@@ -5070,7 +5070,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation>Spannungsverschiebung des Basisdurchdrückungsbeginn, V</translation>
+        <translation>Spannungsverschiebung des Basisaufweitungsbeginn, V</translation>
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
