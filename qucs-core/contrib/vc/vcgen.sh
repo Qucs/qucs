@@ -3,5 +3,5 @@
 (cd ../.. && ./autodsp.sh -v -6)
 rm -f *.ds? *.tgz *~
 mv `find ../.. -name "*.ds?"` .
-tar cvhozf vcgen-qucscore.tgz *
+tar cvhozf vcgen-qucscore.tgz *.dsp *.dsw *.sh *.bat config.h.*
 
