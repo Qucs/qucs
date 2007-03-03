@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.10 2007/02/20 21:00:44 ela Exp $
+ * $Id: property.cpp,v 1.11 2007/03/03 17:37:09 ela Exp $
  *
  */
 
@@ -113,6 +113,15 @@ property::property (const property & p) {
 
 // Destructor deletes the property object.
 property::~property () {
+#if 1 /* FIXME: do this at another code location */
+  if (type == PROPERTY_VAR) {
+    constant * c = var->getConstant ();
+    if (c->getType () == TAG_VECTOR) {
+      delete c;
+      delete var;
+    }
+  }
+#endif
   if (name) free (name);
   if (str) free (str);
   if (txt) free (txt);
