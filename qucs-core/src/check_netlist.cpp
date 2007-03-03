@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.109 2007-03-01 09:15:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.110 2007-03-03 17:37:09 ela Exp $
  *
  */
 
@@ -1571,16 +1571,23 @@ static void netlist_free_nodes (struct node_t * node) {
   }
 }
 
+/* The following function free()'s the given value. */
+static void netlist_free_value (struct value_t * value) {
+  if (value->ident) free (value->ident);
+  if (value->unit)  free (value->unit);
+  if (value->scale) free (value->scale);
+  free (value);
+}
+
 /* Deletes pair list of a definition. */
 static void netlist_free_pairs (struct pair_t * pair) {
-  struct pair_t * n;
-  for (; pair != NULL; pair = n) {
-    n = pair->next;
-    if (pair->value) {
-      if (pair->value->ident) free (pair->value->ident);
-      if (pair->value->unit)  free (pair->value->unit);
-      if (pair->value->scale) free (pair->value->scale);
-      free (pair->value);
+  struct pair_t * np;
+  for (; pair != NULL; pair = np) {
+    np = pair->next;
+    struct value_t * nv, * value;
+    for (value = pair->value; value != NULL; value = nv) {
+      nv = value->next;
+      netlist_free_value (value);
     }
     free (pair->key);
     free (pair);
