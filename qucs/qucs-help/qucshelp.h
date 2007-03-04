@@ -41,6 +41,21 @@ class QListView;
 class HtmlDataFetcher;
 class QDockWindow;
 
+class TextBrowser : public QTextBrowser
+{
+   Q_OBJECT
+   public:
+      TextBrowser(QWidget *parent = 0) : QTextBrowser(parent)
+      {}
+   public slots:
+      void setSource(const QString& name)
+      {
+         // Dont do anything if the clicked link is web url
+         if(!name.startsWith("http://"))
+            QTextBrowser::setSource(name);
+      }
+};
+
 class QucsHelp : public QMainWindow  {
   Q_OBJECT
   public:
@@ -59,7 +74,7 @@ class QucsHelp : public QMainWindow  {
     void setupActions();
     void createSidebar();
 
-    QTextBrowser *textBrowser;
+    TextBrowser *textBrowser;
     uint currentIndex;
     QStringList links;
     QAction *previousAction;
