@@ -68,6 +68,7 @@ class QucsHelp : public QMainWindow  {
     QListView *chaptersView;
     QDockWindow *dock;
     HtmlDataFetcher *dataFetcher;
+    QString currentSource;
 };
 
 #endif
