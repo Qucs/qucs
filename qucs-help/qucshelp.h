@@ -84,6 +84,7 @@ class QucsHelp : public QMainWindow  {
     QDockWindow *dock;
     HtmlDataFetcher *dataFetcher;
     QString currentSource;
+    QString cachedSelectedText;
 };
 
 #endif
