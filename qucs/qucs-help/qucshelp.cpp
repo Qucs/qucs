@@ -167,6 +167,7 @@ void QucsHelp::displaySelectedChapter()
   uint y = chaptersView->selectedItem()->text(1).toUInt();
   Q_ASSERT(y < links.count());
   textBrowser->setSource(QucsHelpDir.filePath(links[y]));
+  cachedSelectedText = chaptersView->selectedItem()->text(1);
 }
 //This slot updates next and previous actions i.e enabling/disabling
 void QucsHelp::slotSourceChanged(const QString& _str)
@@ -188,7 +189,10 @@ void QucsHelp::slotSourceChanged(const QString& _str)
       currentIndex = i;
       previousAction->setEnabled(bool(i!=0));
       nextAction->setEnabled(bool(i+1 != links.count()));
-      if(chaptersView->selectedItem()->text(1).toUInt() != i)
+      QString temp = cachedSelectedText;
+      if(chaptersView->selectedItem())
+         temp = chaptersView->selectedItem()->text(1);
+      if(temp.toUInt() != i)
       {
         QListViewItem *item = chaptersView->findItem(QString::number(i),1);
         if(item != 0l)
