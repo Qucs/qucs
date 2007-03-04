@@ -5,7 +5,7 @@
 # Automake input file.
 #
 # Copyright (C) 2005 Raimund 'Raimi' Jacob <raimi@lkcc.org>
-# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,9 +24,12 @@
 #
 
 HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html start_digi.html characters.html matching.html internal.html
+  programs.html start_digi.html characters.html matching.html internal.html \
+  start_opt.html
 PIC  = qucshaupt.png paste.png wire.png select.png inhalttab.png \
-  unterschaltung.png qucsdigi.png
+  unterschaltung.png qucsdigi.png optimization1.png optimization2.png \
+  optimization3.png optimization4.png optimization5.png optimization6.png \
+  optimization7.png optimization8.png
 
 EXTRA_DIST = $(HTML) $(PIC)
 
