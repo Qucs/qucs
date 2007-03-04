@@ -33,6 +33,7 @@
 #include <qlistview.h>
 
 
+
 QucsHelp::QucsHelp(const QString& page)
 {
   currentIndex = 0;
@@ -42,7 +43,7 @@ QucsHelp::QucsHelp(const QString& page)
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption(tr("Qucs Help System"));
 
-  textBrowser = new QTextBrowser(this);
+  textBrowser = new TextBrowser(this);
   textBrowser->setMinimumSize(400,200);
   setCentralWidget(textBrowser);
   setupActions();
@@ -178,7 +179,7 @@ void QucsHelp::slotSourceChanged(const QString& _str)
   // Don't do anything if accesing same page
   if(str == currentSource)
     return;
-  
+    
   bool found = false;
   for(unsigned int i=0;i < links.count(); i++)
   {
