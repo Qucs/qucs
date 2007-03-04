@@ -161,13 +161,24 @@ void QucsHelp::createSidebar()
 
 void QucsHelp::displaySelectedChapter()
 {
+  if(chaptersView->selectedItem() == 0)
+      return;
   uint y = chaptersView->selectedItem()->text(1).toUInt();
   Q_ASSERT(y < links.count());
   textBrowser->setSource(QucsHelpDir.filePath(links[y]));
 }
 //This slot updates next and previous actions i.e enabling/disabling
-void QucsHelp::slotSourceChanged(const QString& str)
+void QucsHelp::slotSourceChanged(const QString& _str)
 {
+  QString str(_str);
+  // Remove '#*' chars in link since we don't check '#top,etc' while tracking previous actions
+  int hashPos = str.findRev('#');
+  if(hashPos != -1)
+    str = str.left(hashPos);
+  // Don't do anything if accesing same page
+  if(str == currentSource)
+    return;
+  
   bool found = false;
   for(unsigned int i=0;i < links.count(); i++)
   {
@@ -193,9 +204,11 @@ void QucsHelp::slotSourceChanged(const QString& str)
   if(found == false) // some error
   {
     textBrowser->setSource(QucsHelpDir.filePath(links[0]));
-    qDebug("QucsHelp::slotSourceChanged():  Link mismatch");
-    return;
+    currentSource = QucsHelpDir.filePath(links[0]);
+    qDebug("QucsHelp::slotSourceChanged():  Link mismatch \n Link: %s",str.ascii());
   }
+  else
+    currentSource = str;
 }
 
 
