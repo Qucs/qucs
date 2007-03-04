@@ -161,9 +161,9 @@ int main(int argc, char *argv[])
   if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
     int p = locale.find ('_');
     if (p != -1) {
-      QucsHelpDir = QucsSettings.DocDir + locale.left (p);
+       QucsHelpDir = QucsSettings.DocDir + locale.left (p);
       if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
-	QucsHelpDir = QucsSettings.DocDir + "en";
+         QucsHelpDir = QucsSettings.DocDir + "en";
       }
     }
     else QucsHelpDir = QucsSettings.DocDir + "en";
