@@ -1,3 +1,8 @@
+2007-03-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/start_opt.html: Translated optimization introduction
+	into German.
+
 2006-08-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucshelp.cpp (setupActions): Made some more user visible
