@@ -799,67 +799,67 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenler</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">gösterge</translation>
+        <translation>gösterge</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">İsim</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Öntanımlı</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Açıklama</translation>
+        <translation>Açıklama</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">evet</translation>
+        <translation>evet</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">hayır</translation>
+        <translation>hayır</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">Tasarıda göster</translation>
+        <translation>Tasarıda göster</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">İsim:</translation>
+        <translation>İsim:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Öntanımlı Değer:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Ekle</translation>
+        <translation>Ekle</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Kaldır</translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hata</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenin ismi &quot;File&quot; olmamalı!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; değişkeni dizgede zaten var!</translation>
     </message>
 </context>
 <context>
@@ -958,7 +958,7 @@
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>IC-CAP model kütükleri</translation>
     </message>
 </context>
 <context>
@@ -1368,131 +1368,131 @@ olmalı fakat şu anda %1 !</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Benzetim:</translation>
+        <translation>Benzetim:</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yöntem:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>En yüksek deneme sayısı:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıktı tazeleme sıklığı:</translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana sayısı:</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çaprazlama çarpanı:</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastlantısal sayı üreteci için kök değer:</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation>En az eder değişimi:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eder nesneleri:</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eder sınırlamaları:</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Cebir</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Biçim</translation>
+        <translation>Çeşit</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Çeşit:</translation>
+        <translation>Çeşit:</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation>doğrusal çift duyarlıklı</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel çift duyarlıklı</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>doğrusal tam sayı</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel tam sayı</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Değer</translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer:</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>az</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>daha büyük</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>eşit</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>izle</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">evet</translation>
+        <translation>evet</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">hayır</translation>
+        <translation>hayır</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hata</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm metin kutuları dolmalı!</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; değişkeni dizgede zaten var!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; isimli amaç dizgede zaten var!</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>en küçüğü bul</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>en büyüğü bul</translation>
     </message>
 </context>
 <context>
@@ -4025,51 +4025,51 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>saniye cinsinden en büyük adım büyüklüğü</translation>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>gecikme</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>Gecikme</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>başlangıç gecikme zamanı</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM Seviyesi 2 v2.1 verilog devresi</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation>GICCR sabiti</translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
+        <translation>sıfır-kutuplama oluk yükü</translation>
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>2B ve 3B etkileri için yüksek akım düzeltmesi</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT&apos; ler için E azınlık taşıyıcı ağırlık çarpanı</translation>
     </message>
     <message>
         <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT&apos; ler için C azınlık taşıyıcı ağırlık çarpanı</translation>
     </message>
     <message>
         <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT&apos; ler için B-E tüketim bölgesi taşıyıcı ağırlık çarpanı</translation>
     </message>
     <message>
         <source>B-C depletion charge weighting factor in HBTs</source>
@@ -4077,11 +4077,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E doyum akımı</translation>
     </message>
     <message>
         <source>Internal B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>Internal B-E recombination saturation current</source>
@@ -4113,51 +4113,51 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C doyum akımı</translation>
     </message>
     <message>
         <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici B-C doyum akımı</translation>
     </message>
     <message>
         <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici B-C akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E tünelleme doyum akımı</translation>
     </message>
     <message>
         <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Tünelleme akımı için üstel çarpan</translation>
     </message>
     <message>
         <source>Avalanche current factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Çığ akım çarpanı</translation>
     </message>
     <message>
         <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
+        <translation>Çığ akımı için üstel çarpan</translation>
     </message>
     <message>
         <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>FAVL için göreceli TC</translation>
     </message>
     <message>
         <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>QAVL için göreceli TC</translation>
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır kutuplama dahili B (baz) direnci</translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici baz seri direnci</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
@@ -4177,11 +4177,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>E (emetör) seri direnci</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici C (kolektér seri) direnci</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
@@ -4193,11 +4193,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S diyot doyum akımı</translation>
     </message>
     <message>
         <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S diyot akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>Transit time for forward operation of substrate transistor</source>
@@ -4205,23 +4205,23 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt tabaka seri direnci</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt tabaka paralel sığası</translation>
     </message>
     <message>
         <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E eklem gerilimi</translation>
     </message>
     <message>
         <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E değişim katsayısı</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
@@ -4249,11 +4249,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C gerilimi</translation>
     </message>
     <message>
         <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C değişim katsayısı</translation>
     </message>
     <message>
         <source>Internal B-C punch-through voltage</source>
@@ -4277,15 +4277,15 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>İç C-S gerilimi</translation>
     </message>
     <message>
         <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S değişim katsayısı</translation>
     </message>
     <message>
         <source>C-S punch-through voltage</source>
@@ -4313,7 +4313,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek akım yoğunluklarında doyum zaman sabiti</translation>
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
@@ -4401,7 +4401,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
+        <translation>VCES için göreceli TC</translation>
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
@@ -4425,11 +4425,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Isısal direnç</translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Isısal sığa</translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
@@ -4441,55 +4441,55 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>benzetim sıcaklığı</translation>
     </message>
     <message>
         <source>FBH HBT</source>
-        <translation type="unfinished"></translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Görmezden gelindi</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihaz çalışma sıcaklığı, Selsiyüs</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>Isısal direnç, K/W</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyutlandırma çarpanı, E parmak sayısı</translation>
     </message>
     <message>
         <source>Length of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>E parmak uzunluğu, m</translation>
     </message>
     <message>
         <source>Width of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>E parmak genişliği, m</translation>
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri doyum akımı yoğunluğu, A/um^2</translation>
     </message>
     <message>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri akım iletimkatsayısı</translation>
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri ısısal etkinleştirme enerjisi, V, (0 == ısısal sıcaklık bağımlılığını kapatır)</translation>
     </message>
     <message>
         <source>B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E sızıntı doyum akım yoğunluğu, A/um^2</translation>
     </message>
     <message>
         <source>B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E sızıntı iletim katsayısı</translation>
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
@@ -4549,7 +4549,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Ideal forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Mükemmel ileri beta</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
@@ -4557,7 +4557,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Ideal reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Mükemmel geri beta</translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
@@ -4577,7 +4577,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
@@ -4593,11 +4593,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Mükemmel ters geçis zamanı, s</translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Mükemmel düz geçis zamanı, s</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
@@ -4609,35 +4609,35 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Thcs için yumuşatma değişkeni</translation>
     </message>
     <message>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E sıfır-kutuplama tüketim sığası, F/um^2</translation>
     </message>
     <message>
         <source>B-E junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>B-E junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E eklem iç gerilimi, V</translation>
     </message>
     <message>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C sıfır-kutuplama tüketim sığası, F/um^2</translation>
     </message>
     <message>
         <source>B-C junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C eklem iç gerilimi, V</translation>
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>kullanılmamış</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
@@ -4661,7 +4661,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek akımlarda Jk&apos; nin eğimi, Ohm*um^2</translation>
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
@@ -4669,11 +4669,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>C direnci, Ohm/parmak</translation>
     </message>
     <message>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>E direnci, Ohm/parmak</translation>
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
@@ -4685,15 +4685,15 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>C sargı etkisi, H</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>E sargı etkisi, H</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>B sargı etkisi, H</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
@@ -4709,43 +4709,43 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürültü sabiti</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürültü üsteli</translation>
     </message>
     <message>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürültü sıklık üsteli</translation>
     </message>
     <message>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Ani gürültü sabiti</translation>
     </message>
     <message>
         <source>Burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ani gürültü üsteli</translation>
     </message>
     <message>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Hertz cinsinden ani gürültü köşe sıklığı</translation>
     </message>
     <message>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenlerin elde edildiği ortam sıcaklığı</translation>
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>lehim teli</translation>
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>tel uzunluğu</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>tel çapı</translation>
     </message>
     <message>
         <source>height above ground plane</source>
@@ -4753,74 +4753,78 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>metal özdirenci</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>metalin göreceli geçirgenliği</translation>
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>lehim teli modeli</translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehim Teli</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>burgulu çift iletim hattı</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>iletkenin çapı</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>tel çapı (iletken ve yalıtkan)</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>yalıtkanın dielektrik katsayısı</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>uzunluk başına burgu, 1/m</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Burgulu-Çift</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>hattın fiziksel uzunluğu</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>(Olanaklı) AC güç, W</translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt tabakalı MOS alan etkili transistör</translation>
     </message>
     <message>
         <source>ideal 4-terminal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>mükemmel 4-uçlu iletim hattı</translation>
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>4-Uçlu İletim Hattı</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT modeli, Ferdinand-Braun-Institut (FBH) Berlin tarafından yapıldı</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7094,51 +7098,55 @@ Zayıflatıcı olusturma yazılımını baslatır</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>GUI ile ilgili iyileştirme Gopala Krishna A. tarafından yapıldı</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>Çekçe Marek Straka tarafından yapıldı</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalan Antoni Subirats tarafından yapıldı</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-AMS arayüzü Helene Parruitte tarafından yapıldı</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay ortala</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili bileşenleri yatay olarak ortala</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay ortala
+
+Seçili bileşenleri yatay olarak ortala</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey ortala</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey ortala
+
+Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hizalama</translation>
     </message>
 </context>
 <context>
@@ -7518,65 +7526,67 @@ Süzgeç tasarım yazılımı
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Çıkış</translation>
+        <translation>&amp;Çıkış</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Geri</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;İleri</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ev</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Önceki</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sonraki</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;İçindekiler</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>İçindekileri göster/gösterme</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>İçindekiler
+
+İçindekileri göster/gösterme</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Qt hakkında</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Kütük</translation>
+        <translation>&amp;Kütük</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Görünüm</translation>
+        <translation>&amp;Görünüm</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Yardım</translation>
+        <translation>&amp;Yardım</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>İçindekiler</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Ev</translation>
     </message>
 </context>
 <context>
@@ -9171,11 +9181,11 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Çekçe</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalan</translation>
     </message>
 </context>
 <context>
@@ -9596,31 +9606,31 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirilmiş Kütükler</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>İisimsiz</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirilmiş kütükleri kaydet</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydilecek kükleri seç</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapatmaktan Vazgeç</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilileri Kaydet</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydetme</translation>
     </message>
 </context>
 <context>
