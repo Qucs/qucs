@@ -4939,6 +4939,10 @@ Usage:  qucsedit [-r] file
         <source>Extrinsic BC diffusion capacitance, F</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>high-injection knee current (0=infinity)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
