@@ -44,10 +44,10 @@ Diode::Diode()
 	QObject::tr("ohmic series resistance")));
   Props.append(new Property("Tt", "0.0 ps", false,
 	QObject::tr("transit time")));
-  Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("Ikf", "0", false,
+	QObject::tr("high-injection knee current (0=infinity)")));
   Props.append(new Property("Kf", "0.0", false,
-        QObject::tr("flicker noise coefficient")));
+	QObject::tr("flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
 	QObject::tr("flicker noise exponent")));
   Props.append(new Property("Ffe", "1.0", false,
@@ -56,6 +56,8 @@ Diode::Diode()
 	QObject::tr("reverse breakdown voltage")));
   Props.append(new Property("Ibv", "1 mA", false,
 	QObject::tr("current at reverse breakdown voltage")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
   Props.append(new Property("Xti", "3.0", false,
 	QObject::tr("saturation current temperature exponent")));
   Props.append(new Property("Eg", "1.11", false,
