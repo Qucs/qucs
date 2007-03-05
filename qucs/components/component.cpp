@@ -747,7 +747,8 @@ bool Component::load(const QString& _s)
     Props.append(new Property("p", "", true, " "));
 
   // load all properties
-  for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
+  Property *p1;
+  for(p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
     z++;
@@ -755,6 +756,25 @@ bool Component::load(const QString& _s)
     if(z > counts) {
       if(p1->Description.isEmpty())
         Props.remove();    // remove if allocated in vain
+
+      if(counts < 58)     // backward compatible
+        if(Model == "Diode") {
+          counts >>= 1;
+          p1 = Props.at(counts-1);
+          counts = 29;
+          for(; p1 != 0; p1 = Props.current()) {
+            n = Props.prev()->Value;
+            p1->Value = n;
+
+            if(counts-- <= 20)
+              break;
+          }
+
+          p1 = Props.next();
+          p1->Value = Props.at(11)->Value;
+          Props.current()->Value = "0";
+        }
+
       return true;
     }
 
@@ -763,8 +783,8 @@ bool Component::load(const QString& _s)
       n = n.section('=',1,1);
       // allocate memory for a new property (e.g. for equations)
       if(Props.count() < (counts>>1)) {
-	Props.insert(z >> 1, new Property("y", "1", true));
-	Props.prev();
+        Props.insert(z >> 1, new Property("y", "1", true));
+        Props.prev();
       }
     }
     if(z == 6)  if(counts == 6)     // backward compatible
