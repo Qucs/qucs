@@ -145,14 +145,26 @@ void Diagram::paint(ViewPainter *p)
 
 
   if(isSelected) {
+    int x_, y_;
+    float fx_, fy_;
+    p->map(cx, cy-y2, x_, y_);
+    fx_ = float(x2)*p->Scale + 10;
+    fy_ = float(y2)*p->Scale + 10;
+
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->Painter->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
     p->Painter->setPen(QPen(QPen::darkRed,2));
     p->drawResizeRect(cx, cy-y2);  // markers for changing the size
     p->drawResizeRect(cx, cy);
     p->drawResizeRect(cx+x2, cy-y2);
     p->drawResizeRect(cx+x2, cy);
   }
+}
+
+// ------------------------------------------------------------
+void Diagram::paintScheme(QPainter *p)
+{
+  p->drawRect(cx, cy-y2, x2, y2);
 }
 
 // ------------------------------------------------------------
@@ -284,12 +296,6 @@ void Diagram::createAxisLabels()
     wmax *= -1;
     if(wmax < Bounding_y1) Bounding_y1 = wmax;
   }
-}
-
-// ------------------------------------------------------------
-void Diagram::paintScheme(QPainter *p)
-{
-  p->drawRect(cx, cy-y2, x2, y2);
 }
 
 // ------------------------------------------------------------

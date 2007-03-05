@@ -359,40 +359,40 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
   QWMatrix wm = p->Painter->worldMatrix();
   p->Painter->setWorldMatrix(QWMatrix());
 
+  int x2_, y2_;
   p->Painter->setPen(QPen(QPen::black,1));
-  x2 = p->drawText(Text, x0+x1+3, y0+y1+3, &y2);
-  x2 += int(6.0*p->Scale);
-  y2 += int(6.0*p->Scale);
+  x2_ = p->drawText(Text, x0+x1+3, y0+y1+3, &y2_);
+  x2_ += int(6.0*p->Scale);
+  y2_ += int(6.0*p->Scale);
   if(!transparent) {
-    p->eraseRect(x0+x1, y0+y1, x2, y2);
+    p->eraseRect(x0+x1, y0+y1, x2_, y2_);
     p->drawText(Text, x0+x1+3, y0+y1+3);
   }
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
 
   p->Painter->setPen(QPen(QPen::darkMagenta,0));
-  p->drawRectD(x0+x1, y0+y1, x2, y2);
+  p->drawRectD(x0+x1, y0+y1, x2_, y2_);
 
-  x2 = int(double(x2) / p->Scale);
-  y2 = int(double(y2) / p->Scale);
+  x2 = int(float(x2_) / p->Scale);
+  y2 = int(float(y2_) / p->Scale);
 
-  int x1_ = x1;
-  int y1_ = y1;
-  float x2_, y2_;
+  int x1_, y1_;
+  p->map(x0+x1, y0+y1, x1_, y1_);
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
     if(-cy >= y1+(y2>>1))
-      y1_ += y2;
+      y1_ += y2_ - 1;
   }
   else {
-    x1_ += x2;
+    x1_ += x2_ - 1;
     if(-cy >= y1+(y2>>1))
-      y1_ += y2;
+      y1_ += y2_ - 1;
   }
-  p->map(x0+x1_, y0+y1_, x1_, y1_);
-  x2_ = (float(x0)+fCX)*p->Scale + p->DX;
-  y2_ = (float(y0)-fCY)*p->Scale + p->DY;
-  p->Painter->drawLine(x1_, y1_, TO_INT(x2_), TO_INT(y2_));
+  float fx2, fy2;
+  fx2 = (float(x0)+fCX)*p->Scale + p->DX;
+  fy2 = (float(y0)-fCY)*p->Scale + p->DY;
+  p->Painter->drawLine(x1_, y1_, TO_INT(fx2), TO_INT(fy2));
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
@@ -412,13 +412,13 @@ void Marker::paintScheme(QPainter *p)
     if(-cy < y1+(y2>>1))
       p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2-1);
   }
   else {
     if(-cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1);
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2-1, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1+y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2-1, y0+y1+y2-1);
   }
 }
 
