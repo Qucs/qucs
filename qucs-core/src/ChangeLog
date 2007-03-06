@@ -1,3 +1,8 @@
+2007-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Modifying U*Prev values of non-linear devices
+	when a time step has been rejected.
+
 2007-03-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* property.cpp: Deleting vector variable, fixing memory leak.

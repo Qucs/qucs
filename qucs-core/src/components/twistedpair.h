@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.h,v 1.1 2007-01-23 10:28:41 raimi Exp $
+ * $Id: twistedpair.h,v 1.2 2007-03-06 18:21:32 ela Exp $
  *
  */
 
@@ -30,14 +30,17 @@ class twistedpair : public circuit
  public:
   twistedpair ();
   void calcSP (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
   void initTR (void);
   void saveCharacteristics (nr_double_t);
 
  private:
   void calcPropagation (nr_double_t);
+  nr_double_t calcLoss (nr_double_t);
 
  private:
   nr_double_t zl, ereff, alpha, beta, len, angle;

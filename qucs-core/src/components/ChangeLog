@@ -1,3 +1,8 @@
+2007-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* twistedpair.cpp: Added preliminary loss model as well as
+	the noise models for AC and SP due to the losses.
+
 2007-03-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Fixed derivative for knee current.
