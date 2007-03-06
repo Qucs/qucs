@@ -1,6 +1,11 @@
+2007-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* twistedpair.cpp (TwistedPair): Added some new properties
+	necessary for the loss and noise models.
+
 2007-02-04  Stefan Jahn  <stefan@lkcc.org>
 
-	* mscross.cpp (MScross): Added microstrip model selctors
+	* mscross.cpp (MScross): Added microstrip model selectors
 	to the properties of the microstrip cross.
 
 2006-10-29  Stefan Jahn  <stefan@lkcc.org>
