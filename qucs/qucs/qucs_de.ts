@@ -5230,7 +5230,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>Knickstrom bei Hochinjektion (0=unendlich)</translation>
     </message>
 </context>
 <context>
