@@ -1,3 +1,8 @@
+2007-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* tutorial/opamp/content.tex: Added tutorial update about
+	operational amplifier modelling.  Thanks, Mike!
+
 2007-01-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* tutorial/spicetoqucs/content.tex: Added tutorial about
