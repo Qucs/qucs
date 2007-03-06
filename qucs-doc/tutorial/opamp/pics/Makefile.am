@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,11 @@ PDFS = dwr1.pdf fig17_dpl.pdf fig24_dpl.pdf fig31_dpl.pdf fig3_sch.pdf \
   fig13_sch.pdf fig20_dpl.pdf fig29_dpl.pdf fig37_dpl.pdf fig_bdiag.pdf \
   fig14_dpl.pdf fig20_sch.pdf fig29_sch.pdf fig38_sch.pdf fig15_sch.pdf \
   fig22_sch.pdf fig2_dpl.pdf fig39_dpl.pdf fig16_sch.pdf fig23_sch.pdf \
-  fig2_sch.pdf fig3_dpl.pdf
+  fig2_sch.pdf fig3_dpl.pdf \
+  \
+  fig44_sch.pdf opamp_fig42.pdf opamp_fig48.pdf opamp_fig49.pdf \
+  opamp_fig55.pdf opamp_fig57.pdf opamp_fig59.pdf opamp_fig56.pdf \
+  opamp_fig58.pdf  
 
 tutorial: $(XPDF)
 
