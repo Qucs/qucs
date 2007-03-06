@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.64 2007/02/28 18:35:11 ela Exp $
+ * $Id: qucsdefs.h,v 1.65 2007/03/06 18:21:31 ela Exp $
  *
  */
 
@@ -308,10 +308,14 @@ struct define_t qucs_definition_available[] =
     { { "d", PROP_REAL, { 0.5e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
       { "D", PROP_REAL, { 0.8e-3, PROP_NO_STR }, PROP_POS_RANGEX },
       { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      { "er", PROP_REAL, { 4, PROP_NO_STR }, { '[', 1, 100, ']' } },
       { "T", PROP_REAL, { 100, PROP_NO_STR }, PROP_POS_RANGE },
+      { "er", PROP_REAL, { 4, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
   },
   /* ideal coupler */
   { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

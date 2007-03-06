@@ -1,7 +1,7 @@
 /*
  * trsolver.cpp - transient solver class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.49 2006/10/10 07:54:53 raimi Exp $
+ * $Id: trsolver.cpp,v 1.50 2007/03/06 18:21:31 ela Exp $
  *
  */
 
@@ -127,6 +127,8 @@ int trsolver::dcAnalysis (void) {
     convHelper = CONV_LineSearch;
     logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
 	      "fallback\n", getName (), getDescription ());
+    applyNodeset ();
+    restart ();
     error = solve_nonlinear ();
     break;
   default:
@@ -229,10 +231,15 @@ void trsolver::solve (void) {
       }
 #endif
       updateCoefficients (delta);
-      rejected = 0;
 
       // Run predictor.
       error += predictor ();
+
+      // restart Newton iteration
+      if (rejected) {
+	restart ();      // restart non-linear devices
+	rejected = 0;
+      }
 
       // Run corrector process.
       try_running () {
@@ -621,6 +628,15 @@ void trsolver::calcTR (trsolver * self) {
   circuit * root = self->getNet()->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->calcTR (self->current);
+  }
+}
+
+/* Goes through the list of non-linear circuit objects and runs its
+   restartDC() function. */
+void trsolver::restart (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ()) c->restartDC ();
   }
 }
 

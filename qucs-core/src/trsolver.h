@@ -1,7 +1,7 @@
 /*
  * trsolver.h - transient solver class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.23 2006/07/24 08:07:42 raimi Exp $
+ * $Id: trsolver.h,v 1.24 2007/03/06 18:21:31 ela Exp $
  *
  */
 
@@ -51,6 +51,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void initTR (void);
   void deinitTR (void);
   static void calcTR (trsolver *);
+  void restart (void);
   void initDC (void);
   static void calcDC (trsolver *);
   void initSteps (void);
