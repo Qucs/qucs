@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.4 2007/03/06 18:21:32 ela Exp $
+ * $Id: twistedpair.cpp,v 1.5 2007/03/06 19:56:07 ela Exp $
  *
  */
 
@@ -118,9 +118,9 @@ nr_double_t twistedpair::calcLoss (nr_double_t frequency) {
 
   // calculate dielectric losses
   l0 = C0 / frequency;
-  ad = M_PI * tand * ereff / l0;
+  ad = 2 * M_PI * tand * sqrt (ereff) / l0;
 
-  alpha = ac / zl + ad * zl;
+  alpha = ac / zl + ad;
   return alpha;
 }
 
