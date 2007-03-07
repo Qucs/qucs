@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about transient analysis.
 %
-% Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -1750,7 +1750,9 @@ transmission line during the transient analysis is augmented by two
 new rows and columns in order to consider the following branch
 equations.
 \begin{align}
+\label{eq:itran_v1}
 V_1\left(t\right) = Z_L\cdot I_1\left(t\right) + A\cdot\left( Z_L\cdot I_2\left(t -\tau\right) + V_2\left(t -\tau\right)\right)\\
+\label{eq:itran_v2}
 V_2\left(t\right) = Z_L\cdot I_2\left(t\right) + A\cdot\left( Z_L\cdot I_1\left(t -\tau\right) + V_1\left(t -\tau\right)\right)
 \end{align}
 
@@ -1783,6 +1785,74 @@ frequency independent) line attenuation $\alpha$ and the transmission
 line length $l$.
 \begin{equation}
 A = e^{-\tfrac{\alpha}{2}\cdot l}
+\end{equation}
+
+\subsubsection{Ideal 4-terminal transmission line}
+%\addcontentsline{toc}{subsubsection}{Ideal 4-terminal transmission line}
+
+The ideal 4-terminal transmission line is a two-port as well.  It
+differs from the 2-terminal line as shown in
+fig.~\ref{fig:TransLine4P} in two new node voltages and branch
+currents.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.4\linewidth]{tline4p}
+\end{center}
+\label{fig:TransLine4P}
+\caption{ideal 4-terminal transmission line}
+\end{figure}
+\FloatBarrier
+
+The differential mode of the ideal 4-terminal transmission line can be
+modeled by modifying the branch eqs.~\eqref{eq:itran_v1} and
+\eqref{eq:itran_v2} of the 2-terminal line which yields
+\begin{align}
+V_1\left(t\right) - V_4\left(t\right) = Z_L\cdot I_1\left(t\right) + A\cdot\left( Z_L\cdot I_2\left(t -\tau\right) + V_2\left(t -\tau\right) - V_3\left(t -\tau\right)\right)\\
+V_2\left(t\right) - V_3\left(t\right) = Z_L\cdot I_2\left(t\right) + A\cdot\left( Z_L\cdot I_1\left(t -\tau\right) + V_1\left(t -\tau\right) - V_4\left(t -\tau\right)\right)
+\end{align}
+
+Two more conventions must be indroduced
+\begin{align}
+I_1\left(t\right) &= -I_4\left(t\right)\\
+I_2\left(t\right) &= -I_3\left(t\right)
+\end{align}
+
+which is valid for the differential mode (i.e. the odd mode) of the
+transmission line and represents a kind of current mirror on each
+transmission line port.
+
+\addvspace{12pt}
+
+According to these consideration the MNA matrix entries during
+transient analysis are
+\begin{equation}
+\begin{bmatrix}
+. & . & . & . & 1 & 0\\
+. & . & . & . & 0 & 1\\
+. & . & . & . & 0 & -1\\
+. & . & . & . & -1 & 0\\
+1 & 0 & 0 & -1 & -Z_L & 0\\
+0 & 1 & -1 & 0 & 0 & -Z_L
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\left(t\right)\\
+V_2\left(t\right)\\
+V_3\left(t\right)\\
+V_4\left(t\right)\\
+J_1\left(t\right)\\
+J_2\left(t\right)
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\left(t\right)\\
+I_2\left(t\right)\\
+I_3\left(t\right)\\
+I_4\left(t\right)\\
+A\cdot\left(V_2\left(t -\tau\right) - V_3\left(t -\tau\right) + Z_L\cdot J_2\left(t -\tau\right)\right)\\
+A\cdot\left(V_1\left(t -\tau\right) - V_4\left(t -\tau\right) + Z_L\cdot J_1\left(t -\tau\right)\right)\\
+\end{bmatrix}
 \end{equation}
 
 \subsubsection{Logical devices}

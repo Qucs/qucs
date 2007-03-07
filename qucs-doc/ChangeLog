@@ -1,39 +1,7 @@
-2007-03-06  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/opamp/content.tex: Added tutorial update about
-	operational amplifier modelling.  Thanks, Mike!
-
-2007-01-23  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/spicetoqucs/content.tex: Added tutorial about
-	simulation of SPICE netlists with Qucs.  Thanks to Mike Brinson.
-
-2006-09-14  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/timer555/timer555.tex: Added 555 timer tutorial
-	provided by Mike Brinson.  Thanks a lot!
-
 2006-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.10 and bumped up to version
 	0.0.11.
-
-2006-08-08  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/functions/math.tex: Fixed typo in arccot()
-	description.  Documented two-argument functions for the
-	min() and max() functions.
-
-2006-07-24  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/opamp/opamp.tex: Added tutorial about modelling
-	operational amplifiers provided by Mike Brinson.  Thanks a lot!
-
-2006-07-17  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/functions/math.tex: Added documentation of Time2Freq,
-	Freq2Time and fixed those of fft, dft, idft and ifft.  Added
-	description of the signum function.
 
 2006-06-08  Stefan Jahn  <stefan@lkcc.org>
 
@@ -44,16 +12,6 @@
 
 	* configure.ac: Released version 0.0.9 and bumped up to version
 	0.0.10.
-
-2006-05-23  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/digital/content.tex: Added upgrade of digital tutorial
-	provided by Mike Brinson.
-
-2006-05-04  Stefan Jahn  <stefan@lkcc.org>
-
-	* tutorial/ffmodels/ffmodels.tex: Added yet another tutorial
-	provided by Mike Brinson.  Thanks a very lot.
 
 2006-01-31  Stefan Jahn  <stefan@lkcc.org>
 

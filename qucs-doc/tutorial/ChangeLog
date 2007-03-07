@@ -1,0 +1,41 @@
+2007-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* opamp/content.tex: Added tutorial update about
+	operational amplifier modelling.  Thanks, Mike!
+
+2007-01-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* spicetoqucs/content.tex: Added tutorial about
+	simulation of SPICE netlists with Qucs.  Thanks to Mike Brinson.
+
+2006-09-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* timer555/timer555.tex: Added 555 timer tutorial
+	provided by Mike Brinson.  Thanks a lot!
+
+2006-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* functions/math.tex: Fixed typo in arccot()
+	description.  Documented two-argument functions for the
+	min() and max() functions.
+
+2006-07-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* opamp/opamp.tex: Added tutorial about modelling
+	operational amplifiers provided by Mike Brinson.  Thanks a lot!
+
+2006-07-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* functions/math.tex: Added documentation of Time2Freq,
+	Freq2Time and fixed those of fft, dft, idft and ifft.  Added
+	description of the signum function.
+
+2006-05-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/content.tex: Added upgrade of digital tutorial
+	provided by Mike Brinson.
+
+2006-05-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* ffmodels/ffmodels.tex: Added yet another tutorial
+	provided by Mike Brinson.  Thanks a very lot.
