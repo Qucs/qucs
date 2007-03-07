@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.5 2007-03-06 19:56:07 ela Exp $
+ * $Id: twistedpair.cpp,v 1.6 2007-03-07 18:00:37 ela Exp $
  *
  */
 
@@ -45,6 +45,11 @@
 
 twistedpair::twistedpair () : circuit (4) {
   type = CIR_TWISTEDPAIR;
+}
+
+void twistedpair::initSP (void) {
+  allocMatrixS ();
+  calcLength ();
 }
 
 void twistedpair::calcSP (nr_double_t frequency) {
@@ -80,15 +85,33 @@ void twistedpair::calcNoiseSP (nr_double_t) {
 }
 
 void twistedpair::initDC (void) {
-  setVoltageSources (2);
-  allocMatrixMNA ();
-  voltageSource (VSRC_1, NODE_1, NODE_2);
-  voltageSource (VSRC_2, NODE_3, NODE_4);
+  nr_double_t d   = getPropertyDouble ("d");
+  nr_double_t rho = getPropertyDouble ("rho");
+  calcLength ();
+
+  if (d != 0.0 && rho != 0.0 && len != 0.0) {
+    // tiny resistances
+    nr_double_t g1 = M_PI * sqr (d / 2) / rho / len;
+    nr_double_t g2 = g1;
+    setVoltageSources (0);
+    allocMatrixMNA ();
+    setY (NODE_1, NODE_1, +g1); setY (NODE_2, NODE_2, +g1);
+    setY (NODE_1, NODE_2, -g1); setY (NODE_2, NODE_1, -g1);
+    setY (NODE_3, NODE_3, +g2); setY (NODE_4, NODE_4, +g2);
+    setY (NODE_3, NODE_4, -g2); setY (NODE_4, NODE_3, -g2);
+  }
+  else {
+    // DC shorts
+    setVoltageSources (2);
+    allocMatrixMNA ();
+    voltageSource (VSRC_1, NODE_1, NODE_2);
+    voltageSource (VSRC_2, NODE_3, NODE_4);
+  }
 }
 
 void twistedpair::initAC (void) {
-  nr_double_t l = getPropertyDouble ("L");
-  if (l != 0.0) {
+  calcLength ();
+  if (len != 0.0) {
     setVoltageSources (0);
     allocMatrixMNA ();
   } else {
@@ -114,14 +137,22 @@ nr_double_t twistedpair::calcLoss (nr_double_t frequency) {
     if (rin < 0.0) rin = 0.0;
   }
   else rin = 0.0;
-  ac = (rho * M_1_PI) / (rout * rout - rin * rin);
+  ac = (rho * M_1_PI) / (rout * rout - rin * rin) / zl;
 
   // calculate dielectric losses
   l0 = C0 / frequency;
-  ad = 2 * M_PI * tand * sqrt (ereff) / l0;
+  ad = M_PI * tand * sqrt (ereff) / l0;
 
-  alpha = ac / zl + ad;
+  alpha = ac + ad;
   return alpha;
+}
+
+nr_double_t twistedpair::calcLength (void) {
+  nr_double_t l  = getPropertyDouble ("L");
+  nr_double_t T  = getPropertyDouble ("T");
+  nr_double_t D  = getPropertyDouble ("D");
+  len = l * T * M_PI * D * sqrt (1 + 1 / sqr (T * M_PI * D));
+  return len;
 }
 
 void twistedpair::calcPropagation (nr_double_t frequency) {
@@ -129,7 +160,6 @@ void twistedpair::calcPropagation (nr_double_t frequency) {
   nr_double_t D  = getPropertyDouble ("D");
   nr_double_t er = getPropertyDouble ("er");
   nr_double_t T  = getPropertyDouble ("T");
-  nr_double_t l  = getPropertyDouble ("L");
 
   nr_double_t q, p;
   p = atan (T * M_PI * D);
@@ -139,7 +169,6 @@ void twistedpair::calcPropagation (nr_double_t frequency) {
   zl = Z0 / M_PI / sqrt (ereff) * acosh (D / d);
   beta = 2 * M_PI * frequency / C0 * sqrt (ereff);
   angle = deg (p);
-  len = l * T * M_PI * D * sqrt (1 + 1 / sqr (T * M_PI * D));
   alpha = calcLoss (frequency);
 }
 
