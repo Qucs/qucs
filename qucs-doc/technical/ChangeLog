@@ -1,3 +1,11 @@
+2007-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* transline.tex (subsection{Transmission losses}): Described
+	the transmission line loss model of the twisted-pair line.
+
+	* transient.tex (subsubsection{Ideal 4-terminal transmission
+	line}): Documented transient model of the 4-terminal line.
+
 2007-01-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip.tex (section{Bondwire}): Documented the bondwire
