@@ -1,3 +1,8 @@
+2007-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* twistedpair.cpp: Again fixed attenuation model.  Added
+	an appropriate DC model.
+
 2007-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* twistedpair.cpp: Added preliminary loss model as well as
