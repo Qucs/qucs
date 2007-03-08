@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.21 2007/03/06 18:21:32 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.22 2007/03/08 19:45:05 ela Exp $
  *
  */
 
@@ -183,6 +183,22 @@ static void netlist_reference_ground (void) {
   }
 }
 
+/* Look for a single subcircuit definition in a netlist. */
+static struct definition_t *
+netlist_get_single_subcircuit (struct definition_t * root) {
+  int count = 0;
+  struct definition_t * ret = NULL;
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!def->action) {
+      count++;
+    } else if (def->sub) {
+      count++;
+      ret = def;
+    }
+  }
+  return (count == 1) ? ret : NULL;
+}
+
 /* Prints the overall netlist representation. */
 static void netlist_list (void) {
   struct node_t * n;
@@ -201,8 +217,7 @@ static void netlist_list (void) {
   }
   /* Instantiate subcircuit if there is just a single definition. */
   if (definition_root != NULL && subcircuit_root == NULL &&
-      definition_root->sub != NULL && definition_root->next == NULL) {
-    def = definition_root;
+      (def = netlist_get_single_subcircuit (definition_root)) != NULL) {
     fprintf (qucs_out, "\n# no instance of subcircuit \"%s\" found, "
 	     "creating it\n", def->instance);
     fprintf (qucs_out, "Sub:X1");

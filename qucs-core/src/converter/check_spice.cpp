@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.29 2007/02/11 12:32:56 ela Exp $
+ * $Id: check_spice.cpp,v 1.30 2007/03/08 19:45:05 ela Exp $
  *
  */
 
@@ -1331,6 +1331,20 @@ static char * spice_untranslated_text (struct definition_t * def) {
 #define VAL_IS_DONE(val) \
   ((val) == NULL || (val)->hint & HINT_DONE)
 
+/* The function counts values in a property list up to a stop
+   value. */
+static int spice_count_real_values (struct value_t * values) {
+  int ret = 0;
+  struct value_t * val;
+  // go through each not yet processed value
+  foreach_value (values, val) {
+    if (val->hint & (HINT_NODE | HINT_NUMBER))
+      ret++;
+    if (val->hint & HINT_MSTOP) break; // stop here if necessary
+  }
+  return ret;
+}
+
 /* This function is the independent source translator.  If necessary
    new kinds of sources are created.  This must be done since Qucs has
    separate sources for each type of excitation and Spice summarizes
@@ -1340,13 +1354,14 @@ spice_translate_source (struct definition_t * root,
 			struct definition_t * def, char type) {
   struct definition_t * ac = NULL, * dc = def, * pulse = NULL;
   struct value_t * prop;
+  char * ui = (char *) ((type == 'U') ? "U" : "I");
 
   // adjust the DC part of the source
   if ((prop = spice_find_property (dc->values, "DC")) != NULL) {
     spice_value_done (prop);
     prop = prop->next;
     if (VAL_IS_NUMBER (prop)) {
-      spice_append_pair (def, type == 'U' ? "U" : "I", prop->ident, 1);
+      spice_append_pair (def, ui, prop->ident, 1);
       spice_value_done (prop);
     }
   }
@@ -1359,11 +1374,11 @@ spice_translate_source (struct definition_t * root,
     spice_value_done (prop);
     prop = prop->next;
     if (VAL_IS_NUMBER (prop)) {
-      spice_append_pair (dc, type == 'U' ? "U" : "I", prop->ident, 0);
+      spice_append_pair (dc, ui, prop->ident, 0);
       spice_value_done (prop);
       prop = prop->next;
       struct property_field_t field =
-      { { type == 'U' ? "U" : "I", "f", "Phase", "Theta", NULL } };
+      { { ui, "f", "Phase", "Theta", NULL } };
       spice_extract_properties (ac, prop, &field);
     }
     double v, f;
@@ -1392,11 +1407,11 @@ spice_translate_source (struct definition_t * root,
       ac = spice_create_definition (dc, type == 'U' ? "Vac" : "Iac");
     }
     if (Mag) {
-      spice_append_pair (ac, type == 'U' ? "U" : "I", Mag, 1);
+      spice_append_pair (ac, ui, Mag, 1);
       free (Mag);
     }
     else {
-      spice_append_pair (ac, type == 'U' ? "U" : "I", "0", 0);
+      spice_append_pair (ac, ui, "0", 0);
     }
     if (Phase) {
       spice_append_pair (ac, "Phase", Phase, 1);
@@ -1409,21 +1424,56 @@ spice_translate_source (struct definition_t * root,
     pulse = spice_create_definition (dc, type == 'U' ? "Vpulse" : "Ipulse");
     spice_value_done (prop);
     prop = prop->next;
-    if (VAL_IS_NUMBER (prop)) {
-      spice_append_pair (pulse, type == 'U' ? "U1" : "I1", prop->ident, 0);
-      spice_append_pair (dc, type == 'U' ? "U" : "I", "0", 1);
-      spice_value_done (prop);
-      prop = prop->next;
-      struct property_field_t field =
-      { { type == 'U' ? "U2" : "I2", "T1", "Tr", "Tf", "T2", NULL } };
-      spice_extract_properties (pulse, prop, &field);
+
+    // periodic
+    if (spice_count_real_values (prop) > 6) {
+      free (pulse->type);
+      pulse->type = type == 'U' ? strdup ("Vrect") : strdup ("Irect");
+      double add, off = 0;
+      if (VAL_IS_NUMBER (prop)) {
+	add = spice_get_property_value (dc, ui);
+	spice_append_pair (dc, ui, prop->ident, 1);
+	off = spice_get_property_value (dc, ui);
+	add += off;
+	spice_set_property_value (dc, ui, add);
+	prop = prop->next;
+      }
+      if (VAL_IS_NUMBER (prop)) {
+	struct property_field_t field =
+	  { { ui, "Td", "Tr", "Tf", "TH", "TL", NULL } };
+	spice_extract_properties (pulse, prop, &field);
+      }
+      double v;
+      v  = spice_get_property_value (pulse, ui);   // V2
+      v -= off;
+      spice_set_property_value (pulse, ui, v);
+      v  = spice_get_property_value (pulse, "TH"); // PW
+      v += spice_get_property_value (pulse, "Tr");
+      v += spice_get_property_value (pulse, "Tf");
+      spice_set_property_value (pulse, "TH", v);
+      v  = spice_get_property_value (pulse, "TL"); // PER
+      v -= spice_get_property_value (pulse, "TH");
+      v -= spice_get_property_value (pulse, "Td");
+      spice_set_property_value (pulse, "TL", v);
     }
-    double v;
-    v  = spice_get_property_value (pulse, "T1");
-    v += spice_get_property_value (pulse, "Tr");
-    v += spice_get_property_value (pulse, "Tf");
-    v += spice_get_property_value (pulse, "T2");
-    spice_set_property_value (pulse, "T2", v);
+    // single pulse
+    else {
+      if (VAL_IS_NUMBER (prop)) {
+	spice_append_pair (pulse, type == 'U' ? "U1" : "I1", prop->ident, 0);
+	spice_append_pair (dc, ui, "0", 0);
+	spice_value_done (prop);
+	prop = prop->next;
+	struct property_field_t field =
+	  { { type == 'U' ? "U2" : "I2", "T1", "Tr", "Tf", "T2", NULL } };
+	spice_extract_properties (pulse, prop, &field);
+      }
+      double v;
+      v  = spice_get_property_value (pulse, "T1");
+      v += spice_get_property_value (pulse, "Tr");
+      v += spice_get_property_value (pulse, "Tf");
+      v += spice_get_property_value (pulse, "T2");
+      spice_set_property_value (pulse, "T2", v);
+    }
   }
 
   // finally add sources to list of definitions
@@ -1518,6 +1568,18 @@ static struct definition_t *
 spice_find_definition (struct definition_t * root, char * type, char * inst) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcasecmp (def->type, type) && !strcasecmp (def->instance, inst))
+      return def;
+  }
+  return NULL;
+}
+
+/* The function looks through the list of definitions if there is a
+   component with the given type and returns it.  Otherwise the
+   function returns NULL. */
+static struct definition_t *
+spice_find_definition (struct definition_t * root, char * type) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!strcasecmp (def->type, type))
       return def;
   }
   return NULL;
@@ -1872,6 +1934,36 @@ spice_post_translator (struct definition_t * root) {
 	nr_double_t vt = (von + vof) / 2;
 	spice_set_property_value (def, "Vt", vt);
 	spice_set_property_value (def, "Vh", fabs (vh));
+      }
+    }
+    // post-process pulse and rectangular sources
+    if (!def->action && (!strcmp (def->type, "Vpulse") ||
+			 !strcmp (def->type, "Ipulse") ||
+			 !strcmp (def->type, "Vrect") ||
+			 !strcmp (def->type, "Irect"))) {
+      struct definition_t * tran;
+      struct pair_t * tr = spice_find_property (def, "Tr");
+      struct pair_t * tf = spice_find_property (def, "Tf");
+      if (tr == NULL || tf == NULL) {
+	if ((tran = spice_find_definition (definition_root, "TR")) != NULL) {
+	  nr_double_t start = spice_get_property_value (tran, "Start");
+	  nr_double_t stop = spice_get_property_value (tran, "Stop");
+	  nr_double_t points = spice_get_property_value (tran, "Points");
+	  nr_double_t tstep = (stop - start) / (points - 1);
+	  nr_double_t add = 0;
+	  if (!tf) {
+	    spice_set_property_value (def, "Tf", tstep);
+	    add += tstep;
+	  }
+	  if (!tr) {
+	    spice_set_property_value (def, "Tr", tstep);
+	    add += tstep;
+	  }
+	  if (!strcmp (&def->type[1], "pulse")) {
+	    nr_double_t t2 = spice_get_property_value (def, "T2");
+	    spice_set_property_value (def, "T2", t2 + add);
+	  }
+	}
       }
     }
     // post-process resistors
