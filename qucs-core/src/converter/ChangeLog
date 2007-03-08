@@ -1,3 +1,12 @@
+2007-03-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Fixed detection of a single subcircuit
+	definition (skip analysis actions).
+
+	* check_spice.cpp: Handling periodic pulse sources correctly.
+	Also default Tr/Tf values for these sources to a given .TRAN step
+	value.
+
 2007-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Updated the parameter order and added
