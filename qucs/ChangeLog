@@ -1,3 +1,8 @@
+2007-03-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug loading old schematics with diodes
+	* fixed bug loading FBH HBT
+
 2007-03-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* set marker painting precisely

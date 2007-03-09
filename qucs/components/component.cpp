@@ -761,16 +761,15 @@ bool Component::load(const QString& _s)
         if(Model == "Diode") {
           counts >>= 1;
           p1 = Props.at(counts-1);
-          counts = 29;
           for(; p1 != 0; p1 = Props.current()) {
+            if(counts-- < 19)
+              break;
+
             n = Props.prev()->Value;
             p1->Value = n;
-
-            if(counts-- <= 20)
-              break;
           }
 
-          p1 = Props.next();
+          p1 = Props.at(17);
           p1->Value = Props.at(11)->Value;
           Props.current()->Value = "0";
         }
