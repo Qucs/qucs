@@ -5217,19 +5217,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>Граничный ток при высокой инжекции (0=бесконечность)</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель ГБТ Института высокочастотной техники имени Фердинанда Брауна (FBH) в Берлине</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешняя диффузионная емкость базы, Ф</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
 </context>
 <context>
