@@ -1,3 +1,6 @@
+2007-03-04 Gopala Krishna <krishna.ggk@gmail.com>
+	* qucshelp.cpp , qucshelp.h: Fixed few crashes and navigation bugs
+
 2007-03-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/de/start_opt.html: Translated optimization introduction
