@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class HBT_X : public MultiViewComponent
+class HBT_X : public Component
 {
   public:
     HBT_X();
