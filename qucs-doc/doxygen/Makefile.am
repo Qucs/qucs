@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,5 +58,6 @@ doxygen.cfg: doxygen.cfg.in Makefile
 	sed < $< > $@.tmp \
             -e 's:@-top_srcdir-@:${top_srcdir}:g' \
             -e 's:@-enable_dot-@:${enable_dot}:g' \
+            -e 's:@-version-@:${VERSION}:g' \
             -e 's:@-DOT-@:${DOT}:g'
 	mv $@.tmp $@

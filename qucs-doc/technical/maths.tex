@@ -1896,6 +1896,47 @@ s = \dfrac{\pm b}{\sqrt{\left|a\right|^2 + \left|b\right|^2}}
 d = \sqrt{\left|a\right|^2 + \left|b\right|^2}
 \end{equation}
 
+\subsubsection{Eigenvalues of a 2-by-2 matrix}
+
+The eigenvalues of a 2-by-2 matrix
+\begin{equation}
+A = 
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+\end{equation}
+
+can be obtained directly from the quadratic formula.  The
+characteristic polynomial is
+\begin{equation}
+\begin{split}
+det\left(A -\mu I\right) =
+det 
+\begin{bmatrix}
+a - \mu & b\\
+c & d - \mu
+\end{bmatrix}
+&= \left(a -\mu\right) \cdot \left(d -\mu\right) - bc\\
+0 &= \mu^2 - \left(a + d\right)\cdot\mu + \left(ad - bc\right)
+\end{split}
+\end{equation}
+
+The polymonial yields the two eigenvalues.
+\begin{equation}
+\label{eq:eigenvalue}
+\mu_{1,2} = \dfrac{a + d}{2} \pm \sqrt{\left(\dfrac{a + d}{2}\right)^2 + bc - ad}
+\end{equation}
+
+For a symmetric matrix $A$ (i.e. $b = c$) eq.\eqref{eq:eigenvalue} can
+be rewritten to:
+\begin{equation}
+\label{eq:eigenvalue_sym}
+\mu_{1,2} = e + d  \pm \sqrt{e^2 + b^2}
+\;\;\;\; \textrm{ with } \;\;\;\;
+e = \dfrac{a - d}{2}
+\end{equation}
+
 \subsubsection{Step 1: Bidiagonalization}
 
 In the first step the original matrix $A$ is bidiagonalized by the
@@ -2011,7 +2052,9 @@ accumulation.
 
 At this stage the matrices $U_B$ and $V_B^H$ exist in unfactored form.
 Also there are the diagonal vector $\beta$ and the super-diagonal
-vector $\delta$.
+vector $\delta$.  Both vectors are real valued.  Thus the following
+algorithm can be applied even though solving a complex equation
+system.
 \begin{equation}
 B^{(0)} = 
 \begin{bmatrix}
@@ -2023,8 +2066,17 @@ B^{(0)} =
 \end{bmatrix}
 \end{equation}
 
-Computation of the eigenvalue $\mu$ of the 2-by-2 submatrix of $T_n =
-B_n^T\cdot B_n$ that is closer to the $t_{22}$ matrix element.
+The remaining problem is thus to compute the SVD of the matrix $B$.
+This is done applying an implicit-shift QR step to the tridiagonal
+matrix $T=B^T B$ which is a symmetric.  The matrix $T$ is not
+explicitely formed that is why a QR iteration with implicit shifts is
+applied.
+
+\addvspace{12pt}
+
+For a single QR step the computation of the eigenvalue $\mu$ of the
+2-by-2 submatrix of $T_n = B_n^T\cdot B_n$ that is closer to the
+$t_{22}$ matrix element is required.
 \begin{align}
 T_n =
 \begin{bmatrix}
@@ -2047,7 +2099,9 @@ t_{21} & t_{22}\\
 \end{bmatrix}
 \end{align}
 
-Wilkinson shift.
+The required eigenvalue is called Wilkinson shift, see
+eq.\eqref{eq:eigenvalue_sym} for details.  The sign for the eigenvalue
+is chosen such that it is closer to $t_{22}$.
 \begin{align}
 \mu &= t_{22} + d - sign(d)\cdot \sqrt{d^2 + t_{12}^2}\\
 &= t_{22} + d - t_{12}^2\cdot sign\left(\dfrac{d}{t_{12}}\right)\cdot \sqrt{\left(\dfrac{d}{t_{12}}\right)^2 + 1}

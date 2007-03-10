@@ -1,3 +1,11 @@
+2007-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* maths.tex (subsubsection{Eigenvalues of a 2-by-2 matrix}): 
+	Added short section about eigenvalues of 2-by-2 matrices.
+	(subsubsection{Step 3: Diagonalization -- shifted QR iteration}): 
+	Some more descriptions about the diagonalization during
+	SVD.  Not yet finished.
+
 2007-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* transline.tex (subsection{Transmission losses}): Described
