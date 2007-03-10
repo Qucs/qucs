@@ -4,12 +4,12 @@
 # General configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Qucs
-PROJECT_NUMBER         = 
+PROJECT_NUMBER         = @-version-@
 OUTPUT_DIRECTORY       = 
 OUTPUT_LANGUAGE        = English
 EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = NO
-EXTRACT_STATIC         = NO
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = NO
 HIDE_UNDOC_MEMBERS     = NO
 HIDE_UNDOC_CLASSES     = NO

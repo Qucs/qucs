@@ -1,3 +1,8 @@
+2007-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* doxygen/doxygen.cfg.in (EXTRACT_PRIVATE): Added static and
+	private members to source documentation.
+
 2006-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.10 and bumped up to version

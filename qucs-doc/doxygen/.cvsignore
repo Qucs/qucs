@@ -1,3 +1,5 @@
 Makefile
 Makefile.in
-
+doxygen.cfg
+doxygen.log
+html
