@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.30 2007/03/08 19:45:05 ela Exp $
+ * $Id: check_spice.cpp,v 1.31 2007/03/11 15:43:10 ela Exp $
  *
  */
 
@@ -1374,8 +1374,14 @@ spice_translate_source (struct definition_t * root,
     spice_value_done (prop);
     prop = prop->next;
     if (VAL_IS_NUMBER (prop)) {
-      spice_append_pair (dc, ui, prop->ident, 0);
+      // adjust DC offset
+      nr_double_t off;
+      off = spice_get_property_value (dc, ui);
+      spice_append_pair (dc, ui, prop->ident, 1);
+      off += spice_get_property_value (dc, ui);
+      spice_set_property_value (dc, ui, off);
       spice_value_done (prop);
+      // extract frequency, phase and theta
       prop = prop->next;
       struct property_field_t field =
       { { ui, "f", "Phase", "Theta", NULL } };
@@ -1386,7 +1392,7 @@ spice_translate_source (struct definition_t * root,
     v = spice_get_property_value (ac, "Phase") * f * -360.0;
     spice_set_property_value (ac, "Phase", v);
     v = spice_get_property_value (ac, "Theta") / f;
-    spice_set_property_value (ac, "Theta", v);
+    spice_set_property_value (ac, "Theta", f > 0 ? v : 0);
   }
 
   // adjust the AC part of the source
@@ -1963,6 +1969,18 @@ spice_post_translator (struct definition_t * root) {
 	    nr_double_t t2 = spice_get_property_value (def, "T2");
 	    spice_set_property_value (def, "T2", t2 + add);
 	  }
+	}
+      }
+    }
+    // post-process sinusoidal sources
+    if (!def->action && (!strcmp (def->type, "Vac") ||
+			 !strcmp (def->type, "Iac"))) {
+      struct definition_t * tran;
+      struct pair_t * f = spice_find_property (def, "f");
+      if (f == NULL) {
+	if ((tran = spice_find_definition (definition_root, "TR")) != NULL) {
+	  nr_double_t stop = spice_get_property_value (tran, "Stop");
+	  spice_set_property_value (def, "f", 1 / stop);
 	}
       }
     }

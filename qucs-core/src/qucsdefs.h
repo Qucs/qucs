@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.65 2007/03/06 18:21:31 ela Exp $
+ * $Id: qucsdefs.h,v 1.66 2007/03/11 15:43:10 ela Exp $
  *
  */
 
@@ -163,18 +163,18 @@ struct define_t qucs_definition_available[] =
   },
   /* AC voltage source */
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
       { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* AC current source */
   { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
       { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* AM modulated AC voltage source */

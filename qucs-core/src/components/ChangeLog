@@ -1,5 +1,8 @@
 2007-03-11  Stefan Jahn  <stefan@lkcc.org>
 
+	* vac.cpp, iac.cpp: Adjusted time dependency of damping
+	factor.
+
 	* microstrip/mscross.cpp: Compute omega only once.
 
 	* microstrip/bondwire.cpp: Fixed some typos in the doxygen

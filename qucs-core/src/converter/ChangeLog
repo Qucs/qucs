@@ -1,3 +1,9 @@
+2007-03-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed DC offset of sinuasoidal voltage and
+	current sources.  Also apply default frequency if a transient
+	analysis is given.
+
 2007-03-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Fixed detection of a single subcircuit
