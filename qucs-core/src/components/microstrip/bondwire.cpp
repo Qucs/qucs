@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.5 2007-02-25 16:57:35 ela Exp $
+ * $Id: bondwire.cpp,v 1.6 2007-03-11 14:01:25 ela Exp $
  *
  */
 
@@ -75,9 +75,9 @@ bondwire::bondwire () : circuit (2) {
 }
 
 
-/*! Create a matching table between model number and string */
+/*! create a matching table between model number and string */
 #define TABLE(x) { #x, x }
-/*! Array size */
+/*! array size */
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
 /*! bondwire model number */
@@ -100,8 +100,8 @@ static const modeltable_t modeltable[] = {
 };
 
 
-/*!\brief Get properties from model 
- * Get properties and fill the class
+/*!\brief Get properties from model.
+ * Get properties and fill the class.
  *  
  *  \todo check values
  */
@@ -147,11 +147,11 @@ void bondwire::getProperties (void) {
   (void) t;
 }
 
-/*! Compute skin depth
- * \todo Factorize the compution of skin depth in a header file
+/*! Compute skin depth.
+ * \todo Factorize the compution of skin depth in a header file.
  * 
  * \param f frequency
- * \param rho bond wire resistivity 
+ * \param rho bond wire resistivity
  * \param mur relative magnetic permeabillity
  */
 static nr_double_t skindepth (const nr_double_t f,
@@ -159,16 +159,16 @@ static nr_double_t skindepth (const nr_double_t f,
   return sqrt (rho / (M_PI * f * MU0 * mur));
 }
 
-/*! Compute resitance of the wire
+/*! Compute resitance of the wire.
  * Resitance of the wire is computed using classical 
  * tube model enhanced for case where tube is greater
- * than conductor (e.g. low frequency case)
+ * than conductor (i.e. low frequency case).
  *
  * \todo Offer other resistance model for 
  *       instance exponential decay and bessel function exact
- *       computation. But I do not know it is worth the effort.
+ *       computation.  But I do not know it is worth the effort.
  *
- * \todo factorise the resistance model
+ * \todo Factorise the resistance model.
  */
 nr_double_t bondwire::resistance (const nr_double_t f) const {
   nr_double_t delta, rout, rin;
@@ -186,34 +186,34 @@ nr_double_t bondwire::resistance (const nr_double_t f) const {
 }
 
 
-/*! Compute correction factor
+/*! Compute correction factor.
  *  According to [1] pp63 (2.30a-b) correction factor 
  *  is such as:
  *  \f[
  *   C = 0.25 \tanh \frac{4\delta}{d}
  *  \f]
- *  Where \f$\delta\f$ is the well known skin depth
+ *  where \f$\delta\f$ is the well known skin depth.
  * 
  *  \param f frequency
  *  \param d bond wire diameter
  *  \param rho bond wire resistivity 
  *  \param mur relative magnetic permeabillity
  *
- * However according to [2] it seems that the author of [1] do the assumption of
- * \f$\mu_r=1\f$ therefore rewrite the equation such as: 
+ * However according to [2] it seems that the author of [1] do the
+ * assumption of \f$\mu_r=1\f$ therefore rewrite the equation such as: 
  *
  *  \f[
  *   C = \frac{\mu_r}{4} \tanh \frac{4\delta}{d}
  *  \f]
  *
- *  \return mur/4 if rho == 0 else C
- *  \todo Check domain validity for round C factor
+ *  \return mur/4 if rho is zero, otherwise C
+ *  \todo Check domain validity for round C factor.
  */
 static nr_double_t correctionfactor (const nr_double_t f,
 				     const nr_double_t d, 
 				     const nr_double_t rho,
 				     const nr_double_t mur) {
-  /* Skin depth */
+  /* skin depth */
   nr_double_t delta;
 
   if (f > 0.0 && rho > 0.0) {
@@ -226,7 +226,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
   return mur / 4;
 }
 
-/*! Compute free space inductance
+/*! Compute free space inductance.
     According to [1] pp63 (2.29) free space inductance (in nH)
     is such as (\f$l\f$ in micrometers):
 
@@ -249,7 +249,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
 			  
    \f]
 
-   Finally we will use (in H with l in m)::
+   Finally we will use (in H with l in m):
    \f[
     L = \frac{\mu_0}{2\pi} l\left[ 
                \ln\left\{ \frac{2l}{d} 
@@ -261,7 +261,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
 
    \param f frequency
    \param d bond wire diameter
-   \param l bond wire length (in meter)
+   \param l bond wire length (in meters)
    \param rho bond wire resistivity
    \param mur relative magnetic permeabillity
 */
@@ -278,7 +278,7 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
 }
 
 
-/*! Compute inductance modeling ground plane effect
+/*! Compute inductance modeling ground plane effect.
    According to [1] pp64 (2.32) inductance (in nH)
    is such as (\f$l\f$ in micrometers):
 
@@ -302,9 +302,11 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
 	       \right]			  
    \f]
 
-   \note Mirror is a strange model that is frequency independent. Whereas computations 
-        are valid, hypothesis are arguable. Indeed, they did the assumption that the ground plane 
-	is perfect that is really a zero order model in the high frequency domain.
+   \note Mirror is a strange model that is frequency independent.
+        Whereas computations are valid, hypothesis are arguable.
+        Indeed, they did the assumption that the ground plane is
+        perfect that is really a zero order model in the high
+        frequency domain.
 */
 nr_double_t bondwire::Lmirror (void) const {
   nr_double_t tmp;
@@ -321,7 +323,7 @@ nr_double_t bondwire::Lmirror (void) const {
 }
   
   
-/*! Compute Y matrix of bond wire
+/*! Compute Y matrix of bond wire.
  */
 matrix bondwire::calcMatrixY (const nr_double_t f) {
   nr_double_t Lw;
@@ -353,27 +355,27 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
   return Y;
 }
 
-/*! Initialise S parameter simulation */
+/*! Initialize S parameter simulation. */
 void bondwire::initSP (void) {
   allocMatrixS ();
   getProperties ();
 }
 
-/*! Compute S parameters 
- *! Reuse computed Y matrix 
+/*! Compute S parameters.
+ *! Reuse computed Y matrix.
  */
 void bondwire::calcSP (const nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
-/*! Save self-inductance */
+/*! Save self-inductance and resistance. */
 void bondwire::saveCharacteristics (nr_double_t) {
   setCharacteristic ("L", L);
   setCharacteristic ("R", R);
 }
 
-/*! DC model initialisation 
- *! DC model of a bondwire is a resistance 
+/*! DC model initialization.
+ *! DC model of a bondwire is a resistance.
  */
 void bondwire::initDC (void) {
   nr_double_t g;
@@ -398,15 +400,15 @@ void bondwire::initDC (void) {
   }
 }
 
-/*! Initialise AC simulation */
+/*! Initialize AC simulation. */
 void bondwire::initAC (void) {
   getProperties (); 
   setVoltageSources (0);
   allocMatrixMNA ();
 }
 
-/*! Compute AC model 
- *! Use serial LR model (Y matrix)
+/*! Compute AC model.
+ *! Use serial LR model (Y matrix).
  */
 void bondwire::calcAC (const nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
