@@ -1,3 +1,8 @@
+2007-03-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_init.cpp (initActions): Made icon texts and some status
+	bar tips translatable.  Thanks Igor for pointing this out.
+
 2007-03-11  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug in selecting ellipse arc
