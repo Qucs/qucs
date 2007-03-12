@@ -5930,7 +5930,7 @@ Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Dokumentum tulajdonságai</translation>
+        <translation type="unfinished">Dokumentum tulajdonságai</translation>
     </message>
     <message>
         <source>Settings
@@ -6002,7 +6002,7 @@ Kilépés a programból</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Beállítások</translation>
+        <translation type="unfinished">Beállítások</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6154,7 +6154,7 @@ Az alkatrészek tulajdonság értékeit változtatja</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Kivágás</translation>
+        <translation type="unfinished">Kivágás</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6174,7 +6174,7 @@ Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Másolás</translation>
+        <translation type="unfinished">Másolás</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6194,7 +6194,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Beillesztés</translation>
+        <translation type="unfinished">Beillesztés</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6230,7 +6230,7 @@ Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Visszavonás</translation>
+        <translation type="unfinished">Visszavonás</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6250,7 +6250,7 @@ Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Újra</translation>
+        <translation type="unfinished">Újra</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6616,7 +6616,7 @@ Beszúr egy csatlakozópont rajzot</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Beszúr egy vezetéket</translation>
+        <translation type="unfinished">Beszúr egy vezetéket</translation>
     </message>
     <message>
         <source>Wire
@@ -6921,7 +6921,7 @@ Rövid bemutatás a Qucs-hoz</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Program névjegy</translation>
+        <translation type="unfinished">Program névjegy</translation>
     </message>
     <message>
         <source>About
@@ -7462,6 +7462,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Mentés</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Bezár</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

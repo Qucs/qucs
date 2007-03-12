@@ -5677,7 +5677,7 @@ Ukončí aplikaci</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Vyříznout</translation>
+        <translation type="unfinished">Vyříznout</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5701,7 +5701,7 @@ Vyřízne vybranou oblast a zkopíruje ji do schránky</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Zkopírovat</translation>
+        <translation type="unfinished">Zkopírovat</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5725,7 +5725,7 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Vložit</translation>
+        <translation type="unfinished">Vložit</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6293,7 +6293,7 @@ Přepsat ?</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Nový textový dokument</translation>
+        <translation type="unfinished">Nový textový dokument</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6329,7 +6329,7 @@ Vytvoří nový textový dokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Nastavení dokumentu</translation>
+        <translation type="unfinished">Nastavení dokumentu</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6353,7 +6353,7 @@ Vytiskne vybrané objekty z aktuálního dokumentu</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Nastavení aplikace</translation>
+        <translation type="unfinished">Nastavení aplikace</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6533,7 +6533,7 @@ Smaže vybrané komponenty</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Zpět</translation>
+        <translation type="unfinished">Zpět</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6553,7 +6553,7 @@ Poslední úkon bude vrácen zpět</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Zopakovat</translation>
+        <translation type="unfinished">Zopakovat</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6921,7 +6921,7 @@ Vloží symbol připojení</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Vložit vodič</translation>
+        <translation type="unfinished">Vložit vodič</translation>
     </message>
     <message>
         <source>Wire
@@ -7225,7 +7225,7 @@ Krátký úvod do Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">O aplikaci</translation>
+        <translation type="unfinished">O aplikaci</translation>
     </message>
     <message>
         <source>About
@@ -7765,6 +7765,74 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

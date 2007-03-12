@@ -5824,7 +5824,7 @@ Closes the current document</source>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Setările Documentului</translation>
+        <translation type="unfinished">Setările Documentului</translation>
     </message>
     <message>
         <source>Settings
@@ -5896,7 +5896,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Setările Aplicaţiei</translation>
+        <translation type="unfinished">Setările Aplicaţiei</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6032,7 +6032,7 @@ Mută proprietatea text al componentelor</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Taie</translation>
+        <translation type="unfinished">Taie</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6052,7 +6052,7 @@ Taie secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Copiază</translation>
+        <translation type="unfinished">Copiază</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6072,7 +6072,7 @@ Copiază secţiunea selectată si pune-o în clipboard</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Lipeşte</translation>
+        <translation type="unfinished">Lipeşte</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6108,7 +6108,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Anulează</translation>
+        <translation type="unfinished">Anulează</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6128,7 +6128,7 @@ Anulează ultima acţiune</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Repetă</translation>
+        <translation type="unfinished">Repetă</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6488,7 +6488,7 @@ Inserează un simbol de Port</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Inserează un Fir</translation>
+        <translation type="unfinished">Inserează un Fir</translation>
     </message>
     <message>
         <source>Wire
@@ -6776,7 +6776,7 @@ Scurtă introducere în Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Despre aplicaţie</translation>
+        <translation type="unfinished">Despre aplicaţie</translation>
     </message>
     <message>
         <source>About
@@ -7276,6 +7276,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salvează</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Închide</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

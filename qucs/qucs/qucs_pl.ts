@@ -5923,7 +5923,7 @@ Zamyka bieżący dokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Ustawienia dokumentu</translation>
+        <translation type="unfinished">Ustawienia dokumentu</translation>
     </message>
     <message>
         <source>Settings
@@ -5995,7 +5995,7 @@ Zakończenie aplikacji</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Ustawienia programu</translation>
+        <translation type="unfinished">Ustawienia programu</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6148,7 +6148,7 @@ Zmień właściwości elementów</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Wytnij</translation>
+        <translation type="unfinished">Wytnij</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6168,7 +6168,7 @@ Wycina zaznaczenie i wkłada je do schowka</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopiuj</translation>
+        <translation type="unfinished">Kopiuj</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6188,7 +6188,7 @@ Kopiuje zaznaczenia do schowka</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Wklej</translation>
+        <translation type="unfinished">Wklej</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6224,7 +6224,7 @@ Usuwa zaznaczone elementy</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Cofnij</translation>
+        <translation type="unfinished">Cofnij</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6244,7 +6244,7 @@ Cofa ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Ponów</translation>
+        <translation type="unfinished">Ponów</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6609,7 +6609,7 @@ Wstawia symbol portu</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Wstaw drut</translation>
+        <translation type="unfinished">Wstaw drut</translation>
     </message>
     <message>
         <source>Wire
@@ -6912,7 +6912,7 @@ Krótkie wprowadzenie do programu Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">O aplikacji</translation>
+        <translation type="unfinished">O aplikacji</translation>
     </message>
     <message>
         <source>About
@@ -7452,6 +7452,78 @@ wyśrodkowuje w pionie wybrane elementy</translation>
     <message>
         <source>P&amp;ositioning</source>
         <translation>Umiejsc&amp;owienie</translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Zapisz</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zamknij</translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

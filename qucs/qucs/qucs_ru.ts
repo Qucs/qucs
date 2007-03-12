@@ -1628,7 +1628,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation>Коэффициент скрещивания:</translation>
+        <translation>Фактор пересечения:</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
@@ -1636,7 +1636,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation>Минимальное разброс стоимости:</translation>
+        <translation>Минимальный разброс стоимости:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
@@ -1672,15 +1672,15 @@ but is %1 !</source>
     </message>
     <message>
         <source>monitor</source>
-        <translation>наблюдать</translation>
+        <translation>следить</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation>свести к минимуму</translation>
+        <translation>минимум</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation>сделать максимальным</translation>
+        <translation>максимум</translation>
     </message>
 </context>
 <context>
@@ -5709,7 +5709,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Вырезать</translation>
+        <translation type="unfinished">Вырезать</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5733,7 +5733,7 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Скопировать</translation>
+        <translation type="unfinished">Скопировать</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5757,7 +5757,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Вставить</translation>
+        <translation type="unfinished">Вставить</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6325,7 +6325,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Новый текст</translation>
+        <translation type="unfinished">Новый текст</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6361,7 +6361,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Настройки документа</translation>
+        <translation type="unfinished">Настройки документа</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6385,7 +6385,7 @@ Prints selected elements of the current document</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Настройки программы</translation>
+        <translation type="unfinished">Настройки программы</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6601,7 +6601,7 @@ Searches for the same piece of text again</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Отменить</translation>
+        <translation type="unfinished">Отменить</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6623,7 +6623,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Вернуть</translation>
+        <translation type="unfinished">Вернуть</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6991,7 +6991,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Вставляет проводник</translation>
+        <translation type="unfinished">Вставляет проводник</translation>
     </message>
     <message>
         <source>Wire
@@ -7267,21 +7267,21 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="obsolete">Как начать</translation>
+        <translation type="obsolete">Быстрый старт</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>Начало...</translation>
+        <translation>Быстрый старт...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>Начало работы в Qucs</translation>
+        <translation>Быстрый старт в Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Начало
+        <translation>Быстрый старт
 
 Краткое введение в Qucs</translation>
     </message>
@@ -7295,7 +7295,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">О программе</translation>
+        <translation type="unfinished">О программе</translation>
     </message>
     <message>
         <source>About
@@ -7808,6 +7808,74 @@ Center vertically selected elements</source>
     <message>
         <source>P&amp;ositioning</source>
         <translation>Рас&amp;положение</translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Сохранить</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Закрыть</translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9146,21 +9214,21 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="obsolete">Как начать</translation>
+        <translation type="obsolete">Быстрый старт</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="obsolete">Как начать...</translation>
+        <translation type="obsolete">Быстрый старт...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="obsolete">Как начать работать в Qucs</translation>
+        <translation type="obsolete">Быстрый старт в Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="obsolete">Как начать
+        <translation type="obsolete">Быстрый старт
 
 Краткое введение в Qucs</translation>
     </message>
@@ -10583,21 +10651,21 @@ Index of intern Qucs help</source>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="obsolete">Как начать</translation>
+        <translation type="obsolete">Быстрый старт</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="obsolete">Как начать...</translation>
+        <translation type="obsolete">Быстрый старт...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="obsolete">Как начать работать в Qucs</translation>
+        <translation type="obsolete">Быстрый старт в Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="obsolete">Как начать
+        <translation type="obsolete">Быстрый старт
 
 Краткое введение в Qucs</translation>
     </message>
