@@ -293,24 +293,24 @@ bool EllipseArc::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool EllipseArc::getSelected(float fX, float fY, float w)
 {
+  float fX2 = float(x2)/2.0;
+  float fY2 = float(y2)/2.0;
+  fX -= float(cx) + fX2;
+  fY -= float(cy) + fY2;
+
   int Phase =
       int(16.0*180.0/M_PI *
-          atan2(double(x2*cy + ((x2*y2)>>1)) - double(x2)*double(fY),
-                double(y2)*double(fX) - double(y2*cx-((y2*x2)>>1))));
+          atan2(-double(x2)*double(fY), double(y2)*double(fX)));
   Phase -= Angle;
   while(Phase < 0) Phase += 16*360;
+
   if(Phase > ArcLen)
     return false;
 
-  float fX2 = float(x2);
-  float fY2 = float(y2);
-  fX -= float(cx) + fX2/2.0;
-  fY -= float(cy) + fY2/2.0;
-
-  float a1 = fX / (fX2/2.0 - w);  a1 *= a1;
-  float a2 = fX / (fX2/2.0 + w);  a2 *= a2;
-  float b1 = fY / (fY2/2.0 - w);  b1 *= b1;
-  float b2 = fY / (fY2/2.0 + w);  b2 *= b2;
+  float a1 = fX / (fX2 - w);  a1 *= a1;
+  float a2 = fX / (fX2 + w);  a2 *= a2;
+  float b1 = fY / (fY2 - w);  b1 *= b1;
+  float b2 = fY / (fY2 + w);  b2 *= b2;
 
   if(a1+b1 < 1.0)  return false;
   if(a2+b2 > 1.0)  return false;
