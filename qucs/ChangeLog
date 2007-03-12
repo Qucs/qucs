@@ -1,3 +1,7 @@
+2007-03-11  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug in selecting ellipse arc
+
 2007-03-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug loading old schematics with diodes
