@@ -5417,7 +5417,7 @@ Esce dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Taglia</translation>
+        <translation type="unfinished">Taglia</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5437,7 +5437,7 @@ Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Copia</translation>
+        <translation type="unfinished">Copia</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5457,7 +5457,7 @@ Copia la parte selezionata negli appunti</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Incolla</translation>
+        <translation type="unfinished">Incolla</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -5497,7 +5497,7 @@ Cancella i componenti selezionati</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Annulla</translation>
+        <translation type="unfinished">Annulla</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -5517,7 +5517,7 @@ Annulla l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Ripeti</translation>
+        <translation type="unfinished">Ripeti</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6835,7 +6835,7 @@ Crea un nuovo documento schema o vista dati</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Nuovo file Testo</translation>
+        <translation type="unfinished">Nuovo file Testo</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6871,7 +6871,7 @@ Crea un nuovo documento di testo</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Impostazioni Documento</translation>
+        <translation type="unfinished">Impostazioni Documento</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6895,7 +6895,7 @@ Stampa gli elementi selezionati del documento corrente</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Impostazioni Applicazione</translation>
+        <translation type="unfinished">Impostazioni Applicazione</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -7103,7 +7103,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Inserisce un filo</translation>
+        <translation type="unfinished">Inserisce un filo</translation>
     </message>
     <message>
         <source>Wire
@@ -7327,7 +7327,7 @@ Mostra la netlist dell&apos;ultima simulazione</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Informazioni sull&apos;applicazione</translation>
+        <translation type="unfinished">Informazioni sull&apos;applicazione</translation>
     </message>
     <message>
         <source>About
@@ -7829,6 +7829,74 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salva</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Chiudi</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

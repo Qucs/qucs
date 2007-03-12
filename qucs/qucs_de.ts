@@ -5710,7 +5710,7 @@ Beendet die Applikation</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Ausschneiden</translation>
+        <translation>Ausschneiden</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5734,7 +5734,7 @@ Schneidet den ausgewählten Bereich aus und kopiert diesen in die Zwischenablage
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopieren</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5758,7 +5758,7 @@ Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Einfügen</translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6326,7 +6326,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Neues Textdokument</translation>
+        <translation>Neues Textdokument</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6362,7 +6362,7 @@ Erzeugt ein neues Textdokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Dokumenteneinstellungen</translation>
+        <translation>Dokumenteneinstellungen</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6386,7 +6386,7 @@ Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Applikationseinstellungen</translation>
+        <translation>Applikationseinstellungen</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6566,7 +6566,7 @@ Löscht die ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Rückgängig</translation>
+        <translation>Rückgängig</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6586,7 +6586,7 @@ Letzte Aktion wird rückgängig gemacht</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Wiederholen</translation>
+        <translation>Wiederholen</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6954,7 +6954,7 @@ Fügt eine Anschlusssymbol ein</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Fügt einen Draht ein</translation>
+        <translation>Fügt einen Draht ein</translation>
     </message>
     <message>
         <source>Wire
@@ -7258,7 +7258,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Über die Applikation</translation>
+        <translation>Über die Applikation</translation>
     </message>
     <message>
         <source>About
@@ -7819,6 +7819,74 @@ Zentriert ausgewählte Elemente vertikal</translation>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation>Verilog-AMS Schnittstelle von Helene Parruitte</translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation>Alles auf eine Seite drucken</translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation>Setzt ausgewählte Elemente auf das Gitternetz</translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation>Verschiebt den Eigenschaftentext von Komponenten</translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation>Ersetze Komponenteneigenschaften oder VHDL-Code</translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation>Öffnet ein existierendes Projekt</translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation>Löscht ein existierendes Projekt</translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation>Schließt das aktuelle Projekt</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation>Spiegelt die Auswahl an der X-Achse</translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation>Spiegelt die Auswahl an der Y-Achse</translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation>Geht in den ausgewählten Schaltkreis hinein</translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation>Fügt eine Gleichung ein</translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation>Fügt eine Massesymbol ein</translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation>Fügt eine Anschlusssymbol ein</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation>Alles speichern</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation>Drucken...</translation>
     </message>
 </context>
 <context>

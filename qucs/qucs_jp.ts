@@ -5795,7 +5795,7 @@ Closes the current document</source>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">ドキュメント セッティング</translation>
+        <translation type="unfinished">ドキュメント セッティング</translation>
     </message>
     <message>
         <source>Settings
@@ -5867,7 +5867,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">アプリケーションの設定</translation>
+        <translation type="unfinished">アプリケーションの設定</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6020,7 +6020,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">切り取り</translation>
+        <translation type="unfinished">切り取り</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6040,7 +6040,7 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">コピー</translation>
+        <translation type="unfinished">コピー</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6060,7 +6060,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">貼付け</translation>
+        <translation type="unfinished">貼付け</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6096,7 +6096,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">やり直し</translation>
+        <translation type="unfinished">やり直し</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6116,7 +6116,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">元に戻す</translation>
+        <translation type="unfinished">元に戻す</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6480,7 +6480,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">ワイアを挿入</translation>
+        <translation type="unfinished">ワイアを挿入</translation>
     </message>
     <message>
         <source>Wire
@@ -6783,7 +6783,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">このアプリケーションについて</translation>
+        <translation type="unfinished">このアプリケーションについて</translation>
     </message>
     <message>
         <source>About
@@ -7293,6 +7293,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">閉じる</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -5609,7 +5609,7 @@ Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Belge Ayarları</translation>
+        <translation type="unfinished">Belge Ayarları</translation>
     </message>
     <message>
         <source>Settings
@@ -5681,7 +5681,7 @@ Uygulamadan çıkar</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Uygulama ayarları</translation>
+        <translation type="unfinished">Uygulama ayarları</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -5833,7 +5833,7 @@ Bileşenlerşin özelliklerini değiştirir</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Kes</translation>
+        <translation type="unfinished">Kes</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5853,7 +5853,7 @@ Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopyala</translation>
+        <translation type="unfinished">Kopyala</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5873,7 +5873,7 @@ Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Yapıştır</translation>
+        <translation type="unfinished">Yapıştır</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -5909,7 +5909,7 @@ Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Geri Al</translation>
+        <translation type="unfinished">Geri Al</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -5929,7 +5929,7 @@ Son komutu geri alır</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Tekrarla</translation>
+        <translation type="unfinished">Tekrarla</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6297,7 +6297,7 @@ Giriş/çıkış ayak(uç/port) simgesi ekler</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Bağlantı hattı ekler</translation>
+        <translation type="unfinished">Bağlantı hattı ekler</translation>
     </message>
     <message>
         <source>Wire
@@ -6597,7 +6597,7 @@ Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Uygulama hakkında</translation>
+        <translation type="unfinished">Uygulama hakkında</translation>
     </message>
     <message>
         <source>About
@@ -7147,6 +7147,78 @@ Seçili bileşenleri dikey olarak ortala</translation>
     <message>
         <source>P&amp;ositioning</source>
         <translation>&amp;Hizalama</translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Kaydet</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -6640,6 +6640,114 @@ Center vertically selected elements</source>
         <source>Verilog-AMS interface by Helene Parruitte</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salvar</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>

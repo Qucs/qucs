@@ -5788,7 +5788,7 @@ Crée un nouveau schéma ou une feuille de dessin</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Nouveau Texte</translation>
+        <translation type="unfinished">Nouveau Texte</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -5916,7 +5916,7 @@ Ferme le fichier de travail actuel</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Réglages de la feuille</translation>
+        <translation type="unfinished">Réglages de la feuille</translation>
     </message>
     <message>
         <source>Settings
@@ -5988,7 +5988,7 @@ Termine le programme</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Réglages de l&apos;application</translation>
+        <translation type="unfinished">Réglages de l&apos;application</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6140,7 +6140,7 @@ Change la valeur des attributs des composants</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Couper</translation>
+        <translation type="unfinished">Couper</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6160,7 +6160,7 @@ Coupe la sélection vers le presse-papier</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Copier</translation>
+        <translation type="unfinished">Copier</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6180,7 +6180,7 @@ Copie la sélection dans le presse-papier</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Coller</translation>
+        <translation type="unfinished">Coller</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6216,7 +6216,7 @@ Efface la sélection</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Corriger</translation>
+        <translation type="unfinished">Corriger</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6236,7 +6236,7 @@ Annule l&apos;action de la dernière commande</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Recommencer</translation>
+        <translation type="unfinished">Recommencer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6604,7 +6604,7 @@ Ajoute un port</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Ajoute une équipotentielle</translation>
+        <translation type="unfinished">Ajoute une équipotentielle</translation>
     </message>
     <message>
         <source>Wire
@@ -6906,7 +6906,7 @@ Une brève présentation de Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Informations sur Qucs</translation>
+        <translation type="unfinished">Informations sur Qucs</translation>
     </message>
     <message>
         <source>About
@@ -7446,6 +7446,74 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Enregistrer</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
