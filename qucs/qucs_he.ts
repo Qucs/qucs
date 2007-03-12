@@ -5738,7 +5738,7 @@ Closes the current document</source>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">הגדרות מסמך</translation>
+        <translation type="unfinished">הגדרות מסמך</translation>
     </message>
     <message>
         <source>Settings
@@ -5810,7 +5810,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">הגדרות תוכנית</translation>
+        <translation type="unfinished">הגדרות תוכנית</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -5946,7 +5946,7 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">גזור</translation>
+        <translation type="unfinished">גזור</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5966,7 +5966,7 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">העתק</translation>
+        <translation type="unfinished">העתק</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5986,7 +5986,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">הדבק</translation>
+        <translation type="unfinished">הדבק</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6022,7 +6022,7 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">חזור</translation>
+        <translation type="unfinished">חזור</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6042,7 +6042,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">עשה שוב</translation>
+        <translation type="unfinished">עשה שוב</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6402,7 +6402,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">מכניס חוט</translation>
+        <translation type="unfinished">מכניס חוט</translation>
     </message>
     <message>
         <source>Wire
@@ -6686,7 +6686,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">אודות האפליקציה</translation>
+        <translation type="unfinished">אודות האפליקציה</translation>
     </message>
     <message>
         <source>About
@@ -7186,6 +7186,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">שמור</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">סגור</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

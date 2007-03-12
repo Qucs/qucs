@@ -5616,7 +5616,7 @@ Stänger aktuellt dokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Dokumentsinställningar</translation>
+        <translation type="unfinished">Dokumentsinställningar</translation>
     </message>
     <message>
         <source>Settings
@@ -5688,7 +5688,7 @@ Avslutar tillämpningen</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Tillämpningsinställningar</translation>
+        <translation type="unfinished">Tillämpningsinställningar</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -5840,7 +5840,7 @@ Change Property Value of Components</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Klipp</translation>
+        <translation type="unfinished">Klipp</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5860,7 +5860,7 @@ Klipper ut den valda sektionen och lägger det i Urklipp</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopiera</translation>
+        <translation type="unfinished">Kopiera</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5880,7 +5880,7 @@ Kopierar den valda sektionen till Urklipp</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Klistra in</translation>
+        <translation type="unfinished">Klistra in</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -5916,7 +5916,7 @@ Tar bort de valda komponenterna</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Ångra</translation>
+        <translation type="unfinished">Ångra</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -5936,7 +5936,7 @@ Gör senaste åtgärden ogjord</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Gör om</translation>
+        <translation type="unfinished">Gör om</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6304,7 +6304,7 @@ Skjuter in en portsymbol</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Skjuter in en ledare</translation>
+        <translation type="unfinished">Skjuter in en ledare</translation>
     </message>
     <message>
         <source>Wire
@@ -6608,7 +6608,7 @@ Kort introduktion till Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Om tillämpningen</translation>
+        <translation type="unfinished">Om tillämpningen</translation>
     </message>
     <message>
         <source>About
@@ -7120,6 +7120,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Spara</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Stäng</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

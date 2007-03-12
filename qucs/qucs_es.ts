@@ -5878,7 +5878,7 @@ Cierra el documento actual</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">Propiedades del documento</translation>
+        <translation type="unfinished">Propiedades del documento</translation>
     </message>
     <message>
         <source>Settings
@@ -5950,7 +5950,7 @@ Sale de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">Configuración de la aplicación</translation>
+        <translation type="unfinished">Configuración de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6086,7 +6086,7 @@ Mueve la propiedad texto de los componentes</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Cortar</translation>
+        <translation type="unfinished">Cortar</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6106,7 +6106,7 @@ Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Copiar</translation>
+        <translation type="unfinished">Copiar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6126,7 +6126,7 @@ Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Pegar</translation>
+        <translation type="unfinished">Pegar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6162,7 +6162,7 @@ Elimina los componentes seleccionados</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Deshacer</translation>
+        <translation type="unfinished">Deshacer</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6182,7 +6182,7 @@ Deshace la última acción realizada</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Rehacer</translation>
+        <translation type="unfinished">Rehacer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6546,7 +6546,7 @@ Inserta un símbolo de conexión</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">Inserta un cable</translation>
+        <translation type="unfinished">Inserta un cable</translation>
     </message>
     <message>
         <source>Wire
@@ -6850,7 +6850,7 @@ Breve introducción a Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Acerca de la aplicación</translation>
+        <translation type="unfinished">Acerca de la aplicación</translation>
     </message>
     <message>
         <source>About
@@ -7386,6 +7386,78 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Fit to Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace component properties or VHDL code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opens an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes an existing project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about X Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mirrors the selected item about Y Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goes inside the selected subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts an equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a ground symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Guardar</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
