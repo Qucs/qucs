@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
 EXTRA_DIST = $(PNGS) $(PDFS)
 
 PNGS = diodedcop.png diodedcsch.png rcubesch.png sweepedit.png grapheditd.png \
-  diodeditprop.png grapheditp.png propeditrwin.png
+  diodeditprop.png grapheditp.png propeditrwin.png finalhighpassrc.png \
+  highpassrc.png highpasssimblock.png simblockconfig.png
 
 PDFS = diod4out.pdf diod4schr.pdf
 
