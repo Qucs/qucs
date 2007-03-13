@@ -1,3 +1,8 @@
+2007-03-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/ru/start_opt.html: Added Russian translations of
+	optimization dialogs.
+
 2007-03-04 Gopala Krishna <krishna.ggk@gmail.com>
 
 	* qucshelp.cpp, qucshelp.h: Fixed few crashes and navigation bugs.
