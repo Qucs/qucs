@@ -5709,7 +5709,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Вырезать</translation>
+        <translation>Вырезать</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5733,7 +5733,7 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Скопировать</translation>
+        <translation>Скопировать</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5757,7 +5757,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Вставить</translation>
+        <translation>Вставить</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6325,7 +6325,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished">Новый текст</translation>
+        <translation>Новый текст</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6361,7 +6361,7 @@ Creates a new text document</source>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Настройки документа</translation>
+        <translation>Настройки документа</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6385,7 +6385,7 @@ Prints selected elements of the current document</source>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Настройки программы</translation>
+        <translation>Настройки программы</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6601,7 +6601,7 @@ Searches for the same piece of text again</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation>Отменить</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6623,7 +6623,7 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Вернуть</translation>
+        <translation>Вернуть</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6991,7 +6991,7 @@ Inserts a port symbol</source>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Вставляет проводник</translation>
+        <translation>Вставляет проводник</translation>
     </message>
     <message>
         <source>Wire
@@ -7295,7 +7295,7 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">О программе</translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <source>About
@@ -7811,71 +7811,71 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Печать по размеру страницы</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Привязывает выделенные элементы к сетке</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемещает текст со свойствами компонента</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить свойства компонента или текст программы на VHDL</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывает существующий проект</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаляет существующий проект</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрывает текущий проект</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображает выделенный объект относительно оси X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображает выделенный объект относительно оси Y</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Переходит внутрь выделенной подсхемы</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставляет уравнение</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставляет обозначение земли</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставляет обозначение вывода</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить все</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Напечатать...</translation>
     </message>
 </context>
 <context>
