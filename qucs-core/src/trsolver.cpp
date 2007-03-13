@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.50 2007/03/06 18:21:31 ela Exp $
+ * $Id: trsolver.cpp,v 1.51 2007/03/13 19:39:22 ela Exp $
  *
  */
 
@@ -208,6 +208,7 @@ void trsolver::solve (void) {
   setMode (MODE_INIT);
 
   int running = 0;
+  rejected = 0;
   delta /= 10;
   fillState (dState, delta);
   adjustOrder (1);
