@@ -1,3 +1,8 @@
+2007-03-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* content.tex: Added small AC tutorial part provided by
+	Juan Carlos Borrás.
+
 2005-07-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcstatic.tex (section*{When Things Vary}): Fixed description
