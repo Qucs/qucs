@@ -1,3 +1,9 @@
+2007-03-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_ru.ts: Updated Russian translations.
+
+	* qucs_it.ts: Updated Italian translations.
+
 2007-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_init.cpp (initActions): Made icon texts and some status
