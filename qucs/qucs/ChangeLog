@@ -1,3 +1,8 @@
+2007-03-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug of disappearing elements at moving and multiple clicks
+	* fixed crash when double-clicking diagrams with markers
+
 2007-03-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_ru.ts: Updated Russian translations.
