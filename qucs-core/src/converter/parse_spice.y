@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.18 2007-01-31 20:37:21 ela Exp $
+ * $Id: parse_spice.y,v 1.19 2007-03-14 19:27:49 ela Exp $
  *
  */
 
@@ -135,7 +135,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %token OFF_Special IC_Special SIM_Type TEMP_Special MOS_Special B_Source
 %token DISTO_Action INCLUDE_Action File BranchFunc NODESET_Action T_Device
 %token U_Device S_Device W_Device ON_Special TF_Action SENS_Action FOUR_Action
-%token OpFunc GE_Type
+%token OpFunc GE_Type TC_Special
 
 %union {
   char * ident;
@@ -153,7 +153,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <value> VOLTAGE_Output CURRENT_Output Output_Range PRINT_List
 %type <value> OPTIONS_List MODEL_List DEVICE_List_1 DEVICE_List_2 DEVICE_List_3
 %type <value> IC_Condition_1 IC_Condition_2 IC_Condition_3 NODESET_List
-%type <value> IC_Condition_4 SWITCH_State NodeValueList
+%type <value> IC_Condition_4 SWITCH_State NodeValueList TC_Value_1 TC_Value_2
 
 %type <ident> Identifier Nodes Function Value Floats Digits Node
 %type <ident> RLC_Device K_Device L_Device IV_Source GE_Source FH_Source
@@ -166,7 +166,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <ident> ModelProps OP_Action I_Source IV_Reference SAVE_Action ON_Special
 %type <ident> IC_Special OFF_Special SIM_Type TEMP_Special MOS_Special
 %type <ident> BranchFunc NODESET_Action T_Device U_Device S_Device W_Device
-%type <ident> TF_Action SENS_Action FOUR_Action OpFunc
+%type <ident> TF_Action SENS_Action FOUR_Action OpFunc TC_Special
 
 %%
 
@@ -230,6 +230,30 @@ DefinitionLine:
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_val_value ($$, $5, HINT_NUMBER);
     spice_append_str_value ($$, $4, HINT_NAME);
+  }
+  | RLC_Device Node Node MODEL_Ident PairList Eol {
+    /* R definitions specified by a Model, yet another variant */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $5);
+  }
+  | RLC_Device Node Node Value TC_Value_1 Eol {
+    /* R definitions including TC1 */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    $$->values = netlist_append_values ($$->values, $5);
+  }
+  | RLC_Device Node Node Value TC_Value_2 Eol {
+    /* R definitions including TC1/TC2 */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    $$->values = netlist_append_values ($$->values, $5);
   }
   | K_Device L_Device L_Device Value Eol {
     /* Mutual inductors */
@@ -519,6 +543,21 @@ DefinitionLine:
     /* nodeset functionality */
     $$ = spice_create_action ($1, strdup ($1));
     $$->values = $2;
+  }
+;
+
+TC_Value_1:
+  TC_Special Value {
+    $$ = NULL;
+    $$ = spice_create_par_value ($1, $2);
+  }
+;
+
+TC_Value_2:
+  TC_Special Value Value {
+    $$ = NULL;
+    $$ = spice_create_par_value ($1, $2);
+    $$ = spice_append_val_values ($$, $3, HINT_NUMBER);
   }
 ;
 
