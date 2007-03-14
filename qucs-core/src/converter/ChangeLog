@@ -1,3 +1,14 @@
+2007-03-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Lexer modifications for the Spice 2g6 resistor
+	syntax were necessary.
+
+	* parse_spice.y: Allow Spice 2g6 syntax for resistors, also
+	fixed netlist grammar for Spice 3f5 models.
+
+	* check_spice.cpp: Handle R semiconductor model correctly as
+	well as the Spice 2g6 syntax for the temperature coefficients.
+
 2007-03-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed DC offset of sinuasoidal voltage and

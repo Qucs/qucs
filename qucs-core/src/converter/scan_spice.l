@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.22 2007/02/11 12:32:56 ela Exp $
+ * $Id: scan_spice.l,v 1.23 2007/03/14 19:27:49 ela Exp $
  *
  */
 
@@ -128,7 +128,7 @@ LAPLACE  [lL][aA][pP][lL][aA][cC][eE]
 POLY     [pP][oO][lL][yY]
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP
+%x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP RLCPROP
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -181,6 +181,7 @@ POLY     [pP][oO][lL][yY]
 
 <STARTUP,INITIAL>^[rRlLcC]{CSFX} { /* R, L and C instances */
     spice_lval.ident = strdup (spice_text);
+    BEGIN(RLCPROP);
     return RLC_Device;
 }
 
@@ -400,6 +401,11 @@ POLY     [pP][oO][lL][yY]
     return ALL_Special;
 }
 
+<RLCPROP>[tT][cC] { /* a TC special */
+    spice_lval.ident = strdup (spice_text);
+    return TC_Special;
+}
+
 <DEVPROP,VSWITCH,ISWITCH>[oO][fF][fF] { /* a device special */
     spice_lval.ident = strdup (spice_text);
     return OFF_Special;
@@ -505,13 +511,14 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,
- GEVALS,TLPROP>{DIGIT}+ {
+ GEVALS,TLPROP,RLCPROP>{DIGIT}+ {
     /* identify node (containing digits) */
     spice_lval.ident = strdup (spice_text);
     return Digits;
 }
 
-<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS,TLPROP>{NUMBER} {
+<STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS,TLPROP,
+ RLCPROP>{NUMBER} {
     /* identify float (any kind) */
     spice_lval.ident = strdup (spice_text);
     return Floats;
@@ -542,7 +549,7 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,DEVPROP,MODREF2,ISWITCH,VSWITCH,
- TLPROP>{IDENT} { /* arbitrary identifier */
+ TLPROP,RLCPROP>{IDENT} { /* arbitrary identifier */
     spice_lval.ident = strdup (spice_text);
     spice_fix_identifier (spice_lval.ident);
     return Identifier;
@@ -575,14 +582,14 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,GEVALS,
- TLPROP>{NODE} {
+ TLPROP,RLCPROP>{NODE} {
     /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Nodes;
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
- ISWITCH,VSWITCH,GEVALS,SUBCKT,TLPROP>{EOL} {
+ ISWITCH,VSWITCH,GEVALS,SUBCKT,TLPROP,RLCPROP>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;

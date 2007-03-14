@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.31 2007/03/11 15:43:10 ela Exp $
+ * $Id: check_spice.cpp,v 1.32 2007/03/14 19:27:49 ela Exp $
  *
  */
 
@@ -946,6 +946,7 @@ property_translations[] = {
   { "C",  "IC",  "V"   },
   { "L",  "IC",  "I"   },
   { NULL, "Z0",  "Z"   },
+  { "R",  "TC",  "Tc1" },
   /* END of list */
   { NULL, NULL,  NULL  }
 };
@@ -1986,10 +1987,53 @@ spice_post_translator (struct definition_t * root) {
     }
     // post-process resistors
     if (!def->action && !strcmp (def->type, "R")) {
+      // drop the second "R" given in Model
       struct pair_t * r1 = spice_find_property_nocase (def, "R");
       struct pair_t * r2 = spice_find_property_nocase (r1->next, "R");
       if (r2 != NULL) {
 	def->pairs = spice_del_property (def->pairs, r2);
+      }
+      // calculate R value
+      struct pair_t * L = spice_find_property_nocase (def, "L");
+      struct pair_t * W = spice_find_property_nocase (def, "W");
+      struct pair_t * R = spice_find_property_nocase (def, "RSH");
+      struct pair_t * D = spice_find_property_nocase (def, "DEFW");
+      struct pair_t * N = spice_find_property_nocase (def, "NARROW");
+      nr_double_t _L = 0, _W = 0, _R = 0, _D = 0, _N = 0;
+      if (L) {
+	_L = spice_evaluate_value (L->value);
+	def->pairs = spice_del_property (def->pairs, L);
+      }
+      if (W) {
+	_W = spice_evaluate_value (W->value);
+	def->pairs = spice_del_property (def->pairs, W);
+      }
+      if (R) {
+	_R = spice_evaluate_value (R->value);
+	def->pairs = spice_del_property (def->pairs, R);
+      }
+      if (D) {
+	_D = spice_evaluate_value (D->value);
+	def->pairs = spice_del_property (def->pairs, D);
+      }
+      if (N) {
+	_N = spice_evaluate_value (N->value);
+	def->pairs = spice_del_property (def->pairs, N);
+      }
+      if (_D == 0) _D = 1e-6;
+      if (_W == 0) _W = _D;
+      if (_L != 0 && _W != 0 && _R != 0) {
+	_R = _R * (_L - _N) / (_W - _N);
+	spice_set_property_value (def, "R", _R);
+      }
+      // handle Spice 2g6 syntax
+      struct value_t * val;
+      foreach_value (def->values, val) {
+	if (!(val->hint & HINT_DONE) && (val->hint & HINT_NUMBER)) {
+	  spice_append_pair (def, "Tc2", val->ident, 0);
+	  spice_value_done (val);
+	  break;
+	}
       }
     }
     // post-process lossless transmission line
