@@ -1543,9 +1543,10 @@ void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called after moving selected elements.
-void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent *Event)
+void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
 {
-  if(Event->button() != Qt::LeftButton) return;
+  // Allow all mouse buttons, because for others than the left one,
+  // a menu has already created.
   endElementMoving(Doc, &movingElements);
   Doc->releaseKeyboard();  // allow keyboard inputs again
 

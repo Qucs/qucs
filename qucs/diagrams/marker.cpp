@@ -540,8 +540,14 @@ Marker* Marker::sameNewOne(Graph *pGraph_)
   pm->x1 = x1;  pm->y1 = y1;
   pm->x2 = x2;  pm->y2 = y2;
 
+  int z = (nVarPos+2) * sizeof(double);
+  if(pm->VarPos)
+    pm->VarPos = (double*)realloc(pm->VarPos, z);
+  else
+    pm->VarPos = (double*)malloc(z);
+
   pm->nVarPos = nVarPos;
-  for(int z=0; z<nVarPos; z++)
+  for(z=0; z<nVarPos; z++)
     pm->VarPos[z] = VarPos[z];
 
   pm->Text        = Text;
