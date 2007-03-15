@@ -1,4 +1,6 @@
 #include "htmldatafetcher.h"
+#include <qmime.h>
+#include <qdragobject.h>
 
 HtmlDataFetcher::HtmlDataFetcher()
 {
@@ -298,7 +300,14 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
     qWarning("HtmlDataFetcher::fetchChapterTexts() : Can't open file %s",indexFile.latin1());
     return retVal;
   }
-  QTextStream str(&file);
+
+  const QMimeSource *source = QMimeSourceFactory::defaultFactory()->data(indexFile);
+  Q_ASSERT(source);
+  QString sourceText;
+  bool status = QTextDrag::decode(source,sourceText);
+  Q_ASSERT(status);
+
+  QTextStream str(&sourceText,IO_ReadOnly);
   QString txt;
   bool inText = false;//spans multiple lines
   while ( !str.atEnd() )
