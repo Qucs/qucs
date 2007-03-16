@@ -337,6 +337,7 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
       else
       {
         txt += line.mid(index);
+		txt += ' ';
         inText = true;
       }
     }
@@ -344,7 +345,7 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
     {
       int end = line.find("</a>");
       if(end == -1)
-        txt += line;
+        txt += line + ' ';
       else
       {
         txt += line.left(end);
