@@ -84,7 +84,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
   LanguageCombo->insertItem(tr("Turkish")+" (tr)");
   LanguageCombo->insertItem(tr("Ukrainian")+" (uk)");
   LanguageCombo->insertItem(tr("Russian")+" (ru)");
-  LanguageCombo->insertItem(tr("Czech")+" (cz)");
+  LanguageCombo->insertItem(tr("Czech")+" (cs)");
   LanguageCombo->insertItem(tr("Catalan")+" (ca)");
   gp->addWidget(LanguageCombo,2,1);
 

@@ -632,7 +632,7 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
 </context>
 <context>
@@ -840,11 +840,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Text nesmí být prázdný!</translation>
     </message>
 </context>
 <context>
@@ -887,11 +887,11 @@
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Nápověda pro Qucs atenuátor</translation>
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QucsAttenuator je program pro syntézu útlumového článku. K vygenerování modelu atenuátoru zadejte všechny vstupní parametry a stikněte tlačítko Vygenerovat. Obvod s atenuátorem je vypočítán a vložen do schránky. V programu Qucs stačí potom pomocí CTRL-V vložit atenuátor do stávajícího obvodu.</translation>
     </message>
 </context>
 <context>
@@ -914,166 +914,166 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametry</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">zobrazit</translation>
+        <translation>zobrazit</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">jméno</translation>
+        <translation>jméno</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardní</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">popis</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">ano</translation>
+        <translation>ano</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">ne</translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">zobrazit ve schématu</translation>
+        <translation>zobrazit ve schématu</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jméno:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardní hodnota:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Popis:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametr nesmí být pojmenován &quot;soubor&quot;!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametr &quot;%1&quot; je již v seznamu!</translation>
     </message>
 </context>
 <context>
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat datový soubor...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat soubor:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Projít</translation>
     </message>
     <message>
         <source>Output File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor:</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Zprávy</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Import</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <source>All known</source>
-        <translation type="unfinished"></translation>
+        <translation>Všechny známé</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished">Touchstone soubory</translation>
+        <translation>Touchstone soubory</translation>
     </message>
     <message>
         <source>CITI files</source>
-        <translation type="unfinished"></translation>
+        <translation>CITI soubory</translation>
     </message>
     <message>
         <source>ZVR ASCII files</source>
-        <translation type="unfinished"></translation>
+        <translation>ZVR ASCII soubory</translation>
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>IC-CAP soubory modelů</translation>
     </message>
     <message>
         <source>VCD files</source>
-        <translation type="unfinished"></translation>
+        <translation>VCD soubory</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Všechny soubory</translation>
+        <translation>Všechny soubory</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlož jméno datového souboru</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor již existuje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat ho?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Ano</translation>
+        <translation>&amp;Ano</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Ne</translation>
+        <translation>&amp;Ne</translation>
     </message>
     <message>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: neznámý formát souboru! Zkontrolujte příponu souboru!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze spustit simulátor!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor úspěšně importován!</translation>
     </message>
     <message>
         <source>Converter ended with errors!</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertor byl ukončen -  vyskytly se chyby!</translation>
     </message>
 </context>
 <context>
@@ -1111,136 +1111,136 @@
     <name>LibraryDialog</name>
     <message>
         <source>Create Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit knihovnu</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jméno knihovny:</translation>
     </message>
     <message>
         <source>Choose subcircuits:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat podobvody:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Next &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Další &gt;&gt;</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné podobvody!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>Please insert a library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vložit jméno knihovny!</translation>
     </message>
     <message>
         <source>Please choose at least one subcircuit!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vybrat minimálně jeden podobvod!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Upozornění</translation>
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze vytvořit adresář uživatelských knihoven !</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Systémová knihovna s tímto jménem již existuje!</translation>
     </message>
     <message>
         <source>A library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Knihovna s tímto jménem již existuje!</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit popis pro &quot;%1&quot;:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: nelze vytvořit knihovnu!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Nelze otevřít podobvod &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>
 Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Knihovna úspěšně vytvořena.</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>Správa uživatelských knihoven</translation>
     </message>
     <message>
         <source>Choose library:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat knihovnu:</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nové jméno:</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Smazat</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished">Přejmenovat</translation>
+        <translation>Přejmenovat</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádná uživatelská knihovna!</translation>
     </message>
     <message>
         <source>Please insert a new library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vložit nové jméno knihovny!</translation>
     </message>
     <message>
         <source>Please choose a library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vybrat knihovnu!</translation>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze otevřít knihovnu!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
-        <translation type="unfinished"></translation>
+        <translation>Chybí oprávnění k úpravě knihovny!</translation>
     </message>
     <message>
         <source>Writing new library not successful!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zápis nové knihovny nebyl úspěšný!</translation>
     </message>
     <message>
         <source>Cannot delete old library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze smazat původní knihovnu.</translation>
     </message>
     <message>
         <source>Library file is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor s knihovnou je poškozený!</translation>
     </message>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chybí práva ke smazání knihovny &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -1472,203 +1472,203 @@ je ale %1 !</translation>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit vlastnosti optimizace</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jméno:</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">simulace:</translation>
+        <translation>Simulace:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metoda:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximální počet iterací:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovovací cyklus výstupu: </translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Počet rodičů:</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstantní F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Crossing over factor:</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pseudo random number seed:</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minimum cost variance:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cost objectives:</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cost constraints:</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmus</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">jméno</translation>
+        <translation>jméno</translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>aktivní</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>max</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>min:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>max:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">typ:</translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lineární double</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">logaritmický double</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lineární integer</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">logaritmický integer</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Smazat</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Proměnné</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">hodnota</translation>
+        <translation>hodnota</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota:</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">menší</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>větší</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>rovno</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>monitor</translation>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Cíle</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">ano</translation>
+        <translation>ano</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">ne</translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné textové pole nesmí být prázdné!</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Proměnná &quot;%1&quot; je již v seznamu!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Cíl &quot;%1&quot; je již v seznamu!</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>minimalizovat</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>maximalizovat</translation>
     </message>
 </context>
 <context>
@@ -1710,159 +1710,159 @@ je ale %1 !</translation>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit projekt</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation type="unfinished"></translation>
+        <translation>Balíček:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Projít</translation>
     </message>
     <message>
         <source>include user libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>včetně uživatelských knihoven</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat projekty:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádné projekty!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrahovat balíček projektu</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs balíčky</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished">Všechny soubory</translation>
+        <translation>Všechny soubory</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit jméno balíčku</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze otevřít &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím zadat jméno balíčku!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vybrat minimálně jeden projekt!</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor již existuje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat ho?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Ano</translation>
+        <translation>&amp;Ano</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;Ne</translation>
+        <translation>&amp;Ne</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze vytvořit balíček!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Úspěšně vytvořen Qucs balíček!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze otevřít balíček!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Soubor obsahuje chybnou hlavičku!</translation>
     </message>
     <message>
         <source>ERROR: Wrong version number!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Chybné číslo verze!</translation>
     </message>
     <message>
         <source>ERROR: Checksum mismatch!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Kontrolní součet nesouhlasí! </translation>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Opustit adresář &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Balíček je poškozený!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation type="unfinished"></translation>
+        <translation>Balíček úspěšně rozbalen!</translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Adresář projektu &quot;%1&quot; již existuje!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze vytvořit adresář &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit a přejít do adresáře &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze vytvořit soubor &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit soubor &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Uživatelská knihovna &quot;%1&quot; již existuje!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze vytvořit knihovnu &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit knihovnu &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -2741,7 +2741,7 @@ Neplatný začátek řádku!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished">Podobvod</translation>
+        <translation>Podobvod</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -3197,11 +3197,11 @@ Neplatný začátek řádku!</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>zero-bias kapacita závěrného přechodu bulk-drain</translation>
+        <translation type="unfinished">kapacita závěrného přechodu bulk-drain při 0V</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>zero-bias kapacita závěrného přechodu bulk-source</translation>
+        <translation type="unfinished">kapacita závěrného přechodu bulk-source při 0V</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
@@ -3241,7 +3241,7 @@ Neplatný začátek řádku!</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation>kapacita bočních stěn nulového substrátu pro každý oběh v závěrném směru ve F/m</translation>
+        <translation type="unfinished">kapacita bočních stěn nulového substrátu pro každý oběh v závěrném směru ve F/m při 0V</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
@@ -3261,7 +3261,7 @@ Neplatný začátek řádku!</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>zero-bias kapacita plochy substrátu v závěrném přechodu ve F/m²</translation>
+        <translation type="unfinished">kapacita plochy substrátu v závěrném přechodu ve F/m² při 0V</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
@@ -4369,35 +4369,35 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze vytvořit výstupní soubor!</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční napětí pro přechodovou simulaci</translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční proud pro přechodovou simulaci</translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
-        <translation type="unfinished"></translation>
+        <translation>zobrazit čísla portů v symbolech nebo je skrýt</translation>
     </message>
     <message>
         <source>Optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>Optimalizace</translation>
     </message>
     <message>
         <source>optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>optimalizace</translation>
     </message>
     <message>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>spustit počáteční DC analýzu</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>maximální velikost kroku v sekundách</translation>
     </message>
     <message>
         <source>relay</source>
@@ -4409,7 +4409,7 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční časová prodleva</translation>
     </message>
     <message>
         <source>-</source>
@@ -4417,11 +4417,11 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">HICUM zařízení Level 2 v2.1</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">GICCR constant</translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
@@ -4429,7 +4429,7 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Korekce vysokého proudu pro 2D a 3D efekty</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
@@ -5481,7 +5481,7 @@ Přepsat ?</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Nový</translation>
+        <translation>&amp;Nový</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
@@ -5489,7 +5489,7 @@ Přepsat ?</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished">Vytvoří nový dokument</translation>
+        <translation>Vytvoří nový dokument</translation>
     </message>
     <message>
         <source>Open File</source>
@@ -5497,17 +5497,17 @@ Přepsat ?</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">O&amp;tevřít</translation>
+        <translation>O&amp;tevřít...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished">Otevře existující dokument</translation>
+        <translation>Otevře existující dokument</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished">Nový
+        <translation>Nový
 
 Vytvoří nové schéma nebo datovou vizualizaci</translation>
     </message>
@@ -5519,7 +5519,7 @@ Vytvoří nové schéma nebo datovou vizualizaci</translation>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished">Otevřít soubor
+        <translation>Otevřít soubor
 
 Otevře již existující dokument</translation>
     </message>
@@ -5537,13 +5537,13 @@ Otevře již existující dokument</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished">Uloží aktuální dokument</translation>
+        <translation>Uloží aktuální dokument</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished">Uložit soubor
+        <translation>Uložit soubor
 
 Uloží aktuální dokument</translation>
     </message>
@@ -5557,13 +5557,13 @@ Uloží aktuální dokument</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished">Uloží aktuální dokument pod novým jménem souboru</translation>
+        <translation>Uloží aktuální dokument pod novým jménem souboru</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished">Uložit jako
+        <translation>Uložit jako
 
 Uloží aktuální dokument pod novým jménem souboru</translation>
     </message>
@@ -5573,17 +5573,17 @@ Uloží aktuální dokument pod novým jménem souboru</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished">&amp;Uložit vše</translation>
+        <translation>&amp;Uložit vše</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished">Uloží všechny otevřené dokumenty</translation>
+        <translation>Uloží všechny otevřené dokumenty</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished">Uložit všechny soubory
+        <translation>Uložit všechny soubory
 
 Uloží všechny dokumenty</translation>
     </message>
@@ -5593,7 +5593,7 @@ Uloží všechny dokumenty</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">Uza&amp;vřít</translation>
+        <translation>Uza&amp;vřít</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
@@ -5601,13 +5601,13 @@ Uloží všechny dokumenty</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished">Uzavře aktuální dokument</translation>
+        <translation>Uzavře aktuální dokument</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished">Uzavřít soubor
+        <translation>Uzavřít soubor
 
 Uzavře aktuální dokument</translation>
     </message>
@@ -5623,7 +5623,7 @@ Uzavře aktuální dokument</translation>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished">Nastavení
+        <translation>Nastavení
 
 Nastaví parametry souboru</translation>
     </message>
@@ -5633,7 +5633,7 @@ Nastaví parametry souboru</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Tisknout</translation>
+        <translation>&amp;Vytisknout...</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
@@ -5641,13 +5641,13 @@ Nastaví parametry souboru</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished">Vytiskne aktuální dokument</translation>
+        <translation>Vytiskne aktuální dokument</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished">Vytisknout soubor
+        <translation>Vytisknout soubor
 
 Vytiskne aktuální dokument</translation>
     </message>
@@ -5657,7 +5657,7 @@ Vytiskne aktuální dokument</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Ukončit</translation>
+        <translation>&amp;Ukončit</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
@@ -5665,13 +5665,13 @@ Vytiskne aktuální dokument</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished">Ukončí aplikaci</translation>
+        <translation>Ukončí aplikaci</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished">Ukončit
+        <translation>Ukončit
 
 Ukončí aplikaci</translation>
     </message>
@@ -5681,7 +5681,7 @@ Ukončí aplikaci</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">&amp;Vyříznout</translation>
+        <translation>&amp;Vyříznout</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
@@ -5705,7 +5705,7 @@ Vyřízne vybranou oblast a zkopíruje ji do schránky</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Zkopírovat</translation>
+        <translation>&amp;Zkopírovat</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
@@ -5729,7 +5729,7 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Vložit</translation>
+        <translation>&amp;Vložit</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
@@ -7569,202 +7569,234 @@ Vybere všechny diagramové značky v dokumentu</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze spustit podprogram pro výpočet atenuátoru!</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>Je nutné otevřít projekt s podobvody!</translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Je nutné nejdříve otevřít projekt!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím vybrat diagram nebo graf!</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV soubor</translation>
     </message>
     <message>
         <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit výstupní jméno souboru</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupní soubor již existuje!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Přepsat ho?</translation>
     </message>
     <message>
         <source>Cannot delete file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze smazat soubor: </translation>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze odstranit adresář: </translation>
     </message>
     <message>
         <source>Printer Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při komunikaci s tiskárnou.</translation>
     </message>
     <message>
         <source>Print Fit to Page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit velikost pro tisk...</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit velikost pro tisk
+
+Upraví obsah na velikost stránky a vytiskne</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit &amp;knihovnu...</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit knihovnu z podobvodů</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit knihovnu
+
+Vytvořit knihovnu z podobvodů</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit &amp;balíček...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit komprimovaný balíček z projektů</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit komprimovaný balíček z hotových projektů</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ro&amp;zbalit balíček...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Instalovat obsah balíčku</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozbalit balíček
+
+Instalovat obsah balíčku</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;importovat data...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Zkonvertovat soubor do datového souboru formátu Qucs</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat datový soubor do datového formátu Qucs</translation>
     </message>
     <message>
         <source>Export to &amp;CSV...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyexportovat do &amp;CSV...</translation>
     </message>
     <message>
         <source>Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Převést data grafu do CSV souboru</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyexportovat do CSV
+
+Zkonvertovat grafická data do CSV souboru</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntéza atenuátoru</translation>
     </message>
     <message>
         <source>Starts QucsAttenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustit Qucs atenuátor</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntéza atenuátoru
+
+Spustit podprogram pro výpočet atenuátoru</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Zachytit okno</translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktivovat/deaktivovat okno prohlížeče</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Okno prohlížeče
+
+Aktivuje/deaktivuje zachycení okna prohlížeče</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>GUI vylepšení: Gopala Krishna A</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>České rozhraní: Marek Straka</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Katalánština: Antoni Subirats</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-AMS rozhraní: Helene Parruitte</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat vodorovně</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>vyrovnat vodorovně vybrané prvky</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat vodorovně
+
+Vyrovnat vodorovně vybrané prvky</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat svisle</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat svisle vybrané provky</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat svisle
+
+Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation>U&amp;místění</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7819,64 +7851,48 @@ Center vertically selected elements</source>
         <source>Inserts a port symbol</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Print...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Ukončit</translation>
+        <translation>&amp;Ukončit</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished">Nápověda...</translation>
+        <translation>Nápověda...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;O programu Qucs atenuátor...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>O prostředí Qt...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Soubor</translation>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Nápověda</translation>
+        <translation>&amp;Nápověda</translation>
     </message>
     <message>
         <source>Topology</source>
-        <translation type="unfinished"></translation>
+        <translation>Topologie</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstup</translation>
     </message>
     <message>
         <source>Attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Útlum:</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>dB</source>
@@ -7892,7 +7908,7 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ohmů</translation>
     </message>
     <message>
         <source>Zout:</source>
@@ -7900,11 +7916,11 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished">Spočítat a zkopírovat do schránky</translation>
+        <translation>Spočítat a zkopírovat do schránky</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <source>R1:</source>
@@ -7924,33 +7940,35 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished">Výsledek:</translation>
+        <translation>Výsledek:</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>O prostředí Qt</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>O programu...</translation>
     </message>
     <message>
         <source>
 Attenuator synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Program pro návrh atenuátoru
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2006 von</translation>
+        <translation type="unfinished">Copyright (C) 2006: </translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">úspěšně!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Nastavit útlum více než %1 db</translation>
     </message>
 </context>
 <context>
@@ -9583,7 +9601,7 @@ Jednoduchý editor pro Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Řádek: %1  -  Sloupec: %2</translation>
     </message>
 </context>
 <context>
@@ -9759,65 +9777,67 @@ program pro syntézu filtru
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Ukončit</translation>
+        <translation>&amp;Ukončit</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zpět</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dopředu</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Domů</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Předchozí</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Následující</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Obsah</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivovat/deaktivovat tabulku obsahu</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Obsahu
+
+Aktivuje/deaktivuje výpis obsahu</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;O prostředí Qt</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Soubor</translation>
+        <translation>&amp;Soubor</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Náhled</translation>
+        <translation>&amp;Náhled</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Nápověda</translation>
+        <translation>&amp;Nápověda</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Obsah</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Domů</translation>
     </message>
 </context>
 <context>
@@ -11333,11 +11353,11 @@ Zkopíruje soubory do adresáře projektu</translation>
     </message>
     <message>
         <source>Manage User &amp;Libraries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravit uživatelské &amp;knihovny...</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mnohem pohodlnější způsob. Komponenta může být umístěna do schématu pomocí funkce Drag n&apos;Drop.</translation>
     </message>
 </context>
 <context>
@@ -11438,103 +11458,103 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk (bude nastaveno po restartu):</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk systému</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Angličtina</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Němčina</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francouzština</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Španělština</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italština</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polština</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumunština</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>Japonština</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Švédština</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>Maďarština</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebrejština</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugalština</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turečtina</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukrajinština</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruština</translation>
     </message>
     <message>
         <source>Colors for Syntax Highlighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barvy pro zvýraznění syntaxe:</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Komentář</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation>Řetězec</translation>
     </message>
     <message>
         <source>Integer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Integer číslo</translation>
     </message>
     <message>
         <source>Real Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Reálné číslo</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Znak</translation>
     </message>
     <message>
         <source>Data Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Datový typ</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribut</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
@@ -11542,11 +11562,11 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Česky</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalánsky</translation>
     </message>
 </context>
 <context>
@@ -11975,50 +11995,50 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravené soubory</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepojmenované</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit upravené soubory</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat soubory pro uložení</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončit zavírání</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit vybrané</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Neukládat</translation>
     </message>
 </context>
 <context>
     <name>Schematic</name>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Název</translation>
     </message>
     <message>
         <source>Drawn By:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nakresleno:</translation>
     </message>
     <message>
         <source>Date:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum:</translation>
     </message>
     <message>
         <source>Revision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze:</translation>
     </message>
 </context>
 <context>
@@ -12048,63 +12068,63 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     </message>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Text k nalezení</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>Text k nahrazení za</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotázat se před záměnou</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Od místa kurzoru</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>S rozlišením velikosti písmen </translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>Pouze celá slova</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledat zpětně</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaměnit text</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledat text</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished">Zaměnit...</translation>
+        <translation>Zaměnit...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaměnit výskyt ?</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished">Hledat...</translation>
+        <translation>Hledat...</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledaný řetězec nebyl nalezen!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaměněno %1 výskytů!</translation>
     </message>
 </context>
 <context>
@@ -12159,7 +12179,7 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">žádný rámec</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
@@ -12187,7 +12207,7 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rámec</translation>
     </message>
 </context>
 <context>
@@ -12320,7 +12340,7 @@ Chyby:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze otevřít SPICE soubor &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -12441,22 +12461,22 @@ Chyby:
     </message>
     <message>
         <source>! Drag n&apos;Drop me !</source>
-        <translation type="unfinished"></translation>
+        <translation>! Chytni mě a přesuň !</translation>
     </message>
 </context>
 <context>
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Není zde žádný výběr!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Stránka %1 z %2</translation>
     </message>
 </context>
 </TS>
