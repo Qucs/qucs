@@ -80,6 +80,8 @@ AC_CONFIG_FILES([Makefile
 		 doxygen/Makefile
 		 technical/Makefile
 		 tutorial/Makefile
+		 tutorial/getstarted/Makefile
+		 tutorial/getstarted/pics/Makefile
 		 tutorial/dcstatic/Makefile
 		 tutorial/dcstatic/pics/Makefile
 		 tutorial/coupler/Makefile

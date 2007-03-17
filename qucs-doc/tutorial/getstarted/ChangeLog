@@ -1,0 +1,5 @@
+2007-03-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* getstarted.tex: New tutorial for very basic steps with Qucs
+	added.  Placed here the small AC tutorial from Juan.
+

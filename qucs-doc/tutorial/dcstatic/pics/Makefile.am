@@ -25,8 +25,7 @@
 EXTRA_DIST = $(PNGS) $(PDFS)
 
 PNGS = diodedcop.png diodedcsch.png rcubesch.png sweepedit.png grapheditd.png \
-  diodeditprop.png grapheditp.png propeditrwin.png finalhighpassrc.png \
-  highpassrc.png highpasssimblock.png simblockconfig.png
+  diodeditprop.png grapheditp.png propeditrwin.png
 
 PDFS = diod4out.pdf diod4schr.pdf
 

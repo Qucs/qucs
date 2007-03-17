@@ -26,6 +26,7 @@ files.
 Version 0.0.11
 --------------
 
+ * new introductory tutorial started
  * added small section about AC analysis
  * tutorial update about operational amplifier modelling
  * tutorial about simulation of SPICE netlists

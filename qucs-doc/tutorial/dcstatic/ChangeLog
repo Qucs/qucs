@@ -1,3 +1,8 @@
+2007-03-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcstatic.tex: Moved the AC tutorial to another location.
+	Reversed patch from 4 days before.
+
 2007-03-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* content.tex: Added small AC tutorial part provided by
