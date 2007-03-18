@@ -1,3 +1,8 @@
+2007-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.11 and bumped up to version
+        0.0.12.
+
 2006-10-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Checking for admsXml program.  Aded verilog
