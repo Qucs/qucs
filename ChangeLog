@@ -1,3 +1,8 @@
+2007-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.11 and bumped up to version
+	0.0.12.
+
 2006-09-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac:  Don't link using "-s" on MacOSX since it drops lazy
