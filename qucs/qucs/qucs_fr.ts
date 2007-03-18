@@ -860,67 +860,67 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">afficher</translation>
+        <translation>afficher</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Défaut</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Description</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">oui</translation>
+        <translation>oui</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">non</translation>
+        <translation>non</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">afficher dans le schéma</translation>
+        <translation>afficher dans le schéma</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nom :</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur par défaut :</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Description :</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Ajouter</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Enlever</translation>
+        <translation>Enlever</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paramètre ne doit pas s&apos;appeler « File » !</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paramèter &quot;%1&quot; existe déjà !</translation>
     </message>
 </context>
 <context>
@@ -2167,7 +2167,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation>Paramètre � faire varier</translation>
+        <translation>Paramètre à faire varier</translation>
     </message>
     <message>
         <source>start value for sweep</source>
@@ -2349,7 +2349,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation>simulation � laquelle appliquer la variation de paramètre</translation>
+        <translation>simulation à laquelle appliquer la variation de paramètre</translation>
     </message>
     <message>
         <source>Create new project</source>
@@ -2397,7 +2397,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation>capacité de la jonction � polarisation nulle</translation>
+        <translation>capacité de la jonction à polarisation nulle</translation>
     </message>
     <message>
         <source>grading coefficient</source>
@@ -2433,7 +2433,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation>transistor � effet de champ</translation>
+        <translation>transistor à effet de champ (TEC/FET)</translation>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
@@ -2641,7 +2641,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation>MOS � déplétion</translation>
+        <translation>MOS à déplétion</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
@@ -2681,11 +2681,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation>capacité � vide de la jonction grille-source</translation>
+        <translation>capacité à vide de la jonction grille-source</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation>capacité � vide de la jonction grille-drain</translation>
+        <translation>capacité à vide de la jonction grille-drain</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
@@ -2737,7 +2737,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation>nombre de points � simuler</translation>
+        <translation>nombre de points à simuler</translation>
     </message>
     <message>
         <source>microstrip gap</source>
@@ -2825,11 +2825,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation>résistance de base � vide (peut dépendre des forts courants)</translation>
+        <translation>résistance de base à vide (peut dépendre des forts courants)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation>capacité de déplétion base-émetteur � vide</translation>
+        <translation>capacité de déplétion base-émetteur à vide</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
@@ -2841,7 +2841,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation>capacité de déplétion base-collecteur � vide</translation>
+        <translation>capacité de déplétion base-collecteur à vide</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
@@ -2857,7 +2857,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation>capacité collecteur-substrat � vide</translation>
+        <translation>capacité collecteur-substrat à vide</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
@@ -2877,11 +2877,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation>dépendance de Tf � la polarisation</translation>
+        <translation>dépendance de Tf à la polarisation</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation>dépendance de Tf vis-�-vis de la tension base-collecteur</translation>
+        <translation>dépendance de Tf vis-à-vis de la tension base-collecteur</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
@@ -2893,11 +2893,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation>Coefficient de bruit en 1/f (flicker)</translation>
+        <translation>Coefficient de bruit de scintillation</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation>exposant du bruit en 1/f</translation>
+        <translation>exposant du bruit de scintillation</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
@@ -2917,11 +2917,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation>densité spectrale de puissance du courant en A²/Hz</translation>
+        <translation>densité spectrale de puissance du courant (A².Hz⁻¹)</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation>densité spectrale de puissance de la tension en V²/Hz</translation>
+        <translation>densité spectrale de puissance de la tension (V².Hz⁻¹)</translation>
     </message>
     <message>
         <source>linear capacitance</source>
@@ -2941,7 +2941,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation>tension de seuil � vide</translation>
+        <translation>tension de seuil à vide</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/m^2</source>
@@ -2949,7 +2949,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
-        <translation>seuil de semelle en √V</translation>
+        <translation>seuil de semelle (√V)</translation>
     </message>
     <message>
         <source>surface potential</source>
@@ -3005,11 +3005,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>capacité � vide de la jonction drain-semelle</translation>
+        <translation>capacité à vide de la jonction drain-semelle</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>capacité � vide de la jonction source-semelle</translation>
+        <translation>capacité à vide de la jonction source-semelle</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
@@ -3037,11 +3037,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation>densité de dopage de la semelle en 1/cm³</translation>
+        <translation>densité de dopage de la semelle (cm⁻³)</translation>
     </message>
     <message>
         <source>surface state density in 1/cm^2</source>
-        <translation>densité de surface en 1/cm²</translation>
+        <translation>densité de surface (cm⁻²)</translation>
     </message>
     <message>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
@@ -3049,7 +3049,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
-        <translation>mobilité de surface en cm²/Vs</translation>
+        <translation>mobilité de surface (cm².V⁻¹.s⁻¹)</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
@@ -3065,7 +3065,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>capacité surfacique inférieure � vide de la jonction de semelle en F/m²</translation>
+        <translation>capacité surfacique inférieure à vide de la jonction de semelle en F/m²</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
@@ -3073,11 +3073,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>drain diffusion area in m^2</source>
-        <translation>surface de diffusion drain en m²</translation>
+        <translation>surface de diffusion drain (m²)</translation>
     </message>
     <message>
         <source>source diffusion area in m^2</source>
-        <translation>surface de diffusion source en m²</translation>
+        <translation>surface de diffusion source (m²)</translation>
     </message>
     <message>
         <source>drain junction perimeter</source>
@@ -3089,7 +3089,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation>coefficient de variation en tension de la longueur du canal en 1/V</translation>
+        <translation>coefficient de variation en tension de la longueur du canal (V⁻¹)</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
@@ -3361,7 +3361,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation>transconductance en A/V²</translation>
+        <translation>transconductance (A.V⁻²)</translation>
     </message>
     <message>
         <source>microstrip via</source>
@@ -4043,11 +4043,11 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation>résistance de l&apos;état passant (ohms)</translation>
+        <translation>résistance de l&apos;état passant (Ω)</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation>résistance de l&apos;état isolé (ohms)</translation>
+        <translation>résistance de l&apos;état isolé (Ω)</translation>
     </message>
     <message>
         <source>Relais</source>
@@ -4067,7 +4067,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation>atténuation linéaire (1/m)</translation>
+        <translation>atténuation linéaire (m⁻¹)</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
@@ -4083,11 +4083,11 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation>Résistance de conduction (Ohms)</translation>
+        <translation>Résistance de conduction (Ω)</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation>Résistance d&apos;isolation (Ohms)</translation>
+        <translation>Résistance d&apos;isolation (Ω)</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -4135,7 +4135,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>quantum de temps de relaxation</translation>
     </message>
     <message>
         <source>VHDL file</source>
@@ -4183,778 +4183,822 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>relay</source>
-        <translation>relai</translation>
+        <translation>relais</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation>Relai</translation>
+        <translation>Relais</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>Délai initial</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Composant Verilog Hicum niveau 2 v2.1</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante GICCR</translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Charge intrinsèque des trous </translation>
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Correction courant fort pour les effets 2D et 3D</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de pondération des porteurs minoritaires des émetteurs HBTs</translation>
     </message>
     <message>
         <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de pondération des porteurs minoritaires des collecteurs HBTs</translation>
     </message>
     <message>
         <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de pondération de la ZCE base-émetteur des HBTs</translation>
     </message>
     <message>
         <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de pondération de la ZCE base-collecteur des HBTs</translation>
     </message>
     <message>
         <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Courant de saturation base-émetteur</translation>
     </message>
     <message>
         <source>Internal B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité du courant interne base-émetteur</translation>
     </message>
     <message>
         <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant de recombinaison B-E</translation>
     </message>
     <message>
         <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité du courant interne de recombinaison B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant périphérique B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant de recombinaison périphérique B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité du courant de recombinaison périphérique B-E</translation>
     </message>
     <message>
         <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de non-idéalité des HBTs III-V</translation>
     </message>
     <message>
         <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant B-C</translation>
     </message>
     <message>
         <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité du courant interne B-C</translation>
     </message>
     <message>
         <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant externe B-C</translation>
     </message>
     <message>
         <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité du courant externe B-E</translation>
     </message>
     <message>
         <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant tunnel B-E</translation>
     </message>
     <message>
         <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant du courant tunnel</translation>
     </message>
     <message>
         <source>Avalanche current factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur du courant d&apos;avalanche</translation>
     </message>
     <message>
         <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant du courant d&apos;avalanche</translation>
     </message>
     <message>
         <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relatif pour FAVL</translation>
     </message>
     <message>
         <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relatif pour QAVL</translation>
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de la base à polarisation nulle</translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de base additionnelle</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur contrôlant la dépendance géométrique de l&apos;emcombrement des porteurs</translation>
     </message>
     <message>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de modulation des ZCE des jonctions B-E et B-C</translation>
     </message>
     <message>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport de la capacité HF latérale à la capacité globale (effet NQS)</translation>
     </message>
     <message>
         <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport de la charge interne à la charge totale des porteurs minoritaires</translation>
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance série d&apos;émetteur</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance série externe de collecteur</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation du courant de transfert transistor/substrat</translation>
     </message>
     <message>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité direct du courant transistor/substrat</translation>
     </message>
     <message>
         <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation de la diode C-S</translation>
     </message>
     <message>
         <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;idéalité de courant dans la diode C-S</translation>
     </message>
     <message>
         <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de transit direct du transistor substrat</translation>
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance série du substrat</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité shunt du substrat</translation>
     </message>
     <message>
         <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité interne B-E à vide</translation>
     </message>
     <message>
         <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur intrisèque du potentiel B-E</translation>
     </message>
     <message>
         <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de gradation interne B-E</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport de la valeur maximale de la capacité interne B-E à sa valeur à vide</translation>
     </message>
     <message>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité périphérique B-E à vide</translation>
     </message>
     <message>
         <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potentiel intrinsèque périphérique B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de gradation périphérique B-E</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport de la valeur maximale de la capacité périphérique B-E à sa valeur à vide</translation>
     </message>
     <message>
         <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité interne B-C à vide</translation>
     </message>
     <message>
         <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur intrisèque du potentiel B-C interne</translation>
     </message>
     <message>
         <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de gradation interne B-C</translation>
     </message>
     <message>
         <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de punch-through interne B-C</translation>
     </message>
     <message>
         <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité externe B-C à vide</translation>
     </message>
     <message>
         <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur intrisèque du potentiel B-C externe</translation>
     </message>
     <message>
         <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de gradation externe B-C</translation>
     </message>
     <message>
         <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de punch-through externe B-C</translation>
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité C-S à vide</translation>
     </message>
     <message>
         <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur intrisèque du potentiel C-S</translation>
     </message>
     <message>
         <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de gradation C-S</translation>
     </message>
     <message>
         <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de punch-through C-S</translation>
     </message>
     <message>
         <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de transit direct en petits courants à Vbc = 0 V</translation>
     </message>
     <message>
         <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de temps de la modulation de l&apos;épaisseur de la ZCE de base et B-C</translation>
     </message>
     <message>
         <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de temps modélisant l&apos;embouteillage des porteurs aux faibles Vce</translation>
     </message>
     <message>
         <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de stockage d&apos;émetteur neutre</translation>
     </message>
     <message>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant de la dépendance en courant du temps de stockage d&apos;émetteur neutre</translation>
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de temps de la saturation aux fortes densités de courant</translation>
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de lissage de la dépendace en courant du temps de transit dans la base et le collecteur</translation>
     </message>
     <message>
         <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de partition base collecteur</translation>
     </message>
     <message>
         <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance interne du collecteur aux faibles champs</translation>
     </message>
     <message>
         <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de basculement entre régime de vitesse ohmique et saturée</translation>
     </message>
     <message>
         <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation interne C-E</translation>
     </message>
     <message>
         <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de punch-through collecteur</translation>
     </message>
     <message>
         <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de stockage en régime inverse</translation>
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité parasite B-E totale</translation>
     </message>
     <message>
         <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité parasite B-C totale</translation>
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Délai additionnel des porteurs minoritaires</translation>
     </message>
     <message>
         <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Délai additionnel du courant de transfert</translation>
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient du bruit de scintillation</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant du bruit de scintillation</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle des porteurs minoritaires de collecteur dans le sens de la largeur d&apos;émetteur</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle des porteurs minoritaires de collecteur dans le sens de la longueur d&apos;émetteur</translation>
     </message>
     <message>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension de gap extrapolée à 0 K</translation>
     </message>
     <message>
         <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>Dépendance thermique du premier ordre de T0</translation>
     </message>
     <message>
         <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>Dépendance thermique du second ordre de T0</translation>
     </message>
     <message>
         <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de RCI0</translation>
     </message>
     <message>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de la mobilité dans l&apos;expression du temps de transit du transistor substrat</translation>
     </message>
     <message>
         <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Dépendance thermique relative de la vitesse de dérive à saturation</translation>
     </message>
     <message>
         <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
+        <translation>Dépedance thermique relative de Vces</translation>
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de la résistance interne de base</translation>
     </message>
     <message>
         <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de la résistance externe de base</translation>
     </message>
     <message>
         <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de la résistance externe de collecteur</translation>
     </message>
     <message>
         <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant thermique de la résistance d&apos;émetteur</translation>
     </message>
     <message>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
+        <translation>Dépendance thermique relative du β direct dans le modèle v. 2.1</translation>
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance thermique</translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité thermique</translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Température à laquelle les paramètres sont donnés</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dérive thermique d&apos;un transistor individuel dû à l&apos;échauffement global de la puce</translation>
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>Température du composant simulé</translation>
+    </message>
+    <message>
+        <source>npn HICUM L2 v2.1</source>
+        <translation type="obsolete">NPN Hicum L2 v 2.1</translation>
+    </message>
+    <message>
+        <source>pnp HICUM L2 v2.1</source>
+        <translation type="obsolete">PNP Hicum L2 v 2.1</translation>
+    </message>
+    <message>
+        <source>FBH HBT verilog device</source>
+        <translation type="obsolete">Composant FBH HBT Verilog</translation>
     </message>
     <message>
         <source>FBH HBT</source>
-        <translation type="unfinished"></translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoré</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Température de fonctionnement (°C)</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance thermique (K.W⁻¹)</translation>
+    </message>
+    <message>
+        <source>Thermal capacitanc</source>
+        <translation type="obsolete">Capacité thermique</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle : nombre de doigts de l&apos;émetteur</translation>
     </message>
     <message>
         <source>Length of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur d&apos;un doigt d&apos;émetteur (m)</translation>
     </message>
     <message>
         <source>Width of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur d&apos;un doigt d&apos;émetteur (m)</translation>
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation de la densité de courant direct (A.µm⁻²)</translation>
     </message>
     <message>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient d&apos;émission de courant direct</translation>
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Énergie d&apos;activitation thermique directe (V) (0 = aucune dépendance thermique)</translation>
     </message>
     <message>
         <source>B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation de la densité du courant de fuite B-E (A.µm⁻²)</translation>
     </message>
     <message>
         <source>B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient d&apos;émission de fuite B-E</translation>
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de limitation de la diode parasitique B-E (Ω)</translation>
     </message>
     <message>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Second seuil de saturation de la densité du courant de fuite B-E (A.µm⁻²)</translation>
     </message>
     <message>
         <source>2nd B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Second coefficient d&apos;émission de fuite B-E</translation>
     </message>
     <message>
         <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Seconde résistance de limitation de la diode parasitique B-E (Ω)</translation>
     </message>
     <message>
         <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seconde énergie d&apos;activitation thermique de fuite B-E (V) (0 = aucune dépendance thermique)</translation>
     </message>
     <message>
         <source>Reverse saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation de la densité de courant inverse (A.µm⁻²)</translation>
     </message>
     <message>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient d&apos;émission de courant inverse</translation>
     </message>
     <message>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Énergie d&apos;activitation thermique inverse (V) (0 = aucune dépendance thermique)</translation>
     </message>
     <message>
         <source>Fraction of Cjc that goes to internal base node</source>
-        <translation type="unfinished"></translation>
+        <translation>Portion de Cjc reporté sur la base interne</translation>
     </message>
     <message>
         <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de saturation de la densité du courant de fuite B-C (A.µm⁻²)</translation>
     </message>
     <message>
         <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficient d&apos;émission de fuite B-C (0 : effet négligé)</translation>
     </message>
     <message>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de limitation de la diode parasitique B-C (Ω)</translation>
     </message>
     <message>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Énergie d&apos;activitation thermique de fuite B-C (V) (0 = aucune dépendance thermique)</translation>
     </message>
     <message>
         <source>Ideal forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>β direct idéal</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>  Coefficient thermique du β direct (K⁻¹) (0 = aucune dépendance)</translation>
     </message>
     <message>
         <source>Ideal reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>β inverse idéal</translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>  Tension d&apos;Early directe (V) (0 : pas d&apos;effet Early)</translation>
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>  Tension d&apos;Early inverse (V) (0 : pas d&apos;effet Early)</translation>
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil du courant de forte injection direct (A) (0 = pas d&apos;effet Webster)</translation>
     </message>
     <message>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil du courant de forte injection inverse (A) (0 = pas d&apos;effet Webster)</translation>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant d&apos;avalanche C-E (0 = pas d&apos;effet Zéner)</translation>
     </message>
     <message>
         <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;avalanche C-E (0 = pas d&apos;effet Zéner)</translation>
     </message>
     <message>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;avalanche B-E (0 = pas d&apos;effet Zéner)</translation>
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de transit inverse idéal (s)</translation>
+    </message>
+    <message>
+        <source>Extrinsic BC diffusion capacitance, s</source>
+        <translation type="obsolete">Capacité B-C extrinsèque de diffusion (F)</translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de transit idéal (s)</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient thermique du temps de transit direct</translation>
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de transit additionnel dû au push-out de base</translation>
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre de lissage de Thcs</translation>
     </message>
     <message>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de déplétion de la jonction B-E non polarisée (F.µm²)</translation>
     </message>
     <message>
         <source>B-E junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant de la jonction B-E</translation>
     </message>
     <message>
         <source>B-E junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur intrisèque du potentiel B-E (V)</translation>
     </message>
     <message>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de déplétion de la jonction B-C non polarisée (F.µm²)</translation>
     </message>
     <message>
         <source>B-C junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant de la jonction B-C</translation>
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Potentiel intrinsèque de la jonction B-C (V)</translation>
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>Inutilisé</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur minimale de la capacité de déplétion B-C (facteur de Vbc), en F.µm⁻²</translation>
     </message>
     <message>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur du courant de collecteur pour lequel Cbc atteint Cmin, A.µm⁻²</translation>
     </message>
     <message>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fraction de Cmin, limite inférieure de la capacité BC (dépend de lc)</translation>
     </message>
     <message>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil de déclanchement de l&apos;expansion de base aux faibles tensions, Ω.µm² (0 = pas d&apos;effet Kirk)</translation>
     </message>
     <message>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seuil d&apos;expansion de la base aux hautes tensions A.µm⁻² (0 = pas d&apos;effet Kirk)</translation>
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pente de Jk en fort courants, Ω.µm²</translation>
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Variation de la tension de seuil d&apos;expansion de base (V)</translation>
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de collecteur (Ω/doigt)</translation>
     </message>
     <message>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance d&apos;émetteur (Ω/doigt)</translation>
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance extrinsèque de base (Ω/doigt)</translation>
     </message>
     <message>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance de la base interne (Ω/doigt)</translation>
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductance du collecteur (H)</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductance de l&apos;émetteur (H)</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductance de la base (H)</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité extrisèque de l&apos;émetteur (F)</translation>
     </message>
     <message>
         <source>Extrinsic base capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité extrisèque de la base (F)</translation>
     </message>
     <message>
         <source>Extrinsic collector capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité extrisèque du collecteur (F)</translation>
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient du bruit de scintillation</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant du bruit de scintillation</translation>
     </message>
     <message>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant fréquenciel du bruit de scintillation</translation>
     </message>
     <message>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient du bruit de grenaille</translation>
     </message>
     <message>
         <source>Burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exposant du bruit de grenaille</translation>
     </message>
     <message>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Fréquence de coupure du bruit de grenaille (Hz)</translation>
     </message>
     <message>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished"></translation>
+        <translation>Température de mesure des paramètres</translation>
+    </message>
+    <message>
+        <source>ideal 4-port transmission line</source>
+        <translation type="obsolete">Ligne de transmission quadrupolaire idéale</translation>
+    </message>
+    <message>
+        <source>4-Port Transmission Line</source>
+        <translation type="obsolete">Ligne de transmission quadrupolaire</translation>
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil isolé (ou connexion)</translation>
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur du fil</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamètre du fil</translation>
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur au-dessus du plan de masse</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Résistance spécifique du métal</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Perméabilité relative du métal</translation>
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>modèle de fil isolé</translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil libre</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>Paire torsadée</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamètre de l&apos;âme</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diamètre du fil (âme et isolant)</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante diélectrique de l&apos;isolant</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de torsades par mètre (m⁻¹)</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Paire torsadée</translation>
     </message>
     <message>
         <source>physical length of the line</source>
+        <translation>Longueur physique de la ligne</translation>
+    </message>
+    <message>
+        <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>(available) ac power in Watts</source>
+        <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extrinsic BC diffusion capacitance, F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4963,22 +5007,6 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7410,42 +7438,62 @@ Lance l&apos;application de calcul d&apos;atténuateur</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalan par Antoni Subirats</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>Interface Vérilog AMS par Hélène Parruitte</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrer horizontalement</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrer horizontalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrer horizontalement
+
+Centre horizontalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Centre verticalement</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centre verticalement
+
+Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
+        <translation>P&amp;lacement</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Enregistrer</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7498,22 +7546,6 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
-    </message>
-    <message>
-        <source>Print...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9692,7 +9724,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalan</translation>
     </message>
 </context>
 <context>
@@ -10121,27 +10153,31 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers modifiés</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Sans nom</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistre les fichiers modifiés</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir les fichiers à enregistrer</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Interrompre la fermeture</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer la sélection</translation>
+    </message>
+    <message>
+        <source>Dont Save</source>
+        <translation type="obsolete">Ne pas enregistrer</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
