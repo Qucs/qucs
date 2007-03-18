@@ -1,3 +1,7 @@
+2007-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_fr.ts: Updated french translations.  Thanks to Vincent!
+
 2007-03-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (%.qm): Also renamed cz -> cs.  Thanks Marek
