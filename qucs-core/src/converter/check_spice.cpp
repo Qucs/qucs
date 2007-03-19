@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.32 2007/03/14 19:27:49 ela Exp $
+ * $Id: check_spice.cpp,v 1.33 2007/03/19 21:10:19 ela Exp $
  *
  */
 
@@ -1999,32 +1999,32 @@ spice_post_translator (struct definition_t * root) {
       struct pair_t * R = spice_find_property_nocase (def, "RSH");
       struct pair_t * D = spice_find_property_nocase (def, "DEFW");
       struct pair_t * N = spice_find_property_nocase (def, "NARROW");
-      nr_double_t _L = 0, _W = 0, _R = 0, _D = 0, _N = 0;
+      nr_double_t l = 0, w = 0, r = 0, d = 0, n = 0;
       if (L) {
-	_L = spice_evaluate_value (L->value);
+	l = spice_evaluate_value (L->value);
 	def->pairs = spice_del_property (def->pairs, L);
       }
       if (W) {
-	_W = spice_evaluate_value (W->value);
+	w = spice_evaluate_value (W->value);
 	def->pairs = spice_del_property (def->pairs, W);
       }
       if (R) {
-	_R = spice_evaluate_value (R->value);
+	r = spice_evaluate_value (R->value);
 	def->pairs = spice_del_property (def->pairs, R);
       }
       if (D) {
-	_D = spice_evaluate_value (D->value);
+	d = spice_evaluate_value (D->value);
 	def->pairs = spice_del_property (def->pairs, D);
       }
       if (N) {
-	_N = spice_evaluate_value (N->value);
+	n = spice_evaluate_value (N->value);
 	def->pairs = spice_del_property (def->pairs, N);
       }
-      if (_D == 0) _D = 1e-6;
-      if (_W == 0) _W = _D;
-      if (_L != 0 && _W != 0 && _R != 0) {
-	_R = _R * (_L - _N) / (_W - _N);
-	spice_set_property_value (def, "R", _R);
+      if (d == 0) d = 1e-6;
+      if (w == 0) w = d;
+      if (l != 0 && w != 0 && r != 0) {
+	r = r * (l - n) / (w - n);
+	spice_set_property_value (def, "R", r);
       }
       // handle Spice 2g6 syntax
       struct value_t * val;

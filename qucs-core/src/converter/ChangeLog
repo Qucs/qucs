@@ -1,3 +1,9 @@
+2007-03-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed compilation failure for a NetBSD
+	g++ which has _L and _N as predefined symbols (don't know if
+	in headers or built-in).
+
 2007-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Lexer modifications for the Spice 2g6 resistor
