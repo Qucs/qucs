@@ -25,8 +25,8 @@
 EXTRA_DIST = $(PDFS) $(PNGS)
 
 PDFS = igain_1.pdf igain_3.pdf outputbjt_1.pdf igain_2.pdf igain_4.pdf \
-  outputbjt_2.pdf
-
+  outputbjt_2.pdf bjtac_1.pdf bjtac_2.pdf bjtacft_1.pdf bjtacft_2.pdf \
+  igain_ib.pdf bjttr_1.pdf bjttr_2.pdf
 
 PNGS = finalhighpassrc.png highpassrc.png highpasssimblock.png \
   simblockconfig.png \

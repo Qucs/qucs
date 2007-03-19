@@ -49,7 +49,7 @@ can start it by issuing the
   # qucs
 \end{verbatim}
 
-command or by clicking the appropiate icon on your start menu or
+command or by clicking the appropriate icon on your start menu or
 desktop.  Qucs is a multi-lingual program.  So depending on your
 system's language settings the Qucs graphical user interface (GUI)
 appears in different languages.
@@ -750,6 +750,130 @@ is put into the \textbf{U} property of the DC voltage source
 \end{figure}
 \FloatBarrier
 
+\tutsubsection{AC simulation - Transit frequency of a bipolar transistor}
+
+In the next section we are going to determine the transit frequency of
+the bipolar transistor used in the previous DC sections.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{igain_ib}
+  \caption{DC current gain vs. base current}
+  \label{fig:igain_ib}
+\end{figure}
+\FloatBarrier
+
+For maximum AC performance we use as a rule of thumb the bias point
+with the maximum DC current gain.  For this in fig.~\ref{fig:igain_ib}
+the DC current gain from fig.~\ref{fig:igain_4} is plotted versus the
+base current \textbf{Ib} choosing \textbf{Beta} in the diagram dialog
+instead of \textbf{Beta\_vs\_Ic}.  The appropiate base current shown
+in the marker is $140\micro\ampere$.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.85\linewidth]{bjtac_1}
+  \caption{Bias dependent AC simulation setup}
+  \label{fig:bjtac_1}
+\end{figure}
+\FloatBarrier
+
+In fig.~\ref{fig:bjtac_1} is a DC bias dependent AC simulation setup
+shown.  The DC base current \textbf{Ib} is swept for
+$40\micro\ampere$, $140\micro\ampere$ and $240\micro\ampere$.
+Additionally the AC simulation block has been placed on the schematic.
+
+\medskip
+
+The \textbf{Sim} parameter of the \textbf{SW1} parameter sweep is set
+to the instance name of the AC simulation \textbf{AC1}.  Qucs
+automatically ``knows'' that the DC simulation has to be run before
+each AC simulation since it is required to determine the appropriate
+bias points.
+
+\medskip
+
+The AC current current source \textbf{I2} is in parallel to the DC
+current source and has an AC amplitude of $1\micro\ampere$.  During
+the AC simulation the DC current source \textbf{I1} is an ideal open
+and the DC voltage source \textbf{V1} is an ideal short.
+
+\medskip
+
+In the equations \textbf{V1.i} (mark the small i letter) denotes the
+AC current through the DC voltage source \textbf{V1}.  The AC base
+current \textbf{ib} is taken from the input parameter \textbf{I2.I}
+denoting the value of the property \textbf{I} of the AC current source
+\textbf{I2} ($1\micro\ampere$).
+
+\medskip
+
+After pressing \keystroke{F2} -- to start the simulation -- the
+following cartesian diagram can be placed on the data display page,
+see fig.~\ref{fig:bjtac_2}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{bjtac_2}
+  \caption{AC current gain of the bipolar transistor}
+  \label{fig:bjtac_2}
+\end{figure}
+\FloatBarrier
+
+The marker clearly shows for the low frequency range ($f \rightarrow
+0$) the DC current gain of 246 (for $I_B = 140\micro\ampere$) which
+was already determined in fig.~\ref{fig:igain_ib}.
+
+\medskip
+
+In the next AC simulation setup shown in fig.~\ref{fig:bjtacft_1} the
+parameter sweep is dropped to concentrate on the determination of the
+transit frequency.  The transit frequency of a bipolar transistor
+denotes the frequency where the AC current gain drops to 1 (0 dB).
+\begin{equation*}
+f_T \; \leftarrow \; \left|h_{21}\right|^2 = 1
+\end{equation*}
+
+Expressed in h-parameters of a general two-port the AC current gain
+is:
+\begin{equation*}
+\beta_{RF} = h_{21} = \left.\dfrac{i_2}{i_1}\right|_{v_2=0}
+\end{equation*}
+
+wheras port 1 is the base and port 2 the collector.  The side
+condition ($v_2=0$) is given in our setup since the DC voltage source
+is an ideal AC short.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{bjtacft_1}
+  \caption{AC setup for determining the transit frequency}
+  \label{fig:bjtacft_1}
+\end{figure}
+\FloatBarrier
+
+There are two more equations in the setup.  One calculates the AC
+current gain in dB (which is $\mathrm{20\cdot\log{\left(beta\right)}}$
+and the other one is \textbf{ft=xvalue(beta\_dB,0)}.  The equation
+searches for the nearest given x-value (in this case the frequency)
+where \textbf{beta\_dB} approaches \textbf{0}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\linewidth]{bjtacft_2}
+  \caption{Bode plot of the current transfer function}
+  \label{fig:bjtacft_2}
+\end{figure}
+\FloatBarrier
+
+In fig.~\ref{fig:bjtacft_2} the Bode plot (double logarithmic plot) of
+the current transfer function of the bipolar transistor is shown.  The
+current gain is constant up to the corner frequency and then drops by
+20dB/decade.  The marker finally denotes where the gain is finally
+0dB.  The equation for \textbf{ft} worked correctly as seen in the
+beside tabular.  The transit frequency of the bipolar transistor in
+this bias point is approximately $288\mega\hertz$.
+
 \tutsubsection{AC simulation - A simple RC highpass}
 
 Simple circuit AC analysis (circuit frequency response analysis) can
@@ -806,3 +930,58 @@ frequency analysis can be seen on figure~\ref{fig:finalhighpassrc}.
   \label{fig:finalhighpassrc}
 \end{figure}
 \FloatBarrier
+
+\tutsubsection{Transient simulation - Amplification of a bipolar transistor}
+
+Based on the schematic in fig.~\ref{fig:bjtacft_1} we are now going to
+simulate the bipolar transistor in the time domain.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{bjttr_1}
+  \caption{Transient simulation setup}
+  \label{fig:ibjttr_1}
+\end{figure}
+\FloatBarrier
+
+As shown in fig.~\ref{fig:ibjttr_1} the transient simulation block was
+placed on the schematic.  Also the frequency \textbf{f} of the AC
+current source \textbf{I2} was set to 1kHz.  The start time of the
+transient simulation is set to 0 and the stop time to 5ms which will
+include 5 periods of the input signal.
+
+\medskip
+
+The additional DC simulation block is not necessary for the transient
+simulation but left there for some result comparison.
+
+\medskip
+
+The collector current in the equations is denoted by the transient
+current \textbf{-V1.It}.  The peak value if the collector current is
+determined by the equation for \textbf{IcHat}.  The current gain
+during transient simulation is calculated using
+\textbf{BetaTR=IcHat/I2.I} whereas \textbf{I2.I} denotes the component
+property \textbf{I} of the the current source \textbf{I2} (which is
+$1\micro\ampere$ peak).  The current gain \textbf{BetaDC} is computed
+for convenience.
+
+\medskip
+
+The equation blocks imply that the order of appearance of assignments
+does not matter (e.g. \textbf{IcHat} is used before computed).  The
+equation solver will take care of such dependencies.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{bjttr_2}
+  \caption{Transient results}
+  \label{fig:ibjttr_2}
+\end{figure}
+\FloatBarrier
+
+Fig.~\ref{fig:ibjttr_2} shows the results of the transient as well as
+DC simulation.  The time dependent collector current oscillates around
+its bias point.  The current gain of the transient signal corresponds
+perfectly with the DC value.  That is because a rather small frequency
+of 1kHz was chosen.
