@@ -985,3 +985,98 @@ DC simulation.  The time dependent collector current oscillates around
 its bias point.  The current gain of the transient signal corresponds
 perfectly with the DC value.  That is because a rather small frequency
 of 1kHz was chosen.
+
+\tutsubsection{S-parameter simulation - Transit frequency of a BJT}
+
+In the following section the S-parameter simulation is introduced.
+The S-parameter simulation is -- similar to the AC simulation -- a
+small signal analysis in the frequency domain.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{bjtsp_1}
+  \caption{S-parameter simulation setup for the bipolar transistor}
+  \label{fig:bjtsp_1}
+\end{figure}
+\FloatBarrier
+
+Similar to the AC setup in fig.~\ref{fig:bjtacft_1} the S-parameter
+setup in fig.~\ref{fig:bjtsp_1} uses the same biasing.  The setup will
+be used to determine the transit frequency of the bipolar transistor.
+
+\medskip
+
+The two AC power sources \textbf{P1} and \textbf{P2} are required for
+a two-port S-parameter simulation.  They can be found in the
+\textbf{Components} tab in the \textbf{sources} category.  Depending
+on the number of these kind of sources one-port, two-port and
+multi-port simulations are performed.  The \textbf{Num} property of
+the sources determines the location of the matrix entries in the
+resulting S-parameter matrix.  The \textbf{Z} properties define the
+reference impedance of the S-parameters.
+
+\medskip
+
+The additional DC block \textbf{C1} at the base node and the bias tee
+\textbf{X1} on the collector is used to decouple the signal path of
+the biasing DC sources from the internal impedance of the AC power
+sources.
+
+\medskip
+
+The S-parameter simulation itself is selected by placing the
+S-parameter block \textbf{SP1} on the schematic.  The same frequency
+range is chosen as in the previous AC simulations.
+
+\medskip
+
+The equations contain a two-port conversion function which convert the
+resulting S-parameter \textbf{S} into the appropriate H-parameters
+\textbf{H}.  Again the AC current gain $\mathrm{h_{21}}$ is calculated
+and converted in dB.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{bjtsp_3}
+  \caption{S-parameters of the bipolar transistor}
+  \label{fig:bjtsp_3}
+\end{figure}
+\FloatBarrier
+
+In fig.~\ref{fig:bjtsp_3} the four complex S-parameters are displayed
+in two \textbf{Polar-Smith Combi} diagrams.  They represent what can
+be expected from a typical bipolar transistor.
+
+\medskip
+
+Using the computed H-parameters we can now compare the S-parameter
+simulation results with those of the AC simulation.
+Fig.~\ref{fig:bjtsp_2} shows that the curves \textbf{beta\_dB} of both
+simualtion setups cover perfectly each other.  Again the transit
+frequency is approximately 288MHz.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.65\linewidth]{bjtsp_2}
+  \caption{Comparison between S-parameter and AC result}
+  \label{fig:bjtsp_2}
+\end{figure}
+\FloatBarrier
+
+The diagram implies that you can compare data curves from different
+setups.  This is indicated by the \textbf{bjtacft:} prefix.  The
+appropriate dataset file \textbf{bjtacft.dat} can be selected in the
+diagram dialog as shown in fig.~\ref{fig:diagramdialog_sets}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{diagramdialog_sets}
+  \caption{Choosing graphs from different datasets}
+  \label{fig:diagramdialog_sets}
+\end{figure}
+\FloatBarrier
+
+The current S-parameter setup is called \textbf{bjtsp} and the setup
+shown in fig.~\ref{fig:bjtacft_1} was called \textbf{bjtacft}.  Please
+note that only datasets from the same project can be compared with
+each other.
