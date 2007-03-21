@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.48 2007-03-01 09:15:19 ela Exp $
+ * $Id: equation.cpp,v 1.49 2007-03-21 20:57:39 ela Exp $
  *
  */
 
@@ -1470,16 +1470,26 @@ vector * solver::getDataVector (char * str) {
    returns NULL if there are no such dependencies. */
 strlist * solver::collectDataDependencies (node * eqn) {
   strlist * sub = NULL, * datadeps = NULL;
+  // should all data dependencies be dropped?
   if (!eqn->getResult()->dropdeps) {
     strlist * deps = eqn->getDependencies ();
     datadeps = eqn->getDataDependencies ();
     datadeps = datadeps ? new strlist (*datadeps) : NULL;
+    // go through equation dependencies
     for (int i = 0; deps && i < deps->length (); i++) {
       char * var = deps->get (i);
+      // find equation node for the dependency
       node * n = checker::findEquation (equations, var);
+      // try again in the solver equations
       if (n == NULL && eqn->solvee != NULL)
 	n = checker::findEquation (eqn->solvee->getEquations (), var);
+      // if finally founf the equation node
       if (n != NULL) {
+	// pass resulting data dependencies up
+	strlist * resdeps;
+	if ((resdeps = n->getResult()->getDataDependencies ()) != NULL)
+	  n->setDataDependencies (resdeps);
+	// add data dependencies
 	sub = strlist::join (datadeps, n->getDataDependencies ());
 	sub->del (n->getResult()->getDropDependencies ());
 	sub->add (n->getResult()->getPrepDependencies ());
@@ -1488,6 +1498,7 @@ strlist * solver::collectDataDependencies (node * eqn) {
       datadeps = sub;
     }
   }
+  // prepend dependencies if necessary
   strlist * preps = eqn->getResult()->getPrepDependencies ();
   if (datadeps) {
     if (preps) datadeps->add (preps->last ());
@@ -1495,8 +1506,11 @@ strlist * solver::collectDataDependencies (node * eqn) {
     datadeps = new strlist ();
     if (preps) datadeps->add (preps->last ());
   }
+  // drop duplicate entries
   datadeps = checker::foldDependencies (datadeps);
+  // delete the dependencies to be dropped intentionally
   datadeps->del (eqn->getResult()->getDropDependencies ());
+  // finally return the correct data dependencies
   if (datadeps->length () == 0) {
     delete datadeps;
     datadeps = NULL;
