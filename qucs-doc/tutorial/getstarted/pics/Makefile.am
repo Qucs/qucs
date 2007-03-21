@@ -26,7 +26,8 @@ EXTRA_DIST = $(PDFS) $(PNGS)
 
 PDFS = igain_1.pdf igain_3.pdf outputbjt_1.pdf igain_2.pdf igain_4.pdf \
   outputbjt_2.pdf bjtac_1.pdf bjtac_2.pdf bjtacft_1.pdf bjtacft_2.pdf \
-  igain_ib.pdf bjttr_1.pdf bjttr_2.pdf bjtsp_1.pdf bjtsp_2.pdf bjtsp_3.pdf
+  igain_ib.pdf bjttr_1.pdf bjttr_2.pdf bjtsp_1.pdf bjtsp_2.pdf bjtsp_3.pdf \
+  bpac_1.pdf bpac_2.pdf bpsp_1.pdf bpsp_2.pdf igain_beta_1.pdf
 
 PNGS = finalhighpassrc.png highpassrc.png highpasssimblock.png \
   simblockconfig.png \
@@ -37,7 +38,7 @@ PNGS = finalhighpassrc.png highpassrc.png highpasssimblock.png \
   newproject.png contenttab.png divider_save.png nodelabel.png \
   diagramdialog_1.png empty_dpl.png propdirect.png diagramdialog_divided.png \
   eqndialog.png diagramdialog.png fileprops.png start.png divided_dpl.png \
-  final_divider.png divider_1.png diagramdialog_sets.png
+  final_divider.png divider_1.png diagramdialog_sets.png besselfilter.png
 
 
 tutorial: $(XPDF)
