@@ -1,3 +1,9 @@
+2007-03-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Fixed a bug in the data dependency tracking.
+	It apparently occurred due o the many changes in the equation
+	solver.
+
 2007-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Modifying U*Prev values of non-linear devices
