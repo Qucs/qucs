@@ -753,7 +753,30 @@ is put into the \textbf{U} property of the DC voltage source
 \tutsubsection{AC simulation - Transit frequency of a bipolar transistor}
 
 In the next section we are going to determine the transit frequency of
-the bipolar transistor used in the previous DC sections.
+the bipolar transistor used in the previous DC sections.  First a bias
+point is chosen.  In fig.~\ref{fig:igain_beta_1} the DC setup was a
+bit modified.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{igain_beta_1}
+  \caption{DC setup for determining a bias point for AC simulation}
+  \label{fig:igain_beta_1}
+\end{figure}
+\FloatBarrier
+
+There is now an additional equation computing the RF current gain for
+zero frequency which is \textbf{Beta\_0=diff(Ic,Ib)}.  The equation
+denotes
+\begin{equation*}
+\beta_{RF}\left(f=0\right) = \dfrac{\partial Ic}{\partial Ib}
+\end{equation*}
+
+In fig.~\ref{fig:igain_ib} the DC current gain from
+fig.~\ref{fig:igain_4} is plotted versus the base current \textbf{Ib}
+choosing \textbf{Beta} in the diagram dialog instead of
+\textbf{Beta\_vs\_Ic}.  The appropiate base current shown in the
+marker is $140\micro\ampere$.
 
 \begin{figure}[ht]
   \centering
@@ -763,12 +786,13 @@ the bipolar transistor used in the previous DC sections.
 \end{figure}
 \FloatBarrier
 
-For maximum AC performance we use as a rule of thumb the bias point
-with the maximum DC current gain.  For this in fig.~\ref{fig:igain_ib}
-the DC current gain from fig.~\ref{fig:igain_4} is plotted versus the
-base current \textbf{Ib} choosing \textbf{Beta} in the diagram dialog
-instead of \textbf{Beta\_vs\_Ic}.  The appropiate base current shown
-in the marker is $140\micro\ampere$.
+It can be seen that the maximum AC current gain (257 @
+$53\micro\ampere$) differs from the maximum DC gain.  Also the AC
+current gain almostly equals the DC current gain at the base current
+for the maximum DC current gain.  For maximum RF performance the base
+current with the maximum AC current gain could be chosen.  But there
+may be other consideration, e.g. DC power dissipation, so we choose
+the bias point with the maximum DC current gain -- arbitrarily.
 
 \begin{figure}[ht]
   \centering
@@ -780,7 +804,7 @@ in the marker is $140\micro\ampere$.
 
 In fig.~\ref{fig:bjtac_1} is a DC bias dependent AC simulation setup
 shown.  The DC base current \textbf{Ib} is swept for
-$40\micro\ampere$, $140\micro\ampere$ and $240\micro\ampere$.
+$53\micro\ampere$, $140\micro\ampere$ and $500\micro\ampere$.
 Additionally the AC simulation block has been placed on the schematic.
 
 \medskip
@@ -1020,7 +1044,10 @@ reference impedance of the S-parameters.
 The additional DC block \textbf{C1} at the base node and the bias tee
 \textbf{X1} on the collector is used to decouple the signal path of
 the biasing DC sources from the internal impedance of the AC power
-sources.
+sources.  Also the bias tee ensures that the AC signal from the
+\textbf{P2} source is not shorted by the DC source \textbf{V1}.  The
+same functionality is achieved by the DC current source \textbf{I3} at
+the base.  It represents an ideal AC open.
 
 \medskip
 
@@ -1052,7 +1079,7 @@ be expected from a typical bipolar transistor.
 Using the computed H-parameters we can now compare the S-parameter
 simulation results with those of the AC simulation.
 Fig.~\ref{fig:bjtsp_2} shows that the curves \textbf{beta\_dB} of both
-simualtion setups cover perfectly each other.  Again the transit
+simulation setups cover perfectly each other.  Again the transit
 frequency is approximately 288MHz.
 
 \begin{figure}[ht]
@@ -1080,3 +1107,150 @@ The current S-parameter setup is called \textbf{bjtsp} and the setup
 shown in fig.~\ref{fig:bjtacft_1} was called \textbf{bjtacft}.  Please
 note that only datasets from the same project can be compared with
 each other.
+
+\tutsubsection{S-parameter and AC simulation - A Bessel band-pass filter}
+
+The interested reader may have noticed that there seems to be a
+relationship betwenn AC analysis and the S-parameter simulation.  In
+the next section we are going to explain this releationship using a
+simple filter design.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\linewidth]{besselfilter}
+  \caption{Filter synthesis application}
+  \label{fig:besselfilter}
+\end{figure}
+\FloatBarrier
+
+In fig.~\ref{fig:besselfilter} the filter synthesis program coming
+with Qucs is shown.  You can start it by the \Ctrl+\keystroke{2}
+shortcut or by choosing the \textbf{Tools} $\rightarrow$
+\textbf{Filter synthesis} menu entry.  The user can choose between
+different types of filters and the filter class (lowpass, highpass,
+bandpass or bandstop).  Also the appropriate corner frequencies and
+the order must be configured.  When setup correctly you press the
+\textbf{Calculate and put into Clipboard} button.  The program will
+indicate if it was possible to create the appropriate filter
+schematic.  If so, the application passes the schematic to the system
+wide clipboard.
+
+\medskip
+
+Back in the schematic editor you can paste the filter design into the
+schematic using the \Ctrl+\keystroke{V} shortcut or by choosing the
+\textbf{Edit} $\rightarrow$ \textbf{Paste} menu entry.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{bpsp_1}
+  \caption{Schematic for 5th order Bessel band-pass filter}
+  \label{fig:bpsp_1}
+\end{figure}
+\FloatBarrier
+
+The schematic shown in fig.~\ref{fig:bpsp_1} was automatically created
+by the filter synthesis program and can be simulated as is.  It
+contains the LC-ladder network forming the actual filter, the two
+S-parameter ports (the AC power sources) as well the S-parameter
+simulation block with the appropriate frequencies pre-configured.
+Additionally there is an equation computing the transmission and
+reflection of the filter network in dB.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{bpsp_2}
+  \caption{S-parameters of the band-pass filter}
+  \label{fig:bpsp_2}
+\end{figure}
+\FloatBarrier
+
+The results of the S-parameter simulation are depicted in
+fig.~\ref{fig:bpsp_2}.  In the logarthmic cartesian diagram the
+transmission of the filter clearly shows the band-pass behaviour
+between the selected frequencies 1MHz and 2MHz.  Additionally the
+input- and output reflections can be seen in the two Smith charts.
+
+\medskip
+
+Now two AC setups will be created to calculate the same S-parameters
+as found in the previous simulation.  In fig.~\ref{fig:bpac_1} the
+LC-ladder network is unchanged but the S-parameter ports are replaced
+by a $50\Omega$ resistor and an AC voltage source in series.  Also
+there is now an AC simulation block with the same frequency sweep
+chosen as in the previous S-parameter simulation.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{bpac_1}
+  \caption{S-parameters at port 1 of the band-pass filter using AC analysis}
+  \label{fig:bpac_1}
+\end{figure}
+\FloatBarrier
+
+At this point some theory must be stressed.
+
+\medskip
+
+S-parameters are defined by ingoing (a) and outgoing (b) power waves:
+\begin{align*}
+a &= \dfrac{V + Z_0\cdot I}{2 \cdot \sqrt{Z_0}}\\
+b &= \dfrac{V - Z_0\cdot I}{2 \cdot \sqrt{Z_0}}
+\end{align*}
+
+whereas $Z_0$ denotes the reference impedance the S-parameters will be
+normalized to.  With this definition the two-port S-parameters can be
+written as:
+\begin{equation*}
+S_{11} = \left.\dfrac{b_1}{a_1}\right|_{b_2=0}\;\;\;\;
+S_{21} = \left.\dfrac{b_2}{a_1}\right|_{b_2=0}\;\;\;\;
+S_{22} = \left.\dfrac{b_2}{a_2}\right|_{b_1=0}\;\;\;\;
+S_{12} = \left.\dfrac{b_1}{a_2}\right|_{b_1=0}
+\end{equation*}
+
+Back at the schematic in fig.~\ref{fig:bpac_1}.  The amplitude of the
+AC voltage source \textbf{V1} is set to 1V (but can be any other value
+different from zero) and the side condition $\mathrm{b_2=0}$ is
+fulfilled by setting the amplitude of the AC voltage source
+\textbf{V2} to 0V.  The additional equations just calculate the
+S-parameters as they are defined from the AC simulation values.
+
+\medskip
+
+Please note the current directions through the AC voltages sources
+\textbf{V1.i} and \textbf{V2.i}.  They must be considered by the unary
+minus in the equations.
+
+\medskip
+
+The results of this simulation again show the filter transmission
+function as we already know it from the S-parameter simulation.  Also
+the reflections at port 1 look identical.
+
+\medskip
+
+In the second schematic shown in fig.~\ref{fig:bpac_2} the second port
+is handled.  The amplitude of the AC voltage source \textbf{V2} is set
+to 1V and the side condition $\mathrm{b_1=0}$ considered by a zero AC
+voltage source \textbf{V1}.  Again the appropriate equations are used
+to compute the two remaining S-parameters.
+
+\medskip
+
+The below simulation results again verified that we can perform a
+partial S-parameter analysis using the AC simulation block and some
+additional equations.  The diagrams in fig.~\ref{fig:bpac_2} and
+fig.~\ref{fig:bpsp_2} are identical.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\linewidth]{bpac_2}
+  \caption{S-parameters at port 2 of the band-pass filter using AC analysis}
+  \label{fig:bpac_2}
+\end{figure}
+\FloatBarrier
+
+Recapitulating we learned from this example that a S-parameter
+simulation is a number of AC simulations with some additional
+calculation formulas.  This is true though the actual simulation
+algorithms implemented in Qucs are completely different.
