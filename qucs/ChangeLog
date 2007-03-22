@@ -1,3 +1,10 @@
+2007-03-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/rect3ddiagram.cpp, diagrams/psdiagram.cpp,
+	diagrams/polardiagram.cpp, diagrams/rectdiagram.cpp,
+	diagrams/smithdiagram.cpp: Including <ieeefp.h> when available.
+	Fix for finite() function on Solaris.
+
 2007-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_fr.ts: Updated french translations.  Thanks to Vincent!

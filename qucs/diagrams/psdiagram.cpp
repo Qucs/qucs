@@ -15,10 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "psdiagram.h"
-#include "main.h"
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <math.h>
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
+
+#include "psdiagram.h"
+#include "main.h"
 
 // mixed polar and smith diagram
 PSDiagram::PSDiagram(int _cx, int _cy, bool _polarUp)

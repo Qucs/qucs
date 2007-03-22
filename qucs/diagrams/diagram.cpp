@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
-
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
 #endif
