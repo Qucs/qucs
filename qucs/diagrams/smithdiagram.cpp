@@ -15,10 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "smithdiagram.h"
-#include "main.h"
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <math.h>
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
+
+#include "smithdiagram.h"
+#include "main.h"
 
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
