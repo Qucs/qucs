@@ -15,10 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
 #include <limits.h>
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
 
 #include "rect3ddiagram.h"
 #include "main.h"
