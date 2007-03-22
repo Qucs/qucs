@@ -15,12 +15,19 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rectdiagram.h"
-#include "main.h"
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <math.h>
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
 
 #include <qmessagebox.h>
+
+#include "rectdiagram.h"
+#include "main.h"
 
 
 RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
