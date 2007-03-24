@@ -804,7 +804,7 @@ This method is called the Laplace expansion.  In order to save
 computing time the row or column with the most zeros in it is used for
 the expansion expressed in the above equations.  A sub determinant
 $(n-1)$-th order of a matrix's element $a_{\mu\nu}$ of $n$-th order is
-the determinant which is computed by canceling the $\mu$-th row and
+the determinant which is computed by cancelling the $\mu$-th row and
 $\nu$-th column.  The following example demonstrates calculating the
 determinant of a 4th order matrix with the elements of the 3rd row.
 \begin{align}
@@ -1106,7 +1106,7 @@ x_{i} &= y_{i} - \sum_{k=i+1}^{n} x_{k}\cdot u_{ik} & i = n,\ldots,1
 \end{align}
 
 The division by the diagonal elements of the matrix U is not necessary
-because of Crouts definition in eq. (\ref{eq:CroutU}) with $u_{ii} =
+because of Crouts definition in eq.~\eqref{eq:CroutU} with $u_{ii} =
 1$.
 
 \addvspace{12pt}
@@ -1553,7 +1553,7 @@ convergence and yields the final singular values of the matrix $A$.
 B^{(0)} \rightarrow B^{(1)}\rightarrow \ldots \rightarrow \Sigma
 \end{equation}
 \begin{equation}
-B^{(k+1)} = \left(S^{(k)}\right)^H\cdot B^{(k)}\cdot T^{(k)}
+B^{(k+1)} = \left(\tilde{U}^{(k)}\right)^H\cdot B^{(k)}\cdot \tilde{V}^{(k)}
 \end{equation}
 
 Each of the transformations applied to the bidiagonal matrix is also
@@ -1578,7 +1578,7 @@ A \rightarrow \left(A^T\right)^* = \left(A^*\right)^T = A^H
 \end{equation*}
 
 
-\item Euclidian norm:
+\item Euclidean norm:
 \begin{equation*}
 \lVert x \rVert = \sqrt{\sum^n_{i=1} x_i\cdot x^*_1} =
 \sqrt{\sum^n_{i=1} \lvert x_i\rvert^2} = 
@@ -1624,7 +1624,7 @@ H\cdot A &= A - 2\cdot u\cdot u^H\cdot A\\
 &=  A - 2\cdot u\cdot \left(A^H\cdot u\right)^H
 \end{align}
 and hence explicit formation and storage of $H$ is not required.  Also
-colums (or rows) can be transformed individually exploiting the fact
+columns (or rows) can be transformed individually exploiting the fact
 that $u^H\cdot A$ yields a scalar product for single columns or rows.
 
 \paragraph{Specific case}
@@ -1849,7 +1849,7 @@ M =
 \right]
 \end{equation}
 
-The elements are usually choosen so that
+The elements are usually chosen so that
 \begin{equation}
 \label{eq:givenscond}
 R =
@@ -1923,7 +1923,7 @@ c & d - \mu
 \end{split}
 \end{equation}
 
-The polymonial yields the two eigenvalues.
+The polynomial yields the two eigenvalues.
 \begin{equation}
 \label{eq:eigenvalue}
 \mu_{1,2} = \dfrac{a + d}{2} \pm \sqrt{\left(\dfrac{a + d}{2}\right)^2 + bc - ad}
@@ -2007,13 +2007,13 @@ u_{n1} & u_{n2} & u_{n3} &  & \boldsymbol{\beta_n} \\
 \end{align}
 
 For each of the Householder transformations from the left and right
-hand side the appropiate $\tau$ values must be stored in separate
+hand side the appropriate $\tau$ values must be stored in separate
 vectors.
 
 \subsubsection{Step 2: Matrix reconstructions}
 
 Using the Householder vectors stored in place of the original $A$
-matrix and the appropiate $\tau$ value vectors it is now necessary to
+matrix and the appropriate $\tau$ value vectors it is now necessary to
 unpack the $U_B$ and $V_B^H$ matrices.  The diagonal vector $\beta$
 and the super-diagonal vector $\delta$ can be saved in separate
 vectors previously.  Thus the $U_B$ matrix can be unpacked in place of
@@ -2046,7 +2046,7 @@ V_B\; &= I\cdot H^H_{V1}\cdot H^H_{V2}\cdot \ldots \cdot H^H_{Vn}\\
 \end{align}
 
 Unpacking the $V_B^H$ matrix is done in a similar way also performing
-successive Housholder matrix multiplications using backward
+successive Householder matrix multiplications using backward
 accumulation.
 
 \subsubsection{Step 3: Diagonalization -- shifted QR iteration}
@@ -2070,7 +2070,7 @@ B^{(0)} =
 The remaining problem is thus to compute the SVD of the matrix $B$.
 This is done applying an implicit-shift QR step to the tridiagonal
 matrix $T=B^T B$ which is a symmetric.  The matrix $T$ is not
-explicitely formed that is why a QR iteration with implicit shifts is
+explicitly formed that is why a QR iteration with implicit shifts is
 applied.
 
 \addvspace{12pt}
@@ -2084,59 +2084,100 @@ The presented method turns $B^{(k)}$ into a matrix $B^{(k+1)}$ by
 applying a set of orthogonal transforms
 \begin{equation}
 \label{eq:svd_step}
-B^{(k+1)} = S^H\cdot B^{(k)} \cdot T
+B^{(k+1)} = \tilde{U}^H\cdot B^{(k)} \cdot \tilde{V}
 \end{equation}
 
-The orthogonal matrices $S$ and $T$ are chosen so that $B^{(k+1)}$ is
-also a bidiagonal matrix, but with the super-diagonal elements smaller
-than those of $B^{(k)}$.  The eq.\eqref{eq:svd_step} is repeated until
-the non-diagonal elements of $B^{(k+1)}$ become smaller than
-$\varepsilon$ and can be disregarded.
+The orthogonal matrices $\tilde{U}$ and $\tilde{V}$ are chosen so that
+$B^{(k+1)}$ is also a bidiagonal matrix, but with the super-diagonal
+elements smaller than those of $B^{(k)}$.  The eq.\eqref{eq:svd_step}
+is repeated until the non-diagonal elements of $B^{(k+1)}$ become
+smaller than $\varepsilon$ and can be disregarded.
 
 \addvspace{12pt}
 
-The matrices $S$ and $T$ are constructed as
+The matrices $\tilde{U}$ and $\tilde{V}$ are constructed as
 \begin{equation}
-S = S_1 \cdot S_2 \cdot S_3\cdot \dots \cdot S_n
+\tilde{U} = \tilde{U}_1 \cdot \tilde{U}_2 \cdot \tilde{U}_3\cdot \dots \cdot \tilde{U}_{n-1}
 \end{equation}
 
-and similarly $T$ where $T_i$ and $S_i$ are matrices of simple
-rotations as given in eq.\eqref{eq:rotation}.  Both $T$ and $S$ are
-products of Givens rotations and thus perform orthogonal transforms.
+and similarly $\tilde{V}$ where $\tilde{V}_i$ and $\tilde{U}_i$ are
+matrices of simple rotations as given in eq.\eqref{eq:rotation}.  Both
+$\tilde{V}$ and $\tilde{U}$ are products of Givens rotations and thus
+perform orthogonal transforms.
+
+\paragraph{Single shifted QR step.}
+
+The left multiplication of $B^{(k)}$ by $\tilde{U}_i^H$ replaces two
+rows of $B^{(k)}$ by their linear combinations.  The rest of $B^{(k)}$
+is unaffected.  Right multiplication of $B^{(k)}$ by $\tilde{V}_i$
+similarly changes only two columns of $B^{(k)}$.
 
 \addvspace{12pt}
 
-The left multiplication of $B^{(k)}$ by $S_i^H$ replaces two rows of
-$B^{(k)}$ by their linear combinations.  The rest of $B^{(k)}$ is
-unaffected.  Right multiplication of $B^{(k)}$ by $T_i$ similarly
-changes only two columns of $B^{(k)}$.
-
-\addvspace{12pt}
-
-A matrix $T_2$ is chosen the way that
+A matrix $\tilde{V}_1$ is chosen the way that
 \begin{equation}
-B^{(k+1)} = T_2^H \cdot \left(B^{(k)}\right)^H \cdot B^{(k)} \cdot T_2
+B^{(k)}_1 = B^{(k)}_0 \cdot \tilde{V}_1
 \end{equation}
  
 is a QR transform with a shift.  Note that multiplying $B^{(k)}$ by
-$T_2$ gives rise to a non-zero element which is below the main
-diagonal.  A new rotation angle is then chosen so that multiplication
-by $S_2^H$ gets rid of that elemnent.  But this will create a non-zero
-element which is right beside the super-diagonal.  $T_3$ is made to
-make it disappear, but this leads to another non-zero element below
-the diagonal, etc.
+$\tilde{V}_1$ gives rise to a non-zero element which is below the main
+diagonal.
+\begin{equation}
+B^{(k)}_0 \cdot \tilde{V}_1 =
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+\framebox{$\otimes$} & \times & \times & 0 & 0 & 0\\
+0 & 0 & \times & \times & 0 & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+\end{equation}
+
+A new rotation angle is then chosen so that multiplication by
+$\tilde{U}_1^H$ gets rid of that element.  But this will create a
+non-zero element which is right beside the super-diagonal.
+\begin{equation}
+\tilde{U}_1^H \cdot B^{(k)}_1 =
+\begin{bmatrix}
+\times & \times & \framebox{$\otimes$} & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & 0 & \times & \times & 0 & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+\end{equation}
+
+Then $\tilde{V}_2$ is made to make it disappear, but this leads to
+another non-zero element below the diagonal, etc.
+\begin{equation}
+B^{(k)}_2 \cdot \tilde{V}_2 =
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & \framebox{$\otimes$} & \times & \times & 0 & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+\end{equation}
+
+In the end, the matrix $\tilde{U}^H B \tilde{V}$ becomes bidiagonal
+again.  However, because of a special choice of $\tilde{V}_1$ (QR
+algorithm), its non-diagonal elements are smaller than those of $B$.
 
 \addvspace{12pt}
 
-In the end, $S_n$ the matrix $S^H B T$ becomes bidiagonal again.
-However, because of a special choice of $T_2$ (QR algorithm), its
-non-diagonal elements are smaller than those of $B$.
+Please note that each of the transforms must also be applied to the
+unfactored $U_B^H$ and $V_B$ matrices which turns them successively
+into $U^H$ and $V$
 
-\addvspace{12pt}
+\paragraph{Computation of the Wilkinson shift.}
 
 For a single QR step the computation of the eigenvalue $\mu$ of the
-2-by-2 submatrix of $T_n = B_n^T\cdot B_n$ that is closer to the
-$t_{22}$ matrix element is required.
+trailing 2-by-2 submatrix of $T_n = B_n^T\cdot B_n$ that is closer to
+the $t_{22}$ matrix element is required.
 \begin{align}
 T_n =
 \begin{bmatrix}
@@ -2145,16 +2186,17 @@ t_{21} & t_{22}\\
 \end{bmatrix}
 = B_n^T\cdot B_n &=
 \begin{bmatrix}
-\beta_{n-1} & 0\\
-\delta_{n} & \beta_{n}\\
+\delta_{n-1} & \beta_{n-1} & 0\\
+0 & \delta_{n} & \beta_{n}\\
 \end{bmatrix} \cdot
 \begin{bmatrix}
+\delta_{n-1} & 0\\
 \beta_{n-1} & \delta_{n}\\
 0 & \beta_{n}\\
 \end{bmatrix}\\
 &=
 \begin{bmatrix}
-\beta_{n-1}^2 & \delta_{n}\cdot \beta_{n-1}\\
+\beta_{n-1}^2 + \delta_{n-1}^2 & \delta_{n}\cdot \beta_{n-1}\\
 \delta_{n}\cdot \beta_{n-1} & \beta_{n}^2 + \delta_{n}^2\\
 \end{bmatrix}
 \end{align}
@@ -2164,12 +2206,109 @@ eq.\eqref{eq:eigenvalue_sym} for details.  The sign for the eigenvalue
 is chosen such that it is closer to $t_{22}$.
 \begin{align}
 \mu &= t_{22} + d - sign(d)\cdot \sqrt{d^2 + t_{12}^2}\\
-&= t_{22} + d - t_{12}^2\cdot sign\left(\dfrac{d}{t_{12}}\right)\cdot \sqrt{\left(\dfrac{d}{t_{12}}\right)^2 + 1}
+&= t_{22} + d - t_{12}\cdot sign\left(\dfrac{d}{t_{12}}\right)\cdot \sqrt{\left(\dfrac{d}{t_{12}}\right)^2 + 1}\\
+&= t_{22} - \dfrac{t_{12}^2}{d + t_{12}\cdot sign\left(\dfrac{d}{t_{12}}\right)\cdot \sqrt{\left(\dfrac{d}{t_{12}}\right)^2 + 1}}
 \end{align}
 whereas
 \begin{equation}
 d = \dfrac{t_{11} - t_{22}}{2}
 \end{equation}
+
+The Givens rotation $\tilde{V}_1$ is chosen such that
+\begin{equation}
+\begin{bmatrix}
+c_1 & s_1\\
+-s_1 & c_1\\
+\end{bmatrix}^T
+\cdot
+\begin{bmatrix}
+(\beta_1^2 - \mu) / \beta_1 \\
+\delta_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+\times\\
+0
+\end{bmatrix}
+\end{equation}
+
+The special choice of this first rotation in the single QR step
+ensures that the super-diagonal matrix entries get smaller.
+Typically, after a few of these QR steps, the super-diagonal entry
+$\delta_n$ becomes negligible.
+
+\paragraph{Zeros on the diagonal or super-diagonal.}
+
+The QR iteration described above claims to hold if the underlying
+bidiagonal matrix is unreduced, i.e. has no zeros neither on the
+diagonal nor on the super-diagonal.
+
+\addvspace{12pt}
+
+When there is a zero along the diagonal, then premultiplication by a
+sequence of Givens transformations can zero the right-hand
+super-diagonal entry as well.  The inverse rotations must be applied
+to the $U_B^H$ matrix.
+\begin{align*}
+B = &
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & 0 & 0 & \times & 0 & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+&\rightarrow  &
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & \otimes & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}\\
+\rightarrow &
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & \otimes\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+&\rightarrow &
+\begin{bmatrix}
+\times & \times & 0 & 0 & 0 & 0\\
+0 & \times & \times & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & \times & \times & 0\\
+0 & 0 & 0 & 0 & \times & \times\\
+0 & 0 & 0 & 0  & 0 & \times\\
+\end{bmatrix}
+\end{align*}
+
+Thus the problem can be decoupled into two smaller matrices $B_1$ and
+$B_2$.  The diagonal matrix $B_3$ is successively getting larger for
+each super-diagonal entry being neglected after the QR iterations.
+\begin{equation}
+\begin{bmatrix}
+B_1 & 0 & 0\\
+0 & B_2 & 0\\
+0 & 0 & B_3\\
+\end{bmatrix}
+\end{equation}
+
+Matrix $B_2$ has non-zero super-diagonal entries.  If there is any
+zero diagonal entry in $B_2$, then the super-diagonal entry can be
+annihilated as just described.  Otherwise the QR iteration algorithm
+can be applied to $B_2$.
+
+\addvspace{12pt}
+
+When there are only $B_3$ matrix entries left (diagonal entries only)
+the algorithm is finished, then the $B$ matrix has been transformed
+into the singular value matrix $\Sigma$.
 
 \subsubsection{Step 4: Solving the equation system}
 
@@ -2476,7 +2615,7 @@ $\underline{U}_n$.
 \FloatBarrier
 
 This scheme alone gives no advantage. But it can compute all output
-values within, i.e. no temporary memory is needed and the periocity
+values within, i.e. no temporary memory is needed and the periodicity
 of $W_{n,N}$ is best exploited. To understand this, let's have a look
 on the first Danielson-Lanczos step in figure \ref{fig:fft}. The four
 multiplications and additions have to be performed for each output
@@ -2495,7 +2634,7 @@ until the last step.
 \addvspace{12pt}
 
 Finally, a complete FFT source code in C should be presented. The original
-version was taken from \cite{Press}. It is a radix-2 algorithem,
+version was taken from \cite{Press}. It is a radix-2 algorithm,
 known as the Cooley-Tukey Algorithm. Here, several changes were made
 that gain about 10\% speed improvement.
 
@@ -2587,7 +2726,7 @@ There are many other FFT algorithms mainly aiming at higher speed
 (radix-8 FFT, split-radix FFT, Winograd FFT). These algorithms are
 much more complex, but on modern processors with numerical co-processors
 they gain no or hardly no speed advantage, because the reduced FLOPS
-are equaled by the far more complex indexing.
+are equalled by the far more complex indexing.
 
 
 \subsection{Real-Valued FFT}
