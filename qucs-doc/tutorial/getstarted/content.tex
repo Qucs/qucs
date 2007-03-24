@@ -65,7 +65,7 @@ appears in different languages.
 On the left hand side you find the \textbf{Projects} folder opened.
 Usually the projects folder will be empty if you use Qucs for the
 first time.  The large area on the right hand side is the schematic
-area.  Above there are the menu bar as well as some icons.
+area.  Above you can find the menu bar and the toolbars.
 
 \medskip
 
@@ -80,7 +80,7 @@ the user can configure the language and appearance of Qucs.
 \end{figure}
 \FloatBarrier
 
-To take effect of the language and font seetings the application must
+To take effect of the language and font settings the application must
 be closed either via the \Ctrl+\keystroke{Q} shortcut or the
 \textbf{File} $\rightarrow$ \textbf{Exit} menu entry.  Then start Qucs
 again.
@@ -116,7 +116,7 @@ The program can be used to design various types of filters.
 \item a transmission line calculator,
 
 The transmission line calculator can be used to design and analyze
-different types of transmission lines (e.g. micrstrips, coaxial
+different types of transmission lines (e.g. microstrips, coaxial
 cables).
 
 \item a component library,
@@ -133,7 +133,9 @@ attenuators.
 \item a command line conversion program
 
 The conversion tool is used by the GUI to import and export datasets,
-netlists and schematics from and to other CAD/EDA software.
+netlists and schematics from and to other CAD/EDA software.  The
+supported file formats as well as usage information can be found on
+the manpage of \textbf{qucsconv}.
 
 \end{itemize}
 
@@ -243,8 +245,8 @@ reference potential required (for the nodal analysis).  The ground
 symbol can be found in the \textbf{Components} tab in the
 \textbf{lumped components} category.  The user can also choose the
 ground symbol icon or simply press the \Ctrl+\keystroke{G} shortcut.
-In the given circuit the ground symbol is placed at the negative
-terminal of the DC voltage source.
+In the given circuit in fig.~\ref{fig:divider_3} the ground symbol is
+placed at the negative terminal of the DC voltage source.
 
 \tutsubsubsection{Placing simulation blocks}
 
@@ -260,12 +262,15 @@ in the \textbf{Components} tab in the \textbf{simulations} category.
 \end{figure}
 \FloatBarrier
 
-\tutsubsubsection{Labeling wires}
+\tutsubsubsection{Labelling wires}
 
 If you want the voltage between the two resistors (the divided
 voltage) be output in the dataset after simulation the user need to
 label the wire.  This is done by double clicking the wire and given an
-appropriate name.
+appropriate name.  Wire labelling can also be issued using the icon in
+the toolbar, by pressing the \Ctrl+\keystroke{L} shortcut or by
+choosing the \textbf{Insert} $\rightarrow$ \textbf{Wire Label} menu
+entry.
 
 \begin{figure}[ht]
   \centering
@@ -397,7 +402,7 @@ If you want to change the resistor ratio then switch back to your
 schematic either by clicking on the \textbf{divider.sch} tab, by
 pressing the \keystroke{F4} shortcut or by choosing the
 \textbf{Simulation} $\rightarrow$ \textbf{View Data Display/Schematic}
-menu entry.  Aftwards double click the \textbf{R1} resistor.  This
+menu entry.  Afterwards double click the \textbf{R1} resistor.  This
 opens the component property dialog shown in
 fig.~\ref{fig:componentprops}.
 
@@ -418,7 +423,7 @@ which can be used to add the property name and value on the schematic
 \tutparagraph{Allowed property values}
 
 For component values either standard (1000), scientific (1e-3) or an
-engineering (1k) number notation can be choosen.  Some units are also
+engineering (1k) number notation can be chosen.  Some units are also
 allowed.  The units are
 \begin{itemize}
 \item Ohm -- resistance / $\Omega$
@@ -430,8 +435,8 @@ allowed.  The units are
 \item Hz -- frequency / Hertz
 \item V -- voltage / Volt
 \item A -- current / Ampere
-\item W -- powers / Watt
-\item m -- length / Meter
+\item W -- power / Watt
+\item m -- length / Meter (not usable standalone, see paragraph below)
 \end{itemize}
 
 The available engineering suffixes are
@@ -592,7 +597,7 @@ So what do we want to simulate actually?  It is the current transfer
 curve of the bipolar transistor.  The input current (at the base) is
 given by the swept parameter \textbf{Ib}.  The output current (at the
 collector) flows through the DC voltage source \textbf{V1}.  The
-curent transfer curve is:
+current transfer curve is:
 \begin{equation*}
 \beta_{DC} = f\left(I_C\right) = I_C / I_B
 \end{equation*}
@@ -668,7 +673,7 @@ the diagram dialog the \textbf{Beta\_vs\_Ic} dataset entry was chosen.
 \end{figure}
 \FloatBarrier
 
-Additionally the x-axis has been chosen to be logarithmical.  The
+Additionally the x-axis has been chosen to be logarithmic.  The
 x-axis label is \textbf{Ic}.
 
 \begin{figure}[ht]
@@ -682,7 +687,7 @@ x-axis label is \textbf{Ic}.
 \tutsubsubsection{Working with markers in diagrams}
 
 The current gain curve in diagram in fig.~\ref{fig:igain_3} shows a
-maximum value.  If you want to know the appropiate values it is
+maximum value.  If you want to know the appropriate values it is
 possible to use markers for this purpose.
 
 \begin{figure}[ht]
@@ -709,7 +714,7 @@ can move it by pressing the arrow keys \LArrow, \RArrow and \UArrow or
 \FloatBarrier
 
 Double clicking the marker opens the marker dialog.  There you can
-configure the percision as well as the number notation of the
+configure the precision as well as the number notation of the
 displayed values.
 
 \tutsubsubsection{A multi-dimensional sweep}
@@ -745,7 +750,7 @@ is put into the \textbf{U} property of the DC voltage source
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.6\linewidth]{outputbjt_2}
-  \caption{Output characteristics of a NPN bipolar transitor}
+  \caption{Output characteristics of a NPN bipolar transistor}
   \label{fig:outputbjt_2}
 \end{figure}
 \FloatBarrier
@@ -775,7 +780,7 @@ denotes
 In fig.~\ref{fig:igain_ib} the DC current gain from
 fig.~\ref{fig:igain_4} is plotted versus the base current \textbf{Ib}
 choosing \textbf{Beta} in the diagram dialog instead of
-\textbf{Beta\_vs\_Ic}.  The appropiate base current shown in the
+\textbf{Beta\_vs\_Ic}.  The appropriate base current shown in the
 marker is $140\micro\ampere$.
 
 \begin{figure}[ht]
@@ -864,7 +869,7 @@ is:
 \beta_{RF} = h_{21} = \left.\dfrac{i_2}{i_1}\right|_{v_2=0}
 \end{equation*}
 
-wheras port 1 is the base and port 2 the collector.  The side
+whereas port 1 is the base and port 2 the collector.  The side
 condition ($v_2=0$) is given in our setup since the DC voltage source
 is an ideal AC short.
 
@@ -918,7 +923,7 @@ network.
 \end{figure}
 \FloatBarrier
 
-Performing the actual AC analysis is as easy as dragging and droping an
+Performing the actual AC analysis is as easy as dragging and dropping an
 \emph{AC Simulation} block available under the \emph{Simulations}
 tab as can be seen in figure~\ref{fig:highpassimblock}. 
 
@@ -1111,8 +1116,8 @@ each other.
 \tutsubsection{S-parameter and AC simulation - A Bessel band-pass filter}
 
 The interested reader may have noticed that there seems to be a
-relationship betwenn AC analysis and the S-parameter simulation.  In
-the next section we are going to explain this releationship using a
+relationship between AC analysis and the S-parameter simulation.  In
+the next section we are going to explain this relationship using a
 simple filter design.
 
 \begin{figure}[ht]
@@ -1166,7 +1171,7 @@ reflection of the filter network in dB.
 \FloatBarrier
 
 The results of the S-parameter simulation are depicted in
-fig.~\ref{fig:bpsp_2}.  In the logarthmic cartesian diagram the
+fig.~\ref{fig:bpsp_2}.  In the logarithmic cartesian diagram the
 transmission of the filter clearly shows the band-pass behaviour
 between the selected frequencies 1MHz and 2MHz.  Additionally the
 input- and output reflections can be seen in the two Smith charts.

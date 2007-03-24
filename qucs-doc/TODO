@@ -24,7 +24,7 @@ unfixed) have a look at the file BUGS.
 (completed tasks are indented one tab)
 
 - Incorporate more details about the Harmonic Balance.
-- Finish documentation about Singular Value Decomposition.
+	- Finish documentation about Singular Value Decomposition.
 - Write a user manual with detailed descriptions of the netlist format
   for each available feature.
 - Flowcharts for all kinds of simulations in the technical manual.

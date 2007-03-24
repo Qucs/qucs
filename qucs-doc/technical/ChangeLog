@@ -1,3 +1,10 @@
+2007-03-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* maths.tex (paragraph{Zeros on the diagonal or super-diagonal.}):
+	Finished the paragraphs about the SVD equation system solver.
+	(paragraph{Computation of the Wilkinson shift.}): Fixed typo in
+	the calculation formula for the Wilkinson shift.
+
 2007-03-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* maths.tex (subsubsection{Step 3: Diagonalization -- shifted QR
