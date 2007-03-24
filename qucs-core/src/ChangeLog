@@ -1,3 +1,8 @@
+2007-03-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Some more comments on the SVD diagonalization
+	process added.
+
 2007-03-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Fixed a bug in the data dependency tracking.

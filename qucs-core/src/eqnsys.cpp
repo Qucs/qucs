@@ -1,7 +1,7 @@
 /*
  * eqnsys.cpp - equation system solver class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.38 2006/07/03 08:52:23 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.39 2007/03/24 17:07:29 ela Exp $
  *
  */
 
@@ -1369,7 +1369,7 @@ void eqnsys<nr_type_t>::givens_apply_v (int r1, int r2,
 template <class nr_type_t>
 void eqnsys<nr_type_t>::diagonalize_svd (void) {
   bool split;
-  int i, l, j, its, k, n;
+  int i, l, j, its, k, n, MaxIters = 30;
   nr_double_t an, f, g, h, d, c, s, b, a;
 
   // find largest bidiagonal value
@@ -1380,7 +1380,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
   // vector E and diagonal vector S)
   for (k = N - 1; k >= 0; k--) {
     // loop over singular values
-    for (its = 0; its <= 30; its++) {
+    for (its = 0; its <= MaxIters; its++) {
       split = true;
       // check for a zero entry along the super-diagonal E, if there
       // is one, it is possible to QR iterate on two separate matrices
@@ -1418,8 +1418,9 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	}
 	break;
       }
-      if (its == 30) {
-	logprint (LOG_ERROR, "WARNING: no convergence in 30 SVD iterations\n");
+      if (its == MaxIters) {
+	logprint (LOG_ERROR, "WARNING: no convergence in %d SVD iterations\n",
+		  MaxIters);
       }
 
       // shift from bottom 2-by-2 minor
@@ -1435,6 +1436,8 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
       f /= 2.0 * h * b;
       f += sign_(f) * xhypot (f, 1.0);
       f  = ((a - d) * (a + d) + h * (b / f - h)) / a;
+      // f => (B_{ll}^2 - u) / B_{ll}
+      // u => eigenvalue of T = B' * B nearer T_{22} (Wilkinson shift)
 
       // next QR transformation
       c = s = 1.0;
@@ -1442,7 +1445,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	i = j + 1;
 	g = E_(i);
 	b = S_(i);
-	h = s * g;
+	h = s * g; // h => right-hand non-zero to annihilate
 	g *= c;
 	E_(j) = givens (f, h, c, s);
 	// perform the rotation
@@ -1450,17 +1453,29 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
 	g = g * c - a * s;
 	h = b * s;
 	b *= c;
+	// here: +-   -+
+	//       | f g | = B * V'_j (also first V'_1)
+	//       | h b |
+	//       +-   -+
+
 	// accumulate the rotation in V'
 	givens_apply_v (j, i, c, s);
 	d = S_(j) = xhypot (f, h);
 	// rotation can be arbitrary if d = 0
 	if (d != 0.0) {
+	  // d => non-zero result on diagonal
 	  d = 1.0 / d;
+	  // rotation coefficients to annihilate the lower non-zero
 	  c = f * d;
 	  s = h * d;
 	}
 	f = c * g + s * b;
 	a = c * b - s * g;
+	// here: +-   -+
+	//       | d f | => U_j * B
+	//       | 0 a |
+	//       +-   -+
+
 	// accumulate rotation into U
 	givens_apply_u (j, i, c, s);
       }
