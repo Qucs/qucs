@@ -1,3 +1,9 @@
+2007-03-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Handling capacitor models correctly.
+	Also fixed wrong DC value of sources when neither the DC
+	directive nor an immediate value was given.
+
 2007-03-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed compilation failure for a NetBSD
