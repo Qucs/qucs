@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.33 2007/03/19 21:10:19 ela Exp $
+ * $Id: check_spice.cpp,v 1.34 2007/03/24 18:49:16 ela Exp $
  *
  */
 
@@ -467,6 +467,7 @@ spice_devices[] = {
   { "VSWITCH", "Relais", NULL   },
   { "RES",     "R",      NULL   },
   { "R",       "R",      NULL   },
+  { "C",       "C",      NULL   },
   { NULL, NULL, NULL }
 };
 
@@ -1483,6 +1484,11 @@ spice_translate_source (struct definition_t * root,
     }
   }
 
+  // set DC value to zero if necessary
+  if (spice_find_property (dc, ui) == NULL) {
+    spice_append_pair (def, ui, "0", 1);
+  }
+
   // finally add sources to list of definitions
   if (ac) {
     if (type == 'U')
@@ -2036,6 +2042,47 @@ spice_post_translator (struct definition_t * root) {
 	}
       }
     }
+    // post-process capacitor
+    if (!def->action && !strcmp (def->type, "C")) {
+      // calculate C value
+      struct pair_t * L = spice_find_property_nocase (def, "L");
+      struct pair_t * W = spice_find_property_nocase (def, "W");
+      struct pair_t * C = spice_find_property_nocase (def, "CJ");
+      struct pair_t * S = spice_find_property_nocase (def, "CJSW");
+      struct pair_t * D = spice_find_property_nocase (def, "DEFW");
+      struct pair_t * N = spice_find_property_nocase (def, "NARROW");
+      nr_double_t l = 0, w = 0, c = 0, d = 0, n = 0, s = 0;
+      if (L) {
+	l = spice_evaluate_value (L->value);
+	def->pairs = spice_del_property (def->pairs, L);
+      }
+      if (W) {
+	w = spice_evaluate_value (W->value);
+	def->pairs = spice_del_property (def->pairs, W);
+      }
+      if (C) {
+	c = spice_evaluate_value (C->value);
+	def->pairs = spice_del_property (def->pairs, C);
+      }
+      if (S) {
+	s = spice_evaluate_value (S->value);
+	def->pairs = spice_del_property (def->pairs, S);
+      }
+      if (D) {
+	d = spice_evaluate_value (D->value);
+	def->pairs = spice_del_property (def->pairs, D);
+      }
+      if (N) {
+	n = spice_evaluate_value (N->value);
+	def->pairs = spice_del_property (def->pairs, N);
+      }
+      if (d == 0) d = 1e-6;
+      if (w == 0) w = d;
+      if (l != 0 && w != 0 && c != 0) {
+	c = c * (l - n) * (w - n) + 2 * s * (l + w - 2 * n);
+	spice_set_property_value (def, "C", c);
+      }
+    }
     // post-process lossless transmission line
     if (!def->action && !strcmp (def->type, "TLIN4P")) {
       struct pair_t * pt = spice_find_property (def, "TD");
@@ -2271,7 +2318,8 @@ static struct definition_t * spice_translator (struct definition_t * root) {
 	// devices
 	if (!strcasecmp (def->type, "Q") || !strcasecmp (def->type, "M") ||
 	    !strcasecmp (def->type, "J") || !strcasecmp (def->type, "D") ||
-	    !strcasecmp (def->type, "S") || !strcasecmp (def->type, "R")) {
+	    !strcasecmp (def->type, "S") || !strcasecmp (def->type, "R") ||
+	    !strcasecmp (def->type, "C")) {
 	  spice_translate_device (root, def);
 	}
 	// voltage sources
