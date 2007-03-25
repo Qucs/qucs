@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.34 2007-03-24 18:49:16 ela Exp $
+ * $Id: check_spice.cpp,v 1.35 2007-03-25 08:10:56 ela Exp $
  *
  */
 
@@ -2377,6 +2377,8 @@ static struct definition_t * spice_translator (struct definition_t * root) {
    - single-frequency FM (using pm-modulator)
    - analog behavioural B, E, G, F, and H sources
    - piece-wise linear (PWL) voltage and current sources
+   - temperature analysis (.TEMP)
+   - temperature option (.OPTIONS TNOM=27)
 */
 
 #if 0

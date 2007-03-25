@@ -1,3 +1,8 @@
+2007-03-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l, parse_spice.y: Accept .TEMP syntax (Spice 2g6)
+	in lexer and parser.
+
 2007-03-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Handling capacitor models correctly.
