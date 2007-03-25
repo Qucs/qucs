@@ -30,6 +30,7 @@ public:
 
 protected:
   QString vhdlCode(int);
+  QString verilogHDL_Code(int);
 };
 
 #endif

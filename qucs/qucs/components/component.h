@@ -79,6 +79,7 @@ public:
 protected:
   virtual QString netlist();
   virtual QString vhdlCode(int);
+  virtual QString verilogHDL_Code(int);
 
   int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,

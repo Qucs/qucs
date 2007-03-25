@@ -623,6 +623,12 @@ QString Component::getNetlist()
 }
 
 // -------------------------------------------------------
+QString Component::verilogHDL_Code(int)
+{
+  return QString("");   // no digital model
+}
+
+// -------------------------------------------------------
 QString Component::vhdlCode(int)
 {
   return QString("");   // no digital model
