@@ -1,3 +1,10 @@
+qucs (0.0.11-1) unstable; urgency=low
+
+  * New upstream release
+  * Updated debian/copyright and debian/control to change the email of the maintainer
+
+ -- José L. Redrejo Rodríguez <jredrejo@debian.org>  Tue, 20 Mar 2007 13:12:10 +0200
+
 qucs (0.0.10-1) unstable; urgency=low
 
   * New upstream release

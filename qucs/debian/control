@@ -1,7 +1,7 @@
 Source: qucs
 Section: electronics
 Priority: optional
-Maintainer: José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>
+Maintainer: José L. Redrejo Rodríguez <jredrejo@debian.org>
 Build-Depends: debhelper (>> 4.0.0), autotools-dev, libqt3-compat-headers, libqt3-mt-dev
 Standards-Version: 3.7.2
 
