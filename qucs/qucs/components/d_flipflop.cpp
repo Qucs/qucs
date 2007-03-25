@@ -77,6 +77,36 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 }
 
 // -------------------------------------------------------
+QString D_FlipFlop::verilogHDL_Code(int NumPorts)
+{
+  QString s = ";\n";
+  QString d = "        #0" + s;
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0)  // delay time
+      d = "    #" + Props.getFirst()->Value + s;
+
+  s = "module " + Name + "(" +
+    Ports.at(2)->Connection->Name + ", " +
+    Ports.at(0)->Connection->Name + ", " +
+    Ports.at(1)->Connection->Name + ", " +
+    Ports.at(3)->Connection->Name + ")" + s + "    input " +
+    Ports.at(0)->Connection->Name + ", " +
+    Ports.at(1)->Connection->Name + ", " +
+    Ports.at(3)->Connection->Name + s + "    output reg " +
+    Ports.at(2)->Connection->Name + s + "    always @(" +
+    Ports.at(0)->Connection->Name + " or " +
+    Ports.at(1)->Connection->Name + " or " +
+    Ports.at(3)->Connection->Name + ") begin\n" + d + "        if (" +
+    Ports.at(3)->Connection->Name + ") " +
+    Ports.at(2)->Connection->Name + " <= 0" + s + "        if (~" +
+    Ports.at(3)->Connection->Name + " && " +
+    Ports.at(1)->Connection->Name + ") " +
+    Ports.at(2)->Connection->Name + " <= " +
+    Ports.at(0)->Connection->Name + s + "    end\nendmodule\n";
+  return s;
+}
+
+// -------------------------------------------------------
 Component* D_FlipFlop::newOne()
 {
   return new D_FlipFlop();

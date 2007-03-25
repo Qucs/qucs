@@ -1,3 +1,11 @@
+2007-03-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (verilogHDL_Code): New virtual function which
+	is used to produce Verilog HDL code.
+
+	* d_flipflop.cpp (verilogHDL_Code): Added the first Verilog HDL
+	code.  Provided by Ozgur.
+
 2007-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* twistedpair.cpp (TwistedPair): Added some new properties
