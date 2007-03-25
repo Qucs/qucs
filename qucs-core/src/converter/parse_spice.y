@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.19 2007/03/14 19:27:49 ela Exp $
+ * $Id: parse_spice.y,v 1.20 2007/03/25 08:10:57 ela Exp $
  *
  */
 
@@ -135,7 +135,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %token OFF_Special IC_Special SIM_Type TEMP_Special MOS_Special B_Source
 %token DISTO_Action INCLUDE_Action File BranchFunc NODESET_Action T_Device
 %token U_Device S_Device W_Device ON_Special TF_Action SENS_Action FOUR_Action
-%token OpFunc GE_Type TC_Special
+%token OpFunc GE_Type TC_Special TEMP_Action
 
 %union {
   char * ident;
@@ -166,7 +166,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <ident> ModelProps OP_Action I_Source IV_Reference SAVE_Action ON_Special
 %type <ident> IC_Special OFF_Special SIM_Type TEMP_Special MOS_Special
 %type <ident> BranchFunc NODESET_Action T_Device U_Device S_Device W_Device
-%type <ident> TF_Action SENS_Action FOUR_Action OpFunc TC_Special
+%type <ident> TF_Action SENS_Action FOUR_Action OpFunc TC_Special TEMP_Action
 
 %%
 
@@ -415,6 +415,11 @@ DefinitionLine:
   }
   | OPTIONS_Action OPTIONS_List Eol {
     /* general analysis options */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
+  }
+  | TEMP_Action ValueList Eol {
+    /* temperatur analysis (Spice 2g6) */
     $$ = spice_create_action ($1, strdup ($1));
     $$->values = $2;
   }

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.23 2007/03/14 19:27:49 ela Exp $
+ * $Id: scan_spice.l,v 1.24 2007/03/25 08:10:57 ela Exp $
  *
  */
 
@@ -307,6 +307,12 @@ POLY     [pP][oO][lL][yY]
     spice_lval.ident = strdup (&spice_text[1]);
     BEGIN(STARTUP);
     return OP_Action;
+}
+
+<STARTUP,INITIAL>^"."[tT][eE][mM][pP] { /* temperature analysis (Spice 2g6) */
+    spice_lval.ident = strdup (&spice_text[1]);
+    BEGIN(STARTUP);
+    return TEMP_Action;
 }
 
 <STARTUP,INITIAL>^"."[pP][rR][iI][nN][tT] { /* printing action */
