@@ -1,3 +1,7 @@
+2007-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_vcd.l: Allow identifiers to start with '_'.
+
 2007-03-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l, parse_spice.y: Accept .TEMP syntax (Spice 2g6)

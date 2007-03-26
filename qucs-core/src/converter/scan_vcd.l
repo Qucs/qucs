@@ -5,7 +5,7 @@
  * scan_vcd.l - scanner for a VCD data file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.6 2006/08/09 08:32:18 raimi Exp $
+ * $Id: scan_vcd.l,v 1.7 2007/03/26 19:29:18 ela Exp $
  *
  */
 
@@ -62,7 +62,7 @@ BINARY   [01xXzZ]+
 DECIMAL  {DIGIT}+
 SCALAR   [01xXzZ]
 CODE     [!-~]+
-IDENT    [a-zA-Z][a-zA-Z0-9_.-]*
+IDENT    [a-zA-Z_][a-zA-Z0-9_.-]*
 
 %x COMMENT SCALE SCOPE IGNORE VAR VAR2 VAR3 VAR4 DUMP TIMESTAMP CHANGE
 %x BIN FLOAT
