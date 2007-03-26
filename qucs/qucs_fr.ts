@@ -5009,6 +5009,10 @@ Invocation :  qucsedit [-r] fichier
         <source>4-Terminal Transmission Line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

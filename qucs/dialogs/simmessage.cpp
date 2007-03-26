@@ -290,10 +290,13 @@ void SimMessage::startSimulator()
   QString SimPath = QDir::convertSeparators (QucsHomeDir.absPath());
 #ifdef __MINGW32__
   QString QucsDigi = "qucsdigi.bat";
+  QString QucsVeri = "qucsveri.bat";
 #else
   QString QucsDigi = "qucsdigi";
+  QString QucsVeri = "qucsveri";
 #endif
   SimOpt = NULL;
+  bool isVerilog = false;
 
   if(DocWidget->inherits("QTextEdit")) {
     // Take VHDL file in memory as it could contain unsaved changes.
@@ -315,13 +318,24 @@ void SimMessage::startSimulator()
   else {
     // output NodeSets, SPICE simulations etc.
     Stream << Collect.join("\n") << '\n';
+    isVerilog = ((Schematic*)DocWidget)->isVerilog;
     SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts);
-    NetlistFile.close();
     if(SimTime.at(0) == '§') {
+      NetlistFile.close();
       ErrText->insert(SimTime.mid(1));
       FinishSimulation(-1);
       return;
     }
+    if (isVerilog) {
+      Stream << "\n"
+	     << "  initial begin\n"
+	     << "    $dumpfile(\"digi.vcd\");\n"
+	     << "    $dumpvars();\n"
+	     << "    #" << SimTime << " $finish;\n"
+	     << "  end\n\n"
+	     << "endmodule // TestBench\n";
+    }
+    NetlistFile.close();
     ProgText->insert(tr("done.\n"));  // of "creating netlist... 
 
     if(SimPorts < 0) {
@@ -335,15 +349,27 @@ void SimMessage::startSimulator()
            << "-i" << QucsHomeDir.filePath("netlist.txt") << "-o" << DataSet;
       }
     } else {
+      if (isVerilog) {
 #ifdef __MINGW32__
-      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
-		  << "netlist.txt" << DataSet
-		  << SimTime << getShortPathName(SimPath)
-		  << getShortPathName(QucsSettings.BinDir) << "-c";
+	CommandLine << getShortPathName(QucsSettings.BinDir + QucsVeri)
+		    << "netlist.txt" << DataSet
+		    << SimTime << getShortPathName(SimPath)
+		    << getShortPathName(QucsSettings.BinDir) << "-c";
 #else
-      CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
-         << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
+	CommandLine << QucsSettings.BinDir + QucsVeri << "netlist.txt"
+           << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
 #endif
+      } else {
+#ifdef __MINGW32__
+	CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
+		    << "netlist.txt" << DataSet
+		    << SimTime << getShortPathName(SimPath)
+		    << getShortPathName(QucsSettings.BinDir) << "-c";
+#else
+	CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
+           << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
+#endif
+      }
     }
   }
 

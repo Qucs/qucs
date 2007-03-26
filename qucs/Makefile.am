@@ -27,7 +27,7 @@ SUBDIRS = bitmaps components diagrams paintings dialogs
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat
 else
-bin_SCRIPTS = qucsdigi
+bin_SCRIPTS = qucsdigi qucsveri
 endif
 
 bin_PROGRAMS = qucs

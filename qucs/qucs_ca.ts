@@ -4985,6 +4985,10 @@ Use:  qucsedit [-r] fitxer
         <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

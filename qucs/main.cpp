@@ -401,6 +401,34 @@ bool VHDL_Time(QString& t, const QString& Name)
 }
 
 // #########################################################################
+// Checks and corrects a time (number & unit) according Verilog standard.
+bool Verilog_Time(QString& t, const QString& Name)
+{
+  char *p;
+  double Time = strtod(t.latin1(), &p);
+  double factor = 1.0;
+  while(*p == ' ') p++;
+  for(;;) {
+    if(Time >= 0.0) {
+      if(strcmp(p, "fs") == 0) { factor = 1e-3; break; }
+      if(strcmp(p, "ps") == 0) { factor = 1;  break; }
+      if(strcmp(p, "ns") == 0) { factor = 1e3;  break; }
+      if(strcmp(p, "us") == 0) { factor = 1e6;  break; }
+      if(strcmp(p, "ms") == 0) { factor = 1e9;  break; }
+      if(strcmp(p, "sec") == 0) { factor = 1e12; break; }
+      if(strcmp(p, "min") == 0) { factor = 1e12*60; break; }
+      if(strcmp(p, "hr") == 0)  { factor = 1e12*60*60; break; }
+    }
+    t = "§" + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
+            + " fs, ps, ns, us, ms, sec, min, hr.\n";
+    return false;
+  }
+
+  t = QString::number(Time*factor);  // the space is mandatory !
+  return true;
+}
+
+// #########################################################################
 bool checkVersion(QString& Line)
 {
   QStringList sl = QStringList::split('.',PACKAGE_VERSION);

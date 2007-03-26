@@ -236,6 +236,9 @@ private:
   bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, int);
 
   QStringList Signals; // collecting node names for VHDL signal declarations
+
+public:
+  bool isVerilog;
 };
 
 #endif

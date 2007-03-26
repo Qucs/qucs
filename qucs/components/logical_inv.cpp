@@ -65,6 +65,28 @@ QString Logical_Inv::vhdlCode(int NumPorts)
 }
 
 // -------------------------------------------------------
+QString Logical_Inv::verilogCode(int NumPorts)
+{
+  Port *pp = Ports.first();
+
+  QString s ("  not");
+
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
+      QString t = Props.current()->Value;
+      if(!Verilog_Time(t, Name))
+        return t;    // time has not VHDL format
+      s += " #" + t;
+    }
+  s += " " + Name + " (" + pp->Connection->Name;  // output port;
+
+  pp = Ports.next();
+  s += ", " + pp->Connection->Name; // first input port
+  s += ");\n";
+  return s;
+}
+
+// -------------------------------------------------------
 void Logical_Inv::createSymbol()
 {
   int xr;
