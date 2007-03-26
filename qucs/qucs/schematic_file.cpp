@@ -1049,6 +1049,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 {
   if(showBias > 0)  showBias = -1;  // do not show DC bias anymore
 
+  isVerilog = false;
   bool isTruthTable = false;
   int allTypes = 0, NumPorts = 0;
   // Detect simulation domain (analog/digital) by looking at component types.
@@ -1063,6 +1064,8 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
         }
         if(pc->Props.getFirst()->Value != "TimeList")
           isTruthTable = true;
+	if(pc->Props.getLast()->Value != "VHDL")
+	  isVerilog = true;
         allTypes |= isDigitalComponent;
       }
       else allTypes |= isAnalogComponent;
@@ -1103,6 +1106,8 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   // first line is documentation
   if(allTypes & isAnalogComponent)
     stream << "#";
+  else if (isVerilog)
+    stream << "//";
   else
     stream << "--";
   stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
@@ -1117,9 +1122,13 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   if(allTypes & isAnalogComponent)
     return NumPorts;
 
-  stream << "entity TestBench is\n"
-         << "end entity;\n"
-         << "use work.all;\n";
+  if (isVerilog) {
+    stream << "`timescale 1ps/100fs\n";
+  } else {
+    stream << "entity TestBench is\n"
+	   << "end entity;\n"
+	   << "use work.all;\n";
+  }
   return NumPorts;
 }
 
@@ -1128,13 +1137,23 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 {
   if(NumPorts >= 0) {
-    stream << "architecture Arch_TestBench of TestBench is\n"
-           << "  signal " << Signals.join(",\n         ")
-           << " : bit;\n"
-           << "begin\n";
+    if (isVerilog) {
+      stream << "module TestBench ();\n"
+	     << "  wire gnd;\n";
+    } else {
+      stream << "architecture Arch_TestBench of TestBench is\n"
+	     << "  signal " << Signals.join(",\n         ")
+	     << " : bit;\n"
+	     << "begin\n";
+    }
 
-    if(Signals.findIndex("gnd") >= 0)
-      stream << "  gnd <= '0';\n";  // should appear only once
+    if(Signals.findIndex("gnd") >= 0) {
+      if (isVerilog) {
+	stream << "  assign gnd = 0;\n";
+      } else {
+	stream << "  gnd <= '0';\n";  // should appear only once
+      }
+    }
   }
   Signals.clear();  // was filled in "giveNodeNames()"
   StringList.clear();
@@ -1146,22 +1165,37 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
     }
     else {
       if(pc->Model.at(0) == '.') {  // simulation component ?
-        if(NumPorts > 0)  // truth table simulation ?
-          Time = QString::number((1 << NumPorts) - 1) + " ns";
-        else {
+        if(NumPorts > 0) { // truth table simulation ?
+	  if (isVerilog)
+	    Time = QString::number((1 << NumPorts));
+	  else
+	    Time = QString::number((1 << NumPorts) - 1) + " ns";
+        } else {
           Time = pc->Props.at(1)->Value;
-          if(!VHDL_Time(Time, pc->Name))  return Time;  // wrong time format
+	  if (isVerilog) {
+	    if(!Verilog_Time(Time, pc->Name)) return Time;
+	  } else {
+	    if(!VHDL_Time(Time, pc->Name)) return Time;  // wrong time format
+	  }
         }
       }
-      s = pc->get_VHDL_Code(NumPorts);
+      if (isVerilog) {
+	s = pc->get_Verilog_Code(NumPorts);
+      } else {
+	s = pc->get_VHDL_Code(NumPorts);
+      }
       if(s.at(0) == '§')  return s;   // return error
     }
 
     stream << s;
   }
 
-  if(NumPorts >= 0)
-    stream << "end architecture;\n";
+  if(NumPorts >= 0) {
+    if (isVerilog) {
+    } else {
+      stream << "end architecture;\n";
+    }
+  }
 
   return Time;
 }

@@ -78,6 +78,7 @@ void    convert2Unicode(QString&);
 void    convert2ASCII(QString&);
 QString properName (const QString&);
 bool    VHDL_Time(QString&, const QString&);
+bool    Verilog_Time(QString&, const QString&);
 bool    checkVersion(QString&);
 
 #endif

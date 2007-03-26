@@ -143,3 +143,43 @@ QString Digi_Source::vhdlCode(int NumPorts)
   s += "  end process;\n\n";
   return s;
 }
+
+// -------------------------------------------------------
+QString Digi_Source::verilogCode(int NumPorts)
+{
+  QString s, t, n;
+
+  s = "\n  // " + Name + " digital source\n";
+  n = Ports.getFirst()->Connection->Name;
+  s += "  reg " + n + ";\n";
+
+  int z = 0;
+  char State;
+  if(NumPorts <= 0) {  // time table simulation ?
+    if(Props.at(1)->Value == "low")
+      State = '0';
+    else
+      State = '1';
+    s += "  initial #0 " + n + " = " + State + ";\n  always begin\n";
+
+    t = Props.next()->Value.section(';',z,z).stripWhiteSpace();
+    while(!t.isEmpty()) {
+      if(!Verilog_Time(t, Name))
+        return t;    // time has not VHDL format
+      State ^= 1;
+      s += "    #" + t + " " + n + " = " + State + ";\n";
+      z++;
+      t = Props.current()->Value.section(';',z,z).stripWhiteSpace();
+    }
+  }
+  else {  // truth table simulation
+    int Num = Props.getFirst()->Value.toInt() - 1;    
+    s += "  initial #0 " + n + " = " + "0;\n  always begin\n";
+    for(z=1<<(NumPorts-Num); z>0; z--) {
+      s += "    #"+ QString::number(1 << Num) + " " + n + " = !" + n + ";\n";
+    }
+  }
+
+  s += "  end\n\n";
+  return s;
+}
