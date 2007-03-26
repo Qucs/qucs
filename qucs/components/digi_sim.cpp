@@ -45,6 +45,8 @@ Digi_Sim::Digi_Sim()
 	QObject::tr("type of simulation")+" [TruthTable, TimeList]"));
   Props.append(new Property("time", "10 ns", false,
 	QObject::tr("duration of TimeList simulation")));
+  Props.append(new Property("Model", "VHDL", false,
+	QObject::tr("netlist format")+" [VHDL, Verilog]"));
 }
 
 // -------------------------------------------------------

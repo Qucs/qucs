@@ -39,6 +39,7 @@ public:
   virtual void recreate(Schematic*) {};
   QString getNetlist();
   QString get_VHDL_Code(int);
+  QString get_Verilog_Code(int);
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*, float);
@@ -79,7 +80,7 @@ public:
 protected:
   virtual QString netlist();
   virtual QString vhdlCode(int);
-  virtual QString verilogHDL_Code(int);
+  virtual QString verilogCode(int);
 
   int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
@@ -108,6 +109,7 @@ public:
   GateComponent();
   QString netlist();
   QString vhdlCode(int);
+  QString verilogCode(int);
 
 protected:
   void createSymbol();
