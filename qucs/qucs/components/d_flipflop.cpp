@@ -77,7 +77,7 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 }
 
 // -------------------------------------------------------
-QString D_FlipFlop::verilogHDL_Code(int NumPorts)
+QString D_FlipFlop::verilogCode(int NumPorts)
 {
   QString s = ";\n";
   QString d = "        #0" + s;

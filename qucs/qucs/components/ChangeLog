@@ -1,3 +1,11 @@
+2007-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* digi_sim.cpp (Digi_Sim): Can select between VHDL and Verilog
+	netlist format.
+
+	* component.cpp (get_Verilog_Code): Gate components and digital
+	sources now working with Verilog HDL.
+
 2007-03-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (verilogHDL_Code): New virtual function which

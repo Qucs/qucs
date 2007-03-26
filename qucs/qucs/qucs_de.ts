@@ -5232,6 +5232,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>high-injection knee current (0=infinity)</source>
         <translation>Knickstrom bei Hochinjektion (0=unendlich)</translation>
     </message>
+    <message>
+        <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
