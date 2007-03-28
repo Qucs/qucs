@@ -75,10 +75,10 @@ QString Logical_Inv::verilogCode(int NumPorts)
     if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
       QString t = Props.current()->Value;
       if(!Verilog_Time(t, Name))
-        return t;    // time has not VHDL format
+	return t;    // time has not VHDL format
       s += " #" + t;
     }
-  s += " " + Name + " (" + pp->Connection->Name;  // output port;
+  s += " " + Name + " (" + pp->Connection->Name;  // output port
 
   pp = Ports.next();
   s += ", " + pp->Connection->Name; // first input port

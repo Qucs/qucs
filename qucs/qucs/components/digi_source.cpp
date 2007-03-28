@@ -147,11 +147,13 @@ QString Digi_Source::vhdlCode(int NumPorts)
 // -------------------------------------------------------
 QString Digi_Source::verilogCode(int NumPorts)
 {
-  QString s, t, n;
+  QString s, t, n, r;
 
-  s = "\n  // " + Name + " digital source\n";
   n = Ports.getFirst()->Connection->Name;
-  s += "  reg " + n + ";\n";
+  r = "net_src" + n;
+  s = "\n  // " + Name + " digital source\n";
+  s += "  assign " + n + " = " + r + ";\n";
+  s += "  reg    " + r + ";\n";
 
   int z = 0;
   char State;
@@ -160,23 +162,26 @@ QString Digi_Source::verilogCode(int NumPorts)
       State = '0';
     else
       State = '1';
-    s += "  initial #0 " + n + " = " + State + ";\n  always begin\n";
+    s += "  always begin\n";
 
     t = Props.next()->Value.section(';',z,z).stripWhiteSpace();
     while(!t.isEmpty()) {
       if(!Verilog_Time(t, Name))
         return t;    // time has not VHDL format
+      s += "    " + r + " = " + State + ";\n";
+      s += "    #" + t + ";\n";
       State ^= 1;
-      s += "    #" + t + " " + n + " = " + State + ";\n";
       z++;
       t = Props.current()->Value.section(';',z,z).stripWhiteSpace();
     }
   }
   else {  // truth table simulation
     int Num = Props.getFirst()->Value.toInt() - 1;    
-    s += "  initial #0 " + n + " = " + "0;\n  always begin\n";
+    s += "  always begin\n";
+    s += "    " + r + " = 0;\n";
     for(z=1<<(NumPorts-Num); z>0; z--) {
-      s += "    #"+ QString::number(1 << Num) + " " + n + " = !" + n + ";\n";
+      s += "    #"+ QString::number(1 << Num) + ";\n";
+      s += "    " + r + " = !" + r + ";\n";
     }
   }
 
