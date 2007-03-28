@@ -1,5 +1,8 @@
 2007-03-28  Stefan Jahn  <stefan@lkcc.org>
 
+	* digi_source.cpp (verilogCode): Ensured that register name
+	of each digital source is unique.
+
 	* d_flipflop.cpp (verilogCode): Fixed Verilog code of
 	D-flipflop.  Is working now, can be used as template for
 	other flipflops.
