@@ -859,6 +859,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         return false;
       }
       d->DocName = s;
+      d->isVerilog = isVerilog;
       r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
       delete d;
       if(!r) return false;
@@ -961,6 +962,9 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
       else it++;*/
 
   QStringList SubcircuitPorts;
+  QStringList InPorts;
+  QStringList OutPorts;
+  QStringList InOutPorts;
   QStringList::Iterator it;
   Component *pc;
   // collect subcircuit ports and sort their node names into "SubcircuitPorts"
@@ -977,16 +981,31 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
       it = SubcircuitPorts.at(i-1);
       (*it) = pc->Ports.getFirst()->Connection->Name;
       if(NumPorts >= 0) {
-        Signals.remove(Signals.find(*it));  // remove node name of output port
-        switch(pc->Props.at(1)->Value.at(0).latin1()) {
+	if (isVerilog) {
+	  Signals.remove(Signals.find(*it)); // remove node name
+	  switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          case 'a':
+	    InOutPorts.append(*it);
+	    break;
+          case 'o':
+	    OutPorts.append(*it);
+	    break;
+          default:
+	    InPorts.append(*it);
+	  }
+	}
+	else {
+	  Signals.remove(Signals.find(*it)); // remove node name of output port
+	  switch(pc->Props.at(1)->Value.at(0).latin1()) {
           case 'a': (*it) += ": inout";  // attribut "analog" is "inout"
-                    break;
+	    break;
           case 'o': Signals.append(*it);   // output ports need workaround
-                    (*it) = "net_out" + (*it);
-                    // no "break;" here !!!
+	    (*it) = "net_out" + (*it);
+	    // no "break;" here !!!
           default:  (*it) += ": " + pc->Props.at(1)->Value;
-        }
-        (*it) += " bit";
+	  }
+	  (*it) += " bit";
+	}
       }
     }
   }
@@ -1017,25 +1036,52 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 
   }
   else {
-    // ..... digital subcircuit ...................................
-    (*stream) << "\nentity Sub_" << Type << " is\n"
-              << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
-              << "end entity;\n"
-              << "use work.all;\n"
-              << "architecture Arch_Sub_" << Type << " of Sub_" << Type << " is\n";
-    if(!Signals.isEmpty())
-      (*stream) << "  signal " << Signals.join(",\n         ") << " : bit;\n";
+    if (isVerilog) {
+      // ..... digital subcircuit ...................................
+      (*stream) << "\nmodule Sub_" << Type << " ("
+		<< SubcircuitPorts.join(", ") << ");\n";
+      if(!InPorts.isEmpty())
+	(*stream) << "  input " << InPorts.join(", ") << ";\n";
+      if(!OutPorts.isEmpty())
+	(*stream) << "  output " << OutPorts.join(", ") << ";\n";
+      if(!InOutPorts.isEmpty())
+	(*stream) << "  inout " << InOutPorts.join(", ") << ";\n";
+      if(!Signals.isEmpty())
+	(*stream) << "  wire " << Signals.join(",\n       ")
+		  << ";\n";
+      (*stream) << "\n";
 
-    (*stream) << "begin\n";
+      if(Signals.findIndex("gnd") >= 0)
+	(*stream) << "  assign gnd = 0;\n";  // should appear only once
 
-    if(Signals.findIndex("gnd") >= 0)
-      (*stream) << "  gnd <= '0';\n";  // should appear only once
+      // write all components into netlist file
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
+	(*stream) << pc->get_Verilog_Code(NumPorts);
 
-    // write all components into netlist file
-    for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-      (*stream) << pc->get_VHDL_Code(NumPorts);
+      (*stream) << "endmodule\n\n";
+    } else {
+      // ..... digital subcircuit ...................................
+      (*stream) << "\nentity Sub_" << Type << " is\n"
+		<< "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
+		<< "end entity;\n"
+		<< "use work.all;\n"
+		<< "architecture Arch_Sub_" << Type << " of Sub_" << Type
+		<< " is\n";
+      if(!Signals.isEmpty())
+	(*stream) << "  signal " << Signals.join(",\n         ")
+		  << " : bit;\n";
 
-    (*stream) << "end architecture;\n\n";
+      (*stream) << "begin\n";
+
+      if(Signals.findIndex("gnd") >= 0)
+	(*stream) << "  gnd <= '0';\n";  // should appear only once
+
+      // write all components into netlist file
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
+	(*stream) << pc->get_VHDL_Code(NumPorts);
+
+      (*stream) << "end architecture;\n\n";
+    }
   }
 
   Signals.clear();  // was filled in "giveNodeNames()"
@@ -1139,7 +1185,8 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
   if(NumPorts >= 0) {
     if (isVerilog) {
       stream << "module TestBench ();\n"
-	     << "  wire gnd;\n";
+	     << "  wire " << Signals.join(",\n       ")
+	     << ";\n\n";
     } else {
       stream << "architecture Arch_TestBench of TestBench is\n"
 	     << "  signal " << Signals.join(",\n         ")
@@ -1164,7 +1211,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
       s = pc->getNetlist();
     }
     else {
-      if(pc->Model.at(0) == '.') {  // simulation component ?
+      if(pc->Model == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?
 	  if (isVerilog)
 	    Time = QString::number((1 << NumPorts));

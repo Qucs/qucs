@@ -227,3 +227,19 @@ QString Subcircuit::vhdlCode(int)
   s += ");\n";
   return s;
 }
+
+// -------------------------------------------------------
+QString Subcircuit::verilogCode(int)
+{
+  QString s = "  Sub_" +
+    properName(Props.getFirst()->Value) + " " + Name + " (";
+
+  // output all node names
+  Port *pp = Ports.first();
+  if(pp)  s += pp->Connection->Name;
+  for(pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += ", "+pp->Connection->Name;   // node names
+
+  s += ");\n";
+  return s;
+}
