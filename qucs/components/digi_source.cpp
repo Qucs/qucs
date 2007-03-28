@@ -150,7 +150,7 @@ QString Digi_Source::verilogCode(int NumPorts)
   QString s, t, n, r;
 
   n = Ports.getFirst()->Connection->Name;
-  r = "net_src" + n;
+  r = "net_src" + Name + n;
   s = "\n  // " + Name + " digital source\n";
   s += "  assign " + n + " = " + r + ";\n";
   s += "  reg    " + r + ";\n";
