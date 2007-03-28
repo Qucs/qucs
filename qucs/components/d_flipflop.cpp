@@ -19,6 +19,7 @@
 
 #include "d_flipflop.h"
 #include "node.h"
+#include "main.h"
 
 D_FlipFlop::D_FlipFlop()
 {
@@ -79,30 +80,30 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 // -------------------------------------------------------
 QString D_FlipFlop::verilogCode(int NumPorts)
 {
-  QString s = ";\n";
-  QString d = "        #0" + s;
+  QString t = "";
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0)  // delay time
-      d = "    #" + Props.getFirst()->Value + s;
-
-  s = "module " + Name + "(" +
-    Ports.at(2)->Connection->Name + ", " +
-    Ports.at(0)->Connection->Name + ", " +
-    Ports.at(1)->Connection->Name + ", " +
-    Ports.at(3)->Connection->Name + ")" + s + "    input " +
-    Ports.at(0)->Connection->Name + ", " +
-    Ports.at(1)->Connection->Name + ", " +
-    Ports.at(3)->Connection->Name + s + "    output reg " +
-    Ports.at(2)->Connection->Name + s + "    always @(" +
-    Ports.at(0)->Connection->Name + " or " +
-    Ports.at(1)->Connection->Name + " or " +
-    Ports.at(3)->Connection->Name + ") begin\n" + d + "        if (" +
-    Ports.at(3)->Connection->Name + ") " +
-    Ports.at(2)->Connection->Name + " <= 0" + s + "        if (~" +
-    Ports.at(3)->Connection->Name + " && " +
-    Ports.at(1)->Connection->Name + ") " +
-    Ports.at(2)->Connection->Name + " <= " +
-    Ports.at(0)->Connection->Name + s + "    end\nendmodule\n";
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      t = Props.getFirst()->Value;
+      if(!Verilog_Time(t, Name))
+        return t;    // time has not VHDL format
+      t = "    #" + t + ";\n";
+    }
+  
+  QString s = "";
+  QString q = Ports.at(2)->Connection->Name;
+  QString d = Ports.at(0)->Connection->Name;
+  QString r = Ports.at(3)->Connection->Name;
+  QString c = Ports.at(1)->Connection->Name;
+  QString v = "net_reg" + Name + q;
+  
+  s = "\n  // " + Name + " D-flipflop\n" +
+    "  assign  " + q + " = " + v + ";\n" +
+    "  reg     " + v + ";\n" +
+    "  initial " + v + " = 0;\n" +
+    "  always @ (" + c + " or " + r + ") begin\n" + t +
+    "    if (" + r + ") " + v + " <= 0;\n" +
+    "    else if (~" + r + " && " + c + ") " + v + " <= " + d + ";\n" +
+    "  end\n\n";
   return s;
 }
 

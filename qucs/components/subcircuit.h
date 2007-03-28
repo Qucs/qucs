@@ -31,6 +31,7 @@ public:
 protected:
   QString netlist();
   QString vhdlCode(int);
+  QString verilogCode(int);
   void createSymbol();
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
