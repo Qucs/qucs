@@ -639,9 +639,11 @@ QString Component::get_Verilog_Code(int NumPorts)
   }
 
   // Component is shortened.
-  QString Node1 = Ports.first()->Connection->Name;
-  QString s = "  wire " + Node1 + ";\n";
-  s += "  assign " + Node1 + " = " + Ports.next()->Connection->Name + ";\n";
+  Port *p = Ports.first();
+  QString Node1 = p->Connection->Name;
+  QString s = "";
+  for(p = Ports.next(); p != 0; p = Ports.next())
+    s += "  assign " + p->Connection->Name + " = " + Node1 + ";\n";
   return s;
 }
 
@@ -1261,15 +1263,15 @@ QString GateComponent::verilogCode(int NumPorts)
   Port *pp = Ports.first();
 
   QString s = "  " + Model.lower();
-
+ 
   if(NumPorts <= 0)  // no truth table simulation ?
     if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
       QString t = Props.current()->Value;
       if(!Verilog_Time(t, Name))
-        return t;    // time has not VHDL format
+	return t;    // time has not VHDL format
       s += " #" + t;
     }
-  s += " " + Name + " (" + pp->Connection->Name;  // output port;
+  s += " " + Name + " (" + pp->Connection->Name;  // output port
 
   pp = Ports.next();
   s += ", " + pp->Connection->Name;   // first input port

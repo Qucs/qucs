@@ -117,3 +117,9 @@ QString SubCirPort::vhdlCode(int)
   s += pn->Name + " or '0';\n";
   return s;
 }
+
+// -------------------------------------------------------
+QString SubCirPort::verilogCode(int)
+{
+  return QString("");
+}
