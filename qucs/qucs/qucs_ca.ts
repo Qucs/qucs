@@ -10158,11 +10158,11 @@ en la búsqueda.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Iniciando una nueva simulación </translation>
+        <translation type="obsolete">Iniciando una nueva simulación </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> en </translation>
+        <translation type="obsolete"> en </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -10177,7 +10177,7 @@ Abortado.</translation>
     <message>
         <source>done.
 </source>
-        <translation>hecho.
+        <translation type="obsolete">hecho.
 </translation>
     </message>
     <message>
@@ -10191,25 +10191,25 @@ Abortado.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 La simulación ha finalizado </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Listo.
+        <translation type="obsolete">Listo.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Han ocurrido errores durante la simulación </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Abortado.
+        <translation type="obsolete">Abortado.
 </translation>
     </message>
     <message>
@@ -10217,7 +10217,7 @@ Han ocurrido errores durante la simulación </translation>
 ----------
 
 </source>
-        <translation>Sortida:
+        <translation type="obsolete">Sortida:
 ----------
 
 </translation>
@@ -10230,7 +10230,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Errores:
@@ -10257,6 +10257,40 @@ Errores:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>ERROR: No se pudo abrir el fitxer SPICE &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

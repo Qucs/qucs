@@ -5234,7 +5234,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzlistenformat</translation>
     </message>
 </context>
 <context>
@@ -12292,11 +12292,11 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Starte neue Simulation am </translation>
+        <translation type="obsolete">Starte neue Simulation am </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> um </translation>
+        <translation type="obsolete"> um </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -12311,7 +12311,7 @@ Abgebrochen.</translation>
     <message>
         <source>done.
 </source>
-        <translation>fertig.
+        <translation type="obsolete">fertig.
 </translation>
     </message>
     <message>
@@ -12325,25 +12325,25 @@ Abgebrochen.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulation endete am </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Fertig.
+        <translation type="obsolete">Fertig.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Während der Simulation sind Fehler aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Abgebrochen.
+        <translation type="obsolete">Abgebrochen.
 </translation>
     </message>
     <message>
@@ -12351,7 +12351,7 @@ Während der Simulation sind Fehler aufgetreten am </translation>
 ----------
 
 </source>
-        <translation>Ausgabe:
+        <translation type="obsolete">Ausgabe:
 ----------
 
 </translation>
@@ -12364,7 +12364,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Fehler:
@@ -12399,6 +12399,42 @@ Fehler:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>FEHLER: Die SPICE-Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation>Starte neue Simulation am %1 um %2</translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation>fertig.</translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation>Simulation endete am %1 um %2</translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation>Fertig.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation>Während der Simulation am %1 um %2 sind Fehler aufgetreten</translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation>Abgebrochen.</translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation>Ausgabe:
+--------</translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation>Fehler:
+-------</translation>
     </message>
 </context>
 <context>

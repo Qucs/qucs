@@ -109,10 +109,10 @@ bool SimMessage::startProcess()
   Abort->setText(tr("Abort simulation"));
   Display->setDisabled(true);
 
-  ProgText->insert(tr("Starting new simulation on ")+
-                   QDate::currentDate().toString("ddd dd. MMM yyyy"));
-  ProgText->insert(tr(" at ")+
-                   QTime::currentTime().toString("hh:mm:ss")+"\n\n");
+  QString txt = tr("Starting new simulation on %1 at %2").
+    arg(QDate::currentDate().toString("ddd dd. MMM yyyy")).
+    arg(QTime::currentTime().toString("hh:mm:ss"));
+  ProgText->insert(txt + "\n\n");
 
   SimProcess.blockSignals(false);
   if(SimProcess.isRunning()) {
@@ -302,7 +302,7 @@ void SimMessage::startSimulator()
     // Take VHDL file in memory as it could contain unsaved changes.
     Stream << ((TextDoc*)DocWidget)->text();
     NetlistFile.close();
-    ProgText->insert(tr("done.\n"));  // of "creating netlist... 
+    ProgText->insert(tr("done.")+"\n");  // of "creating netlist... 
 
     SimTime = ((TextDoc*)DocWidget)->SimTime;
 #ifdef __MINGW32__
@@ -336,7 +336,7 @@ void SimMessage::startSimulator()
 	     << "endmodule // TestBench\n";
     }
     NetlistFile.close();
-    ProgText->insert(tr("done.\n"));  // of "creating netlist... 
+    ProgText->insert(tr("done.")+"\n");  // of "creating netlist... 
 
     if(SimPorts < 0) {
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
@@ -490,26 +490,26 @@ void SimMessage::FinishSimulation(int Status)
   QTime t = QTime::currentTime();   // get time
 
   if(Status == 0) {
-    ProgText->insert(tr("\nSimulation ended on ")+
-                     d.toString("ddd dd. MMM yyyy"));
-    ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    ProgText->insert(tr("Ready.\n"));
+    QString txt = tr("Simulation ended on %1 at %2").
+      arg(d.toString("ddd dd. MMM yyyy")).
+      arg(t.toString("hh:mm:ss"));
+    ProgText->insert("\n" + txt + "\n" + tr("Ready.") + "\n");
   }
   else {
-    ProgText->insert(tr("\nErrors occured during simulation on ")+
-                     d.toString("ddd dd. MMM yyyy"));
-    ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    ProgText->insert(tr("Aborted.\n"));
+    QString txt = tr("Errors occurred during simulation on %1 at %2").
+      arg(d.toString("ddd dd. MMM yyyy")).
+      arg(t.toString("hh:mm:ss"));
+    ProgText->insert("\n" + txt + "\n" + tr("Aborted.") + "\n");
   }
 
   QFile file(QucsHomeDir.filePath("log.txt"));  // save simulator messages
   if(file.open(IO_WriteOnly)) {
     int z;
     QTextStream stream(&file);
-    stream << tr("Output:\n----------\n\n");
+    stream << tr("Output:\n-------") << "\n\n";
     for(z=0; z<=ProgText->paragraphs(); z++)
       stream << ProgText->text(z) << "\n";
-    stream << tr("\n\n\nErrors:\n--------\n\n");
+    stream << "\n\n\n" << tr("Errors:\n-------") << "\n\n";
     for(z=0; z<ErrText->paragraphs(); z++)
       stream << ErrText->text(z) << "\n";
     file.close();

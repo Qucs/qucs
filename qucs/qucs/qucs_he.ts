@@ -9777,11 +9777,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished">מתחיל סימולציה חדשה על</translation>
+        <translation type="obsolete">מתחיל סימולציה חדשה על</translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished">ב</translation>
+        <translation type="obsolete">ב</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -9795,7 +9795,7 @@ Aborted.</source>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished">הסתיים.</translation>
+        <translation type="obsolete">הסתיים.</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
@@ -9808,22 +9808,22 @@ Aborted.</source>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished">הסימולציה הסתיימה ב</translation>
+        <translation type="obsolete">הסימולציה הסתיימה ב</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished">מוכן.</translation>
+        <translation type="obsolete">מוכן.</translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished">ארעה שגיאה במהלך סימולציה ב</translation>
+        <translation type="obsolete">ארעה שגיאה במהלך סימולציה ב</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished">בוטל.
+        <translation type="obsolete">בוטל.
 </translation>
     </message>
     <message>
@@ -9831,7 +9831,7 @@ Errors occured during simulation on </source>
 ----------
 
 </source>
-        <translation type="unfinished">פלט:
+        <translation type="obsolete">פלט:
 -------
 
 </translation>
@@ -9844,7 +9844,7 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished">שגיאות:
+        <translation type="obsolete">שגיאות:
 --------------
 
 </translation>
@@ -9863,6 +9863,40 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">מוכן.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

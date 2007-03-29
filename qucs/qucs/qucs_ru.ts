@@ -12271,11 +12271,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Начало нового моделирования в </translation>
+        <translation type="obsolete">Начало нового моделирования в </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> в </translation>
+        <translation type="obsolete"> в </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -12290,7 +12290,7 @@ Aborted.</source>
     <message>
         <source>done.
 </source>
-        <translation>готово.
+        <translation type="obsolete">готово.
 </translation>
     </message>
     <message>
@@ -12304,25 +12304,25 @@ Aborted.</source>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Моделирование закончилось в </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Готово.
+        <translation type="obsolete">Готово.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Во время моделирования произошли ошибки в </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Прервано.
+        <translation type="obsolete">Прервано.
 </translation>
     </message>
     <message>
@@ -12330,7 +12330,7 @@ Errors occured during simulation on </source>
 ----------
 
 </source>
-        <translation>Итог:
+        <translation type="obsolete">Итог:
 ----------
 
 </translation>
@@ -12343,7 +12343,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Ошибки:
@@ -12378,6 +12378,40 @@ Errors:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>ОШИБКА: Не удалось открыть SPICE-файл &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Готово.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

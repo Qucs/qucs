@@ -10767,11 +10767,11 @@ sono incluse nella ricerca.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Inizio nuova simulazione in data </translation>
+        <translation type="obsolete">Inizio nuova simulazione in data </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> alle </translation>
+        <translation type="obsolete"> alle </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -10786,7 +10786,7 @@ Abbandonato.</translation>
     <message>
         <source>done.
 </source>
-        <translation>fatto.
+        <translation type="obsolete">fatto.
 </translation>
     </message>
     <message>
@@ -10800,25 +10800,25 @@ Abbandonato.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulazione conclusa in data </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Pronto.
+        <translation type="obsolete">Pronto.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Errori durante la simulazione in data </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Annullato.
+        <translation type="obsolete">Annullato.
 </translation>
     </message>
     <message>
@@ -10826,7 +10826,7 @@ Errori durante la simulazione in data </translation>
 ----------
 
 </source>
-        <translation>Output:
+        <translation type="obsolete">Output:
 ----------
 
 </translation>
@@ -10839,7 +10839,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Errori:
@@ -10866,6 +10866,40 @@ Errori:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>ERRORE: Impossibile aprire file SPICE &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Pronto.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

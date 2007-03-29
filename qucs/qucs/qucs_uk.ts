@@ -7884,14 +7884,6 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> at </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ERROR: Simulator is still running!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7908,11 +7900,6 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>done.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ERROR: Cannot start simulator!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7921,44 +7908,41 @@ are included in the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-Simulation ended on </source>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ready.
-</source>
+        <source>Starting new simulation on %1 at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-Errors occured during simulation on </source>
+        <source>done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aborted.
-</source>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Output:
-----------
-
-</source>
+-------</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-
-
-Errors:
---------
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <source>Errors:
+-------</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
