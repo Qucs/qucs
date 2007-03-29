@@ -1,3 +1,8 @@
+2007-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (FinishSimulation): Improved some
+	translatable strings.
+
 2007-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (createNetlist): Fixed a bug in

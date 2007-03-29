@@ -10405,11 +10405,11 @@ le nom inclut le texte recherchée. La recherche est
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Nouvelle simulation commencée le </translation>
+        <translation type="obsolete">Nouvelle simulation commencée le </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> à </translation>
+        <translation type="obsolete"> à </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -10424,7 +10424,7 @@ Interruption.</translation>
     <message>
         <source>done.
 </source>
-        <translation>terminée.
+        <translation type="obsolete">terminée.
 </translation>
     </message>
     <message>
@@ -10438,24 +10438,24 @@ Interruption.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>Simulation terminée le</translation>
+        <translation type="obsolete">Simulation terminée le</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Prêt.
+        <translation type="obsolete">Prêt.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Des erreurs sont intervenues pendant la simulation le</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Interruption.
+        <translation type="obsolete">Interruption.
 </translation>
     </message>
     <message>
@@ -10463,7 +10463,7 @@ Des erreurs sont intervenues pendant la simulation le</translation>
 ----------
 
 </source>
-        <translation>Résultat :
+        <translation type="obsolete">Résultat :
 -------------
 
 </translation>
@@ -10476,7 +10476,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Erreurs :
@@ -10499,6 +10499,40 @@ Erreurs :
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>Erreur : impossible de lire le fichier Spice &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Prêt.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

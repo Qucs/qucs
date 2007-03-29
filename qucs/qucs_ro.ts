@@ -9869,11 +9869,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished">Startul noii simulări la data </translation>
+        <translation type="obsolete">Startul noii simulări la data </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished">la ora</translation>
+        <translation type="obsolete">la ora</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -9888,7 +9888,7 @@ Renuntare.</translation>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished">Terminat.
+        <translation type="obsolete">Terminat.
 </translation>
     </message>
     <message>
@@ -9902,25 +9902,25 @@ Renuntare.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Simulare terminată la data</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished">Gata.
+        <translation type="obsolete">Gata.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 Erori au avut loc în timpul simulării la data</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished">Renunţare.
+        <translation type="obsolete">Renunţare.
 </translation>
     </message>
     <message>
@@ -9928,7 +9928,7 @@ Erori au avut loc în timpul simulării la data</translation>
 ----------
 
 </source>
-        <translation type="unfinished">Rezultat:
+        <translation type="obsolete">Rezultat:
 ------------
 
 </translation>
@@ -9941,7 +9941,7 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished">
+        <translation type="obsolete">
 
 
 Erori:
@@ -9963,6 +9963,40 @@ Erori:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
