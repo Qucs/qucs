@@ -12242,11 +12242,11 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Spustit novou simulaci v </translation>
+        <translation type="obsolete">Spustit novou simulaci v </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> v </translation>
+        <translation type="obsolete"> v </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -12261,7 +12261,7 @@ Abgebrochen.</translation>
     <message>
         <source>done.
 </source>
-        <translation>hotovo.
+        <translation type="obsolete">hotovo.
 </translation>
     </message>
     <message>
@@ -12275,25 +12275,25 @@ Abgebrochen.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulace skončila v </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Hotovo.
+        <translation type="obsolete">Hotovo.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Během simulace se vyskytly chyby v </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Přerušeno.
+        <translation type="obsolete">Přerušeno.
 </translation>
     </message>
     <message>
@@ -12301,7 +12301,7 @@ Během simulace se vyskytly chyby v </translation>
 ----------
 
 </source>
-        <translation>Výstup:
+        <translation type="obsolete">Výstup:
 ----------
 
 </translation>
@@ -12314,7 +12314,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Chyby:
@@ -12345,6 +12345,40 @@ Chyby:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>CHYBA: Nelze otevřít SPICE soubor &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

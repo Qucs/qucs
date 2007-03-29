@@ -9997,11 +9997,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>新しいシミュレーションを始めています</translation>
+        <translation type="obsolete">新しいシミュレーションを始めています</translation>
     </message>
     <message>
         <source> at </source>
-        <translation> at</translation>
+        <translation type="obsolete"> at</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -10016,7 +10016,7 @@ Aborted.</source>
     <message>
         <source>done.
 </source>
-        <translation>完了.</translation>
+        <translation type="obsolete">完了.</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
@@ -10029,32 +10029,32 @@ Aborted.</source>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 シミュレーション完了 </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>準備完了.
+        <translation type="obsolete">準備完了.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 シミュレーションでのエラー </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>中断しました.</translation>
+        <translation type="obsolete">中断しました.</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation>出力:
+        <translation type="obsolete">出力:
 ------
 
 </translation>
@@ -10067,7 +10067,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 エラー:
@@ -10101,6 +10101,40 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

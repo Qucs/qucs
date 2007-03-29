@@ -32,6 +32,7 @@
 #include <qtoolbutton.h>
 #include <qimage.h>
 #include <qfiledialog.h>
+#include <qfont.h>
 
 
 QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
@@ -67,11 +68,19 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   connect(ButtOK, SIGNAL(clicked()), SLOT(slotQuit()));
   ButtOK->setFocus();
 
+  // try using same-sized mono-spaced font in the textarea
+  QFont fedit = QFont("Courier New");
+  fedit.setPointSize(QucsSettings.font.pointSize()-1);
+  fedit.setStyleHint(QFont::Courier);
+  fedit.setFixedPitch(true);
+
   text = new QTextEdit(this);
   text->setTextFormat(Qt::PlainText);
   text->setReadOnly(readOnly);
   text->setWordWrap(QTextEdit::NoWrap);
   text->setMinimumSize(300,200);
+  text->setFont(fedit);
+  text->setCurrentFont(fedit);
   v->addWidget(text);
   connect(text, SIGNAL(cursorPositionChanged(int, int)),
           SLOT(slotPrintCursorPosition(int, int)));

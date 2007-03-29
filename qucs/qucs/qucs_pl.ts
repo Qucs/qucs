@@ -10208,11 +10208,11 @@ uwzględniono wszystkie biblioteki.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Rozpoczynanie nowej symulacji</translation>
+        <translation type="obsolete">Rozpoczynanie nowej symulacji</translation>
     </message>
     <message>
         <source> at </source>
-        <translation>o</translation>
+        <translation type="obsolete">o</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
@@ -10233,7 +10233,7 @@ uwzględniono wszystkie biblioteki.</translation>
     <message>
         <source>done.
 </source>
-        <translation>zrobione.
+        <translation type="obsolete">zrobione.
 </translation>
     </message>
     <message>
@@ -10247,25 +10247,25 @@ uwzględniono wszystkie biblioteki.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Symulacja zakończona o</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Gotowy.
+        <translation type="obsolete">Gotowy.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Podczas symulacji wystąpiły błędy</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Przerwane.
+        <translation type="obsolete">Przerwane.
 </translation>
     </message>
     <message>
@@ -10273,7 +10273,7 @@ Podczas symulacji wystąpiły błędy</translation>
 ----------
 
 </source>
-        <translation>Wyjście:
+        <translation type="obsolete">Wyjście:
 ----------
 
 </translation>
@@ -10286,7 +10286,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Błędy:
@@ -10301,6 +10301,40 @@ Błędy:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>BŁĄD: Nie można otworzyć pliku SPICE &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Gotowy.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
