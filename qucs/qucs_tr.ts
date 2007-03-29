@@ -9930,11 +9930,11 @@ Bütün kütüphaneler aranır.</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Yeni benzetim başlatılıyor</translation>
+        <translation type="obsolete">Yeni benzetim başlatılıyor</translation>
     </message>
     <message>
         <source> at </source>
-        <translation>de</translation>
+        <translation type="obsolete">de</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
@@ -9955,7 +9955,7 @@ Bütün kütüphaneler aranır.</translation>
     <message>
         <source>done.
 </source>
-        <translation>bitti.
+        <translation type="obsolete">bitti.
 </translation>
     </message>
     <message>
@@ -9969,25 +9969,25 @@ Bütün kütüphaneler aranır.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Benzetim bitti</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Hazır.
+        <translation type="obsolete">Hazır.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Benzetim başlarken hatalar oluştu</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>İptal Edildi.
+        <translation type="obsolete">İptal Edildi.
 </translation>
     </message>
     <message>
@@ -9995,7 +9995,7 @@ Benzetim başlarken hatalar oluştu</translation>
 ----------
 
 </source>
-        <translation>Çıktı:
+        <translation type="obsolete">Çıktı:
 ---------------
 
 </translation>
@@ -10008,7 +10008,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Hatalar:
@@ -10023,6 +10023,40 @@ Hatalar:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>HATA: SPICE kütügü &quot;%1&quot; açılamıyor.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Hazır.</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

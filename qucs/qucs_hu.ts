@@ -10306,11 +10306,11 @@ Rács megjelenítése</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Új szimuláció indulása </translation>
+        <translation type="obsolete">Új szimuláció indulása </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>,  </translation>
+        <translation type="obsolete">,  </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -10326,7 +10326,7 @@ Megszakítva.
     <message>
         <source>done.
 </source>
-        <translation>befejezve.
+        <translation type="obsolete">befejezve.
 </translation>
     </message>
     <message>
@@ -10340,25 +10340,25 @@ Megszakítva.
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Szimuláció befejezése </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Kész.
+        <translation type="obsolete">Kész.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Hibák a szimuláció alatt </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Megszakítva.
+        <translation type="obsolete">Megszakítva.
 </translation>
     </message>
     <message>
@@ -10366,7 +10366,7 @@ Hibák a szimuláció alatt </translation>
 ----------
 
 </source>
-        <translation>Kimenet:
+        <translation type="obsolete">Kimenet:
 -------------
 
 </translation>
@@ -10379,7 +10379,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Hibák:
@@ -10406,6 +10406,41 @@ Hibák:
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
+    </message>
+    <message>
+        <source>Starting new simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation ended on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Kész.
+</translation>
+    </message>
+    <message>
+        <source>Errors occurred during simulation on %1 at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+-------</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors:
+-------</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
