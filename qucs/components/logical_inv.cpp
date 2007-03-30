@@ -67,22 +67,40 @@ QString Logical_Inv::vhdlCode(int NumPorts)
 // -------------------------------------------------------
 QString Logical_Inv::verilogCode(int NumPorts)
 {
+  bool synthesize = true;
   Port *pp = Ports.first();
+  QString s ("");
 
-  QString s ("  not");
+  if (synthesize) {
+    s = "  assign ";
 
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-      QString t = Props.current()->Value;
-      if(!Verilog_Time(t, Name))
-	return t;    // time has not VHDL format
-      s += " #" + t;
-    }
-  s += " " + Name + " (" + pp->Connection->Name;  // output port
+    if(NumPorts <= 0)  // no truth table simulation ?
+      if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
+	QString t = Props.current()->Value;
+	if(!Verilog_Time(t, Name))
+	  return t;    // time has not VHDL format
+	s += "#" + t + " ";
+      }
+    s += pp->Connection->Name + " = ";  // output port
+    pp = Ports.next();
+    s += "~" + pp->Connection->Name;   // input port
+    s += ";\n";
+  }
+  else {
+    s = "  not";
 
-  pp = Ports.next();
-  s += ", " + pp->Connection->Name; // first input port
-  s += ");\n";
+    if(NumPorts <= 0)  // no truth table simulation ?
+      if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
+	QString t = Props.current()->Value;
+	if(!Verilog_Time(t, Name))
+	  return t;    // time has not VHDL format
+	s += " #" + t;
+      }
+    s += " " + Name + " (" + pp->Connection->Name;  // output port
+    pp = Ports.next();
+    s += ", " + pp->Connection->Name; // first input port
+    s += ");\n";
+  }
   return s;
 }
 
