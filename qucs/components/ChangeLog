@@ -1,3 +1,8 @@
+2007-03-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (verilogCode): Also added the "assign"
+	alternative for better "synthesizability" for gate primitives.
+
 2007-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* digi_source.cpp (verilogCode): Ensured that register name
