@@ -1260,27 +1260,64 @@ QString GateComponent::vhdlCode(int NumPorts)
 // -------------------------------------------------------
 QString GateComponent::verilogCode(int NumPorts)
 {
+  bool synthesize = true;
   Port *pp = Ports.first();
+  QString s("");
 
-  QString s = "  " + Model.lower();
+  if(synthesize) {
+    QString op = Model.lower();
+    if(op == "and" || op == "nand")
+      op = "&";
+    else if (op == "or" || op == "nor")
+      op = "|";
+    else if (op == "xor")
+      op = "^";
+    else if (op == "xnor")
+      op = "^~";
+
+    s = "  assign ";
+
+    if(NumPorts <= 0)  // no truth table simulation ?
+      if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
+	QString t = Props.current()->Value;
+	if(!Verilog_Time(t, Name))
+	  return t;    // time has not VHDL format
+	s += "#" + t + " ";
+      }
+    s += pp->Connection->Name + " = ";  // output port
+    if(Model.at(0) == 'N') s += "~(";
+
+    pp = Ports.next();
+    s += pp->Connection->Name;   // first input port
+
+    // output all input ports with node names
+    for(pp = Ports.next(); pp != 0; pp = Ports.next())
+      s += " " + op + " " + pp->Connection->Name;
+
+    if(Model.at(0) == 'N') s += ")";
+    s += ";\n";
+  }
+  else {
+    s = "  " + Model.lower();
  
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
-      QString t = Props.current()->Value;
-      if(!Verilog_Time(t, Name))
-	return t;    // time has not VHDL format
-      s += " #" + t;
-    }
-  s += " " + Name + " (" + pp->Connection->Name;  // output port
+    if(NumPorts <= 0)  // no truth table simulation ?
+      if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
+	QString t = Props.current()->Value;
+	if(!Verilog_Time(t, Name))
+	  return t;    // time has not VHDL format
+	s += " #" + t;
+      }
+    s += " " + Name + " (" + pp->Connection->Name;  // output port
 
-  pp = Ports.next();
-  s += ", " + pp->Connection->Name;   // first input port
+    pp = Ports.next();
+    s += ", " + pp->Connection->Name;   // first input port
 
-  // output all input ports with node names
-  for(pp = Ports.next(); pp != 0; pp = Ports.next())
-    s += ", " + pp->Connection->Name;
+    // output all input ports with node names
+    for(pp = Ports.next(); pp != 0; pp = Ports.next())
+      s += ", " + pp->Connection->Name;
 
-  s += ");\n";
+    s += ");\n";
+  }
   return s;
 }
 
