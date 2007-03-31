@@ -320,6 +320,10 @@
         <source>VHDL files</source>
         <translation>Plik VHDL</translation>
     </message>
+    <message>
+        <source>Verilog files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -4151,11 +4155,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation>BŁĄD: Komponent VHDL &quot;%1&quot; nie ma nazwy pliku.</translation>
+        <translation type="obsolete">BŁĄD: Komponent VHDL &quot;%1&quot; nie ma nazwy pliku.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation>BŁĄD: Nie można otworzyć pliku VHDL &quot;%1&quot;.</translation>
+        <translation type="obsolete">BŁĄD: Nie można otworzyć pliku VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>VHDL file</source>
@@ -5035,6 +5039,26 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7527,6 +7551,18 @@ wyśrodkowuje w pionie wybrane elementy</translation>
     </message>
     <message>
         <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

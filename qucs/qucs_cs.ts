@@ -320,6 +320,10 @@
         <source>VHDL files</source>
         <translation>VHDL soubory</translation>
     </message>
+    <message>
+        <source>Verilog files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -4341,11 +4345,11 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation>CHYBA: Ve VHDL komponentě &quot;%1&quot; chybí jméno souboru.</translation>
+        <translation type="obsolete">CHYBA: Ve VHDL komponentě &quot;%1&quot; chybí jméno souboru.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation>CHYBA: VHDL soubor &quot;%1&quot; nelze otevřít.</translation>
+        <translation type="obsolete">CHYBA: VHDL soubor &quot;%1&quot; nelze otevřít.</translation>
     </message>
     <message>
         <source>VHDL file</source>
@@ -5201,6 +5205,26 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7853,6 +7877,18 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

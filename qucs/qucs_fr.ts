@@ -324,6 +324,10 @@
         <source>VHDL files</source>
         <translation>Fichiers VHDL</translation>
     </message>
+    <message>
+        <source>Verilog files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -4115,11 +4119,11 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation>ERREUR : Aucun nom de fichier dans le composant VHDL &quot;%1&quot;.</translation>
+        <translation type="obsolete">ERREUR : Aucun nom de fichier dans le composant VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation>ERREUR : impossible de trouver le fichier VHDL &quot;%1&quot;.</translation>
+        <translation type="obsolete">ERREUR : impossible de trouver le fichier VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
@@ -5011,6 +5015,26 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7550,6 +7574,18 @@ Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
