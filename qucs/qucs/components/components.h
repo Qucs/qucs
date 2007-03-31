@@ -118,6 +118,7 @@
 #include "d_flipflop.h"
 #include "jk_flipflop.h"
 #include "vhdlfile.h"
+#include "verilogfile.h"
 
 #include "hicumL2p1.h"
 #include "HBT_X.h"

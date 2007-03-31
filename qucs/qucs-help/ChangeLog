@@ -1,3 +1,8 @@
+2007-03-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/qucsveri.1: Added manpage for the qucsveri wrapper
+	script for digital simulations.
+
 2007-03-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/ru/start_opt.html: Added Russian translations of

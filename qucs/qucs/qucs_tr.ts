@@ -308,6 +308,10 @@
         <source>VHDL files</source>
         <translation>VHDL kütükleri</translation>
     </message>
+    <message>
+        <source>Verilog files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -3965,11 +3969,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation>HATA: &quot;%1&quot; VHDL bileşeninde kütük ismi yok.</translation>
+        <translation type="obsolete">HATA: &quot;%1&quot; VHDL bileşeninde kütük ismi yok.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation>HATA: &quot;%1&quot; VHDL kütüğü açılamıyor.</translation>
+        <translation type="obsolete">HATA: &quot;%1&quot; VHDL kütüğü açılamıyor.</translation>
     </message>
     <message>
         <source>VHDL file</source>
@@ -4829,6 +4833,26 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7222,6 +7246,18 @@ Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>Print...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

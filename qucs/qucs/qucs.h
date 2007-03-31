@@ -164,7 +164,7 @@ private:
   QListBox      *Projects;
   QListView     *Content;
   QListViewItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
-                *ConOthers;
+                *ConOthers, *ConVerilog;
 
   QComboBox     *CompChoose;
 

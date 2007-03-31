@@ -122,6 +122,7 @@ QucsApp::QucsApp()
     tr("Data Display")+" (*.dpl);;"+
     tr("Qucs Documents")+" (*.sch *.dpl);;"+
     tr("VHDL Sources")+" (*.vhdl *.vhd);;"+
+    tr("Verilog Sources")+" (*.v);;"+
     tr("Any File")+" (*)";
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
@@ -180,6 +181,7 @@ void QucsApp::initContentListView()
   ConOthers     = new QListViewItem(Content, tr("Others"));
   ConDatasets   = new QListViewItem(Content, tr("Datasets"));
   ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
+  ConVerilog    = new QListViewItem(Content, tr("Verilog"));
   ConSources    = new QListViewItem(Content, tr("VHDL"));
   ConSchematics = new QListViewItem(Content, tr("Schematics"));
 }
@@ -334,7 +336,7 @@ pInfoFunc digitalComps[] =
    &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
    &Logical_XOR::info, &Logical_XNOR::info, &RS_FlipFlop::info,
    &D_FlipFlop::info, &JK_FlipFlop::info, &VHDL_File::info,
-   &Digi_Sim::info, 0};
+   &Verilog_File::info, &Digi_Sim::info, 0};
 
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
@@ -558,7 +560,7 @@ void QucsApp::slotCMenuDelete()
 }
 
 // ----------------------------------------------------------
-// Deletes all files with that name (and suffix sch, dpl, dat, vhdl).
+// Deletes all files with that name (and suffix sch, dpl, dat, vhdl, v).
 void QucsApp::slotCMenuDelGroup()
 {
   QListViewItem *item = Content->selectedItem();
@@ -571,6 +573,7 @@ void QucsApp::slotCMenuDelGroup()
   QString NameDAT = QucsWorkDir.filePath(s+".dat");
   QString NameDIG = QucsWorkDir.filePath(s+".vhdl");
   QString NameVHD = QucsWorkDir.filePath(s+".vhd");
+  QString NameVER = QucsWorkDir.filePath(s+".v");
 
   int No=0;
   QucsDoc *d;  // search, if files are open
@@ -595,6 +598,11 @@ void QucsApp::slotCMenuDelGroup()
                    tr("Cannot delete the open file: ")+NameVHD);
       return;
     }
+    if(d->DocName == NameVER) {
+      QMessageBox::critical(this, tr("Error"),
+                   tr("Cannot delete the open file: ")+NameVER);
+      return;
+    }
   }
 
 
@@ -603,6 +611,7 @@ void QucsApp::slotCMenuDelGroup()
   bool DAT_exists = QFile::exists(NameDAT);
   bool DIG_exists = QFile::exists(NameDIG);
   bool VHD_exists = QFile::exists(NameVHD);
+  bool VER_exists = QFile::exists(NameVER);
 
   QString Str;
   if(SCH_exists)  Str += s+".sch\n";
@@ -610,6 +619,7 @@ void QucsApp::slotCMenuDelGroup()
   if(DAT_exists)  Str += s+".dat\n";
   if(DIG_exists)  Str += s+".vhdl\n";
   if(VHD_exists)  Str += s+".vhd\n";
+  if(VER_exists)  Str += s+".v\n";
 
   No = QMessageBox::warning(this, tr("Warning"),
 	tr("This will delete the files\n")+Str+tr("permanently! Continue ?"),
@@ -647,6 +657,12 @@ void QucsApp::slotCMenuDelGroup()
 		tr("Cannot delete VHDL source: ")+s+".vhd");
       return;
     }
+  if(VER_exists)
+    if(!QFile::remove(NameVER)) {
+      QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete Verilog source: ")+s+".v");
+      return;
+    }
 
   // remove items from listview ........
   if(SCH_exists) {
@@ -679,6 +695,13 @@ void QucsApp::slotCMenuDelGroup()
   }
   if(VHD_exists) {
     item = Content->findItem(s+".vhd", 0);
+    if(item) {
+      item->parent()->takeItem(item);
+      delete item;
+    }
+  }
+  if(VER_exists) {
+    item = Content->findItem(s+".v", 0);
     if(item) {
       item->parent()->takeItem(item);
       delete item;
@@ -814,6 +837,8 @@ void QucsApp::readProjectFiles()
     delete ConDatasets->firstChild();
   while(ConSources->firstChild())
     delete ConSources->firstChild();
+  while(ConVerilog->firstChild())
+    delete ConVerilog->firstChild();
   while(ConOthers->firstChild())
     delete ConOthers->firstChild();
 
@@ -840,6 +865,8 @@ void QucsApp::readProjectFiles()
       new QListViewItem(ConDatasets, (*it).ascii());
     else if((Str == "vhdl") || (Str == "vhd"))
       new QListViewItem(ConSources, (*it).ascii());
+    else if(Str == "v")
+      new QListViewItem(ConVerilog, (*it).ascii());
     else
       new QListViewItem(ConOthers, (*it).ascii());
   }
@@ -1237,6 +1264,8 @@ bool QucsApp::saveAs()
           Content->setSelected(new QListViewItem(ConDatasets, s), true);
         else if((Info.extension(false) == "vhdl") || (Info.extension(false) == "vhd"))
           Content->setSelected(new QListViewItem(ConSources, s), true);
+        else if(Info.extension(false) == "v")
+          Content->setSelected(new QListViewItem(ConVerilog, s), true);
         else
           Content->setSelected(new QListViewItem(ConOthers, s), true);
       }
@@ -1444,9 +1473,12 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
       }
     }
   }
-  else
+  else if(Info.extension() == "vhdl" || Info.extension() == "vhd") {
     Model = "VHDL";
-
+  }
+  else if(Info.extension() == "v") {
+    Model = "Verilog";
+  }
 
   // update all occurencies of subcircuit in all open documents
   No = 0;
@@ -1925,14 +1957,18 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   }
 
 
-  bool isVHDL = true;
+  bool isVHDL = false;
+  bool isVerilog = false;
   if(item->parent() == 0) return;
   if(item->parent()->text(0) == tr("Schematics")) {
     if(item->text(1).isEmpty())
       return;   // return, if not a subcircuit
-    isVHDL = false;
   }
-  else if(item->parent()->text(0) != tr("VHDL"))
+  else if(item->parent()->text(0) == tr("VHDL"))
+    isVHDL = true;
+  else if(item->parent()->text(0) == tr("Verilog"))
+    isVerilog = true;
+  else
     return;
 
   // delete previously selected elements
@@ -1950,6 +1986,8 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   Component *Comp;
   if(isVHDL)
     Comp = new VHDL_File();
+  else if(isVerilog)
+    Comp = new Verilog_File();
   else
     Comp = new Subcircuit();
   Comp->Props.first()->Value = item->text(0);
