@@ -31,12 +31,20 @@
 #include <qtabwidget.h>
 #include <qmessagebox.h>
 #include <qpaintdevicemetrics.h>
+#include <qfont.h>
 
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 {
+  TextFont = QFont("Courier New");
+  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+  TextFont.setStyleHint(QFont::Courier);
+  TextFont.setFixedPitch(true);
+  setFont(TextFont);
+  setCurrentFont(TextFont);
+
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
-  Scale = (float)QucsSettings.font.pointSize();
+  Scale = (float)TextFont.pointSize();
   setUndoDepth(QucsSettings.maxUndo);
 
   QFileInfo Info(Name_);
@@ -164,7 +172,7 @@ int TextDoc::save()
 // -----------------------------------------------------------
 void TextDoc::print(QPrinter *Printer, QPainter *Painter, bool printAll, bool)
 {
-  Painter->setFont(QucsSettings.font);
+  Painter->setFont(TextFont);
 
   sync();   // formatting whole text
 
@@ -236,8 +244,8 @@ void TextDoc::showAll()
 // ---------------------------------------------------
 void TextDoc::showNoZoom()
 {
-  Scale = (float)QucsSettings.font.pointSize();
-  zoomTo(QucsSettings.font.pointSize());
+  Scale = (float)TextFont.pointSize();
+  zoomTo(TextFont.pointSize());
 }
 
 // ---------------------------------------------------
@@ -297,7 +305,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
   QChar c;
   bool isFloat=false;
   int  iString=-1, iWord=-1, iNumber=-1, iExpo=-1, i=0;
-  QFont font = QucsSettings.font;
+  QFont font = Doc->TextFont;
   font.setPointSize((int)Doc->Scale);
   setFormat(0, text.length(), font, QPen::black);
 
@@ -448,7 +456,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     return;
   pChar *List = WordList[idx];
 
-  QFont newFont = QucsSettings.font;
+  QFont newFont = Doc->TextFont;
   newFont.setPointSize((int)Doc->Scale);
 
   if(List)
