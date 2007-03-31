@@ -900,10 +900,15 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       continue;
     }
 
-    if(pc->Model == "VHDL") {
+    if(pc->Model == "VHDL" || pc->Model == "Verilog" ) {
+      if(isVerilog && pc->Model == "VHDL")
+	continue;
+      if(!isVerilog && pc->Model == "Verilog")
+	continue;
       s = pc->Props.getFirst()->Value;
       if(s.isEmpty()) {
-        ErrText->insert(QObject::tr("ERROR: No file name in VHDL component \"%1\".").
+        ErrText->insert(QObject::tr("ERROR: No file name in %1 component \"%2\".").
+			arg(pc->Model).
                         arg(pc->Name));
         return false;
       }
@@ -918,7 +923,8 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       QFile f(s);
       if(!f.open(IO_ReadOnly)) {
         ErrText->insert(
-           QObject::tr("ERROR: Cannot open VHDL file \"%1\".").arg(s));
+           QObject::tr("ERROR: Cannot open %1 file \"%2\".").
+	   arg(pc->Model).arg(s));
         return false;
       }
 

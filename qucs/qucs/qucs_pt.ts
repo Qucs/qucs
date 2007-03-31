@@ -315,6 +315,10 @@
         <source>VHDL files</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Verilog files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -4030,14 +4034,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>initial voltage for transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4891,6 +4887,26 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>netlist format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of Verilog file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6750,6 +6766,18 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

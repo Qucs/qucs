@@ -22,6 +22,7 @@
 
 #include <qtextedit.h>
 #include <qsyntaxhighlighter.h>
+#include <qfont.h>
 
 class SyntaxHighlighter;
 
@@ -45,6 +46,7 @@ public:
   void  becomeCurrent(bool);
   bool  loadSimulationTime(QString&);
   void  outcommmentSelected();
+  QFont TextFont;
 
 public slots:
   void slotCursorPosChanged(int, int);
