@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * support for digital simulations using Verilog
 
 Version 0.0.11
 --------------
