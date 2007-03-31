@@ -1,5 +1,8 @@
 2007-03-31  Stefan Jahn  <stefan@lkcc.org>
 
+	* d_flipflop.cpp (verilogCode): Removed initial value for
+	D-flipflop output register.
+
 	* verilogfile.h: Added new component.  Can handle external
 	verilog files.  Can be used as subcircuit.
 
