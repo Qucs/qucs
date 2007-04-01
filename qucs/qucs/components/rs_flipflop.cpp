@@ -19,6 +19,7 @@
 
 #include "rs_flipflop.h"
 #include "node.h"
+#include "main.h"
 
 RS_FlipFlop::RS_FlipFlop()
 {
@@ -72,6 +73,31 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
     Ports.at(1)->Connection->Name + " nor " +
     Ports.at(2)->Connection->Name + s + '\n';
   return s;
+}
+
+// -------------------------------------------------------
+QString RS_FlipFlop::verilogCode(int NumPorts)
+{
+  QString t = "";
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      t = Props.getFirst()->Value;
+      if(!Verilog_Time(t, Name))
+        return t;    // time has not VHDL format
+      t = "#" + t + " ";
+    }
+  
+  QString l = "";
+
+  QString s = Ports.at(1)->Connection->Name;
+  QString r = Ports.at(0)->Connection->Name;
+  QString q = Ports.at(2)->Connection->Name;
+  QString b = Ports.at(3)->Connection->Name;
+  
+  l = "\n  // " + Name + " RS-flipflop\n" +
+    "  assign " + t + q + " = ~(" + r + " | " + b + ");\n" +
+    "  assign " + t + b + " = ~(" + s + " | " + q + ");\n\n";
+  return l;
 }
 
 // -------------------------------------------------------
