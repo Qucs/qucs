@@ -19,6 +19,7 @@
 
 #include "jk_flipflop.h"
 #include "node.h"
+#include "main.h"
 
 JK_FlipFlop::JK_FlipFlop()
 {
@@ -93,6 +94,43 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
       Ports.at(3)->Connection->Name + " <= not " +
       Ports.at(2)->Connection->Name + ";\n\n";
   return s;
+}
+
+// -------------------------------------------------------
+QString JK_FlipFlop::verilogCode(int NumPorts)
+{
+  QString t = "";
+  if(NumPorts <= 0)  // no truth table simulation ?
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      t = Props.getFirst()->Value;
+      if(!Verilog_Time(t, Name))
+        return t;    // time has not VHDL format
+      t = "    #" + t + ";\n";
+    }
+  
+  QString l = "";
+
+  QString s = Ports.at(5)->Connection->Name;
+  QString r = Ports.at(6)->Connection->Name;
+  QString j = Ports.at(0)->Connection->Name;
+  QString k = Ports.at(1)->Connection->Name;
+  QString q = Ports.at(2)->Connection->Name;
+  QString b = Ports.at(3)->Connection->Name;
+  QString c = Ports.at(4)->Connection->Name;
+  QString v = "net_reg" + Name + q;
+  
+  l = "\n  // " + Name + " JK-flipflop\n" +
+    "  assign  " + q + " = " + v + ";\n" +
+    "  assign  " + b + " = ~" + q + ";\n" +
+    "  reg     " + v + ";\n" +
+    "  always @ (" + c + " or " + r + " or " + s + ") begin\n" + t +
+    "    if (" + r + ") " + v + " <= 0;\n" +
+    "    else if (" + s + ") " + v + " <= 1;\n" +
+    "    else if (" + c + ")\n" + 
+    "      " + v + " <= (" + j + " && ~" + q + ") || (~" +
+    k + " && " + q + ");\n" +
+    "  end\n\n";
+  return l;
 }
 
 // -------------------------------------------------------

@@ -1,3 +1,8 @@
+2007-04-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* jk_flipflop.cpp, rs_flipflop.cpp (verilogCode): Implemented
+	Verilog code for RS- and JK-flipsflops.
+
 2007-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* d_flipflop.cpp (verilogCode): Removed initial value for
