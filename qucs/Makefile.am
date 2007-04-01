@@ -95,7 +95,7 @@ langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)
 
 EXTRA_DIST = $(TRANSLATIONS) $(GENTRANSLATIONS) README.translations \
-	qucsdigi qucsdigi.bat
+	qucsdigi qucsdigi.bat qucsveri
 
 all-local: $(TRANSLATIONS) $(TRANSFILES)
 
