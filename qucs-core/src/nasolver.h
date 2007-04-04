@@ -1,7 +1,7 @@
 /*
  * nasolver.h - nodal analysis solver class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.22 2006-07-24 08:07:41 raimi Exp $
+ * $Id: nasolver.h,v 1.23 2007-04-04 19:25:41 ela Exp $
  *
  */
 
@@ -68,7 +68,9 @@ class nasolver : public analysis
   char * getHelperDescription (void);
 
  protected:
+  void restartNR (void);
   void savePreviousIteration (void);
+  void restorePreviousIteration (void);
   int  countNodes (void);
   int  findAssignedNode (circuit *, int);
   int  countVoltageSources (void);

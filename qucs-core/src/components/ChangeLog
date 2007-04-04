@@ -1,3 +1,13 @@
+2007-04-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/qucsVersion.xml: Cleaned up a bit.  Also fixed
+	some minor bugs.
+
+	* verilog/qucsMODULEcore.xml: Added HB simulation callbacks.
+
+	* verilog/qucsMODULEdefs.xml: Added parameter range extraction
+	functionality.
+
 2007-03-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* vac.cpp, iac.cpp: Adjusted time dependency of damping

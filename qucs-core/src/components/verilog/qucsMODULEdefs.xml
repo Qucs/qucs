@@ -2,7 +2,7 @@
 
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -33,9 +33,68 @@
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
     <admst:value-of select="name"/> 
-    <admst:text format="      { &quot;%s&quot;, PROP_REAL, { "/>
+    <admst:text format="      { &quot;%s&quot;, "/>
+    <admst:choose>
+    <admst:when test="[type='real']">
+      <admst:text format="PROP_REAL"/>
+    </admst:when>
+    <admst:when test="[type='integer']">
+      <admst:text format="PROP_INT"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:text format="PROP_STR"/>
+    </admst:otherwise>
+    </admst:choose>
+    <admst:text format=", { "/>
     <admst:apply-templates select="default" match=":expression"/>
-    <admst:text format=", PROP_NO_STR }, PROP_POS_RANGE },\n"/>
+    <admst:text format=", PROP_NO_STR }, "/>
+    <!-- parameter range -->
+    <admst:choose>
+    <admst:when test="[nilled(range)]">
+      <admst:text format="PROP_NO_RANGE"/>
+    </admst:when>
+    <admst:when test="[name!='pnp' and name!='npn']">
+      <admst:text format="{ "/>
+      <admst:choose>
+      <admst:when test="range/infexpr[hasspecialnumber='YES']">
+        <admst:text format="'.', 0,"/>
+      </admst:when>
+      <admst:otherwise>
+        <admst:choose>
+          <admst:when test="range[infboundtype='range_bound_include']">
+            <admst:text format="'[', "/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:text format="']', "/>
+          </admst:otherwise>
+        </admst:choose>
+        <admst:apply-templates select="range/infexpr" match=":expression"/>
+      </admst:otherwise>
+      </admst:choose>
+      <admst:text format=", "/>
+      <admst:choose>
+      <admst:when test="range/supexpr[hasspecialnumber='YES']">
+        <admst:text format="0, '.'"/>
+      </admst:when>
+      <admst:otherwise>
+        <admst:apply-templates select="range/supexpr" match=":expression"/>
+	<admst:choose>
+	  <admst:when test="range[supboundtype='range_bound_include']">
+	    <admst:text format=", ']'"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:text format=", '['"/>
+          </admst:otherwise>
+        </admst:choose>
+      </admst:otherwise>
+      </admst:choose>
+      <admst:text format=" }"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:text format="PROP_POS_RANGE"/>
+    </admst:otherwise>
+    </admst:choose>
+    <admst:text format=" },\n"/>
   </admst:if>
 </admst:for-each>
 <admst:text format="      { &quot;Type&quot;, PROP_STR, { PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
