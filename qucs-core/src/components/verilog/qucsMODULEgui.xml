@@ -24,9 +24,8 @@
 <admst:count select="node"/>
 <admst:variable name="nbr_nodes" select="%s"/>
 </admst:for-each>
-    
-<admst:open file="$module.gui.cpp">
-/*
+
+<admst:open file="$module.gui.cpp">/*
  * $(module).cpp - device implementations for $(module) module
  *
  * This is free software; you can redistribute it and/or modify

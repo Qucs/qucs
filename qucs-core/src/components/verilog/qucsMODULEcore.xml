@@ -29,8 +29,7 @@
 <admst:variable name="nbr_sources_flickernoise" select="%s"/>
 </admst:for-each>
 
-<admst:open file="$module.core.cpp">
-/*
+<admst:open file="$module.core.cpp">/*
  * $(module).core.cpp - device implementations for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
@@ -40,9 +39,8 @@
  * 
  */
 <admst:for-each select="/module">
-
 #if HAVE_CONFIG_H
-<admst:text format="#include &lt;config.h&gt;"/>
+#include &lt;config.h&gt;
 #endif
 
 #include &lt;stdio.h&gt;
@@ -82,68 +80,107 @@
 </admst:for-each>
 
 <admst:text format="\n// useful macro definitions"/>
-#define NP(node) real(getV(node))
-#define BP(pnode,nnode) real(getV(pnode)-getV(nnode))
+#define NP(node) real (getV (node))
+#define BP(pnode,nnode) (NP(pnode) - NP(nnode))
 #define _load_static_residual2(pnode,nnode,current)\\
 	_rhs[pnode] -= current;\\
 	_rhs[nnode] += current;
 #define _load_static_residual1(node,current)\\
-	_rhs[node] -= current;	
+	_rhs[node] -= current;
 #define _load_static_jacobian4(pnode,nnode,vpnode,vnnode,conductance)\\
-	_jstat[pnode][vpnode] += conductance; \\
-	_jstat[nnode][vnnode] += conductance; \\
-	_jstat[pnode][vnnode] -= conductance; \\
-	_jstat[nnode][vpnode] -= conductance; \\
-	_rhs[pnode] += conductance * BP(vpnode,vnnode); \\
-	_rhs[nnode] -= conductance * BP(vpnode,vnnode);	
+	_jstat[pnode][vpnode] += conductance;\\
+	_jstat[nnode][vnnode] += conductance;\\
+	_jstat[pnode][vnnode] -= conductance;\\
+	_jstat[nnode][vpnode] -= conductance;\\
+	if (doHB) {\\
+	_ghs[pnode] += conductance * BP(vpnode,vnnode);\\
+	_ghs[nnode] -= conductance * BP(vpnode,vnnode);\\
+        } else {\\
+	_rhs[pnode] += conductance * BP(vpnode,vnnode);\\
+	_rhs[nnode] -= conductance * BP(vpnode,vnnode);\\
+	}
 #define _load_static_jacobian2p(node,vpnode,vnnode,conductance)\\
 	_jstat[node][vpnode] += conductance;\\
 	_jstat[node][vnnode] -= conductance;\\
-        _rhs[node] += conductance*(BP(vpnode,vnnode));
+	if (doHB) {\\
+        _ghs[node] += conductance * BP(vpnode,vnnode);\\
+        } else {\\
+        _rhs[node] += conductance * BP(vpnode,vnnode);\\
+	}
 #define _load_static_jacobian2s(pnode,nnode,node,conductance)\\
 	_jstat[pnode][node] += conductance;\\
 	_jstat[nnode][node] -= conductance;\\
+	if (doHB) {\\
+	_ghs[pnode] += conductance * NP(node);\\
+	_ghs[nnode] -= conductance * NP(node);\\
+        } else {\\
 	_rhs[pnode] += conductance * NP(node);\\
-	_rhs[nnode] -= conductance * NP(node);
+	_rhs[nnode] -= conductance * NP(node);\\
+	}
 #define _load_static_jacobian1(node,vnode,conductance)\\
 	_jstat[node][vnode] += conductance;\\
-	_rhs[node] += conductance * NP(vnode);
-#define _load_dynamic_residual2(pnode,nnode,current)\\
-	if (doTR) _charges[pnode][nnode] += current;
-#define _load_dynamic_residual1(node,current)\\
-	if (doTR) _charges[node][node] += current;
-#define _load_dynamic_jacobian4(pnode,nnode,vpnode,vnnode, conductance)\\
+	if (doHB) {\\
+	_ghs[node] += conductance * NP(vnode);\\
+        } else {\\
+	_rhs[node] += conductance * NP(vnode);\\
+	}
+#define _load_dynamic_residual2(pnode,nnode,charge)\\
+	if (doTR) _charges[pnode][nnode] += charge;\\
+	if (doHB) {\\
+	_qhs[pnode] -= charge;\\
+	_qhs[nnode] += charge;\\
+	}
+#define _load_dynamic_residual1(node,charge)\\
+	if (doTR) _charges[node][node] += charge;\\
+	if (doHB) {\\
+	_qhs[node] -= charge;\\
+	}
+#define _load_dynamic_jacobian4(pnode,nnode,vpnode,vnnode,capacitance)\\
 	if (doAC) {\\
-	_jdyna[pnode][vpnode] += conductance;\\
-	_jdyna[nnode][vnnode] += conductance;\\
-	_jdyna[pnode][vnnode] -= conductance;\\
-	_jdyna[nnode][vpnode] -= conductance;\\
+	_jdyna[pnode][vpnode] += capacitance;\\
+	_jdyna[nnode][vnnode] += capacitance;\\
+	_jdyna[pnode][vnnode] -= capacitance;\\
+	_jdyna[nnode][vpnode] -= capacitance;\\
 	}\\
         if (doTR) {\\
-        _caps[pnode][nnode][vpnode][vnnode] += conductance;\\
-  	}
-#define _load_dynamic_jacobian2s(pnode,nnode,vnode,conductance)\\
+        _caps[pnode][nnode][vpnode][vnnode] += capacitance;\\
+  	}\\
+	if (doHB) {\\
+	_chs[pnode] += capacitance * BP(vpnode,vnnode);\\
+	_chs[nnode] -= capacitance * BP(vpnode,vnnode);\\
+	}
+#define _load_dynamic_jacobian2s(pnode,nnode,vnode,capacitance)\\
 	if (doAC) {\\
-	_jdyna[pnode][vnode] += conductance;\\
-	_jdyna[nnode][vnode] -= conductance;\\
+	_jdyna[pnode][vnode] += capacitance;\\
+	_jdyna[nnode][vnode] -= capacitance;\\
 	}\\
 	if (doTR) {\\
-	_caps[pnode][nnode][vnode][vnode] += conductance;\\
-	}	
-#define _load_dynamic_jacobian2p(node,vpnode,vnnode,conductance)\\
+	_caps[pnode][nnode][vnode][vnode] += capacitance;\\
+	}\\
+	if (doHB) {\\
+	_chs[pnode] += capacitance * NP(vnode);\\
+	_chs[nnode] -= capacitance * NP(vnode);\\
+	}
+#define _load_dynamic_jacobian2p(node,vpnode,vnnode,capacitance)\\
 	if (doAC) {\\
-	_jdyna[node][vpnode] += conductance;\\
-        _jdyna[node][vnnode] -= conductance;\\
+	_jdyna[node][vpnode] += capacitance;\\
+        _jdyna[node][vnnode] -= capacitance;\\
         }\\
 	if (doTR) {\\
-        _caps[node][node][vpnode][vnnode] += conductance;\\
+        _caps[node][node][vpnode][vnnode] += capacitance;\\
+	}\\
+	if (doHB) {\\
+	_chs[node] += capacitance * BP(vpnode,vnnode);\\
 	}
-#define _load_dynamic_jacobian1(node,vnode,conductance)\\
+#define _load_dynamic_jacobian1(node,vnode,capacitance)\\
 	if (doAC) {\\
-	_jdyna[node][vnode] += conductance;\\
+	_jdyna[node][vnode] += capacitance;\\
 	}\\
 	if (doTR) {\\
-	_caps[node][node][vnode][vnode] += conductance;\\
+	_caps[node][node][vnode][vnode] += capacitance;\\
+	}\\
+	if (doHB) {\\
+	_chs[node] += capacitance * NP(vnode);\\
 	}
 
 #define _save_whitenoise1(n1,pwr,type)\\
@@ -199,7 +236,7 @@ using namespace device;
   <admst:if test="[location='internal' and name!='GND']">
   <admst:value-of select="name"/>
   <admst:value-of select="name"/>  
-  <admst:text format="  setNode(%s, createInternal (getName (), &quot;%s&quot;));\n"/>
+  <admst:text format="  setNode (%s, createInternal (getName (), &quot;%s&quot;));\n"/>
   </admst:if>
 </admst:for-each>
 <admst:text format="}\n\n"/>
@@ -215,6 +252,7 @@ using namespace device;
   restartDC ();
   doAC = 1;
   doTR = 0;
+  doHB = 0;
 <admst:text format="}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
@@ -294,6 +332,9 @@ using namespace device;
   // zero right hand side, static and dynamic jacobian
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    _rhs[i1] = 0.0;\n"/>
+<admst:text format="    _qhs[i1] = 0.0;\n"/>
+<admst:text format="    _chs[i1] = 0.0;\n"/>
+<admst:text format="    _ghs[i1] = 0.0;\n"/>
 <admst:text format="    for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="      _jstat[i1][i2] = 0.0;\n"/>
 <admst:text format="      _jdyna[i1][i2] = 0.0;\n"/>
@@ -435,6 +476,7 @@ using namespace device;
 
 <admst:text format="/* Perform transient analysis iteration step. */\n"/>
 <admst:text format="void $module::calcTR (nr_double_t)\n{"/>
+  doHB = 0;
   doAC = 1;
   doTR = 1;
   calcDC ();
@@ -544,14 +586,44 @@ using namespace device;
 <admst:text format="/* Perform S-parameter noise computations. */\n"/>
 <admst:text format="void $module::calcNoiseSP (nr_double_t frequency) \n{"/>
   setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Initialization of HB analysis. */\n"/>
+<admst:text format="void $module::initHB (int)\n{"/>
+  initDC ();
+  allocMatrixHB ();
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Perform HB analysis. */\n"/>
+<admst:text format="void $module::calcHB (int)\n{"/>
+  doHB = 1;
+  doAC = 1;
+  doTR = 0;
+
+  // jacobian dI/dV and currents get filled
+  calcDC ();
+  saveOperatingPoints ();
+
+  // fill in HB matrices
+<admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
+<admst:text format="    setQ  (i1, _qhs[i1]); // charges\n"/>
+<admst:text format="    setCV (i1, _chs[i1]); // jacobian dQ/dV * V\n"/>
+<admst:text format="    setGV (i1, _ghs[i1]); // jacobian dI/dV * V\n"/>
+<admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
+<admst:text format="      setQV (i1, i2, _jdyna[i1][i2]); // jacobian dQ/dV\n"/>
+<admst:text format="    }\n  }\n"/>
+
 <admst:text format="}\n"/>
 
 </admst:for-each>
 
 </admst:open>
 
-<admst:open file="$module.core.h">
-/*
+<admst:open file="$module.core.h">/*
  * $(module).core.h - device class definitions for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
@@ -583,16 +655,22 @@ using namespace device;
   void calcNoiseSP (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+  void initHB (int);
+  void calcHB (int);
   void initModel (void);
   matrix calcMatrixY (nr_double_t);
   matrix calcMatrixCy (nr_double_t);
   
  private:
+  int doHB;
   int doAC;
   int doTR;
 
   nr_double_t _freq;
 <admst:text format="  nr_double_t _rhs[$nbr_nodes];\n"/> 
+<admst:text format="  nr_double_t _qhs[$nbr_nodes];\n"/> 
+<admst:text format="  nr_double_t _ghs[$nbr_nodes];\n"/> 
+<admst:text format="  nr_double_t _chs[$nbr_nodes];\n"/> 
 <admst:text format="  nr_double_t _jstat[$nbr_nodes][$nbr_nodes];\n"/>
 <admst:text format="  nr_double_t _jdyna[$nbr_nodes][$nbr_nodes];\n"/>
 <admst:text format="  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];\n"/>

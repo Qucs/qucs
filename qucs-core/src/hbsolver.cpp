@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.21 2006/07/04 09:30:48 raimi Exp $
+ * $Id: hbsolver.cpp,v 1.22 2007/04/04 19:25:41 ela Exp $
  *
  */
 
@@ -333,7 +333,12 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
   posfreqs.clear ();
   if (len > 0) {
     // frequency expansion for full frequency sets
-    for (i = -n; i <= n + 1; i++) {
+    for (i = 0; i <= n + 1; i++) {
+      for (k = 0; k < len; k++) {
+	negfreqs.add (i * f + nfreqs.get (k));
+      }
+    }
+    for (i = -n; i < 0; i++) {
       for (k = 0; k < len; k++) {
 	negfreqs.add (i * f + nfreqs.get (k));
       }
@@ -346,7 +351,8 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
   }
   else {
     // first frequency
-    for (i = -n; i <= n + 1; i++) negfreqs.add (i * f);
+    for (i = 0; i <= n + 1; i++) negfreqs.add (i * f);
+    for (i = -n; i < 0; i++) negfreqs.add (i * f);
     for (i = 0; i <= 2 * n + 1; i++) posfreqs.add (i * f);
   }
 }
@@ -398,7 +404,7 @@ void hbsolver::collectFrequencies (void) {
   // build frequency dimension lengths
   ndfreqs = new int[dfreqs.getSize ()];
   for (i = 0; i < dfreqs.getSize (); i++) {
-    ndfreqs[i] = n * 2 + 1;
+    ndfreqs[i] = (n + 1) * 2;
   }
 
 #if DEBUG && 0
@@ -419,9 +425,7 @@ void hbsolver::collectFrequencies (void) {
 
   // pre-calculate the j[O] vector
   OM = new tvector<complex> (nlfreqs);
-  for (i = n = 0; n < lnfreqs; n++, i++)
-    OM_(n) = rect (0, 2 * M_PI * rfreqs (i));
-  for (i = 0; n < nlfreqs; n++, i++)
+  for (n = i = 0; n < nlfreqs; n++, i++)
     OM_(n) = rect (0, 2 * M_PI * negfreqs (i));
 }
 
@@ -1082,10 +1086,11 @@ void hbsolver::loadMatrices (void) {
 void hbsolver::VectorFFT (tvector<complex> * V, int isign) {
   int i, k, r;
   int n = nlfreqs;
+  int nd = dfreqs.getSize ();
   int nodes = V->getSize () / n;
   nr_double_t * d = (nr_double_t *) V->getData ();
 
-  if (dfreqs.getSize () == 1) {
+  if (nd == 1) {
     // for each node a single 1d-FFT
     for (k = i = 0; i < nodes; i++, k += 2 * n) {
       nr_double_t * dst = &d[k];
@@ -1095,6 +1100,11 @@ void hbsolver::VectorFFT (tvector<complex> * V, int isign) {
   }
   else {
     // for each node a single nd-FFT
+    for (k = i = 0; i < nodes; i++, k += 2 * n) {
+      nr_double_t * dst = &d[k];
+      _fft_nd (dst, ndfreqs, nd, isign);
+      if (isign > 0) for (r = 0; r < 2 * n; r++) *dst++ /= ndfreqs[0];
+    }
   }
 }
 			

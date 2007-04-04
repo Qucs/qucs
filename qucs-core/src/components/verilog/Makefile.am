@@ -45,15 +45,25 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components -I$(top_srcdir)/sr
 if MAINTAINER_MODE
 HBT_X.analogfunction.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e analogfunction.xml
+HBT_X.core.cpp: qucsVersion.xml qucsMODULEcore.xml
 HBT_X.core.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+HBT_X.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+HBT_X.defs.h: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+HBT_X.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+HBT_X.gui.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 hicumL2p1.analogfunction.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e analogfunction.xml
+hicumL2p1.core.cpp: qucsVersion.xml qucsMODULEcore.xml
 hicumL2p1.core.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hicumL2p1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2p1.defs.h: hicumL2V2p11.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hicumL2p1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2p1.gui.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

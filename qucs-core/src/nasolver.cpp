@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.46 2007/02/03 12:21:24 ela Exp $
+ * $Id: nasolver.cpp,v 1.47 2007/04/04 19:25:41 ela Exp $
  *
  */
 
@@ -342,7 +342,12 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void) {
 
     // not yet converged, so decreased the source-step
     if (run >= MaxIterations || error) {
-      sStep /= 2;
+      if (error)
+	sStep *= 0.1;
+      else
+	sStep *= 0.5;
+      restorePreviousIteration ();
+      saveSolution ();
       // here the absolute minimum step checker
       if (sStep < NR_EPSI) {
 	error = 1;
@@ -355,10 +360,13 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void) {
       srcFactor = MIN (sPrev + sStep, 1);
     } 
     // converged, increased the source-step
-    else {
+    else if (run < MaxIterations / 4) {
       sPrev = srcFactor;
       srcFactor = MIN (srcFactor + sStep, 1);
-      sStep *= 2;
+      sStep *= 1.5;
+    }
+    else {
+      srcFactor = MIN (srcFactor + sStep, 1);
     }
   }
   // continue until no source factor is necessary
@@ -1017,6 +1025,24 @@ void nasolver<nr_type_t>::savePreviousIteration (void) {
     *zprev = *z;
   else
     zprev = new tvector<nr_type_t> (*z);
+}
+
+/* The function restores the solution and right hand vector of the
+   previous (successful) iteration. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::restorePreviousIteration (void) {
+  if (xprev != NULL) *x = *xprev;
+  if (zprev != NULL) *z = *zprev;
+}
+
+/* The function restarts the NR iteration for each non-linear
+   circuit. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::restartNR (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ()) c->restartDC ();
+  }
 }
 
 /* This function goes through solution (the x vector) and saves the
