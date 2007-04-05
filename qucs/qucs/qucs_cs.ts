@@ -5227,6 +5227,10 @@ Použití:  qucsedit [-r] soubor
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
