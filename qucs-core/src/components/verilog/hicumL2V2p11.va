@@ -1167,7 +1167,6 @@ analog	begin
 		I(br_sht) 	<+ ddt(cth*V(br_sht));
 	end else begin
 		V(br_sht)	<+ 0.0;
-
 	end
 
 	

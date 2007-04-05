@@ -270,19 +270,20 @@ using namespace device;
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
     <admst:value-of select="name"/>
-    <admst:value-of select="name"/>    
+    <admst:value-of select="name"/>
+    <admst:choose>
+    <admst:when test="[type='real']">
     <admst:text format="  nr_double_t %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
+    </admst:when>
+    <admst:when test="[type='integer']">
+    <admst:text format="  int %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
+    </admst:when>
+    <admst:otherwise>
+    <admst:text format="  char * %s = getPropertyString (&quot;%s&quot;);\n"/> 
+    </admst:otherwise>
+    </admst:choose>
   </admst:if>
 </admst:for-each>
-
-<admst:text format="\n  // definition of derivative helper variables"/>
-  nr_double_t __log_0, __d_log_0, __log_1, __d_log_1, __log_2, __d_log_2;
-  nr_double_t __exp_0, __d_exp_0, __exp_1, __d_exp_1, __exp_2, __d_exp_2;
-  nr_double_t __sqrt_0, __d_sqrt_0, __sqrt_1, __d_sqrt_1, __sqrt_2, __d_sqrt_2;
-  nr_double_t __limexp_0, __d_limexp_0, __limexp_1, __d_limexp_1;
-  nr_double_t __limexp_2, __d_limexp_3, __tanh_0, __d_tanh_0;
-  nr_double_t __fabs_0, __d_fabs_0, __fabs_1, __d_fabs_1, __fabs_2, __d_fabs_2;
-  nr_double_t __pow_0, __dFx_pow_0, __pow_1, __dFx_pow_1, __pow_2, __dFx_pow_2;
 
 <admst:text format="  // initialization of noise variables\n"/>
 <admst:for-each select="source[whitenoise='yes']">

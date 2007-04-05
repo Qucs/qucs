@@ -1,3 +1,8 @@
+2007-04-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/qucsVersion.xml: Some more cleanups.  Also fixed
+	a bug for analog function calls.  Thanks to Laurent.
+
 2007-04-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilog/qucsVersion.xml: Cleaned up a bit.  Also fixed

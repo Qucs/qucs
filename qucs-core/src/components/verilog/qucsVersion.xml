@@ -282,8 +282,6 @@
 #define _d_atan(val,dval,arg)    val = atan(arg);    dval = (+1.0/(1+arg*arg));
 #define _logE(val,arg)           val = log(arg);
 #define _d_logE(val,dval,arg)    val = log(arg);     dval = (1.0/arg);
-#define _log(val,arg)            val = log(arg);
-#define _d_log(val,dval,arg)     val = log(arg);     dval = (1.0/arg);
 #define _log10(val,arg)          val = log10(arg);
 #define _d_log10(val,dval,arg)   val = log10(arg);   dval = (1.0/arg/M_LN10);
 #define _exp(val,arg)            val = exp(arg);
@@ -908,7 +906,7 @@
   <admst:choose>
     <admst:when test="[name='abs']"><admst:value-of select="'fabs'"/></admst:when>
     <admst:when test="[name='log']"><admst:value-of select="'log10'"/></admst:when>
-    <admst:when test="[name='ln']"><admst:value-of select="'log'"/></admst:when>
+    <admst:when test="[name='ln']"><admst:value-of select="'logE'"/></admst:when>
     <admst:when test="[name='limexp']"><admst:value-of select="'limexp'"/></admst:when>
     <admst:when test="[name='\$limexp']"><admst:value-of select="'limexp'"/></admst:when>
     <admst:when test="[name='\$model']"><admst:value-of select="'_modelname'"/></admst:when>
@@ -1061,8 +1059,7 @@
           <admst:value-of select="name"/>
         </admst:if>
       </admst:for-each>
-      <admst:variable name="value" select="%s_%s%s_%s"/>
-      <admst:value-to select="/simulator/tmp" value="$value"/>
+      <admst:value-to select="/simulator/tmp" value="%s_%s%s_%s"/>
       <admst:if test="/simulator/probe">
         <admst:value-to select="/simulator/ddx" value="0.0"/>
       </admst:if>
@@ -1188,7 +1185,6 @@
             <admst:variable name="arg$index" select="%s"/>
             <admst:variable name="args" select="$args$(arg$index)"/>
           </admst:for-each>
-          <admst:value-to select="/simulator/tmp" value="$(module)_$function($args)"/>
           <admst:if test="/simulator/probe">
             <admst:variable name="dargs" select="$args"/>
             <admst:for-each select="arguments">
@@ -1199,6 +1195,7 @@
             </admst:for-each>
             <admst:value-to select="/simulator/ddx" value="$(module)_d_$function($dargs)"/>
           </admst:if>
+          <admst:value-to select="/simulator/tmp" value="$(module)_$function($args)"/>
         </admst:otherwise>
       </admst:choose>
     </admst:otherwise>
@@ -1505,7 +1502,7 @@
             <admst:if test="math[dependency!='constant']">
               <admst:value-of select="../position(.)-1"/>
               <admst:apply-templates select=".." match="function:getname"/>
-              <admst:text format="__d_%s_%s=0.0;\n"/>
+              <admst:text format="double __d_%s_%s=0.0;\n"/>
             </admst:if>
           </admst:for-each>
         </admst:if>
@@ -1516,14 +1513,14 @@
               <admst:if test="math[dependency!='constant']">
                 <admst:value-of select="../position(.)-1"/>
                 <admst:apply-templates select=".." match="function:getname"/>
-                <admst:text format="__dFx_%s_%s=0.0;\n"/>
+                <admst:text format="double __dFx_%s_%s=0.0;\n"/>
               </admst:if>
             </admst:if>
             <admst:if test="[position(.)=2]">
               <admst:if test="math[dependency!='constant']">
                 <admst:value-of select="../position(.)-1"/>
                 <admst:apply-templates select=".." match="function:getname"/>
-                <admst:text format="__dFy_%s_%s=0.0;\n"/>
+                <admst:text format="double __dFy_%s_%s=0.0;\n"/>
               </admst:if>
             </admst:if>
           </admst:for-each>
@@ -1618,11 +1615,11 @@
         <admst:text format="if (doAC)\n{\n"/>
       </admst:when>
     </admst:choose>
-    <admst:text format="\n"/>
+    <admst:text format="{\n"/>
     <admst:for-each select="rhs/function">
       <admst:value-of select="position(.)-1"/>
       <admst:apply-templates select="." match="function:getname"/>
-      <admst:text format="__%s_%s=0.0;\n"/>
+      <admst:text format="double __%s_%s=0.0;\n"/>
     </admst:for-each>
     <admst:apply-templates select="." match="ddx:function:computation"/>
   </admst:if>
@@ -1631,7 +1628,7 @@
   </admst:if>
   <admst:if test="lhs[insource='yes']">
     <admst:if test="rhs/probe">
-	<admst:for-each select="rhs/probe">
+      <admst:for-each select="rhs/probe">
         <admst:value-of select="."/>
         <admst:value-to select="/simulator/probe" value="%p"/>
         <admst:apply-templates select="../tree" match="subexpression:differentiate"/>
@@ -1678,7 +1675,7 @@
     </admst:if-inside>
   </admst:if>
   <admst:if test="rhs[not(nilled(function[class='builtin']))]">
-    <admst:text format="\n"/>
+    <admst:text format="}\n"/>
     <admst:choose>
       <admst:when test="[dynamic='yes']">
         <admst:text format="}\n"/>
@@ -1703,7 +1700,22 @@
 
 <!-- **************************** RHS VECTOR ****************************** -->
 
-<admst:apply-templates select="rhs" match="expression:stringify:noprobe"/>
+  <admst:if test="rhs[not(nilled(function[class='builtin']))]">
+    <admst:choose>
+      <admst:when test="[dynamic='yes']">
+        <admst:text format=""/>
+      </admst:when>
+    </admst:choose>
+    <admst:text format="{\n"/>
+    <admst:for-each select="rhs/function">
+      <admst:value-of select="position(.)-1"/>
+      <admst:apply-templates select="." match="function:getname"/>
+      <admst:text format="double __%s_%s=0.0;\n"/>
+    </admst:for-each>
+    <admst:apply-templates select="." match="ddx:function:computation"/>
+  </admst:if>
+
+  <admst:apply-templates select="rhs" match="expression:stringify:noprobe"/>
    <admst:choose>
     <admst:when test="[dynamic='yes']"> 
   <admst:choose>
@@ -1746,7 +1758,6 @@
 <!-- *************************** JACOBIAN MATRIX ************************** -->
   
   <admst:for-each select="rhs/probe">
-  
     <admst:value-of select="."/>
     <admst:value-to select="/simulator/probe" value="%p"/>
     <admst:apply-templates select="../tree" match="subexpression:differentiate"/>
@@ -1858,6 +1869,14 @@
       </admst:otherwise>
     </admst:choose>
   </admst:for-each>
+
+  <admst:if test="rhs[not(nilled(function[class='builtin']))]">
+    <admst:text format="}\n"/>
+    <admst:if test="[dynamic='yes']">
+      <admst:text format=""/>
+    </admst:if>
+  </admst:if>
+
 </admst:template>
 
 <!-- analog//conditional -->
@@ -1930,6 +1949,9 @@
 
 <!-- analog//whileloop -->
 <admst:template match="whileloop">
+  <admst:if test="while[dynamic='yes']">
+    <admst:text format=""/>
+  </admst:if>
   <admst:if test="while[not(nilled(function[class='builtin']))]">
     <admst:text format="{\n"/>
     <admst:for-each select="while/function">
@@ -2206,6 +2228,11 @@
   </admst:choose>
 </admst:template>
 
+  <admst:value-to select="/simulator/package_name" value="qucs"/>
+  <admst:value-to select="/simulator/package_tarname" value="qucs"/>
+  <admst:value-to select="/simulator/package_version" value="0.0.12"/>
+  <admst:value-to select="/simulator/package_string" value="qucs 0.0.12"/>
+  <admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
   <admst:for-each select="/module">
     <admst:choose>
       <admst:when test="[name='diode']">
