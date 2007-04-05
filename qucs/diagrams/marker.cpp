@@ -26,6 +26,7 @@
 
 #include <limits.h>
 #include <math.h>
+#include <stdlib.h>
 
 
 Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)

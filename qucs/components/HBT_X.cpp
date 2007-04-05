@@ -87,9 +87,9 @@ HBT_X::HBT_X()
   Props.append (new Property ("IKR", "0.0", false,
     QObject::tr ("Reverse high-injection knee current, A, (0 == disables Webster Effect)")));
   Props.append (new Property ("Mc", "0.0", false,
-    QObject::tr ("")));
-  Props.append (new Property ("BVceo", "0.0", false,
     QObject::tr ("C-E breakdown exponent, (0 == disables collector break-down)")));
+  Props.append (new Property ("BVceo", "0.0", false,
+    QObject::tr ("C-E breakdown voltage, V, (0 == disables collector break-down)")));
   Props.append (new Property ("kc", "0.0", false,
     QObject::tr ("C-E breakdown factor, (0 == disables collector break-down)")));
   Props.append (new Property ("BVebo", "0.0", false,
