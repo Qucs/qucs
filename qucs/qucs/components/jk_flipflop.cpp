@@ -122,7 +122,7 @@ QString JK_FlipFlop::verilogCode(int NumPorts)
   l = "\n  // " + Name + " JK-flipflop\n" +
     "  assign  " + q + " = " + v + ";\n" +
     "  assign  " + b + " = ~" + q + ";\n" +
-    "  reg     " + v + ";\n" +
+    "  reg     " + v + " = 0;\n" +
     "  always @ (" + c + " or " + r + " or " + s + ") begin\n" + t +
     "    if (" + r + ") " + v + " <= 0;\n" +
     "    else if (" + s + ") " + v + " <= 1;\n" +

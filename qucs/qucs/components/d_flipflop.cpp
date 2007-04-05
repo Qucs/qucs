@@ -98,7 +98,7 @@ QString D_FlipFlop::verilogCode(int NumPorts)
   
   s = "\n  // " + Name + " D-flipflop\n" +
     "  assign  " + q + " = " + v + ";\n" +
-    "  reg     " + v + ";\n" +
+    "  reg     " + v + " = 0;\n" +
     "  always @ (" + c + " or " + r + ") begin\n" + t +
     "    if (" + r + ") " + v + " <= 0;\n" +
     "    else if (~" + r + " && " + c + ") " + v + " <= " + d + ";\n" +

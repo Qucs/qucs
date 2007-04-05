@@ -760,7 +760,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
       if(Signals.findIndex(pn->Name) < 0)  // avoid redeclaration of signal
         Signals.append(pn->Name);
 
-    createNodeSet(Collect, countInit, pn, pn);
+    if(Analog) createNodeSet(Collect, countInit, pn, pn);
 
     pn->State = 1;
     Cons.append(pn);
@@ -786,7 +786,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
 	  }
 	  if(setName) {
 	    Cons.findRef(p2);   // back to current Connection
-	    createNodeSet(Collect, countInit, pw, pn);
+	    if (Analog) createNodeSet(Collect, countInit, pw, pn);
 	    setName = false;
 	  }
 	}

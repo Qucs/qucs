@@ -1,3 +1,8 @@
+2007-04-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (throughAllNodes): Skip nodeset netlist
+	entries during digital simulations.
+
 2007-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* textdoc.cpp (TextDoc): Using mono-spaced font in text
