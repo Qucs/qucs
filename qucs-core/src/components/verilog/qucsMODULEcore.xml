@@ -2,7 +2,7 @@
 
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -263,28 +263,9 @@ using namespace device;
 
 <!-- ---------------------------------------------------------------------- -->
 
-<admst:text format="/* Perform DC iteration. */\n"/>
-<admst:text format="void $module::calcDC (void)\n{\n"/>
+<admst:text format="/* Initialize Verilog-AMS code. */\n"/>
+<admst:text format="void $module::initVerilog (void)\n{\n"/>
 		
-<admst:text format="  // get device model parameters\n"/>
-<admst:for-each select="variable">
-  <admst:if test="[input='yes']">
-    <admst:value-of select="name"/>
-    <admst:value-of select="name"/>
-    <admst:choose>
-    <admst:when test="[type='real']">
-    <admst:text format="  nr_double_t %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
-    </admst:when>
-    <admst:when test="[type='integer']">
-    <admst:text format="  int %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
-    </admst:when>
-    <admst:otherwise>
-    <admst:text format="  char * %s = getPropertyString (&quot;%s&quot;);\n"/> 
-    </admst:otherwise>
-    </admst:choose>
-  </admst:if>
-</admst:for-each>
-
 <admst:text format="  // initialization of noise variables\n"/>
 <admst:for-each select="source[whitenoise='yes']">
   <admst:value-of select="branch/nnode/name"/>
@@ -329,7 +310,7 @@ using namespace device;
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="  for (i4 = 0; i4 < $nbr_nodes; i4++) {\n"/>
 <admst:text format="    _caps[i1][i2][i3][i4] = 0.0;\n"/>
-<admst:text format="  } } } }"/>
+<admst:text format="  } } } }\n"/>
   // zero right hand side, static and dynamic jacobian
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    _rhs[i1] = 0.0;\n"/>
@@ -341,6 +322,32 @@ using namespace device;
 <admst:text format="      _jdyna[i1][i2] = 0.0;\n"/>
 <admst:text format="    }\n  }\n"/>
 
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
+<admst:text format="void $module::calcVerilog (void)\n{\n"/>
+
+<admst:text format="  // get device model parameters\n"/>
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:value-of select="name"/>
+    <admst:value-of select="name"/>
+    <admst:choose>
+    <admst:when test="[type='real']">
+    <admst:text format="  nr_double_t %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
+    </admst:when>
+    <admst:when test="[type='integer']">
+    <admst:text format="  int %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
+    </admst:when>
+    <admst:otherwise>
+    <admst:text format="  char * %s = getPropertyString (&quot;%s&quot;);\n"/> 
+    </admst:otherwise>
+    </admst:choose>
+  </admst:if>
+</admst:for-each>
+
 /* ----------------- evaluate verilog analog equations -------------------- */
 <admst:apply-templates select="analog" match="analog:evaluate"/>
 /* ------------------ end of verilog analog equations --------------------- */
@@ -349,10 +356,20 @@ using namespace device;
 <admst:apply-templates select="analog" match="analog:noise" required="yes"/>
 /* ------------------- end of verilog noise equations --------------------- */
 
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Perform DC iteration. */\n"/>
+<admst:text format="void $module::calcDC (void)\n{"/>
+  // evaluate Verilog code
+  initVerilog ();		
+  calcVerilog ();		
+
   // fill right hand side and static jacobian
-<admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
+<admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    setI (i1, _rhs[i1]);\n"/>
-<admst:text format="    for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
+<admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="      setY (i1, i2, _jstat[i1][i2]);\n"/>
 <admst:text format="    }\n  }\n"/>
 <admst:text format="}\n\n"/>
@@ -658,10 +675,14 @@ using namespace device;
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
+  
+ private:
+  void initVerilog (void);
+  void calcVerilog (void);
   void initModel (void);
   matrix calcMatrixY (nr_double_t);
   matrix calcMatrixCy (nr_double_t);
-  
+
  private:
   int doHB;
   int doAC;

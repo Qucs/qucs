@@ -1,3 +1,11 @@
+2007-04-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/qucsMODULEdefs.xml: Fixed bug in (-inf:inf) parameter
+	range handling.
+
+	* verilog/qucsMODULEcore.xml: Moved Verilog evaluation into a
+	initVerilog() and calcVerilog() function.
+
 2007-04-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilog/qucsVersion.xml: Some more cleanups.  Also fixed
