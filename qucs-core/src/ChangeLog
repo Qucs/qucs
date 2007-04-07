@@ -1,3 +1,11 @@
+2007-04-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Updated 
+	parameter ranges of verilog-ams devices.
+
+	* check_mdl.cpp: Fixed a variable substitution bug due to
+	e.g. "- 950.0m" (mark the space).
+
 2007-04-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: Improved the source-stepping algorithm.

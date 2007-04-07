@@ -57,7 +57,7 @@
       <admst:text format="{ "/>
       <admst:choose>
       <admst:when test="range/infexpr[hasspecialnumber='YES']">
-        <admst:text format="'.', 0,"/>
+        <admst:text format="'.', 0, "/>
       </admst:when>
       <admst:otherwise>
         <admst:choose>
@@ -69,9 +69,9 @@
           </admst:otherwise>
         </admst:choose>
         <admst:apply-templates select="range/infexpr" match=":expression"/>
+        <admst:text format=", "/>
       </admst:otherwise>
       </admst:choose>
-      <admst:text format=", "/>
       <admst:choose>
       <admst:when test="range/supexpr[hasspecialnumber='YES']">
         <admst:text format="0, '.'"/>

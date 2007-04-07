@@ -1,7 +1,7 @@
 /*
  * check_mdl.cpp - iterate an IC-CAP MDL file
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.cpp,v 1.4 2006/09/20 08:44:14 raimi Exp $
+ * $Id: check_mdl.cpp,v 1.5 2007/04/07 11:00:00 ela Exp $
  *
  */
 
@@ -179,6 +179,17 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
   double val = 0.0;
   char * end = NULL;
   if (txt != NULL) {
+    // remove whitespaces
+    char * t, * p = txt;
+    while (*p) {
+      if (isspace (*p)) {
+	t = p;
+	while (*t) { *t = *(t + 1); t++; }
+	p--;
+      }
+      p++;
+    }
+    // extract value if possible
     val = strtod (txt, &end);
     // not a value, a variable
     if (end == txt) {
