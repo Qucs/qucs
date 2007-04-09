@@ -1,0 +1,64 @@
+%
+% Report -- The Report Book
+%
+% Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+%
+% Permission is granted to copy, distribute and/or modify this document
+% under the terms of the GNU Free Documentation License, Version 1.1
+% or any later version published by the Free Software Foundation.
+%
+
+\documentclass[headsepline,a4paper,twoside,12pt]{scrreprt}
+
+% Include basic and title page definitions.
+\include{basics}
+\include{titlepage}
+
+\tuttitle{
+  Report Book}
+\tutsubtitle{
+  Technical reports and descriptions}
+\tutauthor{
+  Mike Brinson\\
+  Stefan Jahn\vspace*{6pt}\\
+  Helene Parruitte}
+\tutcopyright{
+  Copyright \copyright{} 2006, 2007 Mike Brinson
+  \textless mbrin72043@yahoo.co.uk\textgreater\\
+  Copyright \copyright{} 2007 Stefan Jahn
+  \textless stefan@lkcc.org\textgreater\\
+  Copyright \copyright{} 2006 Helene Parruitte
+  \textless parruit@enseirb.fr\textgreater}
+\tutbooktrue
+
+\tutstartup{Report Collection}{%
+  Mike Brinson, Helene Parruitte and Stefan Jahn}
+\usepackage{keystroke}
+
+% Here finally starts everything.
+\tutbegin
+
+\tableofcontents
+\newpage
+
+\chapter{Verilog-AMS interface}
+\graphicspath{{verilog/pics/}}
+\input{verilog/content}
+
+\chapter{SPICE to Qucs conversion: Test File 1}
+\graphicspath{{StoQ_test1/pics/}}
+\input{StoQ_test1/content}
+
+\chapter{SPICE to Qucs conversion: Test File 2}
+\graphicspath{{StoQ_test2/pics/}}
+\input{StoQ_test2/content}
+
+\chapter{SPICE to Qucs conversion: Test File 3}
+\graphicspath{{StoQ_test3/pics/}}
+\input{StoQ_test3/content}
+
+\chapter{SPICE to Qucs conversion: Test File 4}
+\graphicspath{{StoQ_test4/pics/}}
+\input{StoQ_test4/content}
+
+\tutend
