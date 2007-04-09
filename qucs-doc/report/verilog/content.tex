@@ -8,7 +8,7 @@
 % or any later version published by the Free Software Foundation.
 %
 
-\tutsection{Verilog-AMS interface}
+\tutsection{Introduction}
 
 Verilog-AMS is a hardware description language.  It can be used to
 specify the analogue behaviour of compact device models.  Ususally
@@ -16,7 +16,7 @@ these are C or C++ implementations in analogue simulators.  The effort
 to implement modern compact models in C/C++ is quite high compared to
 the description in Verilog-AMS.
 
-\tutsubsection{ADMS}
+\tutsection{ADMS}
 
 The software ADMS (see \url{http://mot-adms.sourceforge.net}) allows
 Verilog-AMS descriptions to be translated into any other programming
@@ -43,7 +43,7 @@ their derivatives,
 \item any other data described by the original Verilog-AMS input file.
 \end{itemize}
 
-\tutsubsection{XML admst scripts}
+\tutsection{XML admst scripts}
 
 The language transformation uses a language named \textbf{admst}.  It
 is itself a XML description.  The command line in order to run a
@@ -97,7 +97,7 @@ module device (node1, node2, ...)
 endmodule
 \end{lstlisting}
 
-\tutsubsubsection{Short introduction into the \textbf{admst} language syntax}
+\tutsubsection{Short introduction into the \textbf{admst} language syntax}
 
 Usually the \textbf{admst} language instructions are basically formed
 as
@@ -202,7 +202,7 @@ tree.
 
 \end{itemize}
 
-\tutsubsubsection{Analogue simulator script}
+\tutsubsection{Analogue simulator script}
 
 The analogue simulator implementation consists of several parts.  For
 each type of simulation appropriate functions must be implemented.
@@ -300,13 +300,13 @@ matrix multiplied by the voltage vector.  Since devices are usually
 uncorrelated both parts can be computed directly on a per device
 basis.
 
-\tutsubsubsection{Current limitations of ADMS}
+\tutsubsection{Current limitations of ADMS}
 
 The following section contains some simple examples demonstrating
 which Verilog-AMS statements can be successfully handled by ADMS and
 which not.
 
-\tutparagraph{Example 1.}
+\tutsubsubsection{Example 1}
 
 There was a bug in the \textbf{admst} scripts.  They failed to place
 the function calls of analogue functions correctly.  This has been
@@ -338,7 +338,7 @@ module diode(a, c);
 endmodule
 \end{lstlisting}
 
-\tutparagraph{Example 2.}
+\tutsubsubsection{Example 2}
 
 It is not allowed to mix current and charge contributions in
 assignments.  Mixing both emits wrong C/C++ code.  It accounts the
@@ -370,7 +370,7 @@ module diode(a, c);
 endmodule
 \end{lstlisting}
 
-\tutparagraph{Example 3.}
+\tutsubsubsection{Example 3}
 
 The following example is rejected by the \textbf{admst} scripts with
 this error message.
@@ -406,7 +406,7 @@ module diode(a, c);
 endmodule
 \end{lstlisting}
 
-\tutparagraph{Example 4.}
+\tutsubsubsection{Example 4}
 
 Potentials on the left-hand side of contribution assignments are not
 allowed.  This kind of assignment emits wrong C/C++ code.
@@ -437,7 +437,7 @@ module diode(a, c);
 endmodule
 \end{lstlisting}
 
-\tutsubsubsection{Code for the GUI integration}
+\tutsubsection{Code for the GUI integration}
 
 The \textbf{admst} script for the GUI creates files according to its
 API.  Basically it produces the list of parameters as well their
@@ -469,14 +469,14 @@ the icons in the listview on the left hand side of the figure.
 \end{figure}
 \FloatBarrier
 
-\tutsubsection{Adding Verilog-AMS devices to Qucs}
+\tutsection{Adding Verilog-AMS devices to Qucs}
 
 The section gives an overview how to add a Verilog-AMS model to Qucs
 in a step-by-step manner.  Be aware that the description is meant for
 advanced users partly familiar with the usual GNU/Linux build system
 and C/C++ programming.
 
-\tutsubsubsection{The Verilog-AMS source file}
+\tutsubsection{The Verilog-AMS source file}
 
 The starting point of a new Verilog-AMS model in Qucs is the
 Verilog-AMS source file which must be aware of the discussed ADMS
@@ -534,7 +534,7 @@ module diode(a, c);
 endmodule
 \end{lstlisting}
 
-\tutsubsubsection{Integrating the model into the analogue simulator}
+\tutsubsection{Integrating the model into the analogue simulator}
 
 The qucs-core tree of Qucs must be configured using the
 --enable-maintainer-mode option.
@@ -683,7 +683,7 @@ in order to create the correct build rules.
 If everything worked fine then the new Verilog-AMS model is now
 completely integrated into the analogue simulator.
 
-\tutsubsubsection{Integrating the model into the GUI}
+\tutsubsection{Integrating the model into the GUI}
 
 Very likely as the qucs-core tree in the previous section also the
 qucs tree of must be configured using the --enable-maintainer-mode
@@ -848,12 +848,12 @@ following way.
 
 With these steps the component is now fully integrated into the GUI.  
 
-\tutsubsection{Implemented devices}
+\tutsection{Implemented devices}
 
 The following sections presents the models already added in Qucs
 including some test schematics and simulation results.
 
-\tutsubsubsection{HICUM/L2 v2.11 model}
+\tutsubsection{HICUM/L2 v2.11 model}
 
 The name HICUM was derived from HIgh-CUrrent Model, indicating that
 HICUM initially was developed with special emphasis on modelling the
@@ -873,7 +873,7 @@ Some schematics have been setup to verify that the model emits
 basically the correct output values and the source code translations
 worked properly.
 
-\tutparagraph{DC simulation.}
+\tutsubsubsection{DC simulation}
 
 The setup for the forward Gummel plot is depicted in
 fig.~\ref{fig:fgummel}.  The base-emitter voltage is swept ($V_{BE} =
@@ -902,7 +902,7 @@ the secondary axis.
 \end{figure}
 \FloatBarrier
 
-\tutparagraph{DC simulation.}
+\tutsubsubsection{DC simulation}
 
 In fig.~\ref{fig:charac_sch} the schematic for the output
 characteristics of the HICUM model is shown.  The 2-dimensional sweep
@@ -932,7 +932,7 @@ for the output characteristics of the bipolar transistor.
 \end{figure}
 \FloatBarrier
 
-\tutparagraph{AC simulation.}
+\tutsubsubsection{AC simulation}
 
 Figures~\ref{fig:acgain_sch} and \ref{fig:acgain_dpl} depict the
 schematic and digrams for an AC simulation in a given bias point.  The
@@ -958,7 +958,7 @@ complex plane (polar plot).
 \end{figure}
 \FloatBarrier
 
-\tutparagraph{S-parameter simulation.}
+\tutsubsubsection{S-parameter simulation}
 
 In the figures~\ref{fig:sparam_sch} and \ref{fig:sparam_dpl} a
 two-port S-parameter simulation schematic (including noise) as well as
@@ -984,7 +984,7 @@ noise figure are displayed in a logarithmic Cartesian diagram.
 \end{figure}
 \FloatBarrier
 
-\tutparagraph{Transient simulation.}
+\tutsubsubsection{Transient simulation}
 
 In the schematic in fig.~\ref{fig:transient_sch} a current pulse is
 fed into the base of the transistor.  Varying the input capacitance
@@ -1009,13 +1009,13 @@ fig.~\ref{fig:transient_dpl}.
 \end{figure}
 \FloatBarrier
 
-\tutsubsubsection{HBT model by FBH}
+\tutsubsection{HBT model by FBH}
 
 The HBT (Hetero Bipolar Transistor) model developed by Matthias
 Rudolph at the FBH (Ferdinand Braun Institut f"ur Hochfrequenztechnik)
 is available at \url{http://www.designers-guide.org/VerilogAMS}.
 
-\tutparagraph{DC simulation}
+\tutsubsubsection{DC simulation}
 
 Forward Gummel plot.
 
@@ -1028,7 +1028,7 @@ Forward Gummel plot.
 \end{figure}
 \FloatBarrier
 
-\tutparagraph{DC simulation}
+\tutsubsubsection{DC simulation}
 
 Output characteristics.
 
@@ -1041,4 +1041,4 @@ Output characteristics.
 \end{figure}
 \FloatBarrier
 
-\tutsubsection{End Note}
+\tutsection{End Note}
