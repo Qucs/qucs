@@ -79,6 +79,17 @@ dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
 		 doxygen/Makefile
 		 technical/Makefile
+		 report/Makefile
+		 report/verilog/Makefile
+		 report/verilog/pics/Makefile
+		 report/StoQ_test1/Makefile
+		 report/StoQ_test1/pics/Makefile
+		 report/StoQ_test2/Makefile
+		 report/StoQ_test2/pics/Makefile
+		 report/StoQ_test3/Makefile
+		 report/StoQ_test3/pics/Makefile
+		 report/StoQ_test4/Makefile
+		 report/StoQ_test4/pics/Makefile
 		 tutorial/Makefile
 		 tutorial/getstarted/Makefile
 		 tutorial/getstarted/pics/Makefile

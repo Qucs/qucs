@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# report/StoQ_test1/pics/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,14 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = technical tutorial report doxygen
+EXTRA_DIST = $(PDFS)
 
-EXTRA_DIST = autogen.sh RELEASE
+PDFS = S2Q_test1_dpl.pdf S2Q_test1_mod_dpl.pdf S2Q_test1_sch.pdf
 
-CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-	stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+report: $(XPDF)
+
+%.pdf: %.fig
+	$(FIG2DEV) -L pdf $< > $@
+
+CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej
+MAINTAINERCLEANFILES = Makefile.in

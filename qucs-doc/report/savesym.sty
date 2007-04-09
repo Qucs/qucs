@@ -1,0 +1,43 @@
+% The following package was originally pinched (with permission) from
+% similar makros in symbols.tex, written by Scott Pakin <pakin@uiuc.edu>.
+% The following explanation was also taken from symbols.tex.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% There are a number of symbols (e.g., \Square) that are defined by      %
+% multiple packages.  In order to typeset all the variants in this       %
+% document, we have to give glyph a unique name.  To do that, we define  %
+% \savesymbol{XXX}, which renames a symbol from \XXX to \origXXX, and    %
+% \restoresymbols{yyy}{XXX}, which renames \origXXX back to \XXX and     %
+% defines a new command, \yyyXXX, which corresponds to the most recently %
+% loaded version of \XXX.                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% The implementation of \savesymbol and \restoresymbol was changed by
+% Heiko Oberdiek <oberdiek@uni-freiburg.de>
+% and
+% Rolf Niepraschk <rolf.niepraschk@ptb.de>
+% in May 2003. Thank you!
+%
+% Copyright 2003 Juergen Goebel, <juergen.goebel@sysde.eads.net>
+% distributable under the LPPL
+
+\NeedsTeXFormat{LaTeX2e} \ProvidesPackage{savesymbol}[2003/06/01
+v1.1 Saves and restores symbols]
+
+% Save a symbol that we know is going to get redefined.
+\newcommand*\savesymbol[1]{%
+  \expandafter\let\csname orig#1\expandafter\endcsname\csname#1\endcsname
+  \expandafter\let\csname #1\endcsname\relax
+}
+
+% Restore a previously saved symbol, and rename the current one.
+\newcommand*\restoresymbol[2]{%
+  \expandafter\global\expandafter\let\csname#1#2\expandafter\endcsname%
+    \csname#2\endcsname
+  \expandafter\global\expandafter\let\csname#2\expandafter\endcsname%
+    \csname orig#2\endcsname
+}
+
+\endinput
+
+% EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF EOF

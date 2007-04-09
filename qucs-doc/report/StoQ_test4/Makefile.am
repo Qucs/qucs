@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# report/StoQ_test4/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,33 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = technical tutorial report doxygen
+SUBDIRS = pics
 
-EXTRA_DIST = autogen.sh RELEASE
+EXTRA_DIST = $(SOURCES)
 
-CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-	stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+SOURCES = StoQ_test4.tex content.tex
+TARGETS = StoQ_test4.pdf
+
+pics-report:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
+
+report: pics-report $(TARGETS)
+
+book: pics-report
+
+%.dvi: %.tex
+	$(LATEX) $<
+	$(LATEX) $<
+	$(LATEX) -interaction=batchmode $<
+
+%.pdf: %.tex
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+
+%.ps: %.dvi
+	$(DVIPS) $< -o $@
+
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+MAINTAINERCLEANFILES = Makefile.in
+DISTCLEANFILES = *.ps *.pdf

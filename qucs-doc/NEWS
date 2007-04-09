@@ -26,6 +26,8 @@ files.
 Version 0.0.12
 --------------
 
+ * added new ReportBook including Verilog-AMS interface description
+   and the SPICE to Qucs conversion test files
  * finished documentation about Singular Value Decomposition
  * finished introductory tutorial
 
