@@ -49,6 +49,7 @@ public:
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   QPtrList<Element> movingElements;
+  int movingRotated;
 
   // menu appearing by right mouse button click on component
   QPopupMenu *ComponentMenu;
@@ -108,6 +109,9 @@ public:
   void MReleaseMoveText(Schematic*, QMouseEvent*);
   void MReleaseZoomIn(Schematic*, QMouseEvent*);
 
+  void paintElementsScheme(QPainter*);
+  void rotateElements(Schematic*, int&, int&);
+  void moveElements(Schematic*, int&, int&);
   void moveElements(QPtrList<Element>*, int, int);
   void endElementMoving(Schematic*, QPtrList<Element>*);
   void rightPressMenu(Schematic*, QMouseEvent*, float, float);

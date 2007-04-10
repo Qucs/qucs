@@ -1,3 +1,15 @@
+2007-04-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* textdoc.cpp (print): Also fixed print scale for text
+	documents.
+
+	* schematic.cpp (print): Fixed print scale for schematics.  It
+	assumed a screen resolution of 72dpi.
+
+	* mouseactions.cpp (rotateElements): Made rotation sticky while
+	placing elements from the component tab as well as when pasting
+	elements from the clipboard into the schematic.
+
 2007-04-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (throughAllNodes): Skip nodeset netlist
