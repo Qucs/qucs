@@ -494,17 +494,8 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = DOC_X_POS(Event->pos().x());
   MAy1 = DOC_Y_POS(Event->pos().y());
-  Doc->setOnGrid(MAx1, MAy1);
-
-  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type & isLabel) {
-      pe->cx += MAx1;  pe->x1 += MAx1;
-      pe->cy += MAy1;  pe->y1 += MAy1;
-    }
-    else
-      pe->setCenter(MAx1, MAy1, true);
-    pe->paintScheme(&painter);
-  }
+  moveElements(Doc,MAx1,MAy1);
+  paintElementsScheme(&painter);      
 
   drawn = true;
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
@@ -1225,7 +1216,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
   setPainter(Doc, &painter);
 
   
-  int x1, y1, x2, y2;
+  int x1, y1, x2, y2, rot;
   if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
     switch(Event->button()) {
@@ -1243,7 +1234,9 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	drawn = false;
 	Doc->viewport()->update();
 	Doc->setChanged(true, true);
+	rot = Comp->rotated;
 	Comp = Comp->newOne(); // component is used, so create a new one
+	while(rot--) Comp->rotate(); // keep last rotation for single component
 	break;
 
       case Qt::RightButton :  // right mouse button rotates the component
@@ -1626,9 +1619,70 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+void MouseActions::paintElementsScheme(QPainter *p)
+{
+  Element *pe;
+  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
+    pe->paintScheme(p);
+}
+
+// -----------------------------------------------------------
+void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
+{
+  Element *pe;
+  Doc->setOnGrid(x1, y1);
+
+  for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+    if(pe->Type & isLabel) {
+      pe->cx += x1;  pe->x1 += x1;
+      pe->cy += y1;  pe->y1 += y1;
+    }
+    else
+      pe->setCenter(x1, y1, true);
+  }
+}
+
+// -----------------------------------------------------------
+void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
+{
+  int x2, y2;
+  Element *pe;
+  Doc->setOnGrid(x1, y1);
+
+  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    switch(pe->Type) {
+    case isComponent:
+    case isAnalogComponent:
+    case isDigitalComponent:
+      ((Component*)pe)->rotate(); // rotate !before! rotating the center
+      x2 = x1 - pe->cx;
+      pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+      break;
+    case isWire:
+      x2     = pe->x1;
+      pe->x1 = pe->y1 - y1 + x1;
+      pe->y1 = x1 - x2 + y1;
+      x2     = pe->x2;
+      pe->x2 = pe->y2 - y1 + x1;
+      pe->y2 = x1 - x2 + y1;
+      break;
+    case isPainting:
+      ((Painting*)pe)->rotate(); // rotate !before! rotating the center
+      ((Painting*)pe)->getCenter(x2, y2);
+      pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
+          break;
+    default:
+      x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
+      pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+      break;
+    }
+  }
+}
+
+// -----------------------------------------------------------
 void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 {
-  int x1, y1, x2, y2;
+  int x1, y1, x2, y2, rot;
   QFileInfo Info(Doc->DocName);
   QPainter painter(Doc->viewport());
 
@@ -1672,6 +1726,11 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
     }
 
     pasteElements(Doc);
+    // keep rotation sticky for pasted elements
+    rot = movingRotated;
+    x1 = y1 = 0;
+    while(rot--) rotateElements(Doc,x1,y1);
+    
     QucsMain->MouseMoveAction = &MouseActions::MMovePaste;
     QucsMain->MousePressAction = 0;
     QucsMain->MouseReleaseAction = 0;
@@ -1687,43 +1746,16 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
     setPainter(Doc, &painter);
 
     if(drawn) // erase old scheme
-      for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-        pe->paintScheme(&painter);
+      paintElementsScheme(&painter);      
     drawn = true;
 
-    x1  = DOC_X_POS(Event->pos().x());
-    y1  = DOC_Y_POS(Event->pos().y());
-    Doc->setOnGrid(x1, y1);
-
-    for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-      switch(pe->Type) {
-        case isComponent:
-        case isAnalogComponent:
-        case isDigitalComponent:
-          ((Component*)pe)->rotate(); // rotate !before! rotating the center
-          x2 = x1 - pe->cx;
-          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
-          break;
-        case isWire:
-          x2    = pe->x1;
-          pe->x1 = pe->y1 - y1 + x1;
-          pe->y1 = x1 - x2 + y1;
-          x2    = pe->x2;
-          pe->x2 = pe->y2 - y1 + x1;
-          pe->y2 = x1 - x2 + y1;
-          break;
-        case isPainting:
-          ((Painting*)pe)->rotate(); // rotate !before! rotating the center
-          ((Painting*)pe)->getCenter(x2, y2);
-          pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
-          break;
-        default:
-          x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
-          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
-          break;
-      }
-      pe->paintScheme(&painter);
-    }
+    x1 = DOC_X_POS(Event->pos().x());
+    y1 = DOC_Y_POS(Event->pos().y());
+    rotateElements(Doc,x1,y1);
+    paintElementsScheme(&painter);      
+    // save rotation
+    movingRotated++;
+    movingRotated &= 3;
     break;
 
   default: ;    // avoids compiler warnings

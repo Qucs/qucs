@@ -176,13 +176,14 @@ void TextDoc::print(QPrinter *Printer, QPainter *Painter, bool printAll, bool)
 
   sync();   // formatting whole text
 
-  QPaintDeviceMetrics metrics(Painter->device());
+  QPaintDeviceMetrics smetrics(QPainter(this).device());
+  QPaintDeviceMetrics pmetrics(Painter->device());
   int margin  = 54;    // margin at each side (unit is point)
-  int marginX = margin * metrics.logicalDpiX() / 72;
-  int marginY = margin * metrics.logicalDpiY() / 72;
+  int marginX = margin * pmetrics.logicalDpiX() / smetrics.logicalDpiX();
+  int marginY = margin * pmetrics.logicalDpiY() / smetrics.logicalDpiY();
   QRect printArea(
-          marginX, marginY, metrics.width() - 2*marginX,
-          metrics.height() - 2*marginY - Painter->fontMetrics().lineSpacing());
+        marginX, marginY, pmetrics.width() - 2*marginX,
+        pmetrics.height() - 2*marginY - Painter->fontMetrics().lineSpacing());
 
   int linesPerPage = printArea.height() / Painter->fontMetrics().lineSpacing();
 

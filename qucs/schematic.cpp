@@ -467,17 +467,24 @@ void Schematic::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 {
-  QPaintDeviceMetrics metrics(Painter->device());
+  QPaintDeviceMetrics pmetrics(Painter->device());
+  float printerDpiX = (float)pmetrics.logicalDpiX();
+  float printerDpiY = (float)pmetrics.logicalDpiY();
+  float printerW = (float)pmetrics.width();
+  float printerH = (float)pmetrics.height();
+  QPaintDeviceMetrics smetrics(QPainter(viewport()).device());
+  float screenDpiX = (float)smetrics.logicalDpiX();
+  float screenDpiY = (float)smetrics.logicalDpiY();
   float PrintScale = 0.5;
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
-  int marginX = 40 * metrics.logicalDpiX() / 72;
-  int marginY = 40 * metrics.logicalDpiY() / 72;
+  int marginX = (int)(40 * printerDpiX / screenDpiX);
+  int marginY = (int)(40 * printerDpiY / screenDpiY);
 
   if(fitToPage) {
-    float ScaleX = float(metrics.width() - 2*marginX) /
-                   float((UsedX2-UsedX1) * metrics.logicalDpiX()) * 72.0;
-    float ScaleY = float(metrics.height() - 2*marginY) /
-                   float((UsedY2-UsedY1) * metrics.logicalDpiY()) * 72.0;
+    float ScaleX = float(printerW - 2*marginX) /
+                   float((UsedX2-UsedX1) * printerDpiX) * screenDpiX;
+    float ScaleY = float(printerH - 2*marginY) /
+                   float((UsedY2-UsedY1) * printerDpiY) * screenDpiY;
     if(ScaleX > ScaleY)
       PrintScale = ScaleY;
     else
@@ -495,7 +502,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   }
 
   QFont oldFont = Painter->font();
-  p.init(Painter, PrintScale * float(metrics.logicalDpiX()) / 72.0,
+  p.init(Painter, PrintScale * printerDpiX / screenDpiX,
          -StartX, -StartY, -marginX, -marginY, PrintScale);
 
   if(!symbolMode)
@@ -505,7 +512,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
     if(pc->isSelected || printAll) {
       selected = pc->isSelected;
       pc->isSelected = false;
-      pc->print(&p, 72.0 / float(metrics.logicalDpiX()));
+      pc->print(&p, screenDpiX / printerDpiX);
       pc->isSelected = selected;
     }
 
