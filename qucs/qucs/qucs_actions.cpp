@@ -270,6 +270,7 @@ void QucsApp::slotEditPaste(bool on)
 
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMovePaste;
+  view->movingRotated = 0;
   MousePressAction = 0;
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
