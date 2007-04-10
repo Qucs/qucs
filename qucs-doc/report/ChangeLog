@@ -1,3 +1,8 @@
+2007-04-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/content.tex: Fixed some typos in the Verilog-AMS
+	descriptions and wrote an end note.
+
 2007-04-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* reportbook.tex: Started new "Report Book".  Added Verilog-AMS

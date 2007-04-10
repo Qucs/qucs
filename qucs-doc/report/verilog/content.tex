@@ -11,7 +11,7 @@
 \tutsection{Introduction}
 
 Verilog-AMS is a hardware description language.  It can be used to
-specify the analogue behaviour of compact device models.  Ususally
+specify the analogue behaviour of compact device models.  Usually
 these are C or C++ implementations in analogue simulators.  The effort
 to implement modern compact models in C/C++ is quite high compared to
 the description in Verilog-AMS.
@@ -182,8 +182,8 @@ Definition of a function:  Functions in \textbf{admst} are called templates.
 \end{lstlisting}
 
 \item
-Running a function: Templates are applied to part of the internal data
-tree.
+Running a function: Templates are applied to parts of the internal
+data tree.
 \begin{lstlisting}[
   language=XML,
   xleftmargin=12pt,
@@ -251,7 +251,7 @@ endfunction
 \end{lstlisting}
 
 the \verb+analogfunction.xml+ script produces the appropriate C/C++
-and header file
+and header files
 \begin{itemize}
 \item \verb+module.analogfunction.cpp+
 \item \verb+module.analogfunction.h+.
@@ -276,7 +276,10 @@ J^{(m)} = \left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(m)}}
 There are basically two types of contributions supported by ADMS:
 currents and charges.  The appropiate Jacobian matrices are
 \begin{equation}
-J^{(m)} = J_I^{(m)} + J_Q^{(m)} = \underbrace{\left.\dfrac{\partial I\left(V\right)}{\partial V}\right|_{V^{(m)}}}_{\textrm{``static''}} + \underbrace{\left.\dfrac{\partial Q\left(V\right)}{\partial V}\right|_{V^{(m)}}}_{\textrm{``dynamic''}}
+J^{(m)}
+= J_I^{(m)} + J_Q^{(m)}
+= \underbrace{\left.\dfrac{\partial I\left(V\right)}{\partial V}\right|_{V^{(m)}}}_{\textrm{``static''}} + \underbrace{\left.\dfrac{\partial Q\left(V\right)}{\partial V}\right|_{V^{(m)}}}_{\textrm{``dynamic''}}
+= G + C
 \end{equation}
 consisting of two real valued matrices $G$
 (conductance/transconductance matrix) and $C$
@@ -290,8 +293,8 @@ be automatically formed by the language translator ADMS.
 \begin{lstlisting}[
   language=Verilog,
   xleftmargin=12pt]
-  I(ci,ei) <+ it;       // current contribtion
-  I(si,ci) <+ ddt(Qjs); // charge contribtion
+  I(ci,ei) <+ it;       // current contribution
+  I(si,ci) <+ ddt(Qjs); // charge contribution
 \end{lstlisting}
 
 The right-hand side of eq.~\eqref{eq:nonlinearNR} consists of the
@@ -686,8 +689,8 @@ completely integrated into the analogue simulator.
 \tutsubsection{Integrating the model into the GUI}
 
 Very likely as the qucs-core tree in the previous section also the
-qucs tree of must be configured using the --enable-maintainer-mode
-option.
+qucs source tree of must be configured using the
+--enable-maintainer-mode option.
 \begin{Verbatim}[fontsize=\small]
   $ ./configure --enable-maintainer-mode --prefix=/tmp
 \end{Verbatim}
@@ -716,6 +719,7 @@ as depicted in fig.~\ref{fig:componentdialog}.  Check these if they
 are complete or if some can be left.
 \begin{lstlisting}[
   language=C++,
+  basicstyle=\small,
   xleftmargin=12pt]
 diode::diode()
 {
@@ -741,6 +745,7 @@ left-hand component tab as shown in fig.~\ref{fig:hicumschematic}.
 
 \begin{lstlisting}[
   language=C++,
+  basicstyle=\small,
   xleftmargin=12pt]
 Element * diode::info(QString& Name, char * &BitmapFile,
                       bool getNewOne)
@@ -766,6 +771,7 @@ a valid schematic symbol.  Anyway, the default code can be used as a
 template.
 \begin{lstlisting}[
   language=C++,
+  basicstyle=\small,
   xleftmargin=12pt]
 void diode::createSymbol()
 {
@@ -794,12 +800,14 @@ void diode::createSymbol()
     Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
   }
 
+  // terminal definitions
   Ports.append(new Port(  0,-30)); // collector
   Ports.append(new Port(-30,  0)); // base
   Ports.append(new Port(  0, 30)); // emitter
   Ports.append(new Port( 30,  0)); // substrate
   Ports.append(new Port(-30, 20)); // thermal node
 
+  // relative boundings
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 }
@@ -809,7 +817,7 @@ In order to test the component in the GUI it is necessary to modify
 some more source code files.
 \begin{itemize}
 \item \Verb+qucs/qucs.cpp+\\
-In this file the new verilog device will be made available to the
+In this file the new Verilog device will be made available to the
 component tab.  If a new non-linear device is added then place it here:
 \begin{Verbatim}[fontsize=\small]
   pInfoFunc nonlinearComps[] =
@@ -935,8 +943,8 @@ for the output characteristics of the bipolar transistor.
 \tutsubsubsection{AC simulation}
 
 Figures~\ref{fig:acgain_sch} and \ref{fig:acgain_dpl} depict the
-schematic and digrams for an AC simulation in a given bias point.  The
-current gains magnitude and phase are shown as well as the
+schematic and diagrams for an AC simulation in a given bias point.
+The current gains magnitude and phase are shown as well as the
 characteristics of the small signal base and collector current in the
 complex plane (polar plot).
 
@@ -1009,11 +1017,12 @@ fig.~\ref{fig:transient_dpl}.
 \end{figure}
 \FloatBarrier
 
-\tutsubsection{HBT model by FBH}
+\tutsubsection{FBH-HBT model version 2.1}
 
 The HBT (Hetero Bipolar Transistor) model developed by Matthias
-Rudolph at the FBH (Ferdinand Braun Institut f"ur Hochfrequenztechnik)
-is available at \url{http://www.designers-guide.org/VerilogAMS}.
+Rudolph at the FBH (Ferdinand-Braun-Institut f"ur Hochfrequenztechnik)
+is available in the Internet at
+\url{http://www.designers-guide.org/VerilogAMS}.
 
 \tutsubsubsection{DC simulation}
 
@@ -1042,3 +1051,24 @@ Output characteristics.
 \FloatBarrier
 
 \tutsection{End Note}
+
+The preferred way to add a new Verilog model to Qucs is certainly to
+prepare a model, check if it is accepted by ADMS and finally ask the
+maintainers to integrate it.  Until there is no possibility to load
+device modules dynamically (which is on the TODO list) too many
+hand-made changes have to be done to automate this process.  The
+dynamic modules require changes in the simulator API as well in the
+GUI code.
+
+\addvspace{12pt}
+
+Furthermore work is going to be continued on ADMS itself as well as on
+the \textbf{admst} scripts.
+
+\addvspace{12pt}
+
+The authors would like to thank H\'el\`ene Parruitte for the initial
+implementation of the Verilog-AMS interface in Qucs.  Also thanks go
+to the company Xmod Technologies (see \url{http://www.xmodtech.com})
+allowing her to work on such an interface and finally to share the
+outcome of her internship under the GPL.
