@@ -62,8 +62,12 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0)  // delay time
-      s = " after " + Props.getFirst()->Value + ";\n";
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      s = Props.getFirst()->Value;
+      if(!VHDL_Time(s, Name))
+        return s;    // time has not VHDL format
+      s = " after " + s + ";\n";
+    }
 
   s = "  " + Name + " : process (" +
       Ports.at(0)->Connection->Name + ", " +

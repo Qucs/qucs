@@ -1,3 +1,7 @@
+2007-04-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* element.h: Added 'over' and 'under' properties to texts.
+
 2007-04-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* textdoc.cpp (print): Also fixed print scale for text
