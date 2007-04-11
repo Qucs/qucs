@@ -42,7 +42,7 @@ RS_FlipFlop::RS_FlipFlop()
   Texts.append(new Text(-17,  3, "S", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,-17, "Q", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,  3, "Q", QPen::darkBlue, 12.0));
-  Lines.append(new Line(  7,   3, 15,   3,QPen(QPen::darkBlue,1)));
+  Texts.current()->over=true;
 
   Ports.append(new Port(-30,-10));  // R
   Ports.append(new Port(-30, 10));  // S
@@ -62,8 +62,12 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0)  // delay time
-      s = " after " + Props.getFirst()->Value + ";\n";
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      s = Props.getFirst()->Value;
+      if(!VHDL_Time(s, Name))
+        return s;    // time has not VHDL format
+      s = " after " + s + ";\n";
+    }
 
   s = "  " +
     Ports.at(2)->Connection->Name + " <= " +

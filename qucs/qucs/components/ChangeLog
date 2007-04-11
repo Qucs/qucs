@@ -1,3 +1,18 @@
+2007-04-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilogfile.cpp (loadFile): Filtering /* ... */ Verilog comments
+	when extracting the ports of a module.
+
+	* rs_flipflop.cpp (RS_FlipFlop), jk_flipflop.cpp (JK_FlipFlop):
+	Using the overline property for the NQ output.  So no more
+	confusion about the symbol when mirroring about the X-axis.
+
+	* rs_flipflop.cpp, jk_flipflop.cpp, d_flipflop.cpp (vhdlCode):
+	Checking the 'time' property for the correct format.
+
+	* component.cpp (paint): Using the new 'over' and 'under'
+	properties to draw over- as well as underlined texts.
+
 2007-04-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* jk_flipflop.cpp, d_flipflop.cpp (verilogCode): Initialized

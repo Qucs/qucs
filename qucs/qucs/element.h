@@ -61,11 +61,12 @@ struct Text {
   Text(int _x, int _y, const QString& _s, QColor _Color = QColor(0,0,0),
 	float _Size = 10.0, float _mCos=1.0, float _mSin=0.0)
 	: x(_x), y(_y), s(_s), Color(_Color), Size(_Size),
-	  mSin(_mSin), mCos(_mCos) {};
-  int     x, y;
+	  mSin(_mSin), mCos(_mCos) { over = under = false; };
+  int	  x, y;
   QString s;
   QColor  Color;
-  float   Size, mSin, mCos;   // font size and rotation coefficients
+  float	  Size, mSin, mCos; // font size and rotation coefficients
+  bool	  over, under;      // text attributes
 };
 
 struct Property {
