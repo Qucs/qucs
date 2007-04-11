@@ -1,7 +1,7 @@
 /*
  * check_zvr.cpp - iterate a zvr file
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_zvr.cpp,v 1.1 2006/07/17 21:53:13 raimi Exp $
+ * $Id: check_zvr.cpp,v 1.2 2007/04/11 17:57:19 ela Exp $
  *
  */
 
@@ -51,8 +51,15 @@ static char * zvr_vector_txt (struct zvr_vector_t * vec) {
   int i, i1 = -1, i2 = -1, off = 0, len = strlen (vec->n1);
   static char txt[64];
   // strip off leading 're' or 'im'
-  if (strstr (vec->n1, "re") == vec->n1 || strstr (vec->n1, "im") == vec->n1) {
+  if (strstr (vec->n1, "re") == vec->n1 ||
+      strstr (vec->n1, "im") == vec->n1 ||
+      strstr (vec->n1, "db") == vec->n1) {
     off = 2;
+  }
+  // strip off leading 'mag' or 'ang'
+  else if (strstr (vec->n1, "mag") == vec->n1 ||
+	   strstr (vec->n1, "ang") == vec->n1) {
+    off = 3;
   }
   for (i = off; i < len; i++) if (!isalpha (vec->n1[i])) break;
   // get index 1
@@ -185,6 +192,22 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	var->set (pow (10.0, r / 20.0), n);
+      }
+    }
+    // linear magnitude and angle in [degree]
+    else if (!strcmp (hdr->d_FMT, "MA")) {
+      for (n = 0; n < var->getSize (); n++) {
+	nr_double_t r = real (var->get (n));
+	nr_double_t i = imag (var->get (n));
+	var->set (polar (r, rad (i)), n);
+      }
+    }
+    // magnitude in [dB] and angle in [degree]
+    else if (!strcmp (hdr->d_FMT, "DB")) {
+      for (n = 0; n < var->getSize (); n++) {
+	nr_double_t r = real (var->get (n));
+	nr_double_t i = imag (var->get (n));
+	var->set (polar (pow (10.0, r / 20.0), rad (i)), n);
       }
     }
   }
