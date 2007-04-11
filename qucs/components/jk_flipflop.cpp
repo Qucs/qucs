@@ -47,7 +47,7 @@ JK_FlipFlop::JK_FlipFlop()
   Texts.append(new Text(-17, 13, "K", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,-27, "Q", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6, 13, "Q", QPen::darkBlue, 12.0));
-  Lines.append(new Line(  7, 13, 15, 13,QPen(QPen::darkBlue,1)));
+  Texts.current()->over=true;
   Lines.append(new Line(-20, -4,-12,  0,QPen(QPen::darkBlue,0)));
   Lines.append(new Line(-20,  4,-12,  0,QPen(QPen::darkBlue,0)));
 
@@ -72,8 +72,12 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = ";\n";
   if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0)  // delay time
-      s = " after " + Props.getFirst()->Value + ";\n";
+    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
+      s = Props.getFirst()->Value;
+      if(!VHDL_Time(s, Name))
+        return s;    // time has not VHDL format
+      s = " after " + s + ";\n";
+    }
 
   s = "  " + Name + " : process (" +
       Ports.at(5)->Connection->Name + ", " +

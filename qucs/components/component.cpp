@@ -254,6 +254,8 @@ void Component::paint(ViewPainter *p)
                    p->DX + float(cx+pt->x) * p->Scale,
                    p->DY + float(cy+pt->y) * p->Scale));
       newFont.setPointSizeFloat(p->Scale * pt->Size);
+      newFont.setOverline(pt->over);
+      newFont.setUnderline(pt->under);
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
       p->Painter->drawText(0, 0, 0, 0, Qt::DontClip, pt->s);
