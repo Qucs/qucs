@@ -2,7 +2,7 @@
 
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -114,12 +114,14 @@
     Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
   }
 
+  // terminal definitions
   Ports.append(new Port(  0,-30)); // collector
   Ports.append(new Port(-30,  0)); // base
   Ports.append(new Port(  0, 30)); // emitter
   Ports.append(new Port( 30,  0)); // substrate
   Ports.append(new Port(-30, 20)); // thermal node
 
+  // relative boundings
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 <admst:text format="}\n"/>

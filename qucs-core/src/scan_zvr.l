@@ -4,7 +4,7 @@
 /*
  * scan_zvr.l - scanner for a ZVR data file
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_zvr.l,v 1.1 2006-07-17 21:53:13 raimi Exp $
+ * $Id: scan_zvr.l,v 1.2 2007-04-11 17:57:19 ela Exp $
  *
  */
 
@@ -88,7 +88,7 @@ DIDENT   [A-Z]({DIGIT}{1,2})?
   return Unit;
 }
 
-<INITIAL>("RI")|("COMPLEX")|("MAGNITUDE")|("PHASE") {
+<INITIAL>("RI")|("COMPLEX")|("MAGNITUDE")|("PHASE")|("MA")|("DB") {
   zvr_lval.ident = strdup (zvr_text);
   return DataFMT;
 }
@@ -103,7 +103,7 @@ DIDENT   [A-Z]({DIGIT}{1,2})?
   return Identifier;
 }
 
-<INITIAL>(("re")|("im"))?{DIDENT} {
+<INITIAL>(("re")|("im")|("mag")|("ang")|("db"))?{DIDENT} {
   zvr_lval.ident = strdup (zvr_text);
   return DataIDN;
 }
