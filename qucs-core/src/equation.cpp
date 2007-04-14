@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.49 2007/03/21 20:57:39 ela Exp $
+ * $Id: equation.cpp,v 1.50 2007/04/14 16:21:44 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "netdefs.h"
 #include "equation.h"
 #include "evaluate.h"
+#include "differentiate.h"
 #include "constants.h"
 #include "range.h"
 #include "exception.h"
@@ -68,6 +69,45 @@ constant::constant (int tag) : node (CONSTANT) {
   type = tag;
   dataref = false;
   setType (type);
+}
+
+/* This copy constructor creates a instance of the constant class
+   based on the given constant. */
+constant::constant (const constant & o) : node (o) {
+  type = o.type;
+  dataref = o.dataref;
+  setType (type);
+  switch (type) {
+  case TAG_DOUBLE:
+    d = o.d;
+    break;
+  case TAG_COMPLEX:
+    c = dataref ? o.c : new complex (*o.c);
+    break;
+  case TAG_VECTOR:
+    v = dataref ? o.v : new vector (*o.v);
+    break;
+  case TAG_MATRIX:
+    m = dataref ? o.m : new matrix (*o.m);
+    break;
+  case TAG_MATVEC:
+    mv = dataref ? o.mv : new matvec (*o.mv);
+    break;
+  case TAG_STRING:
+    s = dataref ? o.s : strdup (s);
+    break;
+  case TAG_CHAR:
+    chr = o.chr;
+    break;
+  case TAG_RANGE:
+    r = dataref ? o.r : new range (*o.r);
+    break;
+  }
+}
+
+// Re-creates the given instance.
+node * constant::recreate (void) {
+  return new constant (*this);
 }
 
 // Destructor deletes an instance of the constant class.
@@ -193,10 +233,29 @@ constant * constant::evaluate (void) {
   return getResult ();
 }
 
+// Returns the derivative of a constant.
+node * constant::differentiate (char *) {
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 0;
+  return res;
+}
+
 // Constructor creates an instance of the reference class.
 reference::reference () : node (REFERENCE) {
   n = NULL;
   ref = NULL;
+}
+
+/* This copy constructor creates a instance of the reference class
+   based on the given reference. */
+reference::reference (const reference & o) : node (o) {
+  n = o.n ? strdup (o.n) : NULL;
+  ref = o.ref;
+}
+
+// Re-creates the given instance.
+node * reference::recreate (void) {
+  return new reference (*this);
 }
 
 // Destructor deletes an instance of the reference class.
@@ -266,10 +325,32 @@ constant * reference::evaluate (void) {
   return getResult ();
 }
 
+// Returns the derivative of a reference.
+node * reference::differentiate (char * derivative) {
+  constant * res = new constant (TAG_DOUBLE);
+  if (n != NULL && !strcmp (n, derivative))
+    res->d = 1;
+  else
+    res->d = 0;
+  return res;
+}
+
 // Constructor creates an instance of the assignment class.
 assignment::assignment () : node (ASSIGNMENT) {
   body = NULL;
   result = NULL;
+}
+
+/* This copy constructor creates a instance of the assignment class
+   based on the given assignment. */
+assignment::assignment (const assignment & o) : node (o) {
+  body = o.body->recreate ();
+  result = o.result ? strdup (o.result) : NULL;
+}
+
+// Re-creates the given instance.
+node * assignment::recreate (void) {
+  return new assignment (*this);
 }
 
 // Destructor deletes an instance of the assignment class.
@@ -317,12 +398,45 @@ constant * assignment::evaluate (void) {
   return getResult ();
 }
 
+// Returns the derivative of an assignment.
+node * assignment::differentiate (char * derivative) {
+  char * txt = (char *) malloc (strlen (result) + strlen (derivative) + 4);
+  sprintf (txt, "d%s_d%s", result, derivative);
+  assignment * res = new assignment ();
+  res->result = txt;
+  res->body = body->differentiate (derivative);
+  return res;
+}
+
 // Constructor creates an instance of the application class.
 application::application () : node (APPLICATION) {
   n = NULL;
   nargs = 0;
   args = NULL;
   eval = NULL;
+  derive = NULL;
+}
+
+/* This copy constructor creates a instance of the application class
+   based on the given application. */
+application::application (const application & o) : node (o) {
+  n = o.n ? strdup (o.n) : NULL;
+  nargs = o.nargs;
+  if (o.args != NULL) {
+    node * arg = o.args;
+    args = arg->recreate ();
+    for (arg = arg->getNext (); arg != NULL; arg = arg->getNext ()) {
+      args->append (arg->recreate ());
+    }
+  }
+  else args = NULL;
+  eval = o.eval;
+  derive = o.derive;
+}
+
+// Re-creates the given instance.
+node * application::recreate (void) {
+  return new application (*this);
 }
 
 // Destructor deletes an instance of the application class.
@@ -439,6 +553,8 @@ int application::evalType (void) {
   setType (TAG_UNKNOWN);
   // Evaluate type of arguments.
   evalTypeArgs ();
+  // Find an appropriate differentiator.
+  findDifferentiator ();
   // Try the fast method.
   if (evalTypeFast () != TAG_UNKNOWN) return getType ();
 
@@ -474,6 +590,19 @@ int application::evalType (void) {
 	      " found\n", toString ());
   }
   return getType ();
+}
+
+/* This function returns zero if the applications differentiation
+   function could be found and otherwise non-zero. */
+int application::findDifferentiator (void) {
+  for (int i = 0; differentiations[i].application != NULL; i++) {
+    if (!strcmp (n, differentiations[i].application) &&
+	nargs == differentiations[i].nargs) {
+      derive = differentiations[i].derive;
+      return 0;
+    }
+  }
+  return -1;
 }
 
 /* This function runs the actual evaluation function and the returns
@@ -523,6 +652,13 @@ constant * application::evaluate (void) {
   return getResult ();
 }
 
+// Returns the derivative of an application.
+node * application::differentiate (char * derivative) {
+  if (derive)
+    return derive (this, derivative);
+  return recreate ();
+}
+
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
@@ -553,6 +689,23 @@ node::node (int type) {
   instance = NULL;
   solvee = NULL;
   checkee = NULL;
+}
+
+/* This copy constructor creates a instance of the node class based on
+   the given node. */
+node::node (const node & o) {
+  tag = o.tag;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
+  next = NULL;
+  dependencies = NULL;
+  dataDependencies = NULL;
+  dropDependencies = NULL;
+  prepDependencies = NULL;
+  txt = NULL;
+  res = NULL;
+  instance = NULL;
+  solvee = o.solvee;
+  checkee = o.checkee;
 }
 
 // Destructor deletes an instance of the equation node class.
@@ -1184,8 +1337,15 @@ void solver::evaluate (void) {
       }
       eqn->evaluated++;
 #if DEBUG
+      // print equation results
       logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
 		eqn->getResult () ? eqn->getResult()->toString () : "error");
+#if TESTING_DERIVATIVE || 0
+      // print equation
+      logprint (LOG_STATUS, "%s\n", eqn->toString ());
+      // print derivations
+      logprint (LOG_STATUS, "%s\n", eqn->differentiate("x")->toString ());
+#endif
 #endif
     }
   }

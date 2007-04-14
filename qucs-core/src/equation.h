@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.33 2007/02/27 12:05:27 ela Exp $
+ * $Id: equation.h,v 1.34 2007/04/14 16:21:45 ela Exp $
  *
  */
 
@@ -60,6 +60,7 @@ class node
 public:
   node ();
   node (int);
+  node (const node &);
   virtual ~node ();
   node * getNext (void) { return next; }
   void setNext (node * n) { next = n; }
@@ -96,6 +97,8 @@ public:
   virtual int evalType (void) { return type; }
   virtual char * toString (void) { return txt; }
   virtual constant * evaluate (void) { return res; }
+  virtual node * differentiate (char *) { return this; }
+  virtual node * recreate (void) { return new node (*this); }
   
 public:
   int duplicate;
@@ -138,11 +141,14 @@ class constant : public node
 public:
   constant ();
   constant (int);
+  constant (const constant &);
   ~constant ();
   void print (void);
   int evalType (void);
   char * toString (void);
   constant * evaluate (void);
+  node * differentiate (char *);
+  node * recreate (void);
 
 public:
   bool dataref;
@@ -164,6 +170,7 @@ class reference : public node
 {
 public:
   reference ();
+  reference (const reference &);
   ~reference ();
   void print (void);
   void addDependencies (strlist *);
@@ -171,6 +178,8 @@ public:
   int evalType (void);
   char * toString (void);
   constant * evaluate (void);
+  node * differentiate (char *);
+  node * recreate (void);
 
 public:
   char * n;
@@ -183,12 +192,15 @@ class assignment : public node
 {
 public:
   assignment ();
+  assignment (const assignment &);
   ~assignment ();
   void print (void);
   void addDependencies (strlist *);
   int evalType (void);
   char * toString (void);
   constant * evaluate (void);
+  node * differentiate (char *);
+  node * recreate (void);
   
 public:
   char * result;
@@ -198,29 +210,37 @@ public:
 // Type of application function.
 typedef constant * (* evaluator_t) (constant *);
 
+// Type of derivative function.
+typedef node * (* differentiator_t) (application *, char *);
+
 /* The application class represents any kind of operation (unary,
    binary and n-ary ones) containing the appropriate argument list. */
 class application : public node
 {
 public:
   application ();
+  application (const application &);
   ~application ();
   void print (void);
   void addDependencies (strlist *);
   int evalType (void);
   char * toString (void);
   constant * evaluate (void);
+  node * differentiate (char *);
+  node * recreate (void);
 
 public:
   char * n;
   int nargs;
   node * args;
   evaluator_t eval;
+  differentiator_t derive;
 
 private:
   void evalTypeArgs (void);
   char * createKey (void);
   int evalTypeFast (void);
+  int findDifferentiator (void);
 };
 
 /* This class implements the actual functionality regarding a set of

@@ -1,3 +1,12 @@
+2007-04-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* differentiate.h (class differentiate): Added many derivatative
+	functions.  This is preparation towards equation defined devices.
+
+	* equation.cpp: Added copy constructors and re-creator functions
+	for each equation node.  Also added basic differentiation
+	functionality.
+
 2007-04-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_zvr.l, check_zvr.cpp: Supporting some more data formats of
