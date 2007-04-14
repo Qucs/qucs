@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.1 2007/04/14 16:21:44 ela Exp $
+ * $Id: differentiate.cpp,v 1.2 2007/04/14 16:24:58 ela Exp $
  *
  */
 
@@ -566,4 +566,3 @@ struct differentiation_t eqn::differentiations[] = {
 
   { NULL, NULL, 0 /* end of list */ }
 };
-
