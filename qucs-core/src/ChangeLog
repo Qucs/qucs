@@ -1,3 +1,11 @@
+2007-04-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added parameters
+	for the new exponential current and voltage source.
+
+	* vector.cpp: Fixed implementation of variance().  And thereby
+	the one of stddev().
+
 2007-04-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* differentiate.h (class differentiate): Added many derivatative
