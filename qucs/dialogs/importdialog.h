@@ -38,6 +38,7 @@ private slots:
   void slotDisplayErr();
   void slotProcessEnded();
   void slotImport();
+  void slotAbort();
   void slotBrowse();
 
 private:
@@ -49,7 +50,7 @@ public:
   QProcess Process;
   QTextEdit *MsgText;
   QLineEdit *ImportEdit, *OutputEdit;
-  QPushButton *ImportButt, *CancelButt;
+  QPushButton *ImportButt, *CancelButt, *AbortButt;
 };
 
 #endif

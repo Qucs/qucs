@@ -1467,6 +1467,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "Inoise") c = new Noise_ii();
         else if(cstr == "Vnoise") c = new Noise_iv();
         else if(cstr == "nv") c = new Logical_Inv();
+        else if(cstr == "exp") c = new iExp();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
 	else if(cstr == "KFF") c = new JK_FlipFlop();
@@ -1482,6 +1483,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "Vnoise") c = new Noise_vv();
         else if(cstr == "HDL") c = new VHDL_File();
         else if(cstr == "erilog") c = new Verilog_File();
+        else if(cstr == "exp") c = new vExp();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
