@@ -315,7 +315,8 @@ pInfoFunc Sources[] =
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
    &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
    &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
-   &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, 0};
+   &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, &iExp::info,
+   &vExp::info, 0};
 
 pInfoFunc TransmissionLines[] =
   {&TLine::info, &TLine_4Port::info, &TwistedPair::info, &CoaxialLine::info,

@@ -47,6 +47,8 @@
 #include "volt_ac.h"
 #include "ampere_ac.h"
 #include "source_ac.h"
+#include "vexp.h"
+#include "iexp.h"
 #include "vccs.h"
 #include "cccs.h"
 #include "vcvs.h"

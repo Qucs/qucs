@@ -25,6 +25,7 @@
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
 #endif
+#include <locale.h>
 
 #include <qtextstream.h>
 #include <qmessagebox.h>
@@ -828,6 +829,10 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
 //    if(pos > g->Var.find('['))
 //      pos = -1;
 
+  /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
+     to change the locale to the default. */
+  setlocale (LC_NUMERIC, "C");
+
   if(pos <= 0) {
     file.setName(fileName);
     Variable = g->Var;
@@ -1039,6 +1044,11 @@ int Diagram::loadIndepVarData(const QString& Variable,
 {
   bool isIndep = false;
   QString Line, tmp;
+
+  /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
+     to change the locale to the default. */
+  setlocale (LC_NUMERIC, "C");
+
   Line = "dep "+Variable+" ";
   // "pFile" is used through-out the whole function and must NOT used
   // for other purposes!
