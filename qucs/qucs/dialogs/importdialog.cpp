@@ -64,6 +64,9 @@ ImportDialog::ImportDialog(QWidget *parent)
   
   ImportButt = new QPushButton(tr("Import"), Butts);
   connect(ImportButt, SIGNAL(clicked()), SLOT(slotImport()));
+  AbortButt = new QPushButton(tr("Abort"), Butts);
+  AbortButt->setDisabled(true);
+  connect(AbortButt, SIGNAL(clicked()), SLOT(slotAbort()));
   CancelButt = new QPushButton(tr("Close"), Butts);
   connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
 }
@@ -102,15 +105,22 @@ void ImportDialog::slotBrowse()
 void ImportDialog::slotImport()
 {
   MsgText->clear();
+  if (OutputEdit->text().isEmpty())
+    return;
+
   ImportButt->setDisabled(true);
+  AbortButt->setDisabled(false);
 
   QFile File(QucsWorkDir.filePath(OutputEdit->text()));
   if(File.exists())
     if(QMessageBox::information(this, tr("Info"),
           tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
           tr("&Yes"), tr("&No"), 0,1,1))
-      return;
-
+      {
+	ImportButt->setDisabled(false);
+	AbortButt->setDisabled(true);
+	return;
+      }
 
   QFileInfo Info(ImportEdit->text());
   QString Suffix = Info.extension();
@@ -141,6 +151,7 @@ void ImportDialog::slotImport()
               << "-o" << QucsWorkDir.filePath(OutputEdit->text());
 
   Process.setArguments(CommandLine);
+  Process.blockSignals(false);
 
   disconnect(&Process, 0, 0, 0);
   connect(&Process, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
@@ -148,7 +159,15 @@ void ImportDialog::slotImport()
   connect(&Process, SIGNAL(processExited()), SLOT(slotProcessEnded()));
 
   if(!Process.start())
-    MsgText->append(tr("ERROR: Cannot start simulator!"));
+    MsgText->append(tr("ERROR: Cannot start converter!"));
+}
+
+// ------------------------------------------------------------------------
+void ImportDialog::slotAbort()
+{
+  if(Process.isRunning())  Process.kill();
+  AbortButt->setDisabled(true);
+  ImportButt->setDisabled(false);
 }
 
 // ------------------------------------------------------------------------
@@ -177,6 +196,7 @@ void ImportDialog::slotProcessEnded()
 {
   MsgText->append(" ");
   ImportButt->setDisabled(false);
+  AbortButt->setDisabled(true);
 
   if(Process.normalExit() && (Process.exitStatus() == 0)) {
     MsgText->append(tr("Successfully imported file!"));

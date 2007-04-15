@@ -1,3 +1,8 @@
+2007-04-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* iexp.cpp (iExp), vexp.cpp (vExp): Added exponential voltage and
+	current pulse sources.  Thanks to Gunther.
+
 2007-04-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilogfile.cpp (loadFile): Filtering /* ... */ Verilog comments

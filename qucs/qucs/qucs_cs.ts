@@ -1069,7 +1069,7 @@
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>CHYBA: Nelze spustit simulátor!</translation>
+        <translation type="obsolete">CHYBA: Nelze spustit simulátor!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
@@ -1078,6 +1078,14 @@
     <message>
         <source>Converter ended with errors!</source>
         <translation>Konvertor byl ukončen -  vyskytly se chyby!</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start converter!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5229,6 +5237,62 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>exponential current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current before rising edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum current of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start time of the exponentially rising edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start of exponential decay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time constant of the rising edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time constant of the falling edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponential Current Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>exponential voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage before rising edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum voltage of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rise time of the rising edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fall time of the falling edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponential Voltage Pulse</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

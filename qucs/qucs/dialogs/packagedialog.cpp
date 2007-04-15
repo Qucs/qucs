@@ -242,7 +242,13 @@ void PackageDialog::slotCreate()
     }
   }
 
-  QFile PkgFile(NameEdit->text());
+  QString s(NameEdit->text());
+  QFileInfo Info(s);
+  if(Info.extension().isEmpty())
+    s += ".qucs";
+  NameEdit->setText(s);
+
+  QFile PkgFile(s);
   if(PkgFile.exists())
     if(QMessageBox::information(this, tr("Info"),
           tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
@@ -263,7 +269,6 @@ void PackageDialog::slotCreate()
 
 
   // Write project files to package.
-  QString s;
   for(p = BoxList.first(); p != 0; p = BoxList.next())
     if(p->isChecked()) {
       s = p->text() + "_prj";
@@ -319,22 +324,23 @@ void PackageDialog::extractPackage()
 
   QFileInfo Info(s);
   lastDir = Info.dirPath(true);  // remember last directory
-  if(Info.extension().isEmpty())
-    s += ".qucs";
+
+  QFile PkgFile(s);
+  if(!PkgFile.open(IO_ReadOnly)) {
+    if(Info.extension().isEmpty()) s += ".qucs";
+    PkgFile.setName(s);
+    if(!PkgFile.open(IO_ReadOnly)) {
+      MsgText->append(tr("ERROR: Cannot open package!"));
+      ButtClose->setDisabled(false);
+      return;
+    }
+  }
+  QDataStream Stream(&PkgFile);
 
   QDir currDir = QucsHomeDir;
   QString Version;
   Q_UINT16 Checksum;
   Q_UINT32 Code, Length;
-
-
-  QFile PkgFile(s);
-  if(!PkgFile.open(IO_ReadOnly)) {
-    MsgText->append(tr("ERROR: Cannot open package!"));
-    ButtClose->setDisabled(false);
-    return;
-  }
-  QDataStream Stream(&PkgFile);
 
   // First read and check header.
   QByteArray Content = PkgFile.readAll();
