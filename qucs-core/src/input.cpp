@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.67 2007/02/23 17:59:29 ela Exp $
+ * $Id: input.cpp,v 1.68 2007/04/15 10:17:46 ela Exp $
  *
  */
 
@@ -350,6 +350,10 @@ circuit * input::createCircuit (char * type) {
     return new vac ();
   else if (!strcmp (type, "Iac"))
     return new iac ();
+  else if (!strcmp (type, "Iexp"))
+    return new iexp ();
+  else if (!strcmp (type, "Vexp"))
+    return new vexp ();
   else if (!strcmp (type, "AM_Mod"))
     return new vam ();
   else if (!strcmp (type, "PM_Mod"))

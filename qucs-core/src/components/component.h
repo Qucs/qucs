@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.41 2007/01/23 10:23:35 raimi Exp $
+ * $Id: component.h,v 1.42 2007/04/15 10:17:48 ela Exp $
  *
  */
 
@@ -59,6 +59,8 @@
 #include "idc.h"
 #include "vac.h"
 #include "iac.h"
+#include "vexp.h"
+#include "iexp.h"
 #include "vam.h"
 #include "vpm.h"
 #include "phaseshifter.h"

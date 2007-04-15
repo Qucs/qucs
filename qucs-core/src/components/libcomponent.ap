@@ -32,7 +32,8 @@ SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp \
 	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
-	vpm.cpp tswitch.cpp relais.cpp short.cpp tline4p.cpp twistedpair.cpp
+	vpm.cpp tswitch.cpp relais.cpp short.cpp tline4p.cpp twistedpair.cpp \
+	vexp.cpp iexp.cpp
 
 # Additional libraries.
 LIBS = 

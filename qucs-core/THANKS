@@ -36,7 +36,8 @@ Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
 	documenting the grammars used in Qucs's data files.
 
 Gunther Kraut <gn.kraut@t-online.de> for his contributions to the equation
-	solver evaluation.
+	solver evaluation.  Also for providing the exponential current
+	and voltage source code.
 
 Helene Parruitte <parruit@enseirb.fr> for her Verilog-AMS interface using
 	the adms application.  Thanks for implementing the HICMU/L2 v2.11

@@ -1,3 +1,8 @@
+2007-04-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* vexp.h (class vexp), iexp.h (class iexp): New components:
+	exponential voltage and current pulse sources.
+
 2007-04-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilog/qucsMODULEdefs.xml: Fixed bug in (-inf:inf) parameter

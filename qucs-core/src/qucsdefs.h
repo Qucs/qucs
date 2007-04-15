@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.67 2007/04/07 11:00:00 ela Exp $
+ * $Id: qucsdefs.h,v 1.68 2007/04/15 10:17:46 ela Exp $
  *
  */
 
@@ -175,6 +175,28 @@ struct define_t qucs_definition_available[] =
     { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { '[', -360, 360, ']' } },
       { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* exponential current source */
+  { "Iexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "I2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* exponential voltage source */
+  { "Vexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "U2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* AM modulated AC voltage source */

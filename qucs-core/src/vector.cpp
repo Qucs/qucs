@@ -2,7 +2,7 @@
  * vector.cpp - vector class implementation
  *
  * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
- * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
+ * Copyright (C) 2006, 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.30 2006/07/24 08:07:42 raimi Exp $
+ * $Id: vector.cpp,v 1.31 2007/04/15 10:17:47 ela Exp $
  *
  */
 
@@ -996,9 +996,10 @@ nr_double_t vector::rms (void) {
 }
 
 nr_double_t vector::variance (void) { 
-  nr_double_t rms2 = integrate_n (*this) / getSize ();
-  nr_double_t avg2 = norm (avg (*this));
-  return rms2 - avg2;
+  nr_double_t result = 0.0;
+  complex average = avg (*this);
+  for (int i = 0; i < getSize (); i++) result += norm (get (i) - average);
+  return result / getSize ();
 }
 
 nr_double_t vector::stddev (void) {
