@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * support for equation defined devices
  * new components: exponential voltage and current source
 
 Version 0.0.11

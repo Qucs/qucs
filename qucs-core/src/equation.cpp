@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.50 2007-04-14 16:21:44 ela Exp $
+ * $Id: equation.cpp,v 1.51 2007-04-18 19:18:01 ela Exp $
  *
  */
 
@@ -258,6 +258,14 @@ node * reference::recreate (void) {
   return new reference (*this);
 }
 
+// Replaces reference name by the new given name.
+void reference::replace (char * src, char * dst) {
+  if (!strcmp (src, n)) {
+    free (n);
+    n = dst ? strdup (dst) : NULL;
+  }
+}
+
 // Destructor deletes an instance of the reference class.
 reference::~reference () {
   if (n) free (n);
@@ -353,6 +361,17 @@ node * assignment::recreate (void) {
   return new assignment (*this);
 }
 
+// Replaces reference name by the new given name.
+void assignment::replace (char * src, char * dst) {
+  body->replace (src, dst);
+}
+
+// Renames the left hand side of the assignment.
+void assignment::rename (char * n) {
+  if (result) free (result);
+  result = n ? strdup (n) : NULL;
+}
+
 // Destructor deletes an instance of the assignment class.
 assignment::~assignment () {
   delete body;
@@ -437,6 +456,13 @@ application::application (const application & o) : node (o) {
 // Re-creates the given instance.
 node * application::recreate (void) {
   return new application (*this);
+}
+
+// Replaces reference name by the new given name.
+void application::replace (char * src, char * dst) {
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    arg->replace (src, dst);
+  }
 }
 
 // Destructor deletes an instance of the application class.
@@ -1148,10 +1174,20 @@ int checker::findDuplicate (void) {
   return err;
 }
 
-/* The function returns the equations resulting in the passed variable
-   or NULL if there is no such equation. */
+/* The function returns the equation resulting in the passed variable
+   or NULL if there is no such equation.  The function looks through
+   the passed equation root. */
 node * checker::findEquation (node * root, char * n) {
   for (node * eqn = root; eqn != NULL; eqn = eqn->getNext ()) {
+    if (!strcmp (A(eqn)->result, n)) return eqn;
+  }
+  return NULL;
+}
+
+/* The function returns the equation resulting in the passed variable
+   or NULL if there is no such equation. */
+node * checker::findEquation (char * n) {
+  foreach_equation (eqn) {
     if (!strcmp (A(eqn)->result, n)) return eqn;
   }
   return NULL;

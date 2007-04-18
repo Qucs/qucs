@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.68 2007-04-15 10:17:46 ela Exp $
+ * $Id: input.cpp,v 1.69 2007-04-18 19:18:01 ela Exp $
  *
  */
 
@@ -238,7 +238,7 @@ void input::factory (void) {
 	  c->setNode (i, nodes->node);
 
       // add the properties to circuit
-      for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
+      for (pairs = def->pairs; pairs != NULL; pairs = pairs->next) {
 	if (pairs->value == NULL) {
 	  // zero-length value lists
 	  variable * v = new variable (pairs->key);
@@ -272,6 +272,10 @@ void input::factory (void) {
 	    o->addProperty (pairs->key, pairs->value->value);
 	  }
 	}
+      }
+      // set local circuit environment
+      c->setEnv (def->env);
+
       // additionally add missing optional properties
       assignDefaultProperties (c, def->define);
 
@@ -386,6 +390,8 @@ circuit * input::createCircuit (char * type) {
     return new coupler ();
   else if (!strcmp (type, "Diode"))
     return new diode ();
+  else if (!strcmp (type, "EDD"))
+    return new eqndefined ();
   else if (!strcmp (type, "MLIN"))
     return new msline ();
   else if (!strcmp (type, "MCORN"))

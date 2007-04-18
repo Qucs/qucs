@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.42 2007-04-15 10:17:48 ela Exp $
+ * $Id: component.h,v 1.43 2007-04-18 19:18:01 ela Exp $
  *
  */
 
@@ -92,6 +92,7 @@
 #include "devices/jfet.h"
 #include "devices/bjt.h"
 #include "devices/mosfet.h"
+#include "devices/eqndefined.h"
 
 #include "microstrip/substrate.h"
 

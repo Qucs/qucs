@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.52 2007-02-04 18:08:52 ela Exp $
+ * $Id: circuit.h,v 1.53 2007-04-18 19:18:00 ela Exp $
  *
  */
 
@@ -59,6 +59,7 @@ class operatingpoint;
 class characteristic;
 class matrix;
 class net;
+class environment;
 class history;
 
 #include "integrator.h"
@@ -115,6 +116,10 @@ class circuit : public object, public integrator
   // subcircuitry
   char * getSubcircuit (void) { return subcircuit; }
   void   setSubcircuit (char *);
+
+  // environment specific
+  environment * getEnv (void) { return env; }
+  void setEnv (environment * e) { env = e; }
 
   // nodal analyses helpers
   void setInternalVoltageSource (bool i) { MODFLAG (i, CIRCUIT_INTVSOURCE); }
@@ -281,6 +286,7 @@ class circuit : public object, public integrator
   valuelist<operatingpoint> oper;
   valuelist<characteristic> charac;
   net * subnet;
+  environment * env;
   nr_double_t * deltas;
   int nHistories;
   history * histories;
