@@ -1,3 +1,8 @@
+2007-04-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.h (class eqndefined): Added the equation
+	defined device (i.e. explicit equations for I(V) and Q(V)).
+
 2007-04-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* vexp.h (class vexp), iexp.h (class iexp): New components:

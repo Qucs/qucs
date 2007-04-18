@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.68 2007/04/15 10:17:46 ela Exp $
+ * $Id: qucsdefs.h,v 1.69 2007/04/18 19:18:01 ela Exp $
  *
  */
 
@@ -598,6 +598,28 @@ struct define_t qucs_definition_available[] =
       { "capModel", PROP_INT, { 2, PROP_NO_STR }, { '[', 1 , 2, ']' } },
       PROP_NO_PROP }
   },
+  /* equation defined device */
+  { "EDD", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      PROP_NO_PROP },
+    { { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      PROP_NO_PROP }
+  },
+
 
   /* hicumL2p1 verilog device */
   { "hicumL2p1", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,

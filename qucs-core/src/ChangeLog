@@ -1,3 +1,17 @@
+2007-04-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added properties of new
+	equation defined device.
+
+	* input.cpp: Storing appropriate environment pointer in each
+	instantiated component.
+
+	* equation.cpp: Added some more functionality necessary for the
+	new equation defined device.
+
+	* circuit.h (class circuit): Environments can now be stored in
+	components.
+
 2007-04-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added parameters

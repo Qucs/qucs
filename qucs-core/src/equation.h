@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.34 2007/04/14 16:21:45 ela Exp $
+ * $Id: equation.h,v 1.35 2007/04/18 19:18:01 ela Exp $
  *
  */
 
@@ -99,6 +99,7 @@ public:
   virtual constant * evaluate (void) { return res; }
   virtual node * differentiate (char *) { return this; }
   virtual node * recreate (void) { return new node (*this); }
+  virtual void replace (char *, char *) { }
   
 public:
   int duplicate;
@@ -180,6 +181,7 @@ public:
   constant * evaluate (void);
   node * differentiate (char *);
   node * recreate (void);
+  void replace (char *, char *);
 
 public:
   char * n;
@@ -201,6 +203,8 @@ public:
   constant * evaluate (void);
   node * differentiate (char *);
   node * recreate (void);
+  void replace (char *, char *);
+  void rename (char *);
   
 public:
   char * result;
@@ -228,6 +232,7 @@ public:
   constant * evaluate (void);
   node * differentiate (char *);
   node * recreate (void);
+  void replace (char *, char *);
 
 public:
   char * n;
@@ -277,6 +282,7 @@ public:
   node * createReference (char *, char *, char *);
   void appendEquation (node *);
   void addEquation (node *);
+  node * findEquation (char *);
   bool containsVariable (char *);
   nr_double_t getDouble (char *);
   void setDouble (char *, nr_double_t);
