@@ -1,3 +1,8 @@
+2007-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp (calcHB): Added HB callbacks.  Fixed
+	bug in DC calculations.
+
 2007-04-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.h (class eqndefined): Added the equation
