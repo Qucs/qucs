@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.40 2007-03-01 11:36:53 ela Exp $
+ * $Id: diode.cpp,v 1.41 2007-04-19 16:06:27 ela Exp $
  *
  */
 
@@ -267,7 +267,7 @@ void diode::prepareDC (void) {
 // Callback for initializing the DC analysis.
 void diode::initDC (void) {
   deviceStates (StateVars, 1);
-  hb = false;
+  doHB = false;
   prepareDC ();
 }
 
@@ -335,7 +335,7 @@ void diode::calcDC (void) {
   gd += gtiny;
 
   // HB simulation
-  if (hb) {
+  if (doHB) {
     Ieq = Id;
     setGV (NODE_C, -gd * Ud);
     setGV (NODE_A, +gd * Ud);
@@ -428,7 +428,7 @@ void diode::calcTR (nr_double_t) {
 // Callback for initializing the HB analysis.
 void diode::initHB (int frequencies) {
   deviceStates (StateVars, frequencies);
-  hb = true;
+  doHB = true;
   prepareDC ();
   allocMatrixHB ();
 }
@@ -454,7 +454,7 @@ void diode::calcHB (int frequency) {
   setCV (NODE_C, -Cd * Ud);
   setCV (NODE_A, +Cd * Ud);
 
-  // fill in C's (dQ/dU) into H-Matrix 
+  // fill in C's (dQ/dU) into QV-Matrix 
   setQV (NODE_C, NODE_C, +Cd); setQV (NODE_A, NODE_A, +Cd);
   setQV (NODE_C, NODE_A, -Cd); setQV (NODE_A, NODE_C, -Cd);
 }
