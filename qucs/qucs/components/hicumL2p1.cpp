@@ -131,7 +131,7 @@ hicumL2p1::hicumL2p1()
   Props.append (new Property ("vptcx", "100", false,
     QObject::tr ("External B-C punch-through voltage")));
   Props.append (new Property ("fbc", "0.3487", false,
-    QObject::tr ("-")));
+    QObject::tr ("Partitioning factor of parasitic B-C capacitance")));
   Props.append (new Property ("cjs0", "17.68E-15", false,
     QObject::tr ("C-S zero-bias depletion capacitance")));
   Props.append (new Property ("vds", "0.621625", false,
@@ -179,7 +179,7 @@ hicumL2p1::hicumL2p1()
   Props.append (new Property ("af", "2.0", false,
     QObject::tr ("Flicker noise exponent factor")));
   Props.append (new Property ("krbi", "1.0", false,
-    QObject::tr ("-")));
+    QObject::tr ("Noise factor for internal base resistance")));
   Props.append (new Property ("latb", "10.479", false,
     QObject::tr ("Scaling factor for collector minority charge in direction of emitter width")));
   Props.append (new Property ("latl", "0.300012", false,

@@ -4929,7 +4929,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
@@ -5245,6 +5245,38 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor of parasitic B-C capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise factor for internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equation defined device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of equations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of branches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>charge equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
