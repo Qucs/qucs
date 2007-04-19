@@ -59,8 +59,9 @@ unfixed) have a look at the file BUGS.
 	- load/save/print schematics
 	- partial polar/smith chart
 - compatibility code and testing on other platforms as GNU/Linux
-- components: correlated noise sources, symbolically defined devices
-- optimization dialog box
+	- components: correlated noise sources, symbolically defined
+	  devices
+	- optimization dialog box
 - snap mode for wire painting
 	- edit component parameters directly in schematic
 - equations for diagram input line
