@@ -1,3 +1,11 @@
+2007-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqndefined.cpp (EqnDefined): Added new equation defined
+	device.  Icon still missing.
+
+	* hicumL2p1.cpp (hicumL2p1): Added description for the 'fbc' and
+	'krbi' properties.
+
 2007-04-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* iexp.cpp (iExp), vexp.cpp (vExp): Added exponential voltage and
