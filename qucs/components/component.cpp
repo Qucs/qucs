@@ -768,6 +768,8 @@ bool Component::load(const QString& _s)
     tmp = 2;   // first property (File) already exists
   else if(Model == "Lib")
     tmp = 3;
+  else if(Model == "EDD")
+    tmp = 5;
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   for(; tmp<=(int)counts/2; tmp++)
@@ -804,6 +806,7 @@ bool Component::load(const QString& _s)
       return true;
     }
 
+    if(Model != "EDD")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1,1);
@@ -1536,6 +1539,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "VIA") c = new MSvia();
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
+	else if(cstr == "DD") c = new EqnDefined();
         break;
   case 'O' : if(cstr == "pAmp") c = new OpAmp();
         else if(cstr == "R") c = new Logical_OR();

@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * support for symbolically defined devices
  * new components: exponential voltage and current source
  * added Verilog file component
  * support for digital simulations using Verilog
