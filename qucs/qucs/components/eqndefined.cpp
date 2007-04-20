@@ -1,9 +1,9 @@
 /***************************************************************************
                                eqndefined.cpp
                               ----------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+    begin                : Thu Apr 19 2007
+    copyright            : (C) 2007 by Stefan Jahn
+    email                : stefan@lkcc.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -60,7 +60,7 @@ Component* EqnDefined::newOne()
 Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined Device");
-  BitmapFile = "spfile3";
+  BitmapFile = "edd";
 
   if(getNewOne) {
     EqnDefined* p = new EqnDefined();
