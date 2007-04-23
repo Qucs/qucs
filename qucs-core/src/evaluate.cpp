@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.54 2006-09-19 08:22:20 raimi Exp $
+ * $Id: evaluate.cpp,v 1.55 2007-04-23 18:38:47 ela Exp $
  *
  */
 
@@ -1419,6 +1419,25 @@ constant * evaluate::sec_v (constant * args) {
   _RETV (1.0 / cos (*v1));
 }
 
+// *************** arcus secans *******************
+constant * evaluate::arcsec_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (acos (1 / d1));
+}
+
+constant * evaluate::arcsec_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (arccos (1 / *c1));
+}
+
+constant * evaluate::arcsec_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (arccos (1 / *v1));
+}
+
 // ***************** cosecans *********************
 constant * evaluate::cosec_d (constant * args) {
   _ARD0 (d1);
@@ -1436,6 +1455,25 @@ constant * evaluate::cosec_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
   _RETV (1.0 / sin (*v1));
+}
+
+// ************* arcus cosecans *******************
+constant * evaluate::arccosec_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (asin (1 / d1));
+}
+
+constant * evaluate::arccosec_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (arcsin (1 / *c1));
+}
+
+constant * evaluate::arccosec_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (arcsin (1 / *v1));
 }
 
 // ********** area sine hyperbolicus **************
@@ -1457,6 +1495,26 @@ constant * evaluate::arsinh_v (constant * args) {
   _RETV (arsinh (*v1));
 }
 
+// ********** area cosecans hyperbolicus **************
+constant * evaluate::arcosech_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  d1 = 1 / d1;
+  _RETD (log (d1 + sqrt (d1 * d1 + 1)));
+}
+
+constant * evaluate::arcosech_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (arsinh (1 / *c1));
+}
+
+constant * evaluate::arcosech_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (arsinh (1 / *v1));
+}
+
 // ********* area cosine hyperbolicus ************
 constant * evaluate::arcosh_d (constant * args) {
   _ARD0 (d1);
@@ -1474,6 +1532,26 @@ constant * evaluate::arcosh_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
   _RETV (arcosh (*v1));
+}
+
+// ********* area secans hyperbolicus ***********
+constant * evaluate::arsech_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  d1 = 1 / d1;
+  _RETD (log (d1 + sqrt (d1 * d1 - 1)));
+}
+
+constant * evaluate::arsech_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (arcosh (1 / *c1));
+}
+
+constant * evaluate::arsech_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  _RETV (arcosh (1 / *v1));
 }
 
 // ******* area tangent hyperbolicus **********
@@ -1786,6 +1864,34 @@ constant * evaluate::avg_v (constant * args) {
   _ARV0 (v1);
   _DEFC ();
   _RETC (avg (*v1));
+}
+
+// ******************* lengths *********************
+constant * evaluate::length_d (constant *) {
+  _DEFD ();
+  _RETD (1);
+}
+
+constant * evaluate::length_c (constant *) {
+  _DEFD ();
+  _RETD (1);
+}
+
+constant * evaluate::length_v (constant * args) {
+  _ARV0 (v1);
+  _DEFD ();
+  _RETD (v1->getSize ());
+}
+
+constant * evaluate::length_m (constant *) {
+  _DEFD ();
+  _RETD (1);
+}
+
+constant * evaluate::length_mv (constant * args) {
+  _ARV0 (mv);
+  _DEFD ();
+  _RETD (mv->getSize ());
 }
 
 // ***************** array indices *****************

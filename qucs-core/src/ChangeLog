@@ -1,5 +1,8 @@
 2007-04-23  Stefan Jahn  <stefan@lkcc.org>
 
+	* evaluate.cpp: Added arcsec(), arccosec(), arsech(), arcosech()
+	and length() functions to the equation solver.
+
 	* vector.cpp: Fixed calculation of variance().
 
 2007-04-18  Stefan Jahn  <stefan@lkcc.org>
