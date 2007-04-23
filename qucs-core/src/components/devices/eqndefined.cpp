@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.2 2007/04/19 16:06:28 ela Exp $
+ * $Id: eqndefined.cpp,v 1.3 2007/04/23 12:11:38 ela Exp $
  *
  */
 
@@ -28,7 +28,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
+
+#if !HAVE_STRCHR
+# define strchr  index
+# define strrchr rindex
+#endif
 
 #include "logging.h"
 #include "complex.h"
@@ -85,9 +91,14 @@ void eqndefined::initDC (void) {
 
 // Creates a variable name from the given arguments.
 char * eqndefined::createVariable (char * base, int n, bool prefix) {
-  char * txt = (char *) malloc (strlen (getName ()) + strlen (base) + 3);
+  char * str = strchr (getName (), '.');
+  if (str != NULL)
+    str = strrchr (str, '.') + 1;
+  else
+    str = getName ();
+  char * txt = (char *) malloc (strlen (str) + strlen (base) + 3);
   if (prefix)
-    sprintf (txt, "%s.%s%d", getName (), base, n);
+    sprintf (txt, "%s.%s%d", str, base, n);
   else
     sprintf (txt, "%s%d", base, n);
   return txt;
@@ -95,9 +106,14 @@ char * eqndefined::createVariable (char * base, int n, bool prefix) {
 
 // Creates also a variable name from the given arguments.
 char * eqndefined::createVariable (char * base, int r, int c, bool prefix) {
-  char * txt = (char *) malloc (strlen (getName ()) + strlen (base) + 3);
+  char * str = strchr (getName (), '.');
+  if (str != NULL)
+    str = strrchr (str, '.') + 1;
+  else
+    str = getName ();
+  char * txt = (char *) malloc (strlen (str) + strlen (base) + 3);
   if (prefix)
-    sprintf (txt, "%s.%s%d%d", getName (), base, r, c);
+    sprintf (txt, "%s.%s%d%d", str, base, r, c);
   else
     sprintf (txt, "%s%d%d", base, r, c);
   return txt;
@@ -161,8 +177,8 @@ void eqndefined::initModel (void) {
 
     // replace voltage references
     for (j = 0; j < branches; j++) {
-      vn = createVariable ("V", i + 1);
-      vnold = createVariable ("V", i + 1, false);
+      vn = createVariable ("V", j + 1);
+      vnold = createVariable ("V", j + 1, false);
       if (ivalue) ivalue->replace (vnold, vn);
       if (qvalue) qvalue->replace (vnold, vn);
       free (vnold);
@@ -179,7 +195,7 @@ void eqndefined::initModel (void) {
 
     // create differentiations
     for (j = 0; j < branches; j++, k++) {
-      vn = createVariable ("V", i + 1);
+      vn = createVariable ("V", j + 1);
 
       // create conductance equations
       if (ivalue) {

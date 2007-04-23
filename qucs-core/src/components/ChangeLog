@@ -1,3 +1,8 @@
+2007-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp: Fixed bug when using the EDD in a
+	subcircuit.
+
 2007-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp (calcHB): Added HB callbacks.  Fixed
