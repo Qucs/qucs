@@ -1,3 +1,8 @@
+2007-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* StoQ_test5/StoQ_test5.tex: Added new chapter about inductors and
+	mutual inductors to the reportbook.  Thanks to Mike.
+
 2007-04-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilog/content.tex: Fixed some typos in the Verilog-AMS
