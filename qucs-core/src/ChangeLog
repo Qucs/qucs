@@ -1,3 +1,7 @@
+2007-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Fixed calculation of variance().
+
 2007-04-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added properties of new
