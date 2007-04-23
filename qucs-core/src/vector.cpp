@@ -1,7 +1,7 @@
 /*
  * vector.cpp - vector class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006, 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.31 2007-04-15 10:17:47 ela Exp $
+ * $Id: vector.cpp,v 1.32 2007-04-23 17:34:25 ela Exp $
  *
  */
 
@@ -999,7 +999,9 @@ nr_double_t vector::variance (void) {
   nr_double_t result = 0.0;
   complex average = avg (*this);
   for (int i = 0; i < getSize (); i++) result += norm (get (i) - average);
-  return result / getSize ();
+  if (getSize () > 1)
+    return result / (getSize () - 1);
+  return 0.0;
 }
 
 nr_double_t vector::stddev (void) {
