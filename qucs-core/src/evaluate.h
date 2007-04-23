@@ -1,7 +1,7 @@
 /*
  * evaluate.h - definitions for Qucs equation evaluations
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.31 2006/07/03 08:52:23 raimi Exp $
+ * $Id: evaluate.h,v 1.32 2007/04/23 18:38:48 ela Exp $
  *
  */
 
@@ -267,9 +267,17 @@ public:
   static constant * sec_c (constant *);
   static constant * sec_v (constant *);
 
+  static constant * arcsec_d (constant *);
+  static constant * arcsec_c (constant *);
+  static constant * arcsec_v (constant *);
+
   static constant * cosec_d (constant *);
   static constant * cosec_c (constant *);
   static constant * cosec_v (constant *);
+
+  static constant * arccosec_d (constant *);
+  static constant * arccosec_c (constant *);
+  static constant * arccosec_v (constant *);
 
   static constant * sinh_d (constant *);
   static constant * sinh_c (constant *);
@@ -295,21 +303,29 @@ public:
   static constant * artanh_c (constant *);
   static constant * artanh_v (constant *);
 
-  static constant * arcoth_d (constant *);
-  static constant * arcoth_c (constant *);
-  static constant * arcoth_v (constant *);
-
   static constant * coth_d (constant *);
   static constant * coth_c (constant *);
   static constant * coth_v (constant *);
+
+  static constant * arcoth_d (constant *);
+  static constant * arcoth_c (constant *);
+  static constant * arcoth_v (constant *);
 
   static constant * sech_d (constant *);
   static constant * sech_c (constant *);
   static constant * sech_v (constant *);
 
+  static constant * arsech_d (constant *);
+  static constant * arsech_c (constant *);
+  static constant * arsech_v (constant *);
+
   static constant * cosech_d (constant *);
   static constant * cosech_c (constant *);
   static constant * cosech_v (constant *);
+
+  static constant * arcosech_d (constant *);
+  static constant * arcosech_c (constant *);
+  static constant * arcosech_v (constant *);
 
   static constant * ztor_d   (constant *);
   static constant * ztor_d_d (constant *);
@@ -402,6 +418,12 @@ public:
   static constant * sinc_d (constant *);
   static constant * sinc_c (constant *);
   static constant * sinc_v (constant *);
+
+  static constant * length_d (constant *);
+  static constant * length_c (constant *);
+  static constant * length_v (constant *);
+  static constant * length_m (constant *);
+  static constant * length_mv (constant *);
 
   static void extract_vector (constant *, int, int &, int &, constant *);
   static constant * index_mv_2 (constant *);

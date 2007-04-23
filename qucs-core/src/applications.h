@@ -1,7 +1,7 @@
 /*
  * applications.h - the Qucs application list
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.11 2006/07/03 08:52:23 raimi Exp $
+ * $Id: applications.h,v 1.12 2007/04/23 18:38:47 ela Exp $
  *
  */
 
@@ -273,9 +273,17 @@ struct application_t eqn::applications[] = {
   { "sec", TAG_COMPLEX, evaluate::sec_c, 1, { TAG_COMPLEX } },
   { "sec", TAG_VECTOR,  evaluate::sec_v, 1, { TAG_VECTOR  } },
 
+  { "arcsec", TAG_DOUBLE,  evaluate::arcsec_d, 1, { TAG_DOUBLE  } },
+  { "arcsec", TAG_COMPLEX, evaluate::arcsec_c, 1, { TAG_COMPLEX } },
+  { "arcsec", TAG_VECTOR,  evaluate::arcsec_v, 1, { TAG_VECTOR  } },
+
   { "cosec", TAG_DOUBLE,  evaluate::cosec_d, 1, { TAG_DOUBLE  } },
   { "cosec", TAG_COMPLEX, evaluate::cosec_c, 1, { TAG_COMPLEX } },
   { "cosec", TAG_VECTOR,  evaluate::cosec_v, 1, { TAG_VECTOR  } },
+
+  { "arccosec", TAG_DOUBLE,  evaluate::arccosec_d, 1, { TAG_DOUBLE  } },
+  { "arccosec", TAG_COMPLEX, evaluate::arccosec_c, 1, { TAG_COMPLEX } },
+  { "arccosec", TAG_VECTOR,  evaluate::arccosec_v, 1, { TAG_VECTOR  } },
 
   { "sinh", TAG_DOUBLE,  evaluate::sinh_d, 1, { TAG_DOUBLE  } },
   { "sinh", TAG_COMPLEX, evaluate::sinh_c, 1, { TAG_COMPLEX } },
@@ -305,17 +313,25 @@ struct application_t eqn::applications[] = {
   { "coth", TAG_COMPLEX, evaluate::coth_c, 1, { TAG_COMPLEX } },
   { "coth", TAG_VECTOR,  evaluate::coth_v, 1, { TAG_VECTOR  } },
 
+  { "arcoth", TAG_DOUBLE,  evaluate::arcoth_d, 1, { TAG_DOUBLE  } },
+  { "arcoth", TAG_COMPLEX, evaluate::arcoth_c, 1, { TAG_COMPLEX } },
+  { "arcoth", TAG_VECTOR,  evaluate::arcoth_v, 1, { TAG_VECTOR  } },
+
   { "sech", TAG_DOUBLE,  evaluate::sech_d, 1, { TAG_DOUBLE  } },
   { "sech", TAG_COMPLEX, evaluate::sech_c, 1, { TAG_COMPLEX } },
   { "sech", TAG_VECTOR,  evaluate::sech_v, 1, { TAG_VECTOR  } },
+
+  { "arsech", TAG_DOUBLE,  evaluate::arsech_d, 1, { TAG_DOUBLE  } },
+  { "arsech", TAG_COMPLEX, evaluate::arsech_c, 1, { TAG_COMPLEX } },
+  { "arsech", TAG_VECTOR,  evaluate::arsech_v, 1, { TAG_VECTOR  } },
 
   { "cosech", TAG_DOUBLE,  evaluate::cosech_d, 1, { TAG_DOUBLE  } },
   { "cosech", TAG_COMPLEX, evaluate::cosech_c, 1, { TAG_COMPLEX } },
   { "cosech", TAG_VECTOR,  evaluate::cosech_v, 1, { TAG_VECTOR  } },
 
-  { "arcoth", TAG_DOUBLE,  evaluate::arcoth_d, 1, { TAG_DOUBLE  } },
-  { "arcoth", TAG_COMPLEX, evaluate::arcoth_c, 1, { TAG_COMPLEX } },
-  { "arcoth", TAG_VECTOR,  evaluate::arcoth_v, 1, { TAG_VECTOR  } },
+  { "arcosech", TAG_DOUBLE,  evaluate::arcosech_d, 1, { TAG_DOUBLE  } },
+  { "arcosech", TAG_COMPLEX, evaluate::arcosech_c, 1, { TAG_COMPLEX } },
+  { "arcosech", TAG_VECTOR,  evaluate::arcosech_v, 1, { TAG_VECTOR  } },
 
   { "ztor", TAG_DOUBLE,  evaluate::ztor_d, 1, { TAG_DOUBLE } },
   { "ztor", TAG_DOUBLE,  evaluate::ztor_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
@@ -397,6 +413,12 @@ struct application_t eqn::applications[] = {
   { "avg", TAG_COMPLEX, evaluate::avg_c, 1, { TAG_COMPLEX } },
   { "avg", TAG_COMPLEX, evaluate::avg_v, 1, { TAG_VECTOR  } },
   { "avg", TAG_COMPLEX, evaluate::avg_r, 2, { TAG_VECTOR, TAG_RANGE } },
+
+  { "length", TAG_DOUBLE, evaluate::length_d,  1, { TAG_DOUBLE  } },
+  { "length", TAG_DOUBLE, evaluate::length_c,  1, { TAG_COMPLEX } },
+  { "length", TAG_DOUBLE, evaluate::length_v,  1, { TAG_VECTOR  } },
+  { "length", TAG_DOUBLE, evaluate::length_m,  1, { TAG_MATRIX  } },
+  { "length", TAG_DOUBLE, evaluate::length_mv, 1, { TAG_MATVEC  } },
 
   { "array", TAG_VECTOR, evaluate::index_mv_2, 3,
     { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
