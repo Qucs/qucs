@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.2 2007-04-14 16:24:58 ela Exp $
+ * $Id: differentiate.cpp,v 1.3 2007-04-24 18:13:13 ela Exp $
  *
  */
 
@@ -386,7 +386,7 @@ node * differentiate::sign (application *, char *) {
 node * differentiate::arcsin (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (one, sqr);
   node * t2 = sqrt_reduce (t1);
@@ -401,10 +401,22 @@ node * differentiate::square (application * app, char * derivative) {
   return times_reduce (t1, f0->recreate());
 }
 
+node * differentiate::sqr_reduce (node * f0) {
+  if (isOne (f0)) {
+    retCon (1);
+  } else if (isZero (f0)) {
+    retCon (0);
+  } else if (isConst (f0)) {
+    retCon (D(f0) * D(f0));
+  } else {
+    retApp1 ("sqr", f0);
+  }
+}
+
 node * differentiate::arccos (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (one, sqr);
   node * t2 = sqrt_reduce (t1);
@@ -415,7 +427,7 @@ node * differentiate::arccos (application * app, char * derivative) {
 node * differentiate::arctan (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = plus_reduce (one, sqr);
   return over_reduce (d0, t1);
@@ -424,7 +436,7 @@ node * differentiate::arctan (application * app, char * derivative) {
 node * differentiate::arccot (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = plus_reduce (one, sqr);
   node * t2 = minus_reduce (d0);
@@ -434,7 +446,7 @@ node * differentiate::arccot (application * app, char * derivative) {
 node * differentiate::arcsec (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (sqr, one);
   node * t2 = sqrt_reduce (t1);
@@ -445,7 +457,7 @@ node * differentiate::arcsec (application * app, char * derivative) {
 node * differentiate::arccosec (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (sqr, one);
   node * t2 = sqrt_reduce (t1);
@@ -488,7 +500,7 @@ node * differentiate::coth (application * app, char * derivative) {
 node * differentiate::artanh (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (one, sqr);
   return over_reduce (d0, t1);
@@ -497,7 +509,7 @@ node * differentiate::artanh (application * app, char * derivative) {
 node * differentiate::arcoth (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (sqr, one);
   node * t2 = minus_reduce (d0);
@@ -507,7 +519,7 @@ node * differentiate::arcoth (application * app, char * derivative) {
 node * differentiate::arcosh (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = minus_reduce (sqr, one);
   node * t2 = sqrt_reduce (t1);
@@ -517,11 +529,35 @@ node * differentiate::arcosh (application * app, char * derivative) {
 node * differentiate::arsinh (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defApp1 (sqr, "sqr", f0->recreate());
+  node * sqr = sqr_reduce (f0->recreate());
   defCon (one, 1);
   node * t1 = plus_reduce (sqr, one);
   node * t2 = sqrt_reduce (t1);
   return over_reduce (d0, t2);
+}
+
+node * differentiate::arsech (application * app, char * derivative) {
+  _AF0 (f0);
+  _AD0 (d0);
+  node * sqr = sqr_reduce (f0->recreate());
+  defCon (one, 1);
+  node * t1 = minus_reduce (one, sqr);
+  node * t2 = sqrt_reduce (t1);
+  node * t3 = times_reduce (f0->recreate(), t2);
+  node * t4 = minus_reduce (d0);
+  return over_reduce (t4, t3);
+}
+
+node * differentiate::arcosech (application * app, char * derivative) {
+  _AF0 (f0);
+  _AD0 (d0);
+  node * sqr = sqr_reduce (f0->recreate());
+  defCon (one, 1);
+  node * t1 = plus_reduce (one, sqr);
+  node * t2 = sqrt_reduce (t1);
+  node * t3 = times_reduce (f0->recreate(), t2);
+  node * t4 = minus_reduce (d0);
+  return over_reduce (t4, t3);
 }
 
 // List of differentiators.
@@ -563,6 +599,8 @@ struct differentiation_t eqn::differentiations[] = {
   { "arcosh",   differentiate::arcosh,    1 },
   { "artanh",   differentiate::artanh,    1 },
   { "arcoth",   differentiate::arcoth,    1 },
+  { "arsech",   differentiate::arsech,    1 },
+  { "arcosech", differentiate::arcosech,  1 },
 
   { NULL, NULL, 0 /* end of list */ }
 };

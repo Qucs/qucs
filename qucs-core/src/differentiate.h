@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.h,v 1.1 2007-04-14 16:21:44 ela Exp $
+ * $Id: differentiate.h,v 1.2 2007-04-24 18:13:13 ela Exp $
  *
  */
 
@@ -70,6 +70,8 @@ class differentiate
   static node * arcosh	     (application *, char *);
   static node * artanh	     (application *, char *);
   static node * arcoth	     (application *, char *);
+  static node * arsech	     (application *, char *);
+  static node * arcosech     (application *, char *);
 
  private:
   static node * plus_reduce  (node *, node *);
@@ -80,6 +82,7 @@ class differentiate
   static node * power_reduce (node *, node *);
   static node * ln_reduce    (node *);
   static node * sqrt_reduce  (node *);
+  static node * sqr_reduce   (node *);
   static node * app_reduce   (char *, node *, node *);
 };
 
