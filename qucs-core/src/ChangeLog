@@ -1,3 +1,9 @@
+2007-04-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* differentiate.cpp: Added diferentiation formulas for arsech()
+	and arcosech(), also added simplifier for immediate square
+	expressions.
+
 2007-04-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Added arcsec(), arccosec(), arsech(), arcosech()

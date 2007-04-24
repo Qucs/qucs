@@ -700,9 +700,7 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
       </admst:for-each>
     </admst:when>
     <admst:otherwise>
-      <admst:value-of select="admst/datatypename"/>
-      <admst:value-of select="admst/datatypefamily"/>
-      <admst:fatal format="%s.%s: not handled inside expression\n"/>
+      <admst:fatal format="%(datatypename): not handled inside expression\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -810,9 +808,7 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
       <admst:return name="x" value="{$block}"/>
     </admst:when>
     <admst:otherwise>
-      <admst:value-of select="admst/datatypename"/>
-      <admst:value-of select="admst/datatypefamily"/>
-      <admst:fatal format="%s.%s: not handled inside blocks\n"/>
+      <admst:fatal format="%(datatypename): not handled inside blocks\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -911,9 +907,7 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
       <admst:return name="x" value="{$block}"/>
     </admst:when>
     <admst:otherwise>
-      <admst:value-of select="admst/datatypename"/>
-      <admst:value-of select="admst/datatypefamily"/>
-      <admst:fatal format="%s.%s: not handled inside blocks\n"/>
+      <admst:fatal format="%(datatypename): not handled inside blocks\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
