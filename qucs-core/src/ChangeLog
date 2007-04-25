@@ -1,3 +1,17 @@
+2007-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* differentiate.cpp: Added differentiation for the new '?:'
+	operation.
+
+	* scan_netlist.l, parse_netlist.y: Allowing '?:' operations as
+	well as <, >, <=, >=, ==, !=, !, && and || in equations.
+
+	* evaluate.cpp: Implemented comparison operators as well as some
+	important boolean operations.
+
+	* equation.cpp: Added the boolean data type with all its
+	implications.
+
 2007-04-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* differentiate.cpp: Added diferentiation formulas for arsech()

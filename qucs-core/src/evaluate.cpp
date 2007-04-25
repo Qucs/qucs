@@ -1,7 +1,7 @@
 /*
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.55 2007/04/23 18:38:47 ela Exp $
+ * $Id: evaluate.cpp,v 1.56 2007/04/25 18:47:35 ela Exp $
  *
  */
 
@@ -66,6 +66,7 @@ using namespace fspecial;
 #define CHR(con) ((constant *) (con))->chr
 #define INT(con) ((int) D (con))
 #define RNG(con) ((constant *) (con))->r
+#define B(con)   ((constant *) (con))->b
 
 #define A(a) ((assignment *) (a))
 #define R(r) ((reference *) (r))
@@ -75,6 +76,7 @@ using namespace fspecial;
 #define _ARG(idx) args->get(idx)
 
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
+#define _B(var,idx) bool (var) = B (_ARES (idx));
 #define _CX(var,idx) complex * (var) = C (_ARES (idx));
 #define _V(var,idx) vector * (var) = V (_ARES (idx));
 #define _M(var,idx) matrix * (var) = M (_ARES (idx));
@@ -91,6 +93,9 @@ using namespace fspecial;
 #define _ARD0(var) _D (var,0)
 #define _ARD1(var) _D (var,1)
 #define _ARD2(var) _D (var,2)
+#define _ARB0(var) _B (var,0)
+#define _ARB1(var) _B (var,1)
+#define _ARB2(var) _B (var,2)
 #define _ARC0(var) _CX (var,0)
 #define _ARC1(var) _CX (var,1)
 #define _ARC2(var) _CX (var,2)
@@ -106,6 +111,7 @@ using namespace fspecial;
 
 // Return value definition macros.
 #define _DEFD() constant * res = new constant (TAG_DOUBLE);
+#define _DEFB() constant * res = new constant (TAG_BOOLEAN);
 #define _DEFC() constant * res = new constant (TAG_COMPLEX);
 #define _DEFV() constant * res = new constant (TAG_VECTOR);
 #define _DEFM() constant * res = new constant (TAG_MATRIX);
@@ -114,6 +120,7 @@ using namespace fspecial;
 
 // Return value macros.
 #define _RETD(var) res->d = (var); return res;
+#define _RETB(var) res->b = (var); return res;
 #define _RETC(var) res->c = new complex (var); return res;
 #define _RETV(var) res->v = new vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
@@ -3564,6 +3571,86 @@ constant * evaluate::kbd_d (constant * args) {
   arg->evaluate ();
   args->append (arg);
   return kbd_d_d (args);
+}
+
+// ***************** if-then-else operation ****************
+constant * evaluate::ifthenelse_d_d (constant * args) {
+  _ARB0 (cond);
+  _ARD1 (d1);
+  _ARD2 (d2);
+  _DEFD ();
+  _RETD (cond ? d1 : d2);
+}
+
+// ************************** less *************************
+constant * evaluate::less_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 < d1);
+}
+
+// ************************* greater ***********************
+constant * evaluate::greater_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 > d1);
+}
+
+// ********************** less or equal ********************
+constant * evaluate::lessorequal_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 <= d1);
+}
+
+// ********************* greater or equal ******************
+constant * evaluate::greaterorequal_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 >= d1);
+}
+
+// ************************** equal ************************
+constant * evaluate::equal_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 == d1);
+}
+
+// ************************ not equal **********************
+constant * evaluate::notequal_d_d (constant * args) {
+  _ARD0 (d0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (d0 != d1);
+}
+
+// *************************** not *************************
+constant * evaluate::not_b (constant * args) {
+  _ARB0 (b0);
+  _DEFB ();
+  _RETB (!b0);
+}
+
+// *************************** or **************************
+constant * evaluate::or_b_b (constant * args) {
+  _ARB0 (b0);
+  _ARB1 (b1);
+  _DEFB ();
+  _RETB (b0 || b1);
+}
+
+// ************************** and **************************
+constant * evaluate::and_b_b (constant * args) {
+  _ARB0 (b0);
+  _ARB1 (b1);
+  _DEFB ();
+  _RETB (b0 && b1);
 }
 
 // Include the application array.
