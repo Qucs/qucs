@@ -4,7 +4,7 @@
 /*
  * parse_netlist.y - parser for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.23 2006-09-18 07:16:57 raimi Exp $
+ * $Id: parse_netlist.y,v 1.24 2007-04-25 18:47:36 ela Exp $
  *
  */
 
@@ -60,8 +60,14 @@
 %token Character
 %token STRING
 
+%token Less Greater LessOrEqual GreaterOrEqual NotEqual Equal Not
+%token And Or
+
 %right '='
+%left '?'
 %left ':'
+%left And Or
+%nonassoc Less Greater LessOrEqual GreaterOrEqual NotEqual Equal Not
 %left '-' '+'
 %left '*' '/' '%'
 %left NEG     /* unary negation */
@@ -101,7 +107,7 @@
 %type <node> NodeList
 %type <pair> PairList
 %type <value> PropertyValue ValueList Value PropertyReal
-%type <eqn> EquationList Expression ExpressionList
+%type <eqn> EquationList Expression ExpressionList ExpressionListRange
 %type <assign> Equation
 %type <con> Constant
 %type <ref> Reference
@@ -371,7 +377,7 @@ Application:
     $$->nargs = $3->count ();
     $$->args = $3;
   }
-  | Reference '[' ExpressionList ']' {
+  | Reference '[' ExpressionListRange ']' {
     $$ = new eqn::application ();
     $$->n = strdup ("array");
     $$->nargs = 1 + $3->count ();
@@ -432,8 +438,75 @@ Application:
     $1->append ($3);
     $$->args = $1;
   }
-  | Range {
-    $$ = $1;
+  | Expression '?' Expression ':' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("?:");
+    $$->nargs = 3;
+    $1->append ($3);
+    $1->append ($5);
+    $$->args = $1;
+  }
+  | Expression Less Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("<");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression Greater Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup (">");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression GreaterOrEqual Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup (">=");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression LessOrEqual Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("<=");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression Equal Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("==");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression NotEqual Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("!=");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Not Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("!");
+    $$->nargs = 1;
+    $$->args = $2;
+  }
+  | Expression And Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("&&");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression Or Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("||");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
   }
 ;
 
@@ -442,6 +515,23 @@ ExpressionList: /* nothing */ { $$ = NULL; }
     $$ = $1;
   }
   | Expression ',' ExpressionList {
+    $1->setNext ($3);
+    $$ = $1;
+  }
+;
+
+ExpressionListRange: /* nothing */ { $$ = NULL; }
+  | Expression {
+    $$ = $1;
+  }
+  | Range {
+    $$ = $1;
+  }
+  | Expression ',' ExpressionListRange {
+    $1->setNext ($3);
+    $$ = $1;
+  }
+  | Range ',' ExpressionListRange {
     $1->setNext ($3);
     $$ = $1;
   }

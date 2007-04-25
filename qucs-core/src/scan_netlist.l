@@ -4,7 +4,7 @@
 /*
  * scan_netlist.l - scanner for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.19 2006-02-08 07:52:58 raimi Exp $
+ * $Id: scan_netlist.l,v 1.20 2007-04-25 18:47:36 ela Exp $
  *
  */
 
@@ -194,9 +194,19 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return InvalidCharacter;
   }
 
-<EQN>[-+*/%(),^:\"\[\]] { /* return operators unchanged */
+<EQN>[-+*/%(),^:\"\[\]\?] { /* return operators unchanged */
     return netlist_text[0];
   }
+
+<EQN>">=" { return GreaterOrEqual; }
+<EQN>"<=" { return LessOrEqual; }
+<EQN>"!=" { return NotEqual; }
+<EQN>"==" { return Equal; }
+<EQN>"&&" { return And; }
+<EQN>"||" { return Or; }
+<EQN>"<"  { return Less; }
+<EQN>">"  { return Greater; }
+<EQN>"!"  { return Not; }
 
 <EQN>{UCREAL} { /* identify unsigned real float */
     netlist_lval.d = strtod (netlist_text, NULL);

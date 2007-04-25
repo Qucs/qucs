@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.35 2007-04-18 19:18:01 ela Exp $
+ * $Id: equation.h,v 1.36 2007-04-25 18:47:35 ela Exp $
  *
  */
 
@@ -134,6 +134,7 @@ enum ConstantTag {
   TAG_CHAR    =  32, /* single character         */
   TAG_STRING  =  64, /* character string         */
   TAG_RANGE   = 128, /* interval specification   */
+  TAG_BOOLEAN = 256, /* boolean value            */
 };
 
 /* This class represents any type of constant expression. */
@@ -163,6 +164,7 @@ public:
     char chr;
     char * s;
     range * r;
+    bool b;
   };
 };
 

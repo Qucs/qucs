@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.32 2007-04-23 18:38:48 ela Exp $
+ * $Id: evaluate.h,v 1.33 2007-04-25 18:47:35 ela Exp $
  *
  */
 
@@ -673,6 +673,17 @@ public:
 
   static constant * kbd_d_d (constant *);
   static constant * kbd_d   (constant *);
+
+  static constant * ifthenelse_d_d (constant *);
+  static constant * less_d_d (constant *);
+  static constant * greater_d_d (constant *);
+  static constant * lessorequal_d_d (constant *);
+  static constant * greaterorequal_d_d (constant *);
+  static constant * equal_d_d (constant *);
+  static constant * notequal_d_d (constant *);
+  static constant * not_b (constant *);
+  static constant * or_b_b (constant *);
+  static constant * and_b_b (constant *);
 };
 
 // Type of application function.

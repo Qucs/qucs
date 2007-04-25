@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.12 2007-04-23 18:38:47 ela Exp $
+ * $Id: applications.h,v 1.13 2007-04-25 18:47:34 ela Exp $
  *
  */
 
@@ -778,6 +778,20 @@ struct application_t eqn::applications[] = {
   { "kbd", TAG_VECTOR, evaluate::kbd_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
   { "kbd", TAG_VECTOR, evaluate::kbd_d,   1, { TAG_DOUBLE } },
 
+  { "?:", TAG_DOUBLE, evaluate::ifthenelse_d_d, 3,
+    { TAG_BOOLEAN, TAG_DOUBLE, TAG_DOUBLE } },
+  { "<=", TAG_BOOLEAN, evaluate::lessorequal_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { ">=", TAG_BOOLEAN, evaluate::greaterorequal_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "<",  TAG_BOOLEAN, evaluate::less_d_d, 2,     { TAG_DOUBLE, TAG_DOUBLE } },
+  { ">",  TAG_BOOLEAN, evaluate::greater_d_d, 2,  { TAG_DOUBLE, TAG_DOUBLE } },
+  { "==", TAG_BOOLEAN, evaluate::equal_d_d, 2,    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "!=", TAG_BOOLEAN, evaluate::notequal_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+  { "!",  TAG_BOOLEAN, evaluate::not_b, 1,   { TAG_BOOLEAN } },
+  { "||", TAG_BOOLEAN, evaluate::or_b_b, 2,  { TAG_BOOLEAN, TAG_BOOLEAN } },
+  { "&&", TAG_BOOLEAN, evaluate::and_b_b, 2, { TAG_BOOLEAN, TAG_BOOLEAN } },
+
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };
 
@@ -791,6 +805,8 @@ char * checker::tag2key (int tag) {
     key = "U"; break;
   case TAG_DOUBLE:
     key = "D"; break;
+  case TAG_BOOLEAN:
+    key = "B"; break;
   case TAG_COMPLEX:
     key = "C"; break;
   case TAG_VECTOR:

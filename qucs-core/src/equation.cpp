@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.51 2007-04-18 19:18:01 ela Exp $
+ * $Id: equation.cpp,v 1.52 2007-04-25 18:47:35 ela Exp $
  *
  */
 
@@ -78,6 +78,9 @@ constant::constant (const constant & o) : node (o) {
   dataref = o.dataref;
   setType (type);
   switch (type) {
+  case TAG_BOOLEAN:
+    b = o.b;
+    break;
   case TAG_DOUBLE:
     d = o.d;
     break;
@@ -161,6 +164,10 @@ char * constant::toString (void) {
   char str[256];
   if (txt != NULL) free (txt);
   switch (type) {
+  case TAG_BOOLEAN:
+    sprintf (str, "%d", b ? 1 : 0);
+    txt = strdup (str);
+    break;
   case TAG_DOUBLE:
     sprintf (str, "%g", (double) d);
     txt = strdup (str);
@@ -1019,6 +1026,7 @@ void checker::list (void) {
     logprint (LOG_STATUS, "%s", eqn->evalPossible ? 
 	      (eqn->getType () == TAG_UNKNOWN ? "U!" :
 	       eqn->getType () == TAG_DOUBLE  ? "D!" :
+	       eqn->getType () == TAG_BOOLEAN ? "B!" :
 	       eqn->getType () == TAG_COMPLEX ? "C!" :
 	       eqn->getType () == TAG_VECTOR  ? "V!" :
 	       eqn->getType () == TAG_CHAR    ? "CHR!" :
@@ -1437,6 +1445,10 @@ vector * solver::dataVector (node * eqn) {
   case TAG_DOUBLE: // double value
     v = new vector ();
     v->add (eqn->getResult()->d);
+    break;
+  case TAG_BOOLEAN: // boolean value
+    v = new vector ();
+    v->add (eqn->getResult()->b ? 1 : 0);
     break;
   case TAG_COMPLEX: // complex value
     v = new vector ();
