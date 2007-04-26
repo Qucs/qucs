@@ -47,6 +47,8 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
   Expr.setPattern("[^\"=]*");  // valid expression for property 'edit'
   Validator = new QRegExpValidator(Expr, this);
+  Expr.setPattern("[^\"]*");   // valid expression for property 'edit'
+  Validator2 = new QRegExpValidator(Expr, this);
   Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
   ValRestrict = new QRegExpValidator(Expr, this);
 
@@ -275,7 +277,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
   edit = new QLineEdit(v1);
   edit->setMinimumWidth(150);
-  edit->setValidator(Validator);
+  edit->setValidator(Validator2);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
@@ -352,6 +354,7 @@ ComponentDialog::~ComponentDialog()
 {
   delete all;
   delete Validator;
+  delete Validator2;
   delete ValRestrict;
   delete ValInteger;
 }

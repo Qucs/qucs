@@ -1,5 +1,9 @@
 2007-04-26  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs_actions.cpp (slotApplyCompText): Allowing '=' character
+	while editing property values on schematic and in component
+	dialog.
+
 	* mouseactions.cpp (MPressElement): Fixed sticky rotation for
 	elements with an initial rotation (e.g. AC voltage source).
 
