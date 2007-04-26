@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.32 2007/04/23 17:34:25 ela Exp $
+ * $Id: vector.cpp,v 1.33 2007/04/26 16:48:25 ela Exp $
  *
  */
 
@@ -461,6 +461,12 @@ vector cosh (vector v) {
 vector arcosh (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (arcosh (v.get (i)), i);
+  return result;
+}
+
+vector arsech (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arsech (v.get (i)), i);
   return result;
 }
 

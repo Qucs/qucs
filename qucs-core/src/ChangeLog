@@ -1,3 +1,16 @@
+2007-04-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed calculation of arsech().  Using new
+	functions from complex and vector class.
+
+	* parse_netlist.y: Fixed operator precedences.
+
+	* evaluate.cpp: Allowing additionally complex arguments in ?:
+	operator.  Necessary for e.g. sqrt().
+
+	* equation.cpp: Modified printing functions for logical
+	operations.
+
 2007-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* differentiate.cpp: Added differentiation for the new '?:'

@@ -26,6 +26,8 @@ files.
 Version 0.0.12
 --------------
 
+ * new logical and rational operators in equation solver as well as
+   the ternary ?: construct
  * support for equation defined devices
  * new components: exponential voltage and current source
 

@@ -1,7 +1,7 @@
 /*
  * complex.cpp - complex number class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.32 2006/06/23 14:38:00 raimi Exp $
+ * $Id: complex.cpp,v 1.33 2007/04/26 16:48:25 ela Exp $
  *
  */
 
@@ -229,7 +229,11 @@ complex cosh (const complex z) {
 }
 
 complex arcosh (const complex z) {
-  return ln (z + sqrt (z * z - 1));
+  return ln (z + sqrt (z * z - 1.0));
+}
+
+complex arsech (const complex z) {
+  return ln ((1.0 + sqrt (1.0 - z * z)) / z);
 }
 
 complex tanh (const complex z) {

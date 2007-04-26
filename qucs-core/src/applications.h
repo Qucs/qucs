@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.13 2007/04/25 18:47:34 ela Exp $
+ * $Id: applications.h,v 1.14 2007/04/26 16:48:24 ela Exp $
  *
  */
 
@@ -779,7 +779,7 @@ struct application_t eqn::applications[] = {
   { "kbd", TAG_VECTOR, evaluate::kbd_d,   1, { TAG_DOUBLE } },
 
   { "?:", TAG_DOUBLE, evaluate::ifthenelse_d_d, 3,
-    { TAG_BOOLEAN, TAG_DOUBLE, TAG_DOUBLE } },
+    { TAG_BOOLEAN, TAG_DOUBLE | TAG_COMPLEX, TAG_DOUBLE | TAG_COMPLEX } },
   { "<=", TAG_BOOLEAN, evaluate::lessorequal_d_d, 2,
     { TAG_DOUBLE, TAG_DOUBLE } },
   { ">=", TAG_BOOLEAN, evaluate::greaterorequal_d_d, 2,
@@ -804,6 +804,8 @@ char * checker::tag2key (int tag) {
   case TAG_UNKNOWN:
     key = "U"; break;
   case TAG_DOUBLE:
+    key = "D"; break;
+  case TAG_DOUBLE|TAG_COMPLEX:
     key = "D"; break;
   case TAG_BOOLEAN:
     key = "B"; break;

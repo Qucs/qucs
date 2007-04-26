@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.24 2007/04/25 18:47:36 ela Exp $
+ * $Id: parse_netlist.y,v 1.25 2007/04/26 16:48:25 ela Exp $
  *
  */
 
@@ -60,18 +60,17 @@
 %token Character
 %token STRING
 
-%token Less Greater LessOrEqual GreaterOrEqual NotEqual Equal Not
-%token And Or
-
 %right '='
-%left '?'
-%left ':'
-%left And Or
-%nonassoc Less Greater LessOrEqual GreaterOrEqual NotEqual Equal Not
-%left '-' '+'
-%left '*' '/' '%'
-%left NEG     /* unary negation */
-%left POS     /* unary non-negation */
+%right '?' ':'
+%left  Or
+%left  And
+%left  NotEqual Equal
+%left  Less Greater LessOrEqual GreaterOrEqual
+%left  '-' '+'
+%left  '*' '/' '%'
+%right Not
+%left  NEG     /* unary negation */
+%left  POS     /* unary non-negation */
 %right '^'
 
 %union {

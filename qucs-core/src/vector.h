@@ -1,7 +1,7 @@
 /*
  * vector.h - vector class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.25 2006/06/23 14:38:01 raimi Exp $
+ * $Id: vector.h,v 1.26 2007/04/26 16:48:25 ela Exp $
  *
  */
 
@@ -133,6 +133,7 @@ class vector : public object
   friend vector arsinh  (vector);
   friend vector cosh    (vector);
   friend vector arcosh  (vector);
+  friend vector arsech  (vector);
   friend vector tanh    (vector);
   friend vector artanh  (vector);
   friend vector coth    (vector);
