@@ -79,7 +79,7 @@ protected slots:
 
 private:
   QVBoxLayout *all;   // the mother of all widgets
-  QValidator  *Validator, *ValRestrict;
+  QValidator  *Validator, *ValRestrict, *Validator2;
   QRegExp     Expr;
   QIntValidator *ValInteger;
   QListView   *prop;
