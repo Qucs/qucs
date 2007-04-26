@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.52 2007-04-25 18:47:35 ela Exp $
+ * $Id: equation.cpp,v 1.53 2007-04-26 16:48:25 ela Exp $
  *
  */
 
@@ -492,13 +492,24 @@ void application::print (void) {
 char * application::toString (void) {
   if (txt) free (txt);
   // binary operations
-  if ((!strcmp (n, "+") || !strcmp (n, "-") || !strcmp (n, "*") ||
-       !strcmp (n, "/") || !strcmp (n, "^") || !strcmp (n, "%"))
+  if ((!strcmp (n, "+")  || !strcmp (n, "-")  || !strcmp (n, "*") ||
+       !strcmp (n, "/")  || !strcmp (n, "^")  || !strcmp (n, "%") ||
+       !strcmp (n, "<")  || !strcmp (n, ">")  || !strcmp (n, "<=") ||
+       !strcmp (n, ">=") || !strcmp (n, "&&") || !strcmp (n, "||") ||
+       !strcmp (n, "==") || !strcmp (n, "!="))
       && nargs == 2) {
     char * arg1 = args->toString ();
     char * arg2 = args->getNext()->toString ();
     txt = (char *) malloc (strlen (n) + strlen (arg1) + strlen (arg2) + 3);
     sprintf (txt, "(%s%s%s)", arg1, n, arg2);
+  }
+  // ternary ?: operator
+  else if (!strcmp (n, "?:")) {
+    char * arg1 = args->toString ();
+    char * arg2 = args->getNext()->toString ();
+    char * arg3 = args->getNext()->getNext()->toString ();
+    txt = (char *) malloc (strlen (arg3) + strlen (arg1) + strlen (arg2) + 3);
+    sprintf (txt, "%s?%s:%s", arg1, arg2, arg3);
   }
   // array indices
   else if (!strcmp (n, "array")) {

@@ -1,7 +1,7 @@
 /*
  * complex.h - complex number class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.25 2006-06-23 14:38:00 raimi Exp $
+ * $Id: complex.h,v 1.26 2007-04-26 16:48:25 ela Exp $
  *
  */
 
@@ -99,6 +99,7 @@ class complex
   friend complex     arsinh (const complex);
   friend complex       cosh (const complex);
   friend complex     arcosh (const complex);
+  friend complex     arsech (const complex);
   friend complex       tanh (const complex);
   friend complex     artanh (const complex);
   friend complex       coth (const complex);

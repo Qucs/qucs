@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.56 2007-04-25 18:47:35 ela Exp $
+ * $Id: evaluate.cpp,v 1.57 2007-04-26 16:48:25 ela Exp $
  *
  */
 
@@ -1545,20 +1545,19 @@ constant * evaluate::arcosh_v (constant * args) {
 constant * evaluate::arsech_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  d1 = 1 / d1;
-  _RETD (log (d1 + sqrt (d1 * d1 - 1)));
+  _RETD (log ((1 + sqrt (1 - d1 * d1)) / d1));
 }
 
 constant * evaluate::arsech_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcosh (1 / *c1));
+  _RETC (arsech (*c1));
 }
 
 constant * evaluate::arsech_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arcosh (1 / *v1));
+  _RETV (arsech (*v1));
 }
 
 // ******* area tangent hyperbolicus **********
@@ -3576,8 +3575,17 @@ constant * evaluate::kbd_d (constant * args) {
 // ***************** if-then-else operation ****************
 constant * evaluate::ifthenelse_d_d (constant * args) {
   _ARB0 (cond);
-  _ARD1 (d1);
-  _ARD2 (d2);
+  int t1 = _ARG(1)->getType ();
+  int t2 = _ARG(2)->getType ();
+  nr_double_t d1, d2;
+  if (t1 == TAG_DOUBLE)
+    d1 = D(_ARES(1));
+  else
+    d1 = real (*C(_ARES(1)));
+  if (t2 == TAG_DOUBLE)
+    d2 = D(_ARES(2));
+  else
+    d2 = real (*C(_ARES(2)));
   _DEFD ();
   _RETD (cond ? d1 : d2);
 }
