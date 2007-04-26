@@ -1,5 +1,7 @@
 2007-04-26  Stefan Jahn  <stefan@lkcc.org>
 
+	* differentiate.cpp: Added sinc() differentiator.
+
 	* evaluate.cpp: Fixed calculation of arsech().  Using new
 	functions from complex and vector class.
 

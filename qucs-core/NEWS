@@ -28,6 +28,7 @@ Version 0.0.12
 
  * new logical and rational operators in equation solver as well as
    the ternary ?: construct
+ * added arcsec(), arccosec(), arsech() and arcosech() functions
  * support for equation defined devices
  * new components: exponential voltage and current source
 
