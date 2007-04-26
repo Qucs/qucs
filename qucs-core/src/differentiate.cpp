@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.4 2007/04/25 18:47:35 ela Exp $
+ * $Id: differentiate.cpp,v 1.5 2007/04/26 18:58:41 ela Exp $
  *
  */
 
@@ -60,13 +60,13 @@ using namespace eqn;
   constant * def = new constant (TAG_DOUBLE); def->d = val;
 #define retApp1(op,f0) \
   application * res = new application (); res->n = strdup (op); \
-  res->nargs = 1; res->args = f0; f0->setNext (NULL); return res;
+  res->nargs = 1; res->args = f0; res->args->setNext (NULL); return res;
 #define defApp1(def,op,f0) \
   application * def = new application (); def->n = strdup (op); \
-  def->nargs = 1; def->args = f0; f0->setNext (NULL);
+  def->nargs = 1; def->args = f0; def->args->setNext (NULL);
 #define retApp2(op,f0,f1) \
   application * res = new application (); res->n = strdup (op); \
-  res->nargs = 2; res->args = f0; f0->append (f1); return res;
+  res->nargs = 2; res->args = f0; res->args->append (f1); return res;
 #define retApp3(op,f0,f1,f2) \
   application * res = new application (); res->n = strdup (op); \
   res->nargs = 3; res->args = f0; res->args->append (f1); \
@@ -575,6 +575,16 @@ node * differentiate::ifthenelse (application * app, char * derivative) {
   retApp3 ("?:", f0->recreate(), d1, d2);
 }
 
+node * differentiate::sinc (application * app, char * derivative) {
+  _AF0 (f0);
+  _AD0 (d0);
+  defApp1 (sinc, "sinc", f0->recreate());
+  defApp1 (cos, "cos", f0->recreate());
+  node * t1 = minus_reduce (cos, sinc);
+  node * t2 = over_reduce (t1, f0->recreate());
+  return times_reduce (d0, t2);
+}
+
 // List of differentiators.
 struct differentiation_t eqn::differentiations[] = {
   { "+", differentiate::plus_binary,  2 },
@@ -592,6 +602,7 @@ struct differentiation_t eqn::differentiations[] = {
   { "log2",     differentiate::log2,      1 },
   { "sqrt",     differentiate::sqrt,      1 },
   { "exp",      differentiate::exp,       1 },
+  { "sinc",     differentiate::sinc,      1 },
   { "sin",      differentiate::sin,       1 },
   { "cos",      differentiate::cos,       1 },
   { "tan",      differentiate::tan,       1 },
