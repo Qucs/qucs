@@ -1236,6 +1236,8 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	Doc->setChanged(true, true);
 	rot = Comp->rotated;
 	Comp = Comp->newOne(); // component is used, so create a new one
+	rot -= Comp->rotated;
+	rot &= 3;
 	while(rot--) Comp->rotate(); // keep last rotation for single component
 	break;
 

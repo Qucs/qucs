@@ -7902,7 +7902,7 @@ Startet das Programm zur Berechnung von Dämpfungsgliedern</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation>Tschechisch von Marek Strake</translation>
+        <translation>Tschechisch von Marek Straka</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
