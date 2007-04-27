@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.20 2007-04-25 18:47:36 ela Exp $
+ * $Id: scan_netlist.l,v 1.21 2007-04-27 16:01:27 ela Exp $
  *
  */
 
@@ -139,11 +139,12 @@ UCOMPLEX {UCREAL}{UCIMAG}
     netlist_lval.c.i = strtod (&netlist_text[i], NULL);
     return COMPLEX;
   }
-<INITIAL,EQN>{ID}{SPACE}*= {  /* identify 'identifier =' assign */
-    int len = netlist_leng - 2;
+<INITIAL,EQN>{ID}{SPACE}*=[^=] {  /* identify 'identifier =' assign */
+    int len = netlist_leng - 3;
     while (isspace (netlist_text[len])) len--;
     netlist_lval.ident = (char *) calloc (len + 2, 1);
     memcpy (netlist_lval.ident, netlist_text, len + 1);
+    yyless (netlist_leng - 1); /* push back last character */
     return Assign; 
   }
 

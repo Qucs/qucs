@@ -1,3 +1,8 @@
+2007-04-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Avoid conflict between assignment '=' and the
+	new '==' operator.
+
 2007-04-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* differentiate.cpp: Added sinc() differentiator.
