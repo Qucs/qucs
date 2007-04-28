@@ -2154,106 +2154,109 @@ These matrices can easily extended to any number of input ports.
 \section{Equation defined models}
 \label{sec:eqn_def_models}
 
+Often it will happen that a user needs to implement his own model.
+Therefore, it is useful to supply devices that are defined by
+arbitrary equations.
+
 \subsection{Models with Explicit Equations}
 
-Often it will happen that a user needs to implement his own model.
-Therefore, it is useful to supply devices that are defined by an
-arbitrary equation. For example the user must enter an equation $i(V)$
-describing how the port current $I$ depends on the port voltage $V=V_1-V_2$
-and an equation $q(V)$ describing how much charge $Q$ is held due to
-the voltage $V$. These are time domain equations.  The most simple way
+For example the user must enter an equation $i(V)$ describing how the
+port current $I$ depends on the port voltage $V=V_1-V_2$ and an
+equation $q(V)$ describing how much charge $Q$ is held due to the
+voltage $V$. These are time domain equations.  The most simple way
 then is a device with two nodes.  Defining
 
 \begin{equation}
-I = i(V) \qquad\text{and}\qquad
+I = i(V) \qquad\textrm{and}\qquad
     g = \dfrac{\partial I}{\partial V}
-      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{I(V+h) - I(V)}{h}
+      = \underset{h\rightarrow 0}{\textrm{lim}}\dfrac{I(V+h) - I(V)}{h}
 \end{equation}
 as well as
 \begin{equation}
-Q = q(V) \qquad\text{and}\qquad
+Q = q(V) \qquad\textrm{and}\qquad
     c = \dfrac{\partial Q}{\partial V}
-      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{Q(V+h) - Q(V)}{h}
+      = \underset{h\rightarrow 0}{\textrm{lim}}\dfrac{Q(V+h) - Q(V)}{h}
 \end{equation}
 
 the MNA matrix for a (non-linear) DC analysis writes:
 
 \begin{equation}
+\begin{split}
 \begin{bmatrix}
- g^{(m)} & -g^{(m)}\\
--g^{(m)} &  g^{(m)}
++g^{(m)} & -g^{(m)}\\
+-g^{(m)} & +g^{(m)}
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
 V_{1}^{(m+1)}\\
 V_{2}^{(m+1)}
 \end{bmatrix}
-=
+&=
 \begin{bmatrix}
 -I^{(m)} + g^{(m)}\cdot V^{(m)}\\
- I^{(m)} - g^{(m)}\cdot V^{(m)}
-\end{bmatrix}
-=
++I^{(m)} - g^{(m)}\cdot V^{(m)}
+\end{bmatrix}\\
+&=
 \begin{bmatrix}
 -I^{(m)} + g^{(m)}\cdot (V_1^{(m)} - V_2^{(m)})\\
- I^{(m)} - g^{(m)}\cdot (V_1^{(m)} - V_2^{(m)})
++I^{(m)} - g^{(m)}\cdot (V_1^{(m)} - V_2^{(m)})
 \end{bmatrix}
+\end{split}
 \end{equation}
 
-For a transient simulation, equation \ref{eqn:nl_cap_trans} on page
+For a transient simulation, equation \eqref{eqn:nl_cap_trans} on page
 \pageref{eqn:nl_cap_trans} has to be used with $Q$ and $c$.
 
 \addvspace{12pt}
 
-For an AC analysis the MNA matrix writes.
-
+For an AC analysis the MNA matrix writes:
 \begin{equation}
 (\underline{Y}) = (g + j\omega\cdot c)\cdot
 \begin{bmatrix}
- 1 & -1\\
--1 &  1
++1 & -1\\
+-1 & +1
 \end{bmatrix}
 \end{equation}
 
-And the S-parameter matrix writes.
-
+And the S-parameter matrix writes:
 \begin{align}
 S_{11} = S_{22} &= \frac{1}{2\cdot Z_0\cdot Y + 1} \\
 S_{12} = S_{21} &= 1-S_{11} \\
 Y &= g + j\omega\cdot c
 \end{align}
 
-The simulator needs to create the derivatives $g$ and $c$ by his
-own. This can be done numerically. One might ask why the non-linear
-capacitance is modeled as charge, not as capacitance. Indeed this
-may be changed, but with a computer algorithm, creating the
-derivative  is easier than to integrate.
+The simulator needs to create the derivatives $g$ and $c$ by its own.
+This can be done numerically or symbolically.  One might ask why the
+non-linear capacitance is modeled as charge, not as capacitance.
+Indeed this may be changed, but with a computer algorithm, creating
+the derivative is easier than to integrate.
 
 \addvspace{12pt}
 
 The component described above can be expanded to one with two ports
-(two pairs of terminals: terminal 1 and 2 and terminal 3 and 4).
-That is, the currents and charges of both ports depend on both
-port voltages $V_{12}=V_1-V_2$ and $V_{34}=V_3-V_4$. Thus, the defining equations are:
+(two pairs of terminals: terminal 1 and 2 and terminal 3 and 4).  That
+is, the currents and charges of both ports depend on both port
+voltages $V_{12}=V_1-V_2$ and $V_{34}=V_3-V_4$.  Thus, the defining
+equations are:
 \begin{equation}
-I_1 = i_1(V_{12}, V_{34}) \qquad\text{and}\qquad
-g_{11} = \dfrac{\partial I_1}{\partial V_{12}} \qquad\text{and}\qquad
+I_1 = i_1(V_{12}, V_{34}) \qquad\textrm{and}\qquad
+g_{11} = \dfrac{\partial I_1}{\partial V_{12}} \qquad\textrm{and}\qquad
 g_{12} = \dfrac{\partial I_1}{\partial V_{34}}
 \end{equation}
 \begin{equation}
-I_2 = i_2(V_{12}, V_{34}) \qquad\text{and}\qquad
-g_{21} = \dfrac{\partial I_2}{\partial V_{12}} \qquad\text{and}\qquad
+I_2 = i_2(V_{12}, V_{34}) \qquad\textrm{and}\qquad
+g_{21} = \dfrac{\partial I_2}{\partial V_{12}} \qquad\textrm{and}\qquad
 g_{22} = \dfrac{\partial I_2}{\partial V_{34}}
 \end{equation}
 as well as
 \begin{equation}
-Q_1 = q_1(V_{12}, V_{34}) \qquad\text{and}\qquad
-c_{11} = \dfrac{\partial Q_1}{\partial V_{12}} \qquad\text{and}\qquad
+Q_1 = q_1(V_{12}, V_{34}) \qquad\textrm{and}\qquad
+c_{11} = \dfrac{\partial Q_1}{\partial V_{12}} \qquad\textrm{and}\qquad
 c_{12} = \dfrac{\partial Q_1}{\partial V_{34}}
 \end{equation}
 \begin{equation}
-Q_2 = q_2(V_{12}, V_{34}) \qquad\text{and}\qquad
-c_{21} = \dfrac{\partial Q_2}{\partial V_{12}} \qquad\text{and}\qquad
+Q_2 = q_2(V_{12}, V_{34}) \qquad\textrm{and}\qquad
+c_{21} = \dfrac{\partial Q_2}{\partial V_{12}} \qquad\textrm{and}\qquad
 c_{22} = \dfrac{\partial Q_2}{\partial V_{34}}
 \end{equation}
 
@@ -2261,10 +2264,10 @@ The MNA matrix for the DC analysis writes:
 
 \begin{equation}
 \begin{bmatrix}
- g_{11}^{(m)} & -g_{11}^{(m)} &  g_{12}^{(m)} & -g_{12}^{(m)}\\
--g_{11}^{(m)} &  g_{11}^{(m)} & -g_{12}^{(m)} &  g_{12}^{(m)}\\
- g_{21}^{(m)} & -g_{21}^{(m)} &  g_{22}^{(m)} & -g_{22}^{(m)}\\
--g_{21}^{(m)} &  g_{21}^{(m)} & -g_{22}^{(m)} &  g_{22}^{(m)}
++g_{11}^{(m)} & -g_{11}^{(m)} & +g_{12}^{(m)} & -g_{12}^{(m)}\\
+-g_{11}^{(m)} & +g_{11}^{(m)} & -g_{12}^{(m)} & +g_{12}^{(m)}\\
++g_{21}^{(m)} & -g_{21}^{(m)} & +g_{22}^{(m)} & -g_{22}^{(m)}\\
+-g_{21}^{(m)} & +g_{21}^{(m)} & -g_{22}^{(m)} & +g_{22}^{(m)}
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -2276,14 +2279,14 @@ V_{4}^{(m+1)}
 =
 \begin{bmatrix}
 -I_1^{(m)} + g_{11}^{(m)}\cdot V_{12}^{(m)} + g_{12}^{(m)}\cdot V_{34}^{(m)}\\
- I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)}\\
++I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)}\\
 -I_2^{(m)} + g_{21}^{(m)}\cdot V_{12}^{(m)} + g_{22}^{(m)}\cdot V_{34}^{(m)}\\
- I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)}\\
++I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)}\\
 \end{bmatrix}
 \end{equation}
 
-For a transient simulation, the DC equations have to be extended
-by the non-linear capacitance, e.g. for backward Euler:
+For a transient simulation, the DC equations have to be extended by
+the non-linear (trans-) capacitances, e.g. for backward Euler:
 \begin{align}
 I_{C11}^{n+1,m} &=
    \underbrace{\dfrac{c_{11}(V_{12}^{n+1,m})}{h^n}}_{g_{eq,11}}\cdot V_{12}^{n+1}
@@ -2302,10 +2305,10 @@ So with $g_{tr} = g + g_{eq}$ it is:
 \begin{equation}
 \begin{split}
 &\begin{bmatrix}
- g_{tr,11}^{(m)} & -g_{tr,11}^{(m)} &  g_{tr,12}^{(m)} & -g_{tr,12}^{(m)}\\
--g_{tr,11}^{(m)} &  g_{tr,11}^{(m)} & -g_{tr,12}^{(m)} &  g_{tr,12}^{(m)}\\
- g_{tr,21}^{(m)} & -g_{tr,21}^{(m)} &  g_{tr,22}^{(m)} & -g_{tr,22}^{(m)}\\
--g_{tr,21}^{(m)} &  g_{tr,21}^{(m)} & -g_{tr,22}^{(m)} &  g_{tr,22}^{(m)}
++g_{tr,11}^{(m)} & -g_{tr,11}^{(m)} & +g_{tr,12}^{(m)} & -g_{tr,12}^{(m)}\\
+-g_{tr,11}^{(m)} & +g_{tr,11}^{(m)} & -g_{tr,12}^{(m)} & +g_{tr,12}^{(m)}\\
++g_{tr,21}^{(m)} & -g_{tr,21}^{(m)} & +g_{tr,22}^{(m)} & -g_{tr,22}^{(m)}\\
+-g_{tr,21}^{(m)} & +g_{tr,21}^{(m)} & -g_{tr,22}^{(m)} & +g_{tr,22}^{(m)}
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -2317,9 +2320,9 @@ V_{4}^{(n+1,m+1)}
 &=
 \begin{bmatrix}
 -I_1^{(m)} + g_{11}^{(m)}\cdot V_{12}^{(m)} + g_{12}^{(m)}\cdot V_{34}^{(m)} - I_{eq,11}^{(n)} - I_{eq,12}^{(n)}\\
- I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)} + I_{eq,12}^{(n)} + I_{eq,12}^{(n)}\\
++I_1^{(m)} - g_{11}^{(m)}\cdot V_{12}^{(m)} - g_{12}^{(m)}\cdot V_{34}^{(m)} + I_{eq,12}^{(n)} + I_{eq,12}^{(n)}\\
 -I_2^{(m)} + g_{21}^{(m)}\cdot V_{12}^{(m)} + g_{22}^{(m)}\cdot V_{34}^{(m)} - I_{eq,21}^{(n)} - I_{eq,22}^{(n)}\\
- I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)} + I_{eq,21}^{(n)} + I_{eq,22}^{(n)}
++I_2^{(m)} - g_{21}^{(m)}\cdot V_{12}^{(m)} - g_{22}^{(m)}\cdot V_{34}^{(m)} + I_{eq,21}^{(n)} + I_{eq,22}^{(n)}
 \end{bmatrix}
 \end{split}
 \end{equation}
@@ -2330,44 +2333,45 @@ For an AC analysis the MNA matrix writes:
 \label{eqn:UDMmna}
 (\underline{Y}) =
 \begin{bmatrix}
- g_{11} + j\omega\cdot c_{11} & -g_{11} - j\omega\cdot c_{11} &  g_{12} + j\omega\cdot c_{12} & -g_{12} - j\omega\cdot c_{12}\\
--g_{11} - j\omega\cdot c_{11} &  g_{11} + j\omega\cdot c_{11} & -g_{12} - j\omega\cdot c_{12} &  g_{12} + j\omega\cdot c_{12}\\
- g_{21} + j\omega\cdot c_{21} & -g_{21} - j\omega\cdot c_{21} &  g_{22} + j\omega\cdot c_{22} & -g_{22} - j\omega\cdot c_{22}\\
--g_{21} - j\omega\cdot c_{21} &  g_{21} + j\omega\cdot c_{21} & -g_{22} - j\omega\cdot c_{22} &  g_{22} + j\omega\cdot c_{22}
++g_{11} + j\omega\cdot c_{11} & -g_{11} - j\omega\cdot c_{11} & +g_{12} + j\omega\cdot c_{12} & -g_{12} - j\omega\cdot c_{12}\\
+-g_{11} - j\omega\cdot c_{11} & +g_{11} + j\omega\cdot c_{11} & -g_{12} - j\omega\cdot c_{12} & +g_{12} + j\omega\cdot c_{12}\\
++g_{21} + j\omega\cdot c_{21} & -g_{21} - j\omega\cdot c_{21} & +g_{22} + j\omega\cdot c_{22} & -g_{22} - j\omega\cdot c_{22}\\
+-g_{21} - j\omega\cdot c_{21} & +g_{21} + j\omega\cdot c_{21} & -g_{22} - j\omega\cdot c_{22} & +g_{22} + j\omega\cdot c_{22}
 \end{bmatrix}
 \end{equation}
 
 As can bee seen, this scheme can be expanded to any number of ports.
-The matrices soon become quite complex, but fortunately, modern
-computers are able to cope with this complexity.  S-parameters must
-be obtained numerical by setting equation \ref{eqn:UDMmna} into
-equation \ref{eqn:Y2S}.
+The matrices soon become quite complex, but fortunately modern
+computers are able to cope with this complexity.  S-parameters must be
+obtained numerical by setting equation \ref{eqn:UDMmna} into equation
+\ref{eqn:Y2S}.
 
 
 \subsection{Models with Implicit Equations}
 
-The above-mentioned explicit models are not useable for all components.
-If the Y-parameters do not exist or if the equations cannot be
-analytical transformed into the explicit form, then an implicit
-representation must be taken. That is, for a one-port (two-terminal)
-component the following formulas are defined by the user:
+The above-mentioned explicit models are not useable for all
+components.  If the Y-parameters do not exist or if the equations
+cannot be analytically transformed into the explicit form, then an
+implicit representation must be taken.  hat is, for a one-port
+(two-terminal) component the following formulas are defined by the
+user:
 
 \begin{align}
 0 = f(V, I) \qquad & \text{and}\qquad
   g_V = \dfrac{\partial f(V, I)}{\partial V}
-      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V+h, I)) - f(V, I)}{h}\\
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V+h, I) - f(V, I)}{h}\\
                    & \text{and}\qquad
   g_I = \dfrac{\partial f(V, I)}{\partial I}
-      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V, I+h)) - f(V, I)}{h}
+      = \underset{h\rightarrow 0}{\text{lim}}\dfrac{f(V, I+h) - f(V, I)}{h}
 \end{align}
 
 The MNA matrix for the AC analysis writes as follows:
 
 \begin{equation}
 \begin{bmatrix}
- . & . &  1\\
+ . & . & +1\\
  . & . & -1\\
-g_V & -g_V &  g_I
++g_V & -g_V &  g_I
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -2406,12 +2410,12 @@ Building the MNA matrix is again straight forward:
 \begin{equation}
 \begin{split}
 &\begin{bmatrix}
- . & . & . & . &  1 &  0\\
+ . & . & . & . & +1 &  0\\
  . & . & . & . & -1 &  0\\
- . & . & . & . &  0 &  1\\
+ . & . & . & . &  0 & +1\\
  . & . & . & . &  0 & -1\\
- g_{f1,V12} & -g_{f1,V12} &  g_{f1,V34} & -g_{f1,V34} & g_{f1,I1} & g_{f1,I2}\\
- g_{f2,V12} & -g_{f2,V12} &  g_{f2,V34} & -g_{f2,V34} & g_{f2,I1} & g_{f2,I2}\\
++g_{f1,V12} & -g_{f1,V12} & +g_{f1,V34} & -g_{f1,V34} & g_{f1,I1} & g_{f1,I2}\\
++g_{f2,V12} & -g_{f2,V12} & +g_{f2,V34} & -g_{f2,V34} & g_{f2,I1} & g_{f2,I2}\\
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -2437,10 +2441,11 @@ others are defined by implicit equations.
 
 \addvspace{12pt}
 
-The calculation of the S-parameters is not that trival. The Y-parameters as well
-as the Z-parameters might be infinite. A small trick can avoid this problem, as
-will be shown in the following 2-port example. First, the small-signal
-Y-parameters should be derived by using the law about implicit functions:
+The calculation of the S-parameters is not that trival. The
+Y-parameters as well as the Z-parameters might be infinite. A small
+trick can avoid this problem, as will be shown in the following 2-port
+example. First, the small-signal Y-parameters should be derived by
+using the law about implicit functions:
 
 \begin{equation}
 (\underline{J}) =
@@ -2466,7 +2471,7 @@ Jocobi matrix $J_i$ may not exist. But this problem can be outsourced to
 one single scalar number by using Cramer's rule for matrix inversion:
 
 \begin{equation}
-J_i^{-1} = \dfrac{1}{\text{det} J_i}\cdot A_{Ji}
+J_i^{-1} = \dfrac{1}{\Delta J_i}\cdot A_{Ji}
 \end{equation}
 
 The matrix $A_{Ji}$ is built of the sub-determinantes of $J_i$ in the way that
@@ -2491,27 +2496,28 @@ matrix, because the 2-ports are not referenced to ground:
 \begin{equation}
 (\underline{J}'') =
 \begin{pmatrix}
- y_{11}' & -y_{11}' &  y_{12}' & -y_{12}'\\
--y_{11}' &  y_{11}' & -y_{12}' &  y_{12}'\\
- y_{21}' & -y_{21}' &  y_{22}' & -y_{22}'\\
--y_{21}' &  y_{21}' & -y_{22}' &  y_{22}'
++y_{11}' & -y_{11}' & +y_{12}' & -y_{12}'\\
+-y_{11}' & +y_{11}' & -y_{12}' & +y_{12}'\\
++y_{21}' & -y_{21}' & +y_{22}' & -y_{22}'\\
+-y_{21}' & +y_{21}' & -y_{22}' & +y_{22}'
 \end{pmatrix}
 =
 -A_{Ji}'\cdot J_v'
 \end{equation}
 
-Finally, equation \ref{eqn:Y2S} converts the parameters to S-parameters:
+Finally, equation \eqref{eqn:Y2S} converts the parameters to
+S-parameters:
 
 \begin{align}
 (\underline{S})
  &= \left( (E) + Z_0\cdot (\underline{Y}) \right) \cdot
     \left( (E) - Z_0\cdot (\underline{Y}) \right)^{-1}\\
- &= \left( (E) - Z_0\cdot \dfrac{1}{\text{det} J_i}\cdot A_{ji}'\cdot J_v' \right) \cdot
-    \left( (E) + Z_0\cdot \dfrac{1}{\text{det} J_i}\cdot A_{ji}'\cdot J_v' \right)^{-1}\\
- &= \left( \text{det} J_i\cdot (E) - Z_0\cdot A_{ji}'\cdot J_v' \right) \cdot
-    \left( \text{det} J_i\cdot (E) + Z_0\cdot A_{ji}'\cdot J_v' \right)^{-1}
+ &= \left( (E) - Z_0\cdot \dfrac{1}{\Delta J_i}\cdot A_{ji}'\cdot J_v' \right) \cdot
+    \left( (E) + Z_0\cdot \dfrac{1}{\Delta J_i}\cdot A_{ji}'\cdot J_v' \right)^{-1}\\
+ &= \left( \Delta J_i\cdot (E) - Z_0\cdot A_{ji}'\cdot J_v' \right) \cdot
+    \left( \Delta J_i\cdot (E) + Z_0\cdot A_{ji}'\cdot J_v' \right)^{-1}
 \end{align}
 
-The calculations proofs that the critical factor $1/\text{det} J_i$
-disappears and a solution exists if and only if the S-parameters of this
-device exist.
+The calculations proofs that the critical factor $1/\Delta J_i$
+disappears and a solution exists if and only if the S-parameters of
+this device exist.
