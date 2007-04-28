@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.4 2007/04/28 00:09:20 ela Exp $
+ * $Id: eqndefined.cpp,v 1.5 2007/04/28 09:40:45 ela Exp $
  *
  */
 
@@ -111,7 +111,7 @@ char * eqndefined::createVariable (char * base, int r, int c, bool prefix) {
     str = strrchr (str, '.') + 1;
   else
     str = getName ();
-  char * txt = (char *) malloc (strlen (str) + strlen (base) + 3);
+  char * txt = (char *) malloc (strlen (str) + strlen (base) + 4);
   if (prefix)
     sprintf (txt, "%s.%s%d%d", str, base, r, c);
   else
@@ -155,6 +155,7 @@ void eqndefined::initModel (void) {
   for (i = 0; i < branches; i++) {
     vn = createVariable ("V", i + 1);
     veqn[i] = getEnv()->getChecker()->addDouble ("#voltage", vn, 0);
+    A(veqn[i])->evalType ();
     free (vn);
   }
 
@@ -196,10 +197,14 @@ void eqndefined::initModel (void) {
     }
 
     // setup and save equations for currents and charges
-    if (ivalue) ivalue->evalType ();
-    if (qvalue) qvalue->evalType ();
     ieqn[i] = ivalue;
     qeqn[i] = qvalue;
+  }
+
+  // evaluate types of currents and charges
+  for (i = 0; i < branches; i++) {
+    if (ieqn[i]) A(ieqn[i])->evalType ();
+    if (qeqn[i]) A(qeqn[i])->evalType ();
   }
 
   // create derivatives of currents
@@ -224,6 +229,8 @@ void eqndefined::initModel (void) {
 #endif
       }
       else geqn[k] = NULL;
+
+      free (vn);
     }
   }
 
@@ -251,6 +258,7 @@ void eqndefined::initModel (void) {
 	  diff = qvalue->differentiate (in);
 	  A(diff)->mul (A(geqn[l * branches + j]));
 	  A(ceqn[k])->add (A(diff));
+	  delete diff;
 	  free (in);
 	}
 	A(ceqn[k])->evalType ();
@@ -259,6 +267,8 @@ void eqndefined::initModel (void) {
 #endif
       }
       else ceqn[k] = NULL;
+
+      free (vn);
     }
   }
 }

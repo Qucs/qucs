@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.54 2007/04/28 00:09:19 ela Exp $
+ * $Id: equation.cpp,v 1.55 2007/04/28 09:40:44 ela Exp $
  *
  */
 
@@ -455,6 +455,26 @@ void assignment::mul (assignment * f) {
     application * mul = new application ("*", 2);
     mul->args = body;
     mul->args->append (factor);
+    body = mul;
+  }
+}
+
+/* Multiply two assignments by reference. */
+void assignment::mulref (assignment * f) {
+  node * factor = f->body->recreate ();
+  reference * r = new reference ();
+  r->n = strdup (f->result);
+  if (isZero (body) || isZero (factor)) {
+    delete body;
+    defCon (body, 0);
+  } else if (isOne (body)) {
+    body = r;
+  } else if (isOne (factor)) {
+    body = body;
+  } else {
+    application * mul = new application ("*", 2);
+    mul->args = body;
+    mul->args->append (r);
     body = mul;
   }
 }

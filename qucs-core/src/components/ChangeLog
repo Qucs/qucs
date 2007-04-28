@@ -1,7 +1,7 @@
 2007-04-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Allowing I1, I2, etc. in charge
-	equations for now.
+	equations for now.  Some more bug fixes.
 
 2007-04-23  Stefan Jahn  <stefan@lkcc.org>
 
