@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.5 2007/04/26 18:58:41 ela Exp $
+ * $Id: differentiate.cpp,v 1.6 2007/04/28 00:09:19 ela Exp $
  *
  */
 
@@ -130,7 +130,7 @@ node * differentiate::minus_unary (application * app, char * derivative) {
 }
 
 node * differentiate::minus_reduce (node * f0) {
-  if (isConst (f0)) {
+  if (isZero (f0)) {
     retCon (0);
   } else if (isConst (f0)) {
     retCon (-D(f0));
@@ -572,6 +572,11 @@ node * differentiate::ifthenelse (application * app, char * derivative) {
   _AF0 (f0);
   _AD1 (d1);
   _AD2 (d2);
+  if (isConst (d1) && isConst (d2)) {
+    if (D(d1) == D(d2)) {
+      retCon (D(d1));
+    }
+  }
   retApp3 ("?:", f0->recreate(), d1, d2);
 }
 
@@ -583,6 +588,14 @@ node * differentiate::sinc (application * app, char * derivative) {
   node * t1 = minus_reduce (cos, sinc);
   node * t2 = over_reduce (t1, f0->recreate());
   return times_reduce (d0, t2);
+}
+
+node * differentiate::norm (application * app, char * derivative) {
+  _AF0 (f0);
+  _AD0 (d0);
+  defCon (two, 2);
+  node * t1 = times_reduce (d0, two);
+  return times_reduce (t1, f0->recreate());
 }
 
 // List of differentiators.
@@ -603,6 +616,7 @@ struct differentiation_t eqn::differentiations[] = {
   { "sqrt",     differentiate::sqrt,      1 },
   { "exp",      differentiate::exp,       1 },
   { "sinc",     differentiate::sinc,      1 },
+  { "norm",     differentiate::norm,      1 },
   { "sin",      differentiate::sin,       1 },
   { "cos",      differentiate::cos,       1 },
   { "tan",      differentiate::tan,       1 },

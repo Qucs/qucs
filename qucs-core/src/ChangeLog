@@ -1,3 +1,14 @@
+2007-04-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Added assignment multiplier and summarizer.  New
+	application constructor taking function name and the number of
+	arguments.  Fixed a fatal bug in setDouble().
+
+	* differentiate.cpp: Fixed a big bug in the unary minus
+	differentiator, or better: the unary minus reducer.  Improved the
+	'?:' differentiator (better reduction).  Added differentiator for
+	the norm() function.
+
 2007-04-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Avoid conflict between assignment '=' and the

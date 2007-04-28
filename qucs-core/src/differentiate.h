@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.h,v 1.4 2007/04/26 18:58:41 ela Exp $
+ * $Id: differentiate.h,v 1.5 2007/04/28 00:09:19 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@ class differentiate
   static node * sqrt	     (application *, char *);
   static node * exp	     (application *, char *);
   static node * sinc	     (application *, char *);
+  static node * norm	     (application *, char *);
   static node * sin	     (application *, char *);
   static node * cos	     (application *, char *);
   static node * tan	     (application *, char *);

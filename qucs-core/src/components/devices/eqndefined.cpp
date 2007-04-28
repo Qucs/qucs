@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.3 2007/04/23 12:11:38 ela Exp $
+ * $Id: eqndefined.cpp,v 1.4 2007/04/28 00:09:20 ela Exp $
  *
  */
 
@@ -136,7 +136,7 @@ nr_double_t eqndefined::getResult (void * eqn) {
 // Initializes the equation defined device.
 void eqndefined::initModel (void) {
   int i, j, k, branches = getSize () / 2;
-  char * in, * qn, * vn, * gn, * cn, * vnold;
+  char * in, * qn, * vn, * gn, * cn, * vnold, * inold;
   eqn::node * ivalue, * qvalue, * diff;
 
   // allocate space for equation pointers
@@ -158,8 +158,8 @@ void eqndefined::initModel (void) {
     free (vn);
   }
 
-  // create derivatives of currents and charges
-  for (k = 0, i = 0; i < branches; i++) {
+  // prepare current and charge equations
+  for (i = 0; i < branches; i++) {
 
     // fetch current and charge equations
     in = createVariable ("I", i + 1);
@@ -174,15 +174,25 @@ void eqndefined::initModel (void) {
       logprint (LOG_ERROR, "ERROR: charge equation `%s' not found for "
 		"EDD `%s'\n", qn, getName ());
     }
+    free (in);
+    free (qn);
 
-    // replace voltage references
+    // replace voltage and current references
     for (j = 0; j < branches; j++) {
+      in = createVariable ("I", j + 1);
+      inold = createVariable ("I", j + 1, false);
       vn = createVariable ("V", j + 1);
       vnold = createVariable ("V", j + 1, false);
-      if (ivalue) ivalue->replace (vnold, vn);
-      if (qvalue) qvalue->replace (vnold, vn);
-      free (vnold);
-      free (vn);
+      if (ivalue) {
+	ivalue->replace (vnold, vn);
+	ivalue->replace (inold, in);
+      }
+      if (qvalue) {
+	qvalue->replace (vnold, vn);
+	qvalue->replace (inold, in);
+      }
+      free (vnold); free (vn);
+      free (inold); free (in);
     }
 
     // setup and save equations for currents and charges
@@ -190,10 +200,13 @@ void eqndefined::initModel (void) {
     if (qvalue) qvalue->evalType ();
     ieqn[i] = ivalue;
     qeqn[i] = qvalue;
-    free (in);
-    free (qn);
+  }
 
-    // create differentiations
+  // create derivatives of currents
+  for (k = 0, i = 0; i < branches; i++) {
+    ivalue = A(ieqn[i]);
+
+    // create "static" differentiations
     for (j = 0; j < branches; j++, k++) {
       vn = createVariable ("V", j + 1);
 
@@ -207,10 +220,20 @@ void eqndefined::initModel (void) {
 	A(diff)->rename (gn);
 	free (gn);
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: %s\n", diff->toString ());
+	logprint (LOG_STATUS, "DEBUG: %s\n", A(geqn[k])->toString ());
 #endif
       }
       else geqn[k] = NULL;
+    }
+  }
+
+  // create derivatives of charges
+  for (k = 0, i = 0; i < branches; i++) {
+    qvalue = A(qeqn[i]);
+
+    // create "dynamic" differentiations
+    for (j = 0; j < branches; j++, k++) {
+      vn = createVariable ("V", j + 1);
 
       // create capacitance equations
       if (qvalue) {
@@ -221,8 +244,18 @@ void eqndefined::initModel (void) {
 	cn = createVariable ("C", i + 1, j + 1);
 	A(diff)->rename (cn);
 	free (cn);
+	
+	// apply dQ/dI * dI/dV => dQ/dV derivatives
+	for (int l = 0; l < branches; l++) {
+	  in = createVariable ("I", l + 1);
+	  diff = qvalue->differentiate (in);
+	  A(diff)->mul (A(geqn[l * branches + j]));
+	  A(ceqn[k])->add (A(diff));
+	  free (in);
+	}
+	A(ceqn[k])->evalType ();
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: %s\n", diff->toString ());
+	logprint (LOG_STATUS, "DEBUG: %s\n", A(ceqn[k])->toString ());
 #endif
       }
       else ceqn[k] = NULL;

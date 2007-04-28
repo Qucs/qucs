@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.36 2007/04/25 18:47:35 ela Exp $
+ * $Id: equation.h,v 1.37 2007/04/28 00:09:19 ela Exp $
  *
  */
 
@@ -207,6 +207,8 @@ public:
   node * recreate (void);
   void replace (char *, char *);
   void rename (char *);
+  void mul (assignment *);
+  void add (assignment *);
   
 public:
   char * result;
@@ -226,6 +228,7 @@ class application : public node
 public:
   application ();
   application (const application &);
+  application (char *, int);
   ~application ();
   void print (void);
   void addDependencies (strlist *);
