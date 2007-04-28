@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.37 2007-04-28 00:09:19 ela Exp $
+ * $Id: equation.h,v 1.38 2007-04-28 09:40:44 ela Exp $
  *
  */
 
@@ -209,6 +209,7 @@ public:
   void rename (char *);
   void mul (assignment *);
   void add (assignment *);
+  void mulref (assignment *);
   
 public:
   char * result;
