@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.53 2007-04-26 16:48:25 ela Exp $
+ * $Id: equation.cpp,v 1.54 2007-04-28 00:09:19 ela Exp $
  *
  */
 
@@ -434,10 +434,63 @@ node * assignment::differentiate (char * derivative) {
   return res;
 }
 
+// Some small helpers.
+#define D(con) (C(con)->d)
+#define isConst(n) ((n)->getTag()==CONSTANT && C(n)->getType()==TAG_DOUBLE)
+#define isZero(n)  (isConst(n) && D(n) == 0.0)
+#define isOne(n)   (isConst(n) && D(n) == 1.0)
+#define defCon(res,val) res = new constant (TAG_DOUBLE); C(res)->d = val;
+
+/* Multiply two assignments. */
+void assignment::mul (assignment * f) {
+  node * factor = f->body->recreate ();
+  if (isZero (body) || isZero (factor)) {
+    delete body;
+    defCon (body, 0);
+  } else if (isOne (body)) {
+    body = factor;
+  } else if (isOne (factor)) {
+    body = body;
+  } else {
+    application * mul = new application ("*", 2);
+    mul->args = body;
+    mul->args->append (factor);
+    body = mul;
+  }
+}
+
+/* Add two assignments. */
+void assignment::add (assignment * f) {
+  node * factor = f->body->recreate ();
+  if (isZero (body) && isZero (factor)) {
+    delete body;
+    defCon (body, 0);
+  } else if (isZero (body)) {
+    body = factor;
+  } else if (isZero (factor)) {
+    body = body;
+  } else {
+    application * add = new application ("+", 2);
+    add->args = body;
+    add->args->append (factor);
+    body = add;
+  }
+}
+
 // Constructor creates an instance of the application class.
 application::application () : node (APPLICATION) {
   n = NULL;
   nargs = 0;
+  args = NULL;
+  eval = NULL;
+  derive = NULL;
+}
+
+/* Constructor creates an instance of the application class with a
+   given function name and the number of arguments. */
+application::application (char * func, int a) : node (APPLICATION) {
+  n = func ? strdup (func) : NULL;
+  nargs = a;
   args = NULL;
   eval = NULL;
   derive = NULL;
@@ -508,8 +561,8 @@ char * application::toString (void) {
     char * arg1 = args->toString ();
     char * arg2 = args->getNext()->toString ();
     char * arg3 = args->getNext()->getNext()->toString ();
-    txt = (char *) malloc (strlen (arg3) + strlen (arg1) + strlen (arg2) + 3);
-    sprintf (txt, "%s?%s:%s", arg1, arg2, arg3);
+    txt = (char *) malloc (strlen (arg3) + strlen (arg1) + strlen (arg2) + 5);
+    sprintf (txt, "(%s?%s:%s)", arg1, arg2, arg3);
   }
   // array indices
   else if (!strcmp (n, "array")) {
@@ -1959,8 +2012,10 @@ nr_double_t checker::getDouble (char * ident) {
 void checker::setDouble (char * ident, nr_double_t val) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
-      constant * c = C (eqn->body);
-      if (c->type == TAG_DOUBLE) c->d = val;
+      if (eqn->body->getTag () == CONSTANT) {
+	constant * c = C (eqn->body);
+	if (c->type == TAG_DOUBLE) c->d = val;
+      }
     }
   }
 }

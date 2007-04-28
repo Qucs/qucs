@@ -1716,7 +1716,12 @@
   </admst:if>
 
   <admst:apply-templates select="rhs" match="expression:stringify:noprobe"/>
-   <admst:choose>
+
+  <admst:if test="lhs[type='ps']">
+    <admst:message format="contribution %(lhs/nature/access)() &lt;+ not implemented.\n"/>
+  </admst:if>
+
+  <admst:choose>
     <admst:when test="[dynamic='yes']"> 
   <admst:choose>
     <admst:when test="lhs/branch/nnode[grounded='no']">
