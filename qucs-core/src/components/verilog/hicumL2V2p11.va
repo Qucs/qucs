@@ -21,9 +21,7 @@
 `define TMAX		326.85
 `define TMIN		-100.0
 
-
-
-// DEPLETION CAPACITANCE AND CHARGE CALCULATION	
+// DEPLETION CAPACITANCE AND CHARGE CALCULATION
 // Hyperbolic smoothing used; no punch-through
 // INPUT:
 //  c_0		: zero-bias capacitance
@@ -523,8 +521,6 @@ branch 		(bp,bi) irescb;
 branch 		(bp,bi) vrescb;
 branch 		(si,s) 	irescs;
 branch 		(si,s) 	vrescs;
-branch		(tnode) br_sht;
-
 			
 // -- ###########################################################
 // -- ###########     Parameters initialization  ################
@@ -763,7 +759,7 @@ analog	begin
 
 	Tnom    = tnom+`P_CELSIUS0;
 	Tamb    = $temperature;
-	Tdev    = Tamb+dt+V(br_sht);
+	Tdev    = Tamb+dt+V(tnode);
 
 // Limit temperature to avoid FPE's in equations
 	if(Tdev < `TMIN + 273.15)
@@ -772,11 +768,8 @@ analog	begin
  	if (Tdev > `TMAX + 273.15)
 	   Tdev = `TMAX + 273.15;
  
-//	vt0     = $vt(Tnom);
-//	VT      = $vt(Tdev);
-	vt0     = `P_K*Tnom /`P_Q;	
-	VT      = `P_K*Tdev /`P_Q;	
-	
+	vt0     = $vt(Tnom);
+	VT      = $vt(Tdev);
 	dT      = Tdev-Tnom;  
 	qtt0    = Tdev/Tnom;
 	ln_qtt0 = ln(qtt0);
@@ -914,14 +907,14 @@ analog	begin
 	//Avoid devide-by-zer and define infinity other way
 	//High current correction for 2D and 3D effects
     	//if (ich > 0.0 && ich < inf)
-	if (ich > 0.0 && ich < 10000)
+	if (ich > 0.0)
        		Oich 	= 1.0/ich;
       	else
        		Oich	= 0.0;
 
 	//Collector punch-through voltage
 	//if(vpt > 0.0 && vpt < inf)
-	if(vpt > 0.0 && vpt < 10000)
+	if(vpt > 0.0)
        		Ovpt	= 1.0/vpt;
      	else
        		Ovpt	= 0.0;
@@ -1097,13 +1090,12 @@ analog	begin
 	//Self-heating calculation
 	if (rth > 0.0) begin
 		pterm	=  V(ci,ei)*it + (vdci_t-V(bi,ci))*iavl;
-	end
+	end	
 
 	//Model evaluation: end
 	
 	
 	//Define branch sources: begin
-	
 	
 	I(bp,ei) 	<+ -ibet+ibep+irep;
 	I(bi,ei) 	<+ ibei+irei;
@@ -1112,7 +1104,6 @@ analog	begin
 	I(bi,ci) 	<+ ibci-iavl;
 	I(si,ci) 	<+ ijsc;
 	I(ci,ei) 	<+ it;
-
 
    	I(b,ci)      	<+ ddt(ccox1*V(b,ci));
 	I(bp,ci)        <+ ddt(ccox2*V(bp,ci));	
@@ -1152,24 +1143,13 @@ analog	begin
 	end else begin
 		V(vrescs) 	<+ 0.0;
 	end
-	
-//	if(rth > 0.0) begin
-//		itnode		=  V(tnode)/rth-pterm;
-//		I(tnode) 	<+ itnode;
-//		I(tnode)	<+ ddt(V(tnode)*cth);
-//	end else begin
-//		V(tnode)	<+ 0.0;
-//	end	
-	
 	if(rth > 0.0) begin
-		I(br_sht) 	<+ V(br_sht)/rth;
-		I(br_sht)	<+ -pterm;
-		I(br_sht) 	<+ ddt(cth*V(br_sht));
+		I(tnode) 	<+ V(tnode)/rth;
+		I(tnode)	<+ -pterm;
+		I(tnode) 	<+ ddt(cth*V(tnode));
 	end else begin
-		V(br_sht)	<+ 0.0;
+		V(tnode)	<+ 0.0;
 	end
-
-	
 	//Define branch source: end
 	
 	//Define noise sources: begin
@@ -1196,7 +1176,7 @@ analog	begin
    	//Shot noise
    	twoq	= 2.0 * `P_Q;
    	I(ci,ei) 	<+ white_noise(twoq*it,		"shot");
-  	I(ci,bi) 	<+ white_noise(twoq*iavl,	"shot");
+   	I(ci,bi) 	<+ white_noise(twoq*iavl,	"shot");
  	I(bi,ei) 	<+ white_noise(twoq*ibei,	"shot");
   	I(bi,ci) 	<+ white_noise(twoq*ibci,	"shot");
 	I(bp,ei) 	<+ white_noise(twoq*ibep,	"shot");

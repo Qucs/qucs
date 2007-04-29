@@ -23,29 +23,6 @@
 	* vexp.h (class vexp), iexp.h (class iexp): New components:
 	exponential voltage and current pulse sources.
 
-2007-04-07  Stefan Jahn  <stefan@lkcc.org>
-
-	* verilog/qucsMODULEdefs.xml: Fixed bug in (-inf:inf) parameter
-	range handling.
-
-	* verilog/qucsMODULEcore.xml: Moved Verilog evaluation into a
-	initVerilog() and calcVerilog() function.
-
-2007-04-05  Stefan Jahn  <stefan@lkcc.org>
-
-	* verilog/qucsVersion.xml: Some more cleanups.  Also fixed
-	a bug for analog function calls.  Thanks to Laurent.
-
-2007-04-04  Stefan Jahn  <stefan@lkcc.org>
-
-	* verilog/qucsVersion.xml: Cleaned up a bit.  Also fixed
-	some minor bugs.
-
-	* verilog/qucsMODULEcore.xml: Added HB simulation callbacks.
-
-	* verilog/qucsMODULEdefs.xml: Added parameter range extraction
-	functionality.
-
 2007-03-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* vac.cpp, iac.cpp: Adjusted time dependency of damping
@@ -140,11 +117,6 @@
 2006-12-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* devices/mosfet.cpp: allow Nsub = 0 without warning
-
-2006-11-01  Stefan Jahn  <stefan@lkcc.org>
-
-	* verilog/qucsMODULEcore.xml: Optimized memory usage during
-	transient analysis.  Also fixed a bug in the transient analysis.
 
 2006-09-24  Stefan Jahn  <stefan@lkcc.org>
 
