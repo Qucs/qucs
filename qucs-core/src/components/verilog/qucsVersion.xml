@@ -291,11 +291,15 @@
 #define _pow(xy,x,y)             xy = pow(x,y);
 #define _dx_pow(dx,xy,x,y)       dx = (x==0.0)?0.0:((y/x)*xy);
 #define _dy_pow(dy,xy,x,y)       dy = (x==0.0)?0.0:((log(x)/exp(0.0))*xy);
-#define _limexp(val,arg)         val = ((arg)&lt;(80)) ? (exp(arg)) : (exp(80)*(1.0+(arg-80)));
-#define _d_limexp(val,dval,arg)  val = ((arg)&lt;(80)) ? (exp(arg)) : (exp(80)*(1.0+(arg-80))); dval = val;
+#define _limexp(val,arg)         val = ((arg)&lt;(80))?(exp(arg)):(exp(80)*(1.0+(arg-80)));
+#define _d_limexp(val,dval,arg)  val = ((arg)&lt;(80))?(exp(arg)):(exp(80)*(1.0+(arg-80))); dval = ((arg)&lt;(80))?(exp(arg)):(exp(80));
 #define _fabs(val,arg)           val = fabs(arg);
 #define _d_fabs(val,dval,arg)    val = fabs(arg);    dval = (((val)&gt;=0)?(+1.0):(-1.0));
-#define _abs(val)                ((val)&lt;(0) ? (-(val)):(val))
+#define _abs(val,arg)            val = ((arg)&lt;(0)?(-(arg)):(arg));
+#define _d_abs(val,dval,arg)     val = ((arg)&lt;(0)?(-(arg)):(arg)); dval = (((arg)&gt;=0)?(+1.0):(-1.0));
+#define _vt(arg)                 (kBoverQ*(arg))
+#define _d_vt(arg)               (kBoverQ)
+
 </admst:template>
 
 <admst:template match="analog:evaluate">
@@ -991,7 +995,13 @@
           <admst:apply-templates select="." match="function:assert:onearg"/>
           <admst:for-each select="arguments[position(.)=1]">
             <admst:apply-templates select="." match="subexpression:stringify:noprobe"/>
-            <admst:value-to select="/simulator/tmp" value="_vt(%s)"/>
+            <admst:variable name="x" select="%s"/>
+            <admst:value-of select="/simulator/ddx"/>
+            <admst:variable name="dx" select="%s"/>
+            <admst:value-to select="/simulator/tmp" value="_vt($x)"/>
+            <admst:if test="/simulator/probe">
+              <admst:value-to select="/simulator/ddx" value="$dx*_d_vt($x)"/>
+            </admst:if>
           </admst:for-each>
          </admst:when>
          <admst:otherwise>
@@ -1002,6 +1012,9 @@
        <admst:otherwise>
          <admst:apply-templates select="." match="function:assert:noarg"/>
          <admst:value-to select="/simulator/tmp" value="_vt_nom"/>   
+         <admst:if test="/simulator/probe">
+           <admst:value-to select="/simulator/ddx" value="0.0"/>
+         </admst:if>
        </admst:otherwise>
       </admst:choose>
     </admst:when>
@@ -1717,10 +1730,52 @@
 
   <admst:apply-templates select="rhs" match="expression:stringify:noprobe"/>
 
-  <admst:if test="lhs[type='ps']">
-    <admst:message format="contribution %(lhs/nature/access)() &lt;+ not implemented.\n"/>
-  </admst:if>
+  <admst:choose>
+  <admst:when test="lhs[type='ps']">
+  <!-- <admst:when test="lhs[discipline/potential=nature]"> -->
+  <admst:choose>
+    <admst:when test="[dynamic='yes']"> 
+    <admst:text format="_load_dynamic"/>
+  <admst:choose>
+    <admst:when test="lhs/branch/nnode[grounded='no']">
+      <admst:value-of select="lhs/branch/nnode/name"/>
+      <admst:value-of select="lhs/branch/pnode/name"/>
+      <admst:variable name="pnode" select="%s"/>
+      <admst:variable name="nnode" select="%s"/>
+      <admst:variable name="value" select="%s"/>
+      <admst:text format="_augmented_residual2($pnode,$nnode,$value);\n"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:value-of select="lhs/branch/pnode/name"/>
+      <admst:variable name="node" select="%s"/>
+      <admst:variable name="value" select="%s"/>
+      <admst:text format="_augmented_residual1($node,$value);\n"/>
+    </admst:otherwise>
+  </admst:choose>
+    </admst:when>
+    <admst:otherwise>
+    <admst:text format="_load_static"/>
+  <admst:choose>
+    <admst:when test="lhs/branch/nnode[grounded='no']">
+      <admst:value-of select="lhs/branch/nnode/name"/>
+      <admst:value-of select="lhs/branch/pnode/name"/>
+      <admst:variable name="pnode" select="%s"/>
+      <admst:variable name="nnode" select="%s"/>
+      <admst:variable name="value" select="%s"/>
+      <admst:text format="_augmented_residual2($pnode,$nnode,$value);\n"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:value-of select="lhs/branch/pnode/name"/>
+      <admst:variable name="node" select="%s"/>
+      <admst:variable name="value" select="%s"/>
+      <admst:text format="_augmented_residual1($node,$value);\n"/>
+    </admst:otherwise>
+  </admst:choose>
+    </admst:otherwise>
+  </admst:choose>
+  </admst:when>
 
+  <admst:otherwise>
   <admst:choose>
     <admst:when test="[dynamic='yes']"> 
   <admst:choose>
@@ -1758,6 +1813,9 @@
     </admst:otherwise>
   </admst:choose>
     </admst:otherwise>
+  </admst:choose>
+
+  </admst:otherwise>
   </admst:choose>
 
 <!-- *************************** JACOBIAN MATRIX ************************** -->

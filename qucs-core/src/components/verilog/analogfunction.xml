@@ -69,16 +69,12 @@ inline double _pow(double x,double y)      { return pow(x,y); }
 inline double _d0_pow(double x,double y)   { return (x==0.0)?0.0:((y/x)*pow(x,y)); } /* fixme */
 inline double _d1_pow(double x,double y)   { return (x==0.0)?0.0:((log(x)/exp(0.0))*pow(x,y)); } /* fixme */
 
-#define _limexp(arg)    _exp(val,arg)
-#define _d_limexp(arg)  _d_exp(val,dval,arg)
+inline double _limexp(double arg)          { return ((arg)&lt;(80))?(exp(arg)):(exp(80)*(1.0+(arg-80))); }
+inline double _d0_limexp(double arg)       { return ((arg)&lt;(80))?(exp(arg)):(exp(80)); }
 
-inline double $(module)_vt (double Tdev) {
-  return 1.3806503e-23*Tdev/1.602176462e-19;
-}
-inline double $(module)_d_vt (double Tdev, double d_Tdev) {
-  double vt_Tdev=1.3806503e-23/1.602176462e-19;
-  return vt_Tdev*d_Tdev;
-}
+inline double _vt(double arg)              { return 1.3806503e-23*arg/1.602176462e-19; }
+inline double _d0_vt(double arg)           { return 1.3806503e-23/1.602176462e-19; }
+
 </admst:template>
 
 <!-- expression//function: mapping verilog-name == C-name of function -->
@@ -573,7 +569,7 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
       <admst:choose>
         <admst:when test="[ name='cos' or name='sin' or name='tan' or name='cosh' or name='sinh' or name='tanh' or name='acos' or name='asin'
                             or name='atan' or name='ln' or name='log' or name='exp' or name='sqrt' or name='abs' or name='limexp'
-                            or name='pow' or name='hypot' or name='min' or name='max' ]">
+                            or name='pow' or name='hypot' or name='min' or name='max' or name='\$vt' ]">
           <admst:return name="x" value="_$function($args)"/>
           <admst:for-each select="$globalanalogfunction/variable[input='yes']">
             <admst:value-of select="name"/> <admst:variable name="name" select="%s"/>
@@ -916,17 +912,28 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
 <admst:for-each select="/module/analogfunction">
   <admst:value-of select="name"/>
   <admst:variable name="function" select="%s"/>
-<admst:apply-templates select="." match="v2c:converttype"/> $(module)_$function (<admst:join select="variable[input='yes']" separator=", ">
+  <admst:apply-templates select="." match="v2c:converttype"/>
+  <admst:text format=" $(module)_$function ("/>
+  <admst:join select="variable[input='yes']" separator=", ">
     <admst:value-of select="name"/>
-    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
-  </admst:join>);
-<admst:apply-templates select="." match="v2c:converttype"/> $(module)_d_$(function) (<admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/>
+    <admst:text format=" %s"/>
+  </admst:join>
+  <admst:text format=");\n"/>
+  <admst:apply-templates select="." match="v2c:converttype"/>
+  <admst:text format=" $(module)_d_$(function) ("/>
+  <admst:join select="variable[input='yes']" separator=", ">
     <admst:value-of select="name"/>
-    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
-  </admst:join>, <admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/>
+    <admst:text format=" %s"/>
+  </admst:join>
+  <admst:text format=", "/>
+  <admst:join select="variable[input='yes']" separator=", ">
     <admst:value-of select="name"/>
-    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%s"/>
-  </admst:join>);
+    <admst:apply-templates select="." match="v2c:converttype"/>
+    <admst:text format=" d_%s"/>
+  </admst:join>
+  <admst:text format=");\n"/>
 </admst:for-each>
 </admst:template>
 
@@ -936,11 +943,12 @@ inline double $(module)_d_vt (double Tdev, double d_Tdev) {
   <admst:variable name="globalanalogfunction" select="%p"/>
   <admst:value-of select="name"/>
   <admst:variable name="function" select="%s"/>
+  <admst:text format="\n"/>
 <admst:apply-templates select="." match="v2c:converttype"/> $(module)_$function (<admst:join select="variable[input='yes']" separator=", ">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
   </admst:join>)
-{
+<admst:text format="\n{\n"/>
 <admst:text format="double $function; "/>
   <admst:for-each select="variable[input='no' and output='no']">
     <admst:value-of select="name"/>
@@ -959,7 +967,7 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%s"/>
   </admst:join>)
-{
+<admst:text format="\n{\n"/>
 <admst:text format="double $function"/>
   <admst:for-each select="$globalanalogfunction/variable[input='yes']">
     <admst:value-of select="name"/>
@@ -975,7 +983,8 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
       <admst:variable name="ddx" select="%s"/>
       <admst:text format="; "/><admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" $(name)_$(ddx)"/>
     </admst:for-each>
-  </admst:for-each>;
+  </admst:for-each>
+    <admst:text format=";\n"/>
   <admst:apply-templates select="tree" match="af:print:derivate">
     <admst:value-of select="returned('x')/value"/>
     <admst:text format="%s"/>
@@ -984,12 +993,14 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
     <admst:value-of select="name"/>
     <admst:value-of select="name"/>
     <admst:text format="$(function)_%s*d_%s"/>
-  </admst:join>;
-}
+  </admst:join>
+  <admst:text format=";\n"/>
+<admst:text format="}"/>
 </admst:for-each>
 </admst:template>
 
 <admst:variable name="globalanalogfunction"/>
+
 <admst:open file="$(module).analogfunction.h">/*
  * $(module).analogfunction.h - analog function header
  *
@@ -1003,10 +1014,13 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 #ifndef __$(module)_ANALOGFUNCTION_H__
 #define __$(module)_ANALOGFUNCTION_H__
 
+<admst:text format="\n"/>
 <admst:apply-templates select="/module" match="analogfunctionH"/>
 #endif /* __$(module)_ANALOGFUNCTION_H__ */
+<admst:text format="\n"/>
 </admst:open>
 <admst:message format="$(module).analogfunction.h created\n"/>
+
 <admst:open file="$(module).analogfunction.cpp">/*
  * $(module).analogfunction.cpp - analog function implementations
  *
@@ -1020,9 +1034,10 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 #include &lt;stdio.h&gt;
 #include &quot;$(module).analogfunction.h&quot;
 #include &lt;math.h&gt;
+<admst:text format="\n"/>
   <admst:apply-templates select="." match="c:math_h"/>
-  <admst:apply-templates select="/module" match="analogfunctionC">
-  </admst:apply-templates>
+  <admst:apply-templates select="/module" match="analogfunctionC"/>
+<admst:text format="\n"/>
 </admst:open>
 <admst:message format="$(module).analogfunction.cpp created\n"/>
 </admst>

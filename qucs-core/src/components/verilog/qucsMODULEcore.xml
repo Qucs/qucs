@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst SYSTEM "admst.dtd">
-<admst version="2.2.4" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst version="2.2.5" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
@@ -38,6 +38,7 @@
  * any later version.
  * 
  */
+
 <admst:for-each select="/module">
 #if HAVE_CONFIG_H
 #include &lt;config.h&gt;
@@ -48,7 +49,8 @@
 #include &lt;math.h&gt;
 #include &lt;string.h&gt;
 
-<admst:text format="#include &quot;$(module).analogfunction.h&quot;\n"/>
+#include &quot;$(module).analogfunction.h&quot;
+
 #include "logging.h"
 #include "complex.h"
 #include "matrix.h"
@@ -59,8 +61,9 @@
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
-<admst:text format="#include &quot;$module.core.h&quot;\n\n"/>
-<admst:text format="// external nodes\n"/>
+#include &quot;$(module).core.h&quot;
+
+<admst:text format="\n// external nodes\n"/>
 <admst:for-each select="node">
   <admst:if test="[location='external' and name!='GND']">
   <admst:value-of select="name"/>
@@ -85,7 +88,12 @@
 #define _load_static_residual2(pnode,nnode,current)\\
 	_rhs[pnode] -= current;\\
 	_rhs[nnode] += current;
+#define _load_static_augmented_residual2(pnode,nnode,current)\\
+	_rhs[pnode] -= current;\\
+	_rhs[nnode] += current;
 #define _load_static_residual1(node,current)\\
+	_rhs[node] -= current;
+#define _load_static_augmented_residual1(node,current)\\
 	_rhs[node] -= current;
 #define _load_static_jacobian4(pnode,nnode,vpnode,vnnode,conductance)\\
 	_jstat[pnode][vpnode] += conductance;\\
@@ -206,14 +214,13 @@
 #define _load_flickernoise1(n1,pwr,exp)\\
 	cy (n1,n1) += pwr*pow(_freq,-exp)/kB/T0;
 
-<admst:text format="// derivative helper macros"/>
+<admst:text format="\n// derivative helper macros"/>
 <admst:apply-templates select="." match="c:math_h"/>
 
-<admst:text format="\n// \$vt and \$vt() functions "/>
-#define _vt(arg)                 (kBoverQ*arg)
+<admst:text format="\n\n// \$vt and \$vt() functions "/>
 #define _vt_nom                  (kBoverQ)
 
-<admst:text format="\n// simulator specific definitions"/>
+<admst:text format="\n\n// simulator specific definitions"/>
 #define _modelname               &quot;$(module)&quot;
 #define _instancename            getName()
 #define _circuit_temp		 (getPropertyDouble (&quot;Temp&quot;)+273.15)
@@ -222,7 +229,7 @@ using namespace device;
 
 <!-- ---------------------------------------------------------------------- -->
 
-<admst:text format="/* Device constructor. */\n"/>
+<admst:text format="\n/* Device constructor. */\n"/>
 <admst:text format="$module::$module() : circuit ($nbr_nodes)\n{\n"/>
 <admst:text format="  type = CIR_$module;\n"/>
 <admst:text format="}\n\n"/>
@@ -230,8 +237,8 @@ using namespace device;
 <!-- ---------------------------------------------------------------------- -->
 
 <admst:text format="/* Initialization of model. */\n"/>
-<admst:text format="void $module::initModel (void)\n{"/>
-  // create internal nodes
+<admst:text format="void $module::initModel (void)\n{\n"/>
+<admst:text format="  // create internal nodes\n"/>
 <admst:for-each select="node">
   <admst:if test="[location='internal' and name!='GND']">
   <admst:value-of select="name"/>
@@ -253,7 +260,7 @@ using namespace device;
   doAC = 1;
   doTR = 0;
   doHB = 0;
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -300,11 +307,13 @@ using namespace device;
   int i1, i2, i3, i4;
 
   // zero charges
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="    _charges[i1][i2] = 0.0;\n"/>
 <admst:text format="  } }\n"/>
   // zero capacitances
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
@@ -312,6 +321,7 @@ using namespace device;
 <admst:text format="    _caps[i1][i2][i3][i4] = 0.0;\n"/>
 <admst:text format="  } } } }\n"/>
   // zero right hand side, static and dynamic jacobian
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    _rhs[i1] = 0.0;\n"/>
 <admst:text format="    _qhs[i1] = 0.0;\n"/>
@@ -349,12 +359,15 @@ using namespace device;
 </admst:for-each>
 
 /* ----------------- evaluate verilog analog equations -------------------- */
+<admst:text format="\n"/>
 <admst:apply-templates select="analog" match="analog:evaluate"/>
 /* ------------------ end of verilog analog equations --------------------- */
 
 /* ------------------ evaluate verilog noise equations -------------------- */
+<admst:text format="\n"/>
 <admst:apply-templates select="analog" match="analog:noise" required="yes"/>
 /* ------------------- end of verilog noise equations --------------------- */
+<admst:text format="\n\n"/>
 
 <admst:text format="}\n\n"/>
 
@@ -367,6 +380,7 @@ using namespace device;
   calcVerilog ();		
 
   // fill right hand side and static jacobian
+<admst:text format="\n"/>
 <admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    setI (i1, _rhs[i1]);\n"/>
 <admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
@@ -444,14 +458,14 @@ using namespace device;
 <admst:text format="/* Initialization of AC analysis. */\n"/>
 <admst:text format="void $module::initAC (void)\n{"/>
   allocMatrixMNA ();
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
 <admst:text format="/* Perform AC calculations. */\n"/>
 <admst:text format="void $module::calcAC (nr_double_t frequency)\n{"/>
   setMatrixY (calcMatrixY (frequency));
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -461,26 +475,27 @@ using namespace device;
   saveOperatingPoints ();
   matrix y ($nbr_nodes);
 
+<admst:text format="\n"/>
 <admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="      y (i1,i2) = rect (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);\n"/>
 <admst:text format="    }\n  }\n"/>
   return y;
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
 <admst:text format="/* Initialization of S-parameter analysis. */\n"/>
 <admst:text format="void $module::initSP (void)\n{"/>
   allocMatrixS ();
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
 <admst:text format="/* Perform S-parameter calculations. */\n"/>
 <admst:text format="void $module::calcSP (nr_double_t frequency)\n{"/>
   setMatrixS (ytos (calcMatrixY (frequency)));   
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -488,7 +503,7 @@ using namespace device;
 <admst:text format="void $module::initTR (void)\n{"/>
   setStates (2 * $nbr_nodes * $nbr_nodes);
   initDC ();
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -502,6 +517,7 @@ using namespace device;
   int i1, i2, i3, i4, state;
 
   // 2-node charge integrations
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="    state = 2 * (i2 + $nbr_nodes * i1);\n"/>
@@ -510,12 +526,14 @@ using namespace device;
 <admst:text format="      transientCapacitanceQ (state, i1, i2, _charges[i1][i2]);\n"/>
 <admst:text format="  } }\n"/>
   // 1-node charge integrations
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    state = 2 * (i1 + $nbr_nodes * i1);\n"/>
 <admst:text format="    if (_charges[i1][i1] != 0.0)\n"/>
 <admst:text format="      transientCapacitanceQ (state, i1, _charges[i1][i1]);\n"/>
 <admst:text format="  }\n"/>
   // charge: 2-node, voltage: 2-node
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="  if (i1 != i2)\n"/>
@@ -526,6 +544,7 @@ using namespace device;
 <admst:text format="      transientCapacitanceC (i1, i2, i3, i4, _caps[i1][i2][i3][i4], BP(i3,i4));\n"/>
 <admst:text format="  } } } }\n"/>
   // charge: 2-node, voltage: 1-node
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
 <admst:text format="  if (i1 != i2)\n"/>
@@ -534,6 +553,7 @@ using namespace device;
 <admst:text format="      transientCapacitanceC2Q (i1, i2, i3, _caps[i1][i2][i3][i3], NP(i3));\n"/>
 <admst:text format="  } } }\n"/>
   // charge: 1-node, voltage: 2-node
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="  for (i4 = 0; i4 < $nbr_nodes; i4++) {\n"/>
@@ -542,6 +562,7 @@ using namespace device;
 <admst:text format="      transientCapacitanceC2V (i1, i3, i4, _caps[i1][i1][i3][i4], BP(i3,i4));\n"/>
 <admst:text format="  } } }\n"/>     
   // charge: 1-node, voltage: 1-node
+<admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>               
 <admst:text format="    if (_caps[i1][i1][i3][i3] != 0.0)\n"/>
@@ -557,6 +578,7 @@ using namespace device;
   _freq = frequency;
   matrix cy ($nbr_nodes);
 
+<admst:text format="\n"/>
 <admst:for-each select="source[flickernoise='yes']">
   <admst:value-of select="branch/nnode/name"/>
   <admst:value-of select="branch/pnode/name"/>
@@ -597,14 +619,14 @@ using namespace device;
 <admst:text format="/* Perform AC noise computations. */\n"/>
 <admst:text format="void $module::calcNoiseAC (nr_double_t frequency) \n{"/>
   setMatrixN (calcMatrixCy (frequency));
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
 <admst:text format="/* Perform S-parameter noise computations. */\n"/>
 <admst:text format="void $module::calcNoiseSP (nr_double_t frequency) \n{"/>
   setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -612,7 +634,7 @@ using namespace device;
 <admst:text format="void $module::initHB (int)\n{"/>
   initDC ();
   allocMatrixHB ();
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -627,6 +649,7 @@ using namespace device;
   saveOperatingPoints ();
 
   // fill in HB matrices
+<admst:text format="\n"/>
 <admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    setQ  (i1, _qhs[i1]); // charges\n"/>
 <admst:text format="    setCV (i1, _chs[i1]); // jacobian dQ/dV * V\n"/>
@@ -650,15 +673,16 @@ using namespace device;
  * any later version.
  * 
  */
+
 <admst:for-each select="/module">
+#ifndef __$(module)_H__
+#define __$(module)_H__
 
-#ifndef __<admst:text format="$module"/>_H__
-#define __<admst:text format="$module"/>_H__
-
-<admst:text format="class $module : public circuit"/>
+class $(module) : public circuit
 {
  public:
-  <admst:text format="$module ();\n"/>
+  $(module) ();
+
   void initDC (void);
   void restartDC (void);
   void calcDC (void);
@@ -689,20 +713,21 @@ using namespace device;
   int doTR;
 
   nr_double_t _freq;
-<admst:text format="  nr_double_t _rhs[$nbr_nodes];\n"/> 
-<admst:text format="  nr_double_t _qhs[$nbr_nodes];\n"/> 
-<admst:text format="  nr_double_t _ghs[$nbr_nodes];\n"/> 
-<admst:text format="  nr_double_t _chs[$nbr_nodes];\n"/> 
-<admst:text format="  nr_double_t _jstat[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _jdyna[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _charges[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];"/>
+  nr_double_t _rhs[$nbr_nodes];
+  nr_double_t _qhs[$nbr_nodes];
+  nr_double_t _ghs[$nbr_nodes];
+  nr_double_t _chs[$nbr_nodes];
+  nr_double_t _jstat[$nbr_nodes][$nbr_nodes];
+  nr_double_t _jdyna[$nbr_nodes][$nbr_nodes];
+  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];
+  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];
+  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];
+  nr_double_t _charges[$nbr_nodes][$nbr_nodes];
+  nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];
 };
 
-#endif /* __<admst:text format="$module"/>_H__ */
+#endif /* __$(module)_H__ */
+
 </admst:for-each>
 
 </admst:open>
