@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.35 2007-03-25 08:10:56 ela Exp $
+ * $Id: check_spice.cpp,v 1.36 2007-04-30 21:55:22 ela Exp $
  *
  */
 
@@ -1354,7 +1354,7 @@ static int spice_count_real_values (struct value_t * values) {
 static struct definition_t *
 spice_translate_source (struct definition_t * root,
 			struct definition_t * def, char type) {
-  struct definition_t * ac = NULL, * dc = def, * pulse = NULL;
+  struct definition_t * ac = NULL, * dc = def, * pulse = NULL, * expo = NULL;
   struct value_t * prop;
   char * ui = (char *) ((type == 'U') ? "U" : "I");
 
@@ -1484,6 +1484,18 @@ spice_translate_source (struct definition_t * root,
     }
   }
 
+  // adjust the exponential part of the source
+  if ((prop = spice_find_property (dc->values, "EXP")) != NULL) {
+    expo = spice_create_definition (dc, type == 'U' ? "Vexp" : "Iexp");
+    spice_value_done (prop);
+    prop = prop->next;
+    // extract pulse values, rise and fall constants
+    struct property_field_t field =
+      { { type == 'U' ? "U1" : "I1", type == 'U' ? "U2" : "I2", "T1", "Tr",
+	  "T2", "Tf", NULL } };
+    spice_extract_properties (expo, prop, &field);
+  }
+
   // set DC value to zero if necessary
   if (spice_find_property (dc, ui) == NULL) {
     spice_append_pair (def, ui, "0", 1);
@@ -1503,6 +1515,13 @@ spice_translate_source (struct definition_t * root,
     else
       spice_adjust_isource_nodes (pulse, ac ? ac : dc);
     root = spice_add_definition (root, pulse);
+  }
+  if (expo) {
+    if (type == 'U')
+      spice_adjust_vsource_nodes (expo, pulse ? pulse : ac ? ac : dc);
+    else
+      spice_adjust_isource_nodes (expo, pulse ? pulse : ac ? ac : dc);
+    root = spice_add_definition (root, expo);
   }
   return root;
 }

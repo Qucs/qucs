@@ -1,3 +1,8 @@
+2007-04-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Added translation of exponential part of a
+	voltage or current source.
+
 2007-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_vcd.l: Allow identifiers to start with '_'.

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.24 2007-03-25 08:10:57 ela Exp $
+ * $Id: scan_spice.l,v 1.25 2007-04-30 21:55:22 ela Exp $
  *
  */
 
@@ -81,7 +81,7 @@ CSFX     [A-Za-z0-9_]*
 
      /* Source functions */
 FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT]|[dD][cC]|[aA][cC])
-FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[pP][wW][lL])
+FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[pP][wW][lL]|[eE][xX][pP])
 FUN3     ([dD][iI][sS][tT][oO][fF][12])
 FUNCTION ({FUN1}|{FUN2}|{FUN3})
 
