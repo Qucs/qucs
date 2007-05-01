@@ -1,3 +1,9 @@
+2007-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp: Fixed bug occuring when there are
+	multiple instances of an EDD enclosed in a sub-circuit.  These
+	reuse the equations in the environment.
+
 2007-04-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Allowing I1, I2, etc. in charge

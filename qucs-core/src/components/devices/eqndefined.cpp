@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.5 2007/04/28 09:40:45 ela Exp $
+ * $Id: eqndefined.cpp,v 1.6 2007/05/01 13:27:10 ela Exp $
  *
  */
 
@@ -154,8 +154,10 @@ void eqndefined::initModel (void) {
   // first create voltage variables
   for (i = 0; i < branches; i++) {
     vn = createVariable ("V", i + 1);
-    veqn[i] = getEnv()->getChecker()->addDouble ("#voltage", vn, 0);
-    A(veqn[i])->evalType ();
+    if ((veqn[i] = getEnv()->getChecker()->findEquation (vn)) == NULL) {
+      veqn[i] = getEnv()->getChecker()->addDouble ("#voltage", vn, 0);
+      A(veqn[i])->evalType ();
+    }
     free (vn);
   }
 
@@ -217,12 +219,14 @@ void eqndefined::initModel (void) {
 
       // create conductance equations
       if (ivalue) {
-	diff = ivalue->differentiate (vn);
-	getEnv()->getChecker()->addEquation (diff);
-	diff->evalType ();
-	geqn[k] = diff;
 	gn = createVariable ("G", i + 1, j + 1);
-	A(diff)->rename (gn);
+	if ((geqn[k] = getEnv()->getChecker()->findEquation (gn)) == NULL) {
+	  diff = ivalue->differentiate (vn);
+	  getEnv()->getChecker()->addEquation (diff);
+	  diff->evalType ();
+	  geqn[k] = diff;
+	  A(diff)->rename (gn);
+	}
 	free (gn);
 #if DEBUG
 	logprint (LOG_STATUS, "DEBUG: %s\n", A(geqn[k])->toString ());
@@ -244,24 +248,26 @@ void eqndefined::initModel (void) {
 
       // create capacitance equations
       if (qvalue) {
-	diff = qvalue->differentiate (vn);
-	getEnv()->getChecker()->addEquation (diff);
-	diff->evalType ();
-	ceqn[k] = diff;
 	cn = createVariable ("C", i + 1, j + 1);
-	A(diff)->rename (cn);
-	free (cn);
-	
-	// apply dQ/dI * dI/dV => dQ/dV derivatives
-	for (int l = 0; l < branches; l++) {
-	  in = createVariable ("I", l + 1);
-	  diff = qvalue->differentiate (in);
-	  A(diff)->mul (A(geqn[l * branches + j]));
-	  A(ceqn[k])->add (A(diff));
-	  delete diff;
-	  free (in);
+	if ((ceqn[k] = getEnv()->getChecker()->findEquation (cn)) == NULL) {
+	  diff = qvalue->differentiate (vn);
+	  getEnv()->getChecker()->addEquation (diff);
+	  diff->evalType ();
+	  ceqn[k] = diff;
+	  A(diff)->rename (cn);
+
+	  // apply dQ/dI * dI/dV => dQ/dV derivatives
+	  for (int l = 0; l < branches; l++) {
+	    in = createVariable ("I", l + 1);
+	    diff = qvalue->differentiate (in);
+	    A(diff)->mul (A(geqn[l * branches + j]));
+	    A(ceqn[k])->add (A(diff));
+	    delete diff;
+	    free (in);
+	  }
+	  A(ceqn[k])->evalType ();
 	}
-	A(ceqn[k])->evalType ();
+	free (cn);
 #if DEBUG
 	logprint (LOG_STATUS, "DEBUG: %s\n", A(ceqn[k])->toString ());
 #endif
