@@ -2228,7 +2228,7 @@
 </admst:template>
 
 <!-- variable:rhs -->
-<admst:template match="variable" mode="rhs">
+<admst:template match="variable">
   <admst:value-of select="name"/>
   <admst:if test="[parametertype='analogfunction']">
     <admst:value-to select="/simulator/tmp" value="%s"/>
