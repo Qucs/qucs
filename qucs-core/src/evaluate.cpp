@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.57 2007-04-26 16:48:25 ela Exp $
+ * $Id: evaluate.cpp,v 1.58 2007-05-02 20:50:09 ela Exp $
  *
  */
 
@@ -3581,11 +3581,11 @@ constant * evaluate::ifthenelse_d_d (constant * args) {
   if (t1 == TAG_DOUBLE)
     d1 = D(_ARES(1));
   else
-    d1 = real (*C(_ARES(1)));
+    d1 = abs (*C(_ARES(1)));
   if (t2 == TAG_DOUBLE)
     d2 = D(_ARES(2));
   else
-    d2 = real (*C(_ARES(2)));
+    d2 = abs (*C(_ARES(2)));
   _DEFD ();
   _RETD (cond ? d1 : d2);
 }
@@ -3630,12 +3630,26 @@ constant * evaluate::equal_d_d (constant * args) {
   _RETB (d0 == d1);
 }
 
+constant * evaluate::equal_b_b (constant * args) {
+  _ARB0 (b0);
+  _ARB1 (b1);
+  _DEFB ();
+  _RETB (b0 == b1);
+}
+
 // ************************ not equal **********************
 constant * evaluate::notequal_d_d (constant * args) {
   _ARD0 (d0);
   _ARD1 (d1);
   _DEFB ();
   _RETB (d0 != d1);
+}
+
+constant * evaluate::notequal_b_b (constant * args) {
+  _ARB0 (b0);
+  _ARB1 (b1);
+  _DEFB ();
+  _RETB (b0 != b1);
 }
 
 // *************************** not *************************

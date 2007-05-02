@@ -1,3 +1,13 @@
+2007-05-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Using absolute value of complex result in
+	ifthenelse contruct.  This yields the same results as if using
+	absolute arguments for e.g. sqrt() and ln() if these are negative.
+	Added '!=' and '==' implementations for boolean arguments.
+
+	* differentiate.cpp: Introduced new reduction when -1 occurs in
+	products yielding unary minus then.
+
 2007-04-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Added assignment multiplier and summarizer.  New
