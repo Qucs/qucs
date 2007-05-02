@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.6 2007/04/28 00:09:19 ela Exp $
+ * $Id: differentiate.cpp,v 1.7 2007/05/02 20:50:08 ela Exp $
  *
  */
 
@@ -51,6 +51,7 @@ using namespace eqn;
 #define isRef(r,v) ((r)->getTag()==REFERENCE && !strcmp(R(r)->n,v))
 #define isZero(n)  (isConst(n) && D(n) == 0.0)
 #define isOne(n)   (isConst(n) && D(n) == 1.0)
+#define isNeg(n)   (isConst(n) && D(n) == -1.0)
 #define isEuler(n) (isConst(n) && D(n) == M_E || isRef(n,"e"))
 #define isval(n,v) (isConst(n) && D(n) == v)
 
@@ -170,8 +171,12 @@ node * differentiate::times_reduce (node * f0, node * f1) {
     retCon (0);
   } else if (isOne (f0)) {
     return f1;
+  } else if (isNeg (f0)) {
+    return minus_reduce (f1);
   } else if (isOne (f1)) {
     return f0;
+  } else if (isNeg (f1)) {
+    return minus_reduce (f0);
   } else if (isConst (f0) && isConst (f1)) {
     retCon (D(f0) * D(f1));
   } else {

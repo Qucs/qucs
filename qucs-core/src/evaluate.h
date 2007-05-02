@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.33 2007/04/25 18:47:35 ela Exp $
+ * $Id: evaluate.h,v 1.34 2007/05/02 20:50:10 ela Exp $
  *
  */
 
@@ -680,7 +680,9 @@ public:
   static constant * lessorequal_d_d (constant *);
   static constant * greaterorequal_d_d (constant *);
   static constant * equal_d_d (constant *);
+  static constant * equal_b_b (constant *);
   static constant * notequal_d_d (constant *);
+  static constant * notequal_b_b (constant *);
   static constant * not_b (constant *);
   static constant * or_b_b (constant *);
   static constant * and_b_b (constant *);
