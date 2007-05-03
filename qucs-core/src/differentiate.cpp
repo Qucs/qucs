@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.7 2007-05-02 20:50:08 ela Exp $
+ * $Id: differentiate.cpp,v 1.8 2007-05-03 19:00:59 ela Exp $
  *
  */
 
@@ -65,6 +65,9 @@ using namespace eqn;
 #define defApp1(def,op,f0) \
   application * def = new application (); def->n = strdup (op); \
   def->nargs = 1; def->args = f0; def->args->setNext (NULL);
+#define defApp2(def,op,f0,f1) \
+  application * def = new application (); def->n = strdup (op); \
+  def->nargs = 2; def->args = f0; def->args->append (f1);
 #define retApp2(op,f0,f1) \
   application * res = new application (); res->n = strdup (op); \
   res->nargs = 2; res->args = f0; res->args->append (f1); return res;
@@ -72,6 +75,10 @@ using namespace eqn;
   application * res = new application (); res->n = strdup (op); \
   res->nargs = 3; res->args = f0; res->args->append (f1); \
   res->args->append (f2); return res;
+#define defApp3(def,op,f0,f1,f2) \
+  application * def = new application (); def->n = strdup (op); \
+  def->nargs = 3; def->args = f0; def->args->append (f1); \
+  def->args->append (f2);
 
 #define _A(idx) app->args->get(idx)
 #define _A0 _A(0)
@@ -104,13 +111,18 @@ node * differentiate::plus_unary (application * app, char * derivative) {
 
 node * differentiate::plus_reduce (node * f0, node * f1) {
   if (isZero (f0) && isZero (f1)) {
+    delete f0; delete f1;
     retCon (0);
   } else if (isZero (f0)) {
+    delete f0;
     return f1;
   } else if (isZero (f1)) {
+    delete f1;
     return f0;
   } else if (isConst (f0) && isConst (f1)) {
-    retCon (D(f0) + D(f1));
+    nr_double_t t = D(f0) + D(f1);
+    delete f0; delete f1;
+    retCon (t);
   } else {
     retApp2 ("+", f0, f1);
   }
@@ -132,22 +144,29 @@ node * differentiate::minus_unary (application * app, char * derivative) {
 
 node * differentiate::minus_reduce (node * f0) {
   if (isZero (f0)) {
+    delete f0;
     retCon (0);
   } else if (isConst (f0)) {
-    retCon (-D(f0));
+    nr_double_t t = -D(f0);
+    delete f0;
+    retCon (t);
   }
   retApp1 ("-", f0);
 }
 
 node * differentiate::minus_reduce (node * f0, node * f1) {
   if (isZero (f0) && isZero (f1)) {
+    delete f0; delete f1;
     retCon (0);
   } else if (isZero (f0)) {
     return minus_reduce (f1);
   } else if (isZero (f1)) {
+    delete f1;
     return f0;
   } else if (isConst (f0) && isConst (f1)) {
-    retCon (D(f0) - D(f1));
+    nr_double_t t = D(f0) - D(f1);
+    delete f0; delete f1;
+    retCon (t);
   } else {
     retApp2 ("-", f0, f1);
   }
@@ -168,17 +187,22 @@ node * differentiate::times (application * app, char * derivative) {
 
 node * differentiate::times_reduce (node * f0, node * f1) {
   if (isZero (f0) || isZero (f1)) {
+    delete f0; delete f1;
     retCon (0);
   } else if (isOne (f0)) {
+    delete f0;
     return f1;
   } else if (isNeg (f0)) {
     return minus_reduce (f1);
   } else if (isOne (f1)) {
+    delete f1;
     return f0;
   } else if (isNeg (f1)) {
     return minus_reduce (f0);
   } else if (isConst (f0) && isConst (f1)) {
-    retCon (D(f0) * D(f1));
+    nr_double_t t = D(f0) * D(f1);
+    delete f0; delete f1;
+    retCon (t);
   } else {
     retApp2 ("*", f0, f1);
   }
@@ -195,22 +219,29 @@ node * differentiate::over (application * app, char * derivative) {
   node * t1 = times_reduce (f0->recreate(), d1);
   node * t2 = times_reduce (f1->recreate(), d0);
   node * t3 = minus_reduce (t2, t1);
-  node * t4 = times_reduce (f1->recreate(), f1->recreate());
+  node * t4 = sqr_reduce (f1->recreate());
   return over_reduce (t3, t4);
 }
 
 node * differentiate::over_reduce (node * f0, node * f1) {
   if (isOne (f0) && isOne (f1)) {
+    delete f0; delete f1;
     retCon (1);
   } else if (isZero (f0)) {
+    delete f0; delete f1;
     retCon (0);
   } else if (isConst (f0) && isConst (f1)) {
     if (isZero (f1)) {
       retApp2 ("/", f0, f1);
     }
-    retCon (D(f0) / D(f1));
+    nr_double_t t = D(f0) / D(f1);
+    delete f0; delete f1;
+    retCon (t);
   } else if (isOne (f1)) {
+    delete f1;
     return f0;
+  } else if (isNeg (f1)) {
+    return minus_reduce (f0);
   } else {
     retApp2 ("/", f0, f1);
   }
@@ -244,15 +275,21 @@ node * differentiate::power (application * app, char * derivative) {
 
 node * differentiate::power_reduce (node * f0, node * f1) {
   if (isOne (f0)) {
+    delete f0; delete f1;
     retCon (1);
   } else if (isZero (f0)) {
+    delete f0; delete f1;
     retCon (0);
   } else if (isConst (f0) && isConst (f1)) {
     if (isZero (f1)) {
+      delete f0; delete f1;
       retCon (1);
     }
-    retCon (pow (D(f0), D(f1)));
+    nr_double_t t = pow (D(f0), D(f1));
+    delete f0; delete f1;
+    retCon (t);
   } else if (isOne (f1)) {
+    delete f1;
     return f0;
   } else {
     retApp2 ("^", f0, f1);
@@ -267,9 +304,10 @@ node * differentiate::ln (application * app, char * derivative) {
 
 node * differentiate::ln_reduce (node * f0) {
   if (isOne (f0)) {
+    delete f0;
     retCon (0);
-  }
-  else if (isEuler (f0)) {
+  } else if (isEuler (f0)) {
+    delete f0;
     retCon (1);
   }
   retApp1 ("ln", f0);
@@ -302,9 +340,10 @@ node * differentiate::sqrt (application * app, char * derivative) {
 
 node * differentiate::sqrt_reduce (node * f0) {
   if (isOne (f0)) {
+    delete f0;
     retCon (1);
-  }
-  else if (isZero (f0)) {
+  } else if (isZero (f0)) {
+    delete f0;
     retCon (0);
   }
   retApp1 ("sqrt", f0);
@@ -312,9 +351,10 @@ node * differentiate::sqrt_reduce (node * f0) {
 
 node * differentiate::app_reduce (char * func, node * d0, node * f0) {
   if (isOne (d0)) {
+    delete d0;
     retApp1 (func, f0);
-  }
-  else if (isZero (d0)) {
+  } else if (isZero (d0)) {
+    delete d0; delete f0;
     retCon (0);
   }
   defApp1 (app, func, f0);
@@ -325,6 +365,17 @@ node * differentiate::exp (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
   return app_reduce ("exp", d0, f0->recreate());
+}
+
+node * differentiate::limexp (application * app, char * derivative) {
+  _AF0 (f0);
+  _AD0 (d0);
+  defCon (lexp, ::exp (M_LIMEXP));
+  defCon (lcon, M_LIMEXP);
+  defApp2 (ask, "<", f0->recreate(), lcon);
+  defApp1 (exp, "exp", f0->recreate());
+  defApp3 (ite, "?:", ask, exp, lexp);
+  return times_reduce (d0, ite);
 }
 
 node * differentiate::sin (application * app, char * derivative) {
@@ -416,11 +467,15 @@ node * differentiate::square (application * app, char * derivative) {
 
 node * differentiate::sqr_reduce (node * f0) {
   if (isOne (f0)) {
+    delete f0;
     retCon (1);
   } else if (isZero (f0)) {
+    delete f0;
     retCon (0);
   } else if (isConst (f0)) {
-    retCon (D(f0) * D(f0));
+    nr_double_t t = D(f0) * D(f0);
+    delete f0;
+    retCon (t);
   } else {
     retApp1 ("sqr", f0);
   }
@@ -579,7 +634,9 @@ node * differentiate::ifthenelse (application * app, char * derivative) {
   _AD2 (d2);
   if (isConst (d1) && isConst (d2)) {
     if (D(d1) == D(d2)) {
-      retCon (D(d1));
+      nr_double_t t = D(d1);
+      delete d1; delete d2;
+      retCon (t);
     }
   }
   retApp3 ("?:", f0->recreate(), d1, d2);
@@ -601,6 +658,37 @@ node * differentiate::norm (application * app, char * derivative) {
   defCon (two, 2);
   node * t1 = times_reduce (d0, two);
   return times_reduce (t1, f0->recreate());
+}
+
+node * differentiate::xhypot (application * app, char * derivative) {
+  _AF0 (f0);
+  _AF1 (f1);
+  _AD0 (d0);
+  _AD1 (d1);
+  node * t1 = hypot_reduce (f0->recreate(), f1->recreate());
+  node * t2 = times_reduce (d0, f0->recreate());
+  node * t3 = times_reduce (d1, f1->recreate());
+  node * t4 = plus_reduce (t2, t3);
+  return over_reduce (t4, t1);
+}
+
+node * differentiate::hypot_reduce (node * f0, node * f1) {
+  if (isZero (f0) && isZero (f1)) {
+    delete f0; delete f1;
+    retCon (0);
+  } else if (isZero (f0)) {
+    delete f0;
+    return sqrt_reduce (sqr_reduce (f1));
+  } else if (isZero (f1)) {
+    delete f1;
+    return sqrt_reduce (sqr_reduce (f0));
+  } else if (isConst (f0) && isConst (f1)) {
+    nr_double_t t = ::xhypot (D(f0), D(f1));
+    delete f0; delete f1;
+    retCon (t);
+  } else {
+    retApp2 ("hypot", f0, f1);
+  }
 }
 
 // List of differentiators.
@@ -648,6 +736,8 @@ struct differentiation_t eqn::differentiations[] = {
   { "arcoth",   differentiate::arcoth,    1 },
   { "arsech",   differentiate::arsech,    1 },
   { "arcosech", differentiate::arcosech,  1 },
+  { "hypot",    differentiate::xhypot,    2 },
+  { "limexp",   differentiate::limexp,    1 },
 
   { NULL, NULL, 0 /* end of list */ }
 };

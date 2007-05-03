@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.33 2007-04-26 16:48:25 ela Exp $
+ * $Id: complex.cpp,v 1.34 2007-05-03 19:00:56 ela Exp $
  *
  */
 
@@ -118,15 +118,24 @@ nr_double_t dB (const complex z) {
   return 10.0 * log10 (norm (z));
 }
 
+complex exp (const complex z) {
+  nr_double_t mag = exp (real (z));
+  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
+}
+
+complex limexp (const complex z) {
+  nr_double_t mag = limexp (real (z));
+  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
+}
+
+nr_double_t limexp (const nr_double_t r) {
+  return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
+}
+
 // returns the first result of square root z
 complex sqrt (const complex z) {
   nr_double_t phi = arg (z);
   return polar (sqrt (abs (z)), phi / 2.0);
-}
-
-complex exp (const complex z) {
-  nr_double_t mag = exp (real (z));
-  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
 }
 
 // returns the first result of natural logarithm z
@@ -314,6 +323,14 @@ nr_double_t xhypot (const complex a, const complex b) {
     return 0;
   else
     return abs (b) * sqrt (1 + c / d);
+}
+
+nr_double_t xhypot (const nr_double_t a, const complex b) {
+  return xhypot (complex (a), b);
+}
+
+nr_double_t xhypot (const complex a, const nr_double_t b) {
+  return xhypot (a, complex (b));
 }
 
 nr_double_t signum (const nr_double_t d) {

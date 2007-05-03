@@ -1,3 +1,17 @@
+2007-05-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* differentiate.cpp: Fixed loads of memory leaks.  Added
+	differentiators for the new limexp() and hypot() functions.
+
+	* equation.cpp: Initializing data of a constant in constructors
+	(valgrind complained about it).
+
+	* evaluate.cpp, vector.cpp, complex.cpp: Added xhypot() and
+	limexp() functions.
+
+	* Makefile.am (gperfapphash.gph): Fixed rule considering the
+	$(EXEEXT) suffix.
+
 2007-05-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Using absolute value of complex result in

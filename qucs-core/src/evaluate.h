@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.34 2007-05-02 20:50:10 ela Exp $
+ * $Id: evaluate.h,v 1.35 2007-05-03 19:01:03 ela Exp $
  *
  */
 
@@ -157,6 +157,16 @@ public:
   static constant * power_c_v (constant *);
   static constant * power_v_v (constant *);
 
+  static constant * xhypot_d_d (constant *);
+  static constant * xhypot_c_c (constant *);
+  static constant * xhypot_c_d (constant *);
+  static constant * xhypot_d_c (constant *);
+  static constant * xhypot_v_d (constant *);
+  static constant * xhypot_d_v (constant *);
+  static constant * xhypot_v_c (constant *);
+  static constant * xhypot_c_v (constant *);
+  static constant * xhypot_v_v (constant *);
+
   static constant * real_d (constant *);
   static constant * real_c (constant *);
   static constant * real_v (constant *);
@@ -218,6 +228,10 @@ public:
   static constant * exp_d (constant *);
   static constant * exp_c (constant *);
   static constant * exp_v (constant *);
+
+  static constant * limexp_d (constant *);
+  static constant * limexp_c (constant *);
+  static constant * limexp_v (constant *);
 
   static constant * ln_d (constant *);
   static constant * ln_c (constant *);

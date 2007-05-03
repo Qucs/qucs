@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.58 2007-05-02 20:50:09 ela Exp $
+ * $Id: evaluate.cpp,v 1.59 2007-05-03 19:01:01 ela Exp $
  *
  */
 
@@ -198,6 +198,7 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv) (constant * args) {\
 }
 
 MAKE_FUNC_DEFINITION_0 (exp);    // exponential function
+MAKE_FUNC_DEFINITION_0 (limexp); // limited exponential function
 MAKE_FUNC_DEFINITION_0 (sin);    // sine
 MAKE_FUNC_DEFINITION_0 (cos);    // cosine
 MAKE_FUNC_DEFINITION_0 (tan);    // tangent
@@ -1030,6 +1031,70 @@ constant * evaluate::power_v_v (constant * args) {
   _ARV1 (v2);
   _DEFV ();
   _RETV (pow (*v1, *v2));
+}
+
+// ****************** hypotenuse *************************
+constant * evaluate::xhypot_d_d (constant * args) {
+  _ARD0 (d1);
+  _ARD1 (d2);
+  _DEFD ();
+  _RETD (xhypot (d1, d2));
+}
+
+constant * evaluate::xhypot_c_c (constant * args) {
+  _ARC0 (c1);
+  _ARC1 (c2);
+  _DEFD ();
+  _RETD (xhypot (*c1, *c2));
+}
+
+constant * evaluate::xhypot_c_d (constant * args) {
+  _ARC0 (c1);
+  _ARD1 (d2);
+  _DEFD ();
+  _RETD (xhypot (*c1, d2));
+}
+
+constant * evaluate::xhypot_d_c (constant * args) {
+  _ARD0 (d1);
+  _ARC1 (c2);
+  _DEFD ();
+  _RETD (xhypot (d1, *c2));
+}
+
+constant * evaluate::xhypot_v_d (constant * args) {
+  _ARV0 (v1);
+  _ARD1 (d2);
+  _DEFV ();
+  _RETV (xhypot (*v1, d2));
+}
+
+constant * evaluate::xhypot_d_v (constant * args) {
+  _ARD0 (d1);
+  _ARV1 (v2);
+  _DEFV ();
+  _RETV (xhypot (d1, *v2));
+}
+
+constant * evaluate::xhypot_v_c (constant * args) {
+  _ARV0 (v1);
+  _ARC1 (c2);
+  _DEFV ();
+  _RETV (xhypot (*v1, *c2));
+}
+
+constant * evaluate::xhypot_c_v (constant * args) {
+  _ARC0 (c1);
+  _ARV1 (v2);
+  _DEFV ();
+  _RETV (xhypot (*c1, *v2));
+}
+
+constant * evaluate::xhypot_v_v (constant * args) {
+  _ARV0 (v1);
+  _ARV1 (v2);
+  _DEFV ();
+  _RETV (xhypot (*v1, *v2));
 }
 
 // ************** conjugate complex **********************

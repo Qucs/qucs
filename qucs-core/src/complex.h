@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.26 2007-04-26 16:48:25 ela Exp $
+ * $Id: complex.h,v 1.27 2007-05-03 19:00:57 ela Exp $
  *
  */
 
@@ -52,6 +52,7 @@ nr_double_t    abs (const nr_double_t);
 nr_double_t signum (const nr_double_t);
 nr_double_t   sign (const nr_double_t);
 nr_double_t   sinc (const nr_double_t);
+nr_double_t limexp (const nr_double_t);
 
 class complex
 {
@@ -80,6 +81,7 @@ class complex
   friend nr_double_t     dB (const complex);
   friend complex       sqrt (const complex);
   friend complex        exp (const complex);
+  friend complex     limexp (const complex);
   friend complex         ln (const complex);
   friend complex      log10 (const complex);
   friend complex       log2 (const complex);
@@ -113,6 +115,8 @@ class complex
   friend complex       sign (const complex);
   friend complex       sinc (const complex);
   friend nr_double_t xhypot (const complex, const complex);
+  friend nr_double_t xhypot (const nr_double_t, const complex);
+  friend nr_double_t xhypot (const complex, const nr_double_t);
   friend complex       ceil (const complex);
   friend complex        fix (const complex);
   friend complex      round (const complex);

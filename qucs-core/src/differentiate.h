@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.h,v 1.5 2007-04-28 00:09:19 ela Exp $
+ * $Id: differentiate.h,v 1.6 2007-05-03 19:01:00 ela Exp $
  *
  */
 
@@ -75,6 +75,8 @@ class differentiate
   static node * arsech	     (application *, char *);
   static node * arcosech     (application *, char *);
   static node * ifthenelse   (application *, char *);
+  static node * xhypot       (application *, char *);
+  static node * limexp       (application *, char *);
 
  private:
   static node * plus_reduce  (node *, node *);
@@ -87,6 +89,7 @@ class differentiate
   static node * sqrt_reduce  (node *);
   static node * sqr_reduce   (node *);
   static node * app_reduce   (char *, node *, node *);
+  static node * hypot_reduce (node *, node *);
 };
 
 // Type of derivative function.
