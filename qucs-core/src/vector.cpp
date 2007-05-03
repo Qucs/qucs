@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.33 2007/04/26 16:48:25 ela Exp $
+ * $Id: vector.cpp,v 1.34 2007/05/03 19:01:05 ela Exp $
  *
  */
 
@@ -272,6 +272,47 @@ vector sign (vector v) {
   return result;
 }
 
+vector xhypot (vector v, const complex z) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (xhypot (v.get(i), z), i);
+  return result;
+}
+
+vector xhypot (vector v, const nr_double_t d) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (xhypot (v.get(i), d), i);
+  return result;
+}
+
+vector xhypot (const complex z, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (xhypot (z, v.get (i)), i);
+  return result;
+}
+
+vector xhypot (const nr_double_t d, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (xhypot (d, v.get (i)), i);
+  return result;
+}
+
+vector xhypot (vector v1, vector v2) {
+  int j, i, n, len, len1 = v1.getSize (), len2 = v2.getSize ();
+  if (len1 >= len2) {
+    assert (len1 % len2 == 0);
+    len = len1;
+  } else {
+    assert (len2 % len1 == 0);
+    len = len2;
+  }
+  vector res (len);
+  for (j = i = n = 0; n < len; n++) {
+    res (n) = xhypot (v1 (i), v2 (j));
+    if (++i >= len1) i = 0; if (++j >= len2) j = 0;
+  }
+  return res;
+}
+
 vector sinc (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (sinc (v.get (i)), i);
@@ -333,6 +374,12 @@ vector exp (vector v) {
   return result;
 }
 
+vector limexp (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (limexp (v.get (i)), i);
+  return result;
+}
+
 vector ln (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (ln (v.get (i)), i);
@@ -387,7 +434,7 @@ vector pow (vector v1, vector v2) {
   vector res (len);
   for (j = i = n = 0; n < len; n++) {
     res (n) = pow (v1 (i), v2 (j));
-    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+    if (++i >= len1) i = 0; if (++j >= len2) j = 0;
   }
   return res;
 }
@@ -1111,7 +1158,7 @@ vector arctan2 (vector y, vector x) {
   vector res (len);
   for (j = i = n = 0; n < len; n++) {
     res (n) = arctan2 (y (i), x (j));
-    if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
+    if (++i >= len1) i = 0; if (++j >= len2) j = 0;
   }
   return res;
 }

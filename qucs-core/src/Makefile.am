@@ -127,7 +127,7 @@ noinst_PROGRAMS = gperfappgen
 
 gperfappgen_SOURCES = gperfappgen.cpp
 
-gperfapphash.gph: gperfappgen
+gperfapphash.gph: gperfappgen$(EXEEXT)
 	./$< > $@
 
 gperfapphash.cpp: gperfapphash.gph

@@ -1,7 +1,7 @@
 /*
  * consts.h - global math constant header file
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: consts.h,v 1.4 2006/03/13 08:26:25 raimi Exp $
+ * $Id: consts.h,v 1.5 2007/05/03 19:00:58 ela Exp $
  *
  */
 
@@ -65,6 +65,9 @@
 #endif
 #ifndef M_SQRTPI
 #define M_SQRTPI  1.77245385090551602729816748334
+#endif
+#ifndef M_LIMEXP
+#define M_LIMEXP  80.0
 #endif
 
 #endif /* __CONSTS_H__ */

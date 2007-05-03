@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.55 2007/04/28 09:40:44 ela Exp $
+ * $Id: equation.cpp,v 1.56 2007/05/03 19:01:00 ela Exp $
  *
  */
 
@@ -61,6 +61,7 @@ using namespace qucs;
 constant::constant () : node (CONSTANT) {
   type = TAG_UNKNOWN;
   dataref = false;
+  d = 0.0;
   setType (type);
 }
 
@@ -68,6 +69,7 @@ constant::constant () : node (CONSTANT) {
 constant::constant (int tag) : node (CONSTANT) {
   type = tag;
   dataref = false;
+  d = 0.0;
   setType (type);
 }
 
@@ -76,6 +78,7 @@ constant::constant (int tag) : node (CONSTANT) {
 constant::constant (const constant & o) : node (o) {
   type = o.type;
   dataref = o.dataref;
+  d = 0.0;
   setType (type);
   switch (type) {
   case TAG_BOOLEAN:
@@ -445,11 +448,13 @@ node * assignment::differentiate (char * derivative) {
 void assignment::mul (assignment * f) {
   node * factor = f->body->recreate ();
   if (isZero (body) || isZero (factor)) {
-    delete body;
+    delete body; delete factor;
     defCon (body, 0);
   } else if (isOne (body)) {
+    delete body;
     body = factor;
   } else if (isOne (factor)) {
+    delete factor;
     body = body;
   } else {
     application * mul = new application ("*", 2);
@@ -483,11 +488,13 @@ void assignment::mulref (assignment * f) {
 void assignment::add (assignment * f) {
   node * factor = f->body->recreate ();
   if (isZero (body) && isZero (factor)) {
-    delete body;
+    delete body; delete factor;
     defCon (body, 0);
   } else if (isZero (body)) {
+    delete body;
     body = factor;
   } else if (isZero (factor)) {
+    delete factor;
     body = body;
   } else {
     application * add = new application ("+", 2);

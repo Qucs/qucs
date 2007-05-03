@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.15 2007/05/02 20:50:08 ela Exp $
+ * $Id: applications.h,v 1.16 2007/05/03 19:00:55 ela Exp $
  *
  */
 
@@ -150,6 +150,25 @@ struct application_t eqn::applications[] = {
   { "^", TAG_VECTOR,  evaluate::power_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "^", TAG_VECTOR,  evaluate::power_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
+  { "hypot", TAG_DOUBLE,  evaluate::xhypot_d_d, 2,
+    { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "hypot", TAG_DOUBLE, evaluate::xhypot_c_c, 2,
+    { TAG_COMPLEX, TAG_COMPLEX } },
+  { "hypot", TAG_DOUBLE, evaluate::xhypot_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "hypot", TAG_DOUBLE, evaluate::xhypot_d_c, 2,
+    { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "hypot", TAG_VECTOR,  evaluate::xhypot_v_d, 2,
+    { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "hypot", TAG_VECTOR,  evaluate::xhypot_d_v, 2,
+    { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "hypot", TAG_VECTOR,  evaluate::xhypot_v_c, 2,
+    { TAG_VECTOR,  TAG_COMPLEX } },
+  { "hypot", TAG_VECTOR,  evaluate::xhypot_c_v, 2,
+    { TAG_COMPLEX, TAG_VECTOR  } },
+  { "hypot", TAG_VECTOR,  evaluate::xhypot_v_v, 2,
+    { TAG_VECTOR,  TAG_VECTOR  } },
+
   { "real", TAG_DOUBLE,  evaluate::real_d, 1, { TAG_DOUBLE  } },
   { "real", TAG_DOUBLE,  evaluate::real_c, 1, { TAG_COMPLEX } },
   { "real", TAG_VECTOR,  evaluate::real_v, 1, { TAG_VECTOR  } },
@@ -224,6 +243,10 @@ struct application_t eqn::applications[] = {
   { "exp", TAG_DOUBLE,  evaluate::exp_d, 1, { TAG_DOUBLE  } },
   { "exp", TAG_COMPLEX, evaluate::exp_c, 1, { TAG_COMPLEX } },
   { "exp", TAG_VECTOR,  evaluate::exp_v, 1, { TAG_VECTOR  } },
+
+  { "limexp", TAG_DOUBLE,  evaluate::limexp_d, 1, { TAG_DOUBLE  } },
+  { "limexp", TAG_COMPLEX, evaluate::limexp_c, 1, { TAG_COMPLEX } },
+  { "limexp", TAG_VECTOR,  evaluate::limexp_v, 1, { TAG_VECTOR  } },
 
   { "ln", TAG_COMPLEX, evaluate::ln_d, 1, { TAG_DOUBLE  } },
   { "ln", TAG_COMPLEX, evaluate::ln_c, 1, { TAG_COMPLEX } },

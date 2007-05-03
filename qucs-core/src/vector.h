@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.26 2007/04/26 16:48:25 ela Exp $
+ * $Id: vector.h,v 1.27 2007/05/03 19:01:07 ela Exp $
  *
  */
 
@@ -115,11 +115,17 @@ class vector : public object
   friend vector arctan2 (vector, vector);
   friend vector dbm2w   (vector);
   friend vector w2dbm   (vector);
+  friend vector xhypot  (vector, vector);
+  friend vector xhypot  (vector, const complex);
+  friend vector xhypot  (vector, const nr_double_t);
+  friend vector xhypot  (const complex, vector);
+  friend vector xhypot  (const nr_double_t, vector);
 
   // overloaded math functions
   friend vector abs     (vector);
   friend vector log10   (vector);
   friend vector exp     (vector);
+  friend vector limexp  (vector);
   friend vector sqrt    (vector);
   friend vector sin     (vector);
   friend vector arcsin  (vector);
