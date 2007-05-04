@@ -11749,6 +11749,10 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
         <source>Catalan</source>
         <translation>Katalanisch</translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

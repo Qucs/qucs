@@ -9783,6 +9783,10 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

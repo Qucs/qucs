@@ -55,6 +55,8 @@ struct tQucsSettings {
   QString LibDir;
   QString AscoDir;
 
+  unsigned int NodeWiring;
+
   // registered filename extensions with program to open the file
   QStringList FileTypes;
 };

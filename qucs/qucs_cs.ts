@@ -11708,6 +11708,10 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
         <source>Catalan</source>
         <translation>Katalánsky</translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>
