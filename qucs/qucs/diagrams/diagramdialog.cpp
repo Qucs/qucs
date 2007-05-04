@@ -616,8 +616,9 @@ void DiagramDialog::slotReadVars(int)
   }
 
   QString Line, tmp, Var;
-  QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();   // read whole data file
+  // reading the file as a whole improves speed very much, also using
+  // a QByteArray rather than a QString
+  QByteArray FileString = file.readAll();
   file.close();
 
   ChooseVars->clear();
@@ -626,7 +627,8 @@ void DiagramDialog::slotReadVars(int)
   if(i > 0)
   do {
     j = FileString.find('>', i);
-    Line = FileString.mid(i, j-i);
+    for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
+    Line.truncate(j-i);
     i = FileString.find('<', j)+1;
 
     Var = Line.section(' ', 1, 1).remove('>');
