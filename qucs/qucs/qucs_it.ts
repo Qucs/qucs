@@ -10235,6 +10235,10 @@ fine di aprirli utilizzando il programma appropriato.</translation>
         <source>Catalan</source>
         <translation>Catalano</translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

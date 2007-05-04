@@ -37,6 +37,7 @@
 #include <qlistview.h>
 #include <qcombobox.h>
 #include <qmessagebox.h>
+#include <qcheckbox.h>
 
 
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
@@ -54,7 +55,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,6,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,6,2,6,6);
 
   gp->addWidget(new QLabel(tr("Font (set after reload):"), Tab1), 0,0);
   FontButton = new QPushButton(Tab1);
@@ -97,6 +98,10 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
   gp->addWidget(new QLabel(tr("text editor:"), Tab1) ,4,0);
   editorEdit = new QLineEdit(Tab1);
   gp->addWidget(editorEdit,4,1);
+
+  gp->addWidget(new QLabel(tr("start wiring when clicking open node:"), Tab1) ,5,0);
+  checkWiring = new QCheckBox(Tab1);
+  gp->addWidget(checkWiring,5,1);
 
 
   t->addTab(Tab1, tr("Settings"));
@@ -226,6 +231,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
   BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
   undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
   editorEdit->setText(QucsSettings.Editor);
+  checkWiring->setChecked(QucsSettings.NodeWiring);
 
   for(int z=LanguageCombo->count()-1; z>=0; z--)
     if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
@@ -367,6 +373,10 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.Editor = editorEdit->text();
     changed = true;
   }
+  if(QucsSettings.NodeWiring != checkWiring->isChecked()) {
+    QucsSettings.NodeWiring = checkWiring->isChecked();
+    changed = true;
+  }
 
   QListViewItem *Item;
   QucsSettings.FileTypes.clear();
@@ -417,6 +427,7 @@ void QucsSettingsDialog::slotDefaultValues()
 
   undoNumEdit->setText("20");
   editorEdit->setText(QucsSettings.BinDir + "qucsedit");
+  checkWiring->setChecked(false);
 }
 
 // -----------------------------------------------------------
