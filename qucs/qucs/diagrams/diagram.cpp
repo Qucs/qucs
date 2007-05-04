@@ -724,8 +724,10 @@ void Diagram::recalcGraphData()
       p = pD->Points;
       for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
         x = *(p++);
-        if(x > xAxis.max) xAxis.max = x;
-        if(x < xAxis.min) xAxis.min = x;
+	if(finite(x)) {
+	  if(x > xAxis.max) xAxis.max = x;
+	  if(x < xAxis.min) xAxis.min = x;
+	}
       }
     }
 
@@ -735,8 +737,10 @@ void Diagram::recalcGraphData()
         p = pD->Points;
         for(z=pD->count; z>0; z--) { // check y coordinates (2. dimension)
           y = *(p++);
-          if(y > yAxis.max) yAxis.max = y;
-          if(y < yAxis.min) yAxis.min = y;
+	  if(finite(y)) {
+	    if(y > yAxis.max) yAxis.max = y;
+	    if(y < yAxis.min) yAxis.min = y;
+	  }
         }
       }
     }
