@@ -9685,6 +9685,10 @@ otworzyć ten plik odpowiednim programem.</translation>
         <source>Catalan</source>
         <translation>kataloński</translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

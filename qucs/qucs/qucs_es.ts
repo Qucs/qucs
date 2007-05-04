@@ -9650,6 +9650,10 @@ abrir los archivos con el programa apropiado.</translation>
         <source>Catalan</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>start wiring when clicking open node:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsTranscalc</name>

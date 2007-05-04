@@ -27,6 +27,7 @@
 class QListView;
 class QListViewItem;
 class QLineEdit;
+class QCheckBox;
 class QVBoxLayout;
 class QPushButton;
 class QComboBox;
@@ -61,6 +62,7 @@ public:
   QucsApp *App;
 
   QFont Font;
+  QCheckBox *checkWiring;
   QComboBox *LanguageCombo;
   QPushButton *FontButton, *BGColorButton;
   QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program;

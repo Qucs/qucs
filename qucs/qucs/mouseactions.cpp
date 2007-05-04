@@ -1034,6 +1034,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       return;
 
     case isNode:
+      if (QucsSettings.NodeWiring) {
       MAx1 = 0;   // paint wire corner first up, then left/right
       MAx3 = focusElement->cx;  // works even if node is not on grid
       MAy3 = focusElement->cy;
@@ -1053,6 +1054,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       QucsMain->insWire->setOn(true);
       QucsMain->insWire->blockSignals(false);
       return;
+      }
   }
 
 
