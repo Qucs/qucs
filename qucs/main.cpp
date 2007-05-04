@@ -91,6 +91,8 @@ bool loadSettings()
 	QucsSettings.VHDL_Types.setNamedColor(Line.section(",", 5,5));
 	QucsSettings.VHDL_Attributes.setNamedColor(Line.section(",", 6,6));
     }
+    else if(Setting == "NodeWiring") {
+	QucsSettings.NodeWiring = Line.toInt(&ok); }
   }
 
   file.close();
@@ -126,7 +128,8 @@ bool saveApplSettings(QucsApp *qucs)
     << QucsSettings.VHDL_Real.name() << ","
     << QucsSettings.VHDL_Character.name() << ","
     << QucsSettings.VHDL_Types.name() << ","
-    << QucsSettings.VHDL_Attributes.name() << "\n";
+    << QucsSettings.VHDL_Attributes.name() << "\n"
+    << "NodeWiring=" << QucsSettings.NodeWiring << "\n";
 
   QStringList::Iterator it = QucsSettings.FileTypes.begin();
   while(it != QucsSettings.FileTypes.end())
@@ -461,6 +464,7 @@ int main(int argc, char *argv[])
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;
   QucsSettings.maxUndo = 20;
+  QucsSettings.NodeWiring = 0;
 
   // is application relocated?
   char * var = getenv ("QUCSDIR");
