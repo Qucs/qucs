@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Mutual inductors with virtually unlimited number of couplings.
 - Make 'time' and 'frequency' variables available in equations during
   AC, SP and transient simulation.
 - Allow engineering notation in equations.

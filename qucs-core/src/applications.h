@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.16 2007-05-03 19:00:55 ela Exp $
+ * $Id: applications.h,v 1.17 2007-05-05 09:28:40 ela Exp $
  *
  */
 
@@ -320,7 +320,7 @@ struct application_t eqn::applications[] = {
   { "cosh", TAG_COMPLEX, evaluate::cosh_c, 1, { TAG_COMPLEX } },
   { "cosh", TAG_VECTOR,  evaluate::cosh_v, 1, { TAG_VECTOR  } },
 
-  { "arcosh", TAG_DOUBLE,  evaluate::arcosh_d, 1, { TAG_DOUBLE  } },
+  { "arcosh", TAG_COMPLEX, evaluate::arcosh_d, 1, { TAG_DOUBLE  } },
   { "arcosh", TAG_COMPLEX, evaluate::arcosh_c, 1, { TAG_COMPLEX } },
   { "arcosh", TAG_VECTOR,  evaluate::arcosh_v, 1, { TAG_VECTOR  } },
 
@@ -344,7 +344,7 @@ struct application_t eqn::applications[] = {
   { "sech", TAG_COMPLEX, evaluate::sech_c, 1, { TAG_COMPLEX } },
   { "sech", TAG_VECTOR,  evaluate::sech_v, 1, { TAG_VECTOR  } },
 
-  { "arsech", TAG_DOUBLE,  evaluate::arsech_d, 1, { TAG_DOUBLE  } },
+  { "arsech", TAG_COMPLEX, evaluate::arsech_d, 1, { TAG_DOUBLE  } },
   { "arsech", TAG_COMPLEX, evaluate::arsech_c, 1, { TAG_COMPLEX } },
   { "arsech", TAG_VECTOR,  evaluate::arsech_v, 1, { TAG_VECTOR  } },
 

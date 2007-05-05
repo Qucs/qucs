@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.59 2007-05-03 19:01:01 ela Exp $
+ * $Id: evaluate.cpp,v 1.60 2007-05-05 09:28:40 ela Exp $
  *
  */
 
@@ -1590,8 +1590,8 @@ constant * evaluate::arcosech_v (constant * args) {
 // ********* area cosine hyperbolicus ************
 constant * evaluate::arcosh_d (constant * args) {
   _ARD0 (d1);
-  _DEFD ();
-  _RETD (log (d1 + sqrt (d1 * d1 - 1)));
+  _DEFC ();
+  _RETC (arcosh (complex (d1)));
 }
 
 constant * evaluate::arcosh_c (constant * args) {
@@ -1609,8 +1609,8 @@ constant * evaluate::arcosh_v (constant * args) {
 // ********* area secans hyperbolicus ***********
 constant * evaluate::arsech_d (constant * args) {
   _ARD0 (d1);
-  _DEFD ();
-  _RETD (log ((1 + sqrt (1 - d1 * d1)) / d1));
+  _DEFC ();
+  _RETC (arsech (complex (d1)));
 }
 
 constant * evaluate::arsech_c (constant * args) {

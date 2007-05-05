@@ -1,3 +1,10 @@
+2007-05-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: arcosh() and arsech() with real arguments
+	deliver now complex results.
+
+	* complex.cpp: Fixed sqrt() result for Im{z}=+-0.
+
 2007-05-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* differentiate.cpp: Fixed loads of memory leaks.  Added
