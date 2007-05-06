@@ -51,6 +51,8 @@ Component::Component()
 
   cx = 0;
   cy = 0;
+  tx = 0;
+  ty = 0;
 
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
