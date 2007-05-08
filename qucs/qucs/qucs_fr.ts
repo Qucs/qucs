@@ -1134,7 +1134,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Bibliothèque créée.</translation>
     </message>
     <message>
@@ -1200,6 +1200,10 @@ Bibliothèque créée.</translation>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>Bibliothèque &quot;%1&quot; protégée.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5136,6 +5140,26 @@ Invocation :  qucsedit [-r] fichier
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">Erreur : impossible de lire le fichier Spice &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">ERREUR : Impossible de lancer QucsConv !</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Conversion…</translation>
     </message>
 </context>
 <context>

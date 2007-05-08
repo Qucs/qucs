@@ -1,3 +1,8 @@
+2007-05-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilogfile.cpp, vhdlfile.cpp, spicefile.cpp (createSubNetlist):
+	File components can now create the netlist parts on their own.
+
 2007-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqndefined.cpp (EqnDefined): Added new equation defined

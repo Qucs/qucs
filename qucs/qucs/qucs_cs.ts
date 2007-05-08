@@ -1196,7 +1196,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>Knihovna úspěšně vytvořena.</translation>
+        <translation type="obsolete">Knihovna úspěšně vytvořena.</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
@@ -1253,6 +1253,10 @@ Successfully created library.</source>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>Chybí práva ke smazání knihovny &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5326,6 +5330,26 @@ Použití:  qucsedit [-r] soubor
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">CHYBA: Nelze otevřít SPICE soubor &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">CHYBA: Program QucsConv nelze spustit!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Konverze ...</translation>
     </message>
 </context>
 <context>

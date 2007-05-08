@@ -1136,7 +1136,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Biblioteca creada amb éxito.</translation>
     </message>
     <message>
@@ -1202,6 +1202,10 @@ Biblioteca creada amb éxito.</translation>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>Sin permisos para borrar la biblioteca &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5108,6 +5112,26 @@ Use:  qucsedit [-r] fitxer
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">ERROR: No se pudo abrir el fitxer SPICE &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">ERROR: ¡No puedo arrancar QucsConv!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Convirtiendo...</translation>
     </message>
 </context>
 <context>

@@ -20,8 +20,15 @@
 
 #include "component.h"
 
+#include <qobject.h>
+#include <qdatetime.h>
 
-class SpiceFile : public MultiViewComponent  {
+class QProcess;
+class QTextStream;
+class QString;
+
+class SpiceFile : public QObject, public MultiViewComponent  {
+   Q_OBJECT
 public:
   SpiceFile();
  ~SpiceFile() {};
@@ -29,10 +36,27 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool withSim;
+  bool createSubNetlist(QTextStream *);
+  QString getErrorText() { return ErrText; }
+
+private:
+  bool makeSubcircuit;
+  bool insertSim;
+  bool changed;
+  QProcess * QucsConv;
+  QString NetText, ErrText, NetLine, SimText;
+  QTextStream *outstream, *filstream;
+  QDateTime lastLoaded;
+  bool recreateSubNetlist(QString *, QString *);
 
 protected:
   QString netlist();
   void createSymbol();
+
+private slots:
+  void slotGetNetlist();
+  void slotGetError();
+  void slotExited();
 };
 
 #endif
