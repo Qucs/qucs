@@ -1196,7 +1196,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Libreria creata con successo.</translation>
     </message>
     <message>
@@ -1263,6 +1263,10 @@ Scrittura della nuova libreria fallita!</translation>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>La cancellazione della libreria non è permessa.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5278,6 +5282,26 @@ Usage:  qucsedit [-r] file
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">ERRORE: Impossibile aprire file SPICE &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">ERRORE: Impossibile avviare QucsConv!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Conversione...</translation>
     </message>
 </context>
 <context>

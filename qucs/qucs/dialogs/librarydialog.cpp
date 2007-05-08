@@ -38,6 +38,7 @@
 #include <qscrollview.h>
 #include <qvbuttongroup.h>
 
+extern QStringList StringList;
 
 LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
 			: QDialog(App_, 0, TRUE, Qt::WDestructiveClose)
@@ -205,16 +206,17 @@ void LibraryDialog::slotNext()
 
 
   int countInit = 0;
-  bool Success = true;
+  bool Success = true, ret;
   QStringList Collect;
   QStringList::Iterator it = Descriptions.begin();
+  QString tmp;
+  QTextStream ts(&tmp, IO_WriteOnly);
   for(p = BoxList.first(); p != 0; p = BoxList.next())
     if(p->isChecked()) {
       Stream << "<Component " + p->text().section('.',0,0) + ">\n"
              << "  <Description>\n"
              << *(it++)
-             << "\n  </Description>\n"
-             << "  <Model>";
+             << "\n  </Description>\n";
 
       Schematic *Doc = new Schematic(0, QucsWorkDir.filePath(p->text()));
       if(!Doc->loadDocument()) {  // load document if possible
@@ -223,11 +225,56 @@ void LibraryDialog::slotNext()
         break;
       }
       Doc->DocName = NameEdit->text() + "_" + p->text();
-      Success = Doc->createSubNetlist(&Stream, countInit, Collect, ErrText, -1);
-    
-      Stream << "  </Model>\n"
-             << "  <Symbol>\n";
+      Success = false;
 
+      // save analog model
+      tmp = "";
+      countInit = 0;
+      Collect.clear();
+      StringList.clear();
+      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, -1);
+      if(ret) {
+	Stream << "  <Model>";
+	Stream << tmp;
+	Stream << "  </Model>\n";
+	Success = true;
+      } else {
+	ErrText->insert("\n");
+      }
+
+      // save verilog model
+      tmp = "";
+      countInit = 0;
+      Collect.clear();
+      StringList.clear();
+      Doc->isVerilog = true;
+      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, 0);
+      if(ret) {
+	Stream << "  <VerilogModel>";
+	Stream << tmp;
+	Stream << "  </VerilogModel>\n";
+	Success = true;
+      } else {
+	ErrText->insert("\n");
+      }
+
+      // save vhdl model
+      tmp = "";
+      countInit = 0;
+      Collect.clear();
+      StringList.clear();
+      Doc->isVerilog = false;
+      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, 0);
+      if(ret) {
+	Stream << "  <VHDLModel>";
+	Stream << tmp;
+	Stream << "  </VHDLModel>\n";
+	Success = true;
+      } else {
+	ErrText->insert("\n");
+      }
+
+      Stream << "  <Symbol>\n";
       Doc->createSubcircuitSymbol();
       Painting *pp;
       for(pp = Doc->SymbolPaints.first(); pp != 0; pp = Doc->SymbolPaints.next())
@@ -246,5 +293,5 @@ void LibraryDialog::slotNext()
     return;
   }
 
-  ErrText->append(tr("\nSuccessfully created library."));
+  ErrText->append(tr("Successfully created library."));
 }

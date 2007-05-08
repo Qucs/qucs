@@ -256,7 +256,6 @@ void SimMessage::slotReadSpiceNetlist()
   }
 }
 
-
 // ------------------------------------------------------------------------
 void SimMessage::slotFinishSpiceNetlist()
 {

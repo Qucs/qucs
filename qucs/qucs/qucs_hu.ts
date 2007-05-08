@@ -1140,7 +1140,7 @@ fizikai tulajdonságait számítja ki.</translation>
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Az alkatrész katalógus létrehozása sikeres.</translation>
     </message>
     <message>
@@ -1207,6 +1207,10 @@ Az alkatrész katalógus írása sikertelen!</translation>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>Nincs joga a &quot;%1&quot; alkatrész katalógus törléséhez. </translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5106,6 +5110,26 @@ Digitális szimuláció</translation>
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">HIBA: QucsConv nem indítható!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Konvetálás...</translation>
     </message>
 </context>
 <context>

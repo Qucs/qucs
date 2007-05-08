@@ -24,7 +24,7 @@
 
 noinst_LIBRARIES = libcomponents.a
 
-MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h
+MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \

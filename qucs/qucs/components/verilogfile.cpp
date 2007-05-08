@@ -212,3 +212,38 @@ void Verilog_File::createSymbol()
   tx = x1+4;
   ty = y2+4;
 }
+
+// -------------------------------------------------------
+bool Verilog_File::createSubNetlist(QTextStream *stream)
+{
+  ErrText = "";
+
+  // check filename
+  QString FileName = Props.getFirst()->Value;
+  if(FileName.isEmpty()) {
+    ErrText += QObject::tr("ERROR: No file name in %1 component \"%2\".").
+      arg(Model).arg(Name);
+    return false;
+  }
+
+  // construct full filename
+  QFileInfo Info(FileName);
+  if(Info.isRelative())
+    FileName = QucsWorkDir.filePath(FileName);
+
+  // open file for reading
+  QFile f(FileName);
+  if(!f.open(IO_ReadOnly)) {
+    ErrText += QObject::tr("ERROR: Cannot open %1 file \"%2\".").
+      arg(Model).arg(FileName);
+    return false;
+  }
+
+  // write the whole Verilog file into the netlist output
+  QByteArray FileContent = f.readAll();
+  f.close();
+  (*stream) << '\n';
+  stream->writeRawBytes(FileContent.data(), FileContent.size());
+  (*stream) << '\n';
+  return true;
+}
