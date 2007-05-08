@@ -1,3 +1,11 @@
+2007-05-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/librarydialog.cpp (slotNext): Beside analog models now
+	also verilog and vhdl models are saved.
+
+	* schematic_file.cpp (giveNodeNames): Using new file component
+	netlist creators.
+
 2007-05-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/qucssettingsdialog.cpp (QucsSettingsDialog): Made "start
