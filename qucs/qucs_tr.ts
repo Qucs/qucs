@@ -1073,7 +1073,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Kütüphane basarıyla olusturuldu.</translation>
     </message>
     <message>
@@ -1139,6 +1139,10 @@ Kütüphane basarıyla olusturuldu.</translation>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>&quot;%1&quot; kütüphanesini silmek için izin yok.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4954,6 +4958,26 @@ Kullanım:  qucsedit [-r] kütük
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">HATA: SPICE kütügü &quot;%1&quot; açılamıyor.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">HATA: QucsConv açılamıyor !</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Çevriliyor ...</translation>
     </message>
 </context>
 <context>

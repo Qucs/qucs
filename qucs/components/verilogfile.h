@@ -28,12 +28,16 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 
+  bool createSubNetlist(QTextStream *);
+  QString getErrorText() { return ErrText; }
+
 protected:
   QString verilogCode(int);
   void createSymbol();
   QString loadFile();
 
   QString EntityName;
+  QString ErrText;
 };
 
 #endif

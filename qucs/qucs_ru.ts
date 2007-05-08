@@ -1192,7 +1192,7 @@
     <message>
         <source>
 Successfully created library.</source>
-        <translation>
+        <translation type="obsolete">
 Библиотека успешно создана.</translation>
     </message>
     <message>
@@ -1258,6 +1258,10 @@ Successfully created library.</source>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
         <translation>Нет прав на удаление библиотеки &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Successfully created library.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5358,6 +5362,26 @@ Usage:  qucsedit [-r] file
     <message>
         <source>Equation Defined Device</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished">ОШИБКА: Не удалось открыть SPICE-файл &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished">ОШИБКА: Не удалось запустить программу QucsConv!</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished">Преобразование ...</translation>
     </message>
 </context>
 <context>

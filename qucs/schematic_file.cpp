@@ -32,6 +32,8 @@
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
+#include "components/vhdlfile.h"
+#include "components/verilogfile.h"
 #include "components/libcomp.h"
 
 
@@ -893,14 +895,21 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         continue;   // insert each spice component just one time
 
       StringList.append(s);
+#if 0
       s += '"'+pc->Props.next()->Value;
       if(pc->Props.next()->Value == "yes")  s = "SPICE \""+s;
       else  s = "SPICEo\""+s;
       Collect.append(s);
+#else
+      SpiceFile *sf = (SpiceFile*)pc;
+      bool ret = sf->createSubNetlist(stream);
+      ErrText->insert(sf->getErrorText());
+      if(!ret) return false;
+#endif
       continue;
     }
 
-    if(pc->Model == "VHDL" || pc->Model == "Verilog" ) {
+    if(pc->Model == "VHDL" || pc->Model == "Verilog") {
       if(isVerilog && pc->Model == "VHDL")
 	continue;
       if(!isVerilog && pc->Model == "Verilog")
@@ -913,9 +922,10 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         return false;
       }
       if(StringList.findIndex(s) >= 0)
-        continue;   // insert each vhdl component just one time
+        continue;   // insert each vhdl/verilog component just one time
       StringList.append(s);
 
+#if 0
       QFileInfo Info(s);
       if(Info.isRelative())
         s = QucsWorkDir.filePath(s);
@@ -933,6 +943,20 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       s = streamVHDL.read();
       f.close();
       (*stream) << '\n' << s << '\n';
+#else
+      if(pc->Model == "VHDL") {
+	VHDL_File *vf = (VHDL_File*)pc;
+	bool ret = vf->createSubNetlist(stream);
+	ErrText->insert(vf->getErrorText());
+	if(!ret) return false;
+      }
+      if(pc->Model == "Verilog") {
+	Verilog_File *vf = (Verilog_File*)pc;
+	bool ret = vf->createSubNetlist(stream);
+	ErrText->insert(vf->getErrorText());
+	if(!ret) return false;
+      }      
+#endif
       continue;
     }
   }

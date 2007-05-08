@@ -22,6 +22,7 @@
 #include "mouseactions.h"
 #include "components/component.h"
 #include "components/spicedialog.h"
+#include "components/spicefile.h"
 #include "components/optimizedialog.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
