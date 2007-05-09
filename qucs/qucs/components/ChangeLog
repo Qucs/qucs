@@ -1,3 +1,8 @@
+2007-05-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* libcomp.cpp: Enabled library component to emit analog as well as
+	digital netlist code.
+
 2007-05-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilogfile.cpp, vhdlfile.cpp, spicefile.cpp (createSubNetlist):

@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- handle subcircuits in library components as well as other file
+  references correctly
 - simulation messages are sometimes swallowed by the output parser due
   to the concept how the progress bar is extracted, fix this
 - check if -fno-rtti can be used

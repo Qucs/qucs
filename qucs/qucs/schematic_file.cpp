@@ -875,11 +875,19 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
         continue;   // insert each subcircuit just one time
 
       StringList.append(s);
-      r = ((LibComp*)pc)->outputSubNetlist(stream);
+      if(NumPorts < 0)
+	r = ((LibComp*)pc)->createSubNetlist(stream);
+      else {
+	if(isVerilog)
+	  r = ((LibComp*)pc)->createSubNetlist_Verilog(stream);
+	else
+	  r = ((LibComp*)pc)->createSubNetlist_VHDL(stream);
+      }
       if(!r) {
-        ErrText->insert(
-        QObject::tr("ERROR: Cannot load library component \"%1\".").arg(pc->Name));
-        return false;
+	ErrText->insert(
+	    QObject::tr("ERROR: Cannot load library component \"%1\".").
+	    arg(pc->Name));
+	return false;
       }
       continue;
     }
@@ -902,9 +910,9 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       Collect.append(s);
 #else
       SpiceFile *sf = (SpiceFile*)pc;
-      bool ret = sf->createSubNetlist(stream);
+      r = sf->createSubNetlist(stream);
       ErrText->insert(sf->getErrorText());
-      if(!ret) return false;
+      if(!r) return false;
 #endif
       continue;
     }
@@ -946,15 +954,15 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 #else
       if(pc->Model == "VHDL") {
 	VHDL_File *vf = (VHDL_File*)pc;
-	bool ret = vf->createSubNetlist(stream);
+	r = vf->createSubNetlist(stream);
 	ErrText->insert(vf->getErrorText());
-	if(!ret) return false;
+	if(!r) return false;
       }
       if(pc->Model == "Verilog") {
 	Verilog_File *vf = (Verilog_File*)pc;
-	bool ret = vf->createSubNetlist(stream);
+	r = vf->createSubNetlist(stream);
 	ErrText->insert(vf->getErrorText());
-	if(!ret) return false;
+	if(!r) return false;
       }      
 #endif
       continue;
