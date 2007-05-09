@@ -1,3 +1,11 @@
+2007-05-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_uk.ts, qtgeneric_uk.ts: Updated Ukrainian translations.
+	Thanks to Hse?
+
+	* schematic_file.cpp (giveNodeNames): Allow library component to
+	emit analog as well as digital netlist code.
+
 2007-05-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/librarydialog.cpp (slotNext): Beside analog models now
