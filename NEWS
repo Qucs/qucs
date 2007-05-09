@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * libraries can now contain analog as well as digital subcircuits
  * support for symbolically defined devices
  * new components: exponential voltage and current source
  * added Verilog file component
