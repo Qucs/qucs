@@ -36,6 +36,7 @@ extern QDir QucsWorkDir;
 
 LibComp::LibComp()
 {
+  Type = isComponent;   // both analog and digital
   Description = QObject::tr("Component taken from Qucs library");
 
   Ports.append(new Port(0,  0));  // dummy port because of being device
@@ -200,7 +201,7 @@ int LibComp::loadSymbol()
 }
 
 // -------------------------------------------------------
-bool LibComp::outputSubNetlist(QTextStream *stream)
+bool LibComp::createSubNetlist(QTextStream *stream)
 {
   int r;
   QString FileString;
@@ -208,6 +209,39 @@ bool LibComp::outputSubNetlist(QTextStream *stream)
   if(r < 0)  return false;
   (*stream) << "\n" << FileString << "\n";
   return true;
+}
+
+// -------------------------------------------------------
+bool LibComp::createSubNetlist_Verilog(QTextStream *stream)
+{
+  int r;
+  QString FileString;
+  r = loadSection("VerilogModel", FileString);
+  if(r < 0)  return false;
+  (*stream) << "\n" << FileString << "\n";
+  return true;
+}
+
+// -------------------------------------------------------
+bool LibComp::createSubNetlist_VHDL(QTextStream *stream)
+{
+  int r;
+  QString FileString;
+  r = loadSection("VHDLModel", FileString);
+  if(r < 0)  return false;
+  (*stream) << "\n" << FileString << "\n";
+  return true;
+}
+
+// -------------------------------------------------------
+QString LibComp::createType()
+{
+  QString Type = Props.first()->Value;
+  if(!QDir::isRelativePath(Type)) {
+    QFileInfo Info(Type);
+    Type = Info.fileName();
+  }
+  return properName(Type + "_" + Props.next()->Value);
 }
 
 // -------------------------------------------------------
@@ -220,18 +254,41 @@ QString LibComp::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // output property
-  QString Type = Props.first()->Value;
-  if(!QDir::isRelativePath(Type)) {
-    QFileInfo Info(Type);
-    Type = Info.fileName();
-  }
-  Type += "_" + Props.next()->Value;
-  Type.replace(QRegExp("\\W"), "_");
-  s += " Type=\""+Type+"\"";   // type for subcircuit
+  s += " Type=\""+createType()+"\"";   // type for subcircuit
 
   // output user defined parameters
-  for(Property *pp = Props.next(); pp != 0; pp = Props.next())
+  for(Property *pp = Props.at(2); pp != 0; pp = Props.next())
     s += " "+pp->Name+"=\""+pp->Value+"\"";
 
   return s + '\n';
+}
+
+// -------------------------------------------------------
+QString LibComp::verilogCode(int)
+{
+  QString s = "  Sub_" + createType() + " " + Name + " (";
+
+  // output all node names
+  Port *pp = Ports.first();
+  if(pp)  s += pp->Connection->Name;
+  for(pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += ", "+pp->Connection->Name;   // node names
+
+  s += ");\n";
+  return s;
+}
+
+// -------------------------------------------------------
+QString LibComp::vhdlCode(int)
+{
+  QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
+
+  // output all node names
+  Port *pp = Ports.first();
+  if(pp)  s += pp->Connection->Name;
+  for(pp = Ports.next(); pp != 0; pp = Ports.next())
+    s += ", "+pp->Connection->Name;   // node names
+
+  s += ");\n";
+  return s;
 }

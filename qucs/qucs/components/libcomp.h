@@ -26,15 +26,21 @@ public:
   LibComp();
  ~LibComp() {};
   Component* newOne();
-  bool outputSubNetlist(QTextStream*);
+
+  bool createSubNetlist(QTextStream*);
+  bool createSubNetlist_Verilog(QTextStream*);
+  bool createSubNetlist_VHDL(QTextStream*);
 
 protected:
   QString netlist();
+  QString vhdlCode(int);
+  QString verilogCode(int);
   void createSymbol();
 
 private:
   int  loadSymbol();
   int  loadSection(const QString&, QString&);
+  QString createType();
 };
 
 #endif
