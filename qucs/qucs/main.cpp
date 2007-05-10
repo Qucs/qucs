@@ -360,8 +360,24 @@ void convert2ASCII(QString& Text)
 }
 
 // #########################################################################
+QString properAbsFileName(const QString& Name)
+{
+  QString s = Name;
+  QFileInfo Info(s);
+  if(Info.isRelative()) s = QucsWorkDir.filePath(s);
+  return QDir::cleanDirPath(s);
+}
+
+// #########################################################################
+QString properFileName(const QString& Name)
+{
+  QFileInfo Info(Name);
+  return Info.fileName();
+}
+
+// #########################################################################
 // Takes a file name (with path) and replaces all special characters.
-QString properName (const QString& Name)
+QString properName(const QString& Name)
 {
   QString s = Name;
   QFileInfo Info(s);

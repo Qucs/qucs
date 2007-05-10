@@ -1,3 +1,9 @@
+2007-05-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucslib.cpp (slotShowComponent): Allow also VHDL and Verilog
+	entries to define a model.  Fixed drag'n'drop ability for digital
+	only models.
+
 2007-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/OpAmps.lib: Added Mike's opamp models.

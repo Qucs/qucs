@@ -21,6 +21,8 @@
 #include "schematic.h"
 
 #include <qregexp.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 
 
 VHDL_File::VHDL_File()
@@ -222,6 +224,14 @@ void VHDL_File::createSymbol()
 }
 
 // -------------------------------------------------------
+QString VHDL_File::getSubcircuitFile()
+{
+  // construct full filename
+  QString FileName = Props.getFirst()->Value;
+  return properAbsFileName(FileName);
+}
+
+// -------------------------------------------------------
 bool VHDL_File::createSubNetlist(QTextStream *stream)
 {
   ErrText = "";
@@ -235,9 +245,7 @@ bool VHDL_File::createSubNetlist(QTextStream *stream)
   }
 
   // construct full filename
-  QFileInfo Info(FileName);
-  if(Info.isRelative())
-    FileName = QucsWorkDir.filePath(FileName);
+  FileName = getSubcircuitFile();
 
   // open file for reading
   QFile f(FileName);

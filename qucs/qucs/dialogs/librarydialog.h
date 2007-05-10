@@ -18,12 +18,13 @@
 #ifndef LIBRARYDIALOG_H
 #define LIBRARYDIALOG_H
 
-#include <qfile.h>
-#include <qdialog.h>
 #include <qregexp.h>
 #include <qptrlist.h>
 #include <qstringlist.h>
-#include <qcheckbox.h>
+#include <qtextstream.h>
+#include <qdialog.h>
+#include <qfile.h>
+#include <qdir.h>
 
 class QLabel;
 class QucsApp;
@@ -48,6 +49,10 @@ private slots:
   void slotNext();
 
 private:
+  void intoStream(QTextStream&, QString&, const char*);
+  int intoFile(QString&, QString&,  QStringList&);
+
+private:
   QVBoxLayout *all;   // the mother of all widgets
   QLabel *theLabel;
   QLineEdit *NameEdit;
@@ -59,6 +64,7 @@ private:
 
   QucsApp *App;
   QFile LibFile;
+  QDir LibDir;
   QRegExp Expr;
   QRegExpValidator *Validator;
 };

@@ -60,6 +60,7 @@ public:
   bool mirroredX;   // is it mirrored about X axis or not
   int  rotated;     // rotation angle divided by 90 degrees
 
+  virtual QString getSubcircuitFile() { return ""; }
 
   QPtrList<Line>     Lines;
   QPtrList<struct Arc>      Arcs;

@@ -4977,7 +4977,30 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Çevriliyor ...</translation>
+        <translation type="obsolete">Çevriliyor ...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9891,6 +9914,10 @@ uygun bir uygulama ile açılabilsinler.</translation>
         <source>Revision:</source>
         <translation>Düzeltme:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10299,7 +10326,7 @@ Hatalar:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Çevriliyor ...</translation>
+        <translation type="obsolete">Çevriliyor ...</translation>
     </message>
     <message>
         <source>Error</source>
@@ -10312,6 +10339,10 @@ Hatalar:
     <message>
         <source>QucsConv Error</source>
         <translation>QucsConv Hatası</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

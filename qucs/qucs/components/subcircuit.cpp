@@ -79,9 +79,7 @@ void Subcircuit::createSymbol()
 {
   int No;
   QString FileName(Props.getFirst()->Value);
-  QFileInfo Info(FileName);
-  if(Info.isRelative())
-    FileName = QucsWorkDir.filePath(FileName);
+  FileName = getSubcircuitFile();
 
   tx = INT_MIN;
   ty = INT_MIN;
@@ -204,7 +202,8 @@ QString Subcircuit::netlist()
     s += " "+p1->Connection->Name;   // node names
 
   // type for subcircuit
-  s += " Type=\""+properName(Props.first()->Value)+"\"";
+  QString f = properFileName(Props.first()->Value);
+  s += " Type=\""+properName(f)+"\"";
 
   // output all user defined properties
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
@@ -215,8 +214,8 @@ QString Subcircuit::netlist()
 // -------------------------------------------------------
 QString Subcircuit::vhdlCode(int)
 {
-  QString s = "  " + Name + ": entity Sub_" +
-              properName(Props.getFirst()->Value) + " port map (";
+  QString f = properFileName(Props.first()->Value);
+  QString s = "  " + Name + ": entity Sub_" + properName(f) + " port map (";
 
   // output all node names
   Port *pp = Ports.first();
@@ -231,8 +230,8 @@ QString Subcircuit::vhdlCode(int)
 // -------------------------------------------------------
 QString Subcircuit::verilogCode(int)
 {
-  QString s = "  Sub_" +
-    properName(Props.getFirst()->Value) + " " + Name + " (";
+  QString f = properFileName(Props.first()->Value);
+  QString s = "  Sub_" + properName(f) + " " + Name + " (";
 
   // output all node names
   Port *pp = Ports.first();
@@ -242,4 +241,12 @@ QString Subcircuit::verilogCode(int)
 
   s += ");\n";
   return s;
+}
+
+// -------------------------------------------------------
+QString Subcircuit::getSubcircuitFile()
+{
+  // construct full filename
+  QString FileName = Props.getFirst()->Value;
+  return properAbsFileName(FileName);
 }
