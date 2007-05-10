@@ -1,3 +1,14 @@
+2007-05-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* vhdlfile.cpp (getSubcircuitFile), verilogfile.cpp
+	(getSubcircuitFile), subcircuit.cpp (netlist), spicefile.cpp
+	(recreateSubNetlist): Using new file name mangling functions.
+
+	* libcomp.cpp (loadSection): Additionally loading the file include
+	references.
+	(createSubNetlist): Also put file includes into the netlist
+	stream.
+
 2007-05-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* libcomp.cpp: Enabled library component to emit analog as well as

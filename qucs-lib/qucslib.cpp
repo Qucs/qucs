@@ -376,6 +376,33 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
       Symbol->createSymbol(LibName, Item->text());
   }
 
+  if(Symbol->ModelString.isEmpty()) {
+  Start = (*CompString).find("<VHDLModel>");
+  if(Start > 0) {
+    Start += 7+4;
+    End = (*CompString).find("</VHDLModel>", Start);
+    if(End < 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+      return;
+    }
+    Symbol->ModelString =
+      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+  }
+  }
+
+  if(Symbol->ModelString.isEmpty()) {
+  Start = (*CompString).find("<VerilogModel>");
+  if(Start > 0) {
+    Start += 7+7;
+    End = (*CompString).find("</VerilogModel>", Start);
+    if(End < 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+      return;
+    }
+    Symbol->ModelString =
+      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+  }
+  }
 
   Start = (*CompString).find("<Symbol>");
   if(Start > 0) {

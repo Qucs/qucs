@@ -5129,7 +5129,30 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Konvetálás...</translation>
+        <translation type="obsolete">Konvetálás...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10260,6 +10283,10 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <source>Revision:</source>
         <translation>Ellenőrizve:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10671,7 +10698,7 @@ Hibák:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Konvetálás...</translation>
+        <translation type="obsolete">Konvetálás...</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -10692,6 +10719,10 @@ Hibák:
     <message>
         <source>include SPICE simulations</source>
         <translation>belső SPICE szimuláció</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,3 +1,18 @@
+2007-05-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/librarydialog.cpp (slotNext): Library creation now
+	includes file handling.  Separate subcircuit files (VHDL, Verilog,
+	Qucs-Subcircuit, SPICE) used by library elements are stored in an
+	extra sub-directory.
+
+	* schematic_file.cpp (giveNodeNames): Saving included files in a
+	different manner in the global list.
+	(createSubNetlistPlain): Allow subcircuit files to be stored in a
+	dedicated file.  Used during library file creations.
+
+	* main.cpp (properAbsFileName, properFileName): Added two new
+	helper functions for file name mangling.
+
 2007-05-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_uk.ts, qtgeneric_uk.ts: Updated Ukrainian translations.

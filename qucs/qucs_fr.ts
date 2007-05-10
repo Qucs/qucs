@@ -5159,7 +5159,30 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Conversion…</translation>
+        <translation type="obsolete">Conversion…</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10370,6 +10393,10 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
         <source>Revision:</source>
         <translation>Version :</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10767,7 +10794,7 @@ Erreurs :
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Conversion…</translation>
+        <translation type="obsolete">Conversion…</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -10788,6 +10815,10 @@ Erreurs :
     <message>
         <source>include SPICE simulations</source>
         <translation>inclure les simulations Spice</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

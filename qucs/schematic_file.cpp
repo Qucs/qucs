@@ -849,11 +849,12 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
     if(pc->Model == "Sub") {
-      s = pc->Props.getFirst()->Value;
-      if(StringList.findIndex(s) >= 0)
+      QString f = "SCH:"+pc->getSubcircuitFile();
+      if(StringList.findIndex(f) >= 0)
         continue;   // insert each subcircuit just one time
+      StringList.append(f);
 
-      StringList.append(s);
+      s = pc->Props.first()->Value;
       Schematic *d = new Schematic(0, QucsWorkDir.filePath(s));
       if(!d->loadDocument()) {  // load document if possible
         delete d;
@@ -862,6 +863,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       }
       d->DocName = s;
       d->isVerilog = isVerilog;
+      d->creatingLib = creatingLib;
       r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
       delete d;
       if(!r) return false;
@@ -869,19 +871,25 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
     if(pc->Model == "Lib") {
-      s  = pc->Props.first()->Value + "_";
-      s += pc->Props.next()->Value;
+      if(creatingLib) {
+	ErrText->insert(
+	    QObject::tr("WARNING: Skipping library component \"%1\".").
+	    arg(pc->Name));
+	continue;
+      }
+      s  = "LIB:" + pc->getSubcircuitFile();
+      s += "/" + pc->Props.next()->Value;
       if(StringList.findIndex(s) >= 0)
         continue;   // insert each subcircuit just one time
-
       StringList.append(s);
+
       if(NumPorts < 0)
-	r = ((LibComp*)pc)->createSubNetlist(stream);
+	r = ((LibComp*)pc)->createSubNetlist(stream, StringList, 1);
       else {
 	if(isVerilog)
-	  r = ((LibComp*)pc)->createSubNetlist_Verilog(stream);
+	  r = ((LibComp*)pc)->createSubNetlist(stream, StringList, 4);
 	else
-	  r = ((LibComp*)pc)->createSubNetlist_VHDL(stream);
+	  r = ((LibComp*)pc)->createSubNetlist(stream, StringList, 2);
       }
       if(!r) {
 	ErrText->insert(
@@ -899,21 +907,22 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
                         arg(pc->Name));
         return false;
       }
-      if(StringList.findIndex(s) >= 0)
+      QString f = "CIR:"+pc->getSubcircuitFile();
+      if(StringList.findIndex(f) >= 0)
         continue;   // insert each spice component just one time
+      StringList.append(f);
 
-      StringList.append(s);
 #if 0
       s += '"'+pc->Props.next()->Value;
       if(pc->Props.next()->Value == "yes")  s = "SPICE \""+s;
       else  s = "SPICEo\""+s;
       Collect.append(s);
-#else
+#endif
+
       SpiceFile *sf = (SpiceFile*)pc;
       r = sf->createSubNetlist(stream);
       ErrText->insert(sf->getErrorText());
       if(!r) return false;
-#endif
       continue;
     }
 
@@ -929,29 +938,12 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
                         arg(pc->Name));
         return false;
       }
-      if(StringList.findIndex(s) >= 0)
+      QString f = pc->getSubcircuitFile();
+      f = ((pc->Model == "VHDL") ? "VHD:" : "VER:") + f;
+      if(StringList.findIndex(f) >= 0)
         continue;   // insert each vhdl/verilog component just one time
-      StringList.append(s);
+      StringList.append(f);
 
-#if 0
-      QFileInfo Info(s);
-      if(Info.isRelative())
-        s = QucsWorkDir.filePath(s);
-
-      QFile f(s);
-      if(!f.open(IO_ReadOnly)) {
-        ErrText->insert(
-           QObject::tr("ERROR: Cannot open %1 file \"%2\".").
-	   arg(pc->Model).arg(s));
-        return false;
-      }
-
-      // Write the whole VHDL file into the netlist output.
-      QTextStream streamVHDL(&f);
-      s = streamVHDL.read();
-      f.close();
-      (*stream) << '\n' << s << '\n';
-#else
       if(pc->Model == "VHDL") {
 	VHDL_File *vf = (VHDL_File*)pc;
 	r = vf->createSubNetlist(stream);
@@ -964,7 +956,6 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 	ErrText->insert(vf->getErrorText());
 	if(!r) return false;
       }      
-#endif
       continue;
     }
   }
@@ -980,31 +971,64 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
 }
 
 // ---------------------------------------------------
-// Write the netlist as subcircuit to the text stream 'NetlistFile'.
-bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
-                     QStringList& Collect, QTextEdit *ErrText, int NumPorts)
+bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
+				 int NumPorts)
+{
+  int countInit = 0;
+  QStringList Collect;
+  Collect.clear();
+  StringList.clear();
+
+  // Apply node names and collect subcircuits and file include
+  creatingLib = true;
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)) {
+    creatingLib = false;
+    return false;
+  }
+  creatingLib = false;
+
+  // Marking start of actual top-level subcircuit
+  QString c;
+  if(NumPorts >= 0) {
+    if (isVerilog)
+      c = "///";
+    else
+      c = "---";
+  }
+  else c = "###";
+  (*stream) << "\n" << c << " TOP LEVEL MARK " << c << "\n";
+
+  // Emit subcircuit components
+  createSubNetlistPlain(stream, ErrText, NumPorts);
+  return true;
+}
+
+// ---------------------------------------------------
+void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
+				      int NumPorts)
 {
   int i, z;
-//  int Collect_count = Collect.count();   // position for this subcircuit
   QString s;
-  // TODO: NodeSets have to be put into the subcircuit block.
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
-    return false;
-
-/*  Example for TODO
-      for(it = Collect.at(Collect_count); it != Collect.end(); )
-      if((*it).left(4) == "use ") {  // output all subcircuit uses
-        (*stream) << (*it);
-        it = Collect.remove(it);
-      }
-      else it++;*/
-
   QStringList SubcircuitPorts;
   QStringList InPorts;
   QStringList OutPorts;
   QStringList InOutPorts;
   QStringList::Iterator it;
   Component *pc;
+
+  // probably creating a library currently
+  QTextStream * tstream = stream;
+  QFile ofile;
+  if(creatingLib) {
+    QString f = properAbsFileName(DocName) + ".lst";
+    ofile.setName(f);
+    if(!ofile.open(IO_WriteOnly)) {
+      ErrText->insert(tr("ERROR: Cannot create library file \"%s\".").arg(f));
+      return;
+    }
+    tstream = new QTextStream(&ofile);
+  }
+
   // collect subcircuit ports and sort their node names into "SubcircuitPorts"
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
@@ -1048,79 +1072,109 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
     }
   }
 
-  QString  Type = properName(DocName);
+  QString f = properFileName(DocName);
+  QString Type = properName(f);
 
   Painting *pi;
   if(NumPorts < 0) {
     // ..... analog subcircuit ...................................
-    (*stream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ");
+    (*tstream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ");
     for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
       if(pi->Name == ".ID ") {
         SubParameter *pp;
         ID_Text *pid = (ID_Text*)pi;
         for(pp = pid->Parameter.first(); pp != 0; pp = pid->Parameter.next()) {
           s = pp->Name;  // keep 'Name' unchanged
-          (*stream) << " " << s.replace("=", "=\"") << '"';
+          (*tstream) << " " << s.replace("=", "=\"") << '"';
         }
         break;
       }
-    (*stream) << '\n';
+    (*tstream) << '\n';
 
     // write all components with node names into netlist file
     for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-      (*stream) << pc->getNetlist();
+      (*tstream) << pc->getNetlist();
 
-    (*stream) << ".Def:End\n";
+    (*tstream) << ".Def:End\n";
 
   }
   else {
     if (isVerilog) {
       // ..... digital subcircuit ...................................
-      (*stream) << "\nmodule Sub_" << Type << " ("
-		<< SubcircuitPorts.join(", ") << ");\n";
+      (*tstream) << "\nmodule Sub_" << Type << " ("
+		 << SubcircuitPorts.join(", ") << ");\n";
       if(!InPorts.isEmpty())
-	(*stream) << "  input " << InPorts.join(", ") << ";\n";
+	(*tstream) << "  input " << InPorts.join(", ") << ";\n";
       if(!OutPorts.isEmpty())
-	(*stream) << "  output " << OutPorts.join(", ") << ";\n";
+	(*tstream) << "  output " << OutPorts.join(", ") << ";\n";
       if(!InOutPorts.isEmpty())
-	(*stream) << "  inout " << InOutPorts.join(", ") << ";\n";
+	(*tstream) << "  inout " << InOutPorts.join(", ") << ";\n";
       if(!Signals.isEmpty())
-	(*stream) << "  wire " << Signals.join(",\n       ")
-		  << ";\n";
-      (*stream) << "\n";
+	(*tstream) << "  wire " << Signals.join(",\n       ")
+		   << ";\n";
+      (*tstream) << "\n";
 
       if(Signals.findIndex("gnd") >= 0)
-	(*stream) << "  assign gnd = 0;\n";  // should appear only once
+	(*tstream) << "  assign gnd = 0;\n";  // should appear only once
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-	(*stream) << pc->get_Verilog_Code(NumPorts);
+	(*tstream) << pc->get_Verilog_Code(NumPorts);
 
-      (*stream) << "endmodule\n\n";
+      (*tstream) << "endmodule\n";
     } else {
       // ..... digital subcircuit ...................................
-      (*stream) << "\nentity Sub_" << Type << " is\n"
-		<< "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
-		<< "end entity;\n"
-		<< "use work.all;\n"
-		<< "architecture Arch_Sub_" << Type << " of Sub_" << Type
-		<< " is\n";
+      (*tstream) << "\nentity Sub_" << Type << " is\n"
+		 << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
+		 << "end entity;\n"
+		 << "use work.all;\n"
+		 << "architecture Arch_Sub_" << Type << " of Sub_" << Type
+		 << " is\n";
       if(!Signals.isEmpty())
-	(*stream) << "  signal " << Signals.join(",\n         ")
-		  << " : bit;\n";
+	(*tstream) << "  signal " << Signals.join(",\n         ")
+		   << " : bit;\n";
 
-      (*stream) << "begin\n";
+      (*tstream) << "begin\n";
 
       if(Signals.findIndex("gnd") >= 0)
-	(*stream) << "  gnd <= '0';\n";  // should appear only once
+	(*tstream) << "  gnd <= '0';\n";  // should appear only once
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-	(*stream) << pc->get_VHDL_Code(NumPorts);
+	(*tstream) << pc->get_VHDL_Code(NumPorts);
 
-      (*stream) << "end architecture;\n\n";
+      (*tstream) << "end architecture;\n";
     }
   }
+
+  // close file
+  if(creatingLib) {
+    delete tstream;
+    ofile.close();
+  }
+}
+
+// ---------------------------------------------------
+// Write the netlist as subcircuit to the text stream 'stream'.
+bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
+                     QStringList& Collect, QTextEdit *ErrText, int NumPorts)
+{
+//  int Collect_count = Collect.count();   // position for this subcircuit
+
+  // TODO: NodeSets have to be put into the subcircuit block.
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
+    return false;
+
+/*  Example for TODO
+      for(it = Collect.at(Collect_count); it != Collect.end(); )
+      if((*it).left(4) == "use ") {  // output all subcircuit uses
+        (*stream) << (*it);
+        it = Collect.remove(it);
+      }
+      else it++;*/
+
+  // Emit subcircuit components
+  createSubNetlistPlain(stream, ErrText, NumPorts);
 
   Signals.clear();  // was filled in "giveNodeNames()"
   return true;
