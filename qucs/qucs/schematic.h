@@ -206,7 +206,9 @@ private:
    ******************************************************************** */
 
 public:
+  bool createLibNetlist(QTextStream*, QTextEdit*, int);
   bool createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*, int);
+  void createSubNetlistPlain(QTextStream*, QTextEdit*, int);
   int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
@@ -239,6 +241,7 @@ private:
 
 public:
   bool isVerilog;
+  bool creatingLib;
 };
 
 #endif

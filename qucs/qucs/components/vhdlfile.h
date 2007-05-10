@@ -30,6 +30,7 @@ public:
 
   bool createSubNetlist(QTextStream *);
   QString getErrorText() { return ErrText; }
+  QString getSubcircuitFile();
 
 protected:
   QString vhdlCode(int);

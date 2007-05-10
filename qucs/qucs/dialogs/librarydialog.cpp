@@ -30,6 +30,7 @@
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qtextedit.h>
+#include <qtextstream.h>
 #include <qcheckbox.h>
 #include <qlistview.h>
 #include <qvalidator.h>
@@ -131,7 +132,7 @@ void LibraryDialog::slotCreate()
   }
 
 
-  QDir LibDir(QucsHomeDir);
+  LibDir = QDir(QucsHomeDir);
   if(!LibDir.cd("user_lib")) { // user library directory exists ?
     if(!LibDir.mkdir("user_lib")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
@@ -173,6 +174,63 @@ void LibraryDialog::slotCreate()
 }
 
 // ---------------------------------------------------------------
+void LibraryDialog::intoStream(QTextStream &Stream, QString &tmp,
+			       const char *sec)
+{
+  int i = tmp.find("TOP LEVEL MARK");
+  if(i >= 0) {
+    i = tmp.find('\n',i) + 1;
+    tmp = tmp.mid(i);
+  }
+  Stream << "  <" << sec << ">";
+  Stream << tmp;
+  Stream << "  </" << sec << ">\n";
+}
+
+// ---------------------------------------------------------------
+int LibraryDialog::intoFile(QString &ifn, QString &ofn, QStringList &IFiles)
+{
+  int error = 0;
+  QFile ifile(ifn);
+  if(!ifile.open(IO_ReadOnly)) {
+    ErrText->insert(QObject::tr("ERROR: Cannot open file \"%1\".\n").
+		    arg(ifn));
+    error++;
+  }
+  else {
+    QByteArray FileContent = ifile.readAll();
+    ifile.close();
+    if(ifile.name().right(4) == ".lst")
+      LibDir.remove(ifile.name());
+    QDir LibDirSub(LibDir);
+    if(!LibDirSub.cd(NameEdit->text())) {
+      if(!LibDirSub.mkdir(NameEdit->text())) {
+	ErrText->insert(
+          QObject::tr("ERROR: Cannot create user library subdirectory !\n"));
+	error++;
+      }
+      LibDirSub.cd(NameEdit->text());
+    }
+    QFileInfo Info(ofn);
+    ofn = Info.fileName();
+    IFiles.append(ofn);
+    QFile ofile;
+    ofile.setName(LibDirSub.absFilePath(ofn));
+    if(!ofile.open(IO_WriteOnly)) {
+      ErrText->insert(
+        QObject::tr("ERROR: Cannot create file \"%1\".\n").arg(ofn));
+      error++;
+    }
+    else {
+      QTextStream ds(&ofile);
+      ds.writeRawBytes(FileContent.data(), FileContent.size());
+      ofile.close();
+    }
+  }
+  return error;
+}
+
+// ---------------------------------------------------------------
 void LibraryDialog::slotNext()
 {
   Descriptions.append(ErrText->text());
@@ -202,12 +260,11 @@ void LibraryDialog::slotNext()
   }
   QTextStream Stream;
   Stream.setDevice(&LibFile);
-  Stream << "<Qucs Library " PACKAGE_VERSION " \"" << NameEdit->text() << "\">\n\n";
+  Stream << "<Qucs Library " PACKAGE_VERSION " \""
+	 << NameEdit->text() << "\">\n\n";
 
 
-  int countInit = 0;
   bool Success = true, ret;
-  QStringList Collect;
   QStringList::Iterator it = Descriptions.begin();
   QString tmp;
   QTextStream ts(&tmp, IO_WriteOnly);
@@ -221,55 +278,97 @@ void LibraryDialog::slotNext()
       Schematic *Doc = new Schematic(0, QucsWorkDir.filePath(p->text()));
       if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;
-        ErrText->append(tr("Error: Cannot load subcircuit \"%1\".").arg(p->text()));
+        ErrText->append(tr("Error: Cannot load subcircuit \"%1\".").
+			arg(p->text()));
         break;
       }
       Doc->DocName = NameEdit->text() + "_" + p->text();
       Success = false;
 
       // save analog model
-      tmp = "";
-      countInit = 0;
-      Collect.clear();
-      StringList.clear();
-      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, -1);
+      tmp.truncate(0);
+      ret = Doc->createLibNetlist(&ts, ErrText, -1);
       if(ret) {
-	Stream << "  <Model>";
-	Stream << tmp;
-	Stream << "  </Model>\n";
-	Success = true;
+	intoStream(Stream, tmp, "Model");
+	int error = 0;
+	QStringList IFiles;
+	for(QStringList::Iterator it = StringList.begin();
+	    it != StringList.end(); ++it ) {
+	  QString f = *it;
+	  QString ifn, ofn;
+	  if(f.find("SCH") == 0) {
+	    ifn = f.mid(4) + ".lst";
+	    ofn = ifn;
+	  } else if(f.find("CIR") == 0) {
+	    ifn = f.mid(4) + ".lst";
+	    ofn = ifn;
+	  }
+	  error += intoFile(ifn, ofn, IFiles);
+	}
+	if(!IFiles.isEmpty()) {
+	  Stream << "  <ModelIncludes \"" << IFiles.join("\" \"") << "\">\n";
+	}
+	Success = error > 0 ? false : true;
       } else {
 	ErrText->insert("\n");
       }
 
       // save verilog model
-      tmp = "";
-      countInit = 0;
-      Collect.clear();
-      StringList.clear();
+      tmp.truncate(0);
       Doc->isVerilog = true;
-      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, 0);
+      ret = Doc->createLibNetlist(&ts, ErrText, 0);
       if(ret) {
-	Stream << "  <VerilogModel>";
-	Stream << tmp;
-	Stream << "  </VerilogModel>\n";
-	Success = true;
+	intoStream(Stream, tmp, "VerilogModel");
+	int error = 0;
+	QStringList IFiles;
+	for(QStringList::Iterator it = StringList.begin();
+	    it != StringList.end(); ++it ) {
+	  QString f = *it;
+	  QString ifn, ofn;
+	  if(f.find("SCH") == 0) {
+	    ifn = f.mid(4) + ".lst";
+	    ofn = f.mid(4) + ".v";
+	  } else if(f.find("VER") == 0) {
+	    ifn = f.mid(4);
+	    ofn = ifn;
+	  }
+	  error += intoFile(ifn, ofn, IFiles);
+	}
+	if(!IFiles.isEmpty()) {
+	  Stream << "  <VerilogModelIncludes \"" 
+		 << IFiles.join("\" \"") << "\">\n";
+	}
+	Success = error > 0 ? false : true;
       } else {
 	ErrText->insert("\n");
       }
 
       // save vhdl model
-      tmp = "";
-      countInit = 0;
-      Collect.clear();
-      StringList.clear();
+      tmp.truncate(0);
       Doc->isVerilog = false;
-      ret = Doc->createSubNetlist(&ts, countInit, Collect, ErrText, 0);
+      ret = Doc->createLibNetlist(&ts, ErrText, 0);
       if(ret) {
-	Stream << "  <VHDLModel>";
-	Stream << tmp;
-	Stream << "  </VHDLModel>\n";
-	Success = true;
+	intoStream(Stream, tmp, "VHDLModel");
+	int error = 0;
+	QStringList IFiles;
+	for(QStringList::Iterator it = StringList.begin();
+	    it != StringList.end(); ++it ) {
+	  QString f = *it;
+	  QString ifn, ofn;
+	  if(f.find("SCH") == 0) {
+	    ifn = f.mid(4) + ".lst";
+	    ofn = f.mid(4) + ".vhdl";
+	  } else if(f.find("VHD") == 0) {
+	    ifn = f.mid(4);
+	    ofn = ifn;
+	  }
+	  error += intoFile(ifn, ofn, IFiles);
+	}
+	if(!IFiles.isEmpty()) {
+	  Stream << "  <VHDLModelIncludes \"" 
+		 << IFiles.join("\" \"") << "\">\n";
+	}
+	Success = error > 0 ? false : true;
       } else {
 	ErrText->insert("\n");
       }

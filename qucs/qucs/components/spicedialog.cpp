@@ -263,7 +263,8 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   connect(QucsConv, SIGNAL(readyReadStdout()), SLOT(slotGetNetlist()));
   connect(QucsConv, SIGNAL(readyReadStderr()), SLOT(slotGetError()));
 
-  QMessageBox *MBox = new QMessageBox(tr("Info"), tr("Converting ..."),
+  QMessageBox *MBox = new QMessageBox(tr("Info"),
+	       tr("Converting \"%1\".").arg(FileInfo.filePath()),
                QMessageBox::NoIcon, QMessageBox::Abort,
                QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
