@@ -5131,7 +5131,30 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Convirtiendo...</translation>
+        <translation type="obsolete">Convirtiendo...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10118,6 +10141,10 @@ abrir los archivos con el programa apropiado.</translation>
         <source>Revision:</source>
         <translation>Revisión:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10521,7 +10548,7 @@ Errores:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Convirtiendo...</translation>
+        <translation type="obsolete">Convirtiendo...</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -10542,6 +10569,10 @@ Errores:
     <message>
         <source>include SPICE simulations</source>
         <translation>incluir simulaciones SPICE</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

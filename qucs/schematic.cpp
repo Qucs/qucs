@@ -81,6 +81,8 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   UndoStack.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
   UndoSymbol.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
 
+  isVerilog = false;
+  creatingLib = false;
   QFileInfo Info(Name_);
   if(App) {
     if(Name_.isEmpty())

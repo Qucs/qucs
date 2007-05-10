@@ -5382,7 +5382,30 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Konvertiere ...</translation>
+        <translation type="obsolete">Konvertiere ...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12249,6 +12272,10 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
         <source>Revision:</source>
         <translation>Revision:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12677,7 +12704,7 @@ Fehler:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Konvertiere ...</translation>
+        <translation type="obsolete">Konvertiere ...</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -12698,6 +12725,10 @@ Fehler:
     <message>
         <source>include SPICE simulations</source>
         <translation>SPICE-Simulationen mit einbeziehen</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -88,7 +88,8 @@ void LibComp::createSymbol()
 
 // ---------------------------------------------------------------------
 // Loads the section with name "Name" from library file into "Section".
-int LibComp::loadSection(const QString& Name, QString& Section)
+int LibComp::loadSection(const QString& Name, QString& Section,
+			 QStringList *Includes)
 {
   QDir Directory(QucsSettings.LibDir);
   QFile file(Directory.absFilePath(Props.first()->Value + ".lib"));
@@ -132,6 +133,24 @@ int LibComp::loadSection(const QString& Name, QString& Section)
   if(End < 0)  return -6;  // file corrupt
   Section = Section.mid(Start, End-Start+1);
   
+  // search model includes
+  if(Includes) {
+    int StartI, EndI;
+    StartI = Section.find("<"+Name+"Includes");
+    if(StartI >= 0) {  // includes found
+      StartI = Section.find('"', StartI);
+      if(StartI < 0)  return -10;  // file corrupt
+      EndI = Section.find('>', StartI);
+      if(EndI < 0)  return -11;  // file corrupt
+      StartI++; EndI--;
+      QString inc = Section.mid(StartI, EndI-StartI);
+      QStringList f = QStringList::split("\" \"", inc);
+      for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) {
+	Includes->append(*it);
+      }
+    }
+  }
+
   // search model
   Start = Section.find("<"+Name+">");
   if(Start < 0)  return -7;  // symbol not found
@@ -140,6 +159,8 @@ int LibComp::loadSection(const QString& Name, QString& Section)
   while(Section.at(++Start) == ' ') ;
   End = Section.find("</"+Name+">", Start);
   if(End < 0)  return -9;  // file corrupt
+
+  // snip actual model
   Section = Section.mid(Start, End-Start);
   return 0;
 }
@@ -201,46 +222,56 @@ int LibComp::loadSymbol()
 }
 
 // -------------------------------------------------------
-bool LibComp::createSubNetlist(QTextStream *stream)
+QString LibComp::getSubcircuitFile()
 {
-  int r;
-  QString FileString;
-  r = loadSection("Model", FileString);
-  if(r < 0)  return false;
-  (*stream) << "\n" << FileString << "\n";
-  return true;
+  QDir Directory(QucsSettings.LibDir);
+  QString FileName = Directory.absFilePath(Props.first()->Value);
+  return properAbsFileName(FileName);
 }
 
 // -------------------------------------------------------
-bool LibComp::createSubNetlist_Verilog(QTextStream *stream)
+bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
+			       int type)
 {
-  int r;
+  int r = -1;
   QString FileString;
-  r = loadSection("VerilogModel", FileString);
+  QStringList Includes;
+  if(type&1) {
+    r = loadSection("Model", FileString, &Includes);
+  } else if(type&2) {
+    r = loadSection("VHDLModel", FileString, &Includes);
+  } else if(type&4) {
+    r = loadSection("VerilogModel", FileString, &Includes);
+  }
   if(r < 0)  return false;
-  (*stream) << "\n" << FileString << "\n";
-  return true;
-}
 
-// -------------------------------------------------------
-bool LibComp::createSubNetlist_VHDL(QTextStream *stream)
-{
-  int r;
-  QString FileString;
-  r = loadSection("VHDLModel", FileString);
-  if(r < 0)  return false;
+  // also include files
+  int error = 0;
+  for(QStringList::Iterator it = Includes.begin();
+      it != Includes.end(); ++it ) {
+    QString s = getSubcircuitFile()+"/"+*it;
+    if(FileList.findIndex(s) >= 0) continue;
+    FileList.append(s);
+
+    // load file and stuff into stream
+    QFile file(s);
+    if(!file.open(IO_ReadOnly)) {
+      error++;
+    } else {
+      QByteArray FileContent = file.readAll();
+      file.close();
+      stream->writeRawBytes(FileContent.data(), FileContent.size());
+    }
+  }
+
   (*stream) << "\n" << FileString << "\n";
-  return true;
+  return error > 0 ? false : true;
 }
 
 // -------------------------------------------------------
 QString LibComp::createType()
 {
-  QString Type = Props.first()->Value;
-  if(!QDir::isRelativePath(Type)) {
-    QFileInfo Info(Type);
-    Type = Info.fileName();
-  }
+  QString Type = properFileName(Props.first()->Value);
   return properName(Type + "_" + Props.next()->Value);
 }
 

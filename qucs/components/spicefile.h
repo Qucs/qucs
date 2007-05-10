@@ -38,6 +38,7 @@ public:
   bool withSim;
   bool createSubNetlist(QTextStream *);
   QString getErrorText() { return ErrText; }
+  QString getSubcircuitFile();
 
 private:
   bool makeSubcircuit;

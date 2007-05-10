@@ -5349,7 +5349,30 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Konverze ...</translation>
+        <translation type="obsolete">Konverze ...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12208,6 +12231,10 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
         <source>Revision:</source>
         <translation>Verze:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12621,7 +12648,7 @@ Chyby:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Konverze ...</translation>
+        <translation type="obsolete">Konverze ...</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -12642,6 +12669,10 @@ Chyby:
     <message>
         <source>include SPICE simulations</source>
         <translation>zahrnout SPICE simulace</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

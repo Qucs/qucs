@@ -4967,7 +4967,30 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Omvandlar...</translation>
+        <translation type="obsolete">Omvandlar...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9881,6 +9904,10 @@ open files with an appropriate program.</source>
         <source>Revision:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10284,7 +10311,7 @@ Fel:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Omvandlar...</translation>
+        <translation type="obsolete">Omvandlar...</translation>
     </message>
     <message>
         <source>Error</source>
@@ -10297,6 +10324,10 @@ Fel:
     <message>
         <source>QucsConv Error</source>
         <translation>QucsConv-fel</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

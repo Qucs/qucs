@@ -21,6 +21,8 @@
 #include "schematic.h"
 
 #include <qregexp.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 
 
 Verilog_File::Verilog_File()
@@ -214,6 +216,14 @@ void Verilog_File::createSymbol()
 }
 
 // -------------------------------------------------------
+QString Verilog_File::getSubcircuitFile()
+{
+  // construct full filename
+  QString FileName = Props.getFirst()->Value;
+  return properAbsFileName(FileName);
+}
+
+// -------------------------------------------------------
 bool Verilog_File::createSubNetlist(QTextStream *stream)
 {
   ErrText = "";
@@ -227,9 +237,7 @@ bool Verilog_File::createSubNetlist(QTextStream *stream)
   }
 
   // construct full filename
-  QFileInfo Info(FileName);
-  if(Info.isRelative())
-    FileName = QucsWorkDir.filePath(FileName);
+  FileName = getSubcircuitFile();
 
   // open file for reading
   QFile f(FileName);

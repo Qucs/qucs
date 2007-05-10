@@ -30,6 +30,8 @@
 #include <qmessagebox.h>
 #include <qtextstream.h>
 #include <qfile.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 
 #include "spicefile.h"
 #include "schematic.h"
@@ -149,8 +151,17 @@ QString SpiceFile::netlist()
   for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
     s += " "+pp->Connection->Name;   // output all node names
 
-  s += " Type=\""+properName(Props.first()->Value)+"\"\n";
+  QString f = properFileName(Props.first()->Value);
+  s += " Type=\""+properName(f)+"\"\n";
   return s;
+}
+
+// -------------------------------------------------------
+QString SpiceFile::getSubcircuitFile()
+{
+  // construct full filename
+  QString FileName = Props.getFirst()->Value;
+  return properAbsFileName(FileName);
 }
 
 // -------------------------------------------------------------------------
@@ -166,17 +177,15 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
 
   // check input and output file
   QFile SpiceFile, ConvFile;
-  if(FileName.find(QDir::separator()) < 0)  // add path ?
-    SpiceFile.setName(QucsWorkDir.path() + QDir::separator() + FileName);
-  else
-    SpiceFile.setName(FileName);
+  FileName = getSubcircuitFile();
+  SpiceFile.setName(FileName);
   if(!SpiceFile.open(IO_ReadOnly)) {
     ErrText += QObject::tr("ERROR: Cannot open SPICE file \"%1\".").
       arg(FileName);
     return false;
   }
   SpiceFile.close();
-  QString ConvName = SpiceFile.name() + ".netlist.txt";
+  QString ConvName = SpiceFile.name() + ".lst";
   ConvFile.setName(ConvName);
   QFileInfo Info(ConvName);
 
@@ -186,16 +195,15 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
     if(!ConvFile.open(IO_WriteOnly)) {
       ErrText +=
 	QObject::tr("ERROR: Cannot save converted SPICE file \"%1\".").
-	arg(FileName + ".netlist.txt");
+	arg(FileName + ".lst");
       return false;
     }
     outstream = stream;
     filstream = new QTextStream(&ConvFile);
     QString SpiceName = SpiceFile.name();
     bool ret = recreateSubNetlist(&SpiceName, &FileName);
-    delete filstream;
     ConvFile.close();
-    qDebug("recreated");
+    delete filstream;
     return ret;
   }
 
@@ -203,13 +211,12 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
   if(!ConvFile.open(IO_ReadOnly)) {
     ErrText +=
       QObject::tr("ERROR: Cannot open converted SPICE file \"%1\".").
-      arg(FileName + ".netlist.txt");
+      arg(FileName + ".lst");
     return false;
   }
   QByteArray FileContent = ConvFile.readAll();
   ConvFile.close();
   stream->writeRawBytes(FileContent.data(), FileContent.size());
-  qDebug("stuffed");
   return true;
 }
 
@@ -241,7 +248,8 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 
   // begin netlist text creation
   if(makeSubcircuit) {
-    NetText += "\n.Def:" + properName(*FileName) + " ";
+    QString f = properFileName(*FileName);
+    NetText += "\n.Def:" + properName(f) + " ";
     QString PortNames = Props.at(1)->Value;
     PortNames.replace(',', ' ');
     NetText += PortNames;
@@ -265,7 +273,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 
   // waiting info dialog box
   QMessageBox *MBox = new QMessageBox(QObject::tr("Info"),
-	       QObject::tr("Converting ..."),
+	       QObject::tr("Converting \"%1\".").arg(*SpiceFile),
                QMessageBox::NoIcon, QMessageBox::Abort,
                QMessageBox::NoButton, QMessageBox::NoButton, 0, 0, true,
 	       Qt::WStyle_DialogBorder | Qt::WDestructiveClose);

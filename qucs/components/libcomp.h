@@ -27,9 +27,8 @@ public:
  ~LibComp() {};
   Component* newOne();
 
-  bool createSubNetlist(QTextStream*);
-  bool createSubNetlist_Verilog(QTextStream*);
-  bool createSubNetlist_VHDL(QTextStream*);
+  bool createSubNetlist(QTextStream*, QStringList&, int type=1);
+  QString getSubcircuitFile();
 
 protected:
   QString netlist();
@@ -39,7 +38,7 @@ protected:
 
 private:
   int  loadSymbol();
-  int  loadSection(const QString&, QString&);
+  int  loadSection(const QString&, QString&, QStringList* i=0);
   QString createType();
 };
 

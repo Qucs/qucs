@@ -5183,7 +5183,30 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished">Konwersja ...</translation>
+        <translation type="obsolete">Konwersja ...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot open file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create user library subdirectory !
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create file &quot;%1&quot;.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Skipping library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10177,6 +10200,10 @@ otworzyć ten plik odpowiednim programem.</translation>
         <source>Revision:</source>
         <translation>Rewizja:</translation>
     </message>
+    <message>
+        <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10577,7 +10604,7 @@ Błędy:
     </message>
     <message>
         <source>Converting ...</source>
-        <translation>Konwersja ...</translation>
+        <translation type="obsolete">Konwersja ...</translation>
     </message>
     <message>
         <source>Error</source>
@@ -10590,6 +10617,10 @@ Błędy:
     <message>
         <source>QucsConv Error</source>
         <translation>Błąd QucsConv</translation>
+    </message>
+    <message>
+        <source>Converting &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
