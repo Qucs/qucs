@@ -47,6 +47,8 @@ public:
 private slots:
   void slotCreate();
   void slotNext();
+  void slotSelectNone();
+  void slotSelectAll();
 
 private:
   void intoStream(QTextStream&, QString&, const char*);
@@ -58,7 +60,7 @@ private:
   QLineEdit *NameEdit;
   QTextEdit *ErrText;
   QVButtonGroup *Group;
-  QPushButton *ButtCreate, *ButtCancel;
+  QPushButton *ButtCreate, *ButtCancel, *ButtSelectAll, *ButtSelectNone;
   QPtrList<QCheckBox> BoxList;
   QStringList Descriptions;
 

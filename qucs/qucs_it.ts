@@ -1268,6 +1268,14 @@ Scrittura della nuova libreria fallita!</translation>
         <source>Successfully created library.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">Seleziona Tutto</translation>
+    </message>
+    <message>
+        <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LineDialog</name>

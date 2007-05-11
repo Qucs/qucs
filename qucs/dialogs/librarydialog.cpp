@@ -19,11 +19,6 @@
 # include <config.h>
 #endif
 
-#include "librarydialog.h"
-#include "qucs.h"
-#include "main.h"
-#include "schematic.h"
-
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qlabel.h>
@@ -31,6 +26,7 @@
 #include <qlineedit.h>
 #include <qtextedit.h>
 #include <qtextstream.h>
+#include <qdatastream.h>
 #include <qcheckbox.h>
 #include <qlistview.h>
 #include <qvalidator.h>
@@ -39,7 +35,12 @@
 #include <qscrollview.h>
 #include <qvbuttongroup.h>
 
-extern QStringList StringList;
+#include "librarydialog.h"
+#include "qucs.h"
+#include "main.h"
+#include "schematic.h"
+
+ extern QStringList StringList;
 
 LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
 			: QDialog(App_, 0, TRUE, Qt::WDestructiveClose)
@@ -64,6 +65,14 @@ LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
   Group = new QVButtonGroup(tr("Choose subcircuits:"), this);
   all->addWidget(Group);
   
+  // ...........................................................
+  QHBox *h3 = new QHBox(Group);
+  ButtSelectAll = new QPushButton(tr("Select All"), h3);
+  connect(ButtSelectAll, SIGNAL(clicked()), SLOT(slotSelectAll()));
+  ButtSelectNone = new QPushButton(tr("Deselect All"), h3);
+  connect(ButtSelectNone, SIGNAL(clicked()), SLOT(slotSelectNone()));
+
+  // ...........................................................
   QScrollView *Dia_Scroll = new QScrollView(Group);
   Dia_Scroll->setMargin(5);
   QVBox *Dia_Box = new QVBox(Dia_Scroll->viewport());
@@ -222,7 +231,7 @@ int LibraryDialog::intoFile(QString &ifn, QString &ofn, QStringList &IFiles)
       error++;
     }
     else {
-      QTextStream ds(&ofile);
+      QDataStream ds(&ofile);
       ds.writeRawBytes(FileContent.data(), FileContent.size());
       ofile.close();
     }
@@ -292,9 +301,9 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "Model");
 	int error = 0;
 	QStringList IFiles;
-	for(QStringList::Iterator it = StringList.begin();
-	    it != StringList.end(); ++it ) {
-	  QString f = *it;
+	while(!StringList.isEmpty()) {
+	  QString f = StringList.last();
+	  StringList.remove(f);
 	  QString ifn, ofn;
 	  if(f.find("SCH") == 0) {
 	    ifn = f.mid(4) + ".lst";
@@ -321,9 +330,9 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "VerilogModel");
 	int error = 0;
 	QStringList IFiles;
-	for(QStringList::Iterator it = StringList.begin();
-	    it != StringList.end(); ++it ) {
-	  QString f = *it;
+	while(!StringList.isEmpty()) {
+	  QString f = StringList.last();
+	  StringList.remove(f);
 	  QString ifn, ofn;
 	  if(f.find("SCH") == 0) {
 	    ifn = f.mid(4) + ".lst";
@@ -351,9 +360,9 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "VHDLModel");
 	int error = 0;
 	QStringList IFiles;
-	for(QStringList::Iterator it = StringList.begin();
-	    it != StringList.end(); ++it ) {
-	  QString f = *it;
+	while(!StringList.isEmpty()) {
+	  QString f = StringList.last();
+	  StringList.remove(f);
 	  QString ifn, ofn;
 	  if(f.find("SCH") == 0) {
 	    ifn = f.mid(4) + ".lst";
@@ -393,4 +402,18 @@ void LibraryDialog::slotNext()
   }
 
   ErrText->append(tr("Successfully created library."));
+}
+
+// ---------------------------------------------------------------
+void LibraryDialog::slotSelectAll()
+{
+  QCheckBox *p;
+  for(p = BoxList.first(); p != 0; p = BoxList.next()) p->setChecked(true);
+}
+
+// ---------------------------------------------------------------
+void LibraryDialog::slotSelectNone()
+{
+  QCheckBox *p;
+  for(p = BoxList.first(); p != 0; p = BoxList.next()) p->setChecked(false);
 }

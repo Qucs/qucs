@@ -101,6 +101,14 @@ Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
+QString SParamFile::getSubcircuitFile()
+{
+  // construct full filename
+  QString FileName = Props.getFirst()->Value;
+  return properAbsFileName(FileName);
+}
+
+// -------------------------------------------------------
 QString SParamFile::netlist()
 {
   QString s = Model+":"+Name;
@@ -111,9 +119,7 @@ QString SParamFile::netlist()
 
   // output all properties
   Property *p2 = Props.first();
-  QFileInfo info(p2->Value);
-  if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
-  s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";
+  s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
   // data type
   p2 = Props.next();
