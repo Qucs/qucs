@@ -1201,6 +1201,14 @@
         <source>Successfully created library.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">全て選択</translation>
+    </message>
+    <message>
+        <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MarkerDialog</name>

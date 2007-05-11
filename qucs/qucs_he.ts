@@ -1178,6 +1178,14 @@
         <source>Successfully created library.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select All</source>
+        <translation type="unfinished">בחר הכל</translation>
+    </message>
+    <message>
+        <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MarkerDialog</name>
