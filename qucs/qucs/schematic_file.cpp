@@ -1149,8 +1149,8 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 
   // close file
   if(creatingLib) {
-    delete tstream;
     ofile.close();
+    delete tstream;
   }
 }
 
