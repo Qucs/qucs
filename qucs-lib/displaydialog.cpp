@@ -25,18 +25,35 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qtextedit.h>
+#include <qvgroupbox.h>
 
 
 DisplayDialog::DisplayDialog(QWidget *parent)
                      : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
   vLayout = new QVBoxLayout(this);
+  vLayout->setMargin(3);
 
-  Text = new QTextEdit(this);
+  QVGroupBox *Analog = new QVGroupBox (tr("Analog"), this);
+  Text = new QTextEdit(Analog);
   Text->setTextFormat(Qt::PlainText);
   Text->setReadOnly(true);
-  Text->setMinimumSize(200, 100);
-  vLayout->addWidget(Text);
+  Text->setMinimumSize(200, 80);
+  vLayout->addWidget(Analog);
+
+  QVGroupBox *VHDL = new QVGroupBox (tr("VHDL"), this);
+  VHDLText = new QTextEdit(VHDL);
+  VHDLText->setTextFormat(Qt::PlainText);
+  VHDLText->setReadOnly(true);
+  VHDLText->setMinimumSize(200, 80);
+  vLayout->addWidget(VHDL);
+
+  QVGroupBox *Verilog = new QVGroupBox (tr("Verilog"), this);
+  VerilogText = new QTextEdit(Verilog);
+  VerilogText->setTextFormat(Qt::PlainText);
+  VerilogText->setReadOnly(true);
+  VerilogText->setMinimumSize(200, 80);
+  vLayout->addWidget(Verilog);
 
   QHBox *h = new QHBox(this);
   vLayout->addWidget(h);

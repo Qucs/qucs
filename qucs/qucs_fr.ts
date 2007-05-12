@@ -642,6 +642,18 @@
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
+    <message>
+        <source>Analog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished">VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -1211,6 +1223,14 @@ Bibliothèque créée.</translation>
     </message>
     <message>
         <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename library subdirectory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5189,7 +5209,7 @@ Invocation :  qucsedit [-r] fichier
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9720,6 +9740,18 @@ Copie les fichiers dans le répertoire du projet</translation>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
         <translation>Plus aisément : le composant peut aussi être placé sur le schéma par glisser-déposer.</translation>
     </message>
+    <message>
+        <source>QucsLib Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Library Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
@@ -10825,7 +10857,7 @@ Erreurs :
         <translation>inclure les simulations Spice</translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
