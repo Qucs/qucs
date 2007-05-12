@@ -119,19 +119,29 @@ void LibraryDialog::slotRename()
     return;
   }
 
+  QString oldName = UserLibDir.absFilePath(rButton->text());
+  QString newName = UserLibDir.absFilePath(NameEdit->text());
+
   QFile NewLibFile(QucsSettings.LibDir + NameEdit->text() + ".lib");
   if(NewLibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;
   }
 
-  NewLibFile.setName(UserLibDir.absFilePath(NameEdit->text() + ".lib"));
+  NewLibFile.setName(newName + ".lib");
   if(NewLibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A library with this name already exists!"));
     return;
   }
 
-  QFile LibFile(UserLibDir.absFilePath(rButton->text() + ".lib"));
+  QDir LibSubdir(oldName);
+  if(LibSubdir.exists()) {
+    if(!LibSubdir.rename(oldName, newName)) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot rename library subdirectory!"));
+    }
+  }
+
+  QFile LibFile(oldName + ".lib");
   if(!LibFile.open(IO_ReadOnly)) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot open library!"));
     return;
@@ -192,11 +202,28 @@ void LibraryDialog::slotDelete()
     return;
   }
 
-  QFile LibFile(UserLibDir.absFilePath(rButton->text() + ".lib"));
+  QString oldName = UserLibDir.absFilePath(rButton->text());
+  QFile LibFile(oldName + ".lib");
   if(!LibFile.remove()) {
     QMessageBox::critical(this, tr("Error"),
                  tr("No permission to delete library \"%1\".").arg(rButton->text()));
     return;
   }
+
+  QDir LibSubdir(oldName);
+  if(LibSubdir.exists()) {
+    QStringList DirFiles;
+    QStringList::iterator it;
+    DirFiles = LibSubdir.entryList("*", QDir::Files, QDir::Name);
+    for(it = DirFiles.begin(); it != DirFiles.end(); it++)
+      LibSubdir.remove(*it);
+    if(!LibSubdir.rmdir(oldName)) {
+      QMessageBox::critical(this, tr("Error"),
+        tr("No permission to delete library subdirectory \"%1\".").
+			    arg(rButton->text()));
+      return;
+    }
+  }
+
   delete rButton;
 }

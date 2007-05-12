@@ -59,8 +59,9 @@ SymbolWidget::~SymbolWidget()
 // ************************************************************
 QString SymbolWidget::theModel()
 {
-  if(ModelString.contains('\n') < 2)
-    return ModelString.remove('\n');
+  if(!ModelString.isEmpty())
+    if(ModelString.contains('\n') < 2)
+      return ModelString.remove('\n');
 
   return "<Lib " + Prefix + " 1 0 0 " +
          QString::number(Text_x) + " " +

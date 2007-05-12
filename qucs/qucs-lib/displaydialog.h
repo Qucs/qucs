@@ -30,7 +30,7 @@ public:
   DisplayDialog(QWidget *parent = 0);
  ~DisplayDialog();
 
-  QTextEdit *Text;
+  QTextEdit *Text, *VHDLText, *VerilogText;
 
 private slots:
   void slotClose();

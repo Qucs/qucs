@@ -70,6 +70,7 @@ private slots:
 private:
   void closeEvent(QCloseEvent*);
   void putLibrariesIntoCombobox();
+  bool getSection(QString, QString &, QString &);
 
   int UserLibCount;
   SymbolWidget *Symbol;
