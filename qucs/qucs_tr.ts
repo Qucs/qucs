@@ -581,6 +581,18 @@
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
+    <message>
+        <source>Analog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished">VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -1150,6 +1162,14 @@ Kütüphane basarıyla olusturuldu.</translation>
     </message>
     <message>
         <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename library subdirectory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5007,7 +5027,7 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9257,6 +9277,18 @@ Trolltech tarafından Qt hakkında</translation>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
         <translation>Daha kolay bir yol: Bilesen, tasarıya sürükle-bırak yöntemi ile de konabilir.</translation>
     </message>
+    <message>
+        <source>QucsLib Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Library Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
@@ -10349,7 +10381,7 @@ Hatalar:
         <translation>QucsConv Hatası</translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

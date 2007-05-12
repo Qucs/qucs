@@ -273,7 +273,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 
   // waiting info dialog box
   QMessageBox *MBox = new QMessageBox(QObject::tr("Info"),
-	       QObject::tr("Converting \"%1\".").arg(*SpiceFile),
+	       QObject::tr("Converting SPICE file \"%1\".").arg(*SpiceFile),
                QMessageBox::NoIcon, QMessageBox::Abort,
                QMessageBox::NoButton, QMessageBox::NoButton, 0, 0, true,
 	       Qt::WStyle_DialogBorder | Qt::WDestructiveClose);

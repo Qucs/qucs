@@ -609,6 +609,18 @@
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
+    <message>
+        <source>Analog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL</source>
+        <translation type="unfinished">VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -1203,6 +1215,14 @@ Tworzenie biblioteki zakończone sukcesem.</translation>
     </message>
     <message>
         <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename library subdirectory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5213,7 +5233,7 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9539,6 +9559,18 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
         <translation>wygodnejsza metoda: Element można &quot;przeciągnąć i upuścić&quot;.</translation>
     </message>
+    <message>
+        <source>QucsLib Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Library Component</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
@@ -10627,7 +10659,7 @@ Błędy:
         <translation>Błąd QucsConv</translation>
     </message>
     <message>
-        <source>Converting &quot;%1&quot;.</source>
+        <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
