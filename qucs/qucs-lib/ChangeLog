@@ -1,3 +1,13 @@
+2007-05-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* librarydialog.cpp (slotRename): Also rename the library
+	subdirectory.
+	(slotDelete): Additionally remove all files in the library
+	subdirectory as well as the subdirectory itself.
+
+	* displaydialog.cpp (DisplayDialog): Showing now all three type of
+	models: Analog, VHDL and Verilog.
+
 2007-05-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucslib.cpp (slotShowComponent): Allow also VHDL and Verilog

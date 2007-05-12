@@ -207,7 +207,7 @@ void QucsLib::slotManageLib()
 void QucsLib::slotHelp()
 {
   DisplayDialog *d = new DisplayDialog(this);
-  d->setCaption("QucsLib Help");
+  d->setCaption(tr("QucsLib Help"));
   d->resize(250, 325);
   d->Text->setText(
      tr("QucsLib is a program to manage Qucs component libraries. "
@@ -241,10 +241,14 @@ void QucsLib::slotCopyToClipBoard()
 void QucsLib::slotShowModel()
 {
   DisplayDialog *d = new DisplayDialog(this);
-  d->setCaption("Model");
+  d->setCaption(tr("Model"));
   d->resize(500, 150);
   d->Text->setText(Symbol->ModelString);
   d->Text->setWordWrap(QTextEdit::NoWrap);
+  d->VHDLText->setText(Symbol->VHDLModelString);
+  d->VHDLText->setWordWrap(QTextEdit::NoWrap);
+  d->VerilogText->setText(Symbol->VerilogModelString);
+  d->VerilogText->setWordWrap(QTextEdit::NoWrap);
   d->show();
 }
 
@@ -327,6 +331,7 @@ void QucsLib::slotSelectLibrary(int Index)
 void QucsLib::slotSearchComponent()
 {
   SearchDialog *d = new SearchDialog(this);
+  d->setCaption(tr("Search Library Component"));
   if(d->exec() == QDialog::Accepted)
     QMessageBox::information(this, tr("Result"),
                              tr("No appropriate component found."));
@@ -346,75 +351,48 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
   if(Library->currentItem() < UserLibCount)
     LibName = UserLibDir.absPath() + QDir::separator() + LibName;
 
+  QString content;
+  if(!getSection("Description", *CompString, content))
+    return;
+  CompDescr->append(content);
 
-  int Start, End;
-  Start = (*CompString).find("<Description>");
-  if(Start > 0) {
-    Start += 13;
-    End = (*CompString).find("</Description>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    CompDescr->append(
-      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1));
-  }
+  if(!getSection("Model", *CompString, content))
+    return;
+  Symbol->ModelString = content;
+  if(Symbol->ModelString.contains('\n') < 2)
+    Symbol->createSymbol(LibName, Item->text());
 
+  if(!getSection("VHDLModel", *CompString, content))
+    return;
+  Symbol->VHDLModelString = content;
 
-  Start = (*CompString).find("<Model>");
-  if(Start > 0) {
-    Start += 7;
-    End = (*CompString).find("</Model>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    Symbol->ModelString =
-      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+  if(!getSection("VerilogModel", *CompString, content))
+    return;
+  Symbol->VerilogModelString = content;
 
-    if(Symbol->ModelString.contains('\n') < 2)
-      Symbol->createSymbol(LibName, Item->text());
-  }
-
-  if(Symbol->ModelString.isEmpty()) {
-  Start = (*CompString).find("<VHDLModel>");
-  if(Start > 0) {
-    Start += 7+4;
-    End = (*CompString).find("</VHDLModel>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    Symbol->ModelString =
-      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
-  }
-  }
-
-  if(Symbol->ModelString.isEmpty()) {
-  Start = (*CompString).find("<VerilogModel>");
-  if(Start > 0) {
-    Start += 7+7;
-    End = (*CompString).find("</VerilogModel>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    Symbol->ModelString =
-      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
-  }
-  }
-
-  Start = (*CompString).find("<Symbol>");
-  if(Start > 0) {
-    Start += 8;
-    End = (*CompString).find("</Symbol>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    Symbol->setSymbol((*CompString).mid(Start, End-Start),
-                      LibName, Item->text());
-  }
+  if(!getSection("Symbol", *CompString, content))
+    return;
+  if(!content.isEmpty())
+    Symbol->setSymbol(content, LibName, Item->text());
   else if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
     Symbol->setSymbol(DefaultSymbol, LibName, Item->text());
+}
+
+// ----------------------------------------------------
+bool QucsLib::getSection(QString section, QString &list, QString &content)
+{
+  int Start, End;
+  Start = list.find("<"+section+">");
+  content = "";
+  if(Start > 0) {
+    Start += section.length()+2;
+    End = list.find("</"+section+">", Start);
+    if(End < 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+      return false;
+    }
+    content = list.mid(Start, End-Start);
+    content.replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+  }
+  return true;
 }
