@@ -7763,6 +7763,10 @@ Centre verticalement les éléments sélectionnés</translation>
         <source>Cannot delete Verilog source: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
