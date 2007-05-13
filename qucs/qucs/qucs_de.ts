@@ -322,7 +322,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog Dateien</translation>
     </message>
 </context>
 <context>
@@ -647,15 +647,15 @@
     </message>
     <message>
         <source>Analog</source>
-        <translation type="unfinished"></translation>
+        <translation>Analog</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1097,11 +1097,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das Konvertierprogramm kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -1273,23 +1273,23 @@ Die Bibliothek wurde erfolgreich erzeugt.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Bibliothek wurde erfolgreich erzeugt.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Alles auswählen</translation>
+        <translation>Alle auswählen</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesamte Auswahl aufheben</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Bibliotheksunterverzeichnis kann nicht umbenannt werden!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie haben nicht die Berechtigungen, um das Bibliotheksunterverzeichnis &quot;%1&quot; zu löschen.</translation>
     </message>
 </context>
 <context>
@@ -1927,7 +1927,7 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation>GEHLER: Die Bibliothek &quot;%1&quot; kann nicht erstellt werden!</translation>
+        <translation>FEHLER: Die Bibliothek &quot;%1&quot; kann nicht erstellt werden!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
@@ -5282,131 +5282,131 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog Datei</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Verilog Datei</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: In der %1-Komponente &quot;%2&quot; ist kein Dateiname angegeben.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die %1-Datei &quot;%2&quot; kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E Druchbruchspannung, V, (0 == schaltet den Kollektordurchbruch ab)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>exponentielle Stromquelle</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom vor der steigenden Flanke</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>maximaler Strom des Pulses</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Startzeit der exponentiell steigenden Flanke</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>Beginn des exponentiellen Abfalls</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitkonstante der steigenden Flanke</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitkonstante der fallenden Flanke</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentielle Stromquelle</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>exponentielle Spannungsquelle</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung vor der steigenden Flanke</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>maximale Spannung des Pulses</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Anstiegszeit des Pulses</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Abfallszeit des Pulses</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentieller Spannungspuls</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufteilungsfaktor der parasitären B-C Kapazität</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschfaktor für den inneren Basiswiderstand</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>gleichungsdefinierter Baustein</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>Art der Gleichungen</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Zweige</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Stromgleichung</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladungsgleichung</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichungsdefinierter Baustein</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">FEHLER: Die SPICE-Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
+        <translation>FEHLER: Die SPICE-Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">FEHLER: Das Programm QucsConv kann nicht gestartet werden!</translation>
+        <translation>FEHLER: Das Programm QucsConv kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die konvertierte SPICE-Datei &quot;%1&quot; kann nicht gespeichert werden.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die konvertierte SPICE-Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5415,25 +5415,28 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Datei &quot;%1&quot; kann nicht geöffnet werden.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das Benutzerbibliotheksunterverzeichnis kann nicht erstellt werden !
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Datei &quot;%1&quot; kann nicht erzeugt werden.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>WARNUNG: Die Bibliothekskomponente &quot;%1&quot; wird übersprungen.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die SPICE-Datei &quot;%1&quot; wird konvertiert.</translation>
     </message>
 </context>
 <context>
@@ -8093,19 +8096,19 @@ Zentriert ausgewählte Elemente vertikal</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog Quellen</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Die Verilog Quelldatei kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>Messgeräte</translation>
     </message>
 </context>
 <context>
@@ -11621,15 +11624,15 @@ Kopiert Dateien in das Projektverzeichnis</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib Hilfe</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modell</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothekskomponente suchen</translation>
     </message>
 </context>
 <context>
@@ -11842,7 +11845,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdrahtung beginnen, wenn ein offener Knoten angeklickt wird:</translation>
     </message>
 </context>
 <context>
@@ -12318,7 +12321,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Bibliotheksdatei &quot;%1&quot; kann nicht erstellt werden.</translation>
     </message>
 </context>
 <context>
@@ -12772,7 +12775,7 @@ Fehler:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die SPICE-Datei &quot;%1&quot; wird konvertiert.</translation>
     </message>
 </context>
 <context>
