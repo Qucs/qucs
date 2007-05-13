@@ -318,6 +318,9 @@ pInfoFunc Sources[] =
    &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, &iExp::info,
    &vExp::info, 0};
 
+pInfoFunc Probes[] =
+  {&iProbe::info, &vProbe::info, 0};
+
 pInfoFunc TransmissionLines[] =
   {&TLine::info, &TLine_4Port::info, &TwistedPair::info, &CoaxialLine::info,
    &Substrate::info, &MSline::info, &MScoupled::info, &MScorner::info,
@@ -361,7 +364,7 @@ pInfoFunc Paintings[] =
 
 // Order of the component groups in the ComboBox
 pInfoFunc *ComponentGroups[] =
-  {lumpedComponents, Sources, TransmissionLines, nonlinearComps,
+  {lumpedComponents, Sources, Probes, TransmissionLines, nonlinearComps,
    digitalComps, FileComponents, Simulations, Diagrams, 0};
 
 // ---------------------------------------------------------------
@@ -373,6 +376,7 @@ void QucsApp::fillComboBox(bool setAll)
   if(setAll) {
     CompChoose->insertItem(tr("lumped components"));
     CompChoose->insertItem(tr("sources"));
+    CompChoose->insertItem(tr("probes"));
     CompChoose->insertItem(tr("transmission lines"));
     CompChoose->insertItem(tr("nonlinear components"));
     CompChoose->insertItem(tr("digital components"));
