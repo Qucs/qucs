@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.69 2007/04/18 19:18:01 ela Exp $
+ * $Id: qucsdefs.h,v 1.70 2007/05/13 12:21:43 ela Exp $
  *
  */
 
@@ -66,6 +66,13 @@ struct define_t qucs_definition_available[] =
       { "k12", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
       { "k13", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
       { "k23", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* multiple mutual inductors */
+  { "MUTX", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "k", PROP_LIST, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
