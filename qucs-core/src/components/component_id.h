@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.39 2007-04-18 19:18:02 ela Exp $
+ * $Id: component_id.h,v 1.40 2007-05-13 12:21:43 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@ enum circuit_type {
   CIR_INDUCTOR,
   CIR_MUTUAL,
   CIR_MUTUAL2,
+  CIR_MUTUALX,
   CIR_VCCS,
   CIR_CCCS,
   CIR_CCVS,

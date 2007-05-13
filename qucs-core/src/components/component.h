@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.43 2007-04-18 19:18:01 ela Exp $
+ * $Id: component.h,v 1.44 2007-05-13 12:21:43 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@
 #include "inductor.h"
 #include "mutual.h"
 #include "mutual2.h"
+#include "mutualx.h"
 #include "vccs.h"
 #include "cccs.h"
 #include "ccvs.h"

@@ -1,0 +1,124 @@
+/*
+ * mutualx.cpp - multiple mutual inductors class implementation
+ *
+ * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
+ *
+ * $Id: mutualx.cpp,v 1.1 2007-05-13 12:21:43 ela Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "complex.h"
+#include "object.h"
+#include "node.h"
+#include "circuit.h"
+#include "vector.h"
+#include "matrix.h"
+#include "constants.h"
+#include "component_id.h"
+#include "mutualx.h"
+
+mutualx::mutualx () : circuit () {
+  type = CIR_MUTUALX;
+  setVariableSized (true);
+}
+
+void mutualx::calcSP (nr_double_t) {
+}
+
+void mutualx::initAC (void) {
+  initDC ();
+}
+
+void mutualx::calcAC (nr_double_t frequency) {
+  int inductors = getSize () / 2;
+  int r, c, state;
+  vector * L = getPropertyVector ("L");
+  vector * C = getPropertyVector ("k");
+  nr_double_t o = 2 * M_PI * frequency;
+
+  // fill D-Matrix
+  for (r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++) {
+      state = inductors * r + c;
+      nr_double_t l1 = real (L->get (r));
+      nr_double_t l2 = real (L->get (c));
+      nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
+      setD (VSRC_1 + r, VSRC_1 + c, rect (0.0, k * o));
+    }
+  }
+}
+
+void mutualx::initDC (void) {
+  int inductors = getSize () / 2;
+  setVoltageSources (inductors);
+  allocMatrixMNA ();
+  // fill C and B-Matrix entries
+  for (int i = 0; i < inductors; i++)
+    voltageSource (VSRC_1 + i, NODE_1 + i * 2, NODE_2 + i * 2);
+}
+
+void mutualx::initTR (void) {
+  int inductors = getSize () / 2;
+  initDC ();
+  setStates (inductors * inductors * 2);
+}
+
+void mutualx::calcTR (nr_double_t) {
+  int inductors = getSize () / 2;
+  int r, c, state;
+  vector * L = getPropertyVector ("L");
+  vector * C = getPropertyVector ("k");
+
+  nr_double_t * veq = new nr_double_t[inductors * inductors];
+  nr_double_t * req = new nr_double_t[inductors * inductors];
+
+  // integration for self and mutual inductances
+  for (r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++) {
+      state = inductors * r + c;
+      nr_double_t l1 = real (L->get (r));
+      nr_double_t l2 = real (L->get (c));
+      nr_double_t i = real (getJ (VSRC_1 + c));
+      nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
+      setState  (2 * state, i * k);
+      integrate (2 * state, k, req[state], veq[state]);
+    }
+  }
+
+  // fill D-Matrix entries and extended RHS
+  for (r = 0; r < inductors; r++) {
+    nr_double_t v = 0;
+    for (c = 0; c < inductors; c++) {
+      state = inductors * r + c;
+      setD (VSRC_1 + r, VSRC_1 + c, -req[state]);
+      v += veq[state];
+    }
+    setE (VSRC_1 + r, v);
+  }
+
+  delete[] veq;
+  delete[] req;
+}

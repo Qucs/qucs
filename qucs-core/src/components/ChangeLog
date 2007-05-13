@@ -1,3 +1,8 @@
+2007-05-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* mutualx.h (class mutualx): New component.  General multiple
+	mutual inductances.  TODO: S-parameters.
+
 2007-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Fixed bug occuring when there are

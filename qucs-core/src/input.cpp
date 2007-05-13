@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.69 2007-04-18 19:18:01 ela Exp $
+ * $Id: input.cpp,v 1.70 2007-05-13 12:21:43 ela Exp $
  *
  */
 
@@ -450,6 +450,8 @@ circuit * input::createCircuit (char * type) {
     return new mutual ();
   else if (!strcmp (type, "MUT2"))
     return new mutual2 ();
+  else if (!strcmp (type, "MUTX"))
+    return new mutualx ();
   else if (!strcmp (type, "IVnoise"))
     return new ivnoise ();
   else if (!strcmp (type, "VVnoise"))
