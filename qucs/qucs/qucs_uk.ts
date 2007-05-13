@@ -7394,6 +7394,10 @@ About the application</source>
 About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
