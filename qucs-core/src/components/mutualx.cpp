@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.cpp,v 1.1 2007-05-13 12:21:43 ela Exp $
+ * $Id: mutualx.cpp,v 1.2 2007-05-14 20:40:48 ela Exp $
  *
  */
 
@@ -45,7 +45,30 @@ mutualx::mutualx () : circuit () {
   setVariableSized (true);
 }
 
-void mutualx::calcSP (nr_double_t) {
+void mutualx::calcSP (nr_double_t frequency) {
+  setMatrixS (ztos (calcMatrixZ (frequency)));
+}
+
+matrix mutualx::calcMatrixZ (nr_double_t frequency) {
+  int inductors = getSize () / 2;
+  int r, c, state;
+  vector * L = getPropertyVector ("L");
+  vector * C = getPropertyVector ("k");
+  nr_double_t o = 2 * M_PI * frequency;
+  matrix z = matrix (inductors * 2);
+
+  // fill Z-Matrix entries
+  for (state = 0, r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++, state++) {
+      nr_double_t l1 = real (L->get (r));
+      nr_double_t l2 = real (L->get (c));
+      nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
+      complex zi = rect (0.0, k * o);
+      z.set (2 * r + 0, 2 * c + 0, +zi); z.set (2 * r + 1, 2 * c + 1, +zi);
+      z.set (2 * r + 1, 2 * c + 0, -zi); z.set (2 * r + 0, 2 * c + 1, -zi);
+    }
+  }
+  return z;
 }
 
 void mutualx::initAC (void) {
@@ -60,9 +83,8 @@ void mutualx::calcAC (nr_double_t frequency) {
   nr_double_t o = 2 * M_PI * frequency;
 
   // fill D-Matrix
-  for (r = 0; r < inductors; r++) {
-    for (c = 0; c < inductors; c++) {
-      state = inductors * r + c;
+  for (state = 0, r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++, state++) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
@@ -96,9 +118,8 @@ void mutualx::calcTR (nr_double_t) {
   nr_double_t * req = new nr_double_t[inductors * inductors];
 
   // integration for self and mutual inductances
-  for (r = 0; r < inductors; r++) {
-    for (c = 0; c < inductors; c++) {
-      state = inductors * r + c;
+  for (state = 0, r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++, state++) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t i = real (getJ (VSRC_1 + c));
@@ -109,10 +130,9 @@ void mutualx::calcTR (nr_double_t) {
   }
 
   // fill D-Matrix entries and extended RHS
-  for (r = 0; r < inductors; r++) {
+  for (state = 0, r = 0; r < inductors; r++) {
     nr_double_t v = 0;
-    for (c = 0; c < inductors; c++) {
-      state = inductors * r + c;
+    for (c = 0; c < inductors; c++, state++) {
       setD (VSRC_1 + r, VSRC_1 + c, -req[state]);
       v += veq[state];
     }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.h,v 1.1 2007-05-13 12:21:44 ela Exp $
+ * $Id: mutualx.h,v 1.2 2007-05-14 20:40:48 ela Exp $
  *
  */
 
@@ -35,6 +35,9 @@ class mutualx : public circuit
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+
+ private:
+  matrix calcMatrixZ (nr_double_t);
 };
 
 #endif /* __MUTUALX_H__ */
