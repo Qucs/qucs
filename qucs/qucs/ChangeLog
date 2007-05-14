@@ -1,3 +1,9 @@
+2007-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/diagram.cpp (loadGraphData): Fixed a bug which skipped
+	reloading of newly computed graphs in a diagram.  Thanks to
+	Michael.
+
 2007-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/librarydialog.cpp (LibraryDialog): Added

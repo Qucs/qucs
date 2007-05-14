@@ -403,7 +403,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   setPainter(Doc, &painter);
 
   MAx2 = DOC_X_POS(Event->pos().x());
-  MAy2 = DOC_X_POS(Event->pos().y());
+  MAy2 = DOC_Y_POS(Event->pos().y());
 
   Doc->setOnGrid(MAx2, MAy2);
   MAx3 = MAx1 = MAx2 - MAx1;
