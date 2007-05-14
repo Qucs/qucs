@@ -75,6 +75,7 @@ public:
   QString save();
   bool    load(const QString&, QTextStream*);
 
+  void getAxisLimits(Graph*);
   void updateGraphData();
   void loadGraphData(const QString&);
   void recalcGraphData();
