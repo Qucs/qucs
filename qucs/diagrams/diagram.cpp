@@ -666,6 +666,68 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 }
 
 // --------------------------------------------------------------------------
+void Diagram::getAxisLimits(Graph *pg)
+{
+  int z;
+  double x, y, *p;
+  DataX *pD = pg->cPointsX.first();
+  if(pD == 0) return;
+
+  if(Name[0] != 'C') {   // not for location curves
+    p = pD->Points;
+    for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
+      x = *(p++);
+      if(finite(x)) {
+	if(x > xAxis.max) xAxis.max = x;
+	if(x < xAxis.min) xAxis.min = x;
+      }
+    }
+  }
+
+  if(Name == "Rect3D") {
+    pD = pg->cPointsX.next();
+    if(pD) {
+      p = pD->Points;
+      for(z=pD->count; z>0; z--) { // check y coordinates (2. dimension)
+	y = *(p++);
+	if(finite(y)) {
+	  if(y > yAxis.max) yAxis.max = y;
+	  if(y < yAxis.min) yAxis.min = y;
+	}
+      }
+    }
+  }
+
+  Axis *pa;
+  if(pg->yAxisNo == 0)  pa = &yAxis;
+  else  pa = &zAxis;
+  p = pg->cPointsY;
+  if(p == 0) return;
+  for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
+    x = *(p++);
+    y = *(p++);
+
+    if(Name[0] != 'C') {
+      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
+      if(finite(x)) {
+	if(x > pa->max) pa->max = x;
+	if(x < pa->min) pa->min = x;
+      }
+    }
+    else {   // location curve needs different treatment
+      if(finite(x)) {
+	if(x > xAxis.max) xAxis.max = x;
+	if(x < xAxis.min) xAxis.min = x;
+      }
+      if(finite(y)) {
+	if(y > pa->max) pa->max = y;
+	if(y < pa->min) pa->min = y;
+      }
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
   int yNum = yAxis.numGraphs;
@@ -679,12 +741,14 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   int No=0;
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-    if(loadVarData(defaultDataSet, pg) == 1)   // load data, determine max/min values
+    if(loadVarData(defaultDataSet, pg) != 1)   // load data, determine max/min values
       No++;
+    else
+      getAxisLimits(pg);
     pg->lastLoaded = QDateTime::currentDateTime();
   }
 
-  if(No > 0) {   // Are dataset files unchanged ?
+  if(No <= 0) {   // All dataset files unchanged ?
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
     zAxis.numGraphs = zNum;
 
@@ -692,6 +756,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     xAxis.max = xmax; yAxis.max = ymax; zAxis.max = zmax;
     return;    // -> no update neccessary
   }
+
+  // get maximum and minimum values
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    getAxisLimits(pg);
 
   if(xAxis.min > xAxis.max)
     xAxis.min = xAxis.max = 0.0;
@@ -714,64 +782,6 @@ void Diagram::recalcGraphData()
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
-  int z;
-  double x, y, *p;
-  // get maximum and minimum values
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-    DataX *pD = pg->cPointsX.first();
-    if(pD == 0) continue;
-    if(Name[0] != 'C') {   // not for location curves
-      p = pD->Points;
-      for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
-        x = *(p++);
-	if(finite(x)) {
-	  if(x > xAxis.max) xAxis.max = x;
-	  if(x < xAxis.min) xAxis.min = x;
-	}
-      }
-    }
-
-    if(Name == "Rect3D") {
-      pD = pg->cPointsX.next();
-      if(pD) {
-        p = pD->Points;
-        for(z=pD->count; z>0; z--) { // check y coordinates (2. dimension)
-          y = *(p++);
-	  if(finite(y)) {
-	    if(y > yAxis.max) yAxis.max = y;
-	    if(y < yAxis.min) yAxis.min = y;
-	  }
-        }
-      }
-    }
-
-    Axis *pa;
-    if(pg->yAxisNo == 0)  pa = &yAxis;
-    else  pa = &zAxis;
-    p = pg->cPointsY;
-    for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
-      x = *(p++);
-      y = *(p++);
-    
-      if(Name[0] != 'C') {
-        if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-        if(finite(x)) {
-          if(x > pa->max) pa->max = x;
-          if(x < pa->min) pa->min = x;
-        }
-      }
-      else {   // location curve needs different treatment
-        if(finite(x)) {
-          if(x > xAxis.max) xAxis.max = x;
-          if(x < xAxis.min) xAxis.min = x;
-        }
-        if(finite(y)) {
-          if(y > pa->max) pa->max = y;
-          if(y < pa->min) pa->min = y;
-        }
-      }
-    }
-  }
 
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
