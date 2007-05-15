@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.70 2007-05-13 12:21:43 ela Exp $
+ * $Id: input.cpp,v 1.71 2007-05-15 19:01:13 ela Exp $
  *
  */
 
@@ -189,7 +189,17 @@ void input::factory (void) {
 	// add the properties to substrate
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	  if (pairs->value->ident) {
-	    s->addProperty (pairs->key, pairs->value->ident);
+	    // a variable
+	    if (pairs->value->var) {
+	      // at this stage it should be ensured that the variable is
+	      // already in the root environment
+	      variable * v = def->env->getVariable (pairs->value->ident);
+	      s->addProperty (pairs->key, v);
+	    }
+	    // a usual string property
+	    else {
+	      s->addProperty (pairs->key, pairs->value->ident);
+	    }
 	  } else {
 	    s->addProperty (pairs->key, pairs->value->value);
 	  }
