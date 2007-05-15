@@ -701,8 +701,8 @@ void Diagram::getAxisLimits(Graph *pg)
   Axis *pa;
   if(pg->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
+  (pa->numGraphs)++;    // count graphs
   p = pg->cPointsY;
-  if(p == 0) return;
   for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
     x = *(p++);
     y = *(p++);
@@ -757,10 +757,6 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     return;    // -> no update neccessary
   }
 
-  // get maximum and minimum values
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    getAxisLimits(pg);
-
   if(xAxis.min > xAxis.max)
     xAxis.min = xAxis.max = 0.0;
   if(yAxis.min > yAxis.max)
@@ -781,7 +777,11 @@ void Diagram::recalcGraphData()
 {
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
+  yAxis.numGraphs = zAxis.numGraphs = 0;
 
+  // get maximum and minimum values
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    getAxisLimits(pg);
 
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
