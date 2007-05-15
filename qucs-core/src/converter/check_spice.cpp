@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.36 2007/04/30 21:55:22 ela Exp $
+ * $Id: check_spice.cpp,v 1.37 2007/05/15 19:01:14 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "constants.h"
 #include "check_spice.h"
 #include "qucs_producer.h"
+#include "hash.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
@@ -1902,6 +1903,68 @@ spice_translate_coupled (struct definition_t * root,
   free (n1); free (n2); free (n3); free (n4);
   return root;
 }
+
+static struct definition_t *
+spice_find_coupled (struct definition_t * root,
+		    qucs::hash<struct definition_t> * coupled,
+		    char * type, char * inst) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!coupled->get (def->instance) &&
+	!strcmp (def->type, type) && !def->action) {
+      if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
+	continue;
+      char * linst1 = def->values->ident;
+      char * linst2 = def->values->next->ident;
+      if (!strcasecmp (linst1, inst) || !strcasecmp (linst2, inst))
+	return def;
+    }
+  }
+  return NULL;
+}
+
+#if 0
+/* Post translation function for coupled inductors. */
+static struct definition_t *
+spice_translate_coupled_3 (struct definition_t * root,
+			   struct definition_t * def) {
+  char * linst1, * linst2, * kinst, * linst;
+  qucs::hash<struct definition_t> K_hash;
+  qucs::hash<struct definition_t> L_hash;
+  struct definition_t * l, * k;
+
+  linst1 = def->values->ident;
+  l = spice_find_coupled_inductor (root, def, "L", linst1);
+  L_hash.put (linst1, l);
+  linst2 = def->values->next->ident;
+  l = spice_find_coupled_inductor (root, def, "L", linst2);
+  L_hash.put (linst2, l);
+
+  kinst = def->instance;
+  k = def;
+  K_hash.put (kinst, k);
+
+  while ((k = spice_find_coupled (root, &K_hash, "Tr", linst1)) != NULL) {
+    K_hash.put (k->instance, k);
+    linst = def->values->ident;
+    l = spice_find_coupled_inductor (root, def, "L", linst);
+    L_hash.put (linst, l);
+    linst = def->values->next->ident;
+    l = spice_find_coupled_inductor (root, def, "L", linst);
+    L_hash.put (linst, l);
+  }
+  while ((k = spice_find_coupled (root, &K_hash, "Tr", linst2)) != NULL) {
+    K_hash.put (k->instance, k);
+    linst = def->values->ident;
+    l = spice_find_coupled_inductor (root, def, "L", linst);
+    L_hash.put (linst, l);
+    linst = def->values->next->ident;
+    l = spice_find_coupled_inductor (root, def, "L", linst);
+    L_hash.put (linst, l);
+  }
+
+  return root;
+}
+#endif
 
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
