@@ -1,3 +1,7 @@
+2007-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* mutualx.cpp: Tried to fix the Z-matrix representation.
+
 2007-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* mutualx.cpp: Finished implementation of multiple mutual inductor

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.22 2007/03/08 19:45:05 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.23 2007/05/17 09:28:19 ela Exp $
  *
  */
 
@@ -93,9 +93,16 @@ static void qucs_collect_nodes (struct definition_t * root) {
 
 /* Prints value representation. */
 static void netlist_list_value (struct value_t * value) {
-  if (value->ident)
+  if (value == NULL)
+    fprintf (qucs_out, "[]");
+  else if (value->ident)
     fprintf (qucs_out, "%s", value->ident);
-  else {
+  else if (value->next) {
+    fprintf (qucs_out, "[");
+    for (; value != NULL; value = value->next)
+      fprintf (qucs_out, "%g%s", value->value, value->next ? ";" : "");
+    fprintf (qucs_out, "]");
+  } else {
     fprintf (qucs_out, "%g", value->value);
     if (value->scale)
       fprintf (qucs_out, "%s", value->scale);

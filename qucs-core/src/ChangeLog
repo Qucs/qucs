@@ -1,3 +1,8 @@
+2007-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* hash.cpp: Added count() function to hash.  Also added default
+	hashiterator constructor.
+
 2007-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp: Allow variables in substrate properties.
