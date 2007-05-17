@@ -25,6 +25,7 @@
 #include <qregexp.h>
 #include <qprocess.h>
 #include <qtextedit.h>
+#include <qptrlist.h>
 
 #include "main.h"
 #include "node.h"
@@ -827,7 +828,10 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   bool r;
   QString s;
   // give the ground nodes the name "gnd", and insert subcircuits etc.
-  for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+  QPtrListIterator<Component> it(DocComps);
+  Component *pc;
+  while((pc = it.current()) != 0) {
+    ++it;
     if(pc->isActive != COMP_IS_ACTIVE) continue;
 
     if(NumPorts < 0) {
@@ -978,6 +982,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
   QStringList Collect;
   Collect.clear();
   StringList.clear();
+  Signals.clear();
 
   // Apply node names and collect subcircuits and file include
   creatingLib = true;
@@ -1000,6 +1005,8 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
 
   // Emit subcircuit components
   createSubNetlistPlain(stream, ErrText, NumPorts);
+
+  Signals.clear();  // was filled in "giveNodeNames()"
   return true;
 }
 
