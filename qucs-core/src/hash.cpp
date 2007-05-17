@@ -1,7 +1,7 @@
 /*
  * hash.cpp - hash table functions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hash.cpp,v 1.2 2005-12-12 07:46:52 raimi Exp $
+ * $Id: hash.cpp,v 1.3 2007-05-17 09:28:14 ela Exp $
  *
  */
 
@@ -115,6 +115,12 @@ void hash<type_t>::clear (void) {
   keys = 0;
   table = (hashbucket<type_t> **)
     calloc (buckets, sizeof (hashbucket<type_t> *));
+}
+
+// Returns number of items in the hash.
+template <class type_t>
+int hash<type_t>::count (void) {
+  return keys;
 }
 
 /* Rebuilds a hash table.  Double (type is HASH_EXPAND) its size and
@@ -277,6 +283,15 @@ hashiterator<type_t>::hashiterator (hash<type_t> & h) {
   _entry = 0;
   toLast ();
   toFirst ();
+}
+
+// Default constructor for hash table iterator.
+template <class type_t>
+hashiterator<type_t>::hashiterator () {
+  _hash = NULL;
+  _bucket = 0;
+  _entry = 0;
+  _first = _last = _current = NULL;
 }
 
 // Destructor for hash table iterator.

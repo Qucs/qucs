@@ -1,3 +1,12 @@
+2007-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Translation of mutual inductors can now be
+	handled for an virtually unlimited number of coupling coefficients
+	using the new MUTX component.
+
+	* qucs_producer.cpp: Adjusted property printer to handle property
+	vectors correctly.
+
 2007-04-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Added translation of exponential part of a

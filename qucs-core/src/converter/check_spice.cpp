@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.37 2007-05-15 19:01:14 ela Exp $
+ * $Id: check_spice.cpp,v 1.38 2007-05-17 09:28:19 ela Exp $
  *
  */
 
@@ -761,7 +761,7 @@ static void netlist_free_values (struct value_t * value) {
 
 /* Deletes the given key/value pair. */
 void netlist_free_pair (struct pair_t * pair) {
-  if (pair->value) netlist_free_value (pair->value);
+  if (pair->value) netlist_free_values (pair->value);
   free (pair->key);
   free (pair);
 }
@@ -1718,6 +1718,25 @@ spice_find_coupled (struct definition_t * root, struct definition_t * coupled,
   return NULL;
 }
 
+/* Looks for a mutual inductor instance referencing the two given
+   inductors and returns it. */
+static struct definition_t *
+spice_find_coupled (struct definition_t * root, char * type,
+		    char * inst1, char * inst2) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!strcmp (def->type, type) && !def->action) {
+      if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
+	continue;
+      char * linst1 = def->values->ident;
+      char * linst2 = def->values->next->ident;
+      if (!strcasecmp (linst1, inst1) && !strcasecmp (linst2, inst2) ||
+	  !strcasecmp (linst1, inst2) && !strcasecmp (linst2, inst1))
+	return def;
+    }
+  }
+  return NULL;
+}
+
 /* Looks for the inductor definition used in a coupled inductor.
    Emits an error message if there is no such inductor. */
 static struct definition_t *
@@ -1904,67 +1923,163 @@ spice_translate_coupled (struct definition_t * root,
   return root;
 }
 
+/* Finds an additional mutual inductor definition using the same
+   inductors as the original one if there is any. */
 static struct definition_t *
 spice_find_coupled (struct definition_t * root,
 		    qucs::hash<struct definition_t> * coupled,
 		    char * type, char * inst) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
-    if (!coupled->get (def->instance) &&
-	!strcmp (def->type, type) && !def->action) {
+    if (!strcmp (def->type, type) && !def->action) {
       if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
 	continue;
-      char * linst1 = def->values->ident;
-      char * linst2 = def->values->next->ident;
-      if (!strcasecmp (linst1, inst) || !strcasecmp (linst2, inst))
-	return def;
+      if (!coupled->get (def->instance)) {
+	char * linst1 = def->values->ident;
+	char * linst2 = def->values->next->ident;
+	if (!strcasecmp (linst1, inst) || !strcasecmp (linst2, inst))
+	  return def;
+      }
     }
   }
   return NULL;
 }
 
-#if 0
-/* Post translation function for coupled inductors. */
+/* Looks recursively for mutual inductors.  In the end the two hash
+   maps contain all the inductors coupled by those mutual inductors in
+   the other hash map. */
 static struct definition_t *
-spice_translate_coupled_3 (struct definition_t * root,
-			   struct definition_t * def) {
-  char * linst1, * linst2, * kinst, * linst;
-  qucs::hash<struct definition_t> K_hash;
-  qucs::hash<struct definition_t> L_hash;
+spice_search_coupled (struct definition_t * root,
+		      qucs::hash<struct definition_t> * K_hash,
+		      qucs::hash<struct definition_t> * L_hash,
+		      char * type, char * inst) {
+  char * linst;
   struct definition_t * l, * k;
 
-  linst1 = def->values->ident;
-  l = spice_find_coupled_inductor (root, def, "L", linst1);
-  L_hash.put (linst1, l);
-  linst2 = def->values->next->ident;
-  l = spice_find_coupled_inductor (root, def, "L", linst2);
-  L_hash.put (linst2, l);
+  // find mutual inductors referencing the given inductor instance
+  while ((k = spice_find_coupled (root, K_hash, type, inst)) != NULL) {
+    // already had this one?
+    if (K_hash->get (k->instance))
+      continue;
+    K_hash->put (k->instance, k);
 
-  kinst = def->instance;
-  k = def;
-  K_hash.put (kinst, k);
+    // first referenced inductor
+    linst = k->values->ident;
+    if (!L_hash->get (linst)) {
+      if ((l = spice_find_coupled_inductor (root, k, "L", linst)) != NULL) {
+	L_hash->put (linst, l);
+	// recurse
+	root = spice_search_coupled (root, K_hash, L_hash, type, linst);
+      }
+    }
 
-  while ((k = spice_find_coupled (root, &K_hash, "Tr", linst1)) != NULL) {
-    K_hash.put (k->instance, k);
-    linst = def->values->ident;
-    l = spice_find_coupled_inductor (root, def, "L", linst);
-    L_hash.put (linst, l);
-    linst = def->values->next->ident;
-    l = spice_find_coupled_inductor (root, def, "L", linst);
-    L_hash.put (linst, l);
+    // second referenced inductor
+    linst = k->values->next->ident;
+    if (!L_hash->get (linst)) {
+      if ((l = spice_find_coupled_inductor (root, k, "L", linst)) != NULL) {
+	L_hash->put (linst, l);
+	// recurse
+	root = spice_search_coupled (root, K_hash, L_hash, type, linst);
+      }
+    }
   }
-  while ((k = spice_find_coupled (root, &K_hash, "Tr", linst2)) != NULL) {
-    K_hash.put (k->instance, k);
-    linst = def->values->ident;
-    l = spice_find_coupled_inductor (root, def, "L", linst);
-    L_hash.put (linst, l);
-    linst = def->values->next->ident;
-    l = spice_find_coupled_inductor (root, def, "L", linst);
-    L_hash.put (linst, l);
-  }
-
   return root;
 }
-#endif
+
+/* Post translation function for multiple coupled inductors. */
+static struct definition_t *
+spice_translate_coupled_x (struct definition_t * root,
+			   struct definition_t * def) {
+  char * linst1, * linst2;
+  qucs::hash<struct definition_t> K_hash;
+  qucs::hash<struct definition_t> L_hash;
+  qucs::hashiterator<struct definition_t> it;
+  struct definition_t * l;
+
+  // save first 2 referenced inductors and the mutual inductor
+  linst1 = def->values->ident;
+  if ((l = spice_find_coupled_inductor (root, def, "L", linst1)) != NULL)
+    L_hash.put (linst1, l);
+  linst2 = def->values->next->ident;
+  if ((l = spice_find_coupled_inductor (root, def, "L", linst2)) != NULL)
+    L_hash.put (linst2, l);
+  K_hash.put (def->instance, def);
+
+  // look for more mutual inductors involving the first 2 inductors
+  root = spice_search_coupled (root, &K_hash, &L_hash, "Tr", linst1);
+  root = spice_search_coupled (root, &K_hash, &L_hash, "Tr", linst2);
+
+  // create coupling coefficient matrix
+  int i, o, s = L_hash.count ();
+  nr_double_t * kval = new nr_double_t[s * s];
+  struct definition_t * k;
+  struct value_t * val;
+  qucs::hashiterator<struct definition_t> iti, ito;
+  // outer loop
+  for (ito = qucs::hashiterator<struct definition_t> (L_hash), o = 0;
+       *ito; ++ito, ++o) {
+    // inner loop
+    for (iti = qucs::hashiterator<struct definition_t> (L_hash), i = 0;
+	 *iti; ++iti, ++i) {
+      if (i > o) {
+	// cross-coupling coefficients
+	nr_double_t kvalue = 0;
+	k = spice_find_coupled (root, "Tr",
+				iti.currentKey (), ito.currentKey ());
+	if (k != NULL) {
+	  if ((val = spice_get_value_coupled (k)) != NULL) {
+	    kvalue = spice_evaluate_value (val);
+	  }
+	}
+	kval[s * o + i] = kvalue;
+	kval[s * i + o] = kvalue;
+      }
+      else if (i == o) {
+	// self-coupling coefficient
+	kval[s * o + i] = 1;
+      }
+    }
+  }
+
+  spice_value_done (def->values);
+  spice_value_done (def->values->next);
+
+  // adjust MUTX instance
+  free (def->type); def->type = strdup ("MUTX");
+  netlist_free_pairs (def->pairs); def->pairs = NULL;
+
+  // create L property vector
+  struct pair_t * pair = create_pair ();
+  pair->key = strdup ("L");
+  def->pairs = netlist_append_pairs (def->pairs, pair);
+  for (it = qucs::hashiterator<struct definition_t> (L_hash); *it; ++it) {
+    spice_append_node (def, spice_get_node(it.currentVal (), 1)->node);
+    spice_append_node (def, spice_get_node(it.currentVal (), 2)->node);
+    val = create_value ();
+    val->value = spice_get_property_value (it.currentVal (), "L");
+    pair->value = netlist_append_values (pair->value, val);
+    root = spice_del_definition (root, it.currentVal ());
+  }
+
+  // create k property vector
+  pair = create_pair ();
+  pair->key = strdup ("k");
+  def->pairs = netlist_append_pairs (def->pairs, pair);
+  for (i = 0; i < s * s; i++) {
+    val = create_value ();
+    val->value = kval[i];
+    pair->value = netlist_append_values (pair->value, val);
+  }
+
+  // remove remaining coupled inductors from definition list
+  for (it = qucs::hashiterator<struct definition_t> (K_hash); *it; ++it) {
+    if (def != it.currentVal ()) {
+      root = spice_del_definition (root, it.currentVal ());
+    }
+  }
+
+  delete[] kval;
+  return root;
+}
 
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
@@ -2201,7 +2316,10 @@ spice_post_translator (struct definition_t * root) {
     }
     // post-process mutual inductors (transformer)
     if (!def->action && !strcmp (def->type, "Tr")) {
-      root = spice_translate_coupled (root, def);
+      if (1)
+	root = spice_translate_coupled_x (root, def);
+      else
+	root = spice_translate_coupled (root, def);
     }
     // post-process general analysis options
     if (def->action && strstr (def->type, "OPT")) {
