@@ -1,3 +1,12 @@
+2007-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* lineardevices.tex (subsection{Mutual inductors with any number
+	of inductors}): Added Z-parameter representation of mutual
+	inductors.
+
+	* devices.tex (subsection{Models with Implicit Equations}): Fixed
+	sign in S-parameter equations.
+
 2007-03-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* maths.tex (paragraph{Zeros on the diagonal or super-diagonal.}):
