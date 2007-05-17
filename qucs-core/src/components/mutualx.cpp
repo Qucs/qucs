@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.cpp,v 1.3 2007-05-17 09:28:19 ela Exp $
+ * $Id: mutualx.cpp,v 1.4 2007-05-17 13:17:19 ela Exp $
  *
  */
 
@@ -63,7 +63,6 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      if (r != c) k = -k;
       complex zi = rect (0.0, k * o);
       z.set (2 * r + 0, 2 * c + 0, +zi); z.set (2 * r + 1, 2 * c + 1, +zi);
       z.set (2 * r + 1, 2 * c + 0, -zi); z.set (2 * r + 0, 2 * c + 1, -zi);
@@ -89,7 +88,6 @@ void mutualx::calcAC (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      if (r != c) k = -k;
       complex zi = rect (0.0, k * o);
       setD (VSRC_1 + r, VSRC_1 + c, zi);
     }

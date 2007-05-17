@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.36 2007-05-13 12:21:43 ela Exp $
+ * $Id: complex.cpp,v 1.37 2007-05-17 13:17:19 ela Exp $
  *
  */
 
@@ -134,7 +134,7 @@ nr_double_t limexp (const nr_double_t r) {
 
 // returns the first result of square root z
 complex sqrt (const complex z) {
-#if 1
+#if 0
   if (z.i == 0.0) {
     return z.r < 0.0 ? complex (0.0, sqrt (-z.r)) : complex (sqrt (z.r));
   } else {
