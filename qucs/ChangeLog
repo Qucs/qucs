@@ -1,3 +1,10 @@
+2007-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (giveNodeNames): Using QPtrListIterator for
+	iterating the DocComps list.  This is because the current item of
+	the list itself may be modified during iteration in the
+	drawContents() method due to a repaint event.
+
 2007-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/diagram.cpp (recalcGraphData): When removing a graph
