@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.cpp,v 1.4 2007-05-17 13:17:19 ela Exp $
+ * $Id: mutualx.cpp,v 1.5 2007-05-21 16:29:16 ela Exp $
  *
  */
 
@@ -46,7 +46,29 @@ mutualx::mutualx () : circuit () {
 }
 
 void mutualx::calcSP (nr_double_t frequency) {
-  setMatrixS (ztos (calcMatrixZ (frequency)));
+  setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+matrix mutualx::calcMatrixY (nr_double_t frequency) {
+#if 1
+  matrix ts = ztos (calcMatrixZ (frequency));
+  matrix ty = stoy (ts);
+#else
+  matrix ty = ztoy (calcMatrixZ (frequency));
+#endif
+  int r, c;
+  int inductors = getSize () / 2;
+  matrix y = matrix (inductors * 2);
+
+  for (r = 0; r < inductors; r++) {
+    for (c = 0; c < inductors; c++) {
+      y.set (2 * r + 0, 2 * c + 0, +ty (r, c));
+      y.set (2 * r + 1, 2 * c + 1, +ty (r, c));
+      y.set (2 * r + 0, 2 * c + 1, -ty (r, c));
+      y.set (2 * r + 1, 2 * c + 0, -ty (r, c));
+    }
+  }
+  return y;
 }
 
 matrix mutualx::calcMatrixZ (nr_double_t frequency) {
@@ -55,7 +77,7 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
   vector * L = getPropertyVector ("L");
   vector * C = getPropertyVector ("k");
   nr_double_t o = 2 * M_PI * frequency;
-  matrix z = matrix (inductors * 2);
+  matrix z = matrix (inductors);
 
   // fill Z-Matrix entries
   for (state = 0, r = 0; r < inductors; r++) {
@@ -63,9 +85,7 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      complex zi = rect (0.0, k * o);
-      z.set (2 * r + 0, 2 * c + 0, +zi); z.set (2 * r + 1, 2 * c + 1, +zi);
-      z.set (2 * r + 1, 2 * c + 0, -zi); z.set (2 * r + 0, 2 * c + 1, -zi);
+      z.set (r, c, rect (0.0, k * o));
     }
   }
   return z;
@@ -88,8 +108,7 @@ void mutualx::calcAC (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      complex zi = rect (0.0, k * o);
-      setD (VSRC_1 + r, VSRC_1 + c, zi);
+      setD (VSRC_1 + r, VSRC_1 + c, rect (0.0, k * o));
     }
   }
 }
