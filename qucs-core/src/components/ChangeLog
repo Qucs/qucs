@@ -1,3 +1,7 @@
+2007-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* mutualx.cpp: Finally fixed S-parameter calculation.
+
 2007-05-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* mutualx.cpp: Tried to fix the Z-matrix representation.
