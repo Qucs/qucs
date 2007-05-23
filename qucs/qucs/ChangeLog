@@ -1,3 +1,8 @@
+2007-05-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsveri.bat: Added wrapper script for digital Verilog-HDL
+	simulations for Win32.
+
 2007-05-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (giveNodeNames): Using QPtrListIterator for

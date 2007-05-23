@@ -25,7 +25,7 @@
 SUBDIRS = bitmaps components diagrams paintings dialogs
 
 if COND_WIN32
-bin_SCRIPTS = qucsdigi.bat
+bin_SCRIPTS = qucsdigi.bat qucsveri.bat
 else
 bin_SCRIPTS = qucsdigi qucsveri
 endif
@@ -95,7 +95,7 @@ langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)
 
 EXTRA_DIST = $(TRANSLATIONS) $(GENTRANSLATIONS) README.translations \
-	qucsdigi qucsdigi.bat qucsveri
+	qucsdigi qucsdigi.bat qucsveri qucsveri.bat
 
 all-local: $(TRANSLATIONS) $(TRANSFILES)
 
