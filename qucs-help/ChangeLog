@@ -1,3 +1,8 @@
+2007-05-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html, docs/de/mathfunc.html: Documented the new
+	constant "q" and the vt() function.
+
 2007-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/qucsveri.1: Added manpage for the qucsveri wrapper
