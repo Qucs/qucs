@@ -26,7 +26,7 @@ files.
 Version 0.0.12
 --------------
 
- * added hypot() and limexp() to the available functions
+ * added vt(), hypot() and limexp() to the available functions
  * new logical and rational operators in equation solver as well as
    the ternary ?: construct
  * added arcsec(), arccosec(), arsech() and arcosech() functions

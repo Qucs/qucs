@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.17 2007/05/05 09:28:40 ela Exp $
+ * $Id: applications.h,v 1.18 2007/05/24 16:40:30 ela Exp $
  *
  */
 
@@ -797,6 +797,10 @@ struct application_t eqn::applications[] = {
     { TAG_COMPLEX, TAG_DOUBLE } },
   { "runavg", TAG_VECTOR, evaluate::runavg_v_d, 2,
     { TAG_VECTOR,  TAG_DOUBLE } },
+
+  { "vt", TAG_DOUBLE,  evaluate::vt_d, 1, { TAG_DOUBLE  } },
+  { "vt", TAG_COMPLEX, evaluate::vt_c, 1, { TAG_COMPLEX } },
+  { "vt", TAG_VECTOR,  evaluate::vt_v, 1, { TAG_VECTOR  } },
 
   { "kbd", TAG_VECTOR, evaluate::kbd_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
   { "kbd", TAG_VECTOR, evaluate::kbd_d,   1, { TAG_DOUBLE } },

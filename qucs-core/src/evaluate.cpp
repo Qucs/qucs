@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.60 2007/05/05 09:28:40 ela Exp $
+ * $Id: evaluate.cpp,v 1.61 2007/05/24 16:40:31 ela Exp $
  *
  */
 
@@ -3600,6 +3600,28 @@ constant * evaluate::runavg_v_d (constant * args) {
     __RETV ();
   }
   _RETV (runavg (*x, n));
+}
+
+// ********************* thermal voltage **********************
+constant * evaluate::vt_d (constant * args) {
+  _ARD0 (d1);
+  _DEFD ();
+  _RETD (d1 * kBoverQ);
+}
+
+constant * evaluate::vt_c (constant * args) {
+  _ARC0 (c1);
+  _DEFC ();
+  _RETC (*c1 * kBoverQ);
+}
+
+constant * evaluate::vt_v (constant * args) {
+  _ARV0 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) v->add (v1->get (i) * kBoverQ);
+  res->v = v;
+  return res;
 }
 
 // ************** Kaiser-Bessel derived window ****************

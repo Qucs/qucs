@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.35 2007/05/03 19:01:03 ela Exp $
+ * $Id: evaluate.h,v 1.36 2007/05/24 16:40:31 ela Exp $
  *
  */
 
@@ -684,6 +684,10 @@ public:
   static constant * runavg_d_d (constant *);
   static constant * runavg_c_d (constant *);
   static constant * runavg_v_d (constant *);
+
+  static constant * vt_d (constant *);
+  static constant * vt_c (constant *);
+  static constant * vt_v (constant *);
 
   static constant * kbd_d_d (constant *);
   static constant * kbd_d   (constant *);

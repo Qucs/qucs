@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.8 2007/05/03 19:00:59 ela Exp $
+ * $Id: differentiate.cpp,v 1.9 2007/05/24 16:40:30 ela Exp $
  *
  */
 
@@ -691,6 +691,14 @@ node * differentiate::hypot_reduce (node * f0, node * f1) {
   }
 }
 
+#include "constants.h"
+
+node * differentiate::vt (application * app, char * derivative) {
+  _AD0 (d0);
+  defCon (con, kBoverQ);
+  return times_reduce (d0, con);
+}
+
 // List of differentiators.
 struct differentiation_t eqn::differentiations[] = {
   { "+", differentiate::plus_binary,  2 },
@@ -738,6 +746,7 @@ struct differentiation_t eqn::differentiations[] = {
   { "arcosech", differentiate::arcosech,  1 },
   { "hypot",    differentiate::xhypot,    2 },
   { "limexp",   differentiate::limexp,    1 },
+  { "vt",       differentiate::vt,        1 },
 
   { NULL, NULL, 0 /* end of list */ }
 };

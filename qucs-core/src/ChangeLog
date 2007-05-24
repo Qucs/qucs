@@ -1,3 +1,17 @@
+2007-05-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Added elementary charge "q" to the constants in
+	the equation solver.
+
+	* differentiate.cpp: Added differentiator for the new vt()
+	function.
+
+	* evaluate.cpp: Added function vt() computing the thermal voltage.
+
+	* check_netlist.cpp: Moved subroutine call for checking actions
+	behind the subcircuit checks in order to allow detecting
+	non-linearities in subcircuits.
+
 2007-05-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* hash.cpp: Added count() function to hash.  Also added default
