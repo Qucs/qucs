@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.110 2007-03-03 17:37:09 ela Exp $
+ * $Id: check_netlist.cpp,v 1.111 2007-05-24 16:40:30 ela Exp $
  *
  */
 
@@ -721,7 +721,7 @@ static int checker_validate_actions (struct definition_t * root) {
 		"single or none required\n", n);
       errors++;
     }
-    if (a >=1 && c >= 1 && n < 1) {
+    if (a >= 1 && c >= 1 && n < 1) {
       logprint (LOG_ERROR, "checker error, a .DC action is required for this "
 		"circuit definition (accounted %d non-linearities)\n", c);
       errors++;
@@ -1894,8 +1894,6 @@ int netlist_checker (environment * env) {
   errors += netlist_checker_intern (subcircuit_root);
   // check global netlist
   errors += netlist_checker_intern (definition_root);
-  // check actions
-  errors += checker_validate_actions (definition_root);
   // check equations in root
   env_root->setDefinitions (definition_root);
   errors += env_root->equationChecker (0);
@@ -1919,6 +1917,9 @@ int netlist_checker (environment * env) {
     errors += subenv->equationChecker (0);
     subenv->setDefinitions (NULL);
   }
+
+  // check actions
+  errors += checker_validate_actions (definition_root);
 
   if (!errors) {
     // create actual root environment
