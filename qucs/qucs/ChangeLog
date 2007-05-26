@@ -1,3 +1,7 @@
+2007-05-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_ru.ts: Updated russian translations.  Thanks to Igor.
+
 2007-05-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsveri.bat: Added wrapper script for digital Verilog-HDL
