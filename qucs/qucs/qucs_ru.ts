@@ -322,7 +322,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы Verilog</translation>
     </message>
 </context>
 <context>
@@ -647,15 +647,15 @@
     </message>
     <message>
         <source>Analog</source>
-        <translation type="unfinished"></translation>
+        <translation>Analog</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
 </context>
 <context>
@@ -1097,11 +1097,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервать</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается запустить конвертер!</translation>
     </message>
 </context>
 <context>
@@ -1179,7 +1179,7 @@
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation>Не удалось создать папку для библиотек пользователя!</translation>
+        <translation>Не удается создать каталог для библиотек пользователя!</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
@@ -1273,23 +1273,23 @@ Successfully created library.</source>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Успешно создана библиотека.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Выделить все</translation>
+        <translation>Выделить все</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить выделение всего</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается переименовать подкаталог библиотеки!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет прав на удаление подкаталога &quot;%1&quot; библиотеки. </translation>
     </message>
 </context>
 <context>
@@ -1878,7 +1878,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation>Выйти из папки &quot;%1&quot;</translation>
+        <translation>Выйти из каталога &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
@@ -1890,19 +1890,19 @@ but is %1 !</source>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation>ОШИБКА: Папка &quot;%1&quot; проекта уже существует!</translation>
+        <translation>ОШИБКА: Каталог &quot;%1&quot; проекта уже существует!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation>ОШИБКА: Не удалось создать папку &quot;%1&quot;!</translation>
+        <translation>ОШИБКА: Не удалось создать каталог &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation>Создать и войти в папку &quot;%1&quot;</translation>
+        <translation>Создать и войти в каталог &quot;%1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation>ОШИБКА: Не удалось создать файл &quot;%1&quot;!</translation>
+        <translation>ОШИБКА: Не удается создать файл &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
@@ -5021,7 +5021,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
@@ -5277,135 +5277,135 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>формат схемы</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл Verilog</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя Verilog-файла </translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Нет имени файла в %1 компоненте &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается открыть %1 файл &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение пробоя К-Э, В, (0 == отключение пробоя коллектора)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>экспоненциальный источник тока</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>ток перед возрастающим фронтом</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальный ток импульса</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>время начала экспоненциально нарастающего фронта</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>начало экспоненциального спада</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>постоянная времени нарастающего фронта</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>постоянная времени спадающего фронта</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Источник экспоненциального импульсного тока</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>источник экспоненциального напряжения</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение перед возрастающим фронтом</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальное напряжение импульса</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>время нарастания импульса</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>время спада импульса</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Источник экспоненциального импульсного напряжения</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделительный фактор паразитной емкости Б-К</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент шума внутреннего сопротивления базы</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>заданное уравнением устройство</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>тип уравнений</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>число ветвей</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>уравнение тока</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>уравнение заряда</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Заданное уравнением устройство</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">ОШИБКА: Не удалось открыть SPICE-файл &quot;%1&quot;.</translation>
+        <translation>ОШИБКА: Не удается открыть SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">ОШИБКА: Не удалось запустить программу QucsConv!</translation>
+        <translation>ОШИБКА: Не удается запустить программу QucsConv!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается сохранить преобразованный SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается открыть преобразованный SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5414,25 +5414,28 @@ Usage:  qucsedit [-r] file
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается открыть файл &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается создать подкаталог для библиотек пользователя!
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается создать файл &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПРЕДУПРЕЖДЕНИЕ: Пропускается библиотечный компонент &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование SPICE-файла &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -6004,7 +6007,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="obsolete">содержимое папки проекта</translation>
+        <translation type="obsolete">содержимое каталога проекта</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -6142,7 +6145,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation>Не удалось создать рабочую папку !</translation>
+        <translation>Не удалось создать рабочий каталог!</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
@@ -6286,7 +6289,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>Не удалось получить доступ к папке проекта: </translation>
+        <translation>Не удалось получить доступ к каталогу проекта: </translation>
     </message>
     <message>
         <source> - Project: </source>
@@ -6294,7 +6297,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation>Выберите для открывания папку проекта</translation>
+        <translation>Выберите для открывания каталог проекта</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
@@ -6306,7 +6309,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation>Не удалось создать папку проекта !</translation>
+        <translation>Не удалось создать каталог проекта!</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -6334,11 +6337,11 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation>Невозможно удалить папку проекта !</translation>
+        <translation>Невозможно удалить каталог проекта!</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation>Выберите для удаления папку проекта</translation>
+        <translation>Выберите для удаления каталог проекта</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -6418,7 +6421,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation>содержимое папки проекта</translation>
+        <translation>содержимое каталога проекта</translation>
     </message>
     <message>
         <source>content of current project</source>
@@ -6934,7 +6937,7 @@ Closes the current project</source>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation>Копирует файлы в папку проекта</translation>
+        <translation>Копирует файлы в каталог проекта</translation>
     </message>
     <message>
         <source>Add Files to Project
@@ -6942,7 +6945,7 @@ Closes the current project</source>
 Copies files to project directory</source>
         <translation>Добавить файлы к проекту
 
-Копирует файлы в папку проекта</translation>
+Копирует файлы в каталог проекта</translation>
     </message>
     <message>
         <source>View All</source>
@@ -7818,7 +7821,7 @@ Create Library from Subcircuits</source>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation>Невозможно удалить папку: </translation>
+        <translation>Невозможно удалить каталог: </translation>
     </message>
     <message>
         <source>Please open project first!</source>
@@ -8082,19 +8085,19 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходные тексты Verilog</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Не удается удалить файл исходного текста Verilog: </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>измерители</translation>
     </message>
 </context>
 <context>
@@ -8844,7 +8847,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="obsolete">содержание папки проекта</translation>
+        <translation type="obsolete">содержание каталога проекта</translation>
     </message>
     <message>
         <source>Content of</source>
@@ -8920,7 +8923,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation type="obsolete">Невозможно создать рабочую папку !</translation>
+        <translation type="obsolete">Невозможно создать рабочий каталог!</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
@@ -9138,11 +9141,11 @@ Errors:
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation type="obsolete">Выберите папку проекта для открытия</translation>
+        <translation type="obsolete">Выберите каталог проекта для открытия</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation type="obsolete">Нет доступа к папке проекта: </translation>
+        <translation type="obsolete">Нет доступа к каталогу проекта: </translation>
     </message>
     <message>
         <source>Content of &apos;</source>
@@ -9162,7 +9165,7 @@ Errors:
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation type="obsolete">Невозможно создать папку проекта !</translation>
+        <translation type="obsolete">Невозможно создать каталог проекта !</translation>
     </message>
     <message>
         <source>Resistor</source>
@@ -9405,11 +9408,11 @@ Go on ?</source>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation type="obsolete">Невозможно удалить папку проекта !</translation>
+        <translation type="obsolete">Невозможно удалить каталог проекта !</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation type="obsolete">Выберите папку проекта для удаления</translation>
+        <translation type="obsolete">Выберите каталог проекта для удаления</translation>
     </message>
     <message>
         <source>Help Index</source>
@@ -11444,7 +11447,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="obsolete">Копирует файлы в папку проекта</translation>
+        <translation type="obsolete">Копирует файлы в каталог проекта</translation>
     </message>
     <message>
         <source>Add Files to Project
@@ -11452,7 +11455,7 @@ Calculates DC bias and shows it</source>
 Copies files to project directory</source>
         <translation type="obsolete">Добавить файлы к проекту
 
-Копирует файлы в папку проекта</translation>
+Копирует файлы в каталог проекта</translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
@@ -11603,15 +11606,15 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка по QucsLib</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск библиотечного компонента</translation>
     </message>
 </context>
 <context>
@@ -11823,7 +11826,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>начать проводку при нажатии кнопки на открытом узле:</translation>
     </message>
 </context>
 <context>
@@ -12299,7 +12302,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ОШИБКА: Не удается создать библиотечный файл &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
@@ -12592,7 +12595,7 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>ОШИБКА: Не удалось запустить программу QucsConv!</translation>
+        <translation>ОШИБКА: Не удается запустить программу QucsConv!</translation>
     </message>
     <message>
         <source>ERROR: No time for simulation specified!</source>
@@ -12612,41 +12615,43 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Не удалось открыть SPICE-файл &quot;%1&quot;.</translation>
+        <translation>ОШИБКА: Не удается открыть SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Начало нового моделирования в %1 в %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>готово.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Моделирование закончено в %1 в %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Готово.</translation>
+        <translation>Готово.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошли ошибки во время моделирования в %1 в %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервано.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход:
+-------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибки:
+-------</translation>
     </message>
 </context>
 <context>
@@ -12749,7 +12754,7 @@ Errors:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование SPICE-файла &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
