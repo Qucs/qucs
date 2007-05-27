@@ -1,3 +1,14 @@
+2007-05-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* input.cpp: Transfer references to equation variables in an
+	analysis property properly into its properties.
+
+	* equation.cpp: References to component properties can now also be
+	found in analysis definitions.
+
+	* check_netlist.cpp: Allow certain analysis properties to be
+	variable references.
+
 2007-05-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Added elementary charge "q" to the constants in

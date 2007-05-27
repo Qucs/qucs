@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.71 2007/05/15 19:01:13 ela Exp $
+ * $Id: input.cpp,v 1.72 2007/05/27 17:50:15 ela Exp $
  *
  */
 
@@ -147,14 +147,25 @@ void input::factory (void) {
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	  if (pairs->value->ident) {
 	    if (pairs->value->var) {
-	      // put new parameter sweep variable into environment
-	      variable * v = new variable (pairs->value->ident);
-	      constant * c = new constant (TAG_DOUBLE);
-	      c->d = 0; // initialize the variable
-	      v->setConstant (c);
-	      def->env->addVariable (v);
+	      variable * v;
+	      if ((v = def->env->getVariable (pairs->value->ident)) != NULL) {
+		// equation variable reference in analysis property
+		a->addProperty (pairs->key, v);
+	      }
+	      else {
+		// put new parameter sweep variable into environment
+		v = new variable (pairs->value->ident);
+		constant * c = new constant (TAG_DOUBLE);
+		c->d = 0; // initialize the variable
+		v->setConstant (c);
+		def->env->addVariable (v);
+		a->addProperty (pairs->key, pairs->value->ident);
+	      }
 	    }
-	    a->addProperty (pairs->key, pairs->value->ident);
+	    else {
+	      // ususal string property
+	      a->addProperty (pairs->key, pairs->value->ident);
+	    }
 	  } else {
 	    if (pairs->value->var) {
 	      // add list sweeps and constants to the properties

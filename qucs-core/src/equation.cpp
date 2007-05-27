@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.57 2007/05/24 16:40:31 ela Exp $
+ * $Id: equation.cpp,v 1.58 2007/05/27 17:50:14 ela Exp $
  *
  */
 
@@ -1204,7 +1204,7 @@ node * checker::findProperty (char * var) {
 
   // go through list of circuit elements
   for (struct definition_t * def = defs; def; def = def->next) {
-    if (!def->action && !strcmp (def->instance, inst)) {
+    if (!strcmp (def->instance, inst)) {
       for (struct pair_t * pair = def->pairs; pair; pair = pair->next) {
 	if (!strcmp (pair->key, prop)) {
 	  if (++found == 1) {
