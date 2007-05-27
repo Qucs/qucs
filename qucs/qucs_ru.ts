@@ -1195,11 +1195,11 @@
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation>Ошибка: Не удалось создать библиотеку!</translation>
+        <translation>Ошибка: Не удается создать библиотеку!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>Ошибка: Не удалось загрузить подсхему &quot;%1&quot;.</translation>
+        <translation>Ошибка: Не удается загрузить подсхему &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>
@@ -1249,7 +1249,7 @@ Successfully created library.</source>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation>Не удалось открыть библиотеку!</translation>
+        <translation>Не удается открыть библиотеку!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
@@ -1822,7 +1822,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation>Не удалось открыть &quot;%1&quot;!</translation>
+        <translation>Не удается открыть &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
@@ -1854,7 +1854,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation>Не удалось создать пакет!</translation>
+        <translation>Не удается создать пакет!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
@@ -1862,7 +1862,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation>ОШИБКА: Не удалось открыть пакет!</translation>
+        <translation>ОШИБКА: Не удается открыть пакет!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
@@ -1894,7 +1894,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation>ОШИБКА: Не удалось создать каталог &quot;%1&quot;!</translation>
+        <translation>ОШИБКА: Не удается создать каталог &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
@@ -1914,7 +1914,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation>ОШИБКА: Не удалось создать библиотеку &quot;%1&quot;!</translation>
+        <translation>ОШИБКА: Не удается создать библиотеку &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
@@ -1943,7 +1943,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation>Не удалось сохранить документ!</translation>
+        <translation>Не удается сохранить документ!</translation>
     </message>
     <message>
         <source>Format Error:
@@ -2037,7 +2037,7 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation>Не удалось загрузить документ: </translation>
+        <translation>Не удается загрузить документ: </translation>
     </message>
     <message>
         <source>Wrong document type!</source>
@@ -2625,7 +2625,7 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation>Не удалось сохранить настройки !</translation>
+        <translation>Не удается сохранить настройки !</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
@@ -3849,11 +3849,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Не удалось загрузить подсхему &quot;%1&quot;.</translation>
+        <translation>ОШИБКА: Не удается загрузить подсхему &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>ОШИБКА: Не удалось загрузить библиотечный компонент &quot;%1&quot;.</translation>
+        <translation>ОШИБКА: Не удается загрузить библиотечный компонент &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
@@ -4425,7 +4425,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation>Не удалось создать выходной файл!</translation>
+        <translation>Не удается создать выходной файл!</translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
@@ -6091,7 +6091,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation>Не удалось переименовать открытый файл!</translation>
+        <translation>Не удается переименовать открытый файл!</translation>
     </message>
     <message>
         <source>Rename file</source>
@@ -6103,7 +6103,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation>Не удалось переименовать файл: </translation>
+        <translation>Не удается переименовать файл: </translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
@@ -6145,7 +6145,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation>Не удалось создать рабочий каталог!</translation>
+        <translation>Не удается создать рабочий каталог!</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
@@ -6227,7 +6227,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation>Не удалось перезаписать открытый документ</translation>
+        <translation>Не удается перезаписать открытый документ</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
@@ -6281,7 +6281,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation>Не удалось создать </translation>
+        <translation>Не удается создать </translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -6289,7 +6289,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>Не удалось получить доступ к каталогу проекта: </translation>
+        <translation>Не удается получить доступ к каталогу проекта: </translation>
     </message>
     <message>
         <source> - Project: </source>
@@ -6309,7 +6309,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation>Не удалось создать каталог проекта!</translation>
+        <translation>Не удается создать каталог проекта!</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -6409,7 +6409,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation>Не удалось запустить программу &quot;%1&quot;!</translation>
+        <translation>Не удается запустить программу &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
@@ -6453,23 +6453,23 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Не удалось запустить текстовый редактор!</translation>
+        <translation>Не удается запустить текстовый редактор!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Не удалось запустить программу синтеза фильтров!</translation>
+        <translation>Не удается запустить программу синтеза фильтров!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>Не удалось запустить программу расчета линий передач!</translation>
+        <translation>Не удается запустить программу расчета линий передач!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation>Не удалось запустить библиотечную программу!</translation>
+        <translation>Не удается запустить библиотечную программу!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Не удалось запустить программу qucshelp!</translation>
+        <translation>Не удается запустить программу qucshelp!</translation>
     </message>
     <message>
         <source>No project open!</source>
@@ -6485,7 +6485,7 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>Не удалось открыть файл &quot;%1&quot; !</translation>
+        <translation>Не удается открыть файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Overwrite</source>
@@ -6499,15 +6499,15 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>Не удалось создать файл &quot;%1&quot; !</translation>
+        <translation>Не удается создать файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>Не удалось прочитать файл &quot;%1&quot;!</translation>
+        <translation>Не удается прочитать файл &quot;%1&quot;!</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>Не удалось записать файл &quot;%1&quot; !</translation>
+        <translation>Не удается записать файл &quot;%1&quot; !</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
@@ -7945,7 +7945,7 @@ Enables/disables the browse dock window</source>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation>Не удалось запустить программу расчета аттеньюатора!</translation>
+        <translation>Не удается запустить программу расчета аттеньюатора!</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
@@ -9802,11 +9802,11 @@ very simple text editor for Qucs
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation>Не удалось записать файл:</translation>
+        <translation>Не удается записать файл:</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation>Не удалось прочитать файл:</translation>
+        <translation>Не удается прочитать файл:</translation>
     </message>
     <message>
         <source>Closing document</source>
@@ -9850,7 +9850,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation>Строка: %1(sp)(sp)-(sp)(sp)Столбец: %2</translation>
+        <translation>Строка: %1  -  Столбец: %2</translation>
     </message>
 </context>
 <context>
@@ -11578,7 +11578,7 @@ Copies files to project directory</source>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation>Не удалось открыть файл &quot;%1&quot;.</translation>
+        <translation>Не удается открыть файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
@@ -12153,7 +12153,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation>Не удалось загрузить файл:</translation>
+        <translation>Не удается загрузить файл:</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
@@ -12165,7 +12165,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation>Не удалось сохранить файл:</translation>
+        <translation>Не удается сохранить файл:</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
@@ -12591,7 +12591,7 @@ Errors:
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation>ОШИБКА: Не удалось записать схемный файл!</translation>
+        <translation>ОШИБКА: Не удается записать схемный файл!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
@@ -12722,7 +12722,7 @@ Errors:
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Не удалось выполнить</translation>
+        <translation>Не удается выполнить</translation>
     </message>
     <message>
         <source>Info</source>

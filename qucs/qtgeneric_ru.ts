@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>Look &amp;in:</source>
-        <translation>Искать в &amp;папке:</translation>
+        <translation>Искать в &amp;каталоге:</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>One directory up</source>
-        <translation>На одну папку выше</translation>
+        <translation>На один каталог выше</translation>
     </message>
     <message>
         <source>Create New Folder</source>
@@ -283,7 +283,7 @@
     </message>
     <message>
         <source>the directory</source>
-        <translation>папка</translation>
+        <translation>каталог</translation>
     </message>
     <message>
         <source>the symlink</source>
@@ -319,11 +319,11 @@
     </message>
     <message>
         <source>Find Directory</source>
-        <translation>Найти папку</translation>
+        <translation>Найти каталог</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation>Папки</translation>
+        <translation>Каталоги</translation>
     </message>
     <message>
         <source>Save</source>
@@ -331,7 +331,7 @@
     </message>
     <message>
         <source>Directory:</source>
-        <translation>Папка:</translation>
+        <translation>Каталог:</translation>
     </message>
     <message>
         <source>Error</source>
