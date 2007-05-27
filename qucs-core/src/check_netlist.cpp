@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.111 2007-05-24 16:40:30 ela Exp $
+ * $Id: check_netlist.cpp,v 1.112 2007-05-27 17:50:14 ela Exp $
  *
  */
 
@@ -153,7 +153,7 @@ static struct value_t * checker_find_reference (struct definition_t * def,
 
 /* The function looks for the given property key within the properties
    of the given definition line and returns its value if the property
-   is not an identifier.  Otherwise the the function returns NULL. */
+   is not an identifier.  Otherwise the function returns NULL. */
 static struct value_t * checker_find_prop_value (struct definition_t * def,
 						 char * key) {
   struct pair_t * pair;
@@ -163,6 +163,12 @@ static struct value_t * checker_find_prop_value (struct definition_t * def,
 	return pair->value;
   }
   return NULL;
+}
+
+/* The function returns the number of properties in a definition line
+   specified by the given key. */
+static int checker_find_property (struct definition_t * def, char * key) {
+  return checker_find_property (key, def->pairs);
 }
 
 /* This function looks for the specified property 'key' in the given
@@ -637,21 +643,21 @@ static int checker_validate_lists (struct definition_t * root) {
 	  }
 	}
 	// property 'Start' is invalid
-	if ((val = checker_find_prop_value (def, "Start")) != NULL) {
+	if (checker_find_property (def, "Start") > 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
 		    "`%s' is invalid in `%s:%s'\n", def->line, "Start",
 		    def->type, def->instance);
 	  errors++;
 	}
 	// property 'Stop' is invalid
-	if ((val = checker_find_prop_value (def, "Stop")) != NULL) {
+	if (checker_find_property (def, "Stop") > 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
 		    "`%s' is invalid in `%s:%s'\n", def->line, "Stop",
 		    def->type, def->instance);
 	  errors++;
 	}
 	// property 'Points' is also invalid
-	if ((val = checker_find_prop_value (def, "Points")) != NULL) {
+	if (checker_find_property (def, "Points") > 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
 		    "`%s' is invalid in `%s:%s'\n", def->line, "Points",
 		    def->type, def->instance);
@@ -661,28 +667,28 @@ static int checker_validate_lists (struct definition_t * root) {
       // linearly and logarithmically stepped sweeps
       else if (type && (!strcmp (type, "lin") || !strcmp (type, "log"))) {
 	// property 'Start' required
-	if ((val = checker_find_prop_value (def, "Start")) == NULL) {
+	if (checker_find_property (def, "Start") <= 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, required property "
 		    "`%s' not found in `%s:%s'\n", def->line, "Start",
 		    def->type, def->instance);
 	  errors++;
 	}
 	// property 'Stop' required
-	if ((val = checker_find_prop_value (def, "Stop")) == NULL) {
+	if (checker_find_property (def, "Stop") <= 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, required property "
 		    "`%s' not found in `%s:%s'\n", def->line, "Stop",
 		    def->type, def->instance);
 	  errors++;
 	}
 	// property 'Points' is also required
-	if ((val = checker_find_prop_value (def, "Points")) == NULL) {
+	if (checker_find_property (def, "Points") <= 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, required property "
 		    "`%s' not found in `%s:%s'\n", def->line, "Points",
 		    def->type, def->instance);
 	  errors++;
 	}
 	// property 'Values' is invalid
-	if ((val = checker_find_prop_value (def, "Values")) != NULL) {
+	if (checker_find_property (def, "Values") > 0) {
 	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
 		    "`%s' is invalid in `%s:%s'\n", def->line, "Values",
 		    def->type, def->instance);
