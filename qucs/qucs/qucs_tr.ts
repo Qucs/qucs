@@ -5030,6 +5030,22 @@ Kullanım:  qucsedit [-r] kütük
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="obsolete">Çalıştırılamıyor</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -10378,7 +10394,7 @@ Hatalar:
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Çalıştırılamıyor</translation>
+        <translation type="obsolete">Çalıştırılamıyor</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
@@ -10386,6 +10402,26 @@ Hatalar:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -32,6 +32,7 @@ class QCheckBox;
 class QVBoxLayout;
 class QProcess;
 class QRegExpValidator;
+class QComboBox;
 
 
 extern QDir QucsWorkDir;
@@ -58,6 +59,10 @@ private slots:
   void slotGetNetlist();
   void slotGetError();
 
+  void slotGetPrepOut();
+  void slotGetPrepErr();
+  void slotPrepChanged(int);
+
 protected slots:
     void reject();
 
@@ -71,11 +76,13 @@ private:
   QCheckBox   *FileCheck, *SimCheck;
   QLineEdit   *FileEdit, *CompNameEdit;
   QPushButton *ButtBrowse, *ButtEdit, *ButtAdd, *ButtRemove;
+  QComboBox   *PrepCombo;
   SpiceFile   *Comp;
   Schematic   *Doc;
   bool        changed;
 
-  QProcess *QucsConv;
+  QTextStream *prestream;
+  QProcess *QucsConv, *SpicePrep;
   QString Line, Error;  // to store the text read from QucsConv
   int textStatus; // to store with text data QucsConv will sent next
 };

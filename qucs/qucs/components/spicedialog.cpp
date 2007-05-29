@@ -33,6 +33,7 @@
 #include <qcheckbox.h>
 #include <qprocess.h>
 #include <qmessagebox.h>
+#include <qcombobox.h>
 
 
 SpiceDialog::SpiceDialog(SpiceFile *c, Schematic *d)
@@ -82,6 +83,17 @@ SpiceDialog::SpiceDialog(SpiceFile *c, Schematic *d)
   SimCheck = new QCheckBox(tr("include SPICE simulations"), myParent);
   topGrid->addWidget(SimCheck, 3,1);
 
+  QHBox *h1 = new QHBox(myParent);
+  h1->setSpacing(5);
+  PrepCombo = new QComboBox(h1);
+  PrepCombo->insertItem("none");
+  PrepCombo->insertItem("ps2sp");
+  PrepCombo->insertItem("spicepp");
+  PrepCombo->insertItem("spiceprm");
+  QLabel * PrepLabel = new QLabel(tr("preprocessor"), h1);
+  PrepLabel->setMargin(5);
+  topGrid->addWidget(h1, 4,1);
+  connect(PrepCombo, SIGNAL(highlighted(int)), SLOT(slotPrepChanged(int)));
 
   // ...........................................................
   QGridLayout *midGrid = new QGridLayout(0, 2,3,5,5);
@@ -129,6 +141,12 @@ SpiceDialog::SpiceDialog(SpiceFile *c, Schematic *d)
   FileEdit->setText(pp->Value);
   FileCheck->setChecked(pp->display);
   SimCheck->setChecked(Comp->Props.at(2)->Value == "yes");
+  for(int i=0; i<PrepCombo->count(); i++) {
+    if(PrepCombo->text(i) == Comp->Props.at(3)->Value) {
+      PrepCombo->setCurrentItem(i);
+      break;
+    }
+  }
 
   loadSpiceNetList(pp->Value);  // load netlist nodes
 }
@@ -211,6 +229,12 @@ void SpiceDialog::slotButtApply()
   }
   if(pp->Value != "yes")  Comp->withSim = false;
 
+  pp = Comp->Props.next();
+  if(pp->Value != PrepCombo->currentText()) {
+    pp->Value = PrepCombo->currentText();
+    changed = true;
+  }
+
   if(changed || Comp->withSim) {  // because of "sim" text
     Doc->recreateComponent(Comp); // to apply changes to the schematic symbol
     Doc->viewport()->repaint();
@@ -239,6 +263,15 @@ void SpiceDialog::slotButtBrowse()
 }
 
 // -------------------------------------------------------------------------
+void SpiceDialog::slotPrepChanged(int i)
+{
+  if(PrepCombo->currentItem() != i) {
+    PrepCombo->setCurrentItem(i);
+    loadSpiceNetList(FileEdit->text());  // reload netlist nodes
+  }
+}
+
+// -------------------------------------------------------------------------
 bool SpiceDialog::loadSpiceNetList(const QString& s)
 {
   Comp->withSim = false;
@@ -250,6 +283,54 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   textStatus = 0;
   Line = Error = "";
 
+  if(PrepCombo->currentText() != "none") {
+    QString script = QucsSettings.BinDir + PrepCombo->currentText() + ".pl";
+    SpicePrep = new QProcess(this);
+    SpicePrep->addArgument("perl");
+    SpicePrep->addArgument(script);
+    SpicePrep->addArgument(FileInfo.filePath());
+    connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
+    connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+
+    QMessageBox *MBox = new QMessageBox(tr("Info"),
+	       tr("Preprocessing SPICE file \"%1\".").arg(FileInfo.filePath()),
+               QMessageBox::NoIcon, QMessageBox::Abort,
+               QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
+	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
+    connect(SpicePrep, SIGNAL(processExited()), MBox, SLOT(close()));
+
+    QFile PrepFile;
+    QFileInfo PrepInfo(QucsWorkDir, s + ".pre");
+    QString PrepName = PrepInfo.filePath();
+    PrepFile.setName(PrepName);
+    if(!PrepFile.open(IO_WriteOnly)) {
+      QMessageBox::critical(this, tr("Error"),
+        tr("Cannot save preprocessed SPICE file \"%1\".").
+	arg(PrepName));
+      return false;
+    }
+    prestream = new QTextStream(&PrepFile);
+
+    if(!SpicePrep->start()) {
+      QMessageBox::critical(this, tr("Error"),
+                 tr("Cannot execute \"%1\".").arg("perl" " " + script));
+      PrepFile.close();
+      delete prestream;
+      return false;
+    }
+    SpicePrep->closeStdin();
+
+    MBox->exec();
+    delete SpicePrep;
+    PrepFile.close();
+    delete prestream;
+
+    if(!Error.isEmpty()) {
+      QMessageBox::critical(this, tr("SPICE Preprocessor Error"), Error);
+      return false;
+    }
+    FileInfo = QFileInfo(QucsWorkDir, s + ".pre");
+  }
 
   // first call Qucsconv ............
   QucsConv = new QProcess(this);
@@ -272,7 +353,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   if(!QucsConv->start()) {
     QMessageBox::critical(this, tr("Error"),
-                 tr("Cannot execute")+" "+QucsSettings.BinDir + "qucsconv.");
+      tr("Cannot execute \"%1\".").arg(QucsSettings.BinDir + "qucsconv"));
     return false;
   }
   QucsConv->closeStdin();
@@ -300,6 +381,18 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
     else PortsList->removeItem(i--);
   }
   return true;
+}
+
+// -------------------------------------------------------------------------
+void SpiceDialog::slotGetPrepErr()
+{
+  Error += QString(SpicePrep->readStderr());
+}
+
+// -------------------------------------------------------------------------
+void SpiceDialog::slotGetPrepOut()
+{
+  (*prestream) << QString(SpicePrep->readStdout());
 }
 
 // -------------------------------------------------------------------------
