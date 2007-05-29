@@ -44,9 +44,9 @@ private:
   bool makeSubcircuit;
   bool insertSim;
   bool changed;
-  QProcess * QucsConv;
+  QProcess *QucsConv, *SpicePrep;
   QString NetText, ErrText, NetLine, SimText;
-  QTextStream *outstream, *filstream;
+  QTextStream *outstream, *filstream, *prestream;
   QDateTime lastLoaded;
   bool recreateSubNetlist(QString *, QString *);
 
@@ -58,6 +58,8 @@ private slots:
   void slotGetNetlist();
   void slotGetError();
   void slotExited();
+  void slotGetPrepOut();
+  void slotGetPrepErr();
 };
 
 #endif

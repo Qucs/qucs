@@ -5212,6 +5212,22 @@ Invocation :  qucsedit [-r] fichier
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="obsolete">Impossible de lancer</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -10830,7 +10846,7 @@ Erreurs :
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Impossible de lancer</translation>
+        <translation type="obsolete">Impossible de lancer</translation>
     </message>
     <message>
         <source>Info</source>
@@ -10862,6 +10878,26 @@ Erreurs :
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -5063,6 +5063,18 @@ Usage:  qucsedit [-r] file
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -10173,10 +10185,6 @@ Errors:
         <translation type="unfinished">שגיאה</translation>
     </message>
     <message>
-        <source>Cannot execute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info</source>
         <translation type="unfinished">מידע</translation>
     </message>
@@ -10202,6 +10210,26 @@ Errors:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

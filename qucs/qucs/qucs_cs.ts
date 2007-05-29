@@ -5402,6 +5402,22 @@ Použití:  qucsedit [-r] soubor
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="obsolete">Nelze spustit</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -12684,7 +12700,7 @@ Chyby:
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Nelze spustit</translation>
+        <translation type="obsolete">Nelze spustit</translation>
     </message>
     <message>
         <source>Info</source>
@@ -12716,6 +12732,26 @@ Chyby:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
