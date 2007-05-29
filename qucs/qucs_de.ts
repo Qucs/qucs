@@ -5438,6 +5438,22 @@ Verwendung:  qucsedit [-r] Datei
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation>Die SPICE-Datei &quot;%1&quot; wird konvertiert.</translation>
     </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="obsolete">Kann nicht ausführen</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -12743,7 +12759,7 @@ Fehler:
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation>Kann nicht ausführen</translation>
+        <translation type="obsolete">Kann nicht ausführen</translation>
     </message>
     <message>
         <source>Info</source>
@@ -12776,6 +12792,26 @@ Fehler:
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation>Die SPICE-Datei &quot;%1&quot; wird konvertiert.</translation>
+    </message>
+    <message>
+        <source>preprocessor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preprocessing SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

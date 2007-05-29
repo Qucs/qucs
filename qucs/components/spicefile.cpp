@@ -46,6 +46,7 @@ SpiceFile::SpiceFile()
   Props.append(new Property("File", "", true, QString("x")));
   Props.append(new Property("Ports", "", false, QString("x")));
   Props.append(new Property("Sim", "yes", false, QString("x")));
+  Props.append(new Property("Preprocessor", "none", false, QString("x")));
   withSim = false;
 
   Model = "SPICE";
@@ -230,14 +231,58 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   NetLine = "";
 
   // evaluate properties
-  if(Props.next()->Value == "yes")
-    insertSim = true;
-  else
-    insertSim = false;
-  if(Props.last()->Value != "")
+  if(Props.at(1)->Value != "")
     makeSubcircuit = true;
   else
     makeSubcircuit = false;
+  if(Props.at(2)->Value == "yes")
+    insertSim = true;
+  else
+    insertSim = false;
+
+  // preprocessor run if necessary
+  if(Props.at(3)->Value != "none") {
+    QString script = QucsSettings.BinDir + Props.at(3)->Value + ".pl";
+    SpicePrep = new QProcess(this);
+    SpicePrep->addArgument("perl");
+    SpicePrep->addArgument(script);
+    SpicePrep->addArgument(*SpiceFile);
+    connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
+    connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+
+    QMessageBox *MBox = new QMessageBox(QObject::tr("Info"),
+	       QObject::tr("Preprocessing SPICE file \"%1\".").arg(*SpiceFile),
+               QMessageBox::NoIcon, QMessageBox::Abort,
+               QMessageBox::NoButton, QMessageBox::NoButton, 0, 0, true,
+	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
+    connect(SpicePrep, SIGNAL(processExited()), MBox, SLOT(close()));
+
+    QFile PrepFile;
+    QString PrepName = *SpiceFile + ".pre";
+    PrepFile.setName(PrepName);
+    if(!PrepFile.open(IO_WriteOnly)) {
+      ErrText +=
+	QObject::tr("ERROR: Cannot save preprocessed SPICE file \"%1\".").
+	arg(PrepName);
+      return false;
+    }
+    prestream = new QTextStream(&PrepFile);
+
+    if(!SpicePrep->start()) {
+      ErrText += QObject::tr("ERROR: Cannot execute \"%1\".").
+	arg("perl"  " " + script + "\".");
+      PrepFile.close();
+      delete prestream;
+      return false;
+    }
+    SpicePrep->closeStdin();
+
+    MBox->exec();
+    delete SpicePrep;
+    PrepFile.close();
+    delete prestream;
+    *SpiceFile = PrepName;
+  }
 
   // begin command line construction
   QStringList com;
@@ -284,6 +329,18 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   delete QucsConv;
   lastLoaded = QDateTime::currentDateTime();
   return true;
+}
+
+// -------------------------------------------------------------------------
+void SpiceFile::slotGetPrepErr()
+{
+  ErrText += QString(SpicePrep->readStderr());
+}
+
+// -------------------------------------------------------------------------
+void SpiceFile::slotGetPrepOut()
+{
+  (*prestream) << QString(SpicePrep->readStdout());
 }
 
 // -------------------------------------------------------------------------

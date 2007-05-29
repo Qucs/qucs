@@ -1,3 +1,12 @@
+2007-05-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* spicedialog.cpp (loadSpiceNetList): Added selection box for
+	SPICE preprocessors.  The preprocessor is run before the actual
+	SPICE to Qucs conversion.
+
+	* spicefile.cpp (recreateSubNetlist): Added preprocessor call if
+	necessary.
+
 2007-05-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* vhdlfile.cpp (getSubcircuitFile), verilogfile.cpp
