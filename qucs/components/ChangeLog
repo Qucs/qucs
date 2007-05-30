@@ -1,3 +1,9 @@
+2007-05-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* spicefile.cpp, spicedialog.cpp: Tested code for all three SPICE
+	preprocessors.  Made small modicfications for spiceprm as well as
+	for Win32.
+
 2007-05-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* spicedialog.cpp (loadSpiceNetList): Added selection box for
