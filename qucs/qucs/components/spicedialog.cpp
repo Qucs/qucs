@@ -284,13 +284,35 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   Line = Error = "";
 
   if(PrepCombo->currentText() != "none") {
-    QString script = QucsSettings.BinDir + PrepCombo->currentText() + ".pl";
+    QString script;
+#ifdef __MINGW32__
+    QString interpreter = "tinyperl.exe";
+#else
+    QString interpreter = "perl";
+#endif
+    if (PrepCombo->currentText() == "ps2sp") {
+      script = "ps2sp.pl";
+    } else if (PrepCombo->currentText() == "spicepp") {
+      script = "spicepp.pl";
+    } else if (PrepCombo->currentText() == "spiceprm") {
+      script = "spiceprm";
+    }
+    script = QucsSettings.BinDir + script;
     SpicePrep = new QProcess(this);
-    SpicePrep->addArgument("perl");
+    SpicePrep->addArgument(interpreter);
     SpicePrep->addArgument(script);
     SpicePrep->addArgument(FileInfo.filePath());
-    connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
-    connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+
+    QFile PrepFile;
+    QFileInfo PrepInfo(QucsWorkDir, s + ".pre");
+    QString PrepName = PrepInfo.filePath();
+
+    if(PrepCombo->currentText() == "spiceprm") {
+      SpicePrep->addArgument(PrepName);
+    } else {
+      connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
+      connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+    }
 
     QMessageBox *MBox = new QMessageBox(tr("Info"),
 	       tr("Preprocessing SPICE file \"%1\".").arg(FileInfo.filePath()),
@@ -299,9 +321,6 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
     connect(SpicePrep, SIGNAL(processExited()), MBox, SLOT(close()));
 
-    QFile PrepFile;
-    QFileInfo PrepInfo(QucsWorkDir, s + ".pre");
-    QString PrepName = PrepInfo.filePath();
     PrepFile.setName(PrepName);
     if(!PrepFile.open(IO_WriteOnly)) {
       QMessageBox::critical(this, tr("Error"),
@@ -313,7 +332,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
     if(!SpicePrep->start()) {
       QMessageBox::critical(this, tr("Error"),
-                 tr("Cannot execute \"%1\".").arg("perl" " " + script));
+        tr("Cannot execute \"%1\".").arg(interpreter + " " + script));
       PrepFile.close();
       delete prestream;
       return false;
