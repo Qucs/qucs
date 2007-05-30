@@ -242,13 +242,34 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 
   // preprocessor run if necessary
   if(Props.at(3)->Value != "none") {
-    QString script = QucsSettings.BinDir + Props.at(3)->Value + ".pl";
+    QString script;
+#ifdef __MINGW32__
+    QString interpreter = "tinyperl.exe";
+#else
+    QString interpreter = "perl";
+#endif
+    if (Props.at(3)->Value == "ps2sp") {
+      script = "ps2sp.pl";
+    } else if (Props.at(3)->Value == "spicepp") {
+      script = "spicepp.pl";
+    } else if (Props.at(3)->Value == "spiceprm") {
+      script = "spiceprm";
+    }
+    script = QucsSettings.BinDir + script;
     SpicePrep = new QProcess(this);
-    SpicePrep->addArgument("perl");
+    SpicePrep->addArgument(interpreter);
     SpicePrep->addArgument(script);
     SpicePrep->addArgument(*SpiceFile);
-    connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
-    connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+
+    QFile PrepFile;
+    QString PrepName = *SpiceFile + ".pre";
+
+    if (Props.at(3)->Value == "spiceprm") {
+      SpicePrep->addArgument(PrepName);
+    } else {
+      connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
+      connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+    }
 
     QMessageBox *MBox = new QMessageBox(QObject::tr("Info"),
 	       QObject::tr("Preprocessing SPICE file \"%1\".").arg(*SpiceFile),
@@ -257,8 +278,6 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
     connect(SpicePrep, SIGNAL(processExited()), MBox, SLOT(close()));
 
-    QFile PrepFile;
-    QString PrepName = *SpiceFile + ".pre";
     PrepFile.setName(PrepName);
     if(!PrepFile.open(IO_WriteOnly)) {
       ErrText +=
@@ -270,7 +289,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 
     if(!SpicePrep->start()) {
       ErrText += QObject::tr("ERROR: Cannot execute \"%1\".").
-	arg("perl"  " " + script + "\".");
+	arg(interpreter + " " + script + "\".");
       PrepFile.close();
       delete prestream;
       return false;
