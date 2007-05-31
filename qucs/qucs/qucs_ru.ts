@@ -647,7 +647,7 @@
     </message>
     <message>
         <source>Analog</source>
-        <translation>Analog</translation>
+        <translation type="obsolete">Analog</translation>
     </message>
     <message>
         <source>VHDL</source>
@@ -656,6 +656,10 @@
     <message>
         <source>Verilog</source>
         <translation>Verilog</translation>
+    </message>
+    <message>
+        <source>Analogue</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

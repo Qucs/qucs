@@ -34,7 +34,7 @@ DisplayDialog::DisplayDialog(QWidget *parent)
   vLayout = new QVBoxLayout(this);
   vLayout->setMargin(3);
 
-  QVGroupBox *Analog = new QVGroupBox (tr("Analog"), this);
+  QVGroupBox *Analog = new QVGroupBox (tr("Analogue"), this);
   Text = new QTextEdit(Analog);
   Text->setTextFormat(Qt::PlainText);
   Text->setReadOnly(true);

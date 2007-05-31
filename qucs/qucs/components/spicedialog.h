@@ -59,6 +59,8 @@ private slots:
   void slotGetNetlist();
   void slotGetError();
 
+  void slotSkipOut();
+  void slotSkipErr();
   void slotGetPrepOut();
   void slotGetPrepErr();
   void slotPrepChanged(int);

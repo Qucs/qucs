@@ -601,15 +601,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Analog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>VHDL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Verilog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Analogue</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
