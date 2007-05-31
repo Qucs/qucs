@@ -1,3 +1,8 @@
+2007-05-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Allowing inline comments to start with '$'
+	character (hspice syntax).
+
 2007-05-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Translation of mutual inductors can now be

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.25 2007/04/30 21:55:22 ela Exp $
+ * $Id: scan_spice.l,v 1.26 2007/05/31 16:12:48 ela Exp $
  *
  */
 
@@ -147,7 +147,10 @@ POLY     [pP][oO][lL][yY]
     BEGIN(COMMENT);
   }
 
-<STARTUP,INITIAL>"*" { /* ignored inline region begins here */
+<STARTUP,INITIAL,IVREF,DEVPROP,LREF,MODREF1,MODREF2,IGNORE,FUNREF,
+ FILEREF,VREF,VSINGLE,ISWITCH,VSWITCH,CONTROL,GEVALS,INLINE,SUBCKT,
+ TLPROP,RLCPROP>[\*\$] {
+    /* ignored inline region begins here (3f5, 2g6 and hspice) */
     BEGIN(INLINE);
   }
 
