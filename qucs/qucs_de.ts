@@ -647,7 +647,7 @@
     </message>
     <message>
         <source>Analog</source>
-        <translation>Analog</translation>
+        <translation type="obsolete">Analog</translation>
     </message>
     <message>
         <source>VHDL</source>
@@ -656,6 +656,10 @@
     <message>
         <source>Verilog</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Analogue</source>
+        <translation>Analog</translation>
     </message>
 </context>
 <context>
@@ -1673,7 +1677,7 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabezyklus:</translation>
     </message>
     <message>
         <source>Number of parents:</source>
@@ -1681,7 +1685,7 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstante F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
@@ -1693,15 +1697,15 @@ ist aber %1 !</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimale Kostenfunktionsvarianz:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kostenfunktionsziele:</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kostenfunktionsgrenzen:</translation>
     </message>
     <message>
         <source>Algorithm</source>
@@ -5440,11 +5444,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die SPICE-Datei &quot;%1&quot; wird aufbereitet.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die aufbereitete SPICE-Datei &quot;%1&quot; kann nicht gespeichert werden.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5452,7 +5456,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das Programm &quot;%1&quot; kann nicht gestartet werden.</translation>
     </message>
 </context>
 <context>
@@ -12795,23 +12799,23 @@ Fehler:
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>Präprozessor</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die SPICE-Datei &quot;%1&quot; wird aufbereitet.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE-Präprozessor Fehler</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die aufbereitete SPICE-Datei &quot;%1&quot; kann nicht gespeichert werden.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Programm &quot;%1&quot; kann nicht gestartet werden.</translation>
     </message>
 </context>
 <context>

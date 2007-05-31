@@ -58,6 +58,8 @@ private slots:
   void slotGetNetlist();
   void slotGetError();
   void slotExited();
+  void slotSkipOut();
+  void slotSkipErr();
   void slotGetPrepOut();
   void slotGetPrepErr();
 };

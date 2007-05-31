@@ -241,19 +241,22 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
     insertSim = false;
 
   // preprocessor run if necessary
-  if(Props.at(3)->Value != "none") {
+  QString preprocessor = Props.at(3)->Value;
+  if (preprocessor != "none") {
+    bool piping = true;
     QString script;
 #ifdef __MINGW32__
     QString interpreter = "tinyperl.exe";
 #else
     QString interpreter = "perl";
 #endif
-    if (Props.at(3)->Value == "ps2sp") {
+    if (preprocessor == "ps2sp") {
       script = "ps2sp.pl";
-    } else if (Props.at(3)->Value == "spicepp") {
+    } else if (preprocessor == "spicepp") {
       script = "spicepp.pl";
-    } else if (Props.at(3)->Value == "spiceprm") {
+    } else if (preprocessor == "spiceprm") {
       script = "spiceprm";
+      piping = false;
     }
     script = QucsSettings.BinDir + script;
     SpicePrep = new QProcess(this);
@@ -264,8 +267,10 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
     QFile PrepFile;
     QString PrepName = *SpiceFile + ".pre";
 
-    if (Props.at(3)->Value == "spiceprm") {
+    if (!piping) {
       SpicePrep->addArgument(PrepName);
+      connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotSkipOut()));
+      connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
     } else {
       connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
       connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
@@ -278,28 +283,34 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
     connect(SpicePrep, SIGNAL(processExited()), MBox, SLOT(close()));
 
-    PrepFile.setName(PrepName);
-    if(!PrepFile.open(IO_WriteOnly)) {
-      ErrText +=
-	QObject::tr("ERROR: Cannot save preprocessed SPICE file \"%1\".").
-	arg(PrepName);
-      return false;
+    if (piping) {
+      PrepFile.setName(PrepName);
+      if(!PrepFile.open(IO_WriteOnly)) {
+	ErrText +=
+	  QObject::tr("ERROR: Cannot save preprocessed SPICE file \"%1\".").
+	  arg(PrepName);
+	return false;
+      }
+      prestream = new QTextStream(&PrepFile);
     }
-    prestream = new QTextStream(&PrepFile);
 
     if(!SpicePrep->start()) {
       ErrText += QObject::tr("ERROR: Cannot execute \"%1\".").
 	arg(interpreter + " " + script + "\".");
-      PrepFile.close();
-      delete prestream;
+      if (piping) {
+	PrepFile.close();
+	delete prestream;
+      }
       return false;
     }
     SpicePrep->closeStdin();
 
     MBox->exec();
     delete SpicePrep;
-    PrepFile.close();
-    delete prestream;
+    if (piping) {
+      PrepFile.close();
+      delete prestream;
+    }
     *SpiceFile = PrepName;
   }
 
@@ -348,6 +359,18 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   delete QucsConv;
   lastLoaded = QDateTime::currentDateTime();
   return true;
+}
+
+// -------------------------------------------------------------------------
+void SpiceFile::slotSkipErr()
+{
+  SpicePrep->readStderr();
+}
+
+// -------------------------------------------------------------------------
+void SpiceFile::slotSkipOut()
+{
+  SpicePrep->readStdout();
 }
 
 // -------------------------------------------------------------------------
