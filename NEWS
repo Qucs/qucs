@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * preprocessor selectable in SPICE file component
  * translation into Ukrainian
  * libraries can now contain analog as well as digital subcircuits
  * support for symbolically defined devices

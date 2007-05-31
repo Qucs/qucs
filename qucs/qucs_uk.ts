@@ -67,11 +67,11 @@
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>   Товщина лінії:  </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>   Товщина лінії: </translation>
     </message>
 </context>
 <context>
@@ -283,11 +283,11 @@
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation>файли Touchstone</translation>
+        <translation>Файли Touchstone</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation>файли SPICE</translation>
+        <translation>Файли SPICE</translation>
     </message>
     <message>
         <source>VHDL files</source>
@@ -295,7 +295,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файли Verilog</translation>
     </message>
 </context>
 <context>
@@ -568,14 +568,18 @@
     </message>
     <message>
         <source>Analog</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Аналогове</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
+        <translation>Verilog</translation>
+    </message>
+    <message>
+        <source>Analogue</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -781,7 +785,7 @@
     </message>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter - це програма синтезу фільтрів. Для сформування фільтра просто введіть всі параметри і натисніть велику кнопку внизу головного вікна. Відразу після цього фільтр розраховується і поміщається у буфер обміну. Тепер перейдіть в Qucs, відкрийте порожній схемний документ і натисніть CTRL-V (вставити з буфера обміну). Тепер схема фільтра, вставлена і може використовуватись для моделювання. Удачі!</translation>
     </message>
 </context>
 <context>
@@ -967,11 +971,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Про програму</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо запустити конвертор!</translation>
     </message>
 </context>
 <context>
@@ -1143,23 +1147,23 @@ Successfully created library.</source>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Бібліотека успішно створена.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Виділити все</translation>
+        <translation>Виділити все</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Відмінити виділення</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо переіменувати папку бібліотеки!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нема прав на переіменування папки бібліотеки &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -1231,7 +1235,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation>розрахунок відповідного чотрьохполюсника</translation>
+        <translation>розрахунок відповідного чотирьохполюсника</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
@@ -1239,7 +1243,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Port 1</source>
-        <translation>Порт 1</translation>
+        <translation>Вивід 1</translation>
     </message>
     <message>
         <source>ohms</source>
@@ -1247,7 +1251,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Port 2</source>
-        <translation>Порт 2</translation>
+        <translation>Вивід 2</translation>
     </message>
     <message>
         <source>S Parameter</source>
@@ -1932,15 +1936,15 @@ Unknown field!</source>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation>опорний повний опір порту 1</translation>
+        <translation>опорний повний опір виводу 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation>опорний повний опір порту 2</translation>
+        <translation>опорний повний опір виводу 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation>опорний повний опір порту 3</translation>
+        <translation>опорний повний опір виводу 3</translation>
     </message>
     <message>
         <source>coplanar line</source>
@@ -1988,7 +1992,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation>земля (опорний потенціал)</translation>
+        <translation>заземлення (опорний потенціал)</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
@@ -2028,11 +2032,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation>опорний повний опір вхідного порту</translation>
+        <translation>опорний повний опір вхідного виводу</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation>опорний повний опір вивідного порту</translation>
+        <translation>опорний повний опір вивідного виводу</translation>
     </message>
     <message>
         <source>microstrip corner</source>
@@ -2132,11 +2136,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation>порт підсхеми</translation>
+        <translation>вивід підсхеми</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation>номер порту підсхеми</translation>
+        <translation>номер виводу підсхеми</translation>
     </message>
     <message>
         <source>substrate definition</source>
@@ -2228,11 +2232,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>number of the port</source>
-        <translation>номер порту</translation>
+        <translation>номер виводу</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation>повний опір порту</translation>
+        <translation>повний опір виводу</translation>
     </message>
     <message>
         <source>relative permittivity</source>
@@ -2370,7 +2374,7 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation>Джерело напруги, контрольоване струмом</translation>
+        <translation>Джерело напруги, кероване струмом</translation>
     </message>
     <message>
         <source>Circulator</source>
@@ -2406,11 +2410,11 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation>Вимірювач струму</translation>
+        <translation>Амперметр</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation>Изолятор</translation>
+        <translation>Ізолятор</translation>
     </message>
     <message>
         <source>n-JFET</source>
@@ -2478,7 +2482,7 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>Порт підсхеми</translation>
+        <translation>Вивід підсхеми</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -2618,11 +2622,11 @@ Wrong line start!</source>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation>вхідний порт для чинника шуму</translation>
+        <translation>вхідний вивід для чинника шуму</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation>вивідний порт для чинника шуму</translation>
+        <translation>вивідний вивід для чинника шуму</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
@@ -3356,7 +3360,7 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>distance between ground planes</source>
-        <translation>відстань між земляними площинами</translation>
+        <translation>відстань між заземленими площинами</translation>
     </message>
     <message>
         <source>logical OR</source>
@@ -3828,7 +3832,7 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation>Вимірювач напруги</translation>
+        <translation>Вольтметр</translation>
     </message>
     <message>
         <source>number of ports</source>
@@ -3840,11 +3844,11 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>2-port P.S parameter file</source>
-        <translation type="obsolete">файл S-параметрів чотрьохполюсника</translation>
+        <translation type="obsolete">файл S-параметрів чотирьохполюсника</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation>тип порту (лише цифрового моделювання)</translation>
+        <translation>тип виводу (лише цифрового моделювання)</translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
@@ -3896,7 +3900,7 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>Switch</source>
-        <translation>Переключатель</translation>
+        <translation>Вимикач</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
@@ -3936,7 +3940,7 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>2-port matching</source>
-        <translation>узгодження чотрьохполюсника</translation>
+        <translation>узгодження чотирьохполюсника</translation>
     </message>
     <message>
         <source>Info</source>
@@ -3944,7 +3948,7 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>Потенціал землі може мати мітку!</translation>
+        <translation>Потенціал заземлення може мати мітку!</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
@@ -4812,119 +4816,119 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Немає імені файла %1 в компоненті &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо відкрити &quot;%1&quot; файл &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>формат netlist</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>заданий рівнянням пристрій</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>тип рівнянь</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>число розгалужень</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>рівняння струму</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>рівняння заряду</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Заданий рівнянням пристрій</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурний коефіцієнт посилення струму у прямому включенні, -1/К, (0 == відключення температурної залежності)</translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Пряма напруга Эрли, В, (0 == відключення ефекту Эрли)</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Напруга пробою К-Е, В, (0 == відключення пробою коллектора)</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Роздільний фактор паразитної ємності Б-К</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Коєфіцієнт шуму внутрішнього опору бази</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>джерело експоненціального струму</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>струм перед зростаючим фронтом</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальний струм імпульсу</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>час початку експоненціально зростаючого фронту</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>початок експоненціального спаду</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>постійна часу зростаючого фронту</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>постійна часу спадаючого фронту</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Джерело експоненціального імпульсного струму</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл S-параметрів n-портового пристрою</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл S-параметрів двополюсника</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл S-параметрів чотирьохполюсника</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">ПОМИЛКА: Неможливо відкрити SPICE-файл &quot;%1&quot;.</translation>
+        <translation>ПОМИЛКА: Неможливо відкрити SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо записати конвертований SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо відкрити конвертований SPICE-файл &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">ПОМИЛКА: Неможливо запустити програму QucsConv!</translation>
+        <translation>ПОМИЛКА: Неможливо запустити програму QucsConv!</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -4932,101 +4936,115 @@ Usage: qucsedit [-r] file
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл Verilog</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я Verilog файлу</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>джерело експоненціальної напруги</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>напруга перед зростаючим фронтом</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальна напруга імпульсу</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>час наростання імпульсу</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>час спадання імпульсу</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Джерело експоненціальної імпульсної напруги</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2004, 2005 Michael Margraf
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Використання:  qucsedit [-r] файл
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>  -h  виводить цю довідку і завершує роботу
+</translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished"></translation>
+        <translation> -r відкриття файлу лише для читання
+</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>За довгий аргумент командного рядку!
+
+</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Невірний аргумент командного рядку!
+
+</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Можна тільки одну назву файлу!
+
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо відкритифайл &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо створити папку для користувацьких бібліотек !
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо створити файл &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ЗАУВАЖЕННЯ: Пропускається бібліотечний компонент  &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення SPICE-файлу &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
@@ -5035,10 +5053,6 @@ Usage:  qucsedit [-r] file
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot execute</source>
-        <translation type="obsolete">Неможливо виконати</translation>
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
@@ -5327,7 +5341,7 @@ Quits the application</source>
     </message>
     <message>
         <source>No</source>
-        <translation>ні</translation>
+        <translation>Ні</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -5381,7 +5395,7 @@ Quits the application</source>
     </message>
     <message>
         <source>-port</source>
-        <translation>-вивід</translation>
+        <translation>-виводи</translation>
     </message>
     <message>
         <source>Saving file...</source>
@@ -6120,13 +6134,13 @@ Inserts a user defined equation</source>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>Вставити землю</translation>
+        <translation>Вставити заземлення</translation>
     </message>
     <message>
         <source>Insert Ground
 Inserts a ground symbol</source>
-        <translation type="obsolete">Вставити землю
-Вставляє позначення землі</translation>
+        <translation type="obsolete">Вставити заземлення
+Вставляє позначення заземлення</translation>
     </message>
     <message>
         <source>Insert Port</source>
@@ -6266,11 +6280,11 @@ Simulates the current schematic</source>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation>Розрахунок робочої точки по постійному струму</translation>
+        <translation>Розрахунок робочої точки за постійним струмом</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation>Розраховує робочу точку по постійному струму і її</translation>
+        <translation>Розраховує робочу точку за постійним струмом і показує її</translation>
     </message>
     <message>
         <source>Calculate DC bias
@@ -6454,7 +6468,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation>Майже універсальний моделювання ланцюгів</translation>
+        <translation>Цілком універсальне моделювання електричних кіл</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
@@ -6888,7 +6902,7 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation>Вставляє позначення землі</translation>
+        <translation>Вставляє позначення заземлення</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
@@ -6912,159 +6926,207 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний код Verilog</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдається видалити файл вихідного коду Verilog: </translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити позначення схеми
+
+Правка позначення для цієї схеми</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити схему
+
+Правка схеми</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити
+
+Створює нову схему чи документ для перегляду даних</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий текст
+
+Створити новий текстовий документ</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити файл
+
+Відкриває існуючий документ</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти файл
+
+Зберігає поточний документ</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти як
+
+Зберігає поточний документ під іншим ім&apos;ям</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти всі файли
+
+Зберігає всі відкриті документи</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити файл
+
+Закриває поточний документ</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування
+
+Встановлює властивості файла</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Надрукувати файл
+
+Друкує поточний документ</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк за величиною сторінки
+
+Надрукувати й узгодити вміст з розміром сторінки</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Вийти
+
+Закінчує роботу програми</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування Qucs
+
+Настроює параметри програми</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>По верху
+
+Вирівнює виділені елементи по їхньому верхньому краю</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>По низу
+
+Вирівнює виділені елементи по їхньому нижньому краю</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>По лівому краю
+
+Вирівнює виділені елементи по їхньому лівому краю</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>По правому краю
+
+Вирівнює виділені елементи по їхньому правому краю</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Розподілити по горизонталі
+
+Розподіляє виділені елементи рівномірно по горизонталі</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Розподілити по вертикалі
+
+Розподіляє виділені елементи по вертикалі</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Центрувати по горизонталі
+
+Центрувати виділені елементи по горизонталі</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Центрувати по вертикалі
+
+Центрувати виділені елементи по вертикалі</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Прив&apos;язати до сітки
+
+Прив&apos;язує виділені елементи до сітці</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити текст компоненту
+
+Переміщує текст з властивостями компонента</translation>
     </message>
     <message>
         <source>Replace
@@ -7072,347 +7134,464 @@ Moves the property text of components</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Замінити
+
+Змінити властивості компонента
+чи
+текст програми на код VHDL</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати
+
+Вирізає виділене й поміщає його у буфер обміну</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати
+
+Копіює виділене в буфер обміну</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити
+
+Вставляє вміст буфера обміну в позицію курсору</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити
+
+Видаляє виділені компоненти</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук
+
+Пошук тексту</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук
+
+Пошук того самого тексту ще раз</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>Відмінити
+
+Відміняє останню дію
+</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторити
+
+Повторює останнє дію ще раз</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий проект
+
+Створює новий проект</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити проект
+
+Відкриває існуючий проект</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити проект
+
+Видаляє існуючий проект</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити проект
+
+Закриває поточний проект</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати файли до проекту
+
+Копіює файли в теку проекту</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити бібліотеку
+
+Створити бібліотеку з підсхем</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити пакет
+
+Створити стиснений архів з завершених проектів</translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Розпакувати архів
+
+Встановити вміст архіву</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати дані
+
+Перетворити файл даних в файл даних Qucs</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати в CSV
+
+Перетворити дані графіка в файл CSV</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати все
+
+Перегляд вмісту всієї сторінки</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб 1:1
+
+Показує вміст сторінки без збільшення</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити масштаб
+
+Збільшує поточне зображення</translation>
     </message>
     <message>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшити масштаб
+
+Зменшує поточне зображення</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити
+
+Активує режим виділення</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити все
+
+Виділяє всі елементи документу</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати маркери
+
+Обирає всі діаграмні маркери документа</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Повернути
+
+Повертає виділений компонент на 90° проти годинникової стрілки</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Віддзеркалити щодо осі X
+
+Віддзеркалює виділений об&apos;єкт щодо осі X</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Віддзеркалити щодо осі Y
+
+Віддзеркалює виділений об&apos;єкт щодо осі Y</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввійти у підсхему
+
+Переходить всередину виділеної підсхеми</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Вийти
+
+Перехід на один рівень ієрархії вгору, тобто залишає підсхему</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Виключити/Включити
+
+Виключити/Включити виділені компоненти</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити рівняння
+
+Вставляє вказане користувачем рівняння</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити заземлення
+
+Вставляє позначення заземлення</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити вивід
+
+Вставляє позначення виводу</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Провідник
+
+Вставляє зєднувальний провідник</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>Мітка провідника
+
+Вставляє мітку провідника чи виводу</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Об&apos;єкт VHDL
+
+Вставляє каркас об&apos;єкту VHDL</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстовий редактор
+
+Запускає текстовий редактор Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Синтез фільтрів
+
+Запускає програму QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Розрахунок лінії
+
+Запускає програму розрахунку лінії передачі</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished"></translation>
+        <translation>Бібліотека компонентів
+
+Запускає програму управління бібліотекою компонентів</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Узгоджене електричне коло
+
+Діалог створення узгодженого електричного кола</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation type="unfinished"></translation>
+        <translation>Моделювати
+
+Моделює поточну схему</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Моделювати
+
+Моделює поточну схему</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Перегляд даних/схеми
+
+</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Розрахунок робочої точки за постійним струмом
+
+Розраховує робочу точку за постійним струмом і показує її</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити маркер
+
+Встановлює маркер на графіці діаграми</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати останні повідомлення
+
+Показує повідомлення останнього моделювання</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати останню схему
+
+Показує останню змодельовану схему</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель інструментів
+
+включає/виключає панель інструментів</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Рядок стану
+
+включає/виключає рядок стану</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Вікно перегляду
+
+включає/виключає закріплене вікно перегляду</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміст довідки
+
+Зміст вбудованої довідки Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкий старт
+
+Короткий вступ до Qucs</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Про
+
+Про програму</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
+        <translation>Про Qt
+
+Про програму Qt від Trolltech</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>проби</translation>
     </message>
 </context>
 <context>
@@ -7535,7 +7714,7 @@ Attenuator synthesis program
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (С) 2006</translation>
     </message>
 </context>
 <context>
@@ -7622,12 +7801,13 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Рядок: %1  -  Колонка: %2</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (С) 2004, 2005 Michael Margraf
+</translation>
     </message>
 </context>
 <context>
@@ -7774,7 +7954,7 @@ Filter synthesis program
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (С) 2005, 2006</translation>
     </message>
 </context>
 <context>
@@ -7849,7 +8029,9 @@ Enables/disables the table of contents</source>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміст
+
+включає/виключає зміст</translation>
     </message>
 </context>
 <context>
@@ -7949,23 +8131,24 @@ Enables/disables the table of contents</source>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (С) 2005 Michael Margraf
+</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib - це програма для управління бібліотеками компонентів Qucs. У лівій стороні вікна програми можна переглядати наявні бібліотеки, знаходячи потрібний компонент. Натисканням лівої клавіші миші на імені компонента можна одержати його опис у правому боці вікна. Виділений компонент можна перенести у програму Qucs натисканням кнопки &quot;Скопіювати в буфер обміну&quot;. Якщо повернутися у вікно редагування схеми, цей компонент можливо вставлено натисканням CTRL-V  (вставка з буферу обміну).</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Довідка по QucsLib</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук компонентів бібліотек</translation>
     </message>
 </context>
 <context>
@@ -8165,7 +8348,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>почати провідник при виборі відкриття вузла:</translation>
     </message>
 </context>
 <context>
@@ -8533,17 +8716,20 @@ open files with an appropriate program.</source>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001Gopal Narayanan
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2002 Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 Stefan Jahn
+</translation>
     </message>
 </context>
 <context>
@@ -8597,7 +8783,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОМИЛКА: Неможливо створити файл бібліотеки &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
@@ -8878,37 +9064,39 @@ Errors:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Почати нове моделювання на  %1 в %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>зроблено.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Моделювання закінчилося на %1 в %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Готово.</translation>
+        <translation>Готово.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час моделювання сталися помилки на %1 в %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перервано.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Результат:
+----------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилки:
+--------</translation>
     </message>
 </context>
 <context>
@@ -9003,7 +9191,7 @@ Errors:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертація SPICE файлу &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>preprocessor</source>
@@ -9014,15 +9202,15 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE Preprocessor Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
