@@ -814,17 +814,39 @@ matrix.
 \addvspace{12pt}
 
 The S-parameter matrix of this component is obtained by converting the
-Z-parameter matrix of the component.
+Z-parameter matrix of the component.  The Z-parameter matrix can be
+constructed using the following scheme: The self-inductances on the
+main diagonal and the mutual inductances in the off-diagonal entries.
 \begin{equation}
-\left(\underline{Z}\right) =
+\left(\underline{Z'}\right) =
 j\omega\cdot
 \begin{bmatrix}
-+L_1 & -L_1 & +k\cdot\sqrt{L_1\cdot L_2} & -k\cdot\sqrt{L_1\cdot L_2} \\
--L_1 & +L_1 & -k\cdot\sqrt{L_1\cdot L_2} & +k\cdot\sqrt{L_1\cdot L_2} \\
-+k\cdot\sqrt{L_1\cdot L_2} & -k\cdot\sqrt{L_1\cdot L_2} & +L_2 & -L_2\\
--k\cdot\sqrt{L_1\cdot L_2} & +k\cdot\sqrt{L_1\cdot L_2} & -L_2 & +L_2\\
+L_1 & k\cdot\sqrt{L_1\cdot L_2} \\
+k\cdot\sqrt{L_1\cdot L_2} & L_2\\
 \end{bmatrix}
 \end{equation}
+
+This matrix representation does not contain the second terminals of
+the inductances.  That's why the Z-parameter matrix must be converted
+into the Y-parameter matrix representation which is then extended to
+contain the additional terminals.
+\begin{equation}
+\left(\underline{Z'}\right) \rightarrow
+\left(\underline{Y'}\right) =
+\begin{bmatrix}
+y_{11} & y_{12} \\
+y_{21} & y_{22} \\
+\end{bmatrix} \rightarrow
+\left(\underline{Y}\right) =
+\begin{bmatrix}
++y_{11} & -y_{11} & +y_{12} & -y_{12} \\
+-y_{11} & +y_{11} & -y_{12} & +y_{12} \\
++y_{21} & -y_{21} & +y_{22} & -y_{22} \\
+-y_{21} & +y_{21} & -y_{22} & +y_{22} \\
+\end{bmatrix}
+\end{equation}
+The resulting Y-parameter matrix can be converted into the appropriate
+S-parameters numerically by eqn.~\eqref{eqn:Y2S}.
 
 \section{Attenuator}
 \label{sec:dc_attenuator}

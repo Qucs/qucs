@@ -1,3 +1,9 @@
+2007-06-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* equations/equations.tex: New tutorial about omponent, compact
+	device and circuit modelling using symbolic equations added.
+	Thanks to Mike Brinson.
+
 2007-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* opamp/content.tex: Added tutorial update about
