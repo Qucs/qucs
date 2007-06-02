@@ -93,7 +93,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, Schematic *d)
   QLabel * PrepLabel = new QLabel(tr("preprocessor"), h1);
   PrepLabel->setMargin(5);
   topGrid->addWidget(h1, 4,1);
-  connect(PrepCombo, SIGNAL(highlighted(int)), SLOT(slotPrepChanged(int)));
+  connect(PrepCombo, SIGNAL(activated(int)), SLOT(slotPrepChanged(int)));
 
   // ...........................................................
   QGridLayout *midGrid = new QGridLayout(0, 2,3,5,5);
@@ -144,6 +144,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, Schematic *d)
   for(int i=0; i<PrepCombo->count(); i++) {
     if(PrepCombo->text(i) == Comp->Props.at(3)->Value) {
       PrepCombo->setCurrentItem(i);
+      currentPrep = i;
       break;
     }
   }
@@ -265,7 +266,8 @@ void SpiceDialog::slotButtBrowse()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotPrepChanged(int i)
 {
-  if(PrepCombo->currentItem() != i) {
+  if(currentPrep != i) {
+    currentPrep = i;
     PrepCombo->setCurrentItem(i);
     loadSpiceNetList(FileEdit->text());  // reload netlist nodes
   }
