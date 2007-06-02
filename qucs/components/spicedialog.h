@@ -82,6 +82,7 @@ private:
   SpiceFile   *Comp;
   Schematic   *Doc;
   bool        changed;
+  int         currentPrep;
 
   QTextStream *prestream;
   QProcess *QucsConv, *SpicePrep;
