@@ -92,6 +92,8 @@ AC_CONFIG_FILES([Makefile
 		 report/StoQ_test4/pics/Makefile
 		 report/StoQ_test5/Makefile
 		 report/StoQ_test5/pics/Makefile
+		 report/curtice/Makefile
+		 report/curtice/pics/Makefile
 		 tutorial/Makefile
 		 tutorial/getstarted/Makefile
 		 tutorial/getstarted/pics/Makefile

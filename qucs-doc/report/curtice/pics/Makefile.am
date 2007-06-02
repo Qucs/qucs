@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# report/Makefile.am
+# report/curtice/pics/Makefile.am
 #
 # Automake input file.
 #
@@ -22,46 +22,14 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = verilog StoQ_test1 StoQ_test2 StoQ_test3 StoQ_test4 StoQ_test5 \
-  curtice
+EXTRA_DIST = $(PDFS)
 
-EXTRA_DIST = $(SOURCES) $(TEXFILES)
+PDFS = APPC_fig1.pdf APPC_fig3.pdf APPC_fig5.pdf APPC_fig2.pdf APPC_fig4.pdf
 
-TEXFILES = titlepage.tex basics.tex reportbook.tex
-TARGETS = reportbook.pdf
-PICDIRS = verilog
+report: $(XPDF)
 
-pics-book:
-	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
-	done
+%.pdf: %.fig
+	$(FIG2DEV) -L pdf $< > $@
 
-book: pics-book $(TARGETS)
-
-report:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
-	done
-
-%.dvi: %.tex
-	$(LATEX) $<
-	$(LATEX) $<
-	$(LATEX) -interaction=batchmode $<
-
-%.pdf: %.tex
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
-
-%.eps: %.fig
-	$(FIG2DEV) -L eps $< > $@
-
-%.pdf: %.eps
-	$(EPSTOPDF) $< -o=$@
-
-%.ps: %.dvi
-	$(DVIPS) $< -o $@
-
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej
 MAINTAINERCLEANFILES = Makefile.in
-DISTCLEANFILES = *.ps *.pdf

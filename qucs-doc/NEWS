@@ -26,6 +26,7 @@ files.
 Version 0.0.12
 --------------
 
+ * report about Curtice Level 1 MESFET modelling
  * new tutorial about component, compact device and circuit modelling
    using symbolic equations
  * added new ReportBook including Verilog-AMS interface description
