@@ -978,7 +978,7 @@ more higher order terms to the Qucs polynomial if required.}. The test
 circuit is a simple RC network with nominally identical R and C
 component values to those shown in Fig.~\ref{fig:equ_2}. Increasing
 the value of DC source V1 also increases C which in turn decreases the
-RC low pass filter -3dB frequency. This effect is very visible in
+RC low pass filter -3dB frequency. This effect is very visible in 
 Fig.~\ref{fig:equ_18}. The nonlinear changes in C are also clearly
 illustrated in the output voltage and phase curves. The schematic
 symbol for the nonlinear capacitor is shown in Fig.~\ref{fig:equ_18}
@@ -986,26 +986,26 @@ with a red ring drawn around the normal capacitor symbol. This denotes
 an EDD based component. An alternative convention is to use red
 lettering within a symbol. The test circuit and simulation results for
 a nonlinear inductance are shown in Fig.~\ref{fig:equ_19}. The EDD
-model is similar to the SPICE 2g6 nonlinear inductance model with four
+model is similar to the SPICE 2g6 nonlinear inductance model with four 
 coefficients. This number can be increased, if required, by extending
 the EDD polynomial expression. A gyrator is employed with the EDD to
 model the nonlinear inductance. The effect of nonlinear inductance on
-the inductance current is shown by the difference between probe
+the inductance current is shown by the difference between probe 
 currents \textit{Pr1} and \textit{Pr2}.
 
 
  
 
-\begin{figure}[h]
+\begin{figure}[h]   
   \centering
-  \includegraphics[width=0.7\linewidth]{equ_fig18} 
+  \includegraphics[width=0.7\linewidth]{equ_fig18}  
   \caption{Qucs nonlinear capacitor model} 
   \label{fig:equ_18} 
 \end{figure} 
 
 \begin{figure}[h] 
   \centering
-  \includegraphics[width=0.75\linewidth]{equ_fig19} 
+  \includegraphics[width=0.7\linewidth]{equ_fig19} 
   \caption{Qucs nonlinear inductor model} 
   \label{fig:equ_19}
 \end{figure} 
@@ -1078,9 +1078,9 @@ In these equations:
 
 Figure~\ref{fig:equ_20} gives the EDD model for the experimental
 semiconductor diode. The ternary operator ?: is used to select the
-correct equation for each diode operating region. The diode current Id
-is the sum of EDD branch currents I1 to I4, where I1 represents the
-diode forward bias region, I2 the reverse bias region and I3 plus I4
+correct equation for each diode operating region. The diode current $Id: content.tex,v 1.2 2007-06-03 16:58:59 ela Exp $
+is the sum of EDD branch currents $I1$ to $I4$, where $I1$ represents the
+diode forward bias region, $I2$ the reverse bias region and $I3$ plus $I4$
 the diode reverse bias breakdown region. When calculating diode
 current a special form of the exponential function exp(), called
 limexp(), is employed to assist Qucs to converge to a solution during
@@ -1128,34 +1128,69 @@ capacitance is given by:
 \begin{itemize}
  \item Depletion layer capacitance
 \begin{equation}
- Cdep = \dfrac{Area \cdot Cj0}{(1-FC)^{(1+m)}}\left[ 1-FC \cdot (1+m)+\dfrac{m \cdot Vd}{Vj} \right], \hspace{5mm} (Vd < FC \cdot Vj)  
+ C_{dep} = \dfrac{dQ_{dep}}{dV_{d}} = Area \cdot Cj0\left( 1-\dfrac{V_{d}}{V_{j}}\right) ^{-m}  
 \end{equation}
 \item Diffusion capacitance
 \begin{equation}
- Cdiff=tt*I_{d}
+ C_{diff} = \dfrac{dQ_{diff}}{dV_{d}} = tt \cdot \dfrac{dI_{d}}{dV_{d}}
 \end{equation} 
 \end{itemize}
+
+Where the total stored charge $Q_{d} = Q_{dep} + Q_{diff}$.  Using the same notation as the SPICE diode model:
+
+\begin{equation}
+Q_{diff} = tt \cdot I_{d}
+\end{equation} 
+\begin{equation}
+ Q_{dep} = Area \cdot Cj0 \int\limits_{0}^{V_{d}}\left( 1-\dfrac{V_d}{V_j}\right)^{-m} dV,  \hspace{5mm} \forall\; (V_{d} <= FC \cdot V_j)
+\end{equation} 
+
+Using integration formula $\int (ax+b)^{n}dx = \dfrac{1}{a} \dfrac{\left( ax+b\right) ^{1+n}}{1+n}$ and simplifying yields:
+
+\begin{equation}
+ Q_{dep} = \dfrac{Area \cdot Cj0 \cdot V_{j}}{1-m} \left[ 1 - \left( 1-\dfrac{V_d}{V_j}\right)^{1-m}  \right]
+\end{equation} 
+
+Also, in the forward bias region 
+\begin{equation}
+ Q_{dep} = Area \cdot Cj0 \cdot F1 + \dfrac{Area \cdot Cj0}{F2} \int\limits_{FC \cdot V_{j}}^{V_{d}}\left( F3+\dfrac{m \cdot V_d}{V_j}\right) dV, \hspace{5mm} \forall\; (V_{d} >= FC \cdot V_j) 
+\end{equation} 
+
+On integrating
+
+\begin{equation}
+ Q_{dep} = Area \cdot Cj0 \left[ F1+\left( \dfrac{1}{F2}\right) \cdot \left\lbrace F3\cdot \left( V_{d}-FC \cdot V_{j}\right) + \left( \dfrac{m}{2 \cdot V_{j}}\right) \cdot \left( V_d^{2}+(FC \cdot V_{j})^{2}\right) \right\rbrace \right] 
+\end{equation} 
+
+Where
+
+\begin{equation}
+ F1 = \dfrac{V_j}{1-m}\left[ 1-\left( 1-FC\right) ^{1-m}\right\rbrace ,
+ F2 = \left( 1-FC\right) ^{1+m},
+ F3 = 1 - FC \cdot \left( 1+m\right) 
+\end{equation} 
+
 
 In these equations:
 \begin{itemize}
  \item  $FC$ = Coefficient for forward-bias depletion capacitance.
  \item  $m $ = Grading coefficient.
  \item  $tt$ = Transit time.
- \item  $Area$ = device area.
+ \item  $Area$ = Device area.
  \item  $Cj0$ = Zero-bias junction capacitance.
 \end{itemize}
 
-Figure~\ref{fig:equ_23} shows the extended diode model. The Cdep and
-Cdiff components of the device capacitance have been included in the
+Figure~\ref{fig:equ_22m} shows the extended diode model. The $C_{dep}$ and
+$C_{diff}$ components of the device capacitance have been included in the
 EDD model as stored charge Q1 and Q2. Again the ternary operator ?: is
 employed to select the correct equation for each section of the diode
-DC operating range. An equation block is used to simplify the charge
-equations through the use of factors fa and fb.\footnote{In complex
+DC operating range. An equation block is used to simplify the charge 
+equations through the use of factors F1, F2 and F3.\footnote{In complex
 current and charge expressions precalculating subexpressions in
 equation blocks ensures that they are only calculated once at the
 beginning of a simulation, ensuring minimum run times for an EDD
 model.}. An area factor has also been added to the EDD model in
-Fig.~\ref{fig:equ_23}. This is introduced to allow simulation of two
+Fig.~\ref{fig:equ_22m}. This is introduced to allow simulation of two
 or more equivalent parallel devices. The diode variables scaled by
 area are:
 
@@ -1163,21 +1198,21 @@ area are:
  I_{s}(A)=I_{s} \cdot Area,\hspace{5mm} Cj0(A) = Cj0 \cdot Area, \hspace{5mm}\textrm{ and } \hspace{5mm} r_{s}(A) = rs/Area.
 \end{equation} 
 
-The test circuit shown in Fig.~\ref{fig:equ_23} illustrates how device
+The test circuit shown in Fig.~\ref{fig:equ_22m} illustrates how device
 capacitance and resistance can be determined as a function of diode
 bias voltage. Firstly, the diode S parameters are determined at a
 given bias voltage, secondly these are converted to Y parameters and
 the diode capacitance ($Cap$) and resistance ($RD$) extracted from
 $Y[1,1]$, and finally the variation of $Cap$ and $RD$ with diode
 voltage $V_{d}$ plotted using the Qucs plotting function
-PlotVs. Notice that the value of Cap at $Vd = 0V$ agrees with the
+PlotVs. Notice that the value of Cap at $V_{d} = 0V$ agrees with the 
 value of $Cj0$.
 
 \begin{figure} 
   \centering
-  \includegraphics[width=0.8\linewidth]{equ_fig23}
+  \includegraphics[width=1.0\linewidth]{equ_fig22m}
   \caption{Compact diode model capacitance and resistance simulation} 
-  \label{fig:equ_23}
+  \label{fig:equ_22m}
 \end{figure} 
 
 \vspace{3mm}
@@ -1218,17 +1253,17 @@ Let T1 = Tnom and T2 = Temp, then
 In these equations:
 \begin{itemize}
  \item $XTI$ = Saturation current temperature exponent.
- \item $Eg(T) = EG(0)-\dfrac{7.02e-4 \cdot T^{2}}{1108+T}$, the energy gap.
+ \item $Eg(T) = EG(0)-\dfrac{7.02e-4 \cdot T^{2}}{1108+T}$, the energy gap. 
 \end{itemize}
 
 Figure~\ref{fig:equ_24} shows the extended EDD for the experimental
 diode model. Again the limexp() function is used in preference to the
 standard exp() function in the temperature calculations listed in
-equations block Eqn3. The test circuit in Fig.~\ref{fig:equ_23} sweeps
+equations block Eqn2. The test circuit in Fig.~\ref{fig:equ_24} sweeps
 the device temperature from 20 to 80 degrees Centigrade. The graph
 inlay illustrates the experimental diode current $I_{d}$ plotted as a
 function of temperature. The temperature of the built-in Qucs diode is
-held constant, at room temperature, and it's current $Id\_Q$ plotted as
+held constant, at room temperature, and it's current $Id\_Q$ plotted as 
 an overlay. The two curves cross at room temperature, indicating
 identical currents at this temperature.
 
@@ -1237,7 +1272,7 @@ identical currents at this temperature.
 \begin{figure} 
   \centering
   \includegraphics[width=1.0\linewidth]{equ_fig24}
-  \caption{Compact diode model with temperature dependence} 
+  \caption{Compact diode model with temperature dependence}  
   \label{fig:equ_24}
 \end{figure} 
 
@@ -1335,7 +1370,7 @@ Kraut and Stefan Jahn, \url{http://qucs.sourceforge.net/docs.html}.
 		\item cos(x)    cosine
 		\item tan(x)    tangent
 		\item arcsin(x) inverse sine  \hspace{2mm} [asin(x)]
-		\item arccos(x) inverse cosine \hspace{2mm} [acos)x)]
+		\item arccos(x) inverse cosine \hspace{2mm} [acos(x)]
 		\item arctan(x[,y]) inverse tangent \hspace{2mm} [atan2(x,y)]
 		\item sinh(x)   hyperbolic sine
 		\item cosh(x)   hyperbolic cosine
