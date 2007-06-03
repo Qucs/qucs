@@ -1,3 +1,8 @@
+2007-06-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* equations/content.tex: Fixed charge equations for the diode
+	model presented in the tutorial.
+
 2007-06-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* equations/equations.tex: New tutorial about omponent, compact
