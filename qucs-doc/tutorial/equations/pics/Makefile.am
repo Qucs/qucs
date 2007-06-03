@@ -25,7 +25,7 @@
 EXTRA_DIST = $(PDFS) $(PNGS)
 
 PDFS = equ_fig10.pdf equ_fig17.pdf equ_fig21.pdf equ_fig3.pdf equ_fig8b.pdf \
-  equ_fig11.pdf equ_fig18.pdf equ_fig23.pdf equ_fig4.pdf equ_fig8.pdf \
+  equ_fig11.pdf equ_fig18.pdf equ_fig22m.pdf equ_fig4.pdf equ_fig8.pdf \
   equ_fig12.pdf equ_fig19.pdf equ_fig24.pdf equ_fig5.pdf equ_fig9.pdf \
   equ_fig14.pdf equ_fig1a.pdf equ_fig2.pdf equ_fig7.pdf equ_fig16.pdf \
   equ_fig20.pdf equ_fig31.pdf equ_fig8a.pdf
