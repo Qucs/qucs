@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>filled</source>
-        <translation>wypełniona</translation>
+        <translation>wypełniony</translation>
     </message>
 </context>
 <context>
@@ -230,7 +230,7 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation>Zmień</translation>
+        <translation>Edycja</translation>
     </message>
     <message>
         <source>Error</source>
@@ -322,14 +322,14 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik Verilog</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation>Zmień właściwości wykresu</translation>
+        <translation>Edycja właściwości wykresu</translation>
     </message>
     <message>
         <source>Graph Input</source>
@@ -610,12 +610,16 @@
         <translation>Zamknij</translation>
     </message>
     <message>
+        <source>Analog</source>
+        <translation type="obsolete">Analogowy</translation>
+    </message>
+    <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Analogue</source>
@@ -769,7 +773,7 @@
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation>Zmień właściwości tekstu</translation>
+        <translation>Edycja właściwości tekstu</translation>
     </message>
     <message>
         <source>Text color: </source>
@@ -848,7 +852,7 @@
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation>Zmień właściwości podukładu</translation>
+        <translation>Edycja właściwości podukładu</translation>
     </message>
     <message>
         <source>Prefix:</source>
@@ -1031,11 +1035,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Porzuć</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można uruchomić konwertera!</translation>
     </message>
 </context>
 <context>
@@ -1207,30 +1211,30 @@ Tworzenie biblioteki zakończone sukcesem.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzenie biblioteki zakończone pomyślnie.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Zaznacz wszystko</translation>
+        <translation>Zaznacz wszystko</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Odznacz wszystko</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zmienić nazwy podkatalogu biblioteki!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie ma praw do usunięcia podkatalogu biblioteki &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation>Zmień właściwości znacznika</translation>
+        <translation>Edytuj właściwości znacznika</translation>
     </message>
     <message>
         <source>Precision: </source>
@@ -2985,15 +2989,15 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficient of bias-dependence for Tf</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>voltage dependence of Tf on base-collector voltage</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>high-current effect on Tf</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
@@ -3005,23 +3009,23 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker noise exponent</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker noise frequency exponent</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>burst noise coefficient</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>burst noise exponent</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>burst noise corner frequency in Hertz</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
@@ -3053,7 +3057,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
-        <translation type="unfinished"></translation>
+        <translation>bulk threshold in sqrt(V)</translation>
     </message>
     <message>
         <source>surface potential</source>
@@ -3089,7 +3093,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation>lateral diffusion length</translation>
     </message>
     <message>
         <source>oxide thickness</source>
@@ -3121,19 +3125,19 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>bulk junction bottom grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>bulk junction bottom grading coefficient</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>bulk junction forward-bias depletion capacitance coefficient</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>bulk junction periphery grading coefficient</translation>
     </message>
     <message>
         <source>bulk transit time</source>
@@ -3145,11 +3149,11 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>surface state density in 1/cm^2</source>
-        <translation type="unfinished"></translation>
+        <translation>surface state density in 1/cm^2</translation>
     </message>
     <message>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation type="unfinished"></translation>
+        <translation>materiał bramki: 0 = aluminium; -1 = identyczny jak podłoże; 1 = inny niż podłoże</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
@@ -3157,7 +3161,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
-        <translation type="unfinished"></translation>
+        <translation>dyfuzyjna rezystancja powierzchniowa drenu i źródła w Ohmach na kwadat</translation>
     </message>
     <message>
         <source>number of equivalent drain squares</source>
@@ -3465,15 +3469,15 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Średnica</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Przelotka linii mikropaskowej</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik transkonduktacji w A/V^2</translation>
     </message>
     <message>
         <source>operational amplifier</source>
@@ -3943,7 +3947,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura ekstrakcji parametrów modelu</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
@@ -4303,7 +4307,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>wewnętrzny prąd nasycenia B-E</translation>
     </message>
     <message>
         <source>Internal B-E current ideality factor</source>
@@ -4339,7 +4343,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>wewnętrzny prąd nasycenia B-C</translation>
     </message>
     <message>
         <source>Internal B-C current ideality factor</source>
@@ -4371,11 +4375,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatywny TC dla FAVL</translation>
     </message>
     <message>
         <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatywny TC dla QAVL</translation>
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
@@ -4431,11 +4435,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Szeregowa rezystancja podłoża</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Pojemność podłoża (równoległa)</translation>
     </message>
     <message>
         <source>Internal B-E zero-bias depletion capacitance</source>
@@ -4571,11 +4575,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Całkowita pojemnośc pasożytnicza B-E</translation>
     </message>
     <message>
         <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Całkowita pojemnośc pasożytnicza B-C</translation>
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
@@ -4587,7 +4591,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>współczynnik szumów migotania</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
@@ -4627,27 +4631,27 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatywny TC dla VCES</translation>
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik temperaturowy wewnętrznej rezystancji bazy</translation>
     </message>
     <message>
         <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik temperaturowy zewnętrznej rezystancji bazy</translation>
     </message>
     <message>
         <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik temperaturowy zewnętrznej rezystancji kolektora</translation>
     </message>
     <message>
         <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik temperaturowy rezystancji emitera</translation>
     </message>
     <message>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatywny TC wzmocnienia wprzód dla modelu V2.1</translation>
     </message>
     <message>
         <source>Thermal resistance</source>
@@ -4659,7 +4663,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura dla której określono parametry modeli</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
@@ -4715,7 +4719,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Gęstośc prądu nasycenia, A/um^2</translation>
     </message>
     <message>
         <source>Forward current emission coefficient</source>
@@ -4735,7 +4739,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystor ograniczający prąd upływu diody B-E, Ohm</translation>
     </message>
     <message>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
@@ -4783,7 +4787,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystor ograniczający prąd upływu diody B-C, Ohm</translation>
     </message>
     <message>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
@@ -4795,19 +4799,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Współczynnik temperaturowy wzmocnienia prądowego wprzód, -1/K,  (0 == brak zalezności)</translation>
     </message>
     <message>
         <source>Ideal reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Idealny współczynnik beta wtył</translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Napięcie Earlyego wprzód, V,  (0 == bez zjawiska)</translation>
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Napięcie Earlyego wtył, V,  (0 == bez zjawiska)</translation>
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
@@ -4831,15 +4835,15 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie przebicia B-E, V, (0 == bez zjawiska przebicia)</translation>
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>idealny czas przelotu w tył, s</translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>idealny czas przelotu wprzód, s</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
@@ -4855,27 +4859,27 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>domieszkowana pojemność baza emiter przy zerowym prądzie, F/um^2</translation>
     </message>
     <message>
         <source>B-E junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik potęgowy złącza B-E</translation>
     </message>
     <message>
         <source>B-E junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>wbudowany potencjał złączowy B-E, V</translation>
     </message>
     <message>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>domieszkowana pojemność B-C przy zerowym prądzie, F/um^2</translation>
     </message>
     <message>
         <source>B-C junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnik potęgowy złącza B-C</translation>
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>wbudowany potencjał złączowy B-C, V</translation>
     </message>
     <message>
         <source>not used</source>
@@ -4887,7 +4891,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prąd kolektora, dla którego Cbc osiąga Cmin, A/um^2 (0 == bez redukcji Cbc)</translation>
     </message>
     <message>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
@@ -4911,19 +4915,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja kolektora, Ohm/palec</translation>
     </message>
     <message>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezystancja emitera, Ohm/palec</translation>
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Zewnętrzna rezystancja bazy, Ohm/palec</translation>
     </message>
     <message>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Wewnętrzna rezystancja bazy, Ohm/palec</translation>
     </message>
     <message>
         <source>Collector inductance, H</source>
@@ -4939,19 +4943,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Zewnętrzna pojemność B-C, F</translation>
     </message>
     <message>
         <source>Extrinsic base capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Zewnętrzna pojemność bazy, F</translation>
     </message>
     <message>
         <source>Extrinsic collector capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Zewnętrzna pojemność kolektora, F</translation>
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Współczynnik szumów migotania</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
@@ -4987,87 +4991,87 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>bond wire</translation>
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>długość drutu</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>średnica drutu</translation>
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>wzsokość ponad poziom masy</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>rezystancja właściwa metalu</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>względna przenikalność metalu</translation>
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>model bond wire</translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Bond Wire</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia transmisyjna - skrętka dwużyłowa</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>średnica przewodnika</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>średnica przewodu (przewodnik z izolatorem)</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>stała dielektryczna dielektryka</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>liczba skręceń na 1/m</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrętka</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>długość fizyczna linii</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>moc dysponowana ac w Wattach</translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS tranzystor polowy z podłożem</translation>
     </message>
     <message>
         <source>ideal 4-terminal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>idealna 4-wrotowa linia transmsyjna</translation>
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>4-wrotowa linia transmisyjna</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>Model HBT, Ferdinand Braun Institut (FBH), Berlin</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
@@ -5079,87 +5083,88 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>format pliku netlisty</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik Verliog</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>NBazwa pliku Verilog</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Coś nie tak z %1 i &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę otworzyć &quot;%1&quot; plik &quot;%2&quot;.
+</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie przebicia C-E, V, (0 == bez zjawiska przebicia)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładniczne źródło prądowe</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>prąd przed zboczem narastającym</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>maksymalny prąd impulsu</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>początek wykładniczego narastania zbocza</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>początek wykładniczego opadania zbocza</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>stała czasowa zbocza narastającego</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>stała czasowa zbocza opadającego</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Wykładniczy Impuls Prądu</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>wykładnicze źródło napięciowe</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>napięcie przed zboczem narastającym</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>maksymalne napięcie impulsu</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>czas narastania zbocza</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>czas opadania zbocza</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Wykładniczy Impuls Napięcia</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
@@ -5171,11 +5176,11 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>element opisany równaniem</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>typ równań</translation>
     </message>
     <message>
         <source>number of branches</source>
@@ -5183,31 +5188,31 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>równanie prądowe</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>równanie ładunkowe</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Element Opisany Równaniem</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">BŁĄD: Nie można otworzyć pliku SPICE &quot;%1&quot;.</translation>
+        <translation>BŁĄD: Nie można otworzyć pliku SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">BŁĄD: Nie można uruchomić QucsConv!</translation>
+        <translation>BŁĄD: Nie można uruchomić QucsConv!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można zapisać przekonwertowanego pliku &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można otworzyć przekonwertowanego pliku &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5216,33 +5221,36 @@ Stosowanie:  qucsedit [-r] plik
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę otworzyć pliku &quot;%1&quot;!.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można stworzyć podkatalogu z biblioteką użytkownika!
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mogę utworzyć pliku &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSTRZEŻENIE: Pominięto elelemnt biblioteczny &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konwersja pliku SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Preprocessing SPICE file &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5250,7 +5258,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie mozna wykonać &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -6142,7 +6150,7 @@ Zamyka bieżący dokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Ustawienia dokumentu</translation>
+        <translation>Ustawienia dokumentu</translation>
     </message>
     <message>
         <source>Settings
@@ -6214,7 +6222,7 @@ Zakończenie aplikacji</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Ustawienia programu</translation>
+        <translation>Ustawienia programu</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6367,7 +6375,7 @@ Zmień właściwości elementów</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Wytnij</translation>
+        <translation>Wytnij</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6387,7 +6395,7 @@ Wycina zaznaczenie i wkłada je do schowka</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopiuj</translation>
+        <translation>Kopiuj</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6407,7 +6415,7 @@ Kopiuje zaznaczenia do schowka</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Wklej</translation>
+        <translation>Wklej</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6443,7 +6451,7 @@ Usuwa zaznaczone elementy</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Cofnij</translation>
+        <translation>Cofnij</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6463,7 +6471,7 @@ Cofa ostatnio wykonaną operację</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Ponów</translation>
+        <translation>Ponów</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6828,7 +6836,7 @@ Wstawia symbol portu</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Wstaw drut</translation>
+        <translation>Wstaw drut</translation>
     </message>
     <message>
         <source>Wire
@@ -7131,7 +7139,7 @@ Krótkie wprowadzenie do programu Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">O aplikacji</translation>
+        <translation>O aplikacji</translation>
     </message>
     <message>
         <source>About
@@ -7380,13 +7388,15 @@ Kopiuje zaznacone elementy do schowka</translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Uaktywnij tryb wyboru</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz
+
+Uaktywnia tryb wyboru</translation>
     </message>
     <message>
         <source>VHDL entity</source>
@@ -7670,91 +7680,91 @@ wyśrodkowuje w pionie wybrane elementy</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation>Umiejsc&amp;owienie</translation>
+        <translation>P&amp;ołożenie</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopasuj do strony</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Przyciagnij wybrane elementy do siatki</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Przesuwa tekst właściwości elementu</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienia właściwości elementu lub kodu VHDL</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwiera istniejący projekt</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuwa istniejący projekt</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamyka bieżący projekt</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Odbicie lustrzane zaznaczonych elementów względem osi X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Odbicie lustrzane zaznaczonych elementów względem osi Y</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Wejście wgłąb zaznaczonego podukładu</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstawia równanie</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstawia symbol masy</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Wstawia symbol portu</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Nowy Tekst</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Zapisz</translation>
+        <translation>Zapisz</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz Wszystko</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukuj...</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Źródła Verilog</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mogę usunąć źródła Verilog:  </translation>
     </message>
     <message>
         <source>probes</source>
@@ -9581,15 +9591,15 @@ Okno dialogowe tworzenia układu dopasowującego</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoc QucsLib</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Model</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Szukaj elementu bibliotecznego</translation>
     </message>
 </context>
 <context>
@@ -9794,7 +9804,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>rozpoczyna łączenie po kliknięciu na niepodłączoną końcówkę:</translation>
     </message>
 </context>
 <context>
@@ -10215,31 +10225,31 @@ otworzyć ten plik odpowiednim programem.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmienione pliki</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Bez nazwy</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz zmodyfikowane pliki</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz pliki, które mają być zapisane</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerwij zamykanie</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz zaznaczone</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie zapisuj</translation>
     </message>
 </context>
 <context>
@@ -10262,7 +10272,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>BŁĄD: Nie można utowrzyć biblioteki &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
@@ -10555,37 +10565,39 @@ Błędy:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Start nowej symulacji na %1 o %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>gotowe.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec symulacji na %1 o %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Gotowy.</translation>
+        <translation>Gotowy.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Błędy podczas symulacji %1 o %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerwano.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Wynik:
+------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Błędy:
+-------</translation>
     </message>
 </context>
 <context>
@@ -10680,27 +10692,27 @@ Błędy:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konwersja pliku SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>preprocessor</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Preprocessing SPICE file &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Preprocessor Error</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie mozna wykonać &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
