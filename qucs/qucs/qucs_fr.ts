@@ -326,7 +326,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers Vérilog</translation>
     </message>
 </context>
 <context>
@@ -644,15 +644,15 @@
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérilog</translation>
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation>Analogique</translation>
     </message>
 </context>
 <context>
@@ -1039,11 +1039,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Interrompre</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de lancer le convertisseur !</translation>
     </message>
 </context>
 <context>
@@ -1215,23 +1215,23 @@ Bibliothèque créée.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothèque correctement créée.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Tout sélectionner</translation>
+        <translation>Tout sélectionner</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout déselectionner</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de renommer un rayonnage de bibliothèque !</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Droits insuffisants pour effacer le rayonnage de bibliothèque &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -5023,167 +5023,167 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>Courant de seuil de forte injection (0 = infini)</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle HBT par l&apos;Institut Ferdinand Braun de Berlin</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de diffusion extrinsèque B-C (F)</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hicum L2 v. 2.1</translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Transistor à effet de champ MOS avec substrat</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>(disponible) puissance alternative (W)</translation>
     </message>
     <message>
         <source>ideal 4-terminal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de transmission quadrupolaire idéale</translation>
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne de transmission quadrupolaire</translation>
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>format de la netlist</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier Vérilog</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du fichier Vérilog</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : Aucun composant « %2 » dans le répertoire %1.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : Impossible d&apos;ouvrir %1 fichier « %2 ».</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension d&apos;avalanche C-E (V) (0 : aucun effet de claquage)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>source de courant exponentielle</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>courant avant le front montant</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>courant maximal de l&apos;impulsion</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>instant du début du front montant exponentiel</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>instant de début de la décroissance exponentielle</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>constante de temps du front montant</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>constante de temps du front descendant</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulsion exponentielle de courant</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>source de tension exponentielle</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tension avant le front montant</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tension maximale de l&apos;impulsion</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>durée du front montant</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>durée du front descendant</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulsion exponentielle de tension</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de répartition de la capacité parasite B-C</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de bruit de la résistance de base interne</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>composant défini par une équation</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>type d&apos;équations</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>nombre de branches</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>équation de courant</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>équation de charge</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Composant défini par une équation</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">Erreur : impossible de lire le fichier Spice &quot;%1&quot;.</translation>
+        <translation>Erreur : impossible de lire le fichier Spice &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">ERREUR : Impossible de lancer QucsConv !</translation>
+        <translation>ERREUR : Impossible de lancer QucsConv !</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de sauvegarder le fichier Spice converti « %1 ».</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de charger le fichier Spice converti « %1 ».</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5192,33 +5192,36 @@ Invocation :  qucsedit [-r] fichier
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible d&apos;ouvrir « %1 ».
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de créer un rayonnage personnalisé !
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de créer le fichier « %1 ».
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>AVERTISSEMENT : le composant « %1 » est ignoré.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversion du fichier Spice « %1 ».</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prétraitement du fichier Spice « %1 ».</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de sauvegarder le fichier Spice prétraité « %1 ».</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5226,7 +5229,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : « %1 » n&apos;est pas exécutable.</translation>
     </message>
 </context>
 <context>
@@ -6035,7 +6038,7 @@ Crée un nouveau schéma ou une feuille de dessin</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished">Nouveau Texte</translation>
+        <translation>Nouveau Texte</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6163,7 +6166,7 @@ Ferme le fichier de travail actuel</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Réglages de la feuille</translation>
+        <translation>Options du document</translation>
     </message>
     <message>
         <source>Settings
@@ -6235,7 +6238,7 @@ Termine le programme</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Réglages de l&apos;application</translation>
+        <translation>Réglages de l&apos;application</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6251,7 +6254,7 @@ Fixe certains paramètres de l&apos;application</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>Aligner en haut</translation>
+        <translation>Alignement haut</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
@@ -6387,7 +6390,7 @@ Change la valeur des attributs des composants</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Couper</translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6407,7 +6410,7 @@ Coupe la sélection vers le presse-papier</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copier</translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6427,7 +6430,7 @@ Copie la sélection dans le presse-papier</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Coller</translation>
+        <translation>Coller</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6463,7 +6466,7 @@ Efface la sélection</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Corriger</translation>
+        <translation>Corriger</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6483,7 +6486,7 @@ Annule l&apos;action de la dernière commande</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Recommencer</translation>
+        <translation>Recommencer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6567,7 +6570,7 @@ Efface un projet existant</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>&amp;Fermer projet</translation>
+        <translation>&amp;Fermer projet…</translation>
     </message>
     <message>
         <source>Close current project</source>
@@ -6851,7 +6854,7 @@ Ajoute un port</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Ajoute une équipotentielle</translation>
+        <translation>Ajoute une équipotentielle</translation>
     </message>
     <message>
         <source>Wire
@@ -7153,7 +7156,7 @@ Une brève présentation de Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Informations sur Qucs</translation>
+        <translation>Informations sur Qucs</translation>
     </message>
     <message>
         <source>About
@@ -7257,7 +7260,7 @@ Informations sur le toolkit Qt de Trolltech</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation>Simulateur VHDL « FreeHDL » par Edwin Naroska &amp; Marius Vollmer</translation>
+        <translation>Simulateur VHDL « FreeHDL » par Edwin Naroska et Marius Vollmer</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
@@ -7487,7 +7490,7 @@ Sélectionne tous les indicateurs du document</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation>Crée une &amp;Bibliothèque…</translation>
+        <translation>Créer une &amp;Bibliothèque…</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
@@ -7681,7 +7684,7 @@ Centre horizontalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation>Centre verticalement</translation>
+        <translation>Centrer verticalement</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
@@ -7701,87 +7704,87 @@ Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout enregistrer</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer…</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuster à la page</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplace le texte informatif sur le composant</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplace les caractéristiques ou le code VHDL du composant</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvre un projet existant</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprime un projet existant</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferme le projet courant</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Réflexion horizontale de la sélection</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Réflexion verticale de la sélection</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Entre dans le sous-circuit sélectionné</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Insère une équation</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Insère un symbole de masse</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Insère un symbole de port</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Sources Vérilog</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;effacer le fichier source Vérilog : </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>sondes</translation>
     </message>
 </context>
 <context>
@@ -9762,15 +9765,15 @@ Copie les fichiers dans le répertoire du projet</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide de QucsLib</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Chercher un composant des bibliothèques</translation>
     </message>
 </context>
 <context>
@@ -9975,7 +9978,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>Un clic sur un nœud flottant commence un fil :</translation>
     </message>
 </context>
 <context>
@@ -10432,7 +10435,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas enregistrer</translation>
     </message>
 </context>
 <context>
@@ -10455,7 +10458,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de créer la bibliothèque &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
@@ -10753,37 +10756,39 @@ Erreurs :
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation lancée le %1 à %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>terminée.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation achevée le %1 à %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Prêt.</translation>
+        <translation>Prêt.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Des erreurs ont été détectées pendant la simulation le %1 à %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abandon.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortie :
+-------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreurs :
+--------</translation>
     </message>
 </context>
 <context>
@@ -10878,27 +10883,27 @@ Erreurs :
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversion du fichier Spice « %1 ».</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>préparateur</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prétraitement du fichier Spice « %1 ».</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur dans le prétraitement Spice</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERREUR : impossible de sauvegarder le fichier Spice prétraité « %1 ».</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>« %1 » n&apos;est pas exécutable.</translation>
     </message>
 </context>
 <context>
