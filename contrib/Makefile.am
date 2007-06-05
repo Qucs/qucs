@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs/contrib/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,12 +22,9 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib \
-	qucs-attenuator contrib $(RELEASEDIRS)
+dist_bin_SCRIPTS = ps2sp.pl
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+dist_man_MANS = ps2sp.1
 
 CLEANFILES = *~ *.rej *.orig
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+MAINTAINERCLEANFILES = Makefile.in
