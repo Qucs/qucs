@@ -1,3 +1,9 @@
+2007-06-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* contrib/Makefile.am (dist_man_MANS): Added 'ps2ps.pl' perl
+	script (preprocessor) as well as an appropriate manpage.  Thanks
+	to Friedrich Schmidt.
+
 2007-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-edit/qucsedit.cpp (QucsEdit): Try using mono-spaced font
