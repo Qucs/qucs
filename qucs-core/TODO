@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Allow variable references in property value lists.
 - Translation of B-sources in SPICE converter using EDD.
 - Translation of polynomial C's and L's in SPICE converter using EDD.
 - Noise equations in EDD.
