@@ -55,6 +55,7 @@
 #include <qprocess.h>
 #include <qlineedit.h>
 #include <qstringlist.h>
+#include <qdragobject.h>
 
 #include "main.h"
 #include "qucs.h"
@@ -159,9 +160,15 @@ QucsApp::QucsApp()
   switchSchematicDoc(true);  // "untitled" document is schematic
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->argc(); z++)
-    if(*(qApp->argv()[z]) != '-')
-      gotoPage(qApp->argv()[z]);
+  for(int z=1; z<qApp->argc(); z++) {
+    QString arg = qApp->argv()[z];
+    if(*(arg) != '-') {
+      // allow uri's: file:/home/linuxuser/Desktop/example.sch
+      QString f = QDir::convertSeparators(QUriDrag::uriToLocalFile(arg));
+      if(f.isEmpty()) f = arg;
+      gotoPage(f);
+    }
+  }
 }
 
 QucsApp::~QucsApp()
