@@ -322,7 +322,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog soubory</translation>
     </message>
 </context>
 <context>
@@ -647,15 +647,15 @@
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Analogový</translation>
     </message>
 </context>
 <context>
@@ -907,7 +907,7 @@
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished">QucsAttenuator je program pro syntézu útlumového článku. K vygenerování modelu atenuátoru zadejte všechny vstupní parametry a stikněte tlačítko Vygenerovat. Obvod s atenuátorem je vypočítán a vložen do schránky. V programu Qucs stačí potom pomocí CTRL-V vložit atenuátor do stávajícího obvodu.</translation>
+        <translation>QucsAttenuator je program pro syntézu útlumového článku. K vygenerování modelu atenuátoru zadejte všechny vstupní parametry a stikněte tlačítko Vygenerovat. Obvod s atenuátorem je vypočítán a vložen do schránky. V programu Qucs stačí potom pomocí CTRL-V vložit atenuátor do stávajícího obvodu.</translation>
     </message>
 </context>
 <context>
@@ -1093,11 +1093,11 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončit</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze spustit převaděč!</translation>
     </message>
 </context>
 <context>
@@ -1268,23 +1268,23 @@ Successfully created library.</source>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Knihovna úspěšně vytvořena.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Vybrat vše</translation>
+        <translation>Vybrat vše</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit vybrání všeho</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze přejmenovat podadresář knihovny!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chybí oprávnění ke smazání podadresáře &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -5400,15 +5400,15 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Převod SPICE souboru &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Předzpracování SPICE souboru &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze uložit předzpracovaný SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5416,7 +5416,7 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze spustit &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -5896,7 +5896,7 @@ Ukončí aplikaci</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Vyříznout</translation>
+        <translation>Vyříznout</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -5920,7 +5920,7 @@ Vyřízne vybranou oblast a zkopíruje ji do schránky</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Zkopírovat</translation>
+        <translation>Zkopírovat</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -5944,7 +5944,7 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Vložit</translation>
+        <translation>Vložit</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6512,7 +6512,7 @@ Přepsat ?</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished">Nový textový dokument</translation>
+        <translation>Nový textový dokument</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
@@ -6548,7 +6548,7 @@ Vytvoří nový textový dokument</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Nastavení dokumentu</translation>
+        <translation>Nastavení dokumentu</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
@@ -6572,7 +6572,7 @@ Vytiskne vybrané objekty z aktuálního dokumentu</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Nastavení aplikace</translation>
+        <translation>Nastavení aplikace</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6752,7 +6752,7 @@ Smaže vybrané komponenty</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Zpět</translation>
+        <translation>Zpět</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6772,7 +6772,7 @@ Poslední úkon bude vrácen zpět</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Zopakovat</translation>
+        <translation>Zopakovat</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -7140,7 +7140,7 @@ Vloží symbol připojení</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Vložit vodič</translation>
+        <translation>Vložit vodič</translation>
     </message>
     <message>
         <source>Wire
@@ -7444,7 +7444,7 @@ Krátký úvod do Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">O aplikaci</translation>
+        <translation>O aplikaci</translation>
     </message>
     <message>
         <source>About
@@ -7936,19 +7936,19 @@ Spustit podprogram pro výpočet atenuátoru</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished">&amp;Zachytit okno</translation>
+        <translation>&amp;Zachytit okno</translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished">Aktivovat/deaktivovat okno prohlížeče</translation>
+        <translation>Aktivovat/deaktivovat plovoucí okno</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished">Okno prohlížeče
+        <translation>Okno prohlížeče
 
-Aktivuje/deaktivuje zachycení okna prohlížeče</translation>
+Aktivuje/deaktivuje plovoucí okno prohlížeče</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
@@ -7960,7 +7960,7 @@ Aktivuje/deaktivuje zachycení okna prohlížeče</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished">Katalánština: Antoni Subirats</translation>
+        <translation>Katalánské rozhraní: Antoni Subirats</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
@@ -8004,87 +8004,87 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit vše</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tisk...</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Tisk na velikost stránky</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyrovnat vybrané prvky na síť</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Přesunout popisky komponent</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit vlastnosti komponenty nebo VHDL kód</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít existující projekt</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Smazat existující projekt</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít aktuální projekt</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Ozrcadlit vybraný objekt kolem X osy</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Ozrcadlit vybraný objekt kolem Y osy</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Přejít do podobvodu</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit rovnici</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit symbol uzemnění</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Vložit symbol portu</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog data</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze smazat Verilog data: </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>sondy</translation>
     </message>
 </context>
 <context>
@@ -8195,11 +8195,11 @@ Program pro návrh atenuátoru
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2006: </translation>
+        <translation>Copyright (C) 2006 :</translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished">úspěšně!</translation>
+        <translation>úspěšně!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
@@ -9993,7 +9993,7 @@ program pro syntézu filtru
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished">Copyright (C) 2005, 2006 von</translation>
+        <translation>Copyright (C) 2005, 2006 :</translation>
     </message>
 </context>
 <context>
@@ -10036,7 +10036,7 @@ program pro syntézu filtru
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished">&amp;Obsah</translation>
+        <translation>&amp;Obsah</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
@@ -11596,15 +11596,15 @@ Zkopíruje soubory do adresáře projektu</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib nápověda</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhledat komponentu z knihovny</translation>
     </message>
 </context>
 <context>
@@ -11805,7 +11805,7 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11817,7 +11817,7 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>spustit propojení vodiči po kliknutí na &quot;otevřít uzel&quot;:</translation>
     </message>
 </context>
 <context>
@@ -12293,7 +12293,7 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nelze vytvořit knihovnu v souboru &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
@@ -12434,35 +12434,35 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished">žádný rámec</translation>
+        <translation>bez rámečku</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>DIN A5 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>DIN A4 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>DIN A4 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>DIN A3 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>DIN A3 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Rámec</translation>
+        <translation>Rámec</translation>
     </message>
 </context>
 <context>
@@ -12599,37 +12599,39 @@ Chyby:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spustit novou simulaci na %1 v %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">hotovo.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Simulace ukončena na %1 v %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Připraveno.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyby vyskytnuvší se během simulace na %1 v %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přerušeno.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Výstup:
+------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyby:
+-------</translation>
     </message>
 </context>
 <context>
@@ -12732,27 +12734,27 @@ Chyby:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Převod SPICE souboru &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Předzpracování SPICE souboru &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba SPICE preprocesoru</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nelze uložit předzpracovaný SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze spustit &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
