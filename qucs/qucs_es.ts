@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos Verilog</translation>
     </message>
 </context>
 <context>
@@ -642,15 +642,15 @@
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation>Análogo</translation>
     </message>
 </context>
 <context>
@@ -808,11 +808,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El texto no puede estar vacío!</translation>
     </message>
 </context>
 <context>
@@ -851,7 +851,7 @@
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda del Atenuador</translation>
     </message>
 </context>
 <context>
@@ -874,67 +874,67 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">mostrar</translation>
+        <translation>mostrar</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminado</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Descripción</translation>
+        <translation>Descripción</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">Sí</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">no</translation>
+        <translation>no</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">mostrar en el esquema</translation>
+        <translation>mostrar en el esquema</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nombre:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor predeterminado:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Descripción:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El parámetro no debe llamarse &quot;Archivo&quot;!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El parámetro &quot;%1&quot; ya está en la lista!</translation>
     </message>
 </context>
 <context>
@@ -1037,15 +1037,15 @@
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de modelos IC-CAP</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Abortar</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: ¡No puedo iniciar el convertidor!</translation>
     </message>
 </context>
 <context>
@@ -1217,23 +1217,23 @@ Biblioteca creada con éxito.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Biblioteca creada con éxito.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Seleccionar todo</translation>
+        <translation>Seleccionar todo</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseleccionar Todo</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No puedo renombrar el subdirectorio de la biblioteca!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No tiene permisos para borrar el subdirectorio &quot;%1&quot; de la biblioteca.</translation>
     </message>
 </context>
 <context>
@@ -1418,59 +1418,59 @@ pero es %1!</translation>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar Propiedades de Optimización</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nombre:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>activo</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>inicial</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>mín</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>máx</translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>inicial:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>mín:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>máx:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Variables</translation>
     </message>
     <message>
         <source>Set</source>
@@ -1482,147 +1482,147 @@ pero es %1!</translation>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetivos</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Aceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Aplicar</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valor</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor:</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>menos</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>mayor</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>igual</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">Sí</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se puede dejar vacío ningún campo de texto!</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">no</translation>
+        <translation>no</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Simulación:</translation>
+        <translation>Simulación:</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La variable &quot;%1&quot; ya está en la lista!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡EL objetivo &quot;%1&quot; ya está en la lista!</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Método:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Máx. número de iteraciones:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciclo de refresco de la salida:</translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de padres:</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de cruce:</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Semilla de números seudoaleatorios:</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Varianza de coste mínimo:</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetivos de coste:</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>Restricciones de coste:</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation>doble lineal</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>doble logarítmico</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>entero lineal</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>entero logarítmico</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>monitor</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>minimizar</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>maximizar</translation>
     </message>
 </context>
 <context>
@@ -4227,203 +4227,203 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>tamaño máximo del paso en segundos</translation>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>relevo</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>Relevo</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>Retardo inicial</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo Verilog HICUM Level 2 v2.1</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante GICCR </translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Carga del hueco de polarización Cero</translation>
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Corrección de alta corriente para efectos 2D y 3D</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ponderación de carga del emisor minoritario en HTBs</translation>
     </message>
     <message>
         <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ponderación de carga del colector minoritario en HBTs</translation>
     </message>
     <message>
         <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ponderación de carga de la unión B-E en HBTs</translation>
     </message>
     <message>
         <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ponderación de carga de la unión B-C en HBTs</translation>
     </message>
     <message>
         <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente interna de saturación B-E</translation>
     </message>
     <message>
         <source>Internal B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente interna B-E</translation>
     </message>
     <message>
         <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación de recombinación interna B-E</translation>
     </message>
     <message>
         <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente de recombinación interna B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación periférica B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente periférica B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación de recombinación periférica B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente de recombinación periférica B-E</translation>
     </message>
     <message>
         <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor no ideal para III-V HBTs</translation>
     </message>
     <message>
         <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación interna B-C</translation>
     </message>
     <message>
         <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente interna B-C</translation>
     </message>
     <message>
         <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación externa B-C</translation>
     </message>
     <message>
         <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de corriente externa B-C</translation>
     </message>
     <message>
         <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación de túnel B-E</translation>
     </message>
     <message>
         <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor exponencial para la corriente de túnel</translation>
     </message>
     <message>
         <source>Avalanche current factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de corriente de avalancha</translation>
     </message>
     <message>
         <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor exponencial para la corriente de avalancha</translation>
     </message>
     <message>
         <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativa para FAVL</translation>
     </message>
     <message>
         <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativa para QAVL</translation>
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia de base interna de polarización Cero</translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia serie de base externa</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor para la dependencia geométrica de la corriente de avalancha del emisor</translation>
     </message>
     <message>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de corrección de la modulación por B-E y B-C de la capa de carga espacial</translation>
     </message>
     <message>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Porcentaje de desviación HF a la capacidad interna total (efecto lateral NQS)</translation>
     </message>
     <message>
         <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Porcentaje de la carga interna a minoria total</translation>
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia serie del emisor</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia serie del colector externo</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación de la transferenica sustrato transistor</translation>
     </message>
     <message>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal directo de la corriente de transferencia del sustrato</translation>
     </message>
     <message>
         <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de saturación del diodo C-S</translation>
     </message>
     <message>
         <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor ideal de la corriente del diodo C-S</translation>
     </message>
     <message>
         <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo transitorio para la operación directa del sustrato transistor</translation>
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia serie del sustrato</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad desviada del sustrato</translation>
     </message>
     <message>
         <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de la unión B-E interna polarizada a cero</translation>
     </message>
     <message>
         <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial físico de la unión interna B-E</translation>
     </message>
     <message>
         <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de graduación interna B-E</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Porcentaje del valor máximo de polarización de la capacidad B-E interna</translation>
     </message>
     <message>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
@@ -4511,7 +4511,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de tiempo de saturación en densidades de corriente altas</translation>
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
@@ -4519,11 +4519,11 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de particionado para la porción de la base y el colector</translation>
     </message>
     <message>
         <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia interna del colector en campo eléctrico débil</translation>
     </message>
     <message>
         <source>Voltage separating ohmic and saturation velocity regime</source>
@@ -4531,7 +4531,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de saturación interna C-E</translation>
     </message>
     <message>
         <source>Collector punch-through voltage</source>
@@ -4543,11 +4543,11 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad parásita total B-E</translation>
     </message>
     <message>
         <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad parásita total B-C</translation>
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
@@ -4587,7 +4587,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de temperatura para RCI0</translation>
     </message>
     <message>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
@@ -4623,15 +4623,15 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia térmica</translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad térmica</translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura a la que se especifican los parámetros</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
@@ -4639,115 +4639,115 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>simulación de temperatura</translation>
     </message>
     <message>
         <source>FBH HBT</source>
-        <translation type="unfinished"></translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorado</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura de operación del dispositivo, Celsius</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia térmica, K/W</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala, número de dedos emisores</translation>
     </message>
     <message>
         <source>Length of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Longitud del dedo emisor, m</translation>
     </message>
     <message>
         <source>Width of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation>Anchura del dedo emisor, m</translation>
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Densidad de corriente saturada directa, A/um^2</translation>
     </message>
     <message>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de emisión de corriente directa</translation>
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Energía de activación térmica directa, V, (0==deshabilita la dependencia de la temperatura)</translation>
     </message>
     <message>
         <source>B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Densidad de corriente saturada de fuga B-E, A/um^2</translation>
     </message>
     <message>
         <source>B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de emisión de fuga B-E</translation>
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia limitadora del diodo de fuga B-E, Ohm</translation>
     </message>
     <message>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>energía de activación térmica de fuga B-E, V, (0 == deshabilita la dependencia de la temperatura)</translation>
     </message>
     <message>
         <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>2ª densidad de corriente de saturació de fuga,  A/um^2</translation>
     </message>
     <message>
         <source>2nd B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>2º coeficiente de emisión de fuga B-E</translation>
     </message>
     <message>
         <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>2ª resistencia limitadora del diodo de fuga B-E, Ohm</translation>
     </message>
     <message>
         <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>2ª energía de activación térmica de fuga B-E, V, (0 == deshabilita la dependencia de la temperatura)</translation>
     </message>
     <message>
         <source>Reverse saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Densidad de corriente saturada inversa, A/um^2</translation>
     </message>
     <message>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de emisión de corriente inversa</translation>
     </message>
     <message>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Energía de activación térmica inversa, V, (0==deshabilita la dependencia de la temperatura)</translation>
     </message>
     <message>
         <source>Fraction of Cjc that goes to internal base node</source>
-        <translation type="unfinished"></translation>
+        <translation>Fracción de Cjc que va al conector interno de la base</translation>
     </message>
     <message>
         <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Densidad de corriente saturada de fuga B-C, A/um^2 (0 desconecta el diodo)</translation>
     </message>
     <message>
         <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de corriente fuga B-C, A/um^2 (0 desconecta el diodo)</translation>
     </message>
     <message>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia limitadora del diodo de fuga B-C, Ohm</translation>
     </message>
     <message>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Energía de activación térmica de fuga B-C, V, (0 == deshabilita la dependencia de la temperatura)</translation>
     </message>
     <message>
         <source>Ideal forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Beta directa ideal</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
@@ -4755,7 +4755,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Ideal reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Beta inversa ideal</translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
@@ -4763,7 +4763,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión temprana inversa, V (0 == deshabilita el efecto temprano)</translation>
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
@@ -4775,31 +4775,31 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
     </message>
     <message>
         <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
     </message>
     <message>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura B-E, (0 == deshabilita la ruptura del emisor)</translation>
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de transitorio inverso ideal, s</translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietiempo ideal de tránsito en directa, s</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de temperatura del tiempo transitorio en directa</translation>
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
@@ -4827,7 +4827,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>B-C junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>factor exponencial unión B-C</translation>
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
@@ -4835,7 +4835,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>no usado</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
@@ -4867,43 +4867,43 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia del colector, Ohm/finger</translation>
     </message>
     <message>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia del emisor, Ohm/finger</translation>
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia de la base extrínseca, Ohm/finger</translation>
     </message>
     <message>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistencia óhmica de la base interna, Ohm/finger</translation>
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductancia del colector, H</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductancia del emisor, H</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>Inductancia de la base, H</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de B-C extrínseca, F</translation>
     </message>
     <message>
         <source>Extrinsic base capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de la base extrínseca, F</translation>
     </message>
     <message>
         <source>Extrinsic collector capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad del colector extrínseca, F</translation>
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
@@ -4919,19 +4919,19 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de ruido de ráfaga</translation>
     </message>
     <message>
         <source>Burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente del ruido de ráfaga</translation>
     </message>
     <message>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Frecuencia de esquina del ruido de ráfaga, Hz</translation>
     </message>
     <message>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura ambiente en la que se determinan los parámetros</translation>
     </message>
     <message>
         <source>bond wire</source>
@@ -4939,23 +4939,23 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud del cable</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>diámetro del cable</translation>
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>altura sobre el plano de masa</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>resistencia específica del metal</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>permeabilidad relativa del metal</translation>
     </message>
     <message>
         <source>bond wire model</source>
@@ -4967,59 +4967,59 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>línea de transmisión par trenzado</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>diámetro del conductor</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>diámetro del cable (conductor y aislante)</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>constante dieléctrica del aislante</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>trenzas por longitud en 1/m</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Par trenzado</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud física de la línea</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>(disponible) Potencia AC en Watios</translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Transistor de efecto campo MOS con sustrato</translation>
     </message>
     <message>
         <source>ideal 4-terminal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>línea de transmisión de 4 terminales ideal</translation>
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea de transmisión de 4 terminales</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo HBT por  Ferdinand-Braun-Institut (FBH), Berlin</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de difusión BC extrínseca, F</translation>
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
@@ -5027,87 +5027,87 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>formato de la lista de componentes</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo Verilog</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del archivo Verilog</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: Sin nombre de archivo en %1 componente &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo abrir %1 archivo &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura C-E, (0 == deshabilita la ruptura del colector)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de corriente exponencial</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>flanco de subida antes de la corriente</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>corriente máxima del pulso</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tiempo de inicio del flanco de subida exponencial</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>comienzo de la caida exponencial</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>constante de tiempo del flanco de subida</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>constante de tiempo del flanco de bajada</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulso de Corriente Exponencial</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de tensión exponencial</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tensión antes del flanco de subida</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>máxima tensión del pulso</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tiempo de subida del flanco de subida</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tiempo de caida del flanco de caída</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulso de Tensión Exponencial</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
@@ -5115,47 +5115,47 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de ruido para la resistencia de base interna</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>dispositivo de ecuación definida</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>tipos de ecuaciones</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>número de ramas</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>equación de corriente</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>ecuación de carga</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo de Ecuación Definida</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">ERROR: No se pudo abrir el archivo SPICE &quot;%1&quot;.</translation>
+        <translation>ERROR: No se pudo abrir el archivo SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">ERROR: ¡No puedo arrancar QucsConv!</translation>
+        <translation>ERROR: ¡No puedo arrancar QucsConv!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo guardar el archivo SPICE convertido &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo abrir el archivo SPICE convertido &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5164,33 +5164,36 @@ Use:  qucsedit [-r] archivo
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo abrir el archivo &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo crear el subdirectorio de la biblioteca del usuario!
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo crear el archivo &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>AVISO: Saltando el componente de la biblioteca &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convirtiendo archivo SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Preprocesando archivo SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo guardar el archivo SPICE preprocesado &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5198,7 +5201,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se puede ejecutar &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -6093,7 +6096,7 @@ Cierra el documento actual</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Propiedades del documento</translation>
+        <translation>Propiedades del documento</translation>
     </message>
     <message>
         <source>Settings
@@ -6165,7 +6168,7 @@ Sale de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Configuración de la aplicación</translation>
+        <translation>Configuración de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6301,7 +6304,7 @@ Mueve la propiedad texto de los componentes</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Cortar</translation>
+        <translation>Cortar</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6321,7 +6324,7 @@ Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6341,7 +6344,7 @@ Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Pegar</translation>
+        <translation>Pegar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6377,7 +6380,7 @@ Elimina los componentes seleccionados</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Deshacer</translation>
+        <translation>Deshacer</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6397,7 +6400,7 @@ Deshace la última acción realizada</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Rehacer</translation>
+        <translation>Rehacer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6761,7 +6764,7 @@ Inserta un símbolo de conexión</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Inserta un cable</translation>
+        <translation>Inserta un cable</translation>
     </message>
     <message>
         <source>Wire
@@ -7065,7 +7068,7 @@ Breve introducción a Qucs</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Acerca de la aplicación</translation>
+        <translation>Acerca de la aplicación</translation>
     </message>
     <message>
         <source>About
@@ -7557,139 +7560,143 @@ Arranca el programa de cálculo de atenuadores</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>Mejoras en el interfaz gráfico por Gopala Krishna A</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>Checo por Marek Straka</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalán por Antoni Subirats</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>Interfaz Verilog-AMS por Helene Parruitte</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrar horizontalmente</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centra horizontalmente los elementos seleccionados</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrar horizontalmente
+
+Centra horizontalmente los elementos seleccionados</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrar verticalmente</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centra verticalmente los elementos seleccionados</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrar verticalmente
+
+Centra verticalmente los elementos seleccionados</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;osicionado</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir ajustándose a la página</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Fija los elementos seleccionados en la rejilla</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Mueve la propiedad texto de los componentes</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Reemplazar las propiedades del componente o el código VHDL</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Abre un proyecto existente</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Borra un proyecto existente</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Cierra el documento actual</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Refleja el elemento seleccionado sobre el eje x</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Refleja el elemento seleccionado sobre el eje y</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Entra en el subcircuito seleccionado</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Insertar una ecuación</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserta un símbolo de tierra</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserta un símbolo de conexión</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo Texto</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar Todo</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuentes Verilog</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>No puedo borrar la fuente Verilog: </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>sondas</translation>
     </message>
 </context>
 <context>
@@ -8084,65 +8091,67 @@ Programa de síntexis de filtros</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Salir</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Regresar</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Seguir</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Inicio</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anterior</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Siguiente</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicio</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tabla de Contenidos</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilita/deshabilita la tabla de contenidos</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabla de Contenidos
+
+Habilita/deshabilita la tabla de contenidos</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Acerca de Qt</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Archivo</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Ver</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Ayuda</translation>
+        <translation>&amp;Ayuda</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenidos</translation>
     </message>
 </context>
 <context>
@@ -9546,15 +9555,15 @@ Quite Universal Circuit Simulator
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda de QucsLib</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modelo</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar en la Biblioteca de Componentes</translation>
     </message>
 </context>
 <context>
@@ -9751,15 +9760,15 @@ abrir los archivos con el programa apropiado.</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Checo</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Catalán</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>comenzar a cablear al pulsar en el nodo abierto:</translation>
     </message>
 </context>
 <context>
@@ -10156,31 +10165,31 @@ abrir los archivos con el programa apropiado.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos Modificados</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>SinTítulo</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar los archivos modificados</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecciona los archivos a guardar</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Abortar el cierre</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar la selección</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>No Guardar</translation>
     </message>
 </context>
 <context>
@@ -10203,7 +10212,7 @@ abrir los archivos con el programa apropiado.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: No se pudo crear el archivo de biblioteca &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
@@ -10507,37 +10516,39 @@ Errores:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciando una nueva simulación en %1 en %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>hecho.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizada simulación en %1 en %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listo.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Los errores han ocurrido durante la simulación en %1 en %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abortado.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Salida:
+-------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Errores:
+----------</translation>
     </message>
 </context>
 <context>
@@ -10632,27 +10643,27 @@ Errores:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convirtiendo el archivo SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>preprocesador</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Preprocesando el archivo SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error del preprocesador SPICE</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo guardar el archivo SPICE preprocesado &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede ejecutar &quot;%1&quot;.</translation>
     </message>
 </context>
 <context>
