@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.10 2007-02-27 12:05:27 ela Exp $
+ * $Id: environment.cpp,v 1.11 2007-06-15 21:13:29 ela Exp $
  *
  */
 
@@ -132,6 +132,10 @@ void environment::copyVariables (variable * org) {
       c->d = var->getConstant()->d;
       var->setConstant (c);
       break;
+    case VAR_VALUE:
+      c = new constant (*(org->getValue ()));
+      var->setValue (c);
+      break;
     case VAR_REFERENCE:
       r = new reference ();
       r->n = strdup (var->getReference()->n);
@@ -151,6 +155,8 @@ void environment::deleteVariables (void) {
     n = var->getNext ();
     if (var->getType () == VAR_CONSTANT)
       delete var->getConstant ();
+    else if (var->getType () == VAR_VALUE)
+      delete var->getValue ();
     else if (var->getType () == VAR_SUBSTRATE)
       delete var->getSubstrate ();
     else if (var->getType () == VAR_REFERENCE) {
@@ -173,8 +179,9 @@ void environment::addVariable (variable * var) {
    returns it if possible.  Otherwise the function returns NULL. */
 variable * environment::getVariable (char * n) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
-    if (!strcmp (var->getName (), n))
-      return var;
+    if (var->getType () != VAR_VALUE)
+      if (!strcmp (var->getName (), n))
+	return var;
   }
   return NULL;
 }
@@ -222,6 +229,10 @@ int environment::runSolver (void) {
     (*it)->updateReferences (this);
     // actually run the solver
     ret |= (*it)->runSolver ();
+#if 0
+    // save local results
+    (*it)->saveResults ();
+#endif
   }
 
   return ret;
@@ -245,6 +256,59 @@ void environment::fetchConstants (void) {
     if (var->getType () == VAR_CONSTANT) {
       constant * c = var->getConstant ();
       c->d = getDouble (var->getName ());
+    }
+  }
+}
+
+/* Looks through the environment variables for a given variable name
+   being a saved value and returns the variable pointer or NULL if
+   there is no such variable. */
+variable * environment::findValue (char * n) {
+  for (variable * var = root; var != NULL; var = var->getNext ()) {
+    if (var->getType () == VAR_VALUE)
+      if (!strcmp (var->getName (), n))
+	return var;
+  }
+  return NULL;
+}
+
+/* Puts the given variable name and its computed result into the list
+   of environment variables. */
+void environment::setValue (char * n, constant * value) {
+  variable * var = findValue (n);
+  if (var != NULL) {
+    // replace variable
+    delete var->getValue ();
+    var->setValue (new constant (*value));
+  } else {
+    // create new variable
+    var = new variable (n);
+    var->setValue (new constant (*value));
+    addVariable (var);
+  }
+}
+
+// Local macro definition to go through the list of equations.
+#define foreach_equation(eqn)                        \
+  for (assignment * (eqn) = A (equations);           \
+       (eqn) != NULL; (eqn) = A ((eqn)->getNext ()))
+
+// Short helper macro.
+#define A(a) ((assignment *) (a))
+
+/* The function puts local variables (prameters and equation results)
+   into the set of environment variables. */
+void environment::saveResults (void) {
+  node * equations = checkee->getEquations ();
+  // go through equations
+  foreach_equation (eqn) {
+    char * inst = eqn->getInstance ();
+    if (inst != NULL && eqn->evaluated) {
+      char * result = A(eqn)->result;
+      if ((inst[0] != '#' && !strchr (result, '.')) ||
+	  !strcmp (inst, "#subcircuit")) {
+	setValue (result, eqn->getResult ());
+      }
     }
   }
 }

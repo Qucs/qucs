@@ -1,7 +1,7 @@
 /*
  * history.h - history class definitions
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: history.h,v 1.2 2006-02-23 09:02:01 raimi Exp $
+ * $Id: history.h,v 1.3 2007-06-15 21:13:30 ela Exp $
  *
  */
 
@@ -40,6 +40,8 @@ class history
   nr_double_t duration (void);
   nr_double_t last (void);
   nr_double_t first (void);
+  int leftidx (void);
+  int unused (void);
   void drop (void);
   void setTvector (tvector<nr_double_t> * v) { t = v; }
   tvector<nr_double_t> * getTvector (void) { return t; }

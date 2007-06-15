@@ -1,7 +1,7 @@
 /*
  * history.cpp - history class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: history.cpp,v 1.2 2006-02-23 09:02:01 raimi Exp $
+ * $Id: history.cpp,v 1.3 2007-06-15 21:13:30 ela Exp $
  *
  */
 
@@ -62,9 +62,24 @@ void history::append (nr_double_t val) {
   if (values != t) drop ();
 }
 
+// Returns left-most valid index into the time value vector.
+int history::leftidx (void) {
+  int ts = t->getSize ();
+  int vs = values->getSize ();
+  return ts - vs > 0 ? ts - vs : 0;
+}
+
+/* Returns number of unused values (time value vector shorter than
+   value vector). */
+int history::unused (void) {
+  int ts = t->getSize ();
+  int vs = values->getSize ();
+  return vs - ts > 0 ? vs - ts : 0;
+}
+
 // Returns the first (oldest) time value in the history.
 nr_double_t history::first (void) {
-  return (t != NULL) ? t->get (t->getSize () - values->getSize ()) : 0.0;
+  return (t != NULL) ? t->get (leftidx ()) : 0.0;
 }
 
 // Returns the last (youngest) time value in the history.
@@ -83,10 +98,10 @@ void history::drop (void) {
   nr_double_t f = first ();
   nr_double_t l = last ();
   if (age > 0.0 && l - f > age) {
-    int r, i = t->getSize () - values->getSize ();
+    int r, i = leftidx ();
     for (r = 0; i < t->getSize (); r++, i++)
       if (l - t->get (i) < age)	break;
-    r -= 2; // keep 2 values being older than specified age
+    r += unused () - 2; // keep 2 values being older than specified age
     if (r > 127) values->drop (r);
   }
 }
@@ -100,7 +115,7 @@ nr_double_t history::interpol (nr_double_t tval, int idx, bool left) {
 
   int n = left ? idx + 1: idx;
   if (n > 1 && n + 2 < values->getSize ()) {
-    int i, k, l = t->getSize () - values->getSize ();
+    int i, k, l = leftidx ();
     for (k = 0, i = n - 2; k < 4; i++, k++) {
       x (k) = t->get (i + l);
       y (k) = values->get (i);
@@ -117,7 +132,7 @@ nr_double_t history::interpol (nr_double_t tval, int idx, bool left) {
    interpolation is used. */
 nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
   if (t != NULL) {
-    int l = t->getSize () - values->getSize ();
+    int l = leftidx ();
     int r = t->getSize () - 1;
     int i = -1;
     nr_double_t diff = NR_MAX;

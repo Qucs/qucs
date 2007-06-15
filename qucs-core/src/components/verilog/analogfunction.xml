@@ -73,7 +73,7 @@ inline double _limexp(double arg)          { return ((arg)&lt;(80))?(exp(arg)):(
 inline double _d0_limexp(double arg)       { return ((arg)&lt;(80))?(exp(arg)):(exp(80)); }
 
 inline double _vt(double arg)              { return 1.3806503e-23*arg/1.602176462e-19; }
-inline double _d0_vt(double arg)           { return 1.3806503e-23/1.602176462e-19; }
+inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-19; }
 
 </admst:template>
 

@@ -1,3 +1,10 @@
+2007-06-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp: Fixed a bug leading to wrong values in
+	the equations when there are multiple instances of a equation
+	defined device.  It only showed up when equations use local
+	variables or subcircuit parameters.
+
 2007-05-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* mutualx.cpp: Finally fixed S-parameter calculation.
