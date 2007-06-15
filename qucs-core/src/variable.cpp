@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: variable.cpp,v 1.6 2007/02/20 21:00:51 ela Exp $
+ * $Id: variable.cpp,v 1.7 2007/06/15 21:13:30 ela Exp $
  *
  */
 
@@ -93,6 +93,11 @@ char * variable::toString (void) {
     str = value.c->toString ();
     text = (char *) malloc (strlen (str) + 11);
     sprintf (text, "constant: %s", str);
+    break;
+  case VAR_VALUE:
+    str = value.v->toString ();
+    text = (char *) malloc (strlen (str) + 8);
+    sprintf (text, "value: %s", str);
     break;
   case VAR_REFERENCE:
     str = value.r->toString ();

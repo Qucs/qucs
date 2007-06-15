@@ -1,3 +1,13 @@
+2007-06-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* variable.cpp: New type of variables: stored result values.
+
+	* history.cpp: Fixed bug occurring when time value vector is
+	shorter than the value vector.
+
+	* environment.cpp: New function for saving local variable resutls
+	in the environment.  Not yet used...
+
 2007-05-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp: Transfer references to equation variables in an

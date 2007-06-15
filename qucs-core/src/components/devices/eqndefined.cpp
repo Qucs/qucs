@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.6 2007/05/01 13:27:10 ela Exp $
+ * $Id: eqndefined.cpp,v 1.7 2007/06/15 21:13:31 ela Exp $
  *
  */
 
@@ -287,6 +287,8 @@ void eqndefined::calcDC (void) {
   for (i = 0; i < branches; i++) {
     setResult (veqn[i], BP (i));
   }
+  // get local subcircuit values
+  getEnv()->passConstants();
 
   // calculate currents and put into right-hand side
   for (i = 0; i < branches; i++) {

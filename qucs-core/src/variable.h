@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: variable.h,v 1.5 2007/02/20 21:00:51 ela Exp $
+ * $Id: variable.h,v 1.6 2007/06/15 21:13:31 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@ enum variably_type {
   VAR_CONSTANT,     // equation constant
   VAR_REFERENCE,    // equation reference
   VAR_SUBSTRATE,    // substrate definition
+  VAR_VALUE,        // equation result
   VAR_ANALYSIS      // analysis
 };
 
@@ -64,6 +65,8 @@ class variable
   reference * getReference (void) { return value.r; }
   void setSubstrate (substrate * s) { type = VAR_SUBSTRATE; value.s = s; }
   substrate * getSubstrate (void) { return value.s; }
+  void setValue (constant * v) { type = VAR_VALUE; value.v = v; }
+  constant * getValue (void) { return value.v; }
   void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
   analysis * getAnalysis (void) { return value.a; }
   char * toString (void);
@@ -76,6 +79,7 @@ class variable
     constant * c;  // equation constant
     reference * r; // equation reference
     substrate * s; // substrate definition
+    constant * v;  // equation result
     analysis * a;  // analysis
   } value;
   variable * next;
