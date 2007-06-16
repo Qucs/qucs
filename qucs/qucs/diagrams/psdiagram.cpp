@@ -20,6 +20,10 @@
 #endif
 
 #include <math.h>
+#include <float.h>
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
 #endif

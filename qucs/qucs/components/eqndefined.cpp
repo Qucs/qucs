@@ -97,7 +97,7 @@ QString EqnDefined::netlist()
 // -------------------------------------------------------
 void EqnDefined::createSymbol()
 {
-  int PortDistance = 60;
+  int i, PortDistance = 60;
 
   // adjust branch number
   int Num = Props.at(1)->Value.toInt();
@@ -111,14 +111,14 @@ void EqnDefined::createSymbol()
   // adjust property number
   int NumProps = (Props.count() - 2) / 2;
   if (NumProps < Num) {
-    for(int i = NumProps; i < Num; i++) {
+    for(i = NumProps; i < Num; i++) {
       Props.append(new Property("I"+QString::number(i+1), "0", false,
 		QObject::tr("current equation") + " " +QString::number(i+1)));
       Props.append(new Property("Q"+QString::number(i+1), "0", false,
 		QObject::tr("charge equation") + " " +QString::number(i+1)));
     }
   } else {
-    for(int i = Num; i < NumProps; i++) {
+    for(i = Num; i < NumProps; i++) {
       Props.removeLast();
       Props.removeLast();
     }
@@ -126,7 +126,7 @@ void EqnDefined::createSymbol()
 
   // adjust property names
   Property * p1 = Props.at(2);
-  for(int i = 1; i <= Num; i++) {
+  for(i = 1; i <= Num; i++) {
     p1->Name = "I"+QString::number(i);
     p1 = Props.next();
     p1->Name = "Q"+QString::number(i);
@@ -141,7 +141,8 @@ void EqnDefined::createSymbol()
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
 
 
-  int i=0, y = PortDistance/2-h, yh;
+  i=0;
+  int y = PortDistance/2-h, yh;
   while(i<Num) {
     i++;
     Lines.append(new Line(-30, y,-15, y,QPen(QPen::darkBlue,2)));

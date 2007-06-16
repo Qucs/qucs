@@ -15,13 +15,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "curvediagram.h"
-#include "main.h"
-
 #include <math.h>
+#include <float.h>
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 #include <qmessagebox.h>
 
+#include "curvediagram.h"
+#include "main.h"
 
 CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
