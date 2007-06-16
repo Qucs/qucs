@@ -46,7 +46,7 @@ SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp
 
 # List of special Qt files.
-MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h
+MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
 
 # Additional libraries.
 LIBS = 
