@@ -1,3 +1,8 @@
+2007-06-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/uk/start.html: Added Ukrainian translations of the internal
+	help system.
+
 2007-05-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html, docs/de/mathfunc.html: Documented the new
