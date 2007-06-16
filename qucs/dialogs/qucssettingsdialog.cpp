@@ -373,7 +373,7 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.Editor = editorEdit->text();
     changed = true;
   }
-  if(QucsSettings.NodeWiring != checkWiring->isChecked()) {
+  if(QucsSettings.NodeWiring != (unsigned)checkWiring->isChecked()) {
     QucsSettings.NodeWiring = checkWiring->isChecked();
     changed = true;
   }
