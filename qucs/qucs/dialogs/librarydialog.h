@@ -25,12 +25,12 @@
 #include <qdialog.h>
 #include <qfile.h>
 #include <qdir.h>
+#include <qcheckbox.h>
 
 class QLabel;
 class QucsApp;
 class QLineEdit;
 class QTextEdit;
-class QCheckBox;
 class QPushButton;
 class QVBoxLayout;
 class QListViewItem;
