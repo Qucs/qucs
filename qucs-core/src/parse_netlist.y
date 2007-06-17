@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.25 2007-04-26 16:48:25 ela Exp $
+ * $Id: parse_netlist.y,v 1.26 2007-06-17 10:51:49 ela Exp $
  *
  */
 
@@ -106,7 +106,7 @@
 %type <node> NodeList
 %type <pair> PairList
 %type <value> PropertyValue ValueList Value PropertyReal
-%type <eqn> EquationList Expression ExpressionList ExpressionListRange
+%type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
 %type <con> Constant
 %type <ref> Reference
@@ -376,7 +376,7 @@ Application:
     $$->nargs = $3->count ();
     $$->args = $3;
   }
-  | Reference '[' ExpressionListRange ']' {
+  | Reference '[' ExpressionList ']' {
     $$ = new eqn::application ();
     $$->n = strdup ("array");
     $$->nargs = 1 + $3->count ();
@@ -513,24 +513,14 @@ ExpressionList: /* nothing */ { $$ = NULL; }
   | Expression {
     $$ = $1;
   }
+  | Range {
+    $$ = $1;
+  }
   | Expression ',' ExpressionList {
     $1->setNext ($3);
     $$ = $1;
   }
-;
-
-ExpressionListRange: /* nothing */ { $$ = NULL; }
-  | Expression {
-    $$ = $1;
-  }
-  | Range {
-    $$ = $1;
-  }
-  | Expression ',' ExpressionListRange {
-    $1->setNext ($3);
-    $$ = $1;
-  }
-  | Range ',' ExpressionListRange {
+  | Range ',' ExpressionList {
     $1->setNext ($3);
     $$ = $1;
   }
