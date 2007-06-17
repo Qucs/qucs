@@ -1,3 +1,8 @@
+2007-06-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.12 and bumped up to version
+	0.0.13.
+
 2007-06-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* contrib/Makefile.am (dist_man_MANS): Added 'ps2ps.pl' perl
