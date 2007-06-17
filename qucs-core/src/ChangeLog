@@ -1,3 +1,8 @@
+2007-06-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: Re-allow range specifications as function
+	arguments.  It disappreared while implementing the ?: operator.
+
 2007-06-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* variable.cpp: New type of variables: stored result values.
