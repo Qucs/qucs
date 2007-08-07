@@ -18,9 +18,16 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.cpp,v 1.4 2005/06/02 18:17:51 raimi Exp $
+ * $Id: amplifier.cpp,v 1.5 2007/08/07 20:43:08 ela Exp $
  *
  */
+
+/*! \file amplifier.cpp
+    \brief amplifier class implementation
+    
+    An ideal amplifier increases signal strength from input 
+    to output and blocks all signals flowing into the output. 
+*/
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -37,36 +44,74 @@
 #include "constants.h"
 #include "amplifier.h"
 
+/*! Constructor */
 amplifier::amplifier () : circuit (2) {
   type = CIR_AMPLIFIER;
 }
 
+/*! Initialize S-parameter simulation. 
+    An ideal amplifier is characterized by the following 
+    S-matrix 
+    \f[  
+      S=\begin{pmatrix}
+         \dfrac{Z_1-Z_0}{Z_1+Z_0} & 0 \\
+	  \dfrac{4\cdot Z_0\cdot\sqrt{Z_1\cdot Z_2}\cdot G}{(Z_1+Z_0)\cdot(Z_2+Z_0)}
+          & \dfrac{Z_2-Z_0}{Z_2+Z_0}
+        \end{pmatrix}
+    \f]
+    With \f$Z_1\f$ and \f$Z_2\f$ the impedance of the port 1 and 2 and 
+    \f$G\f$ the gain.
+*/
 void amplifier::initSP (void) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
+
   allocMatrixS ();
+
   setS (NODE_1, NODE_1, (z1 - z0) / (z1 + z0));
   setS (NODE_1, NODE_2, 0);
   setS (NODE_2, NODE_2, (z2 - z0) / (z2 + z0));
   setS (NODE_2, NODE_1, 4 * z0 * sqrt (z1 * z2) * g / (z1 + z0) / (z2 + z0));
 }
 
+/*! DC model initialization. 
+    An ideal amplifier is characterized by the following 
+    Y-matrix:
+    \f[
+    \begin{pmatrix}
+    \dfrac{1}{Z_1} & 0 \\
+    \dfrac{-2}{\sqrt{Z_1\cdot Z_2}} & \dfrac{1}{Z_2}
+    \end{pmatrix}
+    \f]
+    With \f$Z_1\f$ and \f$Z_2\f$ the impedance of the port 1 and 2 and 
+    \f$G\f$ the gain.
+*/
 void amplifier::initDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
+
   allocMatrixMNA ();
+
   setY (NODE_1, NODE_1, 1 / z1);
   setY (NODE_1, NODE_2, 0);
   setY (NODE_2, NODE_1, -2 * g / sqrt (z1 * z2));
   setY (NODE_2, NODE_2, 1 / z2);
 }
 
+/*! AC model initialization.
+
+    Idem than DC model.
+*/
 void amplifier::initAC (void) {
   initDC ();
 }
 
+/*! Transient model initialization.
+
+    Idem than DC model.
+*/
 void amplifier::initTR (void) {
   initDC ();
 }

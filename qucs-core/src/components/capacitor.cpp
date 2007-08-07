@@ -18,9 +18,16 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.cpp,v 1.20 2006/07/24 08:07:42 raimi Exp $
+ * $Id: capacitor.cpp,v 1.21 2007/08/07 20:43:10 ela Exp $
  *
  */
+
+/*!\file capacitor.cpp 
+   \brief capacitor class implementation
+
+   A capacitor is a passive device that strore electric energy
+*/
+
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -39,11 +46,25 @@
 #include "constants.h"
 #include "capacitor.h"
 
+/*!\brief Constructor */
 capacitor::capacitor () : circuit (2) {
   type = CIR_CAPACITOR;
   setISource (true);
 }
 
+/*!\brief Compute S parameters 
+
+  \f$S\f$ parameter are computed from admitance, therefore \f$S\f$
+  matrix of a capacitor of capacitance \f$C\f$ is:
+  \f[
+  S=\begin{pmatrix}
+  \frac{1}{1+4j\pi fCZ_0}            & \frac{4j\pi fCZ_0}{1+4j\pi fCZ_0} \\
+  \frac{4j\pi fCZ_0}{1+4j\pi fCZ_0}  & \frac{1}{1+4j\pi fCZ_0}
+  \end{pmatrix}
+  \f]
+
+  \param[in] frequency frequency for S parameters simulation
+*/
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
   complex y = 2 * rect (0, 2.0 * M_PI * frequency * c);
@@ -53,10 +74,24 @@ void capacitor::calcSP (nr_double_t frequency) {
   setS (NODE_2, NODE_1, y / (1 + y));
 }
 
+/*\brief Init DC simulation of capacitor */
 void capacitor::initDC (void) {
   allocMatrixMNA ();
 }
 
+/*!\brief AC model 
+   
+   Capacitor (capacitance \f$C\f$) is modelized by 
+   its \f$Y\f$ matrix:
+   \f[
+   Y=\begin{pmatrix}
+     2j\pi f C  & -2j\pi f C \\
+     -2j\pi f C & 2j\pi f C
+     \end{pmatrix}
+   \f]
+
+   \param[in] frequency frequency used for AC simulation
+*/
 void capacitor::calcAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C");
   complex y = rect (0, 2.0 * M_PI * frequency * c);
@@ -64,6 +99,7 @@ void capacitor::calcAC (nr_double_t frequency) {
   setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }
 
+/*!\brief Init AC model of capacitor */
 void capacitor::initAC (void) {
   allocMatrixMNA ();
 }

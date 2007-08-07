@@ -18,10 +18,67 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.28 2006/07/03 08:52:23 raimi Exp $
+ * $Id: matrix.cpp,v 1.29 2007/08/07 20:43:05 ela Exp $
  *
  */
+/*!\file matrix.cpp
+   \brief Dense matrix class implementation
 
+  References:
+
+  [1] Power Waves and the Scattering Matrix
+      Kurokawa, K. 
+      Microwave Theory and Techniques, IEEE Transactions on, 
+      Vol.13, Iss.2, Mar 1965
+      Pages: 194- 202
+
+  [2] A Rigorous Technique for Measuring the Scattering Matrix of 
+      a Multiport Device with a 2-Port Network Analyzer 
+      John C. TIPPET, Ross A. SPECIALE
+      Microwave Theory and Techniques, IEEE Transactions on, 
+      Vol.82, Iss.5, May 1982
+      Pages: 661- 666
+
+  [3] Comments on "A Rigorous Techique for Measuring the Scattering 
+      Matrix of a Multiport Device with a Two-Port Network Analyzer"
+      Dropkin, H.   
+      Microwave Theory and Techniques, IEEE Transactions on, 
+      Vol. 83, Iss.1, Jan 1983
+      Pages: 79 - 81 
+
+  [4] Arbitrary Impedance
+      "Accurate Measurements In Almost Any
+      Impedance Environment"
+      in Scropion Application note
+      Anritsu
+      online(2007/07/30) http://www.eu.anritsu.com/files/11410-00284B.pdf      
+
+  [5] Conversions between S, Z, Y, H, ABCD, and T parameters 
+      which are valid for complex source and load impedances
+      Frickey, D.A.   
+      Microwave Theory and Techniques, IEEE Transactions on 
+      Vol. 42, Iss. 2, Feb 1994
+      pages: 205 - 211 
+      doi: 10.1109/22.275248 
+
+  [6] Comments on "Conversions between S, Z, Y, h, ABCD, 
+      and T parameters which are valid for complex source and load impedances" [and reply]
+      Marks, R.B.; Williams, D.F.; Frickey, D.A. 
+      Microwave Theory and Techniques, IEEE Transactions on, 
+      Vol.43, Iss.4, Apr 1995
+      Pages: 914- 915
+      doi: 10.1109/22.375247 
+
+  [7] Wave Techniques for Noise Modeling and Measurement
+      S. W. Wedge and D. B. Rutledge, 
+      IEEE Transactions on Microwave Theory and Techniques, 
+      vol. 40, no. 11, Nov. 1992.
+      pages 2004-2012,
+      doi: 10.1109/22.168757
+      Author copy online (2007/07/31) 
+      http://authors.library.caltech.edu/6226/01/WEDieeetmtt92.pdf 
+
+*/
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -38,30 +95,49 @@
 #include "vector.h"
 #include "matrix.h"
 
-// Constructor creates an unnamed instance of the matrix class.
+/*!\brief Create an empty matrix
+
+   Constructor creates an unnamed instance of the matrix class.
+*/
 matrix::matrix () {
   rows = 0;
   cols = 0;
   data = NULL;
 }
 
-/* Constructor creates an unnamed instance of the matrix class with a
-   certain number of rows and columns.  Creates a square matrix.  */
+/*!\brief Creates a square matrix
+
+    Constructor creates an unnamed instance of the matrix class with a
+    certain number of rows and columns.  Particularly creates a square matrix.  
+    \param[in] s number of rows or colums of square matrix
+    \todo Why not s const?
+*/
 matrix::matrix (int s)  {
   rows = cols = s;
   data = (s > 0) ? new complex[s * s] : NULL;
 }
 
-/* Constructor creates an unnamed instance of the matrix class with a
-   certain number of rows and columns.  */
+/* \brief Creates a matrix
+
+   Constructor creates an unnamed instance of the matrix class with a
+   certain number of rows and columns.  
+   \param[in] r number of rows
+   \param[in] c number of column
+   \todo Why not r and c constant
+   \todo Assert r >= 0 and c >= 0
+*/
 matrix::matrix (int r, int c)  {
   rows = r;
   cols = c;
   data = (r > 0 && c > 0) ? new complex[r * c] : NULL;
 }
 
-/* The copy constructor creates a new instance based on the given
-   matrix object. */
+/* \brief copy constructor
+
+   The copy constructor creates a new instance based on the given
+   matrix object. 
+   \todo Add assert tests
+*/
 matrix::matrix (const matrix & m) {
   rows = m.rows;
   cols = m.cols;
@@ -74,13 +150,23 @@ matrix::matrix (const matrix & m) {
   }
 }
 
-/* The assignment copy constructor creates a new instance based on the
-   given matrix object. */
+/*!\brief Assignment operator
+    
+  The assignment copy constructor creates a new instance based on the
+  given matrix object. 
+  
+  \param[in] m object to copy
+  \return assigned object
+  \note m = m is safe
+*/
 const matrix& matrix::operator=(const matrix & m) {
   if (&m != this) {
     rows = m.rows;
     cols = m.cols;
-    if (data) { delete[] data; data = NULL; }
+    if (data) { 
+      delete[] data; 
+      data = NULL; 
+    }
     if (rows > 0 && cols > 0) {
       data = new complex[rows * cols];
       memcpy (data, m.data, sizeof (complex) * rows * cols);
@@ -89,23 +175,37 @@ const matrix& matrix::operator=(const matrix & m) {
   return *this;
 }
 
-// Destructor deletes a matrix object.
+/*!\bried Destructor
+  
+   Destructor deletes a matrix object.
+*/
 matrix::~matrix () {
   if (data) delete[] data;
 }
 
-// Returns the matrix element at the given row and column.
+/*!\brief  Returns the matrix element at the given row and column.
+   \param[in] r row number
+   \param[in] c column number
+   \todo Why not inline and synonymous of ()
+   \todo c and r const
+*/
 complex matrix::get (int r, int c) {
   return data[r * cols + c];
 }
 
-// Sets the matrix element at the given row and column.
+/*!\brief Sets the matrix element at the given row and column.
+   \param[in] r row number
+   \param[in] c column number
+   \param[in] z complex number to assign
+   \todo Why not inline and synonymous of ()
+   \todo r c and z const
+*/
 void matrix::set (int r, int c, complex z) {
   data[r * cols + c] = z;
 }
 
 #ifdef DEBUG
-// Debug function: Prints the matrix object.
+/*!\brief Debug function: Prints the matrix object */
 void matrix::print (void) {
   for (int r = 0; r < rows; r++) {
     for (int c = 0; c < cols; c++) {
@@ -117,9 +217,15 @@ void matrix::print (void) {
 }
 #endif /* DEBUG */
 
-// Matrix addition.
+/*!\brief Matrix addition.
+   \param[a] first matrix
+   \param[b] second matrix
+   \note assert same size
+   \todo a and b are const
+*/
 matrix operator + (matrix a, matrix b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
+
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -127,9 +233,14 @@ matrix operator + (matrix a, matrix b) {
   return res;
 }
 
-// Intrinsic matrix addition.
+/*!\brief Intrinsic matrix addition.
+   \param[in] a matrix to add
+   \note assert same size
+   \todo a is const
+*/
 matrix matrix::operator += (matrix a) {
   assert (a.getRows () == rows && a.getCols () == cols);
+
   int r, c, i;
   for (i = 0, r = 0; r < a.getRows (); r++)
     for (c = 0; c < a.getCols (); c++, i++)
@@ -137,9 +248,15 @@ matrix matrix::operator += (matrix a) {
   return *this;
 }
 
-// Matrix subtraction.
+/*!\brief Matrix subtraction.
+   \param[a] first matrix
+   \param[b] second matrix
+   \note assert same size
+   \todo a and b are const
+*/
 matrix operator - (matrix a, matrix b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
+
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -147,7 +264,7 @@ matrix operator - (matrix a, matrix b) {
   return res;
 }
 
-// Unary minus.
+/*!\brief Unary minus. */
 matrix matrix::operator - () {
   matrix res (getRows (), getCols ());
   int r, c, i;
@@ -157,7 +274,10 @@ matrix matrix::operator - () {
   return res;
 }
 
-// Intrinsic matrix subtraction.
+/*!\brief Intrinsic matrix subtraction.
+   \param[in] a matrix to substract
+   \note assert same size
+*/
 matrix matrix::operator -= (matrix a) {
   assert (a.getRows () == rows && a.getCols () == cols);
   int r, c, i;
@@ -167,7 +287,12 @@ matrix matrix::operator -= (matrix a) {
   return *this;
 }
 
-// Matrix scaling.
+/*!\brief Matrix scaling complex version
+   \param[in] a matrix to scale
+   \param[in] z scaling complex
+   \return Scaled matrix
+   \todo Why not a and z const
+*/
 matrix operator * (matrix a, complex z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -176,7 +301,23 @@ matrix operator * (matrix a, complex z) {
   return res;
 }
 
-// Matrix scaling.
+/*!\brief Matrix scaling complex version (different order)
+   \param[in] a matrix to scale
+   \param[in] z scaling complex
+   \return Scaled matrix
+   \todo Why not a and z const
+   \todo Why not inline
+*/
+matrix operator * (complex z, matrix a) {
+  return a * z;
+}
+
+/*!\brief Matrix scaling complex version
+   \param[in] a matrix to scale
+   \param[in] d scaling real
+   \return Scaled matrix
+   \todo Why not d and a const
+*/
 matrix operator * (matrix a, nr_double_t d) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -185,12 +326,23 @@ matrix operator * (matrix a, nr_double_t d) {
   return res;
 }
 
-// Matrix scaling in different order.
+/*!\brief Matrix scaling real version (different order)
+   \param[in] a matrix to scale
+   \param[in] d scaling real
+   \return Scaled matrix
+   \todo Why not inline?
+   \todo Why not d and a const
+*/
 matrix operator * (nr_double_t d, matrix a) {
   return a * d;
 }
 
-// Matrix scaling.
+/*!\brief Matrix scaling division by complex version
+   \param[in] a matrix to scale
+   \param[in] z scaling complex
+   \return Scaled matrix
+   \todo Why not a and z const
+*/
 matrix operator / (matrix a, complex z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -199,6 +351,12 @@ matrix operator / (matrix a, complex z) {
   return res;
 }
 
+/*!\brief Matrix scaling division by real version
+   \param[in] a matrix to scale
+   \param[in] d scaling real
+   \return Scaled matrix
+   \todo Why not a and d const
+*/
 matrix operator / (matrix a, nr_double_t d) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -207,14 +365,17 @@ matrix operator / (matrix a, nr_double_t d) {
   return res;
 }
 
-// Matrix scaling in different order.
-matrix operator * (complex z, matrix a) {
-  return a * z;
-}
-
-// Matrix multiplication.
+/*! Matrix multiplication.
+  
+    Dumb and not optimized matrix multiplication
+    \param[a] first matrix
+    \param[b] second matrix
+    \note assert compatibility
+    \todo a and b are const
+*/
 matrix operator * (matrix a, matrix b) {
   assert (a.getCols () == b.getRows ());
+
   int r, c, i, n = a.getCols ();
   complex z;
   matrix res (a.getRows (), b.getCols ());
@@ -227,7 +388,12 @@ matrix operator * (matrix a, matrix b) {
   return res;
 }
 
-// Complex scalar addition.
+/*!\brief Complex scalar addition.
+   \param[in] a matrix 
+   \param[in] z complex to add
+   \todo Move near other +
+   \todo a and z are const
+*/
 matrix operator + (matrix a, complex z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -236,7 +402,23 @@ matrix operator + (matrix a, complex z) {
   return res;
 }
 
-// Real scalar addition.
+/*!\brief Complex scalar addition different order.
+   \param[in] a matrix 
+   \param[in] z complex to add
+   \todo Move near other +
+   \todo a and z are const
+   \todo Why not inline
+*/
+matrix operator + (complex z, matrix a) {
+  return a + z;
+}
+
+/*!\brief Real scalar addition.
+   \param[in] a matrix 
+   \param[in] d real to add
+   \todo Move near other +
+   \todo a and d are const
+*/
 matrix operator + (matrix a, nr_double_t d) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -245,34 +427,66 @@ matrix operator + (matrix a, nr_double_t d) {
   return res;
 }
 
-// Scalar addition in different order.
-matrix operator + (complex z, matrix a) {
-  return a + z;
-}
-
+/*!\brief Real scalar addition different order.
+   \param[in] a matrix 
+   \param[in] d real to add
+   \todo Move near other +
+   \todo a and d are const
+   \todo Why not inline
+*/
 matrix operator + (nr_double_t d, matrix a) {
   return a + d;
 }
 
-// Scalar subtraction.
+/*!\brief Complex scalar substraction
+   \param[in] a matrix 
+   \param[in] z complex to add
+   \todo Move near other +
+   \todo a and z are const
+   \todo Why not inline
+*/
 matrix operator - (matrix a, complex z) {
   return -z + a;
 }
 
-matrix operator - (matrix a, nr_double_t d) {
-  return -d + a;
-}
-
-// Scalar subtraction in different order.
+/*!\brief Complex scalar substraction different order
+   \param[in] a matrix 
+   \param[in] z complex to add
+   \todo Move near other +
+   \todo a and z are const
+   \todo Why not inline
+*/
 matrix operator - (complex z, matrix a) {
   return -a + z;
 }
 
+/*!\brief Real scalar substraction
+   \param[in] a matrix 
+   \param[in] z real to add
+   \todo Move near other +
+   \todo a and z are const
+   \todo Why not inline
+*/
+matrix operator - (matrix a, nr_double_t d) {
+  return -d + a;
+}
+
+/*!\brief Real scalar substraction different order
+   \param[in] a matrix 
+   \param[in] z real to add
+   \todo Move near other +
+   \todo a and z are const
+   \todo Why not inline
+*/
 matrix operator - (nr_double_t d, matrix a) {
   return -a + d;
 }
 
-// Transpose the matrix.
+/*!\brief Matrix transposition
+   \param[in] a Matrix to transpose
+   \todo add transpose in place
+   \todo a is const
+*/
 matrix transpose (matrix a) {
   matrix res (a.getCols (), a.getRows ());
   for (int r = 0; r < a.getRows (); r++)
@@ -281,7 +495,11 @@ matrix transpose (matrix a) {
   return res;
 }
 
-// Conjugate complex matrix.
+/*!\brief Conjugate complex matrix.
+  \param[in] a Matrix to conjugate
+  \todo add conj in place
+  \todo a is const
+*/
 matrix conj (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -290,7 +508,24 @@ matrix conj (matrix a) {
   return res;
 }
 
-// Computes magnitude of each matrix element.
+/*!\brief adjoint matrix
+   
+   The function returns the adjoint complex matrix.  This is also
+   called the adjugate or transpose conjugate. 
+   \param[in] a Matrix to transpose
+   \todo add adjoint in place
+   \todo Do not lazy and avoid conj and transpose copy
+   \todo a is const
+*/
+matrix adjoint (matrix a) {
+  return transpose (conj (a));
+}
+
+/*!\brief Computes magnitude of each matrix element.
+   \param[in] a matrix
+   \todo add abs in place
+   \todo a is const
+*/
 matrix abs (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -299,7 +534,11 @@ matrix abs (matrix a) {
   return res;
 }
 
-// Computes the argument of each matrix element.
+/*!\brief Computes the argument of each matrix element.
+   \param[in] a matrix
+   \todo add arg in place
+   \todo a is const
+*/
 matrix arg (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -308,7 +547,11 @@ matrix arg (matrix a) {
   return res;
 }
 
-// Real part matrix.
+/*!\brief Real part matrix.
+   \param[in] a matrix
+   \todo add real in place
+   \todo a is const
+*/
 matrix real (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -317,7 +560,11 @@ matrix real (matrix a) {
   return res;
 }
 
-// Imaginary part matrix.
+/*!\brief Imaginary part matrix.
+   \param[in] a matrix
+   \todo add imag in place
+   \todo a is const
+*/
 matrix imag (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
@@ -326,13 +573,13 @@ matrix imag (matrix a) {
   return res;
 }
 
-/* The function returns the adjoint complex matrix.  This is also
-   called the adjugate or transpose conjugate. */
-matrix adjoint (matrix a) {
-  return transpose (conj (a));
-}
-
-// Create identity matrix with specified number of rows and columns.
+/*!\brief Create identity matrix with specified number of rows and columns.
+   \param[in] rs row number
+   \param[in] cs column number
+   \todo Avoid res.get* 
+   \todo Use memset
+   \todo rs, cs are const
+*/
 matrix eye (int rs, int cs) {
   matrix res (rs, cs);
   for (int r = 0; r < res.getRows (); r++)
@@ -341,12 +588,19 @@ matrix eye (int rs, int cs) {
   return res;
 }
 
-// Create a square identity matrix.
+/*!\brief Create a square identity matrix
+   \param[in] s row or column number of square matrix
+   \todo Do not by lazy and implement it
+   \todo s is const
+*/
 matrix eye (int s) {
   return eye (s, s);
 }
 
-// Create a square matrix with main diagonal entries only.
+/*!\brief Create a diagonal matrix from a vector
+   \param[in] diag vector to write on the diagonal
+   \todo diag is const
+*/
 matrix diagonal (vector diag) {
   int size = diag.getSize ();
   matrix res (size);
@@ -354,8 +608,18 @@ matrix diagonal (vector diag) {
   return res;
 }
 
-/* Computes the cofactor of the given determinant (in matrix
-   representation) for the given row and column. */
+/*!\brief Computes the complex cofactor of the given determinant 
+
+   The cofactor is the determinant obtained by deleting the row and column 
+   of a given element of a matrix or determinant. 
+   The cofactor is preceded by a + or - sign depending of the sign 
+   of \f$(-1)^(u+v)\f$ 
+
+   \bug This algortihm is recursive! Stack overfull!
+   \todo ((u + v) & 1) is cryptic use (u + v)% 2 
+   \todo #ifdef 0
+   \todo static?
+*/
 complex cofactor (matrix a, int u, int v) {
   matrix res (a.getRows () - 1, a.getCols () - 1);
   int r, c, ra, ca;
@@ -370,7 +634,21 @@ complex cofactor (matrix a, int u, int v) {
   return ((u + v) & 1) ? -z : z;
 }
 
-// Compute determinant of the given matrix using Laplace expansion.
+/*!\brief Compute determinant of the given matrix using Laplace expansion.
+
+   The Laplace expansion  of the determinant of
+   an n by n square matrix a expresses
+   the determinant of a as a sum of n determinants of (n-1) by  (n-1)
+   sub-matrices of a.  There are 2n such expressions, one for each row
+   and column of a. 
+
+   See Wikipedia http://en.wikipedia.org/wiki/Laplace_expansion
+   \param[in] a matrix
+   \bug This algortihm is recursive! Stack overfull!
+   \note assert square matrix
+   \todo #ifdef 0
+   \todo static ?
+*/
 complex detLaplace (matrix a) {
   assert (a.getRows () == a.getCols ());
   int s = a.getRows ();
@@ -384,15 +662,24 @@ complex detLaplace (matrix a) {
     }
     return res;
   }
+  /* 1 by 1 matrix */
   else if (s == 1) {
     return a (0, 0);
   }
+  /* 0 by 0 matrix */
   return 1;
 }
 
-/* Compute determinant of the given matrix using the Gaussian
+/*!\brief Compute determinant Gaussian algorithm
+
+   Compute determinant of the given matrix using the Gaussian
    algorithm.  This means to triangulate the matrix and multiply all
-   the diagonal elements. */
+   the diagonal elements. 
+   \param[in] a matrix
+   \note assert square matrix
+   \todo static ?
+   \todo a const?
+   */
 complex detGauss (matrix a) {
   assert (a.getRows () == a.getCols ());
   nr_double_t MaxPivot;
@@ -433,7 +720,11 @@ complex detGauss (matrix a) {
   return res;
 }
 
-// Compute determinant of the given matrix.
+/*!\brief Compute determinant of the given matrix.
+   \param[in] a matrix 
+   \return Complex determinant
+   \todo a const?
+*/
 complex det (matrix a) {
 #if 0
   return detLaplace (a);
@@ -442,7 +733,15 @@ complex det (matrix a) {
 #endif
 }
 
-// Compute inverse matrix of the given matrix using Laplace expansion.
+/*!\brief Compute inverse matrix using Laplace expansion
+
+  Compute inverse matrix of the given matrix using Laplace expansion.
+  \param[in] a matrix to invert
+  \todo Static?
+  \bug recursive! Stack overflow
+  \todo a const?
+  \todo #ifdef 0
+*/
 matrix inverseLaplace (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   complex d = detLaplace (a);
@@ -453,8 +752,15 @@ matrix inverseLaplace (matrix a) {
   return res;
 }
 
-/* Compute inverse matrix of the given matrix by Gauss-Jordan
-   elimination. */
+/*!\brief Compute inverse matrix using Gauss-Jordan elimination
+   
+   Compute inverse matrix of the given matrix by Gauss-Jordan
+   elimination. 
+   \todo a const?
+   \todo static?
+   \note assert non singulat matix
+   \param[in] a matrix to invert
+*/
 matrix inverseGaussJordan (matrix a) {
   nr_double_t MaxPivot;
   complex f;
@@ -500,7 +806,10 @@ matrix inverseGaussJordan (matrix a) {
   return e;
 }
 
-// Compute inverse matrix of the given matrix.
+/*!\brief Compute inverse matrix 
+   \param[in] a matrix to invert
+   \todo a is const
+*/
 matrix inverse (matrix a) {
 #if 0
   return inverseLaplace (a);
@@ -509,107 +818,335 @@ matrix inverse (matrix a) {
 #endif
 }
 
-/* Convert scattering parameters with the reference impedance 'zref'
-   to scattering parameters with the reference impedance 'z0'. */
+/*!\brief S params to S params
+
+  Convert scattering parameters with the reference impedance 'zref'
+  to scattering parameters with the reference impedance 'z0'. 
+
+  Detail are given in [1], under equation (32)
+  
+  New scatering matrix \f$S'\f$ is:
+  \f[
+  S'=A^{-1}(S-\Gamma^+)(I-\Gamma S)^{-1}A^+
+  \f]
+  Where x^+ is the adjoint (or complex tranposate) of x,
+  I the identity matrix and \f$A\f$ is diagonal the matrix such as:
+  \f$   \Gamma_i= r_i \f$ and \f$A\f$ the diagonal matrix such
+  as:
+  \f[
+  A_i =  \frac{(1-r_i^*)\sqrt{|1-r_ir_i^*|}}{|1-r_i|}
+  \f]
+  Where \f$x*\f$ is the complex conjugate of \f$x\f$ 
+  and \f$r_i\f$ is wave reflexion coefficient of \f$Z_i'\f$ with respect 
+  to \f$Z_i^*\f$ (where \f$Z_i'\f$ is the new impedance and 
+  \f$Z_i\f$ is the old impedance), ie:
+  \f[
+  r_i = \frac{Z_i'-Z_i}{Z_i'-Z_i^*}
+  \f]
+  
+  \param[in] s original S matrix
+  \param[in] zref original reference impedance
+  \param[in] z0 new reference impedance
+  \bug This formula is valid only for real z!
+  \todo Correct documentation about standing waves [1-4]
+  \todo Implement Speciale implementation [2-3] if applicable
+  \return Renormalized scattering matrix
+  \todo s, zref and z0 const
+*/
 matrix stos (matrix s, vector zref, vector z0) {
   int d = s.getRows ();
-  assert (d == s.getCols () && d == z0.getSize () && d == zref.getSize ());
   matrix e, r, a;
+
+  assert (d == s.getCols () && d == z0.getSize () && d == zref.getSize ());
+
   e = eye (d);
   r = diagonal ((z0 - zref) / (z0 + zref));
   a = diagonal (sqrt (z0 / zref) / (z0 + zref));
   return inverse (a) * (s - r) * inverse (e - r * s) * a;
 }
 
+/*!\brief S renormalization with all part identic 
+   \param[in] s original S matrix
+   \param[in] zref original reference impedance
+   \param[in] z0 new reference impedance
+   \todo Why not inline
+   \return Renormalized scattering matrix
+   \todo s, zref and z0 const
+*/
 matrix stos (matrix s, complex zref, complex z0) {
   int d = s.getRows ();
   return stos (s, vector (d, zref), vector (d, z0));
 }
 
+/*!\brief S renormalization with all part identic and real
+  \param[in] s original S matrix
+  \param[in] zref original reference impedance
+  \param[in] z0 new reference impedance
+  \todo Why not inline
+  \return Renormalized scattering matrix
+  \todo s, zref and z0 const
+*/ 
 matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
   return stos (s, rect (zref, 0), rect (z0, 0));
 }
 
+/*!\brief S renormalization (variation)
+   \param[in] s original S matrix
+   \param[in] zref original reference impedance
+   \param[in] z0 new reference impedance
+   \todo Why not inline
+   \return Renormalized scattering matrix
+   \todo s, zref and z0 const
+*/ 
 matrix stos (matrix s, vector zref, complex z0) {
   return stos (s, zref, vector (zref.getSize (), z0));
 }
 
+/*!\brief S renormalization (variation)
+  \param[in] s original S matrix
+  \param[in] zref original reference impedance
+  \param[in] z0 new reference impedance
+  \todo Why not inline
+  \todo s, zref and z0 const
+  \return Renormalized scattering matrix
+*/ 
 matrix stos (matrix s, complex zref, vector z0) {
   return stos (s, vector (z0.getSize (), zref), z0);
 }
 
-// Convert scattering parameters to impedance matrix.
+/*!\brief Scattering parameters to impedance matrix
+  
+  Convert scattering parameters to impedance matrix. 
+  According to [1] eq (19):
+  \f[
+  Z=F^{-1} (I- S)^{-1} (SG + G^+) F
+  \f]
+  Where \f$S\f$ is the scattering matrix, \f$x^+\f$
+  is the adjoint of x, I the identity matrix. The matrix 
+  F and G are diagonal matrix defined by:
+  \f{align*}
+  F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
+  G_i&=Z_i
+  \f}
+  \param[in] s Scattering matrix
+  \param[in] z0 Normalisation impedance
+  \bug not correct lack of 1/2 factor!
+  \bug not correct if zref is complex
+  \todo s, z0 const
+  \return Impedance matrix
+*/  
 matrix stoz (matrix s, vector z0) {
   int d = s.getRows ();
-  assert (d == s.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
+
+  assert (d == s.getCols () && d == z0.getSize ());
+
   e = eye (d);
   zref = diagonal (z0);
   gref = diagonal (sqrt (real (1 / z0)));
   return inverse (gref) * inverse (e - s) * (s * zref + zref) * gref;
 }
 
+/*!\brief Scattering parameters to impedance matrix identic case
+   \param[in] s Scattering matrix
+   \param[in] z0 Normalisation impedance
+   \return Impedance matrix
+   \todo Why not inline?
+   \todo s and z0 const?
+*/
 matrix stoz (matrix s, complex z0) {
   return stoz (s, vector (s.getRows (), z0));
 }
 
-// Convert impedance matrix scattering parameters.
+/*!\brief Convert impedance matrix scattering parameters.
+
+   Convert scattering parameters to impedance matrix. 
+   According to [1] eq (18):
+  \f[
+  S=F(Z-G^+)(Z+G)^{-1} F^{-1}
+  \f]
+  Where \f$Z\f$ is the scattering matrix, \f$x^+\f$
+  is the adjoint of x, I the identity matrix. The matrix 
+  F and G are diagonal matrix defined by:
+  \f{align*}
+  F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
+  G_i&=Z_i
+  \f}
+  \param[in] Z Impedance matrix
+  \param[in] z0 Normalisation impedance
+  \return Scattering matrix
+  \bug not correct lack of 1/2 factor!
+  \bug not correct if zref is complex
+  \todo z and z0 const?
+*/
 matrix ztos (matrix z, vector z0) {
   int d = z.getRows ();
-  assert (d == z.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
+
+  assert (d == z.getCols () && d == z0.getSize ());
+
   e = eye (d);
   zref = diagonal (z0);
   gref = diagonal (sqrt (real (1 / z0)));
   return gref * (z - zref) * inverse (z + zref) * inverse (gref);
 }
 
+/*!\brief Convert impedance matrix to scattering parameters identic case
+   \param[in] Z Impedance matrix
+   \param[in] z0 Normalisation impedance
+   \return Scattering matrix
+   \todo Why not inline
+   \todo z and z0 const
+ */
 matrix ztos (matrix z, complex z0) {
   return ztos (z, vector (z.getRows (), z0));
 }
 
-// Convert impedance matrix to admittance matrix.
+/*!\brief impedance matrix to admittance matrix.
+
+   Convert impedance matrix to admittance matrix. By definition
+   \f$Y=Z^{-1}\f$
+   \param[in] z impedance matrix
+   \return Admittance matrix
+   \todo Why not inline
+   \todo z const
+*/
 matrix ztoy (matrix z) {
   assert (z.getRows () == z.getCols ());
   return inverse (z);
 }
 
-// Convert scattering parameters to admittance matrix.
+/*!\brief Scattering parameters to admittance matrix.
+
+    Convert scattering parameters to admittance matrix. 
+    According to [1] eq (19):
+    \f[
+    Z=F^{-1} (I- S)^{-1} (SG + G^+) F
+    \f]
+    Where \f$S\f$ is the scattering matrix, \f$x^+\f$
+    is the adjoint of x, I the identity matrix. The matrix 
+    F and G are diagonal matrix defined by:
+    \f{align*}
+    F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
+    G_i&=Z_i
+    \f}
+    Using the well know formula \f$(AB)^{-1}=B^{1}A^{1}\f$,
+    we derivate:
+    \f[
+    Y=F^{-1} (SG+G^+)^{-1} (I-S) F
+    \f]
+    \param[in] s Scattering matrix
+    \param[in] z0 Normalisation impedance
+    \bug not correct lack of 1/2 factor!
+    \bug not correct if zref is complex
+    \todo s and z0 const
+    \return Admittance matrix
+*/
 matrix stoy (matrix s, vector z0) {
   int d = s.getRows ();
-  assert (d == s.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
+
+  assert (d == s.getCols () && d == z0.getSize ());
+
   e = eye (d);
   zref = diagonal (z0);
   gref = diagonal (sqrt (real (1 / z0)));
   return inverse (gref) * inverse (s * zref + zref) * (e - s) * gref;
 }
 
+/*!\brief Convert scattering pto adminttance parameters identic case
+   \param[in] S Scattering matrix
+   \param[in] z0 Normalisation impedance
+   \return Admittance matrix
+   \todo Why not inline
+   \todo s and z0 const
+ */
 matrix stoy (matrix s, complex z0) {
   return stoy (s, vector (s.getRows (), z0));
 }
 
-// Convert admittance matrix to scattering parameters.
+/*!\brief Admittance matrix to scattering parameters
+
+   Convert admittance matrix to scattering parameters. 
+   Using the same methodology as [1] eq (16-19), but writing
+   (16) as \f$i=Yv\f$, ie
+   \f[
+   S=F(I-G^+Y)(I-GY)^{-1}F^{-1}
+   \f]
+   Where \f$S\f$ is the scattering matrix, \f$x^+\f$
+   is the adjoint of x, I the identity matrix. The matrix 
+   F and G are diagonal matrix defined by:
+   \f{align*}
+   F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
+   G_i&=Z_i
+   \f}
+   Using the well know formula \f$(AB)^{-1}=B^{1}A^{1}\f$,
+   we derivate:
+   \f[
+   Y=F^{-1} (SG+G^+)^{-1} (I-S) F
+   \f]
+   \param[in] y admittance matrix
+   \param[in] z0 Normalisation impedance
+   \bug not correct lack of 1/2 factor!
+   \bug not correct if zref is complex
+   \todo why not y and z0 const
+   \return Scattering matrix
+*/
 matrix ytos (matrix y, vector z0) {
   int d = y.getRows ();
-  assert (d == y.getCols () && d == z0.getSize ());
   matrix e, zref, gref;
+
+  assert (d == y.getCols () && d == z0.getSize ());
+  
   e = eye (d);
   zref = diagonal (z0);
   gref = diagonal (sqrt (real (1 / z0)));
   return gref * (e - zref * y) * inverse (e + zref * y) * inverse (gref);
 }
-
+/*!\brief Convert Admittance matrix to scattering parameters identic case
+   \param[in] y Admittance matrix
+   \param[in] z0 Normalisation impedance
+   \return Scattering matrix
+   \todo Why not inline
+   \todo y and z0 const
+ */
 matrix ytos (matrix y, complex z0) {
   return ytos (y, vector (y.getRows (), z0));
 }
+/*!\brief Converts chain matrix to scattering parameters.
 
-// Converts scattering parameters to chain matrix.
+    Converts scattering parameters to chain matrix.
+    Formulae are given by [5] tab 1. and are remembered here:
+    
+    \f{align*}
+    A&=\frac{(Z_{01}^*+S_{11}Z_{01})(1-S_{22})
+                 +S_{12}S_{21}Z_{01}}{\Delta} \\
+    B&=\frac{(Z_{01}^*+S_{11}Z_{01})(Z_{02}^*+S_{22}Z_{02})
+                 -S_{12}S_{21}Z_{01}Z_{02}}{\Delta} \\
+    C&=\frac{(1-S_{11})(1-S_{22})
+                 -S_{12}S_{21}}{\Delta} \\
+    D&=\frac{(1-S_{11})(Z_{02}^*+S_{22}Z_{02})
+                 +S_{12}S_{21}Z_{02}}{\Delta} 
+    \f}
+    Where:
+    \f[
+    \Delta = 2 S_{21}\sqrt{\Re\text{e}\;Z_{01}\Re\text{e}\;Z_{02}}
+    \f]
+    \bug Do not need fabs
+    \param[in] s Scattering matrix
+    \param[in] z1 impedance at input 1
+    \param[in] z2 impedance at input 2
+    \return Chain matrix
+    \note Assert 2 by 2 matrix
+    \todo Why not s,z1,z2 const
+*/
 matrix stoa (matrix s, complex z1, complex z2) {
-  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex d = s (0, 0) * s (1, 1) - s (0, 1) * s (1, 0);
   complex n = 2.0 * s (1, 0) * sqrt (fabs (real (z1) * real (z2)));
   matrix a (2);
+
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
+
   a.set (0, 0, (conj (z1) + z1 * s (0, 0) - 
 		conj (z1) * s (1, 1) - z1 * d) / n);
   a.set (0, 1, (conj (z1) * conj (z2) + z1 * conj (z2) * s (0, 0) +
@@ -620,15 +1157,40 @@ matrix stoa (matrix s, complex z1, complex z2) {
   return a;
 }
 
-// Converts chain matrix to scattering parameters.
+
+/*!\brief Converts chain matrix to scattering parameters.
+
+    Converts chain matrix to scattering parameters
+    Formulae are given by [5] and are remembered here:
+    \f{align*}
+    S_{11}&=\frac{AZ_{02}+B-CZ_{01}^*Z_{02}-DZ_{01}^*}{\Delta} \\
+    S_{12}&=\frac{2(AD-BC)
+                  (\Re\text{e}\;Z_{01}\Re\text{e}\;Z_{02})^{1/2}}
+                {\Delta}\\
+    S_{21}&=\frac{2(\Re\text{e}\;Z_{01}\Re\text{e}\;Z_{02})^{1/2}}{\Delta}\\
+    S_{22}&=\frac{-AZ_{02}^*+B-CZ_{01}^*Z_{02}+DZ_{01}}{\Delta} 
+    \f}
+    Where:
+    \f[
+    \Delta =AZ_{02}+B+CZ_{01}Z_{02}-DZ_{01}
+    \f]
+    \param[in] a Chain matrix
+    \param[in] z1 impedance at input 1
+    \param[in] z2 impedance at input 2
+    \return Scattering matrix
+    \bug Do not use fabs
+    \todo a, z1, z2 const
+*/
 matrix atos (matrix a, complex z1, complex z2) {
-  assert (a.getRows () >= 2 && a.getCols () >= 2);
   complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
   complex n = a (0, 0) * z2 + a (0, 1) + 
     a (1, 0) * z1 * z2 + a (1, 1) * z1;
   matrix s (2);
-  s.set (0, 0, (a (0, 0) * z2 + a (0, 1) - a (1, 0) * 
-		conj (z1) * z2 - a (1, 1) * conj (z1)) / n);
+
+  assert (a.getRows () >= 2 && a.getCols () >= 2);
+
+  s.set (0, 0, (a (0, 0) * z2 + a (0, 1) 
+                - a (1, 0) * conj (z1) * z2 - a (1, 1) * conj (z1)) / n);
   s.set (0, 1, (a (0, 0) * a (1, 1) - 
 		a (0, 1) * a (1, 0)) * d / n);
   s.set (1, 0, d / n);
@@ -637,12 +1199,42 @@ matrix atos (matrix a, complex z1, complex z2) {
   return s;
 }
 
-// Converts scattering parameters to hybrid matrix.
+/*!\brief Converts scattering parameters to hybrid matrix.
+
+    Converts chain matrix to scattering parameters
+    Formulae are given by [5] and are remembered here:
+    \f{align*}
+    h_{11}&=\frac{(Z_{01}^*+S_{11}Z_{01})
+                  (Z_{02}^*+S_{22}Z_{02})
+		  -S_{12}S_{21}Z_{01}Z_{02}}{\Delta}\\
+    h_{12}&=\frac{2S_{12}
+                  (\Re\text{e}\;Z_{01} \Re\text{e}\;Z_{02})^\frac{1}{2}}
+                 {\Delta} \\
+    h_{21}&=\frac{-2S_{21}
+                  (\Re\text{e}\;Z_{01} \Re\text{e}\;Z_{02})^\frac{1}{2}}
+                 {\Delta} \\
+    
+    h_{22}&=\frac{(1-S_{11})(1-S_{22})-S_{12}S_{21}}{\Delta}
+    \f}
+    Where \f$\Delta\f$ is:
+    \f[
+    \Delta=(1-S_{11})(Z_{02}^*+S_{22}Z_{02})+S_{12}S_{21}Z_{02}
+    \f]
+    \bug{Programmed formulae are valid only for Z real}
+    \param[in] s Scattering matrix
+    \param[in] z1 impedance at input 1
+    \param[in] z2 impedance at input 2
+    \return hybrid matrix
+    \note Assert 2 by 2 matrix
+    \todo Why not s,z1,z2 const
+ */
 matrix stoh (matrix s, complex z1, complex z2) {
-  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 - s (0, 0)) * (1.0 + s (1, 1)) + n;
   matrix h (2);
+
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
+
   h.set (0, 0, ((1.0 + s (0, 0)) * (1.0 + s (1, 1)) - n) * z1 / d);
   h.set (0, 1, +2.0 * s (0, 1) / d);
   h.set (1, 0, -2.0 * s (1, 0) / d);
@@ -650,12 +1242,37 @@ matrix stoh (matrix s, complex z1, complex z2) {
   return h;
 }
 
-// Converts hybrid matrix to scattering parameters.
+/*!\brief Converts hybrid matrix to scattering parameters.
+
+    Formulae are given by [5] and are remembered here:
+    \f{align*}
+    S_{11}&=\frac{(h_{11}-Z_{01}^*)(1+h_{22}Z_{02})-h_{12}h_{21}Z_{02}} 
+                 {\Delta}\\
+    S_{12}&=\frac{-2h_{12}(\Re\text{e}\;Z_{01}\Re\text{e}\;Z_{02})^\frac{1}{2}}
+                 {\Delta}\\
+    S_{21}&=\frac{-2h_{21}(\Re\text{e}\;Z_{01}\Re\text{e}\;Z_{02})^\frac{1}{2}}
+                 {\Delta}\\
+    S_{22}&=\frac{(h_{11}+Z_{01})(1-h_{22}Z_{02}^*)-h_{12}h_{21}Z_{02}^*} 
+                 {\Delta}		 
+   \f}
+   Where \f$\Delta\f$ is:
+   \f[
+   \Delta=(Z_{01}+h_{11})(1+h_{22}Z_{02})-h_{12}h_{21}Z_{02}
+   \f]
+   \param[in] h hybrid matrix
+   \param[in] z1 impedance at input 1
+   \param[in] z2 impedance at input 2
+   \return scattering matrix
+   \note Assert 2 by 2 matrix
+   \todo Why not h,z1,z2 const
+*/
 matrix htos (matrix h, complex z1, complex z2) {
-  assert (h.getRows () >= 2 && h.getCols () >= 2);
   complex n = h (0, 1) * h (1, 0);
   complex d = (1.0 + h (0, 0) / z1) * (1.0 + z2 * h (1, 1)) - n;
   matrix s (2);
+
+  assert (h.getRows () >= 2 && h.getCols () >= 2);
+
   s.set (0, 0, ((h (0, 0) / z1 - 1) * (1 + z2 * h (1, 1)) - n) / d);
   s.set (0, 1, +2.0 * h (0, 1) / d);
   s.set (1, 0, -2.0 * h (1, 0) / d);
@@ -663,12 +1280,23 @@ matrix htos (matrix h, complex z1, complex z2) {
   return s;
 }
 
-// Converts scattering parameters to second hybrid matrix.
+/*\brief Converts scattering parameters to second hybrid matrix.
+  \bug{Programmed formulae are valid only for Z real}
+  \bug{Not documented and references}
+  \param[in] s Scattering matrix
+  \param[in] z1 impedance at input 1
+  \param[in] z2 impedance at input 2
+  \return second hybrid matrix
+  \note Assert 2 by 2 matrix
+  \todo Why not s,z1,z2 const
+*/
 matrix stog (matrix s, complex z1, complex z2) {
-  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 + s (0, 0)) * (1.0 - s (1, 1)) + n;
   matrix g (2);
+
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
+
   g.set (0, 0, ((1.0 - s (0, 0)) * (1.0 - s (1, 1)) - n) / z1 / d);
   g.set (0, 1, -2.0 * s (0, 1) / d);
   g.set (1, 0, +2.0 * s (1, 0) / d);
@@ -676,12 +1304,23 @@ matrix stog (matrix s, complex z1, complex z2) {
   return g;
 }
 
-// Converts second hybrid matrix to scattering parameters.
+/*\brief Converts second hybrid matrix to scattering parameters.
+  \bug{Programmed formulae are valid only for Z real}
+  \bug{Not documented and references}
+  \param[in] g second hybrid matrix
+  \param[in] z1 impedance at input 1
+  \param[in] z2 impedance at input 2
+  \return scattering matrix
+  \note Assert 2 by 2 matrix
+  \todo Why not g,z1,z2 const
+*/
 matrix gtos (matrix g, complex z1, complex z2) {
-  assert (g.getRows () >= 2 && g.getCols () >= 2);
   complex n = g (0, 1) * g (1, 0);
   complex d = (1.0 + g (0, 0) * z1) * (1.0 + g (1, 1) / z2) - n;
   matrix s (2);
+
+  assert (g.getRows () >= 2 && g.getCols () >= 2);
+
   s.set (0, 0, ((1 - g (0, 0) * z1) * (1 + g (1, 1) / z2) + n) / d);
   s.set (0, 1, -2.0 * g (0, 1) / d);
   s.set (1, 0, +2.0 * g (1, 0) / d);
@@ -689,57 +1328,120 @@ matrix gtos (matrix g, complex z1, complex z2) {
   return s;
 }
 
-// Convert admittance matrix to impedance matrix.
+/*!\brief Convert admittance matrix to impedance matrix.
+    
+  Convert \f$Y\f$ matrix to \f$Z\f$ matrix using well known relation
+  \f$Z=Y^{-1}\f$
+  \param[in] y admittance matrix
+  \return Impedance matrix
+  \note Check if y matrix is a square matrix
+  \todo Why not inline
+  \todo y const
+  \todo move near ztoy()
+*/
 matrix ytoz (matrix y) {
   assert (y.getRows () == y.getCols ());
   return inverse (y);
 }
 
-/* Converts admittance noise correlation matrix to S-parameter noise
-   correlation matrix. */
+/*!\brief Admittance noise correlation matrix to S-parameter noise
+   correlation matrix
+
+   Converts admittance noise correlation matrix to S-parameter noise
+   correlation matrix. According to [7] fig 2:
+   \f[
+   C_s=\frac{1}{4}(I+S)C_y(I+S)^+
+   \f]
+   Where \f$C_s\f$ is the scattering noise correlation matrix,
+   \f$C_y\f$ the admittance noise correlation matrix, \f$I\f$
+    the identity matrix and \f$S\f$ the scattering matrix 
+    of device. \f$x^+\f$ is the adjoint of \f$x\f$
+   \warning cy matrix and s matrix are assumed to be normalized
+   \param[in] cy Admittance noise correlation
+   \param[in] s S parameter matrix of device
+   \return S-parameter noise correlation matrix
+   \note Assert compatiblity of matrix
+   \todo cy s const
+*/
 matrix cytocs (matrix cy, matrix s) {
+  matrix e = eye (s.getRows ());
+
   assert (cy.getRows () == cy.getCols () && s.getRows () == s.getCols () &&
 	  cy.getRows () == s.getRows ());
-  matrix e = eye (s.getRows ());
+
   return (e + s) * cy * adjoint (e + s) / 4;
 }
 
-/* Converts impedance noise correlation matrix to S-parameter noise
-   correlation matrix. */
-matrix cztocs (matrix cz, matrix s) {
-  assert (cz.getRows () == cz.getCols () && s.getRows () == s.getCols () &&
-	  cz.getRows () == s.getRows ());
-  matrix e = eye (s.getRows ());
-  return (e - s) * cz * adjoint (e - s) / 4;
-}
+/*!\brief Converts S-parameter noise correlation matrix to admittance noise
+    correlation matrix.  
 
-/* Converts impedance noise correlation matrix to admittance noise
-   correlation matrix.  Both matrices are assumed to be normalized. */
-matrix cztocy (matrix cz, matrix y) {
-  assert (cz.getRows () == cz.getCols () && y.getRows () == y.getCols () &&
-	  cz.getRows () == y.getRows ());
-  return y * cz * adjoint (y);
-}
-
-/* Converts S-parameter noise correlation matrix to admittance noise
-   correlation matrix.  Both matrices are assumed to be normalized. */
+    According to [7] fig 2:
+    \f[
+    C_y=(I+Y)C_s(I+Y)^+
+    \f]
+    Where \f$C_s\f$ is the scattering noise correlation matrix,
+    \f$C_y\f$ the admittance noise correlation matrix, \f$I\f$
+    the identity matrix and \f$S\f$ the scattering matrix 
+    of device. \f$x^+\f$ is the adjoint of \f$x\f$
+    \warning cs matrix and y matrix are assumed to be normalized
+    \param[in]  cs S parameter noise correlation
+    \param[in] y Admittance matrix of device
+    \return admittance noise correlation matrix
+    \todo cs, y const
+*/
 matrix cstocy (matrix cs, matrix y) {
+  matrix e = eye (y.getRows ());
+  
   assert (cs.getRows () == cs.getCols () && y.getRows () == y.getCols () &&
 	  cs.getRows () == y.getRows ());
-  matrix e = eye (y.getRows ());
+  
   return (e + y) * cs * adjoint (e + y);
 }
 
-/* Converts admittance noise correlation matrix to impedance noise
-   correlation matrix.  Both matrices are assumed to be normalized. */
-matrix cytocz (matrix cy, matrix z) {
-  assert (cy.getRows () == cy.getCols () && z.getRows () == z.getCols () &&
-	  cy.getRows () == z.getRows ());
-  return z * cy * adjoint (z);
+/*!\brief Converts impedance noise correlation matrix to S-parameter noise
+   correlation matrix. 
+
+   According to [7] fig 2:
+   \f[
+   C_s=\frac{1}{4}(I-S)C_z(I-S)
+   \f]
+   Where \f$C_s\f$ is the scattering noise correlation matrix,
+   \f$C_z\f$ the impedance noise correlation matrix, \f$I\f$
+    the identity matrix and \f$S\f$ the scattering matrix 
+    of device. \f$x^+\f$ is the adjoint of \f$x\f$
+   \warning Cz matrix and s matrix are assumed to be normalized
+   \param[in] cz Impedance noise correlation
+   \param[in] s S parameter matrix of device
+   \return S-parameter noise correlation matrix
+   \note Assert compatiblity of matrix
+   \todo cz, s const
+*/
+matrix cztocs (matrix cz, matrix s) {
+  matrix e = eye (s.getRows ());
+
+  assert (cz.getRows () == cz.getCols () && s.getRows () == s.getCols () &&
+	  cz.getRows () == s.getRows ());
+
+  return (e - s) * cz * adjoint (e - s) / 4;
 }
 
-/* Converts S-parameter noise correlation matrix to impedance noise
-   correlation matrix.  Both matrices are assumed to be normalized. */
+/*!\brief Converts S-parameter noise correlation matrix to impedance noise
+    correlation matrix.  
+
+    According to [7] fig 2:
+    \f[
+    C_z=(I+Z)C_s(I+Z)^+
+    \f]
+    Where \f$C_s\f$ is the scattering noise correlation matrix,
+    \f$C_z\f$ the impedance noise correlation matrix, \f$I\f$
+    the identity matrix and \f$S\f$ the scattering matrix 
+    of device. \f$x^+\f$ is the adjoint of \f$x\f$
+    \warning cs matrix and y matrix are assumed to be normalized
+    \param[in]  cs S parameter noise correlation
+    \param[in] z Impedance matrix of device
+    \return Impedance noise correlation matrix
+    \todo cs, z const
+*/
 matrix cstocz (matrix cs, matrix z) {
   assert (cs.getRows () == cs.getCols () && z.getRows () == z.getCols () &&
 	  cs.getRows () == z.getRows ());
@@ -747,21 +1449,82 @@ matrix cstocz (matrix cs, matrix z) {
   return (e + z) * cs * adjoint (e + z);
 }
 
-// The function swaps the given rows with each other.
+/*!\brief Converts impedance noise correlation matrix to admittance noise
+    correlation matrix.  
+
+    According to [7] fig 2:
+    \f[
+    C_y=YC_zY^+
+    \f]
+    Where \f$C_z\f$ is the impedance correlation matrix,
+    \f$I\f$ the identity matrix and \f$C_y\f$ the admittance noise 
+    correlation matrix.
+    \f$x^+\f$ is the adjoint of \f$x\f$
+    \warning cz matrix and y matrix are assumed to be normalized
+    \param[in]  cz impedance noise correlation
+    \param[in]  y Admittance matrix of device
+    \return admittance noise correlation matrix
+    \todo cs, y const
+*/
+matrix cztocy (matrix cz, matrix y) {
+  assert (cz.getRows () == cz.getCols () && y.getRows () == y.getCols () &&
+	  cz.getRows () == y.getRows ());
+
+  return y * cz * adjoint (y);
+}
+
+/*!\brief Converts admittance noise correlation matrix to impedance noise
+    correlation matrix.  
+
+    According to [7] fig 2:
+    \f[
+    C_z=ZC_yZ^+
+    \f]
+    Where \f$C_z\f$ is the impedance correlation matrix,
+    \f$I\f$ the identity matrix and \f$C_y\f$ the admittance noise 
+    correlation matrix.
+    \f$x^+\f$ is the adjoint of \f$x\f$
+    \warning cy matrix and z matrix are assumed to be normalized
+    \param[in]  cy Admittance noise correlation
+    \param[in]  z Impedance matrix of device
+    \return Impedance noise correlation matrix
+    \todo cs, z const
+*/
+matrix cytocz (matrix cy, matrix z) {
+  assert (cy.getRows () == cy.getCols () && z.getRows () == z.getCols () &&
+	  cy.getRows () == z.getRows ());
+  return z * cy * adjoint (z);
+}
+
+/*!\brief The function swaps the given rows with each other.
+  \param[in] r1 source row
+  \param[in] r2 destination row
+  \note assert not out of bound r1 and r2
+  \todo r1 and r2 const
+*/
 void matrix::exchangeRows (int r1, int r2) {
-  assert (r1 >= 0 && r2 >= 0 && r1 < rows && r2 < rows);
   complex * s = new complex[cols];
   int len = sizeof (complex) * cols;
+  
+  assert (r1 >= 0 && r2 >= 0 && r1 < rows && r2 < rows);
+
   memcpy (s, &data[r1 * cols], len);
   memcpy (&data[r1 * cols], &data[r2 * cols], len);
   memcpy (&data[r2 * cols], s, len);
   delete[] s;
 }
 
-// The function swaps the given columns with each other.
+/*!\brief The function swaps the given column with each other.
+  \param[in] c1 source column
+  \param[in] c2 destination column
+  \note assert not out of bound r1 and r2
+  \todo c1 and c2 const
+*/
 void matrix::exchangeCols (int c1, int c2) {
-  assert (c1 >= 0 && c2 >= 0 && c1 < cols && c2 < cols);
   complex s;
+
+  assert (c1 >= 0 && c2 >= 0 && c1 < cols && c2 < cols);
+
   for (int r = 0; r < rows * cols; r += cols) {
     s = data[r + c1];
     data[r + c1] = data[r + c2];
@@ -769,9 +1532,27 @@ void matrix::exchangeCols (int c1, int c2) {
   }
 }
 
-/* This function converts 2x2 matrices from any of the matrix forms Y,
-   Z, H, G and A to any other.  Also converts S<->(A, T, H, Y and Z)
-   matrices. */
+/*!\brief Generic conversion matrix
+
+  This function converts 2x2 matrices from any of the matrix forms Y,
+  Z, H, G and A to any other.  Also converts S<->(A, T, H, Y and Z)
+  matrices. 
+  Convertion assumed:
+  
+  Y->Y, Y->Z, Y->H, Y->G, Y->A, Y->S,
+  Z->Y, Z->Z, Z->H, Z->G, Z->A, Z->S,
+  H->Y, H->Z, H->H, H->G, H->A, H->S,
+  G->Y, G->Z, G->H, G->G, G->A, G->S,
+  A->Y, A->Z, A->H, A->G, A->A, A->S,
+  S->Y, S->Z, S->H, S->G, S->A, S->S,
+  S->T,T->T,T->S
+  \note assert 2x2 matrix
+  \param[in] m base matrix
+  \param[in] in matrix
+  \param[in] out matrix
+  \return matrix given by format out
+  \todo m, in, out const
+*/
 matrix twoport (matrix m, char in, char out) {
   assert (m.getRows () >= 2 && m.getCols () >= 2);
   complex d;
@@ -1015,8 +1796,23 @@ matrix twoport (matrix m, char in, char out) {
   return res;
 }
 
-/* The function returns the Rollet stability factor of the given
-   S-parameter matrix. */
+/*!\brief Compute the Rollet stabilty factor
+
+   The function returns the Rollet stability factor (\f$K\f) of the given
+   S-parameter matrix:
+   \[
+   K=\frac{1-|S_{11}|^2-|S_{22}|^2+|\delta|^2}{2|S_{12}S_{21}|}
+   \]
+   Where:
+   \[
+   \Delta=S_{11}S_{22}-S_{12}S_{21}
+   \]
+   \param[in] m S parameter matrix
+   \return Rollet factor
+   \note Assert 2x2 matrix
+   \todo m const?
+   \todo Rewrite with abs and expand det. It is cleaner.
+*/
 nr_double_t rollet (matrix m) {
   assert (m.getRows () >= 2 && m.getCols () >= 2);
   nr_double_t res;
