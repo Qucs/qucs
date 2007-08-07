@@ -18,13 +18,19 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.h,v 1.2 2005-06-02 18:17:51 raimi Exp $
+ * $Id: amplifier.h,v 1.3 2007-08-07 20:43:09 ela Exp $
  *
  */
 
 #ifndef __AMPLIFIER_H__
 #define __AMPLIFIER_H__
 
+/*! Ideal and linear amplifier 
+
+    An ideal amplifier increases signal strength from input to output and
+    blocks all signals flowing into the output.  
+    The ideal amplifier is an isolator with voltage gain \f$G\f$
+*/
 class amplifier : public circuit
 {
  public:

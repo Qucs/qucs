@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.27 2007-05-03 19:00:57 ela Exp $
+ * $Id: complex.h,v 1.28 2007-08-07 20:43:02 ela Exp $
  *
  */
 
@@ -54,10 +54,14 @@ nr_double_t   sign (const nr_double_t);
 nr_double_t   sinc (const nr_double_t);
 nr_double_t limexp (const nr_double_t);
 
+/*\brief Complex class
+  Implement a generic complex class
+*/
 class complex
 {
  private:
-  nr_double_t r, i;
+  nr_double_t r; //!< Real part
+  nr_double_t i; //!< Imaginary part
 		
  public:
   complex (nr_double_t real, nr_double_t imag = 0.0);

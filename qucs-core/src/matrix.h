@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.18 2006-07-03 08:52:23 raimi Exp $
+ * $Id: matrix.h,v 1.19 2007-08-07 20:43:05 ela Exp $
  *
  */
 
@@ -28,9 +28,9 @@
 class vector;
 class matrix;
 
-// other operations
 matrix eye (int);
 
+/*!\brief Dense complex matrix class */
 class matrix
 {
  public:
@@ -121,13 +121,31 @@ class matrix
   friend matrix twoport (matrix, char, char);
   friend nr_double_t rollet (matrix);
 
-  // easy accessor operators
+  /*! \brief Read access operator 
+      \param[in] r: row number (from 0 like usually in C)
+      \param[in] c: column number (from 0 like usually in C)
+      \return Cell in the row r and column c
+      \todo: Why not inline
+      \todo: Why not r and c not const
+      \todo: Create a debug version checking out of bound (using directly assert)
+  */  
   complex  operator () (int r, int c) const { return data[r * cols + c]; }
+  /*! \brief Write access operator 
+      \param[in] r: row number (from 0 like usually in C)
+      \param[in] c: column number (from 0 like usually in C)
+      \return Reference to cell in the row r and column c
+      \todo: Why not inline
+      \todo: Why r and c not const
+      \todo: Create a debug version checking out of bound (using directly assert)
+  */  
   complex& operator () (int r, int c) { return data[r * cols + c]; }
 
  private:
+  /*! Number of colunms */
   int cols;
+  /*! Number of rows */
   int rows;
+  /*! Matrix data */
   complex * data;
 };
 

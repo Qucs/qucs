@@ -18,13 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.h,v 1.9 2006-03-27 09:55:50 raimi Exp $
+ * $Id: capacitor.h,v 1.10 2007-08-07 20:43:10 ela Exp $
  *
  */
 
 #ifndef __CAPACITOR_H__
 #define __CAPACITOR_H__
 
+/*\brief Capacitor class */
 class capacitor : public circuit
 {
  public:
