@@ -49,6 +49,7 @@
 #include "source_ac.h"
 #include "vexp.h"
 #include "iexp.h"
+#include "vfile.h"
 #include "vccs.h"
 #include "cccs.h"
 #include "vcvs.h"
