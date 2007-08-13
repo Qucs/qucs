@@ -5260,6 +5260,22 @@ Stosowanie:  qucsedit [-r] plik
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
         <translation>BŁĄD: Nie mozna wykonać &quot;%1&quot;.</translation>
     </message>
+    <message>
+        <source>file based voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of the sample file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repeat waveform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Based Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

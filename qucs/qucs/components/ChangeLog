@@ -1,3 +1,8 @@
+2007-08-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* vfile.cpp (vFile): New component: file based voltage source.
+	Thanks a lot to Gunther!
+
 2007-05-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* spicefile.cpp, spicedialog.cpp: Tested code for all three SPICE
