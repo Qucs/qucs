@@ -43,7 +43,8 @@ SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp         \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp             \
-  hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp
+  hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp    \
+  vfile.cpp
 
 # List of special Qt files.
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h

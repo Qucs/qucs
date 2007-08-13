@@ -46,7 +46,8 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp         \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp             \
-  hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp
+  hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp    \
+  vfile.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -66,7 +67,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h vprobe.h   \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h     \
   twistedpair.h bondwire.h hicumL2p1.h HBT_X.h verilogfile.h vexp.h iexp.h    \
-  eqndefined.h
+  eqndefined.h vfile.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

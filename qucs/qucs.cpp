@@ -323,7 +323,7 @@ pInfoFunc Sources[] =
    &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
    &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
    &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, &iExp::info,
-   &vExp::info, 0};
+   &vExp::info, &vFile::info, 0};
 
 pInfoFunc Probes[] =
   {&iProbe::info, &vProbe::info, 0};
