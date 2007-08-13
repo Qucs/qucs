@@ -368,7 +368,7 @@ void Component::print(ViewPainter *p, float FontScale)
 }
 
 // -------------------------------------------------------
-// Rotates the component 90° counter-clockwise around its center
+// Rotates the component 90 counter-clockwise around its center
 void Component::rotate()
 {
   if(Ports.count() < 1) return;  // do not rotate components without ports
@@ -1489,6 +1489,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "HDL") c = new VHDL_File();
         else if(cstr == "erilog") c = new Verilog_File();
         else if(cstr == "exp") c = new vExp();
+        else if(cstr == "file") c = new vFile();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
