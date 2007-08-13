@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.112 2007/05/27 17:50:14 ela Exp $
+ * $Id: check_netlist.cpp,v 1.113 2007/08/13 20:45:44 ela Exp $
  *
  */
 
@@ -260,6 +260,8 @@ static struct special_t checker_specials[] = {
   { "MCROSS", "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "hicumL2p1", "Type",     { "npn", "pnp", NULL } },
   { "BOND",   "Model",       { "FREESPACE", "MIRROR", "DESCHARLES", NULL } },
+  { "Vfile", "Interpolator", { "hold", "linear", "cubic", NULL } },
+  { "Vfile", "Repeat",       { "no", "yes", NULL } },
   { NULL, NULL, { NULL } }
 };
 
@@ -360,6 +362,10 @@ static int checker_resolve_variable (struct definition_t * root,
 	v->setConstant (c);
 	root->env->addVariable (v);
       }
+      found++;
+    }
+    /* 8. find file reference in file based sources */
+    if ((val = checker_find_variable (root, "Vfile", "File", value->ident))) {
       found++;
     }
     /* not found */

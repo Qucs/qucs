@@ -1,3 +1,8 @@
+2007-08-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* vfile.h (class vfile): New component: file based voltage source.
+	Thanks a lot to Gunther!
+
 2007-06-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Fixed a bug leading to wrong values in

@@ -37,7 +37,7 @@ Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
 
 Gunther Kraut <gn.kraut@t-online.de> for his contributions to the equation
 	solver evaluation.  Also for providing the exponential current
-	and voltage source code.
+	and voltage source code as well as the file based source.
 
 Helene Parruitte <parruit@enseirb.fr> for her Verilog-AMS interface using
 	the adms application.  Thanks for implementing the HICMU/L2 v2.11
