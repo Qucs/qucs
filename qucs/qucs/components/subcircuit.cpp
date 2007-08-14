@@ -46,7 +46,7 @@ Subcircuit::Subcircuit()
   Name  = "SUB";
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.append(new Port(0, 0));
+  Ports.append(new Port(0, 0, false));
 }
 
 // ---------------------------------------------------------------------
@@ -86,6 +86,9 @@ void Subcircuit::createSymbol()
   if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
+    // remove unused ports
+    for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
+      if(!pp->avail) Ports.remove();
   }
   else {
     No = QucsApp::testFile(FileName);

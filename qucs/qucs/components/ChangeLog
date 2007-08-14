@@ -1,3 +1,13 @@
+2007-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* subcircuit.cpp (createSymbol): Remove unused ports for symbol
+	painting algorithm.  It comes to unused ports when the port
+	numbering does not start with 1 or a number is missing in a row of
+	numbers.
+
+	* component.cpp (analyseLine): Mark really used subcircuit ports
+	while loading a symbol.
+
 2007-08-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* vfile.cpp (vFile): New component: file based voltage source.
