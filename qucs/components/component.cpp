@@ -340,7 +340,7 @@ void Component::paintScheme(QPainter *p)
 
   // paint all ports
   for(Port *p2 = Ports.first(); p2 != 0; p2 = Ports.next())
-    p->drawEllipse(cx+p2->x-4, cy+p2->y-4, 8, 8);
+    if(p2->avail) p->drawEllipse(cx+p2->x-4, cy+p2->y-4, 8, 8);
 
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next())   // paint all arcs
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
@@ -849,10 +849,11 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3))
       return -1;
     for(i6 = Ports.count(); i6<i3; i6++)  // if ports not in numerical order
-      Ports.append(new Port(0, 0));
+      Ports.append(new Port(0, 0, false));
 
     Ports.at(i3-1)->x  = i1;
     Ports.current()->y = i2;
+    Ports.current()->avail = true;
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1 > x2)  x2 = i1;

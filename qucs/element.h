@@ -52,8 +52,9 @@ struct Area {
 
 struct Port {
   Port() {};
-  Port(int _x, int _y) : x(_x), y(_y) {};
+  Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {};
   int   x, y;
+  bool  avail;
   Node *Connection;
 };
 
