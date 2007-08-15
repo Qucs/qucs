@@ -1,7 +1,7 @@
 #
 # src/libqucsator.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@ SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp                   \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
 	matvec.cpp matrix.cpp fspecial.cpp precision.c check_citi.cpp       \
 	parse_citi.cpp scan_citi.cpp sweep.cpp check_mdl.cpp parse_mdl.cpp  \
-	scan_mdl.cpp parse_zvr.cpp scan_zvr.cpp check_zvr.cpp
+	scan_mdl.cpp parse_zvr.cpp scan_zvr.cpp check_zvr.cpp parse_csv.cpp \
+	scan_csv.cpp check_csv.cpp
 
 # Additional libraries.
 LIBS = 

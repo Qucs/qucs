@@ -1,7 +1,7 @@
 /*
  * qucsconv.cpp - main converter program implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.24 2006-08-18 08:20:17 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.25 2007-08-15 20:27:51 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "check_vcd.h"
 #include "check_citi.h"
 #include "check_touchstone.h"
+#include "check_csv.h"
 #include "check_zvr.h"
 #include "check_mdl.h"
 #include "check_dataset.h"
@@ -58,6 +59,7 @@ int vcd2qucs   (struct actionset_t *, char *, char *);
 int qucs2csv   (struct actionset_t *, char *, char *);
 int citi2qucs  (struct actionset_t *, char *, char *);
 int touch2qucs (struct actionset_t *, char *, char *);
+int csv2qucs   (struct actionset_t *, char *, char *);
 int zvr2qucs   (struct actionset_t *, char *, char *);
 int mdl2qucs   (struct actionset_t *, char *, char *);
 
@@ -69,6 +71,7 @@ struct actionset_t actionset[] = {
   { "qucsdata",   "csv",      qucs2csv   },
   { "citi",       "qucsdata", citi2qucs  },
   { "touchstone", "qucsdata", touch2qucs },
+  { "csv",        "qucsdata", csv2qucs   },
   { "zvr",        "qucsdata", zvr2qucs   },
   { "mdl",        "qucsdata", mdl2qucs   },
   { NULL, NULL, NULL}
@@ -327,6 +330,33 @@ int touch2qucs (struct actionset_t * action, char * infile, char * outfile) {
     qucsdata_producer (touchstone_result);
   }
   touchstone_destroy ();
+  return 0;
+}
+
+// CSV to Qucs conversion.
+int csv2qucs (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  csv_init ();
+  if ((csv_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (csv_parse () != 0) {
+    ret = -1;
+  } else if (csv_check () != 0) {
+    ret = -1;
+  }
+  csv_lex_destroy ();
+  if (csv_in)
+    fclose (csv_in);
+  if (ret) {
+    csv_destroy ();
+    return -1;
+  }
+
+  if (!strcmp (action->out, "qucsdata")) {
+    csv_result->setFile (outfile);
+    qucsdata_producer (csv_result);
+  }
+  csv_destroy ();
   return 0;
 }
 
