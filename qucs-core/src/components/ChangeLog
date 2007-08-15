@@ -1,3 +1,7 @@
+2007-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* vfile.cpp: Some minor code cleanups.
+
 2007-08-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* vfile.h (class vfile): New component: file based voltage source.

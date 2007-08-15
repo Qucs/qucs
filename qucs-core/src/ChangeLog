@@ -1,5 +1,10 @@
 2007-08-15  Stefan Jahn  <stefan@lkcc.org>
 
+	* dataset.cpp: New function to load CSV files added.
+
+	* check_csv.cpp, scan_csv.l, parse_csv.y: Implemented lexer,
+	parser and checker for CSV files.
+
 	* matrix.cpp: Documented missing 1/2 factor in some matrix
 	conversions.
 

@@ -1,7 +1,6 @@
 /*
- * vfile.h - file based voltage source class definitions
+ * check_csv.h - checker definitions for CSV files
  *
- * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
  * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,39 +18,37 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.h,v 1.2 2007/08/15 20:27:51 ela Exp $
+ * $Id: check_csv.h,v 1.1 2007/08/15 20:27:50 ela Exp $
  *
  */
 
-#ifndef __VFILE_H__
-#define __VFILE_H__
+#ifndef __CHECK_CSV_H__
+#define __CHECK_CSV_H__
 
-class vector;
 class dataset;
-class spline;
+class vector;
+class strlist;
 
-class vfile : public circuit
-{
- public:
-  vfile ();
-  ~vfile ();
-  void initSP (void);
-  void initDC (void);
-  void initAC (void);
-  void initTR (void);
-  void calcTR (nr_double_t);
-  void prepare (void);
-  nr_double_t interpolate (vector * , vector * , nr_double_t);
-  nr_double_t interpolate_lin (vector *, vector *, nr_double_t, int);
+extern dataset * csv_result;
+extern vector  * csv_vector;
+extern strlist * csv_header;
 
-private:
-  dataset * data;
-  int dataType;
-  int interpolType;
-  vector * ts;          // time samples
-  vector * vs;          // voltage samples
-  nr_double_t duration; // waveform duration
-  spline * sp;
-};
+/* Externalize variables used by the scanner and parser. */
+extern int csv_lineno;
+extern FILE * csv_in;
+void csv_restart (FILE *);
 
-#endif /* __VFILE_H__ */
+__BEGIN_DECLS
+
+/* Available functions of the checker. */
+int csv_parse (void);
+int csv_error (char *);
+int csv_lex (void);
+int csv_lex_destroy (void);
+int csv_check (void);
+void csv_init (void);
+void csv_destroy (void);
+
+__END_DECLS
+
+#endif /* __CHECK_CSV_H__ */

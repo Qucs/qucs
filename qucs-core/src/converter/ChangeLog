@@ -1,3 +1,8 @@
+2007-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.cpp: Added new converter from CSV (comma separated
+	file) to qucs dataset.
+
 2007-05-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Allowing inline comments to start with '$'

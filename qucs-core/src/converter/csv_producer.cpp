@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.4 2006/03/20 08:59:11 raimi Exp $
+ * $Id: csv_producer.cpp,v 1.5 2007/08/15 20:27:51 ela Exp $
  *
  */
 
@@ -35,7 +35,7 @@
 
 /* Global variables. */
 dataset * qucs_data = NULL;
-FILE * csv_out = NULL;
+/* FILE * csv_out = NULL; -- already defined in CSV lexer */
 char * csv_var = NULL;
 
 struct csv_data {

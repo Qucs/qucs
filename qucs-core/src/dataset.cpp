@@ -1,7 +1,7 @@
 /*
  * dataset.cpp - dataset class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.22 2006/09/04 08:05:39 raimi Exp $
+ * $Id: dataset.cpp,v 1.23 2007/08/15 20:27:50 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "dataset.h"
 #include "check_dataset.h"
 #include "check_touchstone.h"
+#include "check_csv.h"
 #include "check_citi.h"
 #include "check_zvr.h"
 #include "check_mdl.h"
@@ -454,6 +455,31 @@ dataset * dataset::load_touchstone (const char * file) {
   touchstone_lex_destroy ();
   touchstone_result->setFile (file);
   return touchstone_result;
+}
+
+/* This static function read a full dataset from the given CSV file
+   and returns it.  On failure the function emits appropriate error
+   messages and returns NULL. */
+dataset * dataset::load_csv (const char * file) {
+  FILE * f;
+  if ((f = fopen (file, "r")) == NULL) {
+    logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
+    return NULL;
+  }
+  csv_in = f;
+  csv_restart (csv_in);
+  if (csv_parse () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  if (csv_check () != 0) {
+    fclose (f);
+    return NULL;
+  }
+  fclose (f);
+  csv_lex_destroy ();
+  csv_result->setFile (file);
+  return csv_result;
 }
 
 /* The function read a full dataset from the given CITIfile and

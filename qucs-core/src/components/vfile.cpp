@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.cpp,v 1.1 2007/08/13 20:45:46 ela Exp $
+ * $Id: vfile.cpp,v 1.2 2007/08/15 20:27:51 ela Exp $
  *
  */
 
@@ -56,12 +56,16 @@ vfile::vfile () : circuit (2) {
   setVSource (true);
   setVoltageSources (1);
   interpolType = dataType = 0;
-  ts = NULL; s = NULL; v1 = NULL; data = NULL;
+  ts = NULL;
+  vs = NULL;
+  sp = NULL;
+  data = NULL;
 }
 
 // Destructor deletes vfile object from memory.
 vfile::~vfile () {
   if (data) delete data;
+  if (sp) delete sp;
 }
 
 void vfile::prepare (void) {
@@ -98,20 +102,20 @@ void vfile::prepare (void) {
 		  file);
 	return;
       }
-      s = data->getVariables();	        // voltage
-      ts = data->getDependencies();	// time
+      vs = data->getVariables();    // voltage
+      ts = data->getDependencies(); // time
       int tlen = ts->getSize();
       if (dataType == REPEAT_YES) {
 	// waveform duration
-	TW = real (ts->get (tlen-1)) - real(ts->get (0));
+	duration = real (ts->get (tlen - 1)) - real(ts->get (0));
 	// set first voltage to the end of the voltage vector
-	s->set (s->get (0), tlen-1);
+	vs->set (vs->get (0), tlen - 1);
 	// add samples at the end to perform correct interpolation
 	if (interpolType == INTERPOL_CUBIC) {
 	  // add two additional points
-	  data->appendVariable (new vector(1,s->get(1)));
+	  data->appendVariable (new vector(1,vs->get(1)));
 	  data->appendDependency (new vector(1,ts->get(1)+ts->get(tlen-1)));
-	  data->appendVariable (new vector(1,s->get(2)));
+	  data->appendVariable (new vector(1,vs->get(2)));
 	  data->appendDependency (new vector(1,ts->get(2)+ts->get(tlen-1)));
 	}
       }
@@ -137,7 +141,7 @@ nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
     return res;
   }
   else if (dataType == REPEAT_YES)
-    x = x - floor(x / TW) * TW;
+    x = x - floor (x / duration) * duration;
 
   // linear interpolation
   if (interpolType == INTERPOL_LINEAR) {
@@ -149,7 +153,7 @@ nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
     if (idx != -1) {
       if (x == real (dep->get (idx))) {
 	// found direct value
-        res = real(var->get (idx));
+        res = real (var->get (idx));
       }
       else {
 	// dependency variable is beyond scope; use last tangent
@@ -166,14 +170,14 @@ nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
   // cubic spline interpolation
   else if (interpolType == INTERPOL_CUBIC) {
     // create splines if necessary
-    if (v1 == NULL) {
-      v1 = new spline (SPLINE_BC_NATURAL);
-      if (dataType == REPEAT_YES) v1->setBoundary (SPLINE_BC_PERIODIC);
-      v1->vectors (*var, *dep);
-      v1->construct ();
+    if (sp == NULL) {
+      sp = new spline (SPLINE_BC_NATURAL);
+      if (dataType == REPEAT_YES) sp->setBoundary (SPLINE_BC_PERIODIC);
+      sp->vectors (*var, *dep);
+      sp->construct ();
     }
     // evaluate spline functions
-    res = v1->evaluate (x).f0;
+    res = sp->evaluate (x).f0;
   }
   else if (interpolType == INTERPOL_HOLD) {
     // find appropriate dependency index
@@ -181,9 +185,9 @@ nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
       if (x >= real (dep->get (i))) idx = i;
     }
     if (idx != -1) // dependency variable in scope or beyond
-      res = real(var->get (idx));
+      res = real (var->get (idx));
     else // dependency variable is before scope
-      res = real(var->get (0));
+      res = real (var->get (0));
   }
   return res;
 }
@@ -195,11 +199,11 @@ nr_double_t vfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
 				    int idx) {
   nr_double_t x1, x2, y1, y2;
 
-  x1 = real(dep->get (idx));
-  x2 = real(dep->get (idx + 1));
-  y1 = real(var->get (idx));
-  y2 = real(var->get (idx + 1));
-  return ( ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1) );
+  x1 = real (dep->get (idx));
+  x2 = real (dep->get (idx + 1));
+  y1 = real (var->get (idx));
+  y2 = real (var->get (idx + 1));
+  return ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
 }
 
 void vfile::initSP (void) {
@@ -227,6 +231,6 @@ void vfile::initTR (void) {
 }
 
 void vfile::calcTR (nr_double_t t) {
-  nr_double_t u = interpolate (s, ts, t);
+  nr_double_t u = interpolate (vs, ts, t);
   setE (VSRC_1, u);
 }
