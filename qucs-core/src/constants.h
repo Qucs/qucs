@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: constants.h,v 1.5 2007/08/07 20:43:03 ela Exp $
+ * $Id: constants.h,v 1.6 2007/08/15 11:02:44 ela Exp $
  *
  */
 
@@ -32,15 +32,15 @@
 #include "consts.h"
 #include "precision.h"
 
-/*!\brief speed of light in vacuum  (\f$c_0\f$) */
+/*!\brief speed of light in vacuum (\f$c_0\f$) */
 #define C0   299792458.0
 /*!\brief magnetic constant of vacuum (\f$\mu_0=4\pi\times10^{-7}\f$) */
 #define MU0  12.566370614e-7
-/*!\brief Electric constant of vacuum \f$\varepsilon_0\f$)*/
+/*!\brief Electric constant of vacuum \f$\varepsilon_0\f$*/
 #define E0   8.854187817e-12
 /*!\brief Wave impedance in vacuum (\f$Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}}\f$)*/
 #define Z0   376.73031346958504364963
-/*!\brief Planck constant \f$h\f$) 
+/*!\brief Planck constant (\f$h\f$)
    \todo Add h bar (\f$h/(2\pi)\f$)
 */
 #define H    6.626069311e-34
@@ -55,7 +55,7 @@
 #define Q    1.6021765314e-19
 /*!\brief Boltzmann constant over Elementary charge (\f$k_B/q_e\f$)*/
 #define kBoverQ    0.86173433260414314916e-4
-/*!\brief Elementary charge over Boltzmann constant(\f$q_e/k_B\f$)*/
+/*!\brief Elementary charge over Boltzmann constant (\f$q_e/k_B\f$)*/
 #define QoverkB    1.16045045690360379713e+4
 
 /*!\brief Relative permittivity of Silicon dioxide (Silica) */
@@ -103,7 +103,7 @@
 */
 #define cubic(x)  ((x) * (x) * (x))
 /*!\brief quad function
-   \param[in] x fonction parameter
+   \param[in] x function parameter
    \return \f$x^4\f$
    \todo will be better to implement as static inline
    because we could do something like
@@ -145,12 +145,12 @@
 #define deg(x)    (180.0 * (x) / M_PI)
 
 #ifndef MAX
-/*!\brief Maximum of x and y*/
+/*!\brief Maximum of x and y */
 # define MAX(x,y) (((x) > (y)) ? (x) : (y))
 #endif
 
 #ifndef MIN
-/*!\brief Minimum of x and y*/
+/*!\brief Minimum of x and y */
 # define MIN(x,y) (((x) < (y)) ? (x) : (y))
 #endif
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.29 2007/08/07 20:43:05 ela Exp $
+ * $Id: matrix.cpp,v 1.30 2007/08/15 11:02:46 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -930,7 +930,8 @@ matrix stos (matrix s, complex zref, vector z0) {
   \f}
   \param[in] s Scattering matrix
   \param[in] z0 Normalisation impedance
-  \bug not correct lack of 1/2 factor!
+  \note We could safely drop the \f$1/2\f$ in \f$F\f$ because we compute
+        \f$FXF^{-1}\f$ and therefore \f$1/2\f$ will simplify.
   \bug not correct if zref is complex
   \todo s, z0 const
   \return Impedance matrix
@@ -975,7 +976,8 @@ matrix stoz (matrix s, complex z0) {
   \param[in] Z Impedance matrix
   \param[in] z0 Normalisation impedance
   \return Scattering matrix
-  \bug not correct lack of 1/2 factor!
+  \note We could safely drop the \f$1/2\f$ in \f$F\f$ because we compute
+        \f$FXF^{-1}\f$ and therefore \f$1/2\f$ will simplify.
   \bug not correct if zref is complex
   \todo z and z0 const?
 */
@@ -1018,29 +1020,30 @@ matrix ztoy (matrix z) {
 
 /*!\brief Scattering parameters to admittance matrix.
 
-    Convert scattering parameters to admittance matrix. 
-    According to [1] eq (19):
-    \f[
-    Z=F^{-1} (I- S)^{-1} (SG + G^+) F
-    \f]
-    Where \f$S\f$ is the scattering matrix, \f$x^+\f$
-    is the adjoint of x, I the identity matrix. The matrix 
-    F and G are diagonal matrix defined by:
-    \f{align*}
-    F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
-    G_i&=Z_i
-    \f}
-    Using the well know formula \f$(AB)^{-1}=B^{1}A^{1}\f$,
-    we derivate:
-    \f[
-    Y=F^{-1} (SG+G^+)^{-1} (I-S) F
-    \f]
-    \param[in] s Scattering matrix
-    \param[in] z0 Normalisation impedance
-    \bug not correct lack of 1/2 factor!
-    \bug not correct if zref is complex
-    \todo s and z0 const
-    \return Admittance matrix
+  Convert scattering parameters to admittance matrix. 
+  According to [1] eq (19):
+  \f[
+  Z=F^{-1} (I- S)^{-1} (SG + G^+) F
+  \f]
+  Where \f$S\f$ is the scattering matrix, \f$x^+\f$
+  is the adjoint of x, I the identity matrix. The matrix 
+  F and G are diagonal matrix defined by:
+  \f{align*}
+  F_i&=\frac{1}{2\sqrt{\Re\text{e}\; Z_i}} \\
+  G_i&=Z_i
+  \f}
+  Using the well know formula \f$(AB)^{-1}=B^{1}A^{1}\f$,
+  we derivate:
+  \f[
+  Y=F^{-1} (SG+G^+)^{-1} (I-S) F
+  \f]
+  \param[in] s Scattering matrix
+  \param[in] z0 Normalisation impedance
+  \note We could safely drop the \f$1/2\f$ in \f$F\f$ because we compute
+        \f$FXF^{-1}\f$ and therefore \f$1/2\f$ will simplify.
+  \bug not correct if zref is complex
+  \todo s and z0 const
+  \return Admittance matrix
 */
 matrix stoy (matrix s, vector z0) {
   int d = s.getRows ();
@@ -1087,7 +1090,8 @@ matrix stoy (matrix s, complex z0) {
    \f]
    \param[in] y admittance matrix
    \param[in] z0 Normalisation impedance
-   \bug not correct lack of 1/2 factor!
+   \note We could safely drop the \f$1/2\f$ in \f$F\f$ because we compute
+         \f$FXF^{-1}\f$ and therefore \f$1/2\f$ will simplify.
    \bug not correct if zref is complex
    \todo why not y and z0 const
    \return Scattering matrix

@@ -1,3 +1,8 @@
+2007-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp: Documented missing 1/2 factor in some matrix
+	conversions.
+
 2007-06-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y: Re-allow range specifications as function
