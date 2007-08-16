@@ -26,6 +26,7 @@ powerpc-unknown-linux-gnu	gcc 3.3.5	0.0.5	ok
 powerpc-unknown-linux-gnu	gcc 3.4.1	0.0.5	ok
 powerpc-apple-darwin7.4.0	gcc 3.3		0.0.2	ok
 powerpc-apple-darwin7.5.0	gcc 3.3		0.0.3	ok
+powerpc-apple-darwin8.10.0	gcc 4.0.1	0.0.12	ok
 powerpc64-unknown-linux-gnu	gcc 3.3.5	0.0.7	ok
 s390-ibm-linux-gnu		gcc 3.3.5	0.0.5	ok
 sparc-sun-solaris2.8		gcc 2.95.3	0.0.4	ok
