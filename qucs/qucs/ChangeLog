@@ -1,3 +1,8 @@
+2007-08-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/importdialog.cpp (slotBrowse): Added CSV file type to
+	the list of possible data import file formats.
+
 2007-06-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (QucsApp): Allowing URIs (file:/path/file.sch) as
