@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_csv.l,v 1.1 2007/08/15 20:27:50 ela Exp $
+ * $Id: scan_csv.l,v 1.2 2007/08/16 08:10:50 ela Exp $
  *
  */
 
@@ -54,7 +54,8 @@
 
 WS       [ \t\n\r]
 SEP      [;,]
-ID1      [a-zA-Z_][a-zA-Z0-9_.]*
+ARRAY    \[[0-9]+,[0-9]+\]
+ID1      [a-zA-Z_][a-zA-Z0-9_.]*{ARRAY}?
 ID2      [^\"\n\r]*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+

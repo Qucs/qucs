@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.cpp,v 1.2 2007/08/15 20:27:51 ela Exp $
+ * $Id: vfile.cpp,v 1.3 2007/08/16 08:10:52 ela Exp $
  *
  */
 
@@ -29,6 +29,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#ifdef __MINGW32__
+#define strcasecmp stricmp
+#endif
 
 #include "logging.h"
 #include "complex.h"
@@ -93,7 +98,10 @@ void vfile::prepare (void) {
   // load file with samples
   char * file = getPropertyString ("File");
   if (data == NULL) {
-    data = dataset::load (file);
+    if (strlen (file) > 4 && !strcasecmp (&file[strlen (file) - 4], ".dat"))
+      data = dataset::load (file);
+    else
+      data = dataset::load_csv (file);
     if (data != NULL) {
       // check number of variables / dependencies defined by that file
       if (data->countVariables () != 1 || data->countDependencies () != 1) {
