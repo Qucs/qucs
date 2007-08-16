@@ -1,3 +1,8 @@
+2007-08-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* vfile.cpp: Allowing both to be used as file formats: native
+	qucsdata and CSV.
+
 2007-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* vfile.cpp: Some minor code cleanups.

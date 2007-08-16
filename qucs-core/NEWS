@@ -26,6 +26,7 @@ files.
 Version 0.0.13
 --------------
 
+ * support for CSV files as an import file format in qucsconv
  * new component: file based voltage source
 
 Version 0.0.12

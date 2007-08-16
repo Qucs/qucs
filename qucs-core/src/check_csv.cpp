@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_csv.cpp,v 1.1 2007-08-15 20:27:50 ela Exp $
+ * $Id: check_csv.cpp,v 1.2 2007-08-16 08:10:48 ela Exp $
  *
  */
 
@@ -68,7 +68,8 @@ static void csv_validate_str (char * n) {
   if (!isalpha (*p)) *p = '_';
   p++;
   while (*p) {
-    if (!isalnum (*p) && *p != '.') *p = '_';
+    if (!isalnum (*p) && *p != '.' && *p != ',' && *p != '[' && *p != ']')
+      *p = '_';
     p++;
   }
 }
