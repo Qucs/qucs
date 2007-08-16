@@ -82,8 +82,9 @@ void ImportDialog::slotBrowse()
 {
   QString s = QFileDialog::getOpenFileName(
      lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("All known")+" (*.s?p *.citi *.cit *.asc *.mdl *.vcd);;"+
+     tr("All known")+" (*.s?p *.csv *.citi *.cit *.asc *.mdl *.vcd);;"+
      tr("Touchstone files")+" (*.s?p);;"+
+     tr("CSV files")+" (*.csv);;"+
      tr("CITI files")+" (*.citi *.cit);;"+
      tr("ZVR ASCII files")+" (*.asc);;"+
      tr("IC-CAP model files")+" (*.mdl);;"+
@@ -135,6 +136,8 @@ void ImportDialog::slotImport()
     CommandLine << "zvr";
   else if(Suffix == "mdl")
     CommandLine << "mdl";
+  else if(Suffix == "csv")
+    CommandLine << "csv";
   else for(;;) {
     if(Suffix.at(0) == 's')
       if(Suffix.at(2) == 'p')

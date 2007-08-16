@@ -748,6 +748,7 @@ void ComponentDialog::slotBrowseFile()
 {
   QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(),
           tr("All Files")+" (*.*);;"+tr("Touchstone files")+" (*.s?p);;"+
+          tr("CSV files")+" (*.csv);;"+
           tr("SPICE files")+" (*.cir *.spi);;"+
           tr("VHDL files")+" (*.vhdl *.vhd);;"+
           tr("Verilog files")+" (*.v)",
