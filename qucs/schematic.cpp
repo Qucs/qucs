@@ -474,7 +474,8 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   float printerDpiY = (float)pmetrics.logicalDpiY();
   float printerW = (float)pmetrics.width();
   float printerH = (float)pmetrics.height();
-  QPaintDeviceMetrics smetrics(QPainter(viewport()).device());
+  QPainter pa(viewport());
+  QPaintDeviceMetrics smetrics(pa.device());
   float screenDpiX = (float)smetrics.logicalDpiX();
   float screenDpiY = (float)smetrics.logicalDpiY();
   float PrintScale = 0.5;

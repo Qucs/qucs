@@ -1,5 +1,8 @@
 2007-08-16  Stefan Jahn  <stefan@lkcc.org>
 
+	* schematic.cpp (print): Fixed a compile issue which strangely
+	occurred with some gcc versions (3.3.3 and 3.3.1).
+
 	* dialogs/importdialog.cpp (slotBrowse): Added CSV file type to
 	the list of possible data import file formats.
 
