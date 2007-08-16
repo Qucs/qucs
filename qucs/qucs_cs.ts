@@ -324,6 +324,10 @@
         <source>Verilog files</source>
         <translation>Verilog soubory</translation>
     </message>
+    <message>
+        <source>CSV files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -1098,6 +1102,10 @@
     <message>
         <source>ERROR: Cannot start converter!</source>
         <translation>CHYBA: Nelze spustit převaděč!</translation>
+    </message>
+    <message>
+        <source>CSV files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
