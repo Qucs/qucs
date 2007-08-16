@@ -328,6 +328,10 @@
         <source>Verilog files</source>
         <translation>Fichiers Vérilog</translation>
     </message>
+    <message>
+        <source>CSV files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -1044,6 +1048,10 @@
     <message>
         <source>ERROR: Cannot start converter!</source>
         <translation>ERREUR : impossible de lancer le convertisseur !</translation>
+    </message>
+    <message>
+        <source>CSV files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
