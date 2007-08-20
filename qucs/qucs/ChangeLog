@@ -1,5 +1,8 @@
 2007-08-20  Stefan Jahn  <stefan@lkcc.org>
 
+	* diagrams/diagram.cpp (getAxisLimits): Fixed segfault bug in
+	3D-cartesian diagram.
+
 	* dialogs/savedialog.cpp (saveSelectedClicked): Fixed a bug
 	causing the GUI to crash on Win32 when saving selected unsaved
 	schematics at end dialog.
