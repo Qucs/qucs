@@ -1,5 +1,6 @@
 /***************************************************************************
  * Copyright (C) 2006 by Gopala Krishna A <krishna.ggk@gmail.com>          *
+ * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>                        *
  *                                                                         *
  * This is free software; you can redistribute it and/or modify            *
  * it under the terms of the GNU General Public License as published by    *
@@ -123,11 +124,7 @@ void SaveDialog::saveSelectedClicked()
          if(app->saveFile(doc) == false)
             unsavables.append(doc);
          else
-         {
-            delete it.data();
-            delete it.key();
             unsavedDocs.remove(it);
-         }
       }
    }
    if(unsavables.isEmpty())
