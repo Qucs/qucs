@@ -685,10 +685,10 @@ void Diagram::getAxisLimits(Graph *pg)
   }
 
   if(Name == "Rect3D") {
-    pD = pg->cPointsX.next();
-    if(pD) {
-      p = pD->Points;
-      for(z=pD->count; z>0; z--) { // check y coordinates (2. dimension)
+    DataX *pDy = pg->cPointsX.next();
+    if(pDy) {
+      p = pDy->Points;
+      for(z=pDy->count; z>0; z--) { // check y coordinates (2. dimension)
 	y = *(p++);
 	if(finite(y)) {
 	  if(y > yAxis.max) yAxis.max = y;
