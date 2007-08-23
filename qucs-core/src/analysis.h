@@ -1,7 +1,7 @@
 /*
  * analysis.h - analysis class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.h,v 1.10 2006/01/30 07:45:34 raimi Exp $
+ * $Id: analysis.h,v 1.11 2007/08/23 18:37:18 ela Exp $
  *
  */
 
@@ -55,6 +55,8 @@ class analysis : public object
   analysis (analysis &);
   ~analysis ();
   virtual void solve (void) { }
+  virtual void initialize (void) { }
+  virtual void cleanup (void) { }
   dataset * getData (void) { return data; }
   void setData (dataset * d) { data = d; }
   net * getNet (void) { return subnet; }

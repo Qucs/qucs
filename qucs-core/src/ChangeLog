@@ -1,3 +1,12 @@
+2007-08-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* parasweep.cpp: Implemented new initialize() and cleanup()
+	callbacks.  This fixes a bug occurring for nested sweeps where the
+	sweep variable of an inner-loop sweep is used in an equation.
+
+	* net.cpp: Run new initialize() and cleanup() functionality of
+	analyses.
+
 2007-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* dataset.cpp: New function to load CSV files added.
