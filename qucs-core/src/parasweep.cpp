@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.13 2007-02-20 21:00:44 ela Exp $
+ * $Id: parasweep.cpp,v 1.14 2007-08-23 18:37:18 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@
 parasweep::parasweep () : analysis () {
   var = NULL;
   swp = NULL;
+  eqn = NULL;
   type = ANALYSIS_SWEEP;
 }
 
@@ -54,6 +55,7 @@ parasweep::parasweep () : analysis () {
 parasweep::parasweep (char * n) : analysis (n) {
   var = NULL;
   swp = NULL;
+  eqn = NULL;
   type = ANALYSIS_SWEEP;
 }
 
@@ -71,14 +73,12 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 
 // Short macro in order to obtain the correct constant value.
 #define D(con) ((constant *) (con))->d
+#define E(equ) ((eqn::node *) (equ))
 
-/* This is the parameter sweep solver. */
-void parasweep::solve (void) {
+/* Initializes the parameter sweep. */
+void parasweep::initialize (void) {
   char * n;
   constant * val;
-  eqn::node * eqn = NULL;
-
-  runs++;
 
   // get fixed simulation properties
   n = getPropertyString ("Param");
@@ -104,6 +104,43 @@ void parasweep::solve (void) {
     eqn = env->getChecker()->addDouble ("#sweep", n, 0);
   }
 
+  // initialize first sweep value in environment and equation checker
+  nr_double_t v = swp->get (0);
+  env->setDoubleConstant (n, v);
+  env->setDouble (n, v);
+
+  // also run initialize functionality for all children
+  for (int k = 0; actions && k < actions->length (); k++) {
+    analysis * a = actions->get (k);
+    a->initialize ();
+  }
+}
+
+/* Cleans the parameter sweep up. */
+void parasweep::cleanup (void) {
+
+  // remove additional equation from equation checker
+  if (eqn) {
+    env->getChecker()->dropEquation (E (eqn));
+    delete E (eqn);
+    eqn = NULL;
+  }
+
+  // also run cleanup functionality for all children
+  for (int k = 0; actions && k < actions->length (); k++) {
+    analysis * a = actions->get (k);
+    a->cleanup ();
+  }
+}
+
+/* This is the parameter sweep solver. */
+void parasweep::solve (void) {
+  char * n;
+  runs++;
+
+  // get fixed simulation properties
+  n = getPropertyString ("Param");
+
   // run the parameter sweep
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
@@ -127,12 +164,6 @@ void parasweep::solve (void) {
 	data->assignDependency ((*it)->getName (), var->getName ());
       }
     }
-  }
-
-  // remove additional equation from checker
-  if (eqn) {
-    env->getChecker()->dropEquation (eqn);
-    delete eqn;
   }
 }
 
