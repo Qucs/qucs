@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@ INCLUDES = -I$(top_srcdir)/src
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \
-	check_vcd.cpp csv_producer.cpp
+	check_vcd.cpp csv_producer.cpp touchstone_producer.cpp
 
 noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
-	tokens_vcd.h csv_producer.h
+	tokens_vcd.h csv_producer.h touchstone_producer.h
 
 if MAINTAINER_MODE
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \

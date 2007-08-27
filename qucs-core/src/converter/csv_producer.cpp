@@ -1,7 +1,7 @@
 /*
  * csv_producer.cpp - the CSV data file producer
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.5 2007/08/15 20:27:51 ela Exp $
+ * $Id: csv_producer.cpp,v 1.6 2007/08/27 17:52:17 ela Exp $
  *
  */
 
@@ -36,7 +36,6 @@
 /* Global variables. */
 dataset * qucs_data = NULL;
 /* FILE * csv_out = NULL; -- already defined in CSV lexer */
-char * csv_var = NULL;
 
 struct csv_data {
   char type;  // type of variable
