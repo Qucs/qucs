@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.25 2007-08-15 20:27:51 ela Exp $
+ * $Id: qucsconv.cpp,v 1.26 2007-08-27 17:52:17 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "check_dataset.h"
 #include "qucs_producer.h"
 #include "csv_producer.h"
+#include "touchstone_producer.h"
 
 /* structure defining a conversion */
 struct actionset_t {
@@ -53,10 +54,14 @@ struct actionset_t {
   int (* execute) (struct actionset_t *, char * infile, char * outfile);
 };
 
+/* data variable specification */
+char * data_var = NULL;
+
 /* required forward declarations */
 int spice2qucs (struct actionset_t *, char *, char *);
 int vcd2qucs   (struct actionset_t *, char *, char *);
 int qucs2csv   (struct actionset_t *, char *, char *);
+int qucs2touch (struct actionset_t *, char *, char *);
 int citi2qucs  (struct actionset_t *, char *, char *);
 int touch2qucs (struct actionset_t *, char *, char *);
 int csv2qucs   (struct actionset_t *, char *, char *);
@@ -65,15 +70,16 @@ int mdl2qucs   (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
-  { "spice",      "qucs",     spice2qucs },
-  { "spice",      "qucslib",  spice2qucs },
-  { "vcd",        "qucsdata", vcd2qucs   },
-  { "qucsdata",   "csv",      qucs2csv   },
-  { "citi",       "qucsdata", citi2qucs  },
-  { "touchstone", "qucsdata", touch2qucs },
-  { "csv",        "qucsdata", csv2qucs   },
-  { "zvr",        "qucsdata", zvr2qucs   },
-  { "mdl",        "qucsdata", mdl2qucs   },
+  { "spice",      "qucs",       spice2qucs },
+  { "spice",      "qucslib",    spice2qucs },
+  { "vcd",        "qucsdata",   vcd2qucs   },
+  { "qucsdata",   "csv",        qucs2csv   },
+  { "qucsdata",   "touchstone", qucs2touch },
+  { "citi",       "qucsdata",   citi2qucs  },
+  { "touchstone", "qucsdata",   touch2qucs },
+  { "csv",        "qucsdata",   csv2qucs   },
+  { "zvr",        "qucsdata",   zvr2qucs   },
+  { "mdl",        "qucsdata",   mdl2qucs   },
   { NULL, NULL, NULL}
 };
 
@@ -106,7 +112,7 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
 	"QucsConverter " PACKAGE_VERSION "\n"
-	"Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>\n"
+	"Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
 	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
@@ -148,7 +154,7 @@ int main (int argc, char ** argv) {
       if (argv[++i]) qucs_gnd = argv[i];
     }
     else if (!strcmp (argv[i], "-d")) {
-      if (argv[++i]) csv_var = argv[i];
+      if (argv[++i]) data_var = argv[i];
     }
     else if (!strcmp (argv[i], "-c") || !strcmp (argv[i], "--correct")) {
       vcd_correct = 1;
@@ -267,13 +273,45 @@ int qucs2csv (struct actionset_t * action, char * infile, char * outfile) {
   if ((csv_out = open_file (outfile, "w")) == NULL)
     return -1;
   if (!strcmp (action->out, "csv")) {
-    if (csv_var != NULL)
-      csv_producer (csv_var, ";");
+    if (data_var != NULL)
+      csv_producer (data_var, ";");
     else {
       fprintf (stderr, "no data variable given (passed by -d option)\n");
       ret = -1;
     }
     fclose (csv_out);
+    return ret;
+  }
+  return -1;
+}
+
+// Qucs dataset to Touchstone conversion.
+int qucs2touch (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  if ((dataset_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (dataset_parse () != 0) {
+    ret = -1;
+  } else if (dataset_result == NULL) {
+    ret = -1;
+  } else if (dataset_check (dataset_result) != 0) {
+    delete dataset_result;
+    dataset_result = NULL;
+    ret = -1;
+  }
+  qucs_data = dataset_result;
+  dataset_result = NULL;
+  dataset_lex_destroy ();
+  if (dataset_in)
+    fclose (dataset_in);
+  if (ret)
+    return -1;
+
+  if ((touchstone_out = open_file (outfile, "w")) == NULL)
+    return -1;
+  if (!strcmp (action->out, "touchstone")) {
+    touchstone_producer (data_var);
+    fclose (touchstone_out);
     return ret;
   }
   return -1;

@@ -1,7 +1,7 @@
 /*
- * csv_producer.h - the CSV producer definitions
+ * touchstone_producer.h - the Touchstone producer definitions
  *
- * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.h,v 1.3 2007-08-27 17:52:17 ela Exp $
+ * $Id: touchstone_producer.h,v 1.1 2007-08-27 17:52:18 ela Exp $
  *
  */
 
-#ifndef __CSV_PRODUCER_H__
-#define __CSV_PRODUCER_H__
+#ifndef __TOUCHSTONE_PRODUCER_H__
+#define __TOUCHSTONE_PRODUCER_H__
 
 #include "logging.h"
 #include "strlist.h"
@@ -34,9 +34,9 @@
 
 /* Externalize variables. */
 extern dataset * qucs_data;
-extern FILE * csv_out;
+extern FILE * touchstone_out;
 
 /* Available functions of the producers. */
-void csv_producer (char * variable, char * sep = ";");
+void touchstone_producer (char * variable);
 
-#endif /* __CSV_PRODUCER_H__ */
+#endif /* __TOUCHSTONE_PRODUCER_H__ */

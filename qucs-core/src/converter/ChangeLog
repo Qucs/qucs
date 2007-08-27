@@ -1,3 +1,9 @@
+2007-08-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* touchstone_producer.cpp (touchstone_producer): Added new
+	Touchstone producer.  Thus Qucs datasets can be exported to
+	Touchstone.  TODO: noise parameters and frequency sort.
+
 2007-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp: Added new converter from CSV (comma separated
