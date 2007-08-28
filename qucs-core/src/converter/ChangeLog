@@ -1,3 +1,8 @@
+2007-08-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* touchstone_producer.cpp: Noise parameters are also exported if
+	available in the Qucs dataset.
+
 2007-08-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* touchstone_producer.cpp (touchstone_producer): Added new
