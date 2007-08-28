@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: touchstone_producer.cpp,v 1.1 2007/08/27 17:52:17 ela Exp $
+ * $Id: touchstone_producer.cpp,v 1.2 2007/08/28 21:34:02 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include "touchstone_producer.h"
 #include "matrix.h"
 #include "matvec.h"
+#include "constants.h"
 
 /* Global variables. */
 /* dataset * qucs_data = NULL;   -- already defined in CSV producer */
@@ -47,6 +48,10 @@ struct touchstone_data_t {
   char * format;     // data format
   vector * vd;       // appropriate dependency vector
   matvec * mv;       // appropriate data matrix vector
+  vector * fmin;     // minimum noise figure
+  vector * sopt;     // optimum input refelction for minimum noise figure
+  vector * rn;       // effective noise resistance
+  vector * vf;       // dependency vector for noise
 }
 touchstone_data;
 
@@ -56,6 +61,29 @@ touchstone_data;
 #else
 #define touchstone_crlf "\r\n"
 #endif
+
+/* The Touchstone noise data printer. */
+void touchstone_print_noise (void) {
+  if (touchstone_data.vf != NULL && touchstone_data.sopt != NULL &&
+      touchstone_data.rn != NULL && touchstone_data.fmin != NULL) {
+    // blank line separator
+    fprintf (touchstone_out, touchstone_crlf);
+    // noise data
+    for (int i = 0; i < touchstone_data.vf->getSize (); i++) {
+      nr_double_t f = real (touchstone_data.vf->get (i));
+      fprintf (touchstone_out, "%." NR_DECS "e"
+	       " %+." NR_DECS "e"
+	       " %+." NR_DECS "e" " %+." NR_DECS "e"
+	       " %+." NR_DECS "e"
+	       touchstone_crlf, f,
+	       10.0 * log10 (real (touchstone_data.fmin->get (i))),
+	       abs (touchstone_data.sopt->get (i)),
+	       deg (arg (touchstone_data.sopt->get (i))),
+	       real (touchstone_data.rn->get (i)) /
+	       touchstone_data.resistance);
+    }
+  }
+}
 
 /* The Touchstone data printer. */
 void touchstone_print (void) {
@@ -149,13 +177,14 @@ void touchstone_print (void) {
    into the global Touchstone structure. */
 void touchstone_find_data (dataset * data, char * name) {
   vector * v;
-  char * n, * vn, * vd = NULL;
+  char * n, * vn, * vd = NULL, * vf = NULL;
   strlist * deps;
   int r, c, rs = -1, cs  = -1, s = 0;
 
   // find parameter matrix data and its dimensions
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
     vn = v->getName ();
+    // requested matrix vector name found?
     if (strstr (vn, name) == vn) {
       if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
 	if (rs < r) rs = r;
@@ -166,6 +195,21 @@ void touchstone_find_data (dataset * data, char * name) {
 	  vd = deps->get (0);
 	}
       }
+    }
+    // minimum noise figure?
+    if (!strcmp (vn, "Fmin")) {
+      touchstone_data.fmin = v;
+      if ((deps = v->getDependencies ()) != NULL) vf = deps->get (0);
+    }
+    // optimal input reflection for minimum noise figure?
+    else if (!strcmp (vn, "Sopt")) {
+      touchstone_data.sopt = v;
+      if ((deps = v->getDependencies ()) != NULL) vf = deps->get (0);
+    }
+    // effective noise resitance?
+    else if (!strcmp (vn, "Rn")) {
+      touchstone_data.rn = v;
+      if ((deps = v->getDependencies ()) != NULL) vf = deps->get (0);
     }
   }
 
@@ -192,8 +236,11 @@ void touchstone_find_data (dataset * data, char * name) {
     touchstone_data.parameter = toupper (mv->getName ()[0]);
     // look for dependency (frequency) vector
     for (v = data->getDependencies (); v; v = (vector *) v->getNext ()) {
-      if (!strcmp (v->getName (), vd)) {
+      if (vd && !strcmp (v->getName (), vd)) {
 	touchstone_data.vd = v;
+      }
+      if (vf && !strcmp (v->getName (), vf)) {
+	touchstone_data.vf = v;
       }
     }
   }
@@ -212,6 +259,10 @@ void touchstone_producer (char * variable) {
   touchstone_data.vd = NULL;
   touchstone_data.format = "RI";
   touchstone_data.resistance = 50.0;
+  touchstone_data.fmin = NULL;
+  touchstone_data.sopt = NULL;
+  touchstone_data.rn = NULL;
+  touchstone_data.vf = NULL;
 
   // look for appropriate matrix data
   touchstone_find_data (qucs_data, variable);
@@ -220,7 +271,7 @@ void touchstone_producer (char * variable) {
   if (touchstone_data.mv != NULL) {
     touchstone_print ();
     delete touchstone_data.mv;
-    delete touchstone_data.vd;
+    touchstone_print_noise ();
   }
   else {
     fprintf (stderr, "no such data variable `%s' found\n", variable);
