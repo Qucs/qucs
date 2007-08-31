@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.7 2007-06-15 21:13:31 ela Exp $
+ * $Id: eqndefined.cpp,v 1.8 2007-08-31 17:57:28 ela Exp $
  *
  */
 
@@ -289,6 +289,7 @@ void eqndefined::calcDC (void) {
   }
   // get local subcircuit values
   getEnv()->passConstants();
+  getEnv()->equationSolver(NULL);
 
   // calculate currents and put into right-hand side
   for (i = 0; i < branches; i++) {
@@ -330,6 +331,9 @@ void eqndefined::saveOperatingPoints (void) {
   for (i = 0; i < branches; i++) {
     setResult (veqn[i], BP (i));
   }
+  // get local subcircuit values
+  getEnv()->passConstants();
+  getEnv()->equationSolver(NULL);
 
   // save values for charges, conductances and capacitances
   for (k = 0, i = 0; i < branches; i++) {
@@ -372,7 +376,7 @@ matrix eqndefined::calcMatrixY (nr_double_t frequency) {
       y (r + 0, c + 1) = -val;
       y (r + 1, c + 0) = -val;
     }
-  }  
+  }
 
   return y;
 }
