@@ -1,3 +1,10 @@
+2007-08-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp: Fixed a bug due to use of several
+	subcircuits of the same type including EDDs.  Equation results in
+	environment depending on subcircuit parameters passed into the EDD
+	equations are now updated correctly.
+
 2007-08-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* vfile.cpp: Allowing both to be used as file formats: native
