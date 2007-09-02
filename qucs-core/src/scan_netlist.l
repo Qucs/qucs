@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.21 2007/04/27 16:01:27 ela Exp $
+ * $Id: scan_netlist.l,v 1.22 2007/09/02 13:47:42 ela Exp $
  *
  */
 
@@ -51,6 +51,30 @@
 # define strchr  index
 # define strrchr rindex
 #endif
+
+static double netlist_evaluate_scale (double val, char * scale) {
+  double factor = 1.0;
+  while (isspace (scale[0])) scale++;
+  switch (scale[0]) {
+  case 'T': factor = 1e+12; break;
+  case 'G': factor = 1e+09; break;
+  case 'M': factor = 1e+06; break;
+  case 'k': factor = 1e+03; break;
+  case 'm': factor = 1e-03; break;
+  case 'u': factor = 1e-06; break;
+  case 'n': factor = 1e-09; break;
+  case 'p': factor = 1e-12; break;
+  case 'f': factor = 1e-15; break;
+  case 'a': factor = 1e-18; break;
+  case 'd':
+    if (scale[1] == 'B') {
+      val = pow (10.0, val / 10.0);
+      if (scale[2] == 'm') factor = 1e-03;
+    }
+    break;
+  }
+  return val * factor;
+}
 
 %}
 
@@ -83,8 +107,8 @@ URFLOAT1 {DIGIT}+{EXPONENT}
 URFLOAT2 {DIGIT}*"."{DIGIT}+({EXPONENT})?
 UIFLOAT1 [ij]{1}{DIGIT}+{EXPONENT}
 UIFLOAT2 [ij]{1}{DIGIT}*"."{DIGIT}+({EXPONENT})?
-UCREAL   ({URFLOAT1}|{URFLOAT2}|{URINT})
-UCIMAG   ({UIFLOAT1}|{UIFLOAT2}|{UIINT})
+UCREAL   ({URFLOAT1}|{URFLOAT2}|{URINT})({SPACE})*({PFX})?
+UCIMAG   ({UIFLOAT1}|{UIFLOAT2}|{UIINT})({SPACE})*({PFX})?
 UCOMPLEX {UCREAL}{UCIMAG}
 
 
@@ -210,7 +234,9 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <EQN>"!"  { return Not; }
 
 <EQN>{UCREAL} { /* identify unsigned real float */
-    netlist_lval.d = strtod (netlist_text, NULL);
+    char * endptr = NULL;
+    netlist_lval.d = strtod (netlist_text, &endptr);
+    netlist_lval.d = netlist_evaluate_scale (netlist_lval.d, endptr);
     return REAL;
   }
 <EQN>{UCIMAG} { /* identify unsigned imaginary float */
@@ -218,7 +244,9 @@ UCOMPLEX {UCREAL}{UCIMAG}
       netlist_text[0] = (netlist_text[1] == '\0') ? '1' : '0';
     else
       netlist_text[1] = '0';
-    netlist_lval.d = strtod (netlist_text, NULL);
+    char * endptr = NULL;
+    netlist_lval.d = strtod (netlist_text, &endptr);
+    netlist_lval.d = netlist_evaluate_scale (netlist_lval.d, endptr);
     return IMAG;
   }
 <EQN>{ID} { /* identify identifier */

@@ -1,3 +1,8 @@
+2007-09-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Allowing engineering notation of numbers in
+	equations.
+
 2007-08-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* parasweep.cpp: Implemented new initialize() and cleanup()
