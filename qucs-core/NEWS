@@ -26,6 +26,7 @@ files.
 Version 0.0.13
 --------------
 
+ * allowing engineering notation of numbers in equations
  * support for Touchstone files as an export file format in qucsconv
  * support for CSV files as an import file format in qucsconv
  * new component: file based voltage source

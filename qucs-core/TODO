@@ -34,7 +34,7 @@ unfixed) have a look at the file BUGS.
 	  couplings.
 - Make 'time' and 'frequency' variables available in equations during
   AC, SP and transient simulation.
-- Allow engineering notation in equations.
+	- Allow engineering notation in equations.
 	- Support for ZVR ascii data (R&S network analyzer) as an import
 	  file format in the Qucs Converter.
 	- Allow input parameters of components, e.g. Q1.Bf, in equations.
