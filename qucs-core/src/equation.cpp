@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.58 2007-05-27 17:50:14 ela Exp $
+ * $Id: equation.cpp,v 1.59 2007-09-04 18:51:01 ela Exp $
  *
  */
 
@@ -786,7 +786,7 @@ node * application::differentiate (char * derivative) {
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
-  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
@@ -802,7 +802,7 @@ node::node () {
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
-  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
@@ -819,7 +819,7 @@ node::node (int type) {
    the given node. */
 node::node (const node & o) {
   tag = o.tag;
-  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
@@ -1458,7 +1458,7 @@ solver::~solver () {
 void solver::evaluate (void) {
   foreach_equation (eqn) {
     // FIXME: Can save evaluation of already evaluated equations?
-    if (eqn->evalPossible /* && eqn->evaluated == 0 */) {
+    if (eqn->evalPossible && !eqn->skip /* && eqn->evaluated == 0 */) {
       // exception handling around evaluation
       try_running () {
 	eqn->solvee = this;
@@ -1471,7 +1471,7 @@ void solver::evaluate (void) {
 	break;
       }
       eqn->evaluated++;
-#if DEBUG
+#if DEBUG && 0
       // print equation results
       logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
 		eqn->getResult () ? eqn->getResult()->toString () : "error");

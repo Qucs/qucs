@@ -1,3 +1,12 @@
+2007-09-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Added new property to an equation node 'skip'
+	indicating that the node (e.g. equation assigment) is skipped from
+	evaluation when the solver is run.
+
+	* environment.cpp: Added new function which just evaluates (no
+	checking and no dataset) the equations in an environment.
+
 2007-09-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Allowing engineering notation of numbers in

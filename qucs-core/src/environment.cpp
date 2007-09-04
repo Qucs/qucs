@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.11 2007-06-15 21:13:29 ela Exp $
+ * $Id: environment.cpp,v 1.12 2007-09-04 18:51:01 ela Exp $
  *
  */
 
@@ -199,6 +199,16 @@ int environment::equationSolver (dataset * data) {
   int err = solvee->solve (data);
   checkee->setEquations (solvee->getEquations ());
   return err;
+}
+
+// The function runs the equation solver for this environment without
+// checking it previously and without considering an additional
+// dataset.
+void environment::equationSolver (void) {
+  checkee->setDefinitions (defs);
+  solvee->setEquations (checkee->getEquations ());
+  solvee->evaluate ();
+  checkee->setEquations (solvee->getEquations ());
 }
 
 // Adds a child to the environment.

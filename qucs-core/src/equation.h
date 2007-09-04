@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.38 2007-04-28 09:40:44 ela Exp $
+ * $Id: equation.h,v 1.39 2007-09-04 18:51:01 ela Exp $
  *
  */
 
@@ -105,6 +105,7 @@ public:
   int duplicate;
   int cycle;
   int evalPossible;
+  int skip;
   char * txt;
   int evaluated;
   char * instance;

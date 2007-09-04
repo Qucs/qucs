@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.9 2007-06-15 21:13:30 ela Exp $
+ * $Id: environment.h,v 1.10 2007-09-04 18:51:01 ela Exp $
  *
  */
 
@@ -60,6 +60,7 @@ class environment
   int equationChecker (int noundefined = 1);
   int equationSolver (dataset *);
   int runSolver (void);
+  void equationSolver (void);
 
   // subcircuit specific
   void setDoubleConstant (char *, nr_double_t);
