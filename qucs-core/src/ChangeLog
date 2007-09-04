@@ -1,5 +1,7 @@
 2007-09-04  Stefan Jahn  <stefan@lkcc.org>
 
+	* differentiate.cpp: Fixed some memory leaks.
+
 	* equation.cpp: Added new property to an equation node 'skip'
 	indicating that the node (e.g. equation assigment) is skipped from
 	evaluation when the solver is run.
