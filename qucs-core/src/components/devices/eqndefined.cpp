@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.8 2007/08/31 17:57:28 ela Exp $
+ * $Id: eqndefined.cpp,v 1.9 2007/09/04 18:51:01 ela Exp $
  *
  */
 
@@ -157,6 +157,7 @@ void eqndefined::initModel (void) {
     if ((veqn[i] = getEnv()->getChecker()->findEquation (vn)) == NULL) {
       veqn[i] = getEnv()->getChecker()->addDouble ("#voltage", vn, 0);
       A(veqn[i])->evalType ();
+      A(veqn[i])->skip = 1;
     }
     free (vn);
   }
@@ -205,8 +206,8 @@ void eqndefined::initModel (void) {
 
   // evaluate types of currents and charges
   for (i = 0; i < branches; i++) {
-    if (ieqn[i]) A(ieqn[i])->evalType ();
-    if (qeqn[i]) A(qeqn[i])->evalType ();
+    if (ieqn[i]) { A(ieqn[i])->evalType (); A(ieqn[i])->skip = 1; }
+    if (qeqn[i]) { A(qeqn[i])->evalType (); A(qeqn[i])->skip = 1; }
   }
 
   // create derivatives of currents
@@ -224,6 +225,7 @@ void eqndefined::initModel (void) {
 	  diff = ivalue->differentiate (vn);
 	  getEnv()->getChecker()->addEquation (diff);
 	  diff->evalType ();
+	  diff->skip = 1;
 	  geqn[k] = diff;
 	  A(diff)->rename (gn);
 	}
@@ -266,6 +268,7 @@ void eqndefined::initModel (void) {
 	    free (in);
 	  }
 	  A(ceqn[k])->evalType ();
+	  A(ceqn[k])->skip = 1;
 	}
 	free (cn);
 #if DEBUG
@@ -279,17 +282,25 @@ void eqndefined::initModel (void) {
   }
 }
 
-// Callback for DC analysis.
-void eqndefined::calcDC (void) {
-  int i, j, k, branches = getSize () / 2;
+// Update local variable equations.
+void eqndefined::updateLocals (void) {
+  int i, branches = getSize () / 2;
 
   // update voltages for equations
   for (i = 0; i < branches; i++) {
     setResult (veqn[i], BP (i));
   }
   // get local subcircuit values
-  getEnv()->passConstants();
-  getEnv()->equationSolver(NULL);
+  getEnv()->passConstants ();
+  getEnv()->equationSolver ();
+}
+
+// Callback for DC analysis.
+void eqndefined::calcDC (void) {
+  int i, j, k, branches = getSize () / 2;
+
+  // update local equations
+  updateLocals ();
 
   // calculate currents and put into right-hand side
   for (i = 0; i < branches; i++) {
@@ -323,17 +334,9 @@ void eqndefined::calcDC (void) {
   }
 }
 
-// Saves operating points.
-void eqndefined::saveOperatingPoints (void) {
+// Evaluate operating points.
+void eqndefined::evalOperatingPoints (void) {
   int i, j, k, branches = getSize () / 2;
-
-  // update voltages for equations
-  for (i = 0; i < branches; i++) {
-    setResult (veqn[i], BP (i));
-  }
-  // get local subcircuit values
-  getEnv()->passConstants();
-  getEnv()->equationSolver(NULL);
 
   // save values for charges, conductances and capacitances
   for (k = 0, i = 0; i < branches; i++) {
@@ -346,6 +349,16 @@ void eqndefined::saveOperatingPoints (void) {
       _jdyna[k] = c;
     }
   }
+}
+
+// Saves operating points.
+void eqndefined::saveOperatingPoints (void) {
+
+  // update local equations
+  updateLocals ();
+
+  // save values for charges, conductances and capacitances
+  evalOperatingPoints ();
 }
 
 // Callback for initializing the AC analysis.
@@ -396,7 +409,7 @@ void eqndefined::calcTR (nr_double_t) {
   calcDC ();
 
   // calculate Q and C
-  saveOperatingPoints ();
+  evalOperatingPoints ();
 
   // charge integrations
   for (i = 0; i < branches; i++) {
@@ -442,7 +455,7 @@ void eqndefined::calcHB (int) {
   calcDC ();
 
   // calculate Q and C
-  saveOperatingPoints ();
+  evalOperatingPoints ();
 
   // setup additional charge right-hand side
   for (i = 0; i < branches; i++) {

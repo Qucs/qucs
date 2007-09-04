@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.h,v 1.2 2007/04/19 16:06:29 ela Exp $
+ * $Id: eqndefined.h,v 1.3 2007/09/04 18:51:01 ela Exp $
  *
  */
 
@@ -49,6 +49,8 @@ class eqndefined : public circuit
   void setResult (void *, nr_double_t);
   nr_double_t getResult (void *);
   matrix calcMatrixY (nr_double_t);
+  void evalOperatingPoints (void);
+  void updateLocals (void);
 
  private:
   void ** veqn;

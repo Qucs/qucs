@@ -1,3 +1,10 @@
+2007-09-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/eqndefined.cpp: Reducing number of equation evaluations
+	using the new 'skip' feature of the equation solver on the one
+	hand and by avoiding running the equation evaluations of the EDD
+	twice for a single simulation step.
+
 2007-08-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Fixed a bug due to use of several
