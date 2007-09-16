@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.47 2007/04/04 19:25:41 ela Exp $
+ * $Id: nasolver.cpp,v 1.48 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -379,7 +379,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void) {
 /* The function returns an appropriate text representation for the
    currently used convergence helper algorithm. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::getHelperDescription (void) {
+const char * nasolver<nr_type_t>::getHelperDescription (void) {
   if (convHelper == CONV_Attenuation) {
     return "RHS attenuation";
   }
@@ -1134,8 +1134,8 @@ void nasolver<nr_type_t>::recallSolution (void) {
 /* This function saves the results of a single solve() functionality
    into the output dataset. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
-				       vector * f) {
+void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
+				       int saveOPs, vector * f) {
   int N = countNodes ();
   int M = countVoltageSources ();
   char * n;
@@ -1195,7 +1195,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 /* Create an appropriate variable name for operating points.  The
    caller is responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createOP (char * c, char * n) {
+char * nasolver<nr_type_t>::createOP (const char * c, const char * n) {
   char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
   sprintf (text, "%s.%s", c, n);
   return text;
@@ -1204,7 +1204,7 @@ char * nasolver<nr_type_t>::createOP (char * c, char * n) {
 /* Creates an appropriate variable name for voltages.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createV (int n, char * volts, int saveOPs) {
+char * nasolver<nr_type_t>::createV (int n, const char * volts, int saveOPs) {
   if (nlist->isInternal (n)) return NULL;
   char * node = nlist->get (n);
   if (strchr (node, '.') && !(saveOPs & SAVE_ALL)) return NULL;
@@ -1216,7 +1216,7 @@ char * nasolver<nr_type_t>::createV (int n, char * volts, int saveOPs) {
 /* Create an appropriate variable name for currents.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createI (int n, char * amps, int saveOPs) {
+char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs) {
   circuit * vs = findVoltageSource (n);
 
   // don't output internal (helper) voltage sources

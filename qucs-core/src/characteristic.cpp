@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: characteristic.cpp,v 1.1 2006/01/30 07:45:34 raimi Exp $
+ * $Id: characteristic.cpp,v 1.2 2007/09/16 16:49:37 ela Exp $
  *
  */
 
@@ -37,13 +37,14 @@ characteristic::characteristic () : pair () {
 }
 
 // Constructor creates a named instance of the characteristic class.
-characteristic::characteristic (char * n) : pair (n) {
+characteristic::characteristic (const char * n) : pair (n) {
 }
 
 /* This full qualified constructor creates an instance of the
    characteristic class containing both the key and the value of the
    characteristic. */
-characteristic::characteristic (char * n, nr_double_t val) : pair (n, val) {
+characteristic::characteristic (const char * n, nr_double_t val)
+  : pair (n, val) {
 }
 
 /* The copy constructor creates a new instance of the characteristic

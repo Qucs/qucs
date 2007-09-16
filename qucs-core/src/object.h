@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.h,v 1.9 2006/07/24 08:07:41 raimi Exp $
+ * $Id: object.h,v 1.10 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -33,30 +33,30 @@ class object
 {
  public:
   object ();
-  object (char *);
+  object (const char *);
   object (const object &);
   virtual ~object ();
   object * getNext (void) { return next; }
   void setNext (object * o) { next = o; }
   object * getPrev (void) { return prev; }
   void setPrev (object * o) { prev = o; }
-  void setName (char *);
+  void setName (const char *);
   char * getName (void);
   void addProperty (property *);
-  property * addProperty (char *, char *);
-  property * addProperty (char *, nr_double_t);
-  property * addProperty (char *, variable *);
-  void setProperty (char *, char *);
-  void setProperty (char *, nr_double_t);
-  void setScaledProperty (char *, nr_double_t);
-  void setProperty (char *, variable *);
-  vector * getPropertyVector (char *);
-  char * getPropertyString (char *);
-  nr_double_t getPropertyDouble (char *);
-  nr_double_t getScaledProperty (char *);
-  int  getPropertyInteger (char *);
-  bool hasProperty (char *);
-  bool isPropertyGiven (char *);
+  property * addProperty (const char *, const char *);
+  property * addProperty (const char *, nr_double_t);
+  property * addProperty (const char *, variable *);
+  void setProperty (const char *, char *);
+  void setProperty (const char *, nr_double_t);
+  void setScaledProperty (const char *, nr_double_t);
+  void setProperty (const char *, variable *);
+  vector * getPropertyVector (const char *);
+  char * getPropertyString (const char *);
+  nr_double_t getPropertyDouble (const char *);
+  nr_double_t getScaledProperty (const char *);
+  int  getPropertyInteger (const char *);
+  bool hasProperty (const char *);
+  bool isPropertyGiven (const char *);
   void copyProperties (property *);
   void deleteProperties (void);
   int  countProperties (void);

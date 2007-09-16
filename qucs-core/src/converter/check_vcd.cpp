@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.13 2006/08/09 08:32:18 raimi Exp $
+ * $Id: check_vcd.cpp,v 1.14 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -346,7 +346,7 @@ vcd_create_dataset (struct vcd_vardef * var) {
 /* The function creates the independent (timestamps) variable.  It
    passes through all VCD changesets and collects the simulation
    times. */
-static struct dataset_variable * vcd_create_indep (char * name) {
+static struct dataset_variable * vcd_create_indep (const char * name) {
   struct dataset_variable * ds;
   struct dataset_value * dv, * current = NULL;
   struct vcd_set * vs;

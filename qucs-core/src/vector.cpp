@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.34 2007/05/03 19:01:05 ela Exp $
+ * $Id: vector.cpp,v 1.35 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -74,7 +74,7 @@ vector::vector (int s, complex val) : object () {
 }
 
 // Constructor creates an named instance of the vector class.
-vector::vector (char * n) : object (n) {
+vector::vector (const char * n) : object (n) {
   capacity = size = 0;
   data = NULL;
   dependencies = NULL;
@@ -84,7 +84,7 @@ vector::vector (char * n) : object (n) {
 
 /* This constructor creates a named instance of the vector class with
    a given initial size. */
-vector::vector (char * n, int s) : object (n) {
+vector::vector (const char * n, int s) : object (n) {
   assert (s >= 0);
   capacity = size = s;
   data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.10 2007/09/04 19:57:17 ela Exp $
+ * $Id: differentiate.cpp,v 1.11 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -353,7 +353,7 @@ node * differentiate::sqrt_reduce (node * f0) {
   retApp1 ("sqrt", f0);
 }
 
-node * differentiate::app_reduce (char * func, node * d0, node * f0) {
+node * differentiate::app_reduce (const char * func, node * d0, node * f0) {
   if (isOne (d0)) {
     delete d0;
     retApp1 (func, f0);

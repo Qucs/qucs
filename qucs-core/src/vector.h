@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.27 2007/05/03 19:01:07 ela Exp $
+ * $Id: vector.h,v 1.28 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -46,10 +46,10 @@ class vector : public object
 {
  public:
   vector ();
-  vector (char *);
+  vector (const char *);
   vector (int);
   vector (int, complex);
-  vector (char *, int);
+  vector (const char *, int);
   vector (const vector &);
   const vector& operator = (const vector &);
   ~vector ();

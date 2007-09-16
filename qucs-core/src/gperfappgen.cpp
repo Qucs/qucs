@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: gperfappgen.cpp,v 1.1 2005/12/06 16:22:07 raimi Exp $
+ * $Id: gperfappgen.cpp,v 1.2 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -52,7 +52,7 @@ int main (void) {
 	   "%%define slot-name key\n"
 	   "%%define word-array-name applist\n"
 	   "%%struct-type\n"
-	   "struct appindex { char * key; int index; };\n"
+	   "struct appindex { const char * key; int index; };\n"
 	   "%%%%\n");
 
   // Print hash key list.

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.36 2007/05/24 16:40:31 ela Exp $
+ * $Id: evaluate.h,v 1.37 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -712,11 +712,11 @@ typedef constant * (* evaluator_t) (constant *);
 // Structure defining an application.
 struct application_t
 {
-  char * application; /* the name of the application     */
-  int retval;         /* its return type                 */
-  evaluator_t eval;   /* the actual application function */
-  int nargs;          /* number of arguments             */
-  int args[16];       /* the appropriate argument types  */
+  const char * application; /* the name of the application     */
+  int retval;               /* its return type                 */
+  evaluator_t eval;         /* the actual application function */
+  int nargs;                /* number of arguments             */
+  int args[16];             /* the appropriate argument types  */
 };
 
 extern struct application_t applications[];

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.h,v 1.14 2007/08/15 20:27:50 ela Exp $
+ * $Id: dataset.h,v 1.15 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -53,8 +53,8 @@ class dataset : public object
   void printData (vector *, FILE *);
   void printDependency (vector *, FILE *);
   void printVariable (vector *, FILE *);
-  vector * findDependency (char *);
-  vector * findVariable (char *);
+  vector * findDependency (const char *);
+  vector * findVariable (const char *);
   vector * getDependencies (void) { return dependencies; }
   vector * getVariables (void) { return variables; }
   int isDependency (vector *);

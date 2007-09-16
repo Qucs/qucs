@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.h,v 1.3 2007/09/04 18:51:01 ela Exp $
+ * $Id: eqndefined.h,v 1.4 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -44,8 +44,8 @@ class eqndefined : public circuit
 
  private:
   void initModel (void);
-  char * createVariable (char *, int, int, bool prefix = true);
-  char * createVariable (char *, int, bool prefix = true);
+  char * createVariable (const char *, int, int, bool prefix = true);
+  char * createVariable (const char *, int, bool prefix = true);
   void setResult (void *, nr_double_t);
   nr_double_t getResult (void *);
   matrix calcMatrixY (nr_double_t);

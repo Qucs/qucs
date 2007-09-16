@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.cpp,v 1.47 2006/01/30 07:45:35 raimi Exp $
+ * $Id: msline.cpp,v 1.48 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -412,7 +412,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 			  nr_double_t rho, nr_double_t D, nr_double_t tand,
 			  nr_double_t ZlEff1, nr_double_t ZlEff2, 
 			  nr_double_t ErEff,
-			  nr_double_t frequency, char * Model,
+			  nr_double_t frequency, const char * Model,
 			  nr_double_t& ac, nr_double_t& ad) {
   ac = ad = 0;
 

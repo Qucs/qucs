@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.cpp,v 1.11 2006/02/17 07:24:06 raimi Exp $
+ * $Id: mstee.cpp,v 1.12 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -197,7 +197,7 @@ void mstee::calcPropagation (nr_double_t f) {
    n:        name of the inserted (internal) node
    internal: number of new internal node (the original external node) */
 circuit * splitMicrostrip (circuit * base, circuit * line, net * subnet,
-			   char * c, char * n, int internal) {
+			   const char * c, const char * n, int internal) {
   if (line == NULL) {
     line = new msline ();
     char * name = circuit::createInternal (c, base->getName ());

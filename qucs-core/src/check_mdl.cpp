@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.cpp,v 1.5 2007/04/07 11:00:00 ela Exp $
+ * $Id: check_mdl.cpp,v 1.6 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -68,7 +68,8 @@ static void mdl_create_condataset (double val, char * name) {
 // The functions creates dependent data vector(s).
 static void mdl_create_vardataset (struct mdl_point_t * point,
 				   struct mdl_datasize_t * dsize,
-				   char * name, char * type, strlist * deps) {
+				   const char * name, const char * type,
+				   strlist * deps) {
   vector * v = new vector[dsize->x * dsize->y] ();
   // adjust type
   if (!strcmp (type, "MEAS"))
@@ -108,7 +109,8 @@ static void mdl_create_vardataset (struct mdl_point_t * point,
 }
 
 // Look through hypertable elements for a name and return value.
-static char * mdl_find_helement (struct mdl_element_t * root, char * name) {
+static char * mdl_find_helement (struct mdl_element_t * root,
+				 const char * name) {
   for (; root != NULL; root = root->next) {
     if (!strcmp (root->name, name)) return root->value;
   }
@@ -116,7 +118,8 @@ static char * mdl_find_helement (struct mdl_element_t * root, char * name) {
 }
 
 // Look through table elements for a name and return value.
-static char * mdl_find_telement (struct mdl_element_t * root, char * name) {
+static char * mdl_find_telement (struct mdl_element_t * root,
+				 const char * name) {
   for (; root != NULL; root = root->next) {
     if (!strcmp (root->name, "Name") && !strcmp (root->value, name)) {
       if (root->next && !strcmp (root->next->name, "Value")) {
@@ -148,8 +151,8 @@ static double mdl_convert_factor (char * end) {
 }
 
 // Forward declaration.
-static double
-mdl_telement_dvalue (struct mdl_link_t *, struct mdl_element_t *, char *);
+static double mdl_telement_dvalue (struct mdl_link_t *, struct mdl_element_t *,
+				   const char *);
 
 // The function resolves the given variable trying upscope resolving.
 static int mdl_resolve_variable (struct mdl_link_t * link, char * name,
@@ -221,21 +224,24 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
 
 // Returns a double variable value stored in a hypertable.
 static double mdl_helement_dvalue (struct mdl_link_t * link,
-				   struct mdl_element_t * eroot, char * name) {
+				   struct mdl_element_t * eroot,
+				   const char * name) {
   char * txt = mdl_find_helement (eroot, name);
   return mdl_variable_value (link, txt);
 }
 
 // Returns a double variable value stored in a table.
 static double mdl_telement_dvalue (struct mdl_link_t * link,
-				   struct mdl_element_t * eroot, char * name) {
+				   struct mdl_element_t * eroot,
+				   const char * name) {
   char * txt = mdl_find_telement (eroot, name);
   return mdl_variable_value (link, txt);
 }
 
 // Returns a integer variable value stored in a hypertable.
 static int mdl_helement_ivalue (struct mdl_link_t * link,
-				struct mdl_element_t  * eroot, char * name) {
+				struct mdl_element_t  * eroot,
+				const char * name) {
   return (int) mdl_helement_dvalue (link, eroot, name);
 }
 

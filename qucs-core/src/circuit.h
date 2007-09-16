@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.53 2007/04/18 19:18:00 ela Exp $
+ * $Id: circuit.h,v 1.54 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -98,7 +98,7 @@ class circuit : public object, public integrator
   virtual void saveCharacteristics (nr_double_t) { }
 
   // real basics
-  void   setNode (int, char *, int intern = 0);
+  void   setNode (int, const char *, int intern = 0);
   node * getNode (int);
   void   setType (int t) { type = t; }
   int    getType (void) { return type; }
@@ -217,16 +217,16 @@ class circuit : public object, public integrator
   void addI (int, nr_double_t);
 
   // operating point functionality
-  void        addOperatingPoint (char *, nr_double_t);
-  nr_double_t getOperatingPoint (char *);
-  void        setOperatingPoint (char *, nr_double_t);
+  void        addOperatingPoint (const char *, nr_double_t);
+  nr_double_t getOperatingPoint (const char *);
+  void        setOperatingPoint (const char *, nr_double_t);
   int         hasOperatingPoint (char *);
   valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
   // characteristics functionality
-  void        addCharacteristic (char *, nr_double_t);
+  void        addCharacteristic (const char *, nr_double_t);
   nr_double_t getCharacteristic (char *);
-  void        setCharacteristic (char *, nr_double_t);
+  void        setCharacteristic (const char *, nr_double_t);
   int         hasCharacteristic (char *);
   valuelist<characteristic> & getCharacteristics (void) { return charac; }
 
@@ -236,7 +236,7 @@ class circuit : public object, public integrator
 
   // miscellaneous functionality
   void print (void);
-  static char * createInternal (char *, char *);
+  static char * createInternal (const char *, const char *);
 
   // matrix operations
   void   allocMatrixS (void);

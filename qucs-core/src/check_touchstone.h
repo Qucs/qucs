@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.h,v 1.7 2006/06/06 07:45:51 raimi Exp $
+ * $Id: check_touchstone.h,v 1.8 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -46,9 +46,9 @@ extern vector  * touchstone_vector;
 extern strlist * touchstone_idents;
 
 struct touchstone_t {
-  char * unit;
+  const char * unit;
   char parameter;
-  char * format;
+  const char * format;
   double resistance;
   double factor;
   int ports;

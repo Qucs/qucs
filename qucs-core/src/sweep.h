@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: sweep.h,v 1.2 2005/06/02 18:17:51 raimi Exp $
+ * $Id: sweep.h,v 1.3 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -39,7 +39,7 @@ class sweep : public object
 {
  public:
   sweep ();
-  sweep (char *);
+  sweep (const char *);
   sweep (sweep &);
   ~sweep ();
   int getSize (void) { return size; }
@@ -67,7 +67,7 @@ class linsweep : public sweep
 {
  public:
   linsweep ();
-  linsweep (char *);
+  linsweep (const char *);
   ~linsweep ();
   void create (nr_double_t, nr_double_t, int);
 };
@@ -76,7 +76,7 @@ class logsweep : public sweep
 {
  public:
   logsweep ();
-  logsweep (char *);
+  logsweep (const char *);
   ~logsweep ();
   void create (nr_double_t, nr_double_t, int);
 };
@@ -85,7 +85,7 @@ class consweep : public sweep
 {
  public:
   consweep ();
-  consweep (char *);
+  consweep (const char *);
   ~consweep ();
   void create (nr_double_t);
 };
@@ -94,7 +94,7 @@ class lstsweep : public sweep
 {
  public:
   lstsweep ();
-  lstsweep (char *);
+  lstsweep (const char *);
   ~lstsweep ();
   void create (int);
 };

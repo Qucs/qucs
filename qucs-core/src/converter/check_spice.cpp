@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.38 2007/05/17 09:28:19 ela Exp $
+ * $Id: check_spice.cpp,v 1.39 2007/09/16 16:49:40 ela Exp $
  *
  */
 
@@ -260,7 +260,7 @@ netlist_append_nodes (struct node_t * n1, struct node_t * n2) {
 
 /* This function goes through the list of available definitions and
    checks whether the given component type can be found. */
-static struct define_t * spice_find_definition (char * n) {
+static struct define_t * spice_find_definition (const char * n) {
   struct define_t * def;
   for (def = spice_definition_available; def->type != NULL; def++)
     if (!strcasecmp (n, def->type)) return def;
@@ -328,9 +328,9 @@ static struct node_t * spice_get_nodes (struct definition_t * def) {
    there is no valid scale found and otherwise the corrected scale.
    The given endptr is set to the character after the last valid scale
    character. */
-static char *
+static const char *
 spice_evaluate_scale (char * value, char ** endptr, double * factor) {
-  char * scale = NULL;
+  const char * scale = NULL;
   *factor = 1.0;
   switch (*value) {
   case 'T': case 't':
@@ -367,7 +367,8 @@ spice_evaluate_scale (char * value, char ** endptr, double * factor) {
    an appropriate real value and save optional scale and unit. */
 static struct value_t * spice_create_value (const char * ident) {
   struct value_t * val;
-  char * end, * str;
+  char * end;
+  const char  * str;
   double value = 1.0;
   val = create_value ();
   val->value = strtod (ident, &end);
@@ -452,9 +453,9 @@ spice_find_device_instance (struct definition_t * def) {
 
 // Little helper structure for device translations.
 struct spice_device_t {
-  char * type;            // Spice type
-  char * trans_type;      // Qucs type
-  char * trans_type_prop; // value of 'Type' in Qucs
+  const char * type;            // Spice type
+  const char * trans_type;      // Qucs type
+  const char * trans_type_prop; // value of 'Type' in Qucs
 }
 spice_devices[] = {
   { "NPN",     "BJT",    "npn"  },
@@ -531,7 +532,7 @@ spice_find_property_nocase (struct pair_t * pair, const char * prop) {
    list of properties of the given definition. */
 static void
 spice_set_property_string (struct definition_t * def, const char * key,
-			   char * val) {
+			   const char * val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
     if (prop->value->ident) free (prop->value->ident);
@@ -620,8 +621,8 @@ spice_get_qucs_definition (struct definition_t * def) {
 
 // Helper structure for direct type translations.
 struct spice_device_table_t {
-  char * type;  // Spice type
-  char * trans; // Qucs type
+  const char * type;  // Spice type
+  const char * trans; // Qucs type
 }
 spice_device_table[] = {
   { "Q", "BJT"    },
@@ -659,10 +660,10 @@ static int spice_translate_type (struct definition_t * def) {
 
 // Helper structure for node translations.
 struct node_translation_t {
-  char * type;    // the type of definition
-  int pass;       // pass number when the translation should be performed
-  int Mapping[6]; // node ordering
-  int Default[6]; // default nodes
+  const char * type;    // the type of definition
+  int pass;             // pass number when the translation should be performed
+  int Mapping[6];       // node ordering
+  int Default[6];       // default nodes
 }
 node_translations[] = {
   { "BJT", 0,
@@ -831,8 +832,8 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
 
 // Helper structure for unit translations.
 struct unit_translation_t {
-  char * key;
-  char * trans;
+  const char * key;
+  const char * trans;
 }
 unit_translations[] = {
   { "OHM",  "Ohm" },
@@ -923,9 +924,9 @@ static void spice_adjust_optional_properties (struct definition_t * def) {
 
 // Helper structure for property translations and aliases in devices.
 struct property_translation_t {
-  char * type;
-  char * key;
-  char * trans;
+  const char * type;
+  const char * key;
+  const char * trans;
 }
 property_translations[] = {
   /* BJT device */
@@ -1005,7 +1006,7 @@ void spice_adjust_properties (struct definition_t * def) {
    within the given list of values and returns it.  If there is no
    such name, then it returns NULL. */
 static struct value_t *
-spice_find_property (struct value_t * values, char * prop) {
+spice_find_property (struct value_t * values, const char * prop) {
   struct value_t * val;
   foreach_value (values, val) {
     if (!strcasecmp (prop, val->ident)) return val;
@@ -1228,7 +1229,7 @@ static double spice_evaluate_value (struct value_t * value) {
    definition of the given property.  If there is no such property it
    returns 0. */
 static double
-spice_get_property_value (struct definition_t * def, char * key) {
+spice_get_property_value (struct definition_t * def, const char * key) {
   struct pair_t * prop = spice_find_property (def, key);
   return prop ? spice_evaluate_value (prop->value) : 0;
 }
@@ -1236,7 +1237,8 @@ spice_get_property_value (struct definition_t * def, char * key) {
 /* This function replaces or appends the given key/value pair in the
    given definition. */
 static void
-spice_set_property_value (struct definition_t * def, char * key, double val) {
+spice_set_property_value (struct definition_t * def, const char * key,
+			  double val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
     // just replace the key/value pair
@@ -1598,7 +1600,8 @@ static int spice_count_values (struct value_t * values) {
    component with the given type and instance names and returns it.
    Otherwise the function returns NULL. */
 static struct definition_t *
-spice_find_definition (struct definition_t * root, char * type, char * inst) {
+spice_find_definition (struct definition_t * root, const char * type,
+		       char * inst) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcasecmp (def->type, type) && !strcasecmp (def->instance, inst))
       return def;
@@ -1610,7 +1613,7 @@ spice_find_definition (struct definition_t * root, char * type, char * inst) {
    component with the given type and returns it.  Otherwise the
    function returns NULL. */
 static struct definition_t *
-spice_find_definition (struct definition_t * root, char * type) {
+spice_find_definition (struct definition_t * root, const char * type) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcasecmp (def->type, type))
       return def;
@@ -1620,8 +1623,8 @@ spice_find_definition (struct definition_t * root, char * type) {
 
 /* The function appends the given key/value pair to the properties of
    any definition of the given type. */
-static void spice_add_property (struct definition_t * root, char * type,
-				char * key, char * value) {
+static void spice_add_property (struct definition_t * root, const char * type,
+				const char * key, char * value) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcmp (def->type, type))
       spice_append_pair (def, key, value, 0);
@@ -1704,7 +1707,7 @@ static struct definition_t * spice_add_Model (struct definition_t * def) {
    as the original one if there is any. */
 static struct definition_t *
 spice_find_coupled (struct definition_t * root, struct definition_t * coupled,
-		    char * type, char * inst) {
+		    const char * type, char * inst) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (def != coupled && !strcmp (def->type, type) && !def->action) {
       if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
@@ -1721,7 +1724,7 @@ spice_find_coupled (struct definition_t * root, struct definition_t * coupled,
 /* Looks for a mutual inductor instance referencing the two given
    inductors and returns it. */
 static struct definition_t *
-spice_find_coupled (struct definition_t * root, char * type,
+spice_find_coupled (struct definition_t * root, const char * type,
 		    char * inst1, char * inst2) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcmp (def->type, type) && !def->action) {
@@ -1741,7 +1744,7 @@ spice_find_coupled (struct definition_t * root, char * type,
    Emits an error message if there is no such inductor. */
 static struct definition_t *
 spice_find_coupled_inductor (struct definition_t * root,
-			     struct definition_t * def, char * type,
+			     struct definition_t * def, const char * type,
 			     char * inst) {
   static struct definition_t * target;
   target = spice_find_definition (root, type, inst);
@@ -1928,7 +1931,7 @@ spice_translate_coupled (struct definition_t * root,
 static struct definition_t *
 spice_find_coupled (struct definition_t * root,
 		    qucs::hash<struct definition_t> * coupled,
-		    char * type, char * inst) {
+		    const char * type, char * inst) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcmp (def->type, type) && !def->action) {
       if (VAL_IS_DONE (def->values) || VAL_IS_DONE (def->values->next))
@@ -1951,7 +1954,7 @@ static struct definition_t *
 spice_search_coupled (struct definition_t * root,
 		      qucs::hash<struct definition_t> * K_hash,
 		      qucs::hash<struct definition_t> * L_hash,
-		      char * type, char * inst) {
+		      const char * type, char * inst) {
   char * linst;
   struct definition_t * l, * k;
 

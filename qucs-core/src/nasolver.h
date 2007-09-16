@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.23 2007/04/04 19:25:41 ela Exp $
+ * $Id: nasolver.h,v 1.24 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -59,13 +59,13 @@ class nasolver : public analysis
   int  solve_linear (void);
   void solve_pre (void);
   void solve_post (void);
-  void setDescription (char * n) { desc = n; }
-  char * getDescription (void) { return desc; }
-  void saveResults (char *, char *, int, vector * f = NULL);
+  void setDescription (const char * n) { desc = n; }
+  const char * getDescription (void) { return desc; }
+  void saveResults (const char *, const char *, int, vector * f = NULL);
   typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
   void setCalculation (calculate_func_t f) { calculate_func = f; }
   void calculate (void) { if (calculate_func) (*calculate_func) (this); }
-  char * getHelperDescription (void);
+  const char * getHelperDescription (void);
 
  protected:
   void restartNR (void);
@@ -95,9 +95,9 @@ class nasolver : public analysis
   void applyAttenuation (void);
   void lineSearch (void);
   void steepestDescent (void);
-  char * createV (int, char *, int);
-  char * createI (int, char *, int);
-  char * createOP (char *, char *);
+  char * createV (int, const char *, int);
+  char * createI (int, const char *, int);
+  char * createOP (const char *, const char *);
   void saveNodeVoltages (void);
   void saveBranchCurrents (void);
   int  checkConvergence (void);
@@ -127,7 +127,7 @@ class nasolver : public analysis
   nasolution<nr_type_t> solution;
 
  private:
-  char * desc;
+  const char * desc;
   calculate_func_t calculate_func;
 };
 

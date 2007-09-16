@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.23 2007/08/15 20:27:50 ela Exp $
+ * $Id: dataset.cpp,v 1.24 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -276,7 +276,7 @@ int dataset::isVariable (vector * var) {
 /* The function goes through the list of dependencies in the dataset
    and returns the vector specified by the given name.  Otherwise the
    function returns NULL. */
-vector * dataset::findDependency (char * n) {
+vector * dataset::findDependency (const char * n) {
   for (vector * v = dependencies; v != NULL; v = (vector *) v->getNext ()) {
     if (!strcmp (v->getName (), n))
       return v;
@@ -287,7 +287,7 @@ vector * dataset::findDependency (char * n) {
 /* The function goes through the list of variables in the dataset and
    returns the vector specified by the given name.  If there is no
    such variable registered the function returns NULL. */
-vector * dataset::findVariable (char * n) {
+vector * dataset::findVariable (const char * n) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
     if (!strcmp (v->getName (), n))
       return v;

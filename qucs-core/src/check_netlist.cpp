@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.113 2007/08/13 20:45:44 ela Exp $
+ * $Id: check_netlist.cpp,v 1.114 2007/09/16 16:49:38 ela Exp $
  *
  */
 
@@ -51,7 +51,7 @@ environment * env_root = NULL;
 #include "qucsdefs.h"
 
 // List of available microstrip components.
-static char * strip_available[] = {
+static const char * strip_available[] = {
   "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", "MTEE",
   "MCROSS", "MVIA", "CLIN", "COPEN", "CSHORT", "CGAP", "CSTEP", "BOND", NULL };
 
@@ -77,7 +77,7 @@ static struct define_t * checker_find_definition (char * type, int action) {
 
 /* The function returns the number of properties in a definition line
    specified by the given key. */
-static int checker_find_property (char * key, struct pair_t * pair) {
+static int checker_find_property (const char * key, struct pair_t * pair) {
   int count = 0;
   while (pair != NULL) {
     if (!strcmp (pair->key, key))
@@ -105,7 +105,7 @@ static int checker_is_property (struct define_t * available, char * key) {
 /* Counts the number of definitions given by the specified type and
    instance name in the definition list. */
 static int checker_count_definition (struct definition_t * root,
-				     char * type, char * instance) {
+				     const char * type, char * instance) {
   int count = 0;
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcmp (def->type, type) && !strcmp (def->instance, instance)) {
@@ -120,7 +120,8 @@ static int checker_count_definition (struct definition_t * root,
    identifier if it is in the list of definitions.  Otherwise the
    function returns NULL. */
 static struct value_t * checker_find_variable (struct definition_t * root,
-					       char * type, char * key, 
+					       const char * type,
+					       const char * key, 
 					       char * ident) {
   struct pair_t * pair;
   for (struct definition_t * def = root; def != NULL; def = def->next) {
@@ -141,7 +142,7 @@ static struct value_t * checker_find_variable (struct definition_t * root,
    string).  If there is no such key value pair the function returns
    NULL. */
 static struct value_t * checker_find_reference (struct definition_t * def,
-						char * key) {
+						const char * key) {
   struct pair_t * pair;
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     if (!strcmp (pair->key, key))
@@ -155,7 +156,7 @@ static struct value_t * checker_find_reference (struct definition_t * def,
    of the given definition line and returns its value if the property
    is not an identifier.  Otherwise the function returns NULL. */
 static struct value_t * checker_find_prop_value (struct definition_t * def,
-						 char * key) {
+						 const char * key) {
   struct pair_t * pair;
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     if (!strcmp (pair->key, key))
@@ -167,7 +168,8 @@ static struct value_t * checker_find_prop_value (struct definition_t * def,
 
 /* The function returns the number of properties in a definition line
    specified by the given key. */
-static int checker_find_property (struct definition_t * def, char * key) {
+static int checker_find_property (struct definition_t * def,
+				  const char * key) {
   return checker_find_property (key, def->pairs);
 }
 
@@ -176,7 +178,7 @@ static int checker_find_property (struct definition_t * def, char * key) {
    reference.  Otherwise the function returns NULL and emits an
    appropriate error message. */
 static struct value_t * checker_validate_reference (struct definition_t * def,
-						    char * key) {
+						    const char * key) {
   struct value_t * val;
   if ((val = checker_find_reference (def, key)) == NULL) {
     logprint (LOG_ERROR, "line %d: checker error, not a valid `%s' property "
@@ -188,9 +190,9 @@ static struct value_t * checker_validate_reference (struct definition_t * def,
 /* Structure defining a certain component type containing special
    parameter values. */
 struct special_t {
-  char * type;     // component type
-  char * key;      // parameter name
-  char * value[8]; // maximum 7 alternatives for now
+  const char * type;     // component type
+  const char * key;      // parameter name
+  const char * value[8]; // maximum 7 alternatives for now
 };
 
 // List of special identifiers.
@@ -431,7 +433,7 @@ static int checker_evaluate_scale (struct value_t * value) {
 /* The function returns the number of instances of the given type within
    the list of definitions. */
 static int checker_count_definitions (struct definition_t * root,
-				      char * type, int action) {
+				      const char * type, int action) {
   int count = 0;
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (def->action == action) {
@@ -582,7 +584,7 @@ static int checker_validate_ports (struct definition_t * root) {
   int p, errors = 0;
   struct value_t * val;
   struct definition_t * port, * def = root;
-  char * prop = "Num";
+  const char * prop = "Num";
   while ((def = checker_find_port (def)) != NULL) {
     if ((val = checker_find_prop_value (def, prop)) != NULL) {
       p = (int) val->value;
@@ -1450,14 +1452,14 @@ static struct define_t * netlist_create_define (struct definition_t * def) {
 static void netlist_free_define (struct define_t * d) {
   int i;
   struct property_t * p;
-  free (d->type);
+  free ((char *) d->type);
   // free required properties
   for (i = 0, p = d->required; p[i].key != NULL; i++) {
-    free (p[i].key);
+    free ((char *) p[i].key);
   }
   // free optional properties
   for (i = 0, p = d->optional; p[i].key != NULL; i++) {
-    free (p[i].key);
+    free ((char *) p[i].key);
   }
   free (d);
 }
@@ -1769,7 +1771,7 @@ static void netlist_list_value (struct value_t * value) {
 }
 
 /* Debug function: Prints definition list representation. */
-static void netlist_lister (struct definition_t * root, char * prefix) {
+static void netlist_lister (struct definition_t * root, const char * prefix) {
   struct definition_t * def;
   struct node_t * node;
   struct pair_t * pair;

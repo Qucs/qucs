@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: sweep.cpp,v 1.8 2005/10/31 16:15:31 ela Exp $
+ * $Id: sweep.cpp,v 1.9 2007/09/16 16:49:39 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ sweep::sweep () : object () {
 }
 
 // Constructor creates a named instance of the sweep class.
-sweep::sweep (char * n) : object (n) {
+sweep::sweep (const char * n) : object (n) {
   type = SWEEP_UNKNOWN;
   data = NULL;
   size = 0;
@@ -107,7 +107,7 @@ void sweep::setSize (int points) {
 // The function creates a string representation of the sweep definition.
 char * sweep::toString (void) {
   if (txt) free (txt);
-  if (data == NULL || size == 0) return "";
+  if (data == NULL || size == 0) return (char *) "";
   int len = 3 + size - 1;
   txt = (char *) malloc (len);
   strcpy (txt, "[");
@@ -155,7 +155,7 @@ linsweep::linsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the linsweep class.
-linsweep::linsweep (char * n) : sweep (n) {
+linsweep::linsweep (const char * n) : sweep (n) {
   type = SWEEP_LINEAR;
 }
 
@@ -178,7 +178,7 @@ logsweep::logsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the logsweep class.
-logsweep::logsweep (char * n) : sweep (n) {
+logsweep::logsweep (const char * n) : sweep (n) {
   type = SWEEP_LOGARITHMIC;
 }
 
@@ -201,7 +201,7 @@ consweep::consweep () : sweep () {
 }
 
 // Constructor creates a named instance of the consweep class.
-consweep::consweep (char * n) : sweep (n) {
+consweep::consweep (const char * n) : sweep (n) {
   type = SWEEP_CONSTANT;
 }
 
@@ -222,7 +222,7 @@ lstsweep::lstsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the lstsweep class.
-lstsweep::lstsweep (char * n) : sweep (n) {
+lstsweep::lstsweep (const char * n) : sweep (n) {
   type = SWEEP_LIST;
 }
 
