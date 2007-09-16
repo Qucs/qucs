@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.h,v 1.3 2007-08-27 17:52:17 ela Exp $
+ * $Id: csv_producer.h,v 1.4 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -37,6 +37,6 @@ extern dataset * qucs_data;
 extern FILE * csv_out;
 
 /* Available functions of the producers. */
-void csv_producer (char * variable, char * sep = ";");
+void csv_producer (char * variable, const char * sep = ";");
 
 #endif /* __CSV_PRODUCER_H__ */

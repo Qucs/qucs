@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.26 2007-08-27 17:52:17 ela Exp $
+ * $Id: qucsconv.cpp,v 1.27 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -47,8 +47,8 @@
 
 /* structure defining a conversion */
 struct actionset_t {
-  char * in;  /* -if parameter */
-  char * out; /* -of parameter */
+  const char * in;  /* -if parameter */
+  const char * out; /* -of parameter */
 
   /* callback for the logic, return error code of application */
   int (* execute) (struct actionset_t *, char * infile, char * outfile);
@@ -84,7 +84,7 @@ struct actionset_t actionset[] = {
 };
 
 /* opens the given file, fallback to stdin/stdout */
-FILE * open_file (char * file, char * flag) {
+FILE * open_file (char * file, const char * flag) {
   FILE * fd = NULL;
   if (file) {
     if ((fd = fopen (file, flag)) == NULL) {

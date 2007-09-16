@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pair.cpp,v 1.1 2006-01-09 09:11:07 raimi Exp $
+ * $Id: pair.cpp,v 1.2 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -39,14 +39,14 @@ pair::pair () {
 }
 
 // Constructor creates a named instance of the pair class.
-pair::pair (char * n) {
+pair::pair (const char * n) {
   name = n ? strdup (n) : NULL;
   value = 0.0;
 }
 
 /* This full qualified constructor creates an instance of the pair
    class containing both the key and the value of the pair. */
-pair::pair (char * n, nr_double_t val) {
+pair::pair (const char * n, nr_double_t val) {
   name = n ? strdup (n) : NULL;
   value = val;
 }

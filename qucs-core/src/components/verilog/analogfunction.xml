@@ -949,10 +949,10 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
   </admst:join>)
 <admst:text format="\n{\n"/>
-<admst:text format="double $function; "/>
+<admst:text format="double $function=0.0;\n"/>
   <admst:for-each select="variable[input='no' and output='no']">
     <admst:value-of select="name"/>
-    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s;"/>
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s=0.0;\n"/>
   </admst:for-each>
   <admst:apply-templates select="tree" match="af:print">
     <admst:value-of select="returned('x')/value"/>
@@ -968,23 +968,24 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%s"/>
   </admst:join>)
 <admst:text format="\n{\n"/>
-<admst:text format="double $function"/>
+<admst:text format="double $function=0.0;\n"/>
   <admst:for-each select="$globalanalogfunction/variable[input='yes']">
     <admst:value-of select="name"/>
     <admst:variable name="ddx" select="%s"/>
-    <admst:text format="; double $(function)_$(ddx)"/>
+    <admst:text format="double $(function)_$(ddx)=0.0;\n"/>
   </admst:for-each>
   <admst:for-each select="variable[input='no' and output='no']">
     <admst:value-of select="name"/>
     <admst:variable name="name" select="%s"/>
-    <admst:text format="; "/><admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" $(name)"/>
+    <admst:apply-templates select="." match="v2c:converttype"/>
+    <admst:text format=" $(name)=0.0;\n"/>
     <admst:for-each select="$globalanalogfunction/variable[input='yes']">
       <admst:value-of select="name"/>
       <admst:variable name="ddx" select="%s"/>
-      <admst:text format="; "/><admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" $(name)_$(ddx)"/>
+      <admst:apply-templates select="." match="v2c:converttype"/>
+      <admst:text format=" $(name)_$(ddx)=0.0;\n"/>
     </admst:for-each>
   </admst:for-each>
-    <admst:text format=";\n"/>
   <admst:apply-templates select="tree" match="af:print:derivate">
     <admst:value-of select="returned('x')/value"/>
     <admst:text format="%s"/>

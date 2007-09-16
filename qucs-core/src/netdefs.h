@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.11 2007-02-25 16:57:35 ela Exp $
+ * $Id: netdefs.h,v 1.12 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -80,11 +80,11 @@ struct definition_t {
 
 // Structure defining a key value pair.
 struct property_t {
-  char * key;       // key name
+  const char * key; // key name
   int type;         // type of property
   struct {
     nr_double_t d;  // default value
-    char * s;       // default string
+    const char * s; // default string
   } defaultval;
   struct {
     char il;        // interval boundary
@@ -96,7 +96,7 @@ struct property_t {
 
 // Structure defining an available component type.
 struct define_t {
-  char * type;                     // component name
+  const char * type;               // component name
   int nodes;                       // number of nodes
   int action;                      // is that an action?
   int substrate;                   // is that a substrate?

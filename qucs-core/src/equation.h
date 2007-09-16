@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.39 2007-09-04 18:51:01 ela Exp $
+ * $Id: equation.h,v 1.40 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -85,7 +85,7 @@ public:
   constant * getResult (void) { return res; } 
   void setResult (constant *);
   char * getInstance (void);
-  void setInstance (char *);
+  void setInstance (const char *);
   void applyInstance (void);
   constant * calculate (void);    
   strlist * collectDependencies (void);
@@ -230,7 +230,7 @@ class application : public node
 public:
   application ();
   application (const application &);
-  application (char *, int);
+  application (const char *, int);
   ~application ();
   void print (void);
   void addDependencies (strlist *);
@@ -268,7 +268,7 @@ public:
   node * getEquations (void) { return equations; }
   void list (void);
   int findUndefined (int);
-  static char * tag2key (int);
+  static const char * tag2key (int);
   static int isGenerated (char *);
   strlist * getVariables (void);
   int findDuplicate (void);
@@ -284,9 +284,9 @@ public:
   void constants (void);
   int check (int noundefined = 1);
   strlist * variables (void);
-  node * addDouble (char *, char *, nr_double_t);
-  node * createDouble (char *, char *, nr_double_t);
-  node * createReference (char *, char *, char *);
+  node * addDouble (const char *, const char *, nr_double_t);
+  node * createDouble (const char *, const char *, nr_double_t);
+  node * createReference (const char *, char *, char *);
   void appendEquation (node *);
   void addEquation (node *);
   node * findEquation (char *);
@@ -318,7 +318,7 @@ public:
   void evaluate (void);
   node * addEquationData (vector *, bool ref = false);
   node * addEquationData (matvec *);
-  node * addGeneratedEquation (vector *, char *);
+  node * addGeneratedEquation (vector *, const char *);
   vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);

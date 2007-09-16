@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msopen.cpp,v 1.8 2005-06-02 18:17:56 raimi Exp $
+ * $Id: msopen.cpp,v 1.9 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -50,7 +50,8 @@ msopen::msopen () : circuit (1) {
 // Returns the microstrip open end capacitance.
 nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 			      nr_double_t h, nr_double_t t, nr_double_t er,
-			      char * SModel, char * DModel, char * Model) {
+			      char * SModel, char * DModel,
+			      const char * Model) {
 
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
   msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);

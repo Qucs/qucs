@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pair.h,v 1.1 2006-01-09 09:11:07 raimi Exp $
+ * $Id: pair.h,v 1.2 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -29,8 +29,8 @@ class pair
 {
  public:
   pair ();
-  pair (char *);
-  pair (char *, nr_double_t);
+  pair (const char *);
+  pair (const char *, nr_double_t);
   pair (const pair &);
   ~pair ();
 

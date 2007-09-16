@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.33 2007-08-23 18:37:18 ela Exp $
+ * $Id: net.cpp,v 1.34 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -64,7 +64,7 @@ net::net () : object () {
 }
 
 // Constructor creates a named instance of the net class.
-net::net (char * n) : object (n) {
+net::net (const char * n) : object (n) {
   root = drop = NULL;
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: valuelist.cpp,v 1.3 2006-08-18 08:20:17 raimi Exp $
+ * $Id: valuelist.cpp,v 1.4 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -72,7 +72,7 @@ void valuelist<type_t>::clear (void) {
 
 // Puts a new entry at the beginning of the value list.
 template <class type_t>
-void valuelist<type_t>::add (char * n, type_t * ptr) {
+void valuelist<type_t>::add (const char * n, type_t * ptr) {
   valentry<type_t> * entry = new valentry<type_t> ();
   if (root) root->prev = entry;
   entry->key = strdup (n);
@@ -152,7 +152,7 @@ int valuelist<type_t>::contains (char * n) {
 
 // Returns the value associated with the given key.
 template <class type_t>
-type_t * valuelist<type_t>::get (char * n) {
+type_t * valuelist<type_t>::get (const char * n) {
   for (valentry<type_t> * p = root; p != NULL; p = p->next) {
     if (!strcmp (p->key, n)) return p->value;
   }

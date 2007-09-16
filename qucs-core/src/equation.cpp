@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.59 2007-09-04 18:51:01 ela Exp $
+ * $Id: equation.cpp,v 1.60 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -515,7 +515,7 @@ application::application () : node (APPLICATION) {
 
 /* Constructor creates an instance of the application class with a
    given function name and the number of arguments. */
-application::application (char * func, int a) : node (APPLICATION) {
+application::application (const char * func, int a) : node (APPLICATION) {
   n = func ? strdup (func) : NULL;
   nargs = a;
   args = NULL;
@@ -843,7 +843,7 @@ node::~node () {
 }
 
 // Sets the instance name where the node occurred.
-void node::setInstance (char * n) {
+void node::setInstance (const char * n) {
   if (instance) free (instance);
   instance = n ? strdup (n) : NULL;
 }
@@ -1503,7 +1503,7 @@ node * solver::addEquationData (vector * v, bool ref) {
 /* The function puts the given vector into the equation set.  The
    resulting data vector is going to be copied and exported - given a
    generated name based upon the second argument. */
-node * solver::addGeneratedEquation (vector * v, char * n) {
+node * solver::addGeneratedEquation (vector * v, const char * n) {
   // create generated name
   char * str = (char *) malloc (strlen (n) + 6);
   sprintf (str, "%s.%04d", n, ++generated);
@@ -1930,7 +1930,7 @@ bool checker::containsVariable (char * ident) {
 
 // Structure defining a predefined constant.
 struct pconstant {
-  char * ident;
+  const char * ident;
   nr_double_t value;
 };
 
@@ -1961,7 +1961,8 @@ void checker::constants (void) {
 
 /* The function adds a new equation to the equation checker consisting
    of an assignment of a double variable. */
-node * checker::addDouble (char * type, char * ident, nr_double_t value) {
+node * checker::addDouble (const char * type, const char * ident,
+			   nr_double_t value) {
   node * eqn = createDouble (type, ident, value);
   addEquation (eqn);
   return eqn;
@@ -1985,7 +1986,8 @@ void checker::appendEquation (node * eqn) {
 
 /* This function creates a equation consisting of an assignment of a
    double variable. */
-node * checker::createDouble (char * type, char * ident, nr_double_t value) {
+node * checker::createDouble (const char * type, const char * ident,
+			      nr_double_t value) {
   // create constant double value
   constant * c = new constant (TAG_DOUBLE);
   c->checkee = this;
@@ -2002,7 +2004,8 @@ node * checker::createDouble (char * type, char * ident, nr_double_t value) {
 
 /* This function creates a equation consisting of an assignment of a
    reference. */
-node * checker::createReference (char * type, char * ident, char * value) {
+node * checker::createReference (const char * type, char * ident,
+				 char * value) {
   // create reference value
   reference * r = new reference ();
   r->checkee = this;

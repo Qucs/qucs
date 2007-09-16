@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.47 2006-09-07 10:56:53 raimi Exp $
+ * $Id: circuit.cpp,v 1.48 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -294,7 +294,7 @@ void circuit::freeMatrixMNA (void) {
    nodes.  It also tells the appropriate node about the circuit it
    belongs to.  The optional 'intern' argument is used to mark a node
    to be for internal use only. */
-void circuit::setNode (int i, char * n, int intern) {
+void circuit::setNode (int i, const char * n, int intern) {
   nodes[i].setName (n);
   nodes[i].setCircuit (this);
   nodes[i].setPort (i);
@@ -512,7 +512,7 @@ void circuit::setCV (int port, complex cv) {
 
 /* This function adds a operating point consisting of a key and a
    value to the circuit. */
-void circuit::addOperatingPoint (char * n, nr_double_t val) {
+void circuit::addOperatingPoint (const char * n, nr_double_t val) {
   operatingpoint * p = new operatingpoint (n, val);
   oper.add (n, p);
 }
@@ -520,7 +520,7 @@ void circuit::addOperatingPoint (char * n, nr_double_t val) {
 /* Returns the requested operating point value which has been
    previously added as its double representation.  If there is no such
    operating point the function returns zero. */
-nr_double_t circuit::getOperatingPoint (char * n) {
+nr_double_t circuit::getOperatingPoint (const char * n) {
   operatingpoint * p = oper.get (n);
   if (p != NULL) return p->getValue ();
   return 0.0;
@@ -528,7 +528,7 @@ nr_double_t circuit::getOperatingPoint (char * n) {
 
 /* This function sets the operating point specified by the given name
    to the value passed to the function. */
-void circuit::setOperatingPoint (char * n, nr_double_t val) {
+void circuit::setOperatingPoint (const char * n, nr_double_t val) {
   operatingpoint * p = oper.get (n);
   if (p != NULL)
     p->setValue (val);
@@ -545,7 +545,7 @@ int circuit::hasOperatingPoint (char * n) {
 
 /* This function adds a characteristic point consisting of a key and a
    value to the circuit. */
-void circuit::addCharacteristic (char * n, nr_double_t val) {
+void circuit::addCharacteristic (const char * n, nr_double_t val) {
   characteristic * p = new characteristic (n, val);
   charac.add (n, p);
 }
@@ -561,7 +561,7 @@ nr_double_t circuit::getCharacteristic (char * n) {
 
 /* This function sets the characteristic value specified by the given
    name to the value passed to the function. */
-void circuit::setCharacteristic (char * n, nr_double_t val) {
+void circuit::setCharacteristic (const char * n, nr_double_t val) {
   characteristic * p = charac.get (n);
   if (p != NULL)
     p->setValue (val);
@@ -621,7 +621,7 @@ void circuit::setNoiseSources (int s) {
 /* The function returns an internal node or circuit name with the
    given prefix and based on the given circuits name.  The caller is
    responsible to free() the returned string. */
-char * circuit::createInternal (char * prefix, char * obj) {
+char * circuit::createInternal (const char * prefix, const char * obj) {
   char * n = (char *) malloc (strlen (prefix) + strlen (obj) + 3);
   sprintf (n, "_%s#%s", prefix, obj);
   return n;

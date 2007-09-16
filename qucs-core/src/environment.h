@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.10 2007-09-04 18:51:01 ela Exp $
+ * $Id: environment.h,v 1.11 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -36,7 +36,7 @@ class environment
 {
  public:
   environment ();
-  environment (char *);
+  environment (const char *);
   environment (const environment &);
   virtual ~environment ();
   void copy (const environment &);

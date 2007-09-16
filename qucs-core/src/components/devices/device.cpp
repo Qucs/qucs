@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.cpp,v 1.22 2006-02-17 07:24:06 raimi Exp $
+ * $Id: device.cpp,v 1.23 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -52,7 +52,8 @@ using namespace device;
    n:        name of the inserted (internal) node
    internal: number of new internal node (the original external node) */
 circuit * device::splitResistor (circuit * base, circuit * res,
-				 char * c, char * n, int internal) {
+				 const char * c, const char * n,
+				 int internal) {
   if (res == NULL) {
     res = new resistor ();
     char * name = circuit::createInternal (c, base->getName ());
@@ -83,7 +84,7 @@ void device::disableResistor (circuit * base, circuit * res, int internal) {
    a name is applied based upon the parents (base) name and the given
    name 'c'.  The circuit is then put into the netlist. */
 circuit * device::splitCapacitor (circuit * base, circuit * cap,
-				  char * c, node * n1, node * n2) {
+				  const char * c, node * n1, node * n2) {
   if (cap == NULL) {
     cap = new capacitor ();
     char * name = circuit::createInternal (c, base->getName ());

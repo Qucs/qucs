@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.11 2007-03-03 17:37:09 ela Exp $
+ * $Id: property.cpp,v 1.12 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -48,7 +48,7 @@ property::property () {
 }
 
 // Constructor creates a named instance of the property class.
-property::property (char * n) {
+property::property (const char * n) {
   type = PROPERTY_UNKNOWN;
   name = n ? strdup (n) : NULL;
   value = 0.0;
@@ -61,7 +61,7 @@ property::property (char * n) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (char * n, char * val) {
+property::property (const char * n, const char * val) {
   type = PROPERTY_STR;
   name = n ? strdup (n) : NULL;
   str = val ? strdup (val) : NULL;
@@ -74,7 +74,7 @@ property::property (char * n, char * val) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (char * n, nr_double_t val) {
+property::property (const char * n, nr_double_t val) {
   type = PROPERTY_DOUBLE;
   name = n ? strdup (n) : NULL;
   value = val;
@@ -87,7 +87,7 @@ property::property (char * n, nr_double_t val) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (char * n, variable * val) {
+property::property (const char * n, variable * val) {
   type = PROPERTY_VAR;
   name = n ? strdup (n) : NULL;
   var = val;
@@ -141,7 +141,7 @@ char * property::getName (void) {
 /* Goes through the chained list of the properties and looks for a
    property matching the given key and returns its value if possible.
    If there is no such property the function returns NULL. */
-property * property::findProperty (char * n) {
+property * property::findProperty (const char * n) {
   for (property * p = this; p != NULL; p = p->getNext ()) {
     if (!strcmp (p->getName (), n)) return p;
   }

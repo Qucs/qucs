@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: characteristic.h,v 1.1 2006-01-30 07:45:34 raimi Exp $
+ * $Id: characteristic.h,v 1.2 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -31,8 +31,8 @@ class characteristic : public pair
 {
  public:
   characteristic ();
-  characteristic (char *);
-  characteristic (char *, nr_double_t);
+  characteristic (const char *);
+  characteristic (const char *, nr_double_t);
   characteristic (const characteristic &);
   ~characteristic () { }
 };

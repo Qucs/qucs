@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.13 2006-07-03 08:52:23 raimi Exp $
+ * $Id: matvec.h,v 1.14 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -38,13 +38,13 @@ class matvec
   int getSize (void) { return size; }
   int getCols (void) { return cols; }
   int getRows (void) { return rows; }
-  void setName (char *);
+  void setName (const char *);
   char * getName (void);
   void set (vector, int, int);
   void set (matrix, int);
   vector get (int, int);
   matrix get (int);
-  static char * createMatrixString (char *, int, int);
+  static char * createMatrixString (const char *, int, int);
   static char * createMatrixString (char, int, int);
   static char * isMatrixVector (char *, int&, int&);
 

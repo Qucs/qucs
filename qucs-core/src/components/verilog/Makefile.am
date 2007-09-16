@@ -29,6 +29,7 @@ noinst_LIBRARIES = libverilog.a
 libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	hicumL2p1.analogfunction.cpp hicumL2p1.core.cpp
 
+
 noinst_HEADERS = HBT_X.core.h HBT_X.analogfunction.h \
 	hicumL2p1.core.h hicumL2p1.analogfunction.h
 
@@ -43,6 +44,7 @@ EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 if MAINTAINER_MODE
+
 HBT_X.analogfunction.cpp: analogfunction.xml
 HBT_X.analogfunction.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e analogfunction.xml
@@ -55,6 +57,7 @@ HBT_X.defs.h: fbh_hbt-2_2a.va
 HBT_X.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 HBT_X.gui.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
 hicumL2p1.analogfunction.cpp: analogfunction.xml
 hicumL2p1.analogfunction.cpp: hicumL2V2p11.va
 	$(ADMSXML) $< -e analogfunction.xml

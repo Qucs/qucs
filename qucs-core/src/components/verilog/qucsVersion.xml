@@ -225,7 +225,7 @@
     <admst:value-of select="name"/>
     <admst:value-of select="type"/>
     <admst:if test="[type='real']">
-      <admst:text format="//%s in VA\ndouble %s;\n"/>
+      <admst:text format="// %s in VA\ndouble %s;\n"/>
     </admst:if>
     <admst:if test="[type!='real']">
       <admst:text format="%s %s;\n"/>
@@ -1347,13 +1347,13 @@
     <admst:assert test="adms[datatypename='variable']" format="expecting datatypename=variable\n"/>
     <admst:if test="[scope='local']">
       <admst:value-of select="name"/>
-      <admst:if test="[type='integer']">int %s=0.0;\n</admst:if>
+      <admst:if test="[type='integer']">int %s=0;\n</admst:if>
       <admst:if test="[type='real']">double %s=0.0;\n</admst:if>
       <admst:if test="[type='string']">char* %s;\n</admst:if>
     </admst:if>
     <admst:if test="[scope!='local']">
       <admst:value-of select="name"/>
-      <admst:if test="[type='integer']">int %s=0.0;\n</admst:if>
+      <admst:if test="[type='integer']">int %s=0;\n</admst:if>
       <admst:if test="[type='real']">double %s=0.0;\n</admst:if>
       <admst:if test="[type='string']">char* %s;\n</admst:if>
     </admst:if>

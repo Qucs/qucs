@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.h,v 1.4 2005-06-02 18:17:56 raimi Exp $
+ * $Id: mstee.h,v 1.5 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -42,7 +42,7 @@ class mstee : public circuit
   void initTR (void);
 
   friend circuit * splitMicrostrip (circuit *, circuit *, net *,
-				    char *, char *, int);
+				    const char *, const char *, int);
   friend void disableMicrostrip (circuit *, circuit *, net *, int);
 
  private:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.9 2007-09-04 18:51:01 ela Exp $
+ * $Id: eqndefined.cpp,v 1.10 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -90,14 +90,14 @@ void eqndefined::initDC (void) {
 #define BP(n) real (getV (n * 2 + 0) - getV (n * 2 + 1))
 
 // Creates a variable name from the given arguments.
-char * eqndefined::createVariable (char * base, int n, bool prefix) {
+char * eqndefined::createVariable (const char * base, int n, bool pfx) {
   char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
     str = getName ();
   char * txt = (char *) malloc (strlen (str) + strlen (base) + 3);
-  if (prefix)
+  if (pfx)
     sprintf (txt, "%s.%s%d", str, base, n);
   else
     sprintf (txt, "%s%d", base, n);
@@ -105,14 +105,14 @@ char * eqndefined::createVariable (char * base, int n, bool prefix) {
 }
 
 // Creates also a variable name from the given arguments.
-char * eqndefined::createVariable (char * base, int r, int c, bool prefix) {
+char * eqndefined::createVariable (const char * base, int r, int c, bool pfx) {
   char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
     str = getName ();
   char * txt = (char *) malloc (strlen (str) + strlen (base) + 4);
-  if (prefix)
+  if (pfx)
     sprintf (txt, "%s.%s%d%d", str, base, r, c);
   else
     sprintf (txt, "%s%d%d", base, r, c);

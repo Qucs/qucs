@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.14 2006-06-06 07:45:51 raimi Exp $
+ * $Id: check_touchstone.cpp,v 1.15 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -54,7 +54,7 @@ struct touchstone_t touchstone_options = {
   "GHz", 'S', "MA", 50.0, 1e9, 0, 0, 0 };
 
 /* available touchstone options */
-static char * touchstone_valid_options[] = {
+static const char * touchstone_valid_options[] = {
   "hz", "khz", "mhz", "ghz", "s", "y", "z", "g", "h", "ma", "db", "ri", NULL };
 
 /* This subroutine is going to join vectors on multiple lines.  The

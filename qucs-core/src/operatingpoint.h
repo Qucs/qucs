@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: operatingpoint.h,v 1.3 2006-01-09 09:11:07 raimi Exp $
+ * $Id: operatingpoint.h,v 1.4 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -31,8 +31,8 @@ class operatingpoint : public pair
 {
  public:
   operatingpoint ();
-  operatingpoint (char *);
-  operatingpoint (char *, nr_double_t);
+  operatingpoint (const char *);
+  operatingpoint (const char *, nr_double_t);
   operatingpoint (const operatingpoint &);
   ~operatingpoint () { }
 };

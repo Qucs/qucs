@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: touchstone_producer.cpp,v 1.2 2007-08-28 21:34:02 ela Exp $
+ * $Id: touchstone_producer.cpp,v 1.3 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -42,16 +42,16 @@
 /* FILE * touchstone_out = NULL; -- already defined in Touchstone lexer */
 
 struct touchstone_data_t {
-  char parameter;    // type of variable
-  int ports;         // number of S-parameter ports
-  double resistance; // reference impedance
-  char * format;     // data format
-  vector * vd;       // appropriate dependency vector
-  matvec * mv;       // appropriate data matrix vector
-  vector * fmin;     // minimum noise figure
-  vector * sopt;     // optimum input refelction for minimum noise figure
-  vector * rn;       // effective noise resistance
-  vector * vf;       // dependency vector for noise
+  char parameter;      // type of variable
+  int ports;           // number of S-parameter ports
+  double resistance;   // reference impedance
+  const char * format; // data format
+  vector * vd;         // appropriate dependency vector
+  matvec * mv;         // appropriate data matrix vector
+  vector * fmin;       // minimum noise figure
+  vector * sopt;       // optimum input refelction for minimum noise figure
+  vector * rn;         // effective noise resistance
+  vector * vf;         // dependency vector for noise
 }
 touchstone_data;
 
@@ -175,7 +175,7 @@ void touchstone_print (void) {
 /* The function finds an appropriate S-parameters or other parameter
    type (G, H, Y, Z, etc.) matrix from the given dataset and stores it
    into the global Touchstone structure. */
-void touchstone_find_data (dataset * data, char * name) {
+void touchstone_find_data (dataset * data, const char * name) {
   vector * v;
   char * n, * vn, * vd = NULL, * vf = NULL;
   strlist * deps;
@@ -247,7 +247,7 @@ void touchstone_find_data (dataset * data, char * name) {
 }
 
 /* This is the overall Touchstone producer. */
-void touchstone_producer (char * variable) {
+void touchstone_producer (const char * variable) {
 
   // apply data variable name
   if (variable == NULL) {

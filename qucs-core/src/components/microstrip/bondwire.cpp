@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.6 2007-03-11 14:01:25 ela Exp $
+ * $Id: bondwire.cpp,v 1.7 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -89,7 +89,7 @@ enum bondwiremodel {
 
 /*! model number to string matching table definition */
 struct modeltable_t { 
-  char * name; 
+  const char * name; 
   int model;
 };
 

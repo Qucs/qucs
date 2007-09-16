@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.h,v 1.19 2006-01-30 07:45:35 raimi Exp $
+ * $Id: msline.h,v 1.20 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -59,7 +59,7 @@ class msline : public circuit
 			     nr_double_t&, nr_double_t&);
   static void analyseLoss (nr_double_t, nr_double_t, nr_double_t, nr_double_t,
 			   nr_double_t, nr_double_t, nr_double_t, nr_double_t,
-			   nr_double_t, nr_double_t, char *,
+			   nr_double_t, nr_double_t, const char *,
 			   nr_double_t&, nr_double_t&);
 
  private:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.12 2007-09-04 18:51:01 ela Exp $
+ * $Id: environment.cpp,v 1.13 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -48,7 +48,7 @@ environment::environment () {
 }
 
 // Constructor creates a named instance of the environment class.
-environment::environment (char * n) {
+environment::environment (const char * n) {
   name = n ? strdup (n) : NULL;
   root = NULL;
   solvee = NULL;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.10 2006-01-30 07:45:34 raimi Exp $
+ * $Id: analysis.cpp,v 1.11 2007-09-16 16:49:37 ela Exp $
  *
  */
 
@@ -91,7 +91,7 @@ void analysis::delAnalysis (analysis * a) {
 /* The following function creates a sweep object depending on the
    analysis's properties.  Supported sweep types are: linear,
    logarithmic, lists and constants. */
-sweep * analysis::createSweep (char * n) {
+sweep * analysis::createSweep (const char * n) {
   sweep * swp = NULL;
   // get type of sweep
   char * type = getPropertyString ("Type");
@@ -131,7 +131,7 @@ sweep * analysis::createSweep (char * n) {
 
 /* Saves the given variable into the dataset.  Creates the dataset
    vector if necessary. */
-void analysis::saveVariable (char * n, complex z, vector * f) {
+void analysis::saveVariable (const char * n, complex z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {
     d = new vector (n);

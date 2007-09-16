@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.h,v 1.15 2006-02-17 07:24:06 raimi Exp $
+ * $Id: device.h,v 1.16 2007-09-16 16:49:40 ela Exp $
  *
  */
 
@@ -36,8 +36,8 @@ namespace device {
     splitResistor (
       circuit * base, // calling circuit (this)
       circuit * res,  // additional resistor circuit (can be NULL)
-      char * c,       // name of the additional circuit
-      char * n,       // name of the inserted (internal) node
+      const char * c, // name of the additional circuit
+      const char * n, // name of the inserted (internal) node
       int internal);  // number of new node (the original external node)
 
   // removes external resistor circuit
@@ -52,7 +52,7 @@ namespace device {
     splitCapacitor (
       circuit * base, // calling circuit (this)
       circuit * cap,  // additional capacitor circuit (can be NULL)
-      char * c,       // name of the additional circuit
+      const char * c, // name of the additional circuit
       node * n1,      // first node of new capacitor
       node * n2);     // second node of new capacitor
 

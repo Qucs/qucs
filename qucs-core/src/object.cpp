@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.cpp,v 1.13 2006-07-24 08:07:41 raimi Exp $
+ * $Id: object.cpp,v 1.14 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ object::object () {
 }
 
 // This constructor creates a named instance of the object class.
-object::object (char * n) {
+object::object (const char * n) {
   name = strdup (n);
   prev = next = NULL;
   prop = NULL;
@@ -72,7 +72,7 @@ object::~object () {
 }
 
 // Sets the name of the object.
-void object::setName (char * n) {
+void object::setName (const char * n) {
   if (name) free (name);
   name = n ? strdup (n) : NULL;
 }
@@ -90,7 +90,7 @@ void object::addProperty (property * p) {
 
 /* This function adds a property consisting of a key and a string
    value to the object. */
-property * object::addProperty (char * n, char * val) {
+property * object::addProperty (const char * n, const char * val) {
   property * p = new property (n, val);
   addProperty (p);
   return p;
@@ -98,7 +98,7 @@ property * object::addProperty (char * n, char * val) {
 
 /* This function sets the specified property consisting of a key and a
    string value in the object. */
-void object::setProperty (char * n, char * val) {
+void object::setProperty (const char * n, char * val) {
   property * p = prop->findProperty (n);
   if (p != NULL)
     p->set (val);
@@ -108,7 +108,7 @@ void object::setProperty (char * n, char * val) {
 
 /* This function adds a property consisting of a key and a double
    value to the object. */
-property * object::addProperty (char * n, nr_double_t val) {
+property * object::addProperty (const char * n, nr_double_t val) {
   property * p = new property (n, val);
   addProperty (p);
   return p;
@@ -116,7 +116,7 @@ property * object::addProperty (char * n, nr_double_t val) {
 
 /* This function sets the specified property consisting of a key and a
    double value in the object. */
-void object::setProperty (char * n, nr_double_t val) {
+void object::setProperty (const char * n, nr_double_t val) {
   property * p = prop->findProperty (n);
   if (p != NULL)
     p->set (val);
@@ -127,7 +127,7 @@ void object::setProperty (char * n, nr_double_t val) {
 /* Th function sets the specified property consisting of a key and a
    double value in the object.  The property is marked a scalability
    property. */
-void object::setScaledProperty (char * n, nr_double_t val) {
+void object::setScaledProperty (const char * n, nr_double_t val) {
   char prop[64];
   sprintf (prop, "Scaled:%s", n);
   setProperty (prop, val);
@@ -135,7 +135,7 @@ void object::setScaledProperty (char * n, nr_double_t val) {
 
 /* This function adds a property consisting of a key and a variable
    value to the object. */
-property * object::addProperty (char * n, variable * val) {
+property * object::addProperty (const char * n, variable * val) {
   property * p = new property (n, val);
   addProperty (p);
   return p;
@@ -144,7 +144,7 @@ property * object::addProperty (char * n, variable * val) {
 /* Returns the requested property value which has been previously
    added as its vector representation.  If there is no such property
    the function returns NULL. */
-vector * object::getPropertyVector (char * n) {
+vector * object::getPropertyVector (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getVector ();
   return NULL;
@@ -153,7 +153,7 @@ vector * object::getPropertyVector (char * n) {
 /* Returns the requested property value which has been previously
    added as its text representation.  If there is no such property the
    function returns NULL. */
-char * object::getPropertyString (char * n) {
+char * object::getPropertyString (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getString ();
   return NULL;
@@ -162,7 +162,7 @@ char * object::getPropertyString (char * n) {
 /* Returns the requested property value which has been previously
    added as its double representation.  If there is no such property
    the function returns zero. */
-nr_double_t object::getPropertyDouble (char * n) {
+nr_double_t object::getPropertyDouble (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getDouble ();
   return 0.0;
@@ -171,7 +171,7 @@ nr_double_t object::getPropertyDouble (char * n) {
 /* The functions returns the requested (scalability) property value
    which has been previously added.  If there is no such scaled
    property the function returns the standard property or zero. */
-nr_double_t object::getScaledProperty (char * n) {
+nr_double_t object::getScaledProperty (const char * n) {
   char txt[64];
   sprintf (txt, "Scaled:%s", n);
   // try to find scaled property
@@ -184,7 +184,7 @@ nr_double_t object::getScaledProperty (char * n) {
 /* Returns the requested property value which has been previously
    added as its integer representation.  If there is no such property
    the function returns zero. */
-int object::getPropertyInteger (char * n) {
+int object::getPropertyInteger (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getInteger ();
   return 0;
@@ -192,14 +192,14 @@ int object::getPropertyInteger (char * n) {
 
 /* The function checks whether the object has got a certain property
    value.  If so it returns non-zero, otherwise it returns zero. */
-bool object::hasProperty (char * n) {
+bool object::hasProperty (const char * n) {
   return (prop && prop->findProperty (n)) ? true : false;
 }
 
 /* The function checks whether the object has got a certain property
    value and if this has its default value.  If so it returns  non-zero,
    otherwise it returns zero. */
-bool object::isPropertyGiven (char * n) {
+bool object::isPropertyGiven (const char * n) {
   if (prop != NULL) {
     property * p = prop->findProperty (n);
     if (p != NULL && !p->isDefault ()) return true;

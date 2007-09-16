@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: touchstone_producer.h,v 1.1 2007-08-27 17:52:18 ela Exp $
+ * $Id: touchstone_producer.h,v 1.2 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -37,6 +37,6 @@ extern dataset * qucs_data;
 extern FILE * touchstone_out;
 
 /* Available functions of the producers. */
-void touchstone_producer (char * variable);
+void touchstone_producer (const char * variable);
 
 #endif /* __TOUCHSTONE_PRODUCER_H__ */

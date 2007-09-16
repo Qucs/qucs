@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.23 2007-05-17 09:28:19 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.24 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -44,7 +44,7 @@
 /* Global variables. */
 FILE * qucs_out = NULL;
 int    qucs_actions = 1;
-char * qucs_gnd = "gnd";
+const char * qucs_gnd = "gnd";
 
 qucs::hash<struct node_t> qucs_nodes;
 
@@ -112,7 +112,7 @@ static void netlist_list_value (struct value_t * value) {
 }
 
 /* Prints a single definition on a single line. */
-static void netlist_list_def (struct definition_t * def, char * prefix) {
+static void netlist_list_def (struct definition_t * def, const char * prefix) {
   struct node_t * node;
   struct pair_t * pair;
   if (def->define == NULL) {
@@ -138,7 +138,7 @@ static void netlist_list_def (struct definition_t * def, char * prefix) {
 }
 
 /* Prints definition list representation. */
-static void netlist_lister (struct definition_t * root, char * prefix) {
+static void netlist_lister (struct definition_t * root, const char * prefix) {
   struct definition_t * def;
   for (def = root; def != NULL; def = def->next) {
     if (def->sub != NULL) {
@@ -258,14 +258,14 @@ void qucs_producer (void) {
 
 // Structure defining Qucs schematic entries of device models.
 struct device_t {
-  char * ntype;     // netlist type
-  char * ltype;     // schematic type
-  char * stype;     // spice type
-  int nodes;        // number of nodes
-  char * props[64]; // list of properties in schematic order
-  char * symbol;    // symbol text
-  char * coords;    // coordinates and other text
-  char * ports;     // subcircuit ports
+  const char * ntype;     // netlist type
+  const char * ltype;     // schematic type
+  const char * stype;     // spice type
+  int nodes;              // number of nodes
+  const char * props[64]; // list of properties in schematic order
+  const char * symbol;    // symbol text
+  const char * coords;    // coordinates and other text
+  const char * ports;     // subcircuit ports
 }
 qucs_devices[] = {
   /* diode */
@@ -382,7 +382,7 @@ static struct device_t * qucslib_find_device (char * type) {
    pairs of the given netlist entry and returns NULL if there is no
    such property. */
 static struct pair_t *
-qucslib_find_prop (struct definition_t * def, char * key) {
+qucslib_find_prop (struct definition_t * def, const char * key) {
   struct pair_t * pair;
   for (pair = def->pairs; pair; pair = pair->next) {
     if (!strcmp (pair->key, key))

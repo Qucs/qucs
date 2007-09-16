@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: csv_producer.cpp,v 1.6 2007-08-27 17:52:17 ela Exp $
+ * $Id: csv_producer.cpp,v 1.7 2007-09-16 16:49:41 ela Exp $
  *
  */
 
@@ -53,7 +53,7 @@ struct csv_data {
 #endif
 
 /* The CSV data printer. */
-void csv_print (struct csv_data * data, int vectors, char * sep) {
+void csv_print (struct csv_data * data, int vectors, const char * sep) {
 
   int len = 0;
 
@@ -86,7 +86,7 @@ void csv_print (struct csv_data * data, int vectors, char * sep) {
 }
 
 /* This is the overall CSV producer. */
-void csv_producer (char * variable, char * sep) {
+void csv_producer (char * variable, const char * sep) {
   vector * v;
   // save variable including its dependencies
   if (variable && (v = qucs_data->findVariable (variable)) != NULL) {

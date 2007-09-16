@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.h,v 1.7 2007-05-24 16:40:30 ela Exp $
+ * $Id: differentiate.h,v 1.8 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -89,7 +89,7 @@ class differentiate
   static node * ln_reduce    (node *);
   static node * sqrt_reduce  (node *);
   static node * sqr_reduce   (node *);
-  static node * app_reduce   (char *, node *, node *);
+  static node * app_reduce   (const char *, node *, node *);
   static node * hypot_reduce (node *, node *);
 };
 
@@ -99,9 +99,9 @@ typedef node * (* differentiator_t) (application *, char *);
 // Structure defining an differentiation.
 struct differentiation_t
 {
-  char * application;      /* the name of the application         */
-  differentiator_t derive; /* the actual differentiation function */
-  int nargs;               /* number of arguments                 */
+  const char * application; /* the name of the application         */
+  differentiator_t derive;  /* the actual differentiation function */
+  int nargs;                /* number of arguments                 */
 };
 
 extern struct differentiation_t differentiations[];

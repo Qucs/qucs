@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.18 2007-05-24 16:40:30 ela Exp $
+ * $Id: applications.h,v 1.19 2007-09-16 16:49:37 ela Exp $
  *
  */
 
@@ -827,8 +827,8 @@ struct application_t eqn::applications[] = {
 };
 
 // Converts a TAG_XXX value into a unique string.
-char * checker::tag2key (int tag) {
-  char * key = "";
+const char * checker::tag2key (int tag) {
+  const char * key = "";
   if (tag == TAG_RANGE)
     key = "R";
   else switch (tag & ~TAG_RANGE) {

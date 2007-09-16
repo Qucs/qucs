@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.20 2006-07-03 08:52:23 raimi Exp $
+ * $Id: matvec.cpp,v 1.21 2007-09-16 16:49:38 ela Exp $
  *
  */
 
@@ -90,7 +90,7 @@ matvec::~matvec () {
 }
 
 // Sets the name of the matvec object.
-void matvec::setName (char * n) {
+void matvec::setName (const char * n) {
   if (name) free (name);
   name = n ? strdup (n) : NULL;
 }
@@ -123,7 +123,7 @@ vector matvec::get (int r, int c) {
 
 /* This function returns a static text representation with the
    'n[r,c]' scheme indicating a matrix (vector) entry. */
-char * matvec::createMatrixString (char * n, int r, int c) {
+char * matvec::createMatrixString (const char * n, int r, int c) {
   static char str[256]; // hopefully enough
   sprintf (str, "%s[%d,%d]", n, r + 1, c + 1);
   return str;

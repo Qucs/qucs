@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.h,v 1.6 2006-07-24 08:07:42 raimi Exp $
+ * $Id: property.h,v 1.7 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -40,10 +40,10 @@ class property
 {
  public:
   property ();
-  property (char *);
-  property (char *, char *);
-  property (char *, nr_double_t);
-  property (char *, variable *);
+  property (const char *);
+  property (const char *, const char *);
+  property (const char *, nr_double_t);
+  property (const char *, variable *);
   property (const property &);
   virtual ~property ();
   property * getNext (void) { return next; }
@@ -58,7 +58,7 @@ class property
   void set (int);
   void set (char *);
   void set (variable *);
-  property * findProperty (char *);
+  property * findProperty (const char *);
   char * toString (void);
   bool isDefault (void) { return def; }
   void setDefault (bool d) { def = d; }

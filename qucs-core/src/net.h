@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.h,v 1.17 2006-08-09 08:32:18 raimi Exp $
+ * $Id: net.h,v 1.18 2007-09-16 16:49:39 ela Exp $
  *
  */
 
@@ -38,7 +38,7 @@ class net : public object
 {
  public:
   net ();
-  net (char *);
+  net (const char *);
   net (net &);
   ~net ();
   circuit * getRoot (void) { return root; }
