@@ -66,7 +66,7 @@ Component* Volt_noise::newOne()
 Element* Volt_noise::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Noise Voltage Source");
-  BitmapFile = "noise_volt";
+  BitmapFile = (char *) "noise_volt";
 
   if(getNewOne)  return new Volt_noise();
   return 0;

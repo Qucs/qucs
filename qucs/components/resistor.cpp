@@ -87,7 +87,7 @@ void Resistor::createSymbol()
 Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor");
-  BitmapFile = "resistor";
+  BitmapFile = (char *) "resistor";
 
   if(getNewOne)  return new Resistor();
   return 0;
@@ -97,7 +97,7 @@ Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor US");
-  BitmapFile = "resistor_us";
+  BitmapFile = (char *) "resistor_us";
 
   if(getNewOne)  return new Resistor(false);
   return 0;

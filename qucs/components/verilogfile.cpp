@@ -53,7 +53,7 @@ Component* Verilog_File::newOne()
 Element* Verilog_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Verilog file");
-  BitmapFile = "vhdlfile";
+  BitmapFile = (char *) "vhdlfile";
 
   if(getNewOne) {
     Verilog_File *p = new Verilog_File();

@@ -62,7 +62,7 @@ Component* SParamFile::newOne()
 Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port S parameter file");
-  BitmapFile = "spfile3";
+  BitmapFile = (char *) "spfile3";
 
   if(getNewOne) {
     SParamFile* p = new SParamFile();
@@ -78,7 +78,7 @@ Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1-port S parameter file");
-  BitmapFile = "spfile1";
+  BitmapFile = (char *) "spfile1";
 
   if(getNewOne)  return new SParamFile();
   return 0;
@@ -88,7 +88,7 @@ Element* SParamFile::info1(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("2-port S parameter file");
-  BitmapFile = "spfile2";
+  BitmapFile = (char *) "spfile2";
 
   if(getNewOne) {
     SParamFile* p = new SParamFile();

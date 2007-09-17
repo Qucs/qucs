@@ -109,7 +109,7 @@ Diagram* SmithDiagram::newOne()
 Element* SmithDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Smith Chart");
-  BitmapFile = "smith";
+  BitmapFile = (char *) "smith";
 
   if(getNewOne)  return new SmithDiagram();
   return 0;
@@ -119,7 +119,7 @@ Element* SmithDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* SmithDiagram::info_y(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Admittance Smith");
-  BitmapFile = "ysmith";
+  BitmapFile = (char *) "ysmith";
 
   if(getNewOne)  return new SmithDiagram(0, 0, false);
   return 0;

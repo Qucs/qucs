@@ -72,7 +72,7 @@ Component* MSstep::newOne()
 Element* MSstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Step");
-  BitmapFile = "msstep";
+  BitmapFile = (char *) "msstep";
 
   if(getNewOne)  return new MSstep();
   return 0;

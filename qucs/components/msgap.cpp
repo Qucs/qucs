@@ -75,7 +75,7 @@ Component* MSgap::newOne()
 Element* MSgap::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Gap");
-  BitmapFile = "msgap";
+  BitmapFile = (char *) "msgap";
 
   if(getNewOne)  return new MSgap();
   return 0;

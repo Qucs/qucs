@@ -81,7 +81,7 @@ Component* iExp::newOne()
 Element* iExp::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Exponential Current Pulse");
-  BitmapFile = "iexp";
+  BitmapFile = (char *) "iexp";
 
   if(getNewOne)  return new iExp();
   return 0;

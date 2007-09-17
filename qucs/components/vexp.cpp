@@ -81,7 +81,7 @@ Component* vExp::newOne()
 Element* vExp::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Exponential Voltage Pulse");
-  BitmapFile = "vexp";
+  BitmapFile = (char *) "vexp";
 
   if(getNewOne)  return new vExp();
   return 0;

@@ -64,7 +64,7 @@ Component* Digi_Sim::newOne()
 Element* Digi_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("digital simulation");
-  BitmapFile = "digi";
+  BitmapFile = (char *) "digi";
 
   if(getNewOne)  return new Digi_Sim();
   return 0;

@@ -81,7 +81,7 @@ Component* Substrate::newOne()
 Element* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Substrate");
-  BitmapFile = "substrate";
+  BitmapFile = (char *) "substrate";
 
   if(getNewOne)  return new Substrate();
   return 0;

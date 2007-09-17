@@ -709,7 +709,7 @@ void QucsTranscalc::createResultItems (QHGroupBox * parent) {
 }
 
 /* Puts the given result into its widget. */
-void QucsTranscalc::setResult (int line, char * text) {
+void QucsTranscalc::setResult (int line, const char * text) {
   struct TransResult * res;
   res = & TransLineTypes[getTypeIndex ()].result[line];
   res->value->setText (text);
@@ -794,7 +794,7 @@ char * QucsTranscalc::getUnit (QString prop) {
     for (int i = 0; val->units[i]; i++) {
       if (str == val->units[i]) {
 	val->unit = i;
-	return val->units[i];
+	return (char *) val->units[i];
       }
     }
   }

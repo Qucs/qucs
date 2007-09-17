@@ -66,7 +66,7 @@ Component* MStee::newOne()
 Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Tee");
-  BitmapFile = "mstee";
+  BitmapFile = (char *) "mstee";
 
   if(getNewOne)  return new MStee();
   return 0;

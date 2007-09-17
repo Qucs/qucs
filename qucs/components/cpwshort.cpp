@@ -81,7 +81,7 @@ Component* CPWshort::newOne()
 Element* CPWshort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coplanar Short");
-  BitmapFile = "cpwshort";
+  BitmapFile = (char *) "cpwshort";
 
   if(getNewOne)  return new CPWshort();
   return 0;

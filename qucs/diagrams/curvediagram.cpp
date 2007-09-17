@@ -244,7 +244,7 @@ Diagram* CurveDiagram::newOne()
 Element* CurveDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Locus Curve");
-  BitmapFile = "curve";
+  BitmapFile = (char *) "curve";
 
   if(getNewOne)  return new CurveDiagram();
   return 0;

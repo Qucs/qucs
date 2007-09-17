@@ -96,7 +96,7 @@ Component* TR_Sim::newOne()
 Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Transient simulation");
-  BitmapFile = "tran";
+  BitmapFile = (char *) "tran";
 
   if(getNewOne)  return new TR_Sim();
   return 0;

@@ -70,7 +70,7 @@ Component* AM_Modulator::newOne()
 Element* AM_Modulator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("AM modulated Source");
-  BitmapFile = "am_mod";
+  BitmapFile = (char *) "am_mod";
 
   if(getNewOne)  return new AM_Modulator();
   return 0;

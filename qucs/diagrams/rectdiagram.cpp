@@ -242,7 +242,7 @@ Diagram* RectDiagram::newOne()
 Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Cartesian");
-  BitmapFile = "rect";
+  BitmapFile = (char *) "rect";
 
   if(getNewOne)  return new RectDiagram();
   return 0;

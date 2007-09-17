@@ -96,7 +96,7 @@ Component* Diode::newOne()
 Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Diode");
-  BitmapFile = "diode";
+  BitmapFile = (char *) "diode";
 
   if(getNewOne)  return new Diode();
   return 0;
