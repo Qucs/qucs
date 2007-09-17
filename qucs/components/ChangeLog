@@ -1,3 +1,8 @@
+2007-09-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (load): Fixed a bug due to one or more '=' in
+	equations while loading a component.
+
 2007-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* subcircuit.cpp (createSymbol): Remove unused ports for symbol
