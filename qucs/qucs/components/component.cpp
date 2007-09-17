@@ -811,7 +811,7 @@ bool Component::load(const QString& _s)
     if(Model != "EDD")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
-      n = n.section('=',1,1);
+      n = n.section('=',1);
       // allocate memory for a new property (e.g. for equations)
       if(Props.count() < (counts>>1)) {
         Props.insert(z >> 1, new Property("y", "1", true));
