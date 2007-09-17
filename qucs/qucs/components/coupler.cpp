@@ -80,7 +80,7 @@ Component* Coupler::newOne()
 Element* Coupler::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coupler");
-  BitmapFile = "coupler";
+  BitmapFile = (char *) "coupler";
 
   if(getNewOne)  return new Coupler();
   return 0;

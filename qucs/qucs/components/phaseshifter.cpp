@@ -61,7 +61,7 @@ Component* Phaseshifter::newOne()
 Element* Phaseshifter::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Phase Shifter");
-  BitmapFile = "pshifter";
+  BitmapFile = (char *) "pshifter";
 
   if(getNewOne)  return new Phaseshifter();
   return 0;

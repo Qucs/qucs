@@ -70,7 +70,7 @@ Component* BiasT::newOne()
 Element* BiasT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Bias T");
-  BitmapFile = "biast";
+  BitmapFile = (char *) "biast";
 
   if(getNewOne)  return new BiasT();
   return 0;

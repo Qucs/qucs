@@ -1136,7 +1136,7 @@ Diagram* Rect3DDiagram::newOne()
 Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3D-Cartesian");
-  BitmapFile = "rect3d";
+  BitmapFile = (char *) "rect3d";
 
   if(getNewOne)  return new Rect3DDiagram();
   return 0;

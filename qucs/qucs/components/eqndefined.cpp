@@ -60,7 +60,7 @@ Component* EqnDefined::newOne()
 Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined Device");
-  BitmapFile = "edd";
+  BitmapFile = (char *) "edd";
 
   if(getNewOne) {
     EqnDefined* p = new EqnDefined();

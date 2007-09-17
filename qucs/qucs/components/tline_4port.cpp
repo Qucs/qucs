@@ -71,7 +71,7 @@ Component* TLine_4Port::newOne()
 Element* TLine_4Port::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("4-Terminal Transmission Line");
-  BitmapFile = "tline_4port";
+  BitmapFile = (char *) "tline_4port";
 
   if(getNewOne)  return new TLine_4Port();
   return 0;

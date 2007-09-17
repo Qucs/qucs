@@ -95,7 +95,7 @@ Painting* Ellipse::newOne()
 Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ellipse");
-  BitmapFile = "ellipse";
+  BitmapFile = (char *) "ellipse";
 
   if(getNewOne)  return new Ellipse();
   return 0;
@@ -105,7 +105,7 @@ Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("filled Ellipse");
-  BitmapFile = "filledellipse";
+  BitmapFile = (char *) "filledellipse";
 
   if(getNewOne)  return new Ellipse(true);
   return 0;

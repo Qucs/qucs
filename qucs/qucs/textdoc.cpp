@@ -406,8 +406,8 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
 
 // ---------------------------------------------------
 // reserved VHDL words in alphabetical order
-typedef char*  pChar;
-typedef char** ppChar;
+typedef const char*  pChar;
+typedef const char** ppChar;
 pChar List_A[] = {"abs", "access", "after", "alias", "all", "and",
                   "architecture", "array", "assert", "attribute", 0};
 pChar List_B[] = {"begin", "block", "body", "buffer", "bus", 0};
@@ -434,12 +434,12 @@ pChar List_W[] = {"wait", "when", "while", "with", 0};
 pChar List_X[] = {"xnor", "xor", 0};
 
 ppChar WordList[] =
-  {(char**)&List_A, (char**)&List_B, (char**)&List_C, (char**)&List_D,
-   (char**)&List_E, (char**)&List_F, (char**)&List_G, 0, (char**)&List_I,
-   0, 0, (char**)&List_L, (char**)&List_M, (char**)&List_N,
-   (char**)&List_O, (char**)&List_P, 0, (char**)&List_R, (char**)&List_S,
-   (char**)&List_T, (char**)&List_U, (char**)&List_V, (char**)&List_W,
-   (char**)&List_X};
+  {(ppChar)&List_A, (ppChar)&List_B, (ppChar)&List_C, (ppChar)&List_D,
+   (ppChar)&List_E, (ppChar)&List_F, (ppChar)&List_G, 0, (ppChar)&List_I,
+   0, 0, (ppChar)&List_L, (ppChar)&List_M, (ppChar)&List_N,
+   (ppChar)&List_O, (ppChar)&List_P, 0, (ppChar)&List_R, (ppChar)&List_S,
+   (ppChar)&List_T, (ppChar)&List_U, (ppChar)&List_V, (ppChar)&List_W,
+   (ppChar)&List_X};
 
 pChar List_Units[] = {"fs", "ps", "ns", "us", "ms", "sec", "min", "hr", 0};
 
@@ -499,11 +499,11 @@ pChar List_Attrib_T[] = {"transaction", 0};
 pChar List_Attrib_V[] = {"val", "value", 0};
 
 ppChar Attribute_List[] =
-  {(char**)&List_Attrib_A, (char**)&List_Attrib_B, 0, (char**)&List_Attrib_D,
-   (char**)&List_Attrib_E, 0, 0, (char**)&List_Attrib_H, (char**)&List_Attrib_I,
-   0, 0, (char**)&List_Attrib_L, 0, 0, 0, (char**)&List_Attrib_P,
-   (char**)&List_Attrib_Q, (char**)&List_Attrib_R, (char**)&List_Attrib_S,
-   (char**)&List_Attrib_T, 0, (char**)&List_Attrib_V};
+  {(ppChar)&List_Attrib_A, (ppChar)&List_Attrib_B, 0, (ppChar)&List_Attrib_D,
+   (ppChar)&List_Attrib_E, 0, 0, (ppChar)&List_Attrib_H, (ppChar)&List_Attrib_I,
+   0, 0, (ppChar)&List_Attrib_L, 0, 0, 0, (ppChar)&List_Attrib_P,
+   (ppChar)&List_Attrib_Q, (ppChar)&List_Attrib_R, (ppChar)&List_Attrib_S,
+   (ppChar)&List_Attrib_T, 0, (ppChar)&List_Attrib_V};
 
 void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
 {

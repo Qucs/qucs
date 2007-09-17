@@ -143,7 +143,7 @@ Component* BJTsub::newOne()
 Element* BJTsub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn transistor");
-  BitmapFile = "npnsub";
+  BitmapFile = (char *) "npnsub";
 
   if(getNewOne)  return new BJTsub();
   return 0;
@@ -153,7 +153,7 @@ Element* BJTsub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp transistor");
-  BitmapFile = "pnpsub";
+  BitmapFile = (char *) "pnpsub";
 
   if(getNewOne) {
     BJTsub* p = new BJTsub();

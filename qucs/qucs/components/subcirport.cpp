@@ -92,7 +92,7 @@ Component* SubCirPort::newOne()
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Subcircuit Port");
-  BitmapFile = "subport";
+  BitmapFile = (char *) "subport";
 
   if(getNewOne)  return new SubCirPort();
   return 0;

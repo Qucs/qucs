@@ -76,7 +76,7 @@ Component* VCCS::newOne()
 Element* VCCS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Controlled Current Source");
-  BitmapFile = "vccs";
+  BitmapFile = (char *) "vccs";
 
   if(getNewOne)  return new VCCS();
   return 0;

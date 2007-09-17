@@ -76,7 +76,7 @@ Component* Relais::newOne()
 Element* Relais::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Relay");
-  BitmapFile = "relais";
+  BitmapFile = (char *) "relais";
 
   if(getNewOne)  return new Relais();
   return 0;

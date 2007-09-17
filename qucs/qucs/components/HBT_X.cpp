@@ -217,7 +217,7 @@ Component * HBT_X::newOne()
 Element * HBT_X::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("FBH HBT");
-  BitmapFile = "npn_therm";
+  BitmapFile = (char *) "npn_therm";
 
   if(getNewOne) return new HBT_X();
   return 0;

@@ -147,7 +147,7 @@ Component* JK_FlipFlop::newOne()
 Element* JK_FlipFlop::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("JK-FlipFlop");
-  BitmapFile = "jkflipflop";
+  BitmapFile = (char *) "jkflipflop";
 
   if(getNewOne)  return new JK_FlipFlop();
   return 0;

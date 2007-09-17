@@ -69,7 +69,7 @@ Component* SpiceFile::newOne()
 Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("SPICE netlist");
-  BitmapFile = "spicefile";
+  BitmapFile = (char *) "spicefile";
 
   if(getNewOne) {
     SpiceFile *p = new SpiceFile();

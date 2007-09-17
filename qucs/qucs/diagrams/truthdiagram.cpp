@@ -260,7 +260,7 @@ Diagram* TruthDiagram::newOne()
 Element* TruthDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Truth Table");
-  BitmapFile = "truth";
+  BitmapFile = (char *) "truth";
 
   if(getNewOne)  return new TruthDiagram();
   return 0;

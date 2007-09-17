@@ -57,7 +57,7 @@ Component* Inductor::newOne()
 Element* Inductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Inductor");
-  BitmapFile = "inductor";  // bitmap file name without suffix
+  BitmapFile = (char *) "inductor";  // bitmap file name without suffix
 
   if(getNewOne)  return new Inductor();
   return 0;

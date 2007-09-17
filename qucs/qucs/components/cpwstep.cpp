@@ -87,7 +87,7 @@ Component* CPWstep::newOne()
 Element* CPWstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coplanar Step");
-  BitmapFile = "cpwstep";
+  BitmapFile = (char *) "cpwstep";
 
   if(getNewOne)  return new CPWstep();
   return 0;
