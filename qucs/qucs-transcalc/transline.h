@@ -31,16 +31,16 @@ class transline {
   virtual ~transline ();
 
   void   setApplication (QucsTranscalc *);
-  void   setProperty (char *, double);
-  void   setProperty (char *, double, int, int);
-  double getProperty (char *);
-  double getProperty (char *, int, int);
-  double convertProperty (char *, double, int, int);
-  void   setResult (int, double, char *);
-  void   setResult (int, char *);
+  void   setProperty (const char *, double);
+  void   setProperty (const char *, double, int, int);
+  double getProperty (const char *);
+  double getProperty (const char *, int, int);
+  double convertProperty (const char *, double, int, int);
+  void   setResult (int, double, const char *);
+  void   setResult (int, const char *);
   int    translateUnit (char *);
-  char * getUnit (char *);
-  bool   isSelected (char *);
+  char * getUnit (const char *);
+  bool   isSelected (const char *);
 
   virtual void synthesize () { };
   virtual void analyze () { };

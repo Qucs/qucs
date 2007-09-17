@@ -76,7 +76,7 @@ Component* vRect::newOne()
 Element* vRect::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Rectangle Voltage");
-  BitmapFile = "vrect";
+  BitmapFile = (char *) "vrect";
 
   if(getNewOne)  return new vRect();
   return 0;

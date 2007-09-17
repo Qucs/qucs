@@ -70,7 +70,7 @@ Component* PM_Modulator::newOne()
 Element* PM_Modulator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("PM modulated Source");
-  BitmapFile = "pm_mod";
+  BitmapFile = (char *) "pm_mod";
 
   if(getNewOne)  return new PM_Modulator();
   return 0;

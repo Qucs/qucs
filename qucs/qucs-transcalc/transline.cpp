@@ -71,13 +71,13 @@ void transline::setApplication (QucsTranscalc * a) {
 
 /* Sets a named property to the given value, access through the
    application. */
-void transline::setProperty (char * prop, double value) {
+void transline::setProperty (const char * prop, double value) {
   app->setProperty (prop, value);
 }
 
 /* Sets a named property to a given value.  Depending on the source
    and destination unit the value gets previously converted. */
-void transline::setProperty (char * prop, double value, int type,
+void transline::setProperty (const char * prop, double value, int type,
 			     int srcunit) {
   int dstunit = translateUnit (getUnit (prop));
   if (type == UNIT_LENGTH)
@@ -93,30 +93,30 @@ void transline::setProperty (char * prop, double value, int type,
 
 /* Converts the given value/unit pair into a text representation and
    puts this into the given result line. */
-void transline::setResult (int line, double value, char * unit) {
+void transline::setResult (int line, double value, const char * unit) {
   char text[256];
   sprintf (text, "%g %s", value, unit);
   app->setResult (line, text);
 }
 
 /* Puts the text into the given result line. */
-void transline::setResult (int line, char * text) {
+void transline::setResult (int line, const char * text) {
   app->setResult (line, text);
 }
 
 /* Returns a named property value. */
-double transline::getProperty (char * prop) {
+double transline::getProperty (const char * prop) {
   return app->getProperty (prop);
 }
 
 /* Returns a named property selection. */
-bool transline::isSelected (char * prop) {
+bool transline::isSelected (const char * prop) {
   return app->isSelected (prop);
 }
 
 /* Returns a named property value.  Depending on the source and
    destination unit the actual value is converted. */
-double transline::getProperty (char * prop, int type, int dstunit) {
+double transline::getProperty (const char * prop, int type, int dstunit) {
   int srcunit = translateUnit (getUnit (prop));
   double value = getProperty (prop);
   if (type == UNIT_LENGTH)
@@ -132,7 +132,7 @@ double transline::getProperty (char * prop, int type, int dstunit) {
 
 /* The function converts the given value depending on the requested
    unit and its source unit. */
-double transline::convertProperty (char * prop, double value, int type,
+double transline::convertProperty (const char * prop, double value, int type,
 				   int srcunit) {
   int dstunit = translateUnit (getUnit (prop));
   if (type == UNIT_LENGTH)
@@ -147,7 +147,7 @@ double transline::convertProperty (char * prop, double value, int type,
 }
 
 /* Returns the unit of the given property. */
-char * transline::getUnit (char * prop) {
+char * transline::getUnit (const char * prop) {
   return app->getUnit (prop);
 }
 

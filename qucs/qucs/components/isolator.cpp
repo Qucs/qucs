@@ -65,7 +65,7 @@ Component* Isolator::newOne()
 Element* Isolator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Isolator");
-  BitmapFile = "isolator";
+  BitmapFile = (char *) "isolator";
 
   if(getNewOne)  return new Isolator();
   return 0;

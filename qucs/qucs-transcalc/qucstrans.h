@@ -72,10 +72,10 @@ extern tQucsSettings QucsSettings;
 
 // Transmission line value.
 struct TransValue {
-  char * name;           // label
+  const char * name;     // label
   double value;          // value
   QString * tip;         // tool tip description
-  char * units[8];       // unit choise
+  const char * units[8]; // unit choise
   int unit;              // unit index
   QLabel * label;        // Qt label widget
   QLineEdit * lineedit;  // Qt value widget
@@ -107,17 +107,17 @@ enum TransMode {
 
 // A transmission line type structure.
 struct TransType {
-  int type;           // type of transmission line (see TransMode)
-  char * description; // description
-  transline * line;   // transmission line instance
+  int type;                 // type of transmission line (see TransMode)
+  const char * description; // description
+  transline * line;         // transmission line instance
   struct TransArray array[MAX_TRANS_BOXES];
-  int results;        // number of extraneous results
+  int results;              // number of extraneous results
   struct TransResult result[MAX_TRANS_RESULTS];
   int radio[4];
 };
 
 struct TransUnit {
-  char * description;
+  const char * description;
   const char * units[8];
 };
 
@@ -135,7 +135,7 @@ public:
   double  getProperty (QString);
   void    setUnit (QString, const char *);
   char *  getUnit (QString);
-  void    setResult (int, char *);
+  void    setResult (int, const char *);
   bool    isSelected (QString);
 
   void    saveMode (QTextStream&);

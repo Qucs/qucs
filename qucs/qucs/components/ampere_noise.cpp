@@ -71,7 +71,7 @@ Component* Ampere_noise::newOne()
 Element* Ampere_noise::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Noise Current Source");
-  BitmapFile = "noise_current";
+  BitmapFile = (char *) "noise_current";
 
   if(getNewOne)  return new Ampere_noise();
   return 0;

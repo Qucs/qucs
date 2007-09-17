@@ -65,7 +65,7 @@ Component* vFile::newOne()
 Element* vFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("File Based Voltage Source");
-  BitmapFile = "ac_voltage";
+  BitmapFile = (char *) "ac_voltage";
 
   if(getNewOne)  return new vFile();
   return 0;

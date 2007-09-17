@@ -56,7 +56,7 @@ Component* Optimize_Sim::newOne()
 Element* Optimize_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("optimization");
-  BitmapFile = "optimize";
+  BitmapFile = (char *) "optimize";
 
   if(getNewOne)  return new Optimize_Sim();
   return 0;

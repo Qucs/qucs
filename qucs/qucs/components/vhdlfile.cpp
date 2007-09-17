@@ -53,7 +53,7 @@ Component* VHDL_File::newOne()
 Element* VHDL_File::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("VHDL file");
-  BitmapFile = "vhdlfile";
+  BitmapFile = (char *) "vhdlfile";
 
   if(getNewOne) {
     VHDL_File *p = new VHDL_File();

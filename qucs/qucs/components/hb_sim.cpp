@@ -65,7 +65,7 @@ Component* HB_Sim::newOne()
 Element* HB_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Harmonic balance");
-  BitmapFile = "hb";
+  BitmapFile = (char *) "hb";
 
   if(getNewOne)  return new HB_Sim();
   return 0;

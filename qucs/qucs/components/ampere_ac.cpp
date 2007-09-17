@@ -66,7 +66,7 @@ Component* Ampere_ac::newOne()
 Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Current Source");
-  BitmapFile = "ac_current";
+  BitmapFile = (char *) "ac_current";
 
   if(getNewOne)  return new Ampere_ac();
   return 0;

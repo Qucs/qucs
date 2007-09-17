@@ -43,7 +43,7 @@ Component* Logical_NAND::newOne()
 Element* Logical_NAND::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port NAND");
-  BitmapFile = "nand";
+  BitmapFile = (char *) "nand";
 
   if(getNewOne)  return new Logical_NAND();
   return 0;

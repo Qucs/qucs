@@ -60,7 +60,7 @@ Component* dcFeed::newOne()
 Element* dcFeed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Feed");
-  BitmapFile = "dcfeed";
+  BitmapFile = (char *) "dcfeed";
 
   if(getNewOne)  return new dcFeed();
   return 0;

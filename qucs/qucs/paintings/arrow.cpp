@@ -133,7 +133,7 @@ Painting* Arrow::newOne()
 Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Arrow");
-  BitmapFile = "arrow";
+  BitmapFile = (char *) "arrow";
 
   if(getNewOne)  return new Arrow();
   return 0;

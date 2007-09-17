@@ -43,7 +43,7 @@ Component* Logical_XNOR::newOne()
 Element* Logical_XNOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port XNOR");
-  BitmapFile = "xnor";
+  BitmapFile = (char *) "xnor";
 
   if(getNewOne)  return new Logical_XNOR();
   return 0;

@@ -75,7 +75,7 @@ Component* iPulse::newOne()
 Element* iPulse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Pulse");
-  BitmapFile = "ipulse";
+  BitmapFile = (char *) "ipulse";
 
   if(getNewOne)  return new iPulse();
   return 0;

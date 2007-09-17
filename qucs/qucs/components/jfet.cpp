@@ -92,7 +92,7 @@ Component* JFET::newOne()
 Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-JFET");
-  BitmapFile = "nfet";
+  BitmapFile = (char *) "nfet";
 
   if(getNewOne)  return new JFET();
   return 0;
@@ -102,7 +102,7 @@ Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("p-JFET");
-  BitmapFile = "pfet";
+  BitmapFile = (char *) "pfet";
 
   if(getNewOne) {
     JFET* p = new JFET();

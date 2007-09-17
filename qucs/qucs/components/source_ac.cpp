@@ -81,7 +81,7 @@ Component* Source_ac::newOne()
 Element* Source_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Power Source");
-  BitmapFile = "source";
+  BitmapFile = (char *) "source";
 
   if(getNewOne)  return new Source_ac();
   return 0;

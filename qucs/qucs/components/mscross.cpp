@@ -60,7 +60,7 @@ Component* MScross::newOne()
 Element* MScross::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Cross");
-  BitmapFile = "mscross";
+  BitmapFile = (char *) "mscross";
 
   if(getNewOne)  return new MScross();
   return 0;
