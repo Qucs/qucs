@@ -74,7 +74,7 @@ Component* Digi_Source::newOne()
 Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("digital source");
-  BitmapFile = "digi_source";
+  BitmapFile = (char *) "digi_source";
 
   if(getNewOne)  return new Digi_Source();
   return 0;

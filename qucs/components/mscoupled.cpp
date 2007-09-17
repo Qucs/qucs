@@ -82,7 +82,7 @@ Component* MScoupled::newOne()
 Element* MScoupled::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coupled Microstrip Line");
-  BitmapFile = "mscoupled";
+  BitmapFile = (char *) "mscoupled";
 
   if(getNewOne)  return new MScoupled();
   return 0;

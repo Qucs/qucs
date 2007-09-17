@@ -151,7 +151,7 @@ Component* Logical_Inv::newOne()
 Element* Logical_Inv::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Inverter");
-  BitmapFile = "inverter";
+  BitmapFile = (char *) "inverter";
 
   if(getNewOne)  return new Logical_Inv();
   return 0;

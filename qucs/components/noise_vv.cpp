@@ -83,7 +83,7 @@ Component* Noise_vv::newOne()
 Element* Noise_vv::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Correlated Noise Sources");
-  BitmapFile = "noise_vv";
+  BitmapFile = (char *) "noise_vv";
 
   if(getNewOne)  return new Noise_vv();
   return 0;

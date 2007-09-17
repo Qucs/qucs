@@ -58,7 +58,7 @@ Component* Ampere_dc::newOne()
 Element* Ampere_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Current Source");
-  BitmapFile = "dc_current";
+  BitmapFile = (char *) "dc_current";
 
   if(getNewOne)  return new Ampere_dc();
   return 0;

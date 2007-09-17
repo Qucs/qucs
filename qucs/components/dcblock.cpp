@@ -58,7 +58,7 @@ Component* dcBlock::newOne()
 Element* dcBlock::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Block");
-  BitmapFile = "dcblock";
+  BitmapFile = (char *) "dcblock";
 
   if(getNewOne)  return new dcBlock();
   return 0;

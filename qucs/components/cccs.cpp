@@ -74,7 +74,7 @@ Component* CCCS::newOne()
 Element* CCCS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Controlled Current Source");
-  BitmapFile = "cccs";
+  BitmapFile = (char *) "cccs";
 
   if(getNewOne)  return new CCCS();
   return 0;

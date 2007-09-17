@@ -43,7 +43,7 @@ Component* Logical_NOR::newOne()
 Element* Logical_NOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("n-port NOR");
-  BitmapFile = "nor";
+  BitmapFile = (char *) "nor";
 
   if(getNewOne)  return new Logical_NOR();
   return 0;

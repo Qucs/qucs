@@ -59,7 +59,7 @@ Component* Volt_dc::newOne()
 Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Voltage Source");
-  BitmapFile = "dc_voltage";
+  BitmapFile = (char *) "dc_voltage";
 
   if(getNewOne)  return new Volt_dc();
   return 0;
