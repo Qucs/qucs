@@ -1,6 +1,6 @@
 2007-09-20  Stefan Jahn  <stefan@lkcc.org>
 
-	* evaluate.cpp: Added random number functions.
+	* evaluate.cpp: Added random number functions.	
 
 2007-09-04  Stefan Jahn  <stefan@lkcc.org>
 
