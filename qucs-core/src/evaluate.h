@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.37 2007-09-16 16:49:38 ela Exp $
+ * $Id: evaluate.h,v 1.38 2007-09-19 22:09:56 ela Exp $
  *
  */
 
@@ -704,6 +704,9 @@ public:
   static constant * not_b (constant *);
   static constant * or_b_b (constant *);
   static constant * and_b_b (constant *);
+
+  static constant * rand (constant *);
+  static constant * srand_d (constant *);
 };
 
 // Type of application function.

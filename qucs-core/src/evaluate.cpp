@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.61 2007-05-24 16:40:31 ela Exp $
+ * $Id: evaluate.cpp,v 1.62 2007-09-19 22:09:55 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <time.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -3760,6 +3761,20 @@ constant * evaluate::and_b_b (constant * args) {
   _ARB1 (b1);
   _DEFB ();
   _RETB (b0 && b1);
+}
+
+// ******************* random numbers **********************
+constant * evaluate::rand (constant *) {
+  _DEFD ();
+  _RETD (((nr_double_t) ::rand ()) / (nr_double_t) RAND_MAX);
+}
+
+constant * evaluate::srand_d (constant * args) {
+  _ARD0 (d0);
+  unsigned int i0 = (unsigned int) d0 * ::time (NULL);
+  ::srand (i0);
+  _DEFD ();
+  _RETD ((nr_double_t) i0);
 }
 
 // Include the application array.
