@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.28 2007-02-27 12:05:28 ela Exp $
+ * $Id: ucs.cpp,v 1.29 2007-09-19 22:24:10 ela Exp $
  *
  */
 
@@ -27,8 +27,10 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <time.h>
 
 #include "logging.h"
 #include "precision.h"
@@ -59,6 +61,7 @@ int main (int argc, char ** argv) {
 
   loginit ();
   precinit ();
+  ::srand (::time (NULL));
 
   // check program arguments
   for (int i = 1; i < argc; i++) {
