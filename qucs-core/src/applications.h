@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.19 2007/09/16 16:49:37 ela Exp $
+ * $Id: applications.h,v 1.20 2007/09/19 22:09:55 ela Exp $
  *
  */
 
@@ -822,6 +822,9 @@ struct application_t eqn::applications[] = {
     { TAG_BOOLEAN, TAG_BOOLEAN } },
   { "!=", TAG_BOOLEAN, evaluate::notequal_b_b, 2,
     { TAG_BOOLEAN, TAG_BOOLEAN } },
+
+  { "random",  TAG_DOUBLE, evaluate::rand, 0, { } },
+  { "srandom", TAG_DOUBLE, evaluate::srand_d, 1, { TAG_DOUBLE } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };
