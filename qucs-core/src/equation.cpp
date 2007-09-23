@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.60 2007/09/16 16:49:38 ela Exp $
+ * $Id: equation.cpp,v 1.61 2007/09/23 17:33:57 ela Exp $
  *
  */
 
@@ -688,18 +688,20 @@ int application::evalType (void) {
     // The correct application?
     if (!strcmp (n, app->application)) {
       int nr = 0;
-      // The correct number of arguments?
-      if (nargs != app->nargs) continue;
-      // The correct types of arguments?
-      for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
-	if (arg->getTag () == REFERENCE)
-	  // Skip checking generated reference variables.
-	  if (checker::isGenerated (R (arg)->n))
-	    continue;
-	// Evaluate and check the type of argument.
-	if (!(arg->getType () & app->args[nr])) { nr = -1; break; }
+      if (app->nargs >= 0) {
+	// The correct number of arguments?
+	if (nargs != app->nargs) continue;
+	// The correct types of arguments?
+	for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
+	  if (arg->getTag () == REFERENCE)
+	    // Skip checking generated reference variables.
+	    if (checker::isGenerated (R (arg)->n))
+	      continue;
+	  // Evaluate and check the type of argument.
+	  if (!(arg->getType () & app->args[nr])) { nr = -1; break; }
+	}
+	if (nr == -1) continue;
       }
-      if (nr == -1) continue;
       // A valid application function?
       if (app->eval == NULL) continue;
       // Everything just fine here.
@@ -875,9 +877,18 @@ int node::count (void) {
 
 // Appends yet another node to the equation node object.
 void node::append (node * last) {
+  if (!last) return;
   node * n;
   for (n = this; n->getNext () != NULL; n = n->getNext ());
   last->setNext (NULL);
+  n->setNext (last);
+}
+
+// Appends othere nodes to the equation node object.
+void node::appendNodes (node * last) {
+  if (!last) return;
+  node * n;
+  for (n = this; n->getNext () != NULL; n = n->getNext ());
   n->setNext (last);
 }
 

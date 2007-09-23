@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.63 2007/09/19 22:24:09 ela Exp $
+ * $Id: evaluate.cpp,v 1.64 2007/09/23 17:33:57 ela Exp $
  *
  */
 
@@ -3780,6 +3780,80 @@ constant * evaluate::srand_d (constant * args) {
   } else {
     _RETD (0.0);
   }
+}
+
+// ******************* immediate vectors *******************
+constant * evaluate::vector_x (constant * args) {
+  _DEFV ();
+  vector * v = new vector ();
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    constant * c = arg->getResult ();
+    switch (arg->getType ()) {
+    case TAG_COMPLEX:
+      v->add (*(c->c)); break;
+    case TAG_DOUBLE:
+      v->add (c->d); break;
+    case TAG_BOOLEAN:
+      v->add (c->b ? 1.0 : 0.0); break;
+    case TAG_VECTOR:
+      v->add (c->v); break;
+    default:
+      v->add (0.0); break;
+    }
+  }
+  res->v = v;
+  return res;
+}
+
+// ******************* immediate matrices ******************
+constant * evaluate::matrix_x (constant * args) {
+  _DEFM ();
+  /* create temporary list of vectors */
+  vector * va = NULL;
+  vector * v = new vector ();
+  va = v;
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    constant * c = arg->getResult ();
+    switch (arg->getType ()) {
+    case TAG_COMPLEX:
+      v->add (*(c->c)); break;
+    case TAG_DOUBLE:
+      v->add (c->d); break;
+    case TAG_BOOLEAN:
+      v->add (c->b ? 1.0 : 0.0); break;
+    case TAG_VECTOR:
+      v->add (c->v); break;
+    case TAG_CHAR:
+      if (c->chr == ';') {
+	/* append new vector, i.e. a new matrix row */
+	vector * vn = new vector ();
+	v->setNext (vn);
+	v = vn;
+      }
+      else v->add (0.0);
+      break;
+    default:
+      v->add (0.0); break;
+    }
+  }
+  /* determine matrix dimensions and create it */
+  int r, c;
+  for (r = 0, c = 0, v = va; v != NULL; v = (vector *) v->getNext (), r++) {
+    if (c < v->getSize ()) c = v->getSize ();
+  }
+  matrix * m = new matrix (r, c);
+  /* fill in matrix entries and delete temporary vector list */
+  vector * vn = NULL;
+  for (r = 0, v = va; v != NULL; v = vn, r++) {
+    for (c = 0; c < v->getSize (); c++) {
+      m->set (r, c, v->get (c));
+    }
+    vn = (vector *) v->getNext ();
+    delete v;
+  }
+  /* return result matrix */
+  res->m = m;
+  return res;
 }
 
 // Include the application array.

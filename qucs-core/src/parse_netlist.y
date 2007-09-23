@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.26 2007/06/17 10:51:49 ela Exp $
+ * $Id: parse_netlist.y,v 1.27 2007/09/23 17:33:57 ela Exp $
  *
  */
 
@@ -110,7 +110,9 @@
 %type <assign> Equation
 %type <con> Constant
 %type <ref> Reference
-%type <app> Application Range
+%type <app> Application Range Matrix Vector
+%type <eqn> ExpressionMatrix ExpressionVector
+%type <eqn> ExpressionRowList ExpressionCol ExpressionColList
 
 %%
 
@@ -301,6 +303,69 @@ Expression:
   }
   | '(' Expression ')' {
     $$ = $2;
+  }
+  | '[' Vector ']' {
+    $$ = $2;
+  }
+  | '[' Matrix ']' {
+    $$ = $2;
+  }
+;
+
+ExpressionCol:
+  Expression ExpressionColList {
+    $1->appendNodes ($2);
+    $$ = $1;
+  }
+;
+
+ExpressionColList:  /* nothing */ { $$ = NULL; }
+  | ',' Expression ExpressionColList {
+    $2->appendNodes ($3);
+    $$ = $2;
+  }
+;
+
+ExpressionVector:
+  ExpressionCol
+;
+
+Vector:
+  ExpressionVector {
+    $$ = new eqn::application ();
+    $$->n = strdup ("vector");
+    $$->nargs = $1->count ();
+    $$->args = $1;
+  }
+;
+
+ExpressionRowList:  /* nothing */ { $$ = NULL; }
+  | ';' ExpressionCol ExpressionRowList {
+    eqn::constant * c = new eqn::constant (eqn::TAG_CHAR);
+    c->chr = ';';
+    c->appendNodes ($2);
+    $2->appendNodes ($3);
+    $$ = c;
+  }
+;
+
+ExpressionMatrix:
+  ExpressionCol ';' ExpressionCol ExpressionRowList {
+    eqn::constant * c = new eqn::constant (eqn::TAG_CHAR);
+    c->chr = ';';
+    c->appendNodes ($3);
+    $3->appendNodes ($4);
+    $1->appendNodes (c);
+    $$ = $1;
+  }
+;
+
+Matrix:
+  ExpressionMatrix {
+    $$ = new eqn::application ();
+    $$->n = strdup ("matrix");
+    $$->nargs = $1->count ();
+    $$->args = $1;
   }
 ;
 
