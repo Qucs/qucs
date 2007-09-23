@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.22 2007-09-02 13:47:42 ela Exp $
+ * $Id: scan_netlist.l,v 1.23 2007-09-23 17:33:58 ela Exp $
  *
  */
 
@@ -232,6 +232,10 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <EQN>"<"  { return Less; }
 <EQN>">"  { return Greater; }
 <EQN>"!"  { return Not; }
+
+<EQN>[,;] { /* special tokens for vectors / matrices */
+    return netlist_text[0];
+  }
 
 <EQN>{UCREAL} { /* identify unsigned real float */
     char * endptr = NULL;

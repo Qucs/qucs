@@ -1,6 +1,21 @@
+2007-09-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Added syntax elements for immediate vectors and
+	matrices.
+
+	* parse_netlist.y: Added grammar for immediate vectors and
+	matrices.
+
+	* evaluate.cpp: Implemented evaluators for immediate vectors and
+	matrices.
+
+	* equation.cpp: Allowing applications with undetermined number of
+	arguments.  New function appendNodes() which can be used to
+	concatenate argument lists.
+
 2007-09-20  Stefan Jahn  <stefan@lkcc.org>
 
-	* evaluate.cpp: Added random number functions.	
+	* evaluate.cpp: Added random number functions.
 
 2007-09-04  Stefan Jahn  <stefan@lkcc.org>
 

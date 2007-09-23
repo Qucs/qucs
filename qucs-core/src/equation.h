@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.40 2007-09-16 16:49:38 ela Exp $
+ * $Id: equation.h,v 1.41 2007-09-23 17:33:57 ela Exp $
  *
  */
 
@@ -66,6 +66,7 @@ public:
   void setNext (node * n) { next = n; }
   int count (void);
   void append (node *);
+  void appendNodes (node *);
   void setDependencies (strlist *);
   strlist * getDependencies (void);
   void setDataDependencies (strlist *);
