@@ -1,3 +1,10 @@
+2007-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Fixed toString() function for evaluated matrices.
+	Added printing functionality for immediate vectors and matrices.
+	New function returning a double value for all kinds of result
+	types.
+
 2007-09-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Added syntax elements for immediate vectors and
