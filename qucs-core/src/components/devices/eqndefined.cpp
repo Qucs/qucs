@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.10 2007-09-16 16:49:40 ela Exp $
+ * $Id: eqndefined.cpp,v 1.11 2007-09-25 17:39:08 ela Exp $
  *
  */
 
@@ -129,8 +129,7 @@ void eqndefined::setResult (void * eqn, nr_double_t val) {
 // Returns the result of the equation.
 nr_double_t eqndefined::getResult (void * eqn) {
   A(eqn)->evaluate ();
-  constant * c = A(eqn)->getResult ();
-  return c->d;
+  return A(eqn)->getResultDouble ();
 }
 
 // Initializes the equation defined device.

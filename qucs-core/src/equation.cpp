@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.61 2007-09-23 17:33:57 ela Exp $
+ * $Id: equation.cpp,v 1.62 2007-09-25 17:39:07 ela Exp $
  *
  */
 
@@ -194,17 +194,17 @@ char * constant::toString (void) {
     break;
   case TAG_MATRIX:
     {
-      int len = 3 + (m->getRows () - 1) * (m->getCols () - 1);
+      int len = 3 + (m->getRows () - 1) * m->getCols () + (m->getCols () - 1);
       txt = (char *) malloc (len);
       strcpy (txt, "[");
-      for (int r = 1; r <= m->getRows (); r++) {
-	for (int c = 1; c <= m->getCols (); c++) {
+      for (int r = 0; r < m->getRows (); r++) {
+	for (int c = 0; c < m->getCols (); c++) {
 	  char * s = Cplx2String (m->get (r, c));
 	  txt = (char *) realloc (txt, len += strlen (s));
 	  strcat (txt, s);
-	  if (c != m->getCols ()) strcat (txt, " ");
+	  if (c != m->getCols () - 1) strcat (txt, ",");
 	}
-	if (r != m->getRows ()) strcat (txt, ";");
+	if (r != m->getRows () - 1) strcat (txt, ";");
       }
       strcat (txt, "]");
     }
@@ -604,6 +604,25 @@ char * application::toString (void) {
     }
     strcat (txt, "]");
   }
+  // vectors and matrices
+  else if (!strcmp (n, "vector") || !strcmp (n, "matrix")) {
+    int len = 3 + nargs - 1;
+    txt = (char *) malloc (len);
+    sprintf (txt, "[");
+    for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+      if (arg->getType () == TAG_CHAR) {
+	txt = (char *) realloc (txt, len++);
+	strcat (txt, ";");
+      } else {
+	char * str = arg->toString ();
+	txt = (char *) realloc (txt, len += strlen (str));
+	strcat (txt, str);
+	node * next = arg->getNext ();
+	if (next && next->getType () != TAG_CHAR) strcat (txt, ",");
+      }
+    }
+    strcat (txt, "]");
+  }
   // unary and n-ary operations here
   else {
     int len = strlen (n) + 3 + nargs - 1;
@@ -909,6 +928,23 @@ constant * node::getResult (int pos) {
   node * n = this;
   for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
   return n ? n->getResult () : NULL;
+}
+
+/* Returns a double value depending on the type of the equation nodes
+   result type. */
+nr_double_t node::getResultDouble (void) {
+  constant * c = getResult ();
+  if (c != NULL) {
+    switch (getType ()) {
+    case TAG_DOUBLE:
+      return c->d; break;
+    case TAG_COMPLEX:
+      return real (*(c->c)); break;
+    case TAG_BOOLEAN:
+      return c->b ? 1.0 : 0.0; break;
+    }
+  }
+  return 0.0;
 }
 
 // Assigns the dependency list to the equation node object.
@@ -2037,13 +2073,7 @@ node * checker::createReference (const char * type, char * ident,
 nr_double_t checker::getDouble (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
-      constant * c = C (eqn->getResult ());
-      if (c != NULL) {
-	if (c->type == TAG_DOUBLE)
-	  return c->d;
-	else if (c->type == TAG_COMPLEX)
-	  return real (*(c->c));
-      }
+      return eqn->getResultDouble ();
     }
   }
   return 0.0;
