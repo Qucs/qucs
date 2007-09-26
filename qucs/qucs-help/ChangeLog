@@ -1,3 +1,9 @@
+2007-09-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html, docs/de/mathfunc.html: Documented random
+	functions as well as general nomenclature for real and complex
+	numbers, vectors and matrices.
+
 2007-08-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/uk/index.html: Updated Ukrainian translations.
