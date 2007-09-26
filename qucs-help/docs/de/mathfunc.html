@@ -40,6 +40,8 @@ benutzt werden.<br><br>
 <tr><td><tt>runavg(x)</tt></td><td>gleitender Mittelwert der Werte eines Vektors</td></tr>
 <tr><td><tt>stddev(x)</tt></td><td>Standardabweichung der Werte eines Vektors</td></tr>
 <tr><td><tt>variance(x)</tt></td><td>Varianz der Werte eines Vektors</td></tr>
+<tr><td><tt>random()</tt></td><td>Zufallszahl zwischen 0.0 und 1.0</td></tr>
+<tr><td><tt>srandom(x)</tt></td><td>Anfangswert f&uuml;r Zufallsgenerator initialisieren</td></tr>
 <tr><td><tt>rms(x)</tt></td><td>Effektivwert der Werte eines Vektors</td></tr>
 <tr><td><tt>sum(x)</tt></td><td>Summe der Werte in einem Vektor</td></tr>
 <tr><td><tt>prod(x)</tt></td><td>Produkt der Werte in einem Vektor</td></tr>
@@ -167,7 +169,7 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>idft(x)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation (IDFT) des Vektors <tt>x</tt></td></tr>
 <tr><td><tt>Time2Freq(v,t)</tt></td><td>Berechnet die diskrete Fourier-Transformation der Funktion <tt>v(t)</tt> und interpretiert die Werte physikalisch</td></tr>
 <tr><td><tt>Freq2Time(V,f)</tt></td><td>Berechnet die inverse diskrete Fourier-Transformation der Funktion <tt>V(f)</tt> und interpretiert die Werte physikalisch</td></tr>
-<tr><td><tt>kbd(x [,n])</tt></td><td>Kaiser-Bessel Fensterfunktion</td></tr>
+<tr><td><tt>kbd(x[,n])</tt></td><td>Kaiser-Bessel Fensterfunktion</td></tr>
 <tr><td><tt>yvalue(f,xval)</tt></td><td>Liefert den Y-Wert des gegebenen Vektors <tt>f</tt>, der dem X-Wert <tt>xval</tt> am n&auml;chsten liegt; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
 <tr><td><tt>xvalue(f,yval)</tt></td><td>Liefert den X-Wert, der mit dem n&auml;chstliegenden Y-Wert zu <tt>yval</tt> aus dem Vektor <tt>f</tt> assoziiert ist; daf&uuml;r muss der Vektor <tt>f</tt> eine einfache Datenabh&auml;ngigkeit besitzen</td></tr>
 
@@ -188,6 +190,15 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>M</tt></td><td>Die gesamte Matrix M</td></tr>
 <tr><td><tt>M[2,3]</tt></td><td>Element in der 2. Zeile und der 3. Spalte der Matrix M</td></tr>
 <tr><td><tt>M[:,3]</tt></td><td>Vektor bestehend aus der 3. Spalte der Matrix M</td></tr>
+</table>
+<br>
+
+<b>Allgemeine Schreibweise</b>
+<table cellspacing=2 cellpadding=2>
+<tr><td><tt>2.5</tt></td><td>reelle Zahl</td></tr>
+<tr><td><tt>1.4+j5.1</tt></td><td>komplexe Zahl</td></tr>
+<tr><td><tt>[1,3,5,7]</tt></td><td>Vektor</td></tr>
+<tr><td><tt>[11,12;21,22]</tt></td><td>Matrize</td></tr>
 </table>
 <br>
 
