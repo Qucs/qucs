@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.21 2007/09/23 17:33:56 ela Exp $
+ * $Id: applications.h,v 1.22 2007/09/27 18:13:17 ela Exp $
  *
  */
 
@@ -806,7 +806,13 @@ struct application_t eqn::applications[] = {
   { "kbd", TAG_VECTOR, evaluate::kbd_d,   1, { TAG_DOUBLE } },
 
   { "?:", TAG_DOUBLE, evaluate::ifthenelse_d_d, 3,
-    { TAG_BOOLEAN, TAG_DOUBLE | TAG_COMPLEX, TAG_DOUBLE | TAG_COMPLEX } },
+    { TAG_BOOLEAN, TAG_DOUBLE, TAG_DOUBLE } },
+  { "?:", TAG_COMPLEX, evaluate::ifthenelse_c_c, 3,
+    { TAG_BOOLEAN, TAG_DOUBLE, TAG_COMPLEX } },
+  { "?:", TAG_COMPLEX, evaluate::ifthenelse_c_c, 3,
+    { TAG_BOOLEAN, TAG_COMPLEX, TAG_DOUBLE } },
+  { "?:", TAG_COMPLEX, evaluate::ifthenelse_c_c, 3,
+    { TAG_BOOLEAN, TAG_COMPLEX, TAG_COMPLEX } },
   { "<=", TAG_BOOLEAN, evaluate::lessorequal_d_d, 2,
     { TAG_DOUBLE, TAG_DOUBLE } },
   { ">=", TAG_BOOLEAN, evaluate::greaterorequal_d_d, 2,

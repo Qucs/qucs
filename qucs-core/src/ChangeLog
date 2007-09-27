@@ -1,3 +1,8 @@
+2007-09-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed if-then-else evaluation for mixed
+	real/complex arguments as well as for pure complex arguments.
+
 2007-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Fixed toString() function for evaluated matrices.
