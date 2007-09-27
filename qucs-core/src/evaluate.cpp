@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.64 2007-09-23 17:33:57 ela Exp $
+ * $Id: evaluate.cpp,v 1.65 2007-09-27 18:13:17 ela Exp $
  *
  */
 
@@ -3662,19 +3662,25 @@ constant * evaluate::kbd_d (constant * args) {
 // ***************** if-then-else operation ****************
 constant * evaluate::ifthenelse_d_d (constant * args) {
   _ARB0 (cond);
+  _DEFD ();
+  _RETD (cond ? D(_ARES(1)) : D(_ARES(2)));
+}
+
+constant * evaluate::ifthenelse_c_c (constant * args) {
+  _ARB0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  nr_double_t d1, d2;
+  complex c1, c2;
   if (t1 == TAG_DOUBLE)
-    d1 = D(_ARES(1));
+    c1 = D(_ARES(1));
   else
-    d1 = abs (*C(_ARES(1)));
+    c1 = *C(_ARES(1));
   if (t2 == TAG_DOUBLE)
-    d2 = D(_ARES(2));
+    c2 = D(_ARES(2));
   else
-    d2 = abs (*C(_ARES(2)));
-  _DEFD ();
-  _RETD (cond ? d1 : d2);
+    c2 = *C(_ARES(2));
+  _DEFC ();
+  _RETC (cond ? c1 : c2);
 }
 
 // ************************** less *************************
