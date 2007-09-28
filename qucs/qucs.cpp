@@ -522,22 +522,27 @@ void QucsApp::slotCMenuRename()
     }
 
   QString Name   = Item->text(0);
-  QString Suffix = Name.section('.',2);   // remember suffix
-  if(!Suffix.isEmpty())
-    Suffix = '.' + Suffix;
+  QString Suffix = Name.section('.',-1);   // remember suffix
+  QString Base   = Name.section('.',0,-2);
+  if(Base.isEmpty()) Base = Name;
 
   bool ok;
   QString s = QInputDialog::getText(tr("Rename file"), tr("Enter new name:"),
-		QLineEdit::Normal, Name.left(Name.length()-4), &ok, this);
+		QLineEdit::Normal, Base, &ok, this);
   if(!ok) return;
   if(s.isEmpty()) return;
 
+  QString NewName;
+  if(s.contains('.'))
+    NewName = s;
+  else
+    NewName = s+"."+Suffix;
   QDir file(QucsWorkDir.path());
-  if(!file.rename(Name, s+Suffix)) {
+  if(!file.rename(Name, NewName)) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: ")+Name);
     return;
   }
-  Item->setText(0, s+Suffix);
+  Item->setText(0, NewName);
 }
 
 // ----------------------------------------------------------
