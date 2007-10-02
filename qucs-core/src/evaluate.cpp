@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.65 2007-09-27 18:13:17 ela Exp $
+ * $Id: evaluate.cpp,v 1.66 2007-10-02 06:45:29 ela Exp $
  *
  */
 
@@ -3662,8 +3662,34 @@ constant * evaluate::kbd_d (constant * args) {
 // ***************** if-then-else operation ****************
 constant * evaluate::ifthenelse_d_d (constant * args) {
   _ARB0 (cond);
+  _ARD1 (d1);
+  _ARD2 (d2);
   _DEFD ();
-  _RETD (cond ? D(_ARES(1)) : D(_ARES(2)));
+  _RETD (cond ? d1 : d2);
+}
+
+constant * evaluate::ifthenelse_b_b (constant * args) {
+  _ARB0 (cond);
+  _ARB1 (b1);
+  _ARB2 (b2);
+  _DEFB ();
+  _RETB (cond ? b1 : b2);
+}
+
+constant * evaluate::ifthenelse_d_b (constant * args) {
+  _ARB0 (cond);
+  _ARD1 (d1);
+  _ARB2 (b2);
+  _DEFD ();
+  _RETD (cond ? d1 : (b2 ? 1.0 : 0.0));
+}
+
+constant * evaluate::ifthenelse_b_d (constant * args) {
+  _ARB0 (cond);
+  _ARB1 (b1);
+  _ARD2 (d2);
+  _DEFD ();
+  _RETD (cond ? (b1 ? 1.0 : 0.0) : d2);
 }
 
 constant * evaluate::ifthenelse_c_c (constant * args) {
@@ -3673,14 +3699,76 @@ constant * evaluate::ifthenelse_c_c (constant * args) {
   complex c1, c2;
   if (t1 == TAG_DOUBLE)
     c1 = D(_ARES(1));
-  else
+  else if (t1 == TAG_COMPLEX)
     c1 = *C(_ARES(1));
+  else
+    c1 = B(_ARES(1)) ? 1.0 : 0.0;
   if (t2 == TAG_DOUBLE)
     c2 = D(_ARES(2));
-  else
+  else if (t2 == TAG_COMPLEX)
     c2 = *C(_ARES(2));
+  else
+    c2 = B(_ARES(2)) ? 1.0 : 0.0;
   _DEFC ();
   _RETC (cond ? c1 : c2);
+}
+
+constant * evaluate::ifthenelse_m_m (constant * args) {
+  _ARB0 (cond);
+  int t1 = _ARG(1)->getType ();
+  int t2 = _ARG(2)->getType ();
+  matrix m1, m2;
+  switch (t1) {
+  case TAG_DOUBLE:
+    m1 = matrix (1); m1 (1,1) = D(_ARES(1)); break;
+  case TAG_COMPLEX:
+    m1 = matrix (1); m1 (1,1) = *C(_ARES(1)); break;
+  case TAG_BOOLEAN:
+    m1 = matrix (1); m1 (1,1) = B(_ARES(1)) ? 1.0 : 0.0; break;
+  case TAG_MATRIX:
+    m1 = *M(_ARES(1)); break;
+  }
+  switch (t2) {
+  case TAG_DOUBLE:
+    m2 = matrix (1); m2 (0,0) = D(_ARES(2)); break;
+  case TAG_COMPLEX:
+    m2 = matrix (1); m2 (0,0) = *C(_ARES(2)); break;
+  case TAG_BOOLEAN:
+    m2 = matrix (1); m2 (0,0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+  case TAG_MATRIX:
+    m2 = *M(_ARES(2)); break;
+  }
+  _DEFM ();
+  _RETM (cond ? m1 : m2);
+}
+
+constant * evaluate::ifthenelse_v_v (constant * args) {
+  _ARB0 (cond);
+  int t1 = _ARG(1)->getType ();
+  int t2 = _ARG(2)->getType ();
+  vector v1, v2;
+  switch (t1) {
+  case TAG_DOUBLE:
+    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+  case TAG_COMPLEX:
+    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+  case TAG_BOOLEAN:
+    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+  case TAG_VECTOR:
+    v1 = *V(_ARES(1)); break;
+  }
+  switch (t2) {
+  case TAG_DOUBLE:
+    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+  case TAG_COMPLEX:
+    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+  case TAG_BOOLEAN:
+    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+  case TAG_VECTOR:
+    v2 = *V(_ARES(2)); break;
+  }
+  _DEFV ();
+  _RETV (cond ? v1 : v2);
 }
 
 // ************************** less *************************
