@@ -1,7 +1,7 @@
 /*
  * matvec.cpp - matrix vector class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.21 2007-09-16 16:49:38 ela Exp $
+ * $Id: matvec.cpp,v 1.22 2007-10-02 08:43:56 ela Exp $
  *
  */
 
@@ -433,6 +433,13 @@ matvec conj (matvec a) {
 matvec abs (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (abs (a.get (i)), i);
+  return res;
+}
+
+// Computes magnitude in dB of each matrix vector element.
+matvec dB (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (dB (a.get (i)), i);
   return res;
 }
 

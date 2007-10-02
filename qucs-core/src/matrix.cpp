@@ -1,7 +1,7 @@
 /*
  * matrix.cpp - matrix class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.30 2007-08-15 11:02:46 ela Exp $
+ * $Id: matrix.cpp,v 1.31 2007-10-02 08:43:54 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -531,6 +531,17 @@ matrix abs (matrix a) {
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
       res.set (r, c, abs (a.get (r, c)));
+  return res;
+}
+
+/*!\brief Computes magnitude in dB of each matrix element.
+   \param[in] a matrix
+*/
+matrix dB (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, dB (a.get (r, c)));
   return res;
 }
 

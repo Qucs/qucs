@@ -2,6 +2,7 @@
 
 	* evaluate.cpp: Added the ?: operator for matrices as well as
 	vectors.
+	Implemented dB() function for matrices and matrix vectors.
 
 2007-09-27  Stefan Jahn  <stefan@lkcc.org>
 

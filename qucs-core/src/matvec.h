@@ -1,7 +1,7 @@
 /*
  * matvec.h - matrix vector class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.14 2007-09-16 16:49:38 ela Exp $
+ * $Id: matvec.h,v 1.15 2007-10-02 08:43:57 ela Exp $
  *
  */
 
@@ -94,6 +94,7 @@ class matvec
   friend matvec real      (matvec);
   friend matvec imag      (matvec);
   friend matvec abs       (matvec);
+  friend matvec dB        (matvec);
   friend matvec arg       (matvec);
   friend matvec adjoint   (matvec);
   friend vector rollet    (matvec);

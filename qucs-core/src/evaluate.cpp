@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.66 2007-10-02 06:45:29 ela Exp $
+ * $Id: evaluate.cpp,v 1.67 2007-10-02 08:43:51 ela Exp $
  *
  */
 
@@ -1283,6 +1283,18 @@ constant * evaluate::dB_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
   _RETV (dB (*v1));
+}
+
+constant * evaluate::dB_m (constant * args) {
+  _ARM0 (m1);
+  _DEFM ();
+  _RETM (dB (*m1));
+}
+
+constant * evaluate::dB_mv (constant * args) {
+  _ARMV0 (v1);
+  _DEFMV ();
+  _RETMV (dB (*v1));
 }
 
 // ********** square root *****************
