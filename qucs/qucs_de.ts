@@ -326,7 +326,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV Dateien</translation>
     </message>
 </context>
 <context>
@@ -1113,7 +1113,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV Dateien</translation>
     </message>
 </context>
 <context>
@@ -5468,19 +5468,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>dateibasierte Spannungsquelle</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Datei mit den Abtastwerten</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Wellenform wiederholen</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateibasierte Spannungsquelle</translation>
     </message>
 </context>
 <context>
