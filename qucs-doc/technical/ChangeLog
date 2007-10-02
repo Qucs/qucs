@@ -1,3 +1,8 @@
+2007-10-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* literature.bib: Fixed publication year of R. C. Compton and
+	D. B. Rutledge, "Perspectives in Microwave Circuit Analysis".
+
 2007-06-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* lineardevices.tex (subsection{Mutual inductors with any number
