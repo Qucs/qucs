@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: variable.h,v 1.6 2007/06/15 21:13:31 ela Exp $
+ * $Id: variable.h,v 1.7 2007/10/19 17:54:17 ela Exp $
  *
  */
 
@@ -70,10 +70,13 @@ class variable
   void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
   analysis * getAnalysis (void) { return value.a; }
   char * toString (void);
+  void setPassing (bool p) { pass = p; }
+  bool getPassing (void) { return pass; }
 
  private:
   char * name;
   char * text;
+  bool pass;
   int type;
   union value_t {
     constant * c;  // equation constant

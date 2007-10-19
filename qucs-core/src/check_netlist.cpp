@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.114 2007/09/16 16:49:38 ela Exp $
+ * $Id: check_netlist.cpp,v 1.115 2007/10/19 17:54:16 ela Exp $
  *
  */
 
@@ -354,17 +354,19 @@ static int checker_resolve_variable (struct definition_t * root,
       found++;
     }
     /* 7. find variable in equation */
-    if (root->env->getChecker()->containsVariable (value->ident)) {
-      variable * v;
-      value->var = eqn::TAG_DOUBLE;
-      if ((v = root->env->getVariable (value->ident)) == NULL) {
-	// put variable into the environment
-	v = new variable (value->ident);
-	eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
-	v->setConstant (c);
-	root->env->addVariable (v);
+    if (root->env) {
+      if (root->env->getChecker()->containsVariable (value->ident)) {
+	variable * v;
+	value->var = eqn::TAG_DOUBLE;
+	if ((v = root->env->getVariable (value->ident)) == NULL) {
+	  // put variable into the environment
+	  v = new variable (value->ident);
+	  eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
+	  v->setConstant (c);
+	  root->env->addVariable (v, false);
+	}
+	found++;
       }
-      found++;
     }
     /* 8. find file reference in file based sources */
     if ((val = checker_find_variable (root, "Vfile", "File", value->ident))) {
