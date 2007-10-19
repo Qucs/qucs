@@ -2,6 +2,7 @@
                                 vfile.cpp
                                -----------
     begin                : Fri April 07 2007
+    updated drawing      : Wed October 03 2007
     copyright            : (C) 2007 by Gunther Kraut
     email                : gn.kraut@t-online.de
  ***************************************************************************/
@@ -31,6 +32,14 @@ vFile::vFile()
   Lines.append(new Line( 18,  5, 18, 11,QPen(QPen::red,1)));
   Lines.append(new Line( 21,  8, 15,  8,QPen(QPen::red,1)));
   Lines.append(new Line(-18,  5,-18, 11,QPen(QPen::black,1)));
+
+  Lines.append(new Line( -6,-17, -6,-21,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line( -8,-17, -8,-21,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-10,-17,-10,-21,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line( -3,-15, -3,-23,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-13,-15,-13,-23,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -3,-23,-13,-23,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -3,-15,-13,-15,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
