@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.13 2007-09-16 16:49:38 ela Exp $
+ * $Id: environment.cpp,v 1.14 2007-10-19 17:54:17 ela Exp $
  *
  */
 
@@ -170,8 +170,9 @@ void environment::deleteVariables (void) {
 }
 
 /* This function adds a variable to the environment. */
-void environment::addVariable (variable * var) {
+void environment::addVariable (variable * var, bool pass) {
   var->setNext (root);
+  var->setPassing (pass);
   root = var;
 }
 
@@ -253,7 +254,7 @@ int environment::runSolver (void) {
    equation checker and solver. */
 void environment::passConstants (void) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
-    if (var->getType () == VAR_CONSTANT) {
+    if (var->getPassing () && var->getType () == VAR_CONSTANT) {
       constant * c = var->getConstant ();
       setDouble (var->getName (), c->d);
     }

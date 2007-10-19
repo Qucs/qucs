@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: variable.cpp,v 1.7 2007-06-15 21:13:30 ela Exp $
+ * $Id: variable.cpp,v 1.8 2007-10-19 17:54:17 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@ variable::variable () {
   text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
+  pass = true;
 }
 
 // This constructor creates a named instance of the variable class.
@@ -51,6 +52,7 @@ variable::variable (char * n) {
   text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
+  pass = true;
 }
 
 /* This copy constructor creates a instance of the variable class based
@@ -60,6 +62,7 @@ variable::variable (const variable & o) {
   text = o.text ? strdup (o.text) : NULL;
   type = o.type;
   next = o.next;
+  pass = o.pass;
   value = o.value;
 }
 

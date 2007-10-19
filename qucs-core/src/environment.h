@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.11 2007-09-16 16:49:38 ela Exp $
+ * $Id: environment.h,v 1.12 2007-10-19 17:54:17 ela Exp $
  *
  */
 
@@ -49,7 +49,7 @@ class environment
   // variable specific functionality
   void copyVariables (variable *);
   void deleteVariables (void);
-  void addVariable (variable *);
+  void addVariable (variable *, bool pass = true);
   variable * getVariable (char *);
 
   // equation specific functionality

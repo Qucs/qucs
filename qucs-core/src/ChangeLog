@@ -1,3 +1,10 @@
+2007-10-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* environment.cpp: Added 'passing' attribute to variables in the
+	environment.  Thus computed values in an environment don't get
+	passed from the environment variables, but any others will be
+	passed as ususal (e.g. subcircuit parameters).
+
 2007-10-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Added the ?: operator for matrices as well as
