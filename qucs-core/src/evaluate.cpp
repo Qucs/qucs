@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.67 2007/10/02 08:43:51 ela Exp $
+ * $Id: evaluate.cpp,v 1.68 2007/10/21 07:53:08 ela Exp $
  *
  */
 
@@ -1988,6 +1988,7 @@ constant * evaluate::index_mv_2 (constant * args) {
     sprintf (txt, "matvec indices [%d,%d] out of bounds [1-%d,1-%d]",
 	     r, c, mv->getRows (), mv->getCols ());
     THROW_MATH_EXCEPTION (txt);
+    res->v = new vector (mv->getSize ());
   } else {
     res->v = new vector (mv->get (r - 1, c - 1));
   }
@@ -2002,6 +2003,7 @@ constant * evaluate::index_mv_1 (constant * args) {
     char txt[256];
     sprintf (txt, "matvec index [%d] out of bounds [1-%d]", i, mv->getSize ());
     THROW_MATH_EXCEPTION (txt);
+    res->m = new matrix (mv->getRows (), mv->getCols ());
   } else {
     res->m = new matrix (mv->get (i - 1));
   }
@@ -2092,6 +2094,7 @@ constant * evaluate::index_m_2 (constant * args) {
     sprintf (txt, "matrix indices [%d,%d] out of bounds [1-%d,1-%d]",
 	     r, c, m->getRows (), m->getCols ());
     THROW_MATH_EXCEPTION (txt);
+    res->c = new complex ();
   } else {
     res->c = new complex (m->get (r - 1, c - 1));
   }
