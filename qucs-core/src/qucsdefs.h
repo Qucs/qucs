@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.72 2007/08/13 20:45:45 ela Exp $
+ * $Id: qucsdefs.h,v 1.73 2007/10/21 20:08:01 ela Exp $
  *
  */
 
@@ -212,6 +212,8 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP },
     { { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
       { "Repeat", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* AM modulated AC voltage source */

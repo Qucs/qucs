@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.cpp,v 1.3 2007/08/16 08:10:52 ela Exp $
+ * $Id: vfile.cpp,v 1.4 2007/10/21 20:08:02 ela Exp $
  *
  */
 
@@ -145,7 +145,7 @@ nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
   }
   // no interpolation necessary
   else if (len == 1) {
-    res = real(var->get (0));
+    res = real (var->get (0));
     return res;
   }
   else if (dataType == REPEAT_YES)
@@ -239,6 +239,8 @@ void vfile::initTR (void) {
 }
 
 void vfile::calcTR (nr_double_t t) {
-  nr_double_t u = interpolate (vs, ts, t);
-  setE (VSRC_1, u);
+  nr_double_t G = getPropertyDouble ("G");
+  nr_double_t T = getPropertyDouble ("T");
+  nr_double_t u = interpolate (vs, ts, t - T);
+  setE (VSRC_1, G * u);
 }
