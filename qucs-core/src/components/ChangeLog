@@ -1,3 +1,8 @@
+2007-10-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* vfile.cpp: Implemented new voltage gain (G) and delay time (T)
+	properties.
+
 2007-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/eqndefined.cpp: Fixed result interpretation for non-real
