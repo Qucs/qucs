@@ -58,6 +58,8 @@ vFile::vFile()
 		QObject::tr("interpolation type")+" [hold, linear, cubic]"));
   Props.append(new Property("Repeat", "no", false,
 		QObject::tr("repeat waveform")+" [no, yes]"));
+  Props.append(new Property("G", "1", false, QObject::tr("voltage gain")));
+  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
 
   rotate();  // fix historical flaw
 }
@@ -97,17 +99,13 @@ QString vFile::netlist()
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;   // node names
 
-  // output all properties
+  // output file properties
   Property *p2 = Props.first();
   s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
-  // interpolator type
-  p2 = Props.next();
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
+  // output all remaining properties
+  for(p2 = Props.next(); p2 != 0; p2 = Props.next())
+    s += " "+p2->Name+"=\""+p2->Value+"\"";
 
-  // repetition type
-  p2 = Props.next();
-  s += " "+p2->Name+"=\""+p2->Value+"\"\n";
-
-  return s;
+  return s + "\n";
 }
