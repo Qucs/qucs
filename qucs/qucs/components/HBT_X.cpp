@@ -192,6 +192,21 @@ HBT_X::HBT_X()
   Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
 
+  // H
+  Lines.append(new Line(-30,-30,-30,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-30,-27,-26,-27,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-26,-30,-26,-24,QPen(QPen::darkBlue,1)));
+  // B
+  Lines.append(new Line(-23,-30,-23,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-24,-30,-20,-30,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-23,-27,-20,-27,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-24,-24,-20,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-20,-30,-20,-27,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-20,-27,-20,-24,QPen(QPen::darkBlue,1)));
+  // T
+  Lines.append(new Line(-18,-30,-14,-30,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-16,-30,-16,-24,QPen(QPen::darkBlue,1)));
+
   Ports.append(new Port(  0,-30)); // collector
   Ports.append(new Port(-30,  0)); // base
   Ports.append(new Port(  0, 30)); // emitter
@@ -199,7 +214,6 @@ HBT_X::HBT_X()
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;
-
 
   tx = x2 + 4;
   ty = y1 + 4;

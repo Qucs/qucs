@@ -270,6 +270,26 @@ void hicumL2p1::createSymbol()
     Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
   }
 
+  // H
+  Lines.append(new Line(-30,-30,-30,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-30,-27,-26,-27,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-26,-30,-26,-24,QPen(QPen::darkBlue,1)));
+  // I
+  Lines.append(new Line(-24,-30,-24,-24,QPen(QPen::darkBlue,1)));
+  // C
+  Lines.append(new Line(-22,-30,-22,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-22,-30,-19,-30,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-22,-24,-19,-24,QPen(QPen::darkBlue,1)));
+  // U
+  Lines.append(new Line(-17,-30,-17,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-14,-30,-14,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-17,-24,-14,-24,QPen(QPen::darkBlue,1)));
+  // M
+  Lines.append(new Line(-12,-30,-12,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line( -8,-30, -8,-24,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-12,-30,-10,-28,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line( -8,-30,-10,-28,QPen(QPen::darkBlue,1)));
+
   Ports.append(new Port(  0,-30)); // collector
   Ports.append(new Port(-30,  0)); // base
   Ports.append(new Port(  0, 30)); // emitter
