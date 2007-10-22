@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.27 2007-09-23 17:33:57 ela Exp $
+ * $Id: parse_netlist.y,v 1.28 2007-10-22 17:53:10 ela Exp $
  *
  */
 
@@ -244,6 +244,10 @@ PropertyValue:
   | InstanceIdentifier {
     $$ = create_value ();
     $$->ident = $1;
+  }
+  | '[' InstanceIdentifier ']' {
+    $$ = create_value ();
+    $$->ident = $2;
   }
   | '[' ValueList ']' {
     $$ = $2;

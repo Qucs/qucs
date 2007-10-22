@@ -1,3 +1,8 @@
+2007-10-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: First preparation to allow vector properties to
+	be a reference to equation variables.
+
 2007-10-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed 'out of bounds' return value in order to
