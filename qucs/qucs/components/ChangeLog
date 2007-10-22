@@ -1,3 +1,8 @@
+2007-10-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* HBT_X.cpp (HBT_X), hicumL2p1.cpp (createSymbol): Cosmetic
+	changes on the schematic symbol.
+
 2007-10-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* vfile.cpp (vFile): Added new voltage gain and delay time
