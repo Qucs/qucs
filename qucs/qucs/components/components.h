@@ -50,6 +50,7 @@
 #include "vexp.h"
 #include "iexp.h"
 #include "vfile.h"
+#include "ifile.h"
 #include "vccs.h"
 #include "cccs.h"
 #include "vcvs.h"

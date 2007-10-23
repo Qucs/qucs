@@ -5284,6 +5284,18 @@ Stosowanie:  qucsedit [-r] plik
         <source>File Based Voltage Source</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>file based current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Based Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
