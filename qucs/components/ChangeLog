@@ -1,3 +1,7 @@
+2007-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* ifile.cpp (iFile): Added new file based current source.
+
 2007-10-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* HBT_X.cpp (HBT_X), hicumL2p1.cpp (createSymbol): Cosmetic
