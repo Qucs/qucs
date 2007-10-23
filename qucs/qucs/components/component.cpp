@@ -1474,6 +1474,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "Vnoise") c = new Noise_iv();
         else if(cstr == "nv") c = new Logical_Inv();
         else if(cstr == "exp") c = new iExp();
+        else if(cstr == "file") c = new iFile();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
 	else if(cstr == "KFF") c = new JK_FlipFlop();

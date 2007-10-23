@@ -26,7 +26,7 @@ files.
 Version 0.0.13
 --------------
 
- * new component: file based voltage source
+ * new components: file based current and voltage sources
 
 Version 0.0.12
 --------------
