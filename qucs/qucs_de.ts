@@ -5484,15 +5484,15 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>dateibasierte Stromquelle</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Stromverstärkung</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateibasierte Stromquelle</translation>
     </message>
 </context>
 <context>
