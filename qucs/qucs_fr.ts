@@ -1,4 +1,5 @@
 <!DOCTYPE TS><TS>
+<defaultcodec></defaultcodec>
 <context>
     <name>ArrowDialog</name>
     <message>
@@ -330,7 +331,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers CSV</translation>
     </message>
 </context>
 <context>
@@ -1051,7 +1052,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers CSV</translation>
     </message>
 </context>
 <context>
@@ -2035,7 +2036,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation>source de courant contrôlée en tension</translation>
+        <translation>source de tension contrôlée en courant</translation>
     </message>
     <message>
         <source>circulator</source>
@@ -2359,7 +2360,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation>source de tension contrôlée en courant</translation>
+        <translation>source de courant contrôlée en tension</translation>
     </message>
     <message>
         <source>forward transconductance</source>
@@ -2521,7 +2522,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation>Bras de polarisation</translation>
+        <translation>Té de polarisation</translation>
     </message>
     <message>
         <source>npn transistor</source>
@@ -4798,10 +4799,6 @@ Invocation :  qucsedit [-r] fichier
         <translation>Seuil du courant de forte injection inverse (A) (0 = pas d&apos;effet Webster)</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
         <translation>Exposant d&apos;avalanche C-E (0 = pas d&apos;effet Zéner)</translation>
     </message>
@@ -5241,31 +5238,31 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>fichier de tensions</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>nom du fichier</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>forme d&apos;onde périodique</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de tensions</translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fichier de courants</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>gain en courant</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de courants</translation>
     </message>
 </context>
 <context>
