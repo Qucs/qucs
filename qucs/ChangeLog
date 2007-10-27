@@ -1,3 +1,11 @@
+2007-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* bitmaps/Makefile.am (XPMS): Added ifile icon.  Thanks to
+	Gunther.
+
+	* qucs_fr.ts: Fixed translations for CCVS and VCCS.  Also updated
+	the translations.  Thanks to Vincent.
+
 2007-09-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (slotCMenuRename): Fixed behaviour of rename context
