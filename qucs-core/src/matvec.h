@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.15 2007/10/02 08:43:57 ela Exp $
+ * $Id: matvec.h,v 1.16 2007/11/01 21:42:46 ela Exp $
  *
  */
 
@@ -98,6 +98,7 @@ class matvec
   friend matvec arg       (matvec);
   friend matvec adjoint   (matvec);
   friend vector rollet    (matvec);
+  friend vector b1        (matvec);
 
   friend matvec stos (matvec, complex, complex z0 = 50.0);
   friend matvec stos (matvec, nr_double_t, nr_double_t z0 = 50.0);

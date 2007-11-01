@@ -27,7 +27,8 @@ Version 0.0.13
 --------------
 
  * allowing immediate vectors and matrices in equations
- * new functions in equation solver: random() and srandom()
+ * new functions in equation solver: random(), srandom(), StabFactor()
+   and StabMeasure()
  * allowing engineering notation of numbers in equations
  * support for Touchstone files as an export file format in qucsconv
  * support for CSV files as an import file format in qucsconv

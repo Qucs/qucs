@@ -1,3 +1,10 @@
+2007-11-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* applications.h: Added StabFactor() as alias for Rollet().
+
+	* matrix.cpp (b1), matvec.cpp (b1): Added new function calculating
+	the stability measure B1 of a 2-port S-parameter matrix.
+
 2007-10-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y: First preparation to allow vector properties to
