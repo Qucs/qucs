@@ -178,6 +178,8 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 <A HREF="#srandom">srandom</A><TT>  </TT>
 <A HREF="#StabCircleL">StabCircleL</A><TT>  </TT>
 <A HREF="#StabCircleS">StabCircleS</A><TT>  </TT>
+<A HREF="#StabFactor">StabFactor</A><TT>  </TT>
+<A HREF="#StabMeasure">StabMeasure</A><TT>  </TT>
 <A HREF="#stddev">stddev</A><TT>  </TT>
 <A HREF="#step">step</A><TT>  </TT>
 <A HREF="#stos">stos</A><TT>  </TT>
@@ -288,7 +290,7 @@ Complex Functions</H3>
 			<A NAME="angle"></A><TT>angle(x)</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			Phase angle in radians of a complex number. Synonym for <TT>arg()</TT
+			Phase angle in radians of a complex number. Synonym for <TT>arg()</TT>
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -349,7 +351,7 @@ Complex Functions</H3>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="phas"></A><TT>phase(x)</TT>
+			<A NAME="phase"></A><TT>phase(x)</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Phase angle in degrees of a complex number
@@ -1238,7 +1240,7 @@ Mathematical Functions</H3>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="Rollet"></A><TT>Rollet(x)</TT>
+			<A NAME="Rollet"></A><TT>Rollet(s)</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Rollet stability factor of a two-port S-parameter matrix
@@ -1258,6 +1260,22 @@ Mathematical Functions</H3>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Stability circle in the source plane
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="StabFactor"></A><TT>StabFactor(s)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Stability factor of a two-port S-parameter matrix. Synonym for <TT>Rollet()</TT>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="StabMeasure"></A><TT>StabMeasure(s)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Stability measure B1 of a two-port S-parameter matrix
 		</TD>
 	</TR>
 </TABLE>
