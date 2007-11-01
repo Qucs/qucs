@@ -1,3 +1,8 @@
+2007-11-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Documented new functions StabMeasure()
+	and StabFactor().  Fixed phase()-link.
+
 2007-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Reordered math functionality.  Thanks to
