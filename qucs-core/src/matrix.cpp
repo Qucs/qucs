@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.31 2007-10-02 08:43:54 ela Exp $
+ * $Id: matrix.cpp,v 1.32 2007-11-01 21:42:46 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -1834,4 +1834,12 @@ nr_double_t rollet (matrix m) {
   res = (1 - norm (m (0, 0)) - norm (m (1, 1)) + norm (det (m))) /
     2 / abs (m (0, 1) * m (1, 0));
   return res;
+}
+
+/* Computes stability measure B1 of the given S-parameter matrix. */
+nr_double_t b1 (matrix m) {
+  assert (m.getRows () >= 2 && m.getCols () >= 2);
+  nr_double_t res;
+  res = 1 + norm (m (0, 0)) - norm (m (1, 1)) - norm (det (m));
+  return res;  
 }

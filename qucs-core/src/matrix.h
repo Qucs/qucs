@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.20 2007-10-02 08:43:55 ela Exp $
+ * $Id: matrix.h,v 1.21 2007-11-01 21:42:46 ela Exp $
  *
  */
 
@@ -121,6 +121,7 @@ class matrix
 
   friend matrix twoport (matrix, char, char);
   friend nr_double_t rollet (matrix);
+  friend nr_double_t b1 (matrix);
 
   /*! \brief Read access operator 
       \param[in] r: row number (from 0 like usually in C)

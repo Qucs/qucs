@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.22 2007-10-02 08:43:56 ela Exp $
+ * $Id: matvec.cpp,v 1.23 2007-11-01 21:42:46 ela Exp $
  *
  */
 
@@ -588,5 +588,14 @@ vector rollet (matvec m) {
   assert (m.getCols () >= 2 && m.getRows () >= 2);
   vector res (m.getSize ());
   for (int i = 0; i < m.getSize (); i++) res.set (rollet (m.get (i)), i);
+  return res;
+}
+
+/* The function returns the stability measure B1 vector of the given
+   S-parameter matrix vector. */
+vector b1 (matvec m) {
+  assert (m.getCols () >= 2 && m.getRows () >= 2);
+  vector res (m.getSize ());
+  for (int i = 0; i < m.getSize (); i++) res.set (b1 (m.get (i)), i);
   return res;
 }

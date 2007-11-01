@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.68 2007-10-21 07:53:08 ela Exp $
+ * $Id: evaluate.cpp,v 1.69 2007-11-01 21:42:46 ela Exp $
  *
  */
 
@@ -2601,6 +2601,17 @@ constant * evaluate::mu2_mv (constant * args) {
   _RETV (k);
 }
 
+constant * evaluate::b1_m (constant * args) {
+  _ARM0 (m);
+  _DEFD ();
+  _RETD (b1 (*m));
+}
+
+constant * evaluate::b1_mv (constant * args) {
+  _ARMV0 (mv);
+  _DEFV ();
+  _RETV (b1 (*mv));
+}
 
 // ***************** vector creation *****************
 constant * evaluate::linspace (constant * args) {
