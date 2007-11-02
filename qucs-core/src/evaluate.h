@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.43 2007/11/01 21:42:46 ela Exp $
+ * $Id: evaluate.h,v 1.44 2007/11/02 19:09:26 ela Exp $
  *
  */
 
@@ -209,6 +209,7 @@ public:
 
   static constant * unwrap_v_1 (constant *);
   static constant * unwrap_v_2 (constant *);
+  static constant * unwrap_v_3 (constant *);
 
   static constant * deg2rad_d (constant *);
   static constant * deg2rad_c (constant *);

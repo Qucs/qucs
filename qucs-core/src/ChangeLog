@@ -1,3 +1,8 @@
+2007-11-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Added optional third argument to unwrap() specifying
+	the phase/angle step.
+
 2007-11-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* applications.h: Added StabFactor() as alias for Rollet().
