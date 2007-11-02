@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.28 2007-09-16 16:49:40 ela Exp $
+ * $Id: vector.h,v 1.29 2007-11-02 19:09:26 ela Exp $
  *
  */
 
@@ -105,7 +105,8 @@ class vector : public object
   friend vector ytor   (vector, complex zref = 50.0);
   friend vector rtoy   (vector, complex zref = 50.0);
   friend vector diff   (vector, vector, int n = 1);
-  friend vector unwrap (vector, nr_double_t tol = M_PI);
+  friend vector unwrap (vector,
+			nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
 
   friend vector polar   (vector, const complex);
   friend vector polar   (const complex, vector);

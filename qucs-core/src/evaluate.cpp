@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.69 2007-11-01 21:42:46 ela Exp $
+ * $Id: evaluate.cpp,v 1.70 2007-11-02 19:09:26 ela Exp $
  *
  */
 
@@ -1221,6 +1221,14 @@ constant * evaluate::unwrap_v_2 (constant * args) {
   _ARD1 (d2);
   _DEFV ();
   _RETV (unwrap (*v1, fabs (d2)));
+}
+
+constant * evaluate::unwrap_v_3 (constant * args) {
+  _ARV0 (v1);
+  _ARD1 (d2);
+  _ARD2 (d3);
+  _DEFV ();
+  _RETV (unwrap (*v1, fabs (d2), fabs (d3)));
 }
 
 // ******** radian/degree conversion **********
