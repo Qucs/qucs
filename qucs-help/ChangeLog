@@ -1,3 +1,10 @@
+2007-11-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/mathfunc.html: Reordered math functionality.  Thanks to
+	Gunther.
+
+	* docs/en/mathfunc.html: Added descriptions of logical operators.
+
 2007-11-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Documented new functions StabMeasure()
