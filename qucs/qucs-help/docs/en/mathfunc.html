@@ -1,11 +1,11 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>Qucs - Math Functions</TITLE>
 	<META NAME="AUTHOR" CONTENT="Michael Margraf">
 	<META NAME="CREATED" CONTENT="">
 	<META NAME="CHANGEDBY" CONTENT="Gunther Kraut">
-	<META NAME="CHANGED" CONTENT="20071026">
+	<META NAME="CHANGED" CONTENT="20071102">
+	<TITLE>Qucs - Math Functions</TITLE>
 </HEAD>
 <BODY LANG="en-GB" DIR="LTR">
 <H3 ALIGN=CENTER><A NAME="top"></A>- Qucs -<BR>Quite Universal Circuit Simulator</H3>
@@ -14,6 +14,7 @@ The following operations and functions can be applied in Qucs
 equations. For detailed description please refer to the "Measurement
 Expressions Reference Manual". Parameters in brackets "[]" are optional.
 <H2>Operators</H2>
+<H3 >Arithmetic Operators</H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=1 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
 	<TR>
@@ -21,7 +22,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>+x</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			unary plus
+			Unary plus
 		</TD>
 	</TR>
 	<TR>
@@ -29,7 +30,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>-x</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			unary minus
+			Unary minus
 		</TD>
 	</TR>
 	<TR>
@@ -37,7 +38,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x+y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			addition
+			Addition
 		</TD>
 	</TR>
 	<TR>
@@ -45,7 +46,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x-y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			subtraction
+			Subtraction
 		</TD>
 	</TR>
 	<TR>
@@ -53,7 +54,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x*y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			multiplication
+			Multiplication
 		</TD>
 	</TR>
 	<TR>
@@ -61,7 +62,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x/y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			division
+			Division
 		</TD>
 	</TR>
 	<TR>
@@ -69,7 +70,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x%y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			modulo (remainder of division)
+			Modulo (remainder of division)
 		</TD>
 	</TR>
 	<TR>
@@ -77,7 +78,99 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 			<TT>x^y</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			power
+			Power
+		</TD>
+	</TR>
+</TABLE>
+<H3 >Logical Operators</H3>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=1 CELLSPACING=0>
+	<COL WIDTH=43*><COL WIDTH=213*>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>!x</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Negation
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x&amp;&amp;y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			And
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x||y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Or
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x^^y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Exclusive or
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x?y:z</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Abbreviation for conditional expression &quot;if <TT>x</TT> then <TT>y</TT> else <TT>z</TT>&quot;
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x==y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Equal
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x!=y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Not equal
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x&lt;y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Less than
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x&lt;=y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Less than or equal
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x&gt;y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Larger than
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25% VALIGN="baseline">
+			<TT>x&gt;=y</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Larger than or equal
 		</TD>
 	</TR>
 </TABLE>
@@ -207,71 +300,71 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 <H2>Math Functions</H2>
 <H3>Vectors and Matrices: Creation</H3>
 <DIV ALIGN=RIGHT>
-	<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
-		<COL WIDTH=43*><COL WIDTH=213*>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="eye"></A><TT>eye(n)</TT>
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Creates <TT>n</TT> x <TT>n</TT> identity matrix
-			</TD>
-		</TR>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="linspace"></A><TT>linspace(from,to,n)</TT>	
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Creates a real vector with <TT>n</TT> linearly spaced components between <TT>from</TT> and <TT>to</TT>, both inclusively
-			</TD>
-		</TR>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="logspace"></A><TT>logspace(from,to,n)</TT>
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Creates a real vector with <TT>n</TT> logarithmically spaced components  between <TT>from</TT> and <TT>to</TT>, both inclusively
-			</TD>
-		</TR>
-	</TABLE>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=43*><COL WIDTH=213*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="eye"></A><TT>eye(n)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Creates <TT>n</TT> x <TT>n</TT> identity matrix
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="linspace"></A><TT>linspace(from,to,n)</TT>	
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Creates a real vector with <TT>n</TT> linearly spaced components between <TT>from</TT> and <TT>to</TT>, both inclusively
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="logspace"></A><TT>logspace(from,to,n)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Creates a real vector with <TT>n</TT> logarithmically spaced components  between <TT>from</TT> and <TT>to</TT>, both inclusively
+		</TD>
+	</TR>
+</TABLE>
 </DIV>
 <H3 >Vectors and Matrices: Basic Matrix Functions</H3>
 <DIV ALIGN=RIGHT>
-	<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
-		<COL WIDTH=43*><COL WIDTH=213*>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="adjoint"></A><TT>adjoint(x)</TT>
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Adjoint matrix of <TT>x</TT> (transposed and conjugate complex)
-			</TD>
-		</TR>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="det"></A><TT>det(x)</TT>	
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Determinant of a matrix <TT>x</TT>
-			</TD>
-		</TR>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="inverse"></A><TT>inverse(x)</TT>
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Inverse matrix of <TT>x</TT>
-			</TD>
-		</TR>
-		<TR VALIGN=TOP>
-			<TD WIDTH=25% VALIGN="baseline">
-				<A NAME="transpose"></A><TT>transpose(x)</TT>
-			</TD>
-			<TD WIDTH=75% VALIGN="baseline">
-				Transposed matrix of <TT>x</TT> (rows and columns exchanged)
-			</TD>
-		</TR>
-	</TABLE>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=43*><COL WIDTH=213*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="adjoint"></A><TT>adjoint(x)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Adjoint matrix of <TT>x</TT> (transposed and conjugate complex)
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="det"></A><TT>det(x)</TT>	
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Determinant of a matrix <TT>x</TT>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="inverse"></A><TT>inverse(x)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Inverse matrix of <TT>x</TT>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="transpose"></A><TT>transpose(x)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Transposed matrix of <TT>x</TT> (rows and columns exchanged)
+		</TD>
+	</TR>
+</TABLE>
 </DIV>
 <H3 >Elementary Mathematical Functions: Basic Real and
 Complex Functions</H3>
@@ -410,7 +503,7 @@ Complex Functions</H3>
 			<A NAME="unwrap"></A><TT>unwrap(p[,tol[,step]])</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			Unwraps the angle <TT>p</TT> (in radians -- default <TT>step</TT> is 2*pi) using the optional tolerance value <TT>tol</TT> (default is pi)
+		         Unwraps the angle <TT>p</TT> (in radians -- default <TT>step</TT> is 2*pi) using the optional tolerance value <TT>tol</TT> (default is pi)
 		</TD>
 	</TR>
 </TABLE>
@@ -557,7 +650,7 @@ Trigonometric Functions</H3>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="arctan"></A><TT>arctan(x)</TT>
+			<A NAME="arctan"></A><TT>arctan(x[,y])</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Arc tangent (also known as "inverse tangent")
@@ -1077,8 +1170,7 @@ Mathematical Functions</H3>
 			<A NAME="rtoswr"></A><TT>rtoswr(x)</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			Converts reflection coefficient to voltage standing wave ratio
-			(VSWR)
+			Converts reflection coefficient to voltage standing wave ratio (VSWR)
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1122,8 +1214,7 @@ Mathematical Functions</H3>
 			<A NAME="stos"></A><TT>stos(s,zref[,z0])</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			Converts S-parameter matrix to S-parameter matrix with
-			different reference impedance(s)
+			Converts S-parameter matrix to S-parameter matrix with different reference impedance(s)
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1222,8 +1313,8 @@ Mathematical Functions</H3>
 	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="NoiseCircle"></A><TT>NoiseCircle(Sopt,</TT><BR>
-			<TT>Fmin,Rn,F[,Arcs])</TT>
+			<A NAME="NoiseCircle"></A><TT>NoiseCircle(Sopt,<BR>
+			Fmin,Rn,F[,Arcs])</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Generates circle(s) with constant Noise Figure(s) <TT>F</TT>. <TT>Arcs</TT> specifies the angles in degrees created by e.g. <TT>linspace(0,360,100)</TT>. If Arcs is a number it specifies the number of equally spaced circle segments, if it is omitted this number defaults to a reasonable value
@@ -1262,24 +1353,25 @@ Mathematical Functions</H3>
 			Stability circle in the source plane
 		</TD>
 	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="StabFactor"></A><TT>StabFactor(s)</TT>
-		</TD>
-		<TD WIDTH=75% VALIGN="baseline">
-			Stability factor of a two-port S-parameter matrix. Synonym for <TT>Rollet()</TT>
-		</TD>
-	</TR>
-	<TR VALIGN=TOP>
-		<TD WIDTH=25% VALIGN="baseline">
-			<A NAME="StabMeasure"></A><TT>StabMeasure(s)</TT>
-		</TD>
-		<TD WIDTH=75% VALIGN="baseline">
-			Stability measure B1 of a two-port S-parameter matrix
-		</TD>
-	</TR>
+       <TR VALIGN=TOP>
+               <TD WIDTH=25% VALIGN="baseline">
+                       <A NAME="StabFactor"></A><TT>StabFactor(s)</TT>
+               </TD>
+               <TD WIDTH=75% VALIGN="baseline">
+                       Stability factor of a two-port S-parameter matrix. Synonym for <TT>Rollet()</TT>
+               </TD>
+       </TR>
+       <TR VALIGN=TOP>
+               <TD WIDTH=25% VALIGN="baseline">
+                       <A NAME="StabMeasure"></A><TT>StabMeasure(s)</TT>
+               </TD>
+               <TD WIDTH=75% VALIGN="baseline">
+                       Stability measure B1 of a two-port S-parameter matrix
+               </TD>
+       </TR>
 </TABLE>
-<H2>Range nomenclature</H2>
+<H2>Nomenclature</H2>
+<H3>Ranges</H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
 	<TR>
@@ -1315,8 +1407,7 @@ Mathematical Functions</H3>
 		</TD>
 	</TR>
 </TABLE>
-<H2>Matrix nomenclature 
-</H2>
+<H3>Matrices and Matrix Elements</H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
 	<TR>
@@ -1345,7 +1436,7 @@ Mathematical Functions</H3>
 	</TR>
 </TABLE>
 
-<H2>Immediate nomenclature</H2>
+<H3>Immediate</H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
 	<TR><TD WIDTH=25% VALIGN="baseline"><TT>2.5</TT></TD><TD WIDTH=75% VALIGN="baseline">Real number</TD></TR>
@@ -1354,8 +1445,7 @@ Mathematical Functions</H3>
 	<TR><TD WIDTH=25% VALIGN="baseline"><TT>[11,12;21,22]</TT></TD><TD WIDTH=75% VALIGN="baseline">Matrix</TD></TR>
 </TABLE>
 
-<H2>Name of values 
-</H2>
+<H3>Name of Values </H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
 	<TR>
@@ -1432,7 +1522,7 @@ Mathematical Functions</H3>
 	</TR>
 </TABLE>
 Note: All voltages and currents are peak values.<br>
-Note: Noise voltages are RMS values at 1Hz bandwidth.
+Note: Noise voltages are RMS values at 1 Hz bandwidth.
 
 <H2>Constants</H2>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -1466,7 +1556,7 @@ Note: Noise voltages are RMS values at 1Hz bandwidth.
 			<TT>kB</TT>
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
-			Boltzmann constant = 1.38065e-23
+			Boltzmann constant = 1.38065e-23 J/K
 		</TD>
 	</TR>
 	<TR>
