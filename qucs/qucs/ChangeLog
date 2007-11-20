@@ -1,3 +1,8 @@
+2007-11-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/diagram.cpp (getAxisLimits): Fixed a segfault bug when
+	recomputing invalid graph data is requested.
+
 2007-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* bitmaps/Makefile.am (XPMS): Added ifile icon.  Thanks to
