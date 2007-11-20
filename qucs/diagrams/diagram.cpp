@@ -703,6 +703,7 @@ void Diagram::getAxisLimits(Graph *pg)
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
   p = pg->cPointsY;
+  if(p == 0) return;    // if no data => invalid
   for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
     x = *(p++);
     y = *(p++);
