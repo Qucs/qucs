@@ -28,32 +28,41 @@
 #include <qvgroupbox.h>
 
 
-DisplayDialog::DisplayDialog(QWidget *parent)
+DisplayDialog::DisplayDialog(QWidget *parent, bool helper)
                      : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
   vLayout = new QVBoxLayout(this);
   vLayout->setMargin(3);
 
-  QVGroupBox *Analog = new QVGroupBox (tr("Analogue"), this);
-  Text = new QTextEdit(Analog);
-  Text->setTextFormat(Qt::PlainText);
-  Text->setReadOnly(true);
-  Text->setMinimumSize(200, 80);
-  vLayout->addWidget(Analog);
+  if(helper) {
+    Text = new QTextEdit(this);
+    Text->setTextFormat(Qt::PlainText);
+    Text->setReadOnly(true);
+    Text->setMinimumSize(200, 100);
+    vLayout->addWidget(Text);
+  }
+  else {
+    QVGroupBox *Analog = new QVGroupBox (tr("Analogue"), this);
+    Text = new QTextEdit(Analog);
+    Text->setTextFormat(Qt::PlainText);
+    Text->setReadOnly(true);
+    Text->setMinimumSize(200, 80);
+    vLayout->addWidget(Analog);
 
-  QVGroupBox *VHDL = new QVGroupBox (tr("VHDL"), this);
-  VHDLText = new QTextEdit(VHDL);
-  VHDLText->setTextFormat(Qt::PlainText);
-  VHDLText->setReadOnly(true);
-  VHDLText->setMinimumSize(200, 80);
-  vLayout->addWidget(VHDL);
+    QVGroupBox *VHDL = new QVGroupBox (tr("VHDL"), this);
+    VHDLText = new QTextEdit(VHDL);
+    VHDLText->setTextFormat(Qt::PlainText);
+    VHDLText->setReadOnly(true);
+    VHDLText->setMinimumSize(200, 80);
+    vLayout->addWidget(VHDL);
 
-  QVGroupBox *Verilog = new QVGroupBox (tr("Verilog"), this);
-  VerilogText = new QTextEdit(Verilog);
-  VerilogText->setTextFormat(Qt::PlainText);
-  VerilogText->setReadOnly(true);
-  VerilogText->setMinimumSize(200, 80);
-  vLayout->addWidget(Verilog);
+    QVGroupBox *Verilog = new QVGroupBox (tr("Verilog"), this);
+    VerilogText = new QTextEdit(Verilog);
+    VerilogText->setTextFormat(Qt::PlainText);
+    VerilogText->setReadOnly(true);
+    VerilogText->setMinimumSize(200, 80);
+    vLayout->addWidget(Verilog);
+  }
 
   QHBox *h = new QHBox(this);
   vLayout->addWidget(h);
