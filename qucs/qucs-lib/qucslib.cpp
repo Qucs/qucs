@@ -240,7 +240,7 @@ void QucsLib::slotCopyToClipBoard()
 // ----------------------------------------------------
 void QucsLib::slotShowModel()
 {
-  DisplayDialog *d = new DisplayDialog(this);
+  DisplayDialog *d = new DisplayDialog(this, false);
   d->setCaption(tr("Model"));
   d->resize(500, 150);
   d->Text->setText(Symbol->ModelString);

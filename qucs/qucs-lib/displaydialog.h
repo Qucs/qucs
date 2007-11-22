@@ -27,7 +27,7 @@ class QVBoxLayout;
 class DisplayDialog : public QDialog  {
    Q_OBJECT
 public:
-  DisplayDialog(QWidget *parent = 0);
+  DisplayDialog(QWidget *parent = 0, bool helper = true);
  ~DisplayDialog();
 
   QTextEdit *Text, *VHDLText, *VerilogText;
