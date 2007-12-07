@@ -78,10 +78,11 @@ else
   if test "x$GCC" = xyes; then
     CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
     CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
-    case $host_os in
-      *darwin*) LDFLAGS="$LDFLAGS" ;;
-      *)        LDFLAGS="$LDFLAGS -s" ;;
-    esac
+# disable stripping (debian bug #437876)
+#    case $host_os in
+#      *darwin*) LDFLAGS="$LDFLAGS" ;;
+#      *)        LDFLAGS="$LDFLAGS -s" ;;
+#    esac
   fi
 fi
 unset enable_debug

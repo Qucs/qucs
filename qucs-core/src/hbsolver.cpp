@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.22 2007/04/04 19:25:41 ela Exp $
+ * $Id: hbsolver.cpp,v 1.23 2007/12/07 20:44:02 ela Exp $
  *
  */
 
@@ -407,13 +407,13 @@ void hbsolver::collectFrequencies (void) {
     ndfreqs[i] = (n + 1) * 2;
   }
 
-#if DEBUG && 0
+#if HB_DEBUG
   fprintf (stderr, "%d frequencies: [ ", negfreqs.getSize ());
   for (i = 0; i < negfreqs.getSize (); i++) {
     fprintf (stderr, "%g ", (double) real (negfreqs.get (i)));
   }
   fprintf (stderr, "]\n");
-#endif /* DEBUG */
+#endif /* HB_DEBUG */
 
   // build list of positive frequencies including DC
   for (n = 0; n < negfreqs.getSize (); n++) {
