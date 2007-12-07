@@ -2,7 +2,7 @@
 % This document contains the chapter about harmonic balance analysis.
 %
 % Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
-% Copyright (C) 2005, 2006
+% Copyright (C) 2005, 2006, 2007
 %               Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -39,7 +39,7 @@ circuits excited with sinusoidal signals (e.g. mixers, power amplifiers).
 
 \section{The Basic Concept}
 
-As non-linear elements can only be modeled in time domain, the circuit
+As the non-linear elements are still modeled in time domain, the circuit
 first must be separated into a linear and a non-linear part. The
 internal impedances $Z_i$ of the voltage sources are put into the
 linear part as well. Figure \ref{fig:hb_concept} illustrates the
@@ -177,9 +177,9 @@ matrix.
 Note: The MNA matrix of the linear subcircuit has $L$ nodes.
 Every node, that is connected to the non-linear subcircuit or/and is
 connected to a voltage source, is called "port" in the following text.
-So, there are $M+N$ ports. The $N$ ports of the interconnections are
-all with reference to ground, whereas the other $M$ ports can be
-differential.
+So, there are $M+N$ ports. All these ports need to be differential
+ones, i.e. without ground reference. Otherwise problemes may occur
+due to singular matrices when calculating $[\tilde{Y}]$ or $[\hat{Y}]$.
 
 \addvspace{12pt}
 
@@ -521,3 +521,25 @@ for n=1 to $NumberOfPorts$ {
     Calculate $\underline{S}_{mn}$ according to above-mentioned equation.
 }
 \end{lstlisting}
+
+
+\section{Autonomous Harmonic Balance}
+
+Up to here, only forced circuits were dealt with. That is, the
+above-mentioned methods can analyse circuits that are driven by
+signal sources, but do not create a signal by themselves. The
+typical examples are amplifiers and mixers. However, harmonic
+balance techniques are also capable of simulating autonomous
+circuits like oscillators.\\
+This is mostly done in the following way:
+\begin{enumerate}
+\item The user enters an approximate frequency, where the oscillation
+  is expected. (An ac simulation can be performed to get an idea about
+  that.)
+\item The user enters a frequency interval. Somewhere within this
+  interval the oscillation must appear.
+\item The user specifies a circuit node where the oscillation voltage
+  can best be measured.
+\item The simulator performs several harmonic balance analyses with
+  different fundamental frequencies in search for the oscillation.
+\end{enumerate}
