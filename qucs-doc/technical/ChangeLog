@@ -1,3 +1,9 @@
+2007-12-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* hbanalysis.tex (section{Autonomous Harmonic Balance}): Added new
+	section.  Thanks to Michael.  Also fixed some description of HB
+	analysis.
+
 2007-10-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* literature.bib: Fixed publication year of R. C. Compton and
