@@ -1,3 +1,8 @@
+2007-12-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac:  Fixed Debian bug #437876 (handling nostrip build
+	option).
+
 2007-09-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* Loads of changes to avoid the "deprecated conversion from string
