@@ -302,10 +302,16 @@ void Diagram::createAxisLabels()
 int Diagram::regionCode(float x, float y)
 {
   int code=0;   // code for clipping
-  if(x < 0.0)  code |= 1;
-  else if(int(x) > x2)  code |= 2;
-  if(y < 0.0)  code |= 4;
-  else if(int(y) > y2)  code |= 8;
+  if(x < 0.0)
+    code |= 1;
+  else if(x > float(x2))  // compare as float to avoid integer overflow
+    code |= 2;
+
+  if(y < 0.0)
+    code |= 4;
+  else if(y > float(y2))  // compare as float to avoid integer overflow
+    code |= 8;
+
   return code;
 }
 
