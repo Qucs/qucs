@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hash.h,v 1.3 2007-05-17 09:28:17 ela Exp $
+ * $Id: hash.h,v 1.4 2007-12-11 21:57:06 ela Exp $
  *
  */
 
@@ -51,10 +51,10 @@ class hashentry
   friend class hash<type_t>;
 
  public:
-  hashentry<type_t> () {  // Constructor.
+  hashentry () {  // Constructor.
     code = 0; key = NULL; value = NULL;
   }
-  ~hashentry<type_t> () { // Destructor.
+  ~hashentry () { // Destructor.
     if (key) free (key);
   }
 
@@ -73,11 +73,11 @@ class hashbucket
   friend class hash<type_t>;
 
  public:
-  hashbucket<type_t> () {  // Constructor.
+  hashbucket () {  // Constructor.
     capacity = size = 0;
     entry = NULL;
   }
-  ~hashbucket<type_t> () { // Destructor.
+  ~hashbucket () { // Destructor.
     if (entry) {
       for (int n = 0; n < size; n++) delete entry[n];
       free (entry);

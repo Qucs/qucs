@@ -1,3 +1,9 @@
+2007-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsVersion.xml: Implemented $strobe() and $finish() corretly
+	now.  Simple (only for numeric case items) but working 'case'
+	implementation added.
+
 2007-09-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* analogfunction.xml: Initializing local variables in analog
