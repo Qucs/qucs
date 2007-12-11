@@ -223,12 +223,14 @@
 <admst:template match="blockvariable">
   <admst:for-each select="variable">
     <admst:value-of select="name"/>
-    <admst:value-of select="type"/>
     <admst:if test="[type='real']">
-      <admst:text format="// %s in VA\ndouble %s;\n"/>
+      <admst:text format="double %s;\n"/>
     </admst:if>
-    <admst:if test="[type!='real']">
-      <admst:text format="%s %s;\n"/>
+    <admst:if test="[type='integer']">
+      <admst:text format="int %s;\n"/>
+    </admst:if>
+    <admst:if test="[type='string']">
+      <admst:text format="char * %s;\n"/>
     </admst:if>
   </admst:for-each>
 </admst:template>
@@ -1387,7 +1389,6 @@
     <admst:when test="adms[datatypename='callfunction']">
     </admst:when>
     <admst:when test="adms[datatypename='case']">
-      <admst:error format="case statement: please implement me! (local declaration)\n"/>
     </admst:when>
     <admst:when test="adms[datatypename='blockvariable']">
         <admst:apply-templates select="." match="blockvariable" required="yes"/>
@@ -2001,8 +2002,22 @@
 
 <!-- analog//case -->
 <admst:template match="case">
-  <admst:error format="case statement: please implement me! (inside block)\n"/>
-  <admst:text format="/*CASE*/;\n"/>
+  <admst:apply-templates select="case" match="expression:stringify:noprobe"/>
+  <admst:text format="switch ((int) %s) {\n"/>
+  <admst:for-each select="caseitem">
+    <admst:variable name="condition" select=""/>
+    <admst:for-each select="condition">
+      <admst:value-of select="."/>
+      <admst:text format="case %s:\n"/>
+    </admst:for-each>
+    <admst:if test="[defaultcase='yes']">
+      <admst:text format="default:\n"/>
+    </admst:if>
+    <admst:value-of select="code/adms/datatypename"/>
+    <admst:apply-templates select="code" match="%s" required="yes"/>
+    <admst:text format="break;\n"/>
+  </admst:for-each>
+  <admst:text format="}\n"/>
 </admst:template>
 
 <!-- analog//nilled -->
@@ -2249,6 +2264,7 @@
     <admst:value-to select="/simulator/tmp" value="%s"/>
   </admst:if>
 </admst:template>
+
 <!-- variable:lhs -->
 <admst:template match="variable:lhs">
   <admst:value-of select="name"/>
@@ -2268,34 +2284,41 @@
     <admst:text format="%s"/>
   </admst:if>
 </admst:template>
+
 <!-- handle analog//callfunctions -->
 <admst:template match="callfunction">
   <admst:choose>
     <admst:when test="function[name='\$strobe']">
-      <admst:text format="fprintf(stdout"/>
+      <admst:text format="logprint(LOG_ERROR"/>
+      <admst:for-each select="function/arguments">
+      <admst:apply-templates select="." match="expression:stringify:noprobe"/>
+      <admst:text format=",%s"/>
+      </admst:for-each>
+      <admst:text format=");\n"/>
+      <admst:text format="logprint(LOG_ERROR,&quot;\\n&quot;);\n"/>
+    </admst:when>
+    <admst:when test="function[name='\$finish']">
+      <admst:text format="exit("/>
+      <admst:join select="function/arguments" separator=",">
+      <admst:apply-templates select="." match="expression:stringify:noprobe"/>
+      <admst:text format="%s"/>
+      </admst:join>
+      <admst:text format=");\n"/>
     </admst:when>
     <admst:otherwise>
       <admst:value-of select="function/name"/>
       <admst:text format="%s: not supported by this interface\n"/>
     </admst:otherwise>
   </admst:choose>
-  <admst:for-each select="function/arguments">
-    <admst:apply-templates select="." match="expression:stringify:noprobe"/>
-    <admst:text format=",%s"/>
-  </admst:for-each>
-  <admst:text format=");\n"/>
-  <admst:choose>
-    <admst:when test="function[name='\$strobe']">
-      <admst:text format="fprintf(stdout,&quot;\\n&quot;);\n"/>
-    </admst:when>
-  </admst:choose>
 </admst:template>
 
-  <admst:value-to select="/simulator/package_name" value="qucs"/>
-  <admst:value-to select="/simulator/package_tarname" value="qucs"/>
-  <admst:value-to select="/simulator/package_version" value="0.0.12"/>
-  <admst:value-to select="/simulator/package_string" value="qucs 0.0.12"/>
-  <admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
+<!-- simulator settings -->
+<admst:value-to select="/simulator/package_name" value="qucs"/>
+<admst:value-to select="/simulator/package_tarname" value="qucs"/>
+<admst:value-to select="/simulator/package_version" value="0.0.13"/>
+<admst:value-to select="/simulator/package_string" value="qucs 0.0.13"/>
+<admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
+
   <admst:for-each select="/module">
     <admst:choose>
       <admst:when test="[name='diode']">
@@ -2416,7 +2439,7 @@
           </admst:new>
         </admst:if>
       </admst:when>
-      <admst:when test="[name='diode' or name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='bjt504_va' or name='HBT_X' or name='hicumL2']">
+      <admst:when test="[name='diode' or name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='bjt504_va' or name='HBT_X' or name='hicumL2' or name='mosfetbsim4' ]">
         <admst:if test="[nilled(variable[name='npn'])]">
           <admst:value-of select="analog"/>
           <admst:value-of select="."/>

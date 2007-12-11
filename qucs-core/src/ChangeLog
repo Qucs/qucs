@@ -1,3 +1,8 @@
+2007-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* hash.h (class hashentry): Fixed compile error for "gcc version
+	4.1.1 on fedora 7 linux".
+
 2007-11-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Added optional third argument to unwrap() specifying
