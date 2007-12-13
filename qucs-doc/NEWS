@@ -29,6 +29,7 @@ Version 0.0.13
 Version 0.0.12
 --------------
 
+ * new report about the Verilog-A Modular OpAmp
  * report about Curtice Level 1 MESFET modelling
  * new tutorial about component, compact device and circuit modelling
    using symbolic equations
