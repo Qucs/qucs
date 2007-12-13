@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.74 2007-10-23 17:48:05 ela Exp $
+ * $Id: input.cpp,v 1.75 2007-12-13 17:53:08 ela Exp $
  *
  */
 
@@ -501,6 +501,8 @@ circuit * input::createCircuit (char * type) {
     return new hicumL2p1 ();
   else if (!strcmp (type, "HBT_X"))
     return new HBT_X ();
+  else if (!strcmp (type, "mod_amp"))
+    return new mod_amp ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

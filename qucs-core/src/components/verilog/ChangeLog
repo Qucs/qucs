@@ -1,3 +1,8 @@
+2007-12-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* mod_amp.va: Added new verilog device: Modular OpAmp.  Thanks to
+	Mike Brinson!
+
 2007-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsVersion.xml: Implemented $strobe() and $finish() corretly

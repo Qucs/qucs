@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.74 2007-10-23 17:48:05 ela Exp $
+ * $Id: qucsdefs.h,v 1.75 2007-12-13 17:53:08 ela Exp $
  *
  */
 
@@ -647,7 +647,6 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP }
   },
 
-
   /* hicumL2p1 verilog device */
   { "hicumL2p1", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     {
@@ -839,6 +838,29 @@ struct define_t qucs_definition_available[] =
       { "Afe", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0.0, 0, '.' } },
       { "Ffee", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0.0, 0, '.' } },
       { "Tnom", PROP_REAL, { 20.0, PROP_NO_STR }, { '[', (-273.15), 0, '.' } },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* mod_amp verilog device */
+  { "mod_amp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    {
+      { "GBP", PROP_REAL, { 1e6, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "AOLDC", PROP_REAL, { 106.0, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "FP2", PROP_REAL, { 3e6, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "RO", PROP_REAL, { 75, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "CD", PROP_REAL, { 1e-12, PROP_NO_STR }, { '[', 1e-20, 0, '.' } },
+      { "RD", PROP_REAL, { 2e6, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "IOFF", PROP_REAL, { 20e-9, PROP_NO_STR }, { '[', 1e-20, 0, '.' } },
+      { "IB", PROP_REAL, { 80e-9, PROP_NO_STR }, { '[', 1e-20, 0, '.' } },
+      { "VOFF", PROP_REAL, { 7e-4, PROP_NO_STR }, { '[', 0, 0, '.' } },
+      { "CMRRDC", PROP_REAL, { 90.0, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "FCM", PROP_REAL, { 200, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "PSRT", PROP_REAL, { 5e5, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "NSRT", PROP_REAL, { 5e5, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "VLIMP", PROP_REAL, { 14, PROP_NO_STR }, { '[', 0.01, 0, '.' } },
+      { "VLIMN", PROP_REAL, { (-14), PROP_NO_STR }, { '.', 0, 0, ']' } },
+      { "ILMAX", PROP_REAL, { 35e-3, PROP_NO_STR }, { '[', 1e-9, 0, '.' } },
+      { "CSCALE", PROP_REAL, { 50, PROP_NO_STR }, { '[', 0, 0, '.' } },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
