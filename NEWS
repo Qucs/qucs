@@ -26,7 +26,8 @@ files.
 Version 0.0.13
 --------------
 
- * new components: file based current and voltage sources
+ * new components: file based current and voltage sources, modular
+   opamp
 
 Version 0.0.12
 --------------

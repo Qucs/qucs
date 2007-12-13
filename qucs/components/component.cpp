@@ -1571,6 +1571,8 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'H' : if(cstr == "BT_X") c = new HBT_X();
         break;
+  case 'm' : if(cstr == "od_amp") c = new mod_amp();
+        break;
   }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),
