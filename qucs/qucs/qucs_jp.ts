@@ -5189,6 +5189,82 @@ Usage:  qucsedit [-r] file
         <source>File Based Current Source</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Modular Operational Amplifier verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gain bandwidth product (Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open-loop differential gain at DC (dB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second pole frequency (Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output resistance (Ohm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differential input capacitance (F)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differential input resistance (Ohm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input offset current (A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input bias current (A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input offset voltage (V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common-mode rejection ratio at DC (dB)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common-mode zero corner frequency (Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Positive slew rate (V/s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negative slew rate (V/s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Positive output voltage limit (V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Negative output voltage limit (V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum DC output current (A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current limit scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modular OpAmp</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
