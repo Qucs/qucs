@@ -26,7 +26,7 @@ EXTRA_DIST = $(PDFS)
 
 PDFS = mod_amp_Fig10.pdf mod_amp_Fig15.pdf mod_amp_Fig4.pdf mod_amp_Fig8.pdf \
   mod_amp_Fig11.pdf mod_amp_Fig1.pdf mod_amp_Fig5.pdf mod_amp_Fig9.pdf \
-  mod_amp_Fig12.pdfmod_amp_Fig2.pdf mod_amp_Fig6.pdf mod_amp_Fig14.pdf \
+  mod_amp_Fig12.pdf mod_amp_Fig2.pdf mod_amp_Fig6.pdf mod_amp_Fig14.pdf \
   mod_amp_Fig3.pdf mod_amp_Fig7.pdf
 
 report: $(XPDF)
