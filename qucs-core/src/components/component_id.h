@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.43 2007/10/23 17:48:06 ela Exp $
+ * $Id: component_id.h,v 1.44 2007/12/13 17:53:09 ela Exp $
  *
  */
 
@@ -133,7 +133,8 @@ enum circuit_type {
   // verilog devices
   CIR_HBT_X,
   CIR_hicumL2p1,
-  CIR_hicumL2p2
+  CIR_hicumL2p2,
+  CIR_mod_amp
 };
 
 #endif /* __COMPONENT_ID_H__ */

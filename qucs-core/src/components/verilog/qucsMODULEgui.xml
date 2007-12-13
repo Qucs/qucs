@@ -40,8 +40,10 @@
 <admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
 
 <!--This file has been made for bipolar transistors, which is why this is the first line of the module function!-->
+<admst:if test="[name='hicumL2p1']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
 <admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[npn, pnp]&quot;));\n"/>
+</admst:if>
 
 <admst:for-each select="/module">
 <admst:for-each select="variable">
@@ -81,7 +83,7 @@
 
 <admst:text format="\n"/>
 <admst:text format="Element * $module::info(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
-<admst:text format="{\n  Name = QObject::tr(&quot;npn $module&quot;);\n  BitmapFile = &quot;npnsub&quot;;\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;npn $module&quot;);\n  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
 <admst:text format="\n  if(getNewOne) return new $module();\n  return 0;\n}\n\n"/>
 
 <admst:text format="Element * $module::info_pnp(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
