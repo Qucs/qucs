@@ -1,3 +1,10 @@
+2007-12-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsVersion.xml: Loads of changes enabling the code to translate
+	ddx() statements.  Also improved 'case' handling (variable
+	assignment detection inside 'caseitem' code).  ADMS version 2.2.8
+	is now required (currently in SVN only).
+
 2007-12-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* mod_amp.va: Added new verilog device: Modular OpAmp.  Thanks to

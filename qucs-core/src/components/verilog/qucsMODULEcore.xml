@@ -63,6 +63,10 @@
 #include "device.h"
 #include &quot;$(module).core.h&quot;
 
+#ifndef CIR_$(module)
+#define CIR_$(module) -1
+#endif
+
 <admst:text format="\n// external nodes\n"/>
 <admst:for-each select="node">
   <admst:if test="[location='external' and name!='GND']">
@@ -218,12 +222,12 @@
 <admst:apply-templates select="." match="c:math_h"/>
 
 <admst:text format="\n\n// \$vt and \$vt() functions "/>
-#define _vt_nom                  (kBoverQ)
+#define _vt_nom                 (kBoverQ)
 
 <admst:text format="\n\n// simulator specific definitions"/>
-#define _modelname               &quot;$(module)&quot;
-#define _instancename            getName()
-#define _circuit_temp		 (getPropertyDouble (&quot;Temp&quot;)+273.15)
+#define _modelname              &quot;$(module)&quot;
+#define _instancename           getName()
+#define _circuit_temp	        (getPropertyDouble (&quot;Temp&quot;)+273.15)
 
 using namespace device;
 
@@ -365,19 +369,23 @@ using namespace device;
   </admst:if>
 </admst:for-each>
 
-/* ------------- evaluate verilog initial analog equations ---------------- */
-<admst:text format="\n"/>
-<admst:apply-templates select="analog" match="analog:initial_step"/>
-/* -------------- end of verilog initial analog equations ----------------- */
-
 /* ----------------- evaluate verilog analog equations -------------------- */
 <admst:text format="\n"/>
-<admst:apply-templates select="analog" match="analog:evaluate"/>
+/* #define's for translated code */
+#undef  _DDT
+#define _DDT(q) q
+#define _DYNAMIC
+#define _DERIVATE
+#define _DDX
+#define _DERIVATEFORDDX
+
+
+<admst:apply-templates select="analog/code" match="analog:evaluate"/>
 /* ------------------ end of verilog analog equations --------------------- */
 
 /* ------------------ evaluate verilog noise equations -------------------- */
 <admst:text format="\n"/>
-<admst:apply-templates select="analog" match="analog:noise" required="yes"/>
+<admst:apply-templates select="analog/code" match="analog:noise"/>
 /* ------------------- end of verilog noise equations --------------------- */
 <admst:text format="\n\n"/>
 
