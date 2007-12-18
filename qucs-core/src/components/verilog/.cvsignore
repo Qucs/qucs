@@ -7,3 +7,4 @@ Makefile.in
 *.core.*
 .adms.*
 *.adms
+.interface.xml
