@@ -1327,14 +1327,14 @@
   <admst:text test="[dynamic='yes']" format="#if defined(_DYNAMIC)\n"/>
   <admst:text test="rhs/function" format="{\n"/>
   <admst:variable name="ddxinsidederivate" select="no"/>
-  <admst:if test="[#ddxprobe='yes']">
+<!--  <admst:if test="[#ddxprobe='yes']"> -->
     <admst:for-each select="lhs/probe">
       <admst:variable name="pprobe" select="%(.)"/>
       <admst:if test="$lhs/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]">
         <admst:variable name="ddxinsidederivate" select="yes"/>
       </admst:if>
     </admst:for-each>
-  </admst:if>
+<!--  </admst:if> -->
   <admst:apply-templates select="rhs[not(nilled(function))]" match="function:derivate:precomputation"/>
   <admst:choose>
     <admst:when test="rhs/tree/adms[datatypename='function']/..[name='ddx']">
@@ -1410,7 +1410,7 @@
           <admst:text test="[$ddxinsidederivate='yes' and $ddxinsidethisprobe='no']" format="#if defined(_DERIVATE)\n"/>
           <admst:text format="%(dxname($lhs)/[name='dxname']/value)=$ep;\n"/>
           <admst:text test="[$ddxinsidederivate='yes' and $ddxinsidethisprobe='no']" format="#endif\n"/>
-          <admst:if test="[#ddxprobe='yes']">
+<!--          <admst:if test="[#ddxprobe='yes']"> -->
             <admst:text test="[$ddxinsidethisprobe='yes']" format="#if defined(_DERIVATE)\n"/>
             <admst:for-each select="$lhs[$ddxinsidethisprobe='yes']/probe">
               <admst:variable name="epq" select="0.0"/>
@@ -1419,7 +1419,7 @@
               <admst:text format="  %(ddxname($lhs)/[name='ddxname']/value)=$epq;\n"/>
             </admst:for-each>
             <admst:text test="$lhs[$ddxinsidethisprobe='yes']" format="#endif\n"/>
-          </admst:if>
+<!--          </admst:if> -->
         </admst:for-each>
         <admst:text test="[$definedrequired='yes']" format="#endif\n"/>
       </admst:if>
