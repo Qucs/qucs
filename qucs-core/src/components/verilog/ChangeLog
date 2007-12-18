@@ -1,5 +1,7 @@
 2007-12-18  Stefan Jahn  <stefan@lkcc.org>
 
+	* hicumL2V2p22.va: Added new device: HICUM L2 v2.22 model.
+
 	* qucsVersion.xml: Loads of changes enabling the code to translate
 	ddx() statements.  Also improved 'case' handling (variable
 	assignment detection inside 'caseitem' code).  ADMS version 2.2.8
