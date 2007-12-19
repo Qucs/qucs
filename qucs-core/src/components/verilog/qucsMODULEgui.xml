@@ -16,6 +16,55 @@
 <!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
 <admst version="2.2.5" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
+<!-- handling of expression -->
+<admst:template match=":expression">
+  <admst:value-of select="tree/adms/datatypename"/>
+  <admst:apply-templates select="tree" match=":%s" required="yes"/>
+</admst:template>
+
+<admst:template match=":number">
+  <admst:value-of select="value"/>
+  <admst:choose>
+    <admst:when test="[scalingunit='1']">%s</admst:when>
+    <admst:when test="[scalingunit='E']">(%s*1.0e+18)</admst:when>
+    <admst:when test="[scalingunit='P']">(%s*1.0e+15)</admst:when>
+    <admst:when test="[scalingunit='T']">(%s*1.0e+12)</admst:when>
+    <admst:when test="[scalingunit='G']">(%s*1.0e+9)</admst:when>
+    <admst:when test="[scalingunit='M']">(%s*1.0e+6)</admst:when>
+    <admst:when test="[scalingunit='k']">(%s*1.0e+3)</admst:when>
+    <admst:when test="[scalingunit='h']">(%s*1.0e+2)</admst:when>
+    <admst:when test="[scalingunit='D']">(%s*1.0e+1)</admst:when>
+    <admst:when test="[scalingunit='d']">(%s*1.0e-1)</admst:when>
+    <admst:when test="[scalingunit='c']">(%s*1.0e-2)</admst:when>
+    <admst:when test="[scalingunit='m']">(%s*1.0e-3)</admst:when>
+    <admst:when test="[scalingunit='u']">(%s*1.0e-6)</admst:when>
+    <admst:when test="[scalingunit='n']">(%s*1.0e-9)</admst:when>
+    <admst:when test="[scalingunit='A']">(%s*1.0e-10)</admst:when>
+    <admst:when test="[scalingunit='p']">(%s*1.0e-12)</admst:when>
+    <admst:when test="[scalingunit='f']">(%s*1.0e-15)</admst:when>
+    <admst:when test="[scalingunit='a']">(%s*1.0e-18)</admst:when>
+    <admst:otherwise>
+      <admst:value-of select="scalingunit"/>
+      <admst:fatal format="%s%s: scaling unit not supported\n"/>
+    </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match=":mapply_unary">
+  <admst:text format="("/>
+  <admst:if test="[name='plus']"> <admst:text format="+"/> </admst:if>
+  <admst:if test="[name='minus']"> <admst:text format="-"/> </admst:if>
+  <admst:if test="[name='not']"> <admst:text format="!"/> </admst:if>
+  <admst:if test="[name='bw_not']"> <admst:text format="~"/> </admst:if>
+  <admst:value-of select="arg1/adms/datatypename"/>	
+  <admst:apply-templates select="arg1" match=":%s" required="yes"/>
+  <admst:text format=")"/>
+</admst:template>
+
+<admst:template match=":variable">
+  <admst:value-of select="name"/>%s
+</admst:template>
+
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
 <!-- definition of variables -->
@@ -35,14 +84,18 @@
  * 
  */
 
-<admst:text format="\n#include &quot;$module.h&quot;\n\n"/>
+<admst:text format="\n#include &quot;$module.gui.h&quot;\n\n"/>
 <admst:text format="$module::$module()\n{\n"/>
 <admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
 
 <!--This file has been made for bipolar transistors, which is why this is the first line of the module function!-->
-<admst:if test="[name='hicumL2p1']">
+<admst:if test="[$module='hicumL2p1']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
 <admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[npn, pnp]&quot;));\n"/>
+</admst:if>
+<admst:if test="[$module='mosfetbsim4']">
+<admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;nfet&quot;, true,\n"/>
+<admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[nfet, pfet]&quot;));\n"/>
 </admst:if>
 
 <admst:for-each select="/module">
@@ -147,7 +200,14 @@
 <admst:text format="#define $module"/>_H\n\n
 <admst:text format="#include &quot;component.h&quot;\n\n"/>
 
+<admst:choose>
+<admst:when test="[$module='hicumL2p1' or $module='mosfetbsim4']">
 <admst:text format="class $module : public MultiViewComponent\n{\n  public:\n"/>
+</admst:when>
+<admst:otherwise>
+<admst:text format="class $module : public Component\n{\n  public:\n"/>
+</admst:otherwise>
+</admst:choose>
 <admst:text format="    $module();\n"/>
 <admst:text format="    ~$module() { };\n"/>
 <admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>

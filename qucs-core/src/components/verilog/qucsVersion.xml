@@ -1439,23 +1439,24 @@
   <admst:value-of select="lhs/branch/pnode/name"/>
   <admst:variable name="pnode" select="%s"/>
   <admst:variable name="nnode" select="%s"/>
+  <admst:text format="_save_"/>
   <admst:if test="[whitenoise='yes']">
     <admst:choose>
     <admst:when test="lhs/branch/nnode[grounded='no']">
-      <admst:text format="_save_whitenoise2($pnode,$nnode"/>
+      <admst:text format="whitenoise2($pnode,$nnode"/>
     </admst:when>
     <admst:otherwise>
-      <admst:text format="_save_whitenoise1($pnode"/>
+      <admst:text format="whitenoise1($pnode"/>
     </admst:otherwise>
     </admst:choose>
   </admst:if>
   <admst:if test="[flickernoise='yes']">
     <admst:choose>
     <admst:when test="lhs/branch/nnode[grounded='no']">
-      <admst:text format="_save_flickernoise2($pnode,$nnode"/>
+      <admst:text format="flickernoise2($pnode,$nnode"/>
     </admst:when>
     <admst:otherwise>
-      <admst:text format="_save_flickernoise1($pnode"/>
+      <admst:text format="flickernoise1($pnode"/>
     </admst:otherwise>
     </admst:choose>
   </admst:if>
@@ -1612,7 +1613,7 @@
     <admst:if test="[defaultcase='no']">
       <admst:text format="if\n("/>
       <admst:join select="condition" separator="||">
-        <admst:text format="$casecondition==%(e(tree))"/>
+        <admst:text format="(($casecondition)==(%(e(tree))))"/>
       </admst:join>
       <admst:text format=")\n"/>
       <admst:value-of select="code/adms/datatypename"/>
@@ -1922,7 +1923,8 @@
         <admst:push into="../attribute" select="." onduplicate="abort"/>
         <admst:value-to select="value" value="diode"/>
       </admst:new>
-    </admst:when>      <admst:when test="[name='hic0_full']">
+    </admst:when>
+    <admst:when test="[name='hic0_full']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
         <admst:value-to select="value" value="hicum0"/>
