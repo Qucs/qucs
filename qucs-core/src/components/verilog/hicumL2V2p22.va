@@ -1407,13 +1407,15 @@ begin : Load_sources
 	if (rbx >= `MIN_R) begin
 		I(br_bbp_i)	<+ V(br_bbp_i)/rbx_t;
 	end else begin
-		V(br_bbp_v) 	<+ 0.0;
+		I(br_bbp_i)	<+ V(br_bbp_i)/1e-6;
+		//V(br_bbp_v) 	<+ 0.0;
 	end
 	if(rbi0 >= `MIN_R) begin
 		I(br_bpbi_i)	<+ V(br_bpbi_i)/rbi;
 		I(br_bpbi_i) 	<+ ddt(qrbi);
 	end else begin
-		V(br_bpbi_v) 	<+ 0.0;
+		I(br_bpbi_i)	<+ V(br_bpbi_i)/1e-6;
+		//V(br_bpbi_v) 	<+ 0.0;
 	end
 	if (tunode==1.0) begin
 		I(br_bpei) 	<+ -ibet;			
@@ -1440,18 +1442,21 @@ begin : Load_sources
 	if (rcx >= `MIN_R) begin
 		I(br_cic_i)	<+ V(br_cic_i)/rcx_t;
 	end else begin
-		V(br_cic_v)  	<+ 0.0;
+		I(br_cic_i)	<+ V(br_cic_i)/1e-6;
+		//V(br_cic_v)  	<+ 0.0;
 	end
 	if (re >= `MIN_R) begin
 		I(br_eie_i)	<+ V(br_eie_i)/re_t;
 	end else begin
-		V(br_eie_v)  	<+ 0.0;
+		I(br_eie_i)	<+ V(br_eie_i)/1e-6;
+		//V(br_eie_v)  	<+ 0.0;
 	end	
 	if(rsu >= `MIN_R) begin
 		I(br_sis_i)  	<+ V(br_sis_i)/rsu;
 		I(br_sis_i)  	<+ ddt(csu*V(br_sis_i));
 	end else begin
-		V(br_sis_v) 	<+ 0.0;
+		I(br_sis_i)  	<+ V(br_sis_i)/1e-6;
+		//V(br_sis_v) 	<+ 0.0;
 	end
 	
 	// Following code is an intermediate solution (if branch contribution is not supported):
