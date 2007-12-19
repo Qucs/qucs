@@ -1,3 +1,13 @@
+2007-12-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL2V2p22.va, hicumL2V2p11.va: Avoiding singular matrices due
+	to V(br) <+ 0.0 statements.  Converted to I(br) <+ V(br)/1e-6
+	statements which is a tiny resistor instead of a real short.
+
+	* qucsVersion.xml: 'case' now works for both real and integer
+	arguments. Statements like 'case (0) a: b=1; endcase' are now also
+	correctly translated.  TODO: String comparisons.
+
 2007-12-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL2V2p22.va: Added new device: HICUM L2 v2.22 model.

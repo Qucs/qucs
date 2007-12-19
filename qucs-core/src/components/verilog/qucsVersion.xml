@@ -147,7 +147,7 @@
       <admst:variable name="e" select="%(name)"/>
     </admst:when>
     <admst:when test="[input='yes' and parametertype='instance']">
-      <admst:variable name="e" select="(name)"/>
+      <admst:variable name="e" select="%(name)"/>
     </admst:when>
     <admst:when test="[input='no' and scope='global_model']">
       <admst:variable name="e" select="%(name)"/>
@@ -1597,6 +1597,39 @@
   <admst:text select="while[dynamic='yes']" format="#endif /*&lt;/dynamic_while&gt;*/\n"/>
 </admst:template>
 
+<!-- analog//case -->
+<admst:template match="case">
+  <admst:text select="case[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
+  <admst:value-of select="case/tree"/>
+  <admst:variable name="casecondition" select="%s"/>
+  <admst:variable name="havedefault" select="no"/>
+  <admst:for-each select="caseitem">
+    <admst:if test="[defaultcase='yes']">
+      <admst:variable name="havedefault" select="yes"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:for-each select="caseitem">
+    <admst:if test="[defaultcase='no']">
+      <admst:text format="if\n("/>
+      <admst:join select="condition" separator="||">
+        <admst:text format="$casecondition==%(e(tree))"/>
+      </admst:join>
+      <admst:text format=")\n"/>
+      <admst:value-of select="code/adms/datatypename"/>
+      <admst:apply-templates select="code" match="%s" required="yes"/>
+      <admst:text format="else\n"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:text select="[$havedefault='no']" format="{ /* no default */ }\n"/>
+  <admst:for-each select="caseitem">
+    <admst:if test="[defaultcase='yes']">
+      <admst:value-of select="code/adms/datatypename"/>
+      <admst:apply-templates select="code" match="%s" required="yes"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:text select="case[dynamic='yes']" format="#endif\n"/>
+</admst:template>
+
 <!-- analog//callfunctions -->
 <admst:template match="callfunction">
   <admst:choose>
@@ -1873,25 +1906,6 @@
 
 #define _vt(arg)                (kBoverQ*(arg))
 #define _d_vt(arg)              (kBoverQ)
-</admst:template>
-
-<!-- analog//case -->
-<admst:template match="case">
-  <admst:text format="switch\n((int) %(e(case/tree)))\n{\n"/>
-  <admst:for-each select="caseitem">
-    <admst:variable name="condition" select=""/>
-    <admst:for-each select="condition">
-      <admst:value-of select="."/>
-      <admst:text format="case %s:\n"/>
-    </admst:for-each>
-    <admst:if test="[defaultcase='yes']">
-      <admst:text format="default:\n"/>
-    </admst:if>
-    <admst:value-of select="code/adms/datatypename"/>
-    <admst:apply-templates select="code" match="%s" required="yes"/>
-    <admst:text format="break;\n"/>
-  </admst:for-each>
-  <admst:text format="} /* case (...) */\n"/>
 </admst:template>
 
 <!-- simulator settings -->

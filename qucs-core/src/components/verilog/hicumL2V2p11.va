@@ -1119,36 +1119,42 @@ analog	begin
 	if (rbx > 0.0) begin
 		I(iresbx)	<+ V(iresbx)/rbx_t;
 	end else begin
-		V(vresbx) 	<+ 0.0;
+		I(iresbx)	<+ V(iresbx)/1e-6;
+		//V(vresbx) 	<+ 0.0;
 	end
 	if(rbi0 > 0.0) begin
 		I(irescb)	<+ V(irescb)/rbi;
 		I(irescb) 	<+ ddt(qrbi);
 	end else begin
-		V(vrescb) 	<+ 0.0;
+		I(irescb)	<+ V(irescb)/1e-6;
+		//V(vrescb) 	<+ 0.0;
 	end
 	if (rcx > 0.0) begin
 		I(irescx)	<+ V(irescx)/rcx_t;
 	end else begin
-		V(vrescx)  	<+ 0.0;
+		I(irescx)	<+ V(irescx)/1e-6;
+		//V(vrescx)  	<+ 0.0;
 	end
 	if (re > 0.0) begin
 		I(iresex)	<+ V(iresex)/re_t;
 	end else begin
-		V(vresex)  	<+ 0.0;
+		I(iresex)	<+ V(iresex)/1e-6;
+		//V(vresex)  	<+ 0.0;
 	end	
 	if(rsu > 0.0) begin
 		I(irescs)  	<+ V(irescs)/rsu;
 		I(irescs)	<+ ddt(csu*V(irescs));
 	end else begin
-		V(vrescs) 	<+ 0.0;
+		I(irescs)  	<+ V(irescs)/1e-6;
+		//V(vrescs) 	<+ 0.0;
 	end
 	if(rth > 0.0) begin
 		I(tnode) 	<+ V(tnode)/rth;
 		I(tnode)	<+ -pterm;
 		I(tnode) 	<+ ddt(cth*V(tnode));
 	end else begin
-		V(tnode)	<+ 0.0;
+		I(tnode) 	<+ V(tnode)/1e-6;
+		//V(tnode)	<+ 0.0;
 	end
 	//Define branch source: end
 	

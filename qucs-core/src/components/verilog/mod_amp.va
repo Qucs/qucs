@@ -179,7 +179,6 @@
         I(out_p) <+ -10.0*VLIMN;
         I(out_p) <+ 10.0*V(out_p);
      end
- 
+
   end
 endmodule
- 
