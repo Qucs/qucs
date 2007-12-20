@@ -1,5 +1,7 @@
 2007-12-20  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucsVersion.xml: Implemented 'forloop' translation code.
+
 	* qucsMODULEgui.xml: Added some code for mosfets.  Still something
 	to do (symbol).
 

@@ -1598,6 +1598,22 @@
   <admst:text select="while[dynamic='yes']" format="#endif /*&lt;/dynamic_while&gt;*/\n"/>
 </admst:template>
 
+<!-- analog//forloop -->
+<admst:template match="forloop">
+  <admst:text select="condition[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
+  <admst:variable name="SkipFVariable" select="y"/>
+  <admst:text format="for\n("/>
+  <admst:text format="%(e(initial/lhs/tree))=%(e(initial/rhs/tree));"/>
+  <admst:text format="%(e(condition/tree));"/>
+  <admst:text format="%(e(update/lhs/tree))=%(e(update/rhs/tree))"/>
+  <admst:text format=")\n"/>
+  <admst:variable name="SkipFVariable" select="n"/>
+  <admst:text select="forblock/adms[datatypename!='block']" format="{\n"/>
+  <admst:apply-templates select="forblock" match="%(adms/datatypename)"/>
+  <admst:text select="forblock/adms[datatypename!='block']" format="}\n"/>
+  <admst:text select="condition[dynamic='yes']" format="#endif /*&lt;/dynamic_for&gt;*/\n"/>
+</admst:template>
+
 <!-- analog//case -->
 <admst:template match="case">
   <admst:text select="case[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
@@ -1613,7 +1629,7 @@
     <admst:if test="[defaultcase='no']">
       <admst:text format="if\n("/>
       <admst:join select="condition" separator="||">
-        <admst:text format="(($casecondition)==(%(e(tree))))"/>
+        <admst:text format="($casecondition)==(%(e(tree)))"/>
       </admst:join>
       <admst:text format=")\n"/>
       <admst:value-of select="code/adms/datatypename"/>
@@ -1628,7 +1644,7 @@
       <admst:apply-templates select="code" match="%s" required="yes"/>
     </admst:if>
   </admst:for-each>
-  <admst:text select="case[dynamic='yes']" format="#endif\n"/>
+  <admst:text select="case[dynamic='yes']" format="#endif /*&lt;/dynamic_case&gt;*/\n"/>
 </admst:template>
 
 <!-- analog//callfunctions -->
@@ -1720,6 +1736,11 @@
     </admst:when>
     <admst:when test="adms[datatypename='whileloop']">
       <admst:apply-templates select="whileblock" match="block:local:declaration"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='forloop']">
+      <admst:apply-templates select="initial" match="block:local:declaration"/>
+      <admst:apply-templates select="forblock" match="block:local:declaration"/>
+      <admst:apply-templates select="update" match="block:local:declaration"/>
     </admst:when>
     <admst:when test="adms[datatypename='contribution']"/>
     <admst:when test="adms[datatypename='callfunction']"/>
