@@ -329,7 +329,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos CSV</translation>
     </message>
 </context>
 <context>
@@ -1053,7 +1053,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos CSV</translation>
     </message>
 </context>
 <context>
@@ -4435,87 +4435,87 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de deflexión periférica B-E polarizada a cero</translation>
     </message>
     <message>
         <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial de la unión periférica B-E</translation>
     </message>
     <message>
         <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente del gradiente periférico B-E</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Porcentaje del valor máximo de polarización de la capacidad B-E periférica</translation>
     </message>
     <message>
         <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de la unión B-C interna polarizada a cero</translation>
     </message>
     <message>
         <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial físico de la unión interna B-C</translation>
     </message>
     <message>
         <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de graduación interna B-C</translation>
     </message>
     <message>
         <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura interna B-C</translation>
     </message>
     <message>
         <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de la unión B-C externa polarizada a cero</translation>
     </message>
     <message>
         <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial de la unión externa B-C</translation>
     </message>
     <message>
         <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de graduación externa B-C</translation>
     </message>
     <message>
         <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura externa B-C</translation>
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de reducción de la unión C-S polarizada a cero</translation>
     </message>
     <message>
         <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial de la unión C-S</translation>
     </message>
     <message>
         <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de graduación C-S</translation>
     </message>
     <message>
         <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura C-S</translation>
     </message>
     <message>
         <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de transición de baja intensidad en directa con VBC=0V</translation>
     </message>
     <message>
         <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de tiempo para la base y capa de carga espacial B-C con modulación</translation>
     </message>
     <message>
         <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
+        <translation>Constante de tiempo para modelado de portadora fija con VCE baja</translation>
     </message>
     <message>
         <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de almacenamiento de emisor neutro</translation>
     </message>
     <message>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor exponencial para la dependencia de corriente del tiempo de almacenamiento de emisor neutro</translation>
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
@@ -4523,7 +4523,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de suavizado para la dependencia de corriente del tiempo de transición de base y colector</translation>
     </message>
     <message>
         <source>Partitioning factor for base and collector portion</source>
@@ -4535,7 +4535,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
+        <translation>Régimen de velocidad de saturación y tensión de separación óhmica</translation>
     </message>
     <message>
         <source>Internal C-E saturation voltage</source>
@@ -4543,11 +4543,11 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión de ruptura del colector</translation>
     </message>
     <message>
         <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de almacenamiento para inversa</translation>
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
@@ -4559,39 +4559,39 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor para el tiempo de retardo adicional de aminoración de carga</translation>
     </message>
     <message>
         <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor para el tiempo de retardo adicional de corriente de transferencia</translation>
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de ruido parpadeante</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor exponencial de ruido parpadeante</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala para la carga de aminoración del colector en la dirección del ancho del emisor</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala para la carga de aminoración del colector en la dirección del largo del emisor</translation>
     </message>
     <message>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
+        <translation>Banda de salto de tensión extrapolada a 0 K</translation>
     </message>
     <message>
         <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativo de primer orden del parámetro T0</translation>
     </message>
     <message>
         <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativo de segundo orden del parámetro T0</translation>
     </message>
     <message>
         <source>Temperature exponent for RCI0</source>
@@ -4599,35 +4599,35 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de mobilidad de la temperatura en el tiempo de transición del sustrato del transistor</translation>
     </message>
     <message>
         <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativa de saturación en la velocidad de deriva</translation>
     </message>
     <message>
         <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativa de VCES</translation>
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de temperatura de la resistencia de base interna</translation>
     </message>
     <message>
         <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de temperatura de la resistencia de base externa</translation>
     </message>
     <message>
         <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de temparatura de la resistencia de colector externa</translation>
     </message>
     <message>
         <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponente de temperatura de la resistencia del emisor</translation>
     </message>
     <message>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
+        <translation>TC relativa de la ganancia de corriente directa para el modelo V2.1</translation>
     </message>
     <message>
         <source>Thermal resistance</source>
@@ -4643,7 +4643,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperature change w.r.t. chip temperature for particular transistor</translation>
     </message>
     <message>
         <source>simulation temperature</source>
@@ -4759,7 +4759,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente de temperatura de la ganancia de corriente directa, -1/K  (0 == deshabilita la depedencia de la temperatura)</translation>
     </message>
     <message>
         <source>Ideal reverse beta</source>
@@ -4767,7 +4767,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión Early Directa, V.  (0 == deshabilita el Efecto Early)</translation>
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
@@ -4775,11 +4775,11 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Forward high-injection knee current, A, (0 == deshabilita el efecto Webster)</translation>
     </message>
     <message>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Reverse high-injection knee current, A, (0 == deshabilita el efecto Webster)</translation>
     </message>
     <message>
         <source></source>
@@ -4811,27 +4811,27 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation type="unfinished"></translation>
+        <translation>Coeficiente del tiempo de transición en exceso en la salida de la base</translation>
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetro de suavizado para Thcs</translation>
     </message>
     <message>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de reducción de polarización cero en B-E, F/um^2</translation>
     </message>
     <message>
         <source>B-E junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor exponencial de la unión B-E</translation>
     </message>
     <message>
         <source>B-E junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial interno de la unión B-E, V</translation>
     </message>
     <message>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de reducción de polarización cero en B-C, F/um^2</translation>
     </message>
     <message>
         <source>B-C junction exponential factor</source>
@@ -4839,7 +4839,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Potencial interno de la unión B-C, V</translation>
     </message>
     <message>
         <source>not used</source>
@@ -4847,31 +4847,31 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacidad de reducción B-C mínima (dependiente de Vbc), F/um^2</translation>
     </message>
     <message>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente de colector cuando Cbc alcanza Cmin, A/um^2 (0 == deshabilita la reducción Cbc)</translation>
     </message>
     <message>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fracción de Cmin, límite inferior de la capacidad BC (dependiente de lc)</translation>
     </message>
     <message>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Llegada de la salida de base a tensiones bajas, Ohm*um^2 (0 == deshabilita la salida de base)</translation>
     </message>
     <message>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Llegada de la salida de base a tensiones altas, Ohm*um^2 (0 == deshabilita la salida de base)</translation>
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pendiente de JK en corrientes grandes , Ohm*um^2</translation>
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplazamiento de tensión al llegar la salida de base, V</translation>
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
@@ -4915,15 +4915,15 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coeficiente de ruido de parpadeo</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>exponente de ruido de parpadeo</translation>
     </message>
     <message>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>exponente de la frecuencia del ruido de parpadeo</translation>
     </message>
     <message>
         <source>Burst noise coefficient</source>
@@ -4943,7 +4943,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Doblez de cable</translation>
     </message>
     <message>
         <source>length of the wire</source>
@@ -4967,11 +4967,11 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>modelo de doblez de cable</translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Doblez de Cable</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
@@ -5031,7 +5031,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>high-injection knee current (0=infinito)</translation>
     </message>
     <message>
         <source>netlist format</source>
@@ -5119,7 +5119,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de particionado de la capacidad parásita B-C</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
@@ -5213,31 +5213,99 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente de tensión basada en un archivo</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>nombre del archivo de muestras</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>forma de onda repetitiva</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente de Tensión Basada en un Archivo</translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de corriente basada en un archivo</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ganancia de corriente</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
+        <translation>Fuente de Corriente Basada en un Archivo</translation>
+    </message>
+    <message>
+        <source>HICUM Level 2 v2.22 verilog device</source>
+        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.22</translation>
+    </message>
+    <message>
+        <source>Base current recombination time constant at B-C barrier for high forward injection</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifies the base node connection for the tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor of parasitic B-C cap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor of parasitic B-E cap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for turning on and off of vertical NQS effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for determining where to tag the flicker noise source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective emitter bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective collector bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective substrate bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K1 in T-dependent band-gap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K2 in T-dependent band-gap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent coefficient in transfer current temperature dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent coefficient in B-E junction current temperature dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for turning on and off self-heating effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.22</source>
+        <translation type="unfinished">HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
@@ -5314,74 +5382,6 @@ Use:  qucsedit [-r] archivo
     <message>
         <source>Modular OpAmp</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished">Dispositivo Verilog HICUM Level 2 v2.22</translation>
-    </message>
-    <message>
-        <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HICUM L2 v2.22</source>
-        <translation type="unfinished">HICUM L2 v2.22</translation>
     </message>
 </context>
 <context>
