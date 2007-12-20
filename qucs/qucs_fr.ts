@@ -6895,7 +6895,7 @@ Tourne le composant sélectionné de 90° dans le sens direct</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>Symétrie horizontale</translation>
+        <translation>Symétrie verticale</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
@@ -6905,13 +6905,13 @@ Tourne le composant sélectionné de 90° dans le sens direct</translation>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>Symétrie horizontale
+        <translation>Symétrie verticale
 
 Inverse l&apos;objet horizontalement</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>Symétrie verticale</translation>
+        <translation>Symétrie horizontale</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
@@ -6921,7 +6921,7 @@ Inverse l&apos;objet horizontalement</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Symétrie verticale
+        <translation>Symétrie horizontale
 
 Inverse l&apos;objet verticalement</translation>
     </message>
@@ -8878,7 +8878,7 @@ Tourne le composant sélectionné de 90° dans le sens direct</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="obsolete">Symétrie horizontale</translation>
+        <translation type="obsolete">Symétrie verticale</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
@@ -8888,13 +8888,13 @@ Tourne le composant sélectionné de 90° dans le sens direct</translation>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="obsolete">Symétrie horizontale
+        <translation type="obsolete">Symétrie verticale
 
 Inverse l&apos;objet horizontalement</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="obsolete">Symétrie verticale</translation>
+        <translation type="obsolete">Symétrie horizontale</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
@@ -8904,7 +8904,7 @@ Inverse l&apos;objet horizontalement</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="obsolete">Symétrie verticale
+        <translation type="obsolete">Symétrie horizontale
 
 Inverse l&apos;objet verticalement</translation>
     </message>
