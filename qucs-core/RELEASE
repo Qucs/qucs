@@ -3,7 +3,7 @@
 -- 
 -- release instructions.
 -- 
--- Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ Distribution process:
      + GNU M4 (any version)
      + GNU Bison 1.875d
      + GNU gperf 3.0.1
-     + adms 2.2.4 (at least)
+     + adms 2.2.8 (at least)
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
     command `automake -a -f -c' with latest automake version installed.
   - Run `make distclean', `sh autogen.sh' and `make all'.

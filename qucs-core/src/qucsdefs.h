@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.76 2007-12-18 21:15:47 ela Exp $
+ * $Id: qucsdefs.h,v 1.77 2007-12-20 21:02:09 ela Exp $
  *
  */
 
@@ -867,8 +867,6 @@ struct define_t qucs_definition_available[] =
   /* hic2_full verilog device */
   { "hic2_full", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     {
-      { "pnp", PROP_INT, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "npn", PROP_INT, { 1, PROP_NO_STR }, PROP_NO_RANGE },
       { "c10", PROP_REAL, { 2.0E-30, PROP_NO_STR }, { '[', 0, 1, ']' } },
       { "qp0", PROP_REAL, { 2.0E-14, PROP_NO_STR }, { ']', 0, 1, ']' } },
       { "ich", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 0, '.' } },

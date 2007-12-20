@@ -26,7 +26,7 @@ files.
 Version 0.0.13
 --------------
 
- * new Verilog-A device model: Modular OpAmp
+ * new Verilog-A device models: Modular OpAmp and HICUM L2 v2.22
  * allowing immediate vectors and matrices in equations
  * new functions in equation solver: random(), srandom(), StabFactor()
    and StabMeasure()
