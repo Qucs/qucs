@@ -927,7 +927,7 @@
           <admst:variable name="xp" select="$ep"/>
           <admst:variable name="xq" select="$eq"/>
           <admst:variable name="xpq" select="$epq"/>
-          <admst:variable name="e" select="_vt($x)"/>   
+          <admst:variable name="e" select="m00_vt($x)"/>   
         </admst:when>
       </admst:choose>
     </admst:when>   
@@ -1039,7 +1039,7 @@
           <admst:variable name="ep" select="0.0"/>
         </admst:when>
         <admst:when test="arguments[count(.)=1]">
-          <admst:variable name="ep" select="$xp*_d_vt($x)"/>
+          <admst:variable name="ep" select="$xp*m10_vt($x)"/>
         </admst:when>
       </admst:choose>
     </admst:when>   
@@ -1115,7 +1115,7 @@
           <admst:variable name="eq" select="0.0"/>
         </admst:when>
         <admst:when test="arguments[count(.)=1]">
-          <admst:variable name="eq" select="$xq*_d_vt($x)"/>   
+          <admst:variable name="eq" select="$xq*m10_vt($x)"/>   
         </admst:when>
       </admst:choose>
     </admst:when>   
@@ -1926,8 +1926,8 @@
 #define m20_sqrt(v00)           (-0.25/(v00)/sqrt(v00))
 #define m20_fabs(v00)           0.0
 
-#define _vt(arg)                (kBoverQ*(arg))
-#define _d_vt(arg)              (kBoverQ)
+#define m00_vt(x)               (kBoverQ*(x))
+#define m10_vt(x)               (kBoverQ)
 </admst:template>
 
 <!-- simulator settings -->
