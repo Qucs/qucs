@@ -5265,6 +5265,74 @@ Usage:  qucsedit [-r] file
         <source>Modular OpAmp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.22 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base current recombination time constant at B-C barrier for high forward injection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifies the base node connection for the tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor of parasitic B-C cap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Partitioning factor of parasitic B-E cap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for turning on and off of vertical NQS effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for determining where to tag the flicker noise source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective emitter bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective collector bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective substrate bandgap voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K1 in T-dependent band-gap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K2 in T-dependent band-gap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent coefficient in transfer current temperature dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent coefficient in B-E junction current temperature dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for turning on and off self-heating effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.22</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
