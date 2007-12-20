@@ -1,3 +1,7 @@
+2007-12-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_es.ts, qucs_fr.ts, qucs_uk.ts: Updated translations.
+
 2007-12-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/diagram.cpp (regionCode): Fixed small clipping bug.
