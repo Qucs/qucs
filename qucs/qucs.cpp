@@ -341,7 +341,7 @@ pInfoFunc nonlinearComps[] =
    &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
    &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
    &OpAmp::info, &hicumL2p1::info, &HBT_X::info, &EqnDefined::info,
-   &mod_amp::info, 0};
+   &mod_amp::info, &hic2_full::info, 0};
 
 pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
