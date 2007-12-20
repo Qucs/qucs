@@ -1568,6 +1568,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "NOR") c = new Logical_XNOR();
         break;
   case 'h' : if(cstr == "icumL2p1") c = new hicumL2p1();
+        else if(cstr == "ic2_full") c = new hic2_full();
         break;
   case 'H' : if(cstr == "BT_X") c = new HBT_X();
         break;
