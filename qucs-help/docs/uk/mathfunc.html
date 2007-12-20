@@ -9,10 +9,13 @@
 <p><center>
 <h3>- Qucs -<br />
 Цілком універсальний симулятор електричних кіл</h3>
-<h2>Короткий опис математичних функцій</h2>
+<h1>Короткий опис математичних функцій</h1>
 
 </center></p>
-<p>У рівняннях Qucs можна застосовувати такі операції, і функції.</p>
+<p>У рівняннях Qucs можна застосовувати наступні операції, та функції. Для детальнішого опису будь-ласка зверніться до "Measurement Expressions Reference Manual". Параметри в квадратних дужках "[]" не обовязкові.</p>
+
+<h2>Оператори</h2>
+<h3>Арифметичні оператори</h3>
 <p><table cellspacing=2 cellpadding=2>
 <tr><td><tt>+x</tt>
 </td><td> унарний плюс
@@ -37,366 +40,884 @@
 </td></tr> 
 <tr><td><tt>x^y</tt>
 </td><td> піднесення до степені
-</td></tr> 
-<tr><td><tt>max(x[,range])</tt>
-</td><td> максимальне значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
-</td></tr> 
-<tr><td><tt>max(x,y)</tt>
-</td><td> повертає більше з значень <tt>x</tt> і <tt>y</tt>
-</td></tr> 
-<tr><td><tt>min(x[,range])</tt>
-</td><td> мінімальне значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
-</td></tr> 
-<tr><td><tt>min(x,y)</tt>
-</td><td> повертає менше з значень <tt>x</tt> і <tt>y</tt>
-</td></tr> 
-<tr><td><tt>avg(x[,range])</tt>
-</td><td> арифметичне середнє значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
-</td></tr> 
-<tr><td><tt>cumavg(x)</tt>
-</td><td> накопичувальне середнє значення в векторі
-</td></tr> 
-<tr><td><tt>runavg(x)</tt>
-</td><td> ковзне середнє значення в векторі
-</td></tr> 
-<tr><td><tt>stddev(x)</tt>
-</td><td> стандартне відхилення значень в векторі
-</td></tr> 
-<tr><td><tt>variance(x)</tt>
-</td><td> розбіжність значень в векторі
-</td></tr> 
-<tr><td><tt>rms(x)</tt>
-</td><td> среднеквадратичне значення по вектору
-</td></tr> 
-<tr><td><tt>sum(x)</tt>
-</td><td> сума значень в векторі
-</td></tr> 
-<tr><td><tt>prod(x)</tt>
-</td><td> добуток значень в векторі
-</td></tr> 
-<tr><td><tt>cumsum(x)</tt>
-</td><td> накопичувальна сума значень в векторі
-</td></tr> 
-<tr><td><tt>cumprod(x)</tt>
-</td><td> накопичувальний добуток значень в векторі
-</td></tr> 
-<tr><td><tt>diff(y,x)</tt>
-</td><td> диференціює вектор y по x
-</td></tr> 
-<tr><td><tt>diff(y,x,n)</tt>
-</td><td> диференціює вектор y по x n раз
-</td></tr> 
-<tr><td><tt>integrate(x,h)</tt>
-</td><td> чисельно інтегрує вектор <tt>x</tt>, приймаючи постійний розмір кроку <tt>h</tt>
-</td></tr> 
-<tr><td><tt>real(x)</tt>
-</td><td> дійсна частина комплексного числа
-</td></tr> 
-<tr><td><tt>imag(x)</tt>
-</td><td> уявна частина комплексного числа
-</td></tr> 
-<tr><td><tt>abs(x)</tt>
-</td><td> абсолютне значення, модуль комплексного числа
-</td></tr> 
-<tr><td><tt>mag(x)</tt>
-</td><td> теж, як і abs(x)
-</td></tr> 
-<tr><td><tt>polar(m,p)</tt>
-</td><td> повертає комплексне число, з модуля і фази
-</td></tr> 
-<tr><td><tt>norm(x)</tt>
-</td><td> квадрат mag(x)
-</td></tr> 
-<tr><td><tt>conj(x)</tt>
-</td><td> спряжене комплексне число
-</td></tr> 
-<tr><td><tt>phase(x)</tt>
-</td><td> фаза в градусах
-</td></tr> 
-<tr><td><tt>angle(x)</tt>
-</td><td> фаза в радіанах
-</td></tr> 
-<tr><td><tt>arg(x)</tt>
-</td><td> теж, як і angle(x)
-</td></tr> 
-<tr><td><tt>deg2rad(x)</tt>
-</td><td> перетворює градуси в радіани
-</td></tr> 
-<tr><td><tt>rad2deg(x)</tt>
-</td><td> перетворює радіани в градуси
-</td></tr> 
-<tr><td><tt>unwrap(rad[,tol])</tt>
-</td><td> розгортає кут (в радіанах), використовуючи необов'язкове значення допуску (за умовчанням pi)
-</td></tr> 
-<tr><td><tt>dB(x)</tt>
-</td><td> децибели напруги
-</td></tr> 
-<tr><td><tt>dbm(x)</tt>
-</td><td> перетворити напругу у потужність в дБ
-</td></tr> 
-<tr><td><tt>dbm2w(x)</tt>
-</td><td> перетворити потужність в dBm в потужність в ваттах
-</td></tr> 
-<tr><td><tt>w2dbm(x)</tt>
-</td><td> перетворити потужність в ваттах в потужність в dBm
-</td></tr> 
-<tr><td><tt>sqr(x)</tt>
-</td><td> квадрат (x в другій сепені)
-</td></tr> 
-<tr><td><tt>sqrt(x)</tt>
-</td><td> квадратний корінь
-</td></tr> 
-<tr><td><tt>exp(x)</tt>
-</td><td> експоненціальна функція з основою e
-</td></tr> 
-<tr><td><tt>ln(x)</tt>
-</td><td> натуральний логарифм
-</td></tr> 
-<tr><td><tt>log10(x)</tt>
-</td><td> десятковий логарифм
-</td></tr> 
-<tr><td><tt>log2(x)</tt>
-</td><td> логарифм з основою два
-</td></tr> 
-<tr><td><tt>sin(x)</tt>
-</td><td> синус
-</td></tr> 
-<tr><td><tt>cos(x)</tt>
-</td><td> косинус
-</td></tr> 
-<tr><td><tt>tan(x)</tt>
-</td><td> тангенс
-</td></tr> 
-<tr><td><tt>sinh(x)</tt>
-</td><td> синус гіперболічний
-</td></tr> 
-<tr><td><tt>cosh(x)</tt>
-</td><td> косинус гіперболічний
-</td></tr> 
-<tr><td><tt>tanh(x)</tt>
-</td><td> тангенс гіперболічний
-</td></tr> 
-<tr><td><tt>arcsin(x)</tt>
-</td><td> арксинус
-</td></tr> 
-<tr><td><tt>arccos(x)</tt>
-</td><td> арккосинус
-</td></tr> 
-<tr><td><tt>arctan(x[,y])</tt>
-</td><td> арктангенс
-</td></tr> 
-<tr><td><tt>arccot(x)</tt>
-</td><td> арккотангенс
-</td></tr> 
-<tr><td><tt>arsinh(x)</tt>
-</td><td> арксинус гіперболічний
-</td></tr> 
-<tr><td><tt>arcosh(x)</tt>
-</td><td> арккосинус гіперболічний
-</td></tr> 
-<tr><td><tt>artanh(x)</tt>
-</td><td> арктангенс гіперболічний
-</td></tr> 
-<tr><td><tt>arsech(x)</tt>
-</td><td> арксеканс гіперболічний
-</td></tr> 
-<tr><td><tt>arcosech(x)</tt>
-</td><td> арккосеканс гіперболічний
-</td></tr> 
-<tr><td><tt>arcoth(x)</tt>
-</td><td> арккотангенс гіперболічний
-</td></tr> 
-<tr><td><tt>sec(x)</tt>
-</td><td> секанс
-</td></tr> 
-<tr><td><tt>cosec(x)</tt>
-</td><td> косеканс
-</td></tr> 
-<tr><td><tt>cot(x)</tt>
-</td><td> котангенс
-</td></tr> 
-<tr><td><tt>sech(x)</tt>
-</td><td> секанс гіперболічний
-</td></tr> 
-<tr><td><tt>cosech(x)</tt>
-</td><td> косеканс гіперболічний
-</td></tr> 
-<tr><td><tt>coth(x)</tt>
-</td><td> котангенс гіперболічний
-</td></tr> 
-<tr><td><tt>ztor(x[,zref])</tt>
-</td><td> перетворює повний опір в коефіцієнт відображення (за замовчуванням повний опорний опір рівний 50 Ом)
-</td></tr> 
-<tr><td><tt>rtoz(x[,zref])</tt>
-</td><td> перетворює коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом) в повний опір
-</td></tr> 
-<tr><td><tt>ytor(x[,zref])</tt>
-</td><td> перетворює повну провідність в коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом)
-</td></tr> 
-<tr><td><tt>rtoy(x[,zref])</tt>
-</td><td> перетворює коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом) в повну провідність
-</td></tr> 
-<tr><td><tt>rtoswr(x)</tt>
-</td><td> перетворює коефіцієнт відображення в коефіцієнт стоячої хвилі (за напругою) (КСВ чи КСВН)
-</td></tr> 
-<tr><td><tt>stos(s,zref[,z0])</tt>
-</td><td> перетворює матрицю s-параметрів в матрицю s-параметрів з другим(и) опорним(и) опором(ами)
-</td></tr> 
-<tr><td><tt>stoy(s[,zref])</tt>
-</td><td> перетворює матрицю s-параметрів в матрицю y-параметрів
-</td></tr> 
-<tr><td><tt>stoz(s[,zref])</tt>
-</td><td> перетворює матрицю s-параметрів в матрицю z-параметрів
-</td></tr> 
-<tr><td><tt>ytos(y[,z0])</tt>
-</td><td> перетворює матрицю y-параметрів в матрицю s-параметрів
-</td></tr> 
-<tr><td><tt>ytoz(y)</tt>
-</td><td> перетворює матрицю y-параметрів в матрицю z-параметрів
-</td></tr> 
-<tr><td><tt>ztos(z[,z0])</tt>
-</td><td> перетворює матрицю z-параметрів в матрицю s-параметрів
-</td></tr> 
-<tr><td><tt>ztoy(z)</tt>
-</td><td> перетворює матрицю z-параметрів в матрицю y-параметрів
-</td></tr> 
-<tr><td><tt>twoport(m,from,to)</tt>
-</td><td> перетворює дану матрицю чотирьохполюсника з одногопредставлення в інше, можливі значення для <tt>"from"</tt> і <tt>"to"</tt> : 'Y', 'Z', 'H', 'G', 'A', 'P.S' і 'T'.
-</td></tr> 
-<tr><td><tt>ceil(x)</tt>
-</td><td> округлення до найближчого більшого цілого
-</td></tr> 
-<tr><td><tt>fix(x)</tt>
-</td><td> відкидає десяткові розряди дійсного числа
-</td></tr> 
-<tr><td><tt>floor(x)</tt>
-</td><td> округлення до найближчого меншого цілого
-</td></tr> 
-<tr><td><tt>round(x)</tt>
-</td><td> округлення до найближчого цілого
-</td></tr> 
-<tr><td><tt>sign(x)</tt>
-</td><td> обчислення знаку функції
-</td></tr> 
-<tr><td><tt>sinc(x)</tt>
-</td><td> повертає sin(x)/x і одиницю при x=0
-</td></tr> 
-<tr><td><tt>step(x)</tt>
-</td><td> крокова функція
-</td></tr> 
-<tr><td><tt>besseli0(x)</tt>
-</td><td> модифікована функція Бесселя нульового порядку
-</td></tr> 
-<tr><td><tt>besselj(n,x)</tt>
-</td><td> функція Бесселя 1-го роду n-го порядку
-</td></tr> 
-<tr><td><tt>bessely(n,x)</tt>
-</td><td> функція Бесселя 2-го роду n-го порядку
-</td></tr> 
-<tr><td><tt>erf(x)</tt>
-</td><td> функція помилки
-</td></tr> 
-<tr><td><tt>erfc(x)</tt>
-</td><td> компліментарна функція помилки
-</td></tr> 
-<tr><td><tt>erfinv(x)</tt>
-</td><td> інверсна функція помилки
-</td></tr> 
-<tr><td><tt>erfcinv(x)</tt>
-</td><td> інверсна компліментарна функція помилки
-</td></tr> 
-<tr><td><tt>det(x)</tt>
-</td><td> детермінант x
-</td></tr> 
-<tr><td><tt>transpose(x)</tt>
-</td><td> транспонована матриця x (рядки - і стовпчики міняються місцями)
-</td></tr> 
-<tr><td><tt>inverse(x)</tt>
-</td><td> інверсія матриці x
-</td></tr> 
-<tr><td><tt>eye(n)</tt>
+</td></tr>
+</table></p>
+
+<h3>Логічні оператори</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>!x</tt>
+</td><td> Заперечення</td></tr>
+<tr><td><tt>x&&y</tt>
+</td><td> І</td></tr>
+<tr><td><tt>x">">y</tt>
+</td><td> Або</td></tr>
+<tr><td><tt>x^^y</tt>
+</td><td> Виключаюче або</td></tr>
+<tr><td><tt>x?y:z</tt>
+</td><td> Скорочення для логічного розалуження "якщо x тоді y інакше z"</td></tr>
+<tr><td><tt>x==y</tt>
+</td><td> Тотожність</td></tr>
+<tr><td><tt>x!=y</tt>
+</td><td> Не дорівнює</td></tr>
+<tr><td><tt>x<y</tt>
+</td><td> Менше</td></tr>
+<tr><td><tt>x<=y</tt>
+</td><td> Менше рівно</td></tr>
+<tr><td><tt>x>y</tt>
+</td><td> Більше</td></tr>
+<tr><td><tt>x>=y</tt>
+</td><td> Більше рівно</td></tr>
+</table></p>
+
+<h2>Алфавітний перелік функцій</h2>
+<a class="internal" href="#abs(x)">abs</a> <a class="internal" href="#adjoint(x)">adjoint</a> <a class="internal" href="#angle(x)">angle</a> <a class="internal" href="#arccos(x)">arccos</a> <a class="internal" href="#arccosec(x)">arccosec</a> <a class="internal" href="#arccot(x)">arccot</a> <a class="internal" href="#arcosech(x)">arcosech</a> <a class="internal" href="#arcosh(x)">arcosh</a> <a class="internal" href="#arcoth(x)">arcoth</a> <a class="internal" href="#arcsec(x)">arcsec</a> <a class="internal" href="#arcsin(x)">arcsin</a> <a class="internal" href="#arctan(x)">arctan</a> <a class="internal" href="./#arg(x)">arg</a> <a class="internal" href="./#arsech(x)">arsech</a> <a class="internal" href="./#arsinh(x)">arsinh</a> <a class="internal" href="./#artanh(x)">artanh</a> <a class="internal" href="#avg(x[,range])">avg</a> 
+<a class="internal" href="#besseli0(x)">besseli0</a> <a class="internal" href="#besselj(n,x)">besselj</a> <a class="internal" href="#bessely(n,x)">bessely</a> 
+<a class="internal" href="#ceil(x)">ceil</a> <a class="internal" href="#conj(x)">conj</a> <a class="internal" href="#cos(x)">cos</a> <a class="internal" href="#cosec(x)">cosec</a> <a class="internal" href="#cosech(x)">cosech</a> <a class="internal" href="#cosh(x)">cosh</a> <a class="internal" href="#cot(x)">cot</a> <a class="internal" href="#coth(x)">coth</a> <a class="internal" href="#cumavg(x)">cumavg</a> <a class="internal" href="#cumprod(x)">cumprod</a> <a class="internal" href="#cumsum(x)">cumsum</a> 
+<a class="internal" href="#dB(x)">dB</a> <a class="internal" href="#dbm(x)">dbm</a> <a class="internal" href="#dbm2w(x)">dbm2w</a> <a class="internal" href="#deg2rad(x)">deg2rad</a> <a class="internal" href="#det(x)">det</a> <a class="internal" href="#dft(x)">dft</a> <a class="internal" href="#diff(y,x[,n])">diff</a> 
+<a class="internal" href="#erf(x)">erf</a> <a class="internal" href="#erfc(x)">erfc</a> <a class="internal" href="#erfcinv(x)">erfcinv</a> <a class="internal" href="#erfinv(x)">erfinv</a> <a class="internal" href="#exp(x)">exp</a> <a class="internal" href="#eye(n)">eye</a> 
+<a class="internal" href="#fft(x)">fft</a> <a class="internal" href="#fix(x)">fix</a> <a class="internal" href="#floor(x)">floor</a> <a class="internal" href="#Freq2Time(V,f)">Freq2Time</a> 
+<a class="internal" href="#GaCircle(S,Ga [,Arcs])">GaCircle</a> <a class="internal" href="#GpCircle(S,Gp [,Arcs])">GpCircle</a> 
+<a class="internal" href="#hypot(x,y)">hypot</a> 
+<a class="internal" href="#idft(x)">idft</a> <a class="internal" href="#ifft(x)">ifft</a> <a class="internal" href="#imag(x)">imag</a> <a class="internal" href="#integrate(x,h)">integrate</a> <a class="internal" href="#interpolate(f,x[,n])">interpolate</a> <a class="internal" href="#inverse(x)">inverse</a> 
+<a class="internal" href="#kbd(x [,n])">kbd</a> 
+<a class="internal" href="#limexp(x)">limexp</a> <a class="internal" href="#linspace(from,to,n)">linspace</a> <a class="internal" href="#ln(x)">ln</a> <a class="internal" href="#log10(x)">log10</a> <a class="internal" href="#log2(x)">log2</a> <a class="internal" href="#logspace(from,to,n)">logspace</a> 
+<a class="internal" href="#mag(x)">mag</a> <a class="internal" href="#max(x[,range])">max</a> <a class="internal" href="#min(x[,range])">min</a> <a class="internal" href="#Mu(x)">Mu</a> <a class="internal" href="#Mu2(x)">Mu2</a> 
+<a class="internal" href="#NoiseCircle(Sopt,<br /> Fmin,Rn,F[,Arcs])">NoiseCircle</a> <a class="internal" href="#norm(x)">norm</a> 
+<a class="internal" href="#phase(x)">phase</a> <a class="internal" href="#PlotVs(data,dep)">PlotVs</a> <a class="internal" href="#polar(m,p)">polar</a> <a class="internal" href="#prod(x)">prod</a> 
+<a class="internal" href="#rad2deg(x)">rad2deg</a> <a class="internal" href="#random()">random</a> <a class="internal" href="#real(x)">real</a> <a class="internal" href="#rms(x)">rms</a> <a class="internal" href="#Rollet(x)">Rollet</a> <a class="internal" href="#round(x)">round</a> <a class="internal" href="#rtoswr(x)">rtoswr</a> <a class="internal" href="#rtoy(x[,zref])">rtoy</a> <a class="internal" href="#rtoz(x[,zref])">rtoz</a> <a class="internal" href="#runavg(x)">runavg</a> 
+<a class="internal" href="#sec(x)">sec</a> <a class="internal" href="#sech(x)">sech</a> <a class="internal" href="#sign(x)">sign</a> <a class="internal" href="#sin(x)">sin</a> <a class="internal" href="#sinc(x)">sinc</a> <a class="internal" href="#sinh(x)">sinh</a> <a class="internal" href="#sqr(x)">sqr</a> <a class="internal" href="#sqrt(x)">sqrt</a> <a class="internal" href="#srandom(x)">srandom</a> <a class="internal" href="#StabCircleL(S [,Arcs])">StabCircleL</a> <a class="internal" href="#StabCircleS(S [,Arcs])">StabCircleS</a> <a class="internal" href="#StabFactor(s)">StabFactor</a> <a class="internal" href="#StabMeasure(s)">StabMeasure</a> <a class="internal" href="#stddev(x)">stddev</a> <a class="internal" href="./#step(x)">step</a> <a class="internal" href="#stos(s,zref[,z0])">stos</a> <a class="internal" href="#stoy(s[,zref])">stoy</a> <a class="internal" href="#stoz(s[,zref])">stoz</a> <a class="internal" href="./#sum(x)">sum</a> 
+<a class="internal" href="#tan(x)">tan</a> <a class="internal" href="#tanh(x)">tanh</a> <a class="internal" href="#Time2Freq(v,t)">Time2Freq</a> <a class="internal" href="#transpose(x)">transpose</a> <a class="internal" href="#twoport(m,from,to)">twoport</a> 
+<a class="internal" href="#unwrap(rad[,tol])">unwrap</a> 
+<a class="internal" href="#variance(x)">variance</a> <a class="internal" href="#vt(t)">vt</a> 
+<a class="internal" href="#w2dbm(x)">w2dbm</a> 
+<a class="internal" href="#xvalue(f,yval)">xvalue</a> 
+<a class="internal" href="#ytor(x[,zref])">ytor</a> <a class="internal" href="#ytos(y[,z0])">ytos</a> <a class="internal" href="#ytoz(y)">ytoz</a> <a class="internal" href="#yvalue(f,xval)">yvalue</a> 
+<a class="internal" href="#ztor(x[,zref])">ztor</a> <a class="internal" href="#ztos(z[,z0])">ztos</a> <a class="internal" href="#ztoy(z)">ztoy</a>
+<h2>Математичні функції</h2>
+<h3>Вектори та матриці: Створення</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>eye(n)
+
+</tt>
 </td><td> n x n одинична матриця
-</td></tr> 
-<tr><td><tt>adjoint(x)</tt>
-</td><td> сполучена матриця (транспонована і комплексно-спряжена)
-</td></tr> 
-<tr><td><tt>Rollet(x)</tt>
-</td><td> Чинник стійкості Роллета для матриці x (матриця S-параметрів чотирьохполюсника)
-</td></tr> 
-<tr><td><tt>Mu(x)</tt>
-</td><td> Mu чинник стійкості для матриці x (матриця S-параметрів чотирьохполюсника)
-</td></tr> 
-<tr><td><tt>Mu2(x)</tt>
-</td><td> Mu' чинник стійкості для матриці x (матриця S-параметрів чотирьохполюсника)
-</td></tr> 
-<tr><td><tt>linspace(from,to,n)</tt>
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>linspace(from,to,n)
+
+</tt>
 </td><td> створює вектор з <tt>n</tt> лінійно протяжними елементами між <tt>from</tt> і <tt>to</tt>, обидва значення включно
 </td></tr> 
-<tr><td><tt>logspace(from,to,n)</tt>
+<tr><td><tt>
+<a name="*"></a>logspace(from,to,n)
+
+</tt>
 </td><td> створює вектор з <tt>n</tt> логарифмічно протяжними елементами між <tt>from</tt> і <tt>to</tt>, обидва значення включно
-</td></tr> 
-<tr><td><tt>NoiseCircle(Sopt,<br /> Fmin,Rn,F[,Arcs])</tt>
-</td><td> окружності з постійним(и) числом(ами) шуму <tt>F</tt> (може бути константою чи вектором), <tt>Arcs</tt> задає кути в градусах, створені, наприклад, з допомогою <tt>linspace(0,360,100)</tt>, якщо <tt>Arcs</tt> є числом, то воно визначає кількість рівномірно розставлених сегментів окружності, коли воно пропущено, то за замовчуванням використовується прийнятне значення
-</td></tr> 
-<tr><td><tt>StabCircleS(S [,Arcs])</tt>
-</td><td> окружність стійкості у площині джерела
-</td></tr> 
-<tr><td><tt>StabCircleL(S [,Arcs])</tt>
-</td><td> окружність стійкості у площині навантаження
-</td></tr> 
-<tr><td><tt>GaCircle(S,Ga [,Arcs])</tt>
-</td><td> окружність(и) з постійним посиленням располагаемой потужності <tt>Ga</tt> у площині джерела
-</td></tr> 
-<tr><td><tt>GpCircle(S,Gp [,Arcs])</tt>
-</td><td> окружність(и) з постійним посиленням потужності <tt>Gp</tt> у площині навантаження
-</td></tr> 
-<tr><td><tt>PlotVs(data,dep)</tt>
-</td><td> повертає елемент даних з <tt>data</tt> (вектор чи матричний вектор), залежний від вектора <tt>dep</tt>, наприклад, <tt>PlotVs(Gain,frequency/1e9)</tt>
-</td></tr> 
-<tr><td><tt>interpolate(f,x[,n])</tt>
-</td><td> повертає вектор інтерпольованих даних дійсної функції <tt>f(x)</tt> по <tt>n</tt> рівновіддаленим даним, останній параметр можна пропустити, тоді буде використано прийнятне значення за замовчуванням
-</td></tr> 
-<tr><td><tt>fft(x)</tt>
-</td><td> розраховує швидке перетворення Фур'є (FFT) вектора <tt>x</tt>
-</td></tr> 
-<tr><td><tt>ifft(x)</tt>
-</td><td> розраховує зворотне швидке перетворення Фур'є (IFFT) вектора <tt>x</tt>
-</td></tr> 
-<tr><td><tt>dft(x)</tt>
-</td><td> розраховує дискретне перетворення Фур'є (DFT) вектора <tt>x</tt>
-</td></tr> 
-<tr><td><tt>idft(x)</tt>
-</td><td> розраховує зворотне дискретне перетворення Фур'є (DFT) вектора <tt>x</tt>
-</td></tr> 
-<tr><td><tt>Time2Freq(v,t)</tt>
-</td><td> розраховує дискретне перетворення Фур'є функції <tt>v(t)</tt> з фізичною інтерпретацією
-</td></tr> 
-<tr><td><tt>Freq2Time(V,f)</tt>
-</td><td> розраховує зворотне дискретне перетворення Фур'є функції <tt>V(f)</tt> з фізичною інтерпретацією
-</td></tr> 
-<tr><td><tt>kbd(x [,n])</tt>
-</td><td> Похідне вікно Кайзера-Бесселя
-</td></tr> 
-<tr><td><tt>yvalue(f,xval)</tt>
-</td><td> повертає y-значение даного вектора <tt>f</tt>, найближче до x-значению <tt>xval</tt><nowiki>; отже, вектор </nowiki><tt>f</tt> повинен мати однозначну залежність від даних
-</td></tr> 
-<tr><td><tt>xvalue(f,yval)</tt>
-</td><td> повертає x-значение, що звязане з y-значением, найближчим до <tt>yval</tt> в даному векторі <tt>f</tt><nowiki>; отже, вектор </nowiki><tt>f</tt> повинен мати однозначну залежність від даних
 </td></tr> 
 </table></p>
 
+<h3>Вектори та матриці: Базові матричні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>adjoint(x)
+
+</tt>
+</td><td> сполучена матриця (транспонована і комплексно-спряжена)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>det(x)
+
+</tt>
+</td><td> детермінант x
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>inverse(x)
+
+</tt>
+</td><td> інверсія матриці x
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>transpose(x)
+
+</tt>
+</td><td> транспонована матриця x (рядки - і стовпчики міняються місцями)
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Базові дійсні та комплексні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>abs(x)
+
+</tt>
+</td><td> абсолютне значення, модуль комплексного числа
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>angle(x)
+
+</tt>
+</td><td> фаза в радіанах
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arg(x)
+
+</tt>
+</td><td> теж, як і angle(x)
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>conj(x)
+
+</tt>
+</td><td> спряжене комплексне число
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>deg2rad(x)
+
+</tt>
+</td><td> перетворює градуси в радіани
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>hypot(x,y)
+
+</tt>
+</td><td> Функція Евклідової відстані
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>imag(x)
+
+</tt>
+</td><td> уявна частина комплексного числа
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>mag(x)
+
+</tt>
+</td><td> теж, як і abs(x)
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>norm(x)
+
+</tt>
+</td><td> квадрат mag(x)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>phase(x)
+
+</tt>
+</td><td> фаза в градусах
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>polar(m,p)
+
+</tt>
+</td><td> повертає комплексне число, з модуля і фази
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>rad2deg(x)
+
+</tt>
+</td><td> перетворює радіани в градуси
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>real(x)
+
+</tt>
+</td><td> дійсна частина комплексного числа
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sign(x)
+
+</tt>
+</td><td> обчислення знаку функції
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sqr(x)
+
+</tt>
+</td><td> квадрат (x в другій сепені)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sqrt(x)
+
+</tt>
+</td><td> квадратний корінь
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>unwrap(rad[,tol])
+
+</tt>
+</td><td> розгортає кут (в радіанах), використовуючи необов'язкове значення допуску (за умовчанням pi)
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Експоненціальні та логарифмічні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>exp(x)
+
+</tt>
+</td><td> експоненціальна функція з основою e
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>limexp(x)
+
+</tt>
+</td><td> Обмежена експоненціальна функція
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>log10(x)
+
+</tt>
+</td><td> десятковий логарифм
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>log2(x)
+
+</tt>
+</td><td> логарифм з основою два
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ln(x)
+
+</tt>
+</td><td> натуральний логарифм
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Тригонометричні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>cos(x)
+
+</tt>
+</td><td> косинус
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>cosec(x)
+
+</tt>
+</td><td> косеканс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>cot(x)
+
+</tt>
+</td><td> котангенс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sec(x)
+
+</tt>
+</td><td> секанс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sin(x)
+
+</tt>
+</td><td> синус
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>tan(x)
+
+</tt>
+</td><td> тангенс
+</td></tr>
+</table></p>
+
+<h3>Елементарні математичні функції: Оберенні тригонометричні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>arccos(x)
+
+</tt>
+</td><td> арккосинус
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arccosec(x)
+
+</tt>
+</td><td> арккосеканс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arccot(x)
+
+</tt>
+</td><td> арккотангенс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arcsec(x)
+
+</tt>
+</td><td> арксеканс
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arcsin(x)
+
+</tt>
+</td><td> арксинус
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arctan(x[,y])
+
+</tt>
+</td><td> арктангенс
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Гіперболічні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>cosh(x)
+
+</tt>
+</td><td> косинус гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>cosech(x)
+
+</tt>
+</td><td> косеканс гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>coth(x)
+
+</tt>
+</td><td> котангенс гіперболічний
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>sech(x)
+
+</tt>
+</td><td> секанс гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sinh(x)
+
+</tt>
+</td><td> синус гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>tanh(x)
+
+</tt>
+</td><td> тангенс гіперболічний
+</td></tr>
+</table></p>
+
+<h3>Елементарні математичні функції: Оберенні гіперболічні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>arcosh(x)
+
+</tt>
+</td><td> арккосинус гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arcosech(x)
+
+</tt>
+</td><td> арккосеканс гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arcoth(x)
+
+</tt>
+</td><td> арккотангенс гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arsech(x)
+
+</tt>
+</td><td> арксеканс гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>arsinh(x)
+
+</tt>
+</td><td> арксинус гіперболічний
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>artanh(x)
+
+</tt>
+</td><td> арктангенс гіперболічний
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Округлення</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>ceil(x)
+
+</tt>
+</td><td> округлення до найближчого більшого цілого
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>fix(x)
+
+</tt>
+</td><td> відкидає десяткові розряди дійсного числа
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>floor(x)
+
+</tt>
+</td><td> округлення до найближчого меншого цілого
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>round(x)
+
+</tt>
+</td><td> округлення до найближчого цілого
+</td></tr> 
+</table></p>
+
+<h3>Елементарні математичні функції: Спеціальні математичні функції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>besseli0(x)
+
+</tt>
+</td><td> модифікована функція Бесселя нульового порядку
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>besselj(n,x)
+
+</tt>
+</td><td> функція Бесселя 1-го роду n-го порядку
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>bessely(n,x)
+
+</tt>
+</td><td> функція Бесселя 2-го роду n-го порядку
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>erf(x)
+
+</tt>
+</td><td> функція помилки
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>erfc(x)
+
+</tt>
+</td><td> компліментарна функція помилки
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>erfinv(x)
+
+</tt>
+</td><td> інверсна функція помилки
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>erfcinv(x)
+
+</tt>
+</td><td> інверсна компліментарна функція помилки
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sinc(x)
+
+</tt>
+</td><td> повертає sin(x)/x і одиницю при x=0
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>step(x)
+
+</tt>
+</td><td> крокова функція
+</td></tr> 
+</table></p>
+
+<h3>Аналіз даних: Базова статистика</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>avg(x[,range])
+
+</tt>
+</td><td> арифметичне середнє значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>cumavg(x)
+
+</tt>
+</td><td> накопичувальне середнє значення в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>max(x,y)
+
+</tt>
+</td><td> повертає більше з значень <tt>x</tt> і <tt>y</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>max(x[,range])
+
+</tt>
+</td><td> максимальне значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>min(x,y)
+
+</tt>
+</td><td> повертає менше з значень <tt>x</tt> і <tt>y</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>min(x[,range])
+
+</tt>
+</td><td> мінімальне значення в векторі; якщо дано інтервал <tt>range</tt>, то в <tt>x</tt> мусить бути однозначна залежність від даних
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>random()
+
+</tt>
+</td><td> випадкове число між 0.0 та 1.0
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>rms(x)
+
+</tt>
+</td><td> среднеквадратичне значення по вектору
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>runavg(x)
+
+</tt>
+</td><td> ковзне середнє значення в векторі
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>srandom(x)
+
+</tt>
+</td><td> видає випадкове число
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>stddev(x)
+
+</tt>
+</td><td> стандартне відхилення значень в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>variance(x)
+
+</tt>
+</td><td> розбіжність значень в векторі
+</td></tr> 
+</table></p>
+
+<h3>Аналіз даних: Базові операції</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>cumprod(x)
+
+</tt>
+</td><td> накопичувальний добуток значень в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>cumsum(x)
+
+</tt>
+</td><td> накопичувальна сума значень в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>interpolate(f,x[,n])
+
+</tt>
+</td><td> повертає вектор інтерпольованих даних дійсної функції <tt>f(x)</tt> по <tt>n</tt> рівновіддаленим даним, останній параметр можна пропустити, тоді буде використано прийнятне значення за замовчуванням
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>prod(x)
+
+</tt>
+</td><td> добуток значень в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>sum(x)
+
+</tt>
+</td><td> сума значень в векторі
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>xvalue(f,yval)
+
+</tt>
+</td><td> повертає x-значение, що звязане з y-значением, найближчим до <tt>yval</tt> в даному векторі <tt>f</tt>; отже, вектор <tt>f</tt> повинен мати однозначну залежність від даних
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>yvalue(f,xval)
+
+</tt>
+</td><td> повертає y-значение даного вектора <tt>f</tt>, найближче до x-значению <tt>xval</tt>; отже, вектор <tt>f</tt> повинен мати однозначну залежність від даних
+</td></tr> 
+</table></p>
+
+<h3>Аналіз даних: Диференциювання та інтегрування</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>diff(y,x[,n])
+
+</tt>
+</td><td> диференціює вектор y по x n раз. Якщо n пропущено по замовчуванню береться n=1.
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>integrate(x,h)
+
+</tt>
+</td><td> чисельно інтегрує вектор <tt>x</tt>, приймаючи постійний розмір кроку <tt>h</tt>
+</td></tr>
+</table></p>
+
+<h3>Аналіз даних: Обробка сигналів</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>dft(x)
+
+</tt>
+</td><td> розраховує дискретне перетворення Фур'є (DFT) вектора <tt>x</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>fft(x)
+
+</tt>
+</td><td> розраховує швидке перетворення Фур'є (FFT) вектора <tt>x</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>Freq2Time(V,f)
+
+</tt>
+</td><td> розраховує зворотне дискретне перетворення Фур'є функції <tt>V(f)</tt> з фізичною інтерпретацією
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>idft(x)
+
+</tt>
+</td><td> розраховує зворотне дискретне перетворення Фур'є (DFT) вектора <tt>x</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ifft(x)
+
+</tt>
+</td><td> розраховує зворотне швидке перетворення Фур'є (IFFT) вектора <tt>x</tt>
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>kbd(x [,n])
+
+</tt>
+</td><td> Похідне вікно Кайзера-Бесселя
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>Time2Freq(v,t)
+
+</tt>
+</td><td> розраховує дискретне перетворення Фур'є функції <tt>v(t)</tt> з фізичною інтерпретацією
+</td></tr> 
+</table></p>
+
+<h2>Функції Електроніки</h2>
+<h3>Перетворення величин</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>dB(x)
+
+</tt>
+</td><td> децибели напруги
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>dbm(x)
+
+</tt>
+</td><td> перетворити напругу у потужність в дБ
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>dbm2w(x)
+
+</tt>
+</td><td> перетворити потужність в dBm в потужність в ваттах
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>w2dbm(x)
+
+</tt>
+</td><td> перетворити потужність в ваттах в потужність в dBm
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>vt(t)
+
+</tt>
+</td><td> Функція залежності опору від температури t в Кельвінах
+</td></tr> 
+</table></p>
+
+<h3>Коефіцієнти відображення та VSWR</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>rtoswr(x)
+
+</tt>
+</td><td> перетворює коефіцієнт відображення в коефіцієнт стоячої хвилі (за напругою) (КСВ чи КСВН)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>rtoy(x[,zref])
+
+</tt>
+</td><td> перетворює коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом) в повну провідність
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>rtoz(x[,zref])
+
+</tt>
+</td><td> перетворює коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом) в повний опір
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ytor(x[,zref])
+
+</tt>
+</td><td> перетворює повну провідність в коефіцієнт відображення (за умовчанням повний опорний опір рівний 50 Ом)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ztor(x[,zref])
+
+</tt>
+</td><td> перетворює повний опір в коефіцієнт відображення (за замовчуванням повний опорний опір рівний 50 Ом)
+</td></tr> 
+</table></p>
+
+<h3>Робота з N-портовою матрицею</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>stos(s,zref[,z0])
+
+</tt>
+</td><td> перетворює матрицю s-параметрів в матрицю s-параметрів з другим(и) опорним(и) опором(ами)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>stoy(s[,zref])
+
+</tt>
+</td><td> перетворює матрицю s-параметрів в матрицю y-параметрів
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>stoz(s[,zref])
+
+</tt>
+</td><td> перетворює матрицю s-параметрів в матрицю z-параметрів
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>twoport(m,from,to)
+
+</tt>
+</td><td> перетворює дану матрицю чотирьохполюсника з одногопредставлення в інше, можливі значення для <tt>"from"</tt> і <tt>"to"</tt> : 'Y', 'Z', 'H', 'G', 'A', 'P.S' і 'T'.
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>ytos(y[,z0])
+
+</tt>
+</td><td> перетворює матрицю y-параметрів в матрицю s-параметрів
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ytoz(y)
+
+</tt>
+</td><td> перетворює матрицю y-параметрів в матрицю z-параметрів
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ztos(z[,z0])
+
+</tt>
+</td><td> перетворює матрицю z-параметрів в матрицю s-параметрів
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>ztoy(z)
+
+</tt>
+</td><td> перетворює матрицю z-параметрів в матрицю y-параметрів
+</td></tr>
+</table></p>
+
+<h3>Amplifiers</h3>
+<p><table cellspacing=2 cellpadding=2>
+<tr><td><tt>
+<a name="*"></a>GaCircle(S,Ga [,Arcs])
+
+</tt>
+</td><td> окружність(и) з постійним посиленням располагаемой потужності <tt>Ga</tt> у площині джерела
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>GpCircle(S,Gp [,Arcs])
+
+</tt>
+</td><td> окружність(и) з постійним посиленням потужності <tt>Gp</tt> у площині навантаження
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>Mu(x)
+
+</tt>
+</td><td> Mu чинник стійкості для матриці x (матриця S-параметрів чотирьохполюсника)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>Mu2(x)
+
+</tt>
+</td><td> Mu' чинник стійкості для матриці x (матриця S-параметрів чотирьохполюсника)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>NoiseCircle(Sopt,<br /> Fmin,Rn,F[,Arcs])
+
+</tt>
+</td><td> Створює окружності з постійним(и) числом(ами) шуму <tt>F</tt> (може бути константою чи вектором), <tt>Arcs</tt> задає кути в градусах, створені, наприклад, з допомогою <tt>linspace(0,360,100)</tt>, якщо <tt>Arcs</tt> є числом, то воно визначає кількість рівномірно розставлених сегментів окружності, коли воно пропущено, то за замовчуванням використовується прийнятне значення
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>PlotVs(data,dep)
+
+</tt>
+</td><td> повертає елемент даних з <tt>data</tt> (вектор чи матричний вектор), залежний від вектора <tt>dep</tt>, наприклад, <tt>PlotVs(Gain,frequency/1e9)</tt>
+</td></tr>
+<tr><td><tt>
+<a name="*"></a>Rollet(x)
+
+</tt>
+</td><td> Чинник стійкості Роллета для матриці x (матриця S-параметрів чотирьохполюсника)
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>StabCircleL(S [,Arcs])
+
+</tt>
+</td><td> окружність стійкості у площині навантаження
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>StabCircleS(S [,Arcs])
+
+</tt>
+</td><td> окружність стійкості у площині джерела
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>StabFactor(s)
+
+</tt>
+</td><td> Фактор стабільності для двох портової матриці S-параметру. Синонім для Rollet()
+</td></tr> 
+<tr><td><tt>
+<a name="*"></a>StabMeasure(s)
+
+</tt>
+</td><td> Границі стабільності B1 для двох портової матриці S-параметру
+</td></tr> 
+</table></p>
+
+<h2>Номенклатура</h2>
 <h3>Інтервали</h3>
 <p><table cellspacing=2 cellpadding=2>
 <tr><td><tt>LO:HI</tt>
 </td><td> інтервал від <tt>LO</tt> до <tt>HI</tt>
 </td></tr> 
-<tr><td><tt><nowiki>:HI</nowiki></tt>
+<tr><td><tt>:HI</tt>
 </td><td> аж до <tt>HI</tt>
 </td></tr> 
 <tr><td><tt>LO:</tt>
 </td><td> від <tt>LO</tt>
 </td></tr> 
-<tr><td><tt><nowiki>:</nowiki></tt>
+<tr><td><tt>:</tt>
 </td><td> немає границі інтервалу
 </td></tr> 
 </table></p>
@@ -449,7 +970,7 @@
 
 <h3>Константи</h3>
 <p><table cellspacing=2 cellpadding=2>
-<tr><td><tt>j</tt>
+<tr><td><tt>i,j</tt>
 </td><td> уявна одиниця ("квадратний корінь з -1")
 </td></tr> 
 <tr><td><tt>pi</tt>
@@ -460,9 +981,12 @@
 </td></tr> 
 <tr><td><tt>kB</tt>
 </td><td> Постійна Больцмана = 1.38065e-23
+</td></tr>
 </td></tr> 
+<tr><td><tt>q</tt>
+</td><td>  Елементарний заряд = 1.6021765e-19 C
+</td></tr>
 </table>
-
 <br><br><a href="#top">нагору</a><br>
 </body>
 </html>
