@@ -326,11 +326,11 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog fájl</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CVS fájl</translation>
     </message>
 </context>
 <context>
@@ -647,15 +647,15 @@
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation>Analóg</translation>
     </message>
 </context>
 <context>
@@ -881,67 +881,67 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paraméterek</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished">Kijelezve</translation>
+        <translation>Kijelezve</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Leírás</translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished">igen</translation>
+        <translation>igen</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished">nem</translation>
+        <translation>nem</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished">Kijelezve a kapcsolási rajzon</translation>
+        <translation>Kijelezve a kapcsolási rajzon</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Név:</translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett érték:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Leírás:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Hozzáadás</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Eltávolítás</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>A paraméter neve nem lehet &quot;File&quot;!</translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>A &quot;%1&quot; paraméter már szerepel a listában!</translation>
     </message>
 </context>
 <context>
@@ -968,7 +968,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Import</translation>
+        <translation>Importálás</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -976,11 +976,11 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>All known</source>
-        <translation>Minden ismert</translation>
+        <translation>Minden ismert fájl</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation>Bármelyik fájl</translation>
+        <translation>Összes fájl</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
@@ -1029,7 +1029,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished">Próbakő fájl</translation>
+        <translation>Touchstone fájlok</translation>
     </message>
     <message>
         <source>CITI files</source>
@@ -1045,19 +1045,19 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>IC-CAP modell fájlok</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Megszakít</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Konverter nem indítható!</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV fájlok</translation>
     </message>
 </context>
 <context>
@@ -1230,23 +1230,23 @@ Az alkatrész katalógus írása sikertelen!</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész-katalógus létrehozása sikeres.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Mindent kijelöl</translation>
+        <translation>Mindent kijelöl</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden kijelölést megszüntet</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Az alkatrész-katalógus nem nevezhető át!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs joga a &quot;%1&quot; alkatrész-katalógus alkönyvtár törléséhez. </translation>
     </message>
 </context>
 <context>
@@ -1563,27 +1563,27 @@ de %1 !</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished">Szimuláció:</translation>
+        <translation>Szimuláció:</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>A &quot;%1&quot; változó már szerepel a listában!</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>A &quot;%1&quot; cél már szerepel a listában!</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Methódus:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Iterációk maximális száma:</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimenet frissítési ciklusa:</translation>
     </message>
     <message>
         <source>Number of parents:</source>
@@ -1591,7 +1591,7 @@ de %1 !</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>F konstans:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
@@ -1615,11 +1615,11 @@ de %1 !</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmus</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Típus:</translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <source>linear double</source>
@@ -2383,7 +2383,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation type="unfinished"></translation>
+        <translation>sík vonal</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
@@ -2403,7 +2403,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Sík vonal</translation>
     </message>
     <message>
         <source>dc block</source>
@@ -4009,7 +4009,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koax kábel</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
@@ -4037,11 +4037,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>csúcs feszültség [V]</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>szigetelő relatív permittivitása</translation>
     </message>
     <message>
         <source>voltage probe</source>
@@ -4081,11 +4081,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AM modulált jelforrás</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>csillapítási faktor (csak tranziens szimuláció)</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
@@ -4097,19 +4097,19 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>modulációs index</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>PM modulált jelforrás</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ellenállás a bekapcsolt állapotban [Ohm]</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ellenállás a kikapcsolt állapotban [Ohm]</translation>
     </message>
     <message>
         <source>initial state</source>
@@ -4125,23 +4125,23 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>kapcsoló (idő vezérelt)</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>letörési feszültség [V]</translation>
     </message>
     <message>
         <source>hysteresis voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>hiszterézis feszültség [V]</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ellenállás a bekapcsolt állapotban [Ohm]</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ellenállás a kikapcsolt állapotban [Ohm]</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -4225,27 +4225,27 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti feszültség tranziens szimulációhoz</translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti áram tranziens szimulációhoz</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>maximális lépésköz [mp]</translation>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>relé</translation>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>Relé</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti késleltetési idő</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
@@ -4645,7 +4645,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>szimulációs hőmérséklet</translation>
     </message>
     <message>
         <source>FBH HBT</source>
@@ -4653,7 +4653,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>Mellőz</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
@@ -4993,11 +4993,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>Csavart érpár</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal fizikai hossza</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
@@ -5033,19 +5033,19 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>kötéslista formátum</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog fájl</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog fájl neve</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
@@ -5149,11 +5149,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
+        <translation>HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">HIBA: QucsConv nem indítható!</translation>
+        <translation>HIBA: QucsConv nem indítható!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
@@ -5188,11 +5188,11 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&quot;%1&quot; SPICE fájl konvertásása.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&quot;%1&quot; SPICE fájl előfeldolgozása.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
@@ -5204,15 +5204,15 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; nem futtatható.</translation>
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>fájl bázisú feszültség generátor</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>Minta fájl neve</translation>
     </message>
     <message>
         <source>repeat waveform</source>
@@ -5220,19 +5220,19 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl bázisú feszültség generátor</translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fájl bázisú áramgenerátor</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>áramerősítés</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl bázisú áramgenerátor</translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
@@ -5244,27 +5244,27 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyilthurkú differenciális DC erősítés [dB]</translation>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Első letörési frekvencia [Hz]</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimeneti ellenállás [Ohm]</translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>Differenciális bemeneti kapacitás [F]</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Differenciális bemeneti ellenállás [Ohm]</translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bemeneti offset áram [A]</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
@@ -5272,7 +5272,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bemeneti offset feszültség [V]</translation>
     </message>
     <message>
         <source>Common-mode rejection ratio at DC (dB)</source>
@@ -5284,23 +5284,23 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitív jelemelkedési sebesség [V/mp]</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Negatív jelemelkedési sebesség [V/mp]</translation>
     </message>
     <message>
         <source>Positive output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitív kimeneti feszültség határ [V]</translation>
     </message>
     <message>
         <source>Negative output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Negatív kimeneti feszültség határ [V]</translation>
     </message>
     <message>
         <source>Maximum DC output current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum DC kimeneti áram [A]</translation>
     </message>
     <message>
         <source>Current limit scale factor</source>
@@ -5308,10 +5308,22 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Modular OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Műveleti erősítő</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A^2s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5319,7 +5331,31 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Specifies the base node connection for the tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished">Ohm</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5371,7 +5407,23 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>K/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>J/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6325,7 +6377,7 @@ Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Dokumentum tulajdonságai</translation>
+        <translation>Dokumentum tulajdonságai</translation>
     </message>
     <message>
         <source>Settings
@@ -6397,7 +6449,7 @@ Kilépés a programból</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Beállítások</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6549,7 +6601,7 @@ Az alkatrészek tulajdonság értékeit változtatja</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Kivágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6569,7 +6621,7 @@ Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Másolás</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6589,7 +6641,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Beillesztés</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6625,7 +6677,7 @@ Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Visszavonás</translation>
+        <translation>Visszavonás</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6645,7 +6697,7 @@ Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Újra</translation>
+        <translation>Újra</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -7316,7 +7368,7 @@ Rövid bemutatás a Qucs-hoz</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Program névjegy</translation>
+        <translation>Program névjegye</translation>
     </message>
     <message>
         <source>About
@@ -7412,11 +7464,11 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
+        <translation>by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>Szimulátor: Stefan Jahn</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
@@ -7813,87 +7865,92 @@ Csillapító méretező program indítása</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>GUI tökéletesítés köszönet Gopala Krishna A</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>Marek Straka - Cseh</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>Antoni Subirats - Katalán</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-AMS interfész, köszönet Helene Parruitte</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőlegesen egyvonalba</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott elemeket függőlegesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőlegesen egyvonalba
+
+A kiválasztott elemeket függőlegesen egyvonalba mozgatja
+</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Vízszintesen egyvonalba</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vízszintesen egyvonalba
+
+A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;ozicionálás</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás oldalra illesztve</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott elemet rácshoz illeszti</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Mozgatja az alkatrészfeliratokat</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkatrész vagy VHDL kód tulajdonságainak megváltoztatása </translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Megnyit egy létező projektet</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Töröl egy létező projektet</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezárja az aktuális projektet</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Tükrözi a kiválasztott elemet az X tengelyre</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Tükrözi a kiválasztott elemet Y tengelyre</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
@@ -7901,51 +7958,52 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyenlet szúr be</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Beszúr egy földelést</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Beszúr egy csatlakozópont rajzot</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Következő szöveg</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Mentés</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mindent ment</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás...</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog forrás</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog forrás nem törölhető:
+</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>próbák</translation>
     </message>
 </context>
 <context>
@@ -8397,41 +8455,43 @@ Szűrő méretező program
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezdőlap</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tartalomjegyzék</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalomjegyzék Be/Ki </translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalomjegyzék
+
+Be vagy Kikapcsolja a tartalomjegyzéket</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Qt Névjegy</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fájl</translation>
+        <translation>&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Megjelenítés</translation>
+        <translation>&amp;Megjelenítés</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Súgó</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Összetevők</translation>
     </message>
 </context>
 <context>
@@ -9859,15 +9919,15 @@ Fájlok másolása a projekt könyvtárba</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib súgó</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modell</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés az alkatrész katalógusban</translation>
     </message>
 </context>
 <context>
@@ -10064,11 +10124,11 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Cseh</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalán</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
@@ -10163,11 +10223,11 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Szögletes hullámvezető</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koax kábel</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
@@ -10220,27 +10280,27 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>TE-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TE-Módok</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TM-Módok</translation>
     </message>
     <message>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezető páros veszteségei</translation>
     </message>
     <message>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezető páratlan veszteségei</translation>
     </message>
     <message>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrikum páros veszteségei</translation>
     </message>
     <message>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrikum páratlan veszteségei</translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
@@ -10248,7 +10308,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatív permeabilitás</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
@@ -10272,7 +10332,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezető érdessége</translation>
     </message>
     <message>
         <source>Frequency</source>
@@ -10332,11 +10392,11 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Páros-Módú impedancia</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Páratlan-Módú impedancia</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
@@ -10380,11 +10440,11 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az értékek konzisztensek.</translation>
     </message>
     <message>
         <source>Values are inconsistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az értékek nem konzisztensek.</translation>
     </message>
     <message>
         <source>Loading file...</source>
@@ -10478,31 +10538,31 @@ a fájlt a megfelelő program nyissa meg.</translation>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Módosított fájlok</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Cím nélkül</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Módosított fájlok mentése</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlok kiválasztása mentéshez</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztottak mentése</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés nélkül</translation>
     </message>
 </context>
 <context>
@@ -10525,7 +10585,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A &quot;%1&quot; alkatrész-katalógus fájl nem hozható létre.</translation>
     </message>
 </context>
 <context>
@@ -10534,7 +10594,9 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation type="unfinished"></translation>
+        <translation>A keresés eredménye tartalmazza azokat a omponenseket, amelyek
+neve tartalmazza a keresett szöveget. Minden könyvtár
+szerepel a keresésben.</translation>
     </message>
     <message>
         <source>Search string:</source>
@@ -10836,38 +10898,40 @@ Hibák:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Új szimuláció indul: %1, %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>kész.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Szimuláció vége: %1, %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Kész.
+        <translation>Kész.
 </translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba a szimuláció közben: %1. %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Megszakítva.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Kimenet:
+-------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibák:
+-------</translation>
     </message>
 </context>
 <context>
@@ -10962,27 +11026,27 @@ Hibák:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE fájl konvertásása.</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>előfeldolgozó</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE fájl előfeldolgozása.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE előfeldolgozó HIBA</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem menthető az előfeldolgozott &quot;%1&quot; SPICE fájl.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; nem futtatható.</translation>
     </message>
 </context>
 <context>
