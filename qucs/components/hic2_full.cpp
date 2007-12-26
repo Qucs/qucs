@@ -15,11 +15,14 @@ hic2_full::hic2_full()
   Description = QObject::tr ("HICUM Level 2 v2.22 verilog device");
 
   Props.append (new Property ("c10", "2.0E-30", false,
-    QObject::tr ("GICCR constant")));
+    QObject::tr ("GICCR constant")
+    +" ("+QObject::tr ("A^2s")+")"));
   Props.append (new Property ("qp0", "2.0E-14", false,
-    QObject::tr ("Zero-bias hole charge")));
+    QObject::tr ("Zero-bias hole charge")
+    +" ("+QObject::tr ("Coul")+")"));
   Props.append (new Property ("ich", "0.0", false,
-    QObject::tr ("High-current correction for 2D and 3D effects")));
+    QObject::tr ("High-current correction for 2D and 3D effects")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("hfe", "1.0", false,
     QObject::tr ("Emitter minority charge weighting factor in HBTs")));
   Props.append (new Property ("hfc", "1.0", false,
@@ -29,51 +32,65 @@ hic2_full::hic2_full()
   Props.append (new Property ("hjci", "1.0", false,
     QObject::tr ("B-C depletion charge weighting factor in HBTs")));
   Props.append (new Property ("ibeis", "1.0E-18", false,
-    QObject::tr ("Internal B-E saturation current")));
+    QObject::tr ("Internal B-E saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mbei", "1.0", false,
     QObject::tr ("Internal B-E current ideality factor")));
   Props.append (new Property ("ireis", "0.0", false,
-    QObject::tr ("Internal B-E recombination saturation current")));
+    QObject::tr ("Internal B-E recombination saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mrei", "2.0", false,
     QObject::tr ("Internal B-E recombination current ideality factor")));
   Props.append (new Property ("ibeps", "0.0", false,
-    QObject::tr ("Peripheral B-E saturation current")));
+    QObject::tr ("Peripheral B-E saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mbep", "1.0", false,
     QObject::tr ("Peripheral B-E current ideality factor")));
   Props.append (new Property ("ireps", "0.0", false,
-    QObject::tr ("Peripheral B-E recombination saturation current")));
+    QObject::tr ("Peripheral B-E recombination saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mrep", "2.0", false,
     QObject::tr ("Peripheral B-E recombination current ideality factor")));
   Props.append (new Property ("mcf", "1.0", false,
     QObject::tr ("Non-ideality factor for III-V HBTs")));
   Props.append (new Property ("tbhrec", "0.0", false,
-    QObject::tr ("Base current recombination time constant at B-C barrier for high forward injection")));
+    QObject::tr ("Base current recombination time constant at B-C barrier for high forward injection")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("ibcis", "1.0E-16", false,
-    QObject::tr ("Internal B-C saturation current")));
+    QObject::tr ("Internal B-C saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mbci", "1.0", false,
     QObject::tr ("Internal B-C current ideality factor")));
   Props.append (new Property ("ibcxs", "0.0", false,
-    QObject::tr ("External B-C saturation current")));
+    QObject::tr ("External B-C saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("mbcx", "1.0", false,
     QObject::tr ("External B-C current ideality factor")));
   Props.append (new Property ("ibets", "0.0", false,
-    QObject::tr ("B-E tunneling saturation current")));
+    QObject::tr ("B-E tunneling saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("abet", "40", false,
     QObject::tr ("Exponent factor for tunneling current")));
   Props.append (new Property ("tunode", "1", false,
     QObject::tr ("Specifies the base node connection for the tunneling current")));
   Props.append (new Property ("favl", "0.0", false,
-    QObject::tr ("Avalanche current factor")));
+    QObject::tr ("Avalanche current factor")
+    +" ("+QObject::tr ("1/V")+")"));
   Props.append (new Property ("qavl", "0.0", false,
-    QObject::tr ("Exponent factor for avalanche current")));
+    QObject::tr ("Exponent factor for avalanche current")
+    +" ("+QObject::tr ("Coul")+")"));
   Props.append (new Property ("alfav", "0.0", false,
-    QObject::tr ("Relative TC for FAVL")));
+    QObject::tr ("Relative TC for FAVL")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("alqav", "0.0", false,
-    QObject::tr ("Relative TC for QAVL")));
+    QObject::tr ("Relative TC for QAVL")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("rbi0", "0.0", false,
-    QObject::tr ("Zero bias internal base resistance")));
+    QObject::tr ("Zero bias internal base resistance")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("rbx", "0.0", false,
-    QObject::tr ("External base series resistance")));
+    QObject::tr ("External base series resistance")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("fgeo", "0.6557", false,
     QObject::tr ("Factor for geometry dependence of emitter current crowding")));
   Props.append (new Property ("fdqr0", "0.0", false,
@@ -83,97 +100,129 @@ hic2_full::hic2_full()
   Props.append (new Property ("fqi", "1.0", false,
     QObject::tr ("Ration of internal to total minority charge")));
   Props.append (new Property ("re", "0.0", false,
-    QObject::tr ("Emitter series resistance")));
+    QObject::tr ("Emitter series resistance")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("rcx", "0.0", false,
-    QObject::tr ("External collector series resistance")));
+    QObject::tr ("External collector series resistance")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("itss", "0.0", false,
-    QObject::tr ("Substrate transistor transfer saturation current")));
+    QObject::tr ("Substrate transistor transfer saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("msf", "1.0", false,
     QObject::tr ("Forward ideality factor of substrate transfer current")));
   Props.append (new Property ("iscs", "0.0", false,
-    QObject::tr ("C-S diode saturation current")));
+    QObject::tr ("C-S diode saturation current")
+    +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("msc", "1.0", false,
     QObject::tr ("Ideality factor of C-S diode current")));
   Props.append (new Property ("tsf", "0.0", false,
-    QObject::tr ("Transit time for forward operation of substrate transistor")));
+    QObject::tr ("Transit time for forward operation of substrate transistor")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("rsu", "0.0", false,
-    QObject::tr ("Substrate series resistance")));
+    QObject::tr ("Substrate series resistance")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("csu", "0.0", false,
-    QObject::tr ("Substrate shunt capacitance")));
+    QObject::tr ("Substrate shunt capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("cjei0", "1.0E-20", false,
-    QObject::tr ("Internal B-E zero-bias depletion capacitance")));
+    QObject::tr ("Internal B-E zero-bias depletion capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("vdei", "0.9", false,
-    QObject::tr ("Internal B-E built-in potential")));
+    QObject::tr ("Internal B-E built-in potential")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zei", "0.5", false,
     QObject::tr ("Internal B-E grading coefficient")));
   Props.append (new Property ("ajei", "2.5", false,
     QObject::tr ("Ratio of maximum to zero-bias value of internal B-E capacitance")));
   Props.append (new Property ("cjep0", "1.0E-20", false,
-    QObject::tr ("Peripheral B-E zero-bias depletion capacitance")));
+    QObject::tr ("Peripheral B-E zero-bias depletion capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("vdep", "0.9", false,
-    QObject::tr ("Peripheral B-E built-in potential")));
+    QObject::tr ("Peripheral B-E built-in potential")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zep", "0.5", false,
     QObject::tr ("Peripheral B-E grading coefficient")));
   Props.append (new Property ("ajep", "2.5", false,
     QObject::tr ("Ratio of maximum to zero-bias value of peripheral B-E capacitance")));
   Props.append (new Property ("cjci0", "1.0E-20", false,
-    QObject::tr ("Internal B-C zero-bias depletion capacitance")));
+    QObject::tr ("Internal B-C zero-bias depletion capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("vdci", "0.7", false,
-    QObject::tr ("Internal B-C built-in potential")));
+    QObject::tr ("Internal B-C built-in potential")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zci", "0.4", false,
     QObject::tr ("Internal B-C grading coefficient")));
   Props.append (new Property ("vptci", "100", false,
-    QObject::tr ("Internal B-C punch-through voltage")));
+    QObject::tr ("Internal B-C punch-through voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("cjcx0", "1.0E-20", false,
-    QObject::tr ("External B-C zero-bias depletion capacitance")));
+    QObject::tr ("External B-C zero-bias depletion capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("vdcx", "0.7", false,
-    QObject::tr ("External B-C built-in potential")));
+    QObject::tr ("External B-C built-in potential")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zcx", "0.4", false,
     QObject::tr ("External B-C grading coefficient")));
   Props.append (new Property ("vptcx", "100", false,
-    QObject::tr ("External B-C punch-through voltage")));
+    QObject::tr ("External B-C punch-through voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("fbcpar", "0.0", false,
     QObject::tr ("Partitioning factor of parasitic B-C cap")));
   Props.append (new Property ("fbepar", "1.0", false,
     QObject::tr ("Partitioning factor of parasitic B-E cap")));
   Props.append (new Property ("cjs0", "0.0", false,
-    QObject::tr ("C-S zero-bias depletion capacitance")));
+    QObject::tr ("C-S zero-bias depletion capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("vds", "0.6", false,
-    QObject::tr ("C-S built-in potential")));
+    QObject::tr ("C-S built-in potential")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zs", "0.5", false,
     QObject::tr ("C-S grading coefficient")));
   Props.append (new Property ("vpts", "100", false,
-    QObject::tr ("C-S punch-through voltage")));
+    QObject::tr ("C-S punch-through voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("t0", "0.0", false,
-    QObject::tr ("Low current forward transit time at VBC=0V")));
+    QObject::tr ("Low current forward transit time at VBC=0V")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("dt0h", "0.0", false,
-    QObject::tr ("Time constant for base and B-C space charge layer width modulation")));
+    QObject::tr ("Time constant for base and B-C space charge layer width modulation")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("tbvl", "0.0", false,
-    QObject::tr ("Time constant for modelling carrier jam at low VCE")));
+    QObject::tr ("Time constant for modelling carrier jam at low VCE")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("tef0", "0.0", false,
-    QObject::tr ("Neutral emitter storage time")));
+    QObject::tr ("Neutral emitter storage time")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("gtfe", "1.0", false,
     QObject::tr ("Exponent factor for current dependence of neutral emitter storage time")));
   Props.append (new Property ("thcs", "0.0", false,
-    QObject::tr ("Saturation time constant at high current densities")));
+    QObject::tr ("Saturation time constant at high current densities")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("ahc", "0.1", false,
     QObject::tr ("Smoothing factor for current dependence of base and collector transit time")));
   Props.append (new Property ("fthc", "0.0", false,
     QObject::tr ("Partitioning factor for base and collector portion")));
   Props.append (new Property ("rci0", "150", false,
-    QObject::tr ("Internal collector resistance at low electric field")));
+    QObject::tr ("Internal collector resistance at low electric field")
+    +" ("+QObject::tr ("Ohm")+")"));
   Props.append (new Property ("vlim", "0.5", false,
-    QObject::tr ("Voltage separating ohmic and saturation velocity regime")));
+    QObject::tr ("Voltage separating ohmic and saturation velocity regime")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("vces", "0.1", false,
-    QObject::tr ("Internal C-E saturation voltage")));
+    QObject::tr ("Internal C-E saturation voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("vpt", "0.0", false,
-    QObject::tr ("Collector punch-through voltage")));
+    QObject::tr ("Collector punch-through voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("tr", "0.0", false,
-    QObject::tr ("Storage time for inverse operation")));
+    QObject::tr ("Storage time for inverse operation")
+    +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("cbepar", "0.0", false,
-    QObject::tr ("Total parasitic B-E capacitance")));
+    QObject::tr ("Total parasitic B-E capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("cbcpar", "0.0", false,
-    QObject::tr ("Total parasitic B-C capacitance")));
+    QObject::tr ("Total parasitic B-C capacitance")
+    +" ("+QObject::tr ("F")+")"));
   Props.append (new Property ("alqf", "0.0", false,
     QObject::tr ("Factor for additional delay time of minority charge")));
   Props.append (new Property ("alit", "0.0", false,
@@ -191,17 +240,21 @@ hic2_full::hic2_full()
   Props.append (new Property ("latl", "0.0", false,
     QObject::tr ("Scaling factor for collector minority charge in direction of emitter length")));
   Props.append (new Property ("vgb", "1.17", false,
-    QObject::tr ("Bandgap voltage extrapolated to 0 K")));
+    QObject::tr ("Bandgap voltage extrapolated to 0 K")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("alt0", "0.0", false,
-    QObject::tr ("First order relative TC of parameter T0")));
+    QObject::tr ("First order relative TC of parameter T0")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("kt0", "0.0", false,
     QObject::tr ("Second order relative TC of parameter T0")));
   Props.append (new Property ("zetaci", "0.0", false,
     QObject::tr ("Temperature exponent for RCI0")));
   Props.append (new Property ("alvs", "0.0", false,
-    QObject::tr ("Relative TC of saturation drift velocity")));
+    QObject::tr ("Relative TC of saturation drift velocity")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("alces", "0.0", false,
-    QObject::tr ("Relative TC of VCES")));
+    QObject::tr ("Relative TC of VCES")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("zetarbi", "0.0", false,
     QObject::tr ("Temperature exponent of internal base resistance")));
   Props.append (new Property ("zetarbx", "0.0", false,
@@ -213,11 +266,14 @@ hic2_full::hic2_full()
   Props.append (new Property ("zetacx", "1.0", false,
     QObject::tr ("Temperature exponent of mobility in substrate transistor transit time")));
   Props.append (new Property ("vge", "1.17", false,
-    QObject::tr ("Effective emitter bandgap voltage")));
+    QObject::tr ("Effective emitter bandgap voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("vgc", "1.17", false,
-    QObject::tr ("Effective collector bandgap voltage")));
+    QObject::tr ("Effective collector bandgap voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("vgs", "1.17", false,
-    QObject::tr ("Effective substrate bandgap voltage")));
+    QObject::tr ("Effective substrate bandgap voltage")
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("f1vg", "-1.02377e-4", false,
     QObject::tr ("Coefficient K1 in T-dependent band-gap equation")));
   Props.append (new Property ("f2vg", "4.3215e-4", false,
@@ -227,19 +283,24 @@ hic2_full::hic2_full()
   Props.append (new Property ("zetabet", "3.5", false,
     QObject::tr ("Exponent coefficient in B-E junction current temperature dependence")));
   Props.append (new Property ("alb", "0.0", false,
-    QObject::tr ("Relative TC of forward current gain for V2.1 model")));
+    QObject::tr ("Relative TC of forward current gain for V2.1 model")
+    +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("flsh", "0", false,
     QObject::tr ("Flag for turning on and off self-heating effect")));
   Props.append (new Property ("rth", "0.0", false,
-    QObject::tr ("Thermal resistance")));
+    QObject::tr ("Thermal resistance")
+    +" ("+QObject::tr ("K/W")+")"));
   Props.append (new Property ("cth", "0.0", false,
-    QObject::tr ("Thermal capacitance")));
+    QObject::tr ("Thermal capacitance")
+    +" ("+QObject::tr ("J/W")+")"));
   Props.append (new Property ("flcomp", "0.0", false,
     QObject::tr ("Flag for compatibility with v2.1 model (0=v2.1)")));
   Props.append (new Property ("tnom", "27.0", false,
-    QObject::tr ("Temperature at which parameters are specified")));
+    QObject::tr ("Temperature at which parameters are specified")
+    +" ("+QObject::tr ("C")+")"));
   Props.append (new Property ("dt", "0.0", false,
-    QObject::tr ("Temperature change w.r.t. chip temperature for particular transistor")));
+    QObject::tr ("Temperature change w.r.t. chip temperature for particular transistor")
+    +" ("+QObject::tr ("K")+")"));
   Props.append (new Property ("Temp", "27", false,
     QObject::tr ("simulation temperature")));
 
@@ -286,13 +347,8 @@ void hic2_full::createSymbol()
   Lines.append(new Line(-20, 17,-20, 23,QPen(QPen::darkBlue,2)));  
 
   // arrow
-  if(Props.getFirst()->Value == "npn") {
-    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
-  } else {
-    Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
-  }
+  Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
 
   // H
   Lines.append(new Line(-30,-30,-30,-24,QPen(QPen::darkBlue,1)));

@@ -1,3 +1,8 @@
+2007-12-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* hic2_full.cpp (hic2_full): Added units to property descriptions.
+	Fixed default symbol (npn).
+
 2007-12-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* hic2_full.h (class hic2_full): Added HICUM L2 v2.22 component.
