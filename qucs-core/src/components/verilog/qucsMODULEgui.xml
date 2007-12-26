@@ -88,7 +88,6 @@
 <admst:text format="$module::$module()\n{\n"/>
 <admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
 
-<!--This file has been made for bipolar transistors, which is why this is the first line of the module function!-->
 <admst:if test="[$module='hicumL2p1']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
 <admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[npn, pnp]&quot;));\n"/>
@@ -107,14 +106,29 @@
     <admst:text format="&quot;, false,\n    QObject::tr (&quot;"/>
     <admst:choose>
       <admst:when test="attribute[name='info']">
-        <admst:for-each select="attribute[name='info']">
-          <admst:value-of select="value"/>
-	  <admst:text format="%s"/>
-	</admst:for-each>
+        <admst:value-of select="attribute[name='info']/value"/>
+	<admst:text format="%s"/>
+      </admst:when>
+      <admst:when test="attribute[name='desc']">
+        <admst:value-of select="attribute[name='desc']/value"/>
+	<admst:text format="%s"/>
+      </admst:when>
+      <admst:when test="attribute[name='unit']">
+        <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format=" (%s)"/>
       </admst:when>
       <admst:otherwise>-</admst:otherwise>
     </admst:choose>
-    <admst:text format="&quot;)));\n"/>
+    <admst:text format="&quot;)"/>
+    <admst:choose>
+      <admst:when test="attribute[name='unit']">
+        <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format="\n    +&quot; (&quot;"/>
+	<admst:text format="+QObject::tr (&quot;%s&quot;)"/>
+	<admst:text format="+&quot;)&quot;"/>
+      </admst:when>
+    </admst:choose>
+    <admst:text format="));\n"/>
   </admst:if>
 </admst:for-each>
 </admst:for-each>
@@ -136,15 +150,18 @@
 
 <admst:text format="\n"/>
 <admst:text format="Element * $module::info(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
-<admst:text format="{\n  Name = QObject::tr(&quot;npn $module&quot;);\n  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;$module&quot;);\n  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
 <admst:text format="\n  if(getNewOne) return new $module();\n  return 0;\n}\n\n"/>
 
+<admst:if test="[$module='hicumL2p1']">
 <admst:text format="Element * $module::info_pnp(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
-<admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = &quot;pnpsub&quot;;\n\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = (char *) &quot;pnpsub&quot;;\n\n"/>
 <admst:text format="  if(getNewOne)\n  {\n    $module* p = new "/>
 <admst:text format="$module();\n    p->Props.getFirst()->Value = &quot;pnp&quot;;\n    p->recreate(0);\n    return p;\n  }\n  return 0;\n}\n\n"/>
+</admst:if>
 
 <admst:text format="void $module::createSymbol()\n{"/>
+<admst:if test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X']">
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
@@ -181,11 +198,58 @@
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
+</admst:if>
+<admst:if test="[$module='mosfetbsim4']">
+  // normal mosfet
+  Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 11,  0, 30,QPen(QPen::darkBlue,2)));
+
+  // bulk connection
+  Lines.append(new Line(-10,  0, 20,  0,QPen(QPen::darkBlue,2)));
+
+  // channel start and end
+  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
+
+  // source marker
+  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
+
+  // arrow
+  if(Props.first()->Value == "nfet") {
+    Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
+  }
+  else {
+    Lines.append(new Line( -1,  0, -6, -5,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -1,  0, -6,  5,QPen(QPen::darkBlue,2)));
+  }
+
+  // channel depletion / enhancement
+  if((Props.next()->Value.stripWhiteSpace().at(0) == '-') ==
+     (Props.first()->Value == "nfet"))
+    Lines.append(new Line(-10, -8,-10,  8,QPen(QPen::darkBlue,3)));
+  else
+    Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
+
+  // terminal definitions
+  Ports.append(new Port(-30,  0)); // gate
+  Ports.append(new Port(  0,-30)); // drain
+  Ports.append(new Port(  0, 30)); // source
+  Ports.append(new Port( 20,  0)); // bulk
+
+  // relative boundings
+  x1 = -30; y1 = -30;
+  x2 =  30; y2 =  30;
+
+</admst:if>
 <admst:text format="}\n"/>
 </admst:open>
 
-<admst:open file="$module.gui.h">
-/*
+<admst:open file="$module.gui.h">/*
  * $(module).h - device definitions for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
@@ -210,7 +274,10 @@
 </admst:choose>
 <admst:text format="    $module();\n"/>
 <admst:text format="    ~$module() { };\n"/>
-<admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
+<admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
+<admst:if test="[$module='hicumL2p1']">
+<admst:text format="    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
+</admst:if>
 <admst:text format="  protected:\n    void createSymbol();\n};\n\n"/>
 
 <admst:text format="#endif /* $(module)_H */\n"/>
