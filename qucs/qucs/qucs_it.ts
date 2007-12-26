@@ -5550,6 +5550,58 @@ Usage:  qucsedit [-r] file
         <source>HICUM L2 v2.22</source>
         <translation type="unfinished">HICUM L2 v2.22</translation>
     </message>
+    <message>
+        <source>A^2s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished">Ohm</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>K/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>J/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>K</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
