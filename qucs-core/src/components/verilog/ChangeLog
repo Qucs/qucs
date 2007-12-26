@@ -1,3 +1,8 @@
+2007-12-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEgui.xml: Added symbol code for mosfets.  Also
+	evaluating 'unit' descriptions for properties.
+
 2007-12-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsVersion.xml: Implemented 'forloop' translation code.
