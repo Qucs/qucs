@@ -5496,199 +5496,199 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Modularer Operationsverstärker Verilogmodell</translation>
     </message>
     <message>
         <source>Gain bandwidth product (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstärkungs-Bandbreite-Produkt (Hz)</translation>
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Differentielle Leerlaufverstärkung bei DC (dB)</translation>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz des zweiten Pols (Hz)</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangswiderstand (Ohm)</translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>Differentielle Eingangskapazität (F)</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Differentieller Eingangswiderstand (Ohm)</translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Stromversatz am Eingang (A)</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitspunktstrom am Eingang (A)</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungversatz am Eingang (V)</translation>
     </message>
     <message>
         <source>Common-mode rejection ratio at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichtaktunterdrückungsverhältnis bei DC (dB)</translation>
     </message>
     <message>
         <source>Common-mode zero corner frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Grenzfrequenz des Gleichtaktsignals (Hz)</translation>
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flankensteilheit der steigenden Flanke (V/s)</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Flankensteilheit der fallenden Flanke (V/s)</translation>
     </message>
     <message>
         <source>Positive output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Positive Ausgangsspannungsbegrenzung (V)</translation>
     </message>
     <message>
         <source>Negative output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Negative Ausgangsspannungsbegrenzung (V)</translation>
     </message>
     <message>
         <source>Maximum DC output current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximaler DC-Ausgangsstrom (A)</translation>
     </message>
     <message>
         <source>Current limit scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor für die Strombegrenzung</translation>
     </message>
     <message>
         <source>Modular OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Modularer OpAmp</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished">HICUM Level 2 v2.22 Verilogmodell</translation>
+        <translation>HICUM Level 2 v2.22 Verilogmodell</translation>
     </message>
     <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekombinationszeitkonstante des Basisstroms am B-C Übergang für hohe Vorwärtsinjektion</translation>
     </message>
     <message>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Spezifiziert die Basisknotenverbindung für den Tunnelstrom</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufteilungsfaktor der parasitären B-C Kapazität</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufteilungsfaktor der parasitären B-E Kapazität</translation>
     </message>
     <message>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltet den vertikalen NQS-Effekt ein oder aus</translation>
     </message>
     <message>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
+        <translation>Legt fest, wo die 1/f-Rauschquelle platziert wird</translation>
     </message>
     <message>
         <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Effektive Emitterbandabstandsspannung</translation>
     </message>
     <message>
         <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Effektive Kollektorbandabstandsspannung</translation>
     </message>
     <message>
         <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Effektive Substratbandabstandsspannung</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Koeffizient K1 in der T-abhängigen Bandabstandsspannungsgleichung</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Koeffizient K2 in der T-abhängigen Bandabstandsspannungsgleichung</translation>
     </message>
     <message>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentieller Koeffizient für die Temperaturabhängigkeit des Transferstroms</translation>
     </message>
     <message>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentieller Koeffizient für die Temperaturabhängigkeit des B-E Übergangsstroms</translation>
     </message>
     <message>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltet den Selbsterwärmungseffekt ein oder aus</translation>
     </message>
     <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompatibilitätsschalter für das v2.1 Modell (0=v2.1)</translation>
     </message>
     <message>
         <source>HICUM L2 v2.22</source>
-        <translation type="unfinished">HICUM L2 v2.22</translation>
+        <translation>HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>A^2s</source>
-        <translation type="unfinished"></translation>
+        <translation>A²s</translation>
     </message>
     <message>
         <source>Coul</source>
-        <translation type="unfinished"></translation>
+        <translation>Coulomb</translation>
     </message>
     <message>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>1/V</translation>
     </message>
     <message>
         <source>1/K</source>
-        <translation type="unfinished"></translation>
+        <translation>1/K</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished">Ohm</translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <source>K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>K/W</translation>
     </message>
     <message>
         <source>J/W</source>
-        <translation type="unfinished"></translation>
+        <translation>J/W</translation>
     </message>
     <message>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
 </context>
 <context>
