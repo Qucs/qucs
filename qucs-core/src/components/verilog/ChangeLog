@@ -1,3 +1,7 @@
+2007-12-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* analogfunction.xml: Minor code cleanups.
+
 2007-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsMODULEgui.xml: Added symbol code for mosfets.  Also

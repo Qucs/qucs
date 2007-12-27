@@ -24,6 +24,7 @@
 </admst:for-each>
 
 <admst:template match="c:math_h">
+/* math functions and appropriate derivatives */
 inline double _cos(double arg)             { return  cos(arg); }
 inline double _d0_cos(double arg)          { return (-sin(arg)); }
 inline double _sin(double arg)             { return  sin(arg); }
@@ -47,15 +48,15 @@ inline double _d0_logE(double arg)         { return (1.0/arg); }
 inline double _log10(double arg)           { return  log10(arg); }
 inline double _d0_log10(double arg)        { return (1.0/arg/log(10)); }
 inline double _exp(double arg)             { return  exp(arg); }
-inline double _d0_exp(double arg)          { return exp(arg); } /* fixme */
+inline double _d0_exp(double arg)          { return exp(arg); }
 inline double _sqrt(double arg)            { return  sqrt(arg); }
-inline double _d0_sqrt(double arg)         { return (1.0/sqrt(arg)/2.0); } /* fixme */
+inline double _d0_sqrt(double arg)         { return (1.0/sqrt(arg)/2.0); }
 inline double _abs(double arg)             { return  fabs(arg); }
 inline double _d0_abs(double arg)          { return (((arg)&gt;=0)?(+1.0):(-1.0)); }
 
 inline double _hypot(double x,double y)    { return sqrt((x)*(x)+(y)*(y)); }
-inline double _d0_hypot(double x,double y) { return (x)/sqrt((x)*(x)+(y)*(y)); } /* fixme */
-inline double _d1_hypot(double x,double y) { return (y)/sqrt((x)*(x)+(y)*(y)); } /* fixme */
+inline double _d0_hypot(double x,double y) { return (x)/sqrt((x)*(x)+(y)*(y)); }
+inline double _d1_hypot(double x,double y) { return (y)/sqrt((x)*(x)+(y)*(y)); }
 
 inline double _max(double x,double y)      { return ((x)&gt;(y))?(x):(y); }
 inline double _d0_max(double x,double y)   { return ((x)&gt;(y))?1.0:0.0; }
@@ -66,8 +67,8 @@ inline double _d0_min(double x,double y)   { return ((x)&lt;(y))?1.0:0.0; }
 inline double _d1_min(double x,double y)   { return ((x)&lt;(y))?0.0:1.0; }
 
 inline double _pow(double x,double y)      { return pow(x,y); }
-inline double _d0_pow(double x,double y)   { return (x==0.0)?0.0:((y/x)*pow(x,y)); } /* fixme */
-inline double _d1_pow(double x,double y)   { return (x==0.0)?0.0:((log(x)/exp(0.0))*pow(x,y)); } /* fixme */
+inline double _d0_pow(double x,double y)   { return (x==0.0)?0.0:((y/x)*pow(x,y)); }
+inline double _d1_pow(double x,double y)   { return (x==0.0)?0.0:((log(x)/exp(0.0))*pow(x,y)); }
 
 inline double _limexp(double arg)          { return ((arg)&lt;(80))?(exp(arg)):(exp(80)*(1.0+(arg-80))); }
 inline double _d0_limexp(double arg)       { return ((arg)&lt;(80))?(exp(arg)):(exp(80)); }
@@ -718,7 +719,7 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
           <admst:variable name="args" select="$args,%s"/>
         </admst:apply-templates>
       </admst:for-each>
-      <admst:return name="x" value="fprintf($outputfile$args); fprintf($outputfile,&quot;\\n&quot;);\n"/>
+      <admst:return name="x" value="fprintf($outputfile$args); fprintf($outputfile,&quot;\n&quot;);\n"/>
     </admst:when>
     <admst:when test="adms[datatypename='whileloop']">
       <admst:apply-templates select="whileblock" match="af:print:expression">
@@ -826,7 +827,7 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
           <admst:variable name="args" select="$args,%s"/>
         </admst:apply-templates>
       </admst:for-each>
-      <admst:return name="x" value="fprintf($outputfile$args); fprintf($outputfile,&quot;\\n&quot;);\n"/>
+      <admst:return name="x" value="fprintf($outputfile$args); fprintf($outputfile,&quot;\n&quot;);\n"/>
     </admst:when>
     <admst:when test="adms[datatypename='whileloop']">
       <admst:apply-templates select="whileblock" match="af:print:expression">
@@ -912,28 +913,29 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
 <admst:for-each select="/module/analogfunction">
   <admst:value-of select="name"/>
   <admst:variable name="function" select="%s"/>
+  <admst:text format="\n/*\n * analog function: $(function)\n */\n"/>
   <admst:apply-templates select="." match="v2c:converttype"/>
-  <admst:text format=" $(module)_$function ("/>
-  <admst:join select="variable[input='yes']" separator=", ">
+  <admst:text format=" $(module)_$function (\n  "/>
+  <admst:join select="variable[input='yes']" separator=",\n  ">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/>
     <admst:text format=" %s"/>
   </admst:join>
-  <admst:text format=");\n"/>
+  <admst:text format="\n  );\n"/>
   <admst:apply-templates select="." match="v2c:converttype"/>
-  <admst:text format=" $(module)_d_$(function) ("/>
-  <admst:join select="variable[input='yes']" separator=", ">
+  <admst:text format=" $(module)_d_$(function) (\n  "/>
+  <admst:join select="variable[input='yes']" separator=",\n  ">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/>
     <admst:text format=" %s"/>
   </admst:join>
-  <admst:text format=", "/>
-  <admst:join select="variable[input='yes']" separator=", ">
+  <admst:text format=",\n  "/>
+  <admst:join select="variable[input='yes']" separator=",\n  ">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/>
     <admst:text format=" d_%s"/>
   </admst:join>
-  <admst:text format=");\n"/>
+  <admst:text format="\n  );\n"/>
 </admst:for-each>
 </admst:template>
 
@@ -943,7 +945,7 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
   <admst:variable name="globalanalogfunction" select="%p"/>
   <admst:value-of select="name"/>
   <admst:variable name="function" select="%s"/>
-  <admst:text format="\n"/>
+  <admst:text format="\n\n/*\n * analog function: $(function)\n */\n"/>
 <admst:apply-templates select="." match="v2c:converttype"/> $(module)_$function (<admst:join select="variable[input='yes']" separator=", ">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
