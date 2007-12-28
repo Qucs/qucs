@@ -1,7 +1,7 @@
 /*
  * dcsolver.cpp - DC solver class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.cpp,v 1.41 2006/06/23 14:38:00 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.42 2007/12/28 20:08:46 ela Exp $
  *
  */
 
@@ -62,7 +62,7 @@ dcsolver::dcsolver (dcsolver & o) : nasolver<nr_double_t> (o) {
 
 /* This is the DC netlist solver.  It prepares the circuit list and
    solves it then. */
-void dcsolver::solve (void) {
+int dcsolver::solve (void) {
   // fetch simulation properties
   saveOPs |= !strcmp (getPropertyString ("saveOPs"), "yes") ? SAVE_OPS : 0;
   saveOPs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
@@ -163,6 +163,7 @@ void dcsolver::solve (void) {
   saveResults ("V", "I", saveOPs);
 
   solve_post ();
+  return 0;
 }
 
 /* Goes through the list of circuit objects and runs its calcDC()

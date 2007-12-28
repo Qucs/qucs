@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.h,v 1.6 2007/08/23 18:37:18 ela Exp $
+ * $Id: parasweep.h,v 1.7 2007/12/28 20:08:47 ela Exp $
  *
  */
 
@@ -36,9 +36,9 @@ class parasweep : public analysis
   parasweep (char *);
   parasweep (parasweep &);
   ~parasweep ();
-  void initialize (void);
-  void solve (void);
-  void cleanup (void);
+  int  initialize (void);
+  int  solve (void);
+  int  cleanup (void);
   void saveResults (void);
 
  private:

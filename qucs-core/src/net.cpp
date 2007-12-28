@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.34 2007/09/16 16:49:39 ela Exp $
+ * $Id: net.cpp,v 1.35 2007/12/28 20:08:47 ela Exp $
  *
  */
 
@@ -229,7 +229,7 @@ int net::containsAnalysis (analysis * child, int type) {
 
 /* This function runs all registered analyses applied to the current
    netlist. */
-dataset * net::runAnalysis (void) {
+dataset * net::runAnalysis (int &err) {
   dataset * out = new dataset ();
   analysis * a;
   int i;
@@ -239,7 +239,7 @@ dataset * net::runAnalysis (void) {
     a = actions->get (i);
     a->setNet (this);
     a->setData (out);
-    a->initialize ();
+    err |= a->initialize ();
   }
 
   // re-order analyses
@@ -249,13 +249,13 @@ dataset * net::runAnalysis (void) {
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
     a->getEnv()->runSolver ();
-    a->solve ();
+    err |= a->solve ();
   }
 
   // cleanup analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    a->cleanup ();
+    err |= a->cleanup ();
   }
 
   return out;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.24 2007/03/06 18:21:31 ela Exp $
+ * $Id: trsolver.h,v 1.25 2007/12/28 20:08:48 ela Exp $
  *
  */
 
@@ -39,7 +39,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   trsolver (char *);
   trsolver (trsolver &);
   ~trsolver ();
-  void solve (void);
+  int  solve (void);
   int  predictor (void);
   int  corrector (void);
   void nextStates (void);

@@ -52,3 +52,9 @@ Bertrand Ardouin <ardouin@xmodtech.com> for allowing Helene to spend
 
 Bastien Roucaries <roucaries.bastien@gmail.com> for the bondwire model
 	implementations.
+
+Mike Brinson <mbrin72043@yahoo.co.uk> for testing the EDD component
+	during his modelling activities.  Also for the Verilog-A
+	implementation of the modular operational amplifier.  Thanks for
+	testing the SPICE to qucs converter and documenting the
+	compatibilty levels.

@@ -1,7 +1,7 @@
 /*
  * hbsolver.h - harmonic balance solver class definitions
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.13 2006/04/28 07:08:26 raimi Exp $
+ * $Id: hbsolver.h,v 1.14 2007/12/28 20:08:47 ela Exp $
  *
  */
 
@@ -39,7 +39,7 @@ class hbsolver : public analysis
   hbsolver (char *);
   hbsolver (hbsolver &);
   ~hbsolver ();
-  void solve (void);
+  int  solve (void);
   void initHB (void);
   void initDC (void);
   static void calc (hbsolver *);
