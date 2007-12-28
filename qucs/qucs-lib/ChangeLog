@@ -1,3 +1,7 @@
+2007-12-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/JFETs.lib: Added loads of new jfet models.
+
 2007-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Transistors.lib: Added some more transistor models.
