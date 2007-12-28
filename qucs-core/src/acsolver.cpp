@@ -1,7 +1,7 @@
 /*
  * acsolver.cpp - AC solver class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.16 2005-10-24 09:10:25 raimi Exp $
+ * $Id: acsolver.cpp,v 1.17 2007-12-28 20:08:46 ela Exp $
  *
  */
 
@@ -72,7 +72,7 @@ acsolver::acsolver (acsolver & o) : nasolver<complex> (o) {
 
 /* This is the AC netlist solver.  It prepares the circuit list for
    each requested frequency and solves it then. */
-void acsolver::solve (void) {
+int acsolver::solve (void) {
   runs++;
 
   // run additional noise analysis ?
@@ -111,6 +111,7 @@ void acsolver::solve (void) {
   }
   solve_post ();
   logprogressclear (40);
+  return 0;
 }
 
 /* Goes through the list of circuit objects and runs its calcAC()

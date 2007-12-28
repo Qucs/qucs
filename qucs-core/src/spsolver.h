@@ -1,7 +1,7 @@
 /*
  * spsolver.h - S-parameter solver class definitions
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.h,v 1.13 2006-01-30 07:45:34 raimi Exp $
+ * $Id: spsolver.h,v 1.14 2007-12-28 20:08:47 ela Exp $
  *
  */
 
@@ -43,7 +43,7 @@ class spsolver : public analysis
   void calc (nr_double_t);
   void init (void);
   void reduce (void);
-  void solve (void);
+  int  solve (void);
   void insertConnections (void);
   void insertDifferentialPorts (void);
   void insertTee (node **, char *);

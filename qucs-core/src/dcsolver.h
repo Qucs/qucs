@@ -1,7 +1,7 @@
 /*
  * dcsolver.h - DC solver class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.h,v 1.13 2006-05-03 09:43:56 raimi Exp $
+ * $Id: dcsolver.h,v 1.14 2007-12-28 20:08:47 ela Exp $
  *
  */
 
@@ -34,7 +34,7 @@ class dcsolver : public nasolver<nr_double_t>
   dcsolver (char *);
   dcsolver (dcsolver &);
   ~dcsolver ();
-  void solve (void);
+  int  solve (void);
   static void calc (dcsolver *);
   void init (void);
   void restart (void);

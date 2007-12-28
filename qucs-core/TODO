@@ -43,7 +43,8 @@ unfixed) have a look at the file BUGS.
   and, or, xor, etc. in the equation solver.
 - Support for binary (digital simulation) data in datasets.
 	- Implement open/short in S-parameter component during DC.
-- Support for touchstone as an export file format in the Qucs Converter.
+	- Support for touchstone as an export file format in the
+	  Qucs Converter.
 - Translate switches in spice netlists in the netlist converter.
 	- Support for equation defined voltage/current sources or
 	  components.
@@ -133,6 +134,7 @@ unfixed) have a look at the file BUGS.
 - Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.
 - MESFET (Curtize, Staatz) implementations.
 - BSIMv3 implementation.
+- BSIMv4 implementation.
 - Harmonic balance simulation.
 	- Transient simulation.
 	- AC noise analysis.

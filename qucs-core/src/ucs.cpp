@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.29 2007-09-19 22:24:10 ela Exp $
+ * $Id: ucs.cpp,v 1.30 2007-12-28 20:08:48 ela Exp $
  *
  */
 
@@ -139,7 +139,9 @@ int main (int argc, char ** argv) {
   subnet->insertCircuit (gnd);
 
   // analyse the netlist
-  out = subnet->runAnalysis ();
+  int err = 0;
+  out = subnet->runAnalysis (err);
+  ret |= err;
 
   // evaluate output dataset
   ret |= root->equationSolver (out);

@@ -1,3 +1,12 @@
+2007-12-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* ucs.cpp (main): Evaluating error codes from analyses.  Changed
+	solve() callback for each analysis to be able to return an error
+	code.
+
+	* trsolver.cpp: Avoiding "jacobian singular at t = nan" error
+	message.
+
 2007-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* hash.h (class hashentry): Fixed compile error for "gcc version

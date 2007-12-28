@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.51 2007-03-13 19:39:22 ela Exp $
+ * $Id: trsolver.cpp,v 1.52 2007-12-28 20:08:47 ela Exp $
  *
  */
 
@@ -30,6 +30,10 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
 
 #include "object.h"
 #include "logging.h"
@@ -44,6 +48,10 @@
 #include "transient.h"
 #include "exception.h"
 #include "exceptionstack.h"
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation
@@ -154,7 +162,7 @@ int trsolver::dcAnalysis (void) {
 
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
-void trsolver::solve (void) {
+int trsolver::solve (void) {
   nr_double_t time, saveCurrent;
   int error = 0, convError = 0;
   char * solver = getPropertyString ("Solver");
@@ -187,7 +195,7 @@ void trsolver::solve (void) {
   if (initialDC) {
     error = dcAnalysis ();
     if (error)
-      return;
+      return -1;
   }
 
   // Initialize transient analysis.
@@ -282,7 +290,7 @@ void trsolver::solve (void) {
 	error++;
 	break;
       }
-      if (error) return;
+      if (error) return -1;
       if (rejected) continue;
 
       // check whether Jacobian matrix is still non-singular
@@ -290,7 +298,7 @@ void trsolver::solve (void) {
 	logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
 		  "aborting %s analysis\n", getName (), (double) current,
 		  getDescription ());
-	return;
+	return -1;
       }
 
       // Update statistics and no more damped Newton-Raphson.
@@ -348,6 +356,7 @@ void trsolver::solve (void) {
 
   // cleanup
   deinitTR ();
+  return 0;
 }
 
 // The function initializes the history.
@@ -765,7 +774,7 @@ nr_double_t trsolver::checkDelta (void) {
     }
 
     dif = x->get (r) - SOL(0)->get (r);
-    if (dif != 0) {
+    if (isfinite (dif) && dif != 0) {
       // use Milne' estimate for the local truncation error
       rel = MAX (abs (x->get (r)), abs (SOL(0)->get (r)));
       tol = LTEreltol * rel + LTEabstol;

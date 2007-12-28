@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.14 2007-08-23 18:37:18 ela Exp $
+ * $Id: parasweep.cpp,v 1.15 2007-12-28 20:08:47 ela Exp $
  *
  */
 
@@ -76,7 +76,7 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 #define E(equ) ((eqn::node *) (equ))
 
 /* Initializes the parameter sweep. */
-void parasweep::initialize (void) {
+int parasweep::initialize (void) {
   char * n;
   constant * val;
 
@@ -114,10 +114,11 @@ void parasweep::initialize (void) {
     analysis * a = actions->get (k);
     a->initialize ();
   }
+  return 0;
 }
 
 /* Cleans the parameter sweep up. */
-void parasweep::cleanup (void) {
+int parasweep::cleanup (void) {
 
   // remove additional equation from equation checker
   if (eqn) {
@@ -131,10 +132,12 @@ void parasweep::cleanup (void) {
     analysis * a = actions->get (k);
     a->cleanup ();
   }
+  return 0;
 }
 
 /* This is the parameter sweep solver. */
-void parasweep::solve (void) {
+int parasweep::solve (void) {
+  int err = 0;
   char * n;
   runs++;
 
@@ -157,7 +160,7 @@ void parasweep::solve (void) {
 #endif
     for (int k = 0; k < actions->length (); k++) {
       analysis * a = actions->get (k);
-      a->solve ();
+      err |= a->solve ();
       // assign variable dataset dependencies to last order analyses
       ptrlist<analysis> * last = subnet->findLastOrderChildren (this);
       for (ptrlistiterator<analysis> it (*last); *it; ++it) {
@@ -165,6 +168,7 @@ void parasweep::solve (void) {
       }
     }
   }
+  return err;
 }
 
 /* This function saves the results of a single solve() functionality

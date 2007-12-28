@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.h,v 1.12 2007-09-16 16:49:37 ela Exp $
+ * $Id: analysis.h,v 1.13 2007-12-28 20:08:46 ela Exp $
  *
  */
 
@@ -54,9 +54,9 @@ class analysis : public object
   analysis (char *);
   analysis (analysis &);
   ~analysis ();
-  virtual void solve (void) { }
-  virtual void initialize (void) { }
-  virtual void cleanup (void) { }
+  virtual int solve (void) { return 0; }
+  virtual int initialize (void) { return 0; }
+  virtual int cleanup (void) { return 0; }
   dataset * getData (void) { return data; }
   void setData (dataset * d) { data = d; }
   net * getNet (void) { return subnet; }

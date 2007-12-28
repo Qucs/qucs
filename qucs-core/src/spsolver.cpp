@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.47 2007-03-01 09:15:19 ela Exp $
+ * $Id: spsolver.cpp,v 1.48 2007-12-28 20:08:47 ela Exp $
  *
  */
 
@@ -561,7 +561,7 @@ void spsolver::init (void) {
 
 /* This is the netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
-void spsolver::solve (void) {
+int spsolver::solve (void) {
   nr_double_t freq;
   int ports;
   runs++;
@@ -623,6 +623,7 @@ void spsolver::solve (void) {
 #if SORTED_LIST
   delete nlist; nlist = NULL;
 #endif
+  return 0;
 }
 
 /* The function goes through the list of circuit objects and creates
