@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.h,v 1.13 2007-12-28 20:08:46 ela Exp $
+ * $Id: analysis.h,v 1.14 2007-12-30 13:05:16 ela Exp $
  *
  */
 
@@ -71,6 +71,8 @@ class analysis : public object
   void setType (int t) { type = t; }
   sweep * createSweep (const char *);
   void saveVariable (const char *, complex, vector *);
+  bool getProgress (void) { return progress; }
+  void setProgress (int p) { progress = p; }
 
  protected:
   int runs;
@@ -79,6 +81,7 @@ class analysis : public object
   dataset * data;
   environment * env;
   ptrlist<analysis> * actions;
+  bool progress;
 };
 
 #endif /* __ANALYSIS_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.17 2007-12-28 20:08:46 ela Exp $
+ * $Id: acsolver.cpp,v 1.18 2007-12-30 13:05:16 ela Exp $
  *
  */
 
@@ -92,7 +92,7 @@ int acsolver::solve (void) {
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
-    logprogressbar (i, swp->getSize (), 40);
+    if (progress) logprogressbar (i, swp->getSize (), 40);
 
 #if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for f = %e\n",
@@ -110,7 +110,7 @@ int acsolver::solve (void) {
     saveAllResults (freq);
   }
   solve_post ();
-  logprogressclear (40);
+  if (progress) logprogressclear (40);
   return 0;
 }
 

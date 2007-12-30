@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.15 2007-12-28 20:08:47 ela Exp $
+ * $Id: parasweep.cpp,v 1.16 2007-12-30 13:05:16 ela Exp $
  *
  */
 
@@ -113,6 +113,7 @@ int parasweep::initialize (void) {
   for (int k = 0; actions && k < actions->length (); k++) {
     analysis * a = actions->get (k);
     a->initialize ();
+    a->setProgress (false);
   }
   return 0;
 }
@@ -147,7 +148,10 @@ int parasweep::solve (void) {
   // run the parameter sweep
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
+    // obtain next sweep point
     nr_double_t v = swp->next ();
+    // display progress bar if requested
+    if (progress) logprogressbar (i, swp->getSize (), 40);
     // update environment and equation checker, then run solver
     env->setDoubleConstant (n, v);
     env->setDouble (n, v);
@@ -168,6 +172,8 @@ int parasweep::solve (void) {
       }
     }
   }
+  // clear progress bar
+  if (progress) logprogressclear (40);
   return err;
 }
 
