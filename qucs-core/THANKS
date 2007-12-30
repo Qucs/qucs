@@ -35,7 +35,7 @@ Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
 	for applying patches to CVS during my time in Munich.  Also for
 	documenting the grammars used in Qucs's data files.
 
-Gunther Kraut <gn.kraut@t-online.de> for his contributions to the equation
+Gunther Kraut <gn.kraut@online.de> for his contributions to the equation
 	solver evaluation.  Also for providing the exponential current
 	and voltage source code as well as the file based source.
 

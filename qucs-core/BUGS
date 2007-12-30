@@ -62,3 +62,11 @@ Description: AC output resistance of the BJT model is much too high.
 Fix:         Use conservative small signal equivalent circuit description
 	     instead of the 'NEWSGP' which works nice for DC calculation
 	     anyway.
+
+Bug:         B0005
+From:	     Stefan Jahn <stefan@lkcc.org>
+State:       unfixed
+Date:	     2007-12-30
+Description: Empty subcircuit definitions in conjunction with duplicate
+	     nodes in the nodelist (shorted nodes) cause the simulator
+	     to withdraw the netlist.
