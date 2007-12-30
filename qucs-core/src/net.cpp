@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.35 2007/12/28 20:08:47 ela Exp $
+ * $Id: net.cpp,v 1.36 2007/12/30 13:05:16 ela Exp $
  *
  */
 
@@ -234,16 +234,21 @@ dataset * net::runAnalysis (int &err) {
   analysis * a;
   int i;
 
-  // apply some data to all analyses and initialize them
+  // apply some data to all analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
     a->setNet (this);
     a->setData (out);
-    err |= a->initialize ();
   }
 
   // re-order analyses
   orderAnalysis ();
+
+  // initialize analyses
+  for (i = 0; i < actions->length (); i++) {
+    a = actions->get (i);
+    err |= a->initialize ();
+  }
 
   // solve the analyses
   for (i = 0; i < actions->length (); i++) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.52 2007/12/28 20:08:47 ela Exp $
+ * $Id: trsolver.cpp,v 1.53 2007/12/30 13:05:17 ela Exp $
  *
  */
 
@@ -224,7 +224,7 @@ int trsolver::solve (void) {
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
     time = swp->next ();
-    logprogressbar (i, swp->getSize (), 40);
+    if (progress) logprogressbar (i, swp->getSize (), 40);
 
 #if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
@@ -347,7 +347,7 @@ int trsolver::solve (void) {
 #endif
   }
   solve_post ();
-  logprogressclear (40);
+  if (progress) logprogressclear (40);
   logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
 	    getName (), (double) (saveCurrent / statSteps), statRejected);
   logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
@@ -774,7 +774,7 @@ nr_double_t trsolver::checkDelta (void) {
     }
 
     dif = x->get (r) - SOL(0)->get (r);
-    if (isfinite (dif) && dif != 0) {
+    if (finite (dif) && dif != 0) {
       // use Milne' estimate for the local truncation error
       rel = MAX (abs (x->get (r)), abs (SOL(0)->get (r)));
       tol = LTEreltol * rel + LTEabstol;
