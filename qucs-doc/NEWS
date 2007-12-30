@@ -26,10 +26,12 @@ files.
 Version 0.0.13
 --------------
 
+ * new report about the Verilog-A Modular OpAmp
+ * fixed harmonic balance descriptions
+
 Version 0.0.12
 --------------
 
- * new report about the Verilog-A Modular OpAmp
  * report about Curtice Level 1 MESFET modelling
  * new tutorial about component, compact device and circuit modelling
    using symbolic equations
