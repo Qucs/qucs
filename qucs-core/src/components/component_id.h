@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.45 2007/12/18 21:15:47 ela Exp $
+ * $Id: component_id.h,v 1.46 2008/01/02 20:43:08 ela Exp $
  *
  */
 
@@ -119,6 +119,9 @@ enum circuit_type {
   CIR_BJT,
   CIR_MOSFET,
   CIR_EQNDEFINED,
+  CIR_DIAC,
+  CIR_TRIAC,
+  CIR_THYRISTOR,
 
   // digital components
   CIR_INVERTER,
