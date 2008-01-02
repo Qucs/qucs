@@ -1,3 +1,8 @@
+2008-01-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_touchstone.l: Fixed bug in touchstone scanner.  Making the
+	'R' in the option line case insensitive.
+
 2007-12-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* parasweep.cpp: Allow parameter sweeps to display their own

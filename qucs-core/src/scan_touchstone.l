@@ -4,7 +4,7 @@
 /*
  * scan_touchstone.l - scanner for Touchstone files
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_touchstone.l,v 1.5 2005-06-02 18:17:51 raimi Exp $
+ * $Id: scan_touchstone.l,v 1.6 2008-01-02 17:51:56 ela Exp $
  *
  */
 
@@ -66,7 +66,7 @@ SPACE    [ \t]
 
 %%
 
-<INITIAL>R     { /* pass the 'R' to the parser */ return 'R'; }
+<INITIAL>[Rr]  { /* pass the 'R' to the parser */ return 'R'; }
 <INITIAL>^#    { /* pass the leading '#' to the parser */ return '#'; }
 <INITIAL>\r?\n { /* detect end of line */ return Eol; }
 
