@@ -1,3 +1,8 @@
+2008-01-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* triac.cpp (Triac), thyristor.cpp (Thyristor), diac.cpp (Diac):
+	Added new components.
+
 2007-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* hic2_full.cpp (hic2_full): Added units to property descriptions.

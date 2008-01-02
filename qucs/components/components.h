@@ -124,6 +124,9 @@
 #include "jk_flipflop.h"
 #include "vhdlfile.h"
 #include "verilogfile.h"
+#include "diac.h"
+#include "triac.h"
+#include "thyristor.h"
 
 #include "hicumL2p1.h"
 #include "HBT_X.h"
