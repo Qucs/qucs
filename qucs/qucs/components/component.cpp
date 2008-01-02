@@ -1497,6 +1497,8 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "LIN") c = new TLine();
         else if(cstr == "LIN4P") c = new TLine_4Port();
         else if(cstr == "WIST") c = new TwistedPair();
+        else if(cstr == "riac") c = new Triac();
+        else if(cstr == "hyristor") c = new Thyristor();
         break;
   case 's' : if(cstr == "Tr") c = new symTrafo();
         break;
@@ -1519,6 +1521,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "iode") c = new Diode();
 	else if(cstr == "igiSource") c = new Digi_Source();
 	else if(cstr == "FF") c = new D_FlipFlop();
+	else if(cstr == "iac") c = new Diac();
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
         else if(cstr == "JT") c = new BJTsub();
