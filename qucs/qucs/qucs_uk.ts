@@ -5290,6 +5290,54 @@ Usage:  qucsedit [-r] file
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>diac (bidirectional trigger diode)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(bidirectional) breakover voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(bidirectional) breakover current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>silicon controlled rectifier (SCR)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>breakover voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate trigger current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thyristor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>triac (bidirectional thyristor)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(bidirectional) gate trigger current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triac</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

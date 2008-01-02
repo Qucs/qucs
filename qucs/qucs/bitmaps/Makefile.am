@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   dflipflop.png jkflipflop.png coupler.png coaxial.png am_mod.png pm_mod.png  \
   vhdlfile.png subcircuit.png optimize.png tline_4port.png twistedpair.png    \
   bondwire.png npn_therm.png npnsub_therm.png iexp.png vexp.png edd.png       \
-  vfile.png ifile.png mod_amp.png
+  vfile.png ifile.png mod_amp.png thyristor.png triac.png diac.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
