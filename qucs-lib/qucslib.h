@@ -55,6 +55,7 @@ public:
   QListBox     *CompList;
   QStringList   LibraryComps;
   QComboBox    *Library;
+  QString       DefaultSymbol;
 
 private slots:
   void slotAbout();
@@ -76,7 +77,6 @@ private:
   SymbolWidget *Symbol;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
-  QString       DefaultSymbol;
 
   QDir QucsHomeDir;  // Qucs user directory where all projects are located
 };

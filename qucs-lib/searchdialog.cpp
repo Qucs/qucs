@@ -125,6 +125,7 @@ void SearchDialog::slotSearch()
       // does search criterion match ?
       if(CompName.find(SearchEdit->text()) >= 0) {
         if(!findComponent) {
+          ParentDialog->DefaultSymbol = "";
           ParentDialog->CompList->clear();
           ParentDialog->LibraryComps.clear();
         }
