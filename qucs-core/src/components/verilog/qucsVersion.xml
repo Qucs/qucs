@@ -1933,8 +1933,8 @@
 <!-- simulator settings -->
 <admst:value-to select="/simulator/package_name" value="qucs"/>
 <admst:value-to select="/simulator/package_tarname" value="qucs"/>
-<admst:value-to select="/simulator/package_version" value="0.0.13"/>
-<admst:value-to select="/simulator/package_string" value="qucs 0.0.13"/>
+<admst:value-to select="/simulator/package_version" value="0.0.14"/>
+<admst:value-to select="/simulator/package_string" value="qucs 0.0.14"/>
 <admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
 
 <admst:for-each select="/module">
@@ -1997,6 +1997,12 @@
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
         <admst:value-to select="value" value="HBT_X"/>
+      </admst:new>
+    </admst:when>
+    <admst:when test="[name='logamp']">
+      <admst:new datatype="attribute" arguments="qucsname">
+        <admst:push into="../attribute" select="." onduplicate="abort"/>
+        <admst:value-to select="value" value="logamp"/>
       </admst:new>
     </admst:when>
     <admst:otherwise>
@@ -2066,6 +2072,8 @@
     <admst:when test="[name='mosfetbsim4']">
     </admst:when>
     <admst:when test="[name='mod_amp']">
+    </admst:when>
+    <admst:when test="[name='logamp']">
     </admst:when>
     <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='bjt504_va']">
       <admst:if test="[nilled(variable[name='npn'])]">
@@ -2162,7 +2170,8 @@
 
     <admst:otherwise>
       <admst:value-of select="name"/>
-      <admst:fatal format="%s: device not handled by the adms qucs interface\n"/>
+      <admst:warning format="%s: device not handled by the adms qucs interface\n"/>
+      <admst:warning format="please ensure extra code to be added to the interface\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:for-each>
