@@ -1,3 +1,11 @@
+2008-01-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsVersion.xml: Allowing none-registered/handled devices to be
+	used with the scripts without initially modifying them.
+
+	* qucsMODULEgui.xml: Added example symbol code for amplifiers and
+	diodes.
+
 2007-12-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* analogfunction.xml: Minor code cleanups.
