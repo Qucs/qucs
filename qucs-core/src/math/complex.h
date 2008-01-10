@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.1 2008/01/10 20:00:05 ela Exp $
+ * $Id: complex.h,v 1.2 2008/01/10 22:34:03 ela Exp $
  *
  */
 
@@ -40,7 +40,7 @@ nr_double_t   sign (const nr_double_t);
 nr_double_t   sinc (const nr_double_t);
 nr_double_t limexp (const nr_double_t);
 
-#if 0//#ifndef HAVE_COMPLEX
+#ifndef HAVE_COMPLEX
 #include "cmplx.h"
 typedef cmplx nr_complex_t;
 #elif defined HAVE_TR1_COMPLEX
