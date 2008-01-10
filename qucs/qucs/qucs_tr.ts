@@ -310,11 +310,11 @@
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog kütükleri</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CVS kütükleri</translation>
     </message>
 </context>
 <context>
@@ -587,15 +587,15 @@
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished">VHDL</translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürekli (analog)</translation>
     </message>
 </context>
 <context>
@@ -982,15 +982,15 @@
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>iptal</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: Çevirici açılamıyor !</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CVS kütükleri</translation>
     </message>
 </context>
 <context>
@@ -1162,23 +1162,23 @@ Kütüphane basarıyla olusturuldu.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüphane başarılı bir biçimde oluşturuldu.</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Tümünü Seç</translation>
+        <translation>Tümünü Seç</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seçme</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüphane altdizini yeniden isimlendirilemiyor!</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; kütüphane altdizinini silmek için izin yok.</translation>
     </message>
 </context>
 <context>
@@ -2229,7 +2229,7 @@ Bilinmeyen alan!</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation>collektör omik (Shotky etkisi yok) direnç</translation>
+        <translation>Kollektör omik (Shotky etkisi yok) direnç</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
@@ -4125,7 +4125,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT&apos; ler için B-C arınmış bölge yükü ağırlık çarpanı</translation>
     </message>
     <message>
         <source>Internal B-E saturation current</source>
@@ -4137,31 +4137,31 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E yeniden birleşme doyum akımı</translation>
     </message>
     <message>
         <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E yeniden birleşme doyum akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E doyum akımı</translation>
     </message>
     <message>
         <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E doyum akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E yeniden birleşme doyum akımı</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E yeniden birleşme doyum akımı mükemmellik çarpanı</translation>
     </message>
     <message>
         <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>III-V HBT&apos; ler için mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>Internal B-C saturation current</source>
@@ -4213,19 +4213,19 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör akımı kalabalıklaştırma&apos; nın geometriye bağımlılık çarpanı</translation>
     </message>
     <message>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E ve B-C uzay yük tabakası tarafından gerçekleştirilen &quot;değiştirme&quot; (modülasyon) olayı için düzeltme çarpanı</translation>
     </message>
     <message>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>HF paralel&apos; in toplam etkin iç sığa&apos; ya oranı (yanal NQS etkisi)</translation>
     </message>
     <message>
         <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>İç azınlık yükün toplama oranı</translation>
     </message>
     <message>
         <source>Emitter series resistance</source>
@@ -4237,11 +4237,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-tabaka transistör geçiş doyum akımı</translation>
     </message>
     <message>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri mükemmellik çarpanının alt-tabaka geçiş akımı</translation>
     </message>
     <message>
         <source>C-S diode saturation current</source>
@@ -4253,7 +4253,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-tabaka transistörünün ileri çalışma durumundaki geçiş zamanı</translation>
     </message>
     <message>
         <source>Substrate series resistance</source>
@@ -4277,27 +4277,27 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-E sığasının en yüksek değerinin sıfır kutuplama durumundaki değerine oranı</translation>
     </message>
     <message>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E eklemi iç gerilimi</translation>
     </message>
     <message>
         <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E değişim katsayısı</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Çevresel B-E eklem sığasının en yüksek değerinin sıfır kutuplama durumundaki değerine oranı</translation>
     </message>
     <message>
         <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>Internal B-C built-in potential</source>
@@ -4309,23 +4309,23 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B-C eklemi &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C eklemi yerleşik (built-in) gerilimi</translation>
     </message>
     <message>
         <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C eklemi değişim katsayısı</translation>
     </message>
     <message>
         <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C eklemi &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
@@ -4341,27 +4341,27 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
+        <translation>VBC=0V durumunda düşük akım ileri geçiş zamanı</translation>
     </message>
     <message>
         <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz ve B-C uzay yük katmanı en değişimi (genişlik modülasyonu) için zaman sabiti</translation>
     </message>
     <message>
         <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
+        <translation>Düşük VCE durumunda taşıyıcı tıkanıklığını modellemek için kullanılan zaman sabiti</translation>
     </message>
     <message>
         <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarafsız (nötr) emetör saklama (depolama) zamanı</translation>
     </message>
     <message>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarafsız (nötr) emetör saklama (depolama) zamanının akıma bağlılığı için üstel çarpan</translation>
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
@@ -4369,87 +4369,87 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz ve kollektör geçiş zamanlarının akıma bağımlılığı için yumuşatma çarpanı</translation>
     </message>
     <message>
         <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz ve kollektör kısımları için kısımlara ayırma çarpan</translation>
     </message>
     <message>
         <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
+        <translation>Düşük elektrik alanda iç kollektör direnci</translation>
     </message>
     <message>
         <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
+        <translation>Omik ve doyum hız rejimlerini ayıran gerilim değeri</translation>
     </message>
     <message>
         <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>İç C-E doyum akımı</translation>
     </message>
     <message>
         <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollektör &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters-çalışma için saklama zamanı</translation>
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam asalak B-E eklem sığası</translation>
     </message>
     <message>
         <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam asalak B-C eklem sığası</translation>
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>Azınlık yükü ek gecikme zaman çarpanı</translation>
     </message>
     <message>
         <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş akımı ek gecikme zaman çarpanı</translation>
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürültü sabiti</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürültüsü üstel çarpanı</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör genişliği doğrultusundaki kollektör azınlık yükü büyüklük çarpanı</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör uzunluğu doğrultusundaki kollektör azınlık yükü büyüklük çarpanı</translation>
     </message>
     <message>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
+        <translation>0 kelvinde hesaplanmış (ekstrapolasyon) bant genişliği (bandgap) gerilimi</translation>
     </message>
     <message>
         <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>T0 değişkeni için birinci-derece göreceli sıcaklık katsayısı (TC)</translation>
     </message>
     <message>
         <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>T0 değişkeni için ikinci-derece göreceli sıcaklık katsayısı (TC)</translation>
     </message>
     <message>
         <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
+        <translation>RCI0 için sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-tabaka transistörü geçiş zamanı yer değiştirme sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Doyum durumunda, sürüklenme hızı göreceli sıcaklık katsayısı (TC)</translation>
     </message>
     <message>
         <source>Relative TC of VCES</source>
@@ -4457,23 +4457,23 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç baz direncinin sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış baz direncinin sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış kollektör direnci sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör direnci sıcaklık üsteli</translation>
     </message>
     <message>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
+        <translation>V2.1 modeli için ileri akım kazncı göreceli sıcaklık sabiti</translation>
     </message>
     <message>
         <source>Thermal resistance</source>
@@ -4485,11 +4485,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenlerin tanımlandığı sıcaklıik</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperature change w.r.t. chip temperature for particular transistor</translation>
     </message>
     <message>
         <source>simulation temperature</source>
@@ -4533,7 +4533,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>İleri ısısal etkinleştirme enerjisi, V, (0 == ısısal sıcaklık bağımlılığını kapatır)</translation>
+        <translation>İleri ısısal etkinleştirme enerjisi, V, (0 == sıcaklık bağımlılığını kapatır)</translation>
     </message>
     <message>
         <source>B-E leakage saturation current density, A/um^2</source>
@@ -4545,59 +4545,59 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E kaçak diyodunun sınırlama direnci, Ohm</translation>
     </message>
     <message>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E kaçağı ısısal etkinleştirme enerjisi, V, (0==sıcaklık bağımlılığını kaldırır)</translation>
     </message>
     <message>
         <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>2. B-E kaçak doyum akım yoğunluğu, A/um^2</translation>
     </message>
     <message>
         <source>2nd B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>2. B-E kaçak yayım sabiti</translation>
     </message>
     <message>
         <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E kaçak diyodunun 2. sınırlama direnci, Ohm</translation>
     </message>
     <message>
         <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>2. B-E kaçak ısısal etkinleştirme enerjisi, V, (0==sıcaklık bağımlılığını kaldırır)</translation>
     </message>
     <message>
         <source>Reverse saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters doyum akımı yoğunluğu, A/um^2</translation>
     </message>
     <message>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters akım yayılım katsayısı</translation>
     </message>
     <message>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters ısısal etkinleştirme enerjisi, V, (0 == sıcaklık bağımlılığını kapatır)</translation>
     </message>
     <message>
         <source>Fraction of Cjc that goes to internal base node</source>
-        <translation type="unfinished"></translation>
+        <translation>İç baz düğümüne sayılan Cjc kesri</translation>
     </message>
     <message>
         <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C kaçak doyum akım yoğunluğu, A/um^2 (0==diyodu kapatır)</translation>
     </message>
     <message>
         <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C kaçak yayım sabiti (0==diyodu kapatır)</translation>
     </message>
     <message>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C kaçak diyodunun sınırlama direnci, Ohm</translation>
     </message>
     <message>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C kaçağı ısısal etkinleştirme enerjisi, V, (0==sıcaklık bağımlılığını kaldırır)</translation>
     </message>
     <message>
         <source>Ideal forward beta</source>
@@ -4605,7 +4605,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>ileri akım kazancı sıcaklık sabiti, -1/K,  (0==sıcaklık bağımlılığını kaldırır)</translation>
     </message>
     <message>
         <source>Ideal reverse beta</source>
@@ -4613,19 +4613,19 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>IIleri Erken gerilimi, V,  (0==Erken etkisini kapatır)</translation>
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters Erken gerilimi, V,  (0==Erken etkisini kapatır)</translation>
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri yüksek injeksiyon büküm akımı, A, (0==Webster etkisini kapatır)</translation>
     </message>
     <message>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters yüksek injeksiyon büküm akımı, A, (0==Webster etkisini kapatır)</translation>
     </message>
     <message>
         <source></source>
@@ -4633,15 +4633,15 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E kırılma üsteli, (0==kollektör kırılma özelliğini kapatır)</translation>
     </message>
     <message>
         <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E kırılma çarpanı, V, (0==kollektör kırılma özelliğini kaldırır)</translation>
     </message>
     <message>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E kırılma gerilimi, V, (0==emetör kırılma özelliğini kaldırır)</translation>
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
@@ -4653,11 +4653,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri geçiş zamanı sıcaklık sabiti</translation>
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz dışarı-it olayı sırasında (push-out) aşırı geçiş-zamanı sabiti</translation>
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
@@ -4693,23 +4693,23 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C tüketim sığasının en küçük değeri (Vbc bağımlılığı), F/um^2</translation>
     </message>
     <message>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cbc&apos;nin Cmin&apos;e eşit olduğu kollektör akımı, A/um^2 (0==Cbc azalımını devre dışı bırakır)</translation>
     </message>
     <message>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmin kesri, BC sığasının aşağı sınırı (Ic bağımlılığı)</translation>
     </message>
     <message>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Düşük gerilimler için Baz dışarı-it olayının (push-out) başladığı nokta, Ohm*um^2 (0==Baz dışarı-it olayını devre dışı bırakır)</translation>
     </message>
     <message>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek gerilimler için Baz dışarı-it olayının (push-out) başladığı nokta, A/um^2 (0==Baz dışarı-it olayını devre dışı bırakır)</translation>
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
@@ -4717,7 +4717,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz dışarı-it (push-out) olayının başlangıcındaki gerilim ötelemesi, V</translation>
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
@@ -4729,11 +4729,11 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici baz direnci, Ohm/parmak</translation>
     </message>
     <message>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>İç Baz omik direnci, Ohm/parmak</translation>
     </message>
     <message>
         <source>Collector inductance, H</source>
@@ -4749,15 +4749,15 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici B-C sığası, F</translation>
     </message>
     <message>
         <source>Extrinsic base capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici baz sığası, F</translation>
     </message>
     <message>
         <source>Extrinsic collector capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici kollektör sığası, F</translation>
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
@@ -4801,7 +4801,7 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>toprak tabakası üzerinde yükseklik</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
@@ -4873,143 +4873,144 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>Harici BC yayınma sığası, F</translation>
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>yüksek-enjeksiyon bükülme akımı (0=sonsuz)</translation>
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>bağlantı dizgesi biçimi</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog kütüğü</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog kütüğünün ismi</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: %1 bileşeni &quot;%2&quot; de kütük ismi yok.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: %1 kütügü &quot;%2&quot; açılamıyor.
+</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E kırılma gerilimi, V, (0==kırılma gerilimi etkinliğini kaldırır)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel akım kaynağı</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>yükselen köşeden önceki akım</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>atma&apos; nın en yüksek akım değeri</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel olarak yükselen köşenin başlangıç zamanı</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel düşüşün başlangıcı</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>yükselen köşenin zaman sabiti</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>düşen köşenin zaman sabiti</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Üstel Akım Atma&apos; sı</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>üstel gerilim kaynağı</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>yükselen köşeden önceki gerilim</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>atma&apos; nın en yüksek gerilimi</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>yükselen köşenin yükselme zamanı</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>düşen köşenin düşme zamanı</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Üstel Gerilim Atma&apos; sı</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Asalak B-C sığası kısımlama çarpanı</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç baz direnci için gürültü çarpanı</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation>eşitlikle tanımlanmış cihaz</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>eşitliklerin çeşidi</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>kol sayısı</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>akım eşitliği</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>yük eşitliği</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşitlikle Tanımlanmış Cihaz</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">HATA: SPICE kütügü &quot;%1&quot; açılamıyor.</translation>
+        <translation>HATA: SPICE kütügü &quot;%1&quot; açılamıyor.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished">HATA: QucsConv açılamıyor !</translation>
+        <translation>HATA: QucsConv başlatılamıyor!</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; çevrilmiş SPICE kütügü kaydedilemiyor.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: Çevrilmiş SPICE kütügü &quot;%1&quot; açılamıyor.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5018,33 +5019,36 @@ Kullanım:  qucsedit [-r] kütük
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; kütügü açılamıyor.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: Kullanıcı kütüphanesi alt-dizini oluşturulamıyor !
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; kütüğü oluşturulamıyor.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>UYARI: &quot;%1&quot; kütüphane bileşeni atlanıyor.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE kütüğü çevriliyor.</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE kütüğü işleniyor.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; önişlenmiş SPICE kütügü kaydedilemiyor.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5052,110 +5056,130 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%1&quot; çalıştırılamıyor.</translation>
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>kütüğe dayalı gerilim kaynağı</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>örnek kütüğünün ismi</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>dalga şeklini tekrarla</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüğe Dayalı Gerilim Kaynağı</translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>kütüğe dayalı akım kaynağı</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>akım kazancı</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüğe Dayalı Akım Kaynağı</translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Parçalı işlemsel yükselteç verilog cihazı</translation>
     </message>
     <message>
         <source>Gain bandwidth product (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kazanç band genişliği çarpımı (Hz)</translation>
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>DC&apos; de açık-döngü diferansiyel kazanç (dB)</translation>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci kutup sıklığı (Hz)</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkış direnci (Ohm)</translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferansiyel giriş sığası (F)</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferansiyel giriş direnci (Ohm)</translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş fark (offset) akımı (A)</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş kutuplama akımı (A)</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş fark (offset) gerilimi (V)</translation>
     </message>
     <message>
         <source>Common-mode rejection ratio at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>DC&apos; de CM (ortalama değer) red oranı (dB)</translation>
     </message>
     <message>
         <source>Common-mode zero corner frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>CM (ortalama değer) sıfır köşe sıklığı (Hz)</translation>
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitif tırmanma hızı (slew-rate) (V/s)</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Negatif tırmanma hızı (slew-rate) (V/s)</translation>
     </message>
     <message>
         <source>Positive output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitif çıkış gerilimi sınırı (V)</translation>
     </message>
     <message>
         <source>Negative output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Negatif çıkış gerilimi sınırı (V)</translation>
     </message>
     <message>
         <source>Maximum DC output current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>En yüksek DC çıkış akımı (A)</translation>
     </message>
     <message>
         <source>Current limit scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Akım sınırı boyutlama çarpanı</translation>
     </message>
     <message>
         <source>Modular OpAmp</source>
+        <translation>Parçalı OpAmp</translation>
+    </message>
+    <message>
+        <source>diac (bidirectional trigger diode)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(bidirectional) breakover voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(bidirectional) breakover current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diac</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5163,11 +5187,47 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished">HICUM Seviyesi 2 v2.22 verilog devresi</translation>
     </message>
     <message>
+        <source>A^2s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Specifies the base node connection for the tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished">Ohm</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5219,55 +5279,15 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>HICUM L2 v2.22</source>
-        <translation type="unfinished">HICUM L2 v2.22</translation>
-    </message>
-    <message>
-        <source>A^2s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coul</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1/V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1/K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ohm</source>
-        <translation type="unfinished">Ohm</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>K/W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>J/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5279,24 +5299,8 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(bidirectional) breakover voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(bidirectional) breakover current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parasitic capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <source>HICUM L2 v2.22</source>
+        <translation type="unfinished">HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
@@ -6108,7 +6112,7 @@ Geçerli belgeyi kapatır</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Belge Ayarları</translation>
+        <translation>Belge Ayarları</translation>
     </message>
     <message>
         <source>Settings
@@ -6180,7 +6184,7 @@ Uygulamadan çıkar</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished">Uygulama ayarları</translation>
+        <translation>Uygulama Ayarları</translation>
     </message>
     <message>
         <source>Application Settings...</source>
@@ -6332,7 +6336,7 @@ Bileşenlerşin özelliklerini değiştirir</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Kes</translation>
+        <translation>Kes</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -6352,7 +6356,7 @@ Seçili kısmı keser ve not tahtasına koyar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopyala</translation>
+        <translation>Çoğalt</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -6372,7 +6376,7 @@ Seçili kısmı not tahtasına kopyalar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Yapıştır</translation>
+        <translation>Yapıştır</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6408,7 +6412,7 @@ Seçili bilşenleri siler</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Geri Al</translation>
+        <translation>Geri Al</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -6428,7 +6432,7 @@ Son komutu geri alır</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Tekrarla</translation>
+        <translation>Tekrarla</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -6796,7 +6800,7 @@ Giriş/çıkış ayak(uç/port) simgesi ekler</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished">Bağlantı hattı ekler</translation>
+        <translation>Bağlantı teli ekler</translation>
     </message>
     <message>
         <source>Wire
@@ -7096,7 +7100,7 @@ Qucs hakkında kısa tanıtım</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished">Uygulama hakkında</translation>
+        <translation>Uygulama hakkında</translation>
     </message>
     <message>
         <source>About
@@ -7649,91 +7653,91 @@ Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfaya Sığdırarak Yazdır</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili bilesenleri ızgaranın üzerine kurar</translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Bileşenlerin özellik metnini taşır</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>Bileşen özelliklerini ya da VHDL metnini yer değiştir</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Varolan bir tasarımı açar</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Varolan bir tasarımı siler</translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli tasarımı kapatır</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili elemanın x ekseni etrafında ayna görüntüsünü alır</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili elemanın y ekseni etrafında ayna görüntüsünü alır</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili alt-devrenin içine girer</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşitlik ekler</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Toprak simgesi ekler</translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş/çıkış ayak (uç/port) simgesi ekler</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Metin</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Kaydet</translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Kaydet</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır...</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog Kaynakları</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog kaynağı silinemiyor: </translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>ölçüm uçları</translation>
     </message>
 </context>
 <context>
@@ -9579,15 +9583,15 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib Yardım</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Model</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Kütüphane Bileşeni Ara</translation>
     </message>
 </context>
 <context>
@@ -9788,7 +9792,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>açık bir düğüm tıklandığında bağlantı teli döşemeye başla:</translation>
     </message>
 </context>
 <context>
@@ -10256,7 +10260,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>HATA: &quot;%s&quot; kütüphanesi oluşturulamıyor.</translation>
     </message>
 </context>
 <context>
@@ -10557,37 +10561,39 @@ Hatalar:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 üzerinde %2 de yeni benzetim başlatılıyor</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>bitti.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 üzerindeki benzetim %2 de bitti</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Hazır.</translation>
+        <translation>Hazır.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 üzerindeki %2 deki benzetim süresince hatalar oluştu</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal edildi.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıktı:
+-------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>Hatalar:
+--------</translation>
     </message>
 </context>
 <context>
@@ -10682,27 +10688,27 @@ Hatalar:
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE kütüğü çevriliyor.</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>önişlemci</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SPICE kütüğü işleniyor.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Önişlemci Hatası</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; önişlenmiş SPICE kütügü kaydedilemiyor.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; çalıştırılamıyor.</translation>
     </message>
 </context>
 <context>
