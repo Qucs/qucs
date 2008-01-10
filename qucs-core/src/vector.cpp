@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.36 2007/11/02 19:09:26 ela Exp $
+ * $Id: vector.cpp,v 1.37 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -55,7 +55,8 @@ vector::vector () : object () {
 vector::vector (int s) : object () {
   assert (s >= 0);
   capacity = size = s;
-  data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;
+  data = s > 0 ? (nr_complex_t *)
+    calloc (capacity, sizeof (nr_complex_t)) : NULL;
   dependencies = NULL;
   origin = NULL;
   requested = 0;
@@ -63,10 +64,11 @@ vector::vector (int s) : object () {
 
 /* Constructor creates an unnamed instance of the vector class with a
    given initial size and content. */
-vector::vector (int s, complex val) : object () {
+vector::vector (int s, nr_complex_t val) : object () {
   assert (s >= 0);
   capacity = size = s;
-  data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;
+  data = s > 0 ? (nr_complex_t *)
+    calloc (capacity, sizeof (nr_complex_t)) : NULL;
   for (int i = 0; i < s; i++) data[i] = val;
   dependencies = NULL;
   origin = NULL;
@@ -87,7 +89,8 @@ vector::vector (const char * n) : object (n) {
 vector::vector (const char * n, int s) : object (n) {
   assert (s >= 0);
   capacity = size = s;
-  data = s > 0 ? (complex *) calloc (capacity, sizeof (complex)) : NULL;
+  data = s > 0 ? (nr_complex_t *)
+    calloc (capacity, sizeof (nr_complex_t)) : NULL;
   dependencies = NULL;
   origin = NULL;
   requested = 0;
@@ -98,8 +101,8 @@ vector::vector (const char * n, int s) : object (n) {
 vector::vector (const vector & v) : object (v) {
   size = v.size;
   capacity = v.capacity;
-  data = (complex *) malloc (sizeof (complex) * capacity);
-  memcpy (data, v.data, sizeof (complex) * size);
+  data = (nr_complex_t *) malloc (sizeof (nr_complex_t) * capacity);
+  memcpy (data, v.data, sizeof (nr_complex_t) * size);
   dependencies = v.dependencies ? new strlist (*v.dependencies) : NULL;
   origin = v.origin ? strdup (v.origin) : NULL;
   requested = v.requested;
@@ -114,8 +117,8 @@ const vector& vector::operator=(const vector & v) {
     capacity = v.capacity;
     if (data) { free (data); data = NULL; }
     if (capacity > 0) {
-      data = (complex *) malloc (sizeof (complex) * capacity);
-      if (size > 0) memcpy (data, v.data, sizeof (complex) * size);
+      data = (nr_complex_t *) malloc (sizeof (nr_complex_t) * capacity);
+      if (size > 0) memcpy (data, v.data, sizeof (nr_complex_t) * size);
     }
   }
   return *this;
@@ -142,14 +145,14 @@ void vector::setDependencies (strlist * s) {
 /* The function appends a new complex data item to the end of the
    vector and ensures that the vector can hold the increasing number
    of data items. */
-void vector::add (complex c) {
+void vector::add (nr_complex_t c) {
   if (data == NULL) {
     size = 0; capacity = 64;
-    data = (complex *) malloc (sizeof (complex) * capacity);
+    data = (nr_complex_t *) malloc (sizeof (nr_complex_t) * capacity);
   }
   else if (size >= capacity) {
     capacity *= 2;
-    data = (complex *) realloc (data, sizeof (complex) * capacity);
+    data = (nr_complex_t *) realloc (data, sizeof (nr_complex_t) * capacity);
   }
   data[size++] = c;
 }
@@ -159,27 +162,27 @@ void vector::add (vector * v) {
   if (v != NULL) {
     if (data == NULL) {
       size = 0; capacity = v->getSize ();
-      data = (complex *) malloc (sizeof (complex) * capacity);
+      data = (nr_complex_t *) malloc (sizeof (nr_complex_t) * capacity);
     }
     else if (size + v->getSize () > capacity) {
       capacity += v->getSize ();
-      data = (complex *) realloc (data, sizeof (complex) * capacity);
+      data = (nr_complex_t *) realloc (data, sizeof (nr_complex_t) * capacity);
     }
     for (int i = 0; i < v->getSize (); i++) data[size++] = v->get (i);
   }
 }
 
 // Returns the complex data item at the given position.
-complex vector::get (int i) {
+nr_complex_t vector::get (int i) {
   return data[i];
 }
 
 void vector::set (nr_double_t d, int i) {
-  data[i] = complex (d);
+  data[i] = nr_complex_t (d);
 }
 
-void vector::set (const complex z, int i) {
-  data[i] = complex (z);
+void vector::set (const nr_complex_t z, int i) {
+  data[i] = nr_complex_t (z);
 }
 
 // The function returns the current size of the vector.
@@ -200,7 +203,7 @@ int vector::checkSizes (vector v1, vector v2) {
 // complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::maximum (void) {
-  complex c;
+  nr_complex_t c;
   nr_double_t d, max_D = -NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
@@ -214,7 +217,7 @@ nr_double_t vector::maximum (void) {
 // complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::minimum (void) {
-  complex c;
+  nr_complex_t c;
   nr_double_t d, min_D = +NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
@@ -242,22 +245,22 @@ vector unwrap (vector v, nr_double_t tol, nr_double_t step) {
   return result;
 }
 
-complex sum (vector v) {
-  complex result (0.0);
+nr_complex_t sum (vector v) {
+  nr_complex_t result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result;
 }
 
-complex prod (vector v) {
-  complex result (1.0);
+nr_complex_t prod (vector v) {
+  nr_complex_t result (1.0);
   for (int i = 0; i < v.getSize (); i++) result *= v.get (i);
   return result;
 }
 
-complex avg (vector v) {
-  complex result (0.0);
+nr_complex_t avg (vector v) {
+  nr_complex_t result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
-  return result / v.getSize ();
+  return result / (nr_double_t) v.getSize ();
 }
 
 vector signum (vector v) {
@@ -272,7 +275,7 @@ vector sign (vector v) {
   return result;
 }
 
-vector xhypot (vector v, const complex z) {
+vector xhypot (vector v, const nr_complex_t z) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (xhypot (v.get(i), z), i);
   return result;
@@ -284,7 +287,7 @@ vector xhypot (vector v, const nr_double_t d) {
   return result;
 }
 
-vector xhypot (const complex z, vector v) {
+vector xhypot (const nr_complex_t z, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (xhypot (z, v.get (i)), i);
   return result;
@@ -398,7 +401,7 @@ vector log2 (vector v) {
   return result;
 }
 
-vector pow (vector v, const complex z) {
+vector pow (vector v, const nr_complex_t z) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (pow (v.get(i), z), i);
   return result;
@@ -410,7 +413,7 @@ vector pow (vector v, const nr_double_t d) {
   return result;
 }
 
-vector pow (const complex z, vector v) {
+vector pow (const nr_complex_t z, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (pow (z, v.get (i)), i);
   return result;
@@ -542,28 +545,28 @@ vector arcoth (vector v) {
 }
 
 // converts impedance to reflexion coefficient
-vector ztor (vector v, complex zref) {
+vector ztor (vector v, nr_complex_t zref) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result (i) = ztor (v (i), zref);
   return result;
 }
 
 // converts admittance to reflexion coefficient
-vector ytor (vector v, complex zref) {
+vector ytor (vector v, nr_complex_t zref) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result (i) = ytor (v (i), zref);
   return result;
 }
 
 // converts reflexion coefficient to impedance
-vector rtoz (vector v, complex zref) {
+vector rtoz (vector v, nr_complex_t zref) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result (i) = rtoz (v (i), zref);
   return result;
 }
 
 // converts reflexion coefficient to admittance
-vector rtoy (vector v, complex zref) {
+vector rtoy (vector v, nr_complex_t zref) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result (i) = rtoy (v (i), zref);
   return result;
@@ -585,7 +588,7 @@ vector diff (vector var, vector dep, int n) {
   }
   assert (y.getSize () % x.getSize () == 0 && x.getSize () >= 2);
   vector result (y);
-  complex c;
+  nr_complex_t c;
 
   for (k = 0; k < n; k++) {  // differentiate n times
     for (yi = xi = 0; yi < y.getSize (); yi++, xi++) {
@@ -598,16 +601,17 @@ vector diff (vector var, vector dep, int n) {
       else {
 	c =
 	  ((y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1)) + 
-	   (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi))) / 2;
+	   (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi))) /
+	  2.0;
       }
-      result.set (exchange ? 1 / c : c, yi);
+      result.set (exchange ? 1.0 / c : c, yi);
     }
     y = result;
   }
   return result;
 }
 
-vector vector::operator=(const complex c) {
+vector vector::operator=(const nr_complex_t c) {
   for (int i = 0; i < size; i++) data[i] = c;
   return *this;
 }
@@ -624,7 +628,7 @@ vector vector::operator+=(vector v) {
   return *this;
 }
 
-vector vector::operator+=(const complex c) {
+vector vector::operator+=(const nr_complex_t c) {
   for (int i = 0; i < size; i++) data[i] += c;
   return *this;
 }
@@ -647,13 +651,13 @@ vector operator+(vector v1, vector v2) {
   return result;
 }
 
-vector operator+(vector v, const complex c) {
+vector operator+(vector v, const nr_complex_t c) {
   vector result (v);
   result += c;
   return result;
 }
 
-vector operator+(const complex c, vector v) {
+vector operator+(const nr_complex_t c, vector v) {
   return v + c;
 }
 
@@ -680,7 +684,7 @@ vector vector::operator-=(vector v) {
   return *this;
 }
 
-vector vector::operator-=(const complex c) {
+vector vector::operator-=(const nr_complex_t c) {
   for (int i = 0; i < size; i++) data[i] -= c;
   return *this;
 }
@@ -703,7 +707,7 @@ vector operator-(vector v1, vector v2) {
   return result;
 }
 
-vector operator-(vector v, const complex c) {
+vector operator-(vector v, const nr_complex_t c) {
   vector result (v);
   result -= c;
   return result;
@@ -715,7 +719,7 @@ vector operator-(vector v, const nr_double_t d) {
   return result;
 }
 
-vector operator-(const complex c, vector v) {
+vector operator-(const nr_complex_t c, vector v) {
   vector result (-v);
   result += c;
   return result;
@@ -734,7 +738,7 @@ vector vector::operator*=(vector v) {
   return *this;
 }
 
-vector vector::operator*=(const complex c) {
+vector vector::operator*=(const nr_complex_t c) {
   for (int i = 0; i < size; i++) data[i] *= c;
   return *this;
 }
@@ -757,7 +761,7 @@ vector operator*(vector v1, vector v2) {
   return result;
 }
 
-vector operator*(vector v, const complex c) {
+vector operator*(vector v, const nr_complex_t c) {
   vector result (v);
   result *= c;
   return result;
@@ -769,7 +773,7 @@ vector operator*(vector v, const nr_double_t d) {
   return result;
 }
 
-vector operator*(const complex c, vector v) {
+vector operator*(const nr_complex_t c, vector v) {
   return v * c;
 }
 
@@ -784,7 +788,7 @@ vector vector::operator/=(vector v) {
   return *this;
 }
 
-vector vector::operator/=(const complex c) {
+vector vector::operator/=(const nr_complex_t c) {
   for (int i = 0; i < size; i++) data[i] /= c;
   return *this;
 }
@@ -809,7 +813,7 @@ vector operator/(vector v1, vector v2) {
   return result;
 }
 
-vector operator/(vector v, const complex c) {
+vector operator/(vector v, const nr_complex_t c) {
   vector result (v);
   result /= c;
   return result;
@@ -821,7 +825,7 @@ vector operator/(vector v, const nr_double_t d) {
   return result;
 }
 
-vector operator/(const complex c, vector v) {
+vector operator/(const nr_complex_t c, vector v) {
   vector result (v);
   result  = c;
   result /= v;
@@ -835,7 +839,7 @@ vector operator/(const nr_double_t d, vector v) {
   return result;
 }
 
-vector operator%(vector v, const complex z) {
+vector operator%(vector v, const nr_complex_t z) {
   int len = v.getSize ();
   vector result (len);
   for (int i = 0; i < len; i++) result (i) = v (i) % z;
@@ -849,7 +853,7 @@ vector operator%(vector v, const nr_double_t d) {
   return result;
 }
 
-vector operator%(const complex z, vector v) {
+vector operator%(const nr_complex_t z, vector v) {
   int len = v.getSize ();
   vector result (len);
   for (int i = 0; i < len; i++) result (i) = z % v (i);
@@ -882,7 +886,7 @@ vector operator%(vector v1, vector v2) {
 
 /* This function reverses the order of the data list. */
 void vector::reverse (void) {
-  complex * buffer = (complex *) malloc (sizeof (complex) * size);
+  nr_complex_t * buffer = (nr_complex_t *) malloc (sizeof (nr_complex_t) * size);
   for (int i = 0; i < size; i++) buffer[i] = data[size - 1 - i];
   free (data);
   data = buffer;
@@ -902,7 +906,7 @@ char * vector::getOrigin (void) {
 
 /* The function returns the number of entries with the given value
    deviating no more than the given epsilon. */
-int vector::contains (complex val, nr_double_t eps) {
+int vector::contains (nr_complex_t val, nr_double_t eps) {
   int count = 0;
   for (int i = 0; i < size; i++) {
     if (abs (data[i] - val) <= eps) count++;
@@ -912,7 +916,7 @@ int vector::contains (complex val, nr_double_t eps) {
 
 // Sorts the vector either in ascending or descending order.
 void vector::sort (bool ascending) {
-  complex t;
+  nr_complex_t t;
   for (int i = 0; i < size; i++) {
     for (int n = 0; n < size - 1; n++) {
       if (ascending ? data[n] > data[n+1] : data[n] < data[n+1]) {
@@ -971,7 +975,7 @@ vector logspace (nr_double_t start, nr_double_t stop, int points) {
 
 vector cumsum (vector v) {
   vector result (v);
-  complex val (0.0);
+  nr_complex_t val (0.0);
   for (int i = 0; i < v.getSize (); i++) {
     val += v.get (i);
     result.set (val, i);
@@ -981,9 +985,9 @@ vector cumsum (vector v) {
 
 vector cumavg (vector v) {
   vector result (v);
-  complex val (0.0);
+  nr_complex_t val (0.0);
   for (int i = 0; i < v.getSize (); i++) {
-    val = (val * i + v.get (i)) / (i + 1);
+    val = (val * (nr_double_t) i + v.get (i)) / (i + 1.0);
     result.set (val, i);
   }
   return result;
@@ -991,7 +995,7 @@ vector cumavg (vector v) {
 
 vector cumprod (vector v) {
   vector result (v);
-  complex val (1.0);
+  nr_complex_t val (1.0);
   for (int i = 0; i < v.getSize (); i++) {
     val *= v.get (i);
     result.set (val, i);
@@ -1050,7 +1054,7 @@ nr_double_t vector::rms (void) {
 
 nr_double_t vector::variance (void) { 
   nr_double_t result = 0.0;
-  complex average = avg (*this);
+  nr_complex_t average = avg (*this);
   for (int i = 0; i < getSize (); i++) result += norm (get (i) - average);
   if (getSize () > 1)
     return result / (getSize () - 1);
@@ -1103,13 +1107,13 @@ vector yn (const int n, vector v) {
   return result;
 }
 
-vector polar (const complex a, vector v) {
+vector polar (const nr_complex_t a, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (polar (a, v.get (i)), i);
   return result;
 }
 
-vector polar (vector v, const complex p) {
+vector polar (vector v, const nr_complex_t p) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (polar (v.get (i), p), i);
   return result;
@@ -1184,36 +1188,36 @@ nr_double_t integrate (vector v, const nr_double_t h) {
   return (s + real (v.get (v.getSize () - 1) ) / 2) * h;
 }
 
-complex integrate (vector v, const complex h) {
-  complex s;
-  s = v.get (0) / 2;
+nr_complex_t integrate (vector v, const nr_complex_t h) {
+  nr_complex_t s;
+  s = v.get (0) / 2.0;
   for (int i = 1; i < v.getSize () - 1; i++)
     s += v.get (i);
-  return (s + v.get (v.getSize () - 1) / 2) * h;
+  return (s + v.get (v.getSize () - 1) / 2.0) * h;
 }
 
-vector dbm (vector v, const complex z) {
+vector dbm (vector v, const nr_complex_t z) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++)
     result.set (10.0 * log10 (norm (v.get (i)) / conj (z) / 0.001), i);
   return result;
 }
 
-vector runavg (const complex x, const int n) {
+vector runavg (const nr_complex_t x, const int n) {
   vector result (n);
   for (int i = 0; i < n; i++) result.set (x, i);
   return result;
 }
 
 vector runavg (vector v, const int n) {
-  complex s (0.0), y;
+  nr_complex_t s (0.0), y;
   int len = v.getSize () - n + 1, i;
   vector result (len);
   for (i = 0; i < n; i++) s += v.get (i);
-  y = s / n; // first running average value
+  y = s / (nr_double_t) n; // first running average value
   result.set (y, 0);
   for (i = 0; i < len - 1; i++) {
-    y += (v.get (i + n) - v.get (i)) / n;
+    y += (v.get (i + n) - v.get (i)) / (nr_double_t) n;
     result.set (y, i + 1);
   }
   return result;

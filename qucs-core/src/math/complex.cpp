@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.38 2007/08/07 20:43:00 ela Exp $
+ * $Id: complex.cpp,v 1.1 2008/01/10 20:00:05 ela Exp $
  *
  */
 
@@ -40,55 +40,6 @@
 
 using namespace fspecial;
 
-/*!\brief Constructor from a real imaginary pair 
-
-   Construct a complex from a real part and an imaginary part 
-   \todo Why not inline
-*/
-complex::complex (nr_double_t real, nr_double_t imag) {
-  r = real;
-  i = imag;
-}
-
-
-/*!\brief Default constructor 
-
-   Initialize the complex number to \f$0 + 0 i\f$
-   \todo Why not inline
-*/
-complex::complex () {
-  r = 0.0;
-  i = 0.0;
-}
-
-
-/*!\brief Copy constructor 
-   \todo Why not inline
-*/
-complex::complex (const complex& z) {
-  r = z.r;
-  i = z.i;
-}
-
-/*!\brief Compute complex modulus 
-
-   \return modulus of complex object
-   \todo Why not inline
-*/
-nr_double_t complex::abs (void) {
-  return xhypot (r, i);
-}
-
-/*!\brief Compute complex modulus 
-
-   \param[in] z Complex number
-   \return Modulus of z
-   \todo Why not inline
-*/
-nr_double_t abs (const complex z) {
-  return xhypot (z.r, z.i);
-}
-
 /*!\brief Compute complex modulus of real number
 
    \param[in] r Real number
@@ -99,16 +50,7 @@ nr_double_t abs (const nr_double_t r) {
   return fabs (r);
 }
 
-/*!\brief Compute euclidian norm of complex number
-
-   Compute \f$(\Re\mathrm{e}\;z )^2+ (\Im\mathrm{m}\;z)^2=|z|^2\f$
-   \return Euclidian norm of z
-   \todo Why not inline
-*/
-nr_double_t complex::norm (void) {
-  return r * r + i * i;
-}
-
+#ifndef HAVE_CXX_COMPLEX_NORM
 /*!\brief Compute euclidian norm of complex number
 
    Compute \f$(\Re\mathrm{e}\;z )^2+ (\Im\mathrm{m}\;z)^2=|z|^2\f$
@@ -116,9 +58,12 @@ nr_double_t complex::norm (void) {
    \return Euclidian norm of z
    \todo Why not inline
 */
-nr_double_t norm (const complex z) {
-  return z.r * z.r + z.i * z.i;
+nr_double_t norm (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return r * r + i * i;
 }
+#endif
 
 /*!\brief Compute euclidian norm of real number
 
@@ -129,36 +74,6 @@ nr_double_t norm (const complex z) {
 */
 nr_double_t norm (const nr_double_t r) {
   return r * r;
-}
-
-/*!\brief Compute argument of complex number
-
-   \param[in] z Complex number
-   \return Argument of z
-   \todo lack of nr_double_t complex::arg(void)
-   \todo Why not inline
-*/
-nr_double_t arg (const complex z) {
-  return atan2 (z.i, z.r);
-}
-
-/*!\brief Real part of complex number
-
-   \return Real part
-   \todo Why not inline?
-*/
-nr_double_t complex::real (void) {
-  return r;
-}
-
-/*!\brief Real part of complex number
-
-   \param[in] z Complex number
-   \return Real part of z
-   \todo Why not inline?
-*/
-nr_double_t real (const complex z) {
-  return z.r;
 }
 
 /*!\brief Real part of real number
@@ -173,51 +88,12 @@ nr_double_t real (const nr_double_t r) {
 
 /*!\brief Imaginary part of complex number
 
-   \return Imaginary part of complex object
-   \todo Why not inline?
-*/
-nr_double_t complex::imag (void) {
-  return i;
-}
-
-/*!\brief Imaginary part of complex number
-
-   \param[in] z Complex number
-   \return Imaginary part of z
-   \todo Why not inline?
-*/
-nr_double_t imag (const complex z) {
-  return z.i;
-}
-
-/*!\brief Imaginary part of complex number
-
    \param[in] r Real number
    \return Imaginary part of r
    \todo Why not inline?
 */
 nr_double_t imag (const nr_double_t r) {
   return 0.0;
-}
-
-/*!\brief Conjugate of complex number
-
-   \return Conjugate of complex object
-   \todo Why not inline?
-   \todo Why not operator ~
-*/
-complex complex::conj (void) {
-  return complex (r, -i);
-}
-
-/*!\brief Conjugate of complex number
-
-   \param[in] z Complex number
-   \return Conjugate of complex z
-   \todo Why not inline?
-*/
-complex conj (const complex z) {
-  return complex (z.r, -z.i);
 }
 
 /*!\brief Conjugate of real number
@@ -237,19 +113,21 @@ nr_double_t conj (const nr_double_t r) {
    \return Magnitude in dB
    \todo Why not inline?
 */
-nr_double_t dB (const complex z) {
+nr_double_t dB (const nr_complex_t z) {
   return 10.0 * log10 (norm (z));
 }
 
+#ifndef HAVE_CXX_COMPLEX_EXP
 /*!\brief Compute complex exponential
 
    \param[in] z complex number
    \return exponential of z
 */
-complex exp (const complex z) {
+nr_complex_t exp (const nr_complex_t z) {
   nr_double_t mag = exp (real (z));
-  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
+  return nr_complex_t (mag * cos (imag (z)), mag * sin (imag (z)));
 }
+#endif
 
 /*!\brief Compute limited complex exponential
 
@@ -257,9 +135,9 @@ complex exp (const complex z) {
    \return limited exponential of z
    \todo Change limexp(real) limexp(complex) file order
 */
-complex limexp (const complex z) {
+nr_complex_t limexp (const nr_complex_t z) {
   nr_double_t mag = limexp (real (z));
-  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
+  return nr_complex_t (mag * cos (imag (z)), mag * sin (imag (z)));
 }
 
 /*!\brief Compute limited exponential
@@ -283,6 +161,7 @@ nr_double_t limexp (const nr_double_t r) {
   return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
 }
 
+#ifndef HAVE_CXX_COMPLEX_SQRT
 /*!\brief Compute principal value of square root
 
     Compute the square root of a given complex number (except negative
@@ -291,20 +170,22 @@ nr_double_t limexp (const nr_double_t r) {
    \param[in] z complex number
    \return principal value of square root z
 */
-complex sqrt (const complex z) {
+nr_complex_t sqrt (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
 #if 0
-  if (z.i == 0.0) {
-    return z.r < 0.0 ? complex (0.0, sqrt (-z.r)) : complex (sqrt (z.r));
+  if (i == 0.0) {
+    return r < 0.0 ? nr_complex_t (0.0, sqrt (-r)) : nr_complex_t (sqrt (r));
   } else {
     nr_double_t phi = arg (z);
     return polar (sqrt (abs (z)), phi / 2.0);
   }
 #else /* better numerical behaviour, avoiding arg() and polar() */
-  if (z.r == 0.0 && z.i == 0.0) {
-    return complex (0.0, 0.0);
+  if (r == 0.0 && i == 0.0) {
+    return nr_complex_t (0.0, 0.0);
   } else {
-    nr_double_t x = fabs (z.r);
-    nr_double_t y = fabs (z.i);
+    nr_double_t x = fabs (r);
+    nr_double_t y = fabs (i);
     nr_double_t k;
     if (x >= y)  {
       nr_double_t t = y / x;
@@ -313,53 +194,61 @@ complex sqrt (const complex z) {
       nr_double_t t = x / y;
       k = sqrt (y) * sqrt (0.5 * (t + sqrt (1.0 + t * t)));
     }
-    if (z.r >= 0.0) {
-      return complex (k, z.i / (2.0 * k));
+    if (r >= 0.0) {
+      return nr_complex_t (k, i / (2.0 * k));
     } else {
-      nr_double_t vi = (z.i >= 0) ? k : -k;
-      return complex (z.i / (2.0 * vi), vi);
+      nr_double_t vi = (i >= 0) ? k : -k;
+      return nr_complex_t (i / (2.0 * vi), vi);
     }
   }
 #endif
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_LOG 
+#endif 
 /*!\brief Compute principal value of natural logarithm of z
 
    \param[in] z complex number
    \return principal value of natural logarithm of z
 */
-complex ln (const complex z) {
+nr_complex_t ln (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return complex (log (abs (z)), phi);
+  return nr_complex_t (log (abs (z)), phi);
 }
 
+#ifndef HAVE_CXX_COMPLEX_LOG10 
 /*!\brief Compute principal value of decimal logarithm of z
 
    \param[in] z complex number
    \return principal value of decimal logarithm of z
 */
-complex log10 (const complex z) {
+nr_complex_t log10 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return complex (log10 (abs (z)), phi * M_LOG10E);
+  return nr_complex_t (log10 (abs (z)), phi * M_LOG10E);
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_LOG2
 /*!\brief Compute principal value of binary logarithm of z
 
    \param[in] z complex number
    \return principal value of binary logarithm of z
 */
-complex log2 (const complex z) {
+nr_complex_t log2 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return complex (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
+  return nr_complex_t (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_POW
 /*!\brief Compute power function with real exponent
 
    \param[in] z complex mantisse
    \param[in] d real exponent
    \return z power d (\f$z^d\f$)
 */
-complex pow (const complex z, const nr_double_t d) {
+nr_complex_t pow (const nr_complex_t z, const nr_double_t d) {
   return polar (pow (abs (z), d), arg (z) * d);
 }
 
@@ -369,10 +258,9 @@ complex pow (const complex z, const nr_double_t d) {
    \param[in] z complex exponent
    \return d power z (\f$d^z\f$)
 */
-complex pow (const nr_double_t d, const complex z) {
+nr_complex_t pow (const nr_double_t d, const nr_complex_t z) {
   return exp (z * log (d));
 }
-
 
 /*!\brief Compute complex power function 
 
@@ -380,78 +268,95 @@ complex pow (const nr_double_t d, const complex z) {
    \param[in] z2 complex exponent
    \return d power z (\f$z_1^{z_2}\f$)
 */
-complex pow (const complex z1, const complex z2) {
+nr_complex_t pow (const nr_complex_t z1, const nr_complex_t z2) {
   return exp (z2 * ln (z1));
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_SIN 
 /*!\brief Compute complex sinus
 
    \param[in] z complex angle
    \return sinus of z
 */
-complex sin (const complex z) {
+nr_complex_t sin (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return (polar (exp (-i), r - M_PI_2) - polar (exp (i), -r - M_PI_2)) / 2.0;
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_ASIN
+#endif
 /*!\brief Compute complex arc sinus
 
    \param[in] z complex arc
    \return arc sinus of z
 */
-complex arcsin (const complex z) {
+nr_complex_t arcsin (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return complex (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
+  return nr_complex_t (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
 }
 
+#ifndef HAVE_CXX_COMPLEX_COS 
 /*!\brief Compute complex cosinus
 
    \param[in] z complex angle
    \return cosinus of z
 */
-complex cos (const complex z) {
+nr_complex_t cos (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_ACOS
+#endif
 /*!\brief Compute complex arc cosinus
 
    \param[in] z complex arc
    \return arc cosinus of z
 */
-complex arccos (const complex z) {
+nr_complex_t arccos (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
 #if 0
   return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
 #else
-  complex y = sqrt (z * z - 1.0);
-  if (z.r * z.i < 0.0) y = -y;
+  nr_complex_t y = sqrt (z * z - 1.0);
+  if (r * i < 0.0) y = -y;
   return rect (0, -1.0) * ln (z + y);
 #endif
 }
 
+#ifndef HAVE_CXX_COMPLEX_TAN
 /*!\brief Compute complex tangent
 
    \param[in] z complex angle
    \return tangent of z
 */
-complex tan (const complex z) {
+nr_complex_t tan (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
   return rect (0.0, -1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_ATAN
+#endif 
 /*!\brief Compute complex arc tangent
 
    \param[in] z complex arc
    \return arc tangent of z
 */
-complex arctan (const complex z) {
+nr_complex_t arctan (const nr_complex_t z) {
   return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
 }
 
+#ifndef HAVE_CXX_COMPLEX_ATAN2
+#endif
 /*!\brief Compute complex arc tangent fortran like function
     
    atan2 is a two-argument function that computes the arctangent of y / x 
@@ -460,8 +365,8 @@ complex arctan (const complex z) {
    \param[in] z complex angle
    \return arc tangent of z
 */
-complex arctan2 (const complex y, const complex x) {
-  complex a = arctan (y / x);
+nr_complex_t arctan2 (const nr_complex_t y, const nr_complex_t x) {
+  nr_complex_t a = arctan (y / x);
   return real (x) > 0.0 ? a : -a;
 }
 
@@ -470,7 +375,7 @@ complex arctan2 (const complex y, const complex x) {
    \param[in] z complex angle
    \return cotangent of z
 */
-complex cot (const complex z) {
+nr_complex_t cot (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
   return rect (0.0, 1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
@@ -481,7 +386,7 @@ complex cot (const complex z) {
    \param[in] z complex arc
    \return arc cotangent of z
 */
-complex arccot (const complex z) {
+nr_complex_t arccot (const nr_complex_t z) {
   return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z - rect (0.0, 1.0)) + 1.0);
 }
 
@@ -490,38 +395,44 @@ complex arccot (const complex z) {
    \param[in] z complex angle
    \return hyperbolic sinus of z
 */
-complex sinh (const complex z) {
+nr_complex_t sinh (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return (polar (exp (r), i) - polar (exp (-r), -i)) / 2.0;
 }
 
+#ifndef HAVE_CXX_COMPLEX_ASINH
+#endif 
 /*!\brief Compute complex argument hyperbolic sinus
 
    \param[in] z complex arc
    \return argument hyperbolic sinus of z
 */
-complex arsinh (const complex z) {
-  return ln (z + sqrt (z * z + 1));
+nr_complex_t arsinh (const nr_complex_t z) {
+  return ln (z + sqrt (z * z + 1.0));
 }
 
+#ifndef HAVE_CXX_COMPLEX_COSH
 /*!\brief Compute complex hyperbolic cosinus
 
    \param[in] z complex angle
    \return hyperbolic cosinus of z
 */
-complex cosh (const complex z) {
+nr_complex_t cosh (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return (polar (exp (r), i) + polar (exp (-r), -i)) / 2.0;
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_ACOSH
+#endif
 /*!\brief Compute complex argument hyperbolic cosinus
 
    \param[in] z complex arc
    \return argument hyperbolic cosinus of z
 */
-complex arcosh (const complex z) {
+nr_complex_t arcosh (const nr_complex_t z) {
   return ln (z + sqrt (z * z - 1.0));
 }
 
@@ -531,27 +442,31 @@ complex arcosh (const complex z) {
    \return argument hyperbolic secant of z
    \todo for symetry reason implement sech
 */
-complex arsech (const complex z) {
+nr_complex_t arsech (const nr_complex_t z) {
   return ln ((1.0 + sqrt (1.0 - z * z)) / z);
 }
 
+#ifndef HAVE_CXX_COMPLEX_TANH
 /*!\brief Compute complex hyperbolic tangent
 
    \param[in] z complex angle
    \return hyperbolic tangent of z
 */
-complex tanh (const complex z) {
+nr_complex_t tanh (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
   return 1.0 - 2.0 / (polar (exp (r), i) + 1.0);
 }
+#endif
 
+#ifndef HAVE_CXX_COMPLEX_ATANH
+#endif 
 /*!\brief Compute complex argument hyperbolic tangent
 
    \param[in] z complex arc
    \return argument hyperbolic tangent of z
 */
-complex artanh (const complex z) {
+nr_complex_t artanh (const nr_complex_t z) {
   return 0.5 * ln ( 2.0 / (1.0 - z) - 1.0);
 }
 
@@ -560,7 +475,7 @@ complex artanh (const complex z) {
    \param[in] z complex angle
    \return hyperbolic cotangent of z
 */
-complex coth (const complex z) {
+nr_complex_t coth (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
   return 1.0 + 2.0 / (polar (exp (r), i) - 1.0);
@@ -571,7 +486,7 @@ complex coth (const complex z) {
    \param[in] z complex arc
    \return argument hyperbolic cotangent of z
 */
-complex arcoth (const complex z) {
+nr_complex_t arcoth (const nr_complex_t z) {
   return 0.5 * ln (2.0 / (z - 1.0) + 1.0);
 }
 
@@ -581,7 +496,7 @@ complex arcoth (const complex z) {
    \param[in] zref normalisation impedance
    \return reflexion coefficient
 */
-complex ztor (const complex z, complex zref) {
+nr_complex_t ztor (const nr_complex_t z, nr_complex_t zref) {
   return (z - zref) / (z + zref);
 }
 
@@ -590,8 +505,8 @@ complex ztor (const complex z, complex zref) {
    \param[in] zref normalisation impedance
    \return reflexion coefficient
 */
-complex ytor (const complex y, complex zref) {
-  return (1 - y * zref) / (1 + y * zref);
+nr_complex_t ytor (const nr_complex_t y, nr_complex_t zref) {
+  return (1.0 - y * zref) / (1.0 + y * zref);
 }
 
 /*!\brief Converts reflexion coefficient to impedance
@@ -599,8 +514,8 @@ complex ytor (const complex y, complex zref) {
    \param[in] zref normalisation impedance
    \return impedance
 */
-complex rtoz (const complex r, complex zref) {
-  return zref * (1 + r) / (1 - r);
+nr_complex_t rtoz (const nr_complex_t r, nr_complex_t zref) {
+  return zref * (1.0 + r) / (1.0 - r);
 }
 
 /*!\brief Converts reflexion coefficient to admittance
@@ -608,10 +523,11 @@ complex rtoz (const complex r, complex zref) {
    \param[in] zref normalisation impedance
    \return admittance
 */
-complex rtoy (const complex r, complex zref) {
-  return (1 - r) / (1 + r) / zref;
+nr_complex_t rtoy (const nr_complex_t r, nr_complex_t zref) {
+  return (1.0 - r) / (1.0 + r) / zref;
 }
 
+#ifndef HAVE_CXX_COMPLEX_FLOOR 
 /*!\brief Complex floor 
 
     floor is the largest integral value not greater than argument
@@ -621,9 +537,51 @@ complex rtoy (const complex r, complex zref) {
     \todo Why not inline?
     \todo Move near ceil
 */
-complex floor (const complex z) {
+nr_complex_t floor (const nr_complex_t z) {
   return rect (floor (real (z)), floor (imag (z)));
 }
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_FMOD
+/*!\brief Complex fmod
+    Apply fmod to the complex z
+    \param[in] x complex number (dividant)
+    \param[in] y complex number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+    \todo Why not inline?
+*/
+nr_complex_t fmod (const nr_complex_t x, const nr_complex_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+
+/*!\brief Complex fmod (double version)
+    Apply fmod to the complex z
+    \param[in] x complex number (dividant)
+    \param[in] y double number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+    \todo Why not inline?
+*/
+nr_complex_t fmod (const nr_complex_t x, const nr_double_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+
+/*!\brief Complex fmod (double version)
+    Apply fmod to the complex z
+    \param[in] x double number (dividant)
+    \param[in] y complex number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+    \todo Why not inline?
+*/
+nr_complex_t fmod (const nr_double_t x, const nr_complex_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+#endif
 
 /*!\brief complex signum function 
    
@@ -638,7 +596,7 @@ complex floor (const complex z) {
    \return signum of z
    \todo Better implementation z/abs(z) is not really stable
 */
-complex signum (const complex z) {
+nr_complex_t signum (const nr_complex_t z) {
   if (z == 0) return 0;
   return z / abs (z);
 }
@@ -656,8 +614,8 @@ complex signum (const complex z) {
    \return sign of z
    \todo Better implementation z/abs(z) is not really stable
 */
-complex sign (const complex z) {
-  if (z == 0) return complex (1);
+nr_complex_t sign (const nr_complex_t z) {
+  if (z == 0) return nr_complex_t (1);
   return z / abs (z);
 }
 
@@ -698,7 +656,7 @@ nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
    \param[in] b second length
    \return Euclidean distance from (0,0) to (a,b): \f$\sqrt{a^2+b^2}\f$
 */
-nr_double_t xhypot (const complex a, const complex b) {
+nr_double_t xhypot (const nr_complex_t a, const nr_complex_t b) {
   nr_double_t c = norm (a);
   nr_double_t d = norm (b);
   if (c > d)
@@ -710,13 +668,13 @@ nr_double_t xhypot (const complex a, const complex b) {
 }
 
 /*!\brief Euclidean distance function for a double b complex */
-nr_double_t xhypot (const nr_double_t a, const complex b) {
-  return xhypot (complex (a), b);
+nr_double_t xhypot (const nr_double_t a, const nr_complex_t b) {
+  return xhypot (nr_complex_t (a), b);
 }
 
 /*!\brief Euclidean distance function for b double a complex */
-nr_double_t xhypot (const complex a, const nr_double_t b) {
-  return xhypot (a, complex (b));
+nr_double_t xhypot (const nr_complex_t a, const nr_double_t b) {
+  return xhypot (a, nr_complex_t (b));
 }
 
 /*!\brief real signum function 
@@ -762,7 +720,7 @@ nr_double_t sign (const nr_double_t d) {
    \return cardianal sinus of z
    \todo Why not inline
 */
-complex sinc (const complex z) {
+nr_complex_t sinc (const nr_complex_t z) {
   if (z == 0) return 1;
   return sin (z) / z;
 }
@@ -779,15 +737,17 @@ nr_double_t sinc (const nr_double_t d) {
   return sin (d) / d;
 }
 
+#ifndef HAVE_CXX_COMPLEX_POLAR
 /*!\brief Construct a complex number using polar notation
    \param[in] mag Magnitude
    \param[in] ang Angle
    \return complex number in rectangular form
    \todo Why not inline
 */
-complex polar (const nr_double_t mag, const nr_double_t ang) {
+nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
   return rect (mag * cos (ang), mag * sin (ang));
 }
+#endif
 
 /*!\brief Construct a complex number using rectangular notation
    \param[in] x Real part
@@ -796,9 +756,11 @@ complex polar (const nr_double_t mag, const nr_double_t ang) {
    \todo Why not inline?
    \todo Move before polar
 */
-complex rect (const nr_double_t x, const nr_double_t y) {
-  return complex (x, y);
+nr_complex_t rect (const nr_double_t x, const nr_double_t y) {
+  return nr_complex_t (x, y);
 }
+
+#ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
 /*!\brief Extension of polar construction to complex
    \param[in] a Magnitude
    \param[in] p Angle
@@ -806,9 +768,10 @@ complex rect (const nr_double_t x, const nr_double_t y) {
    \bug Do not seems holomorph form of real polar
    \todo Move near real polar
 */
-complex polar (const complex a, const complex p) {
-  return a * exp (rect (p.i, -p.r));
+nr_complex_t polar (const nr_complex_t a, const nr_complex_t p) {
+  return a * exp (rect (imag (p), -real (p)));
 }
+#endif
 
 /*!\brief Complex ceil
     Ceil is the smallest integral value not less than argument
@@ -817,8 +780,8 @@ complex polar (const complex a, const complex p) {
     \return ceilled complex number
     \todo Why not inline?
 */
-complex ceil (const complex z) {
-  return rect (ceil (z.r), ceil (z.i));
+nr_complex_t ceil (const nr_complex_t z) {
+  return rect (ceil (real (z)), ceil (imag (z)));
 }
 
 /*!\brief Fix function 
@@ -847,9 +810,9 @@ nr_double_t fix (const nr_double_t d) {
     \todo Why not inline?
     \todo why not using real fix
 */
-complex fix (const complex z) {
-  nr_double_t x = z.r;
-  nr_double_t y = z.i;
+nr_complex_t fix (const nr_complex_t z) {
+  nr_double_t x = real (z);
+  nr_double_t y = imag (z);
   x = (x > 0) ? floor (x) : ceil (x);
   y = (y > 0) ? floor (y) : ceil (y);
   return rect (x, y);
@@ -862,8 +825,8 @@ complex fix (const complex z) {
     \return rounded complex number
     \todo Why not inline?
 */
-complex round (const complex z) {
-  return rect (round (z.r), round (z.i));
+nr_complex_t round (const nr_complex_t z) {
+  return rect (round (real (z)), round (imag (z)));
 }
 
 /*!\brief Square of complex number
@@ -872,8 +835,10 @@ complex round (const complex z) {
     \return squared complex number
     \todo Why not inline?
 */
-complex sqr (const complex z) {
-  return rect (z.r * z.r - z.i * z.i, 2 * z.r * z.i);
+nr_complex_t sqr (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return rect (r * r - i * i, 2 * r * i);
 }
 
 /*!\brief Heaviside step function
@@ -904,9 +869,9 @@ nr_double_t step (const nr_double_t d) {
    \todo Create Heaviside alias
    \todo Why not using real heaviside
 */ 
-complex step (const complex z) {
-  nr_double_t x = z.r;
-  nr_double_t y = z.i;
+nr_complex_t step (const nr_complex_t z) {
+  nr_double_t x = real (z);
+  nr_double_t y = imag (z);
   if (x < 0.0)
     x = 0.0;
   else if (x > 0.0)
@@ -929,8 +894,8 @@ complex step (const complex z) {
    \return Bessel function of first kind of order n 
    \bug Not implemented
 */ 
-complex jn (const int n, const complex z) {
-  return rect (jn (n, z.r), 0);
+nr_complex_t jn (const int n, const nr_complex_t z) {
+  return rect (jn (n, real (z)), 0);
 }
 
 /*!\brief Bessel function of second kind
@@ -940,8 +905,8 @@ complex jn (const int n, const complex z) {
    \return Bessel function of second kind of order n 
    \bug Not implemented
 */ 
-complex yn (const int n, const complex z) {
-  return rect (yn (n, z.r), 0);
+nr_complex_t yn (const int n, const nr_complex_t z) {
+  return rect (yn (n, real (z)), 0);
 }
 
 
@@ -951,8 +916,8 @@ complex yn (const int n, const complex z) {
    \return Modified Bessel function of first kind of order 0
    \bug Not implemented
 */
-complex i0 (const complex z) {
-  return rect (i0 (z.r), 0);
+nr_complex_t i0 (const nr_complex_t z) {
+  return rect (i0 (real (z)), 0);
 }
 
 /*!\brief Error function
@@ -961,8 +926,8 @@ complex i0 (const complex z) {
    \return Error function
    \bug Not implemented
 */
-complex erf (const complex z) {
-  return rect (erf (z.r), 0);
+nr_complex_t erf (const nr_complex_t z) {
+  return rect (erf (real (z)), 0);
 }
 
 /*!\brief Complementart error function
@@ -971,8 +936,8 @@ complex erf (const complex z) {
    \return Complementary error function
    \bug Not implemented
 */
-complex erfc (const complex z) {
-  return rect (erfc (z.r), 0);
+nr_complex_t erfc (const nr_complex_t z) {
+  return rect (erfc (real (z)), 0);
 }
 
 /*!\brief Inverse of error function
@@ -981,8 +946,8 @@ complex erfc (const complex z) {
    \return Inverse of error function
    \bug Not implemented
 */
-complex erfinv (const complex z) {
-  return rect (erfinv (z.r), 0);
+nr_complex_t erfinv (const nr_complex_t z) {
+  return rect (erfinv (real (z)), 0);
 }
 
 /*!\brief Inverse of complementart error function
@@ -991,139 +956,8 @@ complex erfinv (const complex z) {
    \return Inverse of complementary error function
    \bug Not implemented
 */
-complex erfcinv (const complex z) {
-  return rect (erfcinv (z.r), 0);
-}
-
-/*!\brief Unary +
-  \todo Why not inline 
-*/
-complex complex::operator+() {
-  return complex (r, i);
-}
-
-/*!\brief Unary -
-  \todo Why not inline 
-*/
-complex complex::operator-() {
-  return complex (-r, -i);
-}
-
-/*!\brief += operator for complex
-  \todo Why not inline 
-*/
-complex& complex::operator+=(const complex z2) {
-  r += z2.r;
-  i += z2.i;
-  return *this;
-}
-
-/*!\brief += operator for real
-  \todo Why not inline 
-*/
-complex& complex::operator+=(const nr_double_t r2) {
-  r += r2;
-  return *this;
-}
-
-/*!\brief -= operator for complex
-  \todo Why not inline 
-*/
-complex& complex::operator-=(const complex z2) {
-  r -= z2.r;
-  i -= z2.i;
-  return *this;
-}
-
-/*!\brief -= operator for real
-  \todo Why not inline 
-*/
-complex& complex::operator-=(const nr_double_t r2) {
-  r -= r2;
-  return *this;
-}
-
-/*!\brief *= operator for complex
-  \todo Why not inline 
-  \todo Add for real
-*/
-complex& complex::operator*=(const nr_double_t r2) {
-  r *= r2;
-  i *= r2;
-  return *this;
-}
-
-/*!\brief /= operator for complex
-  \todo Why not inline 
-  \todo Add for real
-*/
-complex& complex::operator/=(const nr_double_t r2) {
-  r /= r2;
-  i /= r2;
-  return *this;
-}
-
-/*!\brief Addition of two complex
-  \todo Why not inline
-*/
-complex operator+(const complex z1, const complex z2) {
-  return complex (z1.r + z2.r, z1.i + z2.i);
-}
-
-/*!\brief Addition of real and complex
-  \todo Why not inline
-*/
-complex operator+(const nr_double_t r1, const complex z2) {
-  return complex (r1 + z2.r, z2.i);
-}
-
-/*!\brief Addition of complex and real
-  \todo Why not inline
-*/
-complex operator+(const complex z1, const nr_double_t r2) {
-  return complex (z1.r + r2, z1.i);
-}
-
-/*!\brief Substraction of two complex
-  \todo Why not inline
-*/
-complex operator-(const complex z1, const complex z2) {
-  return complex (z1.r - z2.r, z1.i - z2.i);
-}
-
-/*!\brief Substraction of real and complex
-  \todo Why not inline
-*/
-complex operator-(const nr_double_t r1, const complex z2) {
-  return complex (r1 - z2.r, -z2.i);
-}
-
-/*!\brief Substraction of complex and real
-  \todo Why not inline
-*/
-complex operator-(const complex z1, const nr_double_t r2) {
-  return complex (z1.r - r2, z1.i);
-}
-
-/*!\brief Multiplication of complex and real
-  \todo Why not inline
-*/
-complex operator*(const complex z1, const nr_double_t r2) {
-  return complex (z1.r * r2, z1.i * r2);
-}
-
-/*!\brief Multiplication of real and complex
-  \todo Why not inline
-*/
-complex operator*(const nr_double_t r1, const complex z2) {
-  return complex (z2.r * r1, z2.i * r1);
-}
-
-/*!\brief Multiplication of two complex
-  \todo Why not inline
-*/
-complex operator*(const complex z1, const complex z2) {
-  return complex (z1.r * z2.r - z1.i * z2.i, z1.i * z2.r + z1.r * z2.i);
+nr_complex_t erfcinv (const nr_complex_t z) {
+  return rect (erfcinv (real (z)), 0);
 }
 
 /*!\brief Equality of two complex
@@ -1132,8 +966,8 @@ complex operator*(const complex z1, const complex z2) {
         is meaningless in finite precision
 	Use instead abs(x-x0) < tol
 */
-bool operator==(const complex z1, const complex z2) {
-  return (z1.r == z2.r) && (z1.i == z2.i);
+bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
+  return (real (z1) == real (z2)) && (imag (z1) == imag (z2));
 }
 
 /*!\brief Inequality of two complex
@@ -1142,200 +976,55 @@ bool operator==(const complex z1, const complex z2) {
         is meaningless in finite precision
 	Use instead abs(x-x0) > tol
 */
-bool operator!=(const complex z1, const complex z2) {
-  return (z1.r != z2.r) || (z1.i != z2.i);
+bool operator!=(const nr_complex_t z1, const nr_complex_t z2) {
+  return (real (z1) != real (z2)) || (imag (z1) != imag (z2));
 }
 
 /*!\brief Superior of equal
    \todo Why not inline
 */
-bool operator>=(const complex z1, const complex z2) {
+bool operator>=(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) >= norm (z2);
 }
 
 /*!\brief Inferior of equal
    \todo Why not inline
 */
-bool operator<=(const complex z1, const complex z2) {
+bool operator<=(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) <= norm (z2);
 }
 
 /*!\brief Superior
    \todo Why not inline
 */
-bool operator>(const complex z1, const complex z2) {
+bool operator>(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) > norm (z2);
 }
 
 /*!\brief Inferior 
    \todo Why not inline
 */
-bool operator<(const complex z1, const complex z2) {
+bool operator<(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) < norm (z2);
-}
-
-/*!\brief Divide a complex by a double
-   \todo why not inline
-   \todo Put near *
-*/
-complex operator/(const complex z1, const nr_double_t r2) {
-  return complex (z1.r / r2, z1.i / r2);
-}
-
-/*!\brief Divide a complex by a complex
-   \todo Put near *
-*/
-complex operator/(const complex z1, const complex z2) {
-#if 0
-  nr_double_t n = norm (z2);
-  return complex ((z1.r * z2.r + z1.i * z2.i) / n,
-		  (z1.i * z2.r - z1.r * z2.i) / n);
-#else /* avoid numerical overflow and underrun */
-  nr_double_t r, i, n, d;
-  if (fabs (z2.r) > fabs (z2.i)) {
-    n = z2.i / z2.r;
-    d = z2.r + z2.i * n;
-    r = (z1.r + z1.i * n) / d;
-    i = (z1.i - z1.r * n) / d;
-  }
-  else {
-    n = z2.r / z2.i;
-    d = z2.r * n + z2.i;
-    r = (z1.r * n + z1.i) / d;
-    i = (z1.i * n - z1.r) / d;
-  }
-  return complex (r, i);
-#endif
-}
-
-/*!\brief Divide and assign
-   \todo Put near *=
-*/
-complex& complex::operator/=(const complex z) {
-#if 0
-  nr_double_t n1, n2;
-  n1 = norm (z);
-  n2 = (r * z.r + i * z.i) / n1;
-  i  = (i * z.r - r * z.i) / n1;
-  r  = n2;
-#else /* avoid numerical overflow and underrun */
-  nr_double_t n, d, t;
-  if (fabs (z.r) > fabs (z.i)) {
-    n = z.i / z.r;
-    d = z.r + z.i * n;
-    t = (r + i * n) / d;
-    i = (i - r * n) / d;
-    r = t;
-  }
-  else {
-    n = z.r / z.i;
-    d = z.r * n + z.i;
-    t = (r * n + i) / d;
-    i = (i * n - r) / d;
-    r = t;
-  }
-#endif
-  return *this;
-}
-
-/*!\brief Divide a real by a complex
-   \todo Put near *
-*/
-complex operator/(const nr_double_t r1, const complex z2) {
-#if 0
-  nr_double_t n = norm (z2);
-  return complex (r1 * z2.r / n, -r1 * z2.i / n);
-#else /* avoid numerical overflow and underrun */
-  nr_double_t r, i, n, d;
-  if (fabs (z2.r) > fabs (z2.i)) {
-    n = z2.i / z2.r;
-    d = z2.r + z2.i * n;
-    r = r1 / d;
-    i = -n * r1 / d;
-  }
-  else {
-    n = z2.r / z2.i;
-    d = z2.r * n + z2.i;
-    r = r1 * n / d;
-    i = -r1 / d;
-  }
-  return complex (r, i);
-#endif
 }
 
 /*!\brief Modulo 
    \todo Why not inline 
 */
-complex operator%(const complex z1, const complex z2) {
+nr_complex_t operator%(const nr_complex_t z1, const nr_complex_t z2) {
   return z1 - z2 * floor (z1 / z2);
 }
 
 /*!\brief Modulo 
    \todo Why not inline 
 */
-complex operator%(const complex z1, const nr_double_t r2) {
+nr_complex_t operator%(const nr_complex_t z1, const nr_double_t r2) {
   return z1 - r2 * floor (z1 / r2);
 }
 
 /*!\brief Modulo 
    \todo Why not inline 
 */
-complex operator%(const nr_double_t r1, const complex z2) {
+nr_complex_t operator%(const nr_double_t r1, const nr_complex_t z2) {
   return r1 - z2 * floor (r1 / z2);
 }
-
-/*!\brief Modulo and assign
-   \todo Why not inline 
-*/
-complex& complex::operator%=(const complex z) {
-  *this = *this % z;
-  return *this;
-}
-
-/*!\brief Modulo and assign
-   \todo Why not inline 
-*/
-complex& complex::operator%=(const nr_double_t r) {
-  *this = *this % r;
-  return *this;
-}
-
-/*!\brief Assign
-   \todo Why not inline 
-*/
-complex& complex::operator=(const complex z) {
-  r = z.r;
-  i = z.i;
-  return *this;
-}
-
-/*!\brief Assign with real 
-   \todo Why not inline 
-*/
-complex& complex::operator=(const nr_double_t x) {
-  r = x;
-  i = 0.0;
-  return *this;
-}
-
-/*!\brief Multiply and assign
-   \todo Put near other *=
-*/
-complex& complex::operator*=(const complex z) {
-  nr_double_t n;
-  n = r * z.r - i * z.i;
-  i = i * z.r + r * z.i;
-  r = n;
-  return *this;
-}
-
-#ifdef DEBUG
-#include <stdio.h>
-/*!\brief Print a complex number
-   \todo Transform in inline
-   \todo Add a debug method that is void if non debug
-*/
-void complex::print (void) {
-  fprintf (stderr, "%+.2e,%+.2e ", (double) r, (double) i);
-}
-#endif /* DEBUG */

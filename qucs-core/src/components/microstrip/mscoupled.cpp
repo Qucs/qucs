@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscoupled.cpp,v 1.21 2006/01/30 07:45:35 raimi Exp $
+ * $Id: mscoupled.cpp,v 1.22 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -106,17 +106,17 @@ void mscoupled::calcSP (nr_double_t frequency) {
 
   // compute propagation constants for even and odd mode
   calcPropagation (frequency);
-  complex ge = rect (ae, be);
-  complex go = rect (ao, bo);
+  nr_complex_t ge = rect (ae, be);
+  nr_complex_t go = rect (ao, bo);
 
   // compute abbreviations
-  complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
+  nr_complex_t Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
   Ee = (sqr (ze) + sqr (z0)) * sinh (ge * l);
   Eo = (sqr (zo) + sqr (z0)) * sinh (go * l);
   De = 2 * ze * z0 * cosh (ge * l) + Ee;
   Do = 2 * zo * z0 * cosh (go * l) + Eo;
-  Xe = (sqr (ze) - sqr (z0)) * sinh (ge * l) / 2 / De;
-  Xo = (sqr (zo) - sqr (z0)) * sinh (go * l) / 2 / Do;
+  Xe = (sqr (ze) - sqr (z0)) * sinh (ge * l) / 2.0 / De;
+  Xo = (sqr (zo) - sqr (z0)) * sinh (go * l) / 2.0 / Do;
   Ye = ze * z0 / De;
   Yo = zo * z0 / Do;
 
@@ -443,11 +443,11 @@ void mscoupled::calcAC (nr_double_t frequency) {
 
   // compute propagation constants for even and odd mode
   calcPropagation (frequency);
-  complex ge = rect (ae, be);
-  complex go = rect (ao, bo);
+  nr_complex_t ge = rect (ae, be);
+  nr_complex_t go = rect (ao, bo);
 
   // compute abbreviations
-  complex De, Do, y1, y2, y3, y4;
+  nr_complex_t De, Do, y1, y2, y3, y4;
   De = 0.5 / (ze * sinh (ge * l));
   Do = 0.5 / (zo * sinh (go * l));
   y2 = -De - Do;

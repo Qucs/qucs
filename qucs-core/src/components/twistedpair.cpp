@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.6 2007/03/07 18:00:37 ela Exp $
+ * $Id: twistedpair.cpp,v 1.7 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -55,15 +55,15 @@ void twistedpair::initSP (void) {
 void twistedpair::calcSP (nr_double_t frequency) {
   calcPropagation (frequency);
 
-  complex g = rect (alpha, beta);
+  nr_complex_t g = rect (alpha, beta);
   nr_double_t p = 2 * z0 + zl;
   nr_double_t n = 2 * z0 - zl;
-  complex e = exp (2 * g * len);
-  complex d = p * p * e - n * n;
+  nr_complex_t e = exp (2.0 * g * len);
+  nr_complex_t d = p * p * e - n * n;
 
-  complex s11 = zl * (p * e + n) / d;
-  complex s14 = 1.0 - s11;
-  complex s12 = 4.0 * zl * z0 * exp (g * len) / d;
+  nr_complex_t s11 = zl * (p * e + n) / d;
+  nr_complex_t s14 = 1.0 - s11;
+  nr_complex_t s12 = 4.0 * zl * z0 * exp (g * len) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
@@ -182,9 +182,9 @@ void twistedpair::saveCharacteristics (nr_double_t) {
 void twistedpair::calcAC (nr_double_t frequency) {
   if (len != 0.0) {
     calcPropagation (frequency);
-    complex g = rect (alpha, beta);
-    complex y11 = coth (g * len) / zl;
-    complex y21 = -cosech (g * len) / zl;
+    nr_complex_t g = rect (alpha, beta);
+    nr_complex_t y11 = coth (g * len) / zl;
+    nr_complex_t y21 = -cosech (g * len) / zl;
     setY (NODE_1, NODE_1, +y11); setY (NODE_2, NODE_2, +y11);
     setY (NODE_3, NODE_3, +y11); setY (NODE_4, NODE_4, +y11);
     setY (NODE_1, NODE_4, -y11); setY (NODE_4, NODE_1, -y11);

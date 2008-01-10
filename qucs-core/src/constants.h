@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: constants.h,v 1.6 2007/08/15 11:02:44 ela Exp $
+ * $Id: constants.h,v 1.7 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -114,15 +114,15 @@
 /*!\brief hyperbolic cotangent 
    \todo Better as static inline 
 */
-#define coth(x)   (1 / tanh (x))
+#define coth(x)   (1.0 / tanh (x))
 /*!\brief hyperbolic secant
    \todo Better as static inline 
 */
-#define sech(x)   (1 / cosh (x))
+#define sech(x)   (1.0 / cosh (x))
 /*!\brief hyperbolic cosecant
    \todo Better as static inline 
 */
-#define cosech(x) (1 / sinh (x))
+#define cosech(x) (1.0 / sinh (x))
 /*!\brief Convert kelvin to celcius
    \todo Better as static inline 
    \todo Rename as kelvin2celcius

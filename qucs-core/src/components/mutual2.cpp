@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual2.cpp,v 1.2 2005/11/24 10:10:21 raimi Exp $
+ * $Id: mutual2.cpp,v 1.3 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -56,12 +56,12 @@ matrix mutual2::calcMatrixY (nr_double_t frequency) {
   nr_double_t l3 = getPropertyDouble ("L3");
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = 1 - k12 * k12 - k13 * k13 - k23 * k23 + 2 * k12 * k13 * k23;
-  complex y11 = rect (0, (k23 * k23 - 1) / l1 / a / o);
-  complex y22 = rect (0, (k12 * k12 - 1) / l3 / a / o);
-  complex y44 = rect (0, (k13 * k13 - 1) / l2 / a / o);
-  complex y12 = rect (0, (k13 - k12 * k23) / sqrt (l1 * l3) / a / o);
-  complex y15 = rect (0, (k12 - k13 * k23) / sqrt (l1 * l2) / a / o);
-  complex y25 = rect (0, (k23 - k12 * k13) / sqrt (l2 * l3) / a / o);
+  nr_complex_t y11 = rect (0, (k23 * k23 - 1) / l1 / a / o);
+  nr_complex_t y22 = rect (0, (k12 * k12 - 1) / l3 / a / o);
+  nr_complex_t y44 = rect (0, (k13 * k13 - 1) / l2 / a / o);
+  nr_complex_t y12 = rect (0, (k13 - k12 * k23) / sqrt (l1 * l3) / a / o);
+  nr_complex_t y15 = rect (0, (k12 - k13 * k23) / sqrt (l1 * l2) / a / o);
+  nr_complex_t y25 = rect (0, (k23 - k12 * k13) / sqrt (l2 * l3) / a / o);
   
   matrix y = matrix (6);
   y.set (NODE_1, NODE_1, +y11); y.set (NODE_6, NODE_6, +y11);

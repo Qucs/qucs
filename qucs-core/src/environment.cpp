@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.14 2007/10/19 17:54:17 ela Exp $
+ * $Id: environment.cpp,v 1.15 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "complex.h"
 #include "variable.h"
 #include "equation.h"
 #include "ptrlist.h"

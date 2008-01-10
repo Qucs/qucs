@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.17 2006/01/30 07:45:35 raimi Exp $
+ * $Id: cpwline.cpp,v 1.18 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -296,10 +296,10 @@ void cpwline::calcSP (nr_double_t frequency) {
   // calculate and set S-parameters
   nr_double_t z = zl / z0;
   nr_double_t y = 1 / z;
-  complex g = rect (alpha, beta);
-  complex n = 2 * cosh (g * len) + (z + y) * sinh (g * len);
-  complex s11 = (z - y) * sinh (g * len) / n;
-  complex s21 = 2 / n;
+  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t n = 2.0 * cosh (g * len) + (z + y) * sinh (g * len);
+  nr_complex_t s11 = (z - y) * sinh (g * len) / n;
+  nr_complex_t s21 = 2.0 / n;
 
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
@@ -433,9 +433,9 @@ void cpwline::calcAC (nr_double_t frequency) {
   calcAB (frequency, zl, alpha, beta);
 
   // calculate and set Y-parameters
-  complex g = rect (alpha, beta);
-  complex y11 = coth (g * len) / zl;
-  complex y21 = -cosech (g * len) / zl;
+  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t y11 = coth (g * len) / zl;
+  nr_complex_t y21 = -cosech (g * len) / zl;
 
   setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
   setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);

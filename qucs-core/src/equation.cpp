@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.62 2007/09/25 17:39:07 ela Exp $
+ * $Id: equation.cpp,v 1.63 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -88,7 +88,7 @@ constant::constant (const constant & o) : node (o) {
     d = o.d;
     break;
   case TAG_COMPLEX:
-    c = dataref ? o.c : new complex (*o.c);
+    c = dataref ? o.c : new nr_complex_t (*o.c);
     break;
   case TAG_VECTOR:
     v = dataref ? o.v : new vector (*o.v);
@@ -149,7 +149,7 @@ void constant::print (void) {
 }
 
 // Returns the string representation of a complex value.
-static char * Cplx2String (complex c) {
+static char * Cplx2String (nr_complex_t c) {
   static char str[256]; // enough for a real or complex number
   if (imag (c) == 0.0) {
     sprintf (str, "%g", (double) real (c));

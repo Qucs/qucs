@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: mscorner.cpp,v 1.15 2006/01/27 09:32:02 raimi Exp $
+ * $Id: mscorner.cpp,v 1.16 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -92,8 +92,8 @@ matrix mscorner::calcMatrixZ (nr_double_t frequency) {
 
   // create Z-parameter matrix
   matrix z (2);
-  complex z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
-  complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
+  nr_complex_t z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
+  nr_complex_t z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
   z.set (0, 0, z11);
   z.set (0, 1, z21);
   z.set (1, 0, z21);

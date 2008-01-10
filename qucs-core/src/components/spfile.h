@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.13 2006/04/28 07:08:26 raimi Exp $
+ * $Id: spfile.h,v 1.14 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -54,12 +54,12 @@ class spfile : public circuit
   void calcNoiseAC (nr_double_t);
   void createIndex (void);
   void prepare (void);
-  complex interpolate (struct spfile_index_t * , nr_double_t);
-  complex interpolate_lin (vector *, vector *, nr_double_t, int);
-  complex interpolate_spl (spline *, spline *, nr_double_t);
+  nr_complex_t interpolate (struct spfile_index_t * , nr_double_t);
+  nr_complex_t interpolate_lin (vector *, vector *, nr_double_t, int);
+  nr_complex_t interpolate_spl (spline *, spline *, nr_double_t);
   void createVector (int, int);
-  matrix correlationMatrix (nr_double_t, complex, nr_double_t, matrix);
-  nr_double_t noiseFigure (matrix, matrix, nr_double_t&, complex&,
+  matrix correlationMatrix (nr_double_t, nr_complex_t, nr_double_t, matrix);
+  nr_double_t noiseFigure (matrix, matrix, nr_double_t&, nr_complex_t&,
 			   nr_double_t&);
   matrix expandNoiseMatrix (matrix, matrix);
   matrix shrinkNoiseMatrix (matrix, matrix);

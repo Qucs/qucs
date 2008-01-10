@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.23 2007/11/01 21:42:46 ela Exp $
+ * $Id: matvec.cpp,v 1.24 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -218,14 +218,14 @@ matvec operator + (matrix a, matvec b) {
 }
 
 // Matrix vector scalar addition.
-matvec operator + (matvec a, complex z) {
+matvec operator + (matvec a, nr_complex_t z) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + z, i);
   return res;
 }
 
 // Matrix vector scalar addition in different order.
-matvec operator + (complex z, matvec a) {
+matvec operator + (nr_complex_t z, matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (z + a.get (i), i);
   return res;
@@ -246,14 +246,14 @@ matvec operator + (nr_double_t d, matvec a) {
 }
 
 // Matrix vector scalar subtraction.
-matvec operator - (matvec a, complex z) {
+matvec operator - (matvec a, nr_complex_t z) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - z, i);
   return res;
 }
 
 // Matrix vector scalar subtraction in different order.
-matvec operator - (complex z, matvec a) {
+matvec operator - (nr_complex_t z, matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (z - a.get (i), i);
   return res;
@@ -329,14 +329,14 @@ matvec matvec::operator -= (matvec a) {
 }
 
 // Matrix vector scaling.
-matvec operator * (matvec a, complex z) {
+matvec operator * (matvec a, nr_complex_t z) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * z, i);
   return res;
 }
 
 // Matrix vector scaling in different order.
-matvec operator * (complex z, matvec a) {
+matvec operator * (nr_complex_t z, matvec a) {
   return a * z;
 }
 
@@ -366,7 +366,7 @@ matvec operator * (vector a, matvec b) {
 }
 
 // Matrix vector scaling.
-matvec operator / (matvec a, complex z) {
+matvec operator / (matvec a, nr_complex_t z) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) / z, i);
   return res;
@@ -490,7 +490,7 @@ matvec stos (matvec s, vector zref, vector z0) {
   return res;
 }
 
-matvec stos (matvec s, complex zref, complex z0) {
+matvec stos (matvec s, nr_complex_t zref, nr_complex_t z0) {
   int d = s.getRows ();
   return stos (s, vector (d, zref), vector (d, z0));
 }
@@ -499,11 +499,11 @@ matvec stos (matvec s, nr_double_t zref, nr_double_t z0) {
   return stos (s, rect (zref, 0), rect (z0, 0));
 }
 
-matvec stos (matvec s, vector zref, complex z0) {
+matvec stos (matvec s, vector zref, nr_complex_t z0) {
   return stos (s, zref, vector (zref.getSize (), z0));
 }
 
-matvec stos (matvec s, complex zref, vector z0) {
+matvec stos (matvec s, nr_complex_t zref, vector z0) {
   return stos (s, vector (z0.getSize (), zref), z0);
 }
 
@@ -515,7 +515,7 @@ matvec stoy (matvec s, vector z0) {
   return res;
 }
 
-matvec stoy (matvec s, complex z0) {
+matvec stoy (matvec s, nr_complex_t z0) {
   return stoy (s, vector (s.getCols (), z0));
 }
 
@@ -527,7 +527,7 @@ matvec ytos (matvec y, vector z0) {
   return res;
 }
 
-matvec ytos (matvec y, complex z0) {
+matvec ytos (matvec y, nr_complex_t z0) {
   return ytos (y, vector (y.getCols (), z0));
 }
 
@@ -539,7 +539,7 @@ matvec stoz (matvec s, vector z0) {
   return res;  
 }
 
-matvec stoz (matvec s, complex z0) {
+matvec stoz (matvec s, nr_complex_t z0) {
   return stoz (s, vector (s.getCols (), z0));
 }
 
@@ -551,7 +551,7 @@ matvec ztos (matvec z, vector z0) {
   return res;  
 }
 
-matvec ztos (matvec z, complex z0) {
+matvec ztos (matvec z, nr_complex_t z0) {
   return ztos (z, vector (z.getCols (), z0));
 }
 

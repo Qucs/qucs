@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.46 2006/12/10 20:42:07 raimi Exp $
+ * $Id: bjt.cpp,v 1.47 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -81,19 +81,19 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
   // compute admittance matrix entries
-  complex Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
-  complex Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
-  complex Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
+  nr_complex_t Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
+  nr_complex_t Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
+  nr_complex_t Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
 
   // admittance matrix entries for "transcapacitance"
-  complex Ybebc = rect (0.0, 2.0 * M_PI * frequency * dQbedUbc);
+  nr_complex_t Ybebc = rect (0.0, 2.0 * M_PI * frequency * dQbedUbc);
 
   // compute influence of excess phase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
-  complex gmf = polar (gm, -phase);
+  nr_complex_t gmf = polar (gm, -phase);
 #else
-  complex gmf = polar (gm + go, -phase) - go;
+  nr_complex_t gmf = polar (gm + go, -phase) - go;
 #endif
 
   // build admittance matrix

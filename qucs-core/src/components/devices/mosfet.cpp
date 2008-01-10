@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.36 2006/12/18 06:57:25 margraf Exp $
+ * $Id: mosfet.cpp,v 1.37 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -75,12 +75,12 @@ matrix mosfet::calcMatrixY (nr_double_t frequency) {
   nr_double_t gmb = getOperatingPoint ("gmb");
 
   // compute the models admittances
-  complex Ygd = rect (0.0, 2.0 * M_PI * frequency * Cgd);
-  complex Ygs = rect (0.0, 2.0 * M_PI * frequency * Cgs);
-  complex Yds = gds;
-  complex Ybd = rect (gbd, 2.0 * M_PI * frequency * Cbd);
-  complex Ybs = rect (gbs, 2.0 * M_PI * frequency * Cbs);
-  complex Ygb = rect (0.0, 2.0 * M_PI * frequency * Cgb);
+  nr_complex_t Ygd = rect (0.0, 2.0 * M_PI * frequency * Cgd);
+  nr_complex_t Ygs = rect (0.0, 2.0 * M_PI * frequency * Cgs);
+  nr_complex_t Yds = gds;
+  nr_complex_t Ybd = rect (gbd, 2.0 * M_PI * frequency * Cbd);
+  nr_complex_t Ybs = rect (gbs, 2.0 * M_PI * frequency * Cbs);
+  nr_complex_t Ygb = rect (0.0, 2.0 * M_PI * frequency * Cgb);
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y (4);

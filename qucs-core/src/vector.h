@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.29 2007/11/02 19:09:26 ela Exp $
+ * $Id: vector.h,v 1.30 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -33,14 +33,13 @@
 #undef log2
 #endif
 
-class complex;
 class strlist;
 class vector;
 
 vector linspace (nr_double_t, nr_double_t, int);
 vector logspace (nr_double_t, nr_double_t, int);
 vector runavg (vector, const int);
-vector runavg (const complex, const int);
+vector runavg (const nr_complex_t, const int);
 
 class vector : public object
 {
@@ -48,16 +47,16 @@ class vector : public object
   vector ();
   vector (const char *);
   vector (int);
-  vector (int, complex);
+  vector (int, nr_complex_t);
   vector (const char *, int);
   vector (const vector &);
   const vector& operator = (const vector &);
   ~vector ();
-  void add (complex);
+  void add (nr_complex_t);
   void add (vector *);
-  complex get (int);
+  nr_complex_t get (int);
   void set (nr_double_t, int);
-  void set (const complex, int);
+  void set (const nr_complex_t, int);
   int getSize (void);
   int checkSizes (vector, vector);
   int getRequested (void) { return requested; }
@@ -67,7 +66,7 @@ class vector : public object
   void setDependencies (strlist *);
   void setOrigin (char *);
   char * getOrigin (void);
-  int contains (complex, nr_double_t eps = NR_EPSI);
+  int contains (nr_complex_t, nr_double_t eps = NR_EPSI);
   void sort (bool ascending = true);
 
   nr_double_t maximum  (void);
@@ -76,14 +75,14 @@ class vector : public object
   nr_double_t variance (void);
   nr_double_t stddev   (void);
 
-  friend complex sum     (vector);
-  friend complex prod    (vector);
-  friend complex avg     (vector);
+  friend nr_complex_t sum     (vector);
+  friend nr_complex_t prod    (vector);
+  friend nr_complex_t avg     (vector);
   friend vector  cumsum  (vector);
   friend vector  cumprod (vector);
   friend vector  cumavg  (vector);
-  friend vector  dbm     (vector, const complex z = 50.0);
-  friend complex integrate (vector v, const complex);
+  friend vector  dbm     (vector, const nr_complex_t z = 50.0);
+  friend nr_complex_t integrate (vector v, const nr_complex_t);
   friend nr_double_t integrate (vector v, const nr_double_t);
 
   // vector manipulations
@@ -95,21 +94,21 @@ class vector : public object
   friend vector dB     (vector);
   friend vector ln     (vector);
   friend vector log2   (vector);
-  friend vector pow    (vector, const complex);
+  friend vector pow    (vector, const nr_complex_t);
   friend vector pow    (vector, const nr_double_t);
-  friend vector pow    (const complex, vector);
+  friend vector pow    (const nr_complex_t, vector);
   friend vector pow    (const nr_double_t, vector);
   friend vector pow    (vector, vector);
-  friend vector ztor   (vector, complex zref = 50.0);
-  friend vector rtoz   (vector, complex zref = 50.0);
-  friend vector ytor   (vector, complex zref = 50.0);
-  friend vector rtoy   (vector, complex zref = 50.0);
+  friend vector ztor   (vector, nr_complex_t zref = 50.0);
+  friend vector rtoz   (vector, nr_complex_t zref = 50.0);
+  friend vector ytor   (vector, nr_complex_t zref = 50.0);
+  friend vector rtoy   (vector, nr_complex_t zref = 50.0);
   friend vector diff   (vector, vector, int n = 1);
   friend vector unwrap (vector,
 			nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
 
-  friend vector polar   (vector, const complex);
-  friend vector polar   (const complex, vector);
+  friend vector polar   (vector, const nr_complex_t);
+  friend vector polar   (const nr_complex_t, vector);
   friend vector polar   (vector, vector);
   friend vector arctan2 (vector, const nr_double_t);
   friend vector arctan2 (const nr_double_t, vector);
@@ -117,9 +116,9 @@ class vector : public object
   friend vector dbm2w   (vector);
   friend vector w2dbm   (vector);
   friend vector xhypot  (vector, vector);
-  friend vector xhypot  (vector, const complex);
+  friend vector xhypot  (vector, const nr_complex_t);
   friend vector xhypot  (vector, const nr_double_t);
-  friend vector xhypot  (const complex, vector);
+  friend vector xhypot  (const nr_complex_t, vector);
   friend vector xhypot  (const nr_double_t, vector);
 
   // overloaded math functions
@@ -164,29 +163,29 @@ class vector : public object
 
   // operator functions
   friend vector operator + (vector, vector);
-  friend vector operator + (vector, const complex);
+  friend vector operator + (vector, const nr_complex_t);
   friend vector operator + (vector, const nr_double_t);
-  friend vector operator + (const complex, vector);
+  friend vector operator + (const nr_complex_t, vector);
   friend vector operator + (const nr_double_t, vector);
   friend vector operator - (vector, vector);
-  friend vector operator - (vector, const complex);
+  friend vector operator - (vector, const nr_complex_t);
   friend vector operator - (vector, const nr_double_t);
-  friend vector operator - (const complex, vector);
+  friend vector operator - (const nr_complex_t, vector);
   friend vector operator - (const nr_double_t, vector);
   friend vector operator * (vector, vector);
-  friend vector operator * (vector, const complex);
+  friend vector operator * (vector, const nr_complex_t);
   friend vector operator * (vector, const nr_double_t);
-  friend vector operator * (const complex, vector);
+  friend vector operator * (const nr_complex_t, vector);
   friend vector operator * (const nr_double_t, vector);
   friend vector operator / (vector, vector);
-  friend vector operator / (vector, const complex);
+  friend vector operator / (vector, const nr_complex_t);
   friend vector operator / (vector, const nr_double_t);
-  friend vector operator / (const complex, vector);
+  friend vector operator / (const nr_complex_t, vector);
   friend vector operator / (const nr_double_t, vector);
   friend vector operator % (vector, vector);
-  friend vector operator % (vector, const complex);
+  friend vector operator % (vector, const nr_complex_t);
   friend vector operator % (vector, const nr_double_t);
-  friend vector operator % (const complex, vector);
+  friend vector operator % (const nr_complex_t, vector);
   friend vector operator % (const nr_double_t, vector);
 
   // comparisons
@@ -195,31 +194,31 @@ class vector : public object
 
   // assignment operations
   vector operator  - ();
-  vector operator  = (const complex);
+  vector operator  = (const nr_complex_t);
   vector operator  = (const nr_double_t);
   vector operator += (vector);
-  vector operator += (const complex);
+  vector operator += (const nr_complex_t);
   vector operator += (const nr_double_t);
   vector operator -= (vector);
-  vector operator -= (const complex);
+  vector operator -= (const nr_complex_t);
   vector operator -= (const nr_double_t);
   vector operator *= (vector);
-  vector operator *= (const complex);
+  vector operator *= (const nr_complex_t);
   vector operator *= (const nr_double_t);
   vector operator /= (vector);
-  vector operator /= (const complex);
+  vector operator /= (const nr_complex_t);
   vector operator /= (const nr_double_t);
 
   // easy accessor operators
-  complex  operator () (int i) const { return data[i]; }
-  complex& operator () (int i) { return data[i]; }
+  nr_complex_t  operator () (int i) const { return data[i]; }
+  nr_complex_t& operator () (int i) { return data[i]; }
 
  private:
   int requested;
   int size;
   int capacity;
   strlist * dependencies;
-  complex * data;
+  nr_complex_t * data;
   char * origin;
 };
 

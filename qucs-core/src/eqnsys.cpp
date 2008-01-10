@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.39 2007/03/24 17:07:29 ela Exp $
+ * $Id: eqnsys.cpp,v 1.40 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -449,7 +449,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
 
     // finally divide by the pivot element
     if (c < N - 1) {
-      f = 1 / A_(c, c);
+      f = 1.0 / A_(c, c);
       for (r = c + 1; r < N; r++) A_(r, c) *= f;
     }
   }
@@ -928,7 +928,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
     // apply householder transformation to remaining columns
     for (r = c + 1; r < N; r++) {
       for (f = 0, k = c; k < N; k++) f += conj (A_(k, c)) * A_(k, r);
-      for (k = c; k < N; k++) A_(k, r) -= 2 * f * A_(k, c);
+      for (k = c; k < N; k++) A_(k, r) -= 2.0 * f * A_(k, c);
     }
 
     // update norms of remaining columns too
@@ -1003,7 +1003,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
     // scalar product u_k^T * B
     for (f = 0, r = c; r < N; r++) f += conj (A_(r, c)) * B_(r);
     // z - 2 * f * u_k
-    for (r = c; r < N; r++) B_(r) -= 2 * f * A_(r, c);
+    for (r = c; r < N; r++) B_(r) -= 2.0 * f * A_(r, c);
   }
 
   // backward substitution in order to solve RX = Q'B

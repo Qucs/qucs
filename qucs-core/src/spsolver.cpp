@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.49 2007/12/30 13:05:17 ela Exp $
+ * $Id: spsolver.cpp,v 1.50 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -108,7 +108,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
 
   circuit * s = n1->getCircuit ();
   circuit * result = new circuit (s->getSize () - 2);
-  complex p;
+  nr_complex_t p;
 
   // allocate S-parameter and noise corellation matrices
   result->initSP (); if (noise) result->initNoiseSP ();
@@ -117,7 +117,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  complex d = (1.0 - s->getS (k, l)) * (1.0 - s->getS (l, k)) -
+  nr_complex_t d = (1.0 - s->getS (k, l)) * (1.0 - s->getS (l, k)) -
     s->getS (k, k) * s->getS (l, l);
 
   // avoid singularity when two full reflective ports are interconnected
@@ -171,7 +171,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   circuit * s = n1->getCircuit ();
   circuit * t = n2->getCircuit ();
   circuit * result = new circuit (s->getSize () + t->getSize () - 2);
-  complex p;
+  nr_complex_t p;
 
   // allocate S-parameter and noise corellation matrices
   result->initSP (); if (noise) result->initNoiseSP ();
@@ -180,7 +180,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  complex d = 1.0 - s->getS (k, k) * t->getS (l, l);
+  nr_complex_t d = 1.0 - s->getS (k, k) * t->getS (l, l);
 
   // avoid singularity when two full reflective ports are connected
   nr_double_t tiny1 = (d == 0) ? 1.0 - TINYS : 1.0;
@@ -274,13 +274,13 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
 void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
 
   circuit * c = n1->getCircuit ();
-  complex p, k1, k2, k3, k4;
+  nr_complex_t p, k1, k2, k3, k4;
 
   // interconnected port numbers
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  complex t = (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) - 
+  nr_complex_t t = (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) - 
     c->getS (k, k) * c->getS (l, l);
 
   // avoid singularity when two full reflective ports are interconnected
@@ -341,13 +341,13 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
 void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
   circuit * c = n1->getCircuit ();
   circuit * d = n2->getCircuit ();
-  complex p;
+  nr_complex_t p;
 
   // connected port numbers
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  complex t = 1.0 - c->getS (k, k) * d->getS (l, l);
+  nr_complex_t t = 1.0 - c->getS (k, k) * d->getS (l, l);
 
   // avoid singularity when two full reflective ports are connected
   nr_double_t tiny1 = (t == 0) ? 1.0 - TINYS : 1.0;
@@ -973,7 +973,7 @@ void spsolver::saveResults (nr_double_t freq) {
   circuit * root = subnet->getRoot ();
 
   // temporary noise matrices and input port impedance
-  complex noise_c[4], noise_s[4];
+  nr_complex_t noise_c[4], noise_s[4];
   nr_double_t z0 = circuit::z0;
 
   // add current frequency to the dependency of the output dataset
@@ -1032,11 +1032,11 @@ void spsolver::saveResults (nr_double_t freq) {
 /* This function takes the s-parameter matrix and noise wave
    correlation matrix and computes the noise parameters based upon
    these values.  Then it save the results into the dataset. */
-void spsolver::saveNoiseResults (complex s[4], complex c[4],
+void spsolver::saveNoiseResults (nr_complex_t s[4], nr_complex_t c[4],
 				 nr_double_t z0, vector * f) {
-  complex c22 = c[3], c11 = c[0], c12 = c[1];
-  complex s11 = s[0], s21 = s[2];
-  complex n1, n2, F, Sopt, Fmin, Rn;
+  nr_complex_t c22 = c[3], c11 = c[0], c12 = c[1];
+  nr_complex_t s11 = s[0], s21 = s[2];
+  nr_complex_t n1, n2, F, Sopt, Fmin, Rn;
 
   // linear noise figure
   F    = real (1.0 + c22 / norm (s21));

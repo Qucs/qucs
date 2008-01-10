@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.16 2007/11/01 21:42:46 ela Exp $
+ * $Id: matvec.h,v 1.17 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -26,7 +26,6 @@
 #define __MATVEC_H__
 
 class matrix;
-class complex;
 
 class matvec
 {
@@ -52,8 +51,8 @@ class matvec
   friend matvec operator + (matvec, matvec);
   friend matvec operator + (matvec, matrix);
   friend matvec operator + (matrix, matvec);
-  friend matvec operator + (matvec, complex);
-  friend matvec operator + (complex, matvec);
+  friend matvec operator + (matvec, nr_complex_t);
+  friend matvec operator + (nr_complex_t, matvec);
   friend matvec operator + (matvec, nr_double_t);
   friend matvec operator + (nr_double_t, matvec);
   friend matvec operator + (matvec, vector);
@@ -61,19 +60,19 @@ class matvec
   friend matvec operator - (matvec, matvec);
   friend matvec operator - (matvec, matrix);
   friend matvec operator - (matrix, matvec);
-  friend matvec operator - (matvec, complex);
-  friend matvec operator - (complex, matvec);
+  friend matvec operator - (matvec, nr_complex_t);
+  friend matvec operator - (nr_complex_t, matvec);
   friend matvec operator - (matvec, nr_double_t);
   friend matvec operator - (nr_double_t, matvec);
   friend matvec operator - (matvec, vector);
   friend matvec operator - (vector, matvec);
-  friend matvec operator / (matvec, complex);
+  friend matvec operator / (matvec, nr_complex_t);
   friend matvec operator / (matvec, nr_double_t);
   friend matvec operator / (matvec, vector);
   friend matvec operator * (matvec, vector);
   friend matvec operator * (vector, matvec);
-  friend matvec operator * (matvec, complex);
-  friend matvec operator * (complex, matvec);
+  friend matvec operator * (matvec, nr_complex_t);
+  friend matvec operator * (nr_complex_t, matvec);
   friend matvec operator * (matvec, nr_double_t);
   friend matvec operator * (nr_double_t, matvec);
   friend matvec operator * (matvec, matvec);
@@ -100,19 +99,19 @@ class matvec
   friend vector rollet    (matvec);
   friend vector b1        (matvec);
 
-  friend matvec stos (matvec, complex, complex z0 = 50.0);
+  friend matvec stos (matvec, nr_complex_t, nr_complex_t z0 = 50.0);
   friend matvec stos (matvec, nr_double_t, nr_double_t z0 = 50.0);
-  friend matvec stos (matvec, vector, complex z0 = 50.0);
-  friend matvec stos (matvec, complex, vector);
+  friend matvec stos (matvec, vector, nr_complex_t z0 = 50.0);
+  friend matvec stos (matvec, nr_complex_t, vector);
   friend matvec stos (matvec, vector, vector);
-  friend matvec stoz (matvec, complex z0 = 50.0);
+  friend matvec stoz (matvec, nr_complex_t z0 = 50.0);
   friend matvec stoz (matvec, vector);
-  friend matvec ztos (matvec, complex z0 = 50.0);
+  friend matvec ztos (matvec, nr_complex_t z0 = 50.0);
   friend matvec ztos (matvec, vector);
   friend matvec ztoy (matvec);
-  friend matvec stoy (matvec, complex z0 = 50.0);
+  friend matvec stoy (matvec, nr_complex_t z0 = 50.0);
   friend matvec stoy (matvec, vector);
-  friend matvec ytos (matvec, complex z0 = 50.0);
+  friend matvec ytos (matvec, nr_complex_t z0 = 50.0);
   friend matvec ytos (matvec, vector);
   friend matvec ytoz (matvec);
 

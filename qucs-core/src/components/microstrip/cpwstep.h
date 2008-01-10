@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwstep.h,v 1.2 2005/06/02 18:17:55 raimi Exp $
+ * $Id: cpwstep.h,v 1.3 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@ class cpwstep : public circuit
 
   void checkProperties (void);
   void calcCends (nr_double_t, nr_double_t&, nr_double_t&);
-  complex calcY (nr_double_t);
+  nr_complex_t calcY (nr_double_t);
 };
 
 #endif /* __CPWSTEP_H__ */

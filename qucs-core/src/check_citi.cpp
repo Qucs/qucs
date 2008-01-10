@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_citi.cpp,v 1.1 2006/06/06 07:45:51 raimi Exp $
+ * $Id: check_citi.cpp,v 1.2 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -97,14 +97,14 @@ static vector * citi_create_vector (struct citi_package_t * p, int i,
   // convert data if necessary
   if (!strcmp (type, "MAGANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
-      complex val = vec->get (i);
+      nr_complex_t val = vec->get (i);
       val = polar (real (val), rad (imag (val)));
       vec->set (val, i);
     }
   }
   else if (!strcmp (type, "DBANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
-      complex val = vec->get (i);
+      nr_complex_t val = vec->get (i);
       val = polar (pow (10.0, real (val) / 20.0), rad (imag (val)));
       vec->set (val, i);
     }

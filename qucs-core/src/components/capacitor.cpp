@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.cpp,v 1.21 2007/08/07 20:43:10 ela Exp $
+ * $Id: capacitor.cpp,v 1.22 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -67,11 +67,11 @@ capacitor::capacitor () : circuit (2) {
 */
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
-  complex y = 2 * rect (0, 2.0 * M_PI * frequency * c);
-  setS (NODE_1, NODE_1, 1 / (1 + y));
-  setS (NODE_2, NODE_2, 1 / (1 + y));
-  setS (NODE_1, NODE_2, y / (1 + y));
-  setS (NODE_2, NODE_1, y / (1 + y));
+  nr_complex_t y = 2.0 * rect (0, 2.0 * M_PI * frequency * c);
+  setS (NODE_1, NODE_1, 1.0 / (1.0 + y));
+  setS (NODE_2, NODE_2, 1.0 / (1.0 + y));
+  setS (NODE_1, NODE_2, y / (1.0 + y));
+  setS (NODE_2, NODE_1, y / (1.0 + y));
 }
 
 /*\brief Init DC simulation of capacitor */
@@ -94,7 +94,7 @@ void capacitor::initDC (void) {
 */
 void capacitor::calcAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C");
-  complex y = rect (0, 2.0 * M_PI * frequency * c);
+  nr_complex_t y = rect (0, 2.0 * M_PI * frequency * c);
   setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
   setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }

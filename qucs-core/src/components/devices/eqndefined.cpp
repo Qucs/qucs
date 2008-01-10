@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.11 2007/09/25 17:39:08 ela Exp $
+ * $Id: eqndefined.cpp,v 1.12 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -382,7 +382,7 @@ matrix eqndefined::calcMatrixY (nr_double_t frequency) {
     for (j = 0; j < branches; j++, k++) {
       int r = i * 2;
       int c = j * 2;
-      complex val = rect (_jstat[k], o * _jdyna[k]);
+      nr_complex_t val = rect (_jstat[k], o * _jdyna[k]);
       y (r + 0, c + 0) = +val;
       y (r + 1, c + 1) = +val;
       y (r + 0, c + 1) = -val;

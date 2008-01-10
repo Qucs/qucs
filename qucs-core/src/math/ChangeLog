@@ -1,0 +1,8 @@
+2008-01-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am: Creating math library.  Complex class has been
+	renamed.  Now able to use also <complex> and <tr1/complex>.
+	Thanks a lot to Bastien.  Renamed complex to nr_complex_t
+	everywhere.
+
+	* ChangeLog: Created this file.

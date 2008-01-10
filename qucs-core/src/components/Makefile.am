@@ -49,7 +49,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	tswitch.h relais.h short.h twistedpair.h tline4p.h vexp.h iexp.h     \
 	mutualx.h vfile.h ifile.h
 
-INCLUDES = -I$(top_srcdir)/src
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
 CLEANFILES = *~ *.orig *.rej
 

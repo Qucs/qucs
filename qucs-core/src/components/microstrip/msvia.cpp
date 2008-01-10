@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msvia.cpp,v 1.9 2005/06/02 18:17:56 raimi Exp $
+ * $Id: msvia.cpp,v 1.10 2008/01/10 20:00:02 ela Exp $
  *
  */
 
@@ -64,14 +64,14 @@ void msvia::initSP (void) {
 void msvia::calcSP (nr_double_t frequency) {
   // calculate s-parameters
   Z = calcImpedance (frequency);
-  complex z = Z / z0;
-  setS (NODE_1, NODE_1, z / (z + 2));
-  setS (NODE_2, NODE_2, z / (z + 2));
-  setS (NODE_1, NODE_2, 2 / (z + 2));
-  setS (NODE_2, NODE_1, 2 / (z + 2));
+  nr_complex_t z = Z / z0;
+  setS (NODE_1, NODE_1, z / (z + 2.0));
+  setS (NODE_2, NODE_2, z / (z + 2.0));
+  setS (NODE_1, NODE_2, 2.0 / (z + 2.0));
+  setS (NODE_2, NODE_1, 2.0 / (z + 2.0));
 }
 
-complex msvia::calcImpedance (nr_double_t frequency) {
+nr_complex_t msvia::calcImpedance (nr_double_t frequency) {
   // fetch substrate and component properties
   substrate * subst = getSubstrate ();
   nr_double_t h   = subst->getPropertyDouble ("h");
@@ -132,14 +132,14 @@ void msvia::initAC (void) {
 }
 
 void msvia::calcAC (nr_double_t frequency) {
-  complex y = 1 / calcImpedance (frequency);
+  nr_complex_t y = 1.0 / calcImpedance (frequency);
   setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
   setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }
 
 void msvia::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
-  nr_double_t y = real (1 / Z);
+  nr_double_t y = real (1.0 / Z);
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) / T0 * 4.0 * y;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);

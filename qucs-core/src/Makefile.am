@@ -27,13 +27,14 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
 	parse_csv.y scan_csv.l 
 
-SUBDIRS = components . converter
+SUBDIRS = math components . converter
 
 bin_PROGRAMS = qucsator
 
-INCLUDES = -I$(top_srcdir)/src/components
+INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
 
 qucsator_LDADD = libqucsator.a		      \
+	math/libqucsmath.a	              \
 	components/libcomponent.a	      \
 	components/microstrip/libmicrostrip.a \
 	components/devices/libdevices.a	      \
@@ -51,7 +52,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp
 
-noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
+noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h        \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h object.h \
@@ -61,7 +62,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
 	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
-	valuelist.h pair.h characteristic.h range.h history.h fspecial.h      \
+	valuelist.h pair.h characteristic.h range.h history.h                 \
 	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
 	check_csv.h
@@ -71,8 +72,8 @@ noinst_LIBRARIES = libqucsator.a
 libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp   \
-	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp   \
-	matvec.cpp matrix.cpp fspecial.cpp precision.c parse_citi.cpp        \
+	strlist.cpp logging.c exception.cpp exceptionstack.cpp               \
+	matvec.cpp matrix.cpp precision.c parse_citi.cpp                     \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
 	parse_csv.cpp scan_csv.cpp

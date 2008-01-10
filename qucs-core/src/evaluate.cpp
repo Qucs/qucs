@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.70 2007/11/02 19:09:26 ela Exp $
+ * $Id: evaluate.cpp,v 1.71 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ using namespace fspecial;
 
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
 #define _B(var,idx) bool (var) = B (_ARES (idx));
-#define _CX(var,idx) complex * (var) = C (_ARES (idx));
+#define _CX(var,idx) nr_complex_t * (var) = C (_ARES (idx));
 #define _V(var,idx) vector * (var) = V (_ARES (idx));
 #define _M(var,idx) matrix * (var) = M (_ARES (idx));
 #define _MV(var,idx) matvec * (var) = MV (_ARES (idx));
@@ -121,14 +121,14 @@ using namespace fspecial;
 // Return value macros.
 #define _RETD(var) res->d = (var); return res;
 #define _RETB(var) res->b = (var); return res;
-#define _RETC(var) res->c = new complex (var); return res;
+#define _RETC(var) res->c = new nr_complex_t (var); return res;
 #define _RETV(var) res->v = new vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
 #define _RETMV(var) res->mv = new matvec (var); return res;
 #define _RETR(var) res->r = (var); return res;
 
 // Return value macros without arguments.
-#define __RETC() res->c = new complex (); return res;
+#define __RETC() res->c = new nr_complex_t (); return res;
 #define __RETV() res->v = new vector (); return res;
 #define __RETM() res->m = new matrix (); return res;
 #define __RETMV() res->mv = new matvec (); return res;
@@ -1310,9 +1310,9 @@ constant * evaluate::sqrt_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new complex (0.0, sqrt (-d1));
+    res->c = new nr_complex_t (0.0, sqrt (-d1));
   else
-    res->c = new complex (sqrt (d1));
+    res->c = new nr_complex_t (sqrt (d1));
   return res;
 }
 
@@ -1333,9 +1333,9 @@ constant * evaluate::ln_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new complex (log (-d1), M_PI);
+    res->c = new nr_complex_t (log (-d1), M_PI);
   else
-    res->c = new complex (log (d1));
+    res->c = new nr_complex_t (log (d1));
   return res;
 }
 
@@ -1356,9 +1356,9 @@ constant * evaluate::log10_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new complex (log10 (-d1), M_PI * M_LOG10E);
+    res->c = new nr_complex_t (log10 (-d1), M_PI * M_LOG10E);
   else
-    res->c = new complex (log10 (d1));
+    res->c = new nr_complex_t (log10 (d1));
   return res;
 }
 
@@ -1379,9 +1379,9 @@ constant * evaluate::log2_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new complex (log (-d1) * M_LOG2E, M_PI * M_LOG2E);
+    res->c = new nr_complex_t (log (-d1) * M_LOG2E, M_PI * M_LOG2E);
   else
-    res->c = new complex (log (d1) * M_LOG2E);
+    res->c = new nr_complex_t (log (d1) * M_LOG2E);
   return res;
 }
 
@@ -1521,7 +1521,7 @@ constant * evaluate::arcsec_d (constant * args) {
 constant * evaluate::arcsec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arccos (1 / *c1));
+  _RETC (arccos (1.0 / *c1));
 }
 
 constant * evaluate::arcsec_v (constant * args) {
@@ -1559,7 +1559,7 @@ constant * evaluate::arccosec_d (constant * args) {
 constant * evaluate::arccosec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcsin (1 / *c1));
+  _RETC (arcsin (1.0 / *c1));
 }
 
 constant * evaluate::arccosec_v (constant * args) {
@@ -1598,7 +1598,7 @@ constant * evaluate::arcosech_d (constant * args) {
 constant * evaluate::arcosech_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arsinh (1 / *c1));
+  _RETC (arsinh (1.0 / *c1));
 }
 
 constant * evaluate::arcosech_v (constant * args) {
@@ -1611,7 +1611,7 @@ constant * evaluate::arcosech_v (constant * args) {
 constant * evaluate::arcosh_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
-  _RETC (arcosh (complex (d1)));
+  _RETC (arcosh (nr_complex_t (d1)));
 }
 
 constant * evaluate::arcosh_c (constant * args) {
@@ -1630,7 +1630,7 @@ constant * evaluate::arcosh_v (constant * args) {
 constant * evaluate::arsech_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
-  _RETC (arsech (complex (d1)));
+  _RETC (arsech (nr_complex_t (d1)));
 }
 
 constant * evaluate::arsech_c (constant * args) {
@@ -1816,7 +1816,7 @@ constant * evaluate::max_d_c (constant * args) {
   _DEFC ();
   nr_double_t a = d1;
   nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
-  complex r = a > b ? d1 : *c2;
+  nr_complex_t r = a > b ? d1 : *c2;
   _RETC (r);
 }
 
@@ -1826,7 +1826,7 @@ constant * evaluate::max_c_c (constant * args) {
   _DEFC ();
   nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
-  complex r = a > b ? *c1 : *c2;
+  nr_complex_t r = a > b ? *c1 : *c2;
   _RETC (r);
 }
 
@@ -1836,7 +1836,7 @@ constant * evaluate::max_c_d (constant * args) {
   _DEFC ();
   nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = d2;
-  complex r = a > b ? *c1 : d2;
+  nr_complex_t r = a > b ? *c1 : d2;
   _RETC (r);
 }
 
@@ -1876,7 +1876,7 @@ constant * evaluate::min_d_c (constant * args) {
   _DEFC ();
   nr_double_t a = d1;
   nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
-  complex r = a < b ? d1 : *c2;
+  nr_complex_t r = a < b ? d1 : *c2;
   _RETC (r);
 }
 
@@ -1886,7 +1886,7 @@ constant * evaluate::min_c_c (constant * args) {
   _DEFC ();
   nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
-  complex r = a < b ? *c1 : *c2;
+  nr_complex_t r = a < b ? *c1 : *c2;
   _RETC (r);
 }
 
@@ -1896,7 +1896,7 @@ constant * evaluate::min_c_d (constant * args) {
   _DEFC ();
   nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = d2;
-  complex r = a < b ? *c1 : d2;
+  nr_complex_t r = a < b ? *c1 : d2;
   _RETC (r);
 }
 
@@ -2102,9 +2102,9 @@ constant * evaluate::index_m_2 (constant * args) {
     sprintf (txt, "matrix indices [%d,%d] out of bounds [1-%d,1-%d]",
 	     r, c, m->getRows (), m->getCols ());
     THROW_MATH_EXCEPTION (txt);
-    res->c = new complex ();
+    res->c = new nr_complex_t ();
   } else {
-    res->c = new complex (m->get (r - 1, c - 1));
+    res->c = new nr_complex_t (m->get (r - 1, c - 1));
   }
   return res;
 }
@@ -2691,7 +2691,7 @@ constant * evaluate::noise_circle_d_v (constant * args) {
   vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
   vector C = *Sopt / (1 + N);
   vector * circle = new vector (C.getSize () * arc->getSize ());
-  int i, a, j; complex v;
+  int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2725,7 +2725,7 @@ constant * evaluate::noise_circle_v_v (constant * args) {
   _DEFV ();
   vector * circle =
     new vector (Sopt->getSize () * arc->getSize () * F->getSize ());
-  int i, a, j, f; complex v; vector N, R, C;
+  int i, a, j, f; nr_complex_t v; vector N, R, C;
   for (f = 0; f < F->getSize (); f++) {
     N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
     R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
@@ -2768,7 +2768,7 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
   vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
-  int a, d, i; complex v;
+  int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2799,7 +2799,7 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
   vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
-  int a, d, i; complex v;
+  int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2839,7 +2839,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
   vector * circle = new vector (S->getSize () * arc->getSize ());
-  int i, a, j; complex v;
+  int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2870,7 +2870,7 @@ constant * evaluate::ga_circle_v_v (constant * args) {
   _DEFV ();
   vector * circle =
     new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
+  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
@@ -2924,7 +2924,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
   vector * circle = new vector (S->getSize () * arc->getSize ());
-  int i, a, j; complex v;
+  int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2955,7 +2955,7 @@ constant * evaluate::gp_circle_v_v (constant * args) {
   _DEFV ();
   vector * circle =
     new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
+  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
@@ -3115,7 +3115,7 @@ constant * evaluate::max_r (constant * args) {
     _RETD (0.0);
   }
   vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
-  complex c;
+  nr_complex_t c;
   nr_double_t d, M = -NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
@@ -3137,7 +3137,7 @@ constant * evaluate::min_r (constant * args) {
     _RETD (0.0);
   }
   vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
-  complex c;
+  nr_complex_t c;
   nr_double_t d, M = +NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
@@ -3159,7 +3159,7 @@ constant * evaluate::avg_r (constant * args) {
     _RETC (0.0);
   }
   vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
-  complex c = 0.0;
+  nr_complex_t c = 0.0;
   int i, k;
   for (k = i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
@@ -3167,7 +3167,7 @@ constant * evaluate::avg_r (constant * args) {
       k++;
     }
   }
-  _RETC (c / k);
+  _RETC (c / (nr_double_t) k);
 }
 
 // *************** range functionality *****************
@@ -3730,7 +3730,7 @@ constant * evaluate::ifthenelse_c_c (constant * args) {
   _ARB0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  complex c1, c2;
+  nr_complex_t c1, c2;
   if (t1 == TAG_DOUBLE)
     c1 = D(_ARES(1));
   else if (t1 == TAG_COMPLEX)

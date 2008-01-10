@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.7 2007/09/16 16:49:40 ela Exp $
+ * $Id: bondwire.cpp,v 1.8 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -345,7 +345,7 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
   Lw = L * 2 * M_PI * f;
 
   /* build Y-parameter matrix */
-  complex yL = 1.0 / rect (R, Lw);
+  nr_complex_t yL = 1.0 / rect (R, Lw);
 
   matrix Y (2);
   Y.set (NODE_1, NODE_1, +yL);

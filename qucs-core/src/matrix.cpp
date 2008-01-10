@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.32 2007/11/01 21:42:46 ela Exp $
+ * $Id: matrix.cpp,v 1.33 2008/01/10 20:00:00 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -114,7 +114,7 @@ matrix::matrix () {
 */
 matrix::matrix (int s)  {
   rows = cols = s;
-  data = (s > 0) ? new complex[s * s] : NULL;
+  data = (s > 0) ? new nr_complex_t[s * s] : NULL;
 }
 
 /* \brief Creates a matrix
@@ -129,7 +129,7 @@ matrix::matrix (int s)  {
 matrix::matrix (int r, int c)  {
   rows = r;
   cols = c;
-  data = (r > 0 && c > 0) ? new complex[r * c] : NULL;
+  data = (r > 0 && c > 0) ? new nr_complex_t[r * c] : NULL;
 }
 
 /* \brief copy constructor
@@ -145,8 +145,8 @@ matrix::matrix (const matrix & m) {
 
   // copy matrix elements
   if (rows > 0 && cols > 0) {
-    data = new complex[rows * cols];
-    memcpy (data, m.data, sizeof (complex) * rows * cols);
+    data = new nr_complex_t[rows * cols];
+    memcpy (data, m.data, sizeof (nr_complex_t) * rows * cols);
   }
 }
 
@@ -168,8 +168,8 @@ const matrix& matrix::operator=(const matrix & m) {
       data = NULL; 
     }
     if (rows > 0 && cols > 0) {
-      data = new complex[rows * cols];
-      memcpy (data, m.data, sizeof (complex) * rows * cols);
+      data = new nr_complex_t[rows * cols];
+      memcpy (data, m.data, sizeof (nr_complex_t) * rows * cols);
     }
   }
   return *this;
@@ -189,7 +189,7 @@ matrix::~matrix () {
    \todo Why not inline and synonymous of ()
    \todo c and r const
 */
-complex matrix::get (int r, int c) {
+nr_complex_t matrix::get (int r, int c) {
   return data[r * cols + c];
 }
 
@@ -200,7 +200,7 @@ complex matrix::get (int r, int c) {
    \todo Why not inline and synonymous of ()
    \todo r c and z const
 */
-void matrix::set (int r, int c, complex z) {
+void matrix::set (int r, int c, nr_complex_t z) {
   data[r * cols + c] = z;
 }
 
@@ -293,7 +293,7 @@ matrix matrix::operator -= (matrix a) {
    \return Scaled matrix
    \todo Why not a and z const
 */
-matrix operator * (matrix a, complex z) {
+matrix operator * (matrix a, nr_complex_t z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -308,7 +308,7 @@ matrix operator * (matrix a, complex z) {
    \todo Why not a and z const
    \todo Why not inline
 */
-matrix operator * (complex z, matrix a) {
+matrix operator * (nr_complex_t z, matrix a) {
   return a * z;
 }
 
@@ -343,7 +343,7 @@ matrix operator * (nr_double_t d, matrix a) {
    \return Scaled matrix
    \todo Why not a and z const
 */
-matrix operator / (matrix a, complex z) {
+matrix operator / (matrix a, nr_complex_t z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -377,7 +377,7 @@ matrix operator * (matrix a, matrix b) {
   assert (a.getCols () == b.getRows ());
 
   int r, c, i, n = a.getCols ();
-  complex z;
+  nr_complex_t z;
   matrix res (a.getRows (), b.getCols ());
   for (r = 0; r < a.getRows (); r++) {
     for (c = 0; c < b.getCols (); c++) {
@@ -394,7 +394,7 @@ matrix operator * (matrix a, matrix b) {
    \todo Move near other +
    \todo a and z are const
 */
-matrix operator + (matrix a, complex z) {
+matrix operator + (matrix a, nr_complex_t z) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -409,7 +409,7 @@ matrix operator + (matrix a, complex z) {
    \todo a and z are const
    \todo Why not inline
 */
-matrix operator + (complex z, matrix a) {
+matrix operator + (nr_complex_t z, matrix a) {
   return a + z;
 }
 
@@ -445,7 +445,7 @@ matrix operator + (nr_double_t d, matrix a) {
    \todo a and z are const
    \todo Why not inline
 */
-matrix operator - (matrix a, complex z) {
+matrix operator - (matrix a, nr_complex_t z) {
   return -z + a;
 }
 
@@ -456,7 +456,7 @@ matrix operator - (matrix a, complex z) {
    \todo a and z are const
    \todo Why not inline
 */
-matrix operator - (complex z, matrix a) {
+matrix operator - (nr_complex_t z, matrix a) {
   return -a + z;
 }
 
@@ -631,7 +631,7 @@ matrix diagonal (vector diag) {
    \todo #ifdef 0
    \todo static?
 */
-complex cofactor (matrix a, int u, int v) {
+nr_complex_t cofactor (matrix a, int u, int v) {
   matrix res (a.getRows () - 1, a.getCols () - 1);
   int r, c, ra, ca;
   for (ra = r = 0; r < res.getRows (); r++, ra++) {
@@ -641,7 +641,7 @@ complex cofactor (matrix a, int u, int v) {
       res.set (r, c, a.get (ra, ca));
     }
   }
-  complex z = detLaplace (res);
+  nr_complex_t z = detLaplace (res);
   return ((u + v) & 1) ? -z : z;
 }
 
@@ -660,10 +660,10 @@ complex cofactor (matrix a, int u, int v) {
    \todo #ifdef 0
    \todo static ?
 */
-complex detLaplace (matrix a) {
+nr_complex_t detLaplace (matrix a) {
   assert (a.getRows () == a.getCols ());
   int s = a.getRows ();
-  complex res = 0;
+  nr_complex_t res = 0;
   if (s > 1) {
     /* always use the first row for sub-determinant, but you should
        use the row or column with most zeros in it */
@@ -691,10 +691,10 @@ complex detLaplace (matrix a) {
    \todo static ?
    \todo a const?
    */
-complex detGauss (matrix a) {
+nr_complex_t detGauss (matrix a) {
   assert (a.getRows () == a.getCols ());
   nr_double_t MaxPivot;
-  complex f, res;
+  nr_complex_t f, res;
   matrix b;
   int i, c, r, pivot, n = a.getCols ();
 
@@ -736,7 +736,7 @@ complex detGauss (matrix a) {
    \return Complex determinant
    \todo a const?
 */
-complex det (matrix a) {
+nr_complex_t det (matrix a) {
 #if 0
   return detLaplace (a);
 #else
@@ -755,7 +755,7 @@ complex det (matrix a) {
 */
 matrix inverseLaplace (matrix a) {
   matrix res (a.getRows (), a.getCols ());
-  complex d = detLaplace (a);
+  nr_complex_t d = detLaplace (a);
   assert (abs (d) != 0); // singular matrix
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
@@ -774,7 +774,7 @@ matrix inverseLaplace (matrix a) {
 */
 matrix inverseGaussJordan (matrix a) {
   nr_double_t MaxPivot;
-  complex f;
+  nr_complex_t f;
   matrix b, e;
   int i, c, r, pivot, n = a.getCols ();
 
@@ -884,7 +884,7 @@ matrix stos (matrix s, vector zref, vector z0) {
    \return Renormalized scattering matrix
    \todo s, zref and z0 const
 */
-matrix stos (matrix s, complex zref, complex z0) {
+matrix stos (matrix s, nr_complex_t zref, nr_complex_t z0) {
   int d = s.getRows ();
   return stos (s, vector (d, zref), vector (d, z0));
 }
@@ -909,7 +909,7 @@ matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
    \return Renormalized scattering matrix
    \todo s, zref and z0 const
 */ 
-matrix stos (matrix s, vector zref, complex z0) {
+matrix stos (matrix s, vector zref, nr_complex_t z0) {
   return stos (s, zref, vector (zref.getSize (), z0));
 }
 
@@ -921,7 +921,7 @@ matrix stos (matrix s, vector zref, complex z0) {
   \todo s, zref and z0 const
   \return Renormalized scattering matrix
 */ 
-matrix stos (matrix s, complex zref, vector z0) {
+matrix stos (matrix s, nr_complex_t zref, vector z0) {
   return stos (s, vector (z0.getSize (), zref), z0);
 }
 
@@ -966,7 +966,7 @@ matrix stoz (matrix s, vector z0) {
    \todo Why not inline?
    \todo s and z0 const?
 */
-matrix stoz (matrix s, complex z0) {
+matrix stoz (matrix s, nr_complex_t z0) {
   return stoz (s, vector (s.getRows (), z0));
 }
 
@@ -1011,7 +1011,7 @@ matrix ztos (matrix z, vector z0) {
    \todo Why not inline
    \todo z and z0 const
  */
-matrix ztos (matrix z, complex z0) {
+matrix ztos (matrix z, nr_complex_t z0) {
   return ztos (z, vector (z.getRows (), z0));
 }
 
@@ -1075,7 +1075,7 @@ matrix stoy (matrix s, vector z0) {
    \todo Why not inline
    \todo s and z0 const
  */
-matrix stoy (matrix s, complex z0) {
+matrix stoy (matrix s, nr_complex_t z0) {
   return stoy (s, vector (s.getRows (), z0));
 }
 
@@ -1125,7 +1125,7 @@ matrix ytos (matrix y, vector z0) {
    \todo Why not inline
    \todo y and z0 const
  */
-matrix ytos (matrix y, complex z0) {
+matrix ytos (matrix y, nr_complex_t z0) {
   return ytos (y, vector (y.getRows (), z0));
 }
 /*!\brief Converts chain matrix to scattering parameters.
@@ -1155,9 +1155,9 @@ matrix ytos (matrix y, complex z0) {
     \note Assert 2 by 2 matrix
     \todo Why not s,z1,z2 const
 */
-matrix stoa (matrix s, complex z1, complex z2) {
-  complex d = s (0, 0) * s (1, 1) - s (0, 1) * s (1, 0);
-  complex n = 2.0 * s (1, 0) * sqrt (fabs (real (z1) * real (z2)));
+matrix stoa (matrix s, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t d = s (0, 0) * s (1, 1) - s (0, 1) * s (1, 0);
+  nr_complex_t n = 2.0 * s (1, 0) * sqrt (fabs (real (z1) * real (z2)));
   matrix a (2);
 
   assert (s.getRows () >= 2 && s.getCols () >= 2);
@@ -1196,9 +1196,9 @@ matrix stoa (matrix s, complex z1, complex z2) {
     \bug Do not use fabs
     \todo a, z1, z2 const
 */
-matrix atos (matrix a, complex z1, complex z2) {
-  complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
-  complex n = a (0, 0) * z2 + a (0, 1) + 
+matrix atos (matrix a, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
+  nr_complex_t n = a (0, 0) * z2 + a (0, 1) + 
     a (1, 0) * z1 * z2 + a (1, 1) * z1;
   matrix s (2);
 
@@ -1243,9 +1243,9 @@ matrix atos (matrix a, complex z1, complex z2) {
     \note Assert 2 by 2 matrix
     \todo Why not s,z1,z2 const
  */
-matrix stoh (matrix s, complex z1, complex z2) {
-  complex n = s (0, 1) * s (1, 0);
-  complex d = (1.0 - s (0, 0)) * (1.0 + s (1, 1)) + n;
+matrix stoh (matrix s, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t n = s (0, 1) * s (1, 0);
+  nr_complex_t d = (1.0 - s (0, 0)) * (1.0 + s (1, 1)) + n;
   matrix h (2);
 
   assert (s.getRows () >= 2 && s.getCols () >= 2);
@@ -1281,17 +1281,17 @@ matrix stoh (matrix s, complex z1, complex z2) {
    \note Assert 2 by 2 matrix
    \todo Why not h,z1,z2 const
 */
-matrix htos (matrix h, complex z1, complex z2) {
-  complex n = h (0, 1) * h (1, 0);
-  complex d = (1.0 + h (0, 0) / z1) * (1.0 + z2 * h (1, 1)) - n;
+matrix htos (matrix h, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t n = h (0, 1) * h (1, 0);
+  nr_complex_t d = (1.0 + h (0, 0) / z1) * (1.0 + z2 * h (1, 1)) - n;
   matrix s (2);
 
   assert (h.getRows () >= 2 && h.getCols () >= 2);
 
-  s.set (0, 0, ((h (0, 0) / z1 - 1) * (1 + z2 * h (1, 1)) - n) / d);
+  s.set (0, 0, ((h (0, 0) / z1 - 1.0) * (1.0 + z2 * h (1, 1)) - n) / d);
   s.set (0, 1, +2.0 * h (0, 1) / d);
   s.set (1, 0, -2.0 * h (1, 0) / d);
-  s.set (1, 1, ((1 + h (0, 0) / z1) * (1 - z2 * h (1, 1)) + n) / d);
+  s.set (1, 1, ((1.0 + h (0, 0) / z1) * (1.0 - z2 * h (1, 1)) + n) / d);
   return s;
 }
 
@@ -1305,9 +1305,9 @@ matrix htos (matrix h, complex z1, complex z2) {
   \note Assert 2 by 2 matrix
   \todo Why not s,z1,z2 const
 */
-matrix stog (matrix s, complex z1, complex z2) {
-  complex n = s (0, 1) * s (1, 0);
-  complex d = (1.0 + s (0, 0)) * (1.0 - s (1, 1)) + n;
+matrix stog (matrix s, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t n = s (0, 1) * s (1, 0);
+  nr_complex_t d = (1.0 + s (0, 0)) * (1.0 - s (1, 1)) + n;
   matrix g (2);
 
   assert (s.getRows () >= 2 && s.getCols () >= 2);
@@ -1329,17 +1329,17 @@ matrix stog (matrix s, complex z1, complex z2) {
   \note Assert 2 by 2 matrix
   \todo Why not g,z1,z2 const
 */
-matrix gtos (matrix g, complex z1, complex z2) {
-  complex n = g (0, 1) * g (1, 0);
-  complex d = (1.0 + g (0, 0) * z1) * (1.0 + g (1, 1) / z2) - n;
+matrix gtos (matrix g, nr_complex_t z1, nr_complex_t z2) {
+  nr_complex_t n = g (0, 1) * g (1, 0);
+  nr_complex_t d = (1.0 + g (0, 0) * z1) * (1.0 + g (1, 1) / z2) - n;
   matrix s (2);
 
   assert (g.getRows () >= 2 && g.getCols () >= 2);
 
-  s.set (0, 0, ((1 - g (0, 0) * z1) * (1 + g (1, 1) / z2) + n) / d);
+  s.set (0, 0, ((1.0 - g (0, 0) * z1) * (1.0 + g (1, 1) / z2) + n) / d);
   s.set (0, 1, -2.0 * g (0, 1) / d);
   s.set (1, 0, +2.0 * g (1, 0) / d);
-  s.set (1, 1, ((g (0, 0) * z1 + 1) * (g (1, 1) / z2 - 1) - n) / d);
+  s.set (1, 1, ((g (0, 0) * z1 + 1.0) * (g (1, 1) / z2 - 1.0) - n) / d);
   return s;
 }
 
@@ -1518,8 +1518,8 @@ matrix cytocz (matrix cy, matrix z) {
   \todo r1 and r2 const
 */
 void matrix::exchangeRows (int r1, int r2) {
-  complex * s = new complex[cols];
-  int len = sizeof (complex) * cols;
+  nr_complex_t * s = new nr_complex_t[cols];
+  int len = sizeof (nr_complex_t) * cols;
   
   assert (r1 >= 0 && r2 >= 0 && r1 < rows && r2 < rows);
 
@@ -1536,7 +1536,7 @@ void matrix::exchangeRows (int r1, int r2) {
   \todo c1 and c2 const
 */
 void matrix::exchangeCols (int c1, int c2) {
-  complex s;
+  nr_complex_t s;
 
   assert (c1 >= 0 && c2 >= 0 && c1 < cols && c2 < cols);
 
@@ -1570,7 +1570,7 @@ void matrix::exchangeCols (int c1, int c2) {
 */
 matrix twoport (matrix m, char in, char out) {
   assert (m.getRows () >= 2 && m.getCols () >= 2);
-  complex d;
+  nr_complex_t d;
   matrix res (2);
 
   switch (in) {

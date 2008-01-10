@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscross.cpp,v 1.9 2007/03/11 14:01:25 ela Exp $
+ * $Id: mscross.cpp,v 1.10 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -149,15 +149,15 @@ matrix mscross::calcMatrixY (nr_double_t f) {
 
   // compute admittance matrix
   nr_double_t o = 2 * M_PI * f;
-  complex yc1 = rect (0, o * C1);
-  complex yc2 = rect (0, o * C2);
-  complex yc3 = rect (0, o * C3);
-  complex yc4 = rect (0, o * C4);
-  complex yl1 = 1 / rect (0, o * L1);
-  complex yl2 = 1 / rect (0, o * L2);
-  complex yl3 = 1 / rect (0, o * L3);
-  complex yl4 = 1 / rect (0, o * L4);
-  complex yl5 = 1 / rect (0, o * L5);
+  nr_complex_t yc1 = rect (0, o * C1);
+  nr_complex_t yc2 = rect (0, o * C2);
+  nr_complex_t yc3 = rect (0, o * C3);
+  nr_complex_t yc4 = rect (0, o * C4);
+  nr_complex_t yl1 = 1.0 / rect (0, o * L1);
+  nr_complex_t yl2 = 1.0 / rect (0, o * L2);
+  nr_complex_t yl3 = 1.0 / rect (0, o * L3);
+  nr_complex_t yl4 = 1.0 / rect (0, o * L4);
+  nr_complex_t yl5 = 1.0 / rect (0, o * L5);
   matrix Y (6);
   Y.set (NODE_1, NODE_1, yl1 + yc1);
   Y.set (NODE_2, NODE_2, yl2 + yc2);

@@ -197,6 +197,7 @@ dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  src/Makefile
+                 src/math/Makefile
                  src/converter/Makefile
                  src/components/Makefile
                  src/components/microstrip/Makefile

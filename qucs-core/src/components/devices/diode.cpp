@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.41 2007/04/19 16:06:27 ela Exp $
+ * $Id: diode.cpp,v 1.42 2008/01/10 20:00:01 ela Exp $
  *
  */
 
@@ -66,7 +66,7 @@ diode::diode () : circuit (2) {
 void diode::calcSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  complex y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
   setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
@@ -85,8 +85,8 @@ void diode::calcNoiseSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
-  complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
-  complex f = 2 * z0 * (Id + 2 * Is) / norm (2 * z0 * y + 1) * QoverkB / T0;
+  nr_complex_t y = rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t f = 2 * z0 * (Id + 2 * Is) / norm (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
 #else
@@ -394,7 +394,7 @@ void diode::initAC (void) {
 void diode::calcAC (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = rect (gd, Cd * 2.0 * M_PI * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
 }

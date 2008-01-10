@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.48 2007/09/16 16:49:38 ela Exp $
+ * $Id: circuit.cpp,v 1.49 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -130,34 +130,34 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
     // copy each s-parameter
     if (c.MatrixS) {
       allocMatrixS ();
-      memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
+      memcpy (MatrixS, c.MatrixS, size * size * sizeof (nr_complex_t));
     }
     // copy each noise-correlation parameter
     if (c.MatrixN) {
       allocMatrixN (nsources);
       int i = size + nsources;
-      memcpy (MatrixN, c.MatrixN, i * i * sizeof (complex));
+      memcpy (MatrixN, c.MatrixN, i * i * sizeof (nr_complex_t));
     }
     // copy each HB-matrix entry
     if (c.MatrixQV) {
       allocMatrixHB ();
-      memcpy (MatrixQV, c.MatrixQV, size * size * sizeof (complex));
-      memcpy (VectorGV, c.VectorGV, size * sizeof (complex));
-      memcpy (VectorCV, c.VectorCV, size * sizeof (complex));
-      memcpy (VectorQ, c.VectorQ, size * sizeof (complex));
+      memcpy (MatrixQV, c.MatrixQV, size * size * sizeof (nr_complex_t));
+      memcpy (VectorGV, c.VectorGV, size * sizeof (nr_complex_t));
+      memcpy (VectorCV, c.VectorCV, size * sizeof (nr_complex_t));
+      memcpy (VectorQ, c.VectorQ, size * sizeof (nr_complex_t));
     }
     // copy each G-MNA matrix entry
     if (c.MatrixY) {
       allocMatrixMNA ();
-      memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
-      memcpy (VectorI, c.VectorI, size * sizeof (complex));
-      memcpy (VectorV, c.VectorV, size * sizeof (complex));
+      memcpy (MatrixY, c.MatrixY, size * size * sizeof (nr_complex_t));
+      memcpy (VectorI, c.VectorI, size * sizeof (nr_complex_t));
+      memcpy (VectorV, c.VectorV, size * sizeof (nr_complex_t));
       if (vsources > 0) {
-	memcpy (MatrixB, c.MatrixB, vsources * size * sizeof (complex));
-	memcpy (MatrixC, c.MatrixC, vsources * size * sizeof (complex));
-	memcpy (MatrixD, c.MatrixD, vsources * vsources * sizeof (complex));
-	memcpy (VectorE, c.VectorE, vsources * sizeof (complex));
-	memcpy (VectorJ, c.VectorJ, vsources * sizeof (complex));
+	memcpy (MatrixB, c.MatrixB, vsources * size * sizeof (nr_complex_t));
+	memcpy (MatrixC, c.MatrixC, vsources * size * sizeof (nr_complex_t));
+	memcpy (MatrixD, c.MatrixD, vsources * vsources * sizeof (nr_complex_t));
+	memcpy (VectorE, c.VectorE, vsources * sizeof (nr_complex_t));
+	memcpy (VectorJ, c.VectorJ, vsources * sizeof (nr_complex_t));
       }
     }
   }
@@ -224,33 +224,33 @@ void circuit::freeMatrixHB (void) {
 /* Allocates the HB-matrix memory. */
 void circuit::allocMatrixHB (void) {
   if (VectorQ) {
-    memset (VectorQ, 0, size * sizeof (complex));
+    memset (VectorQ, 0, size * sizeof (nr_complex_t));
   } else {
-    VectorQ = new complex[size];
+    VectorQ = new nr_complex_t[size];
   }
   if (MatrixQV) {
-    memset (MatrixQV, 0, size * size * sizeof (complex));
+    memset (MatrixQV, 0, size * size * sizeof (nr_complex_t));
   } else {
-    MatrixQV = new complex[size * size];
+    MatrixQV = new nr_complex_t[size * size];
   }
   if (VectorCV) {
-    memset (VectorCV, 0, size * sizeof (complex));
+    memset (VectorCV, 0, size * sizeof (nr_complex_t));
   } else {
-    VectorCV = new complex[size];
+    VectorCV = new nr_complex_t[size];
   }
   if (VectorGV) {
-    memset (VectorGV, 0, size * sizeof (complex));
+    memset (VectorGV, 0, size * sizeof (nr_complex_t));
   } else {
-    VectorGV = new complex[size];
+    VectorGV = new nr_complex_t[size];
   }
 }
 
 /* Allocates the S-parameter matrix memory. */
 void circuit::allocMatrixS (void) {
   if (MatrixS) {
-    memset (MatrixS, 0, size * size * sizeof (complex));
+    memset (MatrixS, 0, size * size * sizeof (nr_complex_t));
   } else {
-    MatrixS = new complex[size * size];
+    MatrixS = new nr_complex_t[size * size];
   }
 }
 
@@ -258,22 +258,22 @@ void circuit::allocMatrixS (void) {
 void circuit::allocMatrixN (int sources) {
   nsources = sources;
   if (MatrixN) delete[] MatrixN;
-  MatrixN = new complex[(size + sources) * (size + sources)];
+  MatrixN = new nr_complex_t[(size + sources) * (size + sources)];
 }
 
 /* Allocates the matrix memory for the MNA matrices. */
 void circuit::allocMatrixMNA (void) {
   freeMatrixMNA ();
   if (size > 0) {
-    MatrixY = new complex[size * size];
-    VectorI = new complex[size];
-    VectorV = new complex[size];
+    MatrixY = new nr_complex_t[size * size];
+    VectorI = new nr_complex_t[size];
+    VectorV = new nr_complex_t[size];
     if (vsources > 0) {
-      MatrixB = new complex[vsources * size];
-      MatrixC = new complex[vsources * size];
-      MatrixD = new complex[vsources * vsources];
-      VectorE = new complex[vsources];
-      VectorJ = new complex[vsources];
+      MatrixB = new nr_complex_t[vsources * size];
+      MatrixC = new nr_complex_t[vsources * size];
+      MatrixD = new nr_complex_t[vsources * vsources];
+      VectorE = new nr_complex_t[vsources];
+      VectorJ = new nr_complex_t[vsources];
     }
   }
 }
@@ -338,67 +338,67 @@ void circuit::setSubstrate (substrate * s) {
 
 /* Returns the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-complex circuit::getB (int port, int nr) {
+nr_complex_t circuit::getB (int port, int nr) {
   return MatrixB[(nr - vsource) * size + port];
 }
 
 /* Sets the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-void circuit::setB (int port, int nr, complex z) {
+void circuit::setB (int port, int nr, nr_complex_t z) {
   MatrixB[nr * size + port] = z;
 }
 
 /* Returns the circuits C-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-complex circuit::getC (int nr, int port) {
+nr_complex_t circuit::getC (int nr, int port) {
   return MatrixC[(nr - vsource) * size + port];
 }
 
 /* Sets the circuits C-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-void circuit::setC (int nr, int port, complex z) {
+void circuit::setC (int nr, int port, nr_complex_t z) {
   MatrixC[nr * size + port] = z;
 }
 
 /* Returns the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
-complex circuit::getD (int r, int c) {
+nr_complex_t circuit::getD (int r, int c) {
   return MatrixD[(r - vsource) * vsources + c - vsource];
 }
 
 /* Sets the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
-void circuit::setD (int r, int c, complex z) {
+void circuit::setD (int r, int c, nr_complex_t z) {
   MatrixD[r * vsources + c] = z;
 }
 
 /* Returns the circuits E-MNA matrix value of the given voltage source
    built in the circuit. */
-complex circuit::getE (int nr) {
+nr_complex_t circuit::getE (int nr) {
   return VectorE[nr - vsource];
 }
 
 /* Sets the circuits E-MNA matrix value of the given voltage source
    built in the circuit. */
-void circuit::setE (int nr, complex z) {
+void circuit::setE (int nr, nr_complex_t z) {
   VectorE[nr] = z;
 }
 
 /* Returns the circuits I-MNA matrix value of the current source built
    in the circuit. */
-complex circuit::getI (int port) {
+nr_complex_t circuit::getI (int port) {
   return VectorI[port];
 }
 
 /* Sets the circuits I-MNA matrix value of the current source built in
    the circuit depending on the port number. */
-void circuit::setI (int port, complex z) {
+void circuit::setI (int port, nr_complex_t z) {
   VectorI[port] = z;
 }
 
 /* Modifies the circuits I-MNA matrix value of the current source
    built in the circuit depending on the port number. */
-void circuit::addI (int port, complex i) {
+void circuit::addI (int port, nr_complex_t i) {
   VectorI[port] += i;
 }
 
@@ -408,52 +408,52 @@ void circuit::addI (int port, nr_double_t i) {
 }
 
 /* Returns the circuits Q-HB vector value. */
-complex circuit::getQ (int port) {
+nr_complex_t circuit::getQ (int port) {
   return VectorQ[port];
 }
 
 /* Sets the circuits Q-HB vector value. */
-void circuit::setQ (int port, complex q) {
+void circuit::setQ (int port, nr_complex_t q) {
   VectorQ[port] = q;
 }
 
 /* Returns the circuits J-MNA matrix value of the given voltage source
    built in the circuit. */
-complex circuit::getJ (int nr) {
+nr_complex_t circuit::getJ (int nr) {
   return VectorJ[nr];
 }
 
 /* Sets the circuits J-MNA matrix value of the given voltage source
    built in the circuit. */
-void circuit::setJ (int nr, complex z) {
+void circuit::setJ (int nr, nr_complex_t z) {
   VectorJ[nr - vsource] = z;
 }
 
 // Returns the circuits voltage value at the given port.
-complex circuit::getV (int port) {
+nr_complex_t circuit::getV (int port) {
   return VectorV[port];
 }
 
 // Sets the circuits voltage value at the given port.
-void circuit::setV (int port, complex z) {
+void circuit::setV (int port, nr_complex_t z) {
   VectorV[port] = z;
 }
 
 /* Returns the circuits G-MNA matrix value depending on the port
    numbers. */
-complex circuit::getY (int r, int c) {
+nr_complex_t circuit::getY (int r, int c) {
   return MatrixY[r * size + c];
 }
 
 /* Sets the circuits G-MNA matrix value depending on the port
    numbers. */
-void circuit::setY (int r, int c, complex y) {
+void circuit::setY (int r, int c, nr_complex_t y) {
   MatrixY[r * size + c] = y;
 }
 
 /* Modifies the circuits G-MNA matrix value depending on the port
    numbers. */
-void circuit::addY (int r, int c, complex y) {
+void circuit::addY (int r, int c, nr_complex_t y) {
   MatrixY[r * size + c] += y;
 }
 
@@ -476,37 +476,37 @@ void circuit::setG (int r, int c, nr_double_t y) {
 
 /* Returns the circuits C-HB matrix value depending on the port
    numbers. */
-complex circuit::getQV (int r, int c) {
+nr_complex_t circuit::getQV (int r, int c) {
   return MatrixQV[r * size + c];
 }
 
 /* Sets the circuits C-HB matrix value depending on the port
    numbers. */
-void circuit::setQV (int r, int c, complex qv) {
+void circuit::setQV (int r, int c, nr_complex_t qv) {
   MatrixQV[r * size + c] = qv;
 }
 
 /* Returns the circuits GV-HB vector value depending on the port
    number. */
-complex circuit::getGV (int port) {
+nr_complex_t circuit::getGV (int port) {
   return VectorGV[port];
 }
 
 /* Sets the circuits GV-HB matrix value depending on the port
    number. */
-void circuit::setGV (int port, complex gv) {
+void circuit::setGV (int port, nr_complex_t gv) {
   VectorGV[port] = gv;
 }
 
 /* Returns the circuits CV-HB vector value depending on the port
    number. */
-complex circuit::getCV (int port) {
+nr_complex_t circuit::getCV (int port) {
   return VectorCV[port];
 }
 
 /* Sets the circuits CV-HB matrix value depending on the port
    number. */
-void circuit::setCV (int port, complex cv) {
+void circuit::setCV (int port, nr_complex_t cv) {
   VectorCV[port] = cv;
 }
 
@@ -577,22 +577,22 @@ int circuit::hasCharacteristic (char * n) {
 }
 
 // Returns the S-parameter at the given matrix position.
-complex circuit::getS (int x, int y) { 
+nr_complex_t circuit::getS (int x, int y) { 
   return MatrixS[y + x * size];
 }
 
 // Sets the S-parameter at the given matrix position.
-void circuit::setS (int x, int y, complex z) {
+void circuit::setS (int x, int y, nr_complex_t z) {
   MatrixS[y + x * size] = z;
 }
 
 // Returns the noise-correlation-parameter at the given matrix position.
-complex circuit::getN (int r, int c) { 
+nr_complex_t circuit::getN (int r, int c) { 
   return MatrixN[c + r * (size + nsources)];
 }
 
 // Sets the noise-correlation-parameter at the given matrix position.
-void circuit::setN (int r, int c, complex z) {
+void circuit::setN (int r, int c, nr_complex_t z) {
   MatrixN[c + r * (size + nsources)] = z;
 }
 
@@ -634,7 +634,7 @@ void circuit::setMatrixS (matrix s) {
   int c = s.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
-    memcpy (MatrixS, s.getData (), sizeof (complex) * r * c);
+    memcpy (MatrixS, s.getData (), sizeof (nr_complex_t) * r * c);
   }
 }
 
@@ -642,7 +642,7 @@ void circuit::setMatrixS (matrix s) {
    circuit. */
 matrix circuit::getMatrixS (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixS, sizeof (complex) * size * size);
+  memcpy (res.getData (), MatrixS, sizeof (nr_complex_t) * size * size);
   return res;
 }
 
@@ -653,7 +653,7 @@ void circuit::setMatrixN (matrix n) {
   int c = n.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
-    memcpy (MatrixN, n.getData (), sizeof (complex) * r * c);
+    memcpy (MatrixN, n.getData (), sizeof (nr_complex_t) * r * c);
   }
 }
 
@@ -661,7 +661,7 @@ void circuit::setMatrixN (matrix n) {
    matrix of the circuit. */
 matrix circuit::getMatrixN (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixN, sizeof (complex) * size * size);
+  memcpy (res.getData (), MatrixN, sizeof (nr_complex_t) * size * size);
   return res;
 }
 
@@ -672,7 +672,7 @@ void circuit::setMatrixY (matrix y) {
   int c = y.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
-    memcpy (MatrixY, y.getData (), sizeof (complex) * r * c);
+    memcpy (MatrixY, y.getData (), sizeof (nr_complex_t) * r * c);
   }
 }
 
@@ -680,48 +680,48 @@ void circuit::setMatrixY (matrix y) {
    circuit. */
 matrix circuit::getMatrixY (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixY, sizeof (complex) * size * size);
+  memcpy (res.getData (), MatrixY, sizeof (nr_complex_t) * size * size);
   return res;
 }
 
 // The function cleans up the B-MNA matrix entries.
 void circuit::clearB (void) {
-  memset (MatrixB, 0, sizeof (complex) * size * vsources);
+  memset (MatrixB, 0, sizeof (nr_complex_t) * size * vsources);
 }
 
 // The function cleans up the C-MNA matrix entries.
 void circuit::clearC (void) {
-  memset (MatrixC, 0, sizeof (complex) * size * vsources);
+  memset (MatrixC, 0, sizeof (nr_complex_t) * size * vsources);
 }
 
 // The function cleans up the D-MNA matrix entries.
 void circuit::clearD (void) {
-  memset (MatrixD, 0, sizeof (complex) * vsources * vsources);
+  memset (MatrixD, 0, sizeof (nr_complex_t) * vsources * vsources);
 }
 
 // The function cleans up the E-MNA matrix entries.
 void circuit::clearE (void) {
-  memset (VectorE, 0, sizeof (complex) * vsources);
+  memset (VectorE, 0, sizeof (nr_complex_t) * vsources);
 }
 
 // The function cleans up the J-MNA matrix entries.
 void circuit::clearJ (void) {
-  memset (VectorJ, 0, sizeof (complex) * vsources);
+  memset (VectorJ, 0, sizeof (nr_complex_t) * vsources);
 }
 
 // The function cleans up the I-MNA matrix entries.
 void circuit::clearI (void) {
-  memset (VectorI, 0, sizeof (complex) * size);
+  memset (VectorI, 0, sizeof (nr_complex_t) * size);
 }
 
 // The function cleans up the V-MNA matrix entries.
 void circuit::clearV (void) {
-  memset (VectorV, 0, sizeof (complex) * size);
+  memset (VectorV, 0, sizeof (nr_complex_t) * size);
 }
 
 // The function cleans up the G-MNA matrix entries.
 void circuit::clearY (void) {
-  memset (MatrixY, 0, sizeof (complex) * size * size);
+  memset (MatrixY, 0, sizeof (nr_complex_t) * size * size);
 }
 
 /* This function can be used by several components in order to place

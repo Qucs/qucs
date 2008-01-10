@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.15 2007/09/16 16:49:38 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.16 2008/01/10 20:00:00 ela Exp $
  *
  */
 
@@ -216,7 +216,7 @@ static char * touchstone_create_set (int r, int c) {
 static void touchstone_create (void) {
   vector * f, * v, * root, * next, * nf = NULL;
   int ports = touchstone_options.ports, n;
-  complex val;
+  nr_complex_t val;
   strlist * s;
 
   /* create dataset and frequency vector */
@@ -305,7 +305,7 @@ static void touchstone_create (void) {
 	// re-normalize reflexion coefficient if necessary
 	nr_double_t r = (ZREF - touchstone_options.resistance) / 
 	  (ZREF + touchstone_options.resistance);
-	val = (val - r) / (1 - r * val);
+	val = (val - r) / (1.0 - r * val);
       }
       v->add (val);
       /* fill equivalent noise resistance vector */
