@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
-<admst version="2.2.5" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst version="2.2.8" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- handling of expression -->
 <admst:template match=":expression">
@@ -134,7 +134,7 @@
 </admst:for-each>
 
 
-<admst:text format="  Props.append (new Property (&quot;Temp&quot;, &quot;27&quot;, false,\n"/>
+<admst:text format="  Props.append (new Property (&quot;Temp&quot;, &quot;26.85&quot;, false,\n"/>
 <admst:text format="    QObject::tr (&quot;simulation temperature&quot;)));\n"/>
 
 <admst:text format="\n  createSymbol ();\n  tx = x2 + 4;\n  ty = y1 + 4;\n"/>
