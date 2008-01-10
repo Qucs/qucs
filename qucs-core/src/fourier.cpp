@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.8 2006-07-18 06:35:28 raimi Exp $
+ * $Id: fourier.cpp,v 1.9 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -213,10 +213,10 @@ vector fourier::dft_1d (vector var, int isign) {
   vector res = vector (len);
   for (n = 0; n < len; n++) {
     nr_double_t th = - isign * 2 * M_PI * n / len;
-    complex val = 0;
+    nr_complex_t val = 0;
     for (k = 0; k < len; k++)
       val += var (k) * polar (1.0, th * k);
-    res (n) = isign < 0 ? val / len : val;
+    res (n) = isign < 0 ? val / (nr_double_t) len : val;
   }
   return res;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.cpp,v 1.12 2007-09-16 16:49:40 ela Exp $
+ * $Id: mstee.cpp,v 1.13 2008-01-10 20:00:02 ela Exp $
  *
  */
 
@@ -98,20 +98,20 @@ void mstee::calcSP (nr_double_t frequency) {
   line2->calcSP (frequency);
 
   // calculate S-parameters
-  complex n1 = Ta2 * rect (1 + 1 / Tb2, Bt * z0);
-  complex n2 = Tb2 * rect (1 + 1 / Ta2, Bt * z0);
-  complex n3 = rect (1 / Ta2 + 1 / Tb2, Bt * z0);
-  setS (NODE_1, NODE_1, (1 - n1) / (1 + n1));
-  setS (NODE_2, NODE_2, (1 - n2) / (1 + n2));
-  setS (NODE_3, NODE_3, (1 - n3) / (1 + n3));
-  setS (NODE_1, NODE_3, 2 * sqrt (Ta2) / (1 + n1));
-  setS (NODE_3, NODE_1, 2 * sqrt (Ta2) / (1 + n1));
-  setS (NODE_2, NODE_3, 2 * sqrt (Tb2) / (1 + n2));
-  setS (NODE_3, NODE_2, 2 * sqrt (Tb2) / (1 + n2));
-  setS (NODE_1, NODE_2, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
-			     sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
-  setS (NODE_2, NODE_1, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
-			     sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+  nr_complex_t n1 = Ta2 * rect (1 + 1 / Tb2, Bt * z0);
+  nr_complex_t n2 = Tb2 * rect (1 + 1 / Ta2, Bt * z0);
+  nr_complex_t n3 = rect (1 / Ta2 + 1 / Tb2, Bt * z0);
+  setS (NODE_1, NODE_1, (1.0 - n1) / (1.0 + n1));
+  setS (NODE_2, NODE_2, (1.0 - n2) / (1.0 + n2));
+  setS (NODE_3, NODE_3, (1.0 - n3) / (1.0 + n3));
+  setS (NODE_1, NODE_3, 2.0 * sqrt (Ta2) / (1.0 + n1));
+  setS (NODE_3, NODE_1, 2.0 * sqrt (Ta2) / (1.0 + n1));
+  setS (NODE_2, NODE_3, 2.0 * sqrt (Tb2) / (1.0 + n2));
+  setS (NODE_3, NODE_2, 2.0 * sqrt (Tb2) / (1.0 + n2));
+  setS (NODE_1, NODE_2, 2.0 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+			       sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+  setS (NODE_2, NODE_1, 2.0 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+			       sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
 }
 
 void mstee::calcPropagation (nr_double_t f) {

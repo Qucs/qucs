@@ -44,7 +44,8 @@ XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
 
 EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+  -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 if MAINTAINER_MODE
 

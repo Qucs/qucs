@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.24 2007-09-16 16:49:39 ela Exp $
+ * $Id: nasolver.h,v 1.25 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -41,7 +41,6 @@
 class analysis;
 class circuit;
 class nodelist;
-class complex;
 class vector;
 
 template <class nr_type_t>
@@ -101,8 +100,8 @@ class nasolver : public analysis
   void saveNodeVoltages (void);
   void saveBranchCurrents (void);
   int  checkConvergence (void);
-  nr_type_t MatValX (complex, complex *);
-  nr_type_t MatValX (complex, nr_double_t *);
+  nr_type_t MatValX (nr_complex_t, nr_complex_t *);
+  nr_type_t MatValX (nr_complex_t, nr_double_t *);
 
  protected:
   tvector<nr_type_t> * z;

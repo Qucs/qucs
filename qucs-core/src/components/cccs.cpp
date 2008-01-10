@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cccs.cpp,v 1.15 2006-02-25 14:42:50 raimi Exp $
+ * $Id: cccs.cpp,v 1.16 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -49,8 +49,8 @@ void cccs::calcSP (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
 
-  complex z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
-  complex z2 = polar (g, - 2.0 * M_PI * frequency * t);
+  nr_complex_t z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
+  nr_complex_t z2 = polar (g, - 2.0 * M_PI * frequency * t);
 
   setS (NODE_1, NODE_1, 0.0); setS (NODE_1, NODE_2, 0.0);
   setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 1.0);
@@ -81,7 +81,7 @@ void cccs::initAC (void) {
 void cccs::calcAC (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
-  complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
+  nr_complex_t r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
   setB (NODE_1, VSRC_1, +r); setB (NODE_4, VSRC_1, -r);
 }
 

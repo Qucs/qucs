@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwgap.cpp,v 1.2 2005-06-02 18:17:55 raimi Exp $
+ * $Id: cpwgap.cpp,v 1.3 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -64,7 +64,7 @@ matrix cpwgap::calcMatrixY (nr_double_t frequency) {
     (p - sqrt (1 + p * p) + log ((1 + sqrt (1 + p * p)) / p));
 
   // build Y-parameter matrix
-  complex y11 = rect (0.0, 2.0 * M_PI * frequency * C);
+  nr_complex_t y11 = rect (0.0, 2.0 * M_PI * frequency * C);
   matrix y (2);
   y.set (0, 0, +y11);
   y.set (0, 1, -y11);

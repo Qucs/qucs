@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.18 2007-12-30 13:05:16 ela Exp $
+ * $Id: acsolver.cpp,v 1.19 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -39,7 +39,7 @@
 #include "acsolver.h"
 
 // Constructor creates an unnamed instance of the acsolver class.
-acsolver::acsolver () : nasolver<complex> () {
+acsolver::acsolver () : nasolver<nr_complex_t> () {
   swp = NULL;
   type = ANALYSIS_AC;
   setDescription ("AC");
@@ -48,7 +48,7 @@ acsolver::acsolver () : nasolver<complex> () {
 }
 
 // Constructor creates a named instance of the acsolver class.
-acsolver::acsolver (char * n) : nasolver<complex> (n) {
+acsolver::acsolver (char * n) : nasolver<nr_complex_t> (n) {
   swp = NULL;
   type = ANALYSIS_AC;
   setDescription ("AC");
@@ -64,7 +64,7 @@ acsolver::~acsolver () {
 
 /* The copy constructor creates a new instance of the acsolver class
    based on the given acsolver object. */
-acsolver::acsolver (acsolver & o) : nasolver<complex> (o) {
+acsolver::acsolver (acsolver & o) : nasolver<nr_complex_t> (o) {
   swp = o.swp ? new sweep (*(o.swp)) : NULL;
   xn = o.xn ? new tvector<nr_double_t> (*(o.xn)) : NULL;
   noise = o.noise;
@@ -172,7 +172,7 @@ void acsolver::solve_noise (void) {
   int M = countVoltageSources ();
 
   // save usual AC results
-  tvector<complex> xsave = *x;
+  tvector<nr_complex_t> xsave = *x;
 
   // create the Cy matrix
   createNoiseMatrix ();
@@ -180,7 +180,7 @@ void acsolver::solve_noise (void) {
   if (xn == NULL) xn = new tvector<nr_double_t> (N + M);
 
   // temporary result vector for transimpedances
-  tvector<complex> zn = tvector<complex> (N + M);
+  tvector<nr_complex_t> zn = tvector<nr_complex_t> (N + M);
 
   // create the MNA matrix once again and LU decompose the adjoint matrix
   createMatrix ();

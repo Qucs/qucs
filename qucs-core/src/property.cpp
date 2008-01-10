@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.12 2007-09-16 16:49:39 ela Exp $
+ * $Id: property.cpp,v 1.13 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include <ctype.h>
 #include <math.h>
 
+#include "complex.h"
 #include "variable.h"
 #include "property.h"
 

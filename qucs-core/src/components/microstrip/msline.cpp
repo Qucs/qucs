@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.cpp,v 1.48 2007-09-16 16:49:40 ela Exp $
+ * $Id: msline.cpp,v 1.49 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -105,10 +105,10 @@ void msline::calcSP (nr_double_t frequency) {
   // calculate S-parameters
   nr_double_t z = zl / z0;
   nr_double_t y = 1 / z;
-  complex g = rect (alpha, beta);
-  complex n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
-  complex s11 = (z - y) * sinh (g * l) / n;
-  complex s21 = 2 / n;
+  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t n = 2.0 * cosh (g * l) + (z + y) * sinh (g * l);
+  nr_complex_t s11 = (z - y) * sinh (g * l) / n;
+  nr_complex_t s21 = 2.0 / n;
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
@@ -480,9 +480,9 @@ void msline::calcAC (nr_double_t frequency) {
   calcPropagation (frequency);
 
   // calculate Y-parameters
-  complex g = rect (alpha, beta);
-  complex y11 = coth (g * l) / zl;
-  complex y21 = -cosech (g * l) / zl;
+  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t y11 = coth (g * l) / zl;
+  nr_complex_t y21 = -cosech (g * l) / zl;
   setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
   setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
 }

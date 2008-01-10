@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.1 2008-01-02 20:43:08 ela Exp $
+ * $Id: diac.cpp,v 1.2 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -147,7 +147,7 @@ matrix diac::calcMatrixY (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t gi = getOperatingPoint ("gi");
   nr_double_t Ci = getOperatingPoint ("Ci");
-  complex yi = rect (gi, Ci * 2.0 * M_PI * frequency);
+  nr_complex_t yi = rect (gi, Ci * 2.0 * M_PI * frequency);
   matrix y (3);
   y.set (NODE_A2, NODE_A2, +gd);
   y.set (NODE_IN, NODE_IN, +gd +yi);

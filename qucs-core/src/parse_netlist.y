@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_netlist.y,v 1.28 2007-10-22 17:53:10 ela Exp $
+ * $Id: parse_netlist.y,v 1.29 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -380,7 +380,7 @@ Constant:
   }
   | IMAG {
     $$ = new eqn::constant (eqn::TAG_COMPLEX);
-    $$->c = new complex (0.0, $1);
+    $$->c = new nr_complex_t (0.0, $1);
   }
   | Character {
     $$ = new eqn::constant (eqn::TAG_CHAR);

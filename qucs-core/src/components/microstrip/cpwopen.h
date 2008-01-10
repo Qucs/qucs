@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwopen.h,v 1.2 2005-06-02 18:17:55 raimi Exp $
+ * $Id: cpwopen.h,v 1.3 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@ class cpwopen : public circuit
 
   void checkProperties (void);
   nr_double_t calcCend (nr_double_t);
-  complex calcY (nr_double_t);
+  nr_complex_t calcY (nr_double_t);
 };
 
 #endif /* __CPWOPEN_H__ */

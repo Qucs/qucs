@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.24 2007-09-16 16:49:38 ela Exp $
+ * $Id: dataset.cpp,v 1.25 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -393,7 +393,7 @@ void dataset::printVariable (vector * v, FILE * f) {
    object to the given output stream. */
 void dataset::printData (vector * v, FILE * f) {
   for (int i = 0; i < v->getSize (); i++) {
-    complex c = v->get (i);
+    nr_complex_t c = v->get (i);
     if (imag (c) == 0.0) {
       fprintf (f, "  %+." NR_DECS "e\n", (double) real (c));
     }

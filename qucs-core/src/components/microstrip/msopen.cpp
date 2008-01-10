@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msopen.cpp,v 1.9 2007-09-16 16:49:40 ela Exp $
+ * $Id: msopen.cpp,v 1.10 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -83,10 +83,10 @@ nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 }
 
 void msopen::calcSP (nr_double_t frequency) {
-  setS (NODE_1, NODE_1, ztor (1 / calcY (frequency)));
+  setS (NODE_1, NODE_1, ztor (1.0 / calcY (frequency)));
 }
 
-complex msopen::calcY (nr_double_t frequency) {
+nr_complex_t msopen::calcY (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W = getPropertyDouble ("W");
@@ -101,7 +101,7 @@ complex msopen::calcY (nr_double_t frequency) {
   nr_double_t t     = subst->getPropertyDouble ("t");
 
   /* local variables */
-  complex y;
+  nr_complex_t y;
   nr_double_t o = 2 * M_PI * frequency;
 
   /* Alexopoulos and Wu */
@@ -124,7 +124,7 @@ complex msopen::calcY (nr_double_t frequency) {
     l2 = (0.008285 * tanh (0.5665 * W / h) + 0.0103) *
       h / 2.54e-5 / 25 * ZlEffFreq * 1e-9;
     r2 = (1.024 * tanh (2.025 * W / h)) * ZlEffFreq;
-    y = rect (0, c1 * o) + 1 / rect (r2, l2 * o - 1 / c2 / o);
+    y = rect (0, c1 * o) + 1.0 / rect (r2, l2 * o - 1 / c2 / o);
   }
   else {
     nr_double_t c = calcCend (frequency, W, h, t, er, SModel, DModel, Model);

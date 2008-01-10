@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.h,v 1.14 2007-12-28 20:08:47 ela Exp $
+ * $Id: hbsolver.h,v 1.15 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -55,29 +55,31 @@ class hbsolver : public analysis
   int  assignNodes (ptrlist<circuit>, strlist *, int offset = 0);
   void prepareLinear (void);
   void createMatrixLinearA (void);
-  void fillMatrixLinearA (tmatrix<complex> *, int);
-  void invertMatrix (tmatrix<complex> *, tmatrix<complex> *);
+  void fillMatrixLinearA (tmatrix<nr_complex_t> *, int);
+  void invertMatrix (tmatrix<nr_complex_t> *, tmatrix<nr_complex_t> *);
   void createMatrixLinearY (void);
   void saveResults (void);
   void calcConstantCurrent (void);
-  complex excitationZ (tvector<complex> *, circuit *, int);
+  nr_complex_t excitationZ (tvector<nr_complex_t> *, circuit *, int);
   void finalSolution (void);
-  void fillMatrixNonLinear (tmatrix<complex> *, tmatrix<complex> *, 
-			    tvector<complex> *, tvector<complex> *,
-			    tvector<complex> *, tvector<complex> *, int);
+  void fillMatrixNonLinear (tmatrix<nr_complex_t> *, tmatrix<nr_complex_t> *, 
+			    tvector<nr_complex_t> *, tvector<nr_complex_t> *,
+			    tvector<nr_complex_t> *, tvector<nr_complex_t> *,
+			    int);
   void prepareNonLinear (void);
   void solveHB (void);
   void loadMatrices (void);
-  void VectorFFT (tvector<complex> *, int isign = 1);
-  void VectorIFFT (tvector<complex> *, int isign = 1);
+  void VectorFFT (tvector<nr_complex_t> *, int isign = 1);
+  void VectorIFFT (tvector<nr_complex_t> *, int isign = 1);
   int  calcOrder (int);
-  void MatrixFFT (tmatrix<complex> *);
+  void MatrixFFT (tmatrix<nr_complex_t> *);
   void calcJacobian (void);
   void solveVoltages (void);
-  tvector<complex> expandVector (tvector<complex>, int);
-  tmatrix<complex> expandMatrix (tmatrix<complex>, int);
-  tmatrix<complex> extendMatrixLinear (tmatrix<complex>, int);
-  void fillMatrixLinearExtended (tmatrix<complex> *, tvector<complex> *);
+  tvector<nr_complex_t> expandVector (tvector<nr_complex_t>, int);
+  tmatrix<nr_complex_t> expandMatrix (tmatrix<nr_complex_t>, int);
+  tmatrix<nr_complex_t> extendMatrixLinear (tmatrix<nr_complex_t>, int);
+  void fillMatrixLinearExtended (tmatrix<nr_complex_t> *,
+				 tvector<nr_complex_t> *);
   void saveNodeVoltages (circuit *, int);
 
  private:
@@ -92,33 +94,33 @@ class hbsolver : public analysis
   ptrlist<circuit> nolcircuits;
   ptrlist<circuit> lincircuits;
 
-  tmatrix<complex> * Y;  // transadmittance matrix of linear network
-  tmatrix<complex> * A;  // MNA-matrix of linear network
-  tmatrix<complex> * Z;  // transimpedance matrix of linear network
+  tmatrix<nr_complex_t> * Y;  // transadmittance matrix of linear network
+  tmatrix<nr_complex_t> * A;  // MNA-matrix of linear network
+  tmatrix<nr_complex_t> * Z;  // transimpedance matrix of linear network
 
-  tmatrix<complex> * YV; // linear transadmittance matrix
-  tmatrix<complex> * NA; // MNA-matrix of complete network
+  tmatrix<nr_complex_t> * YV; // linear transadmittance matrix
+  tmatrix<nr_complex_t> * NA; // MNA-matrix of complete network
 
-  tmatrix<complex> * JQ; // C-Jacobian in t and f
-  tmatrix<complex> * JG; // G-Jacobian in t and f
-  tmatrix<complex> * JF; // full Jacobian for non-linear balancing
-  tvector<complex> * IG; // currents in t and f
-  tvector<complex> * FQ; // charges in t and f
-  tvector<complex> * VS;
-  tvector<complex> * VP;
-  tvector<complex> * FV; // error vector F(V) of HB equation
-  tvector<complex> * IL; // currents into linear network
-  tvector<complex> * IN; // currents into non-linear network
+  tmatrix<nr_complex_t> * JQ; // C-Jacobian in t and f
+  tmatrix<nr_complex_t> * JG; // G-Jacobian in t and f
+  tmatrix<nr_complex_t> * JF; // full Jacobian for non-linear balancing
+  tvector<nr_complex_t> * IG; // currents in t and f
+  tvector<nr_complex_t> * FQ; // charges in t and f
+  tvector<nr_complex_t> * VS;
+  tvector<nr_complex_t> * VP;
+  tvector<nr_complex_t> * FV; // error vector F(V) of HB equation
+  tvector<nr_complex_t> * IL; // currents into linear network
+  tvector<nr_complex_t> * IN; // currents into non-linear network
 
-  tvector<complex> * IR;
-  tvector<complex> * QR;
-  tvector<complex> * RH;
-  tvector<complex> * OM;
+  tvector<nr_complex_t> * IR;
+  tvector<nr_complex_t> * QR;
+  tvector<nr_complex_t> * RH;
+  tvector<nr_complex_t> * OM;
 
-  tvector<complex> * IC; // source currents into balanced nodes
-  tvector<complex> * IS; // currents through sources themselves
-  tvector<complex> * x;
-  tvector<complex> * vs;
+  tvector<nr_complex_t> * IC; // source currents into balanced nodes
+  tvector<nr_complex_t> * IS; // currents through sources themselves
+  tvector<nr_complex_t> * x;
+  tvector<nr_complex_t> * vs;
 
   int runs;
   int lnfreqs;

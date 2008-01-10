@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msmbend.cpp,v 1.14 2005-06-02 18:17:56 raimi Exp $
+ * $Id: msmbend.cpp,v 1.15 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -62,7 +62,7 @@ matrix msmbend::calcMatrixZ (nr_double_t frequency) {
   nr_double_t h     = subst->getPropertyDouble ("h");
 
   /* local variables */
-  complex z11, z21;
+  nr_complex_t z11, z21;
   nr_double_t L, C, Wh = W / h;
 
   // check validity

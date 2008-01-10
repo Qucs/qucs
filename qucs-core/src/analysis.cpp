@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.12 2007-12-30 13:05:16 ela Exp $
+ * $Id: analysis.cpp,v 1.13 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -134,7 +134,7 @@ sweep * analysis::createSweep (const char * n) {
 
 /* Saves the given variable into the dataset.  Creates the dataset
    vector if necessary. */
-void analysis::saveVariable (const char * n, complex z, vector * f) {
+void analysis::saveVariable (const char * n, nr_complex_t z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {
     d = new vector (n);

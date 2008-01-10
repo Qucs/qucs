@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.cpp,v 1.14 2006-05-23 09:48:32 raimi Exp $
+ * $Id: tline.cpp,v 1.15 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -49,9 +49,9 @@ void tline::calcSP (nr_double_t frequency) {
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
-  complex p = exp (-l * rect (a, b));
-  complex s11 = r * (1 - p * p) / (1 - p * p * r * r);
-  complex s21 = p * (1 - r * r) / (1 - p * p * r * r);
+  nr_complex_t p = exp (-l * rect (a, b));
+  nr_complex_t s11 = r * (1.0 - p * p) / (1.0 - p * p * r * r);
+  nr_complex_t s21 = p * (1.0 - r * r) / (1.0 - p * p * r * r);
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
@@ -127,8 +127,8 @@ void tline::calcAC (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
   if (l != 0.0) {
-    complex y11 = +1 / z / tanh (rect (a, b) * l);
-    complex y21 = -1 / z / sinh (rect (a, b) * l);
+    nr_complex_t y11 = +1 / z / tanh (rect (a, b) * l);
+    nr_complex_t y21 = -1 / z / sinh (rect (a, b) * l);
     setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
     setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
   }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.21 2007-11-01 21:42:46 ela Exp $
+ * $Id: matrix.h,v 1.22 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -40,30 +40,30 @@ class matrix
   matrix (const matrix &);
   const matrix& operator = (const matrix &);
   ~matrix ();
-  complex get (int, int);
-  void set (int, int, complex);
+  nr_complex_t get (int, int);
+  void set (int, int, nr_complex_t);
   int getCols (void) { return cols; }
   int getRows (void) { return rows; }
-  complex * getData (void) { return data; }
+  nr_complex_t * getData (void) { return data; }
   void print (void);
   void exchangeRows (int, int);
   void exchangeCols (int, int);
 
   // operator functions
   friend matrix operator + (matrix, matrix);
-  friend matrix operator + (complex, matrix);
-  friend matrix operator + (matrix, complex);
+  friend matrix operator + (nr_complex_t, matrix);
+  friend matrix operator + (matrix, nr_complex_t);
   friend matrix operator + (nr_double_t, matrix);
   friend matrix operator + (matrix, nr_double_t);
   friend matrix operator - (matrix, matrix);
-  friend matrix operator - (complex, matrix);
-  friend matrix operator - (matrix, complex);
+  friend matrix operator - (nr_complex_t, matrix);
+  friend matrix operator - (matrix, nr_complex_t);
   friend matrix operator - (nr_double_t, matrix);
   friend matrix operator - (matrix, nr_double_t);
-  friend matrix operator / (matrix, complex);
+  friend matrix operator / (matrix, nr_complex_t);
   friend matrix operator / (matrix, nr_double_t);
-  friend matrix operator * (complex, matrix);
-  friend matrix operator * (matrix, complex);
+  friend matrix operator * (nr_complex_t, matrix);
+  friend matrix operator * (matrix, nr_complex_t);
   friend matrix operator * (nr_double_t, matrix);
   friend matrix operator * (matrix, nr_double_t);
   friend matrix operator * (matrix, matrix);
@@ -84,34 +84,34 @@ class matrix
   friend matrix imag (matrix);
   friend matrix eye (int, int);
   friend matrix diagonal (vector);
-  friend complex cofactor (matrix, int, int);
-  friend complex detLaplace (matrix);
-  friend complex detGauss (matrix);
-  friend complex det (matrix);
+  friend nr_complex_t cofactor (matrix, int, int);
+  friend nr_complex_t detLaplace (matrix);
+  friend nr_complex_t detGauss (matrix);
+  friend nr_complex_t det (matrix);
   friend matrix inverseLaplace (matrix);
   friend matrix inverseGaussJordan (matrix);
   friend matrix inverse (matrix);
-  friend matrix stos (matrix, complex, complex z0 = 50.0);
+  friend matrix stos (matrix, nr_complex_t, nr_complex_t z0 = 50.0);
   friend matrix stos (matrix, nr_double_t, nr_double_t z0 = 50.0);
-  friend matrix stos (matrix, vector, complex z0 = 50.0);
-  friend matrix stos (matrix, complex, vector);
+  friend matrix stos (matrix, vector, nr_complex_t z0 = 50.0);
+  friend matrix stos (matrix, nr_complex_t, vector);
   friend matrix stos (matrix, vector, vector);
-  friend matrix stoz (matrix, complex z0 = 50.0);
+  friend matrix stoz (matrix, nr_complex_t z0 = 50.0);
   friend matrix stoz (matrix, vector);
-  friend matrix ztos (matrix, complex z0 = 50.0);
+  friend matrix ztos (matrix, nr_complex_t z0 = 50.0);
   friend matrix ztos (matrix, vector);
   friend matrix ztoy (matrix);
-  friend matrix stoy (matrix, complex z0 = 50.0);
+  friend matrix stoy (matrix, nr_complex_t z0 = 50.0);
   friend matrix stoy (matrix, vector);
-  friend matrix ytos (matrix, complex z0 = 50.0);
+  friend matrix ytos (matrix, nr_complex_t z0 = 50.0);
   friend matrix ytos (matrix, vector);
   friend matrix ytoz (matrix);
-  friend matrix stoa (matrix, complex z1 = 50.0, complex z2 = 50.0);
-  friend matrix atos (matrix, complex z1 = 50.0, complex z2 = 50.0);
-  friend matrix stoh (matrix, complex z1 = 50.0, complex z2 = 50.0);
-  friend matrix htos (matrix, complex z1 = 50.0, complex z2 = 50.0);
-  friend matrix stog (matrix, complex z1 = 50.0, complex z2 = 50.0);
-  friend matrix gtos (matrix, complex z1 = 50.0, complex z2 = 50.0);
+  friend matrix stoa (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
+  friend matrix atos (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
+  friend matrix stoh (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
+  friend matrix htos (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
+  friend matrix stog (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
+  friend matrix gtos (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
   friend matrix cytocs (matrix, matrix);
   friend matrix cztocs (matrix, matrix);
   friend matrix cztocy (matrix, matrix);
@@ -131,7 +131,7 @@ class matrix
       \todo: Why not r and c not const
       \todo: Create a debug version checking out of bound (using directly assert)
   */  
-  complex  operator () (int r, int c) const { return data[r * cols + c]; }
+  nr_complex_t  operator () (int r, int c) const { return data[r * cols + c]; }
   /*! \brief Write access operator 
       \param[in] r: row number (from 0 like usually in C)
       \param[in] c: column number (from 0 like usually in C)
@@ -140,7 +140,7 @@ class matrix
       \todo: Why r and c not const
       \todo: Create a debug version checking out of bound (using directly assert)
   */  
-  complex& operator () (int r, int c) { return data[r * cols + c]; }
+  nr_complex_t& operator () (int r, int c) { return data[r * cols + c]; }
 
  private:
   /*! Number of colunms */
@@ -148,7 +148,7 @@ class matrix
   /*! Number of rows */
   int rows;
   /*! Matrix data */
-  complex * data;
+  nr_complex_t * data;
 };
 
 #endif /* __MATRIX_H__ */

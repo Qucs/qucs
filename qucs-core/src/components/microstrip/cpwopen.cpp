@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwopen.cpp,v 1.2 2005-06-02 18:17:55 raimi Exp $
+ * $Id: cpwopen.cpp,v 1.3 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -72,7 +72,7 @@ void cpwopen::initSP (void) {
 }
 
 void cpwopen::calcSP (nr_double_t frequency) {
-  setS (NODE_1, NODE_1, ztor (1 / calcY (frequency)));
+  setS (NODE_1, NODE_1, ztor (1.0 / calcY (frequency)));
 }
 
 void cpwopen::checkProperties (void) {
@@ -90,7 +90,7 @@ void cpwopen::checkProperties (void) {
   }
 }
 
-complex cpwopen::calcY (nr_double_t frequency) {
+nr_complex_t cpwopen::calcY (nr_double_t frequency) {
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t c = calcCend (frequency);
   return rect (0, c * o);

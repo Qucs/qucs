@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msgap.cpp,v 1.9 2005-06-02 18:17:55 raimi Exp $
+ * $Id: msgap.cpp,v 1.10 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -106,9 +106,9 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   }
 
   // build Y-parameter matrix
-  complex y21 = rect (0.0, -2.0 * M_PI * frequency * Cs);
-  complex y11 = rect (0.0,  2.0 * M_PI * frequency * (C1 + Cs));
-  complex y22 = rect (0.0,  2.0 * M_PI * frequency * (C2 + Cs));
+  nr_complex_t y21 = rect (0.0, -2.0 * M_PI * frequency * Cs);
+  nr_complex_t y11 = rect (0.0,  2.0 * M_PI * frequency * (C1 + Cs));
+  nr_complex_t y22 = rect (0.0,  2.0 * M_PI * frequency * (C2 + Cs));
   matrix y (2);
   y.set (0, 0, y11);
   y.set (0, 1, y21);

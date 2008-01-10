@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.32 2006-05-03 09:43:56 raimi Exp $
+ * $Id: jfet.cpp,v 1.33 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -68,9 +68,9 @@ matrix jfet::calcMatrixY (nr_double_t frequency) {
   nr_double_t gm  = getOperatingPoint ("gm");
 
   // compute the models admittances
-  complex Ygd = rect (ggd, 2.0 * M_PI * frequency * Cgd);
-  complex Ygs = rect (ggs, 2.0 * M_PI * frequency * Cgs);
-  complex Yds = gds;
+  nr_complex_t Ygd = rect (ggd, 2.0 * M_PI * frequency * Cgd);
+  nr_complex_t Ygs = rect (ggs, 2.0 * M_PI * frequency * Cgs);
+  nr_complex_t Yds = gds;
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y (3);

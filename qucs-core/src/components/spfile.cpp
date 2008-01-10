@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.24 2006-05-15 06:45:42 raimi Exp $
+ * $Id: spfile.cpp,v 1.25 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -148,7 +148,7 @@ matrix spfile::calcMatrixCs (nr_double_t frequency) {
   // set interpolated noise correlation matrix
   nr_double_t r = real (interpolate (RN, frequency));
   nr_double_t f = real (interpolate (FMIN, frequency));
-  complex g     = interpolate (SOPT, frequency);
+  nr_complex_t g = interpolate (SOPT, frequency);
   matrix s = getInterpolMatrixS (frequency);
   matrix n = correlationMatrix (f, g, r, s);
   matrix c = expandNoiseMatrix (n, expandSParaMatrix (s));
@@ -162,7 +162,7 @@ matrix spfile::expandSParaMatrix (matrix s) {
   assert (s.getCols () == s.getRows ());
   int r, c, ports = s.getCols () + 1;
   nr_double_t g = -1;
-  complex fr, ss, sr, sc, sa;
+  nr_complex_t fr, ss, sr, sc, sa;
   matrix res (ports);
 
   // compute S'mm
@@ -170,24 +170,24 @@ matrix spfile::expandSParaMatrix (matrix s) {
     for (c = 0; c < ports - 1; c++) sa += s.get (r, c);
   ss = (2 - g - ports + sa) / (1 - ports * g - sa);
   res.set (ports - 1, ports - 1, ss);
-  fr = (1 - g * ss) / (1 - g);
+  fr = (1.0 - g * ss) / (1.0 - g);
     
   // compute S'im
   for (r = 0; r < ports - 1; r++) {
     for (sc = 0, c = 0; c < ports - 1; c++) sc += s.get (r, c);
-    res.set (r, ports - 1, fr * (1 - sc));
+    res.set (r, ports - 1, fr * (1.0 - sc));
   }
 
   // compute S'mj
   for (c = 0; c < ports - 1; c++) {
     for (sr = 0, r = 0; r < ports - 1; r++) sr += s.get (r, c);
-    res.set (ports - 1, c, fr * (1 - sr));
+    res.set (ports - 1, c, fr * (1.0 - sr));
   }
 
   // compute S'ij
   for (r = 0; r < ports - 1; r++) {
     for (c = 0; c < ports - 1; c++) {
-      fr = g * res.get (r, ports - 1) * res.get (ports - 1, c) / (1 - g * ss);
+      fr = g * res (r, ports - 1) * res (ports - 1, c) / (1.0 - g * ss);
       res.set (r, c, s.get (r, c) - fr);
     }
   }
@@ -207,8 +207,8 @@ matrix spfile::shrinkSParaMatrix (matrix s) {
   // compute S'ij
   for (r = 0; r < ports - 1; r++) {
     for (c = 0; c < ports - 1; c++) {
-      res.set (r, c, s.get (r, c) + g * s.get (r, ports - 1)  *
-	       s.get (ports - 1, c) / (1 - g * s.get (ports - 1, ports - 1)));
+      res.set (r, c, s (r, c) + g * s (r, ports - 1)  *
+	       s (ports - 1, c) / (1.0 - g * s (ports - 1, ports - 1)));
     }
   }
   return res;
@@ -231,7 +231,7 @@ matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
   for (r = 0; r < ports - 1; r++) {
     for (c = 0; c < ports - 1; c++) {
       if (r == c)
-	k.set (r, c, 1.0 + g * (s.get (r, ports - 1) - 1));
+	k.set (r, c, 1.0 + g * (s.get (r, ports - 1) - 1.0));
       else
 	k.set (r, c, g * s.get (r, ports - 1));
     }
@@ -242,7 +242,7 @@ matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
   // create D vector
   matrix d (ports, 1);
   for (r = 0; r < ports - 1; r++) d.set (r, 0, s.get (r, ports - 1));
-  d.set (ports - 1, 0, s.get (ports - 1, ports - 1) - 1);
+  d.set (ports - 1, 0, s.get (ports - 1, ports - 1) - 1.0);
 
   // expand noise correlation matrix
   matrix res (ports);
@@ -268,7 +268,7 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
   for (r = 0; r < ports - 1; r++) k.set (r, r, 1);
   for (r = 0; r < ports - 1; r++)
     k.set (r, ports - 1, g * s.get (r, ports - 1) /
-	   (1 - g * s.get (ports - 1, ports - 1)));
+	   (1.0 - g * s.get (ports - 1, ports - 1)));
 
   // create D' vector
   matrix d (ports - 1, 1);
@@ -276,8 +276,8 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
   
   // shrink noise correlation matrix
   matrix res (ports - 1);
-  res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1 - norm (g)) /
-    norm (1 - g * s.get (ports - 1, ports - 1)) * d * adjoint (d);
+  res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1.0 - norm (g)) /
+    norm (1.0 - g * s.get (ports - 1, ports - 1)) * d * adjoint (d);
   return res;
 }
 
@@ -407,13 +407,13 @@ void spfile::createIndex (void) {
 /* This function computes the noise correlation matrix of a twoport
    based upon the noise parameters and the given S-parameter
    matrix. */
-matrix spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
+matrix spfile::correlationMatrix (nr_double_t Fmin, nr_complex_t Sopt,
 				  nr_double_t Rn, matrix s) {
   assert (s.getCols () == s.getRows () && s.getCols () == 2);
   matrix c (2);
-  complex Kx = 4 * Rn / z0 / norm (1 + Sopt);
+  nr_complex_t Kx = 4 * Rn / z0 / norm (1.0 + Sopt);
   c.set (0, 0, (Fmin - 1) * (norm (s.get (0, 0)) - 1) +
-	 Kx * norm (1 - s.get (0, 0) * Sopt));
+	 Kx * norm (1.0 - s.get (0, 0) * Sopt));
   c.set (1, 1, norm (s.get (1, 0)) * ((Fmin - 1) + Kx * norm (Sopt)));
   c.set (0, 1, s.get (0, 0) / s.get (1, 0) * c.get (1, 1) -
 	 conj (s.get (1, 0)) * conj (Sopt) * Kx);
@@ -424,46 +424,47 @@ matrix spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
 /* The function computes the noise figure and noise parameters for the
    given S-parameter and noise correlation matrices of a twoport. */
 nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
-				 complex& Sopt, nr_double_t& Rn) {
+				 nr_complex_t& Sopt, nr_double_t& Rn) {
   assert (s.getCols () == s.getRows () && c.getCols () == c.getRows () &&
 	  s.getCols () == 2 && c.getCols () == 2);
-  complex n1, n2;
+  nr_complex_t n1, n2;
   n1 = c.get (0, 0) * norm (s.get (1, 0)) -
     2 * real (c.get (0, 1) * s.get (1, 0) * conj (s.get (0, 0))) +
     c.get (1, 1) * norm (s.get (0, 0));
-  n2 = 2 * (c.get (1, 1) * s.get (0, 0) -
-	    c.get (0, 1) * s.get (1, 0)) / (c.get (1, 1) + n1);
+  n2 = 2.0 * (c.get (1, 1) * s.get (0, 0) -
+	      c.get (0, 1) * s.get (1, 0)) / (c.get (1, 1) + n1);
 
   // optimal source reflection coefficient
   Sopt = 1 - norm (n2);
   if (real (Sopt) < 0.0)
-    Sopt = (1 + sqrt (Sopt)) / n2;  // avoid a negative radicant
+    Sopt = (1.0 + sqrt (Sopt)) / n2;  // avoid a negative radicant
   else
-    Sopt = (1 - sqrt (Sopt)) / n2;
+    Sopt = (1.0 - sqrt (Sopt)) / n2;
 
   // minimum noise figure
-  Fmin = real (1 + (c.get (1, 1) - n1 * norm (Sopt)) /
-	       norm (s.get (1, 0)) / (1 + norm (Sopt)));
+  Fmin = real (1.0 + (c.get (1, 1) - n1 * norm (Sopt)) /
+	       norm (s.get (1, 0)) / (1.0 + norm (Sopt)));
 
   // equivalent noise resistance
-  Rn = real ((c.get (0, 0) - 2 *
-	      real (c.get (0, 1) * conj ((1 + s.get (0, 0)) / s.get (1, 0))) +
-	      c.get (1, 1) * norm ((1 + s.get (0, 0)) / s.get (1, 0))) / 4);
+  Rn = real ((c (0, 0) - 2.0 *
+	      real (c (0, 1) * conj ((1.0 + s (0, 0)) / s (1, 0))) +
+	      c (1, 1) * norm ((1.0 + s (0, 0)) / s (1, 0))) / 4.0);
   Rn = Rn * z0;
 
   // noise figure itself
-  return real (1 + c.get (1, 1) / norm (s.get (1, 0)));
+  return real (1.0 + c.get (1, 1) / norm (s.get (1, 0)));
 }
 
 /* This function returns an interpolated value for f(x).  The
    piecewise function f is given by 'var' and the appropriate
    dependent data by 'dep'.  The piecewise dependency data must be
    real and sorted in ascendant order. */
-complex spfile::interpolate (struct spfile_index_t * data, nr_double_t x) {
+nr_complex_t spfile::interpolate (struct spfile_index_t * data,
+				  nr_double_t x) {
   vector * dep = data->f;
   vector * var = data->v;
   int idx = -1, len = dep->getSize ();
-  complex res = 0;
+  nr_complex_t res = 0;
 
   // no chance to interpolate
   if (len <= 0) {
@@ -522,7 +523,8 @@ complex spfile::interpolate (struct spfile_index_t * data, nr_double_t x) {
 
 /* The function is called by the overall interpolator to perform
    cubic spline interpolation. */
-complex spfile::interpolate_spl (spline * v1, spline * v2, nr_double_t x) {
+nr_complex_t spfile::interpolate_spl (spline * v1, spline * v2,
+				      nr_double_t x) {
   nr_double_t f1 = v1->evaluate (x).f0;
   nr_double_t f2 = v2->evaluate (x).f0;
   // rectangular data
@@ -538,8 +540,8 @@ complex spfile::interpolate_spl (spline * v1, spline * v2, nr_double_t x) {
 
 /* The function is called by the overall interpolator to perform
    linear interpolation. */
-complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
-				 int idx) {
+nr_complex_t spfile::interpolate_lin (vector * dep, vector * var,
+				      nr_double_t x, int idx) {
   nr_double_t x1, x2, y1, y2, f1, f2;
 
   x1 = real (dep->get (idx));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.h,v 1.7 2007-12-28 20:08:46 ela Exp $
+ * $Id: acsolver.h,v 1.8 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -30,7 +30,7 @@
 class sweep;
 class vector;
 
-class acsolver : public nasolver<complex>
+class acsolver : public nasolver<nr_complex_t>
 {
  public:
   acsolver ();

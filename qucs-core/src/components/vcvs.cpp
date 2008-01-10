@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vcvs.cpp,v 1.14 2006-02-25 14:42:50 raimi Exp $
+ * $Id: vcvs.cpp,v 1.15 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -49,8 +49,8 @@ void vcvs::calcSP (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
 
-  complex z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
-  complex z2 = polar (g, - 2.0 * M_PI * frequency * t);
+  nr_complex_t z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
+  nr_complex_t z2 = polar (g, - 2.0 * M_PI * frequency * t);
 
   setS (NODE_1, NODE_1, 1.0); setS (NODE_1, NODE_2, 0.0);
   setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 0.0);
@@ -79,7 +79,8 @@ void vcvs::initAC (void) {
 
 void vcvs::calcAC (nr_double_t frequency) {
   nr_double_t t = getPropertyDouble ("T");
-  complex g = polar (getPropertyDouble ("G"), - 2.0 * M_PI * frequency * t);
+  nr_complex_t g = polar (getPropertyDouble ("G"),
+			  - 2.0 * M_PI * frequency * t);
   setC (VSRC_1, NODE_1, +g); setC (VSRC_1, NODE_4, -g);
 }
 

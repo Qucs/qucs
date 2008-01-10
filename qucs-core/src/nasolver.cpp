@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.48 2007-09-16 16:49:39 ela Exp $
+ * $Id: nasolver.cpp,v 1.49 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -508,12 +508,12 @@ void nasolver<nr_type_t>::createMatrix (void) {
 #define MatVal(x) MatValX (x, (nr_type_t *) 0)
 
 template <class nr_type_t>
-nr_type_t nasolver<nr_type_t>::MatValX (complex z, complex *) {
+nr_type_t nasolver<nr_type_t>::MatValX (nr_complex_t z, nr_complex_t *) {
     return z;
 }
 
 template <class nr_type_t>
-nr_type_t nasolver<nr_type_t>::MatValX (complex z, nr_double_t *) {
+nr_type_t nasolver<nr_type_t>::MatValX (nr_complex_t z, nr_double_t *) {
     return real (z);
 }
 

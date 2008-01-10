@@ -26,9 +26,9 @@ EXTRA_DIST = parse_spice.y scan_spice.l parse_vcd.y scan_vcd.l
 
 bin_PROGRAMS = qucsconv
 
-qucsconv_LDADD = ../libqucsator.a
+qucsconv_LDADD = ../libqucsator.a ../math/libqucsmath.a
 
-INCLUDES = -I$(top_srcdir)/src
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \

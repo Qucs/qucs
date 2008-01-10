@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual.cpp,v 1.4 2006-01-04 10:40:33 raimi Exp $
+ * $Id: mutual.cpp,v 1.5 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -52,15 +52,15 @@ void mutual::calcSP (nr_double_t frequency) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = k * k - 1;
-  complex d = rect (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
-  complex r;
+  nr_complex_t d = rect (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
+  nr_complex_t r;
   r = rect (2 * z0, o * l2) / d;
   setS (NODE_1, NODE_4, r); setS (NODE_4, NODE_1, r);
-  r = 1 - r;
+  r = 1.0 - r;
   setS (NODE_1, NODE_1, r); setS (NODE_4, NODE_4, r);
   r = rect (2 * z0, o * l1) / d;
   setS (NODE_2, NODE_3, r); setS (NODE_3, NODE_2, r);
-  r = 1 - r;
+  r = 1.0 - r;
   setS (NODE_2, NODE_2, r); setS (NODE_3, NODE_3, r);
   r = rect (0, o * k * sqrt (l1 * l2)) / d;
   setS (NODE_1, NODE_2, r); setS (NODE_2, NODE_1, r);
@@ -77,15 +77,15 @@ matrix mutual::calcMatrixY (nr_double_t frequency) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = 1 - k * k;
-  complex z1 = rect (0, o * l1 * a);
-  complex z2 = rect (0, o * l2 * a);
-  complex y3 = rect (0, k / (o * sqrt (l1 * l2) * a));
+  nr_complex_t z1 = rect (0, o * l1 * a);
+  nr_complex_t z2 = rect (0, o * l2 * a);
+  nr_complex_t y3 = rect (0, k / (o * sqrt (l1 * l2) * a));
   
   matrix y = matrix (4);
-  y.set (NODE_1, NODE_1, +1 / z1); y.set (NODE_4, NODE_4, +1 / z1);
-  y.set (NODE_1, NODE_4, -1 / z1); y.set (NODE_4, NODE_1, -1 / z1);
-  y.set (NODE_2, NODE_2, +1 / z2); y.set (NODE_3, NODE_3, +1 / z2);
-  y.set (NODE_2, NODE_3, -1 / z2); y.set (NODE_3, NODE_2, -1 / z2);
+  y.set (NODE_1, NODE_1, +1.0 / z1); y.set (NODE_4, NODE_4, +1.0 / z1);
+  y.set (NODE_1, NODE_4, -1.0 / z1); y.set (NODE_4, NODE_1, -1.0 / z1);
+  y.set (NODE_2, NODE_2, +1.0 / z2); y.set (NODE_3, NODE_3, +1.0 / z2);
+  y.set (NODE_2, NODE_3, -1.0 / z2); y.set (NODE_3, NODE_2, -1.0 / z2);
   y.set (NODE_1, NODE_3, -y3); y.set (NODE_3, NODE_1, -y3);
   y.set (NODE_2, NODE_4, -y3); y.set (NODE_4, NODE_2, -y3);
   y.set (NODE_1, NODE_2, +y3); y.set (NODE_2, NODE_1, +y3);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msvia.h,v 1.4 2005-06-02 18:17:56 raimi Exp $
+ * $Id: msvia.h,v 1.5 2008-01-10 20:00:02 ela Exp $
  *
  */
 
@@ -37,11 +37,11 @@ class msvia : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   nr_double_t calcResistance (void);
-  complex calcImpedance (nr_double_t);
+  nr_complex_t calcImpedance (nr_double_t);
 
  private:
   nr_double_t R;
-  complex Z;
+  nr_complex_t Z;
 };
 
 #endif /* __MSVIA_H__ */

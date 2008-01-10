@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.cpp,v 1.11 2007-02-12 18:32:33 ela Exp $
+ * $Id: msstep.cpp,v 1.12 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -93,9 +93,9 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   L2 *= Ls;
 
   // build Z-parameter matrix
-  complex z21 = rect (0.0, -0.5e12 / (M_PI * frequency * Cs));
-  complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L1) + z21;
-  complex z22 = rect (0.0, 2e-9 * M_PI * frequency * L2) + z21;
+  nr_complex_t z21 = rect (0.0, -0.5e12 / (M_PI * frequency * Cs));
+  nr_complex_t z11 = rect (0.0, 2e-9 * M_PI * frequency * L1) + z21;
+  nr_complex_t z22 = rect (0.0, 2e-9 * M_PI * frequency * L2) + z21;
   matrix z (2);
   z.set (0, 0, z11);
   z.set (0, 1, z21);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.cpp,v 1.3 2007-02-21 14:57:18 ela Exp $
+ * $Id: tline4p.cpp,v 1.4 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -50,15 +50,15 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
 
-  complex g = rect (a, b);
+  nr_complex_t g = rect (a, b);
   nr_double_t p = 2 * z0 + z;
   nr_double_t n = 2 * z0 - z;
-  complex e = exp (2 * g * l);
-  complex d = p * p * e - n * n;
+  nr_complex_t e = exp (2.0 * g * l);
+  nr_complex_t d = p * p * e - n * n;
 
-  complex s11 = z * (p * e + n) / d;
-  complex s14 = 1.0 - s11;
-  complex s12 = 4.0 * z * z0 * exp (g * l) / d;
+  nr_complex_t s11 = z * (p * e + n) / d;
+  nr_complex_t s14 = 1.0 - s11;
+  nr_complex_t s12 = 4.0 * z * z0 * exp (g * l) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
@@ -115,9 +115,9 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
   if (l != 0.0) {
-    complex g = rect (a, b);
-    complex y11 = coth (g * l) / z;
-    complex y21 = -cosech (g * l) / z;
+    nr_complex_t g = rect (a, b);
+    nr_complex_t y11 = coth (g * l) / z;
+    nr_complex_t y21 = -cosech (g * l) / z;
     setY (NODE_1, NODE_1, +y11); setY (NODE_2, NODE_2, +y11);
     setY (NODE_3, NODE_3, +y11); setY (NODE_4, NODE_4, +y11);
     setY (NODE_1, NODE_4, -y11); setY (NODE_4, NODE_1, -y11);

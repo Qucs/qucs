@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.54 2007-09-16 16:49:38 ela Exp $
+ * $Id: circuit.h,v 1.55 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -173,35 +173,35 @@ class circuit : public object, public integrator
   void setSubstrate (substrate *);
 
   // matrix entry modificators
-  complex getS (int, int);
-  complex getN (int, int);
-  complex getY (int, int);
-  complex getB (int, int);
-  complex getC (int, int);
-  complex getD (int, int);
-  complex getQV (int, int);
-  complex getGV (int);
-  complex getCV (int);
-  complex getE (int);
-  complex getI (int);
-  complex getJ (int);
-  complex getV (int);
-  complex getQ (int);
+  nr_complex_t getS (int, int);
+  nr_complex_t getN (int, int);
+  nr_complex_t getY (int, int);
+  nr_complex_t getB (int, int);
+  nr_complex_t getC (int, int);
+  nr_complex_t getD (int, int);
+  nr_complex_t getQV (int, int);
+  nr_complex_t getGV (int);
+  nr_complex_t getCV (int);
+  nr_complex_t getE (int);
+  nr_complex_t getI (int);
+  nr_complex_t getJ (int);
+  nr_complex_t getV (int);
+  nr_complex_t getQ (int);
   nr_double_t getG (int, int);
-  void setS (int, int, complex);
-  void setN (int, int, complex);
-  void setY (int, int, complex);
-  void setB (int, int, complex);
-  void setC (int, int, complex);
-  void setD (int, int, complex);
-  void setQV (int, int, complex);
-  void setGV (int, complex);
-  void setCV (int, complex);
-  void setE (int, complex);
-  void setI (int, complex);
-  void setJ (int, complex);
-  void setV (int, complex);
-  void setQ (int, complex);
+  void setS (int, int, nr_complex_t);
+  void setN (int, int, nr_complex_t);
+  void setY (int, int, nr_complex_t);
+  void setB (int, int, nr_complex_t);
+  void setC (int, int, nr_complex_t);
+  void setD (int, int, nr_complex_t);
+  void setQV (int, int, nr_complex_t);
+  void setGV (int, nr_complex_t);
+  void setCV (int, nr_complex_t);
+  void setE (int, nr_complex_t);
+  void setI (int, nr_complex_t);
+  void setJ (int, nr_complex_t);
+  void setV (int, nr_complex_t);
+  void setQ (int, nr_complex_t);
   void setG (int, int, nr_double_t);
   void clearB (void);
   void clearC (void);
@@ -211,9 +211,9 @@ class circuit : public object, public integrator
   void clearJ (void);
   void clearV (void);
   void clearY (void);
-  void addY (int, int, complex);
+  void addY (int, int, nr_complex_t);
   void addY (int, int, nr_double_t);
-  void addI (int, complex);
+  void addI (int, nr_complex_t);
   void addI (int, nr_double_t);
 
   // operating point functionality
@@ -266,20 +266,20 @@ class circuit : public object, public integrator
   int nsources;
   int inserted;
   int flag;
-  complex * MatrixS;
-  complex * MatrixN;
-  complex * MatrixY;
-  complex * MatrixB;
-  complex * MatrixC;
-  complex * MatrixD;
-  complex * VectorE;
-  complex * VectorI;
-  complex * VectorV;
-  complex * VectorJ;
-  complex * VectorQ;
-  complex * MatrixQV;
-  complex * VectorGV;
-  complex * VectorCV;
+  nr_complex_t * MatrixS;
+  nr_complex_t * MatrixN;
+  nr_complex_t * MatrixY;
+  nr_complex_t * MatrixB;
+  nr_complex_t * MatrixC;
+  nr_complex_t * MatrixD;
+  nr_complex_t * VectorE;
+  nr_complex_t * VectorI;
+  nr_complex_t * VectorV;
+  nr_complex_t * VectorJ;
+  nr_complex_t * VectorQ;
+  nr_complex_t * MatrixQV;
+  nr_complex_t * VectorGV;
+  nr_complex_t * VectorCV;
   char * subcircuit;
   node * nodes;
   substrate * subst;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwshort.cpp,v 1.2 2005-06-02 18:17:55 raimi Exp $
+ * $Id: cpwshort.cpp,v 1.3 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -85,7 +85,7 @@ void cpwshort::checkProperties (void) {
   }
 }
 
-complex cpwshort::calcZ (nr_double_t frequency) {
+nr_complex_t cpwshort::calcZ (nr_double_t frequency) {
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t l = calcLend (frequency);
   return rect (0, l * o);
@@ -109,5 +109,5 @@ void cpwshort::initAC (void) {
 }
 
 void cpwshort::calcAC (nr_double_t frequency) {
-  setY (NODE_1, NODE_1, 1 / calcZ (frequency));
+  setY (NODE_1, NODE_1, 1.0 / calcZ (frequency));
 }

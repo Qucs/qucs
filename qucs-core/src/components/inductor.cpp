@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.cpp,v 1.17 2006-07-24 08:07:42 raimi Exp $
+ * $Id: inductor.cpp,v 1.18 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -46,9 +46,11 @@ inductor::inductor () : circuit (2) {
 
 void inductor::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L") / z0;
-  complex z = rect (0, 2.0 * M_PI * frequency * l);
-  setS (NODE_1, NODE_1, z / (z + 2)); setS (NODE_2, NODE_2, z / (z + 2));
-  setS (NODE_1, NODE_2, 2 / (z + 2)); setS (NODE_2, NODE_1, 2 / (z + 2));
+  nr_complex_t z = rect (0, 2.0 * M_PI * frequency * l);
+  setS (NODE_1, NODE_1, z / (z + 2.0));
+  setS (NODE_2, NODE_2, z / (z + 2.0));
+  setS (NODE_1, NODE_2, 2.0 / (z + 2.0));
+  setS (NODE_2, NODE_1, 2.0 / (z + 2.0));
 }
 
 void inductor::initDC (void) {
@@ -81,7 +83,7 @@ void inductor::calcAC (nr_double_t frequency) {
 
   // for non-zero inductance usual MNA entries
   if (l != 0.0) {
-    complex y = rect (0, -1 / (2.0 * M_PI * frequency * l));
+    nr_complex_t y = rect (0, -1 / (2.0 * M_PI * frequency * l));
     setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
     setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
   }

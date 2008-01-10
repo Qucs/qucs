@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iac.cpp,v 1.14 2007-03-11 15:43:10 ela Exp $
+ * $Id: iac.cpp,v 1.15 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -61,7 +61,7 @@ void iac::initDC (void) {
 void iac::initAC (void) {
   nr_double_t a = getPropertyDouble ("I");
   nr_double_t p = getPropertyDouble ("Phase");
-  complex i = polar (a, rad (p));
+  nr_complex_t i = polar (a, rad (p));
   allocMatrixMNA ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }

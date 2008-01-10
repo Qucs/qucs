@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.42 2007-09-25 17:39:07 ela Exp $
+ * $Id: equation.h,v 1.43 2008-01-10 20:00:00 ela Exp $
  *
  */
 
@@ -160,7 +160,7 @@ public:
   int type;
   union {
     nr_double_t d;
-    complex * c;
+    nr_complex_t * c;
     vector * v;
     matrix * m;
     matvec * mv;

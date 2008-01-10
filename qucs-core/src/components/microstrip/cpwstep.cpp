@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwstep.cpp,v 1.3 2005-06-02 18:17:55 raimi Exp $
+ * $Id: cpwstep.cpp,v 1.4 2008-01-10 20:00:01 ela Exp $
  *
  */
 
@@ -79,9 +79,9 @@ void cpwstep::initSP (void) {
 }
 
 void cpwstep::calcSP (nr_double_t frequency) {
-  complex z = 2 / calcY (frequency) / z0;
-  complex s11 = -1 / (z + 1);
-  complex s21 = +z / (z + 1);
+  nr_complex_t z = 2.0 / calcY (frequency) / z0;
+  nr_complex_t s11 = -1.0 / (z + 1.0);
+  nr_complex_t s21 = +z / (z + 1.0);
   setS (NODE_1, NODE_1, s11);
   setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21);
@@ -108,7 +108,7 @@ void cpwstep::checkProperties (void) {
   }
 }
 
-complex cpwstep::calcY (nr_double_t frequency) {
+nr_complex_t cpwstep::calcY (nr_double_t frequency) {
   nr_double_t W1 = getPropertyDouble ("W1");
   nr_double_t W2 = getPropertyDouble ("W2");
   nr_double_t s  = getPropertyDouble ("S");
@@ -146,7 +146,7 @@ void cpwstep::initAC (void) {
 }
 
 void cpwstep::calcAC (nr_double_t frequency) {
-  complex z = 1 / calcY (frequency);
+  nr_complex_t z = 1.0 / calcY (frequency);
   setD (VSRC_1, VSRC_1, z); setD (VSRC_2, VSRC_2, z);
   setD (VSRC_1, VSRC_2, z); setD (VSRC_2, VSRC_1, z);
 }
