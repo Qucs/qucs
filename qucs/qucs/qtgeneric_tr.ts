@@ -38,7 +38,7 @@
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation>A&amp;lfa oluk:</translation>
+        <translation>S&amp;aydamlık kanalı:</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
@@ -103,7 +103,7 @@
     <name>QFileDialog</name>
     <message>
         <source>Copy or Move a File</source>
-        <translation>Kütük Taşı veya Çogalt</translation>
+        <translation>Kütük Taşı veya Çoğalt</translation>
     </message>
     <message>
         <source>Read: %1</source>
