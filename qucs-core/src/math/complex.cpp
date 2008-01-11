@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.1 2008/01/10 20:00:05 ela Exp $
+ * $Id: complex.cpp,v 1.2 2008/01/11 16:15:38 ela Exp $
  *
  */
 
@@ -40,14 +40,35 @@
 
 using namespace fspecial;
 
-/*!\brief Compute complex modulus of real number
+/*!\brief Construct a complex number using rectangular notation
+   \param[in] x Real part
+   \param[in] y Imagninary part
+   \return complex number in rectangular form
+   \todo Why not inline?
+   \todo Move before polar
+*/
+nr_complex_t rect (const nr_double_t x, const nr_double_t y) {
+  return nr_complex_t (x, y);
+}
+
+/*!\brief Real part of real number
 
    \param[in] r Real number
-   \return Modulus of r
-   \todo Why not inline
+   \return Real part of r ie r
+   \todo Why not inline?
 */
-nr_double_t abs (const nr_double_t r) {
-  return fabs (r);
+nr_double_t real (const nr_double_t r) {
+  return r;
+}
+
+/*!\brief Imaginary part of complex number
+
+   \param[in] r Real number
+   \return Imaginary part of r
+   \todo Why not inline?
+*/
+nr_double_t imag (const nr_double_t r) {
+  return 0.0;
 }
 
 #ifndef HAVE_CXX_COMPLEX_NORM
@@ -76,24 +97,14 @@ nr_double_t norm (const nr_double_t r) {
   return r * r;
 }
 
-/*!\brief Real part of real number
+/*!\brief Compute complex modulus of real number
 
    \param[in] r Real number
-   \return Real part of r ie r
-   \todo Why not inline?
+   \return Modulus of r
+   \todo Why not inline
 */
-nr_double_t real (const nr_double_t r) {
-  return r;
-}
-
-/*!\brief Imaginary part of complex number
-
-   \param[in] r Real number
-   \return Imaginary part of r
-   \todo Why not inline?
-*/
-nr_double_t imag (const nr_double_t r) {
-  return 0.0;
+nr_double_t abs (const nr_double_t r) {
+  return fabs (r);
 }
 
 /*!\brief Conjugate of real number
@@ -106,15 +117,103 @@ nr_double_t conj (const nr_double_t r) {
   return r;
 }
 
-/*!\brief Magnitude in dB
-
-   Compute \f$10\log_{10} |z|^2=20\log_{10} |z|\f$
-   \param[in] z complex number
-   \return Magnitude in dB
-   \todo Why not inline?
+#ifndef HAVE_CXX_COMPLEX_POLAR
+/*!\brief Construct a complex number using polar notation
+   \param[in] mag Magnitude
+   \param[in] ang Angle
+   \return complex number in rectangular form
+   \todo Why not inline
 */
-nr_double_t dB (const nr_complex_t z) {
-  return 10.0 * log10 (norm (z));
+nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
+  return rect (mag * cos (ang), mag * sin (ang));
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
+/*!\brief Extension of polar construction to complex
+   \param[in] a Magnitude
+   \param[in] p Angle
+   \return complex number in rectangular form
+   \bug Do not seems holomorph form of real polar
+   \todo Move near real polar
+*/
+nr_complex_t polar (const nr_complex_t a, const nr_complex_t p) {
+  return a * exp (rect (imag (p), -real (p)));
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_COS 
+/*!\brief Compute complex cosinus
+
+   \param[in] z complex angle
+   \return cosinus of z
+*/
+nr_complex_t cos (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_ACOS
+/*!\brief Compute complex arc cosinus
+
+   \param[in] z complex arc
+   \return arc cosinus of z
+*/
+nr_complex_t acos (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+#if 0
+  return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
+#else
+  nr_complex_t y = sqrt (z * z - 1.0);
+  if (r * i < 0.0) y = -y;
+  return rect (0, -1.0) * ln (z + y);
+#endif
+}
+#endif
+
+/*!\brief Compute complex arc cosinus
+
+   \param[in] z complex arc
+   \return arc cosinus of z
+*/
+nr_complex_t arccos (const nr_complex_t z) {
+  return acos (z);
+}
+
+#ifndef HAVE_CXX_COMPLEX_COSH
+/*!\brief Compute complex hyperbolic cosinus
+
+   \param[in] z complex angle
+   \return hyperbolic cosinus of z
+*/
+nr_complex_t cosh (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (r), i) + polar (exp (-r), -i)) / 2.0;
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_ACOSH
+/*!\brief Compute complex argument hyperbolic cosinus
+
+   \param[in] z complex arc
+   \return argument hyperbolic cosinus of z
+*/
+nr_complex_t acosh (const nr_complex_t z) {
+  return ln (z + sqrt (z * z - 1.0));
+}
+#endif
+
+/*!\brief Compute complex argument hyperbolic cosinus
+
+   \param[in] z complex arc
+   \return argument hyperbolic cosinus of z
+*/
+nr_complex_t arcosh (const nr_complex_t z) {
+  return acosh (z);
 }
 
 #ifndef HAVE_CXX_COMPLEX_EXP
@@ -161,60 +260,25 @@ nr_double_t limexp (const nr_double_t r) {
   return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
 }
 
-#ifndef HAVE_CXX_COMPLEX_SQRT
-/*!\brief Compute principal value of square root
-
-    Compute the square root of a given complex number (except negative
-    real), and with a branch cut along the negative real  axis.
+#ifndef HAVE_CXX_COMPLEX_LOG 
+/*!\brief Compute principal value of natural logarithm of z
 
    \param[in] z complex number
-   \return principal value of square root z
+   \return principal value of natural logarithm of z
 */
-nr_complex_t sqrt (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-#if 0
-  if (i == 0.0) {
-    return r < 0.0 ? nr_complex_t (0.0, sqrt (-r)) : nr_complex_t (sqrt (r));
-  } else {
-    nr_double_t phi = arg (z);
-    return polar (sqrt (abs (z)), phi / 2.0);
-  }
-#else /* better numerical behaviour, avoiding arg() and polar() */
-  if (r == 0.0 && i == 0.0) {
-    return nr_complex_t (0.0, 0.0);
-  } else {
-    nr_double_t x = fabs (r);
-    nr_double_t y = fabs (i);
-    nr_double_t k;
-    if (x >= y)  {
-      nr_double_t t = y / x;
-      k = sqrt (x) * sqrt (0.5 * (1.0 + sqrt (1.0 + t * t)));
-    } else {
-      nr_double_t t = x / y;
-      k = sqrt (y) * sqrt (0.5 * (t + sqrt (1.0 + t * t)));
-    }
-    if (r >= 0.0) {
-      return nr_complex_t (k, i / (2.0 * k));
-    } else {
-      nr_double_t vi = (i >= 0) ? k : -k;
-      return nr_complex_t (i / (2.0 * vi), vi);
-    }
-  }
-#endif
+nr_complex_t log (const nr_complex_t z) {
+  nr_double_t phi = arg (z);
+  return nr_complex_t (log (abs (z)), phi);
 }
-#endif
-
-#ifndef HAVE_CXX_COMPLEX_LOG 
 #endif 
+
 /*!\brief Compute principal value of natural logarithm of z
 
    \param[in] z complex number
    \return principal value of natural logarithm of z
 */
 nr_complex_t ln (const nr_complex_t z) {
-  nr_double_t phi = arg (z);
-  return nr_complex_t (log (abs (z)), phi);
+  return log (z);
 }
 
 #ifndef HAVE_CXX_COMPLEX_LOG10 
@@ -287,49 +351,103 @@ nr_complex_t sin (const nr_complex_t z) {
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
+/*!\brief Compute complex arc sinus
+
+   \param[in] z complex arc
+   \return arc sinus of z
+*/
+nr_complex_t asin (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return nr_complex_t (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
+}
 #endif
+
 /*!\brief Compute complex arc sinus
 
    \param[in] z complex arc
    \return arc sinus of z
 */
 nr_complex_t arcsin (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-  return nr_complex_t (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
+  return asin (z);
 }
 
-#ifndef HAVE_CXX_COMPLEX_COS 
-/*!\brief Compute complex cosinus
+#ifndef HAVE_CXX_COMPLEX_SINH
+/*!\brief Compute complex hyperbolic sinus
 
    \param[in] z complex angle
-   \return cosinus of z
+   \return hyperbolic sinus of z
 */
-nr_complex_t cos (const nr_complex_t z) {
+nr_complex_t sinh (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
+  return (polar (exp (r), i) - polar (exp (-r), -i)) / 2.0;
 }
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_ACOS
-#endif
-/*!\brief Compute complex arc cosinus
+#ifndef HAVE_CXX_COMPLEX_ASINH
+/*!\brief Compute complex argument hyperbolic sinus
 
    \param[in] z complex arc
-   \return arc cosinus of z
+   \return argument hyperbolic sinus of z
 */
-nr_complex_t arccos (const nr_complex_t z) {
+nr_complex_t asinh (const nr_complex_t z) {
+  return ln (z + sqrt (z * z + 1.0));
+}
+#endif 
+
+/*!\brief Compute complex argument hyperbolic sinus
+
+   \param[in] z complex arc
+   \return argument hyperbolic sinus of z
+*/
+nr_complex_t arsinh (const nr_complex_t z) {
+  return asinh (z);
+}
+
+#ifndef HAVE_CXX_COMPLEX_SQRT
+/*!\brief Compute principal value of square root
+
+    Compute the square root of a given complex number (except negative
+    real), and with a branch cut along the negative real  axis.
+
+   \param[in] z complex number
+   \return principal value of square root z
+*/
+nr_complex_t sqrt (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
 #if 0
-  return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
-#else
-  nr_complex_t y = sqrt (z * z - 1.0);
-  if (r * i < 0.0) y = -y;
-  return rect (0, -1.0) * ln (z + y);
+  if (i == 0.0) {
+    return r < 0.0 ? nr_complex_t (0.0, sqrt (-r)) : nr_complex_t (sqrt (r));
+  } else {
+    nr_double_t phi = arg (z);
+    return polar (sqrt (abs (z)), phi / 2.0);
+  }
+#else /* better numerical behaviour, avoiding arg() and polar() */
+  if (r == 0.0 && i == 0.0) {
+    return nr_complex_t (0.0, 0.0);
+  } else {
+    nr_double_t x = fabs (r);
+    nr_double_t y = fabs (i);
+    nr_double_t k;
+    if (x >= y)  {
+      nr_double_t t = y / x;
+      k = sqrt (x) * sqrt (0.5 * (1.0 + sqrt (1.0 + t * t)));
+    } else {
+      nr_double_t t = x / y;
+      k = sqrt (y) * sqrt (0.5 * (t + sqrt (1.0 + t * t)));
+    }
+    if (r >= 0.0) {
+      return nr_complex_t (k, i / (2.0 * k));
+    } else {
+      nr_double_t vi = (i >= 0) ? k : -k;
+      return nr_complex_t (i / (2.0 * vi), vi);
+    }
+  }
 #endif
 }
+#endif
 
 #ifndef HAVE_CXX_COMPLEX_TAN
 /*!\brief Compute complex tangent
@@ -345,18 +463,40 @@ nr_complex_t tan (const nr_complex_t z) {
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
-#endif 
+/*!\brief Compute complex arc tangent
+
+   \param[in] z complex arc
+   \return arc tangent of z
+*/
+nr_complex_t atan (const nr_complex_t z) {
+  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
+}
+#endif
+
 /*!\brief Compute complex arc tangent
 
    \param[in] z complex arc
    \return arc tangent of z
 */
 nr_complex_t arctan (const nr_complex_t z) {
-  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
+  return atan (z);
 }
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
+/*!\brief Compute complex arc tangent fortran like function
+    
+   atan2 is a two-argument function that computes the arctangent of y / x 
+   given y and x, but with a range of \f$(-\pi;\pi]\f$
+
+   \param[in] z complex angle
+   \return arc tangent of z
+*/
+nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x) {
+  nr_complex_t a = arctan (y / x);
+  return real (x) > 0.0 ? a : -a;
+}
 #endif
+
 /*!\brief Compute complex arc tangent fortran like function
     
    atan2 is a two-argument function that computes the arctangent of y / x 
@@ -366,8 +506,40 @@ nr_complex_t arctan (const nr_complex_t z) {
    \return arc tangent of z
 */
 nr_complex_t arctan2 (const nr_complex_t y, const nr_complex_t x) {
-  nr_complex_t a = arctan (y / x);
-  return real (x) > 0.0 ? a : -a;
+  return atan2 (y, x);
+}
+
+#ifndef HAVE_CXX_COMPLEX_TANH
+/*!\brief Compute complex hyperbolic tangent
+
+   \param[in] z complex angle
+   \return hyperbolic tangent of z
+*/
+nr_complex_t tanh (const nr_complex_t z) {
+  nr_double_t r = 2.0 * real (z);
+  nr_double_t i = 2.0 * imag (z);
+  return 1.0 - 2.0 / (polar (exp (r), i) + 1.0);
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_ATANH
+/*!\brief Compute complex argument hyperbolic tangent
+
+   \param[in] z complex arc
+   \return argument hyperbolic tangent of z
+*/
+nr_complex_t atanh (const nr_complex_t z) {
+  return 0.5 * ln ( 2.0 / (1.0 - z) - 1.0);
+}
+#endif
+
+/*!\brief Compute complex argument hyperbolic tangent
+
+   \param[in] z complex arc
+   \return argument hyperbolic tangent of z
+*/
+nr_complex_t artanh (const nr_complex_t z) {
+  return atanh (z);
 }
 
 /*!\brief Compute complex cotangent
@@ -390,52 +562,6 @@ nr_complex_t arccot (const nr_complex_t z) {
   return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z - rect (0.0, 1.0)) + 1.0);
 }
 
-/*!\brief Compute complex hyperbolic sinus
-
-   \param[in] z complex angle
-   \return hyperbolic sinus of z
-*/
-nr_complex_t sinh (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-  return (polar (exp (r), i) - polar (exp (-r), -i)) / 2.0;
-}
-
-#ifndef HAVE_CXX_COMPLEX_ASINH
-#endif 
-/*!\brief Compute complex argument hyperbolic sinus
-
-   \param[in] z complex arc
-   \return argument hyperbolic sinus of z
-*/
-nr_complex_t arsinh (const nr_complex_t z) {
-  return ln (z + sqrt (z * z + 1.0));
-}
-
-#ifndef HAVE_CXX_COMPLEX_COSH
-/*!\brief Compute complex hyperbolic cosinus
-
-   \param[in] z complex angle
-   \return hyperbolic cosinus of z
-*/
-nr_complex_t cosh (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-  return (polar (exp (r), i) + polar (exp (-r), -i)) / 2.0;
-}
-#endif
-
-#ifndef HAVE_CXX_COMPLEX_ACOSH
-#endif
-/*!\brief Compute complex argument hyperbolic cosinus
-
-   \param[in] z complex arc
-   \return argument hyperbolic cosinus of z
-*/
-nr_complex_t arcosh (const nr_complex_t z) {
-  return ln (z + sqrt (z * z - 1.0));
-}
-
 /*!\brief Compute complex argument hyperbolic secant
 
    \param[in] z complex arc
@@ -444,30 +570,6 @@ nr_complex_t arcosh (const nr_complex_t z) {
 */
 nr_complex_t arsech (const nr_complex_t z) {
   return ln ((1.0 + sqrt (1.0 - z * z)) / z);
-}
-
-#ifndef HAVE_CXX_COMPLEX_TANH
-/*!\brief Compute complex hyperbolic tangent
-
-   \param[in] z complex angle
-   \return hyperbolic tangent of z
-*/
-nr_complex_t tanh (const nr_complex_t z) {
-  nr_double_t r = 2.0 * real (z);
-  nr_double_t i = 2.0 * imag (z);
-  return 1.0 - 2.0 / (polar (exp (r), i) + 1.0);
-}
-#endif
-
-#ifndef HAVE_CXX_COMPLEX_ATANH
-#endif 
-/*!\brief Compute complex argument hyperbolic tangent
-
-   \param[in] z complex arc
-   \return argument hyperbolic tangent of z
-*/
-nr_complex_t artanh (const nr_complex_t z) {
-  return 0.5 * ln ( 2.0 / (1.0 - z) - 1.0);
 }
 
 /*!\brief Compute complex hyperbolic cotangent
@@ -488,6 +590,17 @@ nr_complex_t coth (const nr_complex_t z) {
 */
 nr_complex_t arcoth (const nr_complex_t z) {
   return 0.5 * ln (2.0 / (z - 1.0) + 1.0);
+}
+
+/*!\brief Magnitude in dB
+
+   Compute \f$10\log_{10} |z|^2=20\log_{10} |z|\f$
+   \param[in] z complex number
+   \return Magnitude in dB
+   \todo Why not inline?
+*/
+nr_double_t dB (const nr_complex_t z) {
+  return 10.0 * log10 (norm (z));
 }
 
 /*!\brief Converts impedance to reflexion coefficient
@@ -736,42 +849,6 @@ nr_double_t sinc (const nr_double_t d) {
   if (d == 0) return 1;
   return sin (d) / d;
 }
-
-#ifndef HAVE_CXX_COMPLEX_POLAR
-/*!\brief Construct a complex number using polar notation
-   \param[in] mag Magnitude
-   \param[in] ang Angle
-   \return complex number in rectangular form
-   \todo Why not inline
-*/
-nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
-  return rect (mag * cos (ang), mag * sin (ang));
-}
-#endif
-
-/*!\brief Construct a complex number using rectangular notation
-   \param[in] x Real part
-   \param[in] y Imagninary part
-   \return complex number in rectangular form
-   \todo Why not inline?
-   \todo Move before polar
-*/
-nr_complex_t rect (const nr_double_t x, const nr_double_t y) {
-  return nr_complex_t (x, y);
-}
-
-#ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
-/*!\brief Extension of polar construction to complex
-   \param[in] a Magnitude
-   \param[in] p Angle
-   \return complex number in rectangular form
-   \bug Do not seems holomorph form of real polar
-   \todo Move near real polar
-*/
-nr_complex_t polar (const nr_complex_t a, const nr_complex_t p) {
-  return a * exp (rect (imag (p), -real (p)));
-}
-#endif
 
 /*!\brief Complex ceil
     Ceil is the smallest integral value not less than argument
