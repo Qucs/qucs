@@ -173,6 +173,19 @@ AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
 		cosh tanh fabs modf atan2 jn yn erf erfc round \
 		strdup strerror strchr])
 
+dnl Checks for complex classes and functions.
+#AC_CXX_NAMESPACES
+#AC_CXX_HAVE_COMPLEX
+#AC_CXX_HAVE_TR1_COMPLEX
+#AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log norm sin sinh sqrt tan tanh])
+#AC_CHECK_CXX_COMPLEX_POW
+#AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh log10])
+#AC_CHECK_CXX_COMPLEX_FUNCS([log2 floor ceil])
+#AC_CHECK_CXX_COMPLEX_ATAN2
+#AC_CHECK_CXX_COMPLEX_FMOD
+#AC_CHECK_CXX_COMPLEX_POLAR
+#AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX
+
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,

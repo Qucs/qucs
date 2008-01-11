@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.2 2008-01-10 22:34:03 ela Exp $
+ * $Id: complex.h,v 1.3 2008-01-11 16:15:39 ela Exp $
  *
  */
 
@@ -56,30 +56,37 @@ typedef std::complex<nr_double_t> nr_complex_t;
 nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0);
 
 #ifndef HAVE_CXX_COMPLEX_ACOS
+nr_complex_t   accos (const nr_complex_t);
 #endif
 nr_complex_t  arccos (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
+nr_complex_t   acosh (const nr_complex_t);
 #endif
 nr_complex_t  arcosh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
+nr_complex_t    asin (const nr_complex_t);
 #endif
 nr_complex_t  arcsin (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ASINH
+nr_complex_t   asinh (const nr_complex_t);
 #endif 
 nr_complex_t  arsinh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
+nr_complex_t   actan (const nr_complex_t);
 #endif 
 nr_complex_t  arctan (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATANH
+nr_complex_t   atanh (const nr_complex_t);
 #endif 
 nr_complex_t  artanh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
+nr_complex_t   atan2 (const nr_complex_t, const nr_complex_t);
 #endif
 nr_complex_t arctan2 (const nr_complex_t, const nr_complex_t);
 
@@ -106,6 +113,7 @@ nr_complex_t    fmod (const nr_double_t x, const nr_complex_t y);
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_LOG 
+nr_complex_t     log (const nr_complex_t);
 #endif 
 nr_complex_t      ln (const nr_complex_t);
 
@@ -117,10 +125,11 @@ nr_complex_t   log10 (const nr_complex_t);
 nr_complex_t    log2 (const nr_complex_t);
 #endif
 
+#ifndef HAVE_CXX_COMPLEX_NORM
 nr_double_t     norm (const nr_complex_t);
+#endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR
-// create a complex object given polar coordinates
 nr_complex_t   polar (const nr_double_t mag, const nr_double_t ang = 0.0);
 #endif
 
@@ -188,15 +197,17 @@ nr_complex_t    erfc (const nr_complex_t);
 nr_complex_t  erfinv (const nr_complex_t);
 nr_complex_t erfcinv (const nr_complex_t);
 
+// modulo operators
 nr_complex_t operator % (const nr_complex_t, const nr_complex_t);
 nr_complex_t operator % (const nr_complex_t, const nr_double_t);
 nr_complex_t operator % (const nr_double_t, const nr_complex_t);
 
-bool  operator == (const nr_complex_t, const nr_complex_t);
-bool  operator != (const nr_complex_t, const nr_complex_t);
-bool  operator >= (const nr_complex_t, const nr_complex_t);
-bool  operator <= (const nr_complex_t, const nr_complex_t);
-bool  operator >  (const nr_complex_t, const nr_complex_t);
-bool  operator <  (const nr_complex_t, const nr_complex_t);
+// comparisons
+bool operator == (const nr_complex_t, const nr_complex_t);
+bool operator != (const nr_complex_t, const nr_complex_t);
+bool operator >= (const nr_complex_t, const nr_complex_t);
+bool operator <= (const nr_complex_t, const nr_complex_t);
+bool operator >  (const nr_complex_t, const nr_complex_t);
+bool operator <  (const nr_complex_t, const nr_complex_t);
 
 #endif /* __COMPLEX_H__ */
