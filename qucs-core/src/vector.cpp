@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.37 2008-01-10 20:00:00 ela Exp $
+ * $Id: vector.cpp,v 1.38 2008-01-12 19:33:01 ela Exp $
  *
  */
 
@@ -207,7 +207,7 @@ nr_double_t vector::maximum (void) {
   nr_double_t d, max_D = -NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? fabs (c) : -fabs (c);
     if (d > max_D) max_D = d;
   }
   return max_D;
@@ -221,7 +221,7 @@ nr_double_t vector::minimum (void) {
   nr_double_t d, min_D = +NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? fabs (c) : -fabs (c);
     if (d < min_D) min_D = d;
   }
   return min_D;
@@ -322,9 +322,9 @@ vector sinc (vector v) {
   return result;
 }
 
-vector abs (vector v) {
+vector fabs (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (abs (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (fabs (v.get (i)), i);
   return result;
 }
 
@@ -909,7 +909,7 @@ char * vector::getOrigin (void) {
 int vector::contains (nr_complex_t val, nr_double_t eps) {
   int count = 0;
   for (int i = 0; i < size; i++) {
-    if (abs (data[i] - val) <= eps) count++;
+    if (fabs (data[i] - val) <= eps) count++;
   }
   return count;
 }

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.30 2008-01-10 20:00:00 ela Exp $
+ * $Id: vector.h,v 1.31 2008-01-12 19:33:01 ela Exp $
  *
  */
 
@@ -122,7 +122,7 @@ class vector : public object
   friend vector xhypot  (const nr_double_t, vector);
 
   // overloaded math functions
-  friend vector abs     (vector);
+  friend vector fabs    (vector);
   friend vector log10   (vector);
   friend vector exp     (vector);
   friend vector limexp  (vector);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.25 2008-01-10 20:00:00 ela Exp $
+ * $Id: hbsolver.cpp,v 1.26 2008-01-12 19:32:59 ela Exp $
  *
  */
 
@@ -926,15 +926,15 @@ int hbsolver::checkBalance (void) {
   int n, len = FV->getSize ();
   for (n = 0; n < len; n++) {
     // check iteration voltages
-    nr_double_t v_abs = abs (VS->get (n) - VP->get (n));
-    nr_double_t v_rel = abs (VS->get (n));
+    nr_double_t v_abs = fabs (VS->get (n) - VP->get (n));
+    nr_double_t v_rel = fabs (VS->get (n));
     if (v_abs >= vabstol + reltol * v_rel) return 0;
     // check balanced currents
     nr_complex_t il = IL->get (n);
     nr_complex_t in = IN->get (n);
     if (il != in) {
-      nr_double_t i_abs = abs (il + in);
-      nr_double_t i_rel = abs ((il + in) / (il - in));
+      nr_double_t i_abs = fabs (il + in);
+      nr_double_t i_rel = fabs ((il + in) / (il - in));
       if (i_abs >= iabstol && 2.0 * i_rel >= reltol) return 0;
     }
   }

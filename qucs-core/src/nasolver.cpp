@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.49 2008-01-10 20:00:00 ela Exp $
+ * $Id: nasolver.cpp,v 1.50 2008-01-12 19:33:00 ela Exp $
  *
  */
 
@@ -991,22 +991,22 @@ int nasolver<nr_type_t>::checkConvergence (void) {
   int r;
 
   for (r = 0; r < N; r++) {
-    v_abs = abs (x->get (r) - xprev->get (r));
-    v_rel = abs (x->get (r));
+    v_abs = fabs (x->get (r) - xprev->get (r));
+    v_rel = fabs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
     if (!convHelper) {
-      i_abs = abs (z->get (r) - zprev->get (r));
-      i_rel = abs (z->get (r));
+      i_abs = fabs (z->get (r) - zprev->get (r));
+      i_rel = fabs (z->get (r));
       if (i_abs >= abstol + reltol * i_rel) return 0;
     }
   }
   for (r = 0; r < M; r++) {
-    i_abs = abs (x->get (r + N) - xprev->get (r + N));
-    i_rel = abs (x->get (r + N));
+    i_abs = fabs (x->get (r + N) - xprev->get (r + N));
+    i_rel = fabs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;
     if (!convHelper) {
-      v_abs = abs (z->get (r + N) - zprev->get (r + N));
-      v_rel = abs (z->get (r + N));
+      v_abs = fabs (z->get (r + N) - zprev->get (r + N));
+      v_rel = fabs (z->get (r + N));
       if (v_abs >= vntol + reltol * v_rel) return 0;
     }
   }

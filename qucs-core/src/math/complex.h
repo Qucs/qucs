@@ -18,27 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.3 2008-01-11 16:15:39 ela Exp $
+ * $Id: complex.h,v 1.4 2008-01-12 19:33:04 ela Exp $
  *
  */
 
 #ifndef __COMPLEX_H__
 #define __COMPLEX_H__
 
-// complex manipulations
-nr_double_t  real (const nr_double_t);
-nr_double_t  imag (const nr_double_t);
-nr_double_t  norm (const nr_double_t);
-nr_double_t  conj (const nr_double_t);
-nr_double_t   fix (const nr_double_t);
-nr_double_t  step (const nr_double_t);
-
-// overloaded math functions
-nr_double_t xhypot (const nr_double_t, const nr_double_t);
-nr_double_t signum (const nr_double_t);
-nr_double_t   sign (const nr_double_t);
-nr_double_t   sinc (const nr_double_t);
-nr_double_t limexp (const nr_double_t);
+#include "real.h"
 
 #ifndef HAVE_COMPLEX
 #include "cmplx.h"

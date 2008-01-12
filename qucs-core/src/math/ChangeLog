@@ -1,3 +1,9 @@
+2008-01-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* real.cpp: Put real valued functions from complex file here.
+	Also renamed abs() function (of complex, vector, matrix) to
+	fabs() everywhere.
+
 2008-01-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am: Creating math library.  Complex class has been
