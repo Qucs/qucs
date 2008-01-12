@@ -1,3 +1,8 @@
+2008-01-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/graphictext.cpp (paint): It's now possible to use
+	^{super] and _{sub} in the graphic text widget.
+
 2007-12-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_es.ts, qucs_fr.ts, qucs_uk.ts: Updated translations.

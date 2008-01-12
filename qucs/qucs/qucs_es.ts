@@ -818,6 +818,10 @@
         <source>The text must not be empty!</source>
         <translation>¡El texto no puede estar vacío!</translation>
     </message>
+    <message>
+        <source>Use _{..} and ^{..} for sub- and super-positions.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HelpDialog</name>
