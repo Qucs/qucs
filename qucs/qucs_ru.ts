@@ -870,6 +870,10 @@
         <source>The text must not be empty!</source>
         <translation>Текст не должен быть пустым!</translation>
     </message>
+    <message>
+        <source>Use _{..} and ^{..} for sub- and super-positions.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HelpDialog</name>
