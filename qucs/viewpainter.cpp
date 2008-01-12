@@ -298,6 +298,68 @@ int ViewPainter::drawText(const QString& Text, int x1, int y1, int *Height)
 
 // -------------------------------------------------------------
 // Returns width of text (and height if pointer is not null).
+int ViewPainter::drawTextMapped(const QString& Text, int x1, int y1,
+				int *Height)
+{
+  QRect r;
+  int y = 0;
+  int x = 0;
+  int h = 0;
+  int w = 0;
+  int i = 0;
+
+  while (!Text[i].isNull()) {
+    if ((Text[i].latin1() == '_' || Text[i].latin1() == '^') &&
+	!Text[i+1].isNull()) {
+      bool is_sub = Text[i++].latin1() == '_';
+      int len = 0;
+
+      if (Text[i] == '{') {
+        i++;
+        while (!Text[i+len].isNull() && Text[i+len].latin1() != '}') len++;
+      }
+
+      QFont fbak = Painter->font();
+      QFont f = Painter->font();
+      f.setPointSizeFloat(f.pointSizeFloat()*0.8);
+      Painter->setFont(f);
+      Painter->drawText(x1+x,
+			y1+y + (is_sub ? +0.6 : -0.3)*fbak.pointSizeFloat(),
+			0, 0, Qt::DontClip,
+			Text.mid(i, len ? len : 1), -1, &r);
+      Painter->setFont(fbak);
+      x += r.width();
+      if (x > w) w = x;
+      i += len ? len + 1 : 1;
+    }
+    else
+    {
+      int len = 0;
+      while (!Text[i+len].isNull() && Text[i+len].latin1() != '_' &&
+	     Text[i+len].latin1() != '^' && Text[i+len].latin1() != '\n')
+	len++;
+      Painter->drawText(x1+x, y1+y,
+			0, 0, Qt::DontClip, Text.mid(i, len), -1, &r);
+      if (h < r.height()) {
+        h = r.height();
+      }
+      x += r.width();
+      if (x > w) w = x;
+      if (Text[i+len].latin1() == '\n') {
+	y += h;
+	x = 0;
+	i++;
+      }
+      i += len;
+    }
+  }
+
+  if(Height) *Height = y+h;
+  return w;
+}
+
+// -------------------------------------------------------------
+// Returns width of text (and height if pointer is not null).
 void ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
 {
   float z;
