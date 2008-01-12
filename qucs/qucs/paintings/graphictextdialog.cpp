@@ -40,8 +40,10 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   vert->setSpacing(3);
 
   vert->addWidget(
-        new QLabel(tr("Use LaTeX style for special characters, e.g. \\tau"),
-        this));
+        new QLabel(tr("Use LaTeX style for special characters, e.g. \\tau")+
+		   "\n"+
+		   tr("Use _{..} and ^{..} for sub- and super-positions."),
+		   this));
 
   text = new QTextEdit(this);
   text->setTextFormat(Qt::PlainText);

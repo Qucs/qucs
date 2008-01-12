@@ -61,23 +61,24 @@ void GraphicText::paint(ViewPainter *p)
   QFont f = p->Painter->font();
   p->Painter->setPen(Color);
   p->Painter->setFont(Font);
-  QRect r;
+
   // Because of a bug in Qt 3.1, drawing this text is dangerous, if it
   // contains linefeeds. Qt has problems with linefeeds. It remembers the
   // last font metrics (within the font ???) and does not calculate it again.
   // The error often appears at a very different drawText function !!!
-  p->Painter->drawText(0, 0, 0, 0, Qt::DontClip, Text, -1, &r);
+  int w, h;
+  w = p->drawTextMapped(Text, 0, 0, &h);
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->Painter->drawRect(-3, -2, r.width()+6, r.height()+5);
+    p->Painter->drawRect(-3, -2, w+6, h+5);
   }
 
   Font.setPointSize(Size);   // restore real font size
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
-  x2 = int(float(r.width())  / p->Scale);
-  y2 = int(float(r.height()) / p->Scale);
+  x2 = int(float(w)  / p->Scale);
+  y2 = int(float(h) / p->Scale);
   p->Painter->setFont(f);
 }
 
