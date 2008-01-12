@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.2 2008/01/11 16:15:38 ela Exp $
+ * $Id: complex.cpp,v 1.3 2008/01/12 19:33:04 ela Exp $
  *
  */
 
@@ -51,26 +51,6 @@ nr_complex_t rect (const nr_double_t x, const nr_double_t y) {
   return nr_complex_t (x, y);
 }
 
-/*!\brief Real part of real number
-
-   \param[in] r Real number
-   \return Real part of r ie r
-   \todo Why not inline?
-*/
-nr_double_t real (const nr_double_t r) {
-  return r;
-}
-
-/*!\brief Imaginary part of complex number
-
-   \param[in] r Real number
-   \return Imaginary part of r
-   \todo Why not inline?
-*/
-nr_double_t imag (const nr_double_t r) {
-  return 0.0;
-}
-
 #ifndef HAVE_CXX_COMPLEX_NORM
 /*!\brief Compute euclidian norm of complex number
 
@@ -85,37 +65,6 @@ nr_double_t norm (const nr_complex_t z) {
   return r * r + i * i;
 }
 #endif
-
-/*!\brief Compute euclidian norm of real number
-
-   Compute \f$r^2\f$
-   \param[in] r Real number
-   \return Euclidian norm of r
-   \todo Why not inline
-*/
-nr_double_t norm (const nr_double_t r) {
-  return r * r;
-}
-
-/*!\brief Compute complex modulus of real number
-
-   \param[in] r Real number
-   \return Modulus of r
-   \todo Why not inline
-*/
-nr_double_t abs (const nr_double_t r) {
-  return fabs (r);
-}
-
-/*!\brief Conjugate of real number
-
-   \param[in] r Real number
-   \return Conjugate of real r ie r
-   \todo Why not inline?
-*/
-nr_double_t conj (const nr_double_t r) {
-  return r;
-}
 
 #ifndef HAVE_CXX_COMPLEX_POLAR
 /*!\brief Construct a complex number using polar notation
@@ -239,27 +188,6 @@ nr_complex_t limexp (const nr_complex_t z) {
   return nr_complex_t (mag * cos (imag (z)), mag * sin (imag (z)));
 }
 
-/*!\brief Compute limited exponential
-
-   Compute limited exponential:
-   \f[
-   \begin{cases}
-   \exp r & \text{if } r < \text{M\_LIMEXP} \\
-   \exp (\text{M\_LIMEXP})\left[1.0 + (r - \text{M\_LIMEXP})\right] &
-        \text{else}
-   \end{cases}
-   \f]
-
-   #M_LIMEXP is a constant
-   \param[in] r real number
-   \return limited exponential of r
-   \todo Change limexp(real) limexp(complex) file order
-   \todo Document #M_LIMEXP
-*/
-nr_double_t limexp (const nr_double_t r) {
-  return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
-}
-
 #ifndef HAVE_CXX_COMPLEX_LOG 
 /*!\brief Compute principal value of natural logarithm of z
 
@@ -268,7 +196,7 @@ nr_double_t limexp (const nr_double_t r) {
 */
 nr_complex_t log (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log (abs (z)), phi);
+  return nr_complex_t (log (fabs (z)), phi);
 }
 #endif 
 
@@ -289,7 +217,7 @@ nr_complex_t ln (const nr_complex_t z) {
 */
 nr_complex_t log10 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log10 (abs (z)), phi * M_LOG10E);
+  return nr_complex_t (log10 (fabs (z)), phi * M_LOG10E);
 }
 #endif
 
@@ -301,7 +229,7 @@ nr_complex_t log10 (const nr_complex_t z) {
 */
 nr_complex_t log2 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
+  return nr_complex_t (log (fabs (z)) * M_LOG2E, phi * M_LOG2E);
 }
 #endif
 
@@ -313,7 +241,7 @@ nr_complex_t log2 (const nr_complex_t z) {
    \return z power d (\f$z^d\f$)
 */
 nr_complex_t pow (const nr_complex_t z, const nr_double_t d) {
-  return polar (pow (abs (z), d), arg (z) * d);
+  return polar (pow (fabs (z), d), arg (z) * d);
 }
 
 /*!\brief Compute power function with complex exponent but real mantisse
@@ -422,7 +350,7 @@ nr_complex_t sqrt (const nr_complex_t z) {
     return r < 0.0 ? nr_complex_t (0.0, sqrt (-r)) : nr_complex_t (sqrt (r));
   } else {
     nr_double_t phi = arg (z);
-    return polar (sqrt (abs (z)), phi / 2.0);
+    return polar (sqrt (fabs (z)), phi / 2.0);
   }
 #else /* better numerical behaviour, avoiding arg() and polar() */
   if (r == 0.0 && i == 0.0) {
@@ -707,11 +635,11 @@ nr_complex_t fmod (const nr_double_t x, const nr_complex_t y) {
 	    \f]
    \param[in] z complex number
    \return signum of z
-   \todo Better implementation z/abs(z) is not really stable
+   \todo Better implementation z/fabs(z) is not really stable
 */
 nr_complex_t signum (const nr_complex_t z) {
   if (z == 0) return 0;
-  return z / abs (z);
+  return z / fabs (z);
 }
 
 /*!\brief complex sign function 
@@ -725,37 +653,11 @@ nr_complex_t signum (const nr_complex_t z) {
 	    \f]
    \param[in] z complex number
    \return sign of z
-   \todo Better implementation z/abs(z) is not really stable
+   \todo Better implementation z/fabs(z) is not really stable
 */
 nr_complex_t sign (const nr_complex_t z) {
   if (z == 0) return nr_complex_t (1);
-  return z / abs (z);
-}
-
-/*!\brief Euclidean distance function
-
-   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.  
-   This is the length of the hypotenuse of a right-angle triangle with sides 
-   of length a and b, or the distance
-   of the point (a,b) from the origin.
-
-   \param[in] a first length
-   \param[in] b second length
-   \return Euclidean distance from (0,0) to (a,b): \f$\sqrt{a^2+b^2}\f$
-*/
-nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
-  nr_double_t c = fabs (a);
-  nr_double_t d = fabs (b);
-  if (c > d) {
-    nr_double_t e = d / c;
-    return c * sqrt (1 + e * e);
-  }
-  else if (d == 0)
-    return 0;
-  else {
-    nr_double_t e = c / d;
-    return d * sqrt (1 + e * e);
-  }
+  return z / fabs (z);
 }
 
 /*!\brief Euclidean distance function for complex argument
@@ -773,11 +675,11 @@ nr_double_t xhypot (const nr_complex_t a, const nr_complex_t b) {
   nr_double_t c = norm (a);
   nr_double_t d = norm (b);
   if (c > d)
-    return abs (a) * sqrt (1 + d / c);
+    return fabs (a) * sqrt (1 + d / c);
   else if (d == 0)
     return 0;
   else
-    return abs (b) * sqrt (1 + c / d);
+    return fabs (b) * sqrt (1 + c / d);
 }
 
 /*!\brief Euclidean distance function for a double b complex */
@@ -788,42 +690,6 @@ nr_double_t xhypot (const nr_double_t a, const nr_complex_t b) {
 /*!\brief Euclidean distance function for b double a complex */
 nr_double_t xhypot (const nr_complex_t a, const nr_double_t b) {
   return xhypot (a, nr_complex_t (b));
-}
-
-/*!\brief real signum function 
-   
-    compute \f[
-    \mathrm{signum}\;d=
-                     = \begin{cases}
-		       O & \text{if } d=0 \\
-		       1 & \text{if } d>0 \\
-		       -1 & \text{if } d<0
-		       \end{cases}
-	    \f]
-   \param[in] d real number
-   \return signum of d
-   \todo Move near complex signum
-*/
-nr_double_t signum (const nr_double_t d) {
-  if (d == 0) return 0;
-  return d < 0 ? -1 : 1;
-}
-
-/*!\brief real sign function 
-   
-    compute \f[
-    \mathrm{sign}\;d=
-                     = \begin{cases}
-		       1 & \text{if } d\ge 0 \\
-		       -1 & \text{if } d<0
-		       \end{cases}
-	    \f]
-   \param[in] d real number
-   \return sign of d
-   \todo Move near complex sign
-*/
-nr_double_t sign (const nr_double_t d) {
-  return d < 0 ? -1 : 1;
 }
 
 /*!\brief Cardinal sinus 
@@ -838,18 +704,6 @@ nr_complex_t sinc (const nr_complex_t z) {
   return sin (z) / z;
 }
 
-/*!\brief Real cardinal sinus 
-   
-   Compute \f$\mathrm{sinc}\;d=\frac{\sin d}{d}\f$
-   \param[in] d real number
-   \return cardianal sinus of s
-   \todo Why not inline
-*/
-nr_double_t sinc (const nr_double_t d) {
-  if (d == 0) return 1;
-  return sin (d) / d;
-}
-
 /*!\brief Complex ceil
     Ceil is the smallest integral value not less than argument
     Apply ceil to real and imaginary part 
@@ -859,24 +713,6 @@ nr_double_t sinc (const nr_double_t d) {
 */
 nr_complex_t ceil (const nr_complex_t z) {
   return rect (ceil (real (z)), ceil (imag (z)));
-}
-
-/*!\brief Fix function 
-
-    Fix is nearest integral value in direction of 0,
-    \f[
-    \operatorname{fix} d=\begin{cases}
-    \operatorname{floor} d & \text{if } d > 0 \\
-    \operatorname{ceil} d  & \text{else}
-    \end{cases}
-    \f]
-    
-    \param[in] d real number
-    \return fixed complex number
-    \todo Why not inline?
-*/
-nr_double_t fix (const nr_double_t d) {
-  return (d > 0) ? floor (d) : ceil (d);
 }
 
 /*!\brief Complex ceil
@@ -916,26 +752,6 @@ nr_complex_t sqr (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return rect (r * r - i * i, 2 * r * i);
-}
-
-/*!\brief Heaviside step function
-   
-   The Heaviside step function, H, also called unit step function, 
-   is a discontinuous function whose value is zero for negative argument and 
-   one for positive argument. For zero by convention, H(0)=0.5
-   \param[in] d Heaviside argument
-   \return Heaviside step
-   \todo Create Heaviside alias
-*/ 
-nr_double_t step (const nr_double_t d) {
-  nr_double_t x = d;
-  if (x < 0.0)
-    x = 0.0;
-  else if (x > 0.0)
-    x = 1.0;
-  else
-    x = 0.5;
-  return x;
 }
 
 /*!\brief Heaviside step function for complex number
@@ -985,7 +801,6 @@ nr_complex_t jn (const int n, const nr_complex_t z) {
 nr_complex_t yn (const int n, const nr_complex_t z) {
   return rect (yn (n, real (z)), 0);
 }
-
 
 /*!\brief Modified Bessel function of first kind
    
@@ -1041,7 +856,7 @@ nr_complex_t erfcinv (const nr_complex_t z) {
   \todo Why not inline
   \note Like equality of double this test 
         is meaningless in finite precision
-	Use instead abs(x-x0) < tol
+	Use instead fabs(x-x0) < tol
 */
 bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
   return (real (z1) == real (z2)) && (imag (z1) == imag (z2));
@@ -1051,7 +866,7 @@ bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
   \todo Why not inline
   \note Like inequality of double this test 
         is meaningless in finite precision
-	Use instead abs(x-x0) > tol
+	Use instead fabs(x-x0) > tol
 */
 bool operator!=(const nr_complex_t z1, const nr_complex_t z2) {
   return (real (z1) != real (z2)) || (imag (z1) != imag (z2));

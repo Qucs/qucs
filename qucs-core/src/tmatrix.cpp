@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.cpp,v 1.13 2006/04/24 08:25:46 raimi Exp $
+ * $Id: tmatrix.cpp,v 1.14 2008/01/12 19:33:00 ela Exp $
  *
  */
 
@@ -216,8 +216,8 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
   for (i = 0; i < n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < n; r++) {
-      if (abs (b.get (r, i)) > MaxPivot) {
-	MaxPivot = abs (b.get (r, i));
+      if (fabs (b.get (r, i)) > MaxPivot) {
+	MaxPivot = fabs (b.get (r, i));
 	pivot = r;
       }
     }

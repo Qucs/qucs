@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.1 2008/01/10 20:00:05 ela Exp $
+ * $Id: fspecial.cpp,v 1.2 2008/01/12 19:33:04 ela Exp $
  *
  */
 
@@ -196,14 +196,6 @@ nr_double_t fspecial::ellip_sncndn (nr_double_t u, nr_double_t k,
   }
   return sn;
 }
-
-#ifndef HAVE_ROUND
-
-nr_double_t fspecial::round (nr_double_t arg) {
-  return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
-}
-
-#endif /* HAVE_ROUND */
 
 /* data for a Chebyshev series over a given interval */
 struct cheb_series_t {

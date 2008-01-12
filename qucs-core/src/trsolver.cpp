@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.53 2007/12/30 13:05:17 ela Exp $
+ * $Id: trsolver.cpp,v 1.54 2008/01/12 19:33:01 ela Exp $
  *
  */
 
@@ -776,7 +776,7 @@ nr_double_t trsolver::checkDelta (void) {
     dif = x->get (r) - SOL(0)->get (r);
     if (finite (dif) && dif != 0) {
       // use Milne' estimate for the local truncation error
-      rel = MAX (abs (x->get (r)), abs (SOL(0)->get (r)));
+      rel = MAX (fabs (x->get (r)), fabs (SOL(0)->get (r)));
       tol = LTEreltol * rel + LTEabstol;
       lte = LTEfactor * (cec / (pec - cec)) * dif;
       q =  delta * exp (log (fabs (tol / lte)) / (corrOrder + 1));

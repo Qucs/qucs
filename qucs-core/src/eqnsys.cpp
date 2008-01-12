@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.40 2008/01/10 20:00:00 ela Exp $
+ * $Id: eqnsys.cpp,v 1.41 2008/01/12 19:32:59 ela Exp $
  *
  */
 
@@ -209,8 +209,8 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
   for (i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < N; r++) {
-      if (abs (A_(r, i)) > MaxPivot) {
-	MaxPivot = abs (A_(r, i));
+      if (fabs (A_(r, i)) > MaxPivot) {
+	MaxPivot = fabs (A_(r, i));
 	pivot = r;
       }
     }
@@ -249,8 +249,8 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   for (i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < N; r++) {
-      if (abs (A_(r, i)) > MaxPivot) {
-	MaxPivot = abs (A_(r, i));
+      if (fabs (A_(r, i)) > MaxPivot) {
+	MaxPivot = fabs (A_(r, i));
 	pivot = r;
       }
     }
@@ -333,7 +333,7 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
   // initialize pivot exchange table
   for (r = 0; r < N; r++) {
     for (MaxPivot = 0, c = 0; c < N; c++)
-      if ((d = abs (A_(r, c))) > MaxPivot)
+      if ((d = fabs (A_(r, c))) > MaxPivot)
 	MaxPivot = d;
     if (MaxPivot <= 0) MaxPivot = NR_TINY;
     nPvt[r] = 1 / MaxPivot;
@@ -354,7 +354,7 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
       for (k = 0; k < c; k++) f -= A_(r, k) * A_(k, c);
       A_(r, c) = f;
       // larger pivot ?
-      if ((d = nPvt[r] * abs (f)) > MaxPivot) {
+      if ((d = nPvt[r] * fabs (f)) > MaxPivot) {
 	MaxPivot = d;
 	pivot = r;
       }
@@ -399,7 +399,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
   // initialize pivot exchange table
   for (r = 0; r < N; r++) {
     for (MaxPivot = 0, c = 0; c < N; c++)
-      if ((d = abs (A_(r, c))) > MaxPivot)
+      if ((d = fabs (A_(r, c))) > MaxPivot)
 	MaxPivot = d;
     if (MaxPivot <= 0) MaxPivot = NR_TINY;
     nPvt[r] = 1 / MaxPivot;
@@ -420,7 +420,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
       for (k = 0; k < c; k++) f -= A_(r, k) * A_(k, c);
       A_(r, c) = f;
       // larger pivot ?
-      if ((d = nPvt[r] * abs (f)) > MaxPivot) {
+      if ((d = nPvt[r] * fabs (f)) > MaxPivot) {
 	MaxPivot = d;
 	pivot = r;
       }
@@ -570,8 +570,8 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
     }
     // check for convergence
     for (conv = 1, r = 0; r < N; r++) {
-      diff = abs (X_(r) - Xprev->get (r));
-      if (diff >= abstol + reltol * abs (X_(r))) {
+      diff = fabs (X_(r) - Xprev->get (r));
+      if (diff >= abstol + reltol * fabs (X_(r))) {
 	conv = 0;
 	break;
       }
@@ -652,12 +652,12 @@ void eqnsys<nr_type_t>::solve_sor (void) {
     }
     // check for convergence
     for (s = 0, d = 0, conv = 1, r = 0; r < N; r++) {
-      diff = abs (X_(r) - Xprev->get (r));
-      if (diff >= abstol + reltol * abs (X_(r))) {
+      diff = fabs (X_(r) - Xprev->get (r));
+      if (diff >= abstol + reltol * fabs (X_(r))) {
 	conv = 0;
 	break;
       }
-      d += diff; s += abs (X_(r));
+      d += diff; s += fabs (X_(r));
       if (!finite (diff)) { error++; break; }
     }
     if (!error) {
@@ -789,9 +789,9 @@ void eqnsys<nr_type_t>::preconditioner (void) {
   for (int i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = i, r = 0; r < N; r++) {
-      if (abs (A_(r, i)) > MaxPivot && 
-	  abs (A_(i, r)) >= abs (A_(r, r))) {
-        MaxPivot = abs (A_(r, i));
+      if (fabs (A_(r, i)) > MaxPivot && 
+	  fabs (A_(i, r)) >= fabs (A_(r, r))) {
+        MaxPivot = fabs (A_(r, i));
         pivot = r;
       }
     }
@@ -1010,7 +1010,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N - 1; r >= 0; r--) {
     f = B_(r);
     for (c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (R_(r)) > NR_EPSI)
+    if (fabs (R_(r)) > NR_EPSI)
       X_(cMap[r]) = f / R_(r);
     else
       X_(cMap[r]) = 0;
@@ -1038,7 +1038,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   // backward substitution in order to solve RX = Q'B
   for (r = N - 1; r >= 0; r--) {
     for (f = B_(r), c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (A_(r, r)) > NR_EPSI)
+    if (fabs (A_(r, r)) > NR_EPSI)
       X_(cMap[r]) = f / A_(r, r);
     else
       X_(cMap[r]) = 0;
@@ -1057,7 +1057,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   // forward substitution in order to solve R'X = B
   for (r = 0; r < N; r++) {
     for (f = B_(r), c = 0; c < r; c++) f -= A_(c, r) * B_(c);
-    if (abs (A_(r, r)) > NR_EPSI)
+    if (fabs (A_(r, r)) > NR_EPSI)
       B_(r) = f / A_(r, r);
     else
       B_(r) = 0;

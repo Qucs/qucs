@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.24 2008/01/10 20:00:00 ela Exp $
+ * $Id: matvec.cpp,v 1.25 2008/01/12 19:33:00 ela Exp $
  *
  */
 
@@ -430,9 +430,9 @@ matvec conj (matvec a) {
 }
 
 // Computes magnitude of each matrix vector element.
-matvec abs (matvec a) {
+matvec fabs (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res.set (abs (a.get (i)), i);
+  for (int i = 0; i < a.getSize (); i++) res.set (fabs (a.get (i)), i);
   return res;
 }
 

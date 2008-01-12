@@ -177,10 +177,10 @@ dnl Checks for complex classes and functions.
 #AC_CXX_NAMESPACES
 #AC_CXX_HAVE_COMPLEX
 #AC_CXX_HAVE_TR1_COMPLEX
-#AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log norm sin sinh sqrt tan tanh])
+#AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
 #AC_CHECK_CXX_COMPLEX_POW
-#AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh log10])
-#AC_CHECK_CXX_COMPLEX_FUNCS([log2 floor ceil])
+#AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])
+#AC_CHECK_CXX_COMPLEX_FUNCS([log2 floor ceil norm fabs])
 #AC_CHECK_CXX_COMPLEX_ATAN2
 #AC_CHECK_CXX_COMPLEX_FMOD
 #AC_CHECK_CXX_COMPLEX_POLAR

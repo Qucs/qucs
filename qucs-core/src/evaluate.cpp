@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.71 2008/01/10 20:00:00 ela Exp $
+ * $Id: evaluate.cpp,v 1.72 2008/01/12 19:32:59 ela Exp $
  *
  */
 
@@ -215,7 +215,7 @@ MAKE_FUNC_DEFINITION_0 (sqr);    // square value
 
 MAKE_FUNC_DEFINITION_1 (real);   // real value
 MAKE_FUNC_DEFINITION_1 (imag);   // imaginary value
-MAKE_FUNC_DEFINITION_1 (abs);    // absolute value
+MAKE_FUNC_DEFINITION_1 (fabs);   // absolute value
 
 // ******************** unary plus *************************
 constant * evaluate::plus_d (constant * args) {
@@ -1752,7 +1752,7 @@ constant * evaluate::rtoswr_d (constant * args) {
 constant * evaluate::rtoswr_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETD ((1 + abs (*c1)) / (1 - abs (*c1)));
+  _RETD ((1 + fabs (*c1)) / (1 - fabs (*c1)));
 }
 
 constant * evaluate::rtoswr_v (constant * args) {
@@ -1760,7 +1760,7 @@ constant * evaluate::rtoswr_v (constant * args) {
   _DEFV ();
   res->v = new vector (v1->getSize ());
   for (int i = 0; i < v1->getSize (); i++)
-    res->v->set ((1 + abs (v1->get (i))) / (1 - abs (v1->get (i))), i);
+    res->v->set ((1 + fabs (v1->get (i))) / (1 - fabs (v1->get (i))), i);
   return res;
 }
 
@@ -1791,9 +1791,9 @@ constant * evaluate::max_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
   if (fabs (arg (*c1)) < M_PI_2)
-    res->d = abs (*c1);
+    res->d = fabs (*c1);
   else
-    res->d = -abs (*c1);
+    res->d = -fabs (*c1);
   return res;
 }
 
@@ -1815,7 +1815,7 @@ constant * evaluate::max_d_c (constant * args) {
   _ARC1 (c2);
   _DEFC ();
   nr_double_t a = d1;
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? fabs (*c2) : -fabs (*c2);
   nr_complex_t r = a > b ? d1 : *c2;
   _RETC (r);
 }
@@ -1824,8 +1824,8 @@ constant * evaluate::max_c_c (constant * args) {
   _ARC0 (c1);
   _ARC1 (c2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? fabs (*c1) : -fabs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? fabs (*c2) : -fabs (*c2);
   nr_complex_t r = a > b ? *c1 : *c2;
   _RETC (r);
 }
@@ -1834,7 +1834,7 @@ constant * evaluate::max_c_d (constant * args) {
   _ARC0 (c1);
   _ARD1 (d2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? fabs (*c1) : -fabs (*c1);
   nr_double_t b = d2;
   nr_complex_t r = a > b ? *c1 : d2;
   _RETC (r);
@@ -1851,9 +1851,9 @@ constant * evaluate::min_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
   if (fabs (arg (*c1)) < M_PI_2)
-    res->d = abs (*c1);
+    res->d = fabs (*c1);
   else
-    res->d = -abs (*c1);
+    res->d = -fabs (*c1);
   return res;
 }
 
@@ -1875,7 +1875,7 @@ constant * evaluate::min_d_c (constant * args) {
   _ARC1 (c2);
   _DEFC ();
   nr_double_t a = d1;
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? fabs (*c2) : -fabs (*c2);
   nr_complex_t r = a < b ? d1 : *c2;
   _RETC (r);
 }
@@ -1884,8 +1884,8 @@ constant * evaluate::min_c_c (constant * args) {
   _ARC0 (c1);
   _ARC1 (c2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? fabs (*c1) : -fabs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? fabs (*c2) : -fabs (*c2);
   nr_complex_t r = a < b ? *c1 : *c2;
   _RETC (r);
 }
@@ -1894,7 +1894,7 @@ constant * evaluate::min_c_d (constant * args) {
   _ARC0 (c1);
   _ARD1 (d2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? fabs (*c1) : -fabs (*c1);
   nr_double_t b = d2;
   nr_complex_t r = a < b ? *c1 : d2;
   _RETC (r);
@@ -2574,8 +2574,8 @@ constant * evaluate::mu1_m (constant * args) {
   _DEFD ();
   nr_double_t k;
   k = (1 - norm (m->get (0, 0))) /
-    (abs (m->get (1, 1) - conj (m->get (0, 0)) * det (*m)) +
-     abs (m->get (0, 1) * m->get (1, 0)));
+    (fabs (m->get (1, 1) - conj (m->get (0, 0)) * det (*m)) +
+     fabs (m->get (0, 1) * m->get (1, 0)));
   _RETD (k);
 }
 
@@ -2584,8 +2584,8 @@ constant * evaluate::mu1_mv (constant * args) {
   _DEFV ();
   vector k;
   k = (1 - norm (mv->get (0, 0))) /
-    (abs (mv->get (1, 1) - conj (mv->get (0, 0)) * det (*mv)) +
-     abs (mv->get (0, 1) * mv->get (1, 0)));
+    (fabs (mv->get (1, 1) - conj (mv->get (0, 0)) * det (*mv)) +
+     fabs (mv->get (0, 1) * mv->get (1, 0)));
   _RETV (k);
 }
 
@@ -2594,8 +2594,8 @@ constant * evaluate::mu2_m (constant * args) {
   _DEFD ();
   nr_double_t k;
   k = (1 - norm (m->get (1, 1))) /
-    (abs (m->get (0, 0) - conj (m->get (1, 1)) * det (*m)) +
-     abs (m->get (0, 1) * m->get (1, 0)));
+    (fabs (m->get (0, 0) - conj (m->get (1, 1)) * det (*m)) +
+     fabs (m->get (0, 1) * m->get (1, 0)));
   _RETD (k);
 }
 
@@ -2604,8 +2604,8 @@ constant * evaluate::mu2_mv (constant * args) {
   _DEFV ();
   vector k;
   k = (1 - norm (mv->get (1, 1))) /
-    (abs (mv->get (0, 0) - conj (mv->get (1, 1)) * det (*mv)) +
-     abs (mv->get (0, 1) * mv->get (1, 0)));
+    (fabs (mv->get (0, 0) - conj (mv->get (1, 1)) * det (*mv)) +
+     fabs (mv->get (0, 1) * mv->get (1, 0)));
   _RETV (k);
 }
 
@@ -2766,7 +2766,7 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   _DEFV ();
   vector D = norm (S->get (1, 1)) - norm (det (*S));
   vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  vector R = fabs (S->get (0, 1)) * fabs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
@@ -2797,7 +2797,7 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   _DEFV ();
   vector D = norm (S->get (0, 0)) - norm (det (*S));
   vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  vector R = fabs (S->get (0, 1)) * fabs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
@@ -2836,7 +2836,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   g = G / norm (S->get (1, 0));
   d = 1 + g * (norm (S->get (0, 0)) - norm (D));
   C = g * conj (c) / d;
-  R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+  R = sqrt (1 - 2 * k * g * fabs (s) + g * g * norm (s)) / fabs (d);
 
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
@@ -2879,7 +2879,7 @@ constant * evaluate::ga_circle_v_v (constant * args) {
     g = G->get (f) / norm (S->get (1, 0));
     d = 1 + g * (norm (S->get (0, 0)) - norm (D));
     C = g * conj (c) / d;
-    R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+    R = sqrt (1 - 2 * k * g * fabs (s) + g * g * norm (s)) / fabs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
 	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -2921,7 +2921,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   g = G / norm (S->get (1, 0));
   d = 1 + g * (norm (S->get (1, 1)) - norm (D));
   C = g * conj (c) / d;
-  R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+  R = sqrt (1 - 2 * k * g * fabs (s) + g * g * norm (s)) / fabs (d);
 
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
@@ -2964,7 +2964,7 @@ constant * evaluate::gp_circle_v_v (constant * args) {
     g = G->get (f) / norm (S->get (1, 0));
     d = 1 + g * (norm (S->get (1, 1)) - norm (D));
     C = g * conj (c) / d;
-    R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+    R = sqrt (1 - 2 * k * g * fabs (s) + g * g * norm (s)) / fabs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
 	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
@@ -3028,7 +3028,7 @@ constant * evaluate::xvalue_d (constant * args) {
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
-    t = abs (v->get (i) - d);
+    t = fabs (v->get (i) - d);
     if (t < diff) {
       idx = i;
       diff = t;
@@ -3050,7 +3050,7 @@ constant * evaluate::xvalue_c (constant * args) {
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
-    t = abs (v->get (i) - *c);
+    t = fabs (v->get (i) - *c);
     if (t < diff) {
       idx = i;
       diff = t;
@@ -3073,7 +3073,7 @@ constant * evaluate::yvalue_d (constant * args) {
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
-    t = abs (indep->get (i) - d);
+    t = fabs (indep->get (i) - d);
     if (t < diff) {
       idx = i;
       diff = t;
@@ -3095,7 +3095,7 @@ constant * evaluate::yvalue_c (constant * args) {
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
-    t = abs (indep->get (i) - *c);
+    t = fabs (indep->get (i) - *c);
     if (t < diff) {
       idx = i;
       diff = t;
@@ -3120,7 +3120,7 @@ constant * evaluate::max_r (constant * args) {
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
       c = v->get (i);
-      d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+      d = fabs (arg (c)) < M_PI_2 ? fabs (c) : -fabs (c);
       if (d > M) M = d;
     }
   }
@@ -3142,7 +3142,7 @@ constant * evaluate::min_r (constant * args) {
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
       c = v->get (i);
-      d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+      d = fabs (arg (c)) < M_PI_2 ? fabs (c) : -fabs (c);
       if (d < M) M = d;
     }
   }
@@ -3273,7 +3273,7 @@ constant * evaluate::rms_d (constant * args) {
 constant * evaluate::rms_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETD (abs (*c1));
+  _RETD (fabs (*c1));
 }
 
 constant * evaluate::rms_v (constant * args) {
