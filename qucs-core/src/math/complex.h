@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.4 2008/01/12 19:33:04 ela Exp $
+ * $Id: complex.h,v 1.5 2008/01/13 12:15:28 ela Exp $
  *
  */
 
@@ -32,10 +32,12 @@
 typedef cmplx nr_complex_t;
 #elif defined HAVE_TR1_COMPLEX
 #include <tr1/complex>
+using namespace std;
 using namespace std::tr1;
 typedef std::complex<nr_double_t> nr_complex_t;
 #else
 #include <complex>
+using namespace std;
 typedef std::complex<nr_double_t> nr_complex_t;
 #endif
 
