@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: operatingpoint.h,v 1.4 2007-09-16 16:49:39 ela Exp $
+ * $Id: operatingpoint.h,v 1.5 2008-01-13 12:15:27 ela Exp $
  *
  */
 
@@ -27,7 +27,7 @@
 
 #include "pair.h"
 
-class operatingpoint : public pair
+class operatingpoint : public ::pair
 {
  public:
   operatingpoint ();
