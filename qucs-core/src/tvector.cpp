@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.18 2008-01-12 19:33:01 ela Exp $
+ * $Id: tvector.cpp,v 1.19 2008-01-13 11:39:19 ela Exp $
  *
  */
 
@@ -169,7 +169,7 @@ void tvector<nr_type_t>::clear (void) {
 template <class nr_type_t>
 int tvector<nr_type_t>::contains (nr_type_t val, nr_double_t eps) {
   int count = 0;
-  for (int i = 0; i < size; i++) if (fabs (data[i] - val) <= eps) count++;
+  for (int i = 0; i < size; i++) if (abs (data[i] - val) <= eps) count++;
   return count;
 }
 
