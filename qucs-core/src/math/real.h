@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: real.h,v 1.1 2008/01/12 19:33:05 ela Exp $
+ * $Id: real.h,v 1.2 2008/01/13 10:50:23 ela Exp $
  *
  */
 
@@ -30,6 +30,9 @@ nr_double_t   real (const nr_double_t);
 nr_double_t   imag (const nr_double_t);
 nr_double_t   norm (const nr_double_t);
 nr_double_t   conj (const nr_double_t);
+#ifndef HAVE_COMPLEX
+nr_double_t    abs (const nr_double_t);
+#endif
 
 // extra math functions
 nr_double_t limexp (const nr_double_t);

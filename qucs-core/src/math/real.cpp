@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: real.cpp,v 1.1 2008/01/12 19:33:05 ela Exp $
+ * $Id: real.cpp,v 1.2 2008/01/13 10:50:23 ela Exp $
  *
  */
 
@@ -68,6 +68,16 @@ nr_double_t norm (const nr_double_t r) {
   return r * r;
 }
 
+/*!\brief Compute complex modulus of real number 	 
+	  	 
+   \param[in] r Real number 	 
+   \return Modulus of r 	 
+   \todo Why not inline 	 
+*/ 	 
+nr_double_t abs (const nr_double_t r) { 	 
+  return fabs (r); 	 
+}
+ 	 
 /*!\brief Conjugate of real number
 
    \param[in] r Real number

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cmplx.h,v 1.2 2008/01/12 19:33:04 ela Exp $
+ * $Id: cmplx.h,v 1.3 2008/01/13 10:50:23 ela Exp $
  *
  */
 
@@ -49,13 +49,13 @@ class cmplx
   friend nr_double_t real (const cmplx);  // the real part
   friend nr_double_t imag (const cmplx);  // the imaginary part
   friend cmplx       conj (const cmplx);  // the complex conjugate
-  friend nr_double_t fabs (const cmplx);  // the magnitude
+  friend nr_double_t  abs (const cmplx);  // the magnitude
 
   nr_double_t arg  (void);  // the angle in the plane
   nr_double_t real (void);  // the real part
   nr_double_t imag (void);  // the imaginary part
   cmplx       conj (void);  // the complex conjugate
-  nr_double_t fabs (void);  // the magnitude
+  nr_double_t  abs (void);  // the magnitude
   nr_double_t norm (void);  // the square of the magnitude
 
   // operator functions

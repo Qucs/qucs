@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: touchstone_producer.cpp,v 1.4 2008/01/12 19:33:01 ela Exp $
+ * $Id: touchstone_producer.cpp,v 1.5 2008/01/13 10:50:22 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ void touchstone_print_noise (void) {
 	       " %+." NR_DECS "e"
 	       touchstone_crlf, f,
 	       10.0 * log10 (real (touchstone_data.fmin->get (i))),
-	       fabs (touchstone_data.sopt->get (i)),
+	       abs (touchstone_data.sopt->get (i)),
 	       deg (arg (touchstone_data.sopt->get (i))),
 	       real (touchstone_data.rn->get (i)) /
 	       touchstone_data.resistance);

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.3 2008/01/12 19:33:04 ela Exp $
+ * $Id: complex.cpp,v 1.4 2008/01/13 10:50:23 ela Exp $
  *
  */
 
@@ -196,7 +196,7 @@ nr_complex_t limexp (const nr_complex_t z) {
 */
 nr_complex_t log (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log (fabs (z)), phi);
+  return nr_complex_t (log (abs (z)), phi);
 }
 #endif 
 
@@ -217,7 +217,7 @@ nr_complex_t ln (const nr_complex_t z) {
 */
 nr_complex_t log10 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log10 (fabs (z)), phi * M_LOG10E);
+  return nr_complex_t (log10 (abs (z)), phi * M_LOG10E);
 }
 #endif
 
@@ -229,7 +229,7 @@ nr_complex_t log10 (const nr_complex_t z) {
 */
 nr_complex_t log2 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log (fabs (z)) * M_LOG2E, phi * M_LOG2E);
+  return nr_complex_t (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
 }
 #endif
 
@@ -241,7 +241,7 @@ nr_complex_t log2 (const nr_complex_t z) {
    \return z power d (\f$z^d\f$)
 */
 nr_complex_t pow (const nr_complex_t z, const nr_double_t d) {
-  return polar (pow (fabs (z), d), arg (z) * d);
+  return polar (pow (abs (z), d), arg (z) * d);
 }
 
 /*!\brief Compute power function with complex exponent but real mantisse
@@ -635,11 +635,11 @@ nr_complex_t fmod (const nr_double_t x, const nr_complex_t y) {
 	    \f]
    \param[in] z complex number
    \return signum of z
-   \todo Better implementation z/fabs(z) is not really stable
+   \todo Better implementation z/abs(z) is not really stable
 */
 nr_complex_t signum (const nr_complex_t z) {
   if (z == 0) return 0;
-  return z / fabs (z);
+  return z / abs (z);
 }
 
 /*!\brief complex sign function 
@@ -653,11 +653,11 @@ nr_complex_t signum (const nr_complex_t z) {
 	    \f]
    \param[in] z complex number
    \return sign of z
-   \todo Better implementation z/fabs(z) is not really stable
+   \todo Better implementation z/abs(z) is not really stable
 */
 nr_complex_t sign (const nr_complex_t z) {
   if (z == 0) return nr_complex_t (1);
-  return z / fabs (z);
+  return z / abs (z);
 }
 
 /*!\brief Euclidean distance function for complex argument
@@ -675,11 +675,11 @@ nr_double_t xhypot (const nr_complex_t a, const nr_complex_t b) {
   nr_double_t c = norm (a);
   nr_double_t d = norm (b);
   if (c > d)
-    return fabs (a) * sqrt (1 + d / c);
+    return abs (a) * sqrt (1 + d / c);
   else if (d == 0)
     return 0;
   else
-    return fabs (b) * sqrt (1 + c / d);
+    return abs (b) * sqrt (1 + c / d);
 }
 
 /*!\brief Euclidean distance function for a double b complex */
