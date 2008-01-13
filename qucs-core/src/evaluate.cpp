@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.73 2008/01/13 10:50:09 ela Exp $
+ * $Id: evaluate.cpp,v 1.74 2008/01/13 11:39:19 ela Exp $
  *
  */
 
@@ -3267,7 +3267,7 @@ constant * evaluate::cumprod_v (constant * args) {
 constant * evaluate::rms_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (abs (d1));
+  _RETD (fabs (d1));
 }
 
 constant * evaluate::rms_c (constant * args) {
