@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.18 2008-01-12 19:33:00 ela Exp $
+ * $Id: matvec.h,v 1.19 2008-01-13 10:50:21 ela Exp $
  *
  */
 
@@ -92,7 +92,7 @@ class matvec
   friend matvec twoport   (matvec, char, char);
   friend matvec real      (matvec);
   friend matvec imag      (matvec);
-  friend matvec fabs      (matvec);
+  friend matvec abs       (matvec);
   friend matvec dB        (matvec);
   friend matvec arg       (matvec);
   friend matvec adjoint   (matvec);

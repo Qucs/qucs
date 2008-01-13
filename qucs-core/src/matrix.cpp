@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.34 2008-01-12 19:33:00 ela Exp $
+ * $Id: matrix.cpp,v 1.35 2008-01-13 10:50:16 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -526,11 +526,11 @@ matrix adjoint (matrix a) {
    \todo add abs in place
    \todo a is const
 */
-matrix fabs (matrix a) {
+matrix abs (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
-      res.set (r, c, fabs (a.get (r, c)));
+      res.set (r, c, abs (a.get (r, c)));
   return res;
 }
 
@@ -709,8 +709,8 @@ nr_complex_t detGauss (matrix a) {
   for (res = 1, i = 0; i < n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < n; r++) {
-      if (fabs (b.get (r, i)) > MaxPivot) {
-	MaxPivot = fabs (b.get (r, i));
+      if (abs (b.get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b.get (r, i));
 	pivot = r;
       }
     }
@@ -756,7 +756,7 @@ nr_complex_t det (matrix a) {
 matrix inverseLaplace (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   nr_complex_t d = detLaplace (a);
-  assert (fabs (d) != 0); // singular matrix
+  assert (abs (d) != 0); // singular matrix
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
       res.set (r, c, cofactor (a, c, r) / d);
@@ -786,8 +786,8 @@ matrix inverseGaussJordan (matrix a) {
   for (i = 0; i < n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r < n; r++) {
-      if (fabs (b (r, i)) > MaxPivot) {
-	MaxPivot = fabs (b (r, i));
+      if (abs (b (r, i)) > MaxPivot) {
+	MaxPivot = abs (b (r, i));
 	pivot = r;
       }
     }
@@ -1832,7 +1832,7 @@ nr_double_t rollet (matrix m) {
   assert (m.getRows () >= 2 && m.getCols () >= 2);
   nr_double_t res;
   res = (1 - norm (m (0, 0)) - norm (m (1, 1)) + norm (det (m))) /
-    2 / fabs (m (0, 1) * m (1, 0));
+    2 / abs (m (0, 1) * m (1, 0));
   return res;
 }
 

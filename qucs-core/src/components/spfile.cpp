@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.26 2008-01-12 19:33:01 ela Exp $
+ * $Id: spfile.cpp,v 1.27 2008-01-13 10:50:22 ela Exp $
  *
  */
 
@@ -509,7 +509,7 @@ nr_complex_t spfile::interpolate (struct spfile_index_t * data,
 	data->v2->vectors (imag (*var), *dep);
       }
       else if (dataType == DATA_POLAR) {
-	data->v1->vectors (fabs (*var), *dep);
+	data->v1->vectors (abs (*var), *dep);
 	data->v2->vectors (unwrap (arg (*var)), *dep);
       }
       data->v1->construct ();
@@ -559,8 +559,8 @@ nr_complex_t spfile::interpolate_lin (vector * dep, vector * var,
   }
   // polar data
   else if (dataType == DATA_POLAR) {
-    y1 = fabs (var->get (idx));
-    y2 = fabs (var->get (idx + 1));
+    y1 = abs (var->get (idx));
+    y2 = abs (var->get (idx + 1));
     f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
     y1 = arg (var->get (idx));
     y2 = arg (var->get (idx + 1));

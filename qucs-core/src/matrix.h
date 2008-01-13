@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.h,v 1.23 2008-01-12 19:33:00 ela Exp $
+ * $Id: matrix.h,v 1.24 2008-01-13 10:50:20 ela Exp $
  *
  */
 
@@ -76,7 +76,7 @@ class matrix
   // other operations
   friend matrix transpose (matrix);
   friend matrix conj (matrix);
-  friend matrix fabs (matrix);
+  friend matrix abs (matrix);
   friend matrix dB (matrix);
   friend matrix arg (matrix);
   friend matrix adjoint (matrix);

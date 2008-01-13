@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.28 2008-01-12 19:32:59 ela Exp $
+ * $Id: applications.h,v 1.29 2008-01-13 10:50:08 ela Exp $
  *
  */
 
@@ -181,17 +181,17 @@ struct application_t eqn::applications[] = {
   { "imag", TAG_MATRIX,  evaluate::imag_m, 1, { TAG_MATRIX  } },
   { "imag", TAG_MATVEC,  evaluate::imag_mv, 1, { TAG_MATVEC } },
 
-  { "abs", TAG_DOUBLE,  evaluate::fabs_d, 1, { TAG_DOUBLE  } },
-  { "abs", TAG_DOUBLE,  evaluate::fabs_c, 1, { TAG_COMPLEX } },
-  { "abs", TAG_VECTOR,  evaluate::fabs_v, 1, { TAG_VECTOR  } },
-  { "abs", TAG_MATRIX,  evaluate::fabs_m, 1, { TAG_MATRIX  } },
-  { "abs", TAG_MATVEC,  evaluate::fabs_mv, 1, { TAG_MATVEC } },
+  { "abs", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
+  { "abs", TAG_DOUBLE,  evaluate::abs_c, 1, { TAG_COMPLEX } },
+  { "abs", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+  { "abs", TAG_MATRIX,  evaluate::abs_m, 1, { TAG_MATRIX  } },
+  { "abs", TAG_MATVEC,  evaluate::abs_mv, 1, { TAG_MATVEC } },
 
-  { "mag", TAG_DOUBLE,  evaluate::fabs_d, 1, { TAG_DOUBLE  } },
-  { "mag", TAG_DOUBLE,  evaluate::fabs_c, 1, { TAG_COMPLEX } },
-  { "mag", TAG_VECTOR,  evaluate::fabs_v, 1, { TAG_VECTOR  } },
-  { "mag", TAG_MATRIX,  evaluate::fabs_m, 1, { TAG_MATRIX  } },
-  { "mag", TAG_MATVEC,  evaluate::fabs_mv, 1, { TAG_MATVEC } },
+  { "mag", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
+  { "mag", TAG_DOUBLE,  evaluate::abs_c, 1, { TAG_COMPLEX } },
+  { "mag", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+  { "mag", TAG_MATRIX,  evaluate::abs_m, 1, { TAG_MATRIX  } },
+  { "mag", TAG_MATVEC,  evaluate::abs_mv, 1, { TAG_MATVEC } },
 
   { "conj", TAG_DOUBLE,  evaluate::conj_d,  1, { TAG_DOUBLE  } },
   { "conj", TAG_COMPLEX, evaluate::conj_c,  1, { TAG_COMPLEX } },

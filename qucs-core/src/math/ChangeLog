@@ -1,3 +1,7 @@
+2008-01-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* real.cpp: Reverted abs() -> fabs() renaming.
+
 2008-01-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* real.cpp: Put real valued functions from complex file here.

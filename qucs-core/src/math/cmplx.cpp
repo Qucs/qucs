@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cmplx.cpp,v 1.2 2008-01-12 19:33:02 ela Exp $
+ * $Id: cmplx.cpp,v 1.3 2008-01-13 10:50:23 ela Exp $
  *
  */
 
@@ -70,7 +70,7 @@ cmplx::cmplx (const cmplx& z) {
    \return modulus of complex object
    \todo Why not inline
 */
-nr_double_t cmplx::fabs (void) {
+nr_double_t cmplx::abs (void) {
   return xhypot (r, i);
 }
 
@@ -80,7 +80,7 @@ nr_double_t cmplx::fabs (void) {
    \return Modulus of z
    \todo Why not inline
 */
-nr_double_t fabs (const cmplx z) {
+nr_double_t abs (const cmplx z) {
   return xhypot (z.r, z.i);
 }
 
@@ -349,7 +349,7 @@ cmplx& cmplx::operator/=(const cmplx z) {
   r  = n2;
 #else /* avoid numerical overflow and underrun */
   nr_double_t n, d, t;
-  if (::fabs (z.r) > ::fabs (z.i)) {
+  if (fabs (z.r) > fabs (z.i)) {
     n = z.i / z.r;
     d = z.r + z.i * n;
     t = (r + i * n) / d;
