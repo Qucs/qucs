@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.39 2008-01-13 10:50:21 ela Exp $
+ * $Id: vector.cpp,v 1.40 2008-01-14 21:15:11 ela Exp $
  *
  */
 
@@ -383,9 +383,9 @@ vector limexp (vector v) {
   return result;
 }
 
-vector ln (vector v) {
+vector log (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (ln (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (log (v.get (i)), i);
   return result;
 }
 
@@ -448,15 +448,15 @@ vector sin (vector v) {
   return result;
 }
 
-vector arcsin (vector v) {
+vector asin (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arcsin (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (asin (v.get (i)), i);
   return result;
 }
 
-vector arccos (vector v) {
+vector acos (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arccos (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (acos (v.get (i)), i);
   return result;
 }
 
@@ -472,9 +472,9 @@ vector tan (vector v) {
   return result;
 }
 
-vector arctan (vector v) {
+vector atan (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arctan (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (atan (v.get (i)), i);
   return result;
 }
 
@@ -484,9 +484,9 @@ vector cot (vector v) {
   return result;
 }
 
-vector arccot (vector v) {
+vector acot (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arccot (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (acot (v.get (i)), i);
   return result;
 }
 
@@ -496,9 +496,9 @@ vector sinh (vector v) {
   return result;
 }
 
-vector arsinh (vector v) {
+vector asinh (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arsinh (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (asinh (v.get (i)), i);
   return result;
 }
 
@@ -508,15 +508,15 @@ vector cosh (vector v) {
   return result;
 }
 
-vector arcosh (vector v) {
+vector acosh (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arcosh (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (acosh (v.get (i)), i);
   return result;
 }
 
-vector arsech (vector v) {
+vector asech (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arsech (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (asech (v.get (i)), i);
   return result;
 }
 
@@ -526,9 +526,9 @@ vector tanh (vector v) {
   return result;
 }
 
-vector artanh (vector v) {
+vector atanh (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (artanh (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (atanh (v.get (i)), i);
   return result;
 }
 
@@ -538,9 +538,9 @@ vector coth (vector v) {
   return result;
 }
 
-vector arcoth (vector v) {
+vector acoth (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (arcoth (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (acoth (v.get (i)), i);
   return result;
 }
 
@@ -1136,21 +1136,21 @@ vector polar (vector a, vector p) {
   return res;
 }
 
-vector arctan2 (const nr_double_t y, vector v) {
+vector atan2 (const nr_double_t y, vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result.set (arctan2 (y, v.get (i)), i);
+    result.set (atan2 (y, v.get (i)), i);
   return result;
 }
 
-vector arctan2 (vector v, const nr_double_t x) {
+vector atan2 (vector v, const nr_double_t x) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result.set (arctan2 (v.get (i), x) , i);
+    result.set (atan2 (v.get (i), x) , i);
   return result;
 }
 
-vector arctan2 (vector y, vector x) {
+vector atan2 (vector y, vector x) {
   int j, i, n, len, len1 = y.getSize (), len2 = x.getSize ();
   if (len1 >= len2) {
     assert (len1 % len2 == 0);
@@ -1161,7 +1161,7 @@ vector arctan2 (vector y, vector x) {
   }
   vector res (len);
   for (j = i = n = 0; n < len; n++) {
-    res (n) = arctan2 (y (i), x (j));
+    res (n) = atan2 (y (i), x (j));
     if (++i >= len1) i = 0; if (++j >= len2) j = 0;
   }
   return res;

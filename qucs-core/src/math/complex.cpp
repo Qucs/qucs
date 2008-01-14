@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.4 2008-01-13 10:50:23 ela Exp $
+ * $Id: complex.cpp,v 1.5 2008-01-14 21:15:12 ela Exp $
  *
  */
 
@@ -114,23 +114,14 @@ nr_complex_t acos (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
 #if 0
-  return rect (0.0, -2.0) * ln (M_SQRT1_2 * (sqrt (z + 1.0) + sqrt (z - 1.0)));
+  return rect (0.0, -2.0) * log (M_SQRT1_2 * (sqrt (z + 1) + sqrt (z - 1)));
 #else
   nr_complex_t y = sqrt (z * z - 1.0);
   if (r * i < 0.0) y = -y;
-  return rect (0, -1.0) * ln (z + y);
+  return rect (0, -1.0) * log (z + y);
 #endif
 }
 #endif
-
-/*!\brief Compute complex arc cosinus
-
-   \param[in] z complex arc
-   \return arc cosinus of z
-*/
-nr_complex_t arccos (const nr_complex_t z) {
-  return acos (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_COSH
 /*!\brief Compute complex hyperbolic cosinus
@@ -152,18 +143,9 @@ nr_complex_t cosh (const nr_complex_t z) {
    \return argument hyperbolic cosinus of z
 */
 nr_complex_t acosh (const nr_complex_t z) {
-  return ln (z + sqrt (z * z - 1.0));
+  return log (z + sqrt (z * z - 1.0));
 }
 #endif
-
-/*!\brief Compute complex argument hyperbolic cosinus
-
-   \param[in] z complex arc
-   \return argument hyperbolic cosinus of z
-*/
-nr_complex_t arcosh (const nr_complex_t z) {
-  return acosh (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_EXP
 /*!\brief Compute complex exponential
@@ -199,15 +181,6 @@ nr_complex_t log (const nr_complex_t z) {
   return nr_complex_t (log (abs (z)), phi);
 }
 #endif 
-
-/*!\brief Compute principal value of natural logarithm of z
-
-   \param[in] z complex number
-   \return principal value of natural logarithm of z
-*/
-nr_complex_t ln (const nr_complex_t z) {
-  return log (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_LOG10 
 /*!\brief Compute principal value of decimal logarithm of z
@@ -261,7 +234,7 @@ nr_complex_t pow (const nr_double_t d, const nr_complex_t z) {
    \return d power z (\f$z_1^{z_2}\f$)
 */
 nr_complex_t pow (const nr_complex_t z1, const nr_complex_t z2) {
-  return exp (z2 * ln (z1));
+  return exp (z2 * log (z1));
 }
 #endif
 
@@ -287,18 +260,9 @@ nr_complex_t sin (const nr_complex_t z) {
 nr_complex_t asin (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return nr_complex_t (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
+  return nr_complex_t (0.0, -1.0) * log (rect (-i, r) + sqrt (1.0 - z * z));
 }
 #endif
-
-/*!\brief Compute complex arc sinus
-
-   \param[in] z complex arc
-   \return arc sinus of z
-*/
-nr_complex_t arcsin (const nr_complex_t z) {
-  return asin (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_SINH
 /*!\brief Compute complex hyperbolic sinus
@@ -320,18 +284,9 @@ nr_complex_t sinh (const nr_complex_t z) {
    \return argument hyperbolic sinus of z
 */
 nr_complex_t asinh (const nr_complex_t z) {
-  return ln (z + sqrt (z * z + 1.0));
+  return log (z + sqrt (z * z + 1.0));
 }
 #endif 
-
-/*!\brief Compute complex argument hyperbolic sinus
-
-   \param[in] z complex arc
-   \return argument hyperbolic sinus of z
-*/
-nr_complex_t arsinh (const nr_complex_t z) {
-  return asinh (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_SQRT
 /*!\brief Compute principal value of square root
@@ -397,45 +352,24 @@ nr_complex_t tan (const nr_complex_t z) {
    \return arc tangent of z
 */
 nr_complex_t atan (const nr_complex_t z) {
-  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
+  return rect (0.0, -0.5) * log (rect (0, 2) / (z + rect (0, 1)) - 1.0);
 }
 #endif
-
-/*!\brief Compute complex arc tangent
-
-   \param[in] z complex arc
-   \return arc tangent of z
-*/
-nr_complex_t arctan (const nr_complex_t z) {
-  return atan (z);
-}
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
 /*!\brief Compute complex arc tangent fortran like function
     
-   atan2 is a two-argument function that computes the arctangent of y / x 
+   atan2 is a two-argument function that computes the arc tangent of y / x 
    given y and x, but with a range of \f$(-\pi;\pi]\f$
 
    \param[in] z complex angle
    \return arc tangent of z
 */
 nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x) {
-  nr_complex_t a = arctan (y / x);
+  nr_complex_t a = atan (y / x);
   return real (x) > 0.0 ? a : -a;
 }
 #endif
-
-/*!\brief Compute complex arc tangent fortran like function
-    
-   atan2 is a two-argument function that computes the arctangent of y / x 
-   given y and x, but with a range of \f$(-\pi;\pi]\f$
-
-   \param[in] z complex angle
-   \return arc tangent of z
-*/
-nr_complex_t arctan2 (const nr_complex_t y, const nr_complex_t x) {
-  return atan2 (y, x);
-}
 
 #ifndef HAVE_CXX_COMPLEX_TANH
 /*!\brief Compute complex hyperbolic tangent
@@ -457,18 +391,9 @@ nr_complex_t tanh (const nr_complex_t z) {
    \return argument hyperbolic tangent of z
 */
 nr_complex_t atanh (const nr_complex_t z) {
-  return 0.5 * ln ( 2.0 / (1.0 - z) - 1.0);
+  return 0.5 * log ( 2.0 / (1.0 - z) - 1.0);
 }
 #endif
-
-/*!\brief Compute complex argument hyperbolic tangent
-
-   \param[in] z complex arc
-   \return argument hyperbolic tangent of z
-*/
-nr_complex_t artanh (const nr_complex_t z) {
-  return atanh (z);
-}
 
 /*!\brief Compute complex cotangent
 
@@ -486,8 +411,8 @@ nr_complex_t cot (const nr_complex_t z) {
    \param[in] z complex arc
    \return arc cotangent of z
 */
-nr_complex_t arccot (const nr_complex_t z) {
-  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z - rect (0.0, 1.0)) + 1.0);
+nr_complex_t acot (const nr_complex_t z) {
+  return rect (0.0, -0.5) * log (rect (0, 2) / (z - rect (0, 1)) + 1.0);
 }
 
 /*!\brief Compute complex argument hyperbolic secant
@@ -496,8 +421,8 @@ nr_complex_t arccot (const nr_complex_t z) {
    \return argument hyperbolic secant of z
    \todo for symetry reason implement sech
 */
-nr_complex_t arsech (const nr_complex_t z) {
-  return ln ((1.0 + sqrt (1.0 - z * z)) / z);
+nr_complex_t asech (const nr_complex_t z) {
+  return log ((1.0 + sqrt (1.0 - z * z)) / z);
 }
 
 /*!\brief Compute complex hyperbolic cotangent
@@ -516,8 +441,8 @@ nr_complex_t coth (const nr_complex_t z) {
    \param[in] z complex arc
    \return argument hyperbolic cotangent of z
 */
-nr_complex_t arcoth (const nr_complex_t z) {
-  return 0.5 * ln (2.0 / (z - 1.0) + 1.0);
+nr_complex_t acoth (const nr_complex_t z) {
+  return 0.5 * log (2.0 / (z - 1.0) + 1.0);
 }
 
 /*!\brief Magnitude in dB
@@ -740,6 +665,17 @@ nr_complex_t fix (const nr_complex_t z) {
 */
 nr_complex_t round (const nr_complex_t z) {
   return rect (round (real (z)), round (imag (z)));
+}
+
+/*!\brief Complex trunc
+    
+    Apply round to integer, towards zero to real and imaginary part 
+    \param[in] z complex number
+    \return rounded complex number
+    \todo Why not inline?
+*/
+nr_complex_t trunc (const nr_complex_t z) {
+  return rect (trunc (real (z)), trunc (imag (z)));
 }
 
 /*!\brief Square of complex number

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.32 2008-01-13 10:50:21 ela Exp $
+ * $Id: vector.h,v 1.33 2008-01-14 21:15:11 ela Exp $
  *
  */
 
@@ -92,7 +92,7 @@ class vector : public object
   friend vector norm   (vector);  // the square of the magnitude
   friend vector arg    (vector);  // the angle in the plane
   friend vector dB     (vector);
-  friend vector ln     (vector);
+  friend vector log    (vector);
   friend vector log2   (vector);
   friend vector pow    (vector, const nr_complex_t);
   friend vector pow    (vector, const nr_double_t);
@@ -110,9 +110,9 @@ class vector : public object
   friend vector polar   (vector, const nr_complex_t);
   friend vector polar   (const nr_complex_t, vector);
   friend vector polar   (vector, vector);
-  friend vector arctan2 (vector, const nr_double_t);
-  friend vector arctan2 (const nr_double_t, vector);
-  friend vector arctan2 (vector, vector);
+  friend vector atan2   (vector, const nr_double_t);
+  friend vector atan2   (const nr_double_t, vector);
+  friend vector atan2   (vector, vector);
   friend vector dbm2w   (vector);
   friend vector w2dbm   (vector);
   friend vector xhypot  (vector, vector);
@@ -128,22 +128,22 @@ class vector : public object
   friend vector limexp  (vector);
   friend vector sqrt    (vector);
   friend vector sin     (vector);
-  friend vector arcsin  (vector);
+  friend vector asin    (vector);
   friend vector cos     (vector);
-  friend vector arccos  (vector);
+  friend vector acos    (vector);
   friend vector tan     (vector);
-  friend vector arctan  (vector);
+  friend vector atan    (vector);
   friend vector cot     (vector);
-  friend vector arccot  (vector);
+  friend vector acot    (vector);
   friend vector sinh    (vector);
-  friend vector arsinh  (vector);
+  friend vector asinh   (vector);
   friend vector cosh    (vector);
-  friend vector arcosh  (vector);
-  friend vector arsech  (vector);
+  friend vector acosh   (vector);
+  friend vector asech   (vector);
   friend vector tanh    (vector);
-  friend vector artanh  (vector);
+  friend vector atanh   (vector);
   friend vector coth    (vector);
-  friend vector arcoth  (vector);
+  friend vector acoth   (vector);
   friend vector signum  (vector);
   friend vector sign    (vector);
   friend vector sinc    (vector);

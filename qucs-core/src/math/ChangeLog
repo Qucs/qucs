@@ -1,3 +1,10 @@
+2008-01-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* real.cpp: Added fallback function for real valued trunc().
+
+	* complex.cpp: Renamed all complex functions probably having a
+	complex<T> pendant, e.g., arcosh() to acosh().
+
 2008-01-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* complex.h: Using std namespace; now using <complex/tr1> works

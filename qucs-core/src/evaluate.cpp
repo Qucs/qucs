@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.74 2008-01-13 11:39:19 ela Exp $
+ * $Id: evaluate.cpp,v 1.75 2008-01-14 21:15:11 ela Exp $
  *
  */
 
@@ -1342,13 +1342,13 @@ constant * evaluate::ln_d (constant * args) {
 constant * evaluate::ln_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (ln (*c1));
+  _RETC (log (*c1));
 }
 
 constant * evaluate::ln_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (ln (*v1));
+  _RETV (log (*v1));
 }
 
 // ********** decimal logarithm *****************
@@ -1407,13 +1407,13 @@ constant * evaluate::arcsin_d (constant * args) {
 constant * evaluate::arcsin_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcsin (*c1));
+  _RETC (asin (*c1));
 }
 
 constant * evaluate::arcsin_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arcsin (*v1));
+  _RETV (asin (*v1));
 }
 
 // ************* arcus cosine ******************
@@ -1426,13 +1426,13 @@ constant * evaluate::arccos_d (constant * args) {
 constant * evaluate::arccos_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arccos (*c1));
+  _RETC (acos (*c1));
 }
 
 constant * evaluate::arccos_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arccos (*v1));
+  _RETV (acos (*v1));
 }
 
 // ************** arcus tangent ******************
@@ -1445,13 +1445,13 @@ constant * evaluate::arctan_d (constant * args) {
 constant * evaluate::arctan_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arctan (*c1));
+  _RETC (atan (*c1));
 }
 
 constant * evaluate::arctan_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arctan (*v1));
+  _RETV (atan (*v1));
 }
 
 // *************** cotangent ********************
@@ -1483,13 +1483,13 @@ constant * evaluate::arccot_d (constant * args) {
 constant * evaluate::arccot_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arccot (*c1));
+  _RETC (acot (*c1));
 }
 
 constant * evaluate::arccot_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arccot (*v1));
+  _RETV (acot (*v1));
 }
 
 // ***************** secans *********************
@@ -1515,19 +1515,19 @@ constant * evaluate::sec_v (constant * args) {
 constant * evaluate::arcsec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (acos (1 / d1));
+  _RETD (acos (1.0 / d1));
 }
 
 constant * evaluate::arcsec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arccos (1.0 / *c1));
+  _RETC (acos (1.0 / *c1));
 }
 
 constant * evaluate::arcsec_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arccos (1 / *v1));
+  _RETV (acos (1.0 / *v1));
 }
 
 // ***************** cosecans *********************
@@ -1553,19 +1553,19 @@ constant * evaluate::cosec_v (constant * args) {
 constant * evaluate::arccosec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (asin (1 / d1));
+  _RETD (asin (1.0 / d1));
 }
 
 constant * evaluate::arccosec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcsin (1.0 / *c1));
+  _RETC (asin (1.0 / *c1));
 }
 
 constant * evaluate::arccosec_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arcsin (1 / *v1));
+  _RETV (asin (1.0 / *v1));
 }
 
 // ********** area sine hyperbolicus **************
@@ -1578,13 +1578,13 @@ constant * evaluate::arsinh_d (constant * args) {
 constant * evaluate::arsinh_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arsinh (*c1));
+  _RETC (asinh (*c1));
 }
 
 constant * evaluate::arsinh_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arsinh (*v1));
+  _RETV (asinh (*v1));
 }
 
 // ********** area cosecans hyperbolicus **************
@@ -1598,51 +1598,51 @@ constant * evaluate::arcosech_d (constant * args) {
 constant * evaluate::arcosech_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arsinh (1.0 / *c1));
+  _RETC (asinh (1.0 / *c1));
 }
 
 constant * evaluate::arcosech_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arsinh (1 / *v1));
+  _RETV (asinh (1 / *v1));
 }
 
 // ********* area cosine hyperbolicus ************
 constant * evaluate::arcosh_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
-  _RETC (arcosh (nr_complex_t (d1)));
+  _RETC (acosh (nr_complex_t (d1)));
 }
 
 constant * evaluate::arcosh_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcosh (*c1));
+  _RETC (acosh (*c1));
 }
 
 constant * evaluate::arcosh_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arcosh (*v1));
+  _RETV (acosh (*v1));
 }
 
 // ********* area secans hyperbolicus ***********
 constant * evaluate::arsech_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
-  _RETC (arsech (nr_complex_t (d1)));
+  _RETC (asech (nr_complex_t (d1)));
 }
 
 constant * evaluate::arsech_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arsech (*c1));
+  _RETC (asech (*c1));
 }
 
 constant * evaluate::arsech_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arsech (*v1));
+  _RETV (asech (*v1));
 }
 
 // ******* area tangent hyperbolicus **********
@@ -1655,13 +1655,13 @@ constant * evaluate::artanh_d (constant * args) {
 constant * evaluate::artanh_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (artanh (*c1));
+  _RETC (atanh (*c1));
 }
 
 constant * evaluate::artanh_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (artanh (*v1));
+  _RETV (atanh (*v1));
 }
 
 // ******* area cotangent hyperbolicus **********
@@ -1674,13 +1674,13 @@ constant * evaluate::arcoth_d (constant * args) {
 constant * evaluate::arcoth_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (arcoth (*c1));
+  _RETC (acoth (*c1));
 }
 
 constant * evaluate::arcoth_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (arcoth (*v1));
+  _RETV (acoth (*v1));
 }
 
 // This is the rtoz, ztor, ytor, rtoy helper macro.
@@ -3453,21 +3453,21 @@ constant * evaluate::arctan2_d_v (constant * args) {
   _ARD0 (y);
   _ARV1 (x);
   _DEFV ();
-  _RETV (arctan2 (y, *x));
+  _RETV (atan2 (y, *x));
 }
 
 constant * evaluate::arctan2_v_d (constant * args) {
   _ARV0 (y);
   _ARD1 (x);
   _DEFV ();
-  _RETV (arctan2 (*y, x));
+  _RETV (atan2 (*y, x));
 }
 
 constant * evaluate::arctan2_v_v (constant * args) {
   _ARV0 (y);
   _ARV1 (x);
   _DEFV ();
-  _RETV (arctan2 (*y, *x));
+  _RETV (atan2 (*y, *x));
 }
 
 // ******************* dbm2w *********************
