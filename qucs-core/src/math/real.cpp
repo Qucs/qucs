@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: real.cpp,v 1.2 2008/01/13 10:50:23 ela Exp $
+ * $Id: real.cpp,v 1.3 2008/01/14 21:15:12 ela Exp $
  *
  */
 
@@ -36,6 +36,12 @@ nr_double_t round (const nr_double_t arg) {
   return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
 }
 #endif /* HAVE_ROUND */
+
+#ifndef HAVE_TRUNC
+nr_double_t trunc (const double arg) {
+  return arg > 0 ? floor (arg) : floor (arg + 1);
+}
+#endif /* HAVE_TRUNC */
 
 /*!\brief Real part of real number
 

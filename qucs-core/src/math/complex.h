@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.5 2008/01/13 12:15:28 ela Exp $
+ * $Id: complex.h,v 1.6 2008/01/14 21:15:12 ela Exp $
  *
  */
 
@@ -44,40 +44,34 @@ typedef std::complex<nr_double_t> nr_complex_t;
 // create a complex object given rectangle coordinates
 nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0);
 
+// overloaded math functions
 #ifndef HAVE_CXX_COMPLEX_ACOS
-nr_complex_t   accos (const nr_complex_t);
+nr_complex_t    acos (const nr_complex_t);
 #endif
-nr_complex_t  arccos (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
 nr_complex_t   acosh (const nr_complex_t);
 #endif
-nr_complex_t  arcosh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
 nr_complex_t    asin (const nr_complex_t);
 #endif
-nr_complex_t  arcsin (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ASINH
 nr_complex_t   asinh (const nr_complex_t);
 #endif 
-nr_complex_t  arsinh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
-nr_complex_t   actan (const nr_complex_t);
+nr_complex_t    atan (const nr_complex_t);
 #endif 
-nr_complex_t  arctan (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATANH
 nr_complex_t   atanh (const nr_complex_t);
 #endif 
-nr_complex_t  artanh (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
 nr_complex_t   atan2 (const nr_complex_t, const nr_complex_t);
 #endif
-nr_complex_t arctan2 (const nr_complex_t, const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_COS 
 nr_complex_t     cos (const nr_complex_t);
@@ -91,10 +85,6 @@ nr_complex_t    cosh (const nr_complex_t);
 nr_complex_t     exp (const nr_complex_t);
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_FLOOR 
-nr_complex_t   floor (const nr_complex_t);
-#endif
-
 #ifndef HAVE_CXX_COMPLEX_FMOD
 nr_complex_t    fmod (const nr_complex_t x, const nr_complex_t y);
 nr_complex_t    fmod (const nr_complex_t x, const nr_double_t y);
@@ -104,7 +94,6 @@ nr_complex_t    fmod (const nr_double_t x, const nr_complex_t y);
 #ifndef HAVE_CXX_COMPLEX_LOG 
 nr_complex_t     log (const nr_complex_t);
 #endif 
-nr_complex_t      ln (const nr_complex_t);
 
 #ifndef HAVE_CXX_COMPLEX_LOG10 
 nr_complex_t   log10 (const nr_complex_t);
@@ -154,14 +143,14 @@ nr_complex_t     tan (const nr_complex_t);
 nr_complex_t     tanh (const nr_complex_t);
 #endif
 
-// overloaded math functions
+// extra math functions
 nr_double_t       dB (const nr_complex_t);
 nr_complex_t  limexp (const nr_complex_t);
 nr_complex_t     cot (const nr_complex_t);
-nr_complex_t  arccot (const nr_complex_t);
-nr_complex_t  arsech (const nr_complex_t);
+nr_complex_t    acot (const nr_complex_t);
+nr_complex_t   asech (const nr_complex_t);
 nr_complex_t    coth (const nr_complex_t);
-nr_complex_t  arcoth (const nr_complex_t);
+nr_complex_t   acoth (const nr_complex_t);
 nr_complex_t    ztor (const nr_complex_t, const nr_complex_t zref = 50.0);
 nr_complex_t    rtoz (const nr_complex_t, const nr_complex_t zref = 50.0);
 nr_complex_t    ytor (const nr_complex_t, const nr_complex_t zref = 50.0);
@@ -172,6 +161,7 @@ nr_complex_t    sinc (const nr_complex_t);
 nr_double_t   xhypot (const nr_complex_t, const nr_complex_t);
 nr_double_t   xhypot (const nr_double_t, const nr_complex_t);
 nr_double_t   xhypot (const nr_complex_t, const nr_double_t);
+nr_complex_t   floor (const nr_complex_t);
 nr_complex_t    ceil (const nr_complex_t);
 nr_complex_t     fix (const nr_complex_t);
 nr_complex_t   trunc (const nr_complex_t);

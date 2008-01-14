@@ -170,7 +170,7 @@ unset double_size
 
 dnl Checks for library functions.
 AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
-		cosh tanh fabs modf atan2 jn yn erf erfc round \
+		cosh tanh fabs modf atan2 jn yn erf erfc round trunc \
 		strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
@@ -180,7 +180,7 @@ AC_CXX_HAVE_TR1_COMPLEX
 AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
 AC_CHECK_CXX_COMPLEX_POW
 AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])
-AC_CHECK_CXX_COMPLEX_FUNCS([log2 floor ceil norm])
+AC_CHECK_CXX_COMPLEX_FUNCS([log2 norm])
 AC_CHECK_CXX_COMPLEX_ATAN2
 AC_CHECK_CXX_COMPLEX_FMOD
 AC_CHECK_CXX_COMPLEX_POLAR
