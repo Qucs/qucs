@@ -24,11 +24,12 @@
 
 INCLUDES = -I$(top_srcdir)/src
 
-noinst_HEADERS = complex.h cmplx.h fspecial.h real.h
+noinst_HEADERS = complex.h cmplx.h fspecial.h real.h precision.h
 
 noinst_LIBRARIES = libqucsmath.a
 
-libqucsmath_a_SOURCES = complex.cpp cmplx.cpp fspecial.cpp real.cpp
+libqucsmath_a_SOURCES = complex.cpp cmplx.cpp fspecial.cpp real.cpp \
+  cbesselj.cpp precision.c
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in

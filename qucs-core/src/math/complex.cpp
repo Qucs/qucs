@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.5 2008-01-14 21:15:12 ela Exp $
+ * $Id: complex.cpp,v 1.6 2008-01-15 19:14:01 ela Exp $
  *
  */
 
@@ -716,6 +716,8 @@ nr_complex_t step (const nr_complex_t z) {
   return rect (x, y);
 }
 
+nr_complex_t cbesselj (unsigned int, nr_complex_t);
+
 /*!\brief Bessel function of first kind
    
    \param[in] n order 
@@ -724,7 +726,7 @@ nr_complex_t step (const nr_complex_t z) {
    \bug Not implemented
 */ 
 nr_complex_t jn (const int n, const nr_complex_t z) {
-  return rect (jn (n, real (z)), 0);
+  return cbesselj (n, z);
 }
 
 /*!\brief Bessel function of second kind
