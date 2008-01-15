@@ -2,6 +2,7 @@
  * diac.cpp - diac class implementation
  *
  * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.2 2008-01-10 20:00:01 ela Exp $
+ * $Id: diac.cpp,v 1.3 2008-01-15 20:58:11 ela Exp $
  *
  */
 
@@ -68,39 +69,39 @@ void diac::calcDC (void) {
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Ibo");
 
-  nr_double_t T, n, Ut, Is, Ri_bo, Ud_bo, Ri, Ieq;
+  nr_double_t T, N, Ut, Is, Gi_bo, Ud_bo, Ieq, Vd;
 
   T = kelvin (26.85);
-  n = 2.0;
-  Ut = T * kBoverQ;
+  N = 2.0;
+  Ut = N * T * kBoverQ;
   Is = 1e-10;
-  Ri_bo = Ubo / Ibo;
-  Ud_bo = n * Ut * log (Ibo / Is + 1.0);
+  Gi_bo = Ibo / Ubo;
+  Ud_bo = Ut * log (Ibo / Is + 1.0);
 
-  Ud = real (getV (NODE_IN) - getV (NODE_A2));
-  Id = sign (Ud);
+  Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
+  Id = sign (Ud) * Is;
   Ud = fabs (Ud);
 
   if (Ud > Ud_bo)
-    Ri = 10.0;
+    gi = 0.1;
   else
-    Ri = Ri_bo;
-  gi = 1.0 / Ri;
+    gi = Gi_bo;
 
-  Ud /= Ut * n;
+  Ud /= Ut;
   if (Ud >= 80.0) {
-    gd  = exp (80.0);
-    Id *= gd * (1.0 + Ud - 80.0);
+    Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+    Ud  = 80.0;
   }
-  else {
-    gd  = Is / Ut / n * exp (Ud);
-    Id *= Is * (exp (Ud) - 1.0);
-  }
-  Ieq = Id - Ud * gd;
+  else
+    Id *= exp (Ud) - 1.0;
+
+  gd  = Is / Ut * exp (Ud);
+  Ieq = Id - Vd * gd;
 
   // fill in I-Vector
   setI (NODE_A2, +Ieq);
   setI (NODE_IN, -Ieq);
+  setI (NODE_A1, 0);
 
   // fill in G-Matrix
   setY (NODE_A2, NODE_A2, +gd); setY (NODE_IN, NODE_IN, +gd);
@@ -139,7 +140,7 @@ void diac::calcOperatingPoints (void) {
 
 // Callback for initializing the AC analysis.
 void diac::initAC (void) {
-  allocMatrixMNA ();
+  initDC ();
 }
 
 // Build admittance matrix for AC and SP analysis.
