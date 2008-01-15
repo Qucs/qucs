@@ -1,3 +1,8 @@
+2008-01-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* cbesselj.cpp: Added complex bessel function of first kind.
+	Thanks a lot to Bastien!
+
 2008-01-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* real.cpp: Added fallback function for real valued trunc().

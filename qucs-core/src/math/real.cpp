@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: real.cpp,v 1.3 2008/01/14 21:15:12 ela Exp $
+ * $Id: real.cpp,v 1.4 2008/01/15 19:14:02 ela Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 #endif
 
 #include <math.h>
+#include <assert.h>
 
 #include "consts.h"
 #include "real.h"
@@ -42,6 +43,25 @@ nr_double_t trunc (const double arg) {
   return arg > 0 ? floor (arg) : floor (arg + 1);
 }
 #endif /* HAVE_TRUNC */
+
+/*!\brief Compute factorial n ie \$n!\$ 
+
+*/
+unsigned int
+factorial (unsigned int n) {
+  unsigned int result = 1;
+
+  /* 13! > 2^32 */
+  assert (n < 13);
+
+  if (n == 0)
+    return 1;
+
+  for (; n > 1; n--)
+    result = result * n;
+
+  return result;
+}
 
 /*!\brief Real part of real number
 

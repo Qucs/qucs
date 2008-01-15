@@ -61,7 +61,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
-	spline.h tridiag.h fourier.h precision.h hash.h applications.h        \
+	spline.h tridiag.h fourier.h hash.h applications.h                    \
 	valuelist.h pair.h characteristic.h range.h history.h                 \
 	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
@@ -73,7 +73,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp   \
 	strlist.cpp logging.c exception.cpp exceptionstack.cpp               \
-	matvec.cpp matrix.cpp precision.c parse_citi.cpp                     \
+	matvec.cpp matrix.cpp parse_citi.cpp                                 \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
 	parse_csv.cpp scan_csv.cpp
