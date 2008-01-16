@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.3 2008-01-15 20:58:11 ela Exp $
+ * $Id: diac.cpp,v 1.4 2008-01-16 18:14:16 ela Exp $
  *
  */
 
@@ -68,13 +68,15 @@ void diac::calcDC (void) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Ibo");
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t N   = getPropertyDouble ("N");
+  nr_double_t Ri  = getPropertyDouble ("Ri");
+  nr_double_t T   = getPropertyDouble ("Temp");
 
-  nr_double_t T, N, Ut, Is, Gi_bo, Ud_bo, Ieq, Vd;
+  nr_double_t Ut, Gi_bo, Ud_bo, Ieq, Vd;
 
-  T = kelvin (26.85);
-  N = 2.0;
+  T = kelvin (T);
   Ut = N * T * kBoverQ;
-  Is = 1e-10;
   Gi_bo = Ibo / Ubo;
   Ud_bo = Ut * log (Ibo / Is + 1.0);
 
@@ -83,7 +85,7 @@ void diac::calcDC (void) {
   Ud = fabs (Ud);
 
   if (Ud > Ud_bo)
-    gi = 0.1;
+    gi = 1 / Ri;
   else
     gi = Gi_bo;
 

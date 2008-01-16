@@ -1,3 +1,8 @@
+2008-01-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diac.cpp: Parameterized the Diac a bit more.  Added some
+	properties.
+
 2008-01-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diac.cpp: Fixed implementation of Diac.  Works now also
