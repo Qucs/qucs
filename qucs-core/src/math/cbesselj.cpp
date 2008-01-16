@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cbesselj.cpp,v 1.1 2008/01/15 19:14:01 ela Exp $
+ * $Id: cbesselj.cpp,v 1.2 2008/01/16 18:44:38 ela Exp $
  *
  */
 
@@ -232,7 +232,6 @@ cbesselj_largearg (unsigned int n, nr_complex_t z)
   Q_ = Q0;
   Qk = Q0;
 
-  /* BASTIEN: m1a8z2 was double before... */
   m1a8z2 = (-1.0) / (8.0 * sqr (z));
 
   /* P */
