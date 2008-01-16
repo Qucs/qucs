@@ -5482,6 +5482,10 @@ Digitális szimuláció</translation>
         <source>Triac</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>intrinsic junction resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
