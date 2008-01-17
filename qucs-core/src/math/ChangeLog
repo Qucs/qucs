@@ -1,3 +1,8 @@
+2008-01-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* fspecial.cpp (isinf): Fixed some compile issues for native sgi
+	IRIX compiler.
+
 2008-01-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* cbesselj.cpp: Added complex bessel function of first kind.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.39 2007/09/16 16:49:40 ela Exp $
+ * $Id: check_spice.cpp,v 1.40 2008/01/17 18:53:06 ela Exp $
  *
  */
 
@@ -1557,7 +1557,7 @@ static int spice_evaluate_points (char ** type, double start, double stop,
     *type = strdup ("lin");
   }
   else if (!strcasecmp (*type, "oct")) { // octaves
-    ret = (int) (((log10 (stop) - log10 (start)) / log10 (8)) * points);
+    ret = (int) (((log10 (stop) - log10 (start)) / log10 (8.0)) * points);
     free (*type);
     *type = strdup ("log");
   }

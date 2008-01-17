@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.2 2008/01/12 19:33:04 ela Exp $
+ * $Id: fspecial.cpp,v 1.3 2008/01/17 18:53:06 ela Exp $
  *
  */
 
@@ -48,7 +48,7 @@
 # define isinf(x)  (!_finite(x) && !_isnan(x))
 # endif
 #endif
-#if defined (__SVR4) && defined (__sun)
+#if (defined (__SVR4) && defined (__sun)) || defined (__sgi)
 # define isinf(x) (!finite(x) && (x) == (x)) 
 #endif
 
@@ -587,9 +587,9 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
   // than 1.15e-9.  One iteration of Halley's rational method (third
   // order) gives full machine precision.
   if (0.0 < x && x < 1.0) {
-    e = 0.5*erfc(-z/sqrt(2)) - x;          // error
-    u = e * sqrt(2*M_PI) * exp(z*z/2);     // f(z)/df(z)
-    z = z - u/(1+z*u/2);                   // Halley's method
+    e = 0.5 * erfc (-z / M_SQRT2) - x;            // error
+    u = e * M_SQRT2 * M_SQRTPI * exp (z * z / 2); // f(z)/df(z)
+    z = z - u / (1 + z * u / 2);                  // Halley's method
   }
   return z;
 }

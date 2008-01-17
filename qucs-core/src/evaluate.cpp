@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.75 2008/01/14 21:15:11 ela Exp $
+ * $Id: evaluate.cpp,v 1.76 2008/01/17 18:53:06 ela Exp $
  *
  */
 
@@ -76,7 +76,7 @@ using namespace fspecial;
 #define _ARG(idx) args->get(idx)
 
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
-#define _B(var,idx) bool (var) = B (_ARES (idx));
+#define _BO(var,idx) bool (var) = B (_ARES (idx));
 #define _CX(var,idx) nr_complex_t * (var) = C (_ARES (idx));
 #define _V(var,idx) vector * (var) = V (_ARES (idx));
 #define _M(var,idx) matrix * (var) = M (_ARES (idx));
@@ -93,9 +93,9 @@ using namespace fspecial;
 #define _ARD0(var) _D (var,0)
 #define _ARD1(var) _D (var,1)
 #define _ARD2(var) _D (var,2)
-#define _ARB0(var) _B (var,0)
-#define _ARB1(var) _B (var,1)
-#define _ARB2(var) _B (var,2)
+#define _ARB0(var) _BO (var,0)
+#define _ARB1(var) _BO (var,1)
+#define _ARB2(var) _BO (var,2)
 #define _ARC0(var) _CX (var,0)
 #define _ARC1(var) _CX (var,1)
 #define _ARC2(var) _CX (var,2)
