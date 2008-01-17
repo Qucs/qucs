@@ -46,7 +46,7 @@ inline double _d0_atan(double arg)         { return (+1.0/(1+arg*arg)); }
 inline double _logE(double arg)            { return  log(arg); }
 inline double _d0_logE(double arg)         { return (1.0/arg); }
 inline double _log10(double arg)           { return  log10(arg); }
-inline double _d0_log10(double arg)        { return (1.0/arg/log(10)); }
+inline double _d0_log10(double arg)        { return (1.0/arg/log(10.0)); }
 inline double _exp(double arg)             { return  exp(arg); }
 inline double _d0_exp(double arg)          { return exp(arg); }
 inline double _sqrt(double arg)            { return  sqrt(arg); }
@@ -70,8 +70,8 @@ inline double _pow(double x,double y)      { return pow(x,y); }
 inline double _d0_pow(double x,double y)   { return (x==0.0)?0.0:((y/x)*pow(x,y)); }
 inline double _d1_pow(double x,double y)   { return (x==0.0)?0.0:((log(x)/exp(0.0))*pow(x,y)); }
 
-inline double _limexp(double arg)          { return ((arg)&lt;(80))?(exp(arg)):(exp(80)*(1.0+(arg-80))); }
-inline double _d0_limexp(double arg)       { return ((arg)&lt;(80))?(exp(arg)):(exp(80)); }
+inline double _limexp(double arg)          { return ((arg)&lt;(80))?(exp(arg)):(exp(80.0)*(1.0+(arg-80))); }
+inline double _d0_limexp(double arg)       { return ((arg)&lt;(80))?(exp(arg)):(exp(80.0)); }
 
 inline double _vt(double arg)              { return 1.3806503e-23*arg/1.602176462e-19; }
 inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-19; }

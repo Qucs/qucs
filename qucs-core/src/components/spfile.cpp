@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.27 2008-01-13 10:50:22 ela Exp $
+ * $Id: spfile.cpp,v 1.28 2008-01-17 18:53:06 ela Exp $
  *
  */
 
@@ -308,7 +308,7 @@ void spfile::prepare (void) {
   if (data == NULL) data = dataset::load_touchstone (file);
   if (data != NULL) {
     // determine the number of ports defined by that file
-    int ports = (int) sqrt (data->countVariables ());
+    int ports = (int) sqrt ((double) data->countVariables ());
     if (ports == getSize () - 1) {
       if (spara == NULL) {
 	// find matrix vector entries in touchstone dataset
