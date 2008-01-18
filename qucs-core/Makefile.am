@@ -24,6 +24,8 @@
 
 SUBDIRS = src doc
 
+ACLOCAL_AMFLAGS = -I m4
+
 EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
 
 CLEANFILES = *~ *.orig *.rej

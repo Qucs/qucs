@@ -1,3 +1,8 @@
+2008-01-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEcore.xml: Fixed memory by using new function
+	setInternalNode().
+
 2008-01-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsVersion.xml: Allowing none-registered/handled devices to be
