@@ -1,3 +1,12 @@
+2008-01-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.cpp: Added new method setInternalNode().
+
+	* evaluate.cpp: Allowing PlotVs() to take 3 and more arguments to
+	construct multiple dependencies for vectors and matrix vectors.
+
+	* equation.cpp: Fixed inheritance of multiple prep dependencies.
+
 2008-01-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_touchstone.l: Fixed bug in touchstone scanner.  Making the

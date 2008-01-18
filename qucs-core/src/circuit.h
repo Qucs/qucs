@@ -1,7 +1,7 @@
 /*
  * circuit.h - circuit class definitions
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.55 2008/01/10 20:00:00 ela Exp $
+ * $Id: circuit.h,v 1.56 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -237,6 +237,7 @@ class circuit : public object, public integrator
   // miscellaneous functionality
   void print (void);
   static char * createInternal (const char *, const char *);
+  void setInternalNode (int, const char *);
 
   // matrix operations
   void   allocMatrixS (void);

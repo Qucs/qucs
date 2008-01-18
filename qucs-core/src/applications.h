@@ -1,7 +1,7 @@
 /*
  * applications.h - the Qucs application list
  *
- * Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.29 2008/01/13 10:50:08 ela Exp $
+ * $Id: applications.h,v 1.30 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -636,8 +636,20 @@ struct application_t eqn::applications[] = {
     { TAG_MATVEC, TAG_VECTOR } },
   { "PlotVs", TAG_VECTOR, evaluate::plot_vs_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_VECTOR, evaluate::plot_vs_v, 3,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_VECTOR, evaluate::plot_vs_v, 4,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_VECTOR, evaluate::plot_vs_v, 5,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
   { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 2,
     { TAG_MATVEC, TAG_VECTOR } },
+  { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 3,
+    { TAG_MATVEC, TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 4,
+    { TAG_MATVEC, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 5,
+    { TAG_MATVEC, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
 
   { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v_d, 3,
     { TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },

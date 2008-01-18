@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.43 2008/01/10 20:00:00 ela Exp $
+ * $Id: equation.h,v 1.44 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -76,6 +76,7 @@ public:
   strlist * getDropDependencies (void) { return dropDependencies; }
   void setPrepDependencies (strlist * deps) { prepDependencies = deps; }
   void addPrepDependencies (char *);
+  void appendPrepDependencies (strlist *);
   strlist * getPrepDependencies (void) { return prepDependencies; }
   strlist * recurseDependencies (checker *, strlist *);
   node * get (int);

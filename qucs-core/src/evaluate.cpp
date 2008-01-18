@@ -1,7 +1,7 @@
 /*
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.76 2008/01/17 18:53:06 ela Exp $
+ * $Id: evaluate.cpp,v 1.77 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -2996,20 +2996,26 @@ constant * evaluate::gp_circle_v (constant * args) {
 // ***************** versus vectors *****************
 constant * evaluate::plot_vs_v (constant * args) {
   _ARV0 (v);
-  _ARV1 (a);
   _DEFV ();
-  node * gen = SOLVEE(1)->addGeneratedEquation (a, "Versus");
-  res->addPrepDependencies (A(gen)->result);
+  int i = 1;
+  for (node * arg = args->getNext (); arg != NULL; arg = arg->getNext ()) {
+    node * gen = arg->solvee->addGeneratedEquation (V (_ARES (i)), "Versus");
+    res->addPrepDependencies (A(gen)->result);
+    i++;
+  }
   res->dropdeps = 1;
   _RETV (*v);
 }
 
 constant * evaluate::plot_vs_mv (constant * args) {
   _ARMV0 (mv);
-  _ARV1 (a);
   _DEFMV ();
-  node * gen = SOLVEE(1)->addGeneratedEquation (a, "Versus");
-  res->addPrepDependencies (A(gen)->result);
+  int i = 1;
+  for (node * arg = args->getNext (); arg != NULL; arg = arg->getNext ()) {
+    node * gen = arg->solvee->addGeneratedEquation (V (_ARES (i)), "Versus");
+    res->addPrepDependencies (A(gen)->result);
+    i++;
+  }
   res->dropdeps = 1;
   _RETMV (*mv);
 }

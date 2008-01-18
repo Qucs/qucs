@@ -1,7 +1,7 @@
 /*
  * equation.cpp - checker for the Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.63 2008/01/10 20:00:00 ela Exp $
+ * $Id: equation.cpp,v 1.64 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -418,11 +418,11 @@ int assignment::evalType (void) {
 constant * assignment::evaluate (void) {
   body->solvee = solvee;
   setResult (body->evaluate ());
-  // inherit drop/prep dependencies
-  if (body->dropdeps) {
-    getResult()->dropdeps = body->dropdeps;
+  // inherit drop/prep dependencies of applications
+  if (body->getResult()->dropdeps) {
+    getResult()->dropdeps = body->getResult()->dropdeps;
     strlist * preps = body->getPrepDependencies ();
-    if (preps) getResult()->addPrepDependencies (preps->get (0));
+    if (preps) getResult()->setPrepDependencies (new strlist (*preps));
   }
   return getResult ();
 }
@@ -754,6 +754,8 @@ int application::findDifferentiator (void) {
    the result. */
 constant * application::evaluate (void) {
   int errors = 0;
+  strlist * apreps = new strlist ();
+
   // first evaluate each argument
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     // FIXME: Can save evaluation of already evaluated equations?
@@ -774,14 +776,19 @@ constant * application::evaluate (void) {
       else {
 	// inherit drop/prep dependencies
 	if (arg->getResult()->dropdeps) {
-	  dropdeps = arg->getResult()->dropdeps;
 	  strlist * preps = arg->getResult()->getPrepDependencies ();
-	  if (preps) addPrepDependencies (preps->get (0));
+	  // recall longest prep dependencies' list of arguments
+	  if (preps && (preps->length () > apreps->length ())) {
+	    delete apreps;
+	    apreps = new strlist (*preps);
+	  }
 	}
 	arg->evaluated++;
       }
     }
   }
+
+  // then evaluate application itself
   if (!errors) {
     node * res;
     // delete previous result if necessary
@@ -794,6 +801,14 @@ constant * application::evaluate (void) {
 		"constant type\n", toString ());
     }
   }
+
+  // inherit prep dependencies of arguments if necessary
+  if (!getResult()->dropdeps && apreps->length () > 0) {
+    getResult()->dropdeps = 1;
+    getResult()->appendPrepDependencies (apreps);
+  }
+  delete apreps;
+
   return getResult ();
 }
 
@@ -1022,6 +1037,13 @@ void node::addDropDependencies (char * dep) {
 void node::addPrepDependencies (char * dep) {
   if (prepDependencies == NULL) prepDependencies = new strlist ();
   prepDependencies->add (dep);
+}
+
+/* This function appends the given dependency list to the list of
+   dependencies which are going to be prepend. */
+void node::appendPrepDependencies (strlist * deps) {
+  if (prepDependencies == NULL) prepDependencies = new strlist ();
+  prepDependencies->append (deps);
 }
 
 /* The function sets the data dependency list of the equation node. */
@@ -1847,10 +1869,10 @@ strlist * solver::collectDataDependencies (node * eqn) {
   // prepend dependencies if necessary
   strlist * preps = eqn->getResult()->getPrepDependencies ();
   if (datadeps) {
-    if (preps) datadeps->add (preps->last ());
+    if (preps) datadeps->add (preps);
   } else {
     datadeps = new strlist ();
-    if (preps) datadeps->add (preps->last ());
+    if (preps) datadeps->add (preps);
   }
   // drop duplicate entries
   datadeps = checker::foldDependencies (datadeps);

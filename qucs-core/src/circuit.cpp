@@ -1,7 +1,7 @@
 /*
  * circuit.cpp - circuit class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.cpp,v 1.49 2008/01/10 20:00:00 ela Exp $
+ * $Id: circuit.cpp,v 1.50 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -625,6 +625,15 @@ char * circuit::createInternal (const char * prefix, const char * obj) {
   char * n = (char *) malloc (strlen (prefix) + strlen (obj) + 3);
   sprintf (n, "_%s#%s", prefix, obj);
   return n;
+}
+
+/* Creates an internal node given the node number as well as the name
+   suffix.  An appropriate node name is constructed from the circuits
+   name and the suffix. */
+void circuit::setInternalNode (int node, const char * suffix) {
+  char * n = createInternal (getName (), suffix);
+  setNode (node, n, 1);
+  free (n);
 }
 
 /* This function copies the matrix elements inside the given matrix to

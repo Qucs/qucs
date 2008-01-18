@@ -1,3 +1,8 @@
+2008-01-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diac.cpp: Fixed memory leak by using new
+	setInternalNode() function of the circuit class.
+
 2008-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diac.cpp: Parameterized the Diac a bit more.  Added some

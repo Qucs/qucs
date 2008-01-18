@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.4 2008/01/16 18:14:16 ela Exp $
+ * $Id: diac.cpp,v 1.5 2008/01/18 20:21:10 ela Exp $
  *
  */
 
@@ -60,7 +60,7 @@ void diac::initDC (void) {
   // allocate MNA matrices
   allocMatrixMNA ();
   // create internal node
-  setNode (NODE_IN, createInternal (getName (), "int"));
+  setInternalNode (NODE_IN, "int");
 }
 
 // Callback for DC analysis.
