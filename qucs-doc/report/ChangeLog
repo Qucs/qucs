@@ -1,3 +1,8 @@
+2008-01-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* log_amp/log_amp.tex: New report: Verilog-A Logarithmic Amplifier
+	Macromodel.  Thanks to Mike Brinson!
+
 2007-12-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* mod_amp/content.tex: New report: Verilog-A Modular Macromodel
