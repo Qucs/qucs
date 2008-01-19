@@ -1577,6 +1577,8 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'm' : if(cstr == "od_amp") c = new mod_amp();
         break;
+  case 'l' : if(cstr == "og_amp") c = new log_amp();
+        break;
   }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),
