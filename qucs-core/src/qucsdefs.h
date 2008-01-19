@@ -1,7 +1,7 @@
 /*
  * qucsdefs.h - netlist definitions for the Qucs netlists
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.79 2008-01-16 18:14:16 ela Exp $
+ * $Id: qucsdefs.h,v 1.80 2008-01-19 13:05:56 ela Exp $
  *
  */
 
@@ -992,6 +992,29 @@ struct define_t qucs_definition_available[] =
       { "flcomp", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 0, '.' } },
       { "tnom", PROP_REAL, { 27.0, PROP_NO_STR }, PROP_NO_RANGE },
       { "dt", PROP_REAL, { 0.0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* log_amp verilog device */
+  { "log_amp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    {
+      { "Kv", PROP_REAL, { 1.0, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Dk", PROP_REAL, { 0.3, PROP_NO_STR }, { '[', (-100), 100, ']' } },
+      { "Ib1", PROP_REAL, { 5e-12, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Ibr", PROP_REAL, { 5e-12, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "M", PROP_REAL, { 5, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "N", PROP_REAL, { 0.1, PROP_NO_STR }, { '[', 0, 100, ']' } },
+      { "Vosout", PROP_REAL, { 3e-3, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Rinp", PROP_REAL, { 1e6, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "Fc", PROP_REAL, { 1e3, PROP_NO_STR }, { '[', 1, 0, '.' } },
+      { "Ro", PROP_REAL, { 1e-3, PROP_NO_STR }, { '[', 1e-3, 0, '.' } },
+      { "Ntc", PROP_REAL, { 0.002, PROP_NO_STR }, { '[', (-100), 100, ']' } },
+      { "Vosouttc", PROP_REAL, { 80e-6, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Dktc", PROP_REAL, { 0.03, PROP_NO_STR }, { '[', (-100), 100, ']' } },
+      { "Ib1tc", PROP_REAL, { 0.5e-12, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Ibrtc", PROP_REAL, { 0.5e-12, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, { '[', (-273), 0, '.' } },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP },
     { PROP_NO_PROP }
