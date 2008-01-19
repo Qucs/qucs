@@ -388,13 +388,14 @@ Input bias and offset currents are represented by the Verilog-A code
 listed in this section. Simple current generators are employed to
 model the input current effects. Values for IB and IOFF can be
 extracted from the results given in Figs.~\ref{fig:mod_amp3} and
-~\ref{fig:mod_amp4}, using equations (1) and (2).
-
-\begin{flushright}
-$Vp=-(IB+\dfrac{IOFF}{2}).1e3$   \hspace{5.5cm}(1)
-\linebreak  
-$Vn-Vs = (\dfrac{IOFF}{2}-IB).1e3$  \hspace{5cm}(2)
-\end{flushright}
+~\ref{fig:mod_amp4}, using equations \eqref{eq:Vp} and
+\eqref{eq:VnVs}.
+\begin{align}
+\label{eq:Vp}
+Vp&=-\left(IB+\dfrac{IOFF}{2}\right)\cdot 1e3\\
+\label{eq:VnVs}
+Vn-Vs &= \left(\dfrac{IOFF}{2}-IB\right)\cdot 1e3
+\end{align}
 
  The remainder of the input stage Verilog-A code adds differential
  input resistance and capacitance to the input stage of the
