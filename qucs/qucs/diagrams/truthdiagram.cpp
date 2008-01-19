@@ -111,7 +111,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
     colWidth = metrics.width("0");
     if(z > colWidth)  colWidth = z;
     colWidth += 2;
-    counting = int(log(NumAll) / log(2) + 0.9999); // number of bits
+    counting = int(log(double(NumAll)) / log(2.0) + 0.9999); // number of bits
 
     if((x+colWidth*counting) >= x2) {    // enough space for text ?
       checkColumnWidth("0", metrics, 0, x2, y);

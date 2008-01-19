@@ -1,3 +1,8 @@
+2008-01-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* log_amp.cpp (log_amp): Added new Logarithmic Amplifier verilog
+	device.  Thanks to Mike Brinson!
+
 2008-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* diac.cpp (Diac): Added some more properties.

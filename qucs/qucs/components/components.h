@@ -132,5 +132,6 @@
 #include "HBT_X.h"
 #include "mod_amp.h"
 #include "hic2_full.h"
+#include "log_amp.h"
 
 #endif
