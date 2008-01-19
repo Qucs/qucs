@@ -5516,6 +5516,106 @@ Invocation :  qucsedit [-r] fichier
         <source>intrinsic junction resistance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logarithmic Amplifier verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scale factor error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input I1 bias current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input reference bias current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of decades</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conformity error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>output offset error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>amplifier input resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>amplifier 3dB frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>amplifier output resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conformity error temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%/Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offset temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V/Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scale factor error temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input I1 bias current temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A/Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input reference bias current temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logarithmic Amplifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
