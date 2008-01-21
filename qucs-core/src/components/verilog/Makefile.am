@@ -30,17 +30,19 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	hicumL2p1.analogfunction.cpp hicumL2p1.core.cpp \
 	mod_amp.analogfunction.cpp mod_amp.core.cpp \
 	hic2_full.analogfunction.cpp hic2_full.core.cpp \
-	log_amp.analogfunction.cpp log_amp.core.cpp
-
+	log_amp.analogfunction.cpp log_amp.core.cpp \
+	hic0_full.analogfunction.cpp hic0_full.core.cpp
 
 noinst_HEADERS = HBT_X.analogfunction.h HBT_X.core.h \
 	hicumL2p1.analogfunction.h hicumL2p1.core.h \
 	mod_amp.analogfunction.h mod_amp.core.h \
 	hic2_full.analogfunction.h hic2_full.core.h \
-	log_amp.analogfunction.h log_amp.core.h
+	log_amp.analogfunction.h log_amp.core.h \
+	hic0_full.analogfunction.h hic0_full.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
-  fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va
+  fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
+  hicumL0V1p12.va
 
 XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
   qucsMODULEdefs.xml qucsMODULEgui.xml
@@ -115,6 +117,19 @@ log_amp.defs.h: log_amp.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 log_amp.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 log_amp.gui.cpp: log_amp.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+hic0_full.analogfunction.cpp: analogfunction.xml
+hic0_full.analogfunction.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e analogfunction.xml
+hic0_full.core.cpp: qucsVersion.xml qucsMODULEcore.xml
+hic0_full.core.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hic0_full.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hic0_full.defs.h: hicumL0V1p12.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hic0_full.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hic0_full.gui.cpp: hicumL0V1p12.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

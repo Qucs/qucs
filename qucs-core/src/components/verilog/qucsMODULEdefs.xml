@@ -141,7 +141,7 @@
     <admst:text format=" },\n"/>
   </admst:if>
 </admst:for-each>
-<admst:if test="[name='hicumL2p1']">
+<admst:if test="[name='hicumL2p1' or name='hic0_full']">
 <admst:text format="      { &quot;Type&quot;, PROP_STR, { PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
 </admst:if>
 <admst:text format="      { &quot;Temp&quot;, PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>

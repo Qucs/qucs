@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.47 2008-01-19 13:05:56 ela Exp $
+ * $Id: component_id.h,v 1.48 2008-01-21 20:31:29 ela Exp $
  *
  */
 
@@ -139,7 +139,8 @@ enum circuit_type {
   CIR_hicumL2p2,
   CIR_mod_amp,
   CIR_hic2_full,
-  CIR_log_amp
+  CIR_log_amp,
+  CIR_hic0_full
 };
 
 #endif /* __COMPONENT_ID_H__ */

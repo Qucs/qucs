@@ -225,6 +225,7 @@
 #define _modelname              &quot;$(module)&quot;
 #define _instancename           getName()
 #define _circuit_temp	        (getPropertyDouble(&quot;Temp&quot;)+273.15)
+#define _param_given(p)		(isPropertyGiven(p)?1:0)
 
 <admst:text format="\n\n// \$vt and \$vt() functions "/>
 #define _vt_nom                 (kBoverQ*_circuit_temp)
@@ -367,6 +368,14 @@ using namespace device;
     </admst:otherwise>
     </admst:choose>
   </admst:if>
+</admst:for-each>
+<admst:text format="\n  // declare global instance variables"/>
+<admst:for-each select="variable[scope='global_instance' and input='no']">
+  %(vtype(.))  %(name);
+</admst:for-each>
+<admst:text format="\n\n  // declare global model variables"/>
+<admst:for-each select="variable[scope='global_model' and input='no']">
+  %(vtype(.))  %(name);
 </admst:for-each>
 
 /* ----------------- evaluate verilog analog equations -------------------- */

@@ -1,3 +1,11 @@
+2008-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL0V1p12.va: Added new device: HICUM L0 v1.12 model.
+
+	* qucsMODULEcore.xml: Declaring global model and instance
+	variables.  Also implemented $given() and $param_given()
+	correctly.
+
 2008-01-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* log_amp.va: Added new verilog device: Logarithmic Amplifier.
