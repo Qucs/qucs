@@ -251,7 +251,7 @@ module hic0_full (c,b,e,s,tnode);
                                                
 // Transit time                              
 	parameter real t0     		= 0.0		from [0:`INF)	`P(spice:name="t0"    info="low current transit time at Vbici=0" test:value="5e-12" unit="s");
-	parameter real dt0h   		= 0.0;		// from [0:`INF)	`P(spice:name="dt0h"  info="Base width modulation contribution" test:value="2e-12" unit="s");
+	parameter real dt0h   		= 0.0		from [0:`INF)	`P(spice:name="dt0h"  info="Base width modulation contribution" test:value="2e-12" unit="s");
 	parameter real tbvl   		= 0.0		from [0:`INF)	`P(spice:name="tbvl"  info="SCR width modulation contribution" test:value="4e-12" unit="s");
 	parameter real tef0   		= 0.0		from [0:`INF)	`P(spice:name="tef0"  info="Storage time in neutral emitter" test:value="1e-12" unit="s"); 
 	parameter real gte    		= 1.0		from (0:10]	`P(spice:name="gte"   info="Exponent factor for emmiter transit time");                  
