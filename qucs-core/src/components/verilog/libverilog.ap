@@ -28,7 +28,8 @@ SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
         hicumL2p1.analogfunction.cpp hicumL2p1.core.cpp \
         mod_amp.analogfunction.cpp mod_amp.core.cpp \
         hic2_full.analogfunction.cpp hic2_full.core.cpp \
-        log_amp.analogfunction.cpp log_amp.core.cpp
+        log_amp.analogfunction.cpp log_amp.core.cpp \
+        hic0_full.analogfunction.cpp hic0_full.core.cpp
 
 # Additional libraries.
 LIBS = 

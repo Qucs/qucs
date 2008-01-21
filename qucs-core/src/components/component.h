@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.50 2008/01/19 13:05:56 ela Exp $
+ * $Id: component.h,v 1.51 2008/01/21 20:31:29 ela Exp $
  *
  */
 
@@ -133,5 +133,6 @@
 #include "verilog/mod_amp.core.h"
 #include "verilog/hic2_full.core.h"
 #include "verilog/log_amp.core.h"
+#include "verilog/hic0_full.core.h"
 
 #endif /* __COMPONENT_H__ */

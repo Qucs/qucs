@@ -1,7 +1,7 @@
 /*
  * input.cpp - input netlist class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.78 2008/01/19 13:05:56 ela Exp $
+ * $Id: input.cpp,v 1.79 2008/01/21 20:31:29 ela Exp $
  *
  */
 
@@ -509,6 +509,8 @@ circuit * input::createCircuit (char * type) {
     return new hic2_full ();
   else if (!strcmp (type, "log_amp"))
     return new log_amp ();
+  else if (!strcmp (type, "hic0_full"))
+    return new hic0_full ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

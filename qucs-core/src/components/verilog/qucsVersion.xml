@@ -898,10 +898,10 @@
       <admst:assert test="$arg1[datatypename='variable' and input='yes']" format="%(name): argument is not a parameter\n"/>
       <admst:choose>
         <admst:when test="$arg1/[parametertype='model']">
-          <admst:variable name="e" select="pModel-&gt;%($arg1/name)"/>
+          <admst:variable name="e" select="_param_given(&quot;%($arg1/name)&quot;)"/>
         </admst:when>
         <admst:when test="$arg1/[parametertype='instance']">
-          <admst:variable name="e" select="pInst-&gt;%($arg1/name)"/>
+          <admst:variable name="e" select="_param_given(&quot;%($arg1/name)&quot;"/>
         </admst:when>
         <admst:otherwise>
           <admst:fatal format="%(name): should not be reached\n"/>

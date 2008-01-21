@@ -88,9 +88,9 @@
 <admst:text format="$module::$module()\n{\n"/>
 <admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
 
-<admst:if test="[$module='hicumL2p1']">
+<admst:if test="[$module='hicumL2p1' or $module='hic0_full']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
-<admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot;[npn, pnp]&quot;));\n"/>
+<admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot; [npn, pnp]&quot;));\n"/>
 </admst:if>
 <admst:if test="[$module='mosfetbsim4']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;nfet&quot;, true,\n"/>
@@ -153,7 +153,7 @@
 <admst:text format="{\n  Name = QObject::tr(&quot;$module&quot;);\n"/>
 
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full']">
+<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='hic0_full']">
 <admst:text format="  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
 </admst:when>
 <admst:when test="[$module='HBT_X']">
@@ -166,7 +166,7 @@
 
 <admst:text format="\n  if(getNewOne) return new $module();\n  return 0;\n}\n\n"/>
 
-<admst:if test="[$module='hicumL2p1']">
+<admst:if test="[$module='hicumL2p1' or $module='hic0_full']">
 <admst:text format="Element * $module::info_pnp(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
 <admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = (char *) &quot;pnpsub&quot;;\n\n"/>
 <admst:text format="  if(getNewOne)\n  {\n    $module* p = new "/>
@@ -175,7 +175,7 @@
 
 <admst:text format="void $module::createSymbol()\n{"/>
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X']">
+<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X' or $module='hic0_full']">
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
@@ -325,7 +325,7 @@
 <admst:text format="#include &quot;component.h&quot;\n\n"/>
 
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='mosfetbsim4']">
+<admst:when test="[$module='hicumL2p1' or $module='mosfetbsim4' or $module='hic0_full']">
 <admst:text format="class $module : public MultiViewComponent\n{\n  public:\n"/>
 </admst:when>
 <admst:otherwise>
@@ -335,7 +335,7 @@
 <admst:text format="    $module();\n"/>
 <admst:text format="    ~$module() { };\n"/>
 <admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
-<admst:if test="[$module='hicumL2p1']">
+<admst:if test="[$module='hicumL2p1' or $module='hic0_full']">
 <admst:text format="    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
 </admst:if>
 <admst:text format="  protected:\n    void createSymbol();\n};\n\n"/>
