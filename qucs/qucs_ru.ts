@@ -5845,6 +5845,326 @@ Usage:  qucsedit [-r] file
         <source>R</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>HICUM Level 0 v1.12 verilog device</source>
+        <translation type="unfinished">HICUM Level 0 v1.12 Verilog-модель</translation>
+    </message>
+    <message>
+        <source>(Modified) saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-ideality coefficient of forward collector current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non-ideality coefficient of reverse collector current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward Early voltage (normalization volt.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward d.c. high-injection toll-off current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inverse d.c. high-injection roll-off current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high-injection correction current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high-injection correction factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE non-ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE recombination saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE recombination non-ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BC saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BC non-ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zero-bias BE depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE built-in voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio of maximum to zero-bias value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>low current transit time at Vbici=0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SCR width modulation contribution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage time in neutral emitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for emmiter transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation time at high current densities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing facor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage time at inverse operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low-field collector resistance under emitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage dividing ohmic and satur.region</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturation voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total zero-bias BC depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BC built-in voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BC exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Punch-through voltage of BC junction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zero-bias external BC depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External BC built-in voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External BC exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Split factor = Cjci0/Cjc0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal base resistance at zero-bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geometry factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate transistor transfer current non-ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SC saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SC non-ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zero-bias SC depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SC built-in voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>External SC exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SC punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collector-base isolation (overlap) capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emitter-base oxide capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefactor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M^(1-AF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flicker noise exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap-voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective emitter bandgap-voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective collector bandgap-voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective substrate bandgap-voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K1 in T-dependent bandgap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V/K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient K2 in T-dependent bandgap equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frist-order TC of tf0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second-order TC of tf0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/K^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent coefficient in BE junction current temperature dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of epi-collector diffusivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC of satur.drift velocity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative TC of vces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of external base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of external collector resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of emitter resistances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of avalanche prefactor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of avalanche exponential factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for self-heating calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ws/K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature for which parameters are valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temperature change for particular transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L0 v1.12</source>
+        <translation type="unfinished">npn HICUM L0 v1.12</translation>
+    </message>
+    <message>
+        <source>pnp HICUM L0 v1.12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base width modulation contribution</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -8506,6 +8826,10 @@ Center vertically selected elements</source>
     <message>
         <source>probes</source>
         <translation>измерители</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
