@@ -342,7 +342,13 @@ pInfoFunc nonlinearComps[] =
    &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
    &OpAmp::info, &hicumL2p1::info, &HBT_X::info, &EqnDefined::info,
    &mod_amp::info, &hic2_full::info, &Diac::info, &Triac::info,
-   &Thyristor::info, &log_amp::info, 0};
+   &Thyristor::info, &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
+   0};
+
+pInfoFunc VerilogAComps[] =
+  {&hicumL2p1::info, &HBT_X::info, &mod_amp::info, &hic2_full::info,
+   &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
+   0};
 
 pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
@@ -374,7 +380,7 @@ pInfoFunc Paintings[] =
 // Order of the component groups in the ComboBox
 pInfoFunc *ComponentGroups[] =
   {lumpedComponents, Sources, Probes, TransmissionLines, nonlinearComps,
-   digitalComps, FileComponents, Simulations, Diagrams, 0};
+   VerilogAComps, digitalComps, FileComponents, Simulations, Diagrams, 0};
 
 // ---------------------------------------------------------------
 // Put the component groups into the ComboBox. It is possible to
@@ -388,6 +394,7 @@ void QucsApp::fillComboBox(bool setAll)
     CompChoose->insertItem(tr("probes"));
     CompChoose->insertItem(tr("transmission lines"));
     CompChoose->insertItem(tr("nonlinear components"));
+    CompChoose->insertItem(tr("verilog-a devices"));
     CompChoose->insertItem(tr("digital components"));
     CompChoose->insertItem(tr("file components"));
     CompChoose->insertItem(tr("simulations"));

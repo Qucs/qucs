@@ -15,7 +15,7 @@ hicumL2p1::hicumL2p1()
   Description = QObject::tr ("HICUM Level 2 v2.1 verilog device");
 
   Props.append (new Property ("Type", "npn", true,
-    QObject::tr ("polarity") + "[npn, pnp]"));
+    QObject::tr ("polarity") + " [npn, pnp]"));
   Props.append (new Property ("c10", "1.516E-31", false,
     QObject::tr ("GICCR constant")));
   Props.append (new Property ("qp0", "5.939E-15", false,

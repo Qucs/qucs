@@ -1,3 +1,7 @@
+2008-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs.cpp: Added new "verilog-a devices" component tab.
+
 2008-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* bitmaps/vfile.png, bitmaps/ifile.png: Fixed alpha channels.

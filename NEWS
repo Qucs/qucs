@@ -26,7 +26,8 @@ files.
 Version 0.0.14
 --------------
 
- * new components: diac, tria, thyristor, logarithmic amplifier
+ * new components: diac, tria, thyristor, logarithmic amplifier,
+   HICUM L0 v1.12
 
 Version 0.0.13
 --------------

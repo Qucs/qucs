@@ -1,3 +1,7 @@
+2008-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* hic0_full.cpp (hic0_full): Added HICUM L0 v1.12 component.
+
 2008-01-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* log_amp.cpp (log_amp): Added new Logarithmic Amplifier verilog
