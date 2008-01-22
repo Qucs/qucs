@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.cpp,v 1.4 2008/01/10 20:00:00 ela Exp $
+ * $Id: coupler.cpp,v 1.5 2008/01/22 17:50:54 ela Exp $
  *
  */
 
@@ -50,9 +50,9 @@ void coupler::initSP (void) {
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t k2 = k * k;
   nr_double_t r2 = r * r;
-  nr_complex_t a = k2 * (polar (1, 2 * p) + 1.0);
+  nr_complex_t a = k2 * (polar (1.0, 2 * p) + 1.0);
   nr_complex_t b = r2 * (1.0 - a);
-  nr_complex_t c = k2 * (polar (1, 2 * p) - 1.0);
+  nr_complex_t c = k2 * (polar (1.0, 2 * p) - 1.0);
   nr_complex_t d = 1.0 - 2.0 * r2 * (1.0 + c) + b * b;
   nr_complex_t s = r * (a * b + c + polar (2 * r2 * k2, 2 * p)) / d;
   setS (NODE_1, NODE_1, s); setS (NODE_2, NODE_2, s);
@@ -83,7 +83,7 @@ void coupler::initAC (void) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t b = 2 * sqrt (1 - k * k);
-  nr_complex_t a = k * k * (polar (1, 2 * p) + 1.0);
+  nr_complex_t a = k * k * (polar (1.0, 2 * p) + 1.0);
   nr_complex_t c = polar (2 * k, p);
   nr_complex_t d = z * (a * a - c * c);
   nr_complex_t y;
