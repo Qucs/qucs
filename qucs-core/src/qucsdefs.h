@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.81 2008-01-21 20:31:29 ela Exp $
+ * $Id: qucsdefs.h,v 1.82 2008-01-24 16:01:06 ela Exp $
  *
  */
 
@@ -658,6 +658,32 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
+  /* triac */
+  { "Triac", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      PROP_NO_PROP },
+    { { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "N", PROP_REAL, { 2.0, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
+      { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Rg", PROP_REAL, { 5.0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
+  /* thyristor */
+  { "SCR", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      PROP_NO_PROP },
+    { { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "N", PROP_REAL, { 2.0, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
+      { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Rg", PROP_REAL, { 5.0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
 
   /* hicumL2p1 verilog device */
   { "hicumL2p1", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
@@ -1041,7 +1067,7 @@ struct define_t qucs_definition_available[] =
       { "ze", PROP_REAL, { 0.5, PROP_NO_STR }, { ']', 0, 1, ']' } },
       { "aje", PROP_REAL, { 2.5, PROP_NO_STR }, { '[', 1, 1.0e6, '[' } },
       { "t0", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 1.0e6, '[' } },
-      { "dt0h", PROP_REAL, { 0.0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "dt0h", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 1.0e6, '[' } },
       { "tbvl", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 1.0e6, '[' } },
       { "tef0", PROP_REAL, { 0.0, PROP_NO_STR }, { '[', 0, 1.0e6, '[' } },
       { "gte", PROP_REAL, { 1.0, PROP_NO_STR }, { ']', 0, 10, ']' } },

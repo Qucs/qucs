@@ -1,5 +1,5 @@
 /*
- * diac.cpp - diac class implementation
+ * thyristor.cpp - thyristor class implementation
  *
  * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2008 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.6 2008-01-24 16:01:07 ela Exp $
+ * $Id: thyristor.cpp,v 1.1 2008-01-24 16:01:07 ela Exp $
  *
  */
 
@@ -42,21 +42,22 @@
 #include "constants.h"
 #include "device.h"
 #include "devstates.h"
-#include "diac.h"
+#include "thyristor.h"
 
 #define NODE_A1 0 /* anode 1 */
 #define NODE_A2 1 /* anode 2 (cathode) */
 #define NODE_IN 2 /* internal node */
+#define NODE_GA 2 /* gate */
 
 using namespace device;
 
-// Constructor for the diac.
-diac::diac () : circuit (3) {
-  type = CIR_DIAC;
+// Constructor for the thyristor.
+thyristor::thyristor () : circuit (4) {
+  type = CIR_THYRISTOR;
 }
 
 // Callback for initializing the DC analysis.
-void diac::initDC (void) {
+void thyristor::initDC (void) {
   // allocate MNA matrices
   allocMatrixMNA ();
   // create internal node
@@ -64,13 +65,14 @@ void diac::initDC (void) {
 }
 
 // Callback for DC analysis.
-void diac::calcDC (void) {
+void thyristor::calcDC (void) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Ibo");
   nr_double_t Is  = getPropertyDouble ("Is");
   nr_double_t N   = getPropertyDouble ("N");
   nr_double_t Ri  = getPropertyDouble ("Ri");
+  nr_double_t Rg  = getPropertyDouble ("Rg");
   nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ut, Gi_bo, Ud_bo, Ieq, Vd;
@@ -81,8 +83,7 @@ void diac::calcDC (void) {
   Ud_bo = Ut * log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
-  Id = sign (Ud) * Is;
-  Ud = fabs (Ud);
+  Id = Is;
 
   if (Ud > Ud_bo)
     gi = 1 / Ri;
@@ -104,16 +105,19 @@ void diac::calcDC (void) {
   setI (NODE_A2, +Ieq);
   setI (NODE_IN, -Ieq);
   setI (NODE_A1, +0.0);
+  setI (NODE_GA, +0.0);
 
   // fill in G-Matrix
   setY (NODE_A2, NODE_A2, +gd); setY (NODE_IN, NODE_IN, +gd);
   setY (NODE_A2, NODE_IN, -gd); setY (NODE_IN, NODE_A2, -gd);
   setY (NODE_A1, NODE_A1, +gi); addY (NODE_IN, NODE_IN, +gi);
   setY (NODE_A1, NODE_IN, -gi); setY (NODE_IN, NODE_A1, -gi);
+  setY (NODE_GA, NODE_GA, +1.0 / Rg); addY (NODE_IN, NODE_IN, +1.0 / Rg);
+  setY (NODE_GA, NODE_IN, -1.0 / Rg); setY (NODE_IN, NODE_GA, -1.0 / Rg);
 }
 
 // Saves operating points (voltages).
-void diac::saveOperatingPoints (void) {
+void thyristor::saveOperatingPoints (void) {
   nr_double_t Vd = real (getV (NODE_IN) - getV (NODE_A2));
   nr_double_t Vi = real (getV (NODE_A1) - getV (NODE_IN));
   setOperatingPoint ("Vd", Vd);
@@ -121,13 +125,13 @@ void diac::saveOperatingPoints (void) {
 }
 
 // Loads operating points (voltages).
-void diac::loadOperatingPoints (void) {
+void thyristor::loadOperatingPoints (void) {
   Ud = getOperatingPoint ("Vd");
   Ui = getOperatingPoint ("Vi");
 }
 
 // Calculates and saves operating points.
-void diac::calcOperatingPoints (void) {
+void thyristor::calcOperatingPoints (void) {
   nr_double_t Cj0 = getPropertyDouble ("Cj0");
   // calculate capacitances and charges
   nr_double_t Ci;
@@ -141,34 +145,38 @@ void diac::calcOperatingPoints (void) {
 }
 
 // Callback for initializing the AC analysis.
-void diac::initAC (void) {
+void thyristor::initAC (void) {
   initDC ();
 }
 
 // Build admittance matrix for AC and SP analysis.
-matrix diac::calcMatrixY (nr_double_t frequency) {
+matrix thyristor::calcMatrixY (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t gi = getOperatingPoint ("gi");
+  nr_double_t gg = 1.0 / getPropertyDouble ("Rg");
   nr_double_t Ci = getOperatingPoint ("Ci");
   nr_complex_t yi = rect (gi, Ci * 2.0 * M_PI * frequency);
-  matrix y (3);
+  matrix y (4);
   y.set (NODE_A2, NODE_A2, +gd);
-  y.set (NODE_IN, NODE_IN, +gd +yi);
+  y.set (NODE_IN, NODE_IN, +gd +yi +gg);
   y.set (NODE_A2, NODE_IN, -gd);
   y.set (NODE_IN, NODE_A2, -gd);
   y.set (NODE_A1, NODE_A1, +yi);
   y.set (NODE_A1, NODE_IN, -yi);
   y.set (NODE_IN, NODE_A1, -yi);
+  y.set (NODE_GA, NODE_GA, +gg);
+  y.set (NODE_GA, NODE_IN, -gg);
+  y.set (NODE_IN, NODE_GA, -gg);
   return y;
 }
 
 // Callback for the AC analysis.
-void diac::calcAC (nr_double_t frequency) {
+void thyristor::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
 }
 
 // Callback for S-parameter analysis.
-void diac::calcSP (nr_double_t frequency) {
+void thyristor::calcSP (nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
@@ -176,13 +184,13 @@ void diac::calcSP (nr_double_t frequency) {
 #define cState 1 // current state
 
 // Callback for initializing the TR analysis.
-void diac::initTR (void) {
+void thyristor::initTR (void) {
   setStates (2);
   initDC ();
 }
 
 // Callback for the TR analysis.
-void diac::calcTR (nr_double_t) {
+void thyristor::calcTR (nr_double_t) {
   calcDC ();
   saveOperatingPoints ();
   loadOperatingPoints ();

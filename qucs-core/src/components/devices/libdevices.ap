@@ -25,7 +25,7 @@ NAME = libdevices
 
 # List all sources here.
 SOURCES = device.cpp diode.cpp jfet.cpp bjt.cpp mosfet.cpp eqndefined.cpp \
-	diac.cpp
+	diac.cpp thyristor.cpp triac.cpp
 
 # Additional libraries.
 LIBS = 
