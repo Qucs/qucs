@@ -1,3 +1,11 @@
+2008-01-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* bitmaps/Makefile.am: Added pnp_therm.png and pnpsub_therm.png
+	icons.
+
+	* qucs.cpp: Removed verilog-a devices from non-linear components
+	tab.
+
 2008-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp: Added new "verilog-a devices" component tab.

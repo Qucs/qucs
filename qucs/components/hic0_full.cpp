@@ -271,7 +271,7 @@ Element * hic0_full::info(QString& Name, char * &BitmapFile, bool getNewOne)
 Element * hic0_full::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp HICUM L0 v1.12");
-  BitmapFile = (char *) "pnpsub";
+  BitmapFile = (char *) "pnpsub_therm";
 
   if(getNewOne)
   {

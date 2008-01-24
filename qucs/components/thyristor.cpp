@@ -49,6 +49,16 @@ Thyristor::Thyristor()
 	QObject::tr("gate trigger current")));
   Props.append(new Property("Cj0", "10 pF", false,
 	QObject::tr("parasitic capacitance")));
+  Props.append(new Property("Is", "1e-10 A", false,
+	QObject::tr("saturation current")));
+  Props.append(new Property("N", "2", false,
+	QObject::tr("emission coefficient")));
+  Props.append(new Property("Ri", "10 Ohm", false,
+	QObject::tr("intrinsic junction resistance")));
+  Props.append(new Property("Rg", "5 Ohm", false,
+	QObject::tr("gate resistance")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature")));
 }
 
 Component* Thyristor::newOne()
