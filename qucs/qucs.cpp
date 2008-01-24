@@ -340,9 +340,8 @@ pInfoFunc nonlinearComps[] =
    &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
    &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
    &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
-   &OpAmp::info, &hicumL2p1::info, &HBT_X::info, &EqnDefined::info,
-   &mod_amp::info, &hic2_full::info, &Diac::info, &Triac::info,
-   &Thyristor::info, &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
+   &OpAmp::info, &EqnDefined::info, &Diac::info, &Triac::info,
+   &Thyristor::info,
    0};
 
 pInfoFunc VerilogAComps[] =
