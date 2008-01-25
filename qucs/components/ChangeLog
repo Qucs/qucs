@@ -1,3 +1,8 @@
+2008-01-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (getComponentFromName): Fixed loading/undo/redo of
+	thyristor component.
+
 2008-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* hic0_full.cpp (hic0_full): Added HICUM L0 v1.12 component.
