@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: triac.cpp,v 1.1 2008-01-24 16:01:07 ela Exp $
+ * $Id: triac.cpp,v 1.2 2008-01-25 08:26:43 ela Exp $
  *
  */
 
@@ -46,8 +46,8 @@
 
 #define NODE_A1 0 /* anode 1 */
 #define NODE_A2 1 /* anode 2 (cathode) */
-#define NODE_IN 2 /* internal node */
 #define NODE_GA 2 /* gate */
+#define NODE_IN 3 /* internal node */
 
 using namespace device;
 
@@ -68,7 +68,7 @@ void triac::initDC (void) {
 void triac::calcDC (void) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
-  nr_double_t Ibo = getPropertyDouble ("Ibo");
+  nr_double_t Ibo = getPropertyDouble ("Igt");
   nr_double_t Is  = getPropertyDouble ("Is");
   nr_double_t N   = getPropertyDouble ("N");
   nr_double_t Ri  = getPropertyDouble ("Ri");
