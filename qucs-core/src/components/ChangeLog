@@ -1,3 +1,8 @@
+2008-01-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/thyristor.cpp, devices/triac.cpp: Small fixes in
+	implementation.
+
 2008-01-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/thyristor.cpp, devices/triac.cpp: Added preliminary
