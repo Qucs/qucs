@@ -1498,7 +1498,6 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "LIN4P") c = new TLine_4Port();
         else if(cstr == "WIST") c = new TwistedPair();
         else if(cstr == "riac") c = new Triac();
-        else if(cstr == "hyristor") c = new Thyristor();
         break;
   case 's' : if(cstr == "Tr") c = new symTrafo();
         break;
@@ -1515,6 +1514,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "UBST") c = new Substrate();
         else if(cstr == "PICE") c = new SpiceFile();
         else if(cstr == "witch") c = new Switch();
+        else if(cstr == "CR") c = new Thyristor();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
 	else if(cstr == "CFeed") c = new dcFeed();
