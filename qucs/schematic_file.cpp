@@ -1010,6 +1010,11 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
   return true;
 }
 
+//#define VHDL_SIGNAL_TYPE "bit"
+//#define VHDL_LIBRARIES   ""
+#define VHDL_SIGNAL_TYPE "std_logic"
+#define VHDL_LIBRARIES   "\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n"
+
 // ---------------------------------------------------
 void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 				      int NumPorts)
@@ -1073,7 +1078,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	    // no "break;" here !!!
           default:  (*it) += ": " + pc->Props.at(1)->Value;
 	  }
-	  (*it) += " bit";
+	  (*it) += " " VHDL_SIGNAL_TYPE;
 	}
       }
     }
@@ -1131,7 +1136,8 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       (*tstream) << "endmodule\n";
     } else {
       // ..... digital subcircuit ...................................
-      (*tstream) << "\nentity Sub_" << Type << " is\n"
+      (*tstream) << VHDL_LIBRARIES;
+      (*tstream) << "entity Sub_" << Type << " is\n"
 		 << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
 		 << "end entity;\n"
 		 << "use work.all;\n"
@@ -1139,7 +1145,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 		 << " is\n";
       if(!Signals.isEmpty())
 	(*tstream) << "  signal " << Signals.join(",\n         ")
-		   << " : bit;\n";
+		   << " : " VHDL_SIGNAL_TYPE ";\n";
 
       (*tstream) << "begin\n";
 
@@ -1256,9 +1262,6 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   else
     stream << "--";
   stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
-//  if((allTypes & isAnalogComponent) == 0)
-//    stream << "library ieee;\nuse ieee.std_logic_1164.all;\n\n";
-
 
   int countInit = 0;  // counts the nodesets to give them unique names
   if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
@@ -1270,6 +1273,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   if (isVerilog) {
     stream << "`timescale 1ps/100fs\n";
   } else {
+    stream << VHDL_LIBRARIES;
     stream << "entity TestBench is\n"
 	   << "end entity;\n"
 	   << "use work.all;\n";
@@ -1289,7 +1293,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
     } else {
       stream << "architecture Arch_TestBench of TestBench is\n"
 	     << "  signal " << Signals.join(",\n         ")
-	     << " : bit;\n"
+	     << " : " VHDL_SIGNAL_TYPE ";\n"
 	     << "begin\n";
     }
 
