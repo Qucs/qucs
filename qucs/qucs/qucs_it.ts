@@ -6078,6 +6078,10 @@ Usage:  qucsedit [-r] file
         <source>Base width modulation contribution</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>gate resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

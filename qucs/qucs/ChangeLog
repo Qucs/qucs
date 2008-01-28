@@ -1,3 +1,8 @@
+2008-01-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp: Using "std_logic" instead of "bit" as
+	representation of a wire during VHDL simulations.
+
 2008-01-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* bitmaps/Makefile.am: Added pnp_therm.png and pnpsub_therm.png
