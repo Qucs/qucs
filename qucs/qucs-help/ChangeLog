@@ -1,3 +1,7 @@
+2008-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Added number suffix documentation.
+
 2008-01-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/de/*.html: Fixed some spelling mistakes.  Thanks to
