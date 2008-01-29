@@ -2442,13 +2442,18 @@ int Schematic::placeNodeLabel(WireLabel *pl)
 
   Element *pe = getWireLabel(pn);
   if(pe) {    // name found ?
-    if(pe->Type & isComponent)  return -2;  // ground potential
+    if(pe->Type & isComponent) {
+      delete pl;
+      return -2;  // ground potential
+    }
 
     delete ((Conductor*)pe)->Label;
     ((Conductor*)pe)->Label = 0;
   }
 
   pn->Label = pl;   // insert node label
+  pl->Type = isNodeLabel;
+  pl->pOwner = pn;
   return 0;
 }
 
@@ -2495,17 +2500,24 @@ Element* Schematic::getWireLabel(Node *pn_)
 // Inserts a node label.
 void Schematic::insertNodeLabel(WireLabel *pl)
 {
-  Node *pn;
-  // check if node lies upon existing node
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())  // check every node
-    if(pn->cx == pl->cx) if(pn->cy == pl->cy) break;
+  if(placeNodeLabel(pl) != -1)
+    return;
 
-  if(!pn) {   // create new node, if no existing one lies at this position
-    pn = new Node(pl->cx, pl->cy);
-    Nodes->append(pn);
+  // Go on, if label don't lie on existing node.
+
+  Wire *pw = selectedWire(pl->cx, pl->cy);
+  if(pw) {  // lies label on existing wire ?
+    if(getWireLabel(pw->Port1) == 0)  // wire not yet labeled ?
+      pw->setName(pl->Name, pl->initValue, 0, pl->cx, pl->cy);
+
+    delete pl;
+    return;
   }
 
-  if(pn->Label) delete pn->Label;
+
+  Node *pn = new Node(pl->cx, pl->cy);
+  Nodes->append(pn);
+
   pn->Label = pl;
   pl->Type  = isNodeLabel;
   pl->pOwner = pn;
