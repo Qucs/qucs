@@ -171,30 +171,21 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 void MouseActions::endElementMoving(Schematic *Doc, QPtrList<Element> *movElements)
 {
   Element *pe;
-
-  // First the wires with length zero are removed. This is important
-  // if they are labeled. These labels must be put in the schematic
-  // before all other elements.
-  for(pe = movElements->first(); pe != 0; ) {
-    if(pe->Type == isWire)
-      if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) {
-	if(((Wire*)pe)->Label) {
-	  Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
-	  ((Wire*)pe)->Label = 0;
-	}
-	movElements->removeRef(pe);
-	delete (Wire*)pe;
-	pe = movElements->current();
-	continue;
-      }
-    pe = movElements->next();
-  }
-
-
   for(pe = movElements->first(); pe!=0; pe = movElements->next()) {
 //    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) {
       case isWire:
+        if(pe->x1 == pe->x2)
+          if(pe->y1 == pe->y2) {
+            // Delete wires with zero length, but preserve label.
+            if(((Wire*)pe)->Label) {
+              Doc->insertNodeLabel((WireLabel*)((Wire*)pe)->Label);
+              ((Wire*)pe)->Label = 0;
+            }
+            delete (Wire*)pe;
+            break;
+          }
+
 	Doc->insertWire((Wire*)pe);
 	break;
       case isDiagram:
