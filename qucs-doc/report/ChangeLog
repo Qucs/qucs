@@ -1,3 +1,8 @@
+2008-01-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilog/content.tex: Clarified the word "source tree".  Also
+	fixed a small typo.
+
 2008-01-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* log_amp/log_amp.tex: New report: Verilog-A Logarithmic Amplifier
