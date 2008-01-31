@@ -544,6 +544,20 @@ The qucs-core tree of Qucs must be configured using the
 \begin{Verbatim}[fontsize=\small]
   $ ./configure --enable-maintainer-mode --prefix=/tmp
 \end{Verbatim}
+
+The source trees of qucs (GUI) as well as qucs-core (simulator) are
+within the release tarballs available at
+\url{http://qucs.sourceforge.net/download.html}.  During development
+of new Verilog-A models it is recommended to use CVS.  Latest CVS
+trees of qucs and qucs-core can be obtained using the following
+command lines.
+\begin{Verbatim}[fontsize=\small]
+    $ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
+      co qucs-core
+    $ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
+      co qucs
+\end{Verbatim}
+
 Also the software \textbf{adms} must be installed.  It is available at
 \url{http://sourceforge.net/projects/mot-adms}.
 
@@ -689,8 +703,8 @@ completely integrated into the analogue simulator.
 \tutsubsection{Integrating the model into the GUI}
 
 Very likely as the qucs-core tree in the previous section also the
-qucs source tree of must be configured using the
---enable-maintainer-mode option.
+qucs source tree must be configured using the --enable-maintainer-mode
+option.
 \begin{Verbatim}[fontsize=\small]
   $ ./configure --enable-maintainer-mode --prefix=/tmp
 \end{Verbatim}
