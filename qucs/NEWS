@@ -1,7 +1,7 @@
 --
 -- NEWS
 --
--- Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
 --
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ files.
 Version 0.0.14
 --------------
 
+ * support for sub- and super-script in graphical text paintings
  * new components: diac, tria, thyristor, logarithmic amplifier,
    HICUM L0 v1.12
 
