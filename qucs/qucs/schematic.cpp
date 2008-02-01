@@ -506,7 +506,8 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 
   QFont oldFont = Painter->font();
   p.init(Painter, PrintScale * printerDpiX / screenDpiX,
-         -StartX, -StartY, -marginX, -marginY, PrintScale);
+         -StartX, -StartY, -marginX, -marginY,
+	 PrintScale, printerDpiX / screenDpiX);
 
   if(!symbolMode)
     paintFrame(&p);

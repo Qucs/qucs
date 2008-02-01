@@ -56,16 +56,16 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
     return;
 
   if(isSelected) {
-    p->Painter->setPen(QPen(QPen::darkGray,Thick+4));
+    p->Painter->setPen(QPen(QPen::darkGray,Thick*p->PrintScale+4));
     paintLines(p, x0, y0);
 
-    p->Painter->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
+    p->Painter->setPen(QPen(QPen::white, Thick*p->PrintScale, Qt::SolidLine));
     paintLines(p, x0, y0);
     return;
   }
 
   // **** not selected ****
-  p->Painter->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
+  p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   paintLines(p, x0, y0);
 }
 
