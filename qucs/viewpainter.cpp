@@ -25,6 +25,7 @@ ViewPainter::ViewPainter(QPainter *p)
 {
   Painter = p;
   DX = DY = Scale = 0.0;
+  FontScale = PrintScale = 1.0;
 }
 
 ViewPainter::~ViewPainter()
@@ -32,11 +33,12 @@ ViewPainter::~ViewPainter()
 }
 
 // -------------------------------------------------------------
-void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int dy_, float FontScale_)
+void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int dy_, float FontScale_, float PrintScale_)
 {
   Painter = p;
   Scale = Scale_;
   FontScale = FontScale_;
+  PrintScale = PrintScale_;
   DX = floor(float(DX_) * Scale) - float(dx_);
   DY = floor(float(DY_) * Scale) - float(dy_);
 
@@ -324,7 +326,8 @@ int ViewPainter::drawTextMapped(const QString& Text, int x1, int y1,
       f.setPointSizeFloat(f.pointSizeFloat()*0.8);
       Painter->setFont(f);
       Painter->drawText(x1+x,
-			y1+y + (is_sub ? +0.6 : -0.3)*fbak.pointSizeFloat(),
+			y1+y + (is_sub ? +0.6 : -0.3) *
+			fbak.pointSizeFloat() * PrintScale,
 			0, 0, Qt::DontClip,
 			Text.mid(i, len ? len : 1), -1, &r);
       Painter->setFont(fbak);
