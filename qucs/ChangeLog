@@ -1,3 +1,12 @@
+2008-02-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/graph.cpp (paint): Using 'PrinterScale' to magnify line
+	thickness of graphs correctly.
+
+	* viewpainter.cpp (drawTextMapped): Introduced 'PrinterScale'
+	property and thus are able to print subscript and superscript
+	correctly.
+
 2008-01-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp: Using "std_logic" instead of "bit" as

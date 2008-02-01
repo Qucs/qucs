@@ -35,7 +35,8 @@ public:
   ViewPainter(QPainter *p=0);
  ~ViewPainter();
 
-  void init(QPainter*, float, int, int, int, int, float FontScale_=0.0);
+  void init(QPainter*, float, int, int, int, int, float FontScale_=0.0,
+	    float PrintScale_=1.0);
   void map(int, int, int&, int&);
   void drawPoint(int, int);
   void drawLine (int, int, int, int);
@@ -55,7 +56,7 @@ public:
   void drawArrowSymbols(int, int, float*);
 
   QPainter *Painter;
-  float Scale, FontScale, DX , DY;
+  float Scale, FontScale, PrintScale, DX , DY;
   int LineSpacing;   // updated by init(), just for info
 };
 
