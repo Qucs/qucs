@@ -1,3 +1,8 @@
+2008-02-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* potentiometer.cpp (potentiometer): Added new Potentiometer
+	Verilog-A model.  Thanks to Mike!
+
 2008-01-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (getComponentFromName): Fixed loading/undo/redo of

@@ -1580,6 +1580,8 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'l' : if(cstr == "og_amp") c = new log_amp();
         break;
+  case 'p' : if(cstr == "otentiometer") c = new potentiometer();
+        break;
   }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),

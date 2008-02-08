@@ -134,5 +134,6 @@
 #include "hic2_full.h"
 #include "log_amp.h"
 #include "hic0_full.h"
+#include "potentiometer.h"
 
 #endif
