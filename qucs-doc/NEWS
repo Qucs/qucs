@@ -26,6 +26,7 @@ files.
 Version 0.0.14
 --------------
 
+ * new report about Potentiometer model in Verilog-A
  * new report about the Verilog-A Logarithmic Amplifier
 
 Version 0.0.13

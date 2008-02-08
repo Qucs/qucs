@@ -1,3 +1,8 @@
+2008-02-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* potentiometer/content.tex: New report about potentiometer model.
+	Thanks to Mike Brinson!
+
 2008-01-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilog/content.tex: Clarified the word "source tree".  Also
