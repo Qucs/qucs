@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.82 2008-01-24 16:01:06 ela Exp $
+ * $Id: qucsdefs.h,v 1.83 2008-02-08 17:12:12 ela Exp $
  *
  */
 
@@ -1138,6 +1138,23 @@ struct define_t qucs_definition_available[] =
       { "pnp", PROP_INT, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
+  },
+  /* potentiometer verilog device */
+  { "potentiometer", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    {
+      { "R_pot", PROP_REAL, { 1e4, PROP_NO_STR }, { '[', 1e-6, 0, '.' } },
+      { "Rotation", PROP_REAL, { 120, PROP_NO_STR }, { '[', 0, 0, '.' } },
+      { "Taper_Coeff", PROP_REAL, { 0, PROP_NO_STR }, { '[', 0, 0, '.' } },
+      { "LEVEL", PROP_INT, { 1, PROP_NO_STR }, { '[', 1, 3, ']' } },
+      { "Max_Rotation", PROP_REAL, { 240.0, PROP_NO_STR }, { '[', 0, 0, '.' } },
+      { "Conformity", PROP_REAL, { 0.2, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Linearity", PROP_REAL, { 0.2, PROP_NO_STR }, { '.', 0, 0, '.' } },
+      { "Contact_Res", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1e-6, 0, '.' } },
+      { "Temp_Coeff", PROP_REAL, { 100, PROP_NO_STR }, { '[', 0, 0, '.' } },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, { '[', (-273), 0, '.' } },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
   },
 
   /* microstrip substrate */

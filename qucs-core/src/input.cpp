@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.80 2008-01-24 16:01:06 ela Exp $
+ * $Id: input.cpp,v 1.81 2008-02-08 17:12:12 ela Exp $
  *
  */
 
@@ -515,6 +515,8 @@ circuit * input::createCircuit (char * type) {
     return new log_amp ();
   else if (!strcmp (type, "hic0_full"))
     return new hic0_full ();
+  else if (!strcmp (type, "potentiometer"))
+    return new potentiometer ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;
