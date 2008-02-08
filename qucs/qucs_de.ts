@@ -6170,6 +6170,62 @@ Verwendung:  qucsedit [-r] Datei
         <source>gate resistance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Potentiometer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nominal device resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shaft/wiper arm rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistive law taper coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>device type selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum shaft/wiper rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linearity error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>wiper arm contact resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PPM/Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Potentiometer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>T</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
