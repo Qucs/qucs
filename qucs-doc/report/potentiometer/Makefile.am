@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# report/Makefile.am
+# report/potentiometer/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,26 +22,19 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = verilog StoQ_test1 StoQ_test2 StoQ_test3 StoQ_test4 StoQ_test5 \
-  curtice mod_amp log_amp potentiometer
+SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES) $(TEXFILES)
+EXTRA_DIST = $(SOURCES)
 
-TEXFILES = titlepage.tex basics.tex reportbook.tex
-TARGETS = reportbook.pdf
-PICDIRS = verilog
+SOURCES = potentiometer.tex content.tex
+TARGETS = potentiometer.pdf
 
-pics-book:
-	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
-	done
+pics-report:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
 
-book: pics-book $(TARGETS)
+report: pics-report $(TARGETS)
 
-report:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
-	done
+book: pics-report
 
 %.dvi: %.tex
 	$(LATEX) $<
@@ -49,15 +42,9 @@ report:
 	$(LATEX) -interaction=batchmode $<
 
 %.pdf: %.tex
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
-
-%.eps: %.fig
-	$(FIG2DEV) -L eps $< > $@
-
-%.pdf: %.eps
-	$(EPSTOPDF) $< -o=$@
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 %.ps: %.dvi
 	$(DVIPS) $< -o $@

@@ -98,6 +98,8 @@ AC_CONFIG_FILES([Makefile
 		 report/mod_amp/pics/Makefile
 		 report/log_amp/Makefile
 		 report/log_amp/pics/Makefile
+		 report/potentiometer/Makefile
+		 report/potentiometer/pics/Makefile
 		 tutorial/Makefile
 		 tutorial/getstarted/Makefile
 		 tutorial/getstarted/pics/Makefile
