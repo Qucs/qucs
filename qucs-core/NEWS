@@ -26,7 +26,8 @@ files.
 Version 0.0.14
 --------------
 
- * new Verilog-A device model: Logarithmic Amplifier and HICUM L0 v1.12
+ * new Verilog-A device models: Logarithmic Amplifier, HICUM L0 v1.12,
+   Potentiometer
  * added 3- and more argument versions of PlotVs()
  * new non-linear component: diac
 

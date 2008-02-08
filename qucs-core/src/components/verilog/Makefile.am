@@ -31,18 +31,20 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	mod_amp.analogfunction.cpp mod_amp.core.cpp \
 	hic2_full.analogfunction.cpp hic2_full.core.cpp \
 	log_amp.analogfunction.cpp log_amp.core.cpp \
-	hic0_full.analogfunction.cpp hic0_full.core.cpp
+	hic0_full.analogfunction.cpp hic0_full.core.cpp \
+	potentiometer.analogfunction.cpp potentiometer.core.cpp
 
 noinst_HEADERS = HBT_X.analogfunction.h HBT_X.core.h \
 	hicumL2p1.analogfunction.h hicumL2p1.core.h \
 	mod_amp.analogfunction.h mod_amp.core.h \
 	hic2_full.analogfunction.h hic2_full.core.h \
 	log_amp.analogfunction.h log_amp.core.h \
-	hic0_full.analogfunction.h hic0_full.core.h
+	hic0_full.analogfunction.h hic0_full.core.h \
+	potentiometer.analogfunction.h potentiometer.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
-  hicumL0V1p12.va
+  hicumL0V1p12.va potentiometer.va
 
 XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
   qucsMODULEdefs.xml qucsMODULEgui.xml
@@ -130,6 +132,19 @@ hic0_full.defs.h: hicumL0V1p12.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hic0_full.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hic0_full.gui.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+potentiometer.analogfunction.cpp: analogfunction.xml
+potentiometer.analogfunction.cpp: potentiometer.va
+	$(ADMSXML) $< -e analogfunction.xml
+potentiometer.core.cpp: qucsVersion.xml qucsMODULEcore.xml
+potentiometer.core.cpp: potentiometer.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+potentiometer.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+potentiometer.defs.h: potentiometer.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+potentiometer.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+potentiometer.gui.cpp: potentiometer.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

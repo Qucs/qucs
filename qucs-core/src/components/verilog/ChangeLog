@@ -1,3 +1,8 @@
+2008-02-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* potentiometer.va: Added new Potentiometer Verilog-A model.
+	Thanks to Mike!
+
 2008-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL0V1p12.va: Added new device: HICUM L0 v1.12 model.
