@@ -65,9 +65,9 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   vert->addWidget(h3);
 
   // first => activated by pressing RETURN
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
+  QPushButton *ButtOK = new QPushButton(tr("&OK"),h3);
   connect(ButtOK, SIGNAL(clicked()), SLOT(slotOkButton()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
+  QPushButton *ButtCancel = new QPushButton(tr("&Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   new QLabel(tr("Text color: "), h1);

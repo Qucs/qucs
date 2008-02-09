@@ -844,11 +844,11 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>Text size: </source>
@@ -873,6 +873,14 @@
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">&amp;Abbrechen</translation>
     </message>
 </context>
 <context>
