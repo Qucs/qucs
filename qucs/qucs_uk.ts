@@ -722,11 +722,11 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation type="obsolete">Гаразд</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation type="obsolete">Скасувати</translation>
     </message>
     <message>
         <source>Text size: </source>
@@ -751,6 +751,14 @@
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">&amp;Скасувати</translation>
     </message>
 </context>
 <context>
