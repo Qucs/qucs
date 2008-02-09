@@ -1,3 +1,8 @@
+2008-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/graphictextdialog.cpp (GraphicTextDialog): Hotkey for
+	OK (Alt-O) and Cancel (Alt-C) button added.
+
 2008-02-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/graph.cpp (paint): Using 'PrinterScale' to magnify line

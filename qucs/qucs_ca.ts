@@ -788,11 +788,11 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>Acceptar</translation>
+        <translation type="obsolete">Acceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancel·lar</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
     <message>
         <source>Text color: </source>
@@ -821,6 +821,14 @@
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">&amp;Cancel·lar</translation>
     </message>
 </context>
 <context>
