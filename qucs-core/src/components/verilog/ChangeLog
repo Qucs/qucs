@@ -1,3 +1,8 @@
+2008-02-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEgui.xml: Fixed notation of number suffixes for some
+	of the suffixes in the GUI code.
+
 2008-02-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* potentiometer.va: Added new Potentiometer Verilog-A model.
