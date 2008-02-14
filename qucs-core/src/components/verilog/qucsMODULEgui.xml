@@ -28,21 +28,21 @@
     <admst:when test="[scalingunit='1']">%s</admst:when>
     <admst:when test="[scalingunit='E']">(%s*1.0e+18)</admst:when>
     <admst:when test="[scalingunit='P']">(%s*1.0e+15)</admst:when>
-    <admst:when test="[scalingunit='T']">(%s*1.0e+12)</admst:when>
-    <admst:when test="[scalingunit='G']">(%s*1.0e+9)</admst:when>
-    <admst:when test="[scalingunit='M']">(%s*1.0e+6)</admst:when>
-    <admst:when test="[scalingunit='k']">(%s*1.0e+3)</admst:when>
+    <admst:when test="[scalingunit='T']">%sT</admst:when>
+    <admst:when test="[scalingunit='G']">%sG</admst:when>
+    <admst:when test="[scalingunit='M']">%sM</admst:when>
+    <admst:when test="[scalingunit='k']">%sk</admst:when>
     <admst:when test="[scalingunit='h']">(%s*1.0e+2)</admst:when>
     <admst:when test="[scalingunit='D']">(%s*1.0e+1)</admst:when>
     <admst:when test="[scalingunit='d']">(%s*1.0e-1)</admst:when>
     <admst:when test="[scalingunit='c']">(%s*1.0e-2)</admst:when>
-    <admst:when test="[scalingunit='m']">(%s*1.0e-3)</admst:when>
-    <admst:when test="[scalingunit='u']">(%s*1.0e-6)</admst:when>
-    <admst:when test="[scalingunit='n']">(%s*1.0e-9)</admst:when>
+    <admst:when test="[scalingunit='m']">%sm</admst:when>
+    <admst:when test="[scalingunit='u']">%su</admst:when>
+    <admst:when test="[scalingunit='n']">%sn</admst:when>
     <admst:when test="[scalingunit='A']">(%s*1.0e-10)</admst:when>
-    <admst:when test="[scalingunit='p']">(%s*1.0e-12)</admst:when>
-    <admst:when test="[scalingunit='f']">(%s*1.0e-15)</admst:when>
-    <admst:when test="[scalingunit='a']">(%s*1.0e-18)</admst:when>
+    <admst:when test="[scalingunit='p']">%sp</admst:when>
+    <admst:when test="[scalingunit='f']">%sf</admst:when>
+    <admst:when test="[scalingunit='a']">%sa</admst:when>
     <admst:otherwise>
       <admst:value-of select="scalingunit"/>
       <admst:fatal format="%s%s: scaling unit not supported\n"/>
