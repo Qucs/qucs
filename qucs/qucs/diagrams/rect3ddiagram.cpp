@@ -956,13 +956,14 @@ void Rect3DDiagram::calcData(Graph *g)
       do {
 
         while(1) {
-          if(pMem->done & 11)   // is grid point ?
-            if(pMem->done & 4)  // is hidden
+          if(pMem->done & 11)    // is grid point ?
+            if(pMem->done & 4) { // is hidden
               if(pMem > Mem) {
                 if((pMem-1)->done & 12)
                   break;
               }
               else  break;
+	    }
 
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
           *(p++) = pMem->x;
@@ -994,13 +995,14 @@ void Rect3DDiagram::calcData(Graph *g)
     default:  // symbol (e.g. star) at each point **********************
       do {
         while(1) {
-          if(pMem->done & 11)   // is grid point ?
-            if(pMem->done & 4)  // is hidden
+          if(pMem->done & 11)    // is grid point ?
+            if(pMem->done & 4) { // is hidden
               if(pMem > Mem) {
                 if((pMem-1)->done & 12)
                   break;
               }
               else  break;
+	    }
 
           *(p++) = pMem->x;
           *(p++) = pMem->y;
@@ -1021,13 +1023,14 @@ void Rect3DDiagram::calcData(Graph *g)
   int Flag = 1;    // current state: 1=stroke, 0=space
   do {
     while(1) {
-      if(pMem->done & 11)   // is grid point ?
-        if(pMem->done & 4)  // is hidden
+      if(pMem->done & 11)    // is grid point ?
+        if(pMem->done & 4) { // is hidden
           if(pMem > Mem) {
             if((pMem-1)->done & 12)
               break;
           }
-          else  break;
+          else break;
+	}
 
       xtmp = pMem->x;
       ytmp = pMem->y;

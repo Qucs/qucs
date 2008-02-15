@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dataset.cpp,v 1.25 2008-01-10 20:00:00 ela Exp $
+ * $Id: dataset.cpp,v 1.26 2008-02-15 17:55:59 ela Exp $
  *
  */
 
@@ -126,7 +126,7 @@ void dataset::addDependencies (vector * v) {
 void dataset::appendDependency (vector * v) {
   vector * e;
   if (dependencies) {
-    for (e = dependencies; e->getNext (); e = (vector *) e->getNext ());
+    for (e = dependencies; e->getNext (); e = (vector *) e->getNext ()) ;
     v->setPrev (e);
     e->setNext (v);
   }
@@ -184,7 +184,7 @@ void dataset::addVariables (vector * v) {
 void dataset::appendVariable (vector * v) {
   vector * e;
   if (variables) {
-    for (e = variables; e->getNext (); e = (vector *) e->getNext ());
+    for (e = variables; e->getNext (); e = (vector *) e->getNext ()) ;
     v->setPrev (e);
     e->setNext (v);
   }

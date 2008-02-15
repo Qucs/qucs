@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ptrlist.cpp,v 1.4 2006-03-29 08:02:03 raimi Exp $
+ * $Id: ptrlist.cpp,v 1.5 2008-02-15 17:56:00 ela Exp $
  *
  */
 
@@ -82,7 +82,7 @@ void ptrlist<type_t>::append (type_t * ptr) {
   entry->next = NULL;
   if (root) {
     ptrentry<type_t> * p;
-    for (p = root; p->next != NULL; p = p->next);
+    for (p = root; p->next != NULL; p = p->next) ;
     p->next = entry;
     entry->prev = p;
   }
@@ -144,7 +144,7 @@ int ptrlist<type_t>::index (type_t * ptr) {
 template <class type_t>
 type_t * ptrlist<type_t>::get (int idx) {
   ptrentry<type_t> * ptr = root;
-  for (int i = 0 ; i < idx && ptr != NULL; ptr = ptr->next, i++);
+  for (int i = 0 ; i < idx && ptr != NULL; ptr = ptr->next, i++) ;
   return ptr ? ptr->data : NULL;
 }
 
@@ -184,7 +184,7 @@ type_t * ptrlistiterator<type_t>::toFirst (void) {
 // Sets the current to the last item in the iterator list.
 template <class type_t>
 type_t * ptrlistiterator<type_t>::toLast (void) {
-  for (_last = _ptrlist->root; _last && _last->next; _last = _last->next);
+  for (_last = _ptrlist->root; _last && _last->next; _last = _last->next) ;
   _current = _last;
   return _current ? _current->data : NULL;
 }

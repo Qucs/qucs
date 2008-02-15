@@ -113,7 +113,7 @@ int Schematic::insertWireNode1(Wire *w)
       if(ptr2->y1 > w->y1) continue;
       if(ptr2->y2 < w->y1) continue;
 
-      if(ptr2->isHorizontal() == w->isHorizontal()) // (ptr2-wire is vertical)
+      if(ptr2->isHorizontal() == w->isHorizontal()) { // ptr2-wire is vertical
         if(ptr2->y2 >= w->y2) {
 	  delete w;    // new wire lies within an existing wire
 	  return 0; }
@@ -140,12 +140,13 @@ int Schematic::insertWireNode1(Wire *w)
             return 2;
           }
         }
+      }
     }
     else if(ptr2->y1 == w->y1) {
       if(ptr2->x1 > w->x1) continue;
       if(ptr2->x2 < w->x1) continue;
 
-      if(ptr2->isHorizontal() == w->isHorizontal()) // (ptr2-wire is horizontal)
+      if(ptr2->isHorizontal() == w->isHorizontal()) { // ptr2-wire is horizontal
         if(ptr2->x2 >= w->x2) {
           delete w;   // new wire lies within an existing wire
           return 0;
@@ -173,6 +174,7 @@ int Schematic::insertWireNode1(Wire *w)
             return 2;
           }
         }
+      }
     }
     else continue;
 
@@ -331,7 +333,7 @@ int Schematic::insertWireNode2(Wire *w)
       if(ptr2->y2 < w->y2) continue;
 
     // (if new wire lies within an existing wire, was already check before)
-      if(ptr2->isHorizontal() == w->isHorizontal()) // ptr2-wire is vertical
+      if(ptr2->isHorizontal() == w->isHorizontal()) { // ptr2-wire is vertical
           // one part of the wire lies within an existing wire
           // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
@@ -353,13 +355,14 @@ int Schematic::insertWireNode2(Wire *w)
             ptr2->Port1->Connections.append(w);   // shorten new wire
             return 2;
           }
+      }
     }
     else if(ptr2->y1 == w->y2) {
       if(ptr2->x1 > w->x2) continue;
       if(ptr2->x2 < w->x2) continue;
 
     // (if new wire lies within an existing wire, was already check before)
-      if(ptr2->isHorizontal() == w->isHorizontal()) // ptr2-wire is horizontal
+      if(ptr2->isHorizontal() == w->isHorizontal()) { // ptr2-wire is horizontal
           // one part of the wire lies within an existing wire
           // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
@@ -381,6 +384,7 @@ int Schematic::insertWireNode2(Wire *w)
             ptr2->Port1->Connections.append(w);   // shorten new wire
             return 2;
           }
+      }
     }
     else continue;
 
@@ -965,7 +969,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
         }
 
     if(pd->getSelected(x, y)) {
-      if(pd->Name[0] == 'T')    // tabular, timing diagram or truth table ?
+      if(pd->Name[0] == 'T') {   // tabular, timing diagram or truth table ?
         if(pd->Name[1] == 'i') {
           if(y > pd->cy) {
             if(x < pd->cx+pd->xAxis.numGraphs) continue;
@@ -979,6 +983,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             return pd;
           }
         }
+      }
 
       // test graphs of diagram
       for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())

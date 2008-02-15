@@ -1,3 +1,7 @@
+2008-02-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* Fixed some compile warnings for g++ 4.3 version.
+
 2008-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* paintings/graphictextdialog.cpp (GraphicTextDialog): Hotkey for

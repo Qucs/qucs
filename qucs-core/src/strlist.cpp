@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strlist.cpp,v 1.12 2007-09-16 16:49:39 ela Exp $
+ * $Id: strlist.cpp,v 1.13 2008-02-15 17:56:00 ela Exp $
  *
  */
 
@@ -86,7 +86,7 @@ void strlist::append (char * str) {
   s->str = str ? strdup (str) : NULL;
   if (root) {
     struct strlist_t * e;
-    for (e = root; e->next != NULL; e = e->next);
+    for (e = root; e->next != NULL; e = e->next) ;
     e->next = s;
   }
   else {
@@ -126,7 +126,7 @@ int strlist::index (char * str) {
    location in the string list. */
 char * strlist::get (int pos) {
   struct strlist_t * s = root;
-  for (int i = 0; i < pos && s != NULL; s = s->next, i++);
+  for (int i = 0; i < pos && s != NULL; s = s->next, i++) ;
   return s ? s->str : NULL;
 }
 
@@ -134,7 +134,7 @@ char * strlist::get (int pos) {
    string list. */
 char * strlist::last (void) {
   struct strlist_t * s;
-  for (s = root; s != NULL && s->next != NULL; s = s->next);
+  for (s = root; s != NULL && s->next != NULL; s = s->next) ;
   return s ? s->str : NULL;
 }
 
@@ -224,7 +224,7 @@ char * strlistiterator::toFirst (void) {
 
 // Sets the current to the last item in the iterator list.
 char * strlistiterator::toLast (void) {
-  for (_last = _strlist->root; _last && _last->next; _last = _last->next);
+  for (_last = _strlist->root; _last && _last->next; _last = _last->next) ;
   _current = _last;
   return _current ? _current->str : NULL;
 }

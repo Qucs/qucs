@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.64 2008-01-18 20:21:10 ela Exp $
+ * $Id: equation.cpp,v 1.65 2008-02-15 17:56:00 ela Exp $
  *
  */
 
@@ -913,7 +913,7 @@ int node::count (void) {
 void node::append (node * last) {
   if (!last) return;
   node * n;
-  for (n = this; n->getNext () != NULL; n = n->getNext ());
+  for (n = this; n->getNext () != NULL; n = n->getNext ()) ;
   last->setNext (NULL);
   n->setNext (last);
 }
@@ -922,14 +922,14 @@ void node::append (node * last) {
 void node::appendNodes (node * last) {
   if (!last) return;
   node * n;
-  for (n = this; n->getNext () != NULL; n = n->getNext ());
+  for (n = this; n->getNext () != NULL; n = n->getNext ()) ;
   n->setNext (last);
 }
 
 // Returns the equation node at the given argument position.
 node * node::get (int pos) {
   node * n = this;
-  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
+  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++) ;
   return n;
 }
 
@@ -941,7 +941,7 @@ void node::setResult (constant * r) {
 // Returns the constant equation node at the given argument position.
 constant * node::getResult (int pos) {
   node * n = this;
-  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
+  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++) ;
   return n ? n->getResult () : NULL;
 }
 
@@ -1410,7 +1410,7 @@ node * checker::appendEquation (node * root, node * last) {
 // Returns the last node in the given equation root.
 node * checker::lastEquation (node * root) {
   node * eqn;
-  for (eqn = root; eqn && eqn->getNext () != NULL; eqn = eqn->getNext ());
+  for (eqn = root; eqn && eqn->getNext () != NULL; eqn = eqn->getNext ()) ;
   return eqn;
 }
 
@@ -1421,7 +1421,7 @@ void checker::dropEquation (node * eqn) {
   }
   else {
     node * prev;
-    for (prev = equations; prev->getNext () != eqn; prev = prev->getNext());
+    for (prev = equations; prev->getNext () != eqn; prev = prev->getNext()) ;
     prev->setNext (eqn->getNext ());
   }
 }

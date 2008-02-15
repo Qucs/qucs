@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: valuelist.cpp,v 1.4 2007-09-16 16:49:39 ela Exp $
+ * $Id: valuelist.cpp,v 1.5 2008-02-15 17:56:00 ela Exp $
  *
  */
 
@@ -93,7 +93,7 @@ void valuelist<type_t>::append (char * n, type_t * ptr) {
   entry->next = NULL;
   if (root) {
     valentry<type_t> * p;
-    for (p = root; p->next != NULL; p = p->next);
+    for (p = root; p->next != NULL; p = p->next) ;
     p->next = entry;
     entry->prev = p;
   }

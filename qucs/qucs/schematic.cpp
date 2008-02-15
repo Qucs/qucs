@@ -1293,7 +1293,7 @@ bool Schematic::undo()
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
 
-  if(ps->at(1) == 'i')
+  if(ps->at(1) == 'i') {
     if(UndoSymbol.isEmpty()) {
       setChanged(false, false);
       return true;
@@ -1302,6 +1302,7 @@ bool Schematic::undo()
       setChanged(false, false);
       return true;
     }
+  }
 
   setChanged(true, false);
   return true;
@@ -1345,7 +1346,7 @@ bool Schematic::redo()
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
 
-  if(ps->at(1) == 'i')
+  if(ps->at(1) == 'i') {
     if(UndoSymbol.isEmpty()) {
       setChanged(false, false);
       return true;
@@ -1354,6 +1355,7 @@ bool Schematic::redo()
       setChanged(false, false);
       return true;
     }
+  }
 
   setChanged(true, false);
   return true;

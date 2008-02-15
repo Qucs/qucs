@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.h,v 1.12 2007-10-19 17:54:17 ela Exp $
+ * $Id: environment.h,v 1.13 2008-02-15 17:56:00 ela Exp $
  *
  */
 
@@ -29,7 +29,6 @@ class variable;
 class checker;
 class solver;
 class dataset;
-class eqn::constant;
 template <class type_t> class ptrlist;
 
 class environment
