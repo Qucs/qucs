@@ -257,11 +257,11 @@ void QucsLib::slotSelectLibrary(int Index)
 {
   int Start, End, NameStart, NameEnd;
   End = Library->count()-1;
-  if(Library->text(End) == tr("Search result"))
+  if(Library->text(End) == tr("Search result")) {
     if(Index < End)
       Library->removeItem(End); // if search result still there -> remove it
     else  return;
-
+  }
 
   CompList->clear();
   LibraryComps.clear();
