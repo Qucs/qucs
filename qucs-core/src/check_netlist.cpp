@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.116 2007/10/23 17:48:05 ela Exp $
+ * $Id: check_netlist.cpp,v 1.117 2008/02/15 17:55:59 ela Exp $
  *
  */
 
@@ -1637,7 +1637,7 @@ netlist_unchain_definition (struct definition_t * root,
   }
   else {
     // find previous to the candidate to be deleted
-    for (prev = root; prev != NULL && prev->next != cand; prev = prev->next);
+    for (prev = root; prev != NULL && prev->next != cand; prev = prev->next) ;
     if (prev != NULL) {
       prev->next = cand->next;
       netlist_free_definition (cand);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.27 2008/01/13 10:50:13 ela Exp $
+ * $Id: hbsolver.cpp,v 1.28 2008/02/15 17:56:00 ela Exp $
  *
  */
 
@@ -360,8 +360,8 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
 
 // Calculates an order fulfilling the "power of two" requirement.
 int hbsolver::calcOrder (int n) {
-  int o, order = n * 2;            // current order + DC + negative freqencies
-  for (o = 1; o < order; o <<= 1); // a power of 2
+  int o, order = n * 2;             // current order + DC + negative freqencies
+  for (o = 1; o < order; o <<= 1) ; // a power of 2
   return o / 2 - 1;
 }
 

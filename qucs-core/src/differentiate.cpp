@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.11 2007/09/16 16:49:38 ela Exp $
+ * $Id: differentiate.cpp,v 1.12 2008/02/15 17:55:59 ela Exp $
  *
  */
 
@@ -52,7 +52,7 @@ using namespace eqn;
 #define isZero(n)  (isConst(n) && D(n) == 0.0)
 #define isOne(n)   (isConst(n) && D(n) == 1.0)
 #define isNeg(n)   (isConst(n) && D(n) == -1.0)
-#define isEuler(n) (isConst(n) && D(n) == M_E || isRef(n,"e"))
+#define isEuler(n) ((isConst(n) && D(n) == M_E) || isRef(n,"e"))
 #define isval(n,v) (isConst(n) && D(n) == v)
 
 #define retCon(val) \

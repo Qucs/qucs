@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.40 2008/01/17 18:53:06 ela Exp $
+ * $Id: check_spice.cpp,v 1.41 2008/02/15 17:56:00 ela Exp $
  *
  */
 
@@ -233,7 +233,7 @@ struct pair_t *
 netlist_append_pairs (struct pair_t * p1, struct pair_t * p2) {
   if (p1 == NULL) return p2;
   struct pair_t * pair;
-  for (pair = p1; pair->next != NULL; pair = pair->next);
+  for (pair = p1; pair->next != NULL; pair = pair->next) ;
   pair->next = p2;
   return p1;
 }
@@ -243,7 +243,7 @@ struct value_t *
 netlist_append_values (struct value_t * v1, struct value_t * v2) {
   if (v1 == NULL) return v2;
   struct value_t * val;
-  for (val = v1; val->next != NULL; val = val->next);
+  for (val = v1; val->next != NULL; val = val->next) ;
   val->next = v2;
   return v1;
 }
@@ -253,7 +253,7 @@ struct node_t *
 netlist_append_nodes (struct node_t * n1, struct node_t * n2) {
   if (n1 == NULL) return n2;
   struct node_t * node;
-  for (node = n1; node->next != NULL; node = node->next);
+  for (node = n1; node->next != NULL; node = node->next) ;
   node->next = n2;
   return n1;
 }
@@ -1129,7 +1129,7 @@ spice_del_definition (struct definition_t * root, struct definition_t * def) {
   }
   else {
     // find previous to the candidate to be deleted
-    for (prev = root; prev != NULL && prev->next != def; prev = prev->next);
+    for (prev = root; prev != NULL && prev->next != def; prev = prev->next) ;
     if (prev != NULL) {
       prev->next = def->next;
       netlist_free_definition (def);
@@ -1148,7 +1148,7 @@ spice_del_property (struct pair_t * root, struct pair_t * pair) {
   }
   else {
     // find previous to the candidate to be deleted
-    for (prev = root; prev != NULL && prev->next != pair; prev = prev->next);
+    for (prev = root; prev != NULL && prev->next != pair; prev = prev->next) ;
     if (prev != NULL) {
       prev->next = pair->next;
       netlist_free_pair (pair);
@@ -1316,8 +1316,8 @@ static char * spice_untranslated_text (struct definition_t * def) {
       sprintf (str, "%s%s%s%s",
 	       (val->hint & HINT_MSTART) ? " " : "",
 	       val->ident,
-	       (val->hint & HINT_MSTART) && val->next &&
-	       (val->next->hint & HINT_MSTOP) || 
+	       ((val->hint & HINT_MSTART) && val->next &&
+	        (val->next->hint & HINT_MSTOP)) || 
 	       (val->hint & HINT_MSTOP) ? "" : " ",
 	       (val->hint & HINT_MSTART && val->next) ? "(" : 
 	       (val->hint & HINT_MSTOP) ? ")" : " ");
@@ -1732,8 +1732,8 @@ spice_find_coupled (struct definition_t * root, const char * type,
 	continue;
       char * linst1 = def->values->ident;
       char * linst2 = def->values->next->ident;
-      if (!strcasecmp (linst1, inst1) && !strcasecmp (linst2, inst2) ||
-	  !strcasecmp (linst1, inst2) && !strcasecmp (linst2, inst1))
+      if ((!strcasecmp (linst1, inst1) && !strcasecmp (linst2, inst2)) ||
+	  (!strcasecmp (linst1, inst2) && !strcasecmp (linst2, inst1)))
 	return def;
     }
   }
@@ -2347,7 +2347,7 @@ spice_post_translator (struct definition_t * root) {
       }
     }
     // post-process print and plot statements
-    if (def->action && !strcmp (def->type, "PRINT") ||
+    if ((def->action && !strcmp (def->type, "PRINT")) ||
 	!strcmp (def->type, "PLOT")) {
       spice_collect_external_nodes (def);
     }
@@ -2601,14 +2601,14 @@ static void spice_lister (struct definition_t * root) {
 // Adjusts the hint value of the last entry in the value list.
 void spice_add_last_hint (struct value_t * val, int hint) {
   if (val == NULL) return;
-  for (; val->next != NULL; val = val->next);
+  for (; val->next != NULL; val = val->next) ;
   val->hint |= hint;
 }
 
 // Adjusts the hint value of the last entry in the value list.
 void spice_set_last_hint (struct value_t * val, int hint) {
   if (val == NULL) return;
-  for (; val->next != NULL; val = val->next);
+  for (; val->next != NULL; val = val->next) ;
   val->hint = hint;
 }
 
