@@ -366,11 +366,12 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
   drawn = true;
   MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
   MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
-  if(isMoveEqual)     // x and y size must be equal ?
+  if(isMoveEqual) {    // x and y size must be equal ?
     if(abs(MAx2) > abs(MAy2)) {
       if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
     }
     else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
+  }
   painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new rectangle
 }
 
@@ -1863,7 +1864,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
     case isDiagram :
          dia = (Diagram*)focusElement;
-         if(dia->Name.at(0) == 'T')  // don't open dialog on scrollbar
+         if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
            if(dia->Name == "Time") {
              if(dia->cy < int(fY)) {
 	       if(((TimingDiagram*)focusElement)->scroll(MAx1))
@@ -1878,6 +1879,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 	       break;
              }
 	   }
+	 }
 
 	 ddia = new DiagramDialog(dia,
 		Info.dirPath() + QDir::separator() + Doc->DataSet, Doc);

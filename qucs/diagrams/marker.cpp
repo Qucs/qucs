@@ -148,7 +148,7 @@ void Marker::initText(int n)
     py = VarPos + 1;
   Diag->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
 
-  if(!Diag->insideDiagram(fCX, fCY))
+  if(!Diag->insideDiagram(fCX, fCY)) {
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       fCX = float(Diag->x2 >> 1);
@@ -156,6 +156,7 @@ void Marker::initText(int n)
     }
     else
       fCX = fCY = 0.0;
+  }
 
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
@@ -225,7 +226,7 @@ void Marker::createText()
 
   Diag->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
 
-  if(!Diag->insideDiagram(fCX, fCY))
+  if(!Diag->insideDiagram(fCX, fCY)) {
     // if marker out of valid bounds, point to origin
     if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       fCX = float(Diag->x2 >> 1);
@@ -233,6 +234,7 @@ void Marker::createText()
     }
     else
       fCX = fCY = 0.0;
+  }
 
   cx = int(fCX+0.5);
   cy = int(fCY+0.5);
