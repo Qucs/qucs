@@ -167,7 +167,7 @@ int TimingDiagram::calcDiagram()
   // First check the maximum bit number of all vectors.
   colWidth = 0;
   for(g = Graphs.first(); g!=0; g = Graphs.next())
-    if(g->cPointsY)
+    if(g->cPointsY) {
       if(g->Var.right(2) == ".X") {
         z = strlen((char*)g->cPointsY);
         if(z > colWidth)
@@ -178,6 +178,7 @@ int TimingDiagram::calcDiagram()
         if(z > colWidth)
           colWidth = z;
       }
+    }
   int TimeStepWidth = colWidth * metrics.width("X") + 8;
   if(TimeStepWidth < 40)
     TimeStepWidth = 40;
