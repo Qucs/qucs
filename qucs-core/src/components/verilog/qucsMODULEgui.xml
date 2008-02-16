@@ -26,8 +26,8 @@
   <admst:value-of select="value"/>
   <admst:choose>
     <admst:when test="[scalingunit='1']">%s</admst:when>
-    <admst:when test="[scalingunit='E']">(%s*1.0e+18)</admst:when>
-    <admst:when test="[scalingunit='P']">(%s*1.0e+15)</admst:when>
+    <admst:when test="[scalingunit='E']">%sE</admst:when>
+    <admst:when test="[scalingunit='P']">%sP</admst:when>
     <admst:when test="[scalingunit='T']">%sT</admst:when>
     <admst:when test="[scalingunit='G']">%sG</admst:when>
     <admst:when test="[scalingunit='M']">%sM</admst:when>

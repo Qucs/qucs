@@ -1,3 +1,8 @@
+2008-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Additionally allowing dBu in equations as well
+	as mil, in, ft and yd in component properties.
+
 2008-02-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* Fixed some compile warnings for g++ 4.3 version.
