@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.23 2007-09-23 17:33:58 ela Exp $
+ * $Id: scan_netlist.l,v 1.24 2008-02-16 19:05:37 ela Exp $
  *
  */
 
@@ -56,21 +56,44 @@ static double netlist_evaluate_scale (double val, char * scale) {
   double factor = 1.0;
   while (isspace (scale[0])) scale++;
   switch (scale[0]) {
+  case 'E': factor = 1e+18; break;
+  case 'P': factor = 1e+15; break;
   case 'T': factor = 1e+12; break;
   case 'G': factor = 1e+09; break;
   case 'M': factor = 1e+06; break;
   case 'k': factor = 1e+03; break;
-  case 'm': factor = 1e-03; break;
+  case 'm':
+    if (scale[1] == 'i' && scale[2] == 'l')
+      factor = 2.54e-5;
+    else
+      factor = 1e-03;
+    break;
   case 'u': factor = 1e-06; break;
   case 'n': factor = 1e-09; break;
   case 'p': factor = 1e-12; break;
-  case 'f': factor = 1e-15; break;
+  case 'f': 
+    if (scale[1] == 't')
+      factor = 0.3048;
+    else
+      factor = 1e-15;
+    break;
   case 'a': factor = 1e-18; break;
   case 'd':
     if (scale[1] == 'B') {
       val = pow (10.0, val / 10.0);
-      if (scale[2] == 'm') factor = 1e-03;
+      if (scale[2] == 'm')
+	factor = 1e-03;
+      else if (scale[2] == 'u')
+	factor = 1e-06;
     }
+    break;
+  case 'i':
+    if (scale[1] == 'n')
+      factor = 2.54e-2;
+    break;
+  case 'y':
+    if (scale[1] == 'd')
+      factor = 0.9144;
     break;
   }
   return val * factor;
@@ -87,9 +110,12 @@ CHR      "'"[^\n\r\']{1}"'"
 STR      "'"[^\n\r\']*"'"
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
-PFX      ("dBm"|"dB"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
+PFX1     ("E"|"P"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
+PFX2     ("mil"|"in"|"ft"|"yd")
+PFX3     ("dBu"|"dBm"|"dB")
+PFX      ({PFX1}|{PFX3})
 UNT      ("Ohm"|"S"|"s"|"K"|"H"|"F"|"Hz"|"V"|"A"|"W"|"m")
-EXCEPT   ("mm")
+EXCEPT   ("mm"|{PFX2})
 SU       ({PFX}|{UNT}|{PFX}{UNT}|{EXCEPT})
 SPACE    [ \t]
 RINT     [+-]?{DIGIT}+

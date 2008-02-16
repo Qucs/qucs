@@ -1,7 +1,7 @@
 /*
  * check_netlist.cpp - checker for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.117 2008-02-15 17:55:59 ela Exp $
+ * $Id: check_netlist.cpp,v 1.118 2008-02-16 19:05:37 ela Exp $
  *
  */
 
@@ -397,6 +397,10 @@ static int checker_evaluate_scale (struct value_t * value) {
   if (value->scale != NULL) {
     scale = value->scale;
     switch (*scale) {
+    case 'E':
+      scale++; factor = 1e18; break;
+    case 'P':
+      scale++; factor = 1e15; break;
     case 'T':
       scale++; factor = 1e12; break;
     case 'G':
@@ -406,7 +410,16 @@ static int checker_evaluate_scale (struct value_t * value) {
     case 'k':
       scale++; factor = 1e3; break;
     case 'm':
-      scale++; factor = 1e-3; break;
+      scale++;
+      if (*scale == 'i') {
+	scale++;
+	if (*scale == 'l') {
+	  scale++; factor = 2.54e-5;
+	}
+      }
+      else
+	factor = 1e-3;
+      break;
     case 'u':
       scale++; factor = 1e-6; break;
     case 'n':
@@ -414,7 +427,13 @@ static int checker_evaluate_scale (struct value_t * value) {
     case 'p':
       scale++; factor = 1e-12; break;
     case 'f':
-      scale++; factor = 1e-15; break;
+      scale++;
+      if (*scale == 't') {
+	scale++; factor = 0.3048;
+      }
+      else
+	factor = 1e-15;
+      break;
     case 'a':
       scale++; factor = 1e-18; break;
     case 'd':
@@ -424,6 +443,21 @@ static int checker_evaluate_scale (struct value_t * value) {
 	if (*scale == 'm') {
 	  scale++; factor = 1e-3;
 	}
+	else if (*scale == 'u') {
+	  scale++; factor = 1e-6;
+	}
+      }
+      break;
+    case 'i':
+      scale++;
+      if (*scale == 'n') {
+	scale++; factor = 2.54e-2;
+      }
+      break;
+    case 'y':
+      scale++;
+      if (*scale == 'd') {
+	scale++; factor = 0.9144;
       }
       break;
     }
