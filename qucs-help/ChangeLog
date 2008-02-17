@@ -1,3 +1,7 @@
+2008-02-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Documented new P and E number suffixes.
+
 2008-01-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Added number suffix documentation.
