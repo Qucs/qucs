@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.81 2008-02-08 17:12:12 ela Exp $
+ * $Id: input.cpp,v 1.82 2008-02-17 18:05:36 ela Exp $
  *
  */
 
@@ -417,6 +417,8 @@ circuit * input::createCircuit (char * type) {
     return new diode ();
   else if (!strcmp (type, "EDD"))
     return new eqndefined ();
+  else if (!strcmp (type, "RFEDD"))
+    return new rfedd ();
   else if (!strcmp (type, "Diac"))
     return new diac ();
   else if (!strcmp (type, "SCR"))

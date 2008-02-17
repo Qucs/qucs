@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.53 2008-02-08 17:12:12 ela Exp $
+ * $Id: component.h,v 1.54 2008-02-17 18:05:38 ela Exp $
  *
  */
 
@@ -84,6 +84,7 @@
 #include "amplifier.h"
 #include "opamp.h"
 #include "coupler.h"
+#include "rfedd.h"
 
 #include "vnoise.h"
 #include "inoise.h"

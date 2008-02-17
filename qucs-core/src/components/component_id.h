@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.49 2008-02-08 17:12:12 ela Exp $
+ * $Id: component_id.h,v 1.50 2008-02-17 18:05:38 ela Exp $
  *
  */
 
@@ -84,6 +84,7 @@ enum circuit_type {
   CIR_IRECT,
   CIR_AMPLIFIER,
   CIR_COUPLER,
+  CIR_RFEDD,
 
   // noise sources
   CIR_VNOISE,
