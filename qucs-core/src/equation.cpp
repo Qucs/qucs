@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.65 2008/02/15 17:56:00 ela Exp $
+ * $Id: equation.cpp,v 1.66 2008/02/17 18:05:35 ela Exp $
  *
  */
 
@@ -955,6 +955,23 @@ nr_double_t node::getResultDouble (void) {
       return c->d; break;
     case TAG_COMPLEX:
       return real (*(c->c)); break;
+    case TAG_BOOLEAN:
+      return c->b ? 1.0 : 0.0; break;
+    }
+  }
+  return 0.0;
+}
+
+/* Returns a complex value depending on the type of the equation nodes
+   result type. */
+nr_complex_t node::getResultComplex (void) {
+  constant * c = getResult ();
+  if (c != NULL) {
+    switch (getType ()) {
+    case TAG_DOUBLE:
+      return rect (c->d, 0.0); break;
+    case TAG_COMPLEX:
+      return *(c->c); break;
     case TAG_BOOLEAN:
       return c->b ? 1.0 : 0.0; break;
     }
@@ -2037,6 +2054,15 @@ node * checker::addDouble (const char * type, const char * ident,
   return eqn;
 }
 
+/* The function adds a new equation to the equation checker consisting
+   of an assignment of a complex variable. */
+node * checker::addComplex (const char * type, const char * ident,
+			    nr_complex_t value) {
+  node * eqn = createComplex (type, ident, value);
+  addEquation (eqn);
+  return eqn;
+}
+
 // Adds given equation to the equation list.
 void checker::addEquation (node * eqn) {
   eqn->setNext (equations);
@@ -2061,6 +2087,24 @@ node * checker::createDouble (const char * type, const char * ident,
   constant * c = new constant (TAG_DOUBLE);
   c->checkee = this;
   c->d = value;
+  // create the appropriate assignment
+  assignment * a = new assignment ();
+  a->checkee = this;
+  a->result = strdup (ident);
+  a->body = c;
+  a->output = 0;
+  a->setInstance (type);
+  return a;
+}
+
+/* This function creates a equation consisting of an assignment of a
+   complex variable. */
+node * checker::createComplex (const char * type, const char * ident,
+			       nr_complex_t value) {
+  // create constant double value
+  constant * c = new constant (TAG_COMPLEX);
+  c->checkee = this;
+  c->c = new nr_complex_t (value);
   // create the appropriate assignment
   assignment * a = new assignment ();
   a->checkee = this;

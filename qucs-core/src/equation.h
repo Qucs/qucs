@@ -1,7 +1,7 @@
 /*
  * equation.h - checker definitions for Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.44 2008/01/18 20:21:10 ela Exp $
+ * $Id: equation.h,v 1.45 2008/02/17 18:05:36 ela Exp $
  *
  */
 
@@ -86,6 +86,7 @@ public:
   void setType (int tag) { type = tag; }
   constant * getResult (void) { return res; } 
   nr_double_t getResultDouble (void);
+  nr_complex_t getResultComplex (void);
   void setResult (constant *);
   char * getInstance (void);
   void setInstance (const char *);
@@ -289,6 +290,8 @@ public:
   strlist * variables (void);
   node * addDouble (const char *, const char *, nr_double_t);
   node * createDouble (const char *, const char *, nr_double_t);
+  node * addComplex (const char *, const char *, nr_complex_t);
+  node * createComplex (const char *, const char *, nr_complex_t);
   node * createReference (const char *, char *, char *);
   void appendEquation (node *);
   void addEquation (node *);

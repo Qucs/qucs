@@ -1,7 +1,7 @@
 /*
  * netdefs.h - netlist definitions for arbitrary netlists
  *
- * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.12 2007/09/16 16:49:39 ela Exp $
+ * $Id: netdefs.h,v 1.13 2008/02/17 18:05:37 ela Exp $
  *
  */
 
