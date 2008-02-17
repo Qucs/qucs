@@ -1,3 +1,8 @@
+2008-02-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd.cpp (RFedd): Added preliminary implementation of an
+	equation defined RF device.
+
 2008-02-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* potentiometer.cpp (potentiometer): Added new Potentiometer
