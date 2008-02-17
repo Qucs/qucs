@@ -79,7 +79,7 @@ $CXX $CXXFLAGS -c $NAME._main_.cc
 echo " done."
 
 echo -n "linking..."
-freehdl-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS -o $NAME
+libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS -o $NAME
 echo " done."
 
 echo "simulating..."
