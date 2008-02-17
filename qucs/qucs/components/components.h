@@ -127,6 +127,7 @@
 #include "diac.h"
 #include "triac.h"
 #include "thyristor.h"
+#include "rfedd.h"
 
 #include "hicumL2p1.h"
 #include "HBT_X.h"

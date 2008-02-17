@@ -48,7 +48,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp             \
   hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp    \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
-  diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp
+  diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -69,7 +69,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h     \
   twistedpair.h bondwire.h hicumL2p1.h HBT_X.h verilogfile.h vexp.h iexp.h    \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
-  diac.h log_amp.h hic0_full.h potentiometer.h
+  diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

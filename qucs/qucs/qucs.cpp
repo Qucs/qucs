@@ -315,7 +315,7 @@ pInfoFunc lumpedComponents[] =
    &Amplifier::info, &Isolator::info, &Circulator::info,
    &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
    &vProbe::info, &Mutual::info, &Mutual2::info, &Switch::info,
-   &Relais::info, 0};
+   &Relais::info, &RFedd::info};
 
 pInfoFunc Sources[] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
