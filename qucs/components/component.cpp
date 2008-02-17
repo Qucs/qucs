@@ -1444,6 +1444,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "us") c = new Resistor(false);  // backward capatible
 	else if(cstr == "SFF") c = new RS_FlipFlop();
 	else if(cstr == "elais") c = new Relais();
+	else if(cstr == "FEDD") c = new RFedd();
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();

@@ -6194,6 +6194,26 @@ Použití:  qucsedit [-r] soubor
         <source>T</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>equation defined RF device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parameter equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation Defined RF Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
