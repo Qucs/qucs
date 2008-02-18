@@ -1,7 +1,7 @@
 /*
  * property.cpp - generic property class implementation
  *
- * Copyright (C) 2003, 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.13 2008-01-10 20:00:00 ela Exp $
+ * $Id: property.cpp,v 1.14 2008-02-18 18:03:55 ela Exp $
  *
  */
 
@@ -163,6 +163,12 @@ vector * property::getVector (void) {
 // Returns the property's value as string.
 char * property::getString (void) {
   if (var != NULL) return S (var->getConstant ());
+  return str;
+}
+
+// Returns the property's reference if it is a variable.
+char * property::getReference (void) {
+  if (var != NULL) return var->getName ();
   return str;
 }
 

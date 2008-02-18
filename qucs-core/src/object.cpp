@@ -1,7 +1,7 @@
 /*
  * object.cpp - generic object class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.cpp,v 1.14 2007-09-16 16:49:39 ela Exp $
+ * $Id: object.cpp,v 1.15 2008-02-18 18:03:55 ela Exp $
  *
  */
 
@@ -156,6 +156,14 @@ vector * object::getPropertyVector (const char * n) {
 char * object::getPropertyString (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getString ();
+  return NULL;
+}
+
+/* Returns the requested property reference variable name.  If there
+   is no such property the function returns NULL. */
+char * object::getPropertyReference (const char * n) {
+  property * p = prop->findProperty (n);
+  if (p != NULL) return p->getReference ();
   return NULL;
 }
 

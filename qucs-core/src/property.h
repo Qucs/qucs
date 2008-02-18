@@ -1,7 +1,7 @@
 /*
  * property.h - generic property class definitions
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.h,v 1.7 2007-09-16 16:49:39 ela Exp $
+ * $Id: property.h,v 1.8 2008-02-18 18:03:55 ela Exp $
  *
  */
 
@@ -54,6 +54,7 @@ class property
   nr_double_t getDouble (void);
   int getInteger (void);
   char * getString (void);
+  char * getReference (void);
   void set (nr_double_t);
   void set (int);
   void set (char *);
