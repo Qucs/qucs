@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.2 2008/02/18 18:03:55 ela Exp $
+ * $Id: rfedd.cpp,v 1.3 2008/02/18 18:26:05 ela Exp $
  *
  */
 
@@ -216,6 +216,7 @@ void rfedd::calcDC (void) {
 void rfedd::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
+  if (peqn == NULL) initModel ();
 }
 
 // Callback for AC analysis.
