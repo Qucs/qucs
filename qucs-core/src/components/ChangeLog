@@ -1,3 +1,8 @@
+2008-02-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd.cpp: Obtaining the real equation variable reference name
+	instead of constructing the equation name ourselves.
+
 2008-02-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp: Added preliminary implementation of an equation

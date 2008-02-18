@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.1 2008/02/17 18:05:39 ela Exp $
+ * $Id: rfedd.cpp,v 1.2 2008/02/18 18:03:55 ela Exp $
  *
  */
 
@@ -148,7 +148,7 @@ nr_complex_t rfedd::getResult (void * eqn) {
 // Initializes the equation defined device.
 void rfedd::initModel (void) {
   int i, j, k, ports = getSize ();
-  char * type, * pn, * sn, * snold, * fn, * fnold;
+  char * type, * pn, * sn, * snold, * fn, * fnold, * vr;
   eqn::node * pvalue;
 
   // allocate space for equation pointers
@@ -170,20 +170,23 @@ void rfedd::initModel (void) {
   // prepare device equations
   for (k = 0, i = 0; i < ports; i++) {
     for (j = 0; j < ports; j++, k++) {
-      pn = createVariable (type, i + 1, j + 1);
-      pvalue = getEnv()->getChecker()->findEquation (pn);
+      // find equation referenced in property
+      pn = createVariable ("P", i + 1, j + 1, false);
+      vr = getPropertyReference (pn);
+      pvalue = getEnv()->getChecker()->findEquation (vr);
       if (!pvalue) {
 	logprint (LOG_ERROR, "ERROR: %s-parameter equation `%s' not found for "
-		  "RFEDD `%s'\n", type, pn, getName ());
+		  "RFEDD `%s'\n", type, vr, getName ());
       }
       else {
-	// evaluate types of parameters
+	// replace references to S and F by local references
 	pvalue->replace (snold, sn);
 	pvalue->replace (fnold, fn);
+	// evaluate types of parameters
 	A(pvalue)->evalType ();
 	A(pvalue)->skip = 1;
       }
-      // setup and save equations for parameters
+      // save equations for parameters
       peqn[k] = pvalue;
       free (pn);
     }
