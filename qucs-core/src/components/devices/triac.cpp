@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: triac.cpp,v 1.2 2008/01/25 08:26:43 ela Exp $
+ * $Id: triac.cpp,v 1.3 2008/02/20 17:36:59 ela Exp $
  *
  */
 
@@ -91,6 +91,20 @@ void triac::calcDC (void) {
   else
     gi = Gi_bo;
 
+#if 0
+  nr_double_t Vi;
+  nr_double_t s = 20;
+  nr_double_t e = exp ((Ud - Ud_bo) * s);
+  nr_double_t f = (1 / Ri - Gi_bo) * e / (1 + e);
+  nr_double_t g = Gi_bo + f;
+  nr_double_t Ii, dIidUi, dIidUd;
+  Vi = real (getV (NODE_A1) - getV (NODE_IN));
+  Ii = Vi * g;
+  dIidUi = g;
+  dIidUd = s * f / (1 + e);
+  gi = dIidUi;
+#endif
+
   Ud /= Ut;
   if (Ud >= 80.0) {
     Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
@@ -115,6 +129,14 @@ void triac::calcDC (void) {
   setY (NODE_A1, NODE_IN, -gi); setY (NODE_IN, NODE_A1, -gi);
   setY (NODE_GA, NODE_GA, +1.0 / Rg); addY (NODE_IN, NODE_IN, +1.0 / Rg);
   setY (NODE_GA, NODE_IN, -1.0 / Rg); setY (NODE_IN, NODE_GA, -1.0 / Rg);
+
+#if 0
+  Ieq = -dIidUd * Vd;
+  addI (NODE_IN, +Ieq);
+  addI (NODE_A1, -Ieq);
+  addY (NODE_A1, NODE_IN, +dIidUd); addY (NODE_IN, NODE_A2, +dIidUd);
+  setY (NODE_A1, NODE_A2, -dIidUd); addY (NODE_IN, NODE_IN, -dIidUd);
+#endif
 }
 
 // Saves operating points (voltages).

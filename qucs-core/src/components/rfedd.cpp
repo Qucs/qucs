@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.3 2008/02/18 18:26:05 ela Exp $
+ * $Id: rfedd.cpp,v 1.4 2008/02/20 17:36:59 ela Exp $
  *
  */
 
@@ -83,6 +83,13 @@ void rfedd::initDC (void) {
   else if (!strcmp (dc, "open")) {
     setVoltageSources (0);
     allocMatrixMNA ();
+    return;
+  }
+  // zero frequency evaluation
+  else if (!strcmp (dc, "zerofrequency")) {
+    prepareModel ();
+    initMNA ();
+    calcMNA (0);
     return;
   }
   // none specified, DC value of IDFT ?
@@ -196,6 +203,11 @@ void rfedd::initModel (void) {
   free (fn); free (fnold);
 }
 
+// Prepares model equations if necessary.
+void rfedd::prepareModel (void) {
+  if (peqn == NULL) initModel ();
+}
+
 // Update local variable equations.
 void rfedd::updateLocals (nr_double_t frequency) {
 
@@ -212,27 +224,68 @@ void rfedd::updateLocals (nr_double_t frequency) {
 void rfedd::calcDC (void) {
 }
 
+// Initializes MNA representation depending on parameter type.
+void rfedd::initMNA (void) {
+  int i, ports = getSize ();
+  char * type = getPropertyString ("Type");
+  switch (type[0]) {
+  case 'Y':
+    setVoltageSources (0);
+    allocMatrixMNA ();
+    break;
+  case 'Z':
+    setVoltageSources (ports);
+    allocMatrixMNA ();
+    for (i = 0; i < ports; i++) setC (i, i, -1);
+    for (i = 0; i < ports; i++) setB (i, i, +1);
+    break;
+  case 'S':
+    setVoltageSources (ports);
+    allocMatrixMNA ();
+    for (i = 0; i < ports; i++) setB (i, i, +1);
+    break;
+  }
+}
+
+// Calculates MNA representation depending on parameter type.
+void rfedd::calcMNA (nr_double_t frequency) {
+  char * type = getPropertyString ("Type");
+  int r, c, ports = getSize ();
+  matrix p = calcMatrix (frequency);
+  switch (type[0]) {
+  case 'Y':
+    setMatrixY (p);
+    break;
+  case 'Z':
+    for (r = 0; r < ports; r++)
+      for (c = 0; c < ports; c++)
+	setD (r, c, p (r, c));
+    break;
+  case 'S':
+    for (r = 0; r < ports; r++)
+      for (c = 0; c < ports; c++) {
+	if (r == c) {
+	  setC (r, c, p (r, c) - 1.0);
+	  setD (r, c, z0 * (p (r, c) + 1.0));
+	}
+	else {
+	  setC (r, c, p (r, c));
+	  setD (r, c, z0 * p (r, c));
+	}
+      }
+    break;
+  }
+}
+
 // Callback for initializing the AC analysis.
 void rfedd::initAC (void) {
-  setVoltageSources (0);
-  allocMatrixMNA ();
-  if (peqn == NULL) initModel ();
+  initMNA ();
+  prepareModel ();
 }
 
 // Callback for AC analysis.
 void rfedd::calcAC (nr_double_t frequency) {
-  char * type = getPropertyString ("Type");
-  switch (type[0]) {
-  case 'Y':
-    setMatrixY (calcMatrix (frequency));
-    break;
-  case 'Z':
-    setMatrixY (ztoy (calcMatrix (frequency)));
-    break;
-  case 'S':
-    setMatrixY (stoy (calcMatrix (frequency)));
-    break;
-  }
+  calcMNA (frequency);
 }
 
 // Computes parameter matrix.
@@ -266,7 +319,7 @@ void rfedd::calcTR (nr_double_t) {
 // Callback for initializing the S-parameter analysis.
 void rfedd::initSP (void) {
   allocMatrixS ();
-  if (peqn == NULL) initModel ();
+  prepareModel ();
 }
 
 // Callback for S-parameter analysis.
