@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.h,v 1.1 2008-02-17 18:05:39 ela Exp $
+ * $Id: rfedd.h,v 1.2 2008-02-20 17:36:59 ela Exp $
  *
  */
 
@@ -48,6 +48,9 @@ class rfedd : public circuit
   nr_complex_t getResult (void *);
   matrix calcMatrix (nr_double_t);
   void updateLocals (nr_double_t);
+  void prepareModel (void);
+  void initMNA (void);
+  void calcMNA (nr_double_t);
 
  private:
   void ** peqn;

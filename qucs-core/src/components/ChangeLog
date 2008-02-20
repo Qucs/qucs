@@ -1,3 +1,9 @@
+2008-02-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd.cpp: Using extended MNA entries for AC analysis when
+	specifying S- or Z-parameters.  Allowing zero-frequency evaluation
+	for DC analysis.
+
 2008-02-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp: Obtaining the real equation variable reference name
