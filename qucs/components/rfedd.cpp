@@ -38,7 +38,7 @@ RFedd::RFedd()
 		QObject::tr("number of ports")));
   Props.append(new Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
-			    " [open, short, unspecified]"));
+			    " [open, short, unspecified, zerofrequency]"));
 
   // last properties
   Props.append(new Property("P11", "0", false,
