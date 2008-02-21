@@ -1,3 +1,7 @@
+2008-02-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd.cpp: Implemented H-, G- and A- parameters.
+
 2008-02-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp: Using extended MNA entries for AC analysis when

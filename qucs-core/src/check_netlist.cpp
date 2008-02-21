@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.120 2008/02/20 17:36:59 ela Exp $
+ * $Id: check_netlist.cpp,v 1.121 2008/02/21 17:56:27 ela Exp $
  *
  */
 
@@ -266,7 +266,7 @@ static struct special_t checker_specials[] = {
   { "Vfile", "Repeat",       { "no", "yes", NULL } },
   { "Ifile", "Interpolator", { "hold", "linear", "cubic", NULL } },
   { "Ifile", "Repeat",       { "no", "yes", NULL } },
-  { "RFEDD", "Type",         { "Y", "Z", "S", NULL } },
+  { "RFEDD", "Type",         { "Y", "Z", "S", "H", "G", "A", NULL } },
   { "RFEDD", "duringDC",     { "open", "short", "unspecified",
 			       "zerofrequency", NULL } },
   { NULL, NULL, { NULL } }
