@@ -1,6 +1,6 @@
 /***************************************************************************
-                               rfedd.cpp
-                              ----------------
+                               rfedd2p.cpp
+                             ----------------
     begin                : Sub Feb 17 2008
     copyright            : (C) 2008 by Stefan Jahn
     email                : stefan@lkcc.org
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rfedd.h"
+#include "rfedd2p.h"
 #include "main.h"
 #include "schematic.h"
 
@@ -24,18 +24,16 @@
 extern QDir QucsWorkDir;
 
 
-RFedd::RFedd()
+RFedd2P::RFedd2P()
 {
-  Description = QObject::tr("equation defined RF device");
+  Description = QObject::tr("equation defined 2-port RF device");
 
-  Model = "RFEDD";
+  Model = "RFEDD2P";
   Name  = "RF";
 
   // first properties !!!
   Props.append(new Property("Type", "Y", false,
-		QObject::tr("type of parameters")+" [Y, Z, S]"));
-  Props.append(new Property("Ports", "2", false,
-		QObject::tr("number of ports")));
+		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A]"));
   Props.append(new Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
@@ -54,25 +52,23 @@ RFedd::RFedd()
 }
 
 // -------------------------------------------------------
-Component* RFedd::newOne()
+Component* RFedd2P::newOne()
 {
-  RFedd* p = new RFedd();
+  RFedd2P* p = new RFedd2P();
   p->Props.at(0)->Value = Props.at(0)->Value;
-  p->Props.at(1)->Value = Props.at(1)->Value;
   p->recreate(0);
   return p;
 }
 
 // -------------------------------------------------------
-Element* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Equation Defined RF Device");
+  Name = QObject::tr("Equation Defined 2-port RF Device");
   BitmapFile = (char *) "rfedd";
 
   if(getNewOne) {
-    RFedd* p = new RFedd();
+    RFedd2P* p = new RFedd2P();
     p->Props.at(0)->Value = "Y";
-    p->Props.at(1)->Value = "2";
     p->recreate(0);
     return p;
   }
@@ -80,9 +76,9 @@ Element* RFedd::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString RFedd::netlist()
+QString RFedd2P::netlist()
 {
-  QString s = Model+":"+Name;
+  QString s = "RFEDD:"+Name;
   QString e = "\n";
   QString n, p;
 
@@ -95,9 +91,9 @@ QString RFedd::netlist()
   p2 = Props.at(0);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
   p = p2->Value;
-  p2 = Props.at(2);
+  p2 = Props.at(1);
   s += " "+p2->Name+"=\""+p2->Value+"\"";
-  p2 = Props.at(3);
+  p2 = Props.at(2);
   while(p2) {
     n = p2->Name.mid(1);
     s += " "+p2->Name+"=\""+Name+"."+p+n+"\"";
@@ -110,74 +106,41 @@ QString RFedd::netlist()
 }
 
 // -------------------------------------------------------
-void RFedd::createSymbol()
+void RFedd2P::createSymbol()
 {
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
   int fHeight = metrics.lineSpacing();
   int w, i;
   QString tmp;
 
-  // adjust port number
-  int No = Props.at(1)->Value.toInt();
-  if(No < 1) No = 1;
-  if(No > 8) No = 8;
-  Props.at(1)->Value = QString::number(No);
-
-  // adjust property number and names
-  int NumProps = Props.count() - 3;
-  if (NumProps < No * No) {
-    for(i = 0; i < NumProps; i++) {
-      tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
-      Props.at(i+3)->Name="P"+tmp;
-      Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
-    }
-    for(i = NumProps; i < No * No; i++) {
-      tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
-      Props.append(new Property("P"+tmp, "0", false,
-		QObject::tr("parameter equation") + " " +tmp));
-    }
-  } else {
-    for(i = No * No; i < NumProps; i++) {
-      Props.removeLast();
-    }
-    for(i = 0; i < No * No; i++) {
-      tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
-      Props.at(i+3)->Name="P"+tmp;
-      Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
-    }
-  }
-
   // draw symbol
   #define HALFWIDTH  17
-  int h = 30*((No-1)/2) + 15;
+  int h = 15;
   Lines.append(new Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(QPen::darkBlue,2)));
 
   i = fHeight/2;
-  tmp = QObject::tr("RF");
+  tmp = Props.at(0)->Value;
   w = metrics.width(tmp);
   Texts.append(new Text(w/-2, -i, tmp));
 
   i = 0;
   int y = 15-h;
-  while(i<No) {
-    Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
-    tmp = QString::number(i+1);
-    w = metrics.width(tmp);
-    Texts.append(new Text(-20-w, y-fHeight-2, tmp));
-    i++;
+  Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(QPen::darkBlue,2)));
+  Ports.append(new Port(-30,  y));
+  tmp = QString::number(i+1);
+  w = metrics.width(tmp);
+  Texts.append(new Text(-20-w, y-fHeight-2, tmp));
+  i++;
 
-    if(i == No) break;
-    Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
-    tmp = QString::number(i+1);
-    Texts.append(new Text( 20, y-fHeight-2, tmp));
-    y += 60;
-    i++;
-  }
+  Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(QPen::darkBlue,2)));
+  Ports.append(new Port( 30,  y));
+  tmp = QString::number(i+1);
+  Texts.append(new Text( 20, y-fHeight-2, tmp));
+  y += 60;
+  i++;
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;

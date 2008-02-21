@@ -48,7 +48,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp             \
   hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp    \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
-  diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp
+  diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 

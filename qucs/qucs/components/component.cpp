@@ -1445,6 +1445,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "SFF") c = new RS_FlipFlop();
 	else if(cstr == "elais") c = new Relais();
 	else if(cstr == "FEDD") c = new RFedd();
+	else if(cstr == "FEDD2P") c = new RFedd2P();
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();
