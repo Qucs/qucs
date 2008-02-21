@@ -1,3 +1,8 @@
+2008-02-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* lineardevices.tex (section{Extended MNA stamping}): Added MNA
+	matrix representations for A-, H- and G-parameters.
+
 2007-12-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* hbanalysis.tex (section{Autonomous Harmonic Balance}): Added new

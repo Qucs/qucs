@@ -1,7 +1,8 @@
 %
 % This document contains the chapter about linear and non-linear devices.
 %
-% Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008
+%               Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2003, 2004, 2005, 2006
 %               Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
@@ -14,18 +15,21 @@
 \chapter{Linear devices}
 \label{sec:Ldevices}
 
-As the MNA matrix is the y-parameter matrix of the whole circuit,
-components that are defined by y-parameters can be easily inserted
-by adding these parameters to the MNA matrix elements (so-called
+As the MNA matrix is the Y-parameter matrix of the whole circuit,
+components that are defined by Y-parameters can be easily inserted by
+adding these parameters to the MNA matrix elements (so-called
 'stamping').
 
-\addvspace{12pt}
+\section{Extended MNA stamping}
 
-Components that cannot be defined by y-parameters need to add
-additional columns and rows to the MNA matrix. Components
-defined by z-parameters can be added in the following way
-(example for a 2-port). It is easily extendable for any port
-number.
+Components that cannot be defined by Y-parameters need to add
+additional columns and rows to the MNA matrix representation.
+
+\subsection{Z-parameters}
+
+Components defined by Z-parameters can be added in the following way
+(example for a 2-port). It is easily extendable for any number of
+ports.
 
 \begin{equation}
 \begin{bmatrix}
@@ -38,8 +42,8 @@ number.
 \begin{bmatrix}
 V_{1}\\
 V_{2}\\
-I_{in}\\
-I_{out}
+J_{1}\\
+J_{2}
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -50,9 +54,11 @@ I_{2}\\
 \end{bmatrix}
 \end{equation}
 
-Components that are characterized by S-parameters (normalized to $Z_0$)
-can be put into the MNA matrix by the following scheme (example for a
-3-port). It is easily extendable for any port number.
+\subsection{S-parameters}
+
+Components that are characterized by S-parameters (normalized to
+$Z_0$) can be put into the MNA matrix by the following scheme (example
+for a 3-port). It is easily extendable for any number of ports.
 
 \begin{equation}
 \label{eqn:Sparam2mna}
@@ -69,9 +75,9 @@ S_{31} &  S_{32} & S_{33}-1 & Z_0\cdot S_{31} & Z_0\cdot S_{32} & Z_0\cdot (S_{3
 V_{1}\\
 V_{2}\\
 V_{3}\\
-I_{I1}\\
-I_{I2}\\
-I_{I3}
+J_{1}\\
+J_{2}\\
+J_{3}
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -84,6 +90,77 @@ I_{3}\\
 \end{bmatrix}
 \end{equation}
 
+\subsection{H-parameters}
+
+According to eqn. \eqref{eq:hparamdef} the MNA matrix for a 2-port
+H-parameter matrix can be written as:
+\begin{equation}
+\begin{bmatrix}
+ . & .  &  1 \\
+ . & H_{22} & H_{21} \\
+-1 & H_{12} & H_{11}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+J_{1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsection{G-parameters}
+
+According to eqn. \eqref{eq:gparamdef} the MNA matrix for a 2-port
+G-parameter matrix can be written as:
+\begin{equation}
+\begin{bmatrix}
+ G_{11} & .  &  G_{12} \\
+ . & . & 1 \\
+ G_{21} & -1 & G_{22}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+J_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsection{A-parameters}
+
+According to eqn. \eqref{eq:aparamdef} the MNA matrix for a 2-port
+A-parameter matrix can be written as:
+\begin{equation}
+\begin{bmatrix}
+ . & A_{21}  &  A_{22} \\
+ . & . & -1 \\
+ -1 & A_{11} & A_{12}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+J_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0
+\end{bmatrix}
+\end{equation}
 
 \section{Resistor}
 
