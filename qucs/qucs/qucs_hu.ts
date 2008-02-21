@@ -5994,6 +5994,14 @@ Digitális szimuláció</translation>
         <source>RF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>equation defined 2-port RF device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation Defined 2-port RF Device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

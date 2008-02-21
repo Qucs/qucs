@@ -128,6 +128,7 @@
 #include "triac.h"
 #include "thyristor.h"
 #include "rfedd.h"
+#include "rfedd2p.h"
 
 #include "hicumL2p1.h"
 #include "HBT_X.h"
