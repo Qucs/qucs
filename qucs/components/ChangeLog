@@ -1,3 +1,8 @@
+2008-02-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd2p.cpp (RFedd2P): Added new 2-port RF-EDD also containing
+	H-, G- and A-parameters.
+
 2008-02-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp (RFedd): Added preliminary implementation of an
