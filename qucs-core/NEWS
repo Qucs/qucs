@@ -26,7 +26,7 @@ files.
 Version 0.0.14
 --------------
 
- * implementation of multi-port equation defined RF device
+ * implementation of multi- and 2-port equation defined RF device
  * new Verilog-A device models: Logarithmic Amplifier, HICUM L0 v1.12,
    Potentiometer
  * added 3- and more argument versions of PlotVs()

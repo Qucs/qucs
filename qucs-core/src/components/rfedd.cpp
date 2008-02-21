@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.4 2008-02-20 17:36:59 ela Exp $
+ * $Id: rfedd.cpp,v 1.5 2008-02-21 17:56:28 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "matrix.h"
 #include "net.h"
 #include "component_id.h"
 #include "equation.h"
@@ -244,6 +245,21 @@ void rfedd::initMNA (void) {
     allocMatrixMNA ();
     for (i = 0; i < ports; i++) setB (i, i, +1);
     break;
+  case 'H':
+    setVoltageSources (1);
+    allocMatrixMNA ();
+    setB (0, 0, +1); setC (0, 0, -1);
+    break;
+  case 'G':
+    setVoltageSources (1);
+    allocMatrixMNA ();
+    setB (1, 0, +1); setC (0, 1, -1);
+    break;
+  case 'A':
+    setVoltageSources (1);
+    allocMatrixMNA ();
+    setB (1, 0, -1); setC (0, 0, -1);
+    break;
   }
 }
 
@@ -273,6 +289,18 @@ void rfedd::calcMNA (nr_double_t frequency) {
 	  setD (r, c, z0 * p (r, c));
 	}
       }
+    break;
+  case 'H':
+    setY (1, 1, p (1, 1)); setB (1, 0, p (1, 0));
+    setC (0, 1, p (0, 1)); setD (0, 0, p (0, 0));
+    break;
+  case 'G':
+    setY (0, 0, p (0, 0)); setB (0, 0, p (0, 1));
+    setC (0, 0, p (1, 0)); setD (0, 0, p (1, 1));
+    break;
+  case 'A':
+    setY (0, 1, p (1, 0)); setB (0, 0, p (1, 1));
+    setC (0, 1, p (0, 0)); setD (0, 0, p (0, 1));
     break;
   }
 }
@@ -325,15 +353,25 @@ void rfedd::initSP (void) {
 // Callback for S-parameter analysis.
 void rfedd::calcSP (nr_double_t frequency) {
   char * type = getPropertyString ("Type");
+  matrix p = calcMatrix (frequency);
   switch (type[0]) {
   case 'Y':
-    setMatrixS (ytos (calcMatrix (frequency)));
+    setMatrixS (ytos (p));
     break;
   case 'Z':
-    setMatrixS (ztos (calcMatrix (frequency)));
+    setMatrixS (ztos (p));
     break;
   case 'S':
-    setMatrixS (calcMatrix (frequency));
+    setMatrixS (p);
+    break;
+  case 'H':
+    setMatrixS (twoport (p, 'H', 'S'));
+    break;
+  case 'G':
+    setMatrixS (twoport (p, 'G', 'S'));
+    break;
+  case 'A':
+    setMatrixS (twoport (p, 'A', 'S'));
     break;
   }
 }
