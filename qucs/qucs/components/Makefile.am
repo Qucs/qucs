@@ -69,7 +69,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h     \
   twistedpair.h bondwire.h hicumL2p1.h HBT_X.h verilogfile.h vexp.h iexp.h    \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
-  diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h
+  diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h rfedd2p.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
