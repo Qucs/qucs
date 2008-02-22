@@ -33,7 +33,7 @@ RFedd2P::RFedd2P()
 
   // first properties !!!
   Props.append(new Property("Type", "Y", false,
-		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A]"));
+		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A, T]"));
   Props.append(new Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
