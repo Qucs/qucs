@@ -162,6 +162,33 @@ I_{2}\\
 \end{bmatrix}
 \end{equation}
 
+\subsection{T-parameters}
+
+According to eqn. \eqref{eq:tparamdef} the MNA matrix for a 2-port
+T-parameter matrix can be written as:
+\begin{equation}
+\begin{bmatrix}
+ . & .  &  1 & 0\\
+ . & .  &  0 & 1\\
+  -1 & T_{12}+T_{11} & -Z_0 & Z_0\cdot (T_{12}-T_{11})\\
+  -1 & T_{22}+T_{21} & +Z_0 & Z_0\cdot (T_{22}-T_{21})
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+J_{1}\\
+J_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
 \section{Resistor}
 
 For DC and AC simulation an ideal resistor with resistance $R$
