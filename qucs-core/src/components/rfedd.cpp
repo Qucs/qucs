@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.5 2008-02-21 17:56:28 ela Exp $
+ * $Id: rfedd.cpp,v 1.6 2008-02-22 16:55:19 ela Exp $
  *
  */
 
@@ -260,6 +260,12 @@ void rfedd::initMNA (void) {
     allocMatrixMNA ();
     setB (1, 0, -1); setC (0, 0, -1);
     break;
+  case 'T':
+    setVoltageSources (2);
+    allocMatrixMNA ();
+    setB (0, 0, +1); setB (1, 1, +1);
+    setC (0, 0, -1); setC (1, 0, -1);
+    break;
   }
 }
 
@@ -301,6 +307,14 @@ void rfedd::calcMNA (nr_double_t frequency) {
   case 'A':
     setY (0, 1, p (1, 0)); setB (0, 0, p (1, 1));
     setC (0, 1, p (0, 0)); setD (0, 0, p (0, 1));
+    break;
+  case 'T':
+    setC (0, 1, p (0, 1) + p (0, 0));
+    setC (1, 1, p (1, 1) + p (1, 0));
+    setD (0, 0, -z0);
+    setD (1, 0, +z0);
+    setD (0, 1, z0 * (p (0, 1) - p (0, 0)));
+    setD (1, 1, z0 * (p (1, 1) - p (1, 0)));
     break;
   }
 }
@@ -372,6 +386,9 @@ void rfedd::calcSP (nr_double_t frequency) {
     break;
   case 'A':
     setMatrixS (twoport (p, 'A', 'S'));
+    break;
+  case 'T':
+    setMatrixS (twoport (p, 'T', 'S'));
     break;
   }
 }

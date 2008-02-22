@@ -1,3 +1,7 @@
+2008-02-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* rfedd.cpp: Implemented T-parameters.
+
 2008-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp: Implemented H-, G- and A- parameters.
