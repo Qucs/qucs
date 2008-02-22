@@ -1,7 +1,7 @@
 #
 # src/components/microstrip/libmicrostrip.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ LIBS =
 LDFLAGS = 
 
 # Include paths.
-INCLUDES = -I.. -I../.. -I../../.. -I../devices
+INCLUDES = -I.. -I../.. -I../../.. -I../devices -I../../math
 
 # Preprocessor flags.
 DEFS = 
