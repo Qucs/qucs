@@ -39,7 +39,7 @@ LIBS =
 LDFLAGS = 
 
 # Include paths.
-INCLUDES = -I.. -I../.. -I../../.. -I../devices
+INCLUDES = -I.. -I../.. -I../../.. -I../devices -I../../math
 
 # Preprocessor flags.
 DEFS = 

@@ -1,7 +1,7 @@
 #
 # src/qucsator.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,14 +33,15 @@ SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp          \
 	range.cpp devstates.cpp differentiate.cpp
 
 # Additional libraries.
-LIBS = -lqucsator -lcomponent -lmicrostrip -ldevices -ldigital -lverilog
+LIBS = -lqucsator -lcomponent -lmicrostrip -ldevices -ldigital -lverilog \
+	-lqucsmath
 
 # Linker flags.
 LDFLAGS = -Lcomponents -Lcomponents/microstrip -Lcomponents/devices \
-	-Lcomponents/digital -Lcomponents/verilog -L.
+	-Lcomponents/digital -Lcomponents/verilog -Lmath -L.
 
 # Include paths.
-INCLUDES = -I. -I.. -Icomponents
+INCLUDES = -I. -I.. -Icomponents -Imath
 
 # Preprocessor flags.
 DEFS = 

@@ -1,7 +1,7 @@
 #
-# qucscore.ap - Autodsp input file.
+# src/math/libqucsmath.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,17 +20,23 @@
 #
 
 OWNER = <4>
-TARGET_TYPE = Project
+TARGET_TYPE = Static Lib
+NAME = libqucsmath
 
-# List all projects here.
-PROJECTS = \
-	src/converter/qucsconv src/qucsator src/components/libcomponent  \
-	src/components/microstrip/libmicrostrip src/libqucsator \
-	src/components/devices/libdevices src/components/digital/libdigital \
-	src/components/verilog/libverilog src/math/libqucsmath
+# List all sources here.
+SOURCES = complex.cpp cmplx.cpp fspecial.cpp real.cpp cbesselj.cpp precision.c
 
-# Notify dependencies.
-qucsator_DEPENDENCIES = libqucsator libcomponent libmicrostrip libdevices \
-	libdigital libverilog libqucsmath
+# Additional libraries.
+LIBS = 
 
-qucsconv_DEPENDENCIES = libqucsator libqucsmath
+# Linker flags.
+LDFLAGS = 
+
+# Include paths.
+INCLUDES = -I.. -I../..
+
+# Preprocessor flags.
+DEFS = 
+
+# Extra debug preprocessor flags.
+dbg_DEFS = -DDEBUG
