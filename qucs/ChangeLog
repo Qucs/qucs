@@ -1,3 +1,8 @@
+2008-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* viewpainter.cpp, schematic.cpp: Fixed printing (font sizes)
+	under Win32 using some work-arounds.
+
 2008-02-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdigi: Using libtool instead of freehdl-libtool for linking
