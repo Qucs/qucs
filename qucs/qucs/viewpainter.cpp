@@ -45,6 +45,9 @@ void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int
   QFont f = p->font();
   if(FontScale == 0.0)
     FontScale = Scale;
+#ifdef __MINGW32__
+  FontScale = Scale;
+#endif
   f.setPointSizeFloat( FontScale * float(f.pointSize()) );
   p->setFont(f);
   LineSpacing = p->fontMetrics().lineSpacing();
@@ -321,13 +324,18 @@ int ViewPainter::drawTextMapped(const QString& Text, int x1, int y1,
         while (!Text[i+len].isNull() && Text[i+len].latin1() != '}') len++;
       }
 
+#ifdef __MINGW32__
+      float scale = 1.0;
+#else
+      float scale = PrintScale;
+#endif
       QFont fbak = Painter->font();
       QFont f = Painter->font();
       f.setPointSizeFloat(f.pointSizeFloat()*0.8);
       Painter->setFont(f);
       Painter->drawText(x1+x,
 			y1+y + (is_sub ? +0.6 : -0.3) *
-			fbak.pointSizeFloat() * PrintScale,
+			fbak.pointSizeFloat() * scale,
 			0, 0, Qt::DontClip,
 			Text.mid(i, len ? len : 1), -1, &r);
       Painter->setFont(fbak);
