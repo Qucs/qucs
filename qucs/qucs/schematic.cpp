@@ -504,10 +504,11 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
     if(UsedY1 > 0)  StartY = 0;
   }
 
+  float PrintRatio = printerDpiX / screenDpiX;
   QFont oldFont = Painter->font();
-  p.init(Painter, PrintScale * printerDpiX / screenDpiX,
+  p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY,
-	 PrintScale, printerDpiX / screenDpiX);
+	 PrintScale, PrintRatio);
 
   if(!symbolMode)
     paintFrame(&p);
@@ -516,7 +517,11 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
     if(pc->isSelected || printAll) {
       selected = pc->isSelected;
       pc->isSelected = false;
+#ifdef __MINGW32__
+      pc->print(&p, 1.0);
+#else
       pc->print(&p, screenDpiX / printerDpiX);
+#endif
       pc->isSelected = selected;
     }
 
