@@ -1263,6 +1263,11 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "--";
   stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
 
+  // set timescale property for verilog schematics
+  if (isVerilog) {
+    stream << "\n`timescale 1ps/100fs\n";
+  }
+
   int countInit = 0;  // counts the nodesets to give them unique names
   if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
     return -10;
@@ -1270,9 +1275,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   if(allTypes & isAnalogComponent)
     return NumPorts;
 
-  if (isVerilog) {
-    stream << "`timescale 1ps/100fs\n";
-  } else {
+  if (!isVerilog) {
     stream << VHDL_LIBRARIES;
     stream << "entity TestBench is\n"
 	   << "end entity;\n"

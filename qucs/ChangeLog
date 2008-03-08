@@ -1,3 +1,9 @@
+2008-03-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (prepareNetlist): Fixed bug occuring with
+	verilog-hdl subcircuits including delays (timescale must be set
+	previously).
+
 2008-03-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* viewpainter.cpp, schematic.cpp: Fixed printing (font sizes)
