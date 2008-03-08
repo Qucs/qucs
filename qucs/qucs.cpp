@@ -147,6 +147,7 @@ QucsApp::QucsApp()
 #if defined (QT_VERSION) && QT_VERSION > 0x030200
   Printer->setOptionEnabled(QPrinter::PrintSelection, true);
   Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
+  Printer->setOptionEnabled(QPrinter::PrintToFile, true);
 #endif
   Printer->setColorMode(QPrinter::Color);
   Printer->setFullPage(true);
@@ -1543,10 +1544,12 @@ void QucsApp::printCurrentDocument(bool fitToPage)
   else
     Printer->setOrientation(QPrinter::Landscape);
 
+  //Printer->setPrintRange(QPrinter::AllPages);
+
   if(Printer->setup(this)) {   // printer dialog
 
     QPainter Painter(Printer);
-    if(!Painter.device())   // valid device available ?
+    if(!Painter.device())      // valid device available ?
       goto Error;
 
     for(int z=Printer->numCopies(); z>0 ; z--) {
