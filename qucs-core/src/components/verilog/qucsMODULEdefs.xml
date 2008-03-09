@@ -61,6 +61,14 @@
   <admst:text format=")"/>
 </admst:template>
   
+<admst:template match=":string">
+  <admst:text format="&quot;%(value)&quot;"/>
+</admst:template>
+
+<admst:template match=":variable">
+  <admst:text format="&quot;%(name)&quot;"/>
+</admst:template>
+
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
 <!-- definition of variables -->

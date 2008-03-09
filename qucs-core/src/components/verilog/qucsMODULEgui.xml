@@ -61,6 +61,10 @@
   <admst:text format=")"/>
 </admst:template>
 
+<admst:template match=":string">
+  <admst:value-of select="name"/>%s
+</admst:template>
+
 <admst:template match=":variable">
   <admst:value-of select="name"/>%s
 </admst:template>
