@@ -51,14 +51,12 @@
 </admst:template>
 
 <admst:template match=":mapply_unary">
-  <admst:text format="("/>
   <admst:if test="[name='plus']"> <admst:text format="+"/> </admst:if>
   <admst:if test="[name='minus']"> <admst:text format="-"/> </admst:if>
   <admst:if test="[name='not']"> <admst:text format="!"/> </admst:if>
   <admst:if test="[name='bw_not']"> <admst:text format="~"/> </admst:if>
   <admst:value-of select="arg1/adms/datatypename"/>	
   <admst:apply-templates select="arg1" match=":%s" required="yes"/>
-  <admst:text format=")"/>
 </admst:template>
   
 <admst:template match=":string">
