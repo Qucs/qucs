@@ -1,3 +1,8 @@
+2008-03-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEgui.xml, qucsMODULEdefs.xml: Skipping surrounding
+	brackets for unary expressions in property values.
+
 2008-02-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsMODULEgui.xml: Fixed notation of number suffixes for some
