@@ -45,6 +45,13 @@ class transline {
   virtual void synthesize () { };
   virtual void analyze () { };
 
+ protected:
+  double f;			/* Frequency of operation */
+  double sigma;			/* Conductivity of the metal */
+  double mur;			/* mag. permeability */
+  double skindepth;		/* Skin depth */
+  double skin_depth();
+
  private:
   QucsTranscalc * app;
 };

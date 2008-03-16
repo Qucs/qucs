@@ -800,7 +800,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Tillgängliha transmissionsledningstyper är: mikrostrip, rektangulär vågledare, koaxialledning och kopplade mikrostrip.</translation>
+        <translation type="obsolete">Tillgängliha transmissionsledningstyper är: mikrostrip, rektangulär vågledare, koaxialledning och kopplade mikrostrip.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10394,7 +10394,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikrostrip</translation>
+        <translation type="obsolete">Mikrostrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -10670,6 +10670,24 @@ open files with an appropriate program.</source>
     <message>
         <source>Transmission line type not available.</source>
         <translation>Transmissionsledningstyp ej tillgänglig.</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikrostripledning</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2008 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>

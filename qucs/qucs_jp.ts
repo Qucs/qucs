@@ -847,7 +847,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>有効なトランスミッションラインは: マイクロストリップ, 導波管, 同軸線路, カップルドマイクロストリップです。</translation>
+        <translation type="obsolete">有効なトランスミッションラインは: マイクロストリップ, 導波管, 同軸線路, カップルドマイクロストリップです。</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10467,7 +10467,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>マイクロストリップ</translation>
+        <translation type="obsolete">マイクロストリップ</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -10740,6 +10740,23 @@ open files with an appropriate program.</source>
     <message>
         <source>ErEff Odd</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">マイクロストリップライン</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf</translation>
     </message>
 </context>
 <context>

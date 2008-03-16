@@ -1,3 +1,12 @@
+2008-03-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucstrans.cpp (slotCopyToClipBoard): Added clipboard copy for
+	new coplanar line types.
+
+2008-02-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* added new lines: coplanar with and without backside metal
+
 2006-10-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* coax.cpp (synthesize): Fixed synthesis equations for coax

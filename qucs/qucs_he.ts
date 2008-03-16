@@ -823,10 +823,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dismiss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10265,10 +10261,6 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Microstrip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rectangular Waveguide</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10539,6 +10531,24 @@ open files with an appropriate program.</source>
     <message>
         <source>ErEff Odd</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">קו microstrip</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>

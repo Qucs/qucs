@@ -58,6 +58,7 @@ static double conv_ang[2][2] = {
 /* Constructor creates a transmission line instance. */
 transline::transline () {
   app = 0;
+  mur = 1.0;
 }
 
 /* Destructor destroys a transmission line instance. */
@@ -173,4 +174,14 @@ int transline::translateUnit (char * text) {
   else if (!strcmp (text, "Deg"))  return ANG_DEG;
   else if (!strcmp (text, "Rad"))  return ANG_RAD;
   return -1;
+}
+
+/*
+ * skin_depth - calculate skin depth
+ */
+double transline::skin_depth()
+{
+  double depth;
+  depth = 1.0 / (sqrt(M_PI * f * mur * MU0 * sigma));
+  return depth;
 }

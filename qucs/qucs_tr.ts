@@ -796,7 +796,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Kullanılabilecek iletim hatları: Mikrostrip, Dik Dörtgen Dalga kılavuzu, Eşeksenli Hat ve Çiftlenmiş Mikrostrip.</translation>
+        <translation type="obsolete">Kullanılabilecek iletim hatları: Mikrostrip, Dik Dörtgen Dalga kılavuzu, Eşeksenli Hat ve Çiftlenmiş Mikrostrip.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10407,7 +10407,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikrostrip</translation>
+        <translation type="obsolete">Mikrostrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -10684,6 +10684,24 @@ uygun bir uygulama ile açılabilsinler.</translation>
     <message>
         <source>Transmission line type not available.</source>
         <translation>İletim hattı çeşidi kullanılabilir değil.</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikrostrip Hat</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Çoğaltma hakkı/Telif (Ç) 2008, Michael Margraf
+</translation>
     </message>
 </context>
 <context>
