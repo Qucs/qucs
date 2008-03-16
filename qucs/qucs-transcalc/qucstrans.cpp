@@ -57,6 +57,7 @@
 #include "transline.h"
 #include "units.h"
 #include "microstrip.h"
+#include "coplanar.h"
 #include "coax.h"
 #include "rectwaveguide.h"
 #include "c_microstrip.h"
@@ -75,7 +76,7 @@ static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
 
 // Defines the available transmission line types.
 struct TransType TransLineTypes[] = {
-  { ModeMicrostrip, "Microstrip", NULL,
+  { ModeMicrostrip, "Microstrip", "microstrip.png", NULL,
     { { {
       { "Er",    2.94,  NULL, TRANS_NONES,   0, TRANS_QOBJS },
       { "Mur",   1,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
@@ -103,7 +104,59 @@ struct TransType TransLineTypes[] = {
     } } },
     4, TRANS_RESULTS, TRANS_RADIOS
   },
-  { ModeRectangular, "Rectangular", NULL,
+  { ModeCoplanar, "Coplanar", "cpw.png", NULL,
+    { { {
+      { "Er",    2.94,  NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "H",     10,    NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "T",     0.1,   NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "Cond",  4.1e7, NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Tand",  0,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "Freq",  1, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "W",     10,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "S",      5,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     100, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
+      TRANS_END
+    } } },
+    4, TRANS_RESULTS, { 1, 0, -1, -1 }
+  },
+  { ModeGroundedCoplanar, "GroundedCoplanar", "cpw_back.png", NULL,
+    { { {
+      { "Er",    2.94,  NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "H",     10,    NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "T",     0.1,   NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "Cond",  4.1e7, NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Tand",  0,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "Freq",  1, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "W",     10,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "S",      5,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     100, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      TRANS_END
+    } },
+    { {
+      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
+      TRANS_END
+    } } },
+    4, TRANS_RESULTS, { 1, 0, -1, -1 }
+  },
+  { ModeRectangular, "Rectangular", "rectwaveguide.png", NULL,
     { { {
       { "Er",    1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
       { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
@@ -129,7 +182,7 @@ struct TransType TransLineTypes[] = {
     } } },
     3, TRANS_RESULTS, { 0, 1, -1, -1 }
   },
-  { ModeCoaxial, "Coaxial", NULL,
+  { ModeCoaxial, "Coaxial", "coax.png", NULL,
     { { {
       { "Er",    2.1,   NULL, TRANS_NONES, 0, TRANS_QOBJS },
       { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
@@ -154,7 +207,7 @@ struct TransType TransLineTypes[] = {
     } } },
     2, TRANS_RESULTS, { 0, 1, -1, -1 }
   },
-  { ModeCoupledMicrostrip, "CoupledMicrostrip", NULL,
+  { ModeCoupledMicrostrip, "CoupledMicrostrip", "c_microstrip.png", NULL,
     { { {
       { "Er",    4.3,   NULL, TRANS_NONES,   0, TRANS_QOBJS },
       { "Mur",   1,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
@@ -184,7 +237,7 @@ struct TransType TransLineTypes[] = {
     } } },
     7, TRANS_RESULTS, TRANS_RADIOS
   },
-  { ModeNone, NULL, NULL, { { { TRANS_END } } }, 0,
+  { ModeNone, NULL, NULL, NULL, { { { TRANS_END } } }, 0,
     TRANS_RESULTS, TRANS_RADIOS }
 };
 
@@ -279,7 +332,9 @@ QucsTranscalc::QucsTranscalc() {
   // transmission line type choice
   QVGroupBox * lineGroup = new QVGroupBox (tr("Transmission Line Type"), h);
   tranType = new QComboBox (lineGroup);
-  tranType->insertItem (tr("Microstrip"));
+  tranType->insertItem (tr("Microstrip Line"));
+  tranType->insertItem (tr("Coplanar Waveguide"));
+  tranType->insertItem (tr("Grounded Coplanar"));
   tranType->insertItem (tr("Rectangular Waveguide"));
   tranType->insertItem (tr("Coaxial Line"));
   tranType->insertItem (tr("Coupled Microstrip"));
@@ -346,12 +401,16 @@ QucsTranscalc::QucsTranscalc() {
   // intantiate transmission lines
   TransLineTypes[0].line = new microstrip ();
   TransLineTypes[0].line->setApplication (this);
-  TransLineTypes[1].line = new rectwaveguide ();
+  TransLineTypes[1].line = new coplanar ();
   TransLineTypes[1].line->setApplication (this);
-  TransLineTypes[2].line = new coax ();
+  TransLineTypes[2].line = new groundedCoplanar ();
   TransLineTypes[2].line->setApplication (this);
-  TransLineTypes[3].line = new c_microstrip ();
+  TransLineTypes[3].line = new rectwaveguide ();
   TransLineTypes[3].line->setApplication (this);
+  TransLineTypes[4].line = new coax ();
+  TransLineTypes[4].line->setApplication (this);
+  TransLineTypes[5].line = new c_microstrip ();
+  TransLineTypes[5].line->setApplication (this);
 }
 
 /* Destructor destroys the application. */
@@ -367,29 +426,45 @@ QucsTranscalc::~QucsTranscalc()
    structures. */
 void QucsTranscalc::setupTranslations () {
   // calculated results
-  TransLineTypes[0].result[0].name = new QString(tr("ErEff"));
-  TransLineTypes[0].result[1].name = new QString(tr("Conductor Losses"));
-  TransLineTypes[0].result[2].name = new QString(tr("Dielectric Losses"));
-  TransLineTypes[0].result[3].name = new QString(tr("Skin Depth"));
+  int i = 0;
+  TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
+  TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  TransLineTypes[1].result[0].name = new QString(tr("ErEff"));
-  TransLineTypes[1].result[1].name = new QString(tr("Conductor Losses"));
-  TransLineTypes[1].result[2].name = new QString(tr("Dielectric Losses"));
-  TransLineTypes[1].result[3].name = new QString(tr("TE-Modes"));
-  TransLineTypes[1].result[4].name = new QString(tr("TM-Modes"));
+  i++;
+  TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
+  TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  TransLineTypes[2].result[0].name = new QString(tr("Conductor Losses"));
-  TransLineTypes[2].result[1].name = new QString(tr("Dielectric Losses"));
-  TransLineTypes[2].result[2].name = new QString(tr("TE-Modes"));
-  TransLineTypes[2].result[3].name = new QString(tr("TM-Modes"));
+  i++;
+  TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
+  TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
 
-  TransLineTypes[3].result[0].name = new QString(tr("ErEff Even"));
-  TransLineTypes[3].result[1].name = new QString(tr("ErEff Odd"));
-  TransLineTypes[3].result[2].name = new QString(tr("Conductor Losses Even"));
-  TransLineTypes[3].result[3].name = new QString(tr("Conductor Losses Odd"));
-  TransLineTypes[3].result[4].name = new QString(tr("Dielectric Losses Even"));
-  TransLineTypes[3].result[5].name = new QString(tr("Dielectric Losses Odd"));
-  TransLineTypes[3].result[6].name = new QString(tr("Skin Depth"));
+  i++;
+  TransLineTypes[i].result[0].name = new QString(tr("ErEff"));
+  TransLineTypes[i].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[i].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[i].result[3].name = new QString(tr("TE-Modes"));
+  TransLineTypes[i].result[4].name = new QString(tr("TM-Modes"));
+
+  i++;
+  TransLineTypes[i].result[0].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[i].result[1].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[i].result[2].name = new QString(tr("TE-Modes"));
+  TransLineTypes[i].result[3].name = new QString(tr("TM-Modes"));
+
+  i++;
+  TransLineTypes[i].result[0].name = new QString(tr("ErEff Even"));
+  TransLineTypes[i].result[1].name = new QString(tr("ErEff Odd"));
+  TransLineTypes[i].result[2].name = new QString(tr("Conductor Losses Even"));
+  TransLineTypes[i].result[3].name = new QString(tr("Conductor Losses Odd"));
+  TransLineTypes[i].result[4].name = new QString(tr("Dielectric Losses Even"));
+  TransLineTypes[i].result[5].name = new QString(tr("Dielectric Losses Odd"));
+  TransLineTypes[i].result[6].name = new QString(tr("Skin Depth"));
 
   // extra tool tips
   struct TransType * t = TransLineTypes;
@@ -404,6 +479,32 @@ void QucsTranscalc::setupTranslations () {
   t->array[1].item[0].tip = new QString(tr("Frequency"));
   t->array[2].item[0].tip = new QString(tr("Line Width"));
   t->array[2].item[1].tip = new QString(tr("Line Length"));
+  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
+
+  t++;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Height of Substrate"));
+  t->array[0].item[2].tip = new QString(tr("Strip Thickness"));
+  t->array[0].item[3].tip = new QString(tr("Strip Conductivity"));
+  t->array[0].item[4].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Line Width"));
+  t->array[2].item[1].tip = new QString(tr("Gap Width"));
+  t->array[2].item[2].tip = new QString(tr("Line Length"));
+  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
+
+  t++;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Height of Substrate"));
+  t->array[0].item[2].tip = new QString(tr("Strip Thickness"));
+  t->array[0].item[3].tip = new QString(tr("Strip Conductivity"));
+  t->array[0].item[4].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Line Width"));
+  t->array[2].item[1].tip = new QString(tr("Gap Width"));
+  t->array[2].item[2].tip = new QString(tr("Line Length"));
   t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
   t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
@@ -821,6 +922,7 @@ void QucsTranscalc::slotAbout()
     tr("Copyright (C) 2001 by Gopal Narayanan\n")+
     tr("Copyright (C) 2002 by Claudio Girardi\n")+
     tr("Copyright (C) 2005 by Stefan Jahn\n")+
+    tr("Copyright (C) 2008 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.");
@@ -852,30 +954,9 @@ void QucsTranscalc::closeEvent(QCloseEvent *Event)
 
 void QucsTranscalc::slotSelectType (int Type)
 {
-  int _mode = mode;
-  switch (Type) {
-  case 0:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "microstrip.png")));
-    _mode = ModeMicrostrip;
-    break;
-  case 1:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "rectwaveguide.png")));
-    _mode = ModeRectangular;
-    break;
-  case 2:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "coax.png")));
-    _mode = ModeCoaxial;
-    break;
-  case 3:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "c_microstrip.png")));
-    _mode = ModeCoupledMicrostrip;
-    break;
-  }
-  setMode (_mode);
+  pix->setPixmap (QPixmap (QImage (
+       QucsSettings.BitmapDir + QString(TransLineTypes[Type].bitmap))));
+  setMode (Type);
   statBar->message(tr("Ready."));
 }
 
@@ -1065,30 +1146,9 @@ void QucsTranscalc::setMode (QString _mode) {
 
 // Updates the combobox and pixmap for the current mode.
 void QucsTranscalc::updatePixmap (int _mode) {
-  int i = 0;
-  switch (_mode) {
-  case ModeMicrostrip:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "microstrip.png")));
-    i = 0;
-    break;
-  case ModeRectangular:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "rectwaveguide.png")));
-    i = 1;
-    break;
-  case ModeCoaxial:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "coax.png")));
-    i = 2;
-    break;
-  case ModeCoupledMicrostrip:
-    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
-				     "c_microstrip.png")));
-    i = 3;
-    break;
-  }
-  tranType->setCurrentItem(i);
+  pix->setPixmap (QPixmap (QImage (
+       QucsSettings.BitmapDir + QString(TransLineTypes[_mode].bitmap))));
+  tranType->setCurrentItem(_mode);
 }
 
 void QucsTranscalc::slotHelpIntro()
@@ -1133,7 +1193,7 @@ void QucsTranscalc::slotCopyToClipBoard()
 
   // create microstrip schematic
   if (mode == ModeMicrostrip) {
-    transline * l = TransLineTypes[0].line;
+    transline * l = TransLineTypes[ModeMicrostrip].line;
     s += "<Components>\n";
     s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
     s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
@@ -1170,7 +1230,7 @@ void QucsTranscalc::slotCopyToClipBoard()
 
   // create coupled microstrip schematic
   else if (mode == ModeCoupledMicrostrip) {
-    transline * l = TransLineTypes[3].line;
+    transline * l = TransLineTypes[ModeCoupledMicrostrip].line;
     s += "<Components>\n";
     s += "  <Pac P1 1 100 130 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
     s += "  <Pac P2 1 320 130 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
@@ -1214,8 +1274,8 @@ void QucsTranscalc::slotCopyToClipBoard()
   }
 
   // create coaxial line schematic
-  if (mode == ModeCoaxial) {
-    transline * l = TransLineTypes[2].line;
+  else if (mode == ModeCoaxial) {
+    transline * l = TransLineTypes[ModeCoaxial].line;
     s += "<Components>\n";
     s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
     s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
@@ -1237,6 +1297,80 @@ void QucsTranscalc::slotCopyToClipBoard()
       arg(l->getProperty("din", UNIT_LENGTH, LENGTH_MM)).
       arg(l->getProperty("L", UNIT_LENGTH, LENGTH_MM)).
       arg(l->getProperty("Tand"));
+    s += "</Components>\n";
+    s += "<Wires>\n";
+    s += "  <90 100 150 100 \"\" 0 0 0 \"\">\n";
+    s += "  <90 100 90 120 \"\" 0 0 0 \"\">\n";
+    s += "  <210 100 270 100 \"\" 0 0 0 \"\">\n";
+    s += "  <270 100 270 120 \"\" 0 0 0 \"\">\n";
+    s += "</Wires>\n";
+    created++;
+  }
+
+  // create coplanar schematic
+  else if (mode == ModeCoplanar) {
+    transline * l = TransLineTypes[ModeCoplanar].line;
+    s += "<Components>\n";
+    s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <GND * 1 90 180 0 0 0 0>\n";
+    s += "  <GND * 1 270 180 0 0 0 0>\n";
+    s += QString("  <SUBST SubstTC1 1 390 140 -30 24 0 0 \"%1\" 1 \"%2 mm\" 1 \"%3 um\" 1 \"%4\" 1 \"%5\" 1 \"0\" 1>\n").
+      arg(l->getProperty("Er")).
+      arg(l->getProperty("H", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("T", UNIT_LENGTH, LENGTH_UM)).
+      arg(l->getProperty("Tand")).
+      arg(1 / l->getProperty("Cond"));
+    s += "  <.SP SPTC1 1 90 240 0 51 0 0 ";
+    double freq = l->getProperty("Freq", UNIT_FREQ, FREQ_GHZ);
+    if (freq > 0)
+      s += QString("\"log\" 1 \"%1 GHz\" 1 \"%2 GHz\" 1 ").
+	arg(freq / 10).arg(freq * 10);
+    else
+      s += "\"lin\" 1 \"0 GHz\" 1 \"10 GHz\" 1 ";
+    s += "\"51\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+    s += QString("  <CLIN CLTC1 1 180 100 -26 25 0 0 \"SubstTC1\" 1 \"%1 mm\" 1 \"%2 mm\" 1 \"%3 mm\" 1 \"Air\" 1 \"yes\" 0>\n").
+      arg(l->getProperty("W", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("S", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("L", UNIT_LENGTH, LENGTH_MM));
+    s += "  <Eqn EqnTC1 1 240 260 -23 12 0 0 \"A=twoport(S,'S','A')\" 1 \"ZL=real(sqrt(A[1,2]/A[2,1]))\" 1 \"yes\" 0>\n"; 
+    s += "</Components>\n";
+    s += "<Wires>\n";
+    s += "  <90 100 150 100 \"\" 0 0 0 \"\">\n";
+    s += "  <90 100 90 120 \"\" 0 0 0 \"\">\n";
+    s += "  <210 100 270 100 \"\" 0 0 0 \"\">\n";
+    s += "  <270 100 270 120 \"\" 0 0 0 \"\">\n";
+    s += "</Wires>\n";
+    created++;
+  }
+
+  // create coplanar schematic
+  else if (mode == ModeGroundedCoplanar) {
+    transline * l = TransLineTypes[ModeGroundedCoplanar].line;
+    s += "<Components>\n";
+    s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <GND * 1 90 180 0 0 0 0>\n";
+    s += "  <GND * 1 270 180 0 0 0 0>\n";
+    s += QString("  <SUBST SubstTC1 1 390 140 -30 24 0 0 \"%1\" 1 \"%2 mm\" 1 \"%3 um\" 1 \"%4\" 1 \"%5\" 1 \"0\" 1>\n").
+      arg(l->getProperty("Er")).
+      arg(l->getProperty("H", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("T", UNIT_LENGTH, LENGTH_UM)).
+      arg(l->getProperty("Tand")).
+      arg(1 / l->getProperty("Cond"));
+    s += "  <.SP SPTC1 1 90 240 0 51 0 0 ";
+    double freq = l->getProperty("Freq", UNIT_FREQ, FREQ_GHZ);
+    if (freq > 0)
+      s += QString("\"log\" 1 \"%1 GHz\" 1 \"%2 GHz\" 1 ").
+	arg(freq / 10).arg(freq * 10);
+    else
+      s += "\"lin\" 1 \"0 GHz\" 1 \"10 GHz\" 1 ";
+    s += "\"51\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+    s += QString("  <CLIN CLTC1 1 180 100 -26 25 0 0 \"SubstTC1\" 1 \"%1 mm\" 1 \"%2 mm\" 1 \"%3 mm\" 1 \"Metal\" 1 \"yes\" 0>\n").
+      arg(l->getProperty("W", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("S", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("L", UNIT_LENGTH, LENGTH_MM));
+    s += "  <Eqn EqnTC1 1 240 260 -23 12 0 0 \"A=twoport(S,'S','A')\" 1 \"ZL=real(sqrt(A[1,2]/A[2,1]))\" 1 \"yes\" 0>\n"; 
     s += "</Components>\n";
     s += "<Wires>\n";
     s += "  <90 100 150 100 \"\" 0 0 0 \"\">\n";

@@ -907,7 +907,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Die verfügbaren Leitungsarten sind: Mikrostreifenleitung, Hohlleiter, Koaxialkabel und gekoppelte Mikrostreifen.</translation>
+        <translation type="obsolete">Die verfügbaren Leitungsarten sind: Mikrostreifenleitung, Hohlleiter, Koaxialkabel und gekoppelte Mikrostreifen.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -12760,7 +12760,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikrostreifenleitung</translation>
+        <translation type="obsolete">Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -13037,6 +13037,25 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation>Effektives Er Gegentakt</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikrostreifenleitung</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 von Michael Margraf
+
+</translation>
     </message>
 </context>
 <context>

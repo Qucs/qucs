@@ -848,7 +848,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Lehetséges átviteli vonalak: Mikroszalag, Négyszögjel, Coax vonal és Páros Mikroszalag.</translation>
+        <translation type="obsolete">Lehetséges átviteli vonalak: Mikroszalag, Négyszögjel, Coax vonal és Páros Mikroszalag.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10795,7 +10795,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikrosztrip</translation>
+        <translation type="obsolete">Mikrosztrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -11077,6 +11077,24 @@ a fájlt a megfelelő program nyissa meg.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikrosztrip Vonal</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>

@@ -907,7 +907,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Имеющиеся линии передачи: микрополосковая, прямоугольный волновод, коаксиальная линия и связанные микрополосковые линии.</translation>
+        <translation type="obsolete">Имеющиеся линии передачи: микрополосковая, прямоугольный волновод, коаксиальная линия и связанные микрополосковые линии.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -12741,7 +12741,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Микрополосковая линия</translation>
+        <translation type="obsolete">Микрополосковая линия</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -13018,6 +13018,25 @@ open files with an appropriate program.</source>
     <message>
         <source>ErEff Odd</source>
         <translation>Эффективная Er для нечетной моды</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 Michael Margraf
+
+</translation>
     </message>
 </context>
 <context>

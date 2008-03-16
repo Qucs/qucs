@@ -911,7 +911,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Le linee di trasmissione disponibili sono: Microstrip, Guida d&apos;onda rettangolare  Linea Coassiale and Microstrip accoppiate.</translation>
+        <translation type="obsolete">Le linee di trasmissione disponibili sono: Microstrip, Guida d&apos;onda rettangolare  Linea Coassiale and Microstrip accoppiate.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -11239,7 +11239,7 @@ fine di aprirli utilizzando il programma appropriato.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Microstrip</translation>
+        <translation type="obsolete">Microstrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -11516,6 +11516,24 @@ fine di aprirli utilizzando il programma appropriato.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation>ErEff Dispari</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Linea Microstrip</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>

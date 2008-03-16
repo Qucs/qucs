@@ -33,14 +33,11 @@ class microstrip : public transline {
 
  private:
   double er;			/* dielectric constant */
-  double mur;			/* mag. permeability */
   double h;			/* height of substrate */
   double ht;			/* height to the top of box */
   double t;			/* thickness of top metal */
-  double sigma;			/* Conductivity of the metal */
   double tand;			/* Dielectric Loss Tangent */
   double rough;			/* Roughness of top metal */
-  double f;			/* Frequency of operation */
   double w;			/* width of line */
   double l;			/* length of line */
   double Z0_0;			/* static characteristic impedance */
@@ -52,7 +49,6 @@ class microstrip : public transline {
   double w_eff;			/* Effective width of line */
   double atten_dielectric;	/* Loss in dielectric (dB) */
   double atten_cond;		/* Loss in conductors (dB) */
-  double skindepth;		/* Skin depth in mils */
 
   /* private params */
   double Z0_h_1;		/* homogeneous stripline impedance */
@@ -68,7 +64,6 @@ class microstrip : public transline {
   double alpha_dielectric();
   double char_impedance_ht();
   double synth_width();
-  double skin_depth();
   double ereff_dispersion();
   double Z0_dispersion();
   double Z0_homogeneous(double);

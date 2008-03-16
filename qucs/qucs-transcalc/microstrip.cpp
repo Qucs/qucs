@@ -46,17 +46,6 @@ microstrip::~microstrip()
 }
 
 /*
- * skin_depth - calculate skin depth
- */
-double microstrip::skin_depth()
-{
-  double depth;
-  depth = 1.0 / (sqrt(M_PI * f * mur * MU0 * sigma));
-  return depth;
-}
-
-
-/*
  * Z0_homogeneous() - compute the impedance for a stripline in a
  * homogeneous medium, without cover effects
  */

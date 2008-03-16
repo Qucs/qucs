@@ -903,7 +903,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Dostupné typy vodičů jsou: mikropáskové vedení, čtvercový dutý vodič, koaxální kabel a svázaný mikropáskový vodič.</translation>
+        <translation type="obsolete">Dostupné typy vodičů jsou: mikropáskové vedení, čtvercový dutý vodič, koaxální kabel a svázaný mikropáskový vodič.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -12712,7 +12712,7 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikropáskové vedení</translation>
+        <translation type="obsolete">Mikropáskové vedení</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -12989,6 +12989,25 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation>Efektivní Er nesouhlasné</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikropáskové vedení</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 von Michael Margraf
+
+</translation>
     </message>
 </context>
 <context>
