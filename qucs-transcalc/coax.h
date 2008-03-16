@@ -31,10 +31,7 @@ class coax : public transline {
 
  private:
   double er;               /* dielectric constant */
-  double mur;              /* rel. permeability */
   double tand;             /* Dielectric Loss Tangent */
-  double sigma;            /* Conductivity of the metal */
-  double f;                /* Frequency of operation */
   double din;              /* Inner diameter of cable */
   double dout;             /* Outer diameter of cable */
   double l;                /* Length of cable */

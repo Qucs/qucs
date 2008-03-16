@@ -47,16 +47,6 @@ c_microstrip::~c_microstrip()
 }
 
 /*
- * skin_depth - calculate skin depth
- */
-double c_microstrip::skin_depth()
-{
-  double depth;
-  depth = 1.0 / (sqrt(M_PI * f * mur * MU0 * sigma));
-  return depth;
-}
-
-/*
  * delta_u_thickness_single() computes the thickness effect on
  * normalized width for a single microstrip line
  *

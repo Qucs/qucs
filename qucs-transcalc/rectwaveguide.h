@@ -31,11 +31,8 @@ class rectwaveguide : public transline {
 
  private:
   double er;               /* dielectric constant */
-  double mur;              /* mag. permeability */
-  double sigma;            /* Conductivity of the metal */
   double tand;             /* Dielectric Loss Tangent */
   double tanm;             /* Magnetic Loss Tangent */  
-  double f;                /* Frequency of operation */
   double a;                /* width of waveguide */
   double b;                /* height of waveguide */
   double l;                /* length of waveguide */
@@ -45,7 +42,6 @@ class rectwaveguide : public transline {
   double mur_eff;          /* Effective mag. permeability */
   double atten_dielectric; /* Loss in dielectric (dB) */
   double atten_cond;       /* Loss in conductors (dB) */
-  double skindepth;        /* Skin depth in mils */
   double fc10;             /* Cutoff frequency for TE10 mode */
 
  public:

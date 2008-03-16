@@ -841,7 +841,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Dostępne linie transmisyjne to: Linia mikropaskowa, Falowód prostokątny, Linia koncentryczna oraz Sprzężona linia mikropaskowa.</translation>
+        <translation type="obsolete">Dostępne linie transmisyjne to: Linia mikropaskowa, Falowód prostokątny, Linia koncentryczna oraz Sprzężona linia mikropaskowa.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10699,7 +10699,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikropaskowa</translation>
+        <translation type="obsolete">Mikropaskowa</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -10976,6 +10976,24 @@ otworzyć ten plik odpowiednim programem.</translation>
     <message>
         <source>Transmission line type not available.</source>
         <translation>Niedostępny rodzaj linii transmisyjnej.</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Linia mikropaskowa</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>

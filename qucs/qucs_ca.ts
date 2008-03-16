@@ -847,7 +847,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Les línees de transmissió disponibles son: Microstrip, Guiaones rectangular, Línea coaxial i Microstrips acoplades</translation>
+        <translation type="obsolete">Les línees de transmissió disponibles son: Microstrip, Guiaones rectangular, Línea coaxial i Microstrips acoplades</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10654,7 +10654,7 @@ abrir els fitxers amb el programa apropiado.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Microstrip</translation>
+        <translation type="obsolete">Microstrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -10931,6 +10931,24 @@ abrir els fitxers amb el programa apropiado.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation>ErEff impar</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Línea Microstrip</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2008 por Michael Margraf
+</translation>
     </message>
 </context>
 <context>

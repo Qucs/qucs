@@ -31,14 +31,11 @@ class c_microstrip : public transline {
 
  private:
   double er;			/* dielectric constant */
-  double mur;			/* mag. permeability */
   double h;			/* height of substrate */
   double ht;			/* height to the top of box */
   double t;			/* thickness of top metal */
-  double sigma;			/* Conductivity of the metal */
   double tand;			/* Dielectric Loss Tangent */
   double rough;			/* Roughness of top metal */
-  double f;			/* Frequency of operation */
   double w;			/* width of lines */
   double w_t_e;                 /* even-mode thickness-corrected line width */
   double w_t_o;                 /* odd-mode thickness-corrected line width */
@@ -63,14 +60,12 @@ class c_microstrip : public transline {
   double atten_cond_e;		/* even-mode conductors losses (dB) */
   double atten_dielectric_o;	/* odd-mode dielectric losses (dB) */
   double atten_cond_o;		/* odd-mode conductors losses (dB) */
-  double skindepth;		/* Skin depth in mils */
 
  public:
   void analyze ();
   void synthesize ();
 
  private:
-  double skin_depth();
   double delta_u_thickness_single(double, double);
   void delta_u_thickness();
   void compute_single_line();

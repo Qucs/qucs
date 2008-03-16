@@ -39,7 +39,7 @@ class transline;
 
 // Current limit defintions.
 #define MAX_TRANS_BOXES   4
-#define MAX_TRANS_TYPES   4
+#define MAX_TRANS_TYPES   6
 #define MAX_TRANS_RESULTS 7
 
 // Types of transmission line properties.
@@ -98,10 +98,12 @@ struct TransResult {
 
 // Transmission line types.
 enum TransMode {
-  ModeMicrostrip,
-  ModeCoupledMicrostrip,
-  ModeRectangular,
-  ModeCoaxial,
+  ModeMicrostrip = 0,
+  ModeCoplanar = 1,
+  ModeGroundedCoplanar = 2,
+  ModeRectangular = 3,
+  ModeCoaxial = 4,
+  ModeCoupledMicrostrip = 5,
   ModeNone
 };
 
@@ -109,6 +111,7 @@ enum TransMode {
 struct TransType {
   int type;                 // type of transmission line (see TransMode)
   const char * description; // description
+  const char * bitmap;      // bitmap file name
   transline * line;         // transmission line instance
   struct TransArray array[MAX_TRANS_BOXES];
   int results;              // number of extraneous results
