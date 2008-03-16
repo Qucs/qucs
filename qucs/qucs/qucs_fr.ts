@@ -850,7 +850,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Les lignes disponibles sont : microruban, guide rectangulaire, coax et microruban couplé.</translation>
+        <translation type="obsolete">Les lignes disponibles sont : microruban, guide rectangulaire, coax et microruban couplé.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -10870,7 +10870,7 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Microruban</translation>
+        <translation type="obsolete">Microruban</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -11147,6 +11147,24 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
     <message>
         <source>ErEff Odd</source>
         <translation>Er(Eff)(impair)</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Ligne microruban</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">© Copyright 2008 par Michael Margraf
+</translation>
     </message>
 </context>
 <context>

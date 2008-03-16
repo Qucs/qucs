@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
 
 XPMS = 
 
-PNGS = c_microstrip.png coax.png microstrip.png rectwaveguide.png
+PNGS = c_microstrip.png coax.png microstrip.png rectwaveguide.png cpw.png \
+	cpw_back.png
 
 ICONS = 
 

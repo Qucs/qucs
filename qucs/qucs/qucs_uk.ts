@@ -777,7 +777,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation>Наявні лінії передачі: мікросмугова, прямокутний хвилевід, коаксіальна лінія та пов&apos;язані мікросмугові лінії.</translation>
+        <translation type="obsolete">Наявні лінії передачі: мікросмугова, прямокутний хвилевід, коаксіальна лінія та пов&apos;язані мікросмугові лінії.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -9243,7 +9243,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Мікросмугова лінія</translation>
+        <translation type="obsolete">Мікросмугова лінія</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -9537,6 +9537,24 @@ open files with an appropriate program.</source>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
         <translation>Copyright (C) 2005 Stefan Jahn
+</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Мікросмугова лінія</translation>
+    </message>
+    <message>
+        <source>Coplanar Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grounded Coplanar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2008 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (С) 2008 Michael Margraf
 </translation>
     </message>
 </context>

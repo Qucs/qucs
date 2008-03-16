@@ -41,12 +41,12 @@ INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucstrans_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
 noinst_HEADERS = $(MOCHEADERS) transline.h units.h microstrip.h coax.h \
-	rectwaveguide.h c_microstrip.h
+	rectwaveguide.h c_microstrip.h coplanar.h
 
 noinst_LIBRARIES = libtranscalc.a
 
 libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
-	rectwaveguide.cpp c_microstrip.cpp
+	rectwaveguide.cpp c_microstrip.cpp coplanar.cpp
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
