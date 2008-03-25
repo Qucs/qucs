@@ -165,7 +165,10 @@ int TextDoc::save()
   setModified(false);
   slotSetChanged();
   file.close();
-  lastSaved = QDateTime::currentDateTime();
+
+  QFileInfo Info(DocName);
+  lastSaved = Info.lastModified();
+
   return 0;
 }
 
