@@ -872,15 +872,15 @@
     </message>
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используйте _{..} и ^{..} для верхнего и нижнего индексов.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">О&amp;тменить</translation>
+        <translation>О&amp;тменить</translation>
     </message>
 </context>
 <context>
@@ -4641,11 +4641,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
-        <translation>Передаточный ток насыщения транзистора на подложке</translation>
+        <translation>Насыщенный ток переноса заряда транзистора на подложке</translation>
     </message>
     <message>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation>Прямой коэффициент идеальности передаточного тока подложки</translation>
+        <translation>Прямой коэффициент идеальности тока переноса заряда подложки</translation>
     </message>
     <message>
         <source>C-S diode saturation current</source>
@@ -4761,7 +4761,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Neutral emitter storage time</source>
-        <translation>Время хранения нейтрального эмиттера</translation>
+        <translation>Время хранения в нейтральном эмиттере</translation>
     </message>
     <message>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
@@ -4813,7 +4813,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Factor for additional delay time of transfer current</source>
-        <translation>Фактор для дополнительного времени задержки передаточного тока</translation>
+        <translation>Фактор для дополнительного времени задержки тока переноса заряда</translation>
     </message>
     <message>
         <source>Flicker noise coefficient</source>
@@ -4833,7 +4833,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation>Напряжение стабилизации, экстраполированное на 0 К</translation>
+        <translation>Напряжение, экстраполированное на 0 К</translation>
     </message>
     <message>
         <source>First order relative TC of parameter T0</source>
@@ -5037,11 +5037,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Граничный прямой ток при высокой инжекции, А, (0 == отключение эффекта Вебстера)</translation>
+        <translation>Граничный прямой ток при большом уровне инжекции, А, (0 == отключение эффекта Вебстера)</translation>
     </message>
     <message>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Граничный обратный ток при высокой инжекции, А, (0 == отключение эффекта Вебстера)</translation>
+        <translation>Граничный обратный ток при большом уровне инжекции, А, (0 == отключение эффекта Вебстера)</translation>
     </message>
     <message>
         <source></source>
@@ -5285,7 +5285,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation>Граничный ток при высокой инжекции (0=бесконечность)</translation>
+        <translation>Граничный ток при большом уровне инжекции (0=бесконечность)</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
@@ -5507,759 +5507,759 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished">HICUM Level 2 v2.22 Verilog-модель</translation>
+        <translation>HICUM Level 2 v2.22 Verilog-модель</translation>
     </message>
     <message>
         <source>A^2s</source>
-        <translation type="unfinished"></translation>
+        <translation>А²с</translation>
     </message>
     <message>
         <source>Coul</source>
-        <translation type="unfinished"></translation>
+        <translation>Кл</translation>
     </message>
     <message>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>А</translation>
     </message>
     <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
+        <translation>Постоянная времени рекомбинации базового тока на Б-К-переходе для большого уровня инжекции при прямом смещении</translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>с</translation>
     </message>
     <message>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Задает место соединения базы для туннельного тока</translation>
     </message>
     <message>
         <source>1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>1/В</translation>
     </message>
     <message>
         <source>1/K</source>
-        <translation type="unfinished"></translation>
+        <translation>1/К</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished">Ом</translation>
+        <translation>Ом</translation>
     </message>
     <message>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ф</translation>
     </message>
     <message>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>В</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделительный фактор паразитной емкости Б-К</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделительный фактор паразитной емкости Б-Э</translation>
     </message>
     <message>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаг для включения и выключения вертикального неквазистатического эффекта</translation>
     </message>
     <message>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаг, определяющий, где поместить источник фликкер-шума</translation>
     </message>
     <message>
         <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов эмиттера</translation>
     </message>
     <message>
         <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов коллектора</translation>
     </message>
     <message>
         <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов подложки</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент K1 в зависящем от T уравнении потенциального барьера</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент K2 в зависящем от T уравнении потенциального барьера</translation>
     </message>
     <message>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент в показателе степени в температурной зависимости тока переноса</translation>
     </message>
     <message>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент в показателе степени в температурной зависимости тока Б-Э перехода</translation>
     </message>
     <message>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаг для включения и выключения эффекта саморазогрева</translation>
     </message>
     <message>
         <source>K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>K/Вт</translation>
     </message>
     <message>
         <source>J/W</source>
-        <translation type="unfinished"></translation>
+        <translation>Дж/Вт</translation>
     </message>
     <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаг для совместимости с моделью v2.1 (0=v2.1)</translation>
     </message>
     <message>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <source>HICUM L2 v2.22</source>
-        <translation type="unfinished">HICUM L2 v2.22</translation>
+        <translation>HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель модульного операционного усилителя</translation>
     </message>
     <message>
         <source>Gain bandwidth product (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Произведение усиления на полосу частот (Гц)</translation>
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дифференциальное усиление при разомкнутой ОС на постоянном токе (Дб)</translation>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота второго полюса (Гц)</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходное сопротивление (Ом)</translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дифференциальная входная емкость (Ф)</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дифференциальное входное сопротивление  (Ом)</translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Разность входных токов смещения (А)</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Входной ток смещения (А)</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Входное напряжение смещения (В)</translation>
     </message>
     <message>
         <source>Common-mode rejection ratio at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент ослабления синфазного сигнала по постоянному току (Дб)</translation>
     </message>
     <message>
         <source>Common-mode zero corner frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Граничная частота синфазного сигнала (Гц)</translation>
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость нарастания (В/с)</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость убывания (В/с)</translation>
     </message>
     <message>
         <source>Positive output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальное положительное выходное напряжение (В)</translation>
     </message>
     <message>
         <source>Negative output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальное отрицательное выходное напряжение (В)</translation>
     </message>
     <message>
         <source>Maximum DC output current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальный выходной ток (А)</translation>
     </message>
     <message>
         <source>Current limit scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент масштаба для ограничения тока</translation>
     </message>
     <message>
         <source>Modular OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Модульный ОУ</translation>
     </message>
     <message>
         <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>диак (симметричный диодный тиристор)</translation>
     </message>
     <message>
         <source>(bidirectional) breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>(симметричное) напряжение включения</translation>
     </message>
     <message>
         <source>(bidirectional) breakover current</source>
-        <translation type="unfinished"></translation>
+        <translation>(симметричный) ток включения</translation>
     </message>
     <message>
         <source>parasitic capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>паразитная емкость</translation>
     </message>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <translation>Диак</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation type="unfinished"></translation>
+        <translation>однооперационный тринистор</translation>
     </message>
     <message>
         <source>breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение включения</translation>
     </message>
     <message>
         <source>gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>отпирающий ток управляющего электрода</translation>
     </message>
     <message>
         <source>Thyristor</source>
-        <translation type="unfinished"></translation>
+        <translation>Тиристор</translation>
     </message>
     <message>
         <source>triac (bidirectional thyristor)</source>
-        <translation type="unfinished"></translation>
+        <translation>триак (симметричный тиристор)</translation>
     </message>
     <message>
         <source>(bidirectional) gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>(симметричный) отпирающий ток управляющего электрода</translation>
     </message>
     <message>
         <source>Triac</source>
-        <translation type="unfinished"></translation>
+        <translation>Триак</translation>
     </message>
     <message>
         <source>intrinsic junction resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>собственное сопротивление перехода</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель логарифмического усилителя</translation>
     </message>
     <message>
         <source>scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент масштабирования</translation>
     </message>
     <message>
         <source>scale factor error</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка коэффициента масштабирования</translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>input I1 bias current</source>
-        <translation type="unfinished"></translation>
+        <translation>ток смещения входа I1</translation>
     </message>
     <message>
         <source>input reference bias current</source>
-        <translation type="unfinished"></translation>
+        <translation>входной опорный ток смещения</translation>
     </message>
     <message>
         <source>number of decades</source>
-        <translation type="unfinished"></translation>
+        <translation>число разрядов</translation>
     </message>
     <message>
         <source>conformity error</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка соответствия</translation>
     </message>
     <message>
         <source>output offset error</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка смещения по выходу</translation>
     </message>
     <message>
         <source>amplifier input resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>входное сопротивление усилителя</translation>
     </message>
     <message>
         <source>amplifier 3dB frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>полоса пропускания усилителя на уровне 3Дб</translation>
     </message>
     <message>
         <source>Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Гц</translation>
     </message>
     <message>
         <source>amplifier output resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>выходное сопротивление усилителя</translation>
     </message>
     <message>
         <source>conformity error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент ошибки соответствия</translation>
     </message>
     <message>
         <source>%/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>%/°C</translation>
     </message>
     <message>
         <source>offset temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент смещения</translation>
     </message>
     <message>
         <source>V/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>В/°C</translation>
     </message>
     <message>
         <source>scale factor error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент ошибки коэффициента масштабирования</translation>
     </message>
     <message>
         <source>input I1 bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент тока смещения входа I1</translation>
     </message>
     <message>
         <source>A/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>А/°C</translation>
     </message>
     <message>
         <source>input reference bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент опорного тока смещения входа I1</translation>
     </message>
     <message>
         <source>Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>°C</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Логарифмический усилитель</translation>
     </message>
     <message>
         <source>I</source>
-        <translation type="unfinished"></translation>
+        <translation>I</translation>
     </message>
     <message>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation type="unfinished">HICUM Level 0 v1.12 Verilog-модель</translation>
+        <translation>HICUM Level 0 v1.12 Verilog-модель</translation>
     </message>
     <message>
         <source>(Modified) saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>(Измененный) ток насыщения</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент неидеальности прямого коллекторного тока</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент неидеальности обратного коллекторного тока</translation>
     </message>
     <message>
         <source>forward Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение Эрли в прямом направлении (напр. нормализации)</translation>
     </message>
     <message>
         <source>forward d.c. high-injection toll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>прямой постоянный ток спада при сильной инжекции</translation>
     </message>
     <message>
         <source>inverse d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>обратный постоянный ток спада при сильной инжекции</translation>
     </message>
     <message>
         <source>high-injection correction current</source>
-        <translation type="unfinished"></translation>
+        <translation>ток коррекции при сильной инжекции</translation>
     </message>
     <message>
         <source>high-injection correction factor</source>
-        <translation type="unfinished"></translation>
+        <translation>поправка на сильную инжекцию</translation>
     </message>
     <message>
         <source>BE saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ток насыщения Б-Э</translation>
     </message>
     <message>
         <source>BE non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент неидеальности для Б-Э</translation>
     </message>
     <message>
         <source>BE recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>рекомбинационный ток насыщения Б-Э</translation>
     </message>
     <message>
         <source>BE recombination non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>рекомбинационный кэффициент неидеальности Б-Э</translation>
     </message>
     <message>
         <source>BC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ток насыщения Б-К</translation>
     </message>
     <message>
         <source>BC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент неидеальности для Б-К</translation>
     </message>
     <message>
         <source>Zero-bias BE depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Емкость перехода Б-Э при нулевом смещении</translation>
     </message>
     <message>
         <source>BE built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>потенциал поля перехода Б-Э</translation>
     </message>
     <message>
         <source>BE exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Показатель степени для перехода Б-Э</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value</source>
-        <translation type="unfinished"></translation>
+        <translation>Отношение максимального значения к значению при нулевом смещении</translation>
     </message>
     <message>
         <source>low current transit time at Vbici=0</source>
-        <translation type="unfinished"></translation>
+        <translation>Время пролета при низком токе при Vbici=0</translation>
     </message>
     <message>
         <source>SCR width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Вклад модуляции ширины однооперационного тринистора</translation>
     </message>
     <message>
         <source>Storage time in neutral emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Время хранения в нейтральном эмиттере</translation>
     </message>
     <message>
         <source>Exponent factor for emmiter transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Показатель степени для времени пролета в эмиттере</translation>
     </message>
     <message>
         <source>Saturation time at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>Время насыщения при высокой плотности тока</translation>
     </message>
     <message>
         <source>Smoothing facor for current dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент сглаживания для зависимости от тока</translation>
     </message>
     <message>
         <source>Storage time at inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Время хранения в инверсном режиме</translation>
     </message>
     <message>
         <source>Low-field collector resistance under emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Сопротивление коллектора под эмиттером при слабом поле</translation>
     </message>
     <message>
         <source>Voltage dividing ohmic and satur.region</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение разделения омической и насыщ. областей</translation>
     </message>
     <message>
         <source>Punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение проникновения</translation>
     </message>
     <message>
         <source>Saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение насыщения</translation>
     </message>
     <message>
         <source>Total zero-bias BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Полная емкость Б-К перехода при нулевом смещении</translation>
     </message>
     <message>
         <source>BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Потенциал поля перехода Б-К</translation>
     </message>
     <message>
         <source>BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Множитель экспоненты для Б-К</translation>
     </message>
     <message>
         <source>Punch-through voltage of BC junction</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение проникновения перехода Б-К</translation>
     </message>
     <message>
         <source>Zero-bias external BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешняя емкость Б-К перехода при нулевом смещении</translation>
     </message>
     <message>
         <source>External BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний потенциал поля перехода Б-К</translation>
     </message>
     <message>
         <source>External BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний множитель экспоненты для Б-К</translation>
     </message>
     <message>
         <source>Split factor = Cjci0/Cjc0</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент расщепления = Cjci0/Cjc0</translation>
     </message>
     <message>
         <source>Internal base resistance at zero-bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Собственное сопротивление базы при нулевом смещении</translation>
     </message>
     <message>
         <source>Geometry factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Геометрический фактор</translation>
     </message>
     <message>
         <source>Substrate transistor transfer current non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент неидельности тока переноса заряда транзистора на подложке</translation>
     </message>
     <message>
         <source>SC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Ток насыщения П-К</translation>
     </message>
     <message>
         <source>SC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент неидеальности для П-К</translation>
     </message>
     <message>
         <source>Zero-bias SC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Емкость перехода П-Э при нулевом смещении</translation>
     </message>
     <message>
         <source>SC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Потенциал поля перехода П-К</translation>
     </message>
     <message>
         <source>External SC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний множитель экспоненты для П-К</translation>
     </message>
     <message>
         <source>SC punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Напряжение проникновения П-К</translation>
     </message>
     <message>
         <source>Collector-base isolation (overlap) capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Емкость изоляции (перекрытия) коллектор-база</translation>
     </message>
     <message>
         <source>Emitter-base oxide capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Емкость окисла эмиттер-базового перехода</translation>
     </message>
     <message>
         <source>Exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Множитель экспоненты</translation>
     </message>
     <message>
         <source>Prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>Предмножитель</translation>
     </message>
     <message>
         <source>M^(1-AF)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>показатель степени 1/f-шума</translation>
     </message>
     <message>
         <source>Bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Контактная разность потенциалов</translation>
     </message>
     <message>
         <source>Effective emitter bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов эмиттера</translation>
     </message>
     <message>
         <source>Effective collector bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов коллектора</translation>
     </message>
     <message>
         <source>Effective substrate bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффективная контактная разность потенциалов подложки</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент K1 в зависящем от T уравнении потенциального барьера</translation>
     </message>
     <message>
         <source>V/K</source>
-        <translation type="unfinished"></translation>
+        <translation>В/К</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент K2 в зависящем от T уравнении потенциального барьера</translation>
     </message>
     <message>
         <source>Frist-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК первого порядка для tf0</translation>
     </message>
     <message>
         <source>Second-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК второго порядка для tf0</translation>
     </message>
     <message>
         <source>1/K^2</source>
-        <translation type="unfinished"></translation>
+        <translation>1/К²</translation>
     </message>
     <message>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент в показателе степени в температурной зависимости тока Б-Э перехода</translation>
     </message>
     <message>
         <source>TC of epi-collector diffusivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурный коэффициент диффузии эпитаксиального слоя (коллектора)</translation>
     </message>
     <message>
         <source>Relative TC of satur.drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Относительный ТК скорости дрейфа насыщения</translation>
     </message>
     <message>
         <source>Relative TC of vces</source>
-        <translation type="unfinished"></translation>
+        <translation>Относительный ТК vces</translation>
     </message>
     <message>
         <source>TC of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК собственного сопротивления базы</translation>
     </message>
     <message>
         <source>TC of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК внешнего сопротивления базы</translation>
     </message>
     <message>
         <source>TC of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК внешнего сопротивления коллектора</translation>
     </message>
     <message>
         <source>TC of emitter resistances</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК сопротивлений эмиттера</translation>
     </message>
     <message>
         <source>TC of avalanche prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК лавинного предмножителя</translation>
     </message>
     <message>
         <source>TC of avalanche exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>ТК лавинного коэффициента</translation>
     </message>
     <message>
         <source>Flag for self-heating calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаг для расчета саморазогрева</translation>
     </message>
     <message>
         <source>Ws/K</source>
-        <translation type="unfinished"></translation>
+        <translation>Втс/К</translation>
     </message>
     <message>
         <source>Temperature for which parameters are valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Температура, при которой параметры правильны</translation>
     </message>
     <message>
         <source>Temperature change for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение температуры для отдельного транзистора</translation>
     </message>
     <message>
         <source>npn HICUM L0 v1.12</source>
-        <translation type="unfinished">npn HICUM L0 v1.12</translation>
+        <translation>npn HICUM L0 v1.12</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.12</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Base width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Вклад модуляции ширины базы</translation>
     </message>
     <message>
         <source>gate resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление затвора</translation>
     </message>
     <message>
         <source>Potentiometer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель потенциометра</translation>
     </message>
     <message>
         <source>nominal device resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>номинальное сопротивление устройства</translation>
     </message>
     <message>
         <source>shaft/wiper arm rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>вращение ручки/ползунка</translation>
     </message>
     <message>
         <source>degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>градусы</translation>
     </message>
     <message>
         <source>resistive law taper coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент спадания резистивной зависимости</translation>
     </message>
     <message>
         <source>device type selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор типа устройства</translation>
     </message>
     <message>
         <source>maximum shaft/wiper rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальное вращение ручки/ползунка</translation>
     </message>
     <message>
         <source>linearity error</source>
-        <translation type="unfinished"></translation>
+        <translation>нелинейность</translation>
     </message>
     <message>
         <source>wiper arm contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление контакта ползунка</translation>
     </message>
     <message>
         <source>resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент сопротивления</translation>
     </message>
     <message>
         <source>PPM/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>пик-пик/°C</translation>
     </message>
     <message>
         <source>Potentiometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Потенциометр</translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>equation defined RF device</source>
-        <translation type="unfinished"></translation>
+        <translation>заданное уравнением ВЧ устройство</translation>
     </message>
     <message>
         <source>type of parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>тип параметра</translation>
     </message>
     <message>
         <source>parameter equation</source>
-        <translation type="unfinished"></translation>
+        <translation>параметрическое уравнение</translation>
     </message>
     <message>
         <source>Equation Defined RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Заданное уравнением ВЧ устройство</translation>
     </message>
     <message>
         <source>RF</source>
-        <translation type="unfinished"></translation>
+        <translation>ВЧ</translation>
     </message>
     <message>
         <source>equation defined 2-port RF device</source>
-        <translation type="unfinished"></translation>
+        <translation>заданное уравнением 2-портовое ВЧ устройство</translation>
     </message>
     <message>
         <source>Equation Defined 2-port RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Заданное уравнением 2-портовое ВЧ устройство</translation>
     </message>
 </context>
 <context>
@@ -8925,7 +8925,7 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation>устройства verilog-a</translation>
     </message>
 </context>
 <context>
@@ -13021,20 +13021,20 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрополосковая линия</translation>
     </message>
     <message>
         <source>Coplanar Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Копланарный волновод</translation>
     </message>
     <message>
         <source>Grounded Coplanar</source>
-        <translation type="unfinished"></translation>
+        <translation>Заземленный копланар</translation>
     </message>
     <message>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2008 Michael Margraf
+        <translation>Copyright (C) 2008 Michael Margraf
 
 </translation>
     </message>
