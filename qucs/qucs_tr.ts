@@ -1,4 +1,5 @@
 <!DOCTYPE TS><TS>
+<defaultcodec></defaultcodec>
 <context>
     <name>ArrowDialog</name>
     <message>
@@ -761,15 +762,15 @@
     </message>
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst ve alt metin konumu için _{..} ve ^{..} kullanɪn.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tamam</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;İptal</translation>
+        <translation>&amp;İptal</translation>
     </message>
 </context>
 <context>
@@ -5176,683 +5177,683 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>diyak (çift-yön tetiklemeli diyot)</translation>
     </message>
     <message>
         <source>(bidirectional) breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>(çift-yön) kɪrɪlma gerilimi</translation>
     </message>
     <message>
         <source>(bidirectional) breakover current</source>
-        <translation type="unfinished"></translation>
+        <translation>(çift-yön) kɪrɪlma akɪmɪ</translation>
     </message>
     <message>
         <source>parasitic capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>asalak sığa</translation>
     </message>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <translation>Diyak</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished">HICUM Seviyesi 2 v2.22 verilog devresi</translation>
+        <translation>HICUM Seviyesi 2 v2.22 verilog devre elemanı</translation>
     </message>
     <message>
         <source>A^2s</source>
-        <translation type="unfinished"></translation>
+        <translation>A^2s</translation>
     </message>
     <message>
         <source>Coul</source>
-        <translation type="unfinished"></translation>
+        <translation>Coul</translation>
     </message>
     <message>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek ileri zerk için, B-C engelindeki baz akımı yeniden-birleşme zaman sabiti</translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>Tünelleme akımı için baz ucu bağlantısı tanımlar</translation>
     </message>
     <message>
         <source>1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>1/V</translation>
     </message>
     <message>
         <source>1/K</source>
-        <translation type="unfinished"></translation>
+        <translation>1/K</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished">Ohm</translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Asalak B-C sığası kısımlama çarpanı</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
+        <translation>Asalak B-E sığası kısımlama çarpanı</translation>
     </message>
     <message>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey NQS etkisi açma kapama bayrağı</translation>
     </message>
     <message>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
+        <translation>Flicker gürüldü kaynağının nereye koyulacağını belirleyen bayrak</translation>
     </message>
     <message>
         <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin emetör bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kollektör bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin alt-tabaka bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>T-bağımlı bant-genişliği eşitliğindeki K1 sabiti</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>T-bağımlı bant-genişliği eşitliğindeki K2 sabiti</translation>
     </message>
     <message>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş akımı sıcaklık bağımlığı üstel çarpanı</translation>
     </message>
     <message>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E eklem akımı sıcaklık bağımlılığı üstel çarpanı</translation>
     </message>
     <message>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendi kendini ısıtma etkisini açma kapama bayrağı</translation>
     </message>
     <message>
         <source>K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>K/W</translation>
     </message>
     <message>
         <source>J/W</source>
-        <translation type="unfinished"></translation>
+        <translation>J/W</translation>
     </message>
     <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
+        <translation>v2.1 modeli ile uyumluluk bayrağı (0=v2.1)</translation>
     </message>
     <message>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <source>HICUM L2 v2.22</source>
-        <translation type="unfinished">HICUM L2 v2.22</translation>
+        <translation>HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation type="unfinished"></translation>
+        <translation>silikon denetimli doğrultucu (SCR)</translation>
     </message>
     <message>
         <source>breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>kırılma gerilimi</translation>
     </message>
     <message>
         <source>gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>kapı tetikleme akımı</translation>
     </message>
     <message>
         <source>Thyristor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tristör</translation>
     </message>
     <message>
         <source>triac (bidirectional thyristor)</source>
-        <translation type="unfinished"></translation>
+        <translation>triyak (çift yönlü tristör)</translation>
     </message>
     <message>
         <source>(bidirectional) gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>(çift-yön) kapı tetikleme akɪmɪ</translation>
     </message>
     <message>
         <source>Triac</source>
-        <translation type="unfinished"></translation>
+        <translation>Triyak</translation>
     </message>
     <message>
         <source>intrinsic junction resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>asıl eklem direnci</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Üstel yükseltici verilog devre elemanı</translation>
     </message>
     <message>
         <source>scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>boyutlama çarpanı</translation>
     </message>
     <message>
         <source>scale factor error</source>
-        <translation type="unfinished"></translation>
+        <translation>boyutlama çarpan hatası</translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>input I1 bias current</source>
-        <translation type="unfinished"></translation>
+        <translation>I1 giriş kutuplama akımı</translation>
     </message>
     <message>
         <source>input reference bias current</source>
-        <translation type="unfinished"></translation>
+        <translation>giriş göreceli dayanak (referans) kutuplama akımı</translation>
     </message>
     <message>
         <source>number of decades</source>
-        <translation type="unfinished"></translation>
+        <translation>onluk sayısı</translation>
     </message>
     <message>
         <source>conformity error</source>
-        <translation type="unfinished"></translation>
+        <translation>uygunluk hatası</translation>
     </message>
     <message>
         <source>output offset error</source>
-        <translation type="unfinished"></translation>
+        <translation>çıkış fark (offset) hatası</translation>
     </message>
     <message>
         <source>amplifier input resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>yükseltici giriş direnci</translation>
     </message>
     <message>
         <source>amplifier 3dB frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>yükseltici 3dB sıklığı</translation>
     </message>
     <message>
         <source>Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Hz</translation>
     </message>
     <message>
         <source>amplifier output resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>yükseltici çıkış direnci</translation>
     </message>
     <message>
         <source>conformity error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>uygunluk hatası sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>%/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>%/Celsius</translation>
     </message>
     <message>
         <source>offset temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>fark (offset) sıcaklık sabiti</translation>
     </message>
     <message>
         <source>V/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>V/Celsius</translation>
     </message>
     <message>
         <source>scale factor error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>boyutlandırma çarpan hatası sıcaklık sabiti</translation>
     </message>
     <message>
         <source>input I1 bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>giriş I1 akımı sıcaklık sabiti</translation>
     </message>
     <message>
         <source>A/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>A/Celsius</translation>
     </message>
     <message>
         <source>input reference bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>giriş göreceli-dayanak kutuplama-akımı sıcaklık sabiti</translation>
     </message>
     <message>
         <source>Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Celsius</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Üstel Yükselteç</translation>
     </message>
     <message>
         <source>I</source>
-        <translation type="unfinished"></translation>
+        <translation>I</translation>
     </message>
     <message>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation type="unfinished">HICUM Seviyesi 0 v1.12 verilog devresi</translation>
+        <translation>HICUM Seviyesi 0 v1.12 verilog devre elemanı</translation>
     </message>
     <message>
         <source>(Modified) saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>(Değiştirilmiş) doyum akımı</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>İleri kollektör akımının mükemmel olmama katsayısı</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters kollektör akımının mükemmel olmama katsayısı</translation>
     </message>
     <message>
         <source>forward Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
+        <translation>ileri Erken gerilimi (göreli boyutlandırma, gerilim)</translation>
     </message>
     <message>
         <source>forward d.c. high-injection toll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>ileri d.c. yüksek-zerk toll-off akımı</translation>
     </message>
     <message>
         <source>inverse d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>ters d.c. yüksek-zerk roll-off akımı</translation>
     </message>
     <message>
         <source>high-injection correction current</source>
-        <translation type="unfinished"></translation>
+        <translation>yüksek-zerk düzeltme akımı</translation>
     </message>
     <message>
         <source>high-injection correction factor</source>
-        <translation type="unfinished"></translation>
+        <translation>yüksek-zerk düzeltme çarpanı</translation>
     </message>
     <message>
         <source>BE saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BE doyum akımı</translation>
     </message>
     <message>
         <source>BE non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>BE recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BE tekrar-birleşim doyum akımı</translation>
     </message>
     <message>
         <source>BE recombination non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE tekrar-birleşim mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>BC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BC doyum akımı</translation>
     </message>
     <message>
         <source>BC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>Zero-bias BE depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>BE sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>BE built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>BE iç gerilimi</translation>
     </message>
     <message>
         <source>BE exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE üstel çarpan</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value</source>
-        <translation type="unfinished"></translation>
+        <translation>En yüksek değerin sıfır-kutuplama durumundaki değere oranı</translation>
     </message>
     <message>
         <source>low current transit time at Vbici=0</source>
-        <translation type="unfinished"></translation>
+        <translation>Vbici=0 durumunda alçak akım geçiş zamanı</translation>
     </message>
     <message>
         <source>SCR width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>SCR genişlik değişimi katkısı</translation>
     </message>
     <message>
         <source>Storage time in neutral emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Nötr emetörde saklama zamanı</translation>
     </message>
     <message>
         <source>Exponent factor for emmiter transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör geçiş zamanı için üstel çarpan</translation>
     </message>
     <message>
         <source>Saturation time at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek akım yoğunluklarındaki doyum zamanı</translation>
     </message>
     <message>
         <source>Smoothing facor for current dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Akıma bağımlılık için yumuşatma çarpanı</translation>
     </message>
     <message>
         <source>Storage time at inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters-çalışma durumunda saklama zamanı</translation>
     </message>
     <message>
         <source>Low-field collector resistance under emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör altında düşük-alan kollektör direnci</translation>
     </message>
     <message>
         <source>Voltage dividing ohmic and satur.region</source>
-        <translation type="unfinished"></translation>
+        <translation>Omik ve doyum rejimlerini ayıran gerilim değeri</translation>
     </message>
     <message>
         <source>Punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;İleri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>Saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Doyum akımı</translation>
     </message>
     <message>
         <source>Total zero-bias BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplam B-C sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>BC iç gerilimi</translation>
     </message>
     <message>
         <source>BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC üstel çarpanı</translation>
     </message>
     <message>
         <source>Punch-through voltage of BC junction</source>
-        <translation type="unfinished"></translation>
+        <translation>BC eklemi &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>Zero-bias external BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>External BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C eklemi iç (built-in) gerilimi</translation>
     </message>
     <message>
         <source>External BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B-C eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>Split factor = Cjci0/Cjc0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayırma çarpanı = Cjci0/Cjc0</translation>
     </message>
     <message>
         <source>Internal base resistance at zero-bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır kutuplama durumunda iç baz direnci</translation>
     </message>
     <message>
         <source>Geometry factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometri çarpanı</translation>
     </message>
     <message>
         <source>Substrate transistor transfer current non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-tabaka transistör geçiş akımı mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>SC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>SC doyum akımı</translation>
     </message>
     <message>
         <source>SC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>SC mükemmel olmama (gerçeklik) çarpanı</translation>
     </message>
     <message>
         <source>Zero-bias SC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>SC sıfır-kutuplama tüketim sığası</translation>
     </message>
     <message>
         <source>SC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>SC iç gerilimi</translation>
     </message>
     <message>
         <source>External SC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış SC eklemi üstel çarpanı</translation>
     </message>
     <message>
         <source>SC punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>SC &quot;ileri delgi&quot; (punch-through) gerilimi</translation>
     </message>
     <message>
         <source>Collector-base isolation (overlap) capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>CB yalıtım (üst üste binme) sığası</translation>
     </message>
     <message>
         <source>Emitter-base oxide capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>EB oksit sığası</translation>
     </message>
     <message>
         <source>Exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Űstel çarpan</translation>
     </message>
     <message>
         <source>Prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön çarpan</translation>
     </message>
     <message>
         <source>M^(1-AF)</source>
-        <translation type="unfinished"></translation>
+        <translation>M^(1-AF)</translation>
     </message>
     <message>
         <source>flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>flicker gürültüsü üstel çarpanı</translation>
     </message>
     <message>
         <source>Bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Effective emitter bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin emetör bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Effective collector bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kollektör bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Effective substrate bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin alt-tabaka bant-genişliği gerilimi</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>T-bağımlı bant-genişliği eşitliğindeki K1 sabiti</translation>
     </message>
     <message>
         <source>V/K</source>
-        <translation type="unfinished"></translation>
+        <translation>V/K</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>T-bağımlı bant-genişliği eşitliğindeki K2 sabiti</translation>
     </message>
     <message>
         <source>Frist-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci-derece TC (tf0 için)</translation>
     </message>
     <message>
         <source>Second-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci-derece TC (tf0 için)</translation>
     </message>
     <message>
         <source>1/K^2</source>
-        <translation type="unfinished"></translation>
+        <translation>1/K^2</translation>
     </message>
     <message>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E eklem akımı sıcaklık bağımlılığı üstel sabiti</translation>
     </message>
     <message>
         <source>TC of epi-collector diffusivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollektör dışındaki dağılmanın (içine işlemenin) sıcaklık sabiti</translation>
     </message>
     <message>
         <source>Relative TC of satur.drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Doygun sürüklenme hızı göreceli sıcaklık katsayısı (TC)</translation>
     </message>
     <message>
         <source>Relative TC of vces</source>
-        <translation type="unfinished"></translation>
+        <translation>VCES için göreceli TC</translation>
     </message>
     <message>
         <source>TC of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>İç B (baz) direnci sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>TC of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış B (baz) direnci sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>TC of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış kollektör direnci sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>TC of emitter resistances</source>
-        <translation type="unfinished"></translation>
+        <translation>Emetör direnci sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>TC of avalanche prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>Çığ ön çarpanı sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>TC of avalanche exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Çığ üstel çarpanı sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>Flag for self-heating calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kendi kendine ısınma hesabı için bayrak</translation>
     </message>
     <message>
         <source>Ws/K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ws/K</translation>
     </message>
     <message>
         <source>Temperature for which parameters are valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişkenlerin geçerli olduğu sıcaklık</translation>
     </message>
     <message>
         <source>Temperature change for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Belirli transistor için sıcaklık değişimi</translation>
     </message>
     <message>
         <source>npn HICUM L0 v1.12</source>
-        <translation type="unfinished"></translation>
+        <translation>npn HICUM L0 v1.12</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.12</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L0 v1.12</translation>
     </message>
     <message>
         <source>Base width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Baz genişlik değişimi katkısı</translation>
     </message>
     <message>
         <source>gate resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>kapı direnci</translation>
     </message>
     <message>
         <source>Potentiometer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Potansiyometre verilog devre elemanı</translation>
     </message>
     <message>
         <source>nominal device resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>varsayılan devre elemanı direnci</translation>
     </message>
     <message>
         <source>shaft/wiper arm rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>gövde/silecek kol dönmesi</translation>
     </message>
     <message>
         <source>degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>derece</translation>
     </message>
     <message>
         <source>resistive law taper coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>resistive law taper coefficient</translation>
     </message>
     <message>
         <source>device type selector</source>
-        <translation type="unfinished"></translation>
+        <translation>devre elemanı çeşidi seçici</translation>
     </message>
     <message>
         <source>maximum shaft/wiper rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>en yüksek gövde/silecek dönmesi</translation>
     </message>
     <message>
         <source>linearity error</source>
-        <translation type="unfinished"></translation>
+        <translation>doğrusallık hatası</translation>
     </message>
     <message>
         <source>wiper arm contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>silici kol bağlantı direnci</translation>
     </message>
     <message>
         <source>resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>direnç sıcaklık katsayısı</translation>
     </message>
     <message>
         <source>PPM/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>PPM/Celsius</translation>
     </message>
     <message>
         <source>Potentiometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Potansiyometre</translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>B</translation>
     </message>
     <message>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <source>equation defined RF device</source>
-        <translation type="unfinished"></translation>
+        <translation>eşitlikle tanımlanmış RF devre elemanı</translation>
     </message>
     <message>
         <source>type of parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>değişkenlerin çeşidi</translation>
     </message>
     <message>
         <source>parameter equation</source>
-        <translation type="unfinished"></translation>
+        <translation>değişken eşitliği</translation>
     </message>
     <message>
         <source>Equation Defined RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşitlikle Tanımlanmış RF Devre Elemanı</translation>
     </message>
     <message>
         <source>RF</source>
-        <translation type="unfinished"></translation>
+        <translation>RF</translation>
     </message>
     <message>
         <source>equation defined 2-port RF device</source>
-        <translation type="unfinished"></translation>
+        <translation>eşitlikle tanımlanmış 2-uçlu RF devre elemanı</translation>
     </message>
     <message>
         <source>Equation Defined 2-port RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Eşitlikle Tanımlanmış 2-Uçlu RF Devre Elemanı</translation>
     </message>
 </context>
 <context>
@@ -8265,7 +8266,7 @@ Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-a devre elemanları</translation>
     </message>
 </context>
 <context>
@@ -10687,20 +10688,20 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished">Mikrostrip Hat</translation>
+        <translation>Mikrostrip Tel</translation>
     </message>
     <message>
         <source>Coplanar Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Eş-yüzey Dalga-kılavuzu</translation>
     </message>
     <message>
         <source>Grounded Coplanar</source>
-        <translation type="unfinished"></translation>
+        <translation>Topraklanmış Eş-Yüzey</translation>
     </message>
     <message>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation type="unfinished">Çoğaltma hakkı/Telif (Ç) 2008, Michael Margraf
+        <translation>Çoğaltma hakkı/Telif (Ç) 2008, Michael Margraf
 </translation>
     </message>
 </context>

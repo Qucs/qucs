@@ -1176,7 +1176,10 @@ int Schematic::save()
   int result = adjustPortNumbers();// same port number for schematic and symbol
   if(saveDocument() < 0)
      return -1;
-  lastSaved = QDateTime::currentDateTime();
+
+  QFileInfo Info(DocName);
+  lastSaved = Info.lastModified();
+
   if(result >= 0) {
     setChanged(false);
     QString *p, *ps = UndoStack.current();

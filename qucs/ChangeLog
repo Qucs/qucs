@@ -1,3 +1,11 @@
+2008-03-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic.cpp (save), textdoc.cpp (save): Fixed save timestamp
+	"bug".  Only occurred on Win32...
+
+	* qucs_tr.ts, qucs_ru.ts: Updated russian and turkish
+	translations.
+
 2008-03-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (prepareNetlist): Fixed bug occuring with
