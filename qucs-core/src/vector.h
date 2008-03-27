@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.33 2008/01/14 21:15:11 ela Exp $
+ * $Id: vector.h,v 1.34 2008/03/27 17:34:31 ela Exp $
  *
  */
 
@@ -68,6 +68,7 @@ class vector : public object
   char * getOrigin (void);
   int contains (nr_complex_t, nr_double_t eps = NR_EPSI);
   void sort (bool ascending = true);
+  void print (void);
 
   nr_double_t maximum  (void);
   nr_double_t minimum  (void);

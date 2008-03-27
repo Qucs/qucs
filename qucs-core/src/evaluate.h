@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.46 2008/01/13 10:50:10 ela Exp $
+ * $Id: evaluate.h,v 1.47 2008/03/27 17:34:29 ela Exp $
  *
  */
 
@@ -704,11 +704,44 @@ public:
   static constant * ifthenelse_c_c (constant *);
   static constant * ifthenelse_m_m (constant *);
   static constant * ifthenelse_v_v (constant *);
+  static constant * ifthenelse_v_v_v (constant *);
 
   static constant * less_d_d (constant *);
+  static constant * less_d_c (constant *);
+  static constant * less_d_v (constant *);
+  static constant * less_c_d (constant *);
+  static constant * less_c_c (constant *);
+  static constant * less_c_v (constant *);
+  static constant * less_v_d (constant *);
+  static constant * less_v_c (constant *);
+  static constant * less_v_v (constant *);
   static constant * greater_d_d (constant *);
+  static constant * greater_d_c (constant *);
+  static constant * greater_d_v (constant *);
+  static constant * greater_c_d (constant *);
+  static constant * greater_c_c (constant *);
+  static constant * greater_c_v (constant *);
+  static constant * greater_v_d (constant *);
+  static constant * greater_v_c (constant *);
+  static constant * greater_v_v (constant *);
   static constant * lessorequal_d_d (constant *);
+  static constant * lessorequal_d_c (constant *);
+  static constant * lessorequal_d_v (constant *);
+  static constant * lessorequal_c_d (constant *);
+  static constant * lessorequal_c_c (constant *);
+  static constant * lessorequal_c_v (constant *);
+  static constant * lessorequal_v_d (constant *);
+  static constant * lessorequal_v_c (constant *);
+  static constant * lessorequal_v_v (constant *);
   static constant * greaterorequal_d_d (constant *);
+  static constant * greaterorequal_d_c (constant *);
+  static constant * greaterorequal_d_v (constant *);
+  static constant * greaterorequal_c_d (constant *);
+  static constant * greaterorequal_c_c (constant *);
+  static constant * greaterorequal_c_v (constant *);
+  static constant * greaterorequal_v_d (constant *);
+  static constant * greaterorequal_v_c (constant *);
+  static constant * greaterorequal_v_v (constant *);
   static constant * equal_d_d (constant *);
   static constant * equal_b_b (constant *);
   static constant * notequal_d_d (constant *);
