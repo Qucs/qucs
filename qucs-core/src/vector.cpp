@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.40 2008-01-14 21:15:11 ela Exp $
+ * $Id: vector.cpp,v 1.41 2008-03-27 17:34:31 ela Exp $
  *
  */
 
@@ -1222,3 +1222,13 @@ vector runavg (vector v, const int n) {
   }
   return result;
 }
+
+#ifdef DEBUG
+// Debug function: Prints the vector object.
+void vector::print (void) {
+  for (int r = 0; r < size; r++) {
+    fprintf (stderr, "%+.2e%+.2ei\n", (double) real (get (r)),
+	     (double) imag (get (r)));
+  }
+}
+#endif /* DEBUG */

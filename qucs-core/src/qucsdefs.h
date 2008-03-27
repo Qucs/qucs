@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.85 2008-03-02 11:42:30 ela Exp $
+ * $Id: qucsdefs.h,v 1.86 2008-03-27 17:34:29 ela Exp $
  *
  */
 
@@ -54,7 +54,7 @@ struct define_t qucs_definition_available[] =
   { "MUT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "L1", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
       { "L2", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
-      { "k", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
+      { "k", PROP_REAL, { 0.9, PROP_NO_STR }, { ']', -1, 1, '[' } },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -63,9 +63,9 @@ struct define_t qucs_definition_available[] =
     { { "L1", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
       { "L2", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
       { "L3", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
-      { "k12", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
-      { "k13", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
-      { "k23", PROP_REAL, { 0.9, PROP_NO_STR }, { '[', 0, 1, '[' } },
+      { "k12", PROP_REAL, { 0.9, PROP_NO_STR }, { ']', -1, 1, '[' } },
+      { "k13", PROP_REAL, { 0.9, PROP_NO_STR }, { ']', -1, 1, '[' } },
+      { "k23", PROP_REAL, { 0.9, PROP_NO_STR }, { ']', -1, 1, '[' } },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },

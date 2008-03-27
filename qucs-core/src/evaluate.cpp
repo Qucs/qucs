@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.77 2008-01-18 20:21:10 ela Exp $
+ * $Id: evaluate.cpp,v 1.78 2008-03-27 17:34:29 ela Exp $
  *
  */
 
@@ -3811,12 +3811,132 @@ constant * evaluate::ifthenelse_v_v (constant * args) {
   _RETV (cond ? v1 : v2);
 }
 
+constant * evaluate::ifthenelse_v_v_v (constant * args) {
+  _ARV0 (cond);
+  int t1 = _ARG(1)->getType ();
+  int t2 = _ARG(2)->getType ();
+  vector v1, v2;
+  switch (t1) {
+  case TAG_DOUBLE:
+    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+  case TAG_COMPLEX:
+    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+  case TAG_BOOLEAN:
+    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+  case TAG_VECTOR:
+    v1 = *V(_ARES(1)); break;
+  }
+  switch (t2) {
+  case TAG_DOUBLE:
+    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+  case TAG_COMPLEX:
+    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+  case TAG_BOOLEAN:
+    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+  case TAG_VECTOR:
+    v2 = *V(_ARES(2)); break;
+  }
+  _DEFV ();
+  int i, a, b;
+  vector * v = new vector ();
+  for (a = b = i = 0; i < cond->getSize (); i++) {
+    v->add (cond->get (i) != 0.0 ? v1 (a) : v2 (b));
+    a++;
+    b++;
+    if (a >= v1.getSize ()) a = 0;
+    if (b >= v2.getSize ()) b = 0;
+  }
+  res->v = v;
+  return res;
+}
+
 // ************************** less *************************
 constant * evaluate::less_d_d (constant * args) {
   _ARD0 (d0);
   _ARD1 (d1);
   _DEFB ();
   _RETB (d0 < d1);
+}
+
+constant * evaluate::less_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 < *c1);
+}
+
+constant * evaluate::less_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 < v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::less_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 < d1);
+}
+
+constant * evaluate::less_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 < *c1);
+}
+
+constant * evaluate::less_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 < v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::less_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) < d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::less_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) < *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::less_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) < v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
 }
 
 // ************************* greater ***********************
@@ -3827,6 +3947,87 @@ constant * evaluate::greater_d_d (constant * args) {
   _RETB (d0 > d1);
 }
 
+constant * evaluate::greater_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 > *c1);
+}
+
+constant * evaluate::greater_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 > real (v1->get (i)) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greater_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 > d1);
+}
+
+constant * evaluate::greater_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 > *c1);
+}
+
+constant * evaluate::greater_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 > v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greater_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) > d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greater_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) > *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greater_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) > v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
 // ********************** less or equal ********************
 constant * evaluate::lessorequal_d_d (constant * args) {
   _ARD0 (d0);
@@ -3835,12 +4036,174 @@ constant * evaluate::lessorequal_d_d (constant * args) {
   _RETB (d0 <= d1);
 }
 
+constant * evaluate::lessorequal_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 <= *c1);
+}
+
+constant * evaluate::lessorequal_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 <= real (v1->get (i)) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::lessorequal_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 <= d1);
+}
+
+constant * evaluate::lessorequal_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 <= *c1);
+}
+
+constant * evaluate::lessorequal_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 <= v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::lessorequal_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) <= d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::lessorequal_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) <= *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::lessorequal_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) <= v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
 // ********************* greater or equal ******************
 constant * evaluate::greaterorequal_d_d (constant * args) {
   _ARD0 (d0);
   _ARD1 (d1);
   _DEFB ();
   _RETB (d0 >= d1);
+}
+
+constant * evaluate::greaterorequal_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 >= *c1);
+}
+
+constant * evaluate::greaterorequal_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 >= real (v1->get (i)) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greaterorequal_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 >= d1);
+}
+
+constant * evaluate::greaterorequal_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 >= *c1);
+}
+
+constant * evaluate::greaterorequal_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 >= v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greaterorequal_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) >= d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greaterorequal_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) >= *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::greaterorequal_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) >= v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
 }
 
 // ************************** equal ************************

@@ -1,3 +1,11 @@
+2008-03-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Allowing negative
+	coupling coefficients for mutual inductors.
+
+	* evaluate.cpp: Added some more allowed function arguments for
+	relational operators.
+
 2008-02-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Additionally allowing dBu in equations as well
