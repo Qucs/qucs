@@ -1,3 +1,9 @@
+2008-03-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/thyristor.cpp, devices/triac.cpp, devices/diac.cpp:
+	Improved convergence during transient simulation. Thanks to
+	Michael.
+
 2008-02-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* rfedd.cpp: Implemented T-parameters.

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: triac.cpp,v 1.3 2008-02-20 17:36:59 ela Exp $
+ * $Id: triac.cpp,v 1.4 2008-03-31 10:50:04 ela Exp $
  *
  */
 
@@ -58,6 +58,7 @@ triac::triac () : circuit (4) {
 
 // Callback for initializing the DC analysis.
 void triac::initDC (void) {
+  Ud_last = 0.0;
   // allocate MNA matrices
   allocMatrixMNA ();
   // create internal node
@@ -66,46 +67,34 @@ void triac::initDC (void) {
 
 // Callback for DC analysis.
 void triac::calcDC (void) {
+  calcTheModel (false);
+}
+
+void triac::calcTheModel (bool last) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Igt");
   nr_double_t Is  = getPropertyDouble ("Is");
   nr_double_t N   = getPropertyDouble ("N");
-  nr_double_t Ri  = getPropertyDouble ("Ri");
-  nr_double_t Rg  = getPropertyDouble ("Rg");
+  nr_double_t Gg  = 1.0 / getPropertyDouble ("Rg");
   nr_double_t T   = getPropertyDouble ("Temp");
+  gi = 1.0 / getPropertyDouble ("Ri");
 
-  nr_double_t Ut, Gi_bo, Ud_bo, Ieq, Vd;
+  nr_double_t Ut, Ud_bo, Ieq, Vd;
 
-  T = kelvin (T);
-  Ut = N * T * kBoverQ;
-  Gi_bo = Ibo / Ubo;
-  Ud_bo = Ut * log (Ibo / Is + 1.0);
+  Ut = N * kelvin (T) * kBoverQ;
+  Ud_bo = log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Id = sign (Ud) * Is;
-  Ud = fabs (Ud);
+  Ud = fabs (Ud) / Ut;
 
-  if (Ud > Ud_bo)
-    gi = 1 / Ri;
+  bool isOn;
+  if (last)
+    isOn = (Ud_last / Ut) > Ud_bo;
   else
-    gi = Gi_bo;
+    isOn = Ud > Ud_bo;
 
-#if 0
-  nr_double_t Vi;
-  nr_double_t s = 20;
-  nr_double_t e = exp ((Ud - Ud_bo) * s);
-  nr_double_t f = (1 / Ri - Gi_bo) * e / (1 + e);
-  nr_double_t g = Gi_bo + f;
-  nr_double_t Ii, dIidUi, dIidUd;
-  Vi = real (getV (NODE_A1) - getV (NODE_IN));
-  Ii = Vi * g;
-  dIidUi = g;
-  dIidUd = s * f / (1 + e);
-  gi = dIidUi;
-#endif
-
-  Ud /= Ut;
   if (Ud >= 80.0) {
     Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
@@ -122,21 +111,32 @@ void triac::calcDC (void) {
   setI (NODE_A1, +0.0);
   setI (NODE_GA, +0.0);
 
+  if (!isOn) {
+    Ut = Ubo / log (Ibo / Is);
+    Vd = Ud = real (getV (NODE_A1) - getV (NODE_IN));
+    Id = sign (Ud) * Is;
+    Ud = fabs (Ud) / Ut;
+
+    if (Ud >= 80.0) {
+      Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+      Ud  = 80.0;
+    }
+    else
+      Id *= exp (Ud) - 1.0;
+
+    gi  = Is / Ut * exp (Ud);
+    Ieq = Id - Vd * gi;
+    addI (NODE_A1, -Ieq);
+    addI (NODE_IN, +Ieq);
+  }
+
   // fill in G-Matrix
   setY (NODE_A2, NODE_A2, +gd); setY (NODE_IN, NODE_IN, +gd);
   setY (NODE_A2, NODE_IN, -gd); setY (NODE_IN, NODE_A2, -gd);
   setY (NODE_A1, NODE_A1, +gi); addY (NODE_IN, NODE_IN, +gi);
   setY (NODE_A1, NODE_IN, -gi); setY (NODE_IN, NODE_A1, -gi);
-  setY (NODE_GA, NODE_GA, +1.0 / Rg); addY (NODE_IN, NODE_IN, +1.0 / Rg);
-  setY (NODE_GA, NODE_IN, -1.0 / Rg); setY (NODE_IN, NODE_GA, -1.0 / Rg);
-
-#if 0
-  Ieq = -dIidUd * Vd;
-  addI (NODE_IN, +Ieq);
-  addI (NODE_A1, -Ieq);
-  addY (NODE_A1, NODE_IN, +dIidUd); addY (NODE_IN, NODE_A2, +dIidUd);
-  setY (NODE_A1, NODE_A2, -dIidUd); addY (NODE_IN, NODE_IN, -dIidUd);
-#endif
+  setY (NODE_GA, NODE_GA, +Gg); addY (NODE_IN, NODE_IN, +Gg);
+  setY (NODE_GA, NODE_IN, -Gg); setY (NODE_IN, NODE_GA, -Gg);
 }
 
 // Saves operating points (voltages).
@@ -210,11 +210,17 @@ void triac::calcSP (nr_double_t frequency) {
 void triac::initTR (void) {
   setStates (2);
   initDC ();
+  time_prev = -1.0;
 }
 
 // Callback for the TR analysis.
-void triac::calcTR (nr_double_t) {
-  calcDC ();
+void triac::calcTR (nr_double_t time) {
+  if (time_prev < time) {
+    time_prev = time;
+    Ud_last = fabs (real (getV (NODE_IN) - getV (NODE_A2)));
+  }
+  calcTheModel (true);
+
   saveOperatingPoints ();
   loadOperatingPoints ();
   calcOperatingPoints ();

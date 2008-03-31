@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.h,v 1.1 2008-01-02 20:43:08 ela Exp $
+ * $Id: diac.h,v 1.2 2008-03-31 10:50:00 ela Exp $
  *
  */
 
@@ -43,9 +43,10 @@ class diac : public circuit, public devstates
   void calcTR (nr_double_t);
 
  private:
-  nr_double_t Ud, gd, Id, Qi, gi, Ui;
+  nr_double_t Ud, gd, Id, Qi, gi, Ui, Ud_last, time_prev;
 
  private:
+  void calcTheModel (bool);
   matrix calcMatrixY (nr_double_t);
 };
 
