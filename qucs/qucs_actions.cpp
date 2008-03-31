@@ -1039,10 +1039,11 @@ void QucsApp::slotApplyCompText()
     (view->MAx3)++;  // next property
     pp = pc->Props.at(view->MAx3-1);  // search for next property
 
+    Doc->viewport()->update();
+    view->drawn = false;
+
     if(!pp) {     // was already last property ?
       editText->setHidden(true);
-      Doc->viewport()->update();  // maybe text is now longer
-      view->drawn = false;
       return;
     }
 
@@ -1052,8 +1053,6 @@ void QucsApp::slotApplyCompText()
       pp = pc->Props.next();
       if(!pp) {     // was already last property ?
         editText->setHidden(true);
-        Doc->viewport()->update();  // maybe text is now longer
-        view->drawn = false;
         return;
       }
     }
