@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.6 2008/01/24 16:01:07 ela Exp $
+ * $Id: diac.cpp,v 1.7 2008/03/31 10:49:58 ela Exp $
  *
  */
 
@@ -57,6 +57,7 @@ diac::diac () : circuit (3) {
 
 // Callback for initializing the DC analysis.
 void diac::initDC (void) {
+  Ud_last = 0.0;
   // allocate MNA matrices
   allocMatrixMNA ();
   // create internal node
@@ -65,31 +66,36 @@ void diac::initDC (void) {
 
 // Callback for DC analysis.
 void diac::calcDC (void) {
+  calcTheModel (false);
+}
+
+void diac::calcTheModel (bool last) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Ibo");
   nr_double_t Is  = getPropertyDouble ("Is");
   nr_double_t N   = getPropertyDouble ("N");
-  nr_double_t Ri  = getPropertyDouble ("Ri");
+  nr_double_t gi  = 1.0 / getPropertyDouble ("Ri");
   nr_double_t T   = getPropertyDouble ("Temp");
 
-  nr_double_t Ut, Gi_bo, Ud_bo, Ieq, Vd;
+  bool isOn;
+  if (last)
+    Ud = fabs (Ud_last);
+  else
+    Ud = fabs (real (getV (NODE_A1) - getV (NODE_IN)));
+  isOn = Ud > (Ibo / gi);
 
-  T = kelvin (T);
-  Ut = N * T * kBoverQ;
-  Gi_bo = Ibo / Ubo;
-  Ud_bo = Ut * log (Ibo / Is + 1.0);
+  nr_double_t Ut, Ieq, Vd;
+
+  if (isOn)
+    Ut = N * kelvin (T) * kBoverQ;
+  else
+    Ut  = Ubo / log (Ibo / Is);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
-  Id = sign (Ud) * Is;
-  Ud = fabs (Ud);
+  Ud = fabs (Ud) / Ut;
+  Id = sign (Vd) * Is;
 
-  if (Ud > Ud_bo)
-    gi = 1 / Ri;
-  else
-    gi = Gi_bo;
-
-  Ud /= Ut;
   if (Ud >= 80.0) {
     Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
@@ -132,7 +138,7 @@ void diac::calcOperatingPoints (void) {
   // calculate capacitances and charges
   nr_double_t Ci;
   Ci = Cj0;
-  Qi = Cj0 * Ui;
+  Qi = Cj0 * Ud;
   // save operating points
   setOperatingPoint ("gi", gi);
   setOperatingPoint ("gd", gd);
@@ -150,15 +156,15 @@ matrix diac::calcMatrixY (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t gi = getOperatingPoint ("gi");
   nr_double_t Ci = getOperatingPoint ("Ci");
-  nr_complex_t yi = rect (gi, Ci * 2.0 * M_PI * frequency);
+  nr_complex_t yd = rect (gd, Ci * 2.0 * M_PI * frequency);
   matrix y (3);
-  y.set (NODE_A2, NODE_A2, +gd);
-  y.set (NODE_IN, NODE_IN, +gd +yi);
-  y.set (NODE_A2, NODE_IN, -gd);
-  y.set (NODE_IN, NODE_A2, -gd);
-  y.set (NODE_A1, NODE_A1, +yi);
-  y.set (NODE_A1, NODE_IN, -yi);
-  y.set (NODE_IN, NODE_A1, -yi);
+  y.set (NODE_A2, NODE_A2, +yd);
+  y.set (NODE_IN, NODE_IN, +yd +gi);
+  y.set (NODE_A2, NODE_IN, -yd);
+  y.set (NODE_IN, NODE_A2, -yd);
+  y.set (NODE_A1, NODE_A1, +gi);
+  y.set (NODE_A1, NODE_IN, -gi);
+  y.set (NODE_IN, NODE_A1, -gi);
   return y;
 }
 
@@ -179,15 +185,21 @@ void diac::calcSP (nr_double_t frequency) {
 void diac::initTR (void) {
   setStates (2);
   initDC ();
+  time_prev = -1.0;
 }
 
 // Callback for the TR analysis.
-void diac::calcTR (nr_double_t) {
-  calcDC ();
+void diac::calcTR (nr_double_t time) {
+  if (time_prev < time) {
+    time_prev = time;
+    Ud_last = real (getV (NODE_A1) - getV (NODE_IN));
+  }
+  calcTheModel (true);
+
   saveOperatingPoints ();
   loadOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Ci = getOperatingPoint ("Ci");
-  transientCapacitance (qState, NODE_A1, NODE_IN, Ci, Ui, Qi);
+  transientCapacitance (qState, NODE_IN, NODE_A2, Ci, Ud, Qi);
 }

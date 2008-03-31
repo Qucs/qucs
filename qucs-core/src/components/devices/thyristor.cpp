@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: thyristor.cpp,v 1.2 2008/01/25 08:26:43 ela Exp $
+ * $Id: thyristor.cpp,v 1.3 2008/03/31 10:50:01 ela Exp $
  *
  */
 
@@ -58,6 +58,7 @@ thyristor::thyristor () : circuit (4) {
 
 // Callback for initializing the DC analysis.
 void thyristor::initDC (void) {
+  Ud_last = 0.0;
   // allocate MNA matrices
   allocMatrixMNA ();
   // create internal node
@@ -66,32 +67,34 @@ void thyristor::initDC (void) {
 
 // Callback for DC analysis.
 void thyristor::calcDC (void) {
+  calcTheModel (false);
+}
+
+void thyristor::calcTheModel (bool last) {
   // get device properties
   nr_double_t Ubo = getPropertyDouble ("Vbo");
   nr_double_t Ibo = getPropertyDouble ("Igt");
   nr_double_t Is  = getPropertyDouble ("Is");
   nr_double_t N   = getPropertyDouble ("N");
-  nr_double_t Ri  = getPropertyDouble ("Ri");
-  nr_double_t Rg  = getPropertyDouble ("Rg");
+  nr_double_t Gg  = 1.0 / getPropertyDouble ("Rg");
   nr_double_t T   = getPropertyDouble ("Temp");
+  gi = 1.0 / getPropertyDouble ("Ri");
 
-  nr_double_t Ut, Gi_bo, Ud_bo, Ieq, Vd;
-  nr_double_t gtiny = Is;
+  nr_double_t Ut, Ud_bo, Ieq, Vd;
 
-  T = kelvin (T);
-  Ut = N * T * kBoverQ;
-  Gi_bo = Ibo / Ubo;
-  Ud_bo = Ut * log (Ibo / Is + 1.0);
+  Ut = N * kelvin (T) * kBoverQ;
+  Ud_bo = log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Id = Is;
-
-  if (Ud > Ud_bo)
-    gi = 1 / Ri;
-  else
-    gi = Gi_bo;
-
   Ud /= Ut;
+
+  bool isOn;
+  if (last)
+    isOn = (Ud_last / Ut) > Ud_bo;
+  else
+    isOn = Ud > Ud_bo;
+
   if (Ud >= 80.0) {
     Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
@@ -100,8 +103,6 @@ void thyristor::calcDC (void) {
     Id *= exp (Ud) - 1.0;
 
   gd  = Is / Ut * exp (Ud);
-  Id += gtiny * Vd;
-  gd += gtiny;
   Ieq = Id - Vd * gd;
 
   // fill in I-Vector
@@ -110,13 +111,32 @@ void thyristor::calcDC (void) {
   setI (NODE_A1, +0.0);
   setI (NODE_GA, +0.0);
 
+  if (!isOn) {
+    Ut = Ubo / log (Ibo / Is);
+    Vd = Ud = real (getV (NODE_A1) - getV (NODE_IN));
+    Id = Is;
+    Ud /= Ut;
+
+    if (Ud >= 80.0) {
+      Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+      Ud  = 80.0;
+    }
+    else
+      Id *= exp (Ud) - 1.0;
+
+    gi  = Is / Ut * exp (Ud);
+    Ieq = Id - Vd * gi;
+    addI (NODE_A1, -Ieq);
+    addI (NODE_IN, +Ieq);
+  }
+
   // fill in G-Matrix
   setY (NODE_A2, NODE_A2, +gd); setY (NODE_IN, NODE_IN, +gd);
   setY (NODE_A2, NODE_IN, -gd); setY (NODE_IN, NODE_A2, -gd);
   setY (NODE_A1, NODE_A1, +gi); addY (NODE_IN, NODE_IN, +gi);
   setY (NODE_A1, NODE_IN, -gi); setY (NODE_IN, NODE_A1, -gi);
-  setY (NODE_GA, NODE_GA, +1.0 / Rg); addY (NODE_IN, NODE_IN, +1.0 / Rg);
-  setY (NODE_GA, NODE_IN, -1.0 / Rg); setY (NODE_IN, NODE_GA, -1.0 / Rg);
+  setY (NODE_GA, NODE_GA, +Gg); addY (NODE_IN, NODE_IN, +Gg);
+  setY (NODE_GA, NODE_IN, -Gg); setY (NODE_IN, NODE_GA, -Gg);
 }
 
 // Saves operating points (voltages).
@@ -190,11 +210,17 @@ void thyristor::calcSP (nr_double_t frequency) {
 void thyristor::initTR (void) {
   setStates (2);
   initDC ();
+  time_prev = -1.0;
 }
 
 // Callback for the TR analysis.
-void thyristor::calcTR (nr_double_t) {
-  calcDC ();
+void thyristor::calcTR (nr_double_t time) {
+  if (time_prev < time) {
+    time_prev = time;
+    Ud_last = fabs (real (getV (NODE_IN) - getV (NODE_A2)));
+  }
+  calcTheModel (true);
+
   saveOperatingPoints ();
   loadOperatingPoints ();
   calcOperatingPoints ();

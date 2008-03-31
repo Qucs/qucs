@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: triac.h,v 1.1 2008/01/24 16:01:07 ela Exp $
+ * $Id: triac.h,v 1.2 2008/03/31 10:50:05 ela Exp $
  *
  */
 
@@ -44,6 +44,9 @@ class triac : public circuit, public devstates
 
  private:
   nr_double_t Ud, gd, Id, Qi, gi, Ui;
+
+  nr_double_t time_prev, Ud_last;
+  void calcTheModel (bool);
 
  private:
   matrix calcMatrixY (nr_double_t);
