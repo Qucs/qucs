@@ -6004,6 +6004,214 @@ Use:  qucsedit [-r] fitxer
         <source>Equation Defined 2-port RF Device</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MESFET verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>model selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pinch-off voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A/(V*V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturation voltage parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel length modulation parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>doping profile parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power law exponent parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power feedback parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum junction voltage limit before capacitance limiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitance saturation transition voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitance threshold transition voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc drain pull coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subthreshold conductance parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>built-in gate potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain junction reverse bias breakdown voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode saturation current temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward-bias depletion capcitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transit time under gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>area factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>energy gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero bias gate-drain junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero bias gate-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero bias drain-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Beta temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alpha temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamma temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subthreshold slope gate parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subthreshold drain pull parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-source current equation selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain current equation selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-source charge equation selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain charge equation selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain-source charge equation selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vto temperature  coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate resistance temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain resistance temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source resistance temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate reverse breakdown currrent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward bias slope resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>breakdown slope resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shot noise coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MESFET</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

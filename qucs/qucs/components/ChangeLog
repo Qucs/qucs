@@ -1,3 +1,8 @@
+2008-04-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* MESFET.cpp (MESFET): Added new MESFET Verilog-A device.  Thanks
+	to Mike Brinson!
+
 2008-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* sp_sim.cpp (recreate), param_sweep.cpp (recreate), tr_sim.cpp
