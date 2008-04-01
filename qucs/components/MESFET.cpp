@@ -168,7 +168,7 @@ Component * MESFET::newOne()
 Element * MESFET::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("MESFET");
-  BitmapFile = (char *) "nfet";
+  BitmapFile = (char *) "MESFET";
 
   if(getNewOne) return new MESFET();
   return 0;
