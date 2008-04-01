@@ -30,7 +30,7 @@ Version 0.0.14
  * fixed printing (font sizes) under Win32
  * support for sub- and super-script in graphical text paintings
  * new components: diac, tria, thyristor, logarithmic amplifier,
-   HICUM L0 v1.12, potentiometer, equation defined RF device
+   HICUM L0 v1.12, potentiometer, equation defined RF device, MESFET
 
 Version 0.0.13
 --------------
