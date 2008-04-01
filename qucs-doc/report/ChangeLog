@@ -1,3 +1,8 @@
+2008-04-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* mesfet/content.tex: New report about Verilog-A MESFET models.
+	Thanks a lot to Mike Brinson!
+
 2008-02-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* potentiometer/content.tex: New report about potentiometer model.
