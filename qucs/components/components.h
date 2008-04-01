@@ -137,5 +137,6 @@
 #include "log_amp.h"
 #include "hic0_full.h"
 #include "potentiometer.h"
+#include "MESFET.h"
 
 #endif
