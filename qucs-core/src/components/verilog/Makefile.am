@@ -41,7 +41,8 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.core.h \
 	hic2_full.analogfunction.h hic2_full.core.h \
 	log_amp.analogfunction.h log_amp.core.h \
 	hic0_full.analogfunction.h hic0_full.core.h \
-	potentiometer.analogfunction.h potentiometer.core.h
+	potentiometer.analogfunction.h potentiometer.core.h \
+	MESFET.analogfunction.h MESFET.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
