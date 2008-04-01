@@ -28,7 +28,7 @@ Version 0.0.14
 
  * implementation of multi- and 2-port equation defined RF device
  * new Verilog-A device models: Logarithmic Amplifier, HICUM L0 v1.12,
-   Potentiometer
+   Potentiometer, MESFET (Curtice, Statz, TOM-1 and TOM-2)
  * added 3- and more argument versions of PlotVs()
  * new non-linear component: diac
 

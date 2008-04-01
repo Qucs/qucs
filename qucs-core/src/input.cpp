@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.82 2008-02-17 18:05:36 ela Exp $
+ * $Id: input.cpp,v 1.83 2008-04-01 14:52:04 ela Exp $
  *
  */
 
@@ -519,6 +519,8 @@ circuit * input::createCircuit (char * type) {
     return new hic0_full ();
   else if (!strcmp (type, "potentiometer"))
     return new potentiometer ();
+  else if (!strcmp (type, "MESFET"))
+    return new MESFET ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;
