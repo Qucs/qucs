@@ -1,4 +1,5 @@
 <!DOCTYPE TS><TS>
+<defaultcodec></defaultcodec>
 <context>
     <name>ArrowDialog</name>
     <message>
@@ -326,14 +327,14 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV soubory</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation>zmměnit vlastnosti diagramu</translation>
+        <translation type="unfinished">Upravit vlastnosti diagramu</translation>
     </message>
     <message>
         <source>Graph Input</source>
@@ -659,7 +660,7 @@
     </message>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished">Analogový</translation>
+        <translation>Analogový</translation>
     </message>
 </context>
 <context>
@@ -868,15 +869,15 @@
     </message>
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít _{..} and ^{..} pro podsazené a nadsazené symboly.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Zrušit</translation>
+        <translation>&amp;Zrušit</translation>
     </message>
 </context>
 <context>
@@ -1117,7 +1118,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV soubory</translation>
     </message>
 </context>
 <context>
@@ -1564,7 +1565,7 @@ je ale %1 !</translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished">Počet rodičů:</translation>
+        <translation>Počet rodičů:</translation>
     </message>
     <message>
         <source>Constant F:</source>
@@ -5265,119 +5266,119 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">formát netlistu</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verilog soubor</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jméno Verilog souboru</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba: Chybí jméno souboru v %1 komponenty &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chyba: Nelze otevřít %1 souboru &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Průrazné C-E napětí, V, (0 == deaktivuje průraz kolektoru)</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">exponenciální proudový zdroj</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">proud před vzestupnou hranou</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">maximální proud pulsu</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">počátek exponenciální vzestupné hrany</translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">počátek exponenciální prodlevy</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">časová konstanta vzestupné hrany</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">časová konstanta sestupné hrany</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exponenciální proudový zdroj</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">exponenciální napěťový zdroj</translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napětí před vzestupnou hranou</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">maximální napětí pulsu</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">doba trvání vzestupné hrany</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">doba trvání sestupné hrany</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">exponenciální napěťový puls</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dělící faktor parazitní B-C kapacity</translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Šumový faktor vnitřního odporu báze</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">komponenta definovaná rovnicí</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">typ rovnic</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">počet závorek</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">aktuální rovnice</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rovnice náboje</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Komponenta definovaná rovnicí</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
@@ -5389,11 +5390,11 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CHYBA: Nelze uložit převedený SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CHYBA: Nelze otevřít transformovaný SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting ...</source>
@@ -5402,21 +5403,24 @@ Použití:  qucsedit [-r] soubor
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CHYBA: Nelze otevřít soubor &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CHYBA: Nelze vytvořit podadresář s uživatelskou knihovnou !
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CHYBA: Nelze vytvořit soubor &quot;%1&quot;.
+</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">UPOZORNĚNÍ: Bude přeskočena zaknihovaná komponenta &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
@@ -5424,11 +5428,11 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">Předzpracování SPICE souboru &quot;%1&quot;.</translation>
+        <translation type="unfinished">Příprava SPICE souboru &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation>CHYBA: Nelze uložit předzpracovaný SPICE soubor &quot;%1&quot;.</translation>
+        <translation type="unfinished">CHYBA: Nelze uložit zpracovaný SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute</source>
@@ -5440,35 +5444,35 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napěťový zdroje ze souboru</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">jméno souboru s navzorkovanými hodnotami</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zopakovat formu signálu</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napěťový zdroj ze souboru</translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">proudový zdroj ze souboru</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">proudové zesílení</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proudový zdroj ze souboru </translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modulární verilog model operačního zesilovače</translation>
     </message>
     <message>
         <source>Gain bandwidth product (Hz)</source>
@@ -5476,35 +5480,35 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diferenciální DC zesílení otevřeného obvodu (dB)</translation>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Frekvence druhého pólu (Hz)</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Výstupní odpor (Ohm)</translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rozdílová vstupní kapacita (F)</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rozdílový vstupní odpor (Ohm)</translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vstupní offset proud (A)</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vstupní bias proud (A)</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vstupní offset napětí (V)</translation>
     </message>
     <message>
         <source>Common-mode rejection ratio at DC (dB)</source>
@@ -5516,95 +5520,95 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Strmost vzestupné hrany (V/s)</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Strmost sestupné hrany (V/s) </translation>
     </message>
     <message>
         <source>Positive output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pozitivní omezení výstupního napětí (V)</translation>
     </message>
     <message>
         <source>Negative output voltage limit (V)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Negativní omezení výstupního napětí (V)</translation>
     </message>
     <message>
         <source>Maximum DC output current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maximální výstupní DC proud (A)</translation>
     </message>
     <message>
         <source>Current limit scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Měřítko pro proudové omezení</translation>
     </message>
     <message>
         <source>Modular OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modulární OpAmp</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">HICUM Level 2 v2.22 Verilog model</translation>
     </message>
     <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rekombinační časová konstanta na B-C přechodu pro velkou dopřednou injekci</translation>
     </message>
     <message>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Udává základní spojovací uzel pro tunelový proud</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dělící faktor parazitní B-C kapacity</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dělící faktor parazitní B-E kapacity</translation>
     </message>
     <message>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vypíná nebo zapíná vertikállní NQS efekt</translation>
     </message>
     <message>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Udává kde bude umístěn 1/f šumový zdroj</translation>
     </message>
     <message>
         <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Efektivní bandgap napětí emitoru</translation>
     </message>
     <message>
         <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Efektivní bandgap napětí kolektoru</translation>
     </message>
     <message>
         <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Efektivní bandgap napětí substrátu</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koeficient K1 v &quot;T&quot; závilé bandgap rovnici</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koeficient K2 v &quot;T&quot; závilé bandgap rovnici</translation>
     </message>
     <message>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exponentiální koeficient teplotní závislosti přenosového proudu</translation>
     </message>
     <message>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exponentiální koeficient teplotní závislosti proudu B-E přechodu</translation>
     </message>
     <message>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vypíná nebo vypíná self-heating efekt</translation>
     </message>
     <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přepínač pro kompatibilitu s modelem v2.1 (0=v2.1)</translation>
     </message>
     <message>
         <source>HICUM L2 v2.22</source>
@@ -5636,7 +5640,7 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ohmů</translation>
     </message>
     <message>
         <source>F</source>
@@ -5664,7 +5668,7 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">diak (bidirectional trigger diode)</translation>
     </message>
     <message>
         <source>(bidirectional) breakover voltage</source>
@@ -5676,11 +5680,11 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <source>parasitic capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">parazitní kapacitance</translation>
     </message>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diak</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
@@ -9100,7 +9104,7 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-a zařízení</translation>
     </message>
 </context>
 <context>
@@ -9147,23 +9151,23 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Zin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zin:</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished">50</translation>
+        <translation>50</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished">Ohmů</translation>
+        <translation>Ohmů</translation>
     </message>
     <message>
         <source>Zout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zout:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
@@ -9175,19 +9179,19 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>R1:</source>
-        <translation type="unfinished"></translation>
+        <translation>R1:</translation>
     </message>
     <message>
         <source>--</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>R2:</source>
-        <translation type="unfinished"></translation>
+        <translation>R2:</translation>
     </message>
     <message>
         <source>R3:</source>
-        <translation type="unfinished"></translation>
+        <translation>R3:</translation>
     </message>
     <message>
         <source>Result:</source>
@@ -13634,38 +13638,38 @@ Chyby:
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished">Spustit novou simulaci na %1 v %2</translation>
+        <translation>Spustit novou simulaci na %1 v %2</translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished">hotovo.</translation>
+        <translation>hotovo.</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished">Simulace ukončena na %1 v %2</translation>
+        <translation>Simulace ukončena na %1 v %2</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Připraveno.</translation>
+        <translation>Připraveno.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished">Chyby vyskytnuvší se během simulace na %1 v %2</translation>
+        <translation>Chyby vyskytnuvší se během simulace na %1 v %2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished">Přerušeno.</translation>
+        <translation>Přerušeno.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished">Výstup:
+        <translation>Výstup:
 ------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished">Chyby:
+        <translation>Chyby:
 -------</translation>
     </message>
 </context>
@@ -13785,7 +13789,7 @@ Chyby:
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished">Nelze uložit předzpracovaný SPICE soubor &quot;%1&quot;.</translation>
+        <translation>Nelze uložit předzpracovaný SPICE soubor &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
