@@ -49,8 +49,7 @@ void PortSymbol::paint(ViewPainter *p)
   p->drawEllipse(cx-4, cy-4, 8, 8);
 
 
-  QFontMetrics  metrics(p->Painter->font());
-  QSize r = metrics.size(0, nameStr);
+  QSize r = p->Painter->fontMetrics().size(0, nameStr);
   int Unit = int(8.0 * p->Scale);
   x1 = -r.width() - Unit;
   y1 = -((r.height() + Unit) >> 1);
@@ -66,10 +65,6 @@ void PortSymbol::paint(ViewPainter *p)
   tx = x1 + (Unit >> 1);
   ty = y1 + (Unit >> 1);
   switch(Angel) {
-    case 0:
-      tx = x1 + (Unit >> 1);
-      ty = y1 + (Unit >> 1);
-      break;
     case 90:
       x1 = y1;
       y1 = -Unit;
