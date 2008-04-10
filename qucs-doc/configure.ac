@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(qucs-doc,0.0.14,qucs-bugs@lists.sourceforge.net)
+AC_INIT(qucs-doc,0.0.15,qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([technical/technical.tex])
 
 AC_CANONICAL_BUILD
