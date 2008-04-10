@@ -1,3 +1,8 @@
+2008-04-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.14 and bumped up to version
+        0.0.15.
+
 2007-12-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.13 and bumped up to version
