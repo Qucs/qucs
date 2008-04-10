@@ -132,7 +132,7 @@ unfixed) have a look at the file BUGS.
 	- Microstrip t-junction.
 	- Microstrip cross.
 - Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.
-- MESFET (Curtize, Staatz) implementations.
+	- MESFET (Curtize, Staatz) implementations.
 - BSIMv3 implementation.
 - BSIMv4 implementation.
 - Harmonic balance simulation.

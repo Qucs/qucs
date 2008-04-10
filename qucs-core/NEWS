@@ -30,7 +30,7 @@ Version 0.0.14
  * new Verilog-A device models: Logarithmic Amplifier, HICUM L0 v1.12,
    Potentiometer, MESFET (Curtice, Statz, TOM-1 and TOM-2)
  * added 3- and more argument versions of PlotVs()
- * new non-linear component: diac
+ * new non-linear components: diac, triac, thyristor
 
 Version 0.0.13
 --------------
