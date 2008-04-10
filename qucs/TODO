@@ -40,7 +40,8 @@ unfixed) have a look at the file BUGS.
 	- implementation of 3d cartesian diagram
 	- node/branch annotation of simulation results
 	- filter design tool
-- implement coplanar line synthesis/analysis in transmission line tool
+	- implement coplanar line synthesis/analysis in transmission
+	  line tool
 	- smith chart design tool for impedance and noise matching
 	- attenuator design tool
 - topology check (open ports) for schematics
