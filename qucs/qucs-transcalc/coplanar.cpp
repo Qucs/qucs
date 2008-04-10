@@ -26,6 +26,26 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <float.h>
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+# ifndef isnan
+# define isnan(x)  _isnan(x)
+# endif
+# ifndef isinf
+# define isinf(x)  (!_finite(x) && !_isnan(x))
+# endif
+#endif
+#if defined (__SVR4) && defined (__sun)
+# define isinf(x) (!finite(x) && (x) == (x)) 
+#endif
+#ifndef M_PI_2
+#define M_PI_2    1.5707963267948966192313216916397514
+#endif
+#ifndef INFINITY
+#define INFINITY -log (0.0);
+#endif
 
 #include "units.h"
 #include "transline.h"
