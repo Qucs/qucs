@@ -29,7 +29,7 @@ echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal}
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-${AUTOMAKE:-automake}
+${AUTOMAKE:-automake} -a -f -c
 echo "done."
 echo -n "Creating configure... "
 autoconf
