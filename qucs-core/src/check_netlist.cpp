@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.122 2008-02-22 16:55:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.123 2008-04-11 16:22:28 ela Exp $
  *
  */
 
@@ -77,12 +77,12 @@ static struct define_t * checker_find_definition (char * type, int action) {
 
 /* The function returns the number of properties in a definition line
    specified by the given key. */
-static int checker_find_property (const char * key, struct pair_t * pair) {
+static int checker_find_property (const char * key, struct pair_t * pp) {
   int count = 0;
-  while (pair != NULL) {
-    if (!strcmp (pair->key, key))
+  while (pp != NULL) {
+    if (!strcmp (pp->key, key))
       count++;
-    pair = pair->next;
+    pp = pp->next;
   }
   return count;
 }
@@ -953,24 +953,24 @@ int netlist_checker_variables (environment * env) {
    inside the allowed range defined by the given property definition
    and returns the number of error or zero otherwise. */
 static int checker_value_in_prop_range (char * instance, struct define_t * def,
-					struct pair_t * pair,
+					struct pair_t * pp,
 					struct property_t * prop) {
   int errors = 0;
   // check values
   if (PROP_IS_VAL (*prop)) {
     if (!PROP_IS_LST (*prop)) {
       // lists of values possible?
-      if (pair->value->next != NULL) {
+      if (pp->value->next != NULL) {
 	logprint (LOG_ERROR,
 		  "checker error, value of `%s' needs to be "
 		  "a single value in `%s:%s', no lists possible\n",
-		  pair->key, def->type, instance);
+		  pp->key, def->type, instance);
 	errors++;
       }
     }
     else {
       // a value list
-      struct value_t * val = pair->value;
+      struct value_t * val = pp->value;
       val->var = eqn::TAG_VECTOR;
       // check and evaluate the unit scale in a value list
       for (; val != NULL; val = val->next) {
@@ -980,13 +980,13 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     }
     // check range of all values
     if (PROP_HAS_RANGE (*prop)) {
-      struct value_t * val = pair->value;
+      struct value_t * val = pp->value;
       if (val->ident) {
 	/* no range checking on variable identifier */
 	logprint (LOG_STATUS, 
 		  "checker notice, value of `%s' (variable `%s') could be "
 		  "out of range `%c%g,%g%c' in `%s:%s'\n",
-		  pair->key, val->ident, prop->range.il, prop->range.l,
+		  pp->key, val->ident, prop->range.il, prop->range.l,
 		  prop->range.h, prop->range.ih, def->type, instance);
 	val = NULL;
       }
@@ -1004,7 +1004,7 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
 	  logprint (LOG_ERROR, 
 		    "checker error, value of `%s' (%g) is out of "
 		    "range `%c%g,%g%c' in `%s:%s'\n",
-		    pair->key, val->value, prop->range.il, prop->range.l,
+		    pp->key, val->value, prop->range.il, prop->range.l,
 		    prop->range.h, prop->range.ih, def->type, instance);
 	  errors++;
 	}
@@ -1013,22 +1013,22 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     // check fraction of integers
     if (PROP_IS_INT (*prop)) {
       double integral;
-      if (modf (pair->value->value, &integral) != 0) {
+      if (modf (pp->value->value, &integral) != 0) {
 	logprint (LOG_ERROR,
 		  "checker error, value of `%s' (%g) needs to be "
 		  "an integer in `%s:%s'\n",
-		  pair->key, pair->value->value, def->type, instance);
+		  pp->key, pp->value->value, def->type, instance);
 	errors++;
       }
     }
   }      
   // check identifiers
   else {
-    if (pair->value->ident == NULL) {
+    if (pp->value->ident == NULL) {
       logprint (LOG_ERROR,
 		"checker error, value of `%s' (%g) needs to be "
 		"an identifier in `%s:%s'\n",
-		pair->key, pair->value->value, def->type, instance);
+		pp->key, pp->value->value, def->type, instance);
       errors++;
     }
   }
@@ -1039,19 +1039,19 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
    part of the available definition is inside the allowed range and
    returns zero if not.  Otherwise the function returns non-zero. */
 static int checker_value_in_range (char * instance, struct define_t * def,
-				   struct pair_t * pair) {
+				   struct pair_t * pp) {
   int i, errors = 0;
   // go through required properties
   for (i = 0; PROP_IS_PROP (def->required[i]); i++) {
-    if (!strcmp (def->required[i].key, pair->key)) {
-      errors += checker_value_in_prop_range (instance, def, pair,
+    if (!strcmp (def->required[i].key, pp->key)) {
+      errors += checker_value_in_prop_range (instance, def, pp,
 					     &def->required[i]);
     }
   }
   // go through optional properties
   for (i = 0; PROP_IS_PROP (def->optional[i]); i++) {
-    if (!strcmp (def->optional[i].key, pair->key)) {
-      errors += checker_value_in_prop_range (instance, def, pair,
+    if (!strcmp (def->optional[i].key, pp->key)) {
+      errors += checker_value_in_prop_range (instance, def, pp,
 					     &def->optional[i]);
     }
   }
@@ -1638,17 +1638,17 @@ static void netlist_free_value (struct value_t * value) {
 }
 
 /* Deletes pair list of a definition. */
-static void netlist_free_pairs (struct pair_t * pair) {
+static void netlist_free_pairs (struct pair_t * pp) {
   struct pair_t * np;
-  for (; pair != NULL; pair = np) {
-    np = pair->next;
+  for (; pp != NULL; pp = np) {
+    np = pp->next;
     struct value_t * nv, * value;
-    for (value = pair->value; value != NULL; value = nv) {
+    for (value = pp->value; value != NULL; value = nv) {
       nv = value->next;
       netlist_free_value (value);
     }
-    free (pair->key);
-    free (pair);
+    free (pp->key);
+    free (pp);
   }
 }
 

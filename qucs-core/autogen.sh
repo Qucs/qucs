@@ -32,7 +32,7 @@ echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-${AUTOMAKE:-automake}
+${AUTOMAKE:-automake} -a -f -c
 echo "done."
 echo -n "Creating configure... "
 autoconf

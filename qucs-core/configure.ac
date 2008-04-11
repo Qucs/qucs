@@ -60,7 +60,7 @@ fi
 
 dnl Check for debugging.
 AC_ARG_ENABLE([debug],
-  AC_HELP_STRING([--enable-debug],
+  AS_HELP_STRING([--enable-debug],
                  [include debug output @<:@default=no@:>@]),
   [case "$enableval" in
    yes) enable_debug="yes" ;;
@@ -136,7 +136,7 @@ AC_TYPE_SIZE_T
 
 dnl Check for double type.
 AC_ARG_ENABLE([double],
-  AC_HELP_STRING([--enable-double=TYPE],
+  AS_HELP_STRING([--enable-double=TYPE],
                  [type of double representation @<:@default=double@:>@]),
   [case "$enableval" in
    no | yes | double)
