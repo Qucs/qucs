@@ -23,7 +23,7 @@
 #
 
 SUBDIRS = verilog StoQ_test1 StoQ_test2 StoQ_test3 StoQ_test4 StoQ_test5 \
-  curtice mod_amp log_amp potentiometer
+  curtice mod_amp log_amp potentiometer mesfet
 
 EXTRA_DIST = $(SOURCES) $(TEXFILES)
 
