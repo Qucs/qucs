@@ -10,3 +10,10 @@ configure
 stamp-h.in
 stamp-h1
 qucs-*.tar.gz
+INSTALL
+config.guess
+config.sub
+depcomp
+install-sh
+missing
+mkinstalldirs
