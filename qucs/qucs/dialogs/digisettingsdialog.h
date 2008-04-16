@@ -25,6 +25,8 @@ class TextDoc;
 class QLineEdit;
 class QPushButton;
 class QRegExpValidator;
+class QLabel;
+class QRadioButton;
 
 
 class DigiSettingsDialog : public QDialog  {
@@ -34,10 +36,13 @@ public:
  ~DigiSettingsDialog();
 
   QString SimTime;
-  QLineEdit *TimeEdit;
+  QLineEdit *TimeEdit, *LibEdit;
+  QLabel *TimeLabel, *LibLabel;
+  QRadioButton *simRadio, *comRadio;
 
 private slots:
   void slotOk();
+  void slotChangeMode(int);
 
 private:
   TextDoc *Doc;
