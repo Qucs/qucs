@@ -1,3 +1,8 @@
+2008-04-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/digisettingsdialog.cpp (DigiSettingsDialog): Started to
+	add settings for pre-compiled digital simulation modules.
+
 2008-03-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic.cpp (save), textdoc.cpp (save): Fixed save timestamp
