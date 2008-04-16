@@ -22,6 +22,9 @@
 #include <qvalidator.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
+#include <qvgroupbox.h>
 
 #include "digisettingsdialog.h"
 #include "textdoc.h"
@@ -40,18 +43,34 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   QVBoxLayout *all = new QVBoxLayout(this);
   all->setMargin(5);
 
-  QLabel *Label1 = new QLabel(tr("Duration of Simulation:"), this);
-  all->addWidget(Label1);
+  QVGroupBox *setGroup = new QVGroupBox(tr("Digital Simulation Settings"), this);
+  all->addWidget(setGroup);
 
+  QButtonGroup *toggleGroup = new QButtonGroup();
+  simRadio = new QRadioButton(tr("Simulation"), setGroup);
+  simRadio->setChecked(true);
+
+  QHBox *hb1 = new QHBox(setGroup);
+  hb1->setSpacing(5);
+  TimeLabel = new QLabel(tr("Duration of Simulation:"), hb1);
   Doc->loadSimulationTime(SimTime);
-  TimeEdit = new QLineEdit(this);
+  TimeEdit = new QLineEdit(hb1);
   TimeEdit->setValidator(Validator);
   TimeEdit->setText(SimTime);
-  all->addWidget(TimeEdit);
-/*
-  QLabel *Label2 = new QLabel(
-          tr("Note: This value is stored in the datadisplay."), all);
-*/
+
+  QRadioButton *comRadio = new QRadioButton(tr("Precompile Module"), setGroup);
+  toggleGroup->insert(simRadio);
+  toggleGroup->insert(comRadio);
+  connect(toggleGroup, SIGNAL(clicked(int)), SLOT(slotChangeMode(int)));
+
+  setGroup->addSpace(15);
+  QHBox *hb2 = new QHBox(setGroup);
+  hb2->setSpacing(5);
+  LibLabel = new QLabel(tr("Libraries:"), hb2);
+  LibEdit = new QLineEdit(hb2);
+
+  all->addSpacing(5);
+  all->addStretch();
   QHBox *Buttons = new QHBox(this);
   all->addWidget(Buttons);
   QPushButton *ButtonOk = new QPushButton(tr("Ok"), Buttons);
@@ -61,6 +80,7 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
 
   ButtonOk->setDefault(true);
   setFocusProxy(TimeEdit);
+  TimeEdit->setFocus();
 }
 
 DigiSettingsDialog::~DigiSettingsDialog()
@@ -86,4 +106,19 @@ void DigiSettingsDialog::slotOk()
   if(changed)
     Doc->slotSetChanged();
   accept();
+}
+
+void DigiSettingsDialog::slotChangeMode(int idx)
+{
+  switch(idx) {
+  case 0:
+    TimeEdit->setEnabled(true);
+    TimeEdit->setFocus();
+    TimeLabel->setEnabled(true);
+    break;
+  case 1:
+    TimeEdit->setEnabled(false);
+    TimeLabel->setEnabled(false);
+    break;
+  }
 }
