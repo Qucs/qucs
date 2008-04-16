@@ -638,6 +638,22 @@
         <source>Error</source>
         <translation>エラー</translation>
     </message>
+    <message>
+        <source>Digital Simulation Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="unfinished">シミュレーション</translation>
+    </message>
+    <message>
+        <source>Precompile Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Libraries:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
