@@ -1,3 +1,8 @@
+2008-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_touchstone.cpp: Fixed compile issue for some gcc/glibc
+	combination (SuSE linux).
+
 2008-04-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.cpp: Fixing compile issues for MSVC.

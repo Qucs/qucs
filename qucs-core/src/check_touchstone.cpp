@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.16 2008-01-10 20:00:00 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.17 2008-04-23 19:00:45 ela Exp $
  *
  */
 
@@ -101,7 +101,7 @@ static int touchstone_vector_check (void) {
     even = 1;
   }
   /* first line determines the number of expected ports */
-  touchstone_options.ports = (int) sqrt ((size - 1) / 2);
+  touchstone_options.ports = (int) sqrt ((size - 1) / 2.0);
 
   /* check first frequency value */
   if (f < 0.0) {
