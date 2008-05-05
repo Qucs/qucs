@@ -1158,23 +1158,24 @@ bool QucsApp::gotoPage(const QString& Name)
   return true;
 }
 
+QString lastDirOpenSave; // to remember last directory and file
+
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
-  static QString lastDir;  // to remember last directory and file
   editText->setHidden(true); // disable text edit of component property
 
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(
-	lastDir.isEmpty() ? QString(".") : lastDir,
+	lastDirOpenSave.isEmpty() ? QString(".") : lastDirOpenSave,
 	QucsFileFilter, this, 0, tr("Enter a Schematic Name"));
 
   if(s.isEmpty())
     statusBar()->message(tr("Opening aborted"), 2000);
   else {
     gotoPage(s);
-    lastDir = s;   // remember last directory and file
+    lastDirOpenSave = s;   // remember last directory and file
     statusBar()->message(tr("Ready."));
   }
 }
@@ -1216,7 +1217,6 @@ void QucsApp::slotFileSave()
 // --------------------------------------------------------------
 bool QucsApp::saveAs()
 {
-  static QString lastDir;  // to remember last directory and file
   QWidget *w = DocumentTab->currentPage();
   QucsDoc *Doc = getDoc();
 
@@ -1230,8 +1230,8 @@ bool QucsApp::saveAs()
     Info.setFile(s);
     if(s.isEmpty()) {   // which is default directory ?
       if(ProjName.isEmpty()) {
-        if(lastDir.isEmpty())  s = QDir::currentDirPath();
-        else  s = lastDir;
+        if(lastDirOpenSave.isEmpty())  s = QDir::currentDirPath();
+        else  s = lastDirOpenSave;
       }
       else s = QucsWorkDir.path();
     }
@@ -1276,7 +1276,7 @@ bool QucsApp::saveAs()
     break;
   }
   Doc->setName(s);
-  lastDir = Info.dirPath(true);  // remember last directory and file
+  lastDirOpenSave = Info.dirPath(true);  // remember last directory and file
 
   if(intoView) {    // insert new name in Content ListView ?
     if(Info.dirPath(true) == QucsWorkDir.absPath())
