@@ -1,3 +1,8 @@
+2008-05-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs.cpp (saveAs): Using single directory variable for both Open
+	and SaveAs as last directory.
+
 2008-04-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/digisettingsdialog.cpp (DigiSettingsDialog): Started to

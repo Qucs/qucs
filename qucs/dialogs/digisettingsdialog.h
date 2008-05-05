@@ -36,8 +36,8 @@ public:
  ~DigiSettingsDialog();
 
   QString SimTime;
-  QLineEdit *TimeEdit, *LibEdit;
-  QLabel *TimeLabel, *LibLabel;
+  QLineEdit *TimeEdit, *LibEdit, *NameEdit;
+  QLabel *TimeLabel, *LibLabel, *NameLabel;
   QRadioButton *simRadio, *comRadio;
 
 private slots:

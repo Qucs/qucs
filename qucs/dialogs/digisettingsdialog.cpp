@@ -63,6 +63,11 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   toggleGroup->insert(comRadio);
   connect(toggleGroup, SIGNAL(clicked(int)), SLOT(slotChangeMode(int)));
 
+  QHBox *hb3 = new QHBox(setGroup);
+  hb3->setSpacing(5);
+  NameLabel = new QLabel(tr("Library Name:"), hb3);
+  NameEdit = new QLineEdit(hb3);
+
   setGroup->addSpace(15);
   QHBox *hb2 = new QHBox(setGroup);
   hb2->setSpacing(5);
@@ -115,10 +120,14 @@ void DigiSettingsDialog::slotChangeMode(int idx)
     TimeEdit->setEnabled(true);
     TimeEdit->setFocus();
     TimeLabel->setEnabled(true);
+    NameEdit->setEnabled(false);
+    NameLabel->setEnabled(false);
     break;
   case 1:
     TimeEdit->setEnabled(false);
     TimeLabel->setEnabled(false);
+    NameEdit->setEnabled(true);
+    NameLabel->setEnabled(true);
     break;
   }
 }
