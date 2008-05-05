@@ -1,0 +1,2219 @@
+<Qucs Library 0.0.14 "PMOSFETs">
+
+<DefaultSymbol>
+  <.ID 8 -26 T>
+  <Line -14 -13 0 26 #000080 3 1>
+  <Line -30 0 16 0 #000080 2 1>
+  <Line -10 -11 10 0 #000080 2 1>
+  <Line 0 -11 0 -19 #000080 2 1>
+  <Line -10 11 10 0 #000080 2 1>
+  <Line 0 0 0 30 #000080 2 1>
+  <Line -10 0 10 0 #000080 2 1>
+  <Line -10 -16 0 9 #000080 3 1>
+  <Line -10 -4 0 8 #000080 3 1>
+  <Line -10 7 0 9 #000080 3 1>
+  <Line -6 -5 5 5 #000080 2 1>
+  <Line -6 5 5 -5 #000080 2 1>
+  <.PortSym -30 0 1 0>
+  <.PortSym 0 -30 2 270>
+  <.PortSym 0 30 3 90>
+</DefaultSymbol>
+
+<Component BSP171>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -60 V, -1700 mA, 0.35 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSP171 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net102 _net3 L="5n"
+    R:RG _net4 _net95 R="33.1"
+    R:RS _net5 _net76 R="92m"
+    Diode:D171 _net76 _net102 Cj0="1n" Rs="20m" Tt="100n" Is="300p" Bv="60" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=1N RS=20M TT=100N IS=300P BV=60) 
+    MOSFET:M171 _net95 _net117 _net76 _net76 Type="pfet" Vt0="-1.582" Kp="0.858" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.582 KP=0.858) 
+    MOSFET:M2 _net117 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.3" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=.3) 
+    MOSFET:M3 _net11 _net117 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.3" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="0.5n"
+    Diode:DGD _net8 _net117 Cj0="758p" M="0.635" Vj="1.015" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=758P M=0.635 VJ=1.015) 
+    C:CGS _net76 _net95 C="0.6n"
+    Vdc:V8 _net11 _net95 U="-14"
+    R:RH _net117 _net102 R="10m"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSP315>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -50 V, -1100 mA, 0.8 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSP315 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net102 _net3 L="5n"
+    R:RG _net4 _net95 R="5.5m"
+    R:RS _net5 _net76 R="252m"
+    Diode:D315 _net76 _net102 Cj0="300p" Rs="20m" Tt="100n" Is="300p" Bv="50" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=300P RS=20M TT=100N IS=300P BV=50) 
+    MOSFET:M315 _net95 _net102 _net76 _net76 Type="pfet" Vt0="-1.246" Kp="0.37" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.246 KP=0.37) 
+    MOSFET:M2 _net102 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net11 _net102 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="180p"
+    Diode:DGD _net8 _net102 Cj0="527p" M="0.605" Vj="0.913" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=527P M=0.605 VJ=0.913) 
+    C:CGS _net76 _net95 C="215p"
+    Vdc:VGC _net11 _net95 U="-20"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSP316>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -650 mA, 2.2 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSP316 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net117 _net3 L="5n"
+    R:RG _net4 _net95 R="18.4"
+    R:RS _net5 _net76 R="485m"
+    Diode:D316 _net76 _net117 Cj0="250p" Rs="20m" Tt="100n" Is="300p" Bv="100" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=250P RS=20M TT=100N IS=300P BV=100) 
+    MOSFET:M316 _net95 _net116 _net76 _net76 Type="pfet" Vt0="-1.415" Kp="0.413" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.415 KP=0.413) 
+    MOSFET:M2 _net116 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=.5) 
+    MOSFET:M3 _net11 _net116 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="0.15n"
+    Diode:DGD _net8 _net116 Cj0="405p" M="0.725" Vj="1.021" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=405P M=0.725 VJ=1.021) 
+    C:CGS _net76 _net95 C="0.31n"
+    R:R15 _net116 _net117 R="280m"
+    Vdc:V8 _net11 _net95 U="-12"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSP317>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -370 mA, 6 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSP317 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net86 _net3 L="5n"
+    R:RG _net4 _net95 R="5.5m"
+    R:RS _net5 _net76 R="322m"
+    Diode:D317 _net76 _net86 Cj0="100p" Rs="20m" Tt="60n" Is="300p" Bv="200" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=100P RS=20M TT=60N IS=300P BV=200) 
+    MOSFET:M317 _net95 _net102 _net76 _net76 Type="pfet" Vt0="-1.419" Kp="0.321" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.419 KP=0.321) 
+    MOSFET:M2 _net102 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=.5) 
+    MOSFET:M3 _net11 _net102 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="340p"
+    Diode:DGD _net8 _net102 Cj0="98p" M="0.477" Vj="0.971" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=98P M=0.477 VJ=0.971) 
+    C:CGS _net76 _net95 C="225p"
+    Vdc:VGC _net11 _net95 U="-13"
+    MOSFET:MHELP _net102 _net86 _net102 _net102 Type="pfet" Vt0="57.7" Kp="7m" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MVRD  PMOS (VTO=57.7 KP=7M) 
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSS84>
+  <Description>
+    Enhancement p-channel MOSFET
+    50V, 130mA, 6.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS84_ 1 0 0 8 -26 0 0 "pfet" 0 "-1.6" 1 "4.87m" 0 "1.98" 0 "0.75" 0 "1.25m" 0 "0.84" 0 "0.84" 0 "0" 0 "65f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "50.7n" 0 "42.2n" 0 "69.5n" 0 "46.6p" 0 "55.9p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component BSS84W>
+  <Description>
+    Enhancement p-channel MOSFET
+    50V, 130mA, 6.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS84W_ 1 0 0 8 -26 0 0 "pfet" 0 "-1.6" 1 "25m" 0 "1.98" 0 "0.75" 0 "108u" 0 "0.84" 0 "0.84" 0 "0" 0 "65f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "144n" 0 "120n" 0 "341n" 0 "64.2p" 0 "77.1p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component BSS92_1>
+  <Description>
+   Enhancement p-channel MOSFET
+   -240 V, -150 mA, 20 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSS92_1 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net97 _net3 L="5n"
+    R:RG _net95 _net99 R="5.5m"
+    R:RS _net5 _net76 R="1084m"
+    Diode:D92 _net76 _net97 Cj0="0.03n" Rs="20m" Tt="35n" Is="300p" Bv="240" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=0.03N RS=20M TT=35N IS=300P BV=240) 
+    MOSFET:M92 _net99 _net98 _net76 _net76 Type="pfet" Vt0="-1.721" Kp="0.071" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.721 KP=0.071) 
+    MOSFET:M2 _net98 _net87 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net87 _net98 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net87 _net8 C="0.2n"
+    Diode:DGD _net8 _net98 Cj0="59p" M="0.542" Vj="0.979" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=59P M=0.542 VJ=0.979) 
+    C:CGS _net76 _net99 C="0.085n"
+    Vdc:VGC _net87 _net99 U="-20"
+    MOSFET:MHELP _net98 _net98 _net97 _net98 Type="pfet" Vt0="31.5" Kp="0.006" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MVRD  PMOS (VTO=31.5 KP=0.006) 
+    L:LG _net95 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSS92>
+  <Description>
+   Enhancement p-channel MOSFET
+   -240 V, -150 mA, 20 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSS92 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net97 _net3 L="5n"
+    R:RG _net86 _net87 R="5.5m"
+    R:RS _net5 _net76 R="886m"
+    Diode:D92 _net76 _net97 Cj0="0.05n" Rs="20m" Tt="35n" Is="300p" Bv="240" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=0.05N RS=20M TT=35N IS=300P BV=240) 
+    MOSFET:M92 _net87 _net98 _net76 _net76 Type="pfet" Vt0="-1.489" Kp="0.049" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.489 KP=0.049) 
+    MOSFET:M2 _net98 _net87 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net87 _net98 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net87 _net8 C="0.15n"
+    Diode:DGD _net8 _net98 Cj0="120p" M="0.601" Vj="0.47" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=120P M=0601 VJ=0.47) 
+    C:CGS _net76 _net87 C="0.06n"
+    MOSFET:MHELP _net98 _net98 _net97 _net98 Type="pfet" Vt0="20.07" Kp="0.008" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MVRD  PMOS (VTO=20.07 KP=0.008) 
+    L:LG _net86 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BSS110>
+  <Description>
+   Enhancement p-channel MOSFET
+   -50 V, -170 mA, 10 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BSS110 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net86 _net3 L="5n"
+    R:RG _net4 _net11 R="5.5m"
+    R:RS _net5 _net76 R="3246m"
+    Diode:D110 _net76 _net86 Cj0="0.035n" Rs="20m" Tt="60n" Is="300p" Bv="50" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=0.035N RS=20M TT=60N IS=300P BV=50) 
+    MOSFET:M110 _net11 _net86 _net76 _net76 Type="pfet" Vt0="-1.462" Kp="0.04" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-1.462 KP=0.04) 
+    MOSFET:M2 _net86 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net11 _net86 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="0.183n"
+    Diode:DGD _net8 _net86 Cj0="0.183n" M="0.439" Vj="1.097" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=0.183N M=0.439 VJ=1.097) 
+    C:CGS _net76 _net11 C="0.02n"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BUZ171>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -50 V, -8 A, 0.3 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BUZ171 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net86 _net3 L="5n"
+    R:RG _net4 _net11 R="5.5m"
+    R:RS _net5 _net76 R="128m"
+    Diode:D171 _net76 _net86 Cj0="1.5n" Rs="20m" Tt="29n" Is="300p" Bv="50" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=1.5N RS=20M TT=29N IS=300P BV=50) 
+    MOSFET:M171 _net11 _net86 _net76 _net76 Type="pfet" Vt0="-3.245" Kp="0.973" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-3.245 KP=0.973) 
+    MOSFET:M2 _net86 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net11 _net86 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="1.313n"
+    Diode:DGD _net8 _net86 Cj0="1.313n" M="0.521" Vj="0.7" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=1.313N M=0.521 VJ=0.7) 
+    C:CGS _net76 _net11 C="0.85n"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BUZ173>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -3.6 A, 1.5 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BUZ173 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net86 _net3 L="5n"
+    R:RG _net4 _net95 R="5.5m"
+    R:RS _net5 _net76 R="129m"
+    Diode:D173 _net76 _net86 Cj0="550p" Rs="20m" Tt="180n" Is="300p" Bv="200" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=550P RS=20M TT=180N IS=300P BV=200) 
+    MOSFET:M173 _net95 _net102 _net76 _net76 Type="pfet" Vt0="-3.419" Kp="0.986" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-3.419 KP=0.986) 
+    MOSFET:M2 _net102 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net11 _net102 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="300p"
+    Diode:DGD _net8 _net102 Cj0="204p" M="0.533" Vj="1.01" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=204P M=0.533 VJ=1.01) 
+    C:CGS _net76 _net95 C="800p"
+    Vdc:VGC _net11 _net95 U="-9"
+    MOSFET:MHELP _net102 _net86 _net102 _net102 Type="pfet" Vt0="14.79" Kp="0.08" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MVRD  PMOS (VTO=14.79 KP=0.08) 
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+
+<Component BUZ271>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -50 V, -22 A, 0.15 Ohm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BUZ271 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net87 _net3 L="5n"
+    R:RG _net4 _net11 R="5.5m"
+    R:RS _net5 _net76 R="58m"
+    Diode:D271 _net76 _net87 Cj0="2n" Rs="20m" Tt="200n" Is="300p" Bv="50" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=2N RS=20M TT=200N IS=300P BV=50) 
+    MOSFET:M271 _net11 _net87 _net76 _net76 Type="pfet" Vt0="-3.1" Kp="1.956" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-3.1 KP=1.956) 
+    MOSFET:M2 _net87 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=5) 
+    MOSFET:M3 _net11 _net87 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="4.3n"
+    Diode:DGD _net8 _net87 Cj0="4.659n" M="0.855" Vj="1.046" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=4.659N M=0.855 VJ=1.046) 
+    C:CGS _net76 _net11 C="2n"
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component BUZ272>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -15 A, 0.3mOhm
+   Manufacturer: Infineon Technologies
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_BUZ272 _net1 _net3 _net2
+    L:LS _net5 _net2 L="7n"
+    L:LD _net86 _net3 L="5n"
+    R:RG _net4 _net95 R="9.6"
+    R:RS _net5 _net76 R="56m"
+    Diode:D272 _net76 _net86 Cj0="1.7n" Rs="20m" Tt="180n" Is="300p" Bv="100" N="1" M="0.5" Vj="0.7"
+    # .MODEL:DREV  D (CJO=1.7N RS=20M TT=180N IS=300P BV=100) 
+    MOSFET:M272 _net95 _net102 _net76 _net76 Type="pfet" Vt0="-3.149" Kp="1.761" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MBUZ  PMOS (VTO=-3.149 KP=1.761) 
+    MOSFET:M2 _net102 _net11 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MSW  PMOS (VTO=-0.001 KP=.5) 
+    MOSFET:M3 _net11 _net102 _net8 _net8 Type="pfet" Vt0="-0.001" Kp="0.5" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    C:COX _net11 _net8 C="700p"
+    Diode:DGD _net8 _net102 Cj0="692p" M="0.659" Vj="1.029" Is="1e-15" N="1"
+    # .MODEL:DCGD  D (CJO=692P M=0.659 VJ=1.029) 
+    C:CGS _net76 _net95 C="2n"
+    Vdc:VGC _net11 _net95 U="-10"
+    MOSFET:MHELP _net102 _net86 _net102 _net102 Type="pfet" Vt0="13" Kp="0.8" Is="1e-14" N="1" Lambda="0" Gamma="0" Phi="0.6"
+    # .MODEL:MVRD  PMOS (VTO=13 KP=0.8) 
+    L:LG _net4 _net1 L="7n"
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF4905>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -74.0 A, 20 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF4905 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.53713" Lambda="0.00549383" Kp="23.3701" Cgso="2.84439e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.53713 LAMBDA=0.00549383 KP=23.3701 CGSO=2.84439E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0101265"
+    Diode:D1 _net3 _net1 Is="1.29014e-08" Rs="0.00297795" N="1.46717" Bv="55" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0" Cj0="3.56968e-09" Vj="1.17553" M="0.500933" Fc="0.5"
+    # .MODEL:MD  D (IS=1.29014E-08 RS=0.00297795 N=1.46717 BV=55 IBV=0.00025 EG=1.2 XTI=4 TT=0 CJO=3.56968E-09 VJ=1.17553 M=0.500933 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.83772e-09" Vj="0.625334" M="0.543532" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.83772E-09 VJ=0.625334 M=0.543532 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="6.08035e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF4905S>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -74.0 A, 20 mOhm, package: D2-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF4905S _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.51981" Lambda="0" Kp="23.4105" Cgso="2.85401e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.51981 LAMBDA=0 KP=23.4105 CGSO=2.85401E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.00996054"
+    Diode:D1 _net3 _net1 Is="1.85183e-11" Rs="0.00355627" N="1.08135" Bv="55" Ibv="10" Eg="1.2" Xti="4" Tt="1e-07" Cj0="3.78706e-09" Vj="0.8596" M="0.468877" Fc="0.5"
+    # .MODEL:MD  D (IS=1.85183E-11 RS=0.00355627 N=1.08135 BV=55 IBV=10 EG=1.2 XTI=4 TT=1E-07 CJO=3.78706E-09 VJ=0.8596 M=0.468877 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="6.94341"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.63428e-09" Vj="0.754894" M="0.564276" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.63428E-09 VJ=0.754894 M=0.564276 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400002" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400002 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="6.08305e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400002" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400002) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5210>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -40.0 A, 60 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5210 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.79917" Lambda="0.00220079" Kp="12.9564" Cgso="2.34655e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.79917 LAMBDA=0.00220079 KP=12.9564 CGSO=2.34655E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0218795"
+    Diode:D1 _net3 _net1 Is="2.06405e-13" Rs="0.00826096" N="0.960301" Bv="100" Ibv="0.00025" Eg="1" Xti="3.14871" Tt="1e-07" Cj0="1.88397e-09" Vj="1.14128" M="0.533786" Fc="0.1"
+    # .MODEL:MD  D (IS=2.06405E-13 RS=0.00826096 N=0.960301 BV=100 IBV=0.00025 EG=1 XTI=3.14871 TT=1E-07 CJO=1.88397E-09 VJ=1.14128 M=0.533786 FC=0.1) 
+    R:RDS _net3 _net1 R="4e+06"
+    R:RD _net9 _net1 R="0.014128"
+    R:RG _net2 _net7 R="7.71191"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.75211e-09" Vj="1.32261" M="0.798237" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.75211E-09 VJ=1.32261 M=0.798237 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.40011" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.40011 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="6.15698e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.40011" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.40011) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5210S>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -40 A, 60 mOhm, package: D2-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5210S _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.79917" Lambda="0.00220079" Kp="12.9564" Cgso="2.34655e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.79917 LAMBDA=0.00220079 KP=12.9564 CGSO=2.34655E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0218795"
+    Diode:D1 _net3 _net1 Is="2.06405e-13" Rs="0.00826096" N="0.960301" Bv="100" Ibv="0.00025" Eg="1" Xti="3.14871" Tt="1e-07" Cj0="1.88397e-09" Vj="1.14128" M="0.533786" Fc="0.1"
+    # .MODEL:MD  D (IS=2.06405E-13 RS=0.00826096 N=0.960301 BV=100 IBV=0.00025 EG=1 XTI=3.14871 TT=1E-07 CJO=1.88397E-09 VJ=1.14128 M=0.533786 FC=0.1) 
+    R:RDS _net3 _net1 R="4e+06"
+    R:RD _net9 _net1 R="0.014128"
+    R:RG _net2 _net7 R="7.71191"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.75211e-09" Vj="1.32261" M="0.798237" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.75211E-09 VJ=1.32261 M=0.798237 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.40011" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.40011 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="6.15698e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.40011" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.40011) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5305>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -31.0 A, 60 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5305 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.45761" Lambda="0" Kp="10.066" Cgso="1.03141e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.45761 LAMBDA=0 KP=10.066 CGSO=1.03141E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0262305"
+    Diode:D1 _net3 _net1 Is="8.90854e-09" Rs="0.00921723" N="1.5" Bv="55" Ibv="0.00025" Eg="1.2" Xti="3.13635" Tt="1e-07" Cj0="1.30546e-09" Vj="0.663932" M="0.419045" Fc="0.5"
+    # .MODEL:MD  D (IS=8.90854E-09 RS=0.00921723 N=1.5 BV=55 IBV=0.00025 EG=1.2 XTI=3.13635 TT=1E-07 CJO=1.30546E-09 VJ=0.663932 M=0.419045 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="11.0979"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.63729e-09" Vj="0.791199" M="0.552278" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.63729E-09 VJ=0.791199 M=0.552278 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400245" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400245 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.89722e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400245" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400245) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5305S>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -31.0 A, 60 mOhm, package: D2-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5305S _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.45761" Lambda="0" Kp="10.066" Cgso="1.03141e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.45761 LAMBDA=0 KP=10.066 CGSO=1.03141E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0262305"
+    Diode:D1 _net3 _net1 Is="8.90854e-09" Rs="0.00921723" N="1.5" Bv="55" Ibv="0.00025" Eg="1.2" Xti="3.13635" Tt="1e-07" Cj0="1.30546e-09" Vj="0.663932" M="0.419045" Fc="0.5"
+    # .MODEL:MD  D (IS=8.90854E-09 RS=0.00921723 N=1.5 BV=55 IBV=0.00025 EG=1.2 XTI=3.13635 TT=1E-07 CJO=1.30546E-09 VJ=0.663932 M=0.419045 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="11.0979"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.63729e-09" Vj="0.791199" M="0.552278" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.63729E-09 VJ=0.791199 M=0.552278 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400245" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400245 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.89722e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400245" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400245) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5803>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -40 V, -3.4 A, 112 mOhm, package: TSOP-6 (Micro 6)
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5803 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.6145" Lambda="0.00422473" Kp="4.04914" Cgso="1.04e-05" Cgdo="4.35428e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.6145 LAMBDA=0.00422473 KP=4.04914 CGSO=1.04E-05 CGDO=4.35428E-07) 
+    R:RS _net8 _net3 R="0.0001"
+    Diode:D1 _net3 _net1 Is="1.49776e-09" Rs="0.022033" N="1.5" Bv="40" Ibv="0.00025" Eg="1" Xti="1" Tt="0.0001" Cj0="1.23506e-10" Vj="3.00164" M="0.713349" Fc="0.5"
+    # .MODEL:MD  D (IS=1.49776E-09 RS=0.022033 N=1.5 BV=40 IBV=0.00025 EG=1 XTI=1 TT=0.0001 CJO=1.23506E-10 VJ=3.00164 M=0.713349 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.02"
+    R:RG _net2 _net7 R="23.0064"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.53016e-10" Vj="0.5" M="0.543059" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.53016E-10 VJ=0.5 M=0.543059 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.403965" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.403965 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.21977e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.403965" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.403965) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF5805>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -3.8 A, 98 mOhm, package: TSOP-6 (Micro 6)
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF5805 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.35096" Lambda="0.000355777" Kp="7.00002" Cgso="4.78559e-06" Cgdo="3.65591e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.35096 LAMBDA=0.000355777 KP=7.00002 CGSO=4.78559E-06 CGDO=3.65591E-07) 
+    R:RS _net8 _net3 R="0.0665679"
+    Diode:D1 _net3 _net1 Is="2.75292e-09" Rs="0.0571758" N="1.5" Bv="30" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="1.54859e-10" Vj="0.5" M="0.420224" Fc="0.5"
+    # .MODEL:MD  D (IS=2.75292E-09 RS=0.0571758 N=1.5 BV=30 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=1.54859E-10 VJ=0.5 M=0.420224 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+07"
+    R:RD _net9 _net1 R="0.000122931"
+    R:RG _net2 _net7 R="43.91"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.28373e-11" Vj="1.44322" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.28373E-11 VJ=1.44322 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="4.36545e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF6100>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -4.1 A, 65 mOhm, package: 4-Lead FlipFET
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF6100 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1" Lambda="0.821104" Kp="30.2521" Cgso="1.06972e-05" Cgdo="1.27352e-06" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=0.821104 KP=30.2521 CGSO=1.06972E-05 CGDO=1.27352E-06) 
+    R:RS _net8 _net3 R="0.0257906"
+    Diode:D1 _net3 _net1 Is="5.32968e-08" Rs="0.0354985" N="1.5" Bv="20" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="2.01413e-10" Vj="3.72827" M="0.689763" Fc="0.5"
+    # .MODEL:MD  D (IS=5.32968E-08 RS=0.0354985 N=1.5 BV=20 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=2.01413E-10 VJ=3.72827 M=0.689763 FC=0.5) 
+    R:RDS _net3 _net1 R="5e+07"
+    R:RD _net9 _net1 R="0.0071968"
+    R:RG _net2 _net7 R="10.0733"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.79932e-10" Vj="4.89336" M="0.891703" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.79932E-10 VJ=4.89336 M=0.891703 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.16278e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF6215>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -150 V, -13.0 A, 290 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF6215 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.32569" Lambda="0" Kp="2.22004" Cgso="7.31925e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.32569 LAMBDA=0 KP=2.22004 CGSO=7.31925E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.00392484"
+    Diode:D1 _net3 _net1 Is="9.47311e-09" Rs="0.0252375" N="1.5" Bv="150" Ibv="0.00025" Eg="1" Xti="4" Tt="0" Cj0="7.186e-10" Vj="0.5" M="0.51926" Fc="0.532815"
+    # .MODEL:MD  D (IS=9.47311E-09 RS=0.0252375 N=1.5 BV=150 IBV=0.00025 EG=1 XTI=4 TT=0 CJO=7.186E-10 VJ=0.5 M=0.51926 FC=0.532815) 
+    R:RDS _net3 _net1 R="6e+06"
+    R:RD _net9 _net1 R="0.193054"
+    R:RG _net2 _net7 R="8.34992"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.58451e-09" Vj="1.82164" M="0.9" Fc="9.99994e-09"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.58451E-09 VJ=1.82164 M=0.9 FC=9.99994E-09) 
+    Diode:D3 gnd _net5 Is="1e-10" N="1" Rs="2.99993e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=1 RS=2.99993E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.35415e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=1) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF6216>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -150 V, -2.2 A, 240 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF6216 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-4.82671" Lambda="10" Kp="2.60668" Cgso="1.22919e-05" Cgdo="1.35498e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-4.82671 LAMBDA=10 KP=2.60668 CGSO=1.22919E-05 CGDO=1.35498E-07) 
+    R:RS _net8 _net3 R="0.166338"
+    Diode:D1 _net3 _net1 Is="5.34835e-11" Rs="0.0146441" N="1.20859" Bv="150" Ibv="0.00025" Eg="1" Xti="1" Tt="0.0001" Cj0="8.89882e-10" Vj="1.5632" M="0.495606" Fc="0.5"
+    # .MODEL:MD  D (IS=5.34835E-11 RS=0.0146441 N=1.20859 BV=150 IBV=0.00025 EG=1 XTI=1 TT=0.0001 CJO=8.89882E-10 VJ=1.5632 M=0.495606 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="5.55712"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.38566e-09" Vj="0.618292" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.38566E-09 VJ=0.618292 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.402445" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.402445 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.38566e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.402445" M="0.5" Cj0="1e-14" Vj="0.7"
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF6217>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -150 V, -0.7 A, 2400 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF6217 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-4.24502" Lambda="0.00174151" Kp="0.231132" Cgso="1.35506e-06" Cgdo="4.16998e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-4.24502 LAMBDA=0.00174151 KP=0.231132 CGSO=1.35506E-06 CGDO=4.16998E-08) 
+    R:RS _net8 _net3 R="0.0001"
+    Diode:D1 _net3 _net1 Is="1.93573e-10" Rs="0.0974367" N="1.40914" Bv="150" Ibv="0.00025" Eg="1" Xti="1" Tt="1e-07" Cj0="1.31857e-10" Vj="0.839829" M="0.544607" Fc="0.5"
+    # .MODEL:MD  D (IS=1.93573E-10 RS=0.0974367 N=1.40914 BV=150 IBV=0.00025 EG=1 XTI=1 TT=1E-07 CJO=1.31857E-10 VJ=0.839829 M=0.544607 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="1.36944"
+    R:RG _net2 _net7 R="26.5956"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.00195e-10" Vj="1.39283" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.00195E-10 VJ=1.39283 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.47706e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7204>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -5.3 A, 60 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7204 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.49142" Lambda="3.03579e-05" Kp="2.80967" Cgso="6.45158e-06" Cgdo="1.09604e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.49142 LAMBDA=3.03579E-05 KP=2.80967 CGSO=6.45158E-06 CGDO=1.09604E-07) 
+    R:RS _net8 _net3 R="0.000222245"
+    Diode:D1 _net3 _net1 Is="1e-06" Rs="0.0867961" N="1.41746" Bv="20" Ibv="0.00025" Eg="1.2" Xti="3.20565" Tt="1e-07" Cj0="7.93659e-10" Vj="5" M="0.3" Fc="0.5"
+    # .MODEL:MD  D (IS=1E-06 RS=0.0867961 N=1.41746 BV=20 IBV=-0.00025 EG=1.2 XTI=3.20565 TT=1E-07 CJO=7.93659E-10 VJ=5 M=0.3 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0188878"
+    R:RG _net2 _net7 R="31.1043"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="9.94636e-10" Vj="0.5" M="0.500757" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=9.94636E-10 VJ=0.5 M=0.500757 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.47947e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7220>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -12 V, -11.0 A, 12 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7220 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1" Lambda="2.04993" Kp="32.9291" Cgso="4.051e-05" Cgdo="4.69064e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=2.04993 KP=32.9291 CGSO=4.051E-05 CGDO=4.69064E-08) 
+    R:RS _net8 _net3 R="0.004788"
+    Diode:D1 _net3 _net1 Is="6.82467e-09" Rs="0.0188446" N="1.5" Bv="300" Ibv="10" Eg="1" Xti="1" Tt="1.99996e-05" Cj0="7.23948e-10" Vj="5" M="0.860432" Fc="0.1"
+    # .MODEL:MD  D (IS=6.82467E-09 RS=0.0188446 N=1.5 BV=300 IBV=10 EG=1 XTI=1 TT=1.99996E-05 CJO=7.23948E-10 VJ=5 M=0.860432 FC=0.1) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.52727e-09" Vj="50" M="0.44818" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.52727E-09 VJ=50 M=0.44818 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.420941" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.420941 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="4.52727e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.420941" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.420941) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7233>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -12 V, -9.5 A, 20 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7233 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1" Lambda="0.0856235" Kp="29.6299" Cgso="2.09443e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=0.0856235 KP=29.6299 CGSO=2.09443E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0101683"
+    Diode:D1 _net3 _net1 Is="7.72366e-09" Rs="0.0136195" N="1.5" Bv="300" Ibv="10" Eg="1.2" Xti="1" Tt="0.0001" Cj0="4.20139e-11" Vj="0.5" M="0.9" Fc="0.5"
+    # .MODEL:MD  D (IS=7.72366E-09 RS=0.0136195 N=1.5 BV=300 IBV=10 EG=1.2 XTI=1 TT=0.0001 CJO=4.20139E-11 VJ=0.5 M=0.9 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="8.36907"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.80782e-09" Vj="49.8304" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.80782E-09 VJ=49.8304 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.418403" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.418403 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.36627e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.418403" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.418403) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7404>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -6.7 A, 40 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7404 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.2434" Lambda="0.0256021" Kp="28.9075" Cgso="1.23648e-05" Cgdo="1.44665e-06" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.2434 LAMBDA=0.0256021 KP=28.9075 CGSO=1.23648E-05 CGDO=1.44665E-06) 
+    R:RS _net8 _net3 R="0.0203887"
+    Diode:D1 _net3 _net1 Is="2.01933e-08" Rs="0.0282171" N="1.5" Bv="20" Ibv="0.00025" Eg="1" Xti="4" Tt="1e-07" Cj0="1.47404e-09" Vj="0.5" M="0.379539" Fc="0.5"
+    # .MODEL:MD  D (IS=2.01933E-08 RS=0.0282171 N=1.5 BV=20 IBV=0.00025 EG=1 XTI=4 TT=1E-07 CJO=1.47404E-09 VJ=0.5 M=0.379539 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.00560309"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.30063e-09" Vj="0.5" M="0.850313" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.30063E-09 VJ=0.5 M=0.850313 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.89191e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7406>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -5.8 A, 45 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7406 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1" Lambda="0" Kp="6.26071" Cgso="9.28062e-06" Cgdo="4.73148e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=0 KP=6.26071 CGSO=9.28062E-06 CGDO=4.73148E-07) 
+    R:RS _net8 _net3 R="0.0150643"
+    Diode:D1 _net3 _net1 Is="1e-06" Rs="0.019567" N="1.45862" Bv="300" Ibv="10" Eg="1" Xti="1" Tt="8.20206e-10" Cj0="1.34437e-09" Vj="0.500015" M="0.3988" Fc="0.5"
+    # .MODEL:MD  D (IS=1E-06 RS=0.019567 N=1.45862 BV=300 IBV=10 EG=1 XTI=1 TT=8.20206E-10 CJO=1.34437E-09 VJ=0.500015 M=0.3988 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="3.73848"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.69091e-09" Vj="0.5" M="0.605297" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.69091E-09 VJ=0.5 M=0.605297 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.42344" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.42344 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.0311e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.42344" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.42344) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7410>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -12 V, -16.0 A, 7 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7410 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.01518" Lambda="0.0900284" Kp="292.265" Cgso="7.50961e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.01518 LAMBDA=0.0900284 KP=292.265 CGSO=7.50961E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.00316136"
+    Diode:D1 _net3 _net1 Is="8.57202e-07" Rs="0.00306658" N="1.5" Bv="12" Ibv="0.00025" Eg="1" Xti="1" Tt="0" Cj0="2.81771e-09" Vj="2.83395" M="0.9" Fc="0.1"
+    # .MODEL:MD  D (IS=8.57202E-07 RS=0.00306658 N=1.5 BV=12 IBV=0.00025 EG=1 XTI=1 TT=0 CJO=2.81771E-09 VJ=2.83395 M=0.9 FC=0.1) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.000690837"
+    R:RG _net2 _net7 R="2.18034"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.27096e-09" Vj="20.7117" M="0.9" Fc="9.99997e-09"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.27096E-09 VJ=20.7117 M=0.9 FC=9.99997E-09) 
+    Diode:D3 gnd _net5 Is="1e-10" N="1" Rs="2.93769e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=1 RS=2.93769E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="7.27788e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=1) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7416>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -10.0 A, 20 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7416 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.49076" Lambda="0.0153351" Kp="22.3913" Cgso="1.34611e-05" Cgdo="3.32209e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.49076 LAMBDA=0.0153351 KP=22.3913 CGSO=1.34611E-05 CGDO=3.32209E-08) 
+    R:RS _net8 _net3 R="0.0118278"
+    Diode:D1 _net3 _net1 Is="1.41408e-08" Rs="0.00429625" N="1.5" Bv="30" Ibv="0.00025" Eg="1.1881" Xti="3.32208" Tt="1e-07" Cj0="2.0599e-09" Vj="0.791946" M="0.414066" Fc="0.5"
+    # .MODEL:MD  D (IS=1.41408E-08 RS=0.00429625 N=1.5 BV=30 IBV=0.00025 EG=1.1881 XTI=3.32208 TT=1E-07 CJO=2.0599E-09 VJ=0.791946 M=0.414066 FC=0.5) 
+    R:RDS _net3 _net1 R="2.4e+07"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="5.5413"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.58564e-09" Vj="0.5" M="0.483153" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.58564E-09 VJ=0.5 M=0.483153 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400179" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400179 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.18987e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400179" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400179) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7424>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -11.0 A, 14 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7424 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.40847" Lambda="0.0529703" Kp="35.8703" Cgso="3.72327e-05" Cgdo="1.47953e-06" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.40847 LAMBDA=0.0529703 KP=35.8703 CGSO=3.72327E-05 CGDO=1.47953E-06) 
+    R:RS _net8 _net3 R="0.006216"
+    Diode:D1 _net3 _net1 Is="2.30999e-10" Rs="0.00816191" N="1.25526" Bv="30" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="1.0231e-09" Vj="0.672092" M="0.478467" Fc="0.5"
+    # .MODEL:MD  D (IS=2.30999E-10 RS=0.00816191 N=1.25526 BV=30 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=1.0231E-09 VJ=0.672092 M=0.478467 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+07"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="11.3193"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.27065e-10" Vj="4.84085" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.27065E-10 VJ=4.84085 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.19782e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7425>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -15.0 A, 8.2 mOhm, package: SO-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7425 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.07364" Lambda="0.133024" Kp="125.272" Cgso="7e-05" Cgdo="3.51356e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.07364 LAMBDA=0.133024 KP=125.272 CGSO=7E-05 CGDO=3.51356E-08) 
+    R:RS _net8 _net3 R="0.00322323"
+    Diode:D1 _net3 _net1 Is="4.93999e-07" Rs="0.00442189" N="1.5" Bv="20" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0.0001" Cj0="2.10964e-09" Vj="0.5" M="0.404376" Fc="0.5"
+    # .MODEL:MD  D (IS=4.93999E-07 RS=0.00442189 N=1.5 BV=20 IBV=0.00025 EG=1.2 XTI=4 TT=0.0001 CJO=2.10964E-09 VJ=0.5 M=0.404376 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="2.18034"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.83366e-09" Vj="1.67017" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.83366E-09 VJ=1.67017 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.522563" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.522563 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.14618e-08"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.522563" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.522563) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7604>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -3.6 A, 90 mOhm, package: Micro 8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7604 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.38357" Lambda="9.72395e-05" Kp="5.51478" Cgso="4.38675e-06" Cgdo="4.78009e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.38357 LAMBDA=9.72395E-05 KP=5.51478 CGSO=4.38675E-06 CGDO=4.78009E-07) 
+    R:RS _net8 _net3 R="0.0001"
+    Diode:D1 _net3 _net1 Is="3.77433e-10" Rs="0.0163258" N="1.31633" Bv="20" Ibv="0.00025" Eg="1.2" Xti="3.00308" Tt="1e-07" Cj0="5.48159e-10" Vj="0.659128" M="0.384573" Fc="0.5"
+    # .MODEL:MD  D (IS=3.77433E-10 RS=0.0163258 N=1.31633 BV=20 IBV=0.00025 EG=1.2 XTI=3.00308 TT=1E-07 CJO=5.48159E-10 VJ=0.659128 M=0.384573 FC=0.5) 
+    R:RDS _net3 _net1 R="1.6e+07"
+    R:RD _net9 _net1 R="0.0168866"
+    R:RG _net2 _net7 R="12.1772"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="9.53461e-10" Vj="0.5" M="0.609398" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=9.53461E-10 VJ=0.5 M=0.609398 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.455146" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.455146 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.49506e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.455146" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.455146) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7606>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -3.6 A, 90 mOhm, package: Micro 8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7606 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.10799" Lambda="0.0214554" Kp="6.27074" Cgso="3.78984e-06" Cgdo="2.7957e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.10799 LAMBDA=0.0214554 KP=6.27074 CGSO=3.78984E-06 CGDO=2.7957E-07) 
+    R:RS _net8 _net3 R="0.0682456"
+    Diode:D1 _net3 _net1 Is="7.65243e-12" Rs="0.0401808" N="1.13471" Bv="30" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="4.78731e-10" Vj="0.791296" M="0.39958" Fc="0.1"
+    # .MODEL:MD  D (IS=7.65243E-12 RS=0.0401808 N=1.13471 BV=30 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=4.78731E-10 VJ=0.791296 M=0.39958 FC=0.1) 
+    R:RDS _net3 _net1 R="2.4e+07"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="8.38906"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="7.7286e-10" Vj="0.5" M="0.581387" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=7.7286E-10 VJ=0.5 M=0.581387 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.444371" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.444371 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="8.49752e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.444371" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.444371) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7705>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -8.0 A, 18 mOhm, package: TSSOP-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7705 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-2.34315" Lambda="0.0228917" Kp="15.4981" Cgso="2.5e-05" Cgdo="1.37729e-06" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.34315 LAMBDA=0.0228917 KP=15.4981 CGSO=2.5E-05 CGDO=1.37729E-06) 
+    R:RS _net8 _net3 R="1e-05"
+    Diode:D1 _net3 _net1 Is="6.2927e-09" Rs="0.0107151" N="1.49944" Bv="300" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0.0001" Cj0="8.38854e-10" Vj="0.584756" M="0.447543" Fc="0.5"
+    # .MODEL:MD  D (IS=6.2927E-09 RS=0.0107151 N=1.49944 BV=300 IBV=0.00025 EG=1.2 XTI=4 TT=0.0001 CJO=8.38854E-10 VJ=0.584756 M=0.447543 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="1.1e-05"
+    R:RG _net2 _net7 R="10.8305"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.59834e-10" Vj="2.40326" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.59834E-10 VJ=2.40326 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.57019e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF7707>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -7.0 A, 14.3 mOhm, package: TSSOP-8
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF7707 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-1.25592" Lambda="0.0641694" Kp="62.9317" Cgso="2.07839e-05" Cgdo="4.54534e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.25592 LAMBDA=0.0641694 KP=62.9317 CGSO=2.07839E-05 CGDO=4.54534E-07) 
+    R:RS _net8 _net3 R="0.00915229"
+    Diode:D1 _net3 _net1 Is="5.27457e-08" Rs="0.0115976" N="1.5" Bv="20" Ibv="0.00025" Eg="1" Xti="1" Tt="1e-07" Cj0="6.79802e-10" Vj="1.40508" M="0.500364" Fc="0.5"
+    # .MODEL:MD  D (IS=5.27457E-08 RS=0.0115976 N=1.5 BV=20 IBV=0.00025 EG=1 XTI=1 TT=1E-07 CJO=6.79802E-10 VJ=1.40508 M=0.500364 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="10.0296"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.70798e-10" Vj="7.90646" M="0.323176" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.70798E-10 VJ=7.90646 M=0.323176 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400001" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400001 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.91894e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400001" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400001) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9510>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -4.0 A, 1.2 Ohm, package: TO-220
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9510 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.38895" Lambda="0.0140708" Kp="1.32543" Cgso="1.86082e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.38895 LAMBDA=0.0140708 KP=1.32543 CGSO=1.86082E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.274259"
+    Diode:D1 _net3 _net1 Is="0.000633894" Rs="0.126663" N="12.7812" Bv="100" Ibv="0.0001" Eg="1.2" Xti="1" Tt="0.0001" Cj0="3.13356e-10" Vj="0.908437" M="0.419645" Fc="0.5"
+    # .MODEL:MD  D (IS=0.000633894 RS=0.126663 N=12.7812 BV=100 IBV=0.0001 EG=1.2 XTI=1 TT=0.0001 CJO=3.13356E-10 VJ=0.908437 M=0.419645 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.410416"
+    R:RG _net2 _net7 R="19.4242"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.20563e-10" Vj="3.09325" M="0.847483" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.20563E-10 VJ=3.09325 M=0.847483 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.36922e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9520>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -6.8 A, 480 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9520 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.41185" Lambda="0.0289226" Kp="3.46967" Cgso="3.45033e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.41185 LAMBDA=0.0289226 KP=3.46967 CGSO=3.45033E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.167957"
+    Diode:D1 _net3 _net1 Is="7.308e-22" Rs="0.17" N="1.29916" Bv="100" Ibv="10" Eg="1" Xti="1" Tt="1e-07" Cj0="4.53963e-10" Vj="2.47692" M="0.539653" Fc="0.1"
+    # .MODEL:MD  D (IS=7.308E-22 RS=0.17 N=1.29916 BV=100 IBV=10 EG=1 XTI=1 TT=1E-07 CJO=4.53963E-10 VJ=2.47692 M=0.539653 FC=0.1) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.198401"
+    R:RG _net2 _net7 R="11.3744"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.45426e-10" Vj="1.57654" M="0.730307" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.45426E-10 VJ=1.57654 M=0.730307 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="7.65813e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9530>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -14.0 A, 200 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9530 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.29858" Lambda="0.00943157" Kp="5.81678" Cgso="4e-05" Cgdo="5e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.29858 LAMBDA=0.00943157 KP=5.81678 CGSO=4E-05 CGDO=5E-08) 
+    R:RS _net8 _net3 R="0.0732334"
+    Diode:D1 _net3 _net1 Is="1e-17" Rs="0.150832" N="1.5" Bv="100" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="3e-09" Vj="3" M="0.8" Fc="0.1"
+    # .MODEL:MD  D (IS=1E-17 RS=0.150832 N=1.5 BV=100 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=3E-09 VJ=3 M=0.8 FC=0.1) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.107379"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1e-09" Vj="0.85" M="0.8" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1E-09 VJ=0.85 M=0.8 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9540N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -23.0 A, 117 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9540N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.76841" Lambda="0" Kp="7.07146" Cgso="1.11762e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.76841 LAMBDA=0 KP=7.07146 CGSO=1.11762E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0425484"
+    Diode:D1 _net3 _net1 Is="9.2473e-11" Rs="0.00815502" N="1.22578" Bv="100" Ibv="0.00025" Eg="1.2" Xti="4" Tt="6.92199e-07" Cj0="7.99077e-10" Vj="1.46806" M="0.554057" Fc="0.499996"
+    # .MODEL:MD  D (IS=9.2473E-11 RS=0.00815502 N=1.22578 BV=100 IBV=-0.00025 EG=1.2 XTI=4 TT=6.92199E-07 CJO=7.99077E-10 VJ=1.46806 M=0.554057 FC=0.499996) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0462318"
+    R:RG _net2 _net7 R="7.07132"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.43656e-09" Vj="1.23601" M="0.748171" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.43656E-09 VJ=1.23601 M=0.748171 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.41908e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9640>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -11 A, 0.5 Ohm, package: TO-220
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9640 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.8062" Lambda="0.0228396" Kp="10.7224" Cgso="1.09465e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.8062 LAMBDA=0.0228396 KP=10.7224 CGSO=1.09465E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.101556"
+    Diode:D1 _net3 _net1 Is="1e-17" Rs="0.185714" N="1.5" Bv="200" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="1.22255e-09" Vj="2.42988" M="0.605683" Fc="0.493595"
+    # .MODEL:MD  D (IS=1E-17 RS=0.185714 N=1.5 BV=200 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=1.22255E-09 VJ=2.42988 M=0.605683 FC=0.493595) 
+    R:RDS _net3 _net1 R="2e+06"
+    R:RD _net9 _net1 R="0.261579"
+    R:RG _net2 _net7 R="6.81119"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="8.6947e-10" Vj="2.34088" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=8.6947E-10 VJ=2.34088 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.402798" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.402798 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.8148e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.402798" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.402798) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9Z24N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -12.0 A, 175 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9Z24N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.43932" Lambda="0" Kp="2.45777" Cgso="2.66558e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.43932 LAMBDA=0 KP=2.45777 CGSO=2.66558E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0964368"
+    Diode:D1 _net3 _net1 Is="6.40889e-11" Rs="0.0172841" N="1.25507" Bv="55" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="2.57014e-10" Vj="3.38187" M="0.582191" Fc="0.5"
+    # .MODEL:MD  D (IS=6.40889E-11 RS=0.0172841 N=1.25507 BV=55 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=2.57014E-10 VJ=3.38187 M=0.582191 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="11.5569"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="5.09353e-10" Vj="0.5" M="0.43731" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=5.09353E-10 VJ=0.5 M=0.43731 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3.00002e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3.00002E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="7.862e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRF9Z34N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -17.0 A, 100 mOhm, package: TO-220AB
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRF9Z34N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.18176" Lambda="0" Kp="2.52466" Cgso="4.9266e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.18176 LAMBDA=0 KP=2.52466 CGSO=4.9266E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0001"
+    Diode:D1 _net3 _net1 Is="2.51148e-12" Rs="0.0124373" N="1.05244" Bv="55" Ibv="0.00025" Eg="1" Xti="2.91741" Tt="0.0001" Cj0="4.87958e-10" Vj="5" M="0.731488" Fc="0.5"
+    # .MODEL:MD  D (IS=2.51148E-12 RS=0.0124373 N=1.05244 BV=55 IBV=0.00025 EG=1 XTI=2.91741 TT=0.0001 CJO=4.87958E-10 VJ=5 M=0.731488 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.028942"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="8.50824e-10" Vj="0.5" M="0.456256" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=8.50824E-10 VJ=0.5 M=0.456256 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="8.50824e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFP9140N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -21.0 A, 117 mOhm, package: TO-247AC
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFP9140N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.75746" Lambda="0" Kp="7.5033" Cgso="1.11719e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.75746 LAMBDA=0 KP=7.5033 CGSO=1.11719E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0445286"
+    Diode:D1 _net3 _net1 Is="5.37934e-10" Rs="0.00744163" N="1.34043" Bv="300" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0" Cj0="7.49036e-10" Vj="2.13968" M="0.626602" Fc="0.5"
+    # .MODEL:MD  D (IS=5.37934E-10 RS=0.00744163 N=1.34043 BV=300 IBV=0.00025 EG=1.2 XTI=4 TT=0 CJO=7.49036E-10 VJ=2.13968 M=0.626602 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0420438"
+    R:RG _net2 _net7 R="6.85564"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.47443e-09" Vj="1.18831" M="0.76184" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.47443E-09 VJ=1.18831 M=0.76184 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.59679e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFP9240>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -12 A, 0.5 Ohm, package: TO-247AC
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFP9240 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.73073" Lambda="0.0109168" Kp="7.97276" Cgso="1.08608e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.73073 LAMBDA=0.0109168 KP=7.97276 CGSO=1.08608E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0716155"
+    Diode:D1 _net3 _net1 Is="0.000456592" Rs="0.0497764" N="10.5339" Bv="200" Ibv="0.0001" Eg="2" Xti="1.29877" Tt="0.0001" Cj0="1.21178e-09" Vj="2.36168" M="0.608194" Fc="0.5"
+    # .MODEL:MD  D (IS=0.000456592 RS=0.0497764 N=10.5339 BV=200 IBV=0.0001 EG=2 XTI=1.29877 TT=0.0001 CJO=1.21178E-09 VJ=2.36168 M=0.608194 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.290364"
+    R:RG _net2 _net7 R="7.03959"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="8.41008e-10" Vj="2.7428" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=8.41008E-10 VJ=2.7428 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.60014e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFR5305>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -28.0 A, 65 mOhm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFR5305 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.45761" Lambda="0" Kp="10.066" Cgso="1.03141e-05" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.45761 LAMBDA=0 KP=10.066 CGSO=1.03141E-05 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.0262305"
+    Diode:D1 _net3 _net1 Is="8.90854e-09" Rs="0.00921723" N="1.5" Bv="55" Ibv="0.00025" Eg="1.2" Xti="3.13635" Tt="0.0001" Cj0="1.30546e-09" Vj="0.663932" M="0.419045" Fc="0.5"
+    # .MODEL:MD  D (IS=8.90854E-09 RS=0.00921723 N=1.5 BV=55 IBV=0.00025 EG=1.2 XTI=3.13635 TT=0.0001 CJO=1.30546E-09 VJ=0.663932 M=0.419045 FC=0.5) 
+    R:RDS _net3 _net1 R="2.2e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="11.0979"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.63729e-09" Vj="0.791199" M="0.552278" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.63729E-09 VJ=0.791199 M=0.552278 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400245" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400245 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.89722e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400245" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400245) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFR5410>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, 13.0 A, 205 mOhm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFR5410 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-4.10332" Lambda="0.044529" Kp="3.57307" Cgso="5.98432e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-4.10332 LAMBDA=0.044529 KP=3.57307 CGSO=5.98432E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.110361"
+    Diode:D1 _net3 _net1 Is="2.32858e-09" Rs="0.0349622" N="1.5" Bv="100" Ibv="0.00025" Eg="1" Xti="1" Tt="0.0001" Cj0="5.85483e-10" Vj="0.500001" M="0.463449" Fc="0.5"
+    # .MODEL:MD  D (IS=2.32858E-09 RS=0.0349622 N=1.5 BV=100 IBV=0.00025 EG=1 XTI=1 TT=0.0001 CJO=5.85483E-10 VJ=0.500001 M=0.463449 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0177033"
+    R:RG _net2 _net7 R="9.86001"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.41944e-09" Vj="1.36483" M="0.723945" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.41944E-09 VJ=1.36483 M=0.723945 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="1" Rs="3.0002e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=1 RS=3.0002E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.27857e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=1) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFR9024N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, 11.0 A, 175 mOhm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFR9024N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.5587" Lambda="0.0135118" Kp="2.59702" Cgso="2.6e-06" Cgdo="1.011e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.5587 LAMBDA=0.0135118 KP=2.59702 CGSO=2.6E-06 CGDO=1.011E-08) 
+    R:RS _net8 _net3 R="0.0892474"
+    Diode:D1 _net3 _net1 Is="1.9871e-09" Rs="0.0156137" N="1.47141" Bv="55" Ibv="0.00025" Eg="1" Xti="1" Tt="1e-07" Cj0="2.924e-10" Vj="1.24114" M="0.429901" Fc="0.5"
+    # .MODEL:MD  D (IS=1.9871E-09 RS=0.0156137 N=1.47141 BV=55 IBV=0.00025 EG=1 XTI=1 TT=1E-07 CJO=2.924E-10 VJ=1.24114 M=0.429901 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="1e-05"
+    R:RG _net2 _net7 R="11.2078"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="4.49348e-10" Vj="0.785485" M="0.46205" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=4.49348E-10 VJ=0.785485 M=0.46205 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="7.94954e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFR9120N>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -6.5 A, 480 mOhm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFR9120N _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.93987" Lambda="0.00470161" Kp="1.00197" Cgso="4.25098e-06" Cgdo="2.09009e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.93987 LAMBDA=0.00470161 KP=1.00197 CGSO=4.25098E-06 CGDO=2.09009E-08) 
+    R:RS _net8 _net3 R="0.0795076"
+    Diode:D1 _net3 _net1 Is="3.39418e-16" Rs="0.0896895" N="0.840591" Bv="100" Ibv="0.00025" Eg="1" Xti="1.70911" Tt="5.13064e-06" Cj0="1.36982e-10" Vj="3.19828" M="0.674432" Fc="0.404059"
+    # .MODEL:MD  D (IS=3.39418E-16 RS=0.0896895 N=0.840591 BV=100 IBV=0.00025 EG=1 XTI=1.70911 TT=5.13064E-06 CJO=1.36982E-10 VJ=3.19828 M=0.674432 FC=0.404059) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.188792"
+    R:RG _net2 _net7 R="11.8409"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="5.54467e-10" Vj="0.501466" M="0.603068" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=5.54467E-10 VJ=0.501466 M=0.603068 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400175" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400175 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.25423e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400175" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400175) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFR9210>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -1.9 A, 3 Ohm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFR9210 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.73744" Lambda="0.00932014" Kp="0.232371" Cgso="3.04277e-07" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.73744 LAMBDA=0.00932014 KP=0.232371 CGSO=3.04277E-07 CGDO=1E-11) 
+    R:RS _net8 _net3 R="3.22829"
+    Diode:D1 _net3 _net1 Is="1e-17" Rs="12.1495" N="1.5" Bv="200" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="3.02609e-11" Vj="1.71818" M="0.509745" Fc="0.492755"
+    # .MODEL:MD  D (IS=1E-17 RS=12.1495 N=1.5 BV=200 IBV=-0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=3.02609E-11 VJ=1.71818 M=0.509745 FC=0.492755) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="10"
+    R:RG _net2 _net7 R="4.72939"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.79996e-11" Vj="3.19772" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.79996E-11 VJ=3.19772 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.32834e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFU9014>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -60 V, -5.1 A, 0.5 Ohm, package: I-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFU9014 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.89208" Lambda="0.000773089" Kp="0.952105" Cgso="2.53693e-06" Cgdo="2.66766e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.89208 LAMBDA=0.000773089 KP=0.952105 CGSO=2.53693E-06 CGDO=2.66766E-08) 
+    R:RS _net8 _net3 R="0.0264603"
+    Diode:D1 _net3 _net1 Is="1e-17" Rs="0.4" N="1.5" Bv="60" Ibv="0.00025" Eg="1.2" Xti="4" Tt="9.96863e-05" Cj0="4.00065e-10" Vj="3.03077" M="0.493052" Fc="0.5"
+    # .MODEL:MD  D (IS=1E-17 RS=0.4 N=1.5 BV=60 IBV=0.00025 EG=1.2 XTI=4 TT=9.96863E-05 CJO=4.00065E-10 VJ=3.03077 M=0.493052 FC=0.5) 
+    R:RDS _net3 _net1 R="600000"
+    R:RD _net9 _net1 R="0.135918"
+    R:RG _net2 _net7 R="7.85024"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.7316e-10" Vj="0.954387" M="0.523166" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.7316E-10 VJ=0.954387 M=0.523166 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="5.87571e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFU9120>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -100 V, -6.5 A, 480 mOhm, package: I-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFU9120 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.76493" Lambda="9.99999" Kp="0.82029" Cgso="3.50958e-06" Cgdo="1e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.76493 LAMBDA=9.99999 KP=0.82029 CGSO=3.50958E-06 CGDO=1E-11) 
+    R:RS _net8 _net3 R="0.391672"
+    Diode:D1 _net3 _net1 Is="3.03444e-27" Rs="0.604715" N="0.996932" Bv="100" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0" Cj0="5.32347e-10" Vj="1.05368" M="0.438313" Fc="0.5"
+    # .MODEL:MD  D (IS=3.03444E-27 RS=0.604715 N=0.996932 BV=100 IBV=0.00025 EG=1.2 XTI=4 TT=0 CJO=5.32347E-10 VJ=1.05368 M=0.438313 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.00901603"
+    R:RG _net2 _net7 R="13.0532"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.91933e-10" Vj="3.4553" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.91933E-10 VJ=3.4553 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.432889" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.432889 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="7.1619e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.432889" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.432889) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFU9220>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -200 V, -3.6 A, 1.5 Ohm, package: I-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFU9220 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.10489" Lambda="0.00869523" Kp="1.63665" Cgso="3.03233e-06" Cgdo="1.0002e-11" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.10489 LAMBDA=0.00869523 KP=1.63665 CGSO=3.03233E-06 CGDO=1.0002E-11) 
+    R:RS _net8 _net3 R="0.157384"
+    Diode:D1 _net3 _net1 Is="1e-17" Rs="0.331916" N="1.5" Bv="200" Ibv="0.00025" Eg="1.2" Xti="4" Tt="1e-07" Cj0="2.80916e-10" Vj="2.95372" M="0.577212" Fc="0.5"
+    # .MODEL:MD  D (IS=1E-17 RS=0.331916 N=1.5 BV=200 IBV=0.00025 EG=1.2 XTI=4 TT=1E-07 CJO=2.80916E-10 VJ=2.95372 M=0.577212 FC=0.5) 
+    R:RDS _net3 _net1 R="2e+06"
+    R:RD _net9 _net1 R="1.03398"
+    R:RG _net2 _net7 R="1.976"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.2072e-10" Vj="2.264" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.2072E-10 VJ=2.264 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400267" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400267 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="6.11592e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400267" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400267) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRFU9310>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -400 V, -1.8 A, 7 Ohm, package: TO-251AA
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRFU9310 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u" Is="1e-32" Vt0="-3.89" Lambda="0.00253798" Kp="0.125666" Cgso="2.62858e-06" Cgdo="6.92449e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-3.89 LAMBDA=0.00253798 KP=0.125666 CGSO=2.62858E-06 CGDO=6.92449E-08) 
+    R:RS _net8 _net3 R="0.0001"
+    Diode:D1 _net3 _net1 Is="1e-24" Rs="1.5" N="1.4" Bv="400" Ibv="0.00025" Eg="1" Xti="1" Tt="0.0001" Cj0="3.02863e-10" Vj="2.43162" M="0.9" Fc="0.5"
+    # .MODEL:MD  D (IS=1E-24 RS=1.5 N=1.4 BV=400 IBV=0.00025 EG=1 XTI=1 TT=0.0001 CJO=3.02863E-10 VJ=2.43162 M=0.9 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="4"
+    R:RG _net2 _net7 R="1.45085"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.25444e-10" Vj="0.7129" M="0.735035" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.25444E-10 VJ=0.7129 M=0.735035 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.25444e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRL5602S>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, 24.0 A, 42 mOhm, package: D2-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRL5602S _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-1.43094" Lambda="0.0331935" Kp="25.5121" Cgso="1.12868e-05" Cgdo="1.53285e-06" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.43094 LAMBDA=0.0331935 KP=25.5121 CGSO=1.12868E-05 CGDO=1.53285E-06) 
+    R:RS _net8 _net3 R="0.00907171"
+    Diode:D1 _net3 _net1 Is="1.5891e-08" Rs="0.00693528" N="1.5" Bv="20" Ibv="0.00025" Eg="1.2" Xti="2.7124" Tt="1e-07" Cj0="1.4879e-09" Vj="0.5" M="0.364631" Fc="0.5"
+    # .MODEL:MD  D (IS=1.5891E-08 RS=0.00693528 N=1.5 BV=20 IBV=0.00025 EG=1.2 XTI=2.7124 TT=1E-07 CJO=1.4879E-09 VJ=0.5 M=0.364631 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.00466524"
+    R:RG _net2 _net7 R="7.50906"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.68697e-09" Vj="0.5" M="0.73866" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.68697E-09 VJ=0.5 M=0.73866 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.92151e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLIB9343>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -14.0 A, 105 mOhm, package: TO-220 FullPak (Iso)
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLIB9343 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-2.20236" Lambda="0.0165791" Kp="9.51441" Cgso="6.20355e-06" Cgdo="3.81359e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.20236 LAMBDA=0.0165791 KP=9.51441 CGSO=6.20355E-06 CGDO=3.81359E-07) 
+    R:RS _net8 _net3 R="0.0736836"
+    Diode:D1 _net3 _net1 Is="2.52918e-10" Rs="0.0107735" N="1.32337" Bv="55" Ibv="0.00025" Eg="1" Xti="1" Tt="1e-07" Cj0="3.87914e-10" Vj="5" M="0.625259" Fc="0.5"
+    # .MODEL:MD  D (IS=2.52918E-10 RS=0.0107735 N=1.32337 BV=55 IBV=0.00025 EG=1 XTI=1 TT=1E-07 CJO=3.87914E-10 VJ=5 M=0.625259 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="4.93838"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.01411e-09" Vj="0.5" M="0.722142" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.01411E-09 VJ=0.5 M=0.722142 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3.00008e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3.00008E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.16534e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLML5103>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -0.61A, 600 mOhm, package: Micro 3/ SOT-23
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLML5103 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-2.27301" Lambda="0.0230355" Kp="1.05282" Cgso="5.98105e-07" Cgdo="6.44026e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.27301 LAMBDA=0.0230355 KP=1.05282 CGSO=5.98105E-07 CGDO=6.44026E-08) 
+    R:RS _net8 _net3 R="0.335467"
+    Diode:D1 _net3 _net1 Is="1.22365e-11" Rs="0.120991" N="1.24852" Bv="30" Ibv="0.00025" Eg="1.2" Xti="4" Tt="0.0001" Cj0="7.65128e-11" Vj="0.778559" M="0.393802" Fc="0.5"
+    # .MODEL:MD  D (IS=1.22365E-11 RS=0.120991 N=1.24852 BV=30 IBV=0.00025 EG=1.2 XTI=4 TT=0.0001 CJO=7.65128E-11 VJ=0.778559 M=0.393802 FC=0.5) 
+    R:RDS _net3 _net1 R="2.4e+07"
+    R:RD _net9 _net1 R="0.0324608"
+    R:RG _net2 _net7 R="42.1622"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.16522e-10" Vj="0.5" M="0.592162" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.16522E-10 VJ=0.5 M=0.592162 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.13509e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLML5203>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -30 V, -3.0 A, 98 mOhm, package: Micro 3/ SOT-23
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLML5203 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-2.47762" Lambda="0.0389368" Kp="5.34673" Cgso="4.76832e-06" Cgdo="2.8336e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.47762 LAMBDA=0.0389368 KP=5.34673 CGSO=4.76832E-06 CGDO=2.8336E-07) 
+    R:RS _net8 _net3 R="0.0456595"
+    Diode:D1 _net3 _net1 Is="1.12244e-09" Rs="0.034735" N="1.5" Bv="30" Ibv="0.00025" Eg="1" Xti="4" Tt="1e-07" Cj0="1.27396e-10" Vj="1.01986" M="0.524092" Fc="0.5"
+    # .MODEL:MD  D (IS=1.12244E-09 RS=0.034735 N=1.5 BV=30 IBV=0.00025 EG=1 XTI=4 TT=1E-07 CJO=1.27396E-10 VJ=1.01986 M=0.524092 FC=0.5) 
+    R:RDS _net3 _net1 R="5e+07"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="68.6712"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="3.69442e-11" Vj="4.15933" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=3.69442E-11 VJ=4.15933 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="3.80842e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLML6302>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -0.62 A, 600 mOhm, package: Micro 3/ SOT-23
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLML6302 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-1.37186" Lambda="0" Kp="1.46142" Cgso="7.46915e-07" Cgdo="1.30976e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1.37186 LAMBDA=0 KP=1.46142 CGSO=7.46915E-07 CGDO=1.30976E-07) 
+    R:RS _net8 _net3 R="0.160522"
+    Diode:D1 _net3 _net1 Is="1.58288e-10" Rs="0.0803102" N="1.3978" Bv="20" Ibv="0.00025" Eg="1" Xti="4" Tt="0.0001" Cj0="7.48552e-11" Vj="1.0433" M="0.38365" Fc="0.5"
+    # .MODEL:MD  D (IS=1.58288E-10 RS=0.0803102 N=1.3978 BV=20 IBV=0.00025 EG=1 XTI=4 TT=0.0001 CJO=7.48552E-11 VJ=1.0433 M=0.38365 FC=0.5) 
+    R:RDS _net3 _net1 R="1.6e+07"
+    R:RD _net9 _net1 R="0.0792372"
+    R:RG _net2 _net7 R="35.953"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.80598e-10" Vj="0.5" M="0.713713" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.80598E-10 VJ=0.5 M=0.713713 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.400002" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.400002 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.96603e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.400002" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.400002) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLML6401>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -12 V, -4.3 A, 50 mOhm, package: Micro 3/ SOT-23
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLML6401 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-1" Lambda="0.263457" Kp="29.6411" Cgso="6.28652e-06" Cgdo="3.1e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=0.263457 KP=29.6411 CGSO=6.28652E-06 CGDO=3.1E-07) 
+    R:RS _net8 _net3 R="0.0272644"
+    Diode:D1 _net3 _net1 Is="8.06174e-08" Rs="0.0356243" N="1.5" Bv="12" Ibv="0.00025" Eg="1" Xti="1" Tt="0" Cj0="1.19641e-10" Vj="5" M="0.898693" Fc="0.5"
+    # .MODEL:MD  D (IS=8.06174E-08 RS=0.0356243 N=1.5 BV=12 IBV=0.00025 EG=1 XTI=1 TT=0 CJO=1.19641E-10 VJ=5 M=0.898693 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="6"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="2.19221e-10" Vj="8.26497" M="0.9" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=2.19221E-10 VJ=8.26497 M=0.9 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="1.20397e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLML6402>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -20 V, -3.7 A, 65 mOhm, package: Micro 3/ SOT-23
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLML6402 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-1" Lambda="0.0111358" Kp="12.788" Cgso="5.36099e-06" Cgdo="5.54234e-08" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-1 LAMBDA=0.0111358 KP=12.788 CGSO=5.36099E-06 CGDO=5.54234E-08) 
+    R:RS _net8 _net3 R="0.0246704"
+    Diode:D1 _net3 _net1 Is="2.03395e-08" Rs="0.0432758" N="1.5" Bv="20" Ibv="0.00025" Eg="1" Xti="4" Tt="1e-07" Cj0="1.11974e-10" Vj="0.5" M="0.3" Fc="0.5"
+    # .MODEL:MD  D (IS=2.03395E-08 RS=0.0432758 N=1.5 BV=20 IBV=0.00025 EG=1 XTI=4 TT=1E-07 CJO=1.11974E-10 VJ=0.5 M=0.3 FC=0.5) 
+    R:RDS _net3 _net1 R="5e+07"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="29.2227"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.68841e-10" Vj="1.50027" M="0.3" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.68841E-10 VJ=1.50027 M=0.3 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="9.68769e-10"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD3  D (IS=1E-10 N=0.4) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component IRLRU9343>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -55 V, -20.0 A, 105 mOhm, package: D-Pak
+   Manufacturer: International Rectifier
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_IRLRU9343 _net2 _net1 _net3
+    MOSFET:M1 _net7 _net9 _net8 _net8 Type="pfet" L="100u" W="100u"  Is="1e-32" Vt0="-2.20236" Lambda="0.0165791" Kp="9.51441" Cgso="6.20355e-06" Cgdo="3.81359e-07" N="1" Gamma="0" Phi="0.6"
+    # .MODEL:MM  PMOS (LEVEL=1 IS=1E-32 VTO=-2.20236 LAMBDA=0.0165791 KP=9.51441 CGSO=6.20355E-06 CGDO=3.81359E-07) 
+    R:RS _net8 _net3 R="0.0736836"
+    Diode:D1 _net3 _net1 Is="2.52918e-10" Rs="0.0107735" N="1.32337" Bv="55" Ibv="0.00025" Eg="1" Xti="1" Tt="1e-07" Cj0="3.87914e-10" Vj="5" M="0.625259" Fc="0.5"
+    # .MODEL:MD  D (IS=2.52918E-10 RS=0.0107735 N=1.32337 BV=55 IBV=0.00025 EG=1 XTI=1 TT=1E-07 CJO=3.87914E-10 VJ=5 M=0.625259 FC=0.5) 
+    R:RDS _net3 _net1 R="1e+06"
+    R:RD _net9 _net1 R="0.0001"
+    R:RG _net2 _net7 R="4.93838"
+    Diode:D2 _net4 _net5 Is="1e-32" N="50" Cj0="1.01411e-09" Vj="0.5" M="0.722142" Fc="1e-08"
+    # .MODEL:MD1  D (IS=1E-32 N=50 CJO=1.01411E-09 VJ=0.5 M=0.722142 FC=1E-08) 
+    Diode:D3 gnd _net5 Is="1e-10" N="0.4" Rs="3.00008e-06" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:MD2  D (IS=1E-10 N=0.4 RS=3.00008E-06) 
+    R:RL _net5 _net10 R="1"
+    CCCS:FI2 _net4 _net7 _net9 _cnet0 G="-1"
+    Vdc:VFI2 _cnet0 gnd U="0"
+    VCVS:EV16 _net9 _net10 gnd _net7 G="1"
+    C:CAP _net11 _net10 C="2.16534e-09"
+    CCCS:FI1 _net11 _net7 _net9 _cnet1 G="-1"
+    Vdc:VFI1 _cnet1 _net6 U="0"
+    R:RCAP _net6 _net10 R="1"
+    Diode:D4 gnd _net6 Is="1e-10" N="0.4" M="0.5" Cj0="1e-14" Vj="0.7"
+  .Def:End
+  </Model>
+</Component>
+
+<Component ZVP2106G>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -60 V, -450 mA, package: SOT-223
+   Manufacturer: Zetex
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_ZVP2106G _net4 _net3 _net5
+    MOSFET:M1 _net2 _net3 _net5 _net5 Type="pfet" L="1u" W="1u" Vt0="-3.193" Rs="2.041" Rd="0.697" Is="1e-15" Kp="0.277" Cgso="4.7e-11" Cgdo="1e-11" Cbd="1.05e-10" Pb="1" Lambda="0.012" N="1" Gamma="0" Phi="0.6"
+    R:RG _net4 _net2 R="160"
+    R:RL _net3 _net5 R="1.2e+08"
+    Diode:D1 _net5 _net3 Is="2e-13" Rs="0.309" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:P2106  PMOS (VTO=-3.193 RS=2.041 RD=0.697 IS=1E-15 KP=0.277 CGSO=47E-12 CGDO=10E-12 CBD=105E-12 PB=1 LAMBDA=1.2E-2) 
+    # .MODEL:DP2106  D (IS=2E-13 RS=0.309) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component ZVP2106>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -60 V, -280 mA, package: TO-92
+   Manufacturer: Zetex
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_ZVP2106 _net4 _net3 _net5
+    MOSFET:M1 _net2 _net3 _net5 _net5 Type="pfet" L="1u" W="1u" Vt0="-3.193" Rs="2.041" Rd="0.697" Is="1e-15" Kp="0.277" Cgso="4.7e-11" Cgdo="1e-11" Cbd="1.05e-10" Pb="1" Lambda="0.012" N="1" Gamma="0" Phi="0.6"
+    R:RG _net4 _net2 R="160"
+    R:RL _net3 _net5 R="1.2e+08"
+    Diode:D1 _net5 _net3 Is="2e-13" Rs="0.309" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:P2106  PMOS (VTO=-3.193 RS=2.041 RD=0.697 IS=1E-15 KP=0.277 CGSO=47E-12 CGDO=10E-12 CBD=105E-12 PB=1 LAMBDA=1.2E-2) 
+    # .MODEL:DP2106  D (IS=2E-13 RS=0.309) 
+  .Def:End
+  </Model>
+</Component>
+
+<Component ZVP3306>
+  <Description>
+   Enhancement p-channel power MOSFET
+   -60 V, -160 mA, package: TO-92
+   Manufacturer: Zetex
+   added by Gunther Kraut <gn.kraut@online.de>
+  </Description>
+  <Model>
+  .Def:PMOSFETs_ZVP3306 _net4 _net3 _net5
+    MOSFET:M1 _net2 _net3 _net5 _net5 Type="pfet" L="1u" W="1u" Vt0="-2.875" Rs="5.227" Rd="7.524" Is="1e-15" Kp="0.145" Cgso="2.8e-11" Cgdo="3e-12" Cbd="3.5e-11" Pb="1" Lambda="0.00667" N="1" Gamma="0" Phi="0.6"
+    R:RG _net4 _net2 R="252"
+    R:RL _net3 _net5 R="1.2e+08"
+    Diode:D1 _net5 _net3 Is="5e-12" Rs="0.768" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+    # .MODEL:P3306M  PMOS (VTO=-2.875 RS=5.227 RD=7.524 IS=1E-15 KP=.145 CGSO=28E-12 CGDO=3E-12 CBD=35E-12 PB=1 LAMBDA=6.67E-3) 
+    # .MODEL:P3306D  D (IS=5E-12 RS=.768) 
+  .Def:End
+  </Model>
+</Component>
