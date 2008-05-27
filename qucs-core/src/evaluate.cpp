@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.78 2008/03/27 17:34:29 ela Exp $
+ * $Id: evaluate.cpp,v 1.79 2008/05/27 17:49:31 ela Exp $
  *
  */
 
@@ -2159,6 +2159,7 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
   node * gen = SOLVEE(0)->addGeneratedEquation (arg->v, "Interpolate");
   res->addPrepDependencies (A(gen)->result);
   res->dropdeps = 1;
+  delete arg;
   return res;
 }
 

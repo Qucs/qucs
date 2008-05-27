@@ -1,3 +1,11 @@
+2008-05-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed small memory leak.
+
+	* equation.cpp: Looking for variables also in the equation set
+	(not just in dataset) for functions like, e.g., xvalue() and
+	yvalue().
+
 2008-04-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_touchstone.cpp: Fixed compile issue for some gcc/glibc
