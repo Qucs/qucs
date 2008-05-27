@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.66 2008-02-17 18:05:35 ela Exp $
+ * $Id: equation.cpp,v 1.67 2008-05-27 17:49:31 ela Exp $
  *
  */
 
@@ -1843,10 +1843,21 @@ int solver::dataSize (strlist * deps) {
    NULL. */
 vector * solver::getDataVector (char * str) {
   vector * var;
-  if ((var = data->findVariable (str)) != NULL)
-    return var;
-  if ((var = data->findDependency (str)) != NULL)
-    return var;
+  /* search for variables in dataset */
+  if (data != NULL) {
+    if ((var = data->findVariable (str)) != NULL)
+      return var;
+    if ((var = data->findDependency (str)) != NULL)
+      return var;
+  }
+  /* search for variables in equation set */
+  if (equations != NULL) {
+    node * eqn = checker::findEquation (equations, str);
+    constant * res = eqn->getResult ();
+    if (res->getTag () == CONSTANT && res->getType () == TAG_VECTOR) {
+      return res->v;
+    }
+  }
   return NULL;
 }
 
