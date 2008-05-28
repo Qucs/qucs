@@ -4,7 +4,7 @@
 /*
  * scan_spice.l - scanner for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.26 2007/05/31 16:12:48 ela Exp $
+ * $Id: scan_spice.l,v 1.27 2008/05/28 18:23:14 ela Exp $
  *
  */
 
@@ -117,7 +117,7 @@ SIMS     ({SIM1}|{SIM2})
 
      /* MOS specific device properties */
 MOS1     ([lL]|[wW]|[aA][dDsS]|[pP][dDsS]|[nN][rR][dDsS]|[dD][eE][bB][uU][gG])
-MOS2     ([rR][gG][eE][oO][mM][oO][dD]|[tT][sSdD])
+MOS2     ([rR][gG][eE][oO][mM][oO][dD]|[tT][sSdD]|[mM])
 MOS      ({MOS1}|{MOS2})
 
      /* analog behavioural */
