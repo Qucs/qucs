@@ -1,3 +1,8 @@
+2008-05-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Transistors.lib: Added few more BJT transistors from
+	Zetex (FZT's in SOT223 packages).
+
 2008-05-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Makefile.am (COMPLIBS): Added three more libraries
