@@ -1809,6 +1809,726 @@
   </Model>
 </Component>
 
+<Component FZT458>
+  <Description>
+    Silicon planar high voltage NPN transistor
+    400V, 0.3A, 2W, 50MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT458_ 1 0 0 8 -26 0 0 "npn" 0 "5.32e-14" 0 "1" 0 "1.05" 0 "1.5" 0 "0.7" 0 "1500" 0 "64" 0 "2.1e-14" 0 "1.385" 0 "6.42e-12" 0 "1.25" 0 "230" 0 "8" 0 "0" 0 "0" 0 "0.134" 0 "0.224" 0 "0.5" 0 "1.15e-10" 0 "0.8" 0 "0.37" 0 "9.5e-12" 0 "0.4" 0 "0.32" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.3e-09" 0 "0" 0 "0" 0 "0" 0 "1.6e-05" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT489>
+  <Description>
+    Silicon planar medium power NPN transistor
+    30V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT489_ 1 0 0 8 -26 0 0 "npn" 0 "1.04e-013" 0 "1" 0 "1" 0 "1.9" 0 "0.5" 0 "160" 0 "30" 0 "1.83e-014" 0 "1.35" 0 "6e-012" 0 "1.5" 0 "195" 0 "140" 0 "0" 0 "0" 0 "0.11" 0 "0.065" 0 "0.3" 0 "1.22e-010" 0 "0.7631" 0 "0.3412" 0 "2.537e-011" 0 "0.464" 0 "0.3281" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8.6e-010" 0 "0" 0 "0" 0 "0" 0 "1.25e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT491>
+  <Description>
+    Silicon planar medium power NPN transistor
+    60V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT491_ 1 0 0 8 -26 0 0 "npn" 0 "3.05e-013" 0 "1.0034" 0 "1.001" 0 "0.8" 0 "0.6" 0 "165" 0 "69" 0 "8.0191e-014" 0 "1.4126" 0 "1.6e-012" 0 "1.38" 0 "200" 0 "50" 0 "0" 0 "0" 0 "0.075" 0 "0.109" 0 "0.065" 0 "9.6e-011" 0 "0.75" 0 "0.33" 0 "1.72e-011" 0 "0.4298" 0 "0.3429" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.1e-010" 0 "0" 0 "0" 0 "0" 0 "2.5e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT491A>
+  <Description>
+    Silicon planar medium power NPN transistor
+    40V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT491A_ 1 0 0 8 -26 0 0 "npn" 0 "3.05e-013" 0 "1.0034" 0 "1.001" 0 "0.8" 0 "0.6" 0 "165" 0 "69" 0 "8.0191e-014" 0 "1.4126" 0 "1.6e-012" 0 "1.38" 0 "650" 0 "120" 0 "0" 0 "0" 0 "0.075" 0 "0.109" 0 "0.065" 0 "9.6e-011" 0 "0.75" 0 "0.33" 0 "1.72e-011" 0 "0.4298" 0 "0.3429" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.1e-010" 0 "0" 0 "0" 0 "0" 0 "2.5e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT493>
+  <Description>
+    Silicon planar medium power NPN transistor
+    100V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT493_ 1 0 0 8 -26 0 0 "npn" 0 "6e-014" 0 "0.99" 0 "0.98" 0 "0.9" 0 "0.5" 0 "270" 0 "27" 0 "1e-014" 0 "1.2" 0 "1.2e-013" 0 "1.2" 0 "250" 0 "30" 0 "0" 0 "0" 0 "0.08" 0 "0.08" 0 "0.2" 0 "1.08e-010" 0 "0.7" 0 "0.35" 0 "1.59e-011" 0 "0.51" 0 "0.4" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8e-010" 0 "0" 0 "0" 0 "0" 0 "5.5e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT549>
+  <Description>
+    Silicon planar medium power PNP transistor
+    30V, 1A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT549_ 1 0 0 8 -26 0 0 "pnp" 0 "1.3e-013" 0 "1" 0 "1" 0 "1.8" 0 "0.2" 0 "104" 0 "8" 0 "6e-014" 0 "1.45" 0 "3.5e-014" 0 "1.23" 0 "200" 0 "50" 0 "0" 0 "0" 0 "0.122" 0 "0.063" 0 "0.7" 0 "1.209e-010" 0 "1.041" 0 "0.4685" 0 "5.5e-011" 0 "0.1928" 0 "0.3541" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "5.1e-010" 0 "0" 0 "0" 0 "0" 0 "3.6e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT558>
+  <Description>
+    Silicon planar medium power high voltage PNP transistor
+    400V, 0.2A, 2W, 50MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT558_ 1 0 0 8 -26 0 0 "pnp" 0 "7.84e-14" 0 "1" 0 "1" 0 "1.8" 0 "0.15" 0 "349" 0 "82" 0 "3.35e-14" 0 "1.69" 0 "9.42e-12" 0 "1.05" 0 "210" 0 "3.4" 0 "0" 0 "0" 0 "0.1" 0 "0.1" 0 "0.5" 0 "1.15e-10" 0 "0.85" 0 "0.43" 0 "2.05e-11" 0 "0.44" 0 "0.38" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "9e-10" 0 "0" 0 "0" 0 "0" 0 "0.00018" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT560>
+  <Description>
+    Silicon planar high voltage PNP transistor
+    500V, 0.15A, 2W, 60MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT560_ 1 0 0 8 -26 0 0 "pnp" 0 "4e-14" 0 "0.98" 0 "1" 0 "0" 0 "0.01" 0 "104" 0 "100" 0 "1e-12" 0 "1.54" 0 "1e-13" 0 "2" 0 "140" 0 "2" 0 "0" 0 "0" 0 "0.3" 0 "0.3" 0 "25" 0 "1.003e-10" 0 "0.877" 0 "0.419" 0 "2.9e-11" 0 "0.511" 0 "0.364" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "2e-10" 0 "0" 0 "0" 0 "0" 0 "1.5e-06" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.5" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT589>
+  <Description>
+    Silicon planar medium power high performance PNP transistor
+    30V, 1A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT589_ 1 0 0 8 -26 0 0 "pnp" 0 "1.3e-013" 0 "1" 0 "1" 0 "1.8" 0 "0.2" 0 "104" 0 "8" 0 "6e-014" 0 "1.45" 0 "3.5e-014" 0 "1.23" 0 "200" 0 "50" 0 "0" 0 "0" 0 "0.122" 0 "0.063" 0 "0.7" 0 "1.209e-010" 0 "1.041" 0 "0.4685" 0 "5.5e-011" 0 "0.1928" 0 "0.3541" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "5.1e-010" 0 "0" 0 "0" 0 "0" 0 "3.6e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT591>
+  <Description>
+    Silicon planar medium power PNP transistor
+    60V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT591_ 1 0 0 8 -26 0 0 "pnp" 0 "3.2e-014" 0 "0.977" 0 "0.986" 0 "1.25" 0 "0.15" 0 "45" 0 "50" 0 "7e-015" 0 "1.35" 0 "9e-015" 0 "1.08" 0 "170" 0 "50" 0 "0" 0 "0" 0 "0.185" 0 "0.195" 0 "0.16" 0 "1.04e-010" 0 "0.75" 0 "0.33" 0 "3.05e-011" 0 "0.395" 0 "0.415" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7e-010" 0 "0" 0 "0" 0 "0" 0 "3e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT591A>
+  <Description>
+    Silicon planar medium power PNP transistor
+    40V, 1A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT591A_ 1 0 0 8 -26 0 0 "pnp" 0 "3.0572e-013" 0 "1.0103" 0 "1.007" 0 "0.93" 0 "0.08" 0 "20" 0 "33" 0 "1.5e-014" 0 "1.52" 0 "3.8736e-014" 0 "1.0893" 0 "450" 0 "160" 0 "0" 0 "0" 0 "0.156" 0 "0.144" 0 "0.112" 0 "9.1e-011" 0 "0.75" 0 "0.33" 0 "4.2e-011" 0 "0.3131" 0 "0.4449" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "5.1e-010" 0 "0" 0 "0" 0 "0" 0 "3.6e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT649>
+  <Description>
+    Silicon planar high performance NPN transistor
+    25V, 3A, 2W, 240MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT649_ 1 0 0 8 -26 0 0 "npn" 0 "3e-013" 0 "1" 0 "0.972" 0 "2.8" 0 "0.8" 0 "80" 0 "28" 0 "1.1e-013" 0 "1.37" 0 "6.5e-013" 0 "1.372" 0 "225" 0 "110" 0 "0" 0 "0" 0 "0.07" 0 "0.063" 0 "0.3" 0 "3.25e-010" 0 "0.75" 0 "0.33" 0 "7e-011" 0 "0.75" 0 "0.33" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1e-009" 0 "0" 0 "0" 0 "0" 0 "1e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT651>
+  <Description>
+    Silicon planar high performance NPN transistor
+    60V, 6A, 2W, 140MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT651_ 1 0 0 8 -26 0 0 "npn" 0 "2.218e-013" 0 "0.9956" 0 "0.995" 0 "2" 0 "1" 0 "100" 0 "30" 0 "2.9e-014" 0 "1.35" 0 "2.971e-013" 0 "1.321" 0 "230" 0 "56" 0 "0" 0 "0" 0 "0.069" 0 "0.075" 0 "0.04" 0 "3.18e-010" 0 "0.75" 0 "0.33" 0 "5.1e-011" 0 "0.595" 0 "0.42" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.7e-010" 0 "0" 0 "0" 0 "0" 0 "2.7e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT653>
+  <Description>
+    Silicon planar high performance NPN transistor
+    100V, 2A, 2W, 175MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT653_ 1 0 0 8 -26 0 0 "npn" 0 "3.8206e-013" 0 "1.0025" 0 "1.0012" 0 "1.15" 0 "0.42" 0 "154" 0 "38" 0 "1.035e-013" 0 "1.3642" 0 "7e-013" 0 "1.19" 0 "250" 0 "50" 0 "0" 0 "0" 0 "0.06" 0 "0.0875" 0 "0.04" 0 "2.78e-010" 0 "0.75" 0 "0.33" 0 "4.55e-011" 0 "0.5774" 0 "0.4534" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.8e-010" 0 "0" 0 "0" 0 "0" 0 "3e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT655>
+  <Description>
+    Silicon planar high performance NPN transistor
+    150V, 1A, 2W, 30MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT655_ 1 0 0 8 -26 0 0 "npn" 0 "3.2e-013" 0 "1.0041" 0 "1.0008" 0 "2" 0 "0" 0 "85" 0 "51" 0 "1.5e-013" 0 "1.26" 0 "6e-014" 0 "1.079" 0 "200" 0 "20" 0 "0" 0 "0" 0 "0" 0 "0.045" 0 "0.1" 0 "3.5e-010" 0 "0.75" 0 "0.33" 0 "6.5e-011" 0 "0.7676" 0 "0.4896" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.5e-009" 0 "0" 0 "0" 0 "0" 0 "3e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT657>
+  <Description>
+    Silicon planar medium power NPN transistor
+    300V, 0.5A, 2W, 30MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT657_ 1 0 0 8 -26 0 0 "npn" 0 "2.3e-13" 0 "1.003" 0 "1.001" 0 "1.35" 0 "0" 0 "295" 0 "43" 0 "1.1e-13" 0 "1.33" 0 "1.8e-13" 0 "1.19" 0 "150" 0 "8" 0 "0" 0 "0" 0 "0.085" 0 "0.2" 0 "0.35" 0 "3.52e-10" 0 "0.75" 0 "0.33" 0 "4.5e-11" 0 "0.6" 0 "0.41" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "6e-10" 0 "0" 0 "0" 0 "0" 0 "5.5e-07" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT658>
+  <Description>
+    Silicon planar high voltage NPN transistor
+    400V, 0.5A, 2W, 50MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT658_ 1 0 0 8 -26 0 0 "npn" 0 "1.3e-13" 0 "1.0025" 0 "1.0012" 0 "0.7" 0 "0.42" 0 "154" 0 "48" 0 "7e-14" 0 "1.4" 0 "3e-13" 0 "1.3" 0 "150" 0 "8" 0 "0" 0 "0" 0 "0.05" 0 "0.0875" 0 "0.04" 0 "3.54e-10" 0 "0.824" 0 "0.36" 0 "2.477e-11" 0 "0.432" 0 "0.322" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "6.2e-10" 0 "0" 0 "0" 0 "0" 0 "7e-07" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.55" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT688B>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    12V, 4A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT688B_ 1 0 0 8 -26 0 0 "npn" 0 "1.09e-012" 0 "0.9935" 0 "0.992" 0 "5.2" 0 "0.5" 0 "25" 0 "5" 0 "1.3e-013" 0 "1.35" 0 "1.74e-013" 0 "1.399" 0 "1180" 0 "790" 0 "0" 0 "0" 0 "0.034" 0 "0.036" 0 "0.3" 0 "2.8e-010" 0 "0.75" 0 "0.33" 0 "1.04e-010" 0 "0.46" 0 "0.29" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "9.3e-010" 0 "0" 0 "0" 0 "0" 0 "1.05e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT689B>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    20V, 3A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT689B_ 1 0 0 8 -26 0 0 "npn" 0 "1.8e-012" 0 "0.994" 0 "0.996" 0 "3.2" 0 "0.8" 0 "24" 0 "4" 0 "2.18e-013" 0 "1.345" 0 "3.6e-013" 0 "1.26" 0 "1500" 0 "310" 0 "0" 0 "0" 0 "0.036" 0 "0.035" 0 "0.2" 0 "2.48e-010" 0 "0.75" 0 "0.33" 0 "7.4e-011" 0 "0.485" 0 "0.35" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.2e-010" 0 "0" 0 "0" 0 "0.005" 0 "4.9e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.13" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT690B>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    45V, 3A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT690B_ 1 0 0 8 -26 0 0 "npn" 0 "1.5e-012" 0 "1" 0 "1" 0 "3" 0 "1" 0 "60" 0 "14.5" 0 "4e-013" 0 "1.37" 0 "4e-013" 0 "1.34" 0 "1000" 0 "123" 0 "0" 0 "0" 0 "0.027" 0 "0.045" 0 "0.1" 0 "2.5e-010" 0 "0.68" 0 "0.36" 0 "5.9e-011" 0 "0.49" 0 "0.36" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.7e-010" 0 "0" 0 "0" 0 "0" 0 "1.8e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT692B>
+  <Description>
+    Silicon planar medium power high gain transistor
+    70V, 2A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT692B_ 1 0 0 8 -26 0 0 "npn" 0 "1.87e-012" 0 "0.9983" 0 "0.997" 0 "0.73" 0 "0.55" 0 "29" 0 "12" 0 "2.1e-013" 0 "1.378" 0 "4.4e-013" 0 "1.14" 0 "1400" 0 "68" 0 "0" 0 "0" 0 "0.048" 0 "0.05" 0 "0.2" 0 "2.33e-010" 0 "0.75" 0 "0.33" 0 "4.25e-011" 0 "0.625" 0 "0.475" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.7e-010" 0 "0" 0 "0" 0 "0" 0 "3.9e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT694B>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    120V, 1A, 2W, 130MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT694B_ 1 0 0 8 -26 0 0 "npn" 0 "1.59e-012" 0 "1.001" 0 "1" 0 "0.26" 0 "1" 0 "45" 0 "30" 0 "2.53e-013" 0 "1.445" 0 "3.26e-013" 0 "1.075" 0 "1009" 0 "40" 0 "0" 0 "0" 0 "0.075" 0 "0.065" 0 "0.2" 0 "2.58e-010" 0 "0.75" 0 "0.33" 0 "3.55e-011" 0 "0.515" 0 "0.465" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.63e-010" 0 "0" 0 "0" 0 "0" 0 "1.3e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT696B>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    180V, 0.5A, 2W, 70MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT696B_ 1 0 0 8 -26 0 0 "npn" 0 "9.8476e-013" 0 "0.999" 0 "1.002" 0 "0.8" 0 "0.8" 0 "235" 0 "26" 0 "8.1e-014" 0 "1.36" 0 "6.6e-013" 0 "1.15" 0 "705" 0 "20" 0 "0" 0 "0" 0 "0.098" 0 "0.125" 0 "0.07" 0 "2.7e-010" 0 "0.75" 0 "0.33" 0 "2.54e-011" 0 "0.445" 0 "0.47" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.301e-009" 0 "0" 0 "0" 0 "0" 0 "6.9e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT717>
+  <Description>
+    PNP low saturation PNP transistor
+    12V, 3A, 2W, 110MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT717_ 1 0 0 8 -26 0 0 "pnp" 0 "5.5e-013" 0 "1" 0 "1" 0 "3" 0 "0.3" 0 "14.93" 0 "5.64" 0 "1.75e-013" 0 "1.5" 0 "6.01e-013" 0 "1.34" 0 "500" 0 "280" 0 "0" 0 "0" 0 "0.025" 0 "0.03" 0 "0.3" 0 "2.236e-010" 0 "0.9091" 0 "0.4803" 0 "1.169e-010" 0 "0.4576" 0 "0.3456" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.2e-009" 0 "0" 0 "0" 0 "0" 0 "2e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT749>
+  <Description>
+    Silicon planar medium power PNP transistor
+    25V, 3A, 2W, 160MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT749_ 1 0 0 8 -26 0 0 "pnp" 0 "2.6e-013" 0 "0.999" 0 "0.982" 0 "7" 0 "0.6" 0 "27" 0 "14" 0 "1.2e-013" 0 "1.43" 0 "1.204e-012" 0 "1.4474" 0 "210" 0 "70" 0 "0" 0 "0" 0 "0.04" 0 "0.065" 0 "0.3" 0 "4.1e-010" 0 "0.75" 0 "0.33" 0 "1.4e-010" 0 "0.305" 0 "0.35" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "6.5e-010" 0 "0" 0 "0" 0 "0" 0 "1.2e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT751>
+  <Description>
+    Silicon planar high performance PNP transistor
+    60V, 3A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT751_ 1 0 0 8 -26 0 0 "pnp" 0 "2.715e-013" 0 "1.004" 0 "1.005" 0 "2.75" 0 "0.55" 0 "70" 0 "40" 0 "1e-013" 0 "1.535" 0 "5.15e-014" 0 "1.13" 0 "170" 0 "23" 0 "0" 0 "0" 0 "0.085" 0 "0.065" 0 "0.07" 0 "3.6e-010" 0 "0.75" 0 "0.33" 0 "9e-011" 0 "0.705" 0 "0.46" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "9.4e-010" 0 "0" 0 "0" 0 "0" 0 "6e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT753>
+  <Description>
+    Silicon planar medium power PNP transistor
+    100V, 2A, 2W, 140MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT753_ 1 0 0 8 -26 0 0 "pnp" 0 "3.2007e-013" 0 "1.0041" 0 "1.0008" 0 "1.6" 0 "0.45" 0 "76" 0 "51" 0 "8e-014" 0 "1.57" 0 "6e-014" 0 "1.079" 0 "200" 0 "33" 0 "0" 0 "0" 0 "0.07" 0 "0.08" 0 "0.087" 0 "3.5e-010" 0 "0.75" 0 "0.33" 0 "8e-011" 0 "0.7676" 0 "0.4896" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8.6e-010" 0 "0" 0 "0" 0 "0" 0 "2.4e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT755>
+  <Description>
+    Silicon planar medium power PNP transistor
+    150V, 1A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT755_ 1 0 0 8 -26 0 0 "pnp" 0 "3.2e-013" 0 "1.0041" 0 "1.0008" 0 "1.6" 0 "0.45" 0 "85" 0 "51" 0 "8e-014" 0 "1.57" 0 "6e-014" 0 "1.079" 0 "150" 0 "20" 0 "0" 0 "0" 0 "0.07" 0 "0.08" 0 "0.087" 0 "3.5e-010" 0 "0.75" 0 "0.33" 0 "6.5e-011" 0 "0.7676" 0 "0.4896" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.5e-009" 0 "0" 0 "0" 0 "0" 0 "3e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT757>
+  <Description>
+    Silicon planar high voltage PNP transistor
+    300V, 0.5A, 2W, 30MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT757_ 1 0 0 8 -26 0 0 "pnp" 0 "1.305e-13" 0 "1.0004" 0 "1" 0 "0.5" 0 "0.5" 0 "1060" 0 "50" 0 "7.5e-13" 0 "1.5" 0 "2e-13" 0 "1.8" 0 "120" 0 "3.2" 0 "0" 0 "0" 0 "0.2" 0 "0.19" 0 "0.1" 0 "4.45e-10" 0 "0.75" 0 "0.33" 0 "4.8e-11" 0 "0.775" 0 "0.56" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "3.03e-09" 0 "0" 0 "0" 0 "0" 0 "1.5e-06" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.6" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT758>
+  <Description>
+    Silicon planar high voltage PNP transistor
+    400V, 0.5A, 2W, 50MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT758_ 1 0 0 8 -26 0 0 "pnp" 0 "1.305e-13" 0 "1.0004" 0 "1" 0 "0" 0 "0" 0 "350" 0 "30" 0 "7.5e-13" 0 "1.5" 0 "2e-13" 0 "1.8" 0 "150" 0 "2.5" 0 "0" 0 "0" 0 "0.01" 0 "0.01" 0 "0.1" 0 "4.04e-10" 0 "0.75" 0 "0.33" 0 "5.8e-11" 0 "0.775" 0 "0.56" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1e-09" 0 "0" 0 "0" 0 "0" 0 "1.2e-06" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.7" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT788A>
+  <Description>
+    PNP low saturation transistor
+    15V, 3A, 2W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT788A_ 1 0 0 8 -26 0 0 "pnp" 0 "1.2016e-012" 0 "1.0186" 0 "1.011" 0 "3.8" 0 "0.35" 0 "10.8" 0 "13.6" 0 "2.2e-013" 0 "1.57" 0 "2.38e-012" 0 "1.693" 0 "490" 0 "190" 0 "0" 0 "0" 0 "0.042" 0 "0.028" 0 "0.05" 0 "3.35e-010" 0 "0.75" 0 "0.33" 0 "1.56e-010" 0 "0.9718" 0 "0.4266" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.8e-010" 0 "0" 0 "0" 0 "0" 0 "4.6e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT788B>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    15V, 3A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT788B_ 1 0 0 8 -26 0 0 "pnp" 0 "1.252e-012" 0 "1.0119" 0 "1.0047" 0 "2.6" 0 "0.32" 0 "11" 0 "10.5" 0 "1.3185e-013" 0 "1.4832" 0 "5.2648e-014" 0 "1.186" 0 "770" 0 "350" 0 "0" 0 "0" 0 "0.044" 0 "0.031" 0 "0.053" 0 "2.8e-010" 0 "0.75" 0 "0.33" 0 "1.37e-010" 0 "0.275" 0 "0.34" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.5e-010" 0 "0" 0 "0" 0 "0" 0 "2.3e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT789A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    25V, 3A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT789A_ 1 0 0 8 -26 0 0 "pnp" 0 "8.5083e-013" 0 "1.007" 0 "1.0025" 0 "3.4" 0 "0.3" 0 "15.5" 0 "9" 0 "1.60716e-013" 0 "1.5059" 0 "7.382e-014" 0 "1.2275" 0 "540" 0 "180" 0 "0" 0 "0" 0 "0.052" 0 "0.32" 0 "0.05" 0 "3e-010" 0 "0.75" 0 "0.33" 0 "1.4e-010" 0 "0.26" 0 "0.335" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.3e-010" 0 "0" 0 "0" 0 "0" 0 "4.2e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT790A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    40V, 3A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT790A_ 1 0 0 8 -26 0 0 "pnp" 0 "1.09684e-012" 0 "1.0102" 0 "1.00391" 0 "1.7" 0 "0.2" 0 "23.5" 0 "30" 0 "9.88593e-014" 0 "1.47256" 0 "5.4933e-014" 0 "1.07427" 0 "650" 0 "270" 0 "0" 0 "0" 0 "0.078" 0 "0.049" 0 "0.055" 0 "2.75e-010" 0 "0.75" 0 "0.33" 0 "9.6e-011" 0 "0.67" 0 "0.495" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.5e-010" 0 "0" 0 "0" 0 "0" 0 "1.08e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT795A>
+  <Description>
+    Silicon planar medium power high gain transistor
+    140V, 0.5A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT795A_ 1 0 0 8 -26 0 0 "pnp" 0 "7e-013" 0 "1.005" 0 "1" 0 "2" 0 "2" 0 "62" 0 "25" 0 "1e-014" 0 "1.4" 0 "4.1e-013" 0 "1.07" 0 "500" 0 "10.1" 0 "0" 0 "0" 0 "0.14" 0 "0.06" 0 "0.45" 0 "2.8e-010" 0 "0.75" 0 "0.33" 0 "5.2e-011" 0 "0.65" 0 "0.515" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.2e-010" 0 "0" 0 "0" 0 "0" 0 "5.8e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT796A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    200V, 0.5A, 2W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT796A_ 1 0 0 8 -26 0 0 "pnp" 0 "7e-013" 0 "1.005" 0 "1" 0 "2" 0 "0.4" 0 "450" 0 "48" 0 "1e-014" 0 "1.4" 0 "4.1e-013" 0 "1.07" 0 "450" 0 "6.5" 0 "0" 0 "0" 0 "0.14" 0 "0.06" 0 "0.05" 0 "2.8e-010" 0 "0.75" 0 "0.33" 0 "5.2e-011" 0 "0.65" 0 "0.515" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8.3e-010" 0 "0" 0 "0" 0 "0" 0 "1.3e-006" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT849>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    30V, 7A, 3W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT849_ 1 0 0 8 -26 0 0 "npn" 0 "5.8591e-013" 0 "0.9919" 0 "0.9908" 0 "18" 0 "6.8" 0 "90" 0 "20" 0 "2.0067e-013" 0 "1.4" 0 "5.3e-013" 0 "1.46" 0 "230" 0 "180" 0 "0" 0 "0" 0 "0.015" 0 "0.0223" 0 "0.023" 0 "1.21e-009" 0 "0.75" 0 "0.33" 0 "2e-010" 0 "0.3532" 0 "0.3006" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.07e-009" 0 "0" 0 "0" 0 "0" 0 "9.3e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT851>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    60V, 6A, 3W, 130MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT851_ 1 0 0 8 -26 0 0 "npn" 0 "1.0085e-012" 0 "1.0001" 0 "0.9988" 0 "5.1" 0 "5.5" 0 "158" 0 "46" 0 "2e-013" 0 "1.38" 0 "4.6515e-013" 0 "1.334" 0 "240" 0 "110" 0 "0" 0 "0" 0 "0.015" 0 "0.018" 0 "0.025" 0 "1.05e-009" 0 "0.75" 0 "0.33" 0 "1.55e-010" 0 "0.6477" 0 "0.4348" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "7.9e-010" 0 "0" 0 "0" 0 "0" 0 "2.4e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT853>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    100V, 6A, 3W, 130MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT853_ 1 0 0 8 -26 0 0 "npn" 0 "8e-013" 0 "0.99" 0 "0.99" 0 "1.4" 0 "1.4" 0 "200" 0 "46" 0 "4e-013" 0 "1.27" 0 "1e-010" 0 "1.65" 0 "240" 0 "90" 0 "0" 0 "0" 0 "0.014" 0 "0.014" 0 "0.3" 0 "1.07e-009" 0 "0.75" 0 "0.33" 0 "1.27e-010" 0 "0.65" 0 "0.46" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "9e-010" 0 "0" 0 "0" 0 "0" 0 "2e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT855>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    150V, 5A, 3W, 90MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT855_ 1 0 0 8 -26 0 0 "npn" 0 "7.5e-013" 0 "0.995" 0 "1.0015" 0 "0" 0 "0" 0 "350" 0 "140" 0 "4e-013" 0 "1.42" 0 "8e-012" 0 "1.3" 0 "240" 0 "27" 0 "0" 0 "0" 0 "0.018" 0 "0.018" 0 "0.15" 0 "4.2e-010" 0 "0.75" 0 "0.33" 0 "6.6e-011" 0 "0.48" 0 "0.41" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.5e-009" 0 "0" 0 "0" 0 "0" 0 "1.8e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT857>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    300V, 3.5A, 3W, 80MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT857_ 1 0 0 8 -26 0 0 "npn" 0 "2e-12" 0 "1.006" 0 "1.01" 0 "5" 0 "94m" 0 "595" 0 "33.5" 0 "3.6e-13" 0 "1.4088" 0 "1.502e-12" 0 "1.067" 0 "226" 0 "40" 0 "0" 0 "0" 0 "0.02" 0 "0.055" 0 "0.02" 0 "1.1e-09" 0 "0.75" 0 "0.33" 0 "6.3e-11" 0 "0.491" 0 "0.505" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.3e-09" 0 "0" 0 "0" 0 "0" 0 "1.75e-06" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT869>
+  <Description>
+    Silicon planar high current (high performance) NPN transistor
+    25V, 7A, 3W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT869_ 1 0 0 8 -26 0 0 "npn" 0 "1.9e-012" 0 "1" 0 "1" 0 "9" 0 "6" 0 "40" 0 "18" 0 "3.752e-013" 0 "1.399" 0 "4.135e-013" 0 "1.384" 0 "600" 0 "370" 0 "0.01" 0 "1" 0 "0.02" 0 "0.01" 0 "1" 0 "9.103e-010" 0 "0.7686" 0 "0.3826" 0 "2.15e-010" 0 "0.5871" 0 "0.3917" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.15e-009" 0 "0" 0 "0" 0 "0" 0 "4.01e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT948>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    20V, 6A, 3W, 80MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT948_ 1 0 0 8 -26 0 0 "pnp" 0 "1.5554e-012" 0 "1.013" 0 "1.004" 0 "14.7" 0 "1.34" 0 "22.4" 0 "15.4" 0 "1.48e-013" 0 "1.485" 0 "1.3946e-011" 0 "1.702" 0 "208" 0 "140" 0 "0" 0 "0" 0 "0.015" 0 "0.0177" 0 "0.02" 0 "1.23e-009" 0 "0.75" 0 "0.33" 0 "4.4e-010" 0 "0.685" 0 "0.3604" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.38e-009" 0 "0" 0 "0" 0 "0" 0 "4.8e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT949>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    30V, 5.5A, 3W, 100MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT949_ 1 0 0 8 -26 0 0 "pnp" 0 "1.5111e-012" 0 "1.0127" 0 "1.009" 0 "12.4" 0 "1.25" 0 "32.7" 0 "26.5" 0 "1.335e-013" 0 "1.42" 0 "1.392e-013" 0 "1.14" 0 "208" 0 "145" 0 "0" 0 "0" 0 "0.0175" 0 "0.019" 0 "0.026" 0 "1.17e-009" 0 "0.75" 0 "0.33" 0 "3.62e-010" 0 "0.4294" 0 "0.338" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.01e-009" 0 "0" 0 "0" 0 "0" 0 "7.5e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT951>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    60V, 5A, 3W, 120MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT951_ 1 0 0 8 -26 0 0 "pnp" 0 "1.3766e-012" 0 "1.013" 0 "1.0099" 0 "5" 0 "0.9" 0 "66.3" 0 "33" 0 "1.4e-013" 0 "1.41" 0 "1.7e-012" 0 "1.4" 0 "187" 0 "56" 0 "0" 0 "0" 0 "0.0255" 0 "0.02" 0 "0.029" 0 "1.15e-009" 0 "0.75" 0 "0.33" 0 "2.87e-010" 0 "0.4956" 0 "0.4522" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8.3e-010" 0 "0" 0 "0" 0 "0" 0 "2e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT953>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    100V, 5A, 3W, 125MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT953_ 1 0 0 8 -26 0 0 "pnp" 0 "1.6649e-012" 0 "1.0139" 0 "1.0107" 0 "4" 0 "0.95" 0 "55" 0 "43" 0 "6.2e-013" 0 "1.62" 0 "3e-012" 0 "1.4" 0 "220" 0 "40" 0 "0" 0 "0" 0 "0.034" 0 "0.0295" 0 "0.032" 0 "1.1e-009" 0 "0.75" 0 "0.33" 0 "2.65e-010" 0 "0.76" 0 "0.5286" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8e-010" 0 "0" 0 "0" 0 "0" 0 "2.9e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT955>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    140V, 4A, 3W, 110MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT955_ 1 0 0 8 -26 0 0 "pnp" 0 "6e-013" 0 "1" 0 "1.0015" 0 "0" 0 "0" 0 "40" 0 "19" 0 "4e-013" 0 "1.42" 0 "8e-012" 0 "1.3" 0 "150" 0 "21" 0 "0" 0 "0" 0 "0.018" 0 "0.023" 0 "0.15" 0 "1.19e-009" 0 "0.92" 0 "0.44" 0 "2.16e-010" 0 "0.87" 0 "0.54" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "9e-010" 0 "0" 0 "0" 0 "0" 0 "1.1e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT956>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    200V, 2A, 3W, 110MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT956_ 1 0 0 8 -26 0 0 "pnp" 0 "3e-012" 0 "1" 0 "1" 0 "2" 0 "0" 0 "86" 0 "59" 0 "6.5e-013" 0 "1.58" 0 "6e-012" 0 "1.6" 0 "215" 0 "18" 0 "0" 0 "0" 0 "0.01" 0 "0.02" 0 "0.05" 0 "1.08e-009" 0 "0.75" 0 "0.33" 0 "1.91e-010" 0 "0.8577" 0 "0.5535" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8.95e-010" 0 "0" 0 "0" 0 "0" 0 "1.18e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT957>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    300V, 1A, 3W, 85MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT957_ 1 0 0 8 -26 0 0 "pnp" 0 "1.3152e-12" 0 "1.0106" 0 "1.0104" 0 "4" 0 "0.63" 0 "325" 0 "110" 0 "5.5e-13" 0 "1.524" 0 "6e-12" 0 "1.8" 0 "215" 0 "8" 0 "0" 0 "0" 0 "0.07" 0 "0.07" 0 "0.25" 0 "1.1e-09" 0 "0.75" 0 "0.33" 0 "1.4e-10" 0 "0.7592" 0 "0.5432" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.23e-09" 0 "0" 0 "0" 0 "0" 0 "5.6e-07" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT958>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    400V, 0.5A, 3W, 85MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT958_ 1 0 0 8 -26 0 0 "pnp" 0 "1.6073e-12" 0 "1.013" 0 "1.05" 0 "0.7" 0 "0.85" 0 "326" 0 "78" 0 "1.75e-13" 0 "1.46" 0 "5e-11" 0 "1.7" 0 "215" 0 "3.5" 0 "0" 0 "0" 0 "0.123" 0 "0.126" 0 "0.05" 0 "1.05e-09" 0 "0.75" 0 "0.33" 0 "1.13e-10" 0 "0.5949" 0 "0.5069" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.26e-09" 0 "0" 0 "0" 0 "0" 0 "1.28e-06" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT968>
+  <Description>
+    Silicon planar high current (high performance) PNP transistor
+    12V, 6A, 3W, 80MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT968_ 1 0 0 8 -26 0 0 "pnp" 0 "3.58e-012" 0 "1.015" 0 "1.01" 0 "11" 0 "1.4" 0 "11.4" 0 "8.4" 0 "1.576e-013" 0 "1.42" 0 "1.48e-011" 0 "1.637" 0 "500" 0 "245" 0 "0" 0 "0" 0 "0.0235" 0 "0.0164" 0 "0.024" 0 "1.05e-009" 0 "0.75" 0 "0.33" 0 "4.38e-010" 0 "0.673" 0 "0.361" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.38e-009" 0 "0" 0 "0" 0 "0" 0 "2.3e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1047A>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    10V, 5A, 2.5W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1047A_ 1 0 0 8 -26 0 0 "npn" 0 "9.73e-013" 0 "1" 0 "1" 0 "8" 0 "5" 0 "120" 0 "15" 0 "2.6e-013" 0 "1.38" 0 "8e-013" 0 "1.4" 0 "550" 0 "400" 0 "0" 0 "0" 0 "0.01" 0 "0.017" 0 "0.1" 0 "5.404e-010" 0 "0.753" 0 "0.359" 0 "1.954e-010" 0 "0.39" 0 "0.257" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "4.5e-010" 0 "0" 0 "0" 0 "0" 0 "1.2e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1048A>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    17.5V, 5A, 2.5W, 150MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1048A_ 1 0 0 8 -26 0 0 "npn" 0 "1.373e-012" 0 "1" 0 "1" 0 "8" 0 "6" 0 "120" 0 "15" 0 "2.6e-013" 0 "1.38" 0 "1.6e-012" 0 "1.4" 0 "550" 0 "300" 0 "0" 0 "0" 0 "0.01" 0 "0.022" 0 "0.1" 0 "5.591e-010" 0 "0.533" 0 "0.299" 0 "1.36e-010" 0 "0.42" 0 "0.267" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "6e-010" 0 "0" 0 "0" 0 "0" 0 "3e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1049A>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    30V, 5A, 2.5W, 180MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1049A_ 1 0 0 8 -26 0 0 "npn" 0 "1.5e-012" 0 "1" 0 "1" 0 "7.5" 0 "3" 0 "100" 0 "15" 0 "9e-014" 0 "1.25" 0 "5e-013" 0 "1.76" 0 "600" 0 "150" 0 "0" 0 "0" 0 "0.007" 0 "0.018" 0 "0.1" 0 "5.5e-010" 0 "0.726" 0 "0.36" 0 "1.36e-010" 0 "0.554" 0 "0.352" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "4e-010" 0 "0" 0 "0" 0 "0" 0 "6.9e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1051A>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    40V, 5A, 2.5W, 155MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1051A_ 1 0 0 8 -26 0 0 "npn" 0 "1.35e-012" 0 "1" 0 "1" 0 "5" 0 "3" 0 "120" 0 "15" 0 "6e-014" 0 "1.25" 0 "1e-010" 0 "1.7" 0 "600" 0 "150" 0 "0" 0 "0" 0 "0.01" 0 "0.023" 0 "0.1" 0 "5.475e-010" 0 "0.741" 0 "0.357" 0 "9.036e-011" 0 "0.5" 0 "0.385" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "6e-010" 0 "0" 0 "0" 0 "0" 0 "8e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1053A>
+  <Description>
+    Silicon planar medium power high gain NPN transistor
+    75V, 4.5A, 2.5W, 140MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1053A_ 1 0 0 8 -26 0 0 "npn" 0 "2.1e-012" 0 "1" 0 "0.99" 0 "2.2" 0 "2.5" 0 "100" 0 "15" 0 "9e-014" 0 "1.25" 0 "5e-010" 0 "1.76" 0 "600" 0 "150" 0 "0" 0 "0" 0 "0.016" 0 "0.028" 0 "0.1" 0 "5.2e-010" 0 "0.766" 0 "0.367" 0 "7.51e-011" 0 "0.512" 0 "0.415" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "5.5e-010" 0 "0" 0 "0" 0 "0" 0 "2.2e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1147A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    12V, 5A, 2.5W, 115MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1147A_ 1 0 0 8 -26 0 0 "pnp" 0 "1.272e-012" 0 "0.989" 0 "1" 0 "8" 0 "1.2" 0 "14.59" 0 "3.1" 0 "2.5e-013" 0 "1.65" 0 "8e-014" 0 "1.6" 0 "500" 0 "90" 0 "0" 0 "0" 0 "0.013" 0 "0.015" 0 "0.145" 0 "5.6e-010" 0 "0.75" 0 "0.33" 0 "2.55e-010" 0 "0.6288" 0 "0.4048" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.2e-009" 0 "0" 0 "0" 0 "0" 0 "1.3e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1149A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    25V, 4A, 2.5W, 135MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1149A_ 1 0 0 8 -26 0 0 "pnp" 0 "9.5e-013" 0 "1.002" 0 "0.997" 0 "5" 0 "0.7" 0 "24.97" 0 "2.51" 0 "1.2e-013" 0 "1.4" 0 "4.5e-013" 0 "1.25" 0 "520" 0 "40" 0 "0" 0 "0" 0 "0.01" 0 "0.02" 0 "0.15" 0 "4.9e-010" 0 "0.75" 0 "0.33" 0 "1.5e-010" 0 "1.094" 0 "0.4739" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1e-009" 0 "0" 0 "0" 0 "0" 0 "3.5e-009" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZT1151A>
+  <Description>
+    Silicon planar medium power high gain PNP transistor
+    40V, 3A, 2.5W, 145MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZT1151A_ 1 0 0 8 -26 0 0 "pnp" 0 "1.7e-012" 0 "1.004" 0 "0.97" 0 "3.5" 0 "0.3" 0 "26.01" 0 "2.41" 0 "1.02e-013" 0 "1.55" 0 "1.5e-013" 0 "1.3" 0 "562" 0 "38" 0 "0" 0 "0" 0 "0.025" 0 "0.02537" 0 "0.25" 0 "4.4e-010" 0 "0.75" 0 "0.33" 0 "1.6e-010" 0 "1.058" 0 "0.5678" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "8e-010" 0 "0" 0 "0" 0 "0" 0 "5.55e-008" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
+<Component FZTA42>
+  <Description>
+    Silicon planar NPN Darlington transistor
+    300V, 0.5A, 2W, 50MHz
+    Package: SOT223
+    Manufacturer: Zetex Semiconductors
+  </Description>
+  <Model>
+    <_BJT FZTA42_ 1 0 0 8 -26 0 0 "npn" 0 "5e-014" 0 "1" 0 "1" 0 "0.25" 0 "0" 0 "610" 0 "45" 0 "9e-015" 0 "1.28" 0 "5e-012" 0 "1.3" 0 "230" 0 "5" 0 "0" 0 "0" 0 "0.07" 0 "0.07" 0 "7" 0 "6.86e-011" 0 "0.75" 0 "0.33" 0 "9.26e-012" 0 "0.3905" 0 "0.241" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "1.1e-009" 0 "0" 0 "0" 0 "0" 0 "9e-007" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.4" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
 <Component IMT4>
   <Description>
     universal silicon PNP BJT
@@ -2829,4 +3549,3 @@
     <_BJT TN6729A_ 1 0 0 8 -26 0 0 "pnp" 0 "9.348f" 0 "1" 0 "1" 0 "10.29" 0 "0" 0 "100" 0 "0" 0 "12.45f" 0 "1.459" 0 "0" 0 "2" 0 "166.8" 0 "8.369" 0 "0" 0 "0" 0 "0.38" 0 "0" 0 "10" 0 "105.6p" 0 "0.75" 0 "0.4351" 0 "48p" 0 "0.75" 0 "0.5152" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "685.2p" 0 "10" 0 "4" 0 "0.3" 0 "1.021n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.5" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
   </Model>
 </Component>
-
