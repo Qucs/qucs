@@ -1,3 +1,8 @@
+2008-05-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Regulators.lib: Added new library containing some
+	voltage regulators based on SPICE models.
+
 2008-05-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Transistors.lib: Added few more BJT transistors from
