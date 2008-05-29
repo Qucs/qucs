@@ -24,7 +24,7 @@
 
 COMPLIBS = Transistors.lib Substrates.lib Diodes.lib MOSFETs.lib OpAmps.lib \
            Bridges.lib LEDs.lib JFETs.lib Z-Diodes.lib NMOSFETs.lib \
-	   PMOSFETs.lib Ideal.lib
+	   PMOSFETs.lib Ideal.lib Regulators.lib
 
 EXTRA_DIST = $(COMPLIBS)
 
