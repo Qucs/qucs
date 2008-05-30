@@ -598,6 +598,10 @@
         <source>Libraries:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Library Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
