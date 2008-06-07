@@ -26,7 +26,8 @@ files.
 Version 0.0.15
 --------------
 
- * new libraries added: PMOSFETs, NMOSFETs, Regulators and Ideal
+ * new libraries added: PMOSFETs, NMOSFETs, Regulators, Varistors and
+   Ideal
 
 Version 0.0.14
 --------------
