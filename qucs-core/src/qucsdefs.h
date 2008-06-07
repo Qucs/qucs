@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.87 2008/04/01 14:52:06 ela Exp $
+ * $Id: qucsdefs.h,v 1.88 2008/06/07 17:19:05 ela Exp $
  *
  */
 
@@ -464,7 +464,7 @@ struct define_t qucs_definition_available[] =
   /* diode */
   { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", PROP_REAL, { 1, PROP_NO_STR }, { '[', 0.1, 100, ']' } },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1e-6, 100, ']' } },
       { "M", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 2, ']' } },
       { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, { ']', 0, 10, ']' } },
