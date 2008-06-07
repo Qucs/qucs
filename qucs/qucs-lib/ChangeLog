@@ -1,3 +1,8 @@
+2008-06-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Varistors.lib: Added new varistor library.  Thanks a lot
+	to Gunther Kraut!
+
 2008-05-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Regulators.lib: Added new library containing some
