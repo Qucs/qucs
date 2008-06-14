@@ -138,5 +138,7 @@
 #include "hic0_full.h"
 #include "potentiometer.h"
 #include "MESFET.h"
+#include "EKV26nMOS.h"
+#include "EKV26pMOS.h"
 
 #endif

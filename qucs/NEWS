@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * new components: EPFL-EKV NMOS/PMOS V2.6
  * new libraries added: PMOSFETs, NMOSFETs, Regulators, Varistors and
    Ideal
 

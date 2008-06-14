@@ -46,7 +46,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   bondwire.png npn_therm.png npnsub_therm.png iexp.png vexp.png edd.png       \
   vfile.png ifile.png mod_amp.png thyristor.png triac.png diac.png            \
   log_amp.png pnp_therm.png pnpsub_therm.png potentiometer.png rfedd.png      \
-  MESFET.png
+  MESFET.png EKV26nMOS.png EKV26pMOS.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
