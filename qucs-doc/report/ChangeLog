@@ -1,3 +1,8 @@
+2008-06-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26/content.tex: New report about EPFL-EKV v2.6 models added.
+	Thanks to Mike Brinson!
+
 2008-04-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* mesfet/content.tex: New report about Verilog-A MESFET models.
