@@ -26,6 +26,8 @@ files.
 Version 0.0.15
 --------------
 
+ * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6
+
 Version 0.0.14
 --------------
 

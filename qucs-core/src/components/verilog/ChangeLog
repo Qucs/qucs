@@ -1,3 +1,8 @@
+2008-06-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26nMOS.va, EKV26pMOS.va: Added new EPFL-EKV MOSFET V2.6
+	models.  Thanks to Mike Brinson!
+
 2008-04-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* MESFET.va: Added new MESFET models provided by Mike Brinson.
