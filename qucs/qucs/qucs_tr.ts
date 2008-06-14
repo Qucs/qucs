@@ -6083,6 +6083,214 @@ Kullanım:  qucsedit [-r] kütük
         <source>MESFET</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EPFL-EKV NMOS 2.6 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>long = 1, short = 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parallel multiple device number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>series multiple device number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate oxide capacitance per unit area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F/m**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>metallurgical junction depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel width correction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel length correction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>long channel threshold voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>body effect parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V**(1/2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk Fermi potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A/V**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mobility reduction coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mobility coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>longitudinal critical field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>depletion length coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>narrow-channel effect coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reverse short channel charge density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A*s/m**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>characteristic length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>threshold voltage temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mobility temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Longitudinal critical field temperature exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ibb temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>heavily doped diffusion length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain/source diffusion sheet resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm/square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source contact resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain contact resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate to source overlap capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate to drain overlap capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate to bulk overlap capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>first impact ionization coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>second impact ionization coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturation voltage factor for impact ionization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>area related theshold voltage mismatch parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V*m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>area related gain mismatch parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>area related body effect mismatch parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sqrt(V)*m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode relative area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPFL-EKV NMOS 2.6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPFL-EKV PMOS 2.6 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EPFL-EKV PMOS 2.6</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

@@ -1551,6 +1551,8 @@ Component* getComponentFromName(QString& Line)
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
 	else if(cstr == "DD") c = new EqnDefined();
+	else if(cstr == "KV26nMOS") c = new EKV26nMOS();
+	else if(cstr == "KV26pMOS") c = new EKV26pMOS();
         break;
   case 'O' : if(cstr == "pAmp") c = new OpAmp();
         else if(cstr == "R") c = new Logical_OR();
