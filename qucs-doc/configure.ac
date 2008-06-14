@@ -102,6 +102,8 @@ AC_CONFIG_FILES([Makefile
 		 report/potentiometer/pics/Makefile
 		 report/mesfet/Makefile
 		 report/mesfet/pics/Makefile
+		 report/EKV26/Makefile
+		 report/EKV26/pics/Makefile
 		 tutorial/Makefile
 		 tutorial/getstarted/Makefile
 		 tutorial/getstarted/pics/Makefile
