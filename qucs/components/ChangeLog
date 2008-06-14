@@ -1,3 +1,8 @@
+2008-06-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26pMOS.cpp (EKV26pMOS), EKV26nMOS.cpp (EKV26nMOS): Added new
+	EPFL-EKV MOSFET V2.6 models.  Thanks to Mike Brinson!
+
 2008-04-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* MESFET.cpp (MESFET): Added new MESFET Verilog-A device.  Thanks
