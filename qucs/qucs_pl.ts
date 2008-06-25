@@ -6500,6 +6500,10 @@ Stosowanie:  qucsedit [-r] plik
         <source>EPFL-EKV PMOS 2.6</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
