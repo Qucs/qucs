@@ -2,6 +2,7 @@
  * amplifier.cpp - amplifier class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.cpp,v 1.5 2007-08-07 20:43:08 ela Exp $
+ * $Id: amplifier.cpp,v 1.6 2008-06-25 15:50:08 ela Exp $
  *
  */
 
@@ -75,6 +76,16 @@ void amplifier::initSP (void) {
   setS (NODE_2, NODE_1, 4 * z0 * sqrt (z1 * z2) * g / (z1 + z0) / (z2 + z0));
 }
 
+void amplifier::calcNoiseSP (nr_double_t) {
+  nr_double_t g = getPropertyDouble ("G");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t NF = getPropertyDouble ("NF");
+  setN (NODE_1, NODE_1, 0);
+  setN (NODE_2, NODE_2, 4 * z0 * z2 * sqrt (g) * (NF - 1) / sqr (z2 + z0));
+  setN (NODE_1, NODE_2, 0);
+  setN (NODE_2, NODE_1, 0);
+}
+
 /*! DC model initialization. 
     An ideal amplifier is characterized by the following 
     Y-matrix:
@@ -106,6 +117,16 @@ void amplifier::initDC (void) {
 */
 void amplifier::initAC (void) {
   initDC ();
+}
+
+void amplifier::calcNoiseAC (nr_double_t) {
+  nr_double_t g = getPropertyDouble ("G");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t NF = getPropertyDouble ("NF");
+  setN (NODE_1, NODE_1, 0);
+  setN (NODE_2, NODE_2, 4 * sqrt (g) * (NF - 1) / z2);
+  setN (NODE_1, NODE_2, 0);
+  setN (NODE_2, NODE_1, 0);
 }
 
 /*! Transient model initialization.

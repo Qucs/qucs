@@ -2,6 +2,7 @@
  * amplifier.h - amplifier class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.h,v 1.3 2007-08-07 20:43:09 ela Exp $
+ * $Id: amplifier.h,v 1.4 2008-06-25 15:50:08 ela Exp $
  *
  */
 
@@ -36,8 +37,10 @@ class amplifier : public circuit
  public:
   amplifier ();
   void initSP (void);
+  void calcNoiseSP (nr_double_t);
   void initDC (void);
   void initAC (void);
+  void calcNoiseAC (nr_double_t);
   void initTR (void);
 };
 
