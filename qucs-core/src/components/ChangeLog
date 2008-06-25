@@ -1,3 +1,7 @@
+2008-06-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* amplifier.cpp: Implemented noise figure 'NF' property.
+
 2008-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/thyristor.cpp, devices/triac.cpp, devices/diac.cpp:

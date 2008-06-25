@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.89 2008/06/14 17:02:43 ela Exp $
+ * $Id: qucsdefs.h,v 1.90 2008/06/25 15:50:07 ela Exp $
  *
  */
 
@@ -400,6 +400,7 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP },
     { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "NF", PROP_REAL, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
       PROP_NO_PROP }
   },
   /* operational amplifier */

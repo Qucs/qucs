@@ -1,7 +1,7 @@
 //   Qucs EPFL-EKV 2.6 pMOS model:
 //
 //   The structure and theoretical background to the EKV 2.6
-//   Verilog-a model is presented in the Qucs EPL-EKV 2.6 report.
+//   Verilog-a model is presented in the Qucs EPFL-EKV 2.6 report.
 //   Typical parameters are for 0.5um CMOS (C) EPLFL-LEG 1999.
 //   Geometry range: Short channel: W >= 0.8um, L >= 0.5um
 //                   Long channel:  W >= 2um,   L >= 2um
