@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.90 2008/06/25 15:50:07 ela Exp $
+ * $Id: qucsdefs.h,v 1.91 2008/06/26 18:14:47 ela Exp $
  *
  */
 
@@ -345,6 +345,19 @@ struct define_t qucs_definition_available[] =
       { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
       { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
       { "er", PROP_REAL, { 2.29, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  },
+  /* rectangular line */
+  { "RECTLINE", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "b", PROP_REAL, { 1.016e-2, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "er", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
       { "mur", PROP_REAL, { 1, PROP_NO_STR }, { '[', 1, 100, ']' } },
       { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
       { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },

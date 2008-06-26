@@ -1,3 +1,8 @@
+2008-06-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* rectline.cpp: Added new rectangular waveguide component provided
+	by Bastien.
+
 2008-06-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* amplifier.cpp: Implemented noise figure 'NF' property.

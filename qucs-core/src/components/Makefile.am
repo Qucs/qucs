@@ -37,7 +37,8 @@ libcomponent_a_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
 	vpm.cpp tswitch.cpp relais.cpp short.cpp twistedpair.cpp tline4p.cpp \
-	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp
+	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp          \
+	rectline.cpp
 
 noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
@@ -47,7 +48,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	vrect.h irect.h amplifier.h opamp.h iinoise.h mutual.h mutual2.h     \
 	vvnoise.h ivnoise.h coupler.h coaxline.h vprobe.h vam.h vpm.h        \
 	tswitch.h relais.h short.h twistedpair.h tline4p.h vexp.h iexp.h     \
-	mutualx.h vfile.h ifile.h rfedd.h
+	mutualx.h vfile.h ifile.h rfedd.h rectline.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
