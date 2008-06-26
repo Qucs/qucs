@@ -1,3 +1,8 @@
+2008-06-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* rectline.cpp (RectLine): Added new rectangular waveguide
+	provided by Bastien.
+
 2008-06-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* EKV26pMOS.cpp (EKV26pMOS), EKV26nMOS.cpp (EKV26nMOS): Added new
