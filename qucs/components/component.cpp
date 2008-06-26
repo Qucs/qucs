@@ -1441,6 +1441,7 @@ Component* getComponentFromName(QString& Line)
   // letter of their name
   switch(first) {
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
+        else if(cstr == "ECTLINE") c = new RectLine();
 	else if(cstr == "us") c = new Resistor(false);  // backward capatible
 	else if(cstr == "SFF") c = new RS_FlipFlop();
 	else if(cstr == "elais") c = new Relais();
