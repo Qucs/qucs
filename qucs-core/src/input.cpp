@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.84 2008-06-14 17:02:43 ela Exp $
+ * $Id: input.cpp,v 1.85 2008-06-26 18:14:46 ela Exp $
  *
  */
 
@@ -409,6 +409,8 @@ circuit * input::createCircuit (char * type) {
     return new tline4p ();
   else if (!strcmp (type, "COAX"))
     return new coaxline ();
+  else if (!strcmp (type, "RECTLINE"))
+    return new rectline ();
   else if (!strcmp (type, "TWIST"))
     return new twistedpair ();
   else if (!strcmp (type, "Coupler"))
