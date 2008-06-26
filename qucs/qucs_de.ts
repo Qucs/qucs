@@ -6702,6 +6702,18 @@ Verwendung:  qucsedit [-r] Datei
         <source>noise figure</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>widest side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shortest side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangular Waveguide</source>
+        <translation type="unfinished">Hohlleiter</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

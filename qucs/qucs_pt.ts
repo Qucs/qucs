@@ -6323,6 +6323,18 @@ Usage:  qucsedit [-r] file
         <source>noise figure</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>widest side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shortest side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangular Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
