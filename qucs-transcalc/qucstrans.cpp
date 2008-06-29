@@ -1381,6 +1381,41 @@ void QucsTranscalc::slotCopyToClipBoard()
     created++;
   }
 
+  // rectangular waveguide schematic
+  else if (mode == ModeRectangular) {
+    transline * l = TransLineTypes[ModeRectangular].line;
+    s += "<Components>\n";
+    s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <GND * 1 90 180 0 0 0 0>\n";
+    s += "  <GND * 1 270 180 0 0 0 0>\n";
+    s += "  <.SP SPTC1 1 90 240 0 51 0 0 ";
+    double freq = l->getProperty("Freq", UNIT_FREQ, FREQ_GHZ);
+    if (freq > 0)
+      s += QString("\"log\" 1 \"%1 GHz\" 1 \"%2 GHz\" 1 ").
+	arg(freq / 10).arg(freq * 10);
+    else
+      s += "\"lin\" 1 \"0 GHz\" 1 \"10 GHz\" 1 ";
+    s += "\"51\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+    s += QString("  <RECTLINE RLTC1 1 180 100 -26 25 0 0 \"%1 mm\" 1 \"%2 mm\" 1 \"%3 mm\" 1 \"%4\" 0 \"%5\" 0 \"%6\" 0 \"%7\" 0 \"26.85\" 0>\n").
+      arg(l->getProperty("a", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("b", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("L", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("Er")).
+      arg(l->getProperty("Mur")).
+      arg(l->getProperty("Tand")).
+      arg(1 / l->getProperty("Cond"));
+    s += "  <Eqn EqnTC1 1 240 260 -23 12 0 0 \"A=twoport(S,'S','A')\" 1 \"ZL=real(sqrt(A[1,2]/A[2,1]))\" 1 \"yes\" 0>\n"; 
+    s += "</Components>\n";
+    s += "<Wires>\n";
+    s += "  <90 100 150 100 \"\" 0 0 0 \"\">\n";
+    s += "  <90 100 90 120 \"\" 0 0 0 \"\">\n";
+    s += "  <210 100 270 100 \"\" 0 0 0 \"\">\n";
+    s += "  <270 100 270 120 \"\" 0 0 0 \"\">\n";
+    s += "</Wires>\n";
+    created++;
+  }
+
   // put resulting transmission line schematic into clipboard
   QClipboard *cb = QApplication::clipboard();
   cb->setText(s);
