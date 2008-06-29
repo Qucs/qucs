@@ -1,3 +1,8 @@
+2008-06-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucstrans.cpp (slotCopyToClipBoard): Added clipboard copy for
+	rectangular waveguide schematic.
+
 2008-03-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucstrans.cpp (slotCopyToClipBoard): Added clipboard copy for
