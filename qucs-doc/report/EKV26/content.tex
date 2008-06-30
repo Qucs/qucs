@@ -39,7 +39,7 @@ Paolo Nenzi and Laurent Lemaitre, GNU Simulators Supporting Verilog-A
 Compact Model Standardization, MOS-AK Meeting, Premstaetten, 2007,
 \url{http://www.mos-ak.org/premstaetten/papers/MOS-AK_QUCS_ngspice_ADMS.pdf}
 }.  The EKV v2.6 MOSFET model is a physics based model which has been
-placed in the public domain by it's developers. It is ideal for
+placed in the public domain by its developers. It is ideal for
 analogue circuit simulation of submicron CMOS circuits.  Since the
 models introduction and development between 1997 and 1999 it has been
 widely used in industry and by academic circuit design groups. Today
@@ -64,7 +64,7 @@ The EKV v2.6 MOSFET model includes the following effects:
  \item Short channel effects including channel-length modulation, source and drain charge-sharing and reverse channel effect
  \item Modelling of substrate current due to impact ionization
  \item Thermal and flicker noise
- \item First order non quasistatic model for the transconductances
+ \item First order non-quasistatic model for the transconductances
  \item Short-distance geometry and bias dependent device matching
 \end{itemize}
 
@@ -97,14 +97,14 @@ A basic DC model for the long channel nMOS EKV v2.6 model is given at
 the EKV Compact MOSFET model website\footnote{See
 \url{http://legwww.epfl.ch/ekv/verilog-a/} for the Verilog-A
 code.}. Unfortunately, this model is only of limited practical use due
-to it's restricted modelling features\footnote{No dynamic, noise or
+to its restricted modelling features\footnote{No dynamic, noise or
 temperature effects.}.  It does however, provide a very good
 introduction to compact device modelling using the Verilog-A hardware
 description language. Readers who are unfamiliar with the Verilog-A
 hardware description language should consult the following references:
 
 \begin{itemize}
- \item Accellera, Verilog-AMS Language Reference Manual, Version 2.2, 2004, Available from \url{http:www.accellera.org}.
+ \item Accellera, Verilog-AMS Language Reference Manual, Version 2.2, 2004, Available from \url{http://www.accellera.org}.
  \item Kenneth S. Kundert and Olaf Zinke, The Designer's Guide to Verilog-AMS, Kluwer Academic Publishers, 2004.
  \item Dan Fitzpatrick and Ira Miller, Analog Behavioral Modeling with the Verilog-A Language, Kluwer Academic Publishers, 1998.
 \item Coram G. J., How to (and how not to) write a compact model in Verilog-A, 2004, IEEE International Behavioural modeling and Simulation Conference (BMAS2004), pp. 97-106.
@@ -147,12 +147,12 @@ L   & $L$ & length parameter   & $m$    & $10e-6$ & $10e-6$ \\
 W   & $W$ & width parameter    & $m$    & $10e-6$ & $10e-6$ \\
 Np  & $Np$ & parallel multiple device number  &   & $1$ & $1$ \\
 Ns  & $Ns$ & series multiple device number    &   & $1$ & $1$ \\
-Cox & $Cox$ & gate oxide capacitance per unit area   & $F/(m*m)$    & $3.4e-3$ & $3.4e-3$ \\
+Cox & $Cox$ & gate oxide capacitance per unit area   & $F/m^2$    & $3.4e-3$ & $3.4e-3$ \\
 Xj  & $Xj$ & metallurgical junction length   & $m$    & $0.15e-6$ & $0.15e-6$ \\
 Dw  & $Dw$ & channel width correction   & $m$    & $-0.02e-6$ & $-0.02e-6$ \\
 Dl  & $Dl$ & channel length correction  & $m$    & $-0.05e-6$ & $-0.05e-6$ \\
 Vto & $Vto$ & long channel threshold voltage   & $V$    & $0.5$ & $-0.55$ \\
-Gamma  & $Gamma$ & body effect parameter   & $V^(1/2)$    & $0.7$ & $0.69$ \\
+Gamma  & $Gamma$ & body effect parameter   & $\sqrt{V}$    & $0.7$ & $0.69$ \\
 Phi  & $Phi$ & bulk Fermi potential  & $V$    & $0.5$ & $0.87$ \\
 Kp   & $Kp$ & transconductance parameter   & $A/V^2$    & $50e-6$ & $20e-6$ \\
 Theta & $Theta$ & mobility reduction coefficient  & $1/V$    & $50e-3$ & $50e-3$ \\
@@ -167,18 +167,18 @@ Cgbo  & $Cgbo$ & gate to bulk overlay capacitance  &  $F$  & $4e-10$ & $4e-10$ \
 N  & $N$ & diode emission coefficient  &    & $1.0$ & $1.0$ \\
 Is  & $Is$ & leakage current  & $A$   & $1e-1$ & $1e-14$ \\
 Bv  & $Bv$ & reverse breakdown voltage  &  $V$  & $100$ & $100$ \\
-Ibv & $Ibv$ & current at BV  &  $A$   & $1e-3$ & $1e-3$ \\
+Ibv & $Ibv$ & current at Bv  &  $A$   & $1e-3$ & $1e-3$ \\
 Vj  & $Vj$ & junction potential  & $V$   & $1.0$ & $1.0$ \\
 Cj0  & $Cj0$ & zero bias depletion capacitance  &  $F$  & $1e-12$ & $1e-12$ \\
 M    & $M$ & grading coefficient  &     & $0.5$ & $0.5$ \\
 Area & $Area$ & relative area  &    & $1.0$ & $1.0$ \\
-Fc & $Fc$ & current at BV  &  $A$   & $1e-3$ & $1e-3$ \\
+Fc & $Fc$ & forward-bias depletion capcitance coefficient  &  & $0.5$ & $0.5$ \\
 Tt  & $Tt$ & transit time  & $s$   & $0.1e-9$ & $0.1e-9$ \\
 Xti  & $Xti$ & saturation current temperature exponent  &    & $3.0$ & $3.0$ \\
 Kf   & $KF$  & flicker noise coefficient                &    & $1e-27$ & $1e-28$ \\
 Af   & $Af$  & flicker noise exponent                   &    & $1.0$ & $1.0$ \\
-Tnom & $Tnom$ & parameter measurement temperature  & $Celsius$    & $26.85$ & $26.85$ \\
-Temp & $Temp$ & device temperature  & $Celsius$   & $26.85$ & $26.85$ \\
+Tnom & $Tnom$ & parameter measurement temperature  & $\degree C$    & $26.85$ & $26.85$ \\
+Temp & $Temp$ & device temperature  & $\degree C$   & $26.85$ & $26.85$ \\
 
 \end{longtable}
 \end{scriptsize}
@@ -190,7 +190,7 @@ Temp & $Temp$ & device temperature  & $Celsius$   & $26.85$ & $26.85$ \\
 
 <24> \hspace{10mm}  $Vd=V(Drain)-V(Bulk)$
 
-<33> \hspace{10mm}  $VGprime = Vg-Vto+Phi+gamma \cdot \sqrt{Phi}$
+<33> \hspace{10mm}  $VGprime = Vg-Vto+Phi+Gamma \cdot \sqrt{Phi}$
 
 <34> \hspace{10mm}  $Vp=VGprime-Phi-Gamma \cdot \left(\sqrt{VGprime+\left[ \dfrac{Gamma}{2}\right]^{2} } -\dfrac{Gamma}{2} \right) $
 
@@ -263,7 +263,7 @@ yielding
 
 Hence   
 \hspace{20mm}     \begin{equation}
-			\dfrac{d(\sqrt{Ids})}{dVs} = -\sqrt{\dfrac{Ispecific}{2 \cdot Vt^{2}}} = -slope
+			\dfrac{\partial(\sqrt{Ids})}{\partial Vs} = -\sqrt{\dfrac{Ispecific}{2 \cdot Vt^{2}}} = -slope
                   \end{equation}  
 Or 
 \hspace{20mm}     \begin{equation}
@@ -278,9 +278,9 @@ the nMOS transistor with the parameters given in Fig.~\ref{fig:EKV3}
 is 3.95e-8 A. Figure~\ref{fig:EKV4} illustrates a test circuit for
 measuring \textit{Vp} with the transistor in saturation. In this
 circuit \textit{Is=Ispecific} and the threshold voltage corresponds to
-\textit{Vg} when\textit{ Vp} = 0V.  Notice also that $n=\frac{\delta
-Vg}{\delta Vp}$. In Fig.~\ref{fig:EKV4} Qucs post-simulation
-processing functions are also used to generate data for \textit{Vp},
+\textit{Vg} when\textit{ Vp} = 0V.  Notice also that $n=\partial Vg/\partial
+Vp$. In Fig.~\ref{fig:EKV4} Qucs post-simulation processing functions 
+are also used to generate data for \textit{Vp},
 \textit{VGprime} and \textit{n}. The value of the threshold voltage
 for the device shown in Fig.~\ref{fig:EKV4} is 0.6V. At this voltage n
 = 1.37. The two test configurations illustrated in
@@ -382,8 +382,8 @@ contributions:
 
 
 \vspace{8mm}
-Where p\_n\_MOS =1 for nMOS devices or -1 for pMOS devices. Charge
-associated with the extrinsic overlap capacitors, CgS0, Cgd0 and Cgb0,
+Where p\_n\_MOS = 1 for nMOS devices or -1 for pMOS devices. Charge
+associated with the extrinsic overlap capacitors, Cgs0, Cgd0 and Cgb0,
 is represented in the Qucs EKV v2.6 implementation by the following
 equations:
 
@@ -409,15 +409,15 @@ EKV v2.6 equivalent circuit shown in the test circuit illustrated in
 Fig.~\ref{fig:EKV5} yields
 
 \hspace{20mm}     \begin{equation} 
-			y[1,1] = \dfrac{j \cdot \omega \cdot Cg}{1+\omega^{2} \cdot (Rgn \cdot Cg)^{2}}
+			y_{11} = \dfrac{j \cdot \omega \cdot Cg}{1+\omega^{2} \cdot (Rgn \cdot Cg)^{2}}
                   \end{equation}  
 Or
 \hspace{20mm}     \begin{equation} 
-			y[1,1] \cong \omega^{2} \cdot Rg \cdot Cg^{2} + j \cdot \omega \cdot Cg, \hspace{3mm} when \hspace{3mm} \omega \cdot Rg \cdot Cg << 1.
+			y_{11} \cong \omega^{2} \cdot Rg \cdot Cg^{2} + j \cdot \omega \cdot Cg, \hspace{3mm} \textrm{when} \hspace{3mm} \omega \cdot Rg \cdot Cg << 1.
                   \end{equation}  
 
-Hence, $ Cg = imag( y[1,1]/ Omega)$ and $Rgn = real( y[1,1]/(
-Omega^{2} \cdot Cg^{2})$, where $Omega = 2 \cdot \pi \cdot f$, and $f$
+Hence, $ Cg = imag( y_{11}/ \omega)$ and $Rgn = real( y_{11}/(
+\omega^{2} \cdot Cg^{2}))$, where $\omega = 2 \cdot \pi \cdot f$, and $f$
 is the frequency of y-parameter measurement, Rg is a series extrinsic
 gate resistance and $Cg \cong Cgs + Cgd + Cgb$.  With equal
 partitioning of the intrinsic gate charge $Cgb$ approximates to zero
@@ -426,7 +426,7 @@ Figures~\ref{fig:EKV5} and ~\ref{fig:EKV6} shows two features which
 are worth commenting on; firstly the values of Cg are very much in
 line with simple hand calculations (for example in the case of the
 nMOS device $Cg(max) = W \cdot L \cdot Cox = 10e-6 * 10e-6* 3.45e-3 =
-3.45e-13 $F ) and secondly both sets of simulation data indicate the
+3.45e-13$F) and secondly both sets of simulation data indicate the
 correct values for the nMOS and pMOS threshold voltages (for example
 -0.55 V for the pMOS device and 0.6 V for the nMOS device),
 reinforcing confidence in the EKV v2.6 model implementation.
@@ -434,13 +434,13 @@ reinforcing confidence in the EKV v2.6 model implementation.
 \begin{figure} 
   \centering
   \includegraphics[width=0.8\linewidth]{EKV_Fig5}
-  \caption{y[1,1] test circuit and values of Cg for the long channel EKV v2.6 nMOS model}
+  \caption{$\mathrm{y_{11}}$ test circuit and values of Cg for the long channel EKV v2.6 nMOS model}
   \label{fig:EKV5}
 \end{figure} 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\linewidth]{EKV_Fig6}
-  \caption{y[1,1] test circuit and values of Cg for the long channel EKV v2.6 pMOS model}
+  \caption{$\mathrm{y_{11}}$ test circuit and values of Cg for the long channel EKV v2.6 pMOS model}
   \label{fig:EKV6}
 \end{figure}  
 
@@ -460,11 +460,11 @@ turned off and the drain to bulk diode reverse biased. Simple analysis
 indicates that
 
 \hspace{20mm}     \begin{equation} 
-			y[1,1] \cong \omega^{2} \cdot RDeff \cdot Cd^{2} + j \cdot \omega \cdot Cd, \hspace{3mm} when \hspace{3mm} \omega \cdot RDeff \cdot Cd << 1.
+			y_{11} \cong \omega^{2} \cdot RDeff \cdot Cd^{2} + j \cdot \omega \cdot Cd, \hspace{3mm} \textrm{when} \hspace{3mm} \omega \cdot RDeff \cdot Cd << 1.
                   \end{equation}  
 
-Hence, $ Cd = imag( y[1,1]/ Omega)$ and $Rdeff = real( y[1,1]/(
-Omega^{2} \cdot Cd^{2})$, where $Omega = 2 \cdot \pi \cdot f$, $f$ is
+Hence, $ Cd = imag( y_{11}/ \omega)$ and $Rdeff = real( y_{11}/(
+\omega^{2} \cdot Cd^{2}))$, where $\omega = 2 \cdot \pi \cdot f$, $f$ is
 the frequency of y-parameter measurement, and $Cd$ is the diode
 capacitance. The data shown in Fig.~\ref{fig:EKV7} indicate good
 agreement with the expected values for \textit{Cd} and \textit{RDeff};
@@ -480,7 +480,13 @@ which are expected to be \textit{Cd} = 300fF at \textit{Vds}=0V, and
 
 
 \tutsubsection{Simulating EKV v2.6 MOSFET noise}
-The EKV v2.6 intrinsic device noise is modelled by a noise current source connected between the internal drain and source terminals. The noise current source \textit{Idsn}, see Fig.~\ref{fig:EKV1}, is composed of a thermal noise component and a flicker noise component. The Power Spectral Density ( $S_{PSD}$ ) of these components are given by:  
+
+The EKV v2.6 intrinsic device noise is modelled by a noise current
+source connected between the internal drain and source terminals. The
+noise current source \textit{Idsn}, see Fig.~\ref{fig:EKV1}, is
+composed of a thermal noise component and a flicker noise
+component. The Power Spectral Density ($S_{PSD}$) of these components
+are given by:
 
 \hspace{20mm}     \begin{equation} 
 			S_{PSD} = S_{thermal} + S_{flicker}
@@ -497,18 +503,18 @@ Where
 		     S_{flicker} = \dfrac{KF \cdot g_{mg}^{2}}{Np \cdot Weff \cdot Ns \cdot Leff \cdot Cox \cdot f^{Af}},
                   \end{equation}
 \hspace{20mm}     \begin{equation} 
-		     g_{mg} = \dfrac{\delta Ids}{\delta Vgs} = \beta \cdot Vt \cdot \left( \sqrt{\dfrac{4 \cdot If}{Ispecific}+1}-\sqrt{\dfrac{4 \cdot Ir}{Ispecific}+1} \right) 
+		     g_{mg} = \dfrac{\partial Ids}{\partial Vgs} = \beta \cdot Vt \cdot \left( \sqrt{\dfrac{4 \cdot If}{Ispecific}+1}-\sqrt{\dfrac{4 \cdot Ir}{Ispecific}+1} \right) 
                   \end{equation}  
 		
 \end{itemize}
 
-Where $\beta $ is a transconductance factor, $qI=qD+qS$,and the other
+Where $\beta $ is a transconductance factor, $qI=qD+qS$, and the other
 symbols are defined in the EKV v2.6 long channel parameter list or
 have their usual meaning. Noise has been implemented in both the Qucs
 long channel and short channel EKV v2.6 models. In addition to the
 intrinsic device noise the Qucs EKV v2.6 model includes the thermal
 noise components for both extrinsic resistors \textit{RDeff} and
-\textit{Rseff}. Figure~\ref{fig:EKV8} presents a typical noise test
+\textit{RSeff}. Figure~\ref{fig:EKV8} presents a typical noise test
 circuit and simulated noise currents. In Figure~\ref{fig:EKV8} four
 nMOS devices are biased under different DC conditions and their noise
 current simulated for a range of \textit{W} values between 1e-6 m and
@@ -522,7 +528,7 @@ model.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{EKV_Fig8}
-  \caption{Test circuit for simulating EKV v2.6 noise: Ids.in blue curve, Ids1.in red curve, Ids2.in Black curve and Ids3.in green curve }
+  \caption{Test circuit for simulating EKV v2.6 noise: Ids.in blue curve, Ids1.in red curve, Ids2.in black curve and Ids3.in green curve }
   \label{fig:EKV8}
 \end{figure}  
 
@@ -558,15 +564,15 @@ L   & $L$ & length parameter   & $m$    & $10e-6$ & $10e-6$ \\
 W   & $W$ & width parameter    & $m$    & $10e-6$ & $10e-6$ \\
 Np  & $Np$ & parallel multiple device number  &   & $1$ & $1$ \\
 Ns  & $Ns$ & series multiple device number    &   & $1$ & $1$ \\
-Cox & $Cox$ & gate oxide capacitance per unit area   & $F/(m*m)$    & $3.4e-3$ & $3.4e-3$ \\
+Cox & $Cox$ & gate oxide capacitance per unit area   & $F/m^2$    & $3.4e-3$ & $3.4e-3$ \\
 Xj  & $Xj$ & metallurgical junction length   & $m$    & $0.15e-6$ & $0.15e-6$ \\
 Dw  & $Dw$ & channel width correction   & $m$    & $-0.02e-6$ & $-0.02e-6$ \\
 Dl  & $Dl$ & channel length correction  & $m$    & $-0.05e-6$ & $-0.05e-6$ \\
 Vto & $Vto$ & long channel threshold voltage   & $V$    & $0.5$ & $-0.55$ \\
-Gamma  & $Gamma$ & body effect parameter   & $V^(1/2)$    & $0.7$ & $0.69$ \\
+Gamma  & $Gamma$ & body effect parameter   & $\sqrt{V}$    & $0.7$ & $0.69$ \\
 Phi  & $Phi$ & bulk Fermi potential  & $V$    & $0.5$ & $0.87$ \\
 Kp   & $Kp$ & transconductance parameter   & $A/V^2$    & $50e-6$ & $20e-6$ \\
-EO & $EO$ & mobility reduction coefficient   & $V/m)$    & $88e-6$ & $51e-6$ \\
+EO & $EO$ & mobility reduction coefficient   & $V/m$    & $88e-6$ & $51e-6$ \\
 Ucrit  & $Ucrit$ & longitudinal critical field   & $V/m$    & $4.5e-6$ & $18e-6$ \\
 Lambda  & $Lambda$ & depletion length coefficient  &     & $0.23$ & $1.1$ \\
 Weta & $Weta$ & narrow channel effect coefficient   &     & $0.05$ & $0.0$ \\
@@ -587,12 +593,12 @@ Cgbo  & $Cgbo$ & gate to bulk overlay capacitance  &  $F$  & $4e-10$ & $4e-10$ \
 N  & $N$ & diode emission coefficient  &    & $1.0$ & $1.0$ \\
 Is  & $Is$ & leakage current  & $A$   & $1e-1$ & $1e-14$ \\
 Bv  & $Bv$ & reverse breakdown voltage  &  $V$  & $100$ & $100$ \\
-Ibv & $Ibv$ & current at BV  &  $A$   & $1e-3$ & $1e-3$ \\
+Ibv & $Ibv$ & current at Bv  &  $A$   & $1e-3$ & $1e-3$ \\
 Vj  & $Vj$ & junction potential  & $V$   & $1.0$ & $1.0$ \\
 Cj0  & $Cj0$ & zero bias depletion capacitance  &  $F$  & $1e-12$ & $1e-12$ \\
 M    & $M$ & grading coefficient  &     & $0.5$ & $0.5$ \\
 Area & $Area$ & relative area  &    & $1.0$ & $1.0$ \\
-Fc & $Fc$ & current at BV  &  $A$   & $1e-3$ & $1e-3$ \\
+Fc & $Fc$ & forward-bias depletion capcitance coefficient  &  & $0.5$ & $0.5$ \\
 Tt  & $Tt$ & transit time  & $s$   & $0.1e-9$ & $0.1e-9$ \\
 Xti  & $Xti$ & saturation current temperature exponent  &    & $3.0$ & $3.0$ \\
 Kf   & $KF$  & flicker noise coefficient                &    & $1e-27$ & $1e-28$ \\
@@ -601,10 +607,10 @@ Avto  & $Avto$ & area related threshold mismatch parameter  &    & $0$ & $0$ \\
 Akp   & $Akp$  & area related gain mismatch parameter       &    & $0$ & $0$ \\
 Agamma   & $Agamma$  & area related body effect mismatch parameter &    & $0$ & $0$ \\
 Iba  & $Iba$ & first impact ionization coefficient  & $1/m$   & $2e8$ & $0.0$ \\
-Ibb   & $Ibb$  & second impact ionization coefficient & $v/m$    & $3.5e8$ & $3.5e8$ \\
-Ibn   & $Ibn$  & saturationvoltage factor for impact ionization  &    & $1.0$ & $1.0$ \\
-Tnom & $Tnom$ & parameter measurement temperature  & $Celsius$    & $26.85$ & $26.85$ \\
-Temp & $Temp$ & device temperature  & $Celsius$   & $26.85$ & $26.85$ \\
+Ibb   & $Ibb$  & second impact ionization coefficient & $V/m$    & $3.5e8$ & $3.5e8$ \\
+Ibn   & $Ibn$  & saturation voltage factor for impact ionization  &    & $1.0$ & $1.0$ \\
+Tnom & $Tnom$ & parameter measurement temperature  & $\degree C$    & $26.85$ & $26.85$ \\
+Temp & $Temp$ & device temperature  & $\degree C$   & $26.85$ & $26.85$ \\
 
 \end{longtable}
 \end{scriptsize}
@@ -623,7 +629,7 @@ consequences on circuit performance.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{EKV_Fig9}
-  \caption{Test circuit for simulating EKV v2.6 charge sharing effects in short channel devices: \textit{Ids} blue curve; NO charge sharing (\textit{Weta} = 0.0, \textit{Leta} = 0.0), \textit{Ids} red curve; charge sharing (\textit{Weta} = 0.05, \textit{Leta} = 0.28) }
+  \caption{Test circuit for simulating EKV v2.6 charge sharing effects in short channel devices: \textit{Ids} blue curve; NO charge sharing (\textit{Weta} = 0.0, \textit{Leta} = 0.0), \textit{Ids} red curve; charge sharing (\textit{Weta} = 0.05, \textit{Leta} = 0.28)}
   \label{fig:EKV9}
 \end{figure}  
 
