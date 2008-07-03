@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.67 2008/05/27 17:49:31 ela Exp $
+ * $Id: equation.cpp,v 1.68 2008/07/03 17:17:31 ela Exp $
  *
  */
 
@@ -2057,6 +2057,15 @@ void checker::constants (void) {
 }
 
 /* The function adds a new equation to the equation checker consisting
+   of an assignment of a reference. */
+node * checker::addReference (const char * type, const char * ident,
+			      char * value) {
+  node * eqn = createReference (type, ident, value);
+  addEquation (eqn);
+  return eqn;
+}
+
+/* The function adds a new equation to the equation checker consisting
    of an assignment of a double variable. */
 node * checker::addDouble (const char * type, const char * ident,
 			   nr_double_t value) {
@@ -2128,7 +2137,7 @@ node * checker::createComplex (const char * type, const char * ident,
 
 /* This function creates a equation consisting of an assignment of a
    reference. */
-node * checker::createReference (const char * type, char * ident,
+node * checker::createReference (const char * type, const char * ident,
 				 char * value) {
   // create reference value
   reference * r = new reference ();

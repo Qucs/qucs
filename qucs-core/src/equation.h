@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.45 2008/02/17 18:05:36 ela Exp $
+ * $Id: equation.h,v 1.46 2008/07/03 17:17:31 ela Exp $
  *
  */
 
@@ -292,7 +292,8 @@ public:
   node * createDouble (const char *, const char *, nr_double_t);
   node * addComplex (const char *, const char *, nr_complex_t);
   node * createComplex (const char *, const char *, nr_complex_t);
-  node * createReference (const char *, char *, char *);
+  node * addReference (const char *, const char *, char *);
+  node * createReference (const char *, const char *, char *);
   void appendEquation (node *);
   void addEquation (node *);
   node * findEquation (char *);

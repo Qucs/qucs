@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.123 2008/04/11 16:22:28 ela Exp $
+ * $Id: check_netlist.cpp,v 1.124 2008/07/03 17:17:31 ela Exp $
  *
  */
 
@@ -100,6 +100,22 @@ static int checker_is_property (struct define_t * available, char * key) {
       return 1;
   }
   return 0;
+}
+
+/* Checks if the given property key is either optional or required for
+   the given definition type and returns the type of the property. */
+static int checker_get_property_type (struct define_t * available,
+				      char * key) {
+  int i;
+  for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
+    if (!strcmp (available->required[i].key, key))
+      return available->required[i].type;
+  }
+  for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
+    if (!strcmp (available->optional[i].key, key))
+      return available->optional[i].type;
+  }
+  return PROP_NONE;
 }
 
 /* Counts the number of definitions given by the specified type and
@@ -379,6 +395,41 @@ static int checker_resolve_variable (struct definition_t * root,
     }
     if ((val = checker_find_variable (root, "Ifile", "File", value->ident))) {
       found++;
+    }
+    /* 9. find property reference in the instance */
+    if (checker_get_property_type (def->define, value->ident) != PROP_NONE) {
+      if (root->env) {
+
+	// create reference variable names
+	char * txt = (char *)
+	  malloc (strlen (def->instance) + 1 + strlen (value->ident) + 1);
+	sprintf (txt, "%s.%s", def->instance, value->ident);
+	char * ref = (char *)
+	  malloc (strlen (def->instance) + 5 + strlen (value->ident) + 1);
+	sprintf (ref, "%s.%s.ref", def->instance, value->ident);
+
+	// replace property string
+	free (value->ident);
+	value->ident = strdup (ref);
+	value->var = eqn::TAG_DOUBLE;
+
+	// already done previously?
+	variable * v;
+	if ((v = root->env->getVariable (ref)) == NULL) {
+	  // put variable into the environment
+	  v = new variable (ref);
+	  eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
+	  v->setConstant (c);
+	  root->env->addVariable (v, false);
+	  // also add reference equation into environment
+	  root->env->getChecker()->addReference ("#propref", ref, txt);
+	}
+
+	// done
+	free (txt);
+	free (ref);
+	found++;
+      }
     }
     /* not found */
     if (!found) {
