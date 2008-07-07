@@ -1,3 +1,8 @@
+2008-07-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp, check_spice.cpp: Checking for HICUM
+	transistors.
+
 2008-05-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Allowing 'M' parameter to be appended to MOSFET
