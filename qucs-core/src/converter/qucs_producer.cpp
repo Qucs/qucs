@@ -1,7 +1,7 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.24 2007-09-16 16:49:41 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.25 2008-07-07 18:37:49 ela Exp $
  *
  */
 
@@ -258,14 +258,14 @@ void qucs_producer (void) {
 
 // Structure defining Qucs schematic entries of device models.
 struct device_t {
-  const char * ntype;     // netlist type
-  const char * ltype;     // schematic type
-  const char * stype;     // spice type
-  int nodes;              // number of nodes
-  const char * props[64]; // list of properties in schematic order
-  const char * symbol;    // symbol text
-  const char * coords;    // coordinates and other text
-  const char * ports;     // subcircuit ports
+  const char * ntype;      // netlist type
+  const char * ltype;      // schematic type
+  const char * stype;      // spice type
+  int nodes;               // number of nodes
+  const char * props[128]; // list of properties in schematic order
+  const char * symbol;     // symbol text
+  const char * coords;     // coordinates and other text
+  const char * ports;      // subcircuit ports
 }
 qucs_devices[] = {
   /* diode */
@@ -310,6 +310,108 @@ qucs_devices[] = {
     "  <.ID 13 28 %s_>\n",
     "1 0 0 8 -26 0 0",
     /*"1 170 160 92 -49 0 0",*/
+    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
+    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
+    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
+    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+  },
+  /* hicum/l0 bipolar transistor */
+  { "hic0_full", "hic0_full", "Q", 5,
+    { "Type", "is", "mcf", "mcr", "vef", "iqf", "iqr", "iqfh", "tfh", "ibes",
+      "mbe", "ires", "mre", "ibcs", "mbc", "cje0", "vde", "ze", "aje", "t0",
+      "dt0h", "tbvl", "tef0", "gte", "thcs", "ahc", "tr", "rci0", "vlim",
+      "vpt", "vces", "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx",
+      "vptcx", "fbc", "rbi0", "vr0e", "vr0c", "fgeo", "rbx", "rcx", "re",
+      "itss", "msf", "iscs", "msc", "cjs0", "vds", "zs", "vpts", "cbcpar",
+      "cbepar", "eavl", "kavl", "kf", "af", "vgb", "vge", "vgc", "vgs",
+      "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci", "alvs",
+      "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "alkav", "aleav",
+      "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
+    "  <.PortSym -50 0 1>\n"
+    "  <.PortSym 0 -50 2>\n"
+    "  <.PortSym 0 50 3>\n"
+    "  <.PortSym 30 0 4>\n"
+    "  <Line 0 -20 0 -30 #000080 2 1>\n"
+    "  <Line -50 0 30 0 #000080 2 1>\n"
+    "  <Line 0 50 0 -30 #000080 2 1>\n"
+    "  <Line -20 -10 20 -10 #000080 2 1>\n"
+    "  <Line -20 10 20 10 #000080 2 1>\n"
+    "  <Line -20 -20 0 40 #000080 2 1>\n"
+    "  <Line 30 0 -30 0 #000080 2 1>\n"
+    "  <Line 0 -10 0 20 #000080 2 1>\n"
+    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
+    "  <.ID 13 28 %s_>\n",
+    "1 0 0 8 -26 0 0",
+    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
+    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
+    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
+    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+  },
+  /* hicum/l2 v2.22 bipolar transistor */
+  { "hic2_full", "hic2_full", "Q", 5,
+    { "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis", "mbei",
+      "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf", "tbhrec",
+      "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "tunode", "favl",
+      "qavl", "alfav", "alqav", "rbi0", "rbx", "fgeo", "fdqr0", "fcrbi",
+      "fqi", "re", "rcx", "itss", "msf", "iscs", "msc", "tsf", "rsu", "csu",
+      "cjei0", "vdei", "zei", "ajei", "cjep0", "vdep", "zep", "ajep",
+      "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx", "vptcx",
+      "fbcpar", "fbepar", "cjs0", "vds", "zs", "vpts", "t0", "dt0h", "tbvl",
+      "tef0", "gtfe", "thcs", "ahc", "fthc", "rci0", "vlim", "vces", "vpt",
+      "tr", "cbepar", "cbcpar", "alqf", "alit", "flnqs", "kf", "af", "cfbe",
+      "latb", "latl", "vgb", "alt0", "kt0", "zetaci", "alvs", "alces",
+      "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "flsh", "rth", "cth",
+      "flcomp", "tnom", "dt", "Temp", NULL },
+    "  <.PortSym -50 0 1>\n"
+    "  <.PortSym 0 -50 2>\n"
+    "  <.PortSym 0 50 3>\n"
+    "  <.PortSym 30 0 4>\n"
+    "  <Line 0 -20 0 -30 #000080 2 1>\n"
+    "  <Line -50 0 30 0 #000080 2 1>\n"
+    "  <Line 0 50 0 -30 #000080 2 1>\n"
+    "  <Line -20 -10 20 -10 #000080 2 1>\n"
+    "  <Line -20 10 20 10 #000080 2 1>\n"
+    "  <Line -20 -20 0 40 #000080 2 1>\n"
+    "  <Line 30 0 -30 0 #000080 2 1>\n"
+    "  <Line 0 -10 0 20 #000080 2 1>\n"
+    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
+    "  <.ID 13 28 %s_>\n",
+    "1 0 0 8 -26 0 0",
+    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
+    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
+    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
+    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+  },
+  /* hicum/l2 v2.1 bipolar transistor */
+  { "hicumL2p1", "hicumL2p1", "Q", 5,
+    { "Type", "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis",
+      "mbei", "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf",
+      "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "favl", "qavl",
+      "alfav", "alqav", "rbi0", "rbx", "fgeo", "fdqr0", "fcrbi", "fqi", "re",
+      "rcx", "itss", "msf", "iscs", "msc", "tsf", "rsu", "csu", "cjei0",
+      "vdei", "zei", "aljei", "cjep0", "vdep", "zep", "aljep", "cjci0",
+      "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx", "vptcx", "fbc", "cjs0",
+      "vds", "zs", "vpts", "t0", "dt0h", "tbvl", "tef0", "gtfe", "thcs",
+      "alhc", "fthc", "rci0", "vlim", "vces", "vpt", "tr", "ceox", "ccox",
+      "alqf", "alit", "kf", "af", "krbi", "latb", "latl", "vgb", "alt0",
+      "kt0", "zetaci", "zetacx", "alvs", "alces", "zetarbi", "zetarbx",
+      "zetarcx", "zetare", "alb", "rth", "cth", "tnom", "dt", "Temp", NULL },
+    "  <.PortSym -50 0 1>\n"
+    "  <.PortSym 0 -50 2>\n"
+    "  <.PortSym 0 50 3>\n"
+    "  <.PortSym 30 0 4>\n"
+    "  <Line 0 -20 0 -30 #000080 2 1>\n"
+    "  <Line -50 0 30 0 #000080 2 1>\n"
+    "  <Line 0 50 0 -30 #000080 2 1>\n"
+    "  <Line -20 -10 20 -10 #000080 2 1>\n"
+    "  <Line -20 10 20 10 #000080 2 1>\n"
+    "  <Line -20 -20 0 40 #000080 2 1>\n"
+    "  <Line 30 0 -30 0 #000080 2 1>\n"
+    "  <Line 0 -10 0 20 #000080 2 1>\n"
+    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
+    "  <.ID 13 28 %s_>\n",
+    "1 0 0 8 -26 0 0",
     "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
     "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
     "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"

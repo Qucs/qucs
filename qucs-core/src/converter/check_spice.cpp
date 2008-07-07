@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.41 2008-02-15 17:56:00 ela Exp $
+ * $Id: check_spice.cpp,v 1.42 2008-07-07 18:37:49 ela Exp $
  *
  */
 
@@ -528,6 +528,18 @@ spice_find_property_nocase (struct pair_t * pair, const char * prop) {
   return NULL;
 }
 
+/* This function looks whether the given property name is stored
+   within the given list of values and returns it.  If there is no
+   such name, then it returns NULL. */
+static struct value_t *
+spice_find_property (struct value_t * values, const char * prop) {
+  struct value_t * val;
+  foreach_value (values, val) {
+    if (!strcasecmp (prop, val->ident)) return val;
+  }
+  return NULL;
+}
+
 /* The function replaces or appends the given key/value pair to the
    list of properties of the given definition. */
 static void
@@ -545,6 +557,69 @@ spice_set_property_string (struct definition_t * def, const char * key,
     prop->value->ident = strdup (val);
     def->pairs = netlist_append_pairs (prop, def->pairs);
   }
+}
+
+/* This function evaluates the already translated value (translated
+   scale value) and returns the actual value leaving it untouched. */
+static double spice_evaluate_value (struct value_t * value) {
+  double val = value->value, factor = 1.0;
+  if (value->scale != NULL) {
+    switch (*(value->scale)) {
+    case 'T': factor = 1e12;  break;
+    case 'G': factor = 1e9;   break;
+    case 'M': factor = 1e6;   break;
+    case 'k': factor = 1e3;   break;
+    case 'm': factor = 1e-3;  break;
+    case 'u': factor = 1e-6;  break;
+    case 'n': factor = 1e-9;  break;
+    case 'p': factor = 1e-12; break;
+    case 'f': factor = 1e-15; break;
+    }
+  }
+  return val * factor;
+}
+
+/* The following function free()'s the given value. */
+static void netlist_free_value (struct value_t * value) {
+  if (value->ident) free (value->ident);
+  if (value->unit)  free (value->unit);
+  if (value->scale) free (value->scale);
+  free (value);
+}
+
+/* Deletes the given value list. */
+static void netlist_free_values (struct value_t * value) {
+  struct value_t * next;
+  for (; value != NULL; value = next) {
+    next = value->next;
+    netlist_free_value (value);
+  }
+}
+
+/* Deletes the given key/value pair. */
+void netlist_free_pair (struct pair_t * pair) {
+  if (pair->value) netlist_free_values (pair->value);
+  free (pair->key);
+  free (pair);
+}
+
+/* Unchains a property pair and deletes it. */
+struct pair_t *
+spice_del_property (struct pair_t * root, struct pair_t * pair) {
+  struct pair_t * prev;
+  if (pair == root) {
+    root = pair->next;
+    netlist_free_pair (pair);
+  }
+  else {
+    // find previous to the candidate to be deleted
+    for (prev = root; prev != NULL && prev->next != pair; prev = prev->next) ;
+    if (prev != NULL) {
+      prev->next = pair->next;
+      netlist_free_pair (pair);
+    }
+  }
+  return root;
 }
 
 /* This function adjusts the given device instance definition using
@@ -573,10 +648,41 @@ static void spice_adjust_device (struct definition_t * def,
       def->pairs = netlist_append_pairs (def->pairs, p);
       // adjust type of device
       if (def->type) free (def->type);
-      def->type = strdup (tran->trans_type);
-      // append "Type" property
-      if (tran->trans_type_prop != NULL) {
-	spice_set_property_string (def, "Type", tran->trans_type_prop);
+
+      bool hic = false;
+      // check for HICUM transistors
+      if (!strcmp (tran->trans_type, "BJT")) {
+	struct pair_t * p1, * p2;
+	if ((p1 = spice_find_property (def, "LEVEL")) != NULL) {
+	  double level = spice_evaluate_value (p1->value);
+	  def->pairs = spice_del_property (def->pairs, p1);
+	  if ((p2 = spice_find_property (def, "VERSION")) != NULL) {
+	    double version = spice_evaluate_value (p2->value);
+	    def->pairs = spice_del_property (def->pairs, p2);
+	    if (level == 0 && version >= 1.11) {
+	      def->type = strdup ("hic0_full");
+	      if (tran->trans_type_prop != NULL) {
+		spice_set_property_string (def, "Type", tran->trans_type_prop);
+	      }
+	      hic = true;
+	    }
+	    else if (level == 2 && version == 2.1) {
+	      def->type = strdup ("hicumL2p1");
+	      hic = true;
+	    }
+	    else if (level == 2 && version >= 2.21) {
+	      def->type = strdup ("hic2_full");
+	      hic = true;
+	    }
+	  }
+	}
+      }
+      if (!hic) {
+	def->type = strdup (tran->trans_type);
+	// append "Type" property
+	if (tran->trans_type_prop != NULL) {
+	  spice_set_property_string (def, "Type", tran->trans_type_prop);
+	}
       }
       break;
     }
@@ -741,30 +847,6 @@ static void netlist_free_nodes (struct node_t * node) {
     free (node->node);
     free (node);
   }
-}
-
-/* The following function free()'s the given value. */
-static void netlist_free_value (struct value_t * value) {
-  if (value->ident) free (value->ident);
-  if (value->unit)  free (value->unit);
-  if (value->scale) free (value->scale);
-  free (value);
-}
-
-/* Deletes the given value list. */
-static void netlist_free_values (struct value_t * value) {
-  struct value_t * next;
-  for (; value != NULL; value = next) {
-    next = value->next;
-    netlist_free_value (value);
-  }
-}
-
-/* Deletes the given key/value pair. */
-void netlist_free_pair (struct pair_t * pair) {
-  if (pair->value) netlist_free_values (pair->value);
-  free (pair->key);
-  free (pair);
 }
 
 /* Deletes pair list of a definition. */
@@ -1002,18 +1084,6 @@ void spice_adjust_properties (struct definition_t * def) {
   }
 }
 
-/* This function looks whether the given property name is stored
-   within the given list of values and returns it.  If there is no
-   such name, then it returns NULL. */
-static struct value_t *
-spice_find_property (struct value_t * values, const char * prop) {
-  struct value_t * val;
-  foreach_value (values, val) {
-    if (!strcasecmp (prop, val->ident)) return val;
-  }
-  return NULL;
-}
-
 /* This function appends the given key/value pair to the given
    definition.  If the replace flag is non-zero the pair gets
    replaced.  If the replace flag is zero and the pair already exists
@@ -1138,25 +1208,6 @@ spice_del_definition (struct definition_t * root, struct definition_t * def) {
   return root;
 }
 
-/* Unchains a property pair and deletes it. */
-struct pair_t *
-spice_del_property (struct pair_t * root, struct pair_t * pair) {
-  struct pair_t * prev;
-  if (pair == root) {
-    root = pair->next;
-    netlist_free_pair (pair);
-  }
-  else {
-    // find previous to the candidate to be deleted
-    for (prev = root; prev != NULL && prev->next != pair; prev = prev->next) ;
-    if (prev != NULL) {
-      prev->next = pair->next;
-      netlist_free_pair (pair);
-    }
-  }
-  return root;
-}
-
 /* This function creates an internal node name used during the
    conversion process.  The returned string is static and must be
    copied by the caller.  Successive calls result in different node
@@ -1203,26 +1254,6 @@ spice_create_definition (struct definition_t * base, const char * type) {
   res->instance = strdup (base->instance);
   res->define = base->define;
   return res;
-}
-
-/* This function evaluates the already translated value (translated
-   scale value) and returns the actual value leaving it untouched. */
-static double spice_evaluate_value (struct value_t * value) {
-  double val = value->value, factor = 1.0;
-  if (value->scale != NULL) {
-    switch (*(value->scale)) {
-    case 'T': factor = 1e12;  break;
-    case 'G': factor = 1e9;   break;
-    case 'M': factor = 1e6;   break;
-    case 'k': factor = 1e3;   break;
-    case 'm': factor = 1e-3;  break;
-    case 'u': factor = 1e-6;  break;
-    case 'n': factor = 1e-9;  break;
-    case 'p': factor = 1e-12; break;
-    case 'f': factor = 1e-15; break;
-    }
-  }
-  return val * factor;
 }
 
 /* The function returns the actual property value stored in the given
