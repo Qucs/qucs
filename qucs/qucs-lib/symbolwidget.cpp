@@ -59,10 +59,12 @@ SymbolWidget::~SymbolWidget()
 // ************************************************************
 QString SymbolWidget::theModel()
 {
+  // single component line
   if(!ModelString.isEmpty())
     if(ModelString.contains('\n') < 2)
       return ModelString.remove('\n');
 
+  // real library component
   return "<Lib " + Prefix + " 1 0 0 " +
          QString::number(Text_x) + " " +
          QString::number(Text_y) + " 0 0 \"" +
@@ -257,6 +259,68 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
     PortNo = 2;
     x1 = -34; y1 = -9;
     x2 =  34; y2 =  9;
+  }
+  else if(Comp == "hicumL2p1" || Comp == "hic2_full" || Comp == "hic0_full") {
+    // normal bipolar
+    Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+    Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,-15,  0,-30,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
+
+    // substrate node
+    Lines.append(new Line(  9,  0, 30,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  9, -7,  9,  7,QPen(QPen::darkBlue,3)));
+
+    // thermal node
+    Lines.append(new Line(-30, 20,-20, 20,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-20, 17,-20, 23,QPen(QPen::darkBlue,2)));  
+
+    // arrow
+    if(FirstProp == "npn" || Comp == "hic2_full") {
+      Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
+    } else {
+      Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
+    }
+
+    // H
+    Lines.append(new Line(-30,-30,-30,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-30,-27,-26,-27,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-26,-30,-26,-24,QPen(QPen::darkBlue,1)));
+    // I
+    Lines.append(new Line(-24,-30,-24,-24,QPen(QPen::darkBlue,1)));
+    // C
+    Lines.append(new Line(-22,-30,-22,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-22,-30,-19,-30,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-22,-24,-19,-24,QPen(QPen::darkBlue,1)));
+    // U
+    Lines.append(new Line(-17,-30,-17,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-14,-30,-14,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-17,-24,-14,-24,QPen(QPen::darkBlue,1)));
+    // M
+    Lines.append(new Line(-12,-30,-12,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( -8,-30, -8,-24,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-12,-30,-10,-28,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( -8,-30,-10,-28,QPen(QPen::darkBlue,1)));
+
+    // terminal definitions
+    Arcs.append(new struct Arc( -4, -34, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1))); // collector
+    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1))); // base
+    Arcs.append(new struct Arc( -4, 26, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1))); // emitter
+    Arcs.append(new struct Arc( 26, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1))); // substrate
+    Arcs.append(new struct Arc(-34, 16, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1))); // thermal node
+
+    // relative boundings
+    x1 = -34; y1 = -34;
+    x2 =  34; y2 =  34;
   }
   else if(Comp == "SUBST") {
     Lines.append(new Line(-30,-16, 30,-16,QPen(QPen::darkBlue,2)));
