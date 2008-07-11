@@ -26,6 +26,8 @@ files.
 Version 0.0.15
 --------------
 
+ * existing HICUM models can now be converter by the qucsconv command
+   line tool into library elements
  * allowing property references inside the same	instance of a component
  * new component: rectangular waveguide
  * added noise figure property to amplifier model

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.25 2008/07/07 18:37:49 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.26 2008/07/11 15:21:39 ela Exp $
  *
  */
 
@@ -273,19 +273,9 @@ qucs_devices[] = {
     {"Is", "N", "Cj0", "M", "Vj", "Fc", "Cp", "Isr", "Nr", "Rs", "Tt", "Ikf",
      "Kf", "Af", "Ffe", "Bv", "Ibv",  "Temp", "Xti", "Eg", "Tbv", "Trs",
      "Ttt1", "Ttt2", "Tm1", "Tm2", "Tnom", "Area", NULL },
-    "  <.PortSym -30 0 1>\n"
-    "  <.PortSym 30 0 2>\n"
-    "  <Line -10 -10 0 20 #000080 2 1>\n"
-    "  <Line -10 0 20 -10 #000080 2 1>\n"
-    "  <Line -10 0 20 10 #000080 2 1>\n"
-    "  <Line 10 0 20 0 #000080 2 1>\n"
-    "  <Line 10 -10 0 20 #000080 2 1>\n"
-    "  <Line -30 0 20 0 #000080 2 1>\n"
-    "  <.ID -30 24 %s_>\n",
+    NULL,
     "1 0 0 -26 13 0 0",
-    /*"1 130 60 -26 13 0 0",*/
-    "  <Port P1 1 100 60 -23 -44 1 0 \"1\" 1>\n"
-    "  <Port P2 1 160 60 4 -44 0 2 \"2\" 1>\n"
+    NULL
   },
   /* bipolar transistor */
   { "BJT", "_BJT", "Q", 4,
@@ -294,26 +284,9 @@ qucs_devices[] = {
       "Cjc", "Vjc", "Mjc", "Xcjc", "Cjs", "Vjs", "Mjs", "Fc", "Tf", "Xtf",
       "Vtf", "Itf", "Tr", "Temp", "Kf", "Af", "Ffe", "Kb", "Ab", "Fb", "Ptf",
       "Xtb", "Xti", "Eg", "Tnom", "Area", NULL },
-    "  <.PortSym -50 0 1>\n"
-    "  <.PortSym 0 -50 2>\n"
-    "  <.PortSym 0 50 3>\n"
-    "  <.PortSym 30 0 4>\n"
-    "  <Line 0 -20 0 -30 #000080 2 1>\n"
-    "  <Line -50 0 30 0 #000080 2 1>\n"
-    "  <Line 0 50 0 -30 #000080 2 1>\n"
-    "  <Line -20 -10 20 -10 #000080 2 1>\n"
-    "  <Line -20 10 20 10 #000080 2 1>\n"
-    "  <Line -20 -20 0 40 #000080 2 1>\n"
-    "  <Line 30 0 -30 0 #000080 2 1>\n"
-    "  <Line 0 -10 0 20 #000080 2 1>\n"
-    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 13 28 %s_>\n",
+    NULL,
     "1 0 0 8 -26 0 0",
-    /*"1 170 160 92 -49 0 0",*/
-    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
-    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+    NULL
   },
   /* hicum/l0 bipolar transistor */
   { "hic0_full", "hic0_full", "Q", 5,
@@ -327,25 +300,9 @@ qucs_devices[] = {
       "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci", "alvs",
       "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "alkav", "aleav",
       "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
-    "  <.PortSym -50 0 1>\n"
-    "  <.PortSym 0 -50 2>\n"
-    "  <.PortSym 0 50 3>\n"
-    "  <.PortSym 30 0 4>\n"
-    "  <Line 0 -20 0 -30 #000080 2 1>\n"
-    "  <Line -50 0 30 0 #000080 2 1>\n"
-    "  <Line 0 50 0 -30 #000080 2 1>\n"
-    "  <Line -20 -10 20 -10 #000080 2 1>\n"
-    "  <Line -20 10 20 10 #000080 2 1>\n"
-    "  <Line -20 -20 0 40 #000080 2 1>\n"
-    "  <Line 30 0 -30 0 #000080 2 1>\n"
-    "  <Line 0 -10 0 20 #000080 2 1>\n"
-    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 13 28 %s_>\n",
+    NULL,
     "1 0 0 8 -26 0 0",
-    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
-    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+    NULL
   },
   /* hicum/l2 v2.22 bipolar transistor */
   { "hic2_full", "hic2_full", "Q", 5,
@@ -363,25 +320,9 @@ qucs_devices[] = {
       "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
       "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "flsh", "rth", "cth",
       "flcomp", "tnom", "dt", "Temp", NULL },
-    "  <.PortSym -50 0 1>\n"
-    "  <.PortSym 0 -50 2>\n"
-    "  <.PortSym 0 50 3>\n"
-    "  <.PortSym 30 0 4>\n"
-    "  <Line 0 -20 0 -30 #000080 2 1>\n"
-    "  <Line -50 0 30 0 #000080 2 1>\n"
-    "  <Line 0 50 0 -30 #000080 2 1>\n"
-    "  <Line -20 -10 20 -10 #000080 2 1>\n"
-    "  <Line -20 10 20 10 #000080 2 1>\n"
-    "  <Line -20 -20 0 40 #000080 2 1>\n"
-    "  <Line 30 0 -30 0 #000080 2 1>\n"
-    "  <Line 0 -10 0 20 #000080 2 1>\n"
-    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 13 28 %s_>\n",
+    NULL,
     "1 0 0 8 -26 0 0",
-    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
-    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+    NULL
   },
   /* hicum/l2 v2.1 bipolar transistor */
   { "hicumL2p1", "hicumL2p1", "Q", 5,
@@ -397,46 +338,18 @@ qucs_devices[] = {
       "alqf", "alit", "kf", "af", "krbi", "latb", "latl", "vgb", "alt0",
       "kt0", "zetaci", "zetacx", "alvs", "alces", "zetarbi", "zetarbx",
       "zetarcx", "zetare", "alb", "rth", "cth", "tnom", "dt", "Temp", NULL },
-    "  <.PortSym -50 0 1>\n"
-    "  <.PortSym 0 -50 2>\n"
-    "  <.PortSym 0 50 3>\n"
-    "  <.PortSym 30 0 4>\n"
-    "  <Line 0 -20 0 -30 #000080 2 1>\n"
-    "  <Line -50 0 30 0 #000080 2 1>\n"
-    "  <Line 0 50 0 -30 #000080 2 1>\n"
-    "  <Line -20 -10 20 -10 #000080 2 1>\n"
-    "  <Line -20 10 20 10 #000080 2 1>\n"
-    "  <Line -20 -20 0 40 #000080 2 1>\n"
-    "  <Line 30 0 -30 0 #000080 2 1>\n"
-    "  <Line 0 -10 0 20 #000080 2 1>\n"
-    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 13 28 %s_>\n",
+    NULL,
     "1 0 0 8 -26 0 0",
-    "  <Port P2 1 170 130 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P1 1 140 160 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P3 1 170 190 12 4 0 1 \"3\" 1>\n"
-    "  <Port P4 1 200 160 4 -44 0 2 \"4\" 1>\n"
+    NULL
   },
   /* junction FET */
   { "JFET", "JFET", "J", 3,
     { "Type", "Vt0", "Beta", "Lambda", "Rd", "Rs", "Is", "N", "Isr", "Nr",
       "Cgs", "Cgd", "Pb", "Fc", "M", "Kf", "Af", "Ffe", "Temp", "Xti",
       "Vt0tc", "Betatce", "Tnom", "Area", NULL },
-    "  <.PortSym -50 0 1>\n"
-    "  <.PortSym 0 -50 2>\n"
-    "  <.PortSym 0 50 3>\n"
-    "  <Line -20 -20 0 40 #000080 2 1>\n"
-    "  <Line -20 -10 20 0 #000080 2 1>\n"
-    "  <Line 0 -10 0 -40 #000080 2 1>\n"
-    "  <Line -50 0 30 0 #000080 2 1>\n"
-    "  <Line -20 10 20 0 #000080 2 1>\n"
-    "  <Line 0 50 0 -40 #000080 2 1>\n"
-    "  <Ellipse -40 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 20 24 %s_>\n",
+    NULL,
     "1 190 140 30 -49 0 0",
-    "  <Port P1 1 160 140 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P2 1 190 110 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P3 1 190 170 -33 32 0 1 \"3\" 1>\n"
+    NULL
   },
   /* MOSFET */
   { "MOSFET", "_MOSFET", "M", 4,
@@ -445,26 +358,9 @@ qucs_devices[] = {
       "Mj", "Fc", "Cjsw", "Mjsw", "Tt", "Nsub", "Nss", "Tpg", "Uo", "Rsh",
       "Nrd", "Nrs", "Cj", "Js", "Ad", "As", "Pd", "Ps", "Kf", "Af", "Ffe",
       "Temp", "Tnom", NULL },
-    "  <.PortSym -40 0 1>\n"
-    "  <.PortSym 10 -50 2>\n"
-    "  <.PortSym 10 50 3>\n"
-    "  <.PortSym 50 0 4>\n"
-    "  <Line 10 -10 0 -40 #000080 2 1>\n"
-    "  <Line -40 0 30 0 #000080 2 1>\n"
-    "  <Line -5 10 15 0 #000080 2 1>\n"
-    "  <Line 10 50 0 -40 #000080 2 1>\n"
-    "  <Line -5 0 55 0 #000080 2 1>\n"
-    "  <Line -5 -20 0 40 #000080 2 1>\n"
-    "  <Line -5 -10 15 0 #000080 2 1>\n"
-    "  <Line -10 -15 0 30 #000080 2 1>\n"
-    "  <Ellipse -30 -30 60 60 #000080 0 1 #c0c0c0 1 0>\n"
-    "  <.ID 30 34 %s_>\n",
+    NULL,
     "1 0 0 8 -26 0 0",
-    /*"1 180 170 73 -51 0 0",*/
-    "  <Port P1 1 150 170 -23 12 0 0 \"1\" 1>\n"
-    "  <Port P2 1 180 140 -51 -23 0 3 \"2\" 1>\n"
-    "  <Port P3 1 180 200 12 4 0 1 \"3\" 1>\n"
-    "  <Port P4 1 200 170 4 -44 0 2 \"4\" 1>\n"
+    NULL
   },
   { NULL, NULL, NULL, 0, { NULL }, NULL, NULL, NULL }
 };
