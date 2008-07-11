@@ -1,3 +1,8 @@
+2008-07-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* symbolwidget.cpp (createSymbol): Added symbol code for HICUM
+	transistor models.
+
 2008-06-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Varistors.lib: Added new varistor library.  Thanks a lot
