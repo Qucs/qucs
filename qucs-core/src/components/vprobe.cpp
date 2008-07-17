@@ -1,7 +1,7 @@
 /*
  * vprobe.cpp - AC/DC and transient voltage probe class implementation
  *
- * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vprobe.cpp,v 1.2 2007/02/03 12:21:27 ela Exp $
+ * $Id: vprobe.cpp,v 1.3 2008/07/17 19:57:32 ela Exp $
  *
  */
 
@@ -43,6 +43,10 @@ vprobe::vprobe () : circuit (2) {
 
 void vprobe::initSP (void) {
   allocMatrixS ();
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void vprobe::initDC (void) {
