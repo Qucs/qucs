@@ -1,3 +1,7 @@
+2008-07-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* vprobe.cpp: Fixed bug in the S-parameters of this component.
+
 2008-06-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* rectline.cpp: Added new rectangular waveguide component provided
