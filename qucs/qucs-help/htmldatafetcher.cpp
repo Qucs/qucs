@@ -336,7 +336,7 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
     {
       txt = "";
       int index = line.find("href=\"");
-      if(index == -1  || line.contains("http"))
+      if(index == -1  || line.contains("http") || line.contains("mailto"))
         continue;
       index += 6;
       index = line.find('>',index);
@@ -394,7 +394,7 @@ QStringList HtmlDataFetcher::fetchLinksToFiles(const QString &indexFile)
   while ( !str.atEnd() )
   {
     line = str.readLine();
-    if(line.contains("http"))
+    if(line.contains("http") || line.contains("mailto"))
       continue;
     index = line.find("href=\"");//find link to other file
     if(index != -1)

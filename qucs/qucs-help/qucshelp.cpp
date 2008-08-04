@@ -177,7 +177,7 @@ void QucsHelp::slotSourceChanged(const QString& _str)
   int hashPos = str.findRev('#');
   if(hashPos != -1)
     str = str.left(hashPos);
-  // Don't do anything if accesing same page
+  // Don't do anything if accessing same page
   if(str == currentSource)
     return;
     
