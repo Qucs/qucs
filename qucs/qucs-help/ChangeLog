@@ -1,3 +1,9 @@
+2008-08-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/cs/Makefile.am (docdatadir): Added Czech translations of
+	internal help system.  Thanks to Martin Stejskal.  Still things to
+	do here...
+
 2008-02-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Documented new P and E number suffixes.
