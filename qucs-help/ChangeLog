@@ -1,5 +1,8 @@
 2008-08-04  Stefan Jahn  <stefan@lkcc.org>
 
+	* htmldatafetcher.cpp (fetchChapterTexts): Avoid collecting
+	"mailto:" links for the available html sources.
+
 	* docs/cs/Makefile.am (docdatadir): Added Czech translations of
 	internal help system.  Thanks to Martin Stejskal.  Still things to
 	do here...
