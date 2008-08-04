@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * Czech translation of the internal help system
  * new components: EPFL-EKV NMOS/PMOS V2.6, rectangular waveguide
  * new libraries added: PMOSFETs, NMOSFETs, Regulators, Varistors and
    Ideal
