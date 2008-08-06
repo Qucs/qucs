@@ -25,6 +25,8 @@
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 #include <qvgroupbox.h>
+#include <qstring.h>
+#include <qstringlist.h>
 
 #include "digisettingsdialog.h"
 #include "textdoc.h"
@@ -48,7 +50,7 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
 
   QButtonGroup *toggleGroup = new QButtonGroup();
   simRadio = new QRadioButton(tr("Simulation"), setGroup);
-  simRadio->setChecked(true);
+  simRadio->setChecked(Doc->simulation);
 
   QHBox *hb1 = new QHBox(setGroup);
   hb1->setSpacing(5);
@@ -67,12 +69,14 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   hb3->setSpacing(5);
   NameLabel = new QLabel(tr("Library Name:"), hb3);
   NameEdit = new QLineEdit(hb3);
+  NameEdit->setText(Doc->Library);
 
   setGroup->addSpace(15);
   QHBox *hb2 = new QHBox(setGroup);
   hb2->setSpacing(5);
   LibLabel = new QLabel(tr("Libraries:"), hb2);
   LibEdit = new QLineEdit(hb2);
+  LibEdit->setText(Doc->Libraries);
 
   all->addSpacing(5);
   all->addStretch();
@@ -82,6 +86,10 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   QPushButton *ButtonCancel = new QPushButton(tr("Cancel"), Buttons);
   connect(ButtonOk, SIGNAL(clicked()), SLOT(slotOk()));
   connect(ButtonCancel, SIGNAL(clicked()), SLOT(reject()));
+
+  simRadio->setChecked(Doc->simulation);
+  comRadio->setChecked(!Doc->simulation);
+  slotChangeMode(!Doc->simulation);
 
   ButtonOk->setDefault(true);
   setFocusProxy(TimeEdit);
@@ -107,9 +115,25 @@ void DigiSettingsDialog::slotOk()
       changed = true;
     }
   }
+  if(Doc->Libraries != LibEdit->text()) {
+    QStringList lst = QStringList::split(' ',LibEdit->text());
+    Doc->Libraries = lst.join(" ");
+    changed = true;
+  }
+  if(Doc->simulation != simRadio->isChecked()) {
+    Doc->simulation = simRadio->isChecked();
+    changed = true;
+  }
+  if(Doc->Libraries != NameEdit->text()) {
+    QString lib = NameEdit->text().stripWhiteSpace();
+    Doc->Library = lib;
+    changed = true;
+  }
 
-  if(changed)
+  if(changed) {
+    Doc->SetChanged = true;
     Doc->slotSetChanged();
+  }
   accept();
 }
 
