@@ -1,3 +1,11 @@
+2008-08-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/digisettingsdialog.cpp (slotOk): Transfering digital
+	setting into the appropriate textdoc.
+
+	* textdoc.cpp (saveSettings, loadSettings): Implemented load/save
+	functionality for digital setting (e.g. simulation time).
+
 2008-05-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (saveAs): Using single directory variable for both Open

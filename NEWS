@@ -26,6 +26,8 @@ files.
 Version 0.0.15
 --------------
 
+ * simulation time for digital files (Verilog and VHDL) now stored in
+   additional configuration file
  * Czech translation of the internal help system
  * new components: EPFL-EKV NMOS/PMOS V2.6, rectangular waveguide
  * new libraries added: PMOSFETs, NMOSFETs, Regulators, Varistors and
