@@ -110,7 +110,6 @@ bool saveApplSettings(QucsApp *qucs)
     return false;
   }
 
-  QString Line;
   QTextStream stream(&file);
 
   stream << "Settings file, Qucs " PACKAGE_VERSION "\n"
