@@ -43,6 +43,11 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
   setFont(TextFont);
   setCurrentFont(TextFont);
 
+  simulation = true;
+  Library = "";
+  Libraries = "";
+  SetChanged = false;
+
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)TextFont.pointSize();
   setUndoDepth(QucsSettings.maxUndo);
@@ -75,6 +80,58 @@ TextDoc::~TextDoc()
     delete syntaxHighlight;
     App->DocumentTab->removePage(this);  // delete tab in TabBar
   }
+}
+
+// ---------------------------------------------------
+bool TextDoc::saveSettings(void)
+{
+  QFile file(DocName + ".cfg");
+  if(!file.open(IO_WriteOnly))
+    return false;
+
+  QTextStream stream(&file);
+
+  stream << "VHDL settings file, Qucs " PACKAGE_VERSION "\n"
+	 << "Simulation=" << simulation << "\n"
+	 << "Duration=" << SimTime << "\n"
+	 << "Module=" << (!simulation) << "\n"
+	 << "Library=" << Library << "\n"
+	 << "Libraries=" << Libraries << "\n";
+
+  file.close();
+  SetChanged = false;
+  return true;
+}
+
+// ---------------------------------------------------
+bool TextDoc::loadSettings(void)
+{
+  QFile file(DocName + ".cfg");
+  if(!file.open(IO_ReadOnly))
+    return false;
+
+  QTextStream stream(&file);
+  QString Line, Setting;
+
+  bool ok;
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    Setting = Line.section('=',0,0);
+    Line    = Line.section('=',1).stripWhiteSpace();
+    if(Setting == "Simulation") {
+      simulation = Line.toInt(&ok);
+    } else if(Setting == "Duration") {
+      SimTime = Line;
+    } else if(Setting == "Module") {
+    } else if(Setting == "Library") {
+      Library = Line;
+    } else if(Setting == "Libraries") {
+      Libraries = Line;
+    }
+  }
+
+  file.close();
+  return true;
 }
 
 // ---------------------------------------------------
@@ -122,11 +179,9 @@ void TextDoc::slotCursorPosChanged(int x, int y)
 // ---------------------------------------------------
 void TextDoc::slotSetChanged()
 {
-  if(isModified()) {
-    if(!DocChanged) {
-      App->DocumentTab->setTabIconSet(this, QPixmap(smallsave_xpm));
-      DocChanged = true;
-    }
+  if((isModified() && !DocChanged) || SetChanged) {
+    App->DocumentTab->setTabIconSet(this, QPixmap(smallsave_xpm));
+    DocChanged = true;
   }
   else if(DocChanged) {
     App->DocumentTab->setTabIconSet(this, QPixmap(empty_xpm));
@@ -150,12 +205,16 @@ bool TextDoc::load()
   slotSetChanged();
   file.close();
   lastSaved = QDateTime::currentDateTime();
+
+  loadSettings();
   return true;
 }
 
 // ---------------------------------------------------
 int TextDoc::save()
 {
+  saveSettings();
+
   QFile file(DocName);
   if(!file.open(IO_WriteOnly))
     return -1;

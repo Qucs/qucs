@@ -48,6 +48,14 @@ public:
   void  outcommmentSelected();
   QFont TextFont;
 
+  bool simulation;   // simulation or module
+  QString Library;   // library this document belongs to
+  QString Libraries; // libraries to be linked with
+  bool SetChanged;
+
+  bool loadSettings(void);
+  bool saveSettings(void);
+
 public slots:
   void slotCursorPosChanged(int, int);
   void slotSetChanged();
