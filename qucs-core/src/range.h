@@ -1,7 +1,7 @@
 /*
  * range.h - range class definitions
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: range.h,v 1.1 2006-02-06 09:50:15 raimi Exp $
+ * $Id: range.h,v 1.2 2008-08-14 18:21:23 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class range
   ~range ();
   bool inside (nr_double_t);
   bool outside (nr_double_t);
+  nr_double_t lo (void) { return l; }
+  nr_double_t hi (void) { return h; }
   char * toString (void);
 
  private:

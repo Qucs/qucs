@@ -1281,12 +1281,12 @@
       <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
       <admst:choose>
         <admst:when test="[name='exp']">
-            <admst:if test="arguments/math[dependency!='constant']">
+            <admst:if test="arguments/math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="#define d10_exp$index d00_exp$index\n"/>
             </admst:if>
         </admst:when>
         <admst:when test="[name='add']">
-            <admst:if test="arguments/math[dependency!='constant']">
+            <admst:if test="arguments/math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="#define d10_add$index 1\n"/>
               <admst:text format="#define d11_add$index 1\n"/>
             </admst:if>
@@ -1296,7 +1296,7 @@
         <admst:when test="[name='div']">
           <admst:for-each select="arguments">
             <admst:variable name="position" select="%(position(.)-1)"/>
-            <admst:if test="math[dependency!='constant']">
+            <admst:if test="math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="m1$(position)_$(fname)(d1$(position)_$(fname)$index,d00_$(fname)$index,d10_$(fname)$index"/>
               <admst:text select="../arguments" format=",%(e(.))"/>
               <admst:text format=")\n"/>
@@ -1306,7 +1306,7 @@
         <admst:otherwise>
           <admst:for-each select="arguments">
             <admst:variable name="position" select="%(position(.)-1)"/>
-            <admst:if test="math[dependency!='constant']">
+            <admst:if test="math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="double m1%(position(.)-1)_$(fname)(d1%(position(.)-1)_$(fname)$index,d00_$(fname)$index"/>
               <admst:text select="../arguments" format=",%(e(.))"/>
               <admst:text format=")\n"/>
@@ -1351,6 +1351,7 @@
               <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
               <admst:variable name="allepq" select="$allepq+($epq)"/>
             </admst:when>
+<!--            <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/nnode]"> -->
             <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/pnode]">
               <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
               <admst:variable name="allepq" select="$allepq-($epq)"/>
@@ -1371,6 +1372,7 @@
             <admst:variable name="allep" select="$allep+($ep)"/>
           </admst:when>
           <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/pnode]">
+<!--          <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/nnode]"> -->
             <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
             <admst:variable name="allep" select="$allep-($ep)"/>
           </admst:when>
@@ -1629,7 +1631,8 @@
     <admst:if test="[defaultcase='no']">
       <admst:text format="if\n("/>
       <admst:join select="condition" separator="||">
-        <admst:text format="($casecondition)==(%(e(tree)))"/>
+        <admst:apply-templates select="." match="%(datatypename)"/>
+	<admst:text format="($casecondition)==($e)"/>
       </admst:join>
       <admst:text format=")\n"/>
       <admst:value-of select="code/adms/datatypename"/>
@@ -1933,8 +1936,8 @@
 <!-- simulator settings -->
 <admst:value-to select="/simulator/package_name" value="qucs"/>
 <admst:value-to select="/simulator/package_tarname" value="qucs"/>
-<admst:value-to select="/simulator/package_version" value="0.0.14"/>
-<admst:value-to select="/simulator/package_string" value="qucs 0.0.14"/>
+<admst:value-to select="/simulator/package_version" value="0.0.15"/>
+<admst:value-to select="/simulator/package_string" value="qucs 0.0.15"/>
 <admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
 
 <admst:for-each select="/module">

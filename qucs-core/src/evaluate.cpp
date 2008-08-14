@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.79 2008-05-27 17:49:31 ela Exp $
+ * $Id: evaluate.cpp,v 1.80 2008-08-14 18:21:22 ela Exp $
  *
  */
 
@@ -2039,9 +2039,25 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
 
   // all of the data vector
   if (type == TAG_RANGE) {
-    vres = new vector (*(res->v));
-    skip *= deps ? SOLVEE(0)->getDataSize (deps->get (didx - 1)) : 1;
-    size *= deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : 1;
+    if (dsize > 1) {
+      // dependent vectors: only ':' possible
+      vres = new vector (*(res->v));
+      skip *= deps ? SOLVEE(0)->getDataSize (deps->get (didx - 1)) : 1;
+      size *= deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : 1;
+    }
+    else {
+      // independent vectors
+      range * r = RNG (_ARES (idx));
+      int n, k;
+      int len = v->getSize ();
+      size = 0;
+      for (n = 0; n < len; n++) if (r->inside (n)) size++;
+      vres = new vector (size);
+      for (k = 0, n = 0; n < len; n++) {
+	if (r->inside (n))
+	  vres->set (res->v->get (n), k++);
+      }
+    }
   }
   // a subset
   else {
