@@ -1,7 +1,7 @@
 /*
  * differentiate.h - definitions for Qucs equation derivatives
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.h,v 1.8 2007/09/16 16:49:38 ela Exp $
+ * $Id: differentiate.h,v 1.9 2008/09/12 15:54:20 ela Exp $
  *
  */
 
@@ -91,6 +91,9 @@ class differentiate
   static node * sqr_reduce   (node *);
   static node * app_reduce   (const char *, node *, node *);
   static node * hypot_reduce (node *, node *);
+
+ private:
+  static void   over_reduce_adv (node * &, node * &);
 };
 
 // Type of derivative function.

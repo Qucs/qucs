@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.68 2008/07/03 17:17:31 ela Exp $
+ * $Id: equation.cpp,v 1.69 2008/09/12 15:54:20 ela Exp $
  *
  */
 
@@ -511,6 +511,7 @@ application::application () : node (APPLICATION) {
   args = NULL;
   eval = NULL;
   derive = NULL;
+  ddx = NULL;
 }
 
 /* Constructor creates an instance of the application class with a
@@ -521,6 +522,7 @@ application::application (const char * func, int a) : node (APPLICATION) {
   args = NULL;
   eval = NULL;
   derive = NULL;
+  ddx = NULL;
 }
 
 /* This copy constructor creates a instance of the application class
@@ -538,6 +540,7 @@ application::application (const application & o) : node (o) {
   else args = NULL;
   eval = o.eval;
   derive = o.derive;
+  ddx = o.ddx ? o.ddx->recreate () : NULL;
 }
 
 // Re-creates the given instance.
@@ -550,6 +553,7 @@ void application::replace (char * src, char * dst) {
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     arg->replace (src, dst);
   }
+  if (ddx) ddx->replace (src, dst);
 }
 
 // Destructor deletes an instance of the application class.
@@ -561,6 +565,7 @@ application::~application () {
   }
   if ((res = getResult ()) != NULL) delete res;
   if (n) free (n);
+  if (ddx) delete ddx;
 }
 
 // Prints textual representation of the application object.
@@ -644,7 +649,7 @@ void application::addDependencies (strlist * depends) {
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     arg->checkee = checkee;
     arg->addDependencies (depends);
-  }  
+  }
 }
 
 /* This function goes through the arguments of an application and
@@ -690,9 +695,20 @@ int application::evalTypeFast (void) {
   return getType ();
 }
 
+// Macro to identify ddx() application.
+#define isDDX() (nargs == 2 && !strcmp (n, "ddx") && \
+                 args->getNext()->getTag () == REFERENCE)
+
 /* Returns the type of application and applies the appropriate
    evaluation function if any. */
 int application::evalType (void) {
+  // Evaluate type of ddx().
+  if (isDDX ()) {
+    args->evalType ();
+    ddx = args->differentiate (R(args->getNext())->n);
+    setType (ddx->evalType ());
+    return getType ();
+  }
   setType (TAG_UNKNOWN);
   // Evaluate type of arguments.
   evalTypeArgs ();
@@ -753,6 +769,12 @@ int application::findDifferentiator (void) {
 /* This function runs the actual evaluation function and the returns
    the result. */
 constant * application::evaluate (void) {
+  // Evaluate ddx() function.
+  if (isDDX ()) {
+    setResult (ddx->evaluate ());
+    return getResult ();
+  }
+
   int errors = 0;
   strlist * apreps = new strlist ();
 
@@ -814,6 +836,9 @@ constant * application::evaluate (void) {
 
 // Returns the derivative of an application.
 node * application::differentiate (char * derivative) {
+  if (isDDX ()) {
+    return ddx->differentiate (derivative);
+  }
   if (derive)
     return derive (this, derivative);
   return recreate ();

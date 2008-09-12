@@ -1,7 +1,7 @@
 /*
  * differentiate.cpp - the Qucs equation differentiator implementations
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: differentiate.cpp,v 1.12 2008/02/15 17:55:59 ela Exp $
+ * $Id: differentiate.cpp,v 1.13 2008/09/12 15:54:18 ela Exp $
  *
  */
 
@@ -55,10 +55,17 @@ using namespace eqn;
 #define isEuler(n) ((isConst(n) && D(n) == M_E) || isRef(n,"e"))
 #define isval(n,v) (isConst(n) && D(n) == v)
 
+#define isVar(v)   ((v)->getTag()==REFERENCE)
+#define isApp(v)   ((v)->getTag()==APPLICATION)
+#define isMul(v)   (isApp(v) && !strcmp(A(v)->n,"*"))
+#define isSqr(v)   (isApp(v) && !strcmp(A(v)->n,"sqr"))
+
 #define retCon(val) \
   constant * res = new constant (TAG_DOUBLE); res->d = val; return res;
 #define defCon(def,val) \
   constant * def = new constant (TAG_DOUBLE); def->d = val;
+#define defRef(def,var) \
+  reference * def = new reference (); def->n = strdup (var);
 #define retApp1(op,f0) \
   application * res = new application (); res->n = strdup (op); \
   res->nargs = 1; res->args = f0; res->args->setNext (NULL); return res;
@@ -94,6 +101,13 @@ using namespace eqn;
 #define _AD0(var) node * var = _D0;
 #define _AD1(var) node * var = _D1;
 #define _AD2(var) node * var = _D2;
+
+#define _AA(a,idx) A(a)->args->get(idx)
+#define _AA0(a) _AA(a,0)
+#define _AA1(a) _AA(a,1)
+
+#define _AAF0(a,var) node * var = _AA0(a);
+#define _AAF1(a,var) node * var = _AA1(a);
 
 node * differentiate::plus_binary (application * app, char * derivative) {
   _AD0 (d0);
@@ -247,7 +261,26 @@ node * differentiate::over_reduce (node * f0, node * f1) {
     delete f1;
     return minus_reduce (f0);
   } else {
+    over_reduce_adv (f0, f1);
     retApp2 ("/", f0, f1);
+  }
+}
+
+void differentiate::over_reduce_adv (node * &f0, node * &f1) {
+  if (isVar (f0)) {
+    if (isSqr (f1)) {
+      _AAF0 (f1,g1);
+      if (isVar (g1)) {
+	if (!strcmp (R(f0)->n, R(g1)->n)) {
+	  defCon (one, 1);
+	  reference * var = new reference (*R(g1));
+	  delete f0;
+	  delete f1;
+	  f0 = one;
+	  f1 = var;
+	}
+      }
+    }
   }
 }
 

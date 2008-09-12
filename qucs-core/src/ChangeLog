@@ -1,3 +1,11 @@
+2008-09-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Added ddx() operation.  Could be useful for EDD
+	equations. Works like the ddx() operator in Verilog-A.
+
+	* differentiate.cpp: Implemented kind of reduction function for
+	divisions.  Could be template for more sophisticated reductions.
+
 2008-08-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed range operator in indices in independent
