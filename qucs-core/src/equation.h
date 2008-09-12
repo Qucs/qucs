@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.46 2008-07-03 17:17:31 ela Exp $
+ * $Id: equation.h,v 1.47 2008-09-12 15:54:22 ela Exp $
  *
  */
 
@@ -249,6 +249,7 @@ public:
   char * n;
   int nargs;
   node * args;
+  node * ddx;
   evaluator_t eval;
   differentiator_t derive;
 
