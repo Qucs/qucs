@@ -1,3 +1,7 @@
+2008-09-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Fixed segfault bug and memory leakage.
+
 2008-09-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Added ddx() operation.  Could be useful for EDD
