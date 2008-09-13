@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.69 2008-09-12 15:54:20 ela Exp $
+ * $Id: equation.cpp,v 1.70 2008-09-13 16:59:51 ela Exp $
  *
  */
 
@@ -705,7 +705,7 @@ int application::evalType (void) {
   // Evaluate type of ddx().
   if (isDDX ()) {
     args->evalType ();
-    ddx = args->differentiate (R(args->getNext())->n);
+    if (!ddx) ddx = args->differentiate (R(args->getNext())->n);
     setType (ddx->evalType ());
     return getType ();
   }
@@ -771,7 +771,8 @@ int application::findDifferentiator (void) {
 constant * application::evaluate (void) {
   // Evaluate ddx() function.
   if (isDDX ()) {
-    setResult (ddx->evaluate ());
+    if (getResult ()) delete getResult ();
+    setResult (C (ddx->evaluate()->recreate ()));
     return getResult ();
   }
 
