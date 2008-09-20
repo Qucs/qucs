@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.26 2008/07/11 15:21:39 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.27 2008/09/20 16:42:27 ela Exp $
  *
  */
 
@@ -300,6 +300,22 @@ qucs_devices[] = {
       "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci", "alvs",
       "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "alkav", "aleav",
       "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
+    NULL,
+    "1 0 0 8 -26 0 0",
+    NULL
+  },
+  /* hicum/l0 v1.2 bipolar transistor */
+  { "hic0p2_full", "hic0p2_full", "Q", 5,
+    { "Type", "is", "mcf", "mcr", "vef", "ver", "iqf", "iqr", "iqfh", "tfh",
+      "ahq", "ibes", "mbe", "ires", "mre", "ibcs", "mbc", "cje0", "vde", "ze",
+      "aje", "t0", "dt0h", "tbvl", "tef0", "gte", "thcs", "ahc", "tr", "rci0",
+      "vlim", "vpt", "vces", "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx",
+      "zcx", "vptcx", "fbc", "rbi0", "vr0e", "vr0c", "fgeo", "rbx", "rcx",
+      "re", "itss", "msf", "iscs", "msc", "cjs0", "vds", "zs", "vpts",
+      "cbcpar", "cbepar", "eavl", "kavl", "kf", "af", "vgb", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci",
+      "alvs", "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "zetaiqf",
+      "alkav", "aleav", "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
     NULL,
     "1 0 0 8 -26 0 0",
     NULL
