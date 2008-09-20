@@ -31,7 +31,7 @@ Version 0.0.15
  * allowing property references inside the same	instance of a component
  * new component: rectangular waveguide
  * added noise figure property to amplifier model
- * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6
+ * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6, HICUM L0 v1.2
 
 Version 0.0.14
 --------------
