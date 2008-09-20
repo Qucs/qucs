@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+	- Implementation of ddx() operator, especially for EDD.
 - Introduce global nodes (e.g. subst!) in the simulator. 
 - Allow variable references in property value lists.
 - Translation of B-sources in SPICE converter using EDD.
