@@ -33,7 +33,8 @@ SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
         potentiometer.analogfunction.cpp potentiometer.core.cpp \
         MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26nMOS.analogfunction.cpp EKV26nMOS.core.cpp \
-	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp 
+	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp \
+        hic0p2_full.analogfunction.cpp hic0p2_full.core.cpp 
 
 # Additional libraries.
 LIBS = 
