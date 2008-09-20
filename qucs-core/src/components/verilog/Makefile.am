@@ -35,7 +35,8 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	potentiometer.analogfunction.cpp potentiometer.core.cpp \
 	MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26nMOS.analogfunction.cpp EKV26nMOS.core.cpp \
-	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp
+	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp \
+	hic0p2_full.analogfunction.cpp hic0p2_full.core.cpp
 
 noinst_HEADERS = HBT_X.analogfunction.h HBT_X.core.h \
 	hicumL2p1.analogfunction.h hicumL2p1.core.h \
@@ -46,11 +47,13 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.core.h \
 	potentiometer.analogfunction.h potentiometer.core.h \
 	MESFET.analogfunction.h MESFET.core.h \
 	EKV26nMOS.analogfunction.h EKV26nMOS.core.h \
-	EKV26pMOS.analogfunction.h EKV26pMOS.core.h
+	EKV26pMOS.analogfunction.h EKV26pMOS.core.h \
+	hic0p2_full.analogfunction.h hic0p2_full.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
-  hicumL0V1p12.va potentiometer.va MESFET.va EKV26nMOS.va EKV26pMOS.va
+  hicumL0V1p12.va potentiometer.va MESFET.va EKV26nMOS.va EKV26pMOS.va \
+  hicumL0V1p2.va
 
 XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
   qucsMODULEdefs.xml qucsMODULEgui.xml
@@ -190,6 +193,19 @@ EKV26pMOS.defs.h: EKV26pMOS.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 EKV26pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 EKV26pMOS.gui.cpp: EKV26pMOS.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+hic0p2_full.analogfunction.cpp: analogfunction.xml
+hic0p2_full.analogfunction.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e analogfunction.xml
+hic0p2_full.core.cpp: qucsVersion.xml qucsMODULEcore.xml
+hic0p2_full.core.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hic0p2_full.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hic0p2_full.defs.h: hicumL0V1p2.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hic0p2_full.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hic0p2_full.gui.cpp: hicumL0V1p2.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

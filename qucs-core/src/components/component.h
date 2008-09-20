@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.57 2008-06-26 18:14:47 ela Exp $
+ * $Id: component.h,v 1.58 2008-09-20 16:42:23 ela Exp $
  *
  */
 
@@ -142,5 +142,6 @@
 #include "verilog/MESFET.core.h"
 #include "verilog/EKV26nMOS.core.h"
 #include "verilog/EKV26pMOS.core.h"
+#include "verilog/hic0p2_full.core.h"
 
 #endif /* __COMPONENT_H__ */

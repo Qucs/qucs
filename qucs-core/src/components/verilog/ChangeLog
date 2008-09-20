@@ -1,3 +1,8 @@
+2008-09-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL0V1p2.va: Added new preliminary version of HICUM L0 v1.2
+	compact model.
+
 2008-09-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsVersion.xml: Added second derivative for pow(x,y) when y is

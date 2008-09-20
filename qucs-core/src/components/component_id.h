@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.53 2008-06-26 18:14:48 ela Exp $
+ * $Id: component_id.h,v 1.54 2008-09-20 16:42:23 ela Exp $
  *
  */
 
@@ -147,6 +147,7 @@ enum circuit_type {
   CIR_MESFET,
   CIR_EKV26nMOS,
   CIR_EKV26pMOS,
+  CIR_hic0p2_full,
 };
 
 #endif /* __COMPONENT_ID_H__ */
