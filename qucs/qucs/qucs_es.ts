@@ -6460,6 +6460,30 @@ Use:  qucsedit [-r] archivo
         <source>Rectangular Waveguide</source>
         <translation type="unfinished">Guiaondas rectángular</translation>
     </message>
+    <message>
+        <source>HICUM Level 0 v1.2 verilog device</source>
+        <translation type="unfinished">Componente verilog HICUM Level 0 v1.2</translation>
+    </message>
+    <message>
+        <source>reverse Early voltage (normalization volt.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of knee current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L0 v1.2</source>
+        <translation type="unfinished">npn HICUM L0 v1.2</translation>
+    </message>
+    <message>
+        <source>pnp HICUM L0 v1.2</source>
+        <translation type="unfinished">pnp HICUM L0 v1.2</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

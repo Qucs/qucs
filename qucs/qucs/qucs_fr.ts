@@ -6484,6 +6484,30 @@ Invocation :  qucsedit [-r] fichier
         <source>Rectangular Waveguide</source>
         <translation type="unfinished">Guide rectangulaire</translation>
     </message>
+    <message>
+        <source>HICUM Level 0 v1.2 verilog device</source>
+        <translation type="unfinished">Composant Verilog Hicum niveau 0 v1.2</translation>
+    </message>
+    <message>
+        <source>reverse Early voltage (normalization volt.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of knee current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L0 v1.2</source>
+        <translation type="unfinished">NPN Hicum L0 v 1.2</translation>
+    </message>
+    <message>
+        <source>pnp HICUM L0 v1.2</source>
+        <translation type="unfinished">PNP Hicum L0 v 1.2</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
