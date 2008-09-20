@@ -18,7 +18,7 @@
 <admst version="2.2.8" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- controlling variable -->
-<admst:variable name="SkipFVariable" select="n"/>
+<admst:variable name="SkipFVariable" string="n"/>
 
 <!-- temporary variable -->
 <admst:variable name="pprobe"/>
@@ -47,49 +47,49 @@
 <admst:template match="bname">
   <admst:choose>
     <admst:when test="[name='bw_equr']">
-      <admst:return name="bname" value="^~"/>
+      <admst:return name="bname" string="^~"/>
     </admst:when>
     <admst:when test="[name='bw_equl']">
-      <admst:return name="bname" value="~^"/>
+      <admst:return name="bname" string="~^"/>
     </admst:when>
     <admst:when test="[name='bw_xor']">
-      <admst:return name="bname" value="^"/>
+      <admst:return name="bname" string="^"/>
     </admst:when>
     <admst:when test="[name='bw_or']">
-      <admst:return name="bname" value="|"/>
+      <admst:return name="bname" string="|"/>
     </admst:when>
     <admst:when test="[name='bw_and']">
-      <admst:return name="bname" value="&amp;"/>
+      <admst:return name="bname" string="&amp;"/>
     </admst:when>
     <admst:when test="[name='or']">
-      <admst:return name="bname" value="||"/>
+      <admst:return name="bname" string="||"/>
     </admst:when>
     <admst:when test="[name='and']">
-      <admst:return name="bname" value="&amp;&amp;"/>
+      <admst:return name="bname" string="&amp;&amp;"/>
     </admst:when>
     <admst:when test="[name='equ']">
-      <admst:return name="bname" value="=="/>
+      <admst:return name="bname" string="=="/>
     </admst:when>
     <admst:when test="[name='notequ']">
-      <admst:return name="bname" value="!="/>
+      <admst:return name="bname" string="!="/>
     </admst:when>
     <admst:when test="[name='lt']">
-      <admst:return name="bname" value="&lt;"/>
+      <admst:return name="bname" string="&lt;"/>
     </admst:when>
     <admst:when test="[name='lt_equ']">
-      <admst:return name="bname" value="&lt;="/>
+      <admst:return name="bname" string="&lt;="/>
     </admst:when>
     <admst:when test="[name='gt']">
-      <admst:return name="bname" value="&gt;"/>
+      <admst:return name="bname" string="&gt;"/>
     </admst:when>
     <admst:when test="[name='gt_equ']">
-      <admst:return name="bname" value="&gt;="/>
+      <admst:return name="bname" string="&gt;="/>
     </admst:when>
     <admst:when test="[name='shiftr']">
-      <admst:return name="bname" value="&gt;&gt;"/>
+      <admst:return name="bname" string="&gt;&gt;"/>
     </admst:when>
     <admst:when test="[name='shiftl']">
-      <admst:return name="bname" value="&lt;&lt;"/>
+      <admst:return name="bname" string="&lt;&lt;"/>
     </admst:when>
     <admst:otherwise>
       <admst:fatal format="variable type unknown\n"/>
@@ -100,14 +100,14 @@
 <!-- expression//function: get function name -->
 <admst:template match="funcname">
   <admst:choose>
-    <admst:when test="[name='abs']"><admst:return name="fname" value="fabs"/></admst:when>
-    <admst:when test="[name='\$shrinkl']"><admst:return name="fname" value="shrinkl"/></admst:when>
-    <admst:when test="[name='\$shrinka']"><admst:return name="fname" value="shrinka"/></admst:when>
-    <admst:when test="[name='log']"><admst:return name="fname" value="log10"/></admst:when>
-    <admst:when test="[name='ln']"><admst:return name="fname" value="logE"/></admst:when>
-    <admst:when test="[name='limexp']"><admst:return name="fname" value="limexp"/></admst:when>
-    <admst:when test="[name='\$limexp']"><admst:return name="fname" value="limexp"/></admst:when>
-    <admst:otherwise><admst:return name="fname" value="%(name)"/></admst:otherwise>
+    <admst:when test="[name='abs']"><admst:return name="fname" string="fabs"/></admst:when>
+    <admst:when test="[name='\$shrinkl']"><admst:return name="fname" string="shrinkl"/></admst:when>
+    <admst:when test="[name='\$shrinka']"><admst:return name="fname" string="shrinka"/></admst:when>
+    <admst:when test="[name='log']"><admst:return name="fname" string="log10"/></admst:when>
+    <admst:when test="[name='ln']"><admst:return name="fname" string="logE"/></admst:when>
+    <admst:when test="[name='limexp']"><admst:return name="fname" string="limexp"/></admst:when>
+    <admst:when test="[name='\$limexp']"><admst:return name="fname" string="limexp"/></admst:when>
+    <admst:otherwise><admst:return name="fname" string="%(name)"/></admst:otherwise>
   </admst:choose>
 </admst:template>
 
@@ -133,34 +133,34 @@
 </admst:template>
 
 <admst:template match="ddxname">
-  <admst:return name="ddxname" value="%(name)_%($pprobe/nature/access)%($pprobe/branch/pnode/name)_%($pprobe/branch/nnode/name)_%($qprobe/nature/access)%($qprobe/branch/pnode/name)_%($qprobe/branch/nnode/name)"/>
+  <admst:return name="ddxname" string="%(name)_%($pprobe/nature/access)%($pprobe/branch/pnode/name)_%($pprobe/branch/nnode/name)_%($qprobe/nature/access)%($qprobe/branch/pnode/name)_%($qprobe/branch/nnode/name)"/>
 </admst:template>
 
 <admst:template match="dxname">
-  <admst:return name="dxname" value="%(name)_%($pprobe/nature/access)%($pprobe/branch/pnode/name)_%($pprobe/branch/nnode/name)"/>
+  <admst:return name="dxname" string="%(name)_%($pprobe/nature/access)%($pprobe/branch/pnode/name)_%($pprobe/branch/nnode/name)"/>
 </admst:template>
 
 <!-- variables -->
 <admst:template match="variable">
   <admst:choose>
     <admst:when test="[input='yes' and parametertype='model']">
-      <admst:variable name="e" select="%(name)"/>
+      <admst:variable name="e" path="name"/>
     </admst:when>
     <admst:when test="[input='yes' and parametertype='instance']">
-      <admst:variable name="e" select="%(name)"/>
+      <admst:variable name="e" path="name"/>
     </admst:when>
     <admst:when test="[input='no' and scope='global_model']">
-      <admst:variable name="e" select="%(name)"/>
+      <admst:variable name="e" path="name"/>
     </admst:when>
     <admst:when test="[input='no' and scope='global_instance']">
-      <admst:variable name="e" select="%(name)"/>
+      <admst:variable name="e" path="name"/>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="e" select="%(name)"/>
+      <admst:variable name="e" path="name"/>
     </admst:otherwise>
   </admst:choose>
 
-  <admst:variable name="ep" select="0.0"/>
+  <admst:variable name="ep" string="0.0"/>
   <admst:if test="[insource='yes']">
     <admst:if-inside select="$pprobe" list="%(probe)">
       <admst:variable name="ep" select="%(name)_%($pprobe/nature/access)%($pprobe/branch/pnode/name)_%($pprobe/branch/nnode/name)"/>
@@ -168,18 +168,18 @@
   </admst:if>
   <admst:if test="$qprobe">
 
-  <admst:variable name="eq" select="0.0"/>
+  <admst:variable name="eq" string="0.0"/>
   <admst:if test="[insource='yes']">
     <admst:if-inside select="$qprobe" list="%(probe)">
       <admst:variable name="eq" select="%(name)_%($qprobe/nature/access)%($qprobe/branch/pnode/name)_%($qprobe/branch/nnode/name)"/>
     </admst:if-inside>
   </admst:if>
 
-  <admst:variable name="epq" select="0.0"/>
+  <admst:variable name="epq" string="0.0"/>
   <admst:if test="[insource='yes']">
     <admst:if-inside select="$pprobe" list="%(probe)">
       <admst:if-inside select="$qprobe" list="%(probe)">
-        <admst:variable name="epq" select="%(ddxname(.)/[name='ddxname']/value)"/>
+        <admst:variable name="epq" path="ddxname(.)/[name='ddxname']/value"/>
       </admst:if-inside>
     </admst:if-inside>
   </admst:if>
@@ -202,7 +202,7 @@
       <admst:variable name="ep" select="1.0"/>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="ep" select="0.0"/>
+      <admst:variable name="ep" string="0.0"/>
     </admst:otherwise>
   </admst:choose>
   <admst:if test="$qprobe">
@@ -212,11 +212,11 @@
       <admst:variable name="eq" select="1.0"/>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="eq" select="0.0"/>
+      <admst:variable name="eq" string="0.0"/>
     </admst:otherwise>
   </admst:choose>
 
-  <admst:variable name="epq" select="0.0"/>
+  <admst:variable name="epq" string="0.0"/>
   </admst:if>
 </admst:template>
 
@@ -235,12 +235,12 @@
 <admst:template match="string">
   <admst:variable name="e" select="&quot;%(value)&quot;"/>
 
-  <admst:variable name="ep" select="0.0"/>
+  <admst:variable name="ep" string="0.0"/>
   <admst:if test="$qprobe">
 
-  <admst:variable name="eq" select="0.0"/>
+  <admst:variable name="eq" string="0.0"/>
 
-  <admst:variable name="epq" select="0.0"/>
+  <admst:variable name="epq" string="0.0"/>
   </admst:if>
 </admst:template>
 
@@ -248,7 +248,7 @@
 <admst:template match="number">
   <admst:choose>
     <admst:when test="[scalingunit='1']">
-      <admst:variable name="e" select="%(value)"/>
+      <admst:variable name="e" path="value"/>
     </admst:when>
     <admst:when test="[scalingunit='E']">
       <admst:variable name="e" select="(%(value)*1.0e+18)"/>
@@ -306,12 +306,12 @@
     </admst:otherwise>
   </admst:choose>
 
-  <admst:variable name="ep" select="0.0"/>
+  <admst:variable name="ep" string="0.0"/>
   <admst:if test="$qprobe">
 
-  <admst:variable name="eq" select="0.0"/>
+  <admst:variable name="eq" string="0.0"/>
 
-  <admst:variable name="epq" select="0.0"/>
+  <admst:variable name="epq" string="0.0"/>
   </admst:if>
 </admst:template>
 
@@ -321,7 +321,7 @@
     <admst:when test="[name='plus']">
       <admst:choose>
         <admst:when test="[arg1/math/value=0.0]">
-          <admst:variable name="e" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:apply-templates select="arg1" match="ddx"/>
@@ -332,7 +332,7 @@
     <admst:when test="[name='minus']">
       <admst:choose>
         <admst:when test="[arg1/math/value=0.0]">
-          <admst:variable name="e" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:apply-templates select="arg1" match="ddx"/>
@@ -343,7 +343,7 @@
     <admst:when test="[name='not']">
       <admst:choose>
         <admst:when test="[arg1/math/value=0.0]">
-          <admst:variable name="e" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:apply-templates select="arg1" match="ddx"/>
@@ -354,7 +354,7 @@
     <admst:when test="[name='bw_not']">
       <admst:choose>
         <admst:when test="[arg1/math/value=0.0]">
-          <admst:variable name="e" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:apply-templates select="arg1" match="ddx"/>
@@ -369,10 +369,10 @@
 
   <admst:choose>
     <admst:when test="[$e='0.0']">
-      <admst:variable name="ep" select="0.0"/>
+      <admst:variable name="ep" string="0.0"/>
     </admst:when>
     <admst:when test="[$ep='0.0']">
-      <admst:variable name="ep" select="0.0"/>
+      <admst:variable name="ep" string="0.0"/>
     </admst:when>
     <admst:otherwise>
       <admst:choose>
@@ -395,10 +395,10 @@
 
   <admst:choose>
     <admst:when test="[$e='0.0']">
-      <admst:variable name="eq" select="0.0"/>
+      <admst:variable name="eq" string="0.0"/>
     </admst:when>
     <admst:when test="[$eq='0.0']">
-      <admst:variable name="eq" select="0.0"/>
+      <admst:variable name="eq" string="0.0"/>
     </admst:when>
     <admst:otherwise>
       <admst:choose>
@@ -418,37 +418,37 @@
     </admst:otherwise>
   </admst:choose>
 
-  <admst:variable name="epq" select="0.0"/>
+  <admst:variable name="epq" string="0.0"/>
   </admst:if>
 </admst:template>
 
 <!-- binary operations -->
 <admst:template match="mapply_binary">
   <admst:apply-templates select="arg1" match="ddx"/>
-  <admst:variable name="x" select="$e"/>
-  <admst:variable name="xp" select="$ep"/>
-  <admst:variable name="xq" select="$eq"/>
-  <admst:variable name="xpq" select="$epq"/>
+  <admst:variable name="x" string="$e"/>
+  <admst:variable name="xp" string="$ep"/>
+  <admst:variable name="xq" string="$eq"/>
+  <admst:variable name="xpq" string="$epq"/>
   <admst:apply-templates select="arg2" match="ddx"/>
-  <admst:variable name="y" select="$e"/>
-  <admst:variable name="yp" select="$ep"/>
-  <admst:variable name="yq" select="$eq"/>
-  <admst:variable name="ypq" select="$epq"/>
+  <admst:variable name="y" string="$e"/>
+  <admst:variable name="yp" string="$ep"/>
+  <admst:variable name="yq" string="$eq"/>
+  <admst:variable name="ypq" string="$epq"/>
   <admst:choose>
     <admst:when test="[name='addp']">
       <admst:choose>
         <admst:when test="[(arg1/math/value=0.0)and(arg2/math/value=0.0)]">
-          <admst:variable name="e" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:when test="[arg1/math/value=0.0]">
           <admst:variable name="e" select="(+$y)"/>
-          <admst:variable name="xp" select="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
         </admst:when>
         <admst:when test="[arg2/math/value=0.0]">
-          <admst:variable name="e" select="%($x)"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" path="$x"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="e" select="($x+$y)"/>
@@ -458,18 +458,18 @@
     <admst:when test="[name='addm']">
       <admst:choose>
         <admst:when test="[(arg1/math/value=0.0)and(arg2/math/value=0.0)]">
-          <admst:variable name="e" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:when test="[arg1/math/value=0.0]">
           <admst:variable name="e" select="(-$y)"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="$ep"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="$ep"/>
         </admst:when>
         <admst:when test="arg2/math[value=0.0]">
-          <admst:variable name="e" select="$x"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" string="$x"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="e" select="($x-$y)"/>
@@ -479,18 +479,18 @@
     <admst:when test="[name='multtime']">
       <admst:choose>
         <admst:when test="[(arg1/math/value=0.0)or(arg2/math/value=0.0)]">
-          <admst:variable name="e" select="0.0"/>
-          <admst:variable name="x" select="0.0"/>
-          <admst:variable name="y" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
+          <admst:variable name="x" string="0.0"/>
+          <admst:variable name="y" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:when test="[(arg1/math/value=1.0)and(arg2/math/value=1.0)]">
           <admst:variable name="e" select="1.0"/>
-          <admst:variable name="x" select="0.0"/>
-          <admst:variable name="y" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="x" string="0.0"/>
+          <admst:variable name="y" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="e" select="($x*$y)"/>
@@ -500,18 +500,18 @@
     <admst:when test="[name='multdiv']">
       <admst:choose>
         <admst:when test="[arg1/math/value=0.0]">
-          <admst:variable name="e" select="0.0"/>
-          <admst:variable name="x" select="0.0"/>
-          <admst:variable name="y" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="e" string="0.0"/>
+          <admst:variable name="x" string="0.0"/>
+          <admst:variable name="y" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:when test="[(arg1/math/value=1.0)and(arg2/math/value=1.0)]">
           <admst:variable name="e" select="1.0"/>
-          <admst:variable name="x" select="0.0"/>
-          <admst:variable name="y" select="0.0"/>
-          <admst:variable name="xp" select="0.0"/>
-          <admst:variable name="yp" select="0.0"/>
+          <admst:variable name="x" string="0.0"/>
+          <admst:variable name="y" string="0.0"/>
+          <admst:variable name="xp" string="0.0"/>
+          <admst:variable name="yp" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="e" select="($x/$y)"/>
@@ -527,13 +527,13 @@
       <admst:when test="[name='addp']">
         <admst:choose>
           <admst:when test="[$xp='0.0' and $yp='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$xp='0.0']">
-            <admst:variable name="ep" select="$yp"/>
+            <admst:variable name="ep" string="$yp"/>
           </admst:when>
           <admst:when test="[$yp='0.0']">
-            <admst:variable name="ep" select="$xp"/>
+            <admst:variable name="ep" string="$xp"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="ep" select="($xp+$yp)"/>
@@ -543,13 +543,13 @@
       <admst:when test="[name='addm']">
         <admst:choose>
           <admst:when test="[$xp='0.0' and $yp='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$xp='0.0']">
             <admst:variable name="ep" select="(-$yp)"/>
           </admst:when>
           <admst:when test="[$yp='0.0']">
-            <admst:variable name="ep" select="$xp"/>
+            <admst:variable name="ep" string="$xp"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="ep" select="($xp-$yp)"/>
@@ -559,10 +559,10 @@
       <admst:when test="[name='multtime']">
         <admst:choose>
           <admst:when test="[$x='0.0' and $y='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$xp='0.0' and $yp='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$xp='0.0' and $yp='1.0']">
             <admst:variable name="ep" select="($x)"/>
@@ -586,10 +586,10 @@
             <admst:variable name="ep" select="(($xp*$y)+$x)"/>
           </admst:when>
           <admst:when test="[$x='1.0']">
-            <admst:variable name="ep" select="$yp"/>
+            <admst:variable name="ep" string="$yp"/>
           </admst:when>
           <admst:when test="[$y='1.0']">
-            <admst:variable name="ep" select="$xp"/>
+            <admst:variable name="ep" string="$xp"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="ep" select="(($xp*$y)+($x*$yp))"/>
@@ -599,10 +599,10 @@
       <admst:when test="[name='multdiv']">
         <admst:choose>
           <admst:when test="[$x='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$xp='0.0' and $yp='0.0']">
-            <admst:variable name="ep" select="0.0"/>
+            <admst:variable name="ep" string="0.0"/>
           </admst:when>
           <admst:when test="[$x='1.0']">
             <admst:choose>
@@ -640,7 +640,7 @@
           <admst:otherwise>
             <admst:choose>
               <admst:when test="[$y='1.0']">
-                <admst:variable name="ep" select="$xp"/>
+                <admst:variable name="ep" string="$xp"/>
               </admst:when>
               <admst:when test="[$yp='0.0']">
                 <admst:variable name="ep" select="($xp/$y)"/>
@@ -656,7 +656,7 @@
         </admst:choose>
       </admst:when>
       <admst:otherwise>
-        <admst:variable name="ep" select="0.0"/>
+        <admst:variable name="ep" string="0.0"/>
       </admst:otherwise>
     </admst:choose>
   <admst:if test="$qprobe">
@@ -665,13 +665,13 @@
       <admst:when test="[name='addp']">
         <admst:choose>
           <admst:when test="[$xq='0.0' and $yq='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$xq='0.0']">
-            <admst:variable name="eq" select="$yq"/>
+            <admst:variable name="eq" string="$yq"/>
           </admst:when>
           <admst:when test="[$yq='0.0']">
-            <admst:variable name="eq" select="$xq"/>
+            <admst:variable name="eq" string="$xq"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="eq" select="($xq+$yq)"/>
@@ -681,13 +681,13 @@
       <admst:when test="[name='addm']">
         <admst:choose>
           <admst:when test="[$xq='0.0' and $yq='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$xq='0.0']">
             <admst:variable name="eq" select="(-$yq)"/>
           </admst:when>
           <admst:when test="[$yq='0.0']">
-            <admst:variable name="eq" select="$xq"/>
+            <admst:variable name="eq" string="$xq"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="eq" select="($xq-$yq)"/>
@@ -697,10 +697,10 @@
       <admst:when test="[name='multtime']">
         <admst:choose>
           <admst:when test="[$x='0.0' and $y='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$xq='0.0' and $yq='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$xq='0.0' and $yq='1.0']">
             <admst:variable name="eq" select="($x)"/>
@@ -724,10 +724,10 @@
             <admst:variable name="eq" select="(($xq*$y)+$x)"/>
           </admst:when>
           <admst:when test="[$x='1.0']">
-            <admst:variable name="eq" select="$yq"/>
+            <admst:variable name="eq" string="$yq"/>
           </admst:when>
           <admst:when test="[$y='1.0']">
-            <admst:variable name="eq" select="$xq"/>
+            <admst:variable name="eq" string="$xq"/>
           </admst:when>
           <admst:otherwise>
             <admst:variable name="eq" select="(($xq*$y)+($x*$yq))"/>
@@ -737,10 +737,10 @@
       <admst:when test="[name='multdiv']">
         <admst:choose>
           <admst:when test="[$x='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$xq='0.0' and $yq='0.0']">
-            <admst:variable name="eq" select="0.0"/>
+            <admst:variable name="eq" string="0.0"/>
           </admst:when>
           <admst:when test="[$x='1.0']">
             <admst:choose>
@@ -778,7 +778,7 @@
           <admst:otherwise>
             <admst:choose>
               <admst:when test="[$y='1.0']">
-                <admst:variable name="eq" select="$xq"/>
+                <admst:variable name="eq" string="$xq"/>
               </admst:when>
               <admst:when test="[$yq='0.0']">
                 <admst:variable name="eq" select="($xq/$y)"/>
@@ -794,59 +794,59 @@
         </admst:choose>
       </admst:when>
       <admst:otherwise>
-        <admst:variable name="eq" select="0.0"/>
+        <admst:variable name="eq" string="0.0"/>
       </admst:otherwise>
     </admst:choose>
 
     <admst:choose>
       <admst:when test="[name='addp']">
-          <admst:variable name="t1" select="+$xpq"/>
-          <admst:variable name="t2" select="+$ypq"/>
-          <admst:variable name="epq" select="$t1$t2"/>
-          <admst:choose>
-            <admst:when test="[$epq='']">
-              <admst:variable name="epq" select="0.0"/>
-            </admst:when>
-            <admst:otherwise>
-              <admst:variable name="epq" select="($epq)"/>
-            </admst:otherwise>
-          </admst:choose>
+        <admst:variable name="t1" select="+$xpq"/>
+        <admst:variable name="t2" select="+$ypq"/>
+        <admst:variable name="epq" select="$t1$t2"/>
+        <admst:choose>
+          <admst:when test="[$epq='']">
+            <admst:variable name="epq" string="0.0"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:variable name="epq" select="($epq)"/>
+          </admst:otherwise>
+        </admst:choose>
       </admst:when>
       <admst:when test="[name='addm']">
-          <admst:variable name="t1" select="+$xpq"/>
-          <admst:variable name="t2" select="-$ypq"/>
-          <admst:variable name="epq" select="$t1$t2"/>
-          <admst:choose>
-            <admst:when test="[$epq='']">
-              <admst:variable name="epq" select="0.0"/>
-            </admst:when>
-            <admst:otherwise>
-              <admst:variable name="epq" select="($epq)"/>
-            </admst:otherwise>
-          </admst:choose>
+        <admst:variable name="t1" select="+$xpq"/>
+        <admst:variable name="t2" select="-$ypq"/>
+        <admst:variable name="epq" select="$t1$t2"/>
+        <admst:choose>
+          <admst:when test="[$epq='']">
+            <admst:variable name="epq" string="0.0"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:variable name="epq" select="($epq)"/>
+          </admst:otherwise>
+        </admst:choose>
       </admst:when>
       <admst:when test="[name='multtime']">
-          <admst:variable name="t1" select="+$xpq*$y"/>
-          <admst:variable name="t2" select="+$xp*$yq"/>
-          <admst:variable name="t3" select="+$xq*$yp"/>
-          <admst:variable name="t4" select="+$x*$ypq"/>
-          <admst:variable name="epq" select="$t1$t2$t3$t4"/>
-          <admst:choose>
-            <admst:when test="[$eq='']">
-              <admst:variable name="eq" select="0.0"/>
-            </admst:when>
-            <admst:otherwise>
-              <admst:variable name="eq" select="($eq)"/>
-            </admst:otherwise>
-          </admst:choose>
-          <admst:choose>
-            <admst:when test="[$epq='']">
-              <admst:variable name="epq" select="0.0"/>
-            </admst:when>
-            <admst:otherwise>
-              <admst:variable name="epq" select="($epq)"/>
-            </admst:otherwise>
-          </admst:choose>
+        <admst:variable name="t1" select="+$xpq*$y"/>
+        <admst:variable name="t2" select="+$xp*$yq"/>
+        <admst:variable name="t3" select="+$xq*$yp"/>
+        <admst:variable name="t4" select="+$x*$ypq"/>
+        <admst:variable name="epq" select="$t1$t2$t3$t4"/>
+        <admst:choose>
+          <admst:when test="[$eq='0.0']">
+            <admst:variable name="eq" string="0.0"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:variable name="eq" select="($eq)"/>
+          </admst:otherwise>
+        </admst:choose>
+        <admst:choose>
+          <admst:when test="[$epq='']">
+            <admst:variable name="epq" string="0.0"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:variable name="epq" select="($epq)"/>
+          </admst:otherwise>
+        </admst:choose>
       </admst:when>
       <admst:when test="[name='multdiv']">
         <admst:variable name="epq" select="($xpq/$y-($xp*$yq+$xq*$yp+$x*$ypq)/$y/$y+2*$x*$yp*$yq/$y/$y/$y)"/>
@@ -858,15 +858,15 @@
 <!-- ternary operations -->
 <admst:template match="mapply_ternary">
   <admst:apply-templates select="arg1" match="ddx"/>
-  <admst:variable name="x" select="$e"/>
+  <admst:variable name="x" string="$e"/>
   <admst:apply-templates select="arg2" match="ddx"/>
-  <admst:variable name="y" select="$e"/>
-  <admst:variable name="yp" select="$ep"/>
-  <admst:variable name="yq" select="$eq"/>
+  <admst:variable name="y" string="$e"/>
+  <admst:variable name="yp" string="$ep"/>
+  <admst:variable name="yq" string="$eq"/>
   <admst:apply-templates select="arg3" match="ddx"/>
-  <admst:variable name="z" select="$e"/>
-  <admst:variable name="zp" select="$ep"/>
-  <admst:variable name="zq" select="$eq"/>
+  <admst:variable name="z" string="$e"/>
+  <admst:variable name="zp" string="$ep"/>
+  <admst:variable name="zq" string="$eq"/>
   <admst:variable name="e" select="($x?$y:$z)"/>
 
   <admst:variable name="ep" select="($x?$yp:$zp)"/>
@@ -874,7 +874,7 @@
 
   <admst:variable name="ep" select="($x?$yp:$zp)"/>
 
-  <admst:variable name="epq" select="fixme"/>
+  <admst:variable name="epq" string="fixme"/>
   </admst:if>
 </admst:template>
 
@@ -883,18 +883,18 @@
   <admst:choose>
     <admst:when test="[name='absdelay']">
       <admst:apply-templates select="arguments[1]" match="ddx"/>
-      <admst:variable name="e" select="$e"/>
+      <admst:variable name="e" string="$e"/>
     </admst:when>
     <admst:when test="[name='ddt']">
       <admst:apply-templates select="arguments[1]" match="ddx"/>
-      <admst:variable name="x" select="$e"/>
-      <admst:variable name="xp" select="$ep"/>
-      <admst:variable name="xq" select="$eq"/>
-      <admst:variable name="xpq" select="$epq"/>
+      <admst:variable name="x" string="$e"/>
+      <admst:variable name="xp" string="$ep"/>
+      <admst:variable name="xq" string="$eq"/>
+      <admst:variable name="xpq" string="$epq"/>
       <admst:variable name="e" select="_DDT($x)"/>
     </admst:when>
     <admst:when test="[name='\$given' or name='\$param_given']">
-      <admst:variable name="arg1" select="%(arguments[1])"/>
+      <admst:variable name="arg1" path="arguments[1]"/>
       <admst:assert test="$arg1[datatypename='variable' and input='yes']" format="%(name): argument is not a parameter\n"/>
       <admst:choose>
         <admst:when test="$arg1/[parametertype='model']">
@@ -910,34 +910,34 @@
     </admst:when>
     <admst:when test="[name='\$temperature']">
       <admst:assert test="[nilled(arguments)]" format="%(name): should not have arguments\n"/>
-      <admst:variable name="e" select="_circuit_temp"/>
+      <admst:variable name="e" string="_circuit_temp"/>
     </admst:when>
     <admst:when test="[name='\$mfactor']">
       <admst:assert test="[nilled(arguments)]" format="%(name): should not have arguments\n"/>
-      <admst:variable name="e" select="MFACTOR"/>
+      <admst:variable name="e" string="MFACTOR"/>
     </admst:when>
     <admst:when test="[name='\$vt']">
       <admst:choose>
         <admst:when test="[nilled(arguments)]">
-          <admst:variable name="e" select="_vt_nom"/>   
+          <admst:variable name="e" string="_vt_nom"/>   
         </admst:when>
         <admst:when test="arguments[count(.)=1]">
           <admst:apply-templates select="arguments[1]" match="ddx"/>
-          <admst:variable name="x" select="$e"/>
-          <admst:variable name="xp" select="$ep"/>
-          <admst:variable name="xq" select="$eq"/>
-          <admst:variable name="xpq" select="$epq"/>
+          <admst:variable name="x" string="$e"/>
+          <admst:variable name="xp" string="$ep"/>
+          <admst:variable name="xq" string="$eq"/>
+          <admst:variable name="xpq" string="$epq"/>
           <admst:variable name="e" select="m00_vt($x)"/>   
         </admst:when>
       </admst:choose>
     </admst:when>   
     <admst:when test="[name='\$scale']">
       <admst:assert test="[nilled(arguments)]" format="%(name): should not have arguments\n"/>
-      <admst:variable name="e" select="_scale"/>
+      <admst:variable name="e" string="_scale"/>
     </admst:when>
     <admst:when test="[name='\$abstime']">
       <admst:assert test="[nilled(arguments)]" format="%(name): should not have arguments\n"/>
-      <admst:variable name="e" select="_abstime"/>
+      <admst:variable name="e" string="_abstime"/>
     </admst:when>
     <admst:when test="[name='ddx']">
       <admst:assert test="arguments[count(.)=2]" format="%(name): should have two arguments exactly\n"/>
@@ -956,7 +956,7 @@
       <admst:variable name="e" select="ceil($e)"/>
     </admst:when>
     <admst:when test="[$SkipFVariable='y']">
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:variable name="args" select=""/>
       <admst:for-each select="arguments">
         <admst:if test="[$args!='']">
@@ -969,33 +969,33 @@
     </admst:when>
     <admst:when test="[name='abs' or name='acos' or name='asin' or name='atan' or name='cos' or name='cosh' or name='exp' or name='hypot' or name='limexp' or name='ln' or name='log' or name='sin' or name='sinh' or name='sqrt' or name='tan' or name='tanh']">
       <admst:assert test="arguments[count(.)=1]" format="%(name): should have one argument exactly\n"/>
-      <admst:variable name="index" select="%(index(subexpression/expression/function,.))"/>
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="index" path="index(subexpression/expression/function,.)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:apply-templates select="arguments[1]" match="ddx"/>
-      <admst:variable name="x" select="$e"/>
-      <admst:variable name="xp" select="$ep"/>
-      <admst:variable name="xq" select="$eq"/>
-      <admst:variable name="xpq" select="$epq"/>
+      <admst:variable name="x" string="$e"/>
+      <admst:variable name="xp" string="$ep"/>
+      <admst:variable name="xq" string="$eq"/>
+      <admst:variable name="xpq" string="$epq"/>
       <admst:variable name="e" select="d00_$(fname)$index"/>
     </admst:when>
     <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
       <admst:assert test="arguments[count(.)=2]" format="%(name): should have two argument exactly\n"/>
-      <admst:variable name="index" select="%(index(./subexpression/expression/function,.))"/>
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:apply-templates select="arguments[1]" match="ddx"/>
-      <admst:variable name="x" select="$e"/>
-      <admst:variable name="xp" select="$ep"/>
-      <admst:variable name="xq" select="$eq"/>
-      <admst:variable name="xpq" select="$epq"/>
+      <admst:variable name="x" string="$e"/>
+      <admst:variable name="xp" string="$ep"/>
+      <admst:variable name="xq" string="$eq"/>
+      <admst:variable name="xpq" string="$epq"/>
       <admst:apply-templates select="arguments[2]" match="ddx"/>
-      <admst:variable name="y" select="$e"/>
-      <admst:variable name="yp" select="$ep"/>
-      <admst:variable name="yq" select="$eq"/>
-      <admst:variable name="ypq" select="$epq"/>
+      <admst:variable name="y" string="$e"/>
+      <admst:variable name="yp" string="$ep"/>
+      <admst:variable name="yq" string="$eq"/>
+      <admst:variable name="ypq" string="$epq"/>
       <admst:variable name="e" select="d00_$(fname)$index"/>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:variable name="args" select=""/>
       <admst:for-each select="arguments">
         <admst:if test="[$args!='']">
@@ -1023,7 +1023,7 @@
     </admst:otherwise>
   </admst:choose>
 
-  <admst:variable name="ep" select="0.0"/>
+  <admst:variable name="ep" string="0.0"/>
   <admst:choose>
     <admst:when test="[name='absdelay']">
     </admst:when>
@@ -1036,7 +1036,7 @@
     <admst:when test="[name='\$vt']">
       <admst:choose>
         <admst:when test="[nilled(arguments)]">
-          <admst:variable name="ep" select="0.0"/>
+          <admst:variable name="ep" string="0.0"/>
         </admst:when>
         <admst:when test="arguments[count(.)=1]">
           <admst:variable name="ep" select="$xp*m10_vt($x)"/>
@@ -1056,13 +1056,13 @@
     <admst:when test="[$SkipFVariable='y']">
     </admst:when>
     <admst:when test="[name='ddt']">
-      <admst:variable name="ep" select="$xp"/>
+      <admst:variable name="ep" string="$xp"/>
     </admst:when>
     <admst:when test="[name='abs' or name='acos' or name='asin' or name='atan' or name='cos' or name='cosh' or name='exp' or name='hypot' or name='limexp' or name='ln' or name='log' or name='sin' or name='sinh' or name='sqrt' or name='tan' or name='tanh']">
-      <admst:variable name="index" select="%(index(subexpression/expression/function,.))"/>
+      <admst:variable name="index" path="index(subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xp='0.0']">
-          <admst:variable name="ep" select="0.0"/>
+          <admst:variable name="ep" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="ep" select="$xp*d10_$(fname)$index"/>
@@ -1070,10 +1070,10 @@
       </admst:choose>
     </admst:when>
     <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
-      <admst:variable name="index" select="%(index(./subexpression/expression/function,.))"/>
+      <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xp='0.0' and $yp='0.0']">
-          <admst:variable name="ep" select="0.0"/>
+          <admst:variable name="ep" string="0.0"/>
         </admst:when>
         <admst:when test="[$xp='0.0']">
           <admst:variable name="ep" select="(d11_$(fname)$index*$yp)"/>
@@ -1099,7 +1099,7 @@
   </admst:choose>
   <admst:if test="$qprobe">
 
-  <admst:variable name="eq" select="0.0"/>
+  <admst:variable name="eq" string="0.0"/>
   <admst:choose>
     <admst:when test="[name='absdelay']">
     </admst:when>
@@ -1112,7 +1112,7 @@
     <admst:when test="[name='\$vt']">
       <admst:choose>
         <admst:when test="[nilled(arguments)]">
-          <admst:variable name="eq" select="0.0"/>
+          <admst:variable name="eq" string="0.0"/>
         </admst:when>
         <admst:when test="arguments[count(.)=1]">
           <admst:variable name="eq" select="$xq*m10_vt($x)"/>   
@@ -1132,13 +1132,13 @@
     <admst:when test="[$SkipFVariable='y']">
     </admst:when>
     <admst:when test="[name='ddt']">
-      <admst:variable name="eq" select="$xq"/>
+      <admst:variable name="eq" string="$xq"/>
     </admst:when>
     <admst:when test="[name='abs' or name='acos' or name='asin' or name='atan' or name='cos' or name='cosh' or name='exp' or name='hypot' or name='limexp' or name='ln' or name='log' or name='sin' or name='sinh' or name='sqrt' or name='tan' or name='tanh']">
-      <admst:variable name="index" select="%(index(subexpression/expression/function,.))"/>
+      <admst:variable name="index" path="index(subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xq='0.0']">
-          <admst:variable name="eq" select="0.0"/>
+          <admst:variable name="eq" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="eq" select="$xq*d10_$(fname)$index"/>
@@ -1146,10 +1146,10 @@
       </admst:choose>
     </admst:when>
     <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
-      <admst:variable name="index" select="%(index(./subexpression/expression/function,.))"/>
+      <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xq='0.0' and $yq='0.0']">
-          <admst:variable name="eq" select="0.0"/>
+          <admst:variable name="eq" string="0.0"/>
         </admst:when>
         <admst:when test="[$xq='0.0']">
           <admst:variable name="eq" select="(d11_$(fname)$index*$yq)"/>
@@ -1169,26 +1169,39 @@
 
   <admst:choose>
     <admst:when test="[name='abs' or name='acos' or name='asin' or name='atan' or name='cos' or name='cosh' or name='exp' or name='hypot' or name='limexp' or name='ln' or name='log' or name='sin' or name='sinh' or name='sqrt' or name='tan' or name='tanh']">
-      <admst:variable name="index" select="%(index(./subexpression/expression/function,.))"/>
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:choose>
         <admst:when test="[$x='0.0']">
-          <admst:variable name="epq" select="0.0"/>
+          <admst:variable name="epq" string="0.0"/>
         </admst:when>
         <admst:when test="[$xp='0.0']">
-          <admst:variable name="epq" select="0.0"/>
+          <admst:variable name="epq" string="0.0"/>
         </admst:when>
         <admst:when test="[$xq='0.0']">
-          <admst:variable name="epq" select="0.0"/>
+          <admst:variable name="epq" string="0.0"/>
         </admst:when>
         <admst:otherwise>
           <admst:variable name="epq" select="(m20_$(fname)($x)*$xq*$xp+d10_$(fname)$index*$xpq)"/>
         </admst:otherwise>
       </admst:choose>
     </admst:when>
+    <admst:when test="[name='pow' and $yp='0.0' and $yq='0.0']">
+      <admst:choose>
+        <admst:when test="[$x='0.0' or $xp='0.0' or $xq='0.0']">
+          <admst:variable name="epq" string="0.0"/>
+        </admst:when>
+        <admst:when test="[$xpq='0.0']">
+          <admst:variable name="epq" select="(m20_$(fname)($x,$y)*$xq*$xp)"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:variable name="epq" select="(m20_$(fname)($x,$y)*$xq*$xp+d10_$(fname)$index*$xpq)"/>
+        </admst:otherwise>
+      </admst:choose>
+    </admst:when>
     <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
-      <admst:variable name="epq" select="fixme"/>
-      <admst:warning format="%(name): ddx dependency not implemented\n"/>
+      <admst:variable name="epq" string="fixme"/>
+      <admst:warning format="%(name): ddx dependency not implemented %(arguments[1]|' '|arguments[2])\n"/>
     </admst:when>
   </admst:choose>
   </admst:if>
@@ -1207,12 +1220,12 @@
   <admst:if test="variable[insource='yes']/probe">
 
     <admst:for-each select="variable">
-      <admst:variable name="myvariable" select="%(.)"/>
+      <admst:variable name="myvariable" path="."/>
       <admst:for-each select="probe">
-          <admst:variable name="pprobe" select="%(.)"/>
-          <admst:variable name="ddxinsidethisprobe" select="no"/>
+          <admst:variable name="pprobe" path="."/>
+          <admst:variable name="ddxinsidethisprobe" string="no"/>
           <admst:if test="$myvariable/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]">
-            <admst:variable name="ddxinsidethisprobe" select="yes"/>
+            <admst:variable name="ddxinsidethisprobe" string="yes"/>
           </admst:if>
           <admst:text test="[$ddxinsidethisprobe='yes']" format="#if defined(_DERIVATEFORDDX)\n"/>
           <admst:text test="[$ddxinsidethisprobe='no']" format="#if defined(_DERIVATE)\n"/>
@@ -1222,19 +1235,19 @@
     </admst:for-each>
 
     <admst:for-each select="variable">
-      <admst:variable name="myvariable" select="%(.)"/>
+      <admst:variable name="myvariable" path="."/>
       <admst:new datatype="list" arguments="list of ddx probes">
-        <admst:variable name="ddxprobes" select="%(.)"/>
+        <admst:variable name="ddxprobes" path="."/>
         <admst:for-each select="$myvariable/probe">
-          <admst:variable name="pprobe" select="%(.)"/>
+          <admst:variable name="pprobe" path="."/>
           <admst:push into="$ddxprobes/item" select="$myvariable/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]/$pprobe" onduplicate="ignore"/>
         </admst:for-each>
       </admst:new>
       <admst:text test="$ddxprobes/item" format="#if defined(_DERIVATE)\n"/>
       <admst:for-each select="$ddxprobes/item">
-        <admst:variable name="pprobe" select="%(.)"/>
+        <admst:variable name="pprobe" path="."/>
         <admst:for-each select="$myvariable/probe">
-          <admst:variable name="qprobe" select="%(.)"/>
+          <admst:variable name="qprobe" path="."/>
           <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value);\n"/>
         </admst:for-each>
       </admst:for-each>
@@ -1245,8 +1258,8 @@
 
 <!-- analog//function: ddx handling -->
 <admst:template match="function:precomputation">
-  <admst:variable name="index" select="%(index(../function,.))"/>
-  <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+  <admst:variable name="index" path="index(../function,.)"/>
+  <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
   <admst:choose>
     <admst:when test="[name='add']">
       <admst:text format="m00_add(d00_add$index"/>
@@ -1277,8 +1290,8 @@
           </admst:otherwise>
         </admst:choose>
     <admst:for-each select="function">
-      <admst:variable name="index" select="%(index(../function,.))"/>
-      <admst:variable name="fname" select="%(funcname(.)/[name='fname']/value)"/>
+      <admst:variable name="index" path="index(../function,.)"/>
+      <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
       <admst:choose>
         <admst:when test="[name='exp']">
             <admst:if test="arguments/math[dependency!='constant' and dependency!='noprobe']">
@@ -1295,7 +1308,7 @@
         <admst:when test="[name='add']"/>
         <admst:when test="[name='div']">
           <admst:for-each select="arguments">
-            <admst:variable name="position" select="%(position(.)-1)"/>
+            <admst:variable name="position" path="position(.)-1"/>
             <admst:if test="math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="m1$(position)_$(fname)(d1$(position)_$(fname)$index,d00_$(fname)$index,d10_$(fname)$index"/>
               <admst:text select="../arguments" format=",%(e(.))"/>
@@ -1305,7 +1318,7 @@
         </admst:when>
         <admst:otherwise>
           <admst:for-each select="arguments">
-            <admst:variable name="position" select="%(position(.)-1)"/>
+            <admst:variable name="position" path="position(.)-1"/>
             <admst:if test="math[dependency!='constant' and dependency!='noprobe']">
               <admst:text format="double m1%(position(.)-1)_$(fname)(d1%(position(.)-1)_$(fname)$index,d00_$(fname)$index"/>
               <admst:text select="../arguments" format=",%(e(.))"/>
@@ -1321,17 +1334,17 @@
 
 <!-- analog//assignment -->
 <admst:template match="assignment">
-  <admst:variable name="assignment" select="%(.)"/>
-  <admst:variable name="rhs" select="%(rhs)"/>
-  <admst:variable name="lhs" select="%(lhs)"/>
+  <admst:variable name="assignment" path="."/>
+  <admst:variable name="rhs" path="rhs"/>
+  <admst:variable name="lhs" path="lhs"/>
   <admst:text test="[dynamic='yes']" format="#if defined(_DYNAMIC)\n"/>
   <admst:text test="rhs/function" format="{\n"/>
-  <admst:variable name="ddxinsidederivate" select="no"/>
+  <admst:variable name="ddxinsidederivate" string="no"/>
 <!--  <admst:if test="[#ddxprobe='yes']"> -->
     <admst:for-each select="lhs/probe">
-      <admst:variable name="pprobe" select="%(.)"/>
+      <admst:variable name="pprobe" path="."/>
       <admst:if test="$lhs/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]">
-        <admst:variable name="ddxinsidederivate" select="yes"/>
+        <admst:variable name="ddxinsidederivate" string="yes"/>
       </admst:if>
     </admst:for-each>
 <!--  </admst:if> -->
@@ -1339,13 +1352,13 @@
   <admst:choose>
     <admst:when test="rhs/tree/adms[datatypename='function']/..[name='ddx']">
       <admst:text format="#if defined(_DDX)\n"/>
-      <admst:variable name="ddxprobe" select="%(rhs/tree/arguments[2])"/>
+      <admst:variable name="ddxprobe" path="rhs/tree/arguments[2]"/>
       <admst:text test="lhs[insource='yes']/probe" format="#if defined(_DERIVATE)\n"/>
       <admst:for-each select="lhs[insource='yes']/probe">
-        <admst:variable name="qprobe" select="%(.)"/>
+        <admst:variable name="qprobe" path="."/>
         <admst:variable name="allepq"/>
         <admst:for-each select="$lhs/probe">
-          <admst:variable name="pprobe" select="%(.)"/>
+          <admst:variable name="pprobe" path="."/>
           <admst:choose>
             <admst:when test="$pprobe/branch/pnode[.=$ddxprobe/branch/pnode]">
               <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
@@ -1358,14 +1371,14 @@
             </admst:when>
           </admst:choose>
         </admst:for-each>
-        <admst:variable name="pprobe" select="%($qprobe)"/>
+        <admst:variable name="pprobe" path="$qprobe"/>
         <admst:text format="%(dxname($lhs)/[name='dxname']/value)=$allepq;\n"/>
       </admst:for-each>
       <admst:text test="lhs[insource='yes']/probe" format="#endif\n"/>
       <admst:variable name="allep"/>
       <admst:variable name="qprobe"/>
       <admst:for-each select="$lhs/probe">
-        <admst:variable name="pprobe" select="%(.)"/>
+        <admst:variable name="pprobe" path="."/>
         <admst:choose>
           <admst:when test="$pprobe/branch/pnode[.=$ddxprobe/branch/pnode]">
             <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
@@ -1384,7 +1397,7 @@
     </admst:when>
     <admst:otherwise>
       <admst:if test="lhs[insource='yes']">
-        <admst:variable name="definedrequired" select="yes"/>
+        <admst:variable name="definedrequired" string="yes"/>
         <admst:choose>
           <admst:when test="[$ddxinsidederivate='yes']">
             <admst:text format="#if defined(_DERIVATEFORDDX)\n"/>
@@ -1393,21 +1406,21 @@
             <admst:text format="#if defined(_DERIVATE)\n"/>
           </admst:when>
           <admst:otherwise>
-            <admst:variable name="definedrequired" select="no"/>
+            <admst:variable name="definedrequired" string="no"/>
           </admst:otherwise>
         </admst:choose>
         <admst:for-each select="lhs/probe">
-          <admst:variable name="pprobe" select="%(.)"/>
-          <admst:variable name="ddxinsidethisprobe" select="no"/>
+          <admst:variable name="pprobe" path="."/>
+          <admst:variable name="ddxinsidethisprobe" string="no"/>
           <admst:if test="$lhs/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]">
-            <admst:variable name="ddxinsidethisprobe" select="yes"/>
+            <admst:variable name="ddxinsidethisprobe" string="yes"/>
           </admst:if>
-          <admst:variable name="isinside" select="0"/>
+          <admst:variable name="isinside" string="0"/>
           <admst:if test="$rhs/probe[.=$pprobe]">
-            <admst:variable name="isinside" select="1"/>
+            <admst:variable name="isinside" string="1"/>
           </admst:if>
           <admst:variable name="qprobe"/>
-          <admst:variable name="ep" select="0.0"/>
+          <admst:variable name="ep" string="0.0"/>
           <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(adms/datatypename)"/>
           <admst:text test="[$ddxinsidederivate='yes' and $ddxinsidethisprobe='no']" format="#if defined(_DERIVATE)\n"/>
           <admst:text format="%(dxname($lhs)/[name='dxname']/value)=$ep;\n"/>
@@ -1415,8 +1428,8 @@
 <!--          <admst:if test="[#ddxprobe='yes']"> -->
             <admst:text test="[$ddxinsidethisprobe='yes']" format="#if defined(_DERIVATE)\n"/>
             <admst:for-each select="$lhs[$ddxinsidethisprobe='yes']/probe">
-              <admst:variable name="epq" select="0.0"/>
-              <admst:variable name="qprobe" select="%(.)"/>
+              <admst:variable name="epq" string="0.0"/>
+              <admst:variable name="qprobe" path="."/>
               <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(adms/datatypename)"/>
               <admst:text format="  %(ddxname($lhs)/[name='ddxname']/value)=$epq;\n"/>
             </admst:for-each>
@@ -1436,11 +1449,9 @@
 
 <!-- analog//contribution[noise] -->
 <admst:template match="contribution:noise">
-  <admst:variable name="SkipFVariable" select="y"/>
-  <admst:value-of select="lhs/branch/nnode/name"/>
-  <admst:value-of select="lhs/branch/pnode/name"/>
-  <admst:variable name="pnode" select="%s"/>
-  <admst:variable name="nnode" select="%s"/>
+  <admst:variable name="SkipFVariable" string="y"/>
+  <admst:variable name="pnode" path="lhs/branch/pnode/name"/>
+  <admst:variable name="nnode" path="lhs/branch/nnode/name"/>
   <admst:text format="_save_"/>
   <admst:if test="[whitenoise='yes']">
     <admst:choose>
@@ -1463,8 +1474,7 @@
     </admst:choose>
   </admst:if>
   <admst:for-each select="rhs/tree/arguments">
-    <admst:value-of select="./adms/datatypename"/>
-    <admst:apply-templates select="." match="%s"/>
+    <admst:apply-templates select="." match="%(datatypename)"/>
     <admst:text format=",$e"/>
   </admst:for-each>
   <admst:if test="[flickernoise='yes']">
@@ -1478,7 +1488,7 @@
     </admst:if>
   </admst:if>
   <admst:text format=");\n"/>
-  <admst:variable name="SkipFVariable" select="n"/>
+  <admst:variable name="SkipFVariable" string="n"/>
 </admst:template>
 
 <!-- analog//contribution -->
@@ -1498,15 +1508,15 @@
   <admst:text test="[dynamic='yes']" format="#if defined(_DYNAMIC)\n"/>
   <admst:text test="rhs/function" format="{\n"/>
   <admst:apply-templates select="rhs[not(nilled(function))]" match="function:derivate:precomputation"/>
-  <admst:variable name="sourcepnode" select="%(lhs/branch/pnode)"/>
-  <admst:variable name="sourcennode" select="%(lhs/branch/nnode)"/>
-  <admst:variable name="sourcepnodename" select="%($sourcepnode/name)"/>
-  <admst:variable name="sourcennodename" select="%($sourcennode/name)"/>
+  <admst:variable name="sourcepnode" path="lhs/branch/pnode"/>
+  <admst:variable name="sourcennode" path="lhs/branch/nnode"/>
+  <admst:variable name="sourcepnodename" path="$sourcepnode/name"/>
+  <admst:variable name="sourcennodename" path="$sourcennode/name"/>
   <admst:text format="_load_"/>
   <admst:choose>
     <admst:when test="[dynamic='yes']">
-      <admst:variable name="jname" select="dQ_dV"/>
-      <admst:variable name="lname" select="dynamic"/>
+      <admst:variable name="jname" string="dQ_dV"/>
+      <admst:variable name="lname" string="dynamic"/>
       <admst:text format="$(lname)_"/>
       <admst:choose>
         <admst:when test="$sourcennode[grounded='no']">
@@ -1518,8 +1528,8 @@
       </admst:choose>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="jname" select="dI_dV"/>
-      <admst:variable name="lname" select="static"/>
+      <admst:variable name="jname" string="dI_dV"/>
+      <admst:variable name="lname" string="static"/>
       <admst:text format="$(lname)_"/>
       <admst:choose>
         <admst:when test="$sourcennode[grounded='no']">
@@ -1533,11 +1543,11 @@
   </admst:choose>
   <admst:text format="#if defined(_DERIVATE)\n"/>
   <admst:for-each select="rhs/probe">
-    <admst:variable name="probepnode" select="%(branch/pnode)"/>
-    <admst:variable name="probennode" select="%(branch/nnode)"/>
-    <admst:variable name="probepnodename" select="%($probepnode/name)"/>
-    <admst:variable name="probennodename" select="%($probennode/name)"/>
-    <admst:variable name="pprobe" select="%(.)"/>
+    <admst:variable name="probepnode" path="branch/pnode"/>
+    <admst:variable name="probennode" path="branch/nnode"/>
+    <admst:variable name="probepnodename" path="$probepnode/name"/>
+    <admst:variable name="probennodename" path="$probennode/name"/>
+    <admst:variable name="pprobe" path="."/>
     <admst:apply-templates select="../tree" match="%(adms/datatypename)"/>
     <admst:text format="_load_"/>
     <admst:text format="$(lname)_"/>
@@ -1591,9 +1601,9 @@
 <!-- analog//whileloop -->
 <admst:template match="whileloop">
   <admst:text select="while[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
-  <admst:variable name="SkipFVariable" select="y"/>
+  <admst:variable name="SkipFVariable" string="y"/>
   <admst:text format="while\n(%(e(while/tree)))\n"/>
-  <admst:variable name="SkipFVariable" select="n"/>
+  <admst:variable name="SkipFVariable" string="n"/>
   <admst:text select="whileblock/adms[datatypename!='block']" format="{\n"/>
   <admst:apply-templates select="whileblock" match="%(adms/datatypename)"/>
   <admst:text select="whileblock/adms[datatypename!='block']" format="}\n"/>
@@ -1603,13 +1613,13 @@
 <!-- analog//forloop -->
 <admst:template match="forloop">
   <admst:text select="condition[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
-  <admst:variable name="SkipFVariable" select="y"/>
+  <admst:variable name="SkipFVariable" string="y"/>
   <admst:text format="for\n("/>
   <admst:text format="%(e(initial/lhs/tree))=%(e(initial/rhs/tree));"/>
   <admst:text format="%(e(condition/tree));"/>
   <admst:text format="%(e(update/lhs/tree))=%(e(update/rhs/tree))"/>
   <admst:text format=")\n"/>
-  <admst:variable name="SkipFVariable" select="n"/>
+  <admst:variable name="SkipFVariable" string="n"/>
   <admst:text select="forblock/adms[datatypename!='block']" format="{\n"/>
   <admst:apply-templates select="forblock" match="%(adms/datatypename)"/>
   <admst:text select="forblock/adms[datatypename!='block']" format="}\n"/>
@@ -1619,12 +1629,11 @@
 <!-- analog//case -->
 <admst:template match="case">
   <admst:text select="case[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
-  <admst:value-of select="case/tree"/>
-  <admst:variable name="casecondition" select="%s"/>
-  <admst:variable name="havedefault" select="no"/>
+  <admst:variable name="casecondition" path="case/tree"/>
+  <admst:variable name="havedefault" string="no"/>
   <admst:for-each select="caseitem">
     <admst:if test="[defaultcase='yes']">
-      <admst:variable name="havedefault" select="yes"/>
+      <admst:variable name="havedefault" string="yes"/>
     </admst:if>
   </admst:for-each>
   <admst:for-each select="caseitem">
@@ -1635,16 +1644,14 @@
 	<admst:text format="($casecondition)==($e)"/>
       </admst:join>
       <admst:text format=")\n"/>
-      <admst:value-of select="code/adms/datatypename"/>
-      <admst:apply-templates select="code" match="%s" required="yes"/>
+      <admst:apply-templates select="code" match="%(code/adms/datatypename)" required="yes"/>
       <admst:text format="else\n"/>
     </admst:if>
   </admst:for-each>
   <admst:text select="[$havedefault='no']" format="{ /* no default */ }\n"/>
   <admst:for-each select="caseitem">
     <admst:if test="[defaultcase='yes']">
-      <admst:value-of select="code/adms/datatypename"/>
-      <admst:apply-templates select="code" match="%s" required="yes"/>
+      <admst:apply-templates select="code" match="%(code/adms/datatypename)" required="yes"/>
     </admst:if>
   </admst:for-each>
   <admst:text select="case[dynamic='yes']" format="#endif /*&lt;/dynamic_case&gt;*/\n"/>
@@ -1669,23 +1676,22 @@
       <admst:text format=");\n"/>
     </admst:when>
     <admst:otherwise>
-      <admst:value-of select="function/name"/>
-      <admst:text format="%s: not supported by this interface\n"/>
+      <admst:text format="%(function/name): not supported by this interface\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
 
 <!-- save all variables used for local declaration -->
-<admst:variable name="ddxinsidederivate" select="no"/>
+<admst:variable name="ddxinsidederivate" string="no"/>
 
 
 <!-- variable declaration -->
 <admst:template match="variable:declaration">
-  <admst:variable name="myvariable" select="%(.)"/>
+  <admst:variable name="myvariable" path="."/>
   <admst:new datatype="list" arguments="list of ddx probes">
-    <admst:variable name="ddxprobes" select="%(.)"/>
+    <admst:variable name="ddxprobes" path="."/>
     <admst:for-each select="$myvariable/probe">
-      <admst:variable name="pprobe" select="%(.)"/>
+      <admst:variable name="pprobe" path="."/>
       <admst:push into="$ddxprobes/item" select="$myvariable/ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]/$pprobe" onduplicate="ignore"/>
     </admst:for-each>
   </admst:new>
@@ -1693,11 +1699,11 @@
     <admst:text test="[static='no' and dynamic='yes']" format="#if defined(_DYNAMIC)\n"/>
     <admst:text test="[scope='local']" format="%(vtype(.)) %(name);\n"/>
     <admst:if test="[insource='yes']/probe">
-      <admst:variable name="ddxinsidederivate" select="no"/>
+      <admst:variable name="ddxinsidederivate" string="no"/>
       <admst:for-each select="probe">
-        <admst:variable name="pprobe" select="%(.)"/>
+        <admst:variable name="pprobe" path="."/>
         <admst:if test="../ddxprobe/branch/pnode[.=$pprobe/branch/pnode or .=$pprobe/branch/nnode]">
-          <admst:variable name="ddxinsidederivate" select="yes"/>
+          <admst:variable name="ddxinsidederivate" string="yes"/>
         </admst:if>
       </admst:for-each>
       <admst:choose>
@@ -1711,9 +1717,9 @@
       <admst:text select="probe" format="double %(../name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name);\n"/>
       <admst:text test="[$ddxinsidederivate='yes']" format="#if defined(_DERIVATE)\n"/>
       <admst:for-each select="$ddxprobes/item">
-        <admst:variable name="pprobe" select="%(.)"/>
+        <admst:variable name="pprobe" path="."/>
         <admst:for-each select="$myvariable/probe">
-          <admst:variable name="qprobe" select="%(.)"/>
+          <admst:variable name="qprobe" path="."/>
           <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value);\n"/>
         </admst:for-each>
       </admst:for-each>
@@ -1844,10 +1850,10 @@
 <admst:template match="variable:desc">
   <admst:choose>
     <admst:when test="attribute[name='desc' or name='info']">
-      <admst:return name="variable:desc" value="&quot;%(attribute[name='desc' or name='info']/value)&quot;"/>
+      <admst:return name="variable:desc" string="&quot;%(attribute[name='desc' or name='info']/value)&quot;"/>
     </admst:when>
     <admst:otherwise>
-      <admst:return name="variable:desc" value="NULL"/>
+      <admst:return name="variable:desc" string="NULL"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -1859,10 +1865,10 @@
 <admst:template match="variable:unit">
   <admst:choose>
     <admst:when test="attribute[name='unit']">
-      <admst:return name="variable:unit" value="&quot;%(attribute[name='unit']/value)&quot;"/>
+      <admst:return name="variable:unit" string="&quot;%(attribute[name='unit']/value)&quot;"/>
     </admst:when>
     <admst:otherwise>
-      <admst:return name="variable:unit" value="NULL"/>
+      <admst:return name="variable:unit" string="NULL"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -1928,91 +1934,90 @@
 #define m20_limexp(v00)         ((v00)&lt;80.0?exp(v00):0.0)
 #define m20_sqrt(v00)           (-0.25/(v00)/sqrt(v00))
 #define m20_fabs(v00)           0.0
-
+#define m20_pow(x,y)            ((y)*((y)-1.0)*pow(x,y)/(x)/(x))
 #define m00_vt(x)               (kBoverQ*(x))
 #define m10_vt(x)               (kBoverQ)
 </admst:template>
 
 <!-- simulator settings -->
-<admst:value-to select="/simulator/package_name" value="qucs"/>
-<admst:value-to select="/simulator/package_tarname" value="qucs"/>
-<admst:value-to select="/simulator/package_version" value="0.0.15"/>
-<admst:value-to select="/simulator/package_string" value="qucs 0.0.15"/>
-<admst:value-to select="/simulator/package_bugreport" value="qucs-bugs@lists.sourceforge.net"/>
+<admst:value-to select="/simulator/package_name" string="qucs"/>
+<admst:value-to select="/simulator/package_tarname" string="qucs"/>
+<admst:value-to select="/simulator/package_version" string="0.0.15"/>
+<admst:value-to select="/simulator/package_string" string="qucs 0.0.15"/>
+<admst:value-to select="/simulator/package_bugreport" string="qucs-bugs@lists.sourceforge.net"/>
 
 <admst:for-each select="/module">
   <admst:choose>
     <admst:when test="[name='diode']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="diode"/>
+        <admst:value-to select="value" string="diode"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hic0_full']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="hicum0"/>
+        <admst:value-to select="value" string="hicum0"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hic2_full']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="hicum2"/>
+        <admst:value-to select="value" string="hicum2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hicumL2p1']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="hicumL2"/>
+        <admst:value-to select="value" string="hicumL2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hicumL2p2']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="hicumL2"/>
+        <admst:value-to select="value" string="hicumL2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hicumL2p21']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="hicumL2"/>
+        <admst:value-to select="value" string="hicumL2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='bjt']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="bjt"/>
+        <admst:value-to select="value" string="bjt"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='bjt504_va']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="mextram"/>
+        <admst:value-to select="value" string="mextram"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='pspva']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="psp"/>
+        <admst:value-to select="value" string="psp"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='HBT_X']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="HBT_X"/>
+        <admst:value-to select="value" string="HBT_X"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='log_amp']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" value="log_amp"/>
+        <admst:value-to select="value" string="log_amp"/>
       </admst:new>
     </admst:when>
     <admst:otherwise>
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-of select="../name"/>
-        <admst:value-to select="value" value="%s"/>
+        <admst:value-to select="value" string="%(../name)"/>
       </admst:new>
     </admst:otherwise>
   </admst:choose>
@@ -2022,23 +2027,18 @@
     </admst:when>
     <admst:when test="[name='mosvar']">
       <admst:if test="[nilled(variable[name='c'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,c,%p">
+        <admst:new datatype="variable" inputs=".,'c',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="1">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="1">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
@@ -2046,23 +2046,18 @@
     </admst:when>
     <admst:when test="[name='juncap2']">
       <admst:if test="[nilled(variable[name='d'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,d,%p">
+        <admst:new datatype="variable" inputs=".,'d',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="1">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="1">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
@@ -2080,45 +2075,35 @@
     </admst:when>
     <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='bjt504_va']">
       <admst:if test="[nilled(variable[name='npn'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,npn,%p">
+        <admst:new datatype="variable" inputs=".,'npn',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="1">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="1">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
       </admst:if>
       <admst:if test="[nilled(variable[name='pnp'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,pnp,%p">
+        <admst:new datatype="variable" inputs=".,'pnp',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="0">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="0">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
@@ -2126,45 +2111,35 @@
     </admst:when>
     <admst:when test="[name='pspva']">
       <admst:if test="[nilled(variable[name='nmos'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,nmos,%p">
+        <admst:new datatype="variable" inputs=".,'nmos',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="1">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="1">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
       </admst:if>
       <admst:if test="[nilled(variable[name='pmos'])]">
-        <admst:value-of select="analog"/>
-        <admst:value-of select="."/>
-        <admst:new datatype="variable" arguments="%p,pmos,%p">
+        <admst:new datatype="variable" inputs=".,'pmos',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
-          <admst:value-to select="sizetype" value="scalar"/>
-          <admst:value-to select="type" value="integer"/>
-          <admst:value-to select="input" value="yes"/>
-          <admst:value-to select="output" value="yes"/>
-          <admst:value-to select="parametertype" value="model"/>
-          <admst:value-to select="scope" value="global_model"/>
-          <admst:new datatype="number" arguments="1">
-            <admst:value-to select="scalingunit" value="1"/>
-            <admst:value-of select="."/>
-            <admst:value-of select="../module"/>
-            <admst:new datatype="expression" arguments="%p,%p">
-              <admst:value-of select="."/>
-              <admst:value-to select="../../default" value="%p"/>
+          <admst:value-to select="sizetype" string="scalar"/>
+          <admst:value-to select="type" string="integer"/>
+          <admst:value-to select="input" string="yes"/>
+          <admst:value-to select="output" string="yes"/>
+          <admst:value-to select="parametertype" string="model"/>
+          <admst:value-to select="scope" string="global_model"/>
+          <admst:new datatype="number" inputs="1">
+            <admst:value-to select="scalingunit" string="1"/>
+            <admst:new datatype="expression" inputs="../module,.">
+              <admst:value-to select="../../default" path="."/>
             </admst:new>
           </admst:new>
         </admst:new>
@@ -2172,8 +2147,7 @@
     </admst:when>
 
     <admst:otherwise>
-      <admst:value-of select="name"/>
-      <admst:warning format="%s: device not handled by the adms qucs interface\n"/>
+      <admst:warning format="%(name): device not handled by the adms qucs interface\n"/>
       <admst:warning format="please ensure extra code to be added to the interface\n"/>
     </admst:otherwise>
   </admst:choose>
