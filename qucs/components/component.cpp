@@ -1579,6 +1579,7 @@ Component* getComponentFromName(QString& Line)
   case 'h' : if(cstr == "icumL2p1") c = new hicumL2p1();
         else if(cstr == "ic2_full") c = new hic2_full();
         else if(cstr == "ic0_full") c = new hic0_full();
+        else if(cstr == "ic0p2_full") c = new hic0p2_full();
         break;
   case 'H' : if(cstr == "BT_X") c = new HBT_X();
         break;
