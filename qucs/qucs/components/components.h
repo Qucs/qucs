@@ -142,5 +142,6 @@
 #include "MESFET.h"
 #include "EKV26nMOS.h"
 #include "EKV26pMOS.h"
+#include "hic0p2_full.h"
 
 #endif
