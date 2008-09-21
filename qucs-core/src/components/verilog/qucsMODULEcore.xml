@@ -369,14 +369,56 @@ using namespace device;
     </admst:choose>
   </admst:if>
 </admst:for-each>
-<admst:text format="\n  // declare global instance variables"/>
-<admst:for-each select="variable[scope='global_instance' and input='no']">
-  %(vtype(.))  %(name);
-</admst:for-each>
+
+/* ------------------ evaluate global model equations --------------------- */
 <admst:text format="\n\n  // declare global model variables"/>
 <admst:for-each select="variable[scope='global_model' and input='no']">
-  %(vtype(.))  %(name);
+  %(vtype(.)) %(name);
+  <admst:choose>
+    <admst:when test="attribute[name='info']">
+      <admst:value-of select="attribute[name='info']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+    <admst:when test="attribute[name='desc']">
+      <admst:value-of select="attribute[name='desc']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+  </admst:choose>
+  <admst:choose>
+    <admst:when test="attribute[name='unit']">
+      <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format=" (%s)"/>
+    </admst:when>
+  </admst:choose>
 </admst:for-each>
+<admst:text format="\n"/>
+<admst:apply-templates select="analog/code" match="analog:initial_model"/>
+/* -------------------- end of global model equations --------------------- */
+
+/* ----------------- evaluate instance model equations -------------------- */
+<admst:text format="\n  // declare global instance variables"/>
+<admst:for-each select="variable[scope='global_instance' and input='no']">
+  %(vtype(.)) %(name);
+  <admst:choose>
+    <admst:when test="attribute[name='info']">
+      <admst:value-of select="attribute[name='info']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+    <admst:when test="attribute[name='desc']">
+      <admst:value-of select="attribute[name='desc']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+  </admst:choose>
+  <admst:choose>
+    <admst:when test="attribute[name='unit']">
+      <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format=" (%s)"/>
+    </admst:when>
+  </admst:choose>
+</admst:for-each>
+<admst:text format="\n"/>
+<admst:apply-templates select="analog/code" match="analog:initial_instance"/>
+/* ------------------- end of instance model equations -------------------- */
 
 /* ----------------- evaluate verilog analog equations -------------------- */
 <admst:text format="\n"/>
@@ -397,6 +439,12 @@ using namespace device;
 <admst:apply-templates select="analog/code" match="analog:noise"/>
 /* ------------------- end of verilog noise equations --------------------- */
 <admst:text format="\n\n"/>
+
+<admst:text format="\n  // save global instance operating points"/>
+<admst:for-each select="variable[scope='global_instance' and input='no']">
+  setOperatingPoint (&quot;%(name)&quot;, %(name));
+</admst:for-each>
+<admst:text format="\n"/>
 
 <admst:text format="}\n\n"/>
 

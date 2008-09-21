@@ -454,7 +454,7 @@ analog begin
 
 // assign voltages with regard to transistor type
 
-	//`INITIAL_MODEL
+	`INITIAL_MODEL
 	 begin
 	  if (`PGIVEN(npn))
 	     HICUMtype	=  `NPN;

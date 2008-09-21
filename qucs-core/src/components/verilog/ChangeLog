@@ -1,3 +1,9 @@
+2008-09-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEcore.xml: Separation for @(initial_model) code and
+	variables implemented.  Also saving global instance variables as
+	operating points.
+
 2008-09-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL0V1p2.va: Added new preliminary version of HICUM L0 v1.2
