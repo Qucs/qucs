@@ -1,3 +1,9 @@
+2008-09-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsMODULEcore.xml: Finally @(initial_model) and
+	@(initial_instance) code separated and evaluated only once at DC
+	startup.
+
 2008-09-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsMODULEcore.xml: Separation for @(initial_model) code and

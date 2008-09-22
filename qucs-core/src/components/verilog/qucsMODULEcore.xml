@@ -251,6 +251,13 @@ using namespace device;
   <admst:text format="  setInternalNode (%s, &quot;%s&quot;);\n"/>
   </admst:if>
 </admst:for-each>
+<admst:text format="  // get device model parameters\n"/>
+<admst:text format="  loadVariables ();\n"/>
+<admst:text format="  // evaluate global model equations\n"/>
+<admst:text format="  initializeModel ();\n"/>
+<admst:text format="  // evaluate global instance equations\n"/>
+<admst:text format="  initializeInstance ();\n"/>
+
 <admst:text format="}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
@@ -348,88 +355,56 @@ using namespace device;
 
 <!-- ---------------------------------------------------------------------- -->
 
-<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
-<admst:text format="void $module::calcVerilog (void)\n{\n"/>
-
-<admst:text format="  // get device model parameters\n"/>
+<admst:text format="/* Load device model input parameters. */\n"/>
+<admst:text format="void $module::loadVariables (void)\n{\n"/>
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
     <admst:value-of select="name"/>
     <admst:value-of select="name"/>
     <admst:choose>
     <admst:when test="[type='real']">
-    <admst:text format="  nr_double_t %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
     </admst:when>
     <admst:when test="[type='integer']">
-    <admst:text format="  int %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
     </admst:when>
     <admst:otherwise>
-    <admst:text format="  char * %s = getPropertyString (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyString (&quot;%s&quot;);\n"/> 
     </admst:otherwise>
     </admst:choose>
   </admst:if>
 </admst:for-each>
+<admst:text format="}\n\n"/>
 
-/* ------------------ evaluate global model equations --------------------- */
-<admst:text format="\n\n  // declare global model variables"/>
-<admst:for-each select="variable[scope='global_model' and input='no']">
-  %(vtype(.)) %(name);
-  <admst:choose>
-    <admst:when test="attribute[name='info']">
-      <admst:value-of select="attribute[name='info']/value"/>
-	<admst:text format=" // %s"/>
-    </admst:when>
-    <admst:when test="attribute[name='desc']">
-      <admst:value-of select="attribute[name='desc']/value"/>
-	<admst:text format=" // %s"/>
-    </admst:when>
-  </admst:choose>
-  <admst:choose>
-    <admst:when test="attribute[name='unit']">
-      <admst:value-of select="attribute[name='unit']/value"/>
-	<admst:text format=" (%s)"/>
-    </admst:when>
-  </admst:choose>
-</admst:for-each>
-<admst:text format="\n"/>
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
+<admst:text format="void $module::initializeModel (void)\n{\n"/>
 <admst:apply-templates select="analog/code" match="analog:initial_model"/>
-/* -------------------- end of global model equations --------------------- */
+<admst:text format="}\n\n"/>
 
-/* ----------------- evaluate instance model equations -------------------- */
-<admst:text format="\n  // declare global instance variables"/>
-<admst:for-each select="variable[scope='global_instance' and input='no']">
-  %(vtype(.)) %(name);
-  <admst:choose>
-    <admst:when test="attribute[name='info']">
-      <admst:value-of select="attribute[name='info']/value"/>
-	<admst:text format=" // %s"/>
-    </admst:when>
-    <admst:when test="attribute[name='desc']">
-      <admst:value-of select="attribute[name='desc']/value"/>
-	<admst:text format=" // %s"/>
-    </admst:when>
-  </admst:choose>
-  <admst:choose>
-    <admst:when test="attribute[name='unit']">
-      <admst:value-of select="attribute[name='unit']/value"/>
-	<admst:text format=" (%s)"/>
-    </admst:when>
-  </admst:choose>
-</admst:for-each>
-<admst:text format="\n"/>
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
+<admst:text format="void $module::initializeInstance (void)\n{\n"/>
 <admst:apply-templates select="analog/code" match="analog:initial_instance"/>
-/* ------------------- end of instance model equations -------------------- */
+<admst:text format="}\n\n"/>
 
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* #define's for translated code */\n"/>
+<admst:text format="#undef  _DDT\n"/>
+<admst:text format="#define _DDT(q) q\n"/>
+<admst:text format="#define _DYNAMIC\n"/>
+<admst:text format="#define _DERIVATE\n"/>
+<admst:text format="#define _DDX\n"/>
+<admst:text format="#define _DERIVATEFORDDX\n"/>
+<admst:text format="\n"/>
+
+<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
+<admst:text format="void $module::calcVerilog (void)\n{\n"/>
 /* ----------------- evaluate verilog analog equations -------------------- */
 <admst:text format="\n"/>
-/* #define's for translated code */
-#undef  _DDT
-#define _DDT(q) q
-#define _DYNAMIC
-#define _DERIVATE
-#define _DDX
-#define _DERIVATEFORDDX
-
 
 <admst:apply-templates select="analog/code" match="analog:evaluate"/>
 /* ------------------ end of verilog analog equations --------------------- */
@@ -438,15 +413,7 @@ using namespace device;
 <admst:text format="\n"/>
 <admst:apply-templates select="analog/code" match="analog:noise"/>
 /* ------------------- end of verilog noise equations --------------------- */
-<admst:text format="\n\n"/>
-
-<admst:text format="\n  // save global instance operating points"/>
-<admst:for-each select="variable[scope='global_instance' and input='no']">
-  setOperatingPoint (&quot;%(name)&quot;, %(name));
-</admst:for-each>
-<admst:text format="\n"/>
-
-<admst:text format="}\n\n"/>
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -469,6 +436,13 @@ using namespace device;
 
 <admst:text format="/* Save operating points. */\n"/>
 <admst:text format="void $module::saveOperatingPoints (void)\n{\n"/>
+
+<admst:text format="  // save global instance operating points"/>
+<admst:for-each select="variable[scope='global_instance' and input='no']">
+  setOperatingPoint (&quot;%(name)&quot;, %(name));
+</admst:for-each>
+<admst:text format="\n"/>
+
 <admst:text format="#if DEBUG\n"/>
 
 <admst:for-each select="node">
@@ -781,6 +755,9 @@ class $(module) : public circuit
   void initVerilog (void);
   void calcVerilog (void);
   void initModel (void);
+  void loadVariables (void);
+  void initializeModel (void);
+  void initializeInstance (void);
   matrix calcMatrixY (nr_double_t);
   matrix calcMatrixCy (nr_double_t);
 
@@ -801,6 +778,70 @@ class $(module) : public circuit
   nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];
   nr_double_t _charges[$nbr_nodes][$nbr_nodes];
   nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];
+
+<admst:text format="\n  // device model parameters\n"/>
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:value-of select="name"/>
+    <admst:choose>
+    <admst:when test="[type='real']">
+    <admst:text format="  nr_double_t %s;\n"/> 
+    </admst:when>
+    <admst:when test="[type='integer']">
+    <admst:text format="  int %s;\n"/> 
+    </admst:when>
+    <admst:otherwise>
+    <admst:text format="  char * %s;\n"/> 
+    </admst:otherwise>
+    </admst:choose>
+  </admst:if>
+</admst:for-each>
+
+<admst:text format="\n  // global model variables"/>
+<admst:for-each select="variable[scope='global_model' and input='no']">
+  %(vtype(.)) %(name);
+  <admst:choose>
+    <admst:when test="attribute[name='info']">
+      <admst:value-of select="attribute[name='info']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+    <admst:when test="attribute[name='desc']">
+      <admst:value-of select="attribute[name='desc']/value"/>
+	<admst:text format=" // %s"/>
+    </admst:when>
+  </admst:choose>
+  <admst:choose>
+    <admst:when test="attribute[name='unit']">
+      <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format=" (%s)"/>
+    </admst:when>
+  </admst:choose>
+</admst:for-each>
+<admst:text format="\n"/>
+
+<admst:text format="\n"/>
+<admst:for-each select="variable[scope='global_instance' and input='no']">
+  <admst:text format="  // "/>
+  <admst:choose>
+    <admst:when test="attribute[name='info']">
+      <admst:value-of select="attribute[name='info']/value"/>
+	<admst:text format="%s"/>
+    </admst:when>
+    <admst:when test="attribute[name='desc']">
+      <admst:value-of select="attribute[name='desc']/value"/>
+	<admst:text format="%s"/>
+    </admst:when>
+  </admst:choose>
+  <admst:choose>
+    <admst:when test="attribute[name='unit']">
+      <admst:value-of select="attribute[name='unit']/value"/>
+	<admst:text format=" (%s)"/>
+    </admst:when>
+  </admst:choose>
+  <admst:text format="\n"/>
+  <admst:text format="  %(vtype(.)) %(name);\n"/>
+</admst:for-each>
+<admst:text format="\n"/>
 };
 
 #endif /* __$(module)_H__ */
