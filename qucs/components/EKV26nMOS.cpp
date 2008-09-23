@@ -156,6 +156,8 @@ EKV26nMOS::EKV26nMOS()
     +" ("+QObject::tr ("Celsius")+")"));
   Props.append (new Property ("Temp", "26.85", false,
     QObject::tr ("simulation temperature")));
+  Props.append (new Property ("Xpart", "0.4", false,
+    QObject::tr ("charge partition parameter")));
 
   createSymbol ();
   tx = x2 + 4;
