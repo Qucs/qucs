@@ -350,7 +350,7 @@ pInfoFunc VerilogAComps[] =
   {&hicumL2p1::info, &HBT_X::info, &mod_amp::info, &hic2_full::info,
    &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
    &potentiometer::info, &MESFET::info, &EKV26nMOS::info, &EKV26pMOS::info,
-   &hic0p2_full::info, &hic0p2_full::info_pnp, 0};
+   &hicumL0V1p2::info, &hicumL0V1p2::info_pnp, 0};
 
 pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
