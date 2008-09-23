@@ -1,5 +1,8 @@
 2008-09-23  Stefan Jahn  <stefan@lkcc.org>
 
+	* EKV26nMOS.va: Updated EKV26 NMOS type model.  Thanks to Mike
+	Brinson.
+
 	* qucsVersion.xml: Fixed some 'bad attribute' errors in XML code.
 
 2008-09-22  Stefan Jahn  <stefan@lkcc.org>
