@@ -378,20 +378,6 @@ using namespace device;
 
 <!-- ---------------------------------------------------------------------- -->
 
-<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
-<admst:text format="void $module::initializeModel (void)\n{\n"/>
-<admst:apply-templates select="analog/code" match="analog:initial_model"/>
-<admst:text format="}\n\n"/>
-
-<!-- ---------------------------------------------------------------------- -->
-
-<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
-<admst:text format="void $module::initializeInstance (void)\n{\n"/>
-<admst:apply-templates select="analog/code" match="analog:initial_instance"/>
-<admst:text format="}\n\n"/>
-
-<!-- ---------------------------------------------------------------------- -->
-
 <admst:text format="/* #define's for translated code */\n"/>
 <admst:text format="#undef  _DDT\n"/>
 <admst:text format="#define _DDT(q) q\n"/>
@@ -400,6 +386,20 @@ using namespace device;
 <admst:text format="#define _DDX\n"/>
 <admst:text format="#define _DERIVATEFORDDX\n"/>
 <admst:text format="\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations in model initialization. */\n"/>
+<admst:text format="void $module::initializeModel (void)\n{\n"/>
+<admst:apply-templates select="analog/code" match="analog:initial_model"/>
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations in instance initialization. */\n"/>
+<admst:text format="void $module::initializeInstance (void)\n{\n"/>
+<admst:apply-templates select="analog/code" match="analog:initial_instance"/>
+<admst:text format="}\n\n"/>
 
 <admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
 <admst:text format="void $module::calcVerilog (void)\n{\n"/>
