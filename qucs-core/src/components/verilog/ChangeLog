@@ -1,3 +1,7 @@
+2008-09-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsVersion.xml: Fixed some 'bad attribute' errors in XML code.
+
 2008-09-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsMODULEcore.xml: Finally @(initial_model) and

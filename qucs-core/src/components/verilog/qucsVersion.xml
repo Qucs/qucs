@@ -125,11 +125,11 @@
 </admst:template>
 
 <admst:template match="e">
-  <admst:apply-templates select="." match="%(adms/datatypename)">$e</admst:apply-templates>
+  <admst:apply-templates select="." match="%(datatypename)">$e</admst:apply-templates>
 </admst:template>
 
 <admst:template match="ddx">
-  <admst:apply-templates select="." match="%(adms/datatypename)"/>
+  <admst:apply-templates select="." match="%(datatypename)"/>
 </admst:template>
 
 <admst:template match="ddxname">
@@ -1210,7 +1210,7 @@
 <!-- analog//block -->
 <admst:template match="block">
   <admst:text format="{\n"/>
-  <admst:apply-templates select="item" match="%(adms/datatypename)"/>
+  <admst:apply-templates select="item" match="%(datatypename)"/>
   <admst:text format="}\n"/>
 </admst:template>
 
@@ -1359,12 +1359,12 @@
           <admst:variable name="pprobe" path="."/>
           <admst:choose>
             <admst:when test="$pprobe/branch/pnode[.=$ddxprobe/branch/pnode]">
-              <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
+              <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(datatypename)"/>
               <admst:variable name="allepq" select="$allepq+($epq)"/>
             </admst:when>
 <!--            <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/nnode]"> -->
             <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/pnode]">
-              <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
+              <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(datatypename)"/>
               <admst:variable name="allepq" select="$allepq-($epq)"/>
             </admst:when>
           </admst:choose>
@@ -1379,12 +1379,12 @@
         <admst:variable name="pprobe" path="."/>
         <admst:choose>
           <admst:when test="$pprobe/branch/pnode[.=$ddxprobe/branch/pnode]">
-            <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
+            <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(datatypename)"/>
             <admst:variable name="allep" select="$allep+($ep)"/>
           </admst:when>
           <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/pnode]">
 <!--          <admst:when test="$pprobe/branch/nnode/[.=$ddxprobe/branch/nnode]"> -->
-            <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(adms/datatypename)"/>
+            <admst:apply-templates select="$rhs/tree/arguments[1]" match="%(datatypename)"/>
             <admst:variable name="allep" select="$allep-($ep)"/>
           </admst:when>
         </admst:choose>
@@ -1419,7 +1419,7 @@
           </admst:if>
           <admst:variable name="qprobe"/>
           <admst:variable name="ep" string="0.0"/>
-          <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(adms/datatypename)"/>
+          <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(datatypename)"/>
           <admst:text test="[$ddxinsidederivate='yes' and $ddxinsidethisprobe='no']" format="#if defined(_DERIVATE)\n"/>
           <admst:text format="%(dxname($lhs)/[name='dxname']/value)=$ep;\n"/>
           <admst:text test="[$ddxinsidederivate='yes' and $ddxinsidethisprobe='no']" format="#endif\n"/>
@@ -1427,7 +1427,7 @@
           <admst:for-each select="$lhs[$ddxinsidethisprobe='yes']/probe">
             <admst:variable name="epq" string="0.0"/>
             <admst:variable name="qprobe" path="."/>
-            <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(adms/datatypename)"/>
+            <admst:apply-templates select="[$isinside='1']/$rhs/tree" match="%(datatypename)"/>
             <admst:text format="  %(ddxname($lhs)/[name='ddxname']/value)=$epq;\n"/>
           </admst:for-each>
           <admst:text test="$lhs[$ddxinsidethisprobe='yes']" format="#endif\n"/>
@@ -1544,7 +1544,7 @@
     <admst:variable name="probepnodename" path="$probepnode/name"/>
     <admst:variable name="probennodename" path="$probennode/name"/>
     <admst:variable name="pprobe" path="."/>
-    <admst:apply-templates select="../tree" match="%(adms/datatypename)"/>
+    <admst:apply-templates select="../tree" match="%(datatypename)"/>
     <admst:text format="_load_"/>
     <admst:text format="$(lname)_"/>
     <admst:choose>
@@ -1578,12 +1578,12 @@
   <admst:apply-templates select="if/function" match="function:precomputation"/>
   <admst:text format="if\n(%(e(if/tree)))\n"/>
   <admst:text select="then/adms[datatypename!='block']" format="{\n"/>
-  <admst:apply-templates select="then" match="%(adms/datatypename)"/>
+  <admst:apply-templates select="then" match="%(datatypename)"/>
   <admst:text select="then/adms[datatypename!='block']" format="}\n"/>
   <admst:if test="else">
     <admst:text format="else\n"/>
     <admst:text test="else/adms[datatypename!='block']" format="{\n"/>
-    <admst:apply-templates select="else" match="%(adms/datatypename)"/>
+    <admst:apply-templates select="else" match="%(datatypename)"/>
     <admst:text test="else/adms[datatypename!='block']" format="}\n"/>
   </admst:if>
   <admst:text test="if/function" format="}\n"/>
@@ -1601,7 +1601,7 @@
   <admst:text format="while\n(%(e(while/tree)))\n"/>
   <admst:variable name="SkipFVariable" string="n"/>
   <admst:text select="whileblock/adms[datatypename!='block']" format="{\n"/>
-  <admst:apply-templates select="whileblock" match="%(adms/datatypename)"/>
+  <admst:apply-templates select="whileblock" match="%(datatypename)"/>
   <admst:text select="whileblock/adms[datatypename!='block']" format="}\n"/>
   <admst:text select="while[dynamic='yes']" format="#endif /*&lt;/dynamic_while&gt;*/\n"/>
 </admst:template>
@@ -1617,7 +1617,7 @@
   <admst:text format=")\n"/>
   <admst:variable name="SkipFVariable" string="n"/>
   <admst:text select="forblock/adms[datatypename!='block']" format="{\n"/>
-  <admst:apply-templates select="forblock" match="%(adms/datatypename)"/>
+  <admst:apply-templates select="forblock" match="%(datatypename)"/>
   <admst:text select="forblock/adms[datatypename!='block']" format="}\n"/>
   <admst:text select="condition[dynamic='yes']" format="#endif /*&lt;/dynamic_for&gt;*/\n"/>
 </admst:template>
@@ -1640,14 +1640,14 @@
 	<admst:text format="($casecondition)==($e)"/>
       </admst:join>
       <admst:text format=")\n"/>
-      <admst:apply-templates select="code" match="%(code/adms/datatypename)" required="yes"/>
+      <admst:apply-templates select="code" match="%(datatypename)" required="yes"/>
       <admst:text format="else\n"/>
     </admst:if>
   </admst:for-each>
   <admst:text select="[$havedefault='no']" format="{ /* no default */ }\n"/>
   <admst:for-each select="caseitem">
     <admst:if test="[defaultcase='yes']">
-      <admst:apply-templates select="code" match="%(code/adms/datatypename)" required="yes"/>
+      <admst:apply-templates select="code" match="%(datatypename)" required="yes"/>
     </admst:if>
   </admst:for-each>
   <admst:text select="case[dynamic='yes']" format="#endif /*&lt;/dynamic_case&gt;*/\n"/>
@@ -1757,7 +1757,7 @@
       </admst:for-each>
     </admst:when>
     <admst:otherwise>
-      <admst:fatal format="'datatypename=%(adms/datatypename)': should not be reached\n"/>
+      <admst:fatal format="'datatypename=%(datatypename)': should not be reached\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -1777,7 +1777,7 @@
   <admst:for-each select="item">
     <admst:choose>
       <admst:when test="adms[datatypename!='block']">
-        <admst:apply-templates select="." match="%(adms/datatypename)"/>
+        <admst:apply-templates select="." match="%(datatypename)"/>
       </admst:when>
       <admst:otherwise>
         <admst:if test="[name!='initial_model' and name!='initial_instance' and name!='noise']">
