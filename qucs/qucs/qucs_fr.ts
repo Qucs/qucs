@@ -6508,6 +6508,10 @@ Invocation :  qucsedit [-r] fichier
         <source>pnp HICUM L0 v1.2</source>
         <translation type="unfinished">PNP Hicum L0 v 1.2</translation>
     </message>
+    <message>
+        <source>charge partition parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

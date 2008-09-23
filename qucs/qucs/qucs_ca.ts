@@ -6480,6 +6480,10 @@ Use:  qucsedit [-r] fitxer
         <source>pnp HICUM L0 v1.2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>charge partition parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
