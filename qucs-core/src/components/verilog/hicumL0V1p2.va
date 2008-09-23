@@ -198,7 +198,7 @@
         end
         
 
-module hic0p2_full (c,b,e,s,tnode);                    
+module hicumL0V1p2 (c,b,e,s,tnode);                    
                                                
                                             
 //Node definitions 

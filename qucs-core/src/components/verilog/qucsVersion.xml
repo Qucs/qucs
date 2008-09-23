@@ -2069,7 +2069,7 @@
     </admst:when>
     <admst:when test="[name='log_amp']">
     </admst:when>
-    <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='bjt504_va']">
+    <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='hicumL0V1p2' or name='bjt504_va']">
       <admst:if test="[nilled(variable[name='npn'])]">
         <admst:new datatype="variable" inputs=".,'npn',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>

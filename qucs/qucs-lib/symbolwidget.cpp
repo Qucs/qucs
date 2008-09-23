@@ -261,7 +261,7 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
     x2 =  34; y2 =  9;
   }
   else if(Comp == "hicumL2p1" || Comp == "hic2_full" || Comp == "hic0_full" ||
-	  Comp == "hic0p2_full") {
+	  Comp == "hicumL0V1p2") {
     // normal bipolar
     Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
     Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
