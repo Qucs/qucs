@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.86 2008/09/20 16:42:21 ela Exp $
+ * $Id: input.cpp,v 1.87 2008/09/23 15:28:26 ela Exp $
  *
  */
 
@@ -527,7 +527,7 @@ circuit * input::createCircuit (char * type) {
     return new EKV26nMOS ();
   else if (!strcmp (type, "EKV26pMOS"))
     return new EKV26pMOS ();
-  else if (!strcmp (type, "hic0p2_full"))
+  else if (!strcmp (type, "hicumL0V1p2"))
     return new hic0_full ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);

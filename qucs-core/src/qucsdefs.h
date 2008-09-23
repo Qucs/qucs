@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.92 2008/09/20 16:42:21 ela Exp $
+ * $Id: qucsdefs.h,v 1.93 2008/09/23 15:28:26 ela Exp $
  *
  */
 
@@ -1224,8 +1224,8 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
-  /* hic0p2_full verilog device */
-  { "hic0p2_full", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+  /* hicumL0V1p2 verilog device */
+  { "hicumL0V1p2", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     {
       { "is", PROP_REAL, { 1.0e-16, PROP_NO_STR }, { '[', 0, 1, ']' } },
       { "mcf", PROP_REAL, { 1.00, PROP_NO_STR }, { ']', 0, 10, ']' } },
