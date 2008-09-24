@@ -1753,7 +1753,7 @@
     <admst:when test="adms[datatypename='blockvariable']"/>
     <admst:when test="adms[datatypename='case']">
       <admst:for-each select="caseitem">
-        <admst:apply-templates select="code/item" match="block:local:declaration"/>
+        <admst:apply-templates select="code" match="block:local:declaration"/>
       </admst:for-each>
     </admst:when>
     <admst:otherwise>
