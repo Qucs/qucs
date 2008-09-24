@@ -251,14 +251,15 @@ using namespace device;
   <admst:text format="  setInternalNode (%s, &quot;%s&quot;);\n"/>
   </admst:if>
 </admst:for-each>
-<admst:text format="  // get device model parameters\n"/>
-<admst:text format="  loadVariables ();\n"/>
-<admst:text format="  // evaluate global model equations\n"/>
-<admst:text format="  initializeModel ();\n"/>
-<admst:text format="  // evaluate global instance equations\n"/>
-<admst:text format="  initializeInstance ();\n"/>
-
-<admst:text format="}\n\n"/>
+  // get device model parameters
+  loadVariables ();
+  // evaluate global model equations
+  initializeModel ();
+  // evaluate initial step equations
+  initialStep ();
+  // evaluate global instance equations
+  initializeInstance ();
+<admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -401,7 +402,23 @@ using namespace device;
 <admst:apply-templates select="analog/code" match="analog:initial_instance"/>
 <admst:text format="}\n\n"/>
 
-<admst:text format="/* Evaluate Verilog-AMS equations. */\n"/>
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations in initial step. */\n"/>
+<admst:text format="void $module::initialStep (void)\n{\n"/>
+<admst:apply-templates select="analog/code" match="analog:initial_step"/>
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations in final step. */\n"/>
+<admst:text format="void $module::finalStep (void)\n{\n"/>
+<admst:apply-templates select="analog/code" match="analog:final_step"/>
+<admst:text format="}\n\n"/>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<admst:text format="/* Evaluate Verilog-AMS equations in analog block. */\n"/>
 <admst:text format="void $module::calcVerilog (void)\n{\n"/>
 /* ----------------- evaluate verilog analog equations -------------------- */
 <admst:text format="\n"/>
@@ -758,6 +775,8 @@ class $(module) : public circuit
   void loadVariables (void);
   void initializeModel (void);
   void initializeInstance (void);
+  void initialStep (void);
+  void finalStep (void);
   matrix calcMatrixY (nr_double_t);
   matrix calcMatrixCy (nr_double_t);
 

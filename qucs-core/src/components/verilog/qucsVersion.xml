@@ -3,7 +3,7 @@
   Copyright (C) 2006 Laurent Lemaitre <r29173@users.sourceforge.net>
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -1765,7 +1765,7 @@
 <!-- analog//code -->
 <admst:template match="analog:evaluate">
   <admst:for-each select="item">
-    <admst:if test="adms[datatypename='block']/..[name!='initial_model' and name!='initial_instance' and name!='noise']">
+    <admst:if test="adms[datatypename='block']/..[name!='initial_model' and name!='initial_instance' and name!='noise' and name!='initial_step' and name!='final_step']">
       <admst:apply-templates select="." match="block:local:declaration"/>
     </admst:if>
     <admst:if test="adms[datatypename!='block']">
@@ -1780,7 +1780,7 @@
         <admst:apply-templates select="." match="%(datatypename)"/>
       </admst:when>
       <admst:otherwise>
-        <admst:if test="[name!='initial_model' and name!='initial_instance' and name!='noise']">
+        <admst:if test="[name!='initial_model' and name!='initial_instance' and name!='noise' and name!='initial_step' and name!='final_step']">
           <admst:apply-templates select="." match="block"/>
         </admst:if>
       </admst:otherwise>
@@ -1831,6 +1831,38 @@
   <admst:reset select="module/evaluation/variable"/>
   <admst:for-each select="item">
     <admst:if test="adms[datatypename='block']/..[name='initial_instance']">
+      <admst:apply-templates select="." match="block"/>
+    </admst:if>
+  </admst:for-each>
+</admst:template>
+
+<!-- analog//[initial_step] -->
+<admst:template match="analog:initial_step">
+  <admst:for-each select="item">
+    <admst:if test="adms[datatypename='block']/..[name='initial_step']">
+      <admst:apply-templates select="." match="block:local:declaration"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:apply-templates select="module/evaluation/variable" match="variable:declaration"/>
+  <admst:reset select="module/evaluation/variable"/>
+  <admst:for-each select="item">
+    <admst:if test="adms[datatypename='block']/..[name='initial_step']">
+      <admst:apply-templates select="." match="block"/>
+    </admst:if>
+  </admst:for-each>
+</admst:template>
+
+<!-- analog//[final_step] -->
+<admst:template match="analog:final_step">
+  <admst:for-each select="item">
+    <admst:if test="adms[datatypename='block']/..[name='final_step']">
+      <admst:apply-templates select="." match="block:local:declaration"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:apply-templates select="module/evaluation/variable" match="variable:declaration"/>
+  <admst:reset select="module/evaluation/variable"/>
+  <admst:for-each select="item">
+    <admst:if test="adms[datatypename='block']/..[name='final_step']">
       <admst:apply-templates select="." match="block"/>
     </admst:if>
   </admst:for-each>
