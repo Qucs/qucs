@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-dist_bin_SCRIPTS = ps2sp.pl
+dist_bin_SCRIPTS = ps2sp
 
 dist_man_MANS = ps2sp.1
 
