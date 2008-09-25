@@ -1,3 +1,8 @@
+2008-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* contrib/ps2sp: Renamed ps2sp.pl into ps2sp in order to avoid
+	'script-with-language-extension' warning for Debian packages.
+
 2008-04-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* autogen.sh: Using automake to add missing files for build if

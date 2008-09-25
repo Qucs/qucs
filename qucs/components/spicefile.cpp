@@ -251,7 +251,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
     QString interpreter = "perl";
 #endif
     if (preprocessor == "ps2sp") {
-      script = "ps2sp.pl";
+      script = "ps2sp";
     } else if (preprocessor == "spicepp") {
       script = "spicepp.pl";
     } else if (preprocessor == "spiceprm") {

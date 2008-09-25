@@ -370,7 +370,7 @@ sub second_stage {
 
   &read_deck; # whole deck read in @deck variable
   $date=localtime;
-  $infoline="* infile=$inputcirfile date=$date Converted with ps2sp.pl V4.14 ";
+  $infoline="* infile=$inputcirfile date=$date Converted with ps2sp V4.14 ";
   $options="* options: -sp3=$spice3 -ltspice=$ltspice -fromsub=$fromsub -fromlib=$fromlib -check=$check (tinylines=$tinylines)";
   $copyright="* copyright 2007 by Friedrich Schmidt - terms of Gnu Licence ";
   splice(@deck,1,0,$infoline,$options,$copyright);
@@ -2378,7 +2378,7 @@ sub hint {
      print "\n       e.g: .param b=10  a={IF(b,0,bn)}  c={1/a}";
      print "\n       Search the bad term and add a very small value to it (1/a) -> (1/(a+eps))";
      print "\n       Add the line .param eps=1e-20 to the cirfile\n";
-     print "\n       Try the ps2sp.pl command line option -check -debug";
+     print "\n       Try the ps2sp command line option -check -debug";
      print "\n       to check the equal nr. of open and closed paranthesis per line and";
      print "\n       to output the values of all parameters and functions\n";
      print "\n       Check also the intermediate outputfiles lib.tmp and sub.tmp";
@@ -3686,7 +3686,7 @@ sub getargs {
    }
 
     if ($arg eq '-h' || $arg eq '--help')
-    {  print "Usage: perl ps2sp.pl [OPTION] infile > outfile\n\n".
+    {  print "Usage: perl ps2sp [OPTION] infile > outfile\n\n".
 	   "  -h, --help     displays the help screen\n".
 	   "  -v, --version  display version information and exit\n".
 	   "  -sp3           switch means conversion of pspice table to spice 3 b-source\n".
