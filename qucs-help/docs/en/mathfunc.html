@@ -209,6 +209,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 <A HREF="#dB">dB</A><TT>  </TT>
 <A HREF="#dbm">dbm</A><TT>  </TT>
 <A HREF="#dbm2w">dbm2w</A><TT>  </TT>
+<A HREF="#ddx">ddx</A><TT>  </TT>
 <A HREF="#deg2rad">deg2rad</A><TT>  </TT>
 <A HREF="#det">det</A><TT>  </TT>
 <A HREF="#dft">dft</A><TT>  </TT>
@@ -233,6 +234,7 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 <A HREF="#interpolate">interpolate</A><TT>  </TT>
 <A HREF="#inverse">inverse</A><TT>  </TT>
 <A HREF="#kbd">kbd</A><TT>  </TT>
+<A HREF="#length">length</A><TT>  </TT>
 <A HREF="#limexp">limexp</A><TT>  </TT>
 <A HREF="#linspace">linspace</A><TT>  </TT>
 <A HREF="#ln">ln</A><TT>  </TT>
@@ -308,6 +310,14 @@ Expressions Reference Manual". Parameters in brackets "[]" are optional.
 		</TD>
 		<TD WIDTH=75% VALIGN="baseline">
 			Creates <TT>n</TT> x <TT>n</TT> identity matrix
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="length"></A><TT>length(y)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Returns the length of the given vector
 		</TD>
 	</TR>
 	<TR VALIGN=TOP>
@@ -1040,6 +1050,14 @@ Mathematical Functions</H3>
 <H3 >Data Analysis: Differentiation and Integration</H3>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=43*><COL WIDTH=213*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25% VALIGN="baseline">
+			<A NAME="ddx"></A><TT>ddx(expr,var)</TT>
+		</TD>
+		<TD WIDTH=75% VALIGN="baseline">
+			Derives mathematical expression <TT>expr</TT> with respect to the variable <TT>var</TT>
+		</TD>
+	</TR>
 	<TR VALIGN=TOP>
 		<TD WIDTH=25% VALIGN="baseline">
 			<A NAME="diff"></A><TT>diff(y,x[,n])</TT>
