@@ -3,7 +3,7 @@
 # qucsdigi - wrapper script for digital simulation
 #
 # Copyright (C) 2005 Michael Margraf <michael.margraf@alumni.tu-berlin.de>
-# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
 # Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
@@ -60,6 +60,7 @@ CXXFLAGS=`freehdl-config --cxxflags`
 LIBS=`freehdl-config --libtool`
 IEEELIBS=`freehdl-config --ieee`
 LDFLAGS=`freehdl-config --ldflags`
+LIBTOOL=`freehdl-config --linker`
 
 cp $NAME digi.vhdl
 NAME="digi"
@@ -79,7 +80,7 @@ $CXX $CXXFLAGS -c $NAME._main_.cc
 echo " done."
 
 echo -n "linking..."
-libtool --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS -o $NAME
+$LIBTOOL --quiet --mode=link $CXX $NAME._main_.o $NAME.o $LIBS $IEEELIBS -o $NAME
 echo " done."
 
 echo "simulating..."
