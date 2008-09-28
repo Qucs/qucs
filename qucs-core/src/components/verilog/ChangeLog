@@ -1,3 +1,8 @@
+2008-09-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26pMOS.va: Updated EKV26 PMOS type model.  Thanks to Mike
+	Brinson!
+
 2008-09-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsMODULEcore.xml: Additionally separated code for
