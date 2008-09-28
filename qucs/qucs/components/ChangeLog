@@ -1,3 +1,7 @@
+2008-09-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26pMOS.cpp (EKV26pMOS): Added new property 'Xpart'.
+
 2008-09-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* hic0p2_full.cpp (hic0p2_full): Added new HICUM/L0 v1.2 model.
