@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.94 2008/09/23 21:01:20 ela Exp $
+ * $Id: qucsdefs.h,v 1.95 2008/09/28 15:44:43 ela Exp $
  *
  */
 
@@ -1514,7 +1514,9 @@ struct define_t qucs_definition_available[] =
       { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_NO_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    {
+      { "Xpart", PROP_REAL, { 0.4, PROP_NO_STR }, { '[', 0.0, 1.0, ']' } },
+      PROP_NO_PROP }
   },
 
   /* microstrip substrate */
