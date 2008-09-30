@@ -2012,6 +2012,12 @@
         <admst:value-to select="value" string="hicumL2"/>
       </admst:new>
     </admst:when>
+    <admst:when test="[name='hicumL2V2p23']">
+      <admst:new datatype="attribute" arguments="qucsname">
+        <admst:push into="../attribute" select="." onduplicate="abort"/>
+        <admst:value-to select="value" string="hicumL2"/>
+      </admst:new>
+    </admst:when>
     <admst:when test="[name='bjt']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
@@ -2100,6 +2106,8 @@
     <admst:when test="[name='mod_amp']">
     </admst:when>
     <admst:when test="[name='log_amp']">
+    </admst:when>
+    <admst:when test="[name='hicumL2V2p23']">
     </admst:when>
     <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='hicumL0V1p2' or name='bjt504_va']">
       <admst:if test="[nilled(variable[name='npn'])]">

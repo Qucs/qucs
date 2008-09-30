@@ -155,7 +155,7 @@
 <admst:text format="{\n  Name = QObject::tr(&quot;$module&quot;);\n"/>
 
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
 <admst:text format="  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
 </admst:when>
 <admst:when test="[$module='HBT_X']">
@@ -177,7 +177,7 @@
 
 <admst:text format="void $module::createSymbol()\n{"/>
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
