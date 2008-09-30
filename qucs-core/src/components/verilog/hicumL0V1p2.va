@@ -816,19 +816,19 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	I(br_eie_i)	  	<+ Veie/re_t					`P(spectre:gmin="add");
 	end else begin
 	//V(br_eie_v)		<+ 0.0;
-	I(br_eie_i)		<+ V(br_eie_i)/1e-6;
+	I(br_eie_i)		<+ V(br_eie_v)/1e-6;
 	end
 	if (rcx >= `MIN_R) begin
 	I(br_cic_i)	  	<+ Vcic/rcx_t					`P(spectre:gmin="add");
 	end else begin
 	//V(br_cic_v)		<+ 0.0;
-	I(br_cic_i)		<+ V(br_cic_i)/1e-6;
+	I(br_cic_i)		<+ V(br_cic_v)/1e-6;
 	end
 	if (rbi0 >= `MIN_R || rbx >= `MIN_R) begin
 	I(br_bbi_i)	  	<+ Vbbi/rb				`P(spectre:gmin="add");
 	end else begin
 	//V(br_bbi_v)		<+ 0.0;
-	I(br_bbi_i)		<+ V(br_bbi_i)/1e-6;
+	I(br_bbi_i)		<+ V(br_bbi_v)/1e-6;
 	end
 	I(br_bici)	<+ Ibici				`P(spectre:gmin="add" spectre:pwl_sat_current="IMAX" spectre:pwl_sat_cond="imax/0.025" spectre:pwl_rev_current="imax" spectre:pwl_rev_cond="IMAX/0.025");
 	I(br_bici)	<+ ddt(Qbici);
