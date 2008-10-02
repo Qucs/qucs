@@ -6742,6 +6742,14 @@ Verwendung:  qucsedit [-r] Datei
         <source>charge partition parameter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.23 verilog device</source>
+        <translation type="unfinished">HICUM Level 2 v2.23 Verilogmodell</translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.23</source>
+        <translation type="unfinished">HICUM L2 v2.23</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
