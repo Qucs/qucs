@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.28 2008-09-23 15:28:26 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.29 2008-10-02 16:20:29 ela Exp $
  *
  */
 
@@ -354,6 +354,26 @@ qucs_devices[] = {
       "alqf", "alit", "kf", "af", "krbi", "latb", "latl", "vgb", "alt0",
       "kt0", "zetaci", "zetacx", "alvs", "alces", "zetarbi", "zetarbx",
       "zetarcx", "zetare", "alb", "rth", "cth", "tnom", "dt", "Temp", NULL },
+    NULL,
+    "1 0 0 8 -26 0 0",
+    NULL
+  },
+  /* hicum/l2 v2.23 bipolar transistor */
+  { "hicumL2V2p23", "hicumL2V2p23", "Q", 5,
+    { "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis", "mbei",
+      "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf", "tbhrec",
+      "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "tunode", "favl",
+      "qavl", "alfav", "alqav", "rbi0", "rbx", "fgeo", "fdqr0", "fcrbi",
+      "fqi", "re", "rcx", "itss", "msf", "iscs", "msc", "tsf", "rsu", "csu",
+      "cjei0", "vdei", "zei", "ajei", "cjep0", "vdep", "zep", "ajep",
+      "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx", "vptcx",
+      "fbcpar", "fbepar", "cjs0", "vds", "zs", "vpts", "t0", "dt0h", "tbvl",
+      "tef0", "gtfe", "thcs", "ahc", "fthc", "rci0", "vlim", "vces", "vpt",
+      "tr", "cbepar", "cbcpar", "alqf", "alit", "flnqs", "kf", "af", "cfbe",
+      "latb", "latl", "vgb", "alt0", "kt0", "zetaci", "alvs", "alces",
+      "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "flsh", "rth", "cth",
+      "flcomp", "tnom", "dt", "Temp", NULL },
     NULL,
     "1 0 0 8 -26 0 0",
     NULL
