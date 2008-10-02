@@ -1,3 +1,10 @@
+2008-10-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL2V2p23.va: Added new HICUM L2 v2.23 compact model.
+
+	* qucsMODULEgui.xml: Fixed default value generation for string
+	type model parameters.  Thanks to Laurent!
+
 2008-09-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* EKV26pMOS.va: Updated EKV26 PMOS type model.  Thanks to Mike
