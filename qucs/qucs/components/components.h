@@ -143,5 +143,6 @@
 #include "EKV26nMOS.h"
 #include "EKV26pMOS.h"
 #include "hicumL0V1p2.h"
+#include "hicumL2V2p23.h"
 
 #endif
