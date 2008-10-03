@@ -1,7 +1,7 @@
 /*
  * idc.h - DC current source class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: idc.h,v 1.8 2005-06-02 18:17:52 raimi Exp $
+ * $Id: idc.h,v 1.9 2008-10-03 14:49:48 ela Exp $
  *
  */
 
@@ -34,6 +34,8 @@ class idc : public circuit
   void calcDC (void);
   void initAC (void);
   void initTR (void);
+
+  CREATOR (idc);
 };
 
 #endif /* __IDC_H__ */

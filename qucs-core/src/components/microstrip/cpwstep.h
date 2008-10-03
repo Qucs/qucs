@@ -1,7 +1,7 @@
 /*
  * cpwstep.h - coplanar waveguide step class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwstep.h,v 1.3 2008-01-10 20:00:01 ela Exp $
+ * $Id: cpwstep.h,v 1.4 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -34,6 +34,8 @@ class cpwstep : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+
+  CREATOR (cpwstep);
 
   void checkProperties (void);
   void calcCends (nr_double_t, nr_double_t&, nr_double_t&);

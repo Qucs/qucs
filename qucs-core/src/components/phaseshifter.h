@@ -1,7 +1,7 @@
 /*
  * phaseshifter.h - phase shifter class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: phaseshifter.h,v 1.7 2005-06-02 18:17:52 raimi Exp $
+ * $Id: phaseshifter.h,v 1.8 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -32,6 +32,8 @@ class phaseshifter : public circuit
   void initSP (void);
   void initDC (void);
   void initAC (void);
+
+  CREATOR (phaseshifter);
 };
 
 #endif /* __PHASESHIFTER_H__ */

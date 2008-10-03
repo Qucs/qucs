@@ -1,7 +1,7 @@
 /*
  * msmbend.h - microstrip mitered bend class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msmbend.h,v 1.5 2005-06-02 18:17:56 raimi Exp $
+ * $Id: msmbend.h,v 1.6 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class msmbend : public circuit
   void initAC (void);
   void calcAC (nr_double_t);
   matrix calcMatrixZ (nr_double_t);
+
+  CREATOR (msmbend);
 };
 
 #endif /* __MSMBEND_H__ */

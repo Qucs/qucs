@@ -1,7 +1,7 @@
 /*
  * vnoise.h - noise voltage source class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vnoise.h,v 1.7 2005-06-02 18:17:52 raimi Exp $
+ * $Id: vnoise.h,v 1.8 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class vnoise : public circuit
   void initAC (void);
   void calcNoiseAC (nr_double_t);
   void initTR (void);
+
+  CREATOR (vnoise);
 };
 
 #endif /* __VNOISE_H__ */

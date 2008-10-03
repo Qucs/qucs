@@ -1,7 +1,7 @@
 /*
  * vvnoise.h - correlated noise voltage sources class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vvnoise.h,v 1.1 2005-10-05 11:22:42 raimi Exp $
+ * $Id: vvnoise.h,v 1.2 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class vvnoise : public circuit
   void initDC (void);
   void initAC (void);
   void initTR (void);
+
+  CREATOR (vvnoise);
 };
 
 #endif /* __VVNOISE_H__ */

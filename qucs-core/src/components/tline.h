@@ -1,7 +1,7 @@
 /*
  * tline.h - ideal transmission line class definitions
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.h,v 1.7 2006-03-02 08:06:03 raimi Exp $
+ * $Id: tline.h,v 1.8 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -37,6 +37,8 @@ class tline : public circuit
   void calcTR (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void calcNoiseSP (nr_double_t);
+
+  CREATOR (tline);
 };
 
 #endif /* __TLINE_H__ */

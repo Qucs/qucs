@@ -1,7 +1,7 @@
 /*
  * msstep.h - microstrip impedance step class definitions
  *
- * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.h,v 1.6 2007-02-12 18:32:33 ela Exp $
+ * $Id: msstep.h,v 1.7 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -36,6 +36,8 @@ class msstep : public circuit
   void calcAC (nr_double_t);
   void initTR (void);
   matrix calcMatrixZ (nr_double_t);
+
+  CREATOR (msstep);
 };
 
 #endif /* __MSSTEP_H__ */

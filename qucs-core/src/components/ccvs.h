@@ -1,7 +1,7 @@
 /*
  * ccvs.h - ccvs class definitions
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ccvs.h,v 1.9 2006-02-23 09:02:01 raimi Exp $
+ * $Id: ccvs.h,v 1.10 2008-10-03 14:49:48 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class ccvs : public circuit
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (ccvs);
 };
 
 #endif /* __CCVS_H__ */

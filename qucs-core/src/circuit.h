@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.56 2008-01-18 20:21:10 ela Exp $
+ * $Id: circuit.h,v 1.57 2008-10-03 14:49:48 ela Exp $
  *
  */
 
@@ -51,6 +51,8 @@ enum circuit_flag {
 
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
 #define RETFLAG(bit)     ((flag & (bit)) != 0)
+
+#define CREATOR(val)     static circuit * create (void) { return new val (); }
 
 class node;
 class property;
@@ -96,6 +98,9 @@ class circuit : public object, public integrator
   virtual void saveOperatingPoints (void) { }
   virtual void calcCharacteristics (nr_double_t) { }
   virtual void saveCharacteristics (nr_double_t) { }
+
+  // modularization
+  //static circuit * create (void) { return NULL; }
 
   // real basics
   void   setNode (int, const char *, int intern = 0);

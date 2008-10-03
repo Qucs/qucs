@@ -1,7 +1,7 @@
 /*
  * vpulse.h - pulse voltage source class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vpulse.h,v 1.3 2005-06-02 18:17:52 raimi Exp $
+ * $Id: vpulse.h,v 1.4 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -34,6 +34,8 @@ class vpulse : public circuit
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (vpulse);
 };
 
 #endif /* __VPULSE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.h,v 1.8 2005-06-02 18:17:50 raimi Exp $
+ * $Id: input.h,v 1.9 2008-10-03 14:49:48 ela Exp $
  *
  */
 
@@ -29,6 +29,10 @@ class net;
 class circuit;
 class analysis;
 class environment;
+
+#include "hash.h"
+
+typedef circuit * (* circuit_creator_t) (void);
 
 class input : public object
 {
@@ -47,11 +51,14 @@ class input : public object
   void setEnv (environment * e) { env = e; }
   static void assignDefaultProperties (object *, struct define_t *);
   static vector * createVector (struct value_t *);
+  void registerCircuit (const char *, circuit_creator_t);
+  void registerCircuits (void);
 
  private:
   FILE * fd;
   net * subnet;
   environment * env;
+  qucs::hash<void> creators;
 };
 
 // externalize global variable

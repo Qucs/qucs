@@ -1,7 +1,7 @@
 /*
  * mscorner.h - microstrip corner class definitions
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: mscorner.h,v 1.7 2006-01-27 09:32:02 raimi Exp $
+ * $Id: mscorner.h,v 1.8 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class mscorner : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+
+  CREATOR (mscorner);
 
  private:
   void initCheck (void);

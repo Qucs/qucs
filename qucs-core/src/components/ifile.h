@@ -1,7 +1,7 @@
 /*
  * ifile.h - file based current source class definitions
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ifile.h,v 1.1 2007-10-23 17:48:06 ela Exp $
+ * $Id: ifile.h,v 1.2 2008-10-03 14:49:48 ela Exp $
  *
  */
 
@@ -42,6 +42,8 @@ class ifile : public circuit
   void prepare (void);
   nr_double_t interpolate (vector * , vector * , nr_double_t);
   nr_double_t interpolate_lin (vector *, vector *, nr_double_t, int);
+
+  CREATOR (ifile);
 
 private:
   dataset * data;

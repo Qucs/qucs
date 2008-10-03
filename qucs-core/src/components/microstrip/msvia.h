@@ -1,7 +1,7 @@
 /*
  * msvia.h - microstrip via hole class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msvia.h,v 1.5 2008-01-10 20:00:02 ela Exp $
+ * $Id: msvia.h,v 1.6 2008-10-03 14:49:49 ela Exp $
  *
  */
 
@@ -38,6 +38,8 @@ class msvia : public circuit
   void calcNoiseAC (nr_double_t);
   nr_double_t calcResistance (void);
   nr_complex_t calcImpedance (nr_double_t);
+
+  CREATOR (msvia);
 
  private:
   nr_double_t R;
