@@ -1,7 +1,7 @@
 /*
  * capacitor.h - capacitor class definitions
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.h,v 1.10 2007/08/07 20:43:10 ela Exp $
+ * $Id: capacitor.h,v 1.11 2008/10/03 14:49:48 ela Exp $
  *
  */
 
@@ -38,6 +38,8 @@ class capacitor : public circuit
   void initTR (void);
   void initHB (void);
   void calcHB (nr_double_t);
+
+  CREATOR (capacitor);
 };
 
 #endif /* __CAPACITOR_H__ */

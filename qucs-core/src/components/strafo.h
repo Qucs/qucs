@@ -1,7 +1,7 @@
 /*
  * strafo.h - symmetrical trafo class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strafo.h,v 1.8 2005/06/02 18:17:52 raimi Exp $
+ * $Id: strafo.h,v 1.9 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -33,6 +33,8 @@ class strafo : public circuit
   void initDC (void);
   void initAC (void);
   void initTR (void);
+
+  CREATOR (strafo);
 };
 
 #endif /* __STRAFO_H__ */

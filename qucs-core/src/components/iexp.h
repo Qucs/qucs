@@ -1,7 +1,7 @@
 /*
  * iexp.h - pulse current source class definitions
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iexp.h,v 1.1 2007/04/15 10:17:49 ela Exp $
+ * $Id: iexp.h,v 1.2 2008/10/03 14:49:48 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class iexp : public circuit
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (iexp);
 };
 
 #endif /* __IEXP_H__ */

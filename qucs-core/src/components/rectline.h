@@ -41,6 +41,8 @@ class rectline : public circuit
   void calcNoiseAC (nr_double_t);
   void saveCharacteristics (nr_complex_t);
 
+  CREATOR (rectline);
+
  private:
   void calcPropagation (nr_double_t);
   void initCheck (void);

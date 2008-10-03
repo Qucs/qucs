@@ -1,7 +1,7 @@
 /*
  * mscross.h - microstrip cross-junction class definitions
  *
- * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscross.h,v 1.4 2007/02/05 19:46:47 ela Exp $
+ * $Id: mscross.h,v 1.5 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class mscross : public circuit
   void initSP (void);
   void calcSP (nr_double_t);
   void initTR (void);
+
+  CREATOR (mscross);
 
  private:
   void initModel (void);

@@ -1,7 +1,7 @@
 /*
  * twistedpair.h - twisted pair line class definitions
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.h,v 1.3 2007/03/07 18:00:37 ela Exp $
+ * $Id: twistedpair.h,v 1.4 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -38,6 +38,8 @@ class twistedpair : public circuit
   void calcNoiseAC (nr_double_t);
   void initTR (void);
   void saveCharacteristics (nr_double_t);
+
+  CREATOR (twistedpair);
 
  private:
   void calcPropagation (nr_double_t);

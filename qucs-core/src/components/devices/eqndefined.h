@@ -1,7 +1,7 @@
 /*
  * eqndefined.h - equation defined device class definitions
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.h,v 1.4 2007/09/16 16:49:40 ela Exp $
+ * $Id: eqndefined.h,v 1.5 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -41,6 +41,8 @@ class eqndefined : public circuit
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
+
+  CREATOR (eqndefined);
 
  private:
   void initModel (void);

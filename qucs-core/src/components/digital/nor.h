@@ -1,7 +1,7 @@
 /*
  * nor.h - logical nor class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nor.h,v 1.2 2005/11/25 08:27:05 raimi Exp $
+ * $Id: nor.h,v 1.3 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -31,6 +31,8 @@ class logicnor : public digital
   logicnor ();
   void calcOutput (void);
   void calcDerivatives (void);
+
+  CREATOR (logicnor);
 };
 
 #endif /* __NOR_H__ */

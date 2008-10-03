@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: thyristor.h,v 1.2 2008/03/31 10:50:02 ela Exp $
+ * $Id: thyristor.h,v 1.3 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -41,6 +41,8 @@ class thyristor : public circuit, public devstates
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (thyristor);
 
  private:
   nr_double_t Ud, gd, Id, Qi, gi, Ui;

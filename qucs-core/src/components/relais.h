@@ -1,7 +1,7 @@
 /*
  * relais.h - relais class definitions
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.h,v 1.2 2006/03/03 07:45:01 raimi Exp $
+ * $Id: relais.h,v 1.3 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -38,6 +38,8 @@ class relais : public circuit
   void saveOperatingPoints (void);
   void calcNoiseSP (nr_double_t);
   void calcNoiseAC (nr_double_t);
+
+  CREATOR (relais);
 
  private:
   int state;

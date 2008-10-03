@@ -1,7 +1,7 @@
 /*
  * vexp.h - exponential voltage source class definitions
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vexp.h,v 1.1 2007/04/15 10:17:51 ela Exp $
+ * $Id: vexp.h,v 1.2 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -35,6 +35,8 @@ class vexp : public circuit
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (vexp);
 };
 
 #endif /* __VEXP_H__ */

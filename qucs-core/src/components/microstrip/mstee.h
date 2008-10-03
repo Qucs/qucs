@@ -1,7 +1,7 @@
 /*
  * mstee.h - microstrip t-junction class definitions
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.h,v 1.5 2007/09/16 16:49:40 ela Exp $
+ * $Id: mstee.h,v 1.6 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -40,6 +40,8 @@ class mstee : public circuit
   void initNoiseSP (void);
   void calcSP (nr_double_t);
   void initTR (void);
+
+  CREATOR (mstee);
 
   friend circuit * splitMicrostrip (circuit *, circuit *, net *,
 				    const char *, const char *, int);

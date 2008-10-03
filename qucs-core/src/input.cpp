@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.89 2008/10/02 16:20:29 ela Exp $
+ * $Id: input.cpp,v 1.90 2008/10/03 14:49:48 ela Exp $
  *
  */
 
@@ -59,6 +59,7 @@ input::input () : object () {
   fd = stdin;
   subnet = NULL;
   env = NULL;
+  registerCircuits ();
 }
 
 // Constructor creates an named instance of the input class.
@@ -70,11 +71,117 @@ input::input (char * file) : object (file) {
   }
   subnet = NULL;
   env = NULL;
+  registerCircuits ();
 }
 
 // Destructor deletes an input object.
 input::~input () {
   if (fd != stdin) fclose (fd);
+}
+
+void input::registerCircuits (void) {
+  registerCircuit ("R", &resistor::create);
+  registerCircuit ("C", &capacitor::create);
+  registerCircuit ("Pac", &pac::create);
+  registerCircuit ("L", &inductor::create);
+  registerCircuit ("VCCS", &vccs::create);
+  registerCircuit ("CCCS", &cccs::create);
+  registerCircuit ("VCVS", &vcvs::create);
+  registerCircuit ("CCVS", &ccvs::create);
+  registerCircuit ("BiasT", &biastee::create);
+  registerCircuit ("DCFeed", &dcfeed::create);
+  registerCircuit ("DCBlock", &dcblock::create);
+  registerCircuit ("Circulator", &circulator::create);
+  registerCircuit ("Attenuator", &attenuator::create);
+  registerCircuit ("Isolator", &isolator::create);
+  registerCircuit ("Tr", &trafo::create);
+  registerCircuit ("sTr", &strafo::create);
+  registerCircuit ("Vdc", &vdc::create);
+  registerCircuit ("Idc", &idc::create);
+  registerCircuit ("Vac", &vac::create);
+  registerCircuit ("Iac", &iac::create);
+  registerCircuit ("Iexp", &iexp::create);
+  registerCircuit ("Vexp", &vexp::create);
+  registerCircuit ("Ifile", &ifile::create);
+  registerCircuit ("Vfile", &vfile::create);
+  registerCircuit ("AM_Mod", &vam::create);
+  registerCircuit ("PM_Mod", &vpm::create);
+  registerCircuit ("Vpulse", &vpulse::create);
+  registerCircuit ("Ipulse", &ipulse::create);
+  registerCircuit ("Vrect", &vrect::create);
+  registerCircuit ("Irect", &irect::create);
+  registerCircuit ("Gyrator", &gyrator::create);
+  registerCircuit ("PShift", &phaseshifter::create);
+  registerCircuit ("Switch", &tswitch::create);
+  registerCircuit ("Relais", &relais::create);
+  registerCircuit ("TLIN", &tline::create);
+  registerCircuit ("TLIN4P", &tline4p::create);
+  registerCircuit ("COAX", &coaxline::create);
+  registerCircuit ("RECTLINE", &rectline::create);
+  registerCircuit ("TWIST", &twistedpair::create);
+  registerCircuit ("Coupler", &coupler::create);
+  registerCircuit ("Diode", &diode::create);
+  registerCircuit ("EDD", &eqndefined::create);
+  registerCircuit ("RFEDD", &rfedd::create);
+  registerCircuit ("Diac", &diac::create);
+  registerCircuit ("SCR", &thyristor::create);
+  registerCircuit ("Triac", &triac::create);
+  registerCircuit ("MLIN", &msline::create);
+  registerCircuit ("MCORN", &mscorner::create);
+  registerCircuit ("MSTEP", &msstep::create);
+  registerCircuit ("MOPEN", &msopen::create);
+  registerCircuit ("MGAP", &msgap::create);
+  registerCircuit ("MMBEND", &msmbend::create);
+  registerCircuit ("MCOUPLED", &mscoupled::create);
+  registerCircuit ("MTEE", &mstee::create);
+  registerCircuit ("MCROSS", &mscross::create);
+  registerCircuit ("MVIA", &msvia::create);
+  registerCircuit ("BOND", &bondwire::create);
+  registerCircuit ("CLIN", &cpwline::create);
+  registerCircuit ("COPEN", &cpwopen::create);
+  registerCircuit ("CSHORT", &cpwshort::create);
+  registerCircuit ("CGAP", &cpwgap::create);
+  registerCircuit ("CSTEP", &cpwstep::create);
+  registerCircuit ("IProbe", &iprobe::create);
+  registerCircuit ("VProbe", &vprobe::create);
+  registerCircuit ("JFET", &jfet::create);
+  registerCircuit ("BJT", &bjt::create);
+  registerCircuit ("SPfile", &spfile::create);
+  registerCircuit ("Vnoise", &vnoise::create);
+  registerCircuit ("Inoise", &inoise::create);
+  registerCircuit ("MOSFET", &mosfet::create);
+  registerCircuit ("Amp", &amplifier::create);
+  registerCircuit ("OpAmp", &opamp::create);
+  registerCircuit ("IInoise", &iinoise::create);
+  registerCircuit ("MUT", &mutual::create);
+  registerCircuit ("MUT2", &mutual2::create);
+  registerCircuit ("MUTX", &mutualx::create);
+  registerCircuit ("IVnoise", &ivnoise::create);
+  registerCircuit ("VVnoise", &vvnoise::create);
+  registerCircuit ("Inv", &inverter::create);
+  registerCircuit ("NOR", &logicnor::create);
+  registerCircuit ("OR", &logicor::create);
+  registerCircuit ("NAND", &logicnand::create);
+  registerCircuit ("AND", &logicand::create);
+  registerCircuit ("XNOR", &logicxnor::create);
+  registerCircuit ("XOR", &logicxor::create);
+  registerCircuit ("DigiSource", &digisource::create);
+  registerCircuit ("hicumL2p1", &hicumL2p1::create);
+  registerCircuit ("HBT_X", &HBT_X::create);
+  registerCircuit ("mod_amp", &mod_amp::create);
+  registerCircuit ("hic2_full", &hic2_full::create);
+  registerCircuit ("log_amp", &log_amp::create);
+  registerCircuit ("hic0_full", &hic0_full::create);
+  registerCircuit ("potentiometer", &potentiometer::create);
+  registerCircuit ("MESFET", &MESFET::create);
+  registerCircuit ("EKV26nMOS", &EKV26nMOS::create);
+  registerCircuit ("EKV26pMOS", &EKV26pMOS::create);
+  registerCircuit ("hicumL0V1p2", &hicumL0V1p2::create);
+  registerCircuit ("hicumL2V2p23", &hicumL2V2p23::create);
+}
+
+void input::registerCircuit (const char * n, circuit_creator_t create) {
+  creators.put ((char *) n, (void *) create);
 }
 
 /* This function scans, parses and checks a netlist from the input
@@ -335,202 +442,9 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
 
 // The function creates components specified by the type of component. 
 circuit * input::createCircuit (char * type) {
-  if (!strcmp (type, "Pac"))
-    return new pac ();
-  else if (!strcmp (type, "R"))
-    return new resistor ();
-  else if (!strcmp (type, "C"))
-    return new capacitor ();
-  else if (!strcmp (type, "L"))
-    return new inductor ();
-  else if (!strcmp (type, "VCCS"))
-    return new vccs ();
-  else if (!strcmp (type, "CCCS"))
-    return new cccs ();
-  else if (!strcmp (type, "VCVS"))
-    return new vcvs ();
-  else if (!strcmp (type, "CCVS"))
-    return new ccvs ();
-  else if (!strcmp (type, "BiasT"))
-    return new biastee ();
-  else if (!strcmp (type, "DCFeed"))
-    return new dcfeed ();
-  else if (!strcmp (type, "DCBlock"))
-    return new dcblock ();
-  else if (!strcmp (type, "Circulator"))
-    return new circulator ();
-  else if (!strcmp (type, "Attenuator"))
-    return new attenuator ();
-  else if (!strcmp (type, "Isolator"))
-    return new isolator ();
-  else if (!strcmp (type, "Tr"))
-    return new trafo ();
-  else if (!strcmp (type, "sTr"))
-    return new strafo ();
-  else if (!strcmp (type, "Vdc"))
-    return new vdc ();
-  else if (!strcmp (type, "Idc"))
-    return new idc ();
-  else if (!strcmp (type, "Vac"))
-    return new vac ();
-  else if (!strcmp (type, "Iac"))
-    return new iac ();
-  else if (!strcmp (type, "Iexp"))
-    return new iexp ();
-  else if (!strcmp (type, "Vexp"))
-    return new vexp ();
-  else if (!strcmp (type, "Ifile"))
-    return new ifile ();
-  else if (!strcmp (type, "Vfile"))
-    return new vfile ();
-  else if (!strcmp (type, "AM_Mod"))
-    return new vam ();
-  else if (!strcmp (type, "PM_Mod"))
-    return new vpm ();
-  else if (!strcmp (type, "Vpulse"))
-    return new vpulse ();
-  else if (!strcmp (type, "Ipulse"))
-    return new ipulse ();
-  else if (!strcmp (type, "Vrect"))
-    return new vrect ();
-  else if (!strcmp (type, "Irect"))
-    return new irect ();
-  else if (!strcmp (type, "Gyrator"))
-    return new gyrator ();
-  else if (!strcmp (type, "PShift"))
-    return new phaseshifter ();
-  else if (!strcmp (type, "Switch"))
-    return new tswitch ();
-  else if (!strcmp (type, "Relais"))
-    return new relais ();
-  else if (!strcmp (type, "TLIN"))
-    return new tline ();
-  else if (!strcmp (type, "TLIN4P"))
-    return new tline4p ();
-  else if (!strcmp (type, "COAX"))
-    return new coaxline ();
-  else if (!strcmp (type, "RECTLINE"))
-    return new rectline ();
-  else if (!strcmp (type, "TWIST"))
-    return new twistedpair ();
-  else if (!strcmp (type, "Coupler"))
-    return new coupler ();
-  else if (!strcmp (type, "Diode"))
-    return new diode ();
-  else if (!strcmp (type, "EDD"))
-    return new eqndefined ();
-  else if (!strcmp (type, "RFEDD"))
-    return new rfedd ();
-  else if (!strcmp (type, "Diac"))
-    return new diac ();
-  else if (!strcmp (type, "SCR"))
-    return new thyristor ();
-  else if (!strcmp (type, "Triac"))
-    return new triac ();
-  else if (!strcmp (type, "MLIN"))
-    return new msline ();
-  else if (!strcmp (type, "MCORN"))
-    return new mscorner ();
-  else if (!strcmp (type, "MSTEP"))
-    return new msstep ();
-  else if (!strcmp (type, "MOPEN"))
-    return new msopen ();
-  else if (!strcmp (type, "MGAP"))
-    return new msgap ();
-  else if (!strcmp (type, "MMBEND"))
-    return new msmbend ();
-  else if (!strcmp (type, "MCOUPLED"))
-    return new mscoupled ();
-  else if (!strcmp (type, "MTEE"))
-    return new mstee ();
-  else if (!strcmp (type, "MCROSS"))
-    return new mscross ();
-  else if (!strcmp (type, "MVIA"))
-    return new msvia ();
-  else if (!strcmp (type, "BOND"))
-    return new bondwire ();
-  else if (!strcmp (type, "CLIN"))
-    return new cpwline ();
-  else if (!strcmp (type, "COPEN"))
-    return new cpwopen ();
-  else if (!strcmp (type, "CSHORT"))
-    return new cpwshort ();
-  else if (!strcmp (type, "CGAP"))
-    return new cpwgap ();
-  else if (!strcmp (type, "CSTEP"))
-    return new cpwstep ();
-  else if (!strcmp (type, "IProbe"))
-    return new iprobe ();
-  else if (!strcmp (type, "VProbe"))
-    return new vprobe ();
-  else if (!strcmp (type, "JFET"))
-    return new jfet ();
-  else if (!strcmp (type, "BJT"))
-    return new bjt ();
-  else if (!strcmp (type, "SPfile"))
-    return new spfile ();
-  else if (!strcmp (type, "Vnoise"))
-    return new vnoise ();
-  else if (!strcmp (type, "Inoise"))
-    return new inoise ();
-  else if (!strcmp (type, "MOSFET"))
-    return new mosfet ();
-  else if (!strcmp (type, "Amp"))
-    return new amplifier ();
-  else if (!strcmp (type, "OpAmp"))
-    return new opamp ();
-  else if (!strcmp (type, "IInoise"))
-    return new iinoise ();
-  else if (!strcmp (type, "MUT"))
-    return new mutual ();
-  else if (!strcmp (type, "MUT2"))
-    return new mutual2 ();
-  else if (!strcmp (type, "MUTX"))
-    return new mutualx ();
-  else if (!strcmp (type, "IVnoise"))
-    return new ivnoise ();
-  else if (!strcmp (type, "VVnoise"))
-    return new vvnoise ();
-  else if (!strcmp (type, "Inv"))
-    return new inverter ();
-  else if (!strcmp (type, "NOR"))
-    return new logicnor ();
-  else if (!strcmp (type, "OR"))
-    return new logicor ();
-  else if (!strcmp (type, "NAND"))
-    return new logicnand ();
-  else if (!strcmp (type, "AND"))
-    return new logicand ();
-  else if (!strcmp (type, "XNOR"))
-    return new logicxnor ();
-  else if (!strcmp (type, "XOR"))
-    return new logicxor ();
-  else if (!strcmp (type, "DigiSource"))
-    return new digisource ();
-  else if (!strcmp (type, "hicumL2p1"))
-    return new hicumL2p1 ();
-  else if (!strcmp (type, "HBT_X"))
-    return new HBT_X ();
-  else if (!strcmp (type, "mod_amp"))
-    return new mod_amp ();
-  else if (!strcmp (type, "hic2_full"))
-    return new hic2_full ();
-  else if (!strcmp (type, "log_amp"))
-    return new log_amp ();
-  else if (!strcmp (type, "hic0_full"))
-    return new hic0_full ();
-  else if (!strcmp (type, "potentiometer"))
-    return new potentiometer ();
-  else if (!strcmp (type, "MESFET"))
-    return new MESFET ();
-  else if (!strcmp (type, "EKV26nMOS"))
-    return new EKV26nMOS ();
-  else if (!strcmp (type, "EKV26pMOS"))
-    return new EKV26pMOS ();
-  else if (!strcmp (type, "hicumL0V1p2"))
-    return new hicumL0V1p2 ();
-  else if (!strcmp (type, "hicumL2V2p23"))
-    return new hicumL2V2p23 ();
+  circuit_creator_t create;
+  if ((create = (circuit_creator_t) creators.get (type)) != NULL)
+    return create ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

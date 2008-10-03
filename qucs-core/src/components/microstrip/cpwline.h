@@ -2,7 +2,7 @@
  * cpwline.h - coplanar waveguide line class definitions
  *
  * Copyright (C) 2004, 2005 Vincent Habchi, F5RCS <10.50@free.fr>
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.h,v 1.9 2006/01/30 07:45:35 raimi Exp $
+ * $Id: cpwline.h,v 1.10 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -39,6 +39,8 @@ class cpwline : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void saveCharacteristics (nr_double_t);
+
+  CREATOR (cpwline);
 
   static void ellipke (nr_double_t, nr_double_t &, nr_double_t &);
   static nr_double_t ellipk (nr_double_t);

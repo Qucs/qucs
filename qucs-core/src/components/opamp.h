@@ -1,7 +1,7 @@
 /*
  * opamp.h - operational amplifier class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.h,v 1.5 2005/06/27 14:18:09 raimi Exp $
+ * $Id: opamp.h,v 1.6 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -36,6 +36,8 @@ class opamp : public circuit
   void initTR (void);
   void calcTR (nr_double_t);
   void calcOperatingPoints (void);
+
+  CREATOR (opamp);
 
  private:
   nr_double_t gv;

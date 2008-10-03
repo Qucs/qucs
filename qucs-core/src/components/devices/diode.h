@@ -1,7 +1,7 @@
 /*
  * diode.h - diode class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.h,v 1.18 2007/04/19 16:06:28 ela Exp $
+ * $Id: diode.h,v 1.19 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -46,6 +46,8 @@ class diode : public circuit, public devstates
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
+
+  CREATOR (diode);
 
  private:
   nr_double_t Ud, gd, Id, Qd, Bv;

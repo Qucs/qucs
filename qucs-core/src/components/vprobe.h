@@ -1,7 +1,7 @@
 /*
  * vprobe.h - AC/DC and transient voltage probe class definitions
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vprobe.h,v 1.1 2006/02/06 09:50:15 raimi Exp $
+ * $Id: vprobe.h,v 1.2 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -34,6 +34,8 @@ class vprobe : public circuit
   void initAC (void);
   void initTR (void);
   void saveOperatingPoints (void);
+
+  CREATOR (vprobe);
 };
 
 #endif /* __VPROBE_H__ */

@@ -1,7 +1,7 @@
 /*
  * inverter.h - logical inverter class definitions
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.h,v 1.1 2005/11/24 10:10:21 raimi Exp $
+ * $Id: inverter.h,v 1.2 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -31,6 +31,8 @@ class inverter : public digital
   inverter ();
   void calcOutput (void);
   void calcDerivatives (void);
+
+  CREATOR (inverter);
 };
 
 #endif /* __INVERTER_H__ */

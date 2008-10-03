@@ -1,7 +1,7 @@
 /*
  * mosfet.h - mosfet class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.h,v 1.17 2006/05/03 09:43:56 raimi Exp $
+ * $Id: mosfet.h,v 1.18 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -43,6 +43,8 @@ class mosfet : public circuit
   void calcNoiseAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
+
+  CREATOR (mosfet);
 
  private:
   nr_double_t transientChargeTR (int, nr_double_t&, nr_double_t, nr_double_t);

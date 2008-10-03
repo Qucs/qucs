@@ -750,6 +750,7 @@ class $(module) : public circuit
 {
  public:
   $(module) ();
+  CREATOR ($(module));
 
   void initDC (void);
   void restartDC (void);

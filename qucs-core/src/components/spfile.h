@@ -1,7 +1,7 @@
 /*
  * spfile.h - S-parameter file class definitions
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.14 2008/01/10 20:00:00 ela Exp $
+ * $Id: spfile.h,v 1.15 2008/10/03 14:49:49 ela Exp $
  *
  */
 
@@ -67,6 +67,8 @@ class spfile : public circuit
   matrix shrinkSParaMatrix (matrix);
   matrix getInterpolMatrixS (nr_double_t);
   matrix calcMatrixCs (nr_double_t);
+
+  CREATOR (spfile);
 
  private:
   dataset * data;
