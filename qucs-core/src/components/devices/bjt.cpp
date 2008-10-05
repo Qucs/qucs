@@ -1,7 +1,7 @@
 /*
  * bjt.cpp - bipolar junction transistor class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.47 2008/01/10 20:00:01 ela Exp $
+ * $Id: bjt.cpp,v 1.48 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,20 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "matrix.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include "bjt.h"
 
@@ -771,3 +758,58 @@ void bjt::excessPhase (int istate, nr_double_t& i, nr_double_t& g) {
   setState (istate, i);
   g = g * c1;
 }
+
+// properties
+struct define_t bjt::cirdef =
+  { "BJT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ikr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vaf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Var", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ise", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ne", PROP_REAL, { 1.5, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Isc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nc", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Bf", PROP_REAL, { 100, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Br", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Rbm", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Irb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cje", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vje", PROP_REAL, { 0.75, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      { "Mje", PROP_REAL, { 0.33, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Cjc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vjc", PROP_REAL, { 0.75, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      { "Mjc", PROP_REAL, { 0.33, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Xcjc", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Cjs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vjs", PROP_REAL, { 0.75, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      { "Mjs", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Vtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Xtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Itf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Rc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Re", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ab", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Fb", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
+      { "Ptf", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
+      { "Xtb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.h,v 1.5 2008/10/03 14:49:49 ela Exp $
+ * $Id: eqndefined.h,v 1.6 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class eqndefined : public circuit
 {
  public:
-  eqndefined ();
+  CREATOR (eqndefined);
   ~eqndefined ();
   void initDC (void);
   void calcDC (void);
@@ -41,8 +41,6 @@ class eqndefined : public circuit
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
-
-  CREATOR (eqndefined);
 
  private:
   void initModel (void);

@@ -1,7 +1,7 @@
 /*
  * vac.cpp - AC voltage source class implementation
  *
- * Copyright (C) 2003, 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.cpp,v 1.19 2007/03/11 15:43:10 ela Exp $
+ * $Id: vac.cpp,v 1.20 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "consts.h"
-#include "constants.h"
+#include "component.h"
 #include "vac.h"
 
 vac::vac () : circuit (2) {
@@ -99,3 +88,13 @@ void vac::calcHB (nr_double_t frequency) {
     setE (VSRC_1, 0);
   }
 }
+
+// properties
+struct define_t vac::cirdef =
+  { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -1,7 +1,7 @@
 /*
  * acsolver.h - AC solver class definitions
  *
- * Copyright (C) 2004, 2005, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.h,v 1.8 2008/01/10 20:00:00 ela Exp $
+ * $Id: acsolver.h,v 1.9 2008/10/05 17:52:10 ela Exp $
  *
  */
 
@@ -33,7 +33,7 @@ class vector;
 class acsolver : public nasolver<nr_complex_t>
 {
  public:
-  acsolver ();
+  ACREATOR (acsolver);
   acsolver (char *);
   acsolver (acsolver &);
   ~acsolver ();

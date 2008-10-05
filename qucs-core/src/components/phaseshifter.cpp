@@ -1,7 +1,7 @@
 /*
  * phaseshifter.cpp - phase shifter class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.12 2008/01/22 17:50:54 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.13 2008/10/05 17:52:12 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "phaseshifter.h"
 
 phaseshifter::phaseshifter () : circuit (2) {
@@ -79,3 +70,12 @@ void phaseshifter::initAC (void) {
     setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
   }
 }
+
+// properties
+struct define_t phaseshifter::cirdef =
+  { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "phi", PROP_REAL, { 1e-90, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

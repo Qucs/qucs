@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: biastee.h,v 1.11 2008/10/03 14:49:48 ela Exp $
+ * $Id: biastee.h,v 1.12 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,14 +28,12 @@
 class biastee : public circuit
 {
  public:
-  biastee ();
+  CREATOR (biastee);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (biastee);
 };
 
 #endif /* __BIASTEE_H__ */

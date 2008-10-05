@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: idc.h,v 1.9 2008/10/03 14:49:48 ela Exp $
+ * $Id: idc.h,v 1.10 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,14 +28,12 @@
 class idc : public circuit
 {
  public:
-  idc ();
+  CREATOR (idc);
   void initSP (void);
   void initDC (void);
   void calcDC (void);
   void initAC (void);
   void initTR (void);
-
-  CREATOR (idc);
 };
 
 #endif /* __IDC_H__ */

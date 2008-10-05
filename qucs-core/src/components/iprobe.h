@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iprobe.h,v 1.6 2008/10/03 14:49:48 ela Exp $
+ * $Id: iprobe.h,v 1.7 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,13 +28,11 @@
 class iprobe : public circuit
 {
  public:
-  iprobe ();
+  CREATOR (iprobe);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
-
-  CREATOR (iprobe);
 };
 
 #endif /* __IPROBE_H__ */

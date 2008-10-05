@@ -1,7 +1,7 @@
 /*
- * short.cpp - short class implementation
+ * analyses.h - global analysis header file
  *
- * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,43 +18,19 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: short.cpp,v 1.2 2008/10/05 17:52:14 ela Exp $
+ * $Id: analyses.h,v 1.1 2008/10/05 17:52:10 ela Exp $
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef __ANALYSES_H__
+#define __ANALYSES_H__
 
-#include "component.h"
-#include "short.h"
+#include "analysis.h"
+#include "spsolver.h"
+#include "dcsolver.h"
+#include "parasweep.h"
+#include "acsolver.h"
+#include "trsolver.h"
+#include "hbsolver.h"
 
-ashort::ashort () : circuit (2) {
-  type = CIR_SHORT;
-  setVoltageSources (1);
-}
-
-void ashort::initSP (void) {
-  allocMatrixS ();
-  setS (NODE_1, NODE_1, 0.0);
-  setS (NODE_2, NODE_2, 0.0);
-  setS (NODE_1, NODE_2, 1.0);
-  setS (NODE_2, NODE_1, 1.0);
-}
-
-void ashort::initDC (void) {
-  allocMatrixMNA ();
-  voltageSource (VSRC_1, NODE_1, NODE_2);
-}
-
-void ashort::initAC (void) {
-  initDC ();
-}
-
-void ashort::initTR (void) {
-  initDC ();
-}
-
-void ashort::initHB (void) {
-  initDC ();
-}
+#endif /* __ANALYSES_H__ */

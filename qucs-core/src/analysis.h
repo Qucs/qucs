@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.h,v 1.16 2008/02/22 19:46:06 ela Exp $
+ * $Id: analysis.h,v 1.17 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,6 +28,12 @@
 #define SAVE_OPS 1 // save operating points
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
 #define SAVE_CVS 4 // save characteristic values
+
+#define ACREATOR(val) \
+  val (); \
+  static analysis * create (void) { return new val (); } \
+  static struct define_t anadef; \
+  static struct define_t * definition (void) { return &anadef; }
 
 class dataset;
 class net;

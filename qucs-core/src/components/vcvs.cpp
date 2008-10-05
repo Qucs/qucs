@@ -1,7 +1,7 @@
 /*
  * vcvs.cpp - vcvs class implementation
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vcvs.cpp,v 1.15 2008/01/10 20:00:00 ela Exp $
+ * $Id: vcvs.cpp,v 1.16 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#define __USE_BSD
-#define __USE_XOPEN
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "vcvs.h"
 
 vcvs::vcvs () : circuit (4) {
@@ -104,3 +94,10 @@ void vcvs::calcTR (nr_double_t t) {
     setE (VSRC_1, g * v);
   }
 }
+
+// properties
+struct define_t vcvs::cirdef =
+  { "VCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

@@ -1,7 +1,7 @@
 /*
  * coaxline.cpp - coaxial cable class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.cpp,v 1.3 2008/01/10 20:00:00 ela Exp $
+ * $Id: coaxline.cpp,v 1.4 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "logging.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "matrix.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "coaxline.h"
 
 coaxline::coaxline () : circuit (2) {
@@ -171,3 +160,18 @@ void coaxline::calcNoiseAC (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
+
+// properties
+struct define_t coaxline::cirdef =
+  { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "er", PROP_REAL, { 2.29, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcfeed.h,v 1.10 2008/10/03 14:49:48 ela Exp $
+ * $Id: dcfeed.h,v 1.11 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,14 +28,12 @@
 class dcfeed : public circuit
 {
  public:
-  dcfeed ();
+  CREATOR (dcfeed);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (dcfeed);
 };
 
 #endif /* __DCFEED_H__ */

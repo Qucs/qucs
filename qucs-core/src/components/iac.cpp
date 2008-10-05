@@ -1,7 +1,7 @@
 /*
  * iac.cpp - AC current source class implementation
  *
- * Copyright (C) 2004, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iac.cpp,v 1.15 2008/01/10 20:00:00 ela Exp $
+ * $Id: iac.cpp,v 1.16 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "consts.h"
-#include "constants.h"
+#include "component.h"
 #include "iac.h"
 
 iac::iac () : circuit (2) {
@@ -77,3 +66,13 @@ void iac::calcTR (nr_double_t t) {
   nr_double_t i = s * a * exp (-(t + T) * d * f) * sin (o * t + rad (p));
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
+
+// properties
+struct define_t iac::cirdef =
+  { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

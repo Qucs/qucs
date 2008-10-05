@@ -1,7 +1,7 @@
 /*
  * substrate.h - microstrip substrate class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004m 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: substrate.h,v 1.3 2005/06/02 18:17:56 raimi Exp $
+ * $Id: substrate.h,v 1.4 2008/10/05 17:52:17 ela Exp $
  *
  */
 
@@ -30,13 +30,9 @@
 class substrate : public object
 {
  public:
-  substrate ();
+  MCREATOR (substrate);
   substrate (const substrate &);
   ~substrate ();
-
- protected:
-
- private:
 };
 
 #endif /* __SUBSTRATE_H__ */

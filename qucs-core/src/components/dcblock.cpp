@@ -1,7 +1,7 @@
 /*
  * dcblock.cpp - DC block class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcblock.cpp,v 1.8 2005/06/02 18:17:51 raimi Exp $
+ * $Id: dcblock.cpp,v 1.9 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "dcblock.h"
 
 dcblock::dcblock () : circuit (2) {
@@ -82,3 +75,11 @@ void dcblock::calcTR (nr_double_t) {
   setI (NODE_1 , -i);
   setI (NODE_2 , +i);
 }
+
+// properties
+struct define_t dcblock::cirdef =
+  { "DCBlock", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.h,v 1.15 2008/10/03 14:49:49 ela Exp $
+ * $Id: resistor.h,v 1.16 2008/10/05 17:52:13 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class resistor : public circuit
 {
  public:
-  resistor ();
+  CREATOR (resistor);
   void initSP (void);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
@@ -40,8 +40,6 @@ class resistor : public circuit
   void calcTR (nr_double_t);
   void initTR (void);
   void initHB (void);
-
-  CREATOR (resistor);
 
  private:
   void initModel (void);

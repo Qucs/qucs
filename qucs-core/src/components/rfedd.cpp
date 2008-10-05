@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.6 2008/02/22 16:55:19 ela Exp $
+ * $Id: rfedd.cpp,v 1.7 2008/10/05 17:52:13 ela Exp $
  *
  */
 
@@ -26,27 +26,9 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#if !HAVE_STRCHR
-# define strchr  index
-# define strrchr rindex
-#endif
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "matrix.h"
-#include "net.h"
-#include "component_id.h"
+#include "component.h"
 #include "equation.h"
 #include "environment.h"
-#include "constants.h"
 #include "rfedd.h"
 
 using namespace eqn;
@@ -392,3 +374,76 @@ void rfedd::calcSP (nr_double_t frequency) {
     break;
   }
 }
+
+// properties
+struct define_t rfedd::cirdef =
+  { "RFEDD", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "Y" }, PROP_NO_RANGE },
+      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" }, PROP_NO_RANGE },
+      { "P11", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "P12", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P13", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P14", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P15", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P16", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P17", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P18", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P21", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P22", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P23", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P24", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P25", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P26", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P27", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P28", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P31", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P32", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P33", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P34", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P35", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P36", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P37", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P38", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P41", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P42", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P43", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P44", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P45", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P46", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P47", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P48", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P51", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P52", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P53", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P54", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P55", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P56", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P57", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P58", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P61", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P62", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P63", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P64", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P65", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P66", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P67", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P68", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P71", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P72", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P73", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P74", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P75", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P76", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P77", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P78", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P81", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "P82", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P83", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P84", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P85", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P86", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P87", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "P88", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      PROP_NO_PROP }
+  };

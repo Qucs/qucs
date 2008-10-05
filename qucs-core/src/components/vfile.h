@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.h,v 1.3 2008/10/03 14:49:49 ela Exp $
+ * $Id: vfile.h,v 1.4 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -33,7 +33,7 @@ class spline;
 class vfile : public circuit
 {
  public:
-  vfile ();
+  CREATOR (vfile);
   ~vfile ();
   void initSP (void);
   void initDC (void);
@@ -43,8 +43,6 @@ class vfile : public circuit
   void prepare (void);
   nr_double_t interpolate (vector * , vector * , nr_double_t);
   nr_double_t interpolate_lin (vector *, vector *, nr_double_t, int);
-
-  CREATOR (vfile);
 
 private:
   dataset * data;

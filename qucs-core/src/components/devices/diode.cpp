@@ -1,7 +1,7 @@
 /*
  * diode.cpp - diode class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.42 2008/01/10 20:00:01 ela Exp $
+ * $Id: diode.cpp,v 1.43 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,19 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "matrix.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include "devstates.h"
 #include "diode.h"
@@ -458,3 +446,38 @@ void diode::calcHB (int frequency) {
   setQV (NODE_C, NODE_C, +Cd); setQV (NODE_A, NODE_A, +Cd);
   setQV (NODE_C, NODE_A, -Cd); setQV (NODE_A, NODE_C, -Cd);
 }
+
+// properties
+struct define_t diode::cirdef =
+  { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1e-6, 100) },
+      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 2) },
+      { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      PROP_NO_PROP },
+    { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Isr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Bv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ibv", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
+      { "Cp", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+      PROP_NO_PROP }
+  };

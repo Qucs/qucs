@@ -1,7 +1,7 @@
 /*
  * iexp.cpp - exponential current source class implementation
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iexp.cpp,v 1.1 2007/04/15 10:17:48 ela Exp $
+ * $Id: iexp.cpp,v 1.2 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -27,16 +27,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include <math.h>
+#include "component.h"
 #include "iexp.h"
 
 iexp::iexp () : circuit (2) {
@@ -90,3 +81,16 @@ void iexp::calcTR (nr_double_t t) {
   }
   setI (NODE_1, +it * s); setI (NODE_2, -it * s);
 }
+
+// properties
+struct define_t iexp::cirdef =
+  { "Iexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "I2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

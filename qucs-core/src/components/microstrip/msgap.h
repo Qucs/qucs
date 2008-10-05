@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msgap.h,v 1.7 2008/10/03 14:49:49 ela Exp $
+ * $Id: msgap.h,v 1.8 2008/10/05 17:52:17 ela Exp $
  *
  */
 
@@ -29,13 +29,11 @@
 class msgap : public circuit
 {
  public:
-  msgap ();
+  CREATOR (msgap);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcAC (nr_double_t);
   matrix calcMatrixY (nr_double_t);
-
-  CREATOR (msgap);
 };
 
 #endif /* __MSGAP_H__ */

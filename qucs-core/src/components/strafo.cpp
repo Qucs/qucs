@@ -1,7 +1,7 @@
 /*
  * strafo.cpp - symmetrical trafo class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: strafo.cpp,v 1.13 2005/06/02 18:17:52 raimi Exp $
+ * $Id: strafo.cpp,v 1.14 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "strafo.h"
 
 strafo::strafo () : circuit (6) {
@@ -109,3 +102,11 @@ void strafo::initAC (void) {
 void strafo::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t strafo::cirdef =
+  { "sTr", 6, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "T1", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.30 2007/12/28 20:08:48 ela Exp $
+ * $Id: ucs.cpp,v 1.31 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include "logging.h"
 #include "precision.h"
 #include "component.h"
+#include "components.h"
 #include "net.h"
 #include "input.h"
 #include "dataset.h"
@@ -42,6 +43,7 @@
 #include "environment.h"
 #include "exceptionstack.h"
 #include "check_netlist.h"
+#include "module.h"
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -109,6 +111,9 @@ int main (int argc, char ** argv) {
     }
   }
 
+  // create static modules
+  module::registerModules ();
+
   // create root environment
   root = new environment ("root");
 
@@ -154,6 +159,10 @@ int main (int argc, char ** argv) {
   delete in;
   delete out;
   delete root;
+
+  // delete modules
+  module::unregisterModules ();
+
   netlist_destroy_env ();
   return ret;
 }

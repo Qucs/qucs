@@ -1,7 +1,7 @@
 /*
  * vnoise.cpp - noise voltage source class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vnoise.cpp,v 1.8 2005/06/02 18:17:52 raimi Exp $
+ * $Id: vnoise.cpp,v 1.9 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "constants.h"
-#include "component_id.h"
+#include "component.h"
 #include "vnoise.h"
 
 vnoise::vnoise () : circuit (2) {
@@ -82,3 +73,14 @@ void vnoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t ipsd = u / (a + c * pow (frequency, e)) / kB / T0;
   setN (NODE_3, NODE_3, +ipsd);
 }
+
+// properties
+struct define_t vnoise::cirdef =
+  { "Vnoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "u", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

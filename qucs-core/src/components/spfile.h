@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.15 2008/10/03 14:49:49 ela Exp $
+ * $Id: spfile.h,v 1.16 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -42,7 +42,7 @@ struct spfile_index_t {
 class spfile : public circuit
 {
  public:
-  spfile ();
+  CREATOR (spfile);
   ~spfile ();
   void initSP (void);
   void calcSP (nr_double_t);
@@ -67,8 +67,6 @@ class spfile : public circuit
   matrix shrinkSParaMatrix (matrix);
   matrix getInterpolMatrixS (nr_double_t);
   matrix calcMatrixCs (nr_double_t);
-
-  CREATOR (spfile);
 
  private:
   dataset * data;

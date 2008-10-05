@@ -2,7 +2,7 @@
  * bondwire.cpp - bondwire class implementation
  *
  * Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.8 2008/01/10 20:00:01 ela Exp $
+ * $Id: bondwire.cpp,v 1.9 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -50,25 +50,9 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "matrix.h"
 #include "bondwire.h"
-
-#ifdef __MINGW32__
-#define strcasecmp stricmp
-#endif
 
 bondwire::bondwire () : circuit (2) {
   type = CIR_BONDWIRE;
@@ -430,3 +414,18 @@ void bondwire::calcNoiseAC (nr_double_t) {
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
+
+// properties
+struct define_t bondwire::cirdef =
+  { "BOND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "D", PROP_REAL, { 25e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "H", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "FREESPACE" }, PROP_NO_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

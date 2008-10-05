@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.cpp,v 1.13 2008/01/10 20:00:02 ela Exp $
+ * $Id: mstee.cpp,v 1.14 2008/10/05 17:52:17 ela Exp $
  *
  */
 
@@ -26,18 +26,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "net.h"
 #include "device.h"
 #include "msline.h"
 #include "mstee.h"
@@ -287,3 +277,18 @@ void mstee::calcAC (nr_double_t frequency) {
 void mstee::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t mstee::cirdef =
+  { "MTEE", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W3", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

@@ -2,7 +2,7 @@
  * vfile.cpp - file based voltage source class implementation
  *
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.cpp,v 1.4 2007/10/21 20:08:02 ela Exp $
+ * $Id: vfile.cpp,v 1.5 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -27,24 +27,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef __MINGW32__
-#define strcasecmp stricmp
-#endif
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
+#include "component.h"
 #include "dataset.h"
-#include "net.h"
-#include "component_id.h"
-#include "vector.h"
-#include "consts.h"
 #include "poly.h"
 #include "spline.h"
 #include "vfile.h"
@@ -244,3 +228,15 @@ void vfile::calcTR (nr_double_t t) {
   nr_double_t u = interpolate (vs, ts, t - T);
   setE (VSRC_1, G * u);
 }
+
+// properties
+struct define_t vfile::cirdef =
+  { "Vfile", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "File", PROP_STR, { PROP_NO_VAL, "vfile.dat" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
+      { "Repeat", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwopen.h,v 1.4 2008/10/03 14:49:49 ela Exp $
+ * $Id: cpwopen.h,v 1.5 2008/10/05 17:52:16 ela Exp $
  *
  */
 
@@ -28,14 +28,12 @@
 class cpwopen : public circuit
 {
  public:
-  cpwopen ();
+  CREATOR (cpwopen);
   void initSP (void);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
-
-  CREATOR (cpwopen);
 
   void checkProperties (void);
   nr_double_t calcCend (nr_double_t);

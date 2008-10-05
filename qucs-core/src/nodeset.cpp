@@ -1,7 +1,7 @@
 /*
  * nodeset.cpp - node set class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodeset.cpp,v 1.2 2005/06/02 18:17:51 raimi Exp $
+ * $Id: nodeset.cpp,v 1.3 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -30,6 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "object.h"
+#include "netdefs.h"
 #include "nodeset.h"
 
 // Constructor creates an unnamed instance of the node set class.
@@ -88,3 +90,11 @@ nodeset * nodeset::findNodeset (char * n) {
   }
   return NULL;
 }
+
+// properties
+struct define_t nodeset::miscdef =
+  { "NodeSet", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

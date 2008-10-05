@@ -1,7 +1,7 @@
 /*
  * tline.cpp - ideal transmission line class implementation
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline.cpp,v 1.15 2008/01/10 20:00:00 ela Exp $
+ * $Id: tline.cpp,v 1.16 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "tline.h"
 
 tline::tline () : circuit (2) {
@@ -166,3 +157,14 @@ void tline::calcTR (nr_double_t t) {
     setE (VSRC_2, a * (getV (NODE_1, T) + z * getJ (VSRC_1, T)));
   }
 }
+
+// properties
+struct define_t tline::cirdef =
+  { "TLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Alpha", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

@@ -1,7 +1,7 @@
 /*
  * irect.cpp - rectangular pulse current source class implementation
  *
- * Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: irect.cpp,v 1.6 2006/09/25 07:45:01 raimi Exp $
+ * $Id: irect.cpp,v 1.7 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
+#include "component.h"
 #include "irect.h"
 
 irect::irect () : circuit (2) {
@@ -101,3 +92,16 @@ void irect::calcTR (nr_double_t t) {
   }
   setI (NODE_1, +it * s); setI (NODE_2, -it * s);
 }
+
+// properties
+struct define_t irect::cirdef =
+  { "Irect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Td", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

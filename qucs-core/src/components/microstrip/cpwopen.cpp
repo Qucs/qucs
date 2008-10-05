@@ -1,7 +1,7 @@
 /*
  * cpwopen.cpp - coplanar waveguide open end class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwopen.cpp,v 1.3 2008/01/10 20:00:01 ela Exp $
+ * $Id: cpwopen.cpp,v 1.4 2008/10/05 17:52:16 ela Exp $
  *
  */
 
@@ -26,21 +26,10 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "cpwopen.h"
 #include "cpwline.h"
+#include "cpwopen.h"
 
 cpwopen::cpwopen () : circuit (1) {
   type = CIR_CPWOPEN;
@@ -109,3 +98,15 @@ void cpwopen::initAC (void) {
 void cpwopen::calcAC (nr_double_t frequency) {
   setY (NODE_1, NODE_1, calcY (frequency));
 }
+
+// properties
+struct define_t cpwopen::cirdef =
+  { "COPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "G", PROP_REAL, { 5e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

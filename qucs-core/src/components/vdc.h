@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vdc.h,v 1.12 2008/10/03 14:49:49 ela Exp $
+ * $Id: vdc.h,v 1.13 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class vdc : public circuit
 {
  public:
-  vdc ();
+  CREATOR (vdc);
   void initSP (void);
   void initDC (void);
   void calcDC (void);
@@ -36,8 +36,6 @@ class vdc : public circuit
   void initTR (void);
   void initHB (void);
   void calcHB (nr_double_t);
-
-  CREATOR (vdc);
 };
 
 #endif /* __VDC_H__ */

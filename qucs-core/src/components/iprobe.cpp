@@ -1,7 +1,7 @@
 /*
  * iprobe.cpp - AC/DC and transient current probe class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iprobe.cpp,v 1.8 2005/06/02 18:17:52 raimi Exp $
+ * $Id: iprobe.cpp,v 1.9 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "iprobe.h"
 
 iprobe::iprobe () : circuit (2) {
@@ -62,3 +55,10 @@ void iprobe::initAC (void) {
 void iprobe::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t iprobe::cirdef =
+  { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

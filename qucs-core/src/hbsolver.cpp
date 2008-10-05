@@ -1,7 +1,7 @@
 /*
  * hbsolver.cpp - harmonic balance solver class implementation
  *
- * Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.28 2008/02/15 17:56:00 ela Exp $
+ * $Id: hbsolver.cpp,v 1.29 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "circuit.h"
 #include "component_id.h"
 #include "net.h"
+#include "netdefs.h"
 #include "strlist.h"
 #include "ptrlist.h"
 #include "tvector.h"
@@ -1408,6 +1409,19 @@ void hbsolver::saveResults (void) {
     }
   }
 }
+
+// properties
+struct define_t hbsolver::anadef =
+  { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
+      PROP_NO_PROP },
+    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "iabstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
+      { "vabstol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+      { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, PROP_RNGII (2, 10000) },
+      PROP_NO_PROP }
+  };
 
 /* TODO list for HB Solver:
    - Take care about nodes with non-linear components only.

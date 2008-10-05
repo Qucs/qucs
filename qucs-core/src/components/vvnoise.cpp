@@ -1,7 +1,7 @@
 /*
  * vvnoise.cpp - correlated noise voltage sources class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vvnoise.cpp,v 1.1 2005/10/05 11:22:42 raimi Exp $
+ * $Id: vvnoise.cpp,v 1.2 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "constants.h"
-#include "matrix.h"
-#include "component_id.h"
+#include "component.h"
 #include "vvnoise.h"
 
 #define NODE_V1P 0
@@ -106,3 +96,16 @@ void vvnoise::calcNoiseAC (nr_double_t frequency) {
   setN (NODE_5, NODE_5, u1); setN (NODE_6, NODE_6, u2);
   setN (NODE_5, NODE_6, cu); setN (NODE_6, NODE_5, cu);
 }
+
+// properties
+struct define_t vvnoise::cirdef =
+  { "VVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "v1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (-1, 1) }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

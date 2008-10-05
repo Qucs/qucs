@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: mscorner.h,v 1.8 2008/10/03 14:49:49 ela Exp $
+ * $Id: mscorner.h,v 1.9 2008/10/05 17:52:16 ela Exp $
  *
  */
 
@@ -29,14 +29,12 @@
 class mscorner : public circuit
 {
  public:
-  mscorner ();
+  CREATOR (mscorner);
   void calcSP (nr_double_t);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
-
-  CREATOR (mscorner);
 
  private:
   void initCheck (void);

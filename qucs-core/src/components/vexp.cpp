@@ -1,7 +1,7 @@
 /*
  * vexp.cpp - exponential voltage source class implementation
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vexp.cpp,v 1.1 2007/04/15 10:17:51 ela Exp $
+ * $Id: vexp.cpp,v 1.2 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -27,16 +27,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "consts.h"
+#include "component.h"
 #include "vexp.h"
 
 vexp::vexp () : circuit (2) {
@@ -91,3 +82,16 @@ void vexp::calcTR (nr_double_t t) {
   }
   setE (VSRC_1, ut * s);
 }
+
+// properties
+struct define_t vexp::cirdef =
+  { "Vexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "U2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -1,7 +1,7 @@
 /*
  * mosfet.cpp - mosfet class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.37 2008/01/10 20:00:01 ela Exp $
+ * $Id: mosfet.cpp,v 1.38 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,20 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
-#include "complex.h"
-#include "matrix.h"
-#include "object.h"
-#include "logging.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include "mosfet.h"
 
@@ -717,3 +704,55 @@ nr_double_t mosfet::transientChargeSR (int qstate, nr_double_t& cap,
   setState (vstate, voltage);
   return cap * (voltage - getState (vstate, 1)) + getState (qstate, 1);
 }
+
+// properties
+struct define_t mosfet::cirdef =
+  { "MOSFET", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Vt0", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kp", PROP_REAL, { 2e-5, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Gamma", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Phi", PROP_REAL, { 0.6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rg", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_RNG_X01I },
+      { "Ld", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Tox", PROP_REAL, { 1e-7, PROP_NO_STR }, PROP_RNG_X01I },
+      { "Cgso", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgdo", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgbo", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cbd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cbs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Pb", PROP_REAL, { 0.8, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      { "Mj", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
+      { "Cjsw", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Mjsw", PROP_REAL, { 0.33, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nsub", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nss", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tpg", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (-1 , 1) },
+      { "Uo", PROP_REAL, { 600, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rsh", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nrd", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nrs", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cj", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Js", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ad", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "As", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Pd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ps", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "capModel", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1 , 2) },
+      PROP_NO_PROP }
+  };

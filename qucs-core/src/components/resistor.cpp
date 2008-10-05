@@ -1,7 +1,7 @@
 /*
  * resistor.cpp - resistor class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.cpp,v 1.27 2006/03/27 09:55:50 raimi Exp $
+ * $Id: resistor.cpp,v 1.28 2008/10/05 17:52:13 ela Exp $
  *
  */
 
@@ -26,16 +26,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "resistor.h"
-#include "constants.h"
 
 resistor::resistor () : circuit (2) {
   type = CIR_RESISTOR;
@@ -151,3 +143,14 @@ void resistor::initHB (void) {
   voltageSource (VSRC_1, NODE_1, NODE_2);
   setD (VSRC_1, VSRC_1, -r);
 }
+
+// properties
+struct define_t resistor::cirdef =
+  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
+    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Tc1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tc2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

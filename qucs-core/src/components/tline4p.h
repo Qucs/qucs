@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.h,v 1.3 2008/10/03 14:49:49 ela Exp $
+ * $Id: tline4p.h,v 1.4 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class tline4p : public circuit
 {
  public:
-  tline4p ();
+  CREATOR (tline4p);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
@@ -37,8 +37,6 @@ class tline4p : public circuit
   void calcTR (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void calcNoiseSP (nr_double_t);
-
-  CREATOR (tline4p);
 };
 
 #endif /* __TLINE4P_H__ */

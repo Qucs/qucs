@@ -2,7 +2,7 @@
 
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst SYSTEM "admst.dtd">
-<admst version="2.2.8" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst version="2.3.0" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- handling of expression -->
 <admst:template match=":expression">
@@ -67,6 +67,97 @@
   <admst:text format="&quot;%(name)&quot;"/>
 </admst:template>
 
+<admst:template match=":range">
+  <admst:choose>
+    <admst:when test="[nilled(range)]">
+      <admst:text format="PROP_NO_RANGE"/>
+    </admst:when>
+    <admst:otherwise>
+    <admst:variable name="linf" select="%(range/infexpr/hasspecialnumber)"/>
+    <admst:variable name="rinf" select="%(range/supexpr/hasspecialnumber)"/>
+    <admst:variable name="linc" select="%(range/infboundtype)"/>
+    <admst:variable name="rinc" select="%(range/supboundtype)"/>
+
+    <admst:choose>
+    <!-- no range -->
+    <admst:when test="[$linf='YES' and $rinf='YES']">
+      <admst:text format="PROP_NO_RANGE"/>
+    </admst:when>
+    <!-- minimal value -->
+    <admst:when test="[$linf='NO' and $rinf='YES']">
+      <admst:text format="PROP_MIN_VAL"/>
+      <admst:if test="[$linc!='range_bound_include']">
+        <admst:text format="X"/>
+      </admst:if>
+      <admst:text format=" ("/>
+      <admst:apply-templates select="range/infexpr" match=":expression"/>
+      <admst:text format=")"/>
+    </admst:when>
+    <!-- maximal value -->
+    <admst:when test="[$linf='YES' and $rinf='NO']">
+      <admst:text format="PROP_MAX_VAL"/>
+      <admst:if test="[$rinc!='range_bound_include']">
+        <admst:text format="X"/>
+      </admst:if>
+      <admst:text format=" ("/>
+      <admst:apply-templates select="range/supexpr" match=":expression"/>
+      <admst:text format=")"/>
+    </admst:when>
+    <!-- ranged value -->
+    <admst:when test="[$linf='NO' and $rinf='NO']">
+      <admst:text format="PROP_RNG"/>
+      <admst:choose>
+      <admst:when test="[$linc='range_bound_include']">
+        <admst:text format="I"/>
+      </admst:when>
+      <admst:otherwise><admst:text format="X"/></admst:otherwise>
+      </admst:choose>
+      <admst:choose>
+      <admst:when test="[$rinc='range_bound_include']">
+        <admst:text format="I"/>
+      </admst:when>
+      <admst:otherwise><admst:text format="X"/></admst:otherwise>
+      </admst:choose>
+      <admst:text format=" ("/>
+      <admst:apply-templates select="range/infexpr" match=":expression"/>
+      <admst:text format=", "/>
+      <admst:apply-templates select="range/supexpr" match=":expression"/>
+      <admst:text format=")"/>
+    </admst:when>
+  </admst:choose>
+  </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match=":property">
+  <!-- name -->
+  <admst:value-of select="name"/> 
+  <admst:text format="      { &quot;%s&quot;, "/>
+
+  <!-- type -->
+  <admst:choose>
+  <admst:when test="[type='real']">
+    <admst:text format="PROP_REAL"/>
+  </admst:when>
+  <admst:when test="[type='integer']">
+    <admst:text format="PROP_INT"/>
+  </admst:when>
+  <admst:otherwise>
+    <admst:text format="PROP_STR"/>
+  </admst:otherwise>
+  </admst:choose>
+
+  <!-- default value -->
+  <admst:text format=", { "/>
+  <admst:apply-templates select="default" match=":expression"/>
+  <admst:text format=", PROP_NO_STR }, "/>
+
+  <!-- parameter range -->
+  <admst:apply-templates select="." match=":range"/>
+
+  <admst:text format=" },\n"/>
+</admst:template>
+
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
 <!-- definition of variables -->
@@ -78,82 +169,67 @@
 
 <admst:open file="$module.defs.h">
 <admst:for-each select="/module">
-<admst:text format="  /* $module verilog device */\n"/>
-<admst:text format="  { &quot;$module&quot;, $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,\n    {\n"/>
+<admst:text format="/* $module verilog device definition and properties */\n"/>
+<admst:text format="struct define_t $module::cirdef =\n"/>
+<admst:text format="  { &quot;$module&quot;, $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,\n"/>
+
+<!-- find temp and tnom parameters -->
+<admst:variable name="tnom" string="none"/>
+<admst:variable name="temp" string="none"/>
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
-    <admst:value-of select="name"/> 
-    <admst:text format="      { &quot;%s&quot;, "/>
-    <admst:choose>
-    <admst:when test="[type='real']">
-      <admst:text format="PROP_REAL"/>
-    </admst:when>
-    <admst:when test="[type='integer']">
-      <admst:text format="PROP_INT"/>
-    </admst:when>
-    <admst:otherwise>
-      <admst:text format="PROP_STR"/>
-    </admst:otherwise>
-    </admst:choose>
-    <admst:text format=", { "/>
-    <admst:apply-templates select="default" match=":expression"/>
-    <admst:text format=", PROP_NO_STR }, "/>
-    <!-- parameter range -->
-    <admst:choose>
-    <admst:when test="[nilled(range)]">
-      <admst:text format="PROP_NO_RANGE"/>
-    </admst:when>
-    <admst:when test="[name!='pnp' and name!='npn']">
-      <admst:text format="{ "/>
-      <admst:choose>
-      <admst:when test="range/infexpr[hasspecialnumber='YES']">
-        <admst:text format="'.', 0, "/>
-      </admst:when>
-      <admst:otherwise>
-        <admst:choose>
-          <admst:when test="range[infboundtype='range_bound_include']">
-            <admst:text format="'[', "/>
-          </admst:when>
-          <admst:otherwise>
-            <admst:text format="']', "/>
-          </admst:otherwise>
-        </admst:choose>
-        <admst:apply-templates select="range/infexpr" match=":expression"/>
-        <admst:text format=", "/>
-      </admst:otherwise>
-      </admst:choose>
-      <admst:choose>
-      <admst:when test="range/supexpr[hasspecialnumber='YES']">
-        <admst:text format="0, '.'"/>
-      </admst:when>
-      <admst:otherwise>
-        <admst:apply-templates select="range/supexpr" match=":expression"/>
-	<admst:choose>
-	  <admst:when test="range[supboundtype='range_bound_include']">
-	    <admst:text format=", ']'"/>
-          </admst:when>
-          <admst:otherwise>
-            <admst:text format=", '['"/>
-          </admst:otherwise>
-        </admst:choose>
-      </admst:otherwise>
-      </admst:choose>
-      <admst:text format=" }"/>
-    </admst:when>
-    <admst:otherwise>
-      <admst:text format="PROP_POS_RANGE"/>
-    </admst:otherwise>
-    </admst:choose>
-    <admst:text format=" },\n"/>
+    <admst:if test="[upper-case(name)='TNOM']">
+      <admst:variable name="tnom" path="."/>
+    </admst:if>
+    <admst:if test="[upper-case(name)='TEMP']">
+      <admst:variable name="temp" path="."/>
+    </admst:if>
   </admst:if>
 </admst:for-each>
-<admst:if test="[name='hicumL2p1' or name='hic0_full']">
-<admst:text format="      { &quot;Type&quot;, PROP_STR, { PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
-</admst:if>
-<admst:text format="      { &quot;Temp&quot;, PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
-<admst:text format="      PROP_NO_PROP },\n"/>
-<admst:text format="    { PROP_NO_PROP }\n  },\n"/>
+
+<!-- emit required properties -->
+<admst:text format="    {\n"/>
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:if test="[name!='npn' and name!='pnp']">
+      <admst:apply-templates select="." match=":property"/>
+    </admst:if>
+  </admst:if>
 </admst:for-each>
+<admst:text format="      PROP_NO_PROP },\n"/>
+
+<!-- emit optional properties -->
+<admst:text format="    {\n"/>
+
+<admst:if test="[name='hicumL2p1' or name='hic0_full']">
+  <admst:text format="      { &quot;Type&quot;, PROP_STR, { "/>
+  <admst:text format="PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
+</admst:if>
+
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:if test="[name='npn' or name='pnp']">
+      <admst:apply-templates select="." match=":property"/>
+    </admst:if>
+  </admst:if>
+</admst:for-each>
+
+<admst:if test="[name!='mod_amp']">
+  <admst:if test="[$temp='none']">
+  <admst:text format="      { &quot;Temp&quot;, PROP_REAL, { "/>
+  <admst:choose>
+    <admst:when test="[$tnom!='none']">
+      <admst:apply-templates select="$tnom/default" match=":expression"/>
+    </admst:when>
+    <admst:otherwise><admst:text format="26.85"/></admst:otherwise>
+  </admst:choose>
+  <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
+  </admst:if>
+</admst:if>
+<admst:text format="      PROP_NO_PROP }\n  };\n"/>
+
+</admst:for-each>
+
 </admst:open>
 <admst:message format="$module.defs.h: file created\n"/>
 </admst>

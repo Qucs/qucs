@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nand.cpp,v 1.5 2005/12/21 07:14:50 margraf Exp $
+ * $Id: nand.cpp,v 1.6 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,13 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-
-#include "complex.h"
-#include "object.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "digital.h"
 #include "nand.h"
 
@@ -62,3 +56,10 @@ void logicnand::calcDerivatives (void) {
     g[k] = -2 * n * calcDerivative (k) / x / x;
   }
 }
+
+// properties
+struct define_t logicnand::cirdef =
+  { "NAND", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

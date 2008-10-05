@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscoupled.h,v 1.9 2008/10/03 14:49:49 ela Exp $
+ * $Id: mscoupled.h,v 1.10 2008/10/05 17:52:16 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class mscoupled : public circuit
 {
  public:
-  mscoupled ();
+  CREATOR (mscoupled);
   void initDC (void);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
@@ -37,8 +37,6 @@ class mscoupled : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void saveCharacteristics (nr_double_t);
-
-  CREATOR (mscoupled);
 
   static void analysQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				 nr_double_t, nr_double_t, char *,

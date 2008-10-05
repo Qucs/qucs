@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.h,v 1.3 2008/10/03 14:49:49 ela Exp $
+ * $Id: bondwire.h,v 1.4 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -30,7 +30,7 @@
 class bondwire : public circuit
 {
  public:
-  bondwire ();
+  CREATOR (bondwire);
   void initSP (void);
   void calcSP (const nr_double_t);
   void calcNoiseSP (nr_double_t);
@@ -40,8 +40,6 @@ class bondwire : public circuit
   void calcNoiseAC (nr_double_t);
   matrix calcMatrixY (nr_double_t);
   void saveCharacteristics (nr_double_t);
-
-  CREATOR (bondwire);
 
  private:
   void getProperties (void);    

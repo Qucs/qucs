@@ -1,7 +1,7 @@
 /*
  * isolator.cpp - isolator class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: isolator.cpp,v 1.15 2005/06/02 18:17:52 raimi Exp $
+ * $Id: isolator.cpp,v 1.16 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "constants.h"
-#include "component_id.h"
+#include "component.h"
 #include "isolator.h"
 
 isolator::isolator () : circuit (2) {
@@ -108,3 +99,12 @@ void isolator::initAC (void) {
 void isolator::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t isolator::cirdef =
+  { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

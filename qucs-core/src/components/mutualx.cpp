@@ -1,7 +1,7 @@
 /*
  * mutualx.cpp - multiple mutual inductors class implementation
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.cpp,v 1.5 2007/05/21 16:29:16 ela Exp $
+ * $Id: mutualx.cpp,v 1.6 2008/10/05 17:52:12 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "vector.h"
-#include "matrix.h"
-#include "constants.h"
-#include "component_id.h"
+#include "component.h"
 #include "mutualx.h"
 
 mutualx::mutualx () : circuit () {
@@ -162,3 +151,12 @@ void mutualx::calcTR (nr_double_t) {
   delete[] veq;
   delete[] req;
 }
+
+// properties
+struct define_t mutualx::cirdef =
+  { "MUTX", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "k", PROP_LIST, { 0.9, PROP_NO_STR }, PROP_RNGII (-1, +1) },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

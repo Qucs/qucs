@@ -1,7 +1,7 @@
 /*
  * acsolver.cpp - AC solver class implementation
  *
- * Copyright (C) 2004, 2005, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.19 2008/01/10 20:00:00 ela Exp $
+ * $Id: acsolver.cpp,v 1.20 2008/10/05 17:52:10 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "circuit.h"
 #include "sweep.h"
 #include "net.h"
+#include "netdefs.h"
 #include "analysis.h"
 #include "nasolver.h"
 #include "acsolver.h"
@@ -206,3 +207,16 @@ void acsolver::solve_noise (void) {
   // restore usual AC results
   *x = xsave;
 }
+
+// properties
+struct define_t acsolver::anadef =
+  { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
+      { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

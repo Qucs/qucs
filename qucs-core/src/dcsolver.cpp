@@ -1,7 +1,7 @@
 /*
  * dcsolver.cpp - DC solver class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.cpp,v 1.42 2007/12/28 20:08:46 ela Exp $
+ * $Id: dcsolver.cpp,v 1.43 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include "complex.h"
 #include "circuit.h"
 #include "net.h"
+#include "netdefs.h"
 #include "analysis.h"
 #include "nasolver.h"
 #include "dcsolver.h"
@@ -201,3 +202,19 @@ void dcsolver::saveOperatingPoints (void) {
     if (c->isNonLinear ()) c->saveOperatingPoints ();
   }
 }
+
+// properties
+struct define_t dcsolver::anadef =
+  { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, PROP_RNGII (2, 10000) },
+      { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
+      { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+      { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "convHelper", PROP_STR, { PROP_NO_VAL, "none" }, PROP_NO_RANGE },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

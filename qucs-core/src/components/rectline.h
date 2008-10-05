@@ -31,7 +31,7 @@
 class rectline : public circuit
 {
  public:
-  rectline ();
+  CREATOR (rectline);
   void initSP (void);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
@@ -40,8 +40,6 @@ class rectline : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void saveCharacteristics (nr_complex_t);
-
-  CREATOR (rectline);
 
  private:
   void calcPropagation (nr_double_t);

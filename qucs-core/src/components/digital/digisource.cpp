@@ -1,7 +1,7 @@
 /*
  * digisource.cpp - digital source class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digisource.cpp,v 1.2 2005/12/14 08:57:27 raimi Exp $
+ * $Id: digisource.cpp,v 1.3 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "vector.h"
-#include "component_id.h"
-#include "consts.h"
+#include "component.h"
 #include "digisource.h"
 
 digisource::digisource () : circuit (1) {
@@ -87,3 +77,12 @@ void digisource::calcTR (nr_double_t t) {
 
   setE (VSRC_1, lo ? 0 : v);
 }
+
+// properties
+struct define_t digisource::cirdef =
+  { "DigiSource", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "init", PROP_STR, { PROP_NO_VAL, "low" }, PROP_NO_RANGE },
+      { "times", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

@@ -1,7 +1,7 @@
 /*
  * cpwshort.cpp - coplanar waveguide short class implementation
  *
- * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwshort.cpp,v 1.3 2008/01/10 20:00:01 ela Exp $
+ * $Id: cpwshort.cpp,v 1.4 2008/10/05 17:52:16 ela Exp $
  *
  */
 
@@ -26,21 +26,10 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "cpwshort.h"
 #include "cpwline.h"
+#include "cpwshort.h"
 
 cpwshort::cpwshort () : circuit (1) {
   type = CIR_CPWSHORT;
@@ -111,3 +100,14 @@ void cpwshort::initAC (void) {
 void cpwshort::calcAC (nr_double_t frequency) {
   setY (NODE_1, NODE_1, 1.0 / calcZ (frequency));
 }
+
+// properties
+struct define_t cpwshort::cirdef =
+  { "CSHORT", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

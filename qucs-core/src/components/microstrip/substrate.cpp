@@ -1,7 +1,7 @@
 /*
  * substrate.cpp - microstrip substrate class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: substrate.cpp,v 1.2 2005/06/02 18:17:56 raimi Exp $
+ * $Id: substrate.cpp,v 1.3 2008/10/05 17:52:17 ela Exp $
  *
  */
 
@@ -26,17 +26,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "property.h"
+#include "component.h"
 #include "substrate.h"
-#include "component_id.h"
 
 // Constructor creates an unnamed instance of the substrate class.
 substrate::substrate () : object () {
@@ -50,3 +41,16 @@ substrate::substrate (const substrate & c) : object (c) {
 // Destructor deletes a substrate object.
 substrate::~substrate () {
 }
+
+// properties
+struct define_t substrate::miscdef =
+  { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR,
+    { { "er", PROP_REAL, { 9.8, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "h", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "t", PROP_REAL, { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "tand", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "D", PROP_REAL, { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.12 2008/01/10 20:00:01 ela Exp $
+ * $Id: eqndefined.cpp,v 1.13 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,26 +26,9 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#if !HAVE_STRCHR
-# define strchr  index
-# define strrchr rindex
-#endif
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
+#include "component.h"
 #include "equation.h"
 #include "environment.h"
-#include "constants.h"
 #include "device.h"
 #include "eqndefined.h"
 
@@ -479,3 +462,26 @@ void eqndefined::calcHB (int) {
     setCV (i * 2 + 1, -cv);
   }  
 }
+
+// properties
+struct define_t eqndefined::cirdef =
+  { "EDD", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      PROP_NO_PROP },
+    { { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.h,v 1.23 2008/10/03 14:49:49 ela Exp $
+ * $Id: bjt.h,v 1.24 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class bjt : public circuit
 {
  public:
-  bjt ();
+  CREATOR (bjt);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
   void initSP (void);
@@ -43,8 +43,6 @@ class bjt : public circuit
   void calcNoiseAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (bjt);
 
  private:
   void initModel (void);

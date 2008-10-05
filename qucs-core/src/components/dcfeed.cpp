@@ -1,7 +1,7 @@
 /*
  * dcfeed.cpp - DC feed class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcfeed.cpp,v 1.10 2005/06/02 18:17:51 raimi Exp $
+ * $Id: dcfeed.cpp,v 1.11 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "dcfeed.h"
 
 dcfeed::dcfeed () : circuit (2) {
@@ -77,3 +70,11 @@ void dcfeed::calcTR (nr_double_t) {
   setD (VSRC_1, VSRC_1, -r);
   setE (VSRC_1, v);
 }
+
+// properties
+struct define_t dcfeed::cirdef =
+  { "DCFeed", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

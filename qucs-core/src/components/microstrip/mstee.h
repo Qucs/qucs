@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mstee.h,v 1.6 2008/10/03 14:49:49 ela Exp $
+ * $Id: mstee.h,v 1.7 2008/10/05 17:52:17 ela Exp $
  *
  */
 
@@ -31,7 +31,7 @@ class net;
 class mstee : public circuit
 {
  public:
-  mstee ();
+  CREATOR (mstee);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
@@ -40,8 +40,6 @@ class mstee : public circuit
   void initNoiseSP (void);
   void calcSP (nr_double_t);
   void initTR (void);
-
-  CREATOR (mstee);
 
   friend circuit * splitMicrostrip (circuit *, circuit *, net *,
 				    const char *, const char *, int);

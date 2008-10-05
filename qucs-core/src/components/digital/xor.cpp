@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: xor.cpp,v 1.6 2006/01/11 09:50:07 raimi Exp $
+ * $Id: xor.cpp,v 1.7 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -26,13 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-
-#include "complex.h"
-#include "object.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "digital.h"
 #include "xor.h"
 
@@ -61,3 +55,10 @@ void logicxor::calcDerivatives (void) {
     g[k] = 0.5 * calcDerivativeX (k) * x;
   }
 }
+
+// properties
+struct define_t logicxor::cirdef =
+  { "XOR", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

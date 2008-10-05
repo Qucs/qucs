@@ -1,7 +1,7 @@
 /*
  * relais.cpp - time controlled switch class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.3 2006/03/07 11:13:54 raimi Exp $
+ * $Id: relais.cpp,v 1.4 2008/10/05 17:52:12 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "vector.h"
-#include "component_id.h"
-#include "consts.h"
-#include "constants.h"
+#include "component.h"
 #include "relais.h"
 
 relais::relais () : circuit (4) {
@@ -123,3 +112,15 @@ void relais::initTR (void) {
 void relais::calcTR (nr_double_t) {
   calcDC ();
 }
+
+// properties
+struct define_t relais::cirdef =
+  { "Relais", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Vt", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Vh", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

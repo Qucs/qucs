@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.57 2008/10/03 14:49:48 ela Exp $
+ * $Id: circuit.h,v 1.58 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -52,7 +52,11 @@ enum circuit_flag {
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
 #define RETFLAG(bit)     ((flag & (bit)) != 0)
 
-#define CREATOR(val)     static circuit * create (void) { return new val (); }
+#define CREATOR(val) \
+  val (); \
+  static circuit * create (void) { return new val (); } \
+  static struct define_t cirdef; \
+  static struct define_t * definition (void) { return &cirdef; }
 
 class node;
 class property;

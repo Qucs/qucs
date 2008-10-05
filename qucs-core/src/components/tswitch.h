@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.h,v 1.3 2008/10/03 14:49:49 ela Exp $
+ * $Id: tswitch.h,v 1.4 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class tswitch : public circuit
 {
  public:
-  tswitch ();
+  CREATOR (tswitch);
   void initSP (void);
   void initDC (void);
   void initAC (void);
@@ -36,8 +36,6 @@ class tswitch : public circuit
   void calcTR (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void calcNoiseSP (nr_double_t);
-
-  CREATOR (tswitch);
 
  private:
   nr_double_t initState (void);

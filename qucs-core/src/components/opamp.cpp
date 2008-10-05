@@ -1,7 +1,7 @@
 /*
  * opamp.cpp - operational amplifier class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.cpp,v 1.8 2005/10/31 16:15:31 ela Exp $
+ * $Id: opamp.cpp,v 1.9 2008/10/05 17:52:12 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "opamp.h"
 
 #define NODE_INM 0
@@ -96,3 +87,12 @@ void opamp::initTR (void) {
 void opamp::calcTR (nr_double_t) {
   calcDC ();
 }
+
+// properties
+struct define_t opamp::cirdef =
+  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "G", PROP_REAL, { 1e6, PROP_NO_STR }, PROP_MIN_VAL (1) },
+      PROP_NO_PROP },
+    { { "Umax", PROP_REAL, { 15, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

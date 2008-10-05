@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nand.h,v 1.3 2008/10/03 14:49:49 ela Exp $
+ * $Id: nand.h,v 1.4 2008/10/05 17:52:15 ela Exp $
  *
  */
 
@@ -28,11 +28,9 @@
 class logicnand : public digital
 {
  public:
-  logicnand ();
+  CREATOR (logicnand);
   void calcOutput (void);
   void calcDerivatives (void);
-
-  CREATOR (logicnand);
 };
 
 #endif /* __NAND_H__ */

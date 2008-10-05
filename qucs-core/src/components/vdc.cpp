@@ -1,7 +1,7 @@
 /*
  * vdc.cpp - DC voltage source class implementation
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vdc.cpp,v 1.16 2006/04/05 08:27:06 raimi Exp $
+ * $Id: vdc.cpp,v 1.17 2008/10/05 17:52:14 ela Exp $
  *
  */
 
@@ -26,15 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
+#include "component.h"
 #include "vdc.h"
 
 vdc::vdc () : circuit (2) {
@@ -82,3 +74,10 @@ void vdc::calcHB (nr_double_t frequency) {
     setE (VSRC_1, 0);
   }
 }
+
+// properties
+struct define_t vdc::cirdef =
+  { "Vdc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

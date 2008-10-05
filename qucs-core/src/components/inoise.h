@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inoise.h,v 1.8 2008/10/03 14:49:48 ela Exp $
+ * $Id: inoise.h,v 1.9 2008/10/05 17:52:11 ela Exp $
  *
  */
 
@@ -28,12 +28,10 @@
 class inoise : public circuit
 {
  public:
-  inoise ();
+  CREATOR (inoise);
   void initSP (void);
   void calcNoiseSP (nr_double_t);
   void calcNoiseAC (nr_double_t);
-
-  CREATOR (inoise);
 };
 
 #endif /* __INOISE_H__ */
