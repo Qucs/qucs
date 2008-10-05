@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digisource.cpp,v 1.3 2008/10/05 17:52:15 ela Exp $
+ * $Id: digisource.cpp,v 1.4 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -81,7 +81,8 @@ void digisource::calcTR (nr_double_t t) {
 // properties
 struct define_t digisource::cirdef =
   { "DigiSource", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "init", PROP_STR, { PROP_NO_VAL, "low" }, PROP_NO_RANGE },
+    { { "init", PROP_STR, { PROP_NO_VAL, "low" }, 
+	PROP_RNG_STR2 ("low", "high") },
       { "times", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
     { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }

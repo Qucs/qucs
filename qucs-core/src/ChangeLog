@@ -1,5 +1,10 @@
 2008-10-05  Stefan Jahn  <stefan@lkcc.org>
 
+	* check_netlist.cpp: Removed special string validation in
+	properties.  Identifier ranges are now stored directly in property
+	definitions, thus checking can be done using the component
+	specifications.
+
 	* module.cpp: First steps towards modularization.  Changes in all
 	component files.  New components now only need to register in this
 	file.

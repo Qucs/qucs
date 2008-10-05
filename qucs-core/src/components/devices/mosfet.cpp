@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.cpp,v 1.38 2008/10/05 17:52:15 ela Exp $
+ * $Id: mosfet.cpp,v 1.39 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -752,7 +752,7 @@ struct define_t mosfet::cirdef =
       { "Ps", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_RNG_FET },
       { "capModel", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1 , 2) },
       PROP_NO_PROP }
   };

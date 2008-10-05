@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcsolver.cpp,v 1.43 2008/10/05 17:52:11 ela Exp $
+ * $Id: dcsolver.cpp,v 1.44 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -211,10 +211,12 @@ struct define_t dcsolver::anadef =
       { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
       { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
       { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
-      { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
-      { "convHelper", PROP_STR, { PROP_NO_VAL, "none" }, PROP_NO_RANGE },
-      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
+      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+      { "convHelper", PROP_STR, { PROP_NO_VAL, "none" },
+	PROP_RNG_STR6 ("none", "SourceStepping", "gMinStepping", 
+		       "LineSearch", "Attenuation", "SteepestDescent") },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_RNG_SOL },
       PROP_NO_PROP }
   };

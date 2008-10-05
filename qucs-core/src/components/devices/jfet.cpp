@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.34 2008/10/05 17:52:15 ela Exp $
+ * $Id: jfet.cpp,v 1.35 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -429,7 +429,7 @@ struct define_t jfet::cirdef =
       { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_RNG_FET },
       { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

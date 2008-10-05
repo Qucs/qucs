@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.3 2008/10/05 17:52:14 ela Exp $
+ * $Id: tswitch.cpp,v 1.4 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -105,7 +105,8 @@ void tswitch::calcTR (nr_double_t t) {
 // properties
 struct define_t tswitch::cirdef =
   { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "init", PROP_STR, { PROP_NO_VAL, "off" }, PROP_NO_RANGE },
+    { { "init", PROP_STR, { PROP_NO_VAL, "off" },
+	PROP_RNG_STR2 ("on", "off") },
       { "time", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
     { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

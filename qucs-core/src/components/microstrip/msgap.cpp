@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msgap.cpp,v 1.11 2008/10/05 17:52:17 ela Exp $
+ * $Id: msgap.cpp,v 1.12 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -121,9 +121,8 @@ struct define_t msgap::cirdef =
       { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "S" , PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
-	PROP_NO_RANGE },
-      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },	PROP_RNG_DIS },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_RNG_MOD },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   };

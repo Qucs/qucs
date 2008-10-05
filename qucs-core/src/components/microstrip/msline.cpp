@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.cpp,v 1.50 2008/10/05 17:52:17 ela Exp $
+ * $Id: msline.cpp,v 1.51 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -489,8 +489,8 @@ struct define_t msline::cirdef =
     { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
-      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_RNG_DIS },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_RNG_MOD },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }

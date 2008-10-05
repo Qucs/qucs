@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.48 2008/10/05 17:52:15 ela Exp $
+ * $Id: bjt.cpp,v 1.49 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -804,7 +804,7 @@ struct define_t bjt::cirdef =
       { "Ab", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Fb", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
+      { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_RNG_BJT },
       { "Ptf", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
       { "Xtb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },

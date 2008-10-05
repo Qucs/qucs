@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msopen.cpp,v 1.11 2008/10/05 17:52:17 ela Exp $
+ * $Id: msopen.cpp,v 1.12 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -136,10 +136,10 @@ struct define_t msopen::cirdef =
   { "MOPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
-	PROP_NO_RANGE },
-      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
-      { "Model", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_RNG_DIS },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_RNG_MOD },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_RNG_STR3 ("Kirschning", "Hammerstad", "Alexopoulos") },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   };

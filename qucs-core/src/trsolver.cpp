@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.55 2008/10/05 17:52:11 ela Exp $
+ * $Id: trsolver.cpp,v 1.56 2008/10/05 20:13:14 ela Exp $
  *
  */
 
@@ -803,13 +803,14 @@ void trsolver::updateCoefficients (nr_double_t delta) {
 // properties
 struct define_t trsolver::anadef =
   { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" },
+	PROP_RNG_STR2 ("lin", "log") },
       { "Start", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Stop", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
       PROP_NO_PROP },
     { { "IntegrationMethod", PROP_STR, { PROP_NO_VAL, "Trapezoidal" },
-	PROP_NO_RANGE },
+	PROP_RNG_STR4 ("Euler", "Trapezoidal", "Gear", "AdamsMoulton") },
       { "Order", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1, 6) },
       { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
@@ -822,8 +823,8 @@ struct define_t trsolver::anadef =
       { "LTEreltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
       { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 16) },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
-      { "relaxTSR", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
-      { "initialDC", PROP_STR, { PROP_NO_VAL, "yes" }, PROP_NO_RANGE },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_RNG_SOL },
+      { "relaxTSR", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+      { "initialDC", PROP_STR, { PROP_NO_VAL, "yes" }, PROP_RNG_YESNO },
       PROP_NO_PROP }
   };

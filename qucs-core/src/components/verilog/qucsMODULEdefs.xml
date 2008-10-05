@@ -203,7 +203,7 @@
 
 <admst:if test="[name='hicumL2p1' or name='hic0_full']">
   <admst:text format="      { &quot;Type&quot;, PROP_STR, { "/>
-  <admst:text format="PROP_NO_VAL, &quot;npn&quot; }, PROP_NO_RANGE },\n"/>
+  <admst:text format="PROP_NO_VAL, &quot;npn&quot; }, PROP_RNG_BJT },\n"/>
 </admst:if>
 
 <admst:for-each select="variable">
