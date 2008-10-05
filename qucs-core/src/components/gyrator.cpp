@@ -1,7 +1,7 @@
 /*
  * gyrator.cpp - gyrator class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: gyrator.cpp,v 1.13 2005-06-02 18:17:52 raimi Exp $
+ * $Id: gyrator.cpp,v 1.14 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,15 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "gyrator.h"
 
 gyrator::gyrator () : circuit (4) {
@@ -94,3 +86,11 @@ void gyrator::initAC (void) {
 void gyrator::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t gyrator::cirdef =
+  { "Gyrator", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.h,v 1.2 2008-10-03 14:49:49 ela Exp $
+ * $Id: inverter.h,v 1.3 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,11 +28,9 @@
 class inverter : public digital
 {
  public:
-  inverter ();
+  CREATOR (inverter);
   void calcOutput (void);
   void calcDerivatives (void);
-
-  CREATOR (inverter);
 };
 
 #endif /* __INVERTER_H__ */

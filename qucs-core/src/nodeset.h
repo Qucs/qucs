@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodeset.h,v 1.2 2005-06-02 18:17:51 raimi Exp $
+ * $Id: nodeset.h,v 1.3 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class nodeset
 {
  public:
-  nodeset ();
+  MCREATOR (nodeset);
   nodeset (char *);
   nodeset (char *, nr_double_t);
   nodeset (const nodeset &);

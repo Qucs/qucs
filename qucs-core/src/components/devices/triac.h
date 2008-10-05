@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: triac.h,v 1.3 2008-10-03 14:49:49 ela Exp $
+ * $Id: triac.h,v 1.4 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -30,7 +30,7 @@
 class triac : public circuit, public devstates
 {
  public:
-  triac ();
+  CREATOR (triac);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcDC (void);
@@ -41,8 +41,6 @@ class triac : public circuit, public devstates
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (triac);
 
  private:
   nr_double_t Ud, gd, Id, Qi, gi, Ui;

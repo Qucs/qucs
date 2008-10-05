@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vccs.h,v 1.10 2008-10-03 14:49:49 ela Exp $
+ * $Id: vccs.h,v 1.11 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -28,15 +28,13 @@
 class vccs : public circuit
 {
  public:
-  vccs ();
+  CREATOR (vccs);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (vccs);
 };
 
 #endif /* __VCCS_H__ */

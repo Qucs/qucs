@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.h,v 1.7 2008-10-03 14:49:49 ela Exp $
+ * $Id: msstep.h,v 1.8 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -29,15 +29,13 @@
 class msstep : public circuit
 {
  public:
-  msstep ();
+  CREATOR (msstep);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void initTR (void);
   matrix calcMatrixZ (nr_double_t);
-
-  CREATOR (msstep);
 };
 
 #endif /* __MSSTEP_H__ */

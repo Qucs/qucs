@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vprobe.cpp,v 1.3 2008-07-17 19:57:32 ela Exp $
+ * $Id: vprobe.cpp,v 1.4 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "vprobe.h"
 
 vprobe::vprobe () : circuit (2) {
@@ -67,3 +60,10 @@ void vprobe::initAC (void) {
 void vprobe::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t vprobe::cirdef =
+  { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

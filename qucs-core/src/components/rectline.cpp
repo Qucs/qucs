@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rectline.cpp,v 1.1 2008-06-26 18:14:49 ela Exp $
+ * $Id: rectline.cpp,v 1.2 2008-10-05 17:52:12 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "logging.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "matrix.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "rectline.h"
 
 /*!\file rectangular.cpp 
@@ -253,3 +242,18 @@ void rectline::calcNoiseAC (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   setMatrixN (4.0 * kelvin (T) / T0 * real (getMatrixY ()));
 }
+
+// properties
+struct define_t rectline::cirdef =
+  { "RECTLINE", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "b", PROP_REAL, { 1.016e-2, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "er", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

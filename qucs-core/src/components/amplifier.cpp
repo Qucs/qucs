@@ -1,7 +1,7 @@
 /*
  * amplifier.cpp - amplifier class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2008 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.cpp,v 1.6 2008-06-25 15:50:08 ela Exp $
+ * $Id: amplifier.cpp,v 1.7 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -34,15 +34,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "amplifier.h"
 
 /*! Constructor */
@@ -136,3 +128,14 @@ void amplifier::calcNoiseAC (nr_double_t) {
 void amplifier::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t amplifier::cirdef =
+  { "Amp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
+      PROP_NO_PROP },
+    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "NF", PROP_REAL, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
+      PROP_NO_PROP }
+  };

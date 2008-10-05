@@ -1,7 +1,7 @@
 /*
  * tswitch.cpp - time controlled switch class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.2 2006-03-24 14:30:06 raimi Exp $
+ * $Id: tswitch.cpp,v 1.3 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -26,18 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "vector.h"
-#include "component_id.h"
-#include "consts.h"
-#include "constants.h"
+#include "component.h"
 #include "tswitch.h"
 
 tswitch::tswitch () : circuit (2) {
@@ -112,3 +101,15 @@ void tswitch::calcTR (nr_double_t t) {
 
   setD (VSRC_1, VSRC_1, on ? ron : roff);
 }
+
+// properties
+struct define_t tswitch::cirdef =
+  { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "init", PROP_STR, { PROP_NO_VAL, "off" }, PROP_NO_RANGE },
+      { "time", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

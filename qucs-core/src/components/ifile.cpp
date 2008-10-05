@@ -1,7 +1,7 @@
 /*
  * ifile.cpp - file based current source class implementation
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ifile.cpp,v 1.1 2007-10-23 17:48:06 ela Exp $
+ * $Id: ifile.cpp,v 1.2 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,24 +26,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef __MINGW32__
-#define strcasecmp stricmp
-#endif
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
+#include "component.h"
 #include "dataset.h"
-#include "net.h"
-#include "component_id.h"
-#include "vector.h"
-#include "consts.h"
 #include "poly.h"
 #include "spline.h"
 #include "ifile.h"
@@ -239,3 +223,15 @@ void ifile::calcTR (nr_double_t t) {
   nr_double_t i = interpolate (is, ts, t - T);
   setI (NODE_1, +G * i); setI (NODE_2, -G * i);
 }
+
+// properties
+struct define_t ifile::cirdef =
+  { "Ifile", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "File", PROP_STR, { PROP_NO_VAL, "ifile.dat" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
+      { "Repeat", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

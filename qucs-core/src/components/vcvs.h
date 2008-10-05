@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vcvs.h,v 1.10 2008-10-03 14:49:49 ela Exp $
+ * $Id: vcvs.h,v 1.11 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -28,15 +28,13 @@
 class vcvs : public circuit
 {
  public:
-  vcvs ();
+  CREATOR (vcvs);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (vcvs);
 };
 
 #endif /* __VCVS_H__ */

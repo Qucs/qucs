@@ -1,7 +1,7 @@
 /*
  * inductor.cpp - inductor class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.cpp,v 1.18 2008-01-10 20:00:00 ela Exp $
+ * $Id: inductor.cpp,v 1.19 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#define __USE_BSD
-#define __USE_XOPEN
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "inductor.h"
 
 inductor::inductor () : circuit (2) {
@@ -125,3 +115,11 @@ void inductor::calcHB (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   setD (VSRC_1, VSRC_1, -l * 2 * M_PI * frequency);
 }
+
+// properties
+struct define_t inductor::cirdef =
+  { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "I", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

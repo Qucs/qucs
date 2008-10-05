@@ -2,7 +2,7 @@
  * cpwline.cpp - coplanar waveguide line class implementation
  *
  * Copyright (C) 2004, 2005 Vincent Habchi, F5RCS <10.50@free.fr>
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.18 2008-01-10 20:00:01 ela Exp $
+ * $Id: cpwline.cpp,v 1.19 2008-10-05 17:52:16 ela Exp $
  *
  */
 
@@ -27,39 +27,9 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <float.h>
-
-#if HAVE_IEEEFP_H
-# include <ieeefp.h>
-#endif
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "matrix.h"
 #include "cpwline.h"
-
-#ifdef __MINGW32__
-# define finite(x) _finite(x)
-# ifndef isnan
-# define isnan(x)  _isnan(x)
-# endif
-# ifndef isinf
-# define isinf(x)  (!_finite(x) && !_isnan(x))
-# endif
-#endif
-#if defined (__SVR4) && defined (__sun)
-# define isinf(x) (!finite(x) && (x) == (x)) 
-#endif
 
 cpwline::cpwline () : circuit (2) {
   Zl = Er = 0;
@@ -446,3 +416,17 @@ void cpwline::calcNoiseAC (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
+
+// properties
+struct define_t cpwline::cirdef =
+  { "CLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
+      { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

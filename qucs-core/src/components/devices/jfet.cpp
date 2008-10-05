@@ -1,7 +1,7 @@
 /*
  * jfet.cpp - jfet class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.33 2008-01-10 20:00:01 ela Exp $
+ * $Id: jfet.cpp,v 1.34 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -26,19 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
-#include "complex.h"
-#include "matrix.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include "jfet.h"
 
@@ -419,3 +407,33 @@ void jfet::calcTR (nr_double_t) {
   transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Qgs);
   transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Qgd);
 }
+
+// properties
+struct define_t jfet::cirdef =
+  { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "Vt0", PROP_REAL, { -2, PROP_NO_STR }, PROP_NEG_RANGE },
+      { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Beta", PROP_REAL, { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      { "Pb", PROP_REAL, { 1.0, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
+      { "Cgs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+      PROP_NO_PROP }
+  };

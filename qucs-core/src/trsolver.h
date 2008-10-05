@@ -1,7 +1,7 @@
 /*
  * trsolver.h - transient solver class definitions
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.h,v 1.25 2007-12-28 20:08:48 ela Exp $
+ * $Id: trsolver.h,v 1.26 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -35,7 +35,7 @@ class history;
 class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
 {
  public:
-  trsolver ();
+  ACREATOR (trsolver);
   trsolver (char *);
   trsolver (trsolver &);
   ~trsolver ();

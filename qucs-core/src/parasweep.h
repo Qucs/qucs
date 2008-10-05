@@ -1,7 +1,7 @@
 /*
  * parasweep.h - parameter sweep class definitions
  *
- * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.h,v 1.7 2007-12-28 20:08:47 ela Exp $
+ * $Id: parasweep.h,v 1.8 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -32,7 +32,7 @@ class sweep;
 class parasweep : public analysis
 {
  public:
-  parasweep ();
+  ACREATOR (parasweep);
   parasweep (char *);
   parasweep (parasweep &);
   ~parasweep ();

@@ -1,7 +1,7 @@
 /*
  * mutual.cpp - two mutual inductors class implementation
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual.cpp,v 1.5 2008-01-10 20:00:00 ela Exp $
+ * $Id: mutual.cpp,v 1.6 2008-10-05 17:52:12 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "constants.h"
-#include "matrix.h"
-#include "component_id.h"
+#include "component.h"
 #include "mutual.h"
 
 mutual::mutual () : circuit (4) {
@@ -149,3 +139,13 @@ void mutual::calcTR (nr_double_t) {
   setE (VSRC_1, v11 + v12);
   setE (VSRC_2, v22 + v21);
 }
+
+// properties
+struct define_t mutual::cirdef =
+  { "MUT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L1", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
+      { "L2", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
+      { "k", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

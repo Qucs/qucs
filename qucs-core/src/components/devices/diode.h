@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.h,v 1.19 2008-10-03 14:49:49 ela Exp $
+ * $Id: diode.h,v 1.20 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -30,7 +30,7 @@
 class diode : public circuit, public devstates
 {
  public:
-  diode ();
+  CREATOR (diode);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
   void initDC (void);
@@ -46,8 +46,6 @@ class diode : public circuit, public devstates
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
-
-  CREATOR (diode);
 
  private:
   nr_double_t Ud, gd, Id, Qd, Bv;

@@ -1,7 +1,7 @@
 /*
  * input.h - input netlist class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.h,v 1.9 2008-10-03 14:49:48 ela Exp $
+ * $Id: input.h,v 1.10 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -29,10 +29,6 @@ class net;
 class circuit;
 class analysis;
 class environment;
-
-#include "hash.h"
-
-typedef circuit * (* circuit_creator_t) (void);
 
 class input : public object
 {
@@ -51,14 +47,11 @@ class input : public object
   void setEnv (environment * e) { env = e; }
   static void assignDefaultProperties (object *, struct define_t *);
   static vector * createVector (struct value_t *);
-  void registerCircuit (const char *, circuit_creator_t);
-  void registerCircuits (void);
 
  private:
   FILE * fd;
   net * subnet;
   environment * env;
-  qucs::hash<void> creators;
 };
 
 // externalize global variable

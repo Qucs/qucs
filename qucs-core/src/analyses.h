@@ -1,7 +1,7 @@
 /*
- * inoise.h - noise current source class definitions
+ * analyses.h - global analysis header file
  *
- * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,19 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inoise.h,v 1.9 2008-10-05 17:52:11 ela Exp $
+ * $Id: analyses.h,v 1.1 2008-10-05 17:52:10 ela Exp $
  *
  */
 
-#ifndef __INOISE_H__
-#define __INOISE_H__
+#ifndef __ANALYSES_H__
+#define __ANALYSES_H__
 
-class inoise : public circuit
-{
- public:
-  CREATOR (inoise);
-  void initSP (void);
-  void calcNoiseSP (nr_double_t);
-  void calcNoiseAC (nr_double_t);
-};
+#include "analysis.h"
+#include "spsolver.h"
+#include "dcsolver.h"
+#include "parasweep.h"
+#include "acsolver.h"
+#include "trsolver.h"
+#include "hbsolver.h"
 
-#endif /* __INOISE_H__ */
+#endif /* __ANALYSES_H__ */

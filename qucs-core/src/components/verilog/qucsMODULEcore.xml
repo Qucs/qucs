@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst SYSTEM "admst.dtd">
-<admst version="2.2.5" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst version="2.3.0" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- handling of device: starting point -->
 <admst:for-each select="/module">
@@ -44,22 +44,8 @@
 #include &lt;config.h&gt;
 #endif
 
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;math.h&gt;
-#include &lt;string.h&gt;
-
 #include &quot;$(module).analogfunction.h&quot;
-
-#include "logging.h"
-#include "complex.h"
-#include "matrix.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include &quot;$(module).core.h&quot;
 
@@ -727,6 +713,7 @@ using namespace device;
 <admst:text format="    }\n  }\n"/>
 
 <admst:text format="}\n"/>
+#include &quot;$(module).defs.h&quot;
 
 </admst:for-each>
 
@@ -749,7 +736,6 @@ using namespace device;
 class $(module) : public circuit
 {
  public:
-  $(module) ();
   CREATOR ($(module));
 
   void initDC (void);

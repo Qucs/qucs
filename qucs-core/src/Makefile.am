@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
 	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
-	range.cpp devstates.cpp differentiate.cpp
+	range.cpp devstates.cpp differentiate.cpp module.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp
@@ -65,7 +65,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
 	valuelist.h pair.h characteristic.h range.h history.h                 \
 	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
-	check_csv.h
+	check_csv.h module.h analyses.h
 
 noinst_LIBRARIES = libqucsator.a
 

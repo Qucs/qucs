@@ -1,7 +1,7 @@
 /*
  * spfile.cpp - S-parameter file class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.28 2008-01-17 18:53:06 ela Exp $
+ * $Id: spfile.cpp,v 1.29 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -26,27 +26,13 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <assert.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "vector.h"
-#include "matrix.h"
+#include "component.h"
 #include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
 #include "poly.h"
 #include "spline.h"
 #include "spfile.h"
-#include "constants.h"
 
 // Type of data and interpolators.
 #define DATA_RECTANGULAR 1
@@ -637,3 +623,15 @@ void spfile::calcNoiseAC (nr_double_t frequency) {
 void spfile::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t spfile::cirdef =
+  { "SPfile", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
+      { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

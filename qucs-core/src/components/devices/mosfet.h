@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mosfet.h,v 1.18 2008-10-03 14:49:49 ela Exp $
+ * $Id: mosfet.h,v 1.19 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class mosfet : public circuit
 {
  public:
-  mosfet ();
+  CREATOR (mosfet);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
   void calcDC (void);
@@ -43,8 +43,6 @@ class mosfet : public circuit
   void calcNoiseAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (mosfet);
 
  private:
   nr_double_t transientChargeTR (int, nr_double_t&, nr_double_t, nr_double_t);

@@ -1,7 +1,7 @@
 /*
  * msstep.cpp - microstrip impedance step class implementation
  *
- * Copyright (C) 2004, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.cpp,v 1.12 2008-01-10 20:00:01 ela Exp $
+ * $Id: msstep.cpp,v 1.13 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -27,22 +27,10 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "matrix.h"
-#include "msstep.h"
 #include "msline.h"
+#include "msstep.h"
 
 msstep::msstep () : circuit (2) {
   type = CIR_MSSTEP;
@@ -125,3 +113,16 @@ void msstep::calcAC (nr_double_t frequency) {
 void msstep::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t msstep::cirdef =
+  { "MSTEP", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

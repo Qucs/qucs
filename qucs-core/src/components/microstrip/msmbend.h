@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msmbend.h,v 1.6 2008-10-03 14:49:49 ela Exp $
+ * $Id: msmbend.h,v 1.7 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -29,14 +29,12 @@
 class msmbend : public circuit
 {
  public:
-  msmbend ();
+  CREATOR (msmbend);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   matrix calcMatrixZ (nr_double_t);
-
-  CREATOR (msmbend);
 };
 
 #endif /* __MSMBEND_H__ */

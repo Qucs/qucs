@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.90 2008-10-03 14:49:48 ela Exp $
+ * $Id: input.cpp,v 1.91 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -34,15 +34,8 @@
 
 #include "logging.h"
 #include "component.h"
-#include "netdefs.h"
+#include "components.h"
 #include "net.h"
-#include "analysis.h"
-#include "spsolver.h"
-#include "dcsolver.h"
-#include "parasweep.h"
-#include "acsolver.h"
-#include "trsolver.h"
-#include "hbsolver.h"
 #include "variable.h"
 #include "property.h"
 #include "environment.h"
@@ -50,6 +43,7 @@
 #include "input.h"
 #include "check_netlist.h"
 #include "equation.h"
+#include "module.h"
 
 // Global variables.
 int netlist_check = 0;
@@ -59,7 +53,6 @@ input::input () : object () {
   fd = stdin;
   subnet = NULL;
   env = NULL;
-  registerCircuits ();
 }
 
 // Constructor creates an named instance of the input class.
@@ -71,117 +64,11 @@ input::input (char * file) : object (file) {
   }
   subnet = NULL;
   env = NULL;
-  registerCircuits ();
 }
 
 // Destructor deletes an input object.
 input::~input () {
   if (fd != stdin) fclose (fd);
-}
-
-void input::registerCircuits (void) {
-  registerCircuit ("R", &resistor::create);
-  registerCircuit ("C", &capacitor::create);
-  registerCircuit ("Pac", &pac::create);
-  registerCircuit ("L", &inductor::create);
-  registerCircuit ("VCCS", &vccs::create);
-  registerCircuit ("CCCS", &cccs::create);
-  registerCircuit ("VCVS", &vcvs::create);
-  registerCircuit ("CCVS", &ccvs::create);
-  registerCircuit ("BiasT", &biastee::create);
-  registerCircuit ("DCFeed", &dcfeed::create);
-  registerCircuit ("DCBlock", &dcblock::create);
-  registerCircuit ("Circulator", &circulator::create);
-  registerCircuit ("Attenuator", &attenuator::create);
-  registerCircuit ("Isolator", &isolator::create);
-  registerCircuit ("Tr", &trafo::create);
-  registerCircuit ("sTr", &strafo::create);
-  registerCircuit ("Vdc", &vdc::create);
-  registerCircuit ("Idc", &idc::create);
-  registerCircuit ("Vac", &vac::create);
-  registerCircuit ("Iac", &iac::create);
-  registerCircuit ("Iexp", &iexp::create);
-  registerCircuit ("Vexp", &vexp::create);
-  registerCircuit ("Ifile", &ifile::create);
-  registerCircuit ("Vfile", &vfile::create);
-  registerCircuit ("AM_Mod", &vam::create);
-  registerCircuit ("PM_Mod", &vpm::create);
-  registerCircuit ("Vpulse", &vpulse::create);
-  registerCircuit ("Ipulse", &ipulse::create);
-  registerCircuit ("Vrect", &vrect::create);
-  registerCircuit ("Irect", &irect::create);
-  registerCircuit ("Gyrator", &gyrator::create);
-  registerCircuit ("PShift", &phaseshifter::create);
-  registerCircuit ("Switch", &tswitch::create);
-  registerCircuit ("Relais", &relais::create);
-  registerCircuit ("TLIN", &tline::create);
-  registerCircuit ("TLIN4P", &tline4p::create);
-  registerCircuit ("COAX", &coaxline::create);
-  registerCircuit ("RECTLINE", &rectline::create);
-  registerCircuit ("TWIST", &twistedpair::create);
-  registerCircuit ("Coupler", &coupler::create);
-  registerCircuit ("Diode", &diode::create);
-  registerCircuit ("EDD", &eqndefined::create);
-  registerCircuit ("RFEDD", &rfedd::create);
-  registerCircuit ("Diac", &diac::create);
-  registerCircuit ("SCR", &thyristor::create);
-  registerCircuit ("Triac", &triac::create);
-  registerCircuit ("MLIN", &msline::create);
-  registerCircuit ("MCORN", &mscorner::create);
-  registerCircuit ("MSTEP", &msstep::create);
-  registerCircuit ("MOPEN", &msopen::create);
-  registerCircuit ("MGAP", &msgap::create);
-  registerCircuit ("MMBEND", &msmbend::create);
-  registerCircuit ("MCOUPLED", &mscoupled::create);
-  registerCircuit ("MTEE", &mstee::create);
-  registerCircuit ("MCROSS", &mscross::create);
-  registerCircuit ("MVIA", &msvia::create);
-  registerCircuit ("BOND", &bondwire::create);
-  registerCircuit ("CLIN", &cpwline::create);
-  registerCircuit ("COPEN", &cpwopen::create);
-  registerCircuit ("CSHORT", &cpwshort::create);
-  registerCircuit ("CGAP", &cpwgap::create);
-  registerCircuit ("CSTEP", &cpwstep::create);
-  registerCircuit ("IProbe", &iprobe::create);
-  registerCircuit ("VProbe", &vprobe::create);
-  registerCircuit ("JFET", &jfet::create);
-  registerCircuit ("BJT", &bjt::create);
-  registerCircuit ("SPfile", &spfile::create);
-  registerCircuit ("Vnoise", &vnoise::create);
-  registerCircuit ("Inoise", &inoise::create);
-  registerCircuit ("MOSFET", &mosfet::create);
-  registerCircuit ("Amp", &amplifier::create);
-  registerCircuit ("OpAmp", &opamp::create);
-  registerCircuit ("IInoise", &iinoise::create);
-  registerCircuit ("MUT", &mutual::create);
-  registerCircuit ("MUT2", &mutual2::create);
-  registerCircuit ("MUTX", &mutualx::create);
-  registerCircuit ("IVnoise", &ivnoise::create);
-  registerCircuit ("VVnoise", &vvnoise::create);
-  registerCircuit ("Inv", &inverter::create);
-  registerCircuit ("NOR", &logicnor::create);
-  registerCircuit ("OR", &logicor::create);
-  registerCircuit ("NAND", &logicnand::create);
-  registerCircuit ("AND", &logicand::create);
-  registerCircuit ("XNOR", &logicxnor::create);
-  registerCircuit ("XOR", &logicxor::create);
-  registerCircuit ("DigiSource", &digisource::create);
-  registerCircuit ("hicumL2p1", &hicumL2p1::create);
-  registerCircuit ("HBT_X", &HBT_X::create);
-  registerCircuit ("mod_amp", &mod_amp::create);
-  registerCircuit ("hic2_full", &hic2_full::create);
-  registerCircuit ("log_amp", &log_amp::create);
-  registerCircuit ("hic0_full", &hic0_full::create);
-  registerCircuit ("potentiometer", &potentiometer::create);
-  registerCircuit ("MESFET", &MESFET::create);
-  registerCircuit ("EKV26nMOS", &EKV26nMOS::create);
-  registerCircuit ("EKV26pMOS", &EKV26pMOS::create);
-  registerCircuit ("hicumL0V1p2", &hicumL0V1p2::create);
-  registerCircuit ("hicumL2V2p23", &hicumL2V2p23::create);
-}
-
-void input::registerCircuit (const char * n, circuit_creator_t create) {
-  creators.put ((char *) n, (void *) create);
 }
 
 /* This function scans, parses and checks a netlist from the input
@@ -442,9 +329,9 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
 
 // The function creates components specified by the type of component. 
 circuit * input::createCircuit (char * type) {
-  circuit_creator_t create;
-  if ((create = (circuit_creator_t) creators.get (type)) != NULL)
-    return create ();
+  module * m;
+  if ((m = module::modules.get (type)) != NULL)
+    return m->circreate ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;
@@ -452,18 +339,9 @@ circuit * input::createCircuit (char * type) {
 
 // The function creates an analysis specified by the type of analysis.
 analysis * input::createAnalysis (char * type) {
-  if (!strcmp (type, "SP"))
-    return new spsolver ();
-  else if (!strcmp (type, "DC"))
-    return new dcsolver ();
-  else if (!strcmp (type, "SW"))
-    return new parasweep ();
-  else if (!strcmp (type, "AC"))
-    return new acsolver ();
-  else if (!strcmp (type, "TR"))
-    return new trsolver ();
-  else if (!strcmp (type, "HB"))
-    return new hbsolver ();
+  module * m;
+  if ((m = module::modules.get (type)) != NULL)
+    return m->anacreate ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;

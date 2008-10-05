@@ -18,12 +18,17 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: object.h,v 1.11 2008-02-18 18:03:55 ela Exp $
+ * $Id: object.h,v 1.12 2008-10-05 17:52:11 ela Exp $
  *
  */
 
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
+
+#define MCREATOR(val) \
+  val (); \
+  static struct define_t miscdef; \
+  static struct define_t * definition (void) { return &miscdef; }
 
 class property;
 class variable;

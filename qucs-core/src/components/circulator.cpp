@@ -1,7 +1,7 @@
 /*
  * circulator.cpp - circulator class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circulator.cpp,v 1.11 2005-06-02 18:17:51 raimi Exp $
+ * $Id: circulator.cpp,v 1.12 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,15 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "circulator.h"
 
 circulator::circulator () : circuit (3) {
@@ -119,3 +111,12 @@ void circulator::initAC (void) {
 void circulator::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t circulator::cirdef =
+  { "Circulator", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z3", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

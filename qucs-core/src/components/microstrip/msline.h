@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: msline.h,v 1.21 2008-10-03 14:49:49 ela Exp $
+ * $Id: msline.h,v 1.22 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class msline : public circuit
 {
  public:
-  msline ();
+  CREATOR (msline);
   void initDC (void);
   void calcNoiseSP (nr_double_t);
   void calcSP (nr_double_t);
@@ -37,8 +37,6 @@ class msline : public circuit
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void saveCharacteristics (nr_double_t);
-
-  CREATOR (msline);
 
   static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				  nr_double_t, char *,

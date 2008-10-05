@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diac.cpp,v 1.7 2008-03-31 10:49:58 ela Exp $
+ * $Id: diac.cpp,v 1.8 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -27,19 +27,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "net.h"
-#include "matrix.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "device.h"
 #include "devstates.h"
 #include "diac.h"
@@ -203,3 +191,17 @@ void diac::calcTR (nr_double_t time) {
   nr_double_t Ci = getOperatingPoint ("Ci");
   transientCapacitance (qState, NODE_IN, NODE_A2, Ci, Ud, Qi);
 }
+
+// properties
+struct define_t diac::cirdef =
+  { "Diac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Ibo", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      PROP_NO_PROP },
+    { { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "N", PROP_REAL, { 2.0, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+      { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

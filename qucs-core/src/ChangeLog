@@ -1,3 +1,9 @@
+2008-10-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* module.cpp: First steps towards modularization.  Changes in all
+	component files.  New components now only need to register in this
+	file.
+
 2008-10-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp: New function registerCircuits().  Global preparations

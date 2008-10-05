@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vrect.h,v 1.4 2008-10-03 14:49:49 ela Exp $
+ * $Id: vrect.h,v 1.5 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,14 +28,12 @@
 class vrect : public circuit
 {
  public:
-  vrect ();
+  CREATOR (vrect);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (vrect);
 };
 
 #endif /* __VRECT_H__ */

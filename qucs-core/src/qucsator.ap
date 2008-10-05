@@ -30,7 +30,7 @@ SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp          \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp  \
 	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp      \
-	range.cpp devstates.cpp differentiate.cpp
+	range.cpp devstates.cpp differentiate.cpp module.cpp
 
 # Additional libraries.
 LIBS = -lqucsator -lcomponent -lmicrostrip -ldevices -ldigital -lverilog \

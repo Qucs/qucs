@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.h,v 1.2 2008-10-03 14:49:48 ela Exp $
+ * $Id: coupler.h,v 1.3 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -28,13 +28,11 @@
 class coupler : public circuit
 {
  public:
-  coupler ();
+  CREATOR (coupler);
   void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
-
-  CREATOR (coupler);
 };
 
 #endif /* __COUPLER_H__ */

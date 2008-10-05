@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.54 2008-01-12 19:33:01 ela Exp $
+ * $Id: trsolver.cpp,v 1.55 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "circuit.h"
 #include "sweep.h"
 #include "net.h"
+#include "netdefs.h"
 #include "analysis.h"
 #include "nasolver.h"
 #include "history.h"
@@ -798,3 +799,31 @@ void trsolver::updateCoefficients (nr_double_t delta) {
   calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
   calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
 }
+
+// properties
+struct define_t trsolver::anadef =
+  { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Stop", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
+      PROP_NO_PROP },
+    { { "IntegrationMethod", PROP_STR, { PROP_NO_VAL, "Trapezoidal" },
+	PROP_NO_RANGE },
+      { "Order", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1, 6) },
+      { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MaxStep", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, PROP_RNGII (2, 10000) },
+      { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
+      { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+      { "LTEabstol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
+      { "LTEreltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+      { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 16) },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
+      { "relaxTSR", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "initialDC", PROP_STR, { PROP_NO_VAL, "yes" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

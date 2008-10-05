@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vvnoise.h,v 1.2 2008-10-03 14:49:49 ela Exp $
+ * $Id: vvnoise.h,v 1.3 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,15 +28,13 @@
 class vvnoise : public circuit
 {
  public:
-  vvnoise ();
+  CREATOR (vvnoise);
   void initSP (void);
   void calcNoiseSP (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void initDC (void);
   void initAC (void);
   void initTR (void);
-
-  CREATOR (vvnoise);
 };
 
 #endif /* __VVNOISE_H__ */

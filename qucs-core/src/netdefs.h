@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.14 2008-07-03 17:17:31 ela Exp $
+ * $Id: netdefs.h,v 1.15 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -91,6 +91,7 @@ struct property_t {
     nr_double_t l;  // lower bound of the value
     nr_double_t h;  // upper bound of the value
     char ih;        // interval boundary
+    const char * str[4]; // possible string list
   } range;
 };
 
@@ -119,18 +120,22 @@ struct define_t {
                             PROP_NO_RANGE }
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
-#define PROP_NO_RANGE     { '.', 0, 0, '.' }
+#define PROP_NO_RANGE     { '.', 0, 0, '.', { NULL} }
 #define PROP_VAL_MAX      NR_MAX
 #define PROP_VAL_MIN      NR_MIN
-#define PROP_POS_RANGE    { '[', 0, 0, '.' }
-#define PROP_NEG_RANGE    { '.', 0, 0, ']' }
-#define PROP_POS_RANGEX   { ']', 0, 0, '.' }
-#define PROP_NEG_RANGEX   { '.', 0, 0, '[' }
-#define PROP_MIN_VAL(k)   { '[', k, 0, '.' }
-#define PROP_MAX_VAL(k)   { '.', 0, k, ']' }
-#define PROP_MIN_VALX(k)  { ']', k, 0, '.' }
-#define PROP_MAX_VALX(k)  { '.', 0, k, '[' }
-#define PROP_RNG_X01I     { ']', 0, 1, ']' }
+#define PROP_POS_RANGE    { '[', 0, 0, '.', { NULL } }
+#define PROP_NEG_RANGE    { '.', 0, 0, ']', { NULL } }
+#define PROP_POS_RANGEX   { ']', 0, 0, '.', { NULL } }
+#define PROP_NEG_RANGEX   { '.', 0, 0, '[', { NULL } }
+#define PROP_MIN_VAL(k)   { '[', k, 0, '.', { NULL } }
+#define PROP_MAX_VAL(k)   { '.', 0, k, ']', { NULL } }
+#define PROP_MIN_VALX(k)  { ']', k, 0, '.', { NULL } }
+#define PROP_MAX_VALX(k)  { '.', 0, k, '[', { NULL } }
+#define PROP_RNG_X01I     { ']', 0, 1, ']', { NULL } }
+#define PROP_RNGII(f,t)   { '[', f, t, ']', { NULL } }
+#define PROP_RNGXI(f,t)   { ']', f, t, ']', { NULL } }
+#define PROP_RNGIX(f,t)   { '[', f, t, '[', { NULL } }
+#define PROP_RNGXX(f,t)   { ']', f, t, '[', { NULL } }
 #define PROP_NONE         -1
 #define PROP_INT          0
 #define PROP_REAL         1

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.124 2008-07-03 17:17:31 ela Exp $
+ * $Id: check_netlist.cpp,v 1.125 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -41,14 +41,12 @@
 #include "constants.h"
 #include "environment.h"
 #include "variable.h"
+#include "module.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
 environment * env_root = NULL;
-
-// Include list of available components.
-#include "qucsdefs.h"
 
 // List of available microstrip components.
 static const char * strip_available[] = {
@@ -67,11 +65,8 @@ static int checker_count_nodes (struct definition_t * def) {
    type.  If there is no such definition type the function returns
    NULL. */
 static struct define_t * checker_find_definition (char * type, int action) {
-  struct define_t * def;
-  for (def = qucs_definition_available; def->type != NULL; def++) {
-    if (!strcmp (type, def->type) && action == def->action)
-      return def;
-  }
+  struct define_t * def = module::getModule (type);
+  if (def != NULL && action == def->action) return def;
   return NULL;
 }
 
@@ -397,7 +392,8 @@ static int checker_resolve_variable (struct definition_t * root,
       found++;
     }
     /* 9. find property reference in the instance */
-    if (checker_get_property_type (def->define, value->ident) != PROP_NONE) {
+    if (!found &&
+	checker_get_property_type (def->define, value->ident) != PROP_NONE) {
       if (root->env) {
 
 	// create reference variable names
@@ -1903,7 +1899,9 @@ void netlist_status (void) {
   struct definition_t * cir;
   int count;
   logprint (LOG_STATUS, "netlist content\n");
-  for (def = qucs_definition_available; def->type != NULL; def++) {
+  qucs::hashiterator<module> it;
+  for (it = qucs::hashiterator<module> (module::modules); *it; ++it) {
+    def = it.currentVal()->definition;
     for (count = 0, cir = definition_root; cir != NULL; cir = cir->next) {
       if (!strcmp (def->type, cir->type)) count++;
     }

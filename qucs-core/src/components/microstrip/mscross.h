@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mscross.h,v 1.5 2008-10-03 14:49:49 ela Exp $
+ * $Id: mscross.h,v 1.6 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -28,15 +28,13 @@
 class mscross : public circuit
 {
  public:
-  mscross ();
+  CREATOR (mscross);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void initSP (void);
   void calcSP (nr_double_t);
   void initTR (void);
-
-  CREATOR (mscross);
 
  private:
   void initModel (void);

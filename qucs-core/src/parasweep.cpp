@@ -1,7 +1,7 @@
 /*
  * parasweep.cpp - parameter sweep class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.16 2007-12-30 13:05:16 ela Exp $
+ * $Id: parasweep.cpp,v 1.17 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "vector.h"
 #include "dataset.h"
 #include "net.h"
+#include "netdefs.h"
 #include "ptrlist.h"
 #include "analysis.h"
 #include "variable.h"
@@ -190,3 +191,17 @@ void parasweep::saveResults (void) {
   }
   v->add (D (var->getConstant ()));
 }
+
+// properties
+struct define_t parasweep::anadef =
+  { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Param", PROP_STR, { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
+      { "Sim", PROP_STR, { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Points", PROP_INT, { 5, PROP_NO_STR }, PROP_MIN_VAL (2) },
+      { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Values", PROP_LIST, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  };

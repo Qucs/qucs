@@ -1,7 +1,7 @@
 /*
  * attenuator.cpp - attenuator class implementation
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: attenuator.cpp,v 1.18 2005-06-02 18:17:51 raimi Exp $
+ * $Id: attenuator.cpp,v 1.19 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "matrix.h"
-#include "constants.h"
-#include "component_id.h"
+#include "component.h"
 #include "attenuator.h"
 
 attenuator::attenuator () : circuit (2) {
@@ -156,3 +146,13 @@ void attenuator::initAC (void) {
 void attenuator::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t attenuator::cirdef =
+  { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: device.cpp,v 1.23 2007-09-16 16:49:40 ela Exp $
+ * $Id: device.cpp,v 1.24 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "net.h"
 #include "constants.h"
 #include "device.h"
+#include "netdefs.h"
 #include "resistor.h"
 #include "capacitor.h"
 

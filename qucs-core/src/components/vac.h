@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.h,v 1.11 2008-10-03 14:49:49 ela Exp $
+ * $Id: vac.h,v 1.12 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class vac : public circuit
 {
  public:
-  vac ();
+  CREATOR (vac);
   void initSP (void);
   void initDC (void);
   void initAC (void);
@@ -36,8 +36,6 @@ class vac : public circuit
   void calcTR (nr_double_t);
   void initHB (void);
   void calcHB (nr_double_t);
-
-  CREATOR (vac);
 };
 
 #endif /* __VAC_H__ */

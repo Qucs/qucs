@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.h,v 1.3 2008-10-03 14:49:49 ela Exp $
+ * $Id: relais.h,v 1.4 2008-10-05 17:52:13 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class relais : public circuit
 {
  public:
-  relais ();
+  CREATOR (relais);
   void initSP (void);
   void initDC (void);
   void calcDC (void);
@@ -38,8 +38,6 @@ class relais : public circuit
   void saveOperatingPoints (void);
   void calcNoiseSP (nr_double_t);
   void calcNoiseAC (nr_double_t);
-
-  CREATOR (relais);
 
  private:
   int state;

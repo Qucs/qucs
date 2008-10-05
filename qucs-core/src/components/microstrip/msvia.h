@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msvia.h,v 1.6 2008-10-03 14:49:49 ela Exp $
+ * $Id: msvia.h,v 1.7 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class msvia : public circuit
 {
  public:
-  msvia ();
+  CREATOR (msvia);
   void calcSP (nr_double_t);
   void initSP (void);
   void calcNoiseSP (nr_double_t);
@@ -38,8 +38,6 @@ class msvia : public circuit
   void calcNoiseAC (nr_double_t);
   nr_double_t calcResistance (void);
   nr_complex_t calcImpedance (nr_double_t);
-
-  CREATOR (msvia);
 
  private:
   nr_double_t R;

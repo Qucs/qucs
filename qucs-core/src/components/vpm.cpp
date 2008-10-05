@@ -1,7 +1,7 @@
 /*
  * vpm.cpp - PM modulated AC voltage source class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vpm.cpp,v 1.1 2006-03-02 08:06:03 raimi Exp $
+ * $Id: vpm.cpp,v 1.2 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -26,17 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "consts.h"
-#include "constants.h"
+#include "component.h"
 #include "vpm.h"
 
 vpm::vpm () : circuit (3) {
@@ -80,3 +70,14 @@ void vpm::calcTR (nr_double_t t) {
   setE (VSRC_1, g * v - u);
   setC (VSRC_1, NODE_3, g);
 }
+
+// properties
+struct define_t vpm::cirdef =
+  { "PM_Mod", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "M", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0, 1) },
+      PROP_NO_PROP },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+      PROP_NO_PROP }
+  };

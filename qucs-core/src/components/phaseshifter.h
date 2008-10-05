@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: phaseshifter.h,v 1.8 2008-10-03 14:49:49 ela Exp $
+ * $Id: phaseshifter.h,v 1.9 2008-10-05 17:52:12 ela Exp $
  *
  */
 
@@ -28,12 +28,10 @@
 class phaseshifter : public circuit
 {
  public:
-  phaseshifter ();
+  CREATOR (phaseshifter);
   void initSP (void);
   void initDC (void);
   void initAC (void);
-
-  CREATOR (phaseshifter);
 };
 
 #endif /* __PHASESHIFTER_H__ */

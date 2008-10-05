@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.h,v 1.4 2008-10-03 14:49:48 ela Exp $
+ * $Id: mutualx.h,v 1.5 2008-10-05 17:52:12 ela Exp $
  *
  */
 
@@ -28,15 +28,13 @@
 class mutualx : public circuit
 {
  public:
-  mutualx ();
+  CREATOR (mutualx);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (mutualx);
 
  private:
   matrix calcMatrixZ (nr_double_t);

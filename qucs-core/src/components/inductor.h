@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.h,v 1.9 2008-10-03 14:49:48 ela Exp $
+ * $Id: inductor.h,v 1.10 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class inductor : public circuit
 {
  public:
-  inductor ();
+  CREATOR (inductor);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcDC (void);
@@ -38,8 +38,6 @@ class inductor : public circuit
   void calcTR (nr_double_t);
   void initHB (void);
   void calcHB (nr_double_t);
-
-  CREATOR (inductor);
 };
 
 #endif /* __INDUCTOR_H__ */

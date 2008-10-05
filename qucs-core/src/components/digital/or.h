@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: or.h,v 1.3 2008-10-03 14:49:49 ela Exp $
+ * $Id: or.h,v 1.4 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,11 +28,9 @@
 class logicor : public digital
 {
  public:
-  logicor ();
+  CREATOR (logicor);
   void calcOutput (void);
   void calcDerivatives (void);
-
-  CREATOR (logicor);
 };
 
 #endif /* __OR_H__ */

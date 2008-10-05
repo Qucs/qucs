@@ -1,7 +1,7 @@
 /*
  * twistedpair.cpp - twisted pair line class implementation
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: twistedpair.cpp,v 1.7 2008-01-10 20:00:00 ela Exp $
+ * $Id: twistedpair.cpp,v 1.8 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -26,22 +26,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
-#include "matrix.h"
+#include "component.h"
 #include "twistedpair.h"
-
-#ifdef __MINGW32__
-#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
-#endif
 
 twistedpair::twistedpair () : circuit (4) {
   type = CIR_TWISTEDPAIR;
@@ -206,3 +192,19 @@ void twistedpair::calcNoiseAC (nr_double_t) {
 void twistedpair::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t twistedpair::cirdef =
+  { "TWIST", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "d", PROP_REAL, { 0.5e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+      { "D", PROP_REAL, { 0.8e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T", PROP_REAL, { 100, PROP_NO_STR }, PROP_POS_RANGE },
+      { "er", PROP_REAL, { 4, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+      PROP_NO_PROP }
+  };

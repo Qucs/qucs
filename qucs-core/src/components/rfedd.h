@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.h,v 1.3 2008-10-03 14:49:49 ela Exp $
+ * $Id: rfedd.h,v 1.4 2008-10-05 17:52:14 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class rfedd : public circuit
 {
  public:
-  rfedd ();
+  CREATOR (rfedd);
   ~rfedd ();
   void initDC (void);
   void calcDC (void);
@@ -38,8 +38,6 @@ class rfedd : public circuit
   void calcSP (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (rfedd);
 
  private:
   void initModel (void);

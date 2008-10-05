@@ -1,7 +1,7 @@
 /*
  * coupler.cpp - ideal coupler class implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.cpp,v 1.5 2008-01-22 17:50:54 ela Exp $
+ * $Id: coupler.cpp,v 1.6 2008-10-05 17:52:11 ela Exp $
  *
  */
 
@@ -26,16 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "coupler.h"
 
 coupler::coupler () : circuit (4) {
@@ -104,3 +95,13 @@ void coupler::initAC (void) {
 void coupler::initTR (void) {
   initDC ();
 }
+
+// properties
+struct define_t coupler::cirdef =
+  { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
+      { "phi", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
+      PROP_NO_PROP },
+    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  };

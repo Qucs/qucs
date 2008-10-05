@@ -1,7 +1,7 @@
 /*
- * mscorner.cpp - microstrip mitered bend class implementation
+ * msmbend.cpp - microstrip mitered bend class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msmbend.cpp,v 1.15 2008-01-10 20:00:01 ela Exp $
+ * $Id: msmbend.cpp,v 1.16 2008-10-05 17:52:17 ela Exp $
  *
  */
 
@@ -27,20 +27,8 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "substrate.h"
-#include "constants.h"
-#include "matrix.h"
 #include "msmbend.h"
 
 msmbend::msmbend () : circuit (2) {
@@ -112,3 +100,12 @@ void msmbend::initAC (void) {
 void msmbend::calcAC (nr_double_t frequency) {
   setMatrixY (ztoy (calcMatrixZ (frequency)));
 }
+
+// properties
+struct define_t msmbend::cirdef =
+  { "MMBEND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  };

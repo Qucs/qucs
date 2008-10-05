@@ -1,7 +1,7 @@
 /*
  * inverter.cpp - logical inverter class implementation
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.cpp,v 1.4 2006-01-11 09:50:07 raimi Exp $
+ * $Id: inverter.cpp,v 1.5 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -26,13 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-
-#include "complex.h"
-#include "object.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
+#include "component.h"
 #include "digital.h"
 #include "inverter.h"
 
@@ -49,3 +43,10 @@ void inverter::calcOutput (void) {
 void inverter::calcDerivatives (void) {
   g[0] = - 0.5 * calcDerivativeX (0);
 }
+
+// properties
+struct define_t inverter::cirdef =
+  { "Inv", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  };

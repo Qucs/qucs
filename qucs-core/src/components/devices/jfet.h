@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.h,v 1.15 2008-10-03 14:49:49 ela Exp $
+ * $Id: jfet.h,v 1.16 2008-10-05 17:52:15 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 class jfet : public circuit
 {
  public:
-  jfet ();
+  CREATOR (jfet);
   void calcSP (nr_double_t);
   void calcNoiseSP (nr_double_t);
   void calcDC (void);
@@ -42,8 +42,6 @@ class jfet : public circuit
   void calcNoiseAC (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
-
-  CREATOR (jfet);
 
  private:
   matrix calcMatrixY (nr_double_t);
