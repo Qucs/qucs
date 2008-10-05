@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.125 2008-10-05 17:52:11 ela Exp $
+ * $Id: check_netlist.cpp,v 1.126 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -198,122 +198,6 @@ static struct value_t * checker_validate_reference (struct definition_t * def,
   return val;
 }
 
-/* Structure defining a certain component type containing special
-   parameter values. */
-struct special_t {
-  const char * type;     // component type
-  const char * key;      // parameter name
-  const char * value[8]; // maximum 7 alternatives for now
-};
-
-// List of special identifiers.
-static struct special_t checker_specials[] = {
-  { "JFET",   "Type",        { "nfet", "pfet", NULL } },
-  { "BJT",    "Type",        { "npn", "pnp", NULL } },
-  { "MOSFET", "Type",        { "nfet", "pfet", NULL } },
-  { "SP",     "Noise",       { "yes", "no", NULL } },
-  { "SP",     "saveCVs",     { "yes", "no", NULL } },
-  { "SP",     "saveAll",     { "yes", "no", NULL } },
-  { "SP",     "Type",        { "lin", "log", "list", "const", NULL } },
-  { "AC",     "Type",        { "lin", "log", "list", "const", NULL } },
-  { "AC",     "Noise",       { "yes", "no", NULL } },
-  { "DC",     "saveOPs",     { "yes", "no", NULL } },
-  { "DC",     "saveAll",     { "yes", "no", NULL } },
-  { "DC",     "convHelper",  { "none", "SourceStepping", "gMinStepping", 
-			       "LineSearch", "Attenuation", "SteepestDescent",
-			       NULL } },
-  { "DC",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
-			       "HouseholderLQ", "GolubSVD", NULL } },
-  { "TR",     "Type",        { "lin", "log", NULL } },
-  { "TR",     "IntegrationMethod",
-    { "Euler", "Trapezoidal", "Gear", "AdamsMoulton", NULL } },
-  { "TR",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
-			       "HouseholderLQ", "GolubSVD", NULL } },
-  { "TR",     "relaxTSR",    { "yes", "no", NULL } },
-  { "TR",     "initialDC",   { "yes", "no", NULL } },
-  { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MLIN",   "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "CLIN",   "Backside",    { "Metal", "Air", NULL } },
-  { "CLIN",   "Approx",      { "yes", "no", NULL } },
-  { "COPEN",  "Backside",    { "Metal", "Air", NULL } },
-  { "CSHORT", "Backside",    { "Metal", "Air", NULL } },
-  { "CSTEP",  "Backside",    { "Metal", "Air", NULL } },
-  { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
-  { "SPfile", "Data",        { "rectangular", "polar", NULL } },
-  { "SPfile", "Interpolator",{ "linear", "cubic", NULL } },
-  { "SPfile", "duringDC",    { "open", "short", "shortall", "unspecified",
-			       NULL } },
-  { "DigiSource", "init",    { "low", "high", NULL } },
-  { "Switch", "init",        { "on", "off", NULL } },
-  { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MSTEP",  "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "MOPEN",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MOPEN",  "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "MOPEN",  "Model",       { "Kirschning", "Hammerstad",
-			       "Alexopoulos", NULL } },
-  { "MGAP",   "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MGAP",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "MCOUPLED", "Model",     { "Kirschning", "Hammerstad", NULL } },
-  { "MCOUPLED", "DispModel", { "Kirschning", "Getsinger", NULL } },
-  { "MTEE",   "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MTEE",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "MCROSS", "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			       "Getsinger", "Schneider", "Pramanick",
-			       "Hammerstad", NULL } },
-  { "MCROSS", "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "hicumL2p1", "Type",     { "npn", "pnp", NULL } },
-  { "BOND",   "Model",       { "FREESPACE", "MIRROR", "DESCHARLES", NULL } },
-  { "Vfile", "Interpolator", { "hold", "linear", "cubic", NULL } },
-  { "Vfile", "Repeat",       { "no", "yes", NULL } },
-  { "Ifile", "Interpolator", { "hold", "linear", "cubic", NULL } },
-  { "Ifile", "Repeat",       { "no", "yes", NULL } },
-  { "RFEDD", "Type",         { "Y", "Z", "S", "H", "G", "A", "T", NULL } },
-  { "RFEDD", "duringDC",     { "open", "short", "unspecified",
-			       "zerofrequency", NULL } },
-  { NULL, NULL, { NULL } }
-};
-
-/* This function checks whether the given identifier which occurred in
-   a component property (may also be a variable) is a special
-   identifier used for some properties. It returns zero if the
-   identifier is invalid. */
-static int checker_validate_special (struct definition_t * root,
-				     struct definition_t * def, char * ident) {
-  int found = 0;
-  struct value_t * val;
-  struct special_t * special;
-  // go through each special
-  for (int i = 0; checker_specials[i].type != NULL; i++) {
-    special = &checker_specials[i];
-    // find the given identifier in the list of allowed specials
-    val = checker_find_variable (root, special->type, special->key, ident);
-    if (val != NULL) {
-      // check whether the given identifier is an allowed value
-      for (int n = 0; special->value[n] != NULL; n++) {
-	if (!strcmp (special->value[n], ident)) {
-	  found++;
-	}
-      }
-      if (!found) {
-	logprint (LOG_ERROR, "line %d: checker error, `%s' is not a valid "
-		  "`%s' property as used in `%s:%s'\n", def->line, ident,
-		  special->key, def->type, def->instance);
-      }
-    }
-  }
-  return found;
-}
-
 /* This function checks whether the given definition is a known
    microstrip component with a substrate definition.  If the given
    identifier equals this substrate definition then the function
@@ -362,7 +246,7 @@ static int checker_resolve_variable (struct definition_t * root,
       found++;
     }
     /* 5. find special identifiers in certain properties */
-    if (checker_validate_special (root, def, value->ident)) {
+    if (value->range) {
       found++;
     }
     /* 6. find file reference in S-parameter file components */
@@ -1071,12 +955,32 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
   }      
   // check identifiers
   else {
+    // no identifier given
     if (pp->value->ident == NULL) {
       logprint (LOG_ERROR,
 		"checker error, value of `%s' (%g) needs to be "
 		"an identifier in `%s:%s'\n",
 		pp->key, pp->value->value, def->type, instance);
       errors++;
+    }
+    // check identifier range
+    else {
+      int i, found = 0;
+      char range[256]; sprintf (range, "[");
+      for (i = 0; prop->range.str[i]; i++) {
+	strcat (range, prop->range.str[i]);
+	strcat (range, ",");
+	if (!strcmp (prop->range.str[i], pp->value->ident)) found++;
+      }
+      if (!found && prop->range.str[0]) {
+	range[strlen (range) - 1] = ']';
+	logprint (LOG_ERROR,
+		  "checker error, value of `%s' (%s) needs to be "
+		  "in %s in `%s:%s'\n",
+		  pp->key, pp->value->ident, range, def->type, instance);
+	errors++;
+      }
+      else pp->value->range = 1;
     }
   }
   return errors;

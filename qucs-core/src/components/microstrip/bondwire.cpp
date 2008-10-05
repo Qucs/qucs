@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bondwire.cpp,v 1.9 2008-10-05 17:52:15 ela Exp $
+ * $Id: bondwire.cpp,v 1.10 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -423,7 +423,8 @@ struct define_t bondwire::cirdef =
       { "H", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
       { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Model", PROP_STR, { PROP_NO_VAL, "FREESPACE" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "FREESPACE" },
+	PROP_RNG_STR3 ("FREESPACE", "MIRROR", "DESCHARLES") },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },

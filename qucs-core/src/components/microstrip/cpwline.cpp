@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.19 2008-10-05 17:52:16 ela Exp $
+ * $Id: cpwline.cpp,v 1.20 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -426,7 +426,8 @@ struct define_t cpwline::cirdef =
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
-      { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
+	PROP_RNG_STR2 ("Metal", "Air") },
+      { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
       PROP_NO_PROP }
   };

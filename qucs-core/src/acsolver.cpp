@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.20 2008-10-05 17:52:10 ela Exp $
+ * $Id: acsolver.cpp,v 1.21 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -211,9 +211,9 @@ void acsolver::solve_noise (void) {
 // properties
 struct define_t acsolver::anadef =
   { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_RNG_TYP },
       PROP_NO_PROP },
-    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
       { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },

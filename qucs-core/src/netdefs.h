@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.15 2008-10-05 17:52:11 ela Exp $
+ * $Id: netdefs.h,v 1.16 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@ struct value_t {
   int var;
   int subst;
   int hint;
+  int range;
   struct value_t * next;
 };
 
@@ -91,7 +92,7 @@ struct property_t {
     nr_double_t l;  // lower bound of the value
     nr_double_t h;  // upper bound of the value
     char ih;        // interval boundary
-    const char * str[4]; // possible string list
+    const char * str[8]; // possible string list
   } range;
 };
 
@@ -120,7 +121,7 @@ struct define_t {
                             PROP_NO_RANGE }
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
-#define PROP_NO_RANGE     { '.', 0, 0, '.', { NULL} }
+#define PROP_NO_RANGE     { '.', 0, 0, '.', { NULL } }
 #define PROP_VAL_MAX      NR_MAX
 #define PROP_VAL_MIN      NR_MIN
 #define PROP_POS_RANGE    { '[', 0, 0, '.', { NULL } }
@@ -136,6 +137,36 @@ struct define_t {
 #define PROP_RNGXI(f,t)   { ']', f, t, ']', { NULL } }
 #define PROP_RNGIX(f,t)   { '[', f, t, '[', { NULL } }
 #define PROP_RNGXX(f,t)   { ']', f, t, '[', { NULL } }
+
+#define PROP_RNG_STR1(s) \
+  { '.', 0, 0, '.', { s, NULL } }
+#define PROP_RNG_STR2(s1,s2) \
+  { '.', 0, 0, '.', { s1, s2, NULL } }
+#define PROP_RNG_STR3(s1,s2,s3) \
+  { '.', 0, 0, '.', { s1, s2, s3, NULL } }
+#define PROP_RNG_STR4(s1,s2,s3,s4) \
+  { '.', 0, 0, '.', { s1, s2, s3, s4, NULL } }
+#define PROP_RNG_STR5(s1,s2,s3,s4,s5) \
+  { '.', 0, 0, '.', { s1, s2, s3, s4, s5, NULL } }
+#define PROP_RNG_STR6(s1,s2,s3,s4,s5,s6) \
+  { '.', 0, 0, '.', { s1, s2, s3, s4, s5, s6, NULL } }
+#define PROP_RNG_STR7(s1,s2,s3,s4,s5,s6,s7) \
+  { '.', 0, 0, '.', { s1, s2, s3, s4, s5, s6, s7, NULL } }
+
+#define PROP_RNG_YESNO    PROP_RNG_STR2 ("yes", "no")
+#define PROP_RNG_BJT      PROP_RNG_STR2 ("npn", "pnp")
+#define PROP_RNG_FET      PROP_RNG_STR2 ("nfet", "pfet")
+#define PROP_RNG_MOS      PROP_RNG_STR2 ("nmos", "pmos")
+#define PROP_RNG_TYP      PROP_RNG_STR4 ("lin", "log", "list", "const")
+#define PROP_RNG_SOL \
+  PROP_RNG_STR5 ("CroutLU", "DoolittleLU", "HouseholderQR", \
+		 "HouseholderLQ", "GolubSVD")
+#define PROP_RNG_DIS \
+  PROP_RNG_STR7 ("Kirschning", "Kobayashi", "Yamashita", "Getsinger", \
+		 "Schneider", "Pramanick", "Hammerstad")
+#define PROP_RNG_MOD \
+  PROP_RNG_STR3 ("Wheeler", "Schneider", "Hammerstad")
+
 #define PROP_NONE         -1
 #define PROP_INT          0
 #define PROP_REAL         1

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.29 2008-10-05 17:52:14 ela Exp $
+ * $Id: spfile.cpp,v 1.30 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -629,9 +629,12 @@ struct define_t spfile::cirdef =
   { "SPfile", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
-      { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" }, PROP_NO_RANGE },
+    { { "Data", PROP_STR, { PROP_NO_VAL, "polar" },
+	PROP_RNG_STR2 ("rectangular", "polar") },
+      { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" },
+	PROP_RNG_STR2 ("linear", "cubic") },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" }, PROP_NO_RANGE },
+      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" },
+	PROP_RNG_STR4 ("open", "short", "shortall", "unspecified") },
       PROP_NO_PROP }
   };

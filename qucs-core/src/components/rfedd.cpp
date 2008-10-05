@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rfedd.cpp,v 1.7 2008-10-05 17:52:13 ela Exp $
+ * $Id: rfedd.cpp,v 1.8 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -378,8 +378,10 @@ void rfedd::calcSP (nr_double_t frequency) {
 // properties
 struct define_t rfedd::cirdef =
   { "RFEDD", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "Y" }, PROP_NO_RANGE },
-      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" }, PROP_NO_RANGE },
+    { { "Type", PROP_STR, { PROP_NO_VAL, "Y" },
+	PROP_RNG_STR7 ("Y", "Z", "S", "H", "G", "A", "T") },
+      { "duringDC", PROP_STR, { PROP_NO_VAL, "open" },
+	PROP_RNG_STR4  ("open", "short", "unspecified", "zerofrequency") },
       { "P11", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "P12", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 

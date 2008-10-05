@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwshort.cpp,v 1.4 2008-10-05 17:52:16 ela Exp $
+ * $Id: cpwshort.cpp,v 1.5 2008-10-05 20:13:14 ela Exp $
  *
  */
 
@@ -108,6 +108,7 @@ struct define_t cpwshort::cirdef =
       { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
+    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
+	PROP_RNG_STR2 ("Metal", "Air") },
       PROP_NO_PROP }
   };
