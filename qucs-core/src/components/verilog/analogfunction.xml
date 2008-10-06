@@ -54,7 +54,7 @@ inline double _d0_sqrt(double arg)         { return (1.0/sqrt(arg)/2.0); }
 inline double _abs(double arg)             { return  fabs(arg); }
 inline double _d0_abs(double arg)          { return (((arg)&gt;=0)?(+1.0):(-1.0)); }
 inline int _floor(double arg)              { return  floor(arg); }
-inline int _d0_floor(double arg)           { return (1.0); }
+inline int _d0_floor(double)               { return (1.0); }
 
 inline double _hypot(double x,double y)    { return sqrt((x)*(x)+(y)*(y)); }
 inline double _d0_hypot(double x,double y) { return (x)/sqrt((x)*(x)+(y)*(y)); }
