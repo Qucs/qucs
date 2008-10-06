@@ -1,5 +1,7 @@
 2008-10-06  Stefan Jahn  <stefan@lkcc.org>
 
+	* scan_dataset.l: Fixed data identifier syntax (e.g. Versus.0001).
+
 	* check_netlist.cpp: Finally removed any component specific
 	checks.  Now everything can be checked by the registered module
 	properties.
