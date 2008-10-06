@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.16 2008-10-05 20:13:14 ela Exp $
+ * $Id: netdefs.h,v 1.17 2008-10-06 17:08:29 ela Exp $
  *
  */
 
@@ -180,6 +180,7 @@ struct define_t {
 #define PROP_IS_LST(prop)    ((prop).type == PROP_LIST)
 #define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0 || \
                               (prop).range.il != '.' || (prop).range.ih != '.')
+#define PROP_HAS_STR(prop)   ((prop).range.str[0] != NULL)
 
 #define create_definition() \
   ((struct definition_t *) calloc (sizeof (struct definition_t), 1))

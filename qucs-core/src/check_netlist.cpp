@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.126 2008-10-05 20:13:14 ela Exp $
+ * $Id: check_netlist.cpp,v 1.127 2008-10-06 17:08:29 ela Exp $
  *
  */
 
@@ -47,11 +47,6 @@
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
 environment * env_root = NULL;
-
-// List of available microstrip components.
-static const char * strip_available[] = {
-  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", "MTEE",
-  "MCROSS", "MVIA", "CLIN", "COPEN", "CSHORT", "CGAP", "CSTEP", "BOND", NULL };
 
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
@@ -83,24 +78,9 @@ static int checker_find_property (const char * key, struct pair_t * pp) {
 }
 
 /* Checks if the given property key is either optional or required for
-   the given definition type. */
-static int checker_is_property (struct define_t * available, char * key) {
-  int i;
-  for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
-    if (!strcmp (available->required[i].key, key))
-      return 1;
-  }
-  for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
-    if (!strcmp (available->optional[i].key, key))
-      return 1;
-  }
-  return 0;
-}
-
-/* Checks if the given property key is either optional or required for
    the given definition type and returns the type of the property. */
-static int checker_get_property_type (struct define_t * available,
-				      char * key) {
+static int checker_is_property (struct define_t * available,
+				const char * key) {
   int i;
   for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
     if (!strcmp (available->required[i].key, key))
@@ -205,12 +185,10 @@ static struct value_t * checker_validate_reference (struct definition_t * def,
 static struct value_t * checker_find_substrate (struct definition_t * def,
 						char * ident) {
   struct value_t * val;
-  for (int i = 0; strip_available[i] != NULL; i++) {
-    if (!strcmp (strip_available[i], def->type)) {
-      if ((val = checker_find_reference (def, "Subst")) != NULL) {
-	if (ident != NULL && !strcmp (val->ident, ident))
-	  return val;
-      }
+  if (checker_is_property (def->define, "Subst") == PROP_STR) {
+    if ((val = checker_find_reference (def, "Subst")) != NULL) {
+      if (ident != NULL && !strcmp (val->ident, ident))
+	return val;
     }
   }
   return NULL;
@@ -277,7 +255,7 @@ static int checker_resolve_variable (struct definition_t * root,
     }
     /* 9. find property reference in the instance */
     if (!found &&
-	checker_get_property_type (def->define, value->ident) != PROP_NONE) {
+	checker_is_property (def->define, value->ident) != PROP_NONE) {
       if (root->env) {
 
 	// create reference variable names
@@ -730,28 +708,26 @@ static int checker_validate_strips (struct definition_t * root) {
   struct value_t * val;
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!def->action) {
-      /* find microstrip components */
-      for (int i = 0; strip_available[i] != NULL; i++) {
-	if (!strcmp (strip_available[i], def->type)) {
-	  /* check validity of 'Subst' property */
-	  if ((val = checker_validate_reference (def, "Subst")) == NULL) {
-	    errors++;
-	  }
-	  else {
-	    if (checker_count_definition (root, "SUBST", val->ident) != 1) {
-	      logprint (LOG_ERROR, "line %d: checker error, no such substrate "
-			"`%s' found as specified in `%s:%s'\n", def->line,
-			val->ident, def->type, def->instance);
-	      errors++;
-	    }
-	  }
-	  /* check validity of 'Model' property */
-#if DISABLE_FOR_NOW /* ThinkME!!! */
-	  if ((val = checker_validate_reference (def, "Model")) == NULL) {
-	    errors++;
-	  }
-#endif
+      /* find components with substrate property */
+      if (checker_is_property (def->define, "Subst") == PROP_STR) {
+	/* check validity of 'Subst' property */
+	if ((val = checker_validate_reference (def, "Subst")) == NULL) {
+	  errors++;
 	}
+	else {
+	  if (checker_count_definition (root, "SUBST", val->ident) != 1) {
+	    logprint (LOG_ERROR, "line %d: checker error, no such substrate "
+		      "`%s' found as specified in `%s:%s'\n", def->line,
+		      val->ident, def->type, def->instance);
+	    errors++;
+	  }
+	}
+	/* check validity of 'Model' property */
+#if DISABLE_FOR_NOW /* ThinkME!!! */
+	if ((val = checker_validate_reference (def, "Model")) == NULL) {
+	  errors++;
+	}
+#endif
       }
     }
   }
@@ -965,22 +941,24 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     }
     // check identifier range
     else {
-      int i, found = 0;
-      char range[256]; sprintf (range, "[");
-      for (i = 0; prop->range.str[i]; i++) {
-	strcat (range, prop->range.str[i]);
-	strcat (range, ",");
-	if (!strcmp (prop->range.str[i], pp->value->ident)) found++;
+      if (PROP_HAS_STR (*prop)) {
+	int i, found = 0;
+	char range[256]; sprintf (range, "[");
+	for (i = 0; prop->range.str[i]; i++) {
+	  strcat (range, prop->range.str[i]);
+	  strcat (range, ",");
+	  if (!strcmp (prop->range.str[i], pp->value->ident)) found++;
+	}
+	if (!found) {
+	  range[strlen (range) - 1] = ']';
+	  logprint (LOG_ERROR,
+		    "checker error, value of `%s' (%s) needs to be "
+		    "in %s in `%s:%s'\n",
+		    pp->key, pp->value->ident, range, def->type, instance);
+	  errors++;
+	}
+	else pp->value->range = 1;
       }
-      if (!found && prop->range.str[0]) {
-	range[strlen (range) - 1] = ']';
-	logprint (LOG_ERROR,
-		  "checker error, value of `%s' (%s) needs to be "
-		  "in %s in `%s:%s'\n",
-		  pp->key, pp->value->ident, range, def->type, instance);
-	errors++;
-      }
-      else pp->value->range = 1;
     }
   }
   return errors;
@@ -1492,7 +1470,7 @@ static int checker_validate_properties (struct definition_t * root,
   /* check the property content */
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     /* check whether properties are either required or optional */
-    if (!checker_is_property (available, pair->key)) {
+    if (checker_is_property (available, pair->key) == PROP_NONE) {
       if (strcmp (def->type, "Def")) {
 	logprint (LOG_ERROR, 
 		  "line %d: checker error, extraneous property `%s' is "
