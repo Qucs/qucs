@@ -132,7 +132,7 @@
 <admst:template match=":property">
   <!-- name -->
   <admst:value-of select="name"/> 
-  <admst:text format="      { &quot;%s&quot;, "/>
+  <admst:text format="  { &quot;%s&quot;, "/>
 
   <!-- type -->
   <admst:choose>
@@ -168,10 +168,18 @@
 </admst:for-each>
 
 <admst:open file="$module.defs.h">
-<admst:for-each select="/module">
-<admst:text format="/* $module verilog device definition and properties */\n"/>
-<admst:text format="struct define_t $module::cirdef =\n"/>
-<admst:text format="  { &quot;$module&quot;, $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,\n"/>
+<admst:for-each select="/module">/*
+ * $(module).defs.h - device definition header
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ */
+
+#ifndef __$(module)_DEFS_H__
+#define __$(module)_DEFS_H__
 
 <!-- find temp and tnom parameters -->
 <admst:variable name="tnom" string="none"/>
@@ -186,9 +194,10 @@
     </admst:if>
   </admst:if>
 </admst:for-each>
+// required properties
+PROP_REQ [] = {
 
 <!-- emit required properties -->
-<admst:text format="    {\n"/>
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
     <admst:if test="[name!='npn' and name!='pnp']">
@@ -196,13 +205,13 @@
     </admst:if>
   </admst:if>
 </admst:for-each>
-<admst:text format="      PROP_NO_PROP },\n"/>
+<admst:text format="  PROP_NO_PROP };\n"/>
+// optional properties
+PROP_OPT [] = {
 
 <!-- emit optional properties -->
-<admst:text format="    {\n"/>
-
 <admst:if test="[name='hicumL2p1' or name='hic0_full']">
-  <admst:text format="      { &quot;Type&quot;, PROP_STR, { "/>
+  <admst:text format="  { &quot;Type&quot;, PROP_STR, { "/>
   <admst:text format="PROP_NO_VAL, &quot;npn&quot; }, PROP_RNG_BJT },\n"/>
 </admst:if>
 
@@ -216,7 +225,7 @@
 
 <admst:if test="[name!='mod_amp']">
   <admst:if test="[$temp='none']">
-  <admst:text format="      { &quot;Temp&quot;, PROP_REAL, { "/>
+  <admst:text format="  { &quot;Temp&quot;, PROP_REAL, { "/>
   <admst:choose>
     <admst:when test="[$tnom!='none']">
       <admst:apply-templates select="$tnom/default" match=":expression"/>
@@ -226,7 +235,13 @@
   <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
   </admst:if>
 </admst:if>
-<admst:text format="      PROP_NO_PROP }\n  };\n"/>
+<admst:text format="  PROP_NO_PROP };\n"/>
+// device definition
+struct define_t $module::cirdef =
+  { &quot;$module&quot;,
+    $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };
+
+#endif /* __$(module)_DEFS_H__ */
 
 </admst:for-each>
 

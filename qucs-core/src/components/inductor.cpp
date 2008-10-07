@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inductor.cpp,v 1.19 2008/10/05 17:52:11 ela Exp $
+ * $Id: inductor.cpp,v 1.20 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -117,9 +117,9 @@ void inductor::calcHB (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "I", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
 struct define_t inductor::cirdef =
-  { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "I", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP }
-  };
+  { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

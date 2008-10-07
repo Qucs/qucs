@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spsolver.cpp,v 1.52 2008/10/05 20:13:14 ela Exp $
+ * $Id: spsolver.cpp,v 1.53 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -1104,18 +1104,19 @@ void spsolver::saveCharacteristics (nr_double_t freq) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_RNG_TYP },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+  { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) }, 
+  { "NoiseOP", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
+  { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
+  { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
+  { "saveCVs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+  { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+  PROP_NO_PROP };
 struct define_t spsolver::anadef =
-  { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_RNG_TYP },
-      PROP_NO_PROP },
-    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-      { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) }, 
-      { "NoiseOP", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
-      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Points", PROP_INT, { 10, PROP_NO_STR }, PROP_MIN_VAL (2) },
-      { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
-      { "saveCVs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-      PROP_NO_PROP }
-  };
+  { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

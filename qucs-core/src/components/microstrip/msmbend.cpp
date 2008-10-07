@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msmbend.cpp,v 1.16 2008/10/05 17:52:17 ela Exp $
+ * $Id: msmbend.cpp,v 1.17 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -102,10 +102,11 @@ void msmbend::calcAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t msmbend::cirdef =
-  { "MMBEND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "MMBEND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

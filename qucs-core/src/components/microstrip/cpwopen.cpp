@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwopen.cpp,v 1.5 2008/10/05 20:13:14 ela Exp $
+ * $Id: cpwopen.cpp,v 1.6 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -100,14 +100,15 @@ void cpwopen::calcAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "G", PROP_REAL, { 5e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
+    PROP_RNG_STR2 ("Metal", "Air") },
+  PROP_NO_PROP };
 struct define_t cpwopen::cirdef =
-  { "COPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "G", PROP_REAL, { 5e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
-	PROP_RNG_STR2 ("Metal", "Air") },
-      PROP_NO_PROP }
-  };
+  { "COPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

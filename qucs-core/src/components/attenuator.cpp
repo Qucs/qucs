@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: attenuator.cpp,v 1.19 2008/10/05 17:52:11 ela Exp $
+ * $Id: attenuator.cpp,v 1.20 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -148,11 +148,13 @@ void attenuator::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t attenuator::cirdef =
-  { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
-      PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Attenuator",
+    2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

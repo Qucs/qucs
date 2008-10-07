@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: isolator.cpp,v 1.16 2008/10/05 17:52:11 ela Exp $
+ * $Id: isolator.cpp,v 1.17 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -101,10 +101,12 @@ void isolator::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t isolator::cirdef =
-  { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
-  };
+  { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ccvs.cpp,v 1.16 2008/10/05 17:52:11 ela Exp $
+ * $Id: ccvs.cpp,v 1.17 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -106,8 +106,9 @@ void ccvs::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
 struct define_t ccvs::cirdef =
-  { "CCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
-  };
+  { "CCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

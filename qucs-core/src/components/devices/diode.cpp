@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.43 2008/10/05 17:52:15 ela Exp $
+ * $Id: diode.cpp,v 1.44 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -448,36 +448,37 @@ void diode::calcHB (int frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
+  { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1e-6, 100) },
+  { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 2) },
+  { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Isr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+  { "Bv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ibv", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
+  { "Cp", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+  PROP_NO_PROP };
 struct define_t diode::cirdef =
-  { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1e-6, 100) },
-      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 2) },
-      { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, PROP_RNGXI (0, 10) },
-      PROP_NO_PROP },
-    { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Isr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
-      { "Bv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ibv", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
-      { "Cp", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tbv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Trs", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Ttt1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Ttt2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Tm1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Tm2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
-      PROP_NO_PROP }
-  };
+  { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

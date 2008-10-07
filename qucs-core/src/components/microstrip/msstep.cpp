@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msstep.cpp,v 1.14 2008/10/05 20:13:14 ela Exp $
+ * $Id: msstep.cpp,v 1.15 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -115,13 +115,14 @@ void msstep::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+  { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_RNG_DIS },
+  { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_RNG_MOD },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t msstep::cirdef =
-  { "MSTEP", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_RNG_DIS },
-      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_RNG_MOD },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "MSTEP", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

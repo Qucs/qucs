@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: mscorner.cpp,v 1.17 2008/10/05 17:52:16 ela Exp $
+ * $Id: mscorner.cpp,v 1.18 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -108,10 +108,11 @@ void mscorner::calcAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t mscorner::cirdef =
-  { "MCORN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "MCORN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

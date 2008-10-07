@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iac.cpp,v 1.16 2008/10/05 17:52:11 ela Exp $
+ * $Id: iac.cpp,v 1.17 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -68,11 +68,12 @@ void iac::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+  { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t iac::cirdef =
-  { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
-      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

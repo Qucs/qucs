@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nor.cpp,v 1.6 2008/10/05 17:52:15 ela Exp $
+ * $Id: nor.cpp,v 1.7 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -58,8 +58,10 @@ void logicnor::calcDerivatives (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
 struct define_t logicnor::cirdef =
-  { "NOR", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
-  };
+  { "NOR",
+    PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

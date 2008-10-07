@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vpm.cpp,v 1.2 2008/10/05 17:52:14 ela Exp $
+ * $Id: vpm.cpp,v 1.3 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -72,12 +72,13 @@ void vpm::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "M", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0, 1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+  PROP_NO_PROP };
 struct define_t vpm::cirdef =
-  { "PM_Mod", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "M", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0, 1) },
-      PROP_NO_PROP },
-    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
-      PROP_NO_PROP }
-  };
+  { "PM_Mod", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

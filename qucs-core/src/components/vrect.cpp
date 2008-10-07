@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vrect.cpp,v 1.7 2008/10/05 17:52:15 ela Exp $
+ * $Id: vrect.cpp,v 1.8 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -95,14 +95,15 @@ void vrect::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+  { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Td", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 struct define_t vrect::cirdef =
-  { "Vrect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
-      { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Td", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Vrect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

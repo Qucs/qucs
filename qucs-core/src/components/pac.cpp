@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pac.cpp,v 1.13 2008/10/05 17:52:12 ela Exp $
+ * $Id: pac.cpp,v 1.14 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -105,13 +105,14 @@ void pac::calcHB (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Num", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t pac::cirdef =
-  { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "Num", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
-      PROP_NO_PROP },
-    { { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

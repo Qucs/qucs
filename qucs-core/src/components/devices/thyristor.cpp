@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: thyristor.cpp,v 1.4 2008/10/05 17:52:15 ela Exp $
+ * $Id: thyristor.cpp,v 1.5 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -218,16 +218,17 @@ void thyristor::calcTR (nr_double_t time) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "N", PROP_REAL, { 2.0, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
+  { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Rg", PROP_REAL, { 5.0, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t thyristor::cirdef =
-  { "SCR", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
-      { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
-      PROP_NO_PROP },
-    { { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "N", PROP_REAL, { 2.0, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
-      { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "Rg", PROP_REAL, { 5.0, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "SCR", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

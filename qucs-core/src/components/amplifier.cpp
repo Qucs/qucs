@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.cpp,v 1.7 2008/10/05 17:52:11 ela Exp $
+ * $Id: amplifier.cpp,v 1.8 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -130,12 +130,13 @@ void amplifier::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "G", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  { "NF", PROP_REAL, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
+  PROP_NO_PROP };
 struct define_t amplifier::cirdef =
-  { "Amp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 10, PROP_NO_STR }, PROP_MIN_VAL (1) },
-      PROP_NO_PROP },
-    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "NF", PROP_REAL, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
-      PROP_NO_PROP }
-  };
+  { "Amp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vnoise.cpp,v 1.9 2008/10/05 17:52:14 ela Exp $
+ * $Id: vnoise.cpp,v 1.10 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -75,12 +75,13 @@ void vnoise::calcNoiseAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "u", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t vnoise::cirdef =
-  { "Vnoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "u", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      PROP_NO_PROP },
-    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Vnoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

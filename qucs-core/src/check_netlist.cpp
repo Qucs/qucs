@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.127 2008/10/06 17:08:29 ela Exp $
+ * $Id: check_netlist.cpp,v 1.128 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -1382,6 +1382,20 @@ static struct define_t * netlist_create_define (struct definition_t * def) {
   d->type = strdup (def->instance);
   d->nodes = checker_count_nodes (def);
   d->action = PROP_COMPONENT;
+
+  // determine number of required and optional parameters
+  for (o = r = 0, p = def->pairs; p != NULL; p = p->next) {
+    if (p->value == NULL)
+      r++;
+    else
+      o++;
+  }
+  d->required =
+    (struct property_t *) calloc (sizeof (struct property_t), r + 2);
+  d->optional =
+    (struct property_t *) calloc (sizeof (struct property_t), o + 1);
+
+  // fill in parameters
   for (o = r = 0, p = def->pairs; p != NULL; p = p->next) {
     if (p->value == NULL) {
       // required
@@ -1430,10 +1444,12 @@ static void netlist_free_define (struct define_t * d) {
   for (i = 0, p = d->required; p[i].key != NULL; i++) {
     free ((char *) p[i].key);
   }
+  free (d->required);
   // free optional properties
   for (i = 0, p = d->optional; p[i].key != NULL; i++) {
     free ((char *) p[i].key);
   }
+  free (d->optional);
   free (d);
 }
 

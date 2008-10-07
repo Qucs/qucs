@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: substrate.cpp,v 1.3 2008/10/05 17:52:17 ela Exp $
+ * $Id: substrate.cpp,v 1.4 2008/10/07 20:15:33 ela Exp $
  *
  */
 
@@ -43,14 +43,15 @@ substrate::~substrate () {
 }
 
 // properties
+PROP_REQ [] = {
+  { "er", PROP_REAL, { 9.8, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "h", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "t", PROP_REAL, { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  { "tand", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  { "D", PROP_REAL, { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t substrate::miscdef =
-  { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR,
-    { { "er", PROP_REAL, { 9.8, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "h", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "t", PROP_REAL, { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "tand", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "D", PROP_REAL, { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR, PROP_DEF };

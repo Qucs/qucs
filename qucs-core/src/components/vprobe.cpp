@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vprobe.cpp,v 1.4 2008/10/05 17:52:15 ela Exp $
+ * $Id: vprobe.cpp,v 1.5 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -62,8 +62,7 @@ void vprobe::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = { PROP_NO_PROP };
+PROP_OPT [] = { PROP_NO_PROP };
 struct define_t vprobe::cirdef =
-  { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

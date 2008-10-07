@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vexp.cpp,v 1.2 2008/10/05 17:52:14 ela Exp $
+ * $Id: vexp.cpp,v 1.3 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -84,14 +84,15 @@ void vexp::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "U2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+  { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t vexp::cirdef =
-  { "Vexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "U2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
-      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Vexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

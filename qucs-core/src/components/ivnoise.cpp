@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ivnoise.cpp,v 1.2 2008/10/05 17:52:12 ela Exp $
+ * $Id: ivnoise.cpp,v 1.3 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -100,14 +100,15 @@ void ivnoise::calcNoiseAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "C", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (-1, 1) }, 
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t ivnoise::cirdef =
-  { "IVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (-1, 1) }, 
-      PROP_NO_PROP },
-    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "IVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

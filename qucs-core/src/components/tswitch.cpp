@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.4 2008/10/05 20:13:14 ela Exp $
+ * $Id: tswitch.cpp,v 1.5 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -103,14 +103,14 @@ void tswitch::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "init", PROP_STR, { PROP_NO_VAL, "off" }, PROP_RNG_STR2 ("on", "off") },
+  { "time", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t tswitch::cirdef =
-  { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "init", PROP_STR, { PROP_NO_VAL, "off" },
-	PROP_RNG_STR2 ("on", "off") },
-      { "time", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

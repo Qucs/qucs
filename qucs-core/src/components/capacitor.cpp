@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: capacitor.cpp,v 1.23 2008/10/05 17:52:11 ela Exp $
+ * $Id: capacitor.cpp,v 1.24 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -133,10 +133,11 @@ void capacitor::calcHB (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "C", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "V", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 struct define_t capacitor::cirdef =
-  { "C", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "C", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "V", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP }
-  };
+  { "C", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

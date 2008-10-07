@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iprobe.cpp,v 1.9 2008/10/05 17:52:11 ela Exp $
+ * $Id: iprobe.cpp,v 1.10 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -57,8 +57,7 @@ void iprobe::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = { PROP_NO_PROP };
+PROP_OPT [] = { PROP_NO_PROP };
 struct define_t iprobe::cirdef =
-  { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

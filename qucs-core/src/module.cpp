@@ -18,13 +18,16 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.1 2008/10/05 17:52:11 ela Exp $
+ * $Id: module.cpp,v 1.2 2008/10/07 20:15:32 ela Exp $
  *
  */
 
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "netdefs.h"
 #include "components.h"
@@ -47,18 +50,19 @@ module::~module () {
 }
 
 // Definitions which do not fit elsewhere.
+static struct property_t props1[] = {
+  PROP_NO_PROP };
+static struct property_t props2[] = {
+  { "Type", PROP_STR, { PROP_NO_VAL, "DEF1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+
 struct define_t miscdef1 =
   { "Def", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+    props1, props1 };
 
 struct define_t miscdef2 =
   { "Sub", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "DEF1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+    props1, props2 };
 
 // Registers an analysis object to the list of available modules.
 void module::registerModule (analysis_definer_t define,
@@ -247,3 +251,111 @@ void module::unregisterModules (void) {
   }
   modules.clear ();
 }
+
+#if DEBUG
+// header prefix
+static const char * def_prefix =
+"/*\n"
+" * qucsdefs.h - netlist definitions for the Qucs netlists\n"
+" *\n"
+" * This is free software; you can redistribute it and/or modify\n"
+" * it under the terms of the GNU General Public License as published by\n"
+" * the Free Software Foundation; either version 2, or (at your option)\n"
+" * any later version.\n"
+" * \n"
+" */\n"
+"\n"
+"#ifndef __QUCSDEFS_H__\n"
+"#define __QUCSDEFS_H__\n";
+
+// header suffix
+static const char * def_suffix =
+"\n"
+"#endif /* __QUCSDEFS_H__ */\n";
+
+// start of list of definitions
+static const char * def_start =
+"\n"
+"// List of available components.\n"
+"struct define_t qucs_definition_available[] =\n";
+
+// end of list entry
+static const char * def_stop =
+"\n"
+"static struct define_t def_End = {\n"
+"  ((char *) 0), -1, 1, 0, 0, req_Def, opt_Def };\n";
+
+// Returns a compilable C-code string made from the given string.
+static char * printstr (const char * str) {
+  static char txt[256];
+  int nostr = (str == PROP_NO_STR);
+  sprintf (txt, "%s%s%s",
+	   (str && !nostr) ? "\"" : "",
+	   str ? nostr ? "((char *) -1)" : str : "((char *) 0)",
+	   (str && !nostr) ? "\"" : "");
+  return txt;
+}
+
+// Prints a property list as compilable C-code.
+static void printprop (const char * type, const char * prefix,
+		       struct property_t * prop) {
+  const char * key;
+  const char ** str;
+  const char * txt;
+  fprintf (stdout, "static struct property_t %s_%s[] = {\n", prefix, type);
+  do {
+    key = prop->key;
+    fprintf (stdout, "  { %s, %d, ", printstr (key), prop->type);
+    fprintf (stdout, "{ %g, %s }, ", prop->defaultval.d,
+	     printstr (prop->defaultval.s));
+    fprintf (stdout, "{ '%c', %g, %g, '%c',\n",
+	     prop->range.il, prop->range.l, prop->range.h, prop->range.ih);
+    fprintf (stdout, "    {");
+    str = prop->range.str;
+    do {
+      txt = *str;
+      fprintf (stdout, " %s", printstr (txt));
+      if (txt) fprintf (stdout, ",");
+      str++;
+    }
+    while (txt != NULL);
+    fprintf (stdout, " } } }");
+    if (key) fprintf (stdout, ",");
+    fprintf (stdout, "\n");
+    prop++;
+  }
+  while (key != NULL);
+  fprintf (stdout, "};\n");
+}
+
+/* The function emits a complete list of the registered component
+   definitions as compilable C-code. */
+void module::print (void) {
+  fprintf (stdout, def_prefix);
+  qucs::hashiterator<module> it;
+  for (it = qucs::hashiterator<module> (modules); *it; ++it) {
+    module * m = it.currentVal ();
+    struct define_t * def = m->definition;
+    fprintf (stdout, "\n");
+    printprop (def->type, "req", def->required);
+    fprintf (stdout, "\n");
+    printprop (def->type, "opt", def->optional);
+    fprintf (stdout, "\n");
+    fprintf (stdout, "static struct define_t def_%s = {\n", def->type);
+    fprintf (stdout, "  %s, %d, %d, %d, %d, req_%s, opt_%s };\n",
+	     printstr (def->type), def->nodes, def->action, def->substrate,
+	     def->nonlinear, def->type, def->type);
+  }
+  fprintf (stdout, def_stop);
+  fprintf (stdout, def_start);
+  fprintf (stdout, "{\n");
+  for (it = qucs::hashiterator<module> (modules); *it; ++it) {
+    module * m = it.currentVal ();
+    struct define_t * def = m->definition;
+    fprintf (stdout, "  def_%s,\n", def->type);
+  }
+  fprintf (stdout, "  def_End\n");
+  fprintf (stdout, "};\n");
+  fprintf (stdout, def_suffix);
+}
+#endif /* DEBUG */

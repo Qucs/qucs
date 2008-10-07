@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rectline.cpp,v 1.2 2008/10/05 17:52:12 ela Exp $
+ * $Id: rectline.cpp,v 1.3 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -244,16 +244,17 @@ void rectline::calcNoiseAC (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "b", PROP_REAL, { 1.016e-2, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+  { "er", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+  { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t rectline::cirdef =
-  { "RECTLINE", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX }, 
-      { "b", PROP_REAL, { 1.016e-2, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      { "er", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
-      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "RECTLINE", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

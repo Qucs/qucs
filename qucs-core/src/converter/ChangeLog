@@ -1,3 +1,8 @@
+2008-10-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Applied changes in component definitions and
+	their properties.
+
 2008-09-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp, check_spice.cpp: Updated versions for

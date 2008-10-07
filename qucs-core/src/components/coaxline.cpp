@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.cpp,v 1.4 2008/10/05 17:52:11 ela Exp $
+ * $Id: coaxline.cpp,v 1.5 2008/10/07 20:15:32 ela Exp $
  *
  */
 
@@ -162,16 +162,17 @@ void coaxline::calcNoiseAC (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
+  { "er", PROP_REAL, { 2.29, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
+  { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t coaxline::cirdef =
-  { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
-      { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      { "er", PROP_REAL, { 2.29, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "mur", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "tand", PROP_REAL, { 4e-4, PROP_NO_STR }, PROP_POS_RANGE },
-      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "COAX", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
