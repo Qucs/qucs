@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parasweep.cpp,v 1.18 2008-10-05 20:13:14 ela Exp $
+ * $Id: parasweep.cpp,v 1.19 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -193,15 +193,16 @@ void parasweep::saveResults (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_RNG_TYP },
+  { "Param", PROP_STR, { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
+  { "Sim", PROP_STR, { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Points", PROP_INT, { 5, PROP_NO_STR }, PROP_MIN_VAL (2) },
+  { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Values", PROP_LIST, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 struct define_t parasweep::anadef =
-  { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_RNG_TYP },
-      { "Param", PROP_STR, { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
-      { "Sim", PROP_STR, { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Points", PROP_INT, { 5, PROP_NO_STR }, PROP_MIN_VAL (2) },
-      { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Values", PROP_LIST, { 5, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP }
-  };
+  { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.h,v 1.1 2008-10-05 17:52:11 ela Exp $
+ * $Id: module.h,v 1.2 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@ class module
   static void registerModules (void);
   static void unregisterModules (void);
   static struct define_t * getModule (char *);
+  static void print (void);
 
  private:
   static void registerModule (analysis_definer_t , analysis_creator_t);

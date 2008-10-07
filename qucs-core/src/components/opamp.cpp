@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.cpp,v 1.9 2008-10-05 17:52:12 ela Exp $
+ * $Id: opamp.cpp,v 1.10 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -89,10 +89,11 @@ void opamp::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "G", PROP_REAL, { 1e6, PROP_NO_STR }, PROP_MIN_VAL (1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Umax", PROP_REAL, { 15, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t opamp::cirdef =
-  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "G", PROP_REAL, { 1e6, PROP_NO_STR }, PROP_MIN_VAL (1) },
-      PROP_NO_PROP },
-    { { "Umax", PROP_REAL, { 15, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

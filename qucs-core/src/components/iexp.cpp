@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: iexp.cpp,v 1.2 2008-10-05 17:52:11 ela Exp $
+ * $Id: iexp.cpp,v 1.3 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -83,14 +83,15 @@ void iexp::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+  { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t iexp::cirdef =
-  { "Iexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "I2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
-      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Iexp", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

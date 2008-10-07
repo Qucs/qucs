@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcfeed.cpp,v 1.11 2008-10-05 17:52:11 ela Exp $
+ * $Id: dcfeed.cpp,v 1.12 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -72,9 +72,10 @@ void dcfeed::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t dcfeed::cirdef =
-  { "DCFeed", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "DCFeed", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

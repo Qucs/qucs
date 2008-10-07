@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.cpp,v 1.20 2008-10-05 20:13:14 ela Exp $
+ * $Id: cpwline.cpp,v 1.21 2008-10-07 20:15:33 ela Exp $
  *
  */
 
@@ -418,16 +418,17 @@ void cpwline::calcNoiseAC (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
+    PROP_RNG_STR2 ("Metal", "Air") },
+  { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+  PROP_NO_PROP };
 struct define_t cpwline::cirdef =
-  { "CLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" },
-	PROP_RNG_STR2 ("Metal", "Air") },
-      { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-      PROP_NO_PROP }
-  };
+  { "CLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

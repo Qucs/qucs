@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inverter.cpp,v 1.5 2008-10-05 17:52:15 ela Exp $
+ * $Id: inverter.cpp,v 1.6 2008-10-07 20:15:33 ela Exp $
  *
  */
 
@@ -45,8 +45,9 @@ void inverter::calcDerivatives (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
 struct define_t inverter::cirdef =
-  { "Inv", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
-  };
+  { "Inv", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

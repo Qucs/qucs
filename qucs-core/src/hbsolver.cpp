@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hbsolver.cpp,v 1.29 2008-10-05 17:52:11 ela Exp $
+ * $Id: hbsolver.cpp,v 1.30 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -1411,17 +1411,18 @@ void hbsolver::saveResults (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "iabstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
+  { "vabstol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
+  { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
+  { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, PROP_RNGII (2, 10000) },
+  PROP_NO_PROP };
 struct define_t hbsolver::anadef =
-  { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "n", PROP_INT, { 1, PROP_NO_STR }, PROP_MIN_VAL (1) },
-      PROP_NO_PROP },
-    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "iabstol", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_RNG_X01I },
-      { "vabstol", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_RNG_X01I },
-      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_RNG_X01I },
-      { "MaxIter", PROP_INT, { 150, PROP_NO_STR }, PROP_RNGII (2, 10000) },
-      PROP_NO_PROP }
-  };
+  { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
 
 /* TODO list for HB Solver:
    - Take care about nodes with non-linear components only.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutualx.cpp,v 1.6 2008-10-05 17:52:12 ela Exp $
+ * $Id: mutualx.cpp,v 1.7 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -153,10 +153,12 @@ void mutualx::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "L", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "k", PROP_LIST, { 0.9, PROP_NO_STR }, PROP_RNGII (-1, +1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t mutualx::cirdef =
-  { "MUTX", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", PROP_LIST, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "k", PROP_LIST, { 0.9, PROP_NO_STR }, PROP_RNGII (-1, +1) },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "MUTX",
+    PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

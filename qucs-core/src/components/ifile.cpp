@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ifile.cpp,v 1.3 2008-10-05 20:13:14 ela Exp $
+ * $Id: ifile.cpp,v 1.4 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -225,14 +225,15 @@ void ifile::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "File", PROP_STR, { PROP_NO_VAL, "ifile.dat" }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" },
+    PROP_RNG_STR3 ("hold", "linear", "cubic") },
+  { "Repeat", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+  { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t ifile::cirdef =
-  { "Ifile", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "File", PROP_STR, { PROP_NO_VAL, "ifile.dat" }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Interpolator", PROP_STR, { PROP_NO_VAL, "linear" },
-	PROP_RNG_STR3 ("hold", "linear", "cubic") },
-      { "Repeat", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-      { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
-      { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Ifile", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

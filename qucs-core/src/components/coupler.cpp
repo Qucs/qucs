@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coupler.cpp,v 1.6 2008-10-05 17:52:11 ela Exp $
+ * $Id: coupler.cpp,v 1.7 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -97,11 +97,12 @@ void coupler::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
+  { "phi", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t coupler::cirdef =
-  { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
-      { "phi", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
-      PROP_NO_PROP },
-    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Coupler", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

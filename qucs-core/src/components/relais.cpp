@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.4 2008-10-05 17:52:12 ela Exp $
+ * $Id: relais.cpp,v 1.5 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -114,13 +114,14 @@ void relais::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Vt", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Vh", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t relais::cirdef =
-  { "Relais", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Vt", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Vh", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP },
-    { { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "Relais", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

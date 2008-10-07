@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: dcblock.cpp,v 1.9 2008-10-05 17:52:11 ela Exp $
+ * $Id: dcblock.cpp,v 1.10 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -77,9 +77,10 @@ void dcblock::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t dcblock::cirdef =
-  { "DCBlock", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "DCBlock", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

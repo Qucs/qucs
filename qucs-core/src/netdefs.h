@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.17 2008-10-06 17:08:29 ela Exp $
+ * $Id: netdefs.h,v 1.18 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -98,13 +98,13 @@ struct property_t {
 
 // Structure defining an available component type.
 struct define_t {
-  const char * type;               // component name
-  int nodes;                       // number of nodes
-  int action;                      // is that an action?
-  int substrate;                   // is that a substrate?
-  int nonlinear;                   // is the component linear?
-  struct property_t required[128]; // required properties
-  struct property_t optional[64];  // optional proberties
+  const char * type;            // component name
+  int nodes;                    // number of nodes
+  int action;                   // is that an action?
+  int substrate;                // is that a substrate?
+  int nonlinear;                // is the component linear?
+  struct property_t * required; // required properties
+  struct property_t * optional; // optional proberties
 };
 
 // Maximum number of S-parameter ports.
@@ -181,6 +181,10 @@ struct define_t {
 #define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0 || \
                               (prop).range.il != '.' || (prop).range.ih != '.')
 #define PROP_HAS_STR(prop)   ((prop).range.str[0] != NULL)
+
+#define PROP_REQ static struct property_t required
+#define PROP_OPT static struct property_t optional
+#define PROP_DEF required, optional
 
 #define create_definition() \
   ((struct definition_t *) calloc (sizeof (struct definition_t), 1))

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqndefined.cpp,v 1.13 2008-10-05 17:52:15 ela Exp $
+ * $Id: eqndefined.cpp,v 1.14 2008-10-07 20:15:33 ela Exp $
  *
  */
 
@@ -464,24 +464,26 @@ void eqndefined::calcHB (int) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  PROP_NO_PROP };
 struct define_t eqndefined::cirdef =
-  { "EDD", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      PROP_NO_PROP },
-    { { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-      PROP_NO_PROP }
-  };
+  { "EDD",
+    PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

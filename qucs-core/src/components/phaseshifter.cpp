@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.13 2008-10-05 17:52:12 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.14 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -72,10 +72,11 @@ void phaseshifter::initAC (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "phi", PROP_REAL, { 1e-90, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t phaseshifter::cirdef =
-  { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "phi", PROP_REAL, { 1e-90, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

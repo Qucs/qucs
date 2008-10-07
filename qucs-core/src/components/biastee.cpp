@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: biastee.cpp,v 1.11 2008-10-05 17:52:11 ela Exp $
+ * $Id: biastee.cpp,v 1.12 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -96,10 +96,11 @@ void biastee::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t biastee::cirdef =
-  { "BiasT", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "BiasT", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

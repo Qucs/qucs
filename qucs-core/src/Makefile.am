@@ -84,7 +84,7 @@ generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp      \
 	parse_citi.cpp tokens_citi.h scan_citi.cpp parse_zvr.cpp          \
 	scan_zvr.cpp tokens_zvr.h parse_mdl.cpp	scan_mdl.cpp tokens_mdl.h \
-	parse_csv.cpp tokens_csv.h scan_csv.cpp
+	parse_csv.cpp tokens_csv.h scan_csv.cpp qucsdefs.h
 
 scan_netlist.cpp: scan_netlist.l
 	$(LEX) -o$@ $<
@@ -129,6 +129,11 @@ parse_mdl.cpp: parse_mdl.y
 	$(YACC) -v -o $@ --defines=tokens_mdl.h $<
 else
 generated_FILES = 
+endif
+
+if MAINTAINER_MODE
+qucsdefs.h: qucsator$(EXEEXT)
+	./$< -l > $@
 endif
 
 equation.cpp: gperfapphash.cpp

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: resistor.cpp,v 1.28 2008-10-05 17:52:13 ela Exp $
+ * $Id: resistor.cpp,v 1.29 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -145,12 +145,13 @@ void resistor::initHB (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Tc1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Tc2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t resistor::cirdef =
-  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
-    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Tc1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Tc2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

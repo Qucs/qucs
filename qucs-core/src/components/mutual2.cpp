@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual2.cpp,v 1.5 2008-10-05 17:52:12 ela Exp $
+ * $Id: mutual2.cpp,v 1.6 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -167,14 +167,15 @@ void mutual2::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "L1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "L2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "L3", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "k12", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
+  { "k13", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
+  { "k23", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  PROP_NO_PROP };
 struct define_t mutual2::cirdef =
-  { "MUT2", 6, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L1", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
-      { "L2", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
-      { "L3", PROP_REAL, { 1e-3, PROP_NO_STR },	PROP_POS_RANGEX },
-      { "k12", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
-      { "k13", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
-      { "k23", PROP_REAL, { 0.9, PROP_NO_STR }, PROP_RNGXX (-1, 1) },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  };
+  { "MUT2", 6, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

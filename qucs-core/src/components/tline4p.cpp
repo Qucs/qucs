@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tline4p.cpp,v 1.5 2008-10-05 17:52:14 ela Exp $
+ * $Id: tline4p.cpp,v 1.6 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -158,12 +158,13 @@ void tline4p::calcTR (nr_double_t t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Alpha", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
 struct define_t tline4p::cirdef =
-  { "TLIN4P", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { { "Alpha", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  };
+  { "TLIN4P", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

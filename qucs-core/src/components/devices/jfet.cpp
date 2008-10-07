@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.35 2008-10-05 20:13:14 ela Exp $
+ * $Id: jfet.cpp,v 1.36 2008-10-07 20:15:33 ela Exp $
  *
  */
 
@@ -409,31 +409,33 @@ void jfet::calcTR (nr_double_t) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+  { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "Vt0", PROP_REAL, { -2, PROP_NO_STR }, PROP_NEG_RANGE },
+  { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Beta", PROP_REAL, { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
+  { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
+  { "Pb", PROP_REAL, { 1.0, PROP_NO_STR }, PROP_RNGXI (0, 10) },
+  { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
+  { "Cgs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Cgd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_RNG_FET },
+  { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+  PROP_NO_PROP };
 struct define_t jfet::cirdef =
-  { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "Vt0", PROP_REAL, { -2, PROP_NO_STR }, PROP_NEG_RANGE },
-      { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Beta", PROP_REAL, { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
-      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
-      { "Pb", PROP_REAL, { 1.0, PROP_NO_STR }, PROP_RNGXI (0, 10) },
-      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGIX (0, 1) },
-      { "Cgs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Cgd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, PROP_RNGII (1, 100) },
-      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_RNG_FET },
-      { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
-      PROP_NO_PROP }
-  };
+  { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

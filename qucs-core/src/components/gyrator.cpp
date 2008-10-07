@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: gyrator.cpp,v 1.14 2008-10-05 17:52:11 ela Exp $
+ * $Id: gyrator.cpp,v 1.15 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -88,9 +88,10 @@ void gyrator::initTR (void) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t gyrator::cirdef =
-  { "Gyrator", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Gyrator", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

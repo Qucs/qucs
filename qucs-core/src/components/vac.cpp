@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vac.cpp,v 1.20 2008-10-05 17:52:14 ela Exp $
+ * $Id: vac.cpp,v 1.21 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -90,11 +90,12 @@ void vac::calcHB (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+PROP_OPT [] = {
+  { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
+  { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t vac::cirdef =
-  { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
-      { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

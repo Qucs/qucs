@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.45 2008-10-02 16:20:29 ela Exp $
+ * $Id: check_spice.cpp,v 1.46 2008-10-07 20:15:33 ela Exp $
  *
  */
 
@@ -50,141 +50,129 @@ struct definition_t * device_root = NULL;
 int spice_errors = 0;
 char * spice_title = NULL;
 
+// List of available Spice component properties.
+static struct property_t spice_noprops[] = { PROP_NO_PROP };
+
+static struct property_t req_spice_R[] = {
+  { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+static struct property_t opt_spice_R[] = {
+  { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  PROP_NO_PROP };
+
+static struct property_t req_spice_L[] = {
+  { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_C[] = {
+  { "C", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_V[] = {
+  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_I[] = {
+  { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_G[] = {
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_E[] = {
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_F[] = {
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_H[] = {
+  { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_T[] = {
+  { "Z0", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_NODESET[] = {
+  { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
+static struct property_t req_spice_IC[] = {
+  { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP };
+
 // List of available Spice components.
 struct define_t spice_definition_available[] =
 {
   /* resistor */
   { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
-    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
-      PROP_NO_PROP }
-  },
+    req_spice_R, opt_spice_R },
   /* inductor */
   { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_L, spice_noprops },
   /* capacitor */
   { "C", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "C", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_C, spice_noprops },
   /* voltage sources */
   { "V", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_V, spice_noprops },
   /* current sources */
   { "I", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_I, spice_noprops },
   /* voltage-controlled current source */
   { "G", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_G, spice_noprops },
   /* voltage-controlled voltage source */
   { "E", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_E, spice_noprops },
   /* current-controlled current source */
   { "F", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_F, spice_noprops },
   /* current-controlled voltage source */
   { "H", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_H, spice_noprops },
   /* transformer (mutual inductors) */
   { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* BJT device */
   { "Q", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* MOS device */
   { "M", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* JFET device */
   { "J", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* diodes */
   { "D", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* relais */
   { "S", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* lossless transmission line */
   { "T", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Z0", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_T, spice_noprops },
   /* transient analysis */
   { "TRAN", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* AC analysis */
   { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* DC analysis */
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* operating point analysis */
   { "OP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* subcircuit instance */
   { "X", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* subcircuit definition */
   { "SUBCKT", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    spice_noprops, spice_noprops },
   /* nodeset functionality */
   { "NODESET", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_NODESET, spice_noprops },
   /* nodeset functionality */
   { "IC", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
-      PROP_NO_PROP },
-    { PROP_NO_PROP }
-  },
+    req_spice_IC, spice_noprops },
 
   /* end of list */
-  { NULL, 0, 0, 0, 0, { PROP_NO_PROP }, { PROP_NO_PROP } }
+  { NULL, 0, 0, 0, 0, spice_noprops, spice_noprops },
 };
 
-// Include also the Qucs definitions.
+// Include also the (generated) Qucs definitions.
 #include "qucsdefs.h"
 
 // Short definition for iterating a list of values.

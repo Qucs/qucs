@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: inoise.cpp,v 1.8 2008-10-05 17:52:11 ela Exp $
+ * $Id: inoise.cpp,v 1.9 2008-10-07 20:15:32 ela Exp $
  *
  */
 
@@ -62,12 +62,13 @@ void inoise::calcNoiseAC (nr_double_t frequency) {
 }
 
 // properties
+PROP_REQ [] = {
+  { "i", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+  PROP_NO_PROP };
+PROP_OPT [] = {
+  { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  PROP_NO_PROP };
 struct define_t inoise::cirdef =
-  { "Inoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "i", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-      PROP_NO_PROP },
-    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      PROP_NO_PROP }
-  };
+  { "Inoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
