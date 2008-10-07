@@ -28,3 +28,4 @@ tokens_mdl.h
 scan_csv.cpp
 parse_csv.cpp
 tokens_csv.h
+qucsdefs.h
