@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.46 2008/10/07 20:15:33 ela Exp $
+ * $Id: check_spice.cpp,v 1.47 2008/10/08 16:43:30 ela Exp $
  *
  */
 
@@ -661,7 +661,7 @@ static void spice_adjust_device (struct definition_t * def,
 	      }
 	    }
 	    else if (level == 2 && version == 2.1) {
-	      def->type = strdup ("hicumL2p1");
+	      def->type = strdup ("hicumL2V2p1");
 	      hic = true;
 	    }
 	    else if (level == 2 && version >= 2.21 && version <= 2.22) {
