@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.29 2008-10-02 16:20:29 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.30 2008-10-08 16:43:30 ela Exp $
  *
  */
 
@@ -341,8 +341,8 @@ qucs_devices[] = {
     NULL
   },
   /* hicum/l2 v2.1 bipolar transistor */
-  { "hicumL2p1", "hicumL2p1", "Q", 5,
-    { "Type", "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis",
+  { "hicumL2V2p1", "hicumL2V2p1", "Q", 5,
+    { "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis",
       "mbei", "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf",
       "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "favl", "qavl",
       "alfav", "alqav", "rbi0", "rbx", "fgeo", "fdqr0", "fcrbi", "fqi", "re",
