@@ -46,7 +46,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp opt_sim.cpp         \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp             \
-  hicumL2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp    \
+  hicumL2V2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp  \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp EKV26nMOS.cpp EKV26pMOS.cpp rectline.cpp hicumL0V1p2.cpp         \
@@ -69,7 +69,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h         \
   coupler.h rs_flipflop.h d_flipflop.h jk_flipflop.h coaxialline.h vprobe.h   \
   switch.h relais.h am_modulator.h pm_modulator.h opt_sim.h tline_4port.h     \
-  twistedpair.h bondwire.h hicumL2p1.h HBT_X.h verilogfile.h vexp.h iexp.h    \
+  twistedpair.h bondwire.h hicumL2V2p1.h HBT_X.h verilogfile.h vexp.h iexp.h  \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
   diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h rfedd2p.h MESFET.h     \
   EKV26nMOS.h EKV26pMOS.h rectline.h hicumL0V1p2.h hicumL2V2p23.h
