@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.2 2008-10-07 20:15:32 ela Exp $
+ * $Id: module.cpp,v 1.3 2008-10-08 16:32:58 ela Exp $
  *
  */
 
@@ -221,7 +221,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (logicxnor);
   REGISTER_CIRCUIT (logicxor);
   REGISTER_CIRCUIT (digisource);
-  REGISTER_CIRCUIT (hicumL2p1);
+  REGISTER_CIRCUIT (hicumL2V2p1);
   REGISTER_CIRCUIT (HBT_X);
   REGISTER_CIRCUIT (mod_amp);
   REGISTER_CIRCUIT (hic2_full);

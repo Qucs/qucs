@@ -1,7 +1,7 @@
 /*
  * fspecial.cpp - special functions implementation
  *
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.3 2008-01-17 18:53:06 ela Exp $
+ * $Id: fspecial.cpp,v 1.4 2008-10-08 16:32:59 ela Exp $
  *
  */
 
@@ -32,25 +32,9 @@
 #include <math.h>
 #include <float.h>
 
-#if HAVE_IEEEFP_H
-# include <ieeefp.h>
-#endif
-
+#include "compat.h"
 #include "constants.h"
 #include "fspecial.h"
-
-#ifdef __MINGW32__
-# define finite(x) _finite(x)
-# ifndef isnan
-# define isnan(x)  _isnan(x)
-# endif
-# ifndef isinf
-# define isinf(x)  (!_finite(x) && !_isnan(x))
-# endif
-#endif
-#if (defined (__SVR4) && defined (__sun)) || defined (__sgi)
-# define isinf(x) (!finite(x) && (x) == (x)) 
-#endif
 
 /* The function computes the complete elliptic integral of first kind
    K() and the second kind E() using the arithmetic-geometric mean

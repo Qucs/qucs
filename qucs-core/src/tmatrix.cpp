@@ -1,7 +1,7 @@
 /*
  * tmatrix.cpp - simple matrix template class implementation
  *
- * Copyright (C) 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tmatrix.cpp,v 1.15 2008-01-13 10:50:21 ela Exp $
+ * $Id: tmatrix.cpp,v 1.16 2008-10-08 16:32:58 ela Exp $
  *
  */
 
@@ -32,17 +32,10 @@
 #include <string.h>
 #include <math.h>
 
-#if HAVE_IEEEFP_H
-# include <ieeefp.h>
-#endif
-
+#include "compat.h"
 #include "logging.h"
 #include "complex.h"
 #include "tmatrix.h"
-
-#ifdef __MINGW32__
-# define finite(x) _finite(x)
-#endif
 
 // Constructor creates an unnamed instance of the tmatrix class.
 template <class nr_type_t>

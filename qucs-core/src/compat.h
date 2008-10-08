@@ -1,5 +1,5 @@
 /*
- * component.h - component header file
+ * compat.h - compatibility header file
  *
  * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,31 +18,42 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.62 2008-10-08 16:32:58 ela Exp $
+ * $Id: compat.h,v 1.1 2008-10-08 16:32:58 ela Exp $
  *
  */
 
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#ifndef __COMPAT_H__
+#define __COMPAT_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <math.h>
-#include <float.h>
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
 
-#include "compat.h"
-#include "logging.h"
-#include "complex.h"
-#include "object.h"
-#include "vector.h"
-#include "matrix.h"
-#include "node.h"
-#include "net.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "constants.h"
-#include "netdefs.h"
+#if !HAVE_STRCHR
+# define strchr  index
+# define strrchr rindex
+#endif
 
-#endif /* __COMPONENT_H__ */
+#ifdef __MINGW32__
+#define strcasecmp stricmp
+#endif
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+# ifndef isnan
+# define isnan(x)  _isnan(x)
+# endif
+# ifndef isinf
+# define isinf(x)  (!_finite(x) && !_isnan(x))
+# endif
+#endif
+
+#ifdef __MINGW32__
+#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
+#endif
+
+#if (defined (__SVR4) && defined (__sun)) || defined (__sgi)
+# define isinf(x) (!finite(x) && (x) == (x)) 
+#endif
+
+#endif /* __COMPAT_H__ */

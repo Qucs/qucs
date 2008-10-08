@@ -502,7 +502,7 @@
 
 
 
-module hicumL2p1 (c,b,e,s,tnode);
+module hicumL2V2p1 (c,b,e,s,tnode);
 
 //Node definitions
 

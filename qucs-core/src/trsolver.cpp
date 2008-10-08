@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.57 2008-10-07 20:15:32 ela Exp $
+ * $Id: trsolver.cpp,v 1.58 2008-10-08 16:32:58 ela Exp $
  *
  */
 
@@ -31,10 +31,7 @@
 #include <math.h>
 #include <float.h>
 
-#if HAVE_IEEEFP_H
-# include <ieeefp.h>
-#endif
-
+#include "compat.h"
 #include "object.h"
 #include "logging.h"
 #include "complex.h"
@@ -49,10 +46,6 @@
 #include "transient.h"
 #include "exception.h"
 #include "exceptionstack.h"
-
-#ifdef __MINGW32__
-# define finite(x) _finite(x)
-#endif
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation

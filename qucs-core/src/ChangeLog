@@ -1,3 +1,8 @@
+2008-10-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* compat.h: New file containing system specific #include's and
+	#define's.  Changed all callers.
+
 2008-10-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* module.cpp: Added a function which can emit the list of

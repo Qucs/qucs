@@ -65,7 +65,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
 	valuelist.h pair.h characteristic.h range.h history.h                 \
 	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
-	check_csv.h module.h analyses.h
+	check_csv.h module.h analyses.h compat.h
 
 noinst_LIBRARIES = libqucsator.a
 

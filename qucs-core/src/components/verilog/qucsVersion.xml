@@ -1994,28 +1994,16 @@
         <admst:value-to select="value" string="hicum2"/>
       </admst:new>
     </admst:when>
-    <admst:when test="[name='hicumL2p1']">
+    <admst:when test="[name='hicumL2V2p1']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" string="hicumL2"/>
-      </admst:new>
-    </admst:when>
-    <admst:when test="[name='hicumL2p2']">
-      <admst:new datatype="attribute" arguments="qucsname">
-        <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" string="hicumL2"/>
-      </admst:new>
-    </admst:when>
-    <admst:when test="[name='hicumL2p21']">
-      <admst:new datatype="attribute" arguments="qucsname">
-        <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" string="hicumL2"/>
+        <admst:value-to select="value" string="hicum2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='hicumL2V2p23']">
       <admst:new datatype="attribute" arguments="qucsname">
         <admst:push into="../attribute" select="." onduplicate="abort"/>
-        <admst:value-to select="value" string="hicumL2"/>
+        <admst:value-to select="value" string="hicum2"/>
       </admst:new>
     </admst:when>
     <admst:when test="[name='bjt']">
@@ -2109,7 +2097,11 @@
     </admst:when>
     <admst:when test="[name='hicumL2V2p23']">
     </admst:when>
-    <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hic2_full' or name='hicumL2p21' or name='hicumL2p1' or name='hicumL2p2' or name='hicumL0V1p2' or name='bjt504_va']">
+    <admst:when test="[name='hicumL2V2p1']">
+    </admst:when>
+    <admst:when test="[name='hic2_full']">
+    </admst:when>
+    <admst:when test="[name='vbic' or name='bjt' or name='hic0_full' or name='hicumL0V1p2' or name='bjt504_va']">
       <admst:if test="[nilled(variable[name='npn'])]">
         <admst:new datatype="variable" inputs=".,'npn',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>
