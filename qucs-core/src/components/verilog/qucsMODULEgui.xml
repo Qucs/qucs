@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
-<admst version="2.2.8" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst version="2.3.0" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
 <!-- handling of expression -->
 <admst:template match=":expression">
@@ -90,7 +90,7 @@
 <admst:text format="$module::$module()\n{\n"/>
 <admst:text format="  Description = QObject::tr (&quot;$module verilog device&quot;);\n\n"/>
 
-<admst:if test="[$module='hicumL2p1' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:if test="[$module='hic0_full' or $module='hicumL0V1p2']">
 <admst:text format="  Props.append (new Property (&quot;Type&quot;, &quot;npn&quot;, true,\n"/>
 <admst:text format="    QObject::tr (&quot;polarity&quot;) + &quot; [npn, pnp]&quot;));\n"/>
 </admst:if>
@@ -100,6 +100,21 @@
 </admst:if>
 
 <admst:for-each select="/module">
+
+<!-- find temp and tnom parameters -->
+<admst:variable name="tnom" string="none"/>
+<admst:variable name="temp" string="none"/>
+<admst:for-each select="variable">
+  <admst:if test="[input='yes']">
+    <admst:if test="[upper-case(name)='TNOM']">
+      <admst:variable name="tnom" path="."/>
+    </admst:if>
+    <admst:if test="[upper-case(name)='TEMP']">
+      <admst:variable name="temp" path="."/>
+    </admst:if>
+  </admst:if>
+</admst:for-each>
+
 <admst:for-each select="variable">
   <admst:if test="[input='yes' and name!='npn' and name !='pnp']">
     <admst:value-of select="name"/>  
@@ -135,9 +150,19 @@
 </admst:for-each>
 </admst:for-each>
 
-
-<admst:text format="  Props.append (new Property (&quot;Temp&quot;, &quot;26.85&quot;, false,\n"/>
-<admst:text format="    QObject::tr (&quot;simulation temperature&quot;)));\n"/>
+<admst:if test="[name!='mod_amp']">
+  <admst:if test="[$temp='none']">
+  <admst:text format="  Props.append (new Property (&quot;Temp&quot;, &quot;"/>
+  <admst:choose>
+    <admst:when test="[$tnom!='none']">
+      <admst:apply-templates select="$tnom/default" match=":expression"/>
+    </admst:when>
+    <admst:otherwise><admst:text format="26.85"/></admst:otherwise>
+  </admst:choose>
+  <admst:text format="&quot;, false,\n    "/>
+  <admst:text format="QObject::tr (&quot;simulation temperature&quot;)));\n"/>
+  </admst:if>
+</admst:if>
 
 <admst:text format="\n  createSymbol ();\n  tx = x2 + 4;\n  ty = y1 + 4;\n"/>
 <admst:text format="  Model = &quot;$module&quot;;\n  Name  = &quot;T&quot;;\n"/>
@@ -155,8 +180,8 @@
 <admst:text format="{\n  Name = QObject::tr(&quot;$module&quot;);\n"/>
 
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
-<admst:text format="  BitmapFile = (char *) &quot;npnsub&quot;;\n"/>
+<admst:when test="[$module='hicumL2V2p1' or $module='hic2_full' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
+<admst:text format="  BitmapFile = (char *) &quot;npnsub_therm&quot;;\n"/>
 </admst:when>
 <admst:when test="[$module='HBT_X']">
 <admst:text format="  BitmapFile = (char *) &quot;npn_therm&quot;;\n"/>
@@ -168,16 +193,16 @@
 
 <admst:text format="\n  if(getNewOne) return new $module();\n  return 0;\n}\n\n"/>
 
-<admst:if test="[$module='hicumL2p1' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:if test="[$module='hic0_full' or $module='hicumL0V1p2']">
 <admst:text format="Element * $module::info_pnp(QString&amp; Name, char * &amp;BitmapFile, bool getNewOne)\n"/>
-<admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = (char *) &quot;pnpsub&quot;;\n\n"/>
+<admst:text format="{\n  Name = QObject::tr(&quot;pnp $module&quot;);\n  BitmapFile = (char *) &quot;pnpsub_therm&quot;;\n\n"/>
 <admst:text format="  if(getNewOne)\n  {\n    $module* p = new "/>
 <admst:text format="$module();\n    p->Props.getFirst()->Value = &quot;pnp&quot;;\n    p->recreate(0);\n    return p;\n  }\n  return 0;\n}\n\n"/>
 </admst:if>
 
 <admst:text format="void $module::createSymbol()\n{"/>
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='hic2_full' or $module='HBT_X' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
+<admst:when test="[$module='hicumL2V2p1' or $module='hic2_full' or $module='HBT_X' or $module='hic0_full' or $module='hicumL0V1p2' or $module='hicumL2V2p23']">
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
@@ -327,7 +352,7 @@
 <admst:text format="#include &quot;component.h&quot;\n\n"/>
 
 <admst:choose>
-<admst:when test="[$module='hicumL2p1' or $module='mosfetbsim4' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:when test="[$module='mosfetbsim4' or $module='hic0_full' or $module='hicumL0V1p2']">
 <admst:text format="class $module : public MultiViewComponent\n{\n  public:\n"/>
 </admst:when>
 <admst:otherwise>
@@ -337,7 +362,7 @@
 <admst:text format="    $module();\n"/>
 <admst:text format="    ~$module() { };\n"/>
 <admst:text format="    Component* newOne();\n    static Element* info(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
-<admst:if test="[$module='hicumL2p1' or $module='hic0_full' or $module='hicumL0V1p2']">
+<admst:if test="[$module='hic0_full' or $module='hicumL0V1p2']">
 <admst:text format="    static Element* info_pnp(QString&amp;, char* &amp;, bool getNewOne=false);\n"/>
 </admst:if>
 <admst:text format="  protected:\n    void createSymbol();\n};\n\n"/>

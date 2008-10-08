@@ -253,15 +253,7 @@ using namespace device;
 <admst:text format="void $module::initDC (void)\n{"/>
   allocMatrixMNA ();
   initModel ();
-<admst:choose>
-<admst:when test="[name='hicumL2p1']">
-  char * type = getPropertyString ("Type");
-  pol = (type != NULL &amp;&amp; !strcmp (type, "pnp")) ? -1 : 1;
-</admst:when>
-<admst:otherwise>
   pol = 1;
-</admst:otherwise>
-</admst:choose>
   restartDC ();
   doAC = 1;
   doTR = 0;

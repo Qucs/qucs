@@ -1,7 +1,7 @@
 /*
  * eqnsys.cpp - equation system solver class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.cpp,v 1.42 2008/01/13 10:50:09 ela Exp $
+ * $Id: eqnsys.cpp,v 1.43 2008/10/08 16:32:58 ela Exp $
  *
  */
 
@@ -34,10 +34,7 @@
 #include <math.h>
 #include <float.h>
 
-#if HAVE_IEEEFP_H
-# include <ieeefp.h>
-#endif
-
+#include "compat.h"
 #include "logging.h"
 #include "precision.h"
 #include "complex.h"
@@ -45,10 +42,6 @@
 #include "eqnsys.h"
 #include "exception.h"
 #include "exceptionstack.h"
-
-#ifdef __MINGW32__
-# define finite(x) _finite(x)
-#endif
 
 // Little helper macro.
 #define Swap(type,a,b) { type t; t = a; a = b; b = t; }

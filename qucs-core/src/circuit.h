@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: circuit.h,v 1.58 2008/10/05 17:52:11 ela Exp $
+ * $Id: circuit.h,v 1.59 2008/10/08 16:32:58 ela Exp $
  *
  */
 
@@ -102,9 +102,6 @@ class circuit : public object, public integrator
   virtual void saveOperatingPoints (void) { }
   virtual void calcCharacteristics (nr_double_t) { }
   virtual void saveCharacteristics (nr_double_t) { }
-
-  // modularization
-  //static circuit * create (void) { return NULL; }
 
   // real basics
   void   setNode (int, const char *, int intern = 0);
