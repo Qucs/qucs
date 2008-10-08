@@ -1,5 +1,5 @@
 /*
- * hicumL2p1.cpp - device implementations for hicumL2p1 module
+ * hicumL2V2p1.cpp - device implementations for hicumL2V2p1 module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -8,14 +8,12 @@
  * 
  */
 
-#include "hicumL2p1.h"
+#include "hicumL2V2p1.h"
 
-hicumL2p1::hicumL2p1()
+hicumL2V2p1::hicumL2V2p1()
 {
   Description = QObject::tr ("HICUM Level 2 v2.1 verilog device");
 
-  Props.append (new Property ("Type", "npn", true,
-    QObject::tr ("polarity") + " [npn, pnp]"));
   Props.append (new Property ("c10", "1.516E-31", false,
     QObject::tr ("GICCR constant")));
   Props.append (new Property ("qp0", "5.939E-15", false,
@@ -74,7 +72,7 @@ hicumL2p1::hicumL2p1()
     QObject::tr ("External base series resistance")));
   Props.append (new Property ("fgeo", "0.724", false,
     QObject::tr ("Factor for geometry dependence of emitter current crowding")));
-  Props.append (new Property ("fdqr0", "200", false,
+  Props.append (new Property ("fdqr0", "0", false,
     QObject::tr ("Correction factor for modulation by B-E and B-C space charge layer")));
   Props.append (new Property ("fcrbi", "0.0", false,
     QObject::tr ("Ratio of HF shunt to total internal capacitance (lateral NQS effect)")));
@@ -222,28 +220,28 @@ hicumL2p1::hicumL2p1()
   createSymbol ();
   tx = x2 + 4;
   ty = y1 + 4;
-  Model = "hicumL2p1";
+  Model = "hicumL2V2p1";
   Name  = "T";
 }
 
-Component * hicumL2p1::newOne()
+Component * hicumL2V2p1::newOne()
 {
-  hicumL2p1 * p = new hicumL2p1();
+  hicumL2V2p1 * p = new hicumL2V2p1();
   p->Props.getFirst()->Value = Props.getFirst()->Value; 
   p->recreate(0); 
   return p;
 }
 
-Element * hicumL2p1::info(QString& Name, char * &BitmapFile, bool getNewOne)
+Element * hicumL2V2p1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("HICUM L2 v2.1");
   BitmapFile = (char *) "npnsub_therm";
 
-  if(getNewOne) return new hicumL2p1();
+  if(getNewOne) return new hicumL2V2p1();
   return 0;
 }
 
-void hicumL2p1::createSymbol()
+void hicumL2V2p1::createSymbol()
 {
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
@@ -262,13 +260,8 @@ void hicumL2p1::createSymbol()
   Lines.append(new Line(-20, 17,-20, 23,QPen(QPen::darkBlue,2)));
   
   // arrow
-  if(Props.getFirst()->Value == "npn") {
-    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
-  } else {
-    Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
-  }
+  Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
 
   // H
   Lines.append(new Line(-30,-30,-30,-24,QPen(QPen::darkBlue,1)));
