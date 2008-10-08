@@ -1576,7 +1576,7 @@ Component* getComponentFromName(QString& Line)
   case 'X' : if(cstr == "OR") c = new Logical_XOR();
         else if(cstr == "NOR") c = new Logical_XNOR();
         break;
-  case 'h' : if(cstr == "icumL2p1") c = new hicumL2p1();
+  case 'h' : if(cstr == "icumL2V2p1") c = new hicumL2V2p1();
         else if(cstr == "ic2_full") c = new hic2_full();
         else if(cstr == "ic0_full") c = new hic0_full();
         else if(cstr == "icumL0V1p2") c = new hicumL0V1p2();
