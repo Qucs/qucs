@@ -6343,6 +6343,54 @@ Kullanım:  qucsedit [-r] kütük
         <source>HICUM L2 v2.23</source>
         <translation type="unfinished">HICUM L2 v2.23</translation>
     </message>
+    <message>
+        <source>Photodiode verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>photodiode emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>series lead resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode dark current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>responsivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A/W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shunt resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quantum efficiency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>light wavelength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>responsivity calculator selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Photodiode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

@@ -1589,6 +1589,7 @@ Component* getComponentFromName(QString& Line)
   case 'l' : if(cstr == "og_amp") c = new log_amp();
         break;
   case 'p' : if(cstr == "otentiometer") c = new potentiometer();
+        else if(cstr == "hotodiode") c = new photodiode();
         break;
   }
   if(!c) {
