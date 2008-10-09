@@ -1,3 +1,8 @@
+2008-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/cs/index.html: Updated Czech translation of internal help
+	system.  Thanks to Martin Stejskal.
+
 2008-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html, docs/de/mathfunc.html: Documented
