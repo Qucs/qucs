@@ -35,7 +35,8 @@ SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	EKV26nMOS.analogfunction.cpp EKV26nMOS.core.cpp \
 	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp \
         hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
-        hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp
+        hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
+        photodiode.analogfunction.cpp photodiode.core.cpp
 
 # Additional libraries.
 LIBS = 

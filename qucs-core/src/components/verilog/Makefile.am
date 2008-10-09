@@ -37,7 +37,8 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	EKV26nMOS.analogfunction.cpp EKV26nMOS.core.cpp \
 	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
-	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp
+	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
+	photodiode.analogfunction.cpp photodiode.core.cpp
 
 noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hicumL2V2p1.analogfunction.h hicumL2V2p1.defs.h hicumL2V2p1.core.h \
@@ -51,12 +52,13 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	EKV26nMOS.analogfunction.h EKV26nMOS.defs.h EKV26nMOS.core.h \
 	EKV26pMOS.analogfunction.h EKV26pMOS.defs.h EKV26pMOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
-	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h
+	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
+	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va EKV26nMOS.va EKV26pMOS.va \
-  hicumL0V1p2.va hicumL2V2p23.va
+  hicumL0V1p2.va hicumL2V2p23.va photodiode.va
 
 XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
   qucsMODULEdefs.xml qucsMODULEgui.xml
@@ -222,6 +224,19 @@ hicumL2V2p23.defs.h: hicumL2V2p23.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hicumL2V2p23.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL2V2p23.gui.cpp: hicumL2V2p23.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+photodiode.analogfunction.cpp: analogfunction.xml
+photodiode.analogfunction.cpp: photodiode.va
+	$(ADMSXML) $< -e analogfunction.xml
+photodiode.core.cpp: photodiode.defs.h qucsVersion.xml qucsMODULEcore.xml
+photodiode.core.cpp: photodiode.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+photodiode.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+photodiode.defs.h: photodiode.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+photodiode.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+photodiode.gui.cpp: photodiode.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
