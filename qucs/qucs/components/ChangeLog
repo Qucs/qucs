@@ -1,3 +1,8 @@
+2008-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* photodiode.cpp (photodiode): Added new photodiode model.  Thanks
+	to Mike Brinson!
+
 2008-10-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL2V2p23.cpp (hicumL2V2p23): Added new HICUM/L2 v2.23 model.
