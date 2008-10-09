@@ -25,7 +25,8 @@
 EXTRA_DIST = $(PDFS)
 
 PDFS = EKV_Fig1.pdf EKV_Fig3.pdf EKV_Fig5.pdf EKV_Fig7.pdf EKV_Fig9.pdf \
-  EKV_Fig2.pdf EKV_Fig4.pdf EKV_Fig6.pdf EKV_Fig8.pdf
+  EKV_Fig2.pdf EKV_Fig4.pdf EKV_Fig6.pdf EKV_Fig8.pdf EKV_fig10.pdf \
+  EKV_fig11.pdf EKV_fig12.pdf
 
 report: $(XPDF)
 
