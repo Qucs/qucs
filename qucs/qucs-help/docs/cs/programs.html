@@ -1,9 +1,9 @@
 <html>
 
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Michael Margraf">
-<title>Qucs - Installed Files</title>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name="Author" content="Martin Stejskal">
+<title>Qucs - Instalované soubory</title>
 </head>
 
 
@@ -13,55 +13,56 @@
 
 <center><h3>
 - Qucs -<br>
-Installed Files<br>
+Instalované soubory<br>
 </h3></center>
+Qucs potřebuje několik programů. Ty josu nainstalovány během
+instalace. Cesty k Qucs se určují během
+instalace (<tt>configure</tt> skript). Následující vysvětlivky
+předpokládají, že program je nainstalován defaultně do defaultních adresářů
+(<tt>/usr/local/</tt>).
 
-The Qucs system needs several programs. These are installed during
-the installation process. The path of Qucs is determined during the
-installation (<tt>configure</tt> script). The following explanations
-assume the default path (<tt>/usr/local/</tt>).
+<br><br>
+<tt>/usr/local/bin/qucs&nbsp;&nbsp;&nbsp;&nbsp; </tt> - GUI - grafické rozhraní
+<br>
+<tt>/usr/local/bin/qucsator </tt> - simulátor (aplikace v konzoli)
+<br>
+<tt>/usr/local/bin/qucsedit </tt> - jednoduchý textový editor
+<br>
+<tt>/usr/local/bin/qucshelp </tt> - malý program zobrazující nápovědu
+<br>
+<tt>/usr/local/bin/qucstrans </tt> - program pro přenos výpočtů a parametrů
+<br>
+<tt>/usr/local/bin/qucsfilter </tt> - program syntetizující filtry obvodů
+<br>
+<tt>/usr/local/bin/qucsconv </tt> - konvertor formátu souborů (aplikace v konzoli)
+<br><br>
+Všechny programy jsou samostatné aplikace a mohou být spuštěny samostatně.
+Hlavní program (GUI)
 
+<br>spustí <tt>qucsator</tt> když provádí simulaci,
+<br>spustí <tt>qucsedit</tt> když zobrazuje textové soubory,
+<br>spustí <tt>qucshelp</tt> když zobrazuje nápovědu,
+<br>spustí <tt>qucstrans</tt> když spustíme tento program z menu "Nástroje",
+<br>spustí <tt>qucsfilter</tt> když spustíme tento program z menu "Nástroje",
+<br>spustí <tt>qucsconv</tt> když umísťujete SPICE komponentu a když
+vykonává simulaci s SPICE komponentou.
 <br><br>
-<tt>/usr/local/bin/qucs&nbsp;&nbsp;&nbsp;&nbsp; </tt> - the GUI
+Krom toho, následující adresáře jsou vytvořeny během instalace:
 <br>
-<tt>/usr/local/bin/qucsator </tt> - the simulator (console application)
+<tt>/usr/local/share/qucs/bitmaps </tt> - obsahuje všechny bitmapy (ikony atd.)
 <br>
-<tt>/usr/local/bin/qucsedit </tt> - a simple text editor
+<tt>/usr/local/share/qucs/docs&nbsp;&nbsp;&nbsp; </tt> - obsahuje HTML dokumenty, které pak používá nápověda
 <br>
-<tt>/usr/local/bin/qucshelp </tt> - a small program displaying the help system
-<br>
-<tt>/usr/local/bin/qucstrans </tt> - a program for calculation transmission line parameters
-<br>
-<tt>/usr/local/bin/qucsfilter </tt> - a program synthesizing filter circuits
-<br>
-<tt>/usr/local/bin/qucsconv </tt> - a file format converter (console application)
-<br><br>
-All programs are stand-alone applications and can be started independently.
-The main program (GUI)
-<br>calls <tt>qucsator</tt> when performing a simulation,
-<br>calls <tt>qucsedit</tt> when showing text files,
-<br>calls <tt>qucshelp</tt> when showing the help system,
-<br>calls <tt>qucstrans</tt> when calling this program from menu "Tools",
-<br>calls <tt>qucsfilter</tt> when calling this program from menu "Tools",
-<br>calls <tt>qucsconv</tt> when placing the SPICE component and when
-performing a simulation with the SPICE component.
-<br><br>
-Furthermore, the following directories are created during installation:
-<br>
-<tt>/usr/local/share/qucs/bitmaps </tt> - contains all bitmaps (icons etc.)
-<br>
-<tt>/usr/local/share/qucs/docs&nbsp;&nbsp;&nbsp; </tt> - contains HTML documents for the help system
-<br>
-<tt>/usr/local/share/qucs/lang&nbsp;&nbsp;&nbsp; </tt> - contains the translation files
+<tt>/usr/local/share/qucs/lang&nbsp;&nbsp;&nbsp; </tt> - obsahuje soubory s překladem
 <br><br>
 
-<h4>Command line arguments</h4>
-<tt>qucs [file1 [file2 ...]]</tt><br>
-<tt>qucsator [-b] -i netlist -o dataset</tt> (b = progress bar)<br>
-<tt>qucsedit [-r] [file]</tt> (r = read-only)<br>
-<tt>qucshelp</tt> (no arguments)<br>
+<h4>Příkazová řádka - argumenty</h4>
+<tt>qucs [soubor1 [soubor2 ...]]</tt><br>
+<tt>qucsator [-b] -i netlist -o dataset</tt> (b = ukazatel stavu - progress bar)<br>
+<tt>qucsedit [-r] [soubor]</tt> (r = pouze pro čtení)<br>
+<tt>qucshelp</tt> (bez argumentů)<br>
 <tt>qucsconv -if spice -of qucs -i netlist.inp -o netlist.net</tt><br>
 
-<br><a href="#top">back to the top</a><br>
+<br><a href="#top">Nahoru</a><br>
 </body>
 </html>
