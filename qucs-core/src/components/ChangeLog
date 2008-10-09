@@ -1,3 +1,8 @@
+2008-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* rectline.cpp: Applied temperature dependent waveguide model
+	provided by Andrea Zonca.  Thanks a lot.
+
 2008-07-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* vprobe.cpp: Fixed bug in the S-parameters of this component.
