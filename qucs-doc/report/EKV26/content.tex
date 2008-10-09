@@ -1515,3 +1515,141 @@ else
 end
 endmodule
 \end{lstlisting}
+
+\newpage 
+\tutsection{Update number one: September 2008}
+
+The first version of the Qucs EPFL-EKV v2.6 model provided Qucs users
+with reasonably complete long and short channel models for nMOS and
+pMOS devices.  In no respect were these models optimized for minimum
+simulation run time or were they flexible enough to allow users to
+select the style of charge partitioning employed by the EKV
+model. Recent work on the Qucs implementation of the EKV v2.6 MOSFET
+model and the Qucs ADMS/XML interface has resulted in a significant
+reduction in simulation run time overhead, particularly in transient
+and small signal analysis. The addition of a SPICE BSIM style
+partition parameter Xpart to the Qucs version of the EKV v2.6 model
+now allows users to set the style of charge partitioning employed by
+the EKV model. These notes explain the function of the first EKV v2.6
+update and introduce a series of test simulations that demonstrate the
+effects these changes have on the operation of the Qucs port of the
+EKV V2.6 model.
+
+\tutsubsection{Model initialisation}
+
+Readers who have looked through the EKV v2.6 Verilog-A code listed in
+the previous sections of these notes will probably have been struck by
+the quantity of calculations involved each time the code is evaluated
+during simulation.  In the case of transient analysis it is calculated
+at least once per time step, often resulting in many thousands of
+passes through the code. The more MOS devices included in a circuit
+the greater the time overhead becomes.  Obviously, a sensible approach
+would be to minimize the amount of calculation by only evaluating once
+those parts of the EKV model equations which result in constant values
+during simulation. The Verilog-A hardware description language
+provides a model initialisation feature which selects those parts of a
+device model code which are to be evaluated prior to the start of a
+simulation. The resulting calculated variables are then available for
+use by other sections of the Verilog-A model code during
+simulation. In transient and small signal analysis this is
+particularly important as it significantly reduces simulation
+calculation time.  Verilog-A employs the ``at'' (
+@(\verb|initial_step|) or @(\verb|initial_model|) ) language
+construction coupled with a begin ... end block to signify the
+Verilog-A code that is to be evaluated only at model
+initialisation. Although this technique does greatly improve model
+simulation speed it does imply significantly more work for the model
+developer in that the Verilog-A device code has to be split into
+initialisation and dynamic simulation sections. Readers interested in
+the detail of how this split can be achieved should compare the latest
+EKV v2.6 Verilog-A CVS code given at the Qucs Web site with that
+presented in previous sections of these notes.
+
+\tutsubsection{Charge partitioning}
+
+The MOSFT is a four terminal device with a dynamic performance that
+requires accurate calculation of the charge at each terminal. Previous
+notes indicated that the intrinsic channel charge equals the sum of
+the drain and source charges.  However, the exact proportion of
+intrinsic channel charge that belongs to the drain or to the source is
+often not known.  The assignment of the proportion of the channel
+charge to the drain and source charges is called charge partitioning.
+The first release of the Qucs EKV v2.6 model used the 50/50
+partitioning scheme where 50\% of the channel charge is arbitrarily
+assigned to both drain and source. It's interesting to note that this
+partitioning scheme has no physical basis but depends entirely on
+convenience. A second partitioning scheme, called the 40/60
+partitioning, does however, have a strong physical
+basis\footnote{William Liu, MOSFET models for SPICE simulation,
+including BSIM3v3 and BSIM4, 2001, Wiley-Interscience publications,
+ISBN 0-471-39697-4.}. Yet a third charge partitioning is often
+employed for digital circuit simulation; this is known as the 0/100
+partition. The second release of the Qucs EPFL-EKV v2.6 model includes
+an extra parameter called Xpart which allows users to set the
+partitioning scheme for dynamic simulation calculations. Xpart default
+is set at 0.4 which corresponds to the 40/60 partitioning
+scheme. Figure~\ref{fig:EKV10} illustrates a test circuit for
+determining the S-Parameters of an nMOS device connected as a
+capacitance. Both the device capacitance and associated series
+resistance can be extracted from S[1,1]. Qucs equation block Eqn1
+gives the equations for extracting these properties. Other equations
+in Eqn1 show how the extracted capacitance can be represented as a
+ratio of the basic parallel capacitance given by
+
+\begin{equation}
+C\verb|_|parallel\verb|_|plate = W\cdot L \cdot Cox.
+\end{equation}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{EKV_fig10}
+  \caption{Test circuit for simulating EKV v2.6 charge partitioning effects: Xpart = 0.4 or QD/QS = 40/60}
+  \label{fig:EKV10}
+\end{figure}  
+
+
+\tutsubsection{Modelling EKV v2.6 charge partitioning using Qucs EDD}
+
+Complex simulation results like those shown in Fig~\ref{fig:EKV10}
+suggest the question ``How do we check the accuracy of the model being
+simulated?''. One possible approach is to develop a second model of
+the same device based on the same physical principles and equations
+but using a different approach like the Qucs EDD/subcircuit modelling
+route shown in Fig.~\ref{fig:EKV11}. It is an EDD/subcircuit model of
+a long channel EKV v2.6 nMOS device which includes charge
+partitioning. Figure~\ref{fig:EKV12} illustrated the same test circuit
+as Fig.~\ref{fig:EKV10} and the extracted capacitance and resistance
+values for the EDD model of the long channel nMOS device. A number of
+features observed from Fig.~\ref{fig:EKV10} and Fig.~\ref{fig:EKV11}
+are worth commenting on; firstly that good agreement is recorded
+between the two sets of results, secondly that the Verilog-A model
+includes both overlap capacitance and drain and gate source
+resistances. Hence the slight difference in the capacitance ratio and
+the recorded values of Rin above one Ohm for the Verilog-A model.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{EKV_fig11}
+  \caption{Qucs EDD model for a EKV v2.6 long channel nMOS device with charge partitioning}
+  \label{fig:EKV11}
+\end{figure}  
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{EKV_fig12}
+  \caption{Test circuit for simulating EKV v2.6 EDD model charge partitioning effects: Xpart = 0.4 or QD/QS = 40/60}
+  \label{fig:EKV12}
+\end{figure}  
+
+\tutsection{End note}
+
+The first update of the Qucs EKV v2.6 model provides users with a more
+optimised model, with improved simulation performance and a more
+complete charge partitioning scheme.  Even with these changes the
+model is still not complete. The nMOS and pMOS Verilog-A code needs to
+be unified and a number of optional parameters need to be added to the
+Qucs implementation of the EKV v2.6 model.  The next update of the
+model is scheduled for the near future, following correction of bug
+reports sent in by Qucs users.  Once again my thanks to Stefan Jahn
+for all his help and support during the first EKV v2.6 update
+development phase.
