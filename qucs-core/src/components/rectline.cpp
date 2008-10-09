@@ -2,6 +2,7 @@
  * rectline.cpp - rectangular waveguide class implementation
  *
  * Copyright (C) 2008 Bastien ROUCARIES <roucaries.bastien@gmail.com>
+ * Copyright (C) 2008 Andrea Zonca <andrea.zonca@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rectline.cpp,v 1.3 2008-10-07 20:15:32 ela Exp $
+ * $Id: rectline.cpp,v 1.4 2008-10-09 16:49:50 ela Exp $
  *
  */
 
@@ -103,6 +104,64 @@ void rectline::calcPropagation (nr_double_t frequency) {
   nr_double_t a    = getPropertyDouble ("a");
   nr_double_t b    = getPropertyDouble ("b");
 
+#define TEMP_MODEL 1
+#ifdef TEMP_MODEL
+  nr_double_t T = kelvin (getPropertyDouble ("Temp"));
+  nr_double_t mat = rho;
+  if (mat == 1) { // copper
+    if (T < 7) { 
+      rho = 2e-11;
+    }
+    else if (T < 15) {
+      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) + 
+	9.82267e-14 * pow (T, 3) - 1.29684e-12 * pow (T, 2) +
+	8.68341e-12 * T - 2.72120e-12;
+    }
+    else if (T < 45) {
+      rho = 6.60731e-15 * pow (T, 3) - 1.14812e-13 * pow (T, 2) -
+	1.11681e-12 * T + 4.23709e-11;
+    }
+    else if (T < 100) {
+      rho = -6.53059e-15 * pow (T, 3) +	1.73783e-12 * pow (T, 2) -
+	8.73888e-11 * T + 1.37016e-9;
+    }
+    else if (T < 350) {
+      rho = 1.00018e-17 * pow (T, 3) - 8.72408e-15 * pow (T, 2) +
+	7.06020e-11 * T - 3.51125e-9;
+    }
+    else {
+      rho = 0.000000020628;
+    }
+    // in ADS iT_K is forced T_Ko Cu_300K:
+    //rho = 1.7e-8;
+  }
+  else if (mat == 2) { // stainless steel
+    rho = 7.4121e-17 * pow (T, 4) - 5.3504e-14 * pow (T, 3) +
+      1.2902e-11 * pow (T, 2) - 2.9186e-10 * T +4.9320e-7;
+  }
+  else if (mat == 3) { // gold
+    if (T < 20) {
+      rho = 0.00000000024;
+    }
+    else if (T < 65) {
+      rho = 2e-12 * pow (T, 2) - 8e-11 * T + 1e-9;
+    }
+    else if (T < 80) {
+      rho = 5e-13 * pow (T, 3) - 1e-10 * pow (T, 2) + 9e-9 * T - 2e-7;
+    }
+    else if (T < 300) {
+      rho = 8e-11 * T - 1e-10;
+    }
+    else {
+      rho = 2.4e-8;
+    }
+  }
+#if DEBUG
+  logprint (LOG_ERROR, "NOTIFY: MAT %g FREQ %g RHO %g TEMP %g\n",
+	    mat, frequency, rho, T);
+#endif
+#endif
+
   /* wave number */
   nr_double_t k0;
   nr_double_t kc;
@@ -165,8 +224,7 @@ void rectline::initCheck (void) {
   nr_double_t mur = getPropertyDouble ("mur");
   // check validity
   if (a < b) {
-    logprint (LOG_ERROR,
-	      "ERROR: a < b should be a >= b.\n");
+    logprint (LOG_ERROR, "ERROR: a < b should be a >= b.\n");
   }
   nr_double_t c = sqrt (epsr * mur);
   fc_low =  C0 / (2.0 * a * c);
