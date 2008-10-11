@@ -44,6 +44,7 @@ class rectline : public circuit
  private:
   void calcPropagation (nr_double_t);
   void initCheck (void);
+  void calcResistivity (char *, nr_double_t);
   /*! attenuation constant */
   nr_double_t alpha;
   /*! propagation constant */
@@ -54,6 +55,8 @@ class rectline : public circuit
   nr_double_t fc_low;
   /*! cut off frequency higher mode */
   nr_double_t fc_high;
+  /*! resistivity */
+  nr_double_t rho;
 };
 
 #endif /* __RECTLINE_H__ */

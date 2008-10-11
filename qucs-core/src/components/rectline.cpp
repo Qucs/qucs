@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rectline.cpp,v 1.4 2008-10-09 16:49:50 ela Exp $
+ * $Id: rectline.cpp,v 1.5 2008-10-11 16:06:47 ela Exp $
  *
  */
 
@@ -55,6 +55,57 @@ rectline::rectline () : circuit (2) {
   alpha = beta = fc_low = fc_high = 0.0;
   zl = 0.0;
   type = CIR_RECTANGULAR;
+}
+
+void rectline::calcResistivity (char * Mat, nr_double_t T) {
+  if (!strcmp (Mat, "Copper")) {
+    if (T < 7) { 
+      rho = 2e-11;
+    }
+    else if (T < 15) {
+      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) + 
+	9.82267e-14 * pow (T, 3) - 1.29684e-12 * pow (T, 2) +
+	8.68341e-12 * T - 2.72120e-12;
+    }
+    else if (T < 45) {
+      rho = 6.60731e-15 * pow (T, 3) - 1.14812e-13 * pow (T, 2) -
+	1.11681e-12 * T + 4.23709e-11;
+    }
+    else if (T < 100) {
+      rho = -6.53059e-15 * pow (T, 3) +	1.73783e-12 * pow (T, 2) -
+	8.73888e-11 * T + 1.37016e-9;
+    }
+    else if (T < 350) {
+      rho = 1.00018e-17 * pow (T, 3) - 8.72408e-15 * pow (T, 2) +
+	7.06020e-11 * T - 3.51125e-9;
+    }
+    else {
+      rho = 0.000000020628;
+    }
+    // in ADS iT_K is forced T_Ko Cu_300K:
+    //rho = 1.7e-8;
+  }
+  else if (!strcmp (Mat, "StainlessSteel")) {
+    rho = 7.4121e-17 * pow (T, 4) - 5.3504e-14 * pow (T, 3) +
+      1.2902e-11 * pow (T, 2) - 2.9186e-10 * T +4.9320e-7;
+  }
+  else if (!strcmp (Mat, "Gold")) {
+    if (T < 20) {
+      rho = 0.00000000024;
+    }
+    else if (T < 65) {
+      rho = 2e-12 * pow (T, 2) - 8e-11 * T + 1e-9;
+    }
+    else if (T < 80) {
+      rho = 5e-13 * pow (T, 3) - 1e-10 * pow (T, 2) + 9e-9 * T - 2e-7;
+    }
+    else if (T < 300) {
+      rho = 8e-11 * T - 1e-10;
+    }
+    else {
+      rho = 2.4e-8;
+    }
+  }
 }
 
 /*! Compute propagation constant 
@@ -99,68 +150,9 @@ rectline::rectline () : circuit (2) {
 void rectline::calcPropagation (nr_double_t frequency) {
   nr_double_t er   = getPropertyDouble ("er");
   nr_double_t mur  = getPropertyDouble ("mur");
-  nr_double_t rho  = getPropertyDouble ("rho");
   nr_double_t tand = getPropertyDouble ("tand");
   nr_double_t a    = getPropertyDouble ("a");
   nr_double_t b    = getPropertyDouble ("b");
-
-#define TEMP_MODEL 1
-#ifdef TEMP_MODEL
-  nr_double_t T = kelvin (getPropertyDouble ("Temp"));
-  nr_double_t mat = rho;
-  if (mat == 1) { // copper
-    if (T < 7) { 
-      rho = 2e-11;
-    }
-    else if (T < 15) {
-      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) + 
-	9.82267e-14 * pow (T, 3) - 1.29684e-12 * pow (T, 2) +
-	8.68341e-12 * T - 2.72120e-12;
-    }
-    else if (T < 45) {
-      rho = 6.60731e-15 * pow (T, 3) - 1.14812e-13 * pow (T, 2) -
-	1.11681e-12 * T + 4.23709e-11;
-    }
-    else if (T < 100) {
-      rho = -6.53059e-15 * pow (T, 3) +	1.73783e-12 * pow (T, 2) -
-	8.73888e-11 * T + 1.37016e-9;
-    }
-    else if (T < 350) {
-      rho = 1.00018e-17 * pow (T, 3) - 8.72408e-15 * pow (T, 2) +
-	7.06020e-11 * T - 3.51125e-9;
-    }
-    else {
-      rho = 0.000000020628;
-    }
-    // in ADS iT_K is forced T_Ko Cu_300K:
-    //rho = 1.7e-8;
-  }
-  else if (mat == 2) { // stainless steel
-    rho = 7.4121e-17 * pow (T, 4) - 5.3504e-14 * pow (T, 3) +
-      1.2902e-11 * pow (T, 2) - 2.9186e-10 * T +4.9320e-7;
-  }
-  else if (mat == 3) { // gold
-    if (T < 20) {
-      rho = 0.00000000024;
-    }
-    else if (T < 65) {
-      rho = 2e-12 * pow (T, 2) - 8e-11 * T + 1e-9;
-    }
-    else if (T < 80) {
-      rho = 5e-13 * pow (T, 3) - 1e-10 * pow (T, 2) + 9e-9 * T - 2e-7;
-    }
-    else if (T < 300) {
-      rho = 8e-11 * T - 1e-10;
-    }
-    else {
-      rho = 2.4e-8;
-    }
-  }
-#if DEBUG
-  logprint (LOG_ERROR, "NOTIFY: MAT %g FREQ %g RHO %g TEMP %g\n",
-	    mat, frequency, rho, T);
-#endif
-#endif
 
   /* wave number */
   nr_double_t k0;
@@ -171,8 +163,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
   // check cutoff frequency
   if (frequency >= fc_high) {
     logprint (LOG_ERROR, "WARNING: Operating frequency (%g) outside TE10 "
-	      "band (%g <= TE10  <= %g ) or outside non propagative mode "
-	      " <= %g\n", frequency, fc_low, fc_high, fc_low);
+	      "band (%g <= TE10 <= %g) or outside non propagative mode "
+	      "<= %g\n", frequency, fc_low, fc_high, fc_low);
   }
   // calculate wave number 
   k0 = (2.0 * M_PI * frequency * sqrt (er * mur)) / C0;
@@ -230,6 +222,10 @@ void rectline::initCheck (void) {
   fc_low =  C0 / (2.0 * a * c);
   /* min of second TE mode and first TM mode */
   fc_high = MIN (C0 / (a * c),  C0 / (2.0  * b * c));
+  // calculation of resistivity
+  rho  = getPropertyDouble ("rho");
+  nr_double_t T = getPropertyDouble ("Temp");
+  calcResistivity (getPropertyString ("Material"), kelvin (T));
 }
 
 void rectline::saveCharacteristics (nr_complex_t) {
@@ -313,6 +309,8 @@ PROP_REQ [] = {
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "Material", PROP_STR, { PROP_NO_VAL, "unspecified" },
+    PROP_RNG_STR4 ("unspecified", "Copper", "StainlessSteel", "Gold") },
   PROP_NO_PROP };
 struct define_t rectline::cirdef =
   { "RECTLINE", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
