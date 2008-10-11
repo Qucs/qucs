@@ -62,6 +62,9 @@ RectLine::RectLine()
 		QObject::tr("specific resistance of conductor")));
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("Material", "unspecified", false,
+		QObject::tr("material parameter for temperature model")+
+			    " [unspecified, Copper, StainlessSteel, Gold]"));
 }
 
 RectLine::~RectLine()

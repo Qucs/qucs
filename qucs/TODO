@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- eye-diagram implementation
 - editing long property lines, e.g. for EDD device
 - what about S-parameter file references in library elements?
 - Verilog-HDL editor based on VHDL editor
