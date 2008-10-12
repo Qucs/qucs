@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- MESFET translation from SPICE to qucs in the converter.
+- Four-terminal versions of two-port RFEDD's.
 	- Implementation of ddx() operator, especially for EDD.
 - Introduce global nodes (e.g. subst!) in the simulator. 
 - Allow variable references in property value lists.

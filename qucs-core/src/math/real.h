@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: real.h,v 1.4 2008/01/15 19:14:03 ela Exp $
+ * $Id: real.h,v 1.5 2008/10/12 11:02:02 ela Exp $
  *
  */
 
@@ -48,6 +48,12 @@ nr_double_t  round (const nr_double_t);
 #endif
 #ifndef HAVE_TRUNC
 nr_double_t  trunc (const nr_double_t);
+#endif
+#ifndef HAVE_ACOSH
+nr_double_t  acosh (const nr_double_t);
+#endif
+#ifndef HAVE_ASINH
+nr_double_t  asinh (const nr_double_t);
 #endif
 
 // more extra math functions
