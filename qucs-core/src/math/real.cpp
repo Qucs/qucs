@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: real.cpp,v 1.4 2008-01-15 19:14:02 ela Exp $
+ * $Id: real.cpp,v 1.5 2008-10-12 11:02:02 ela Exp $
  *
  */
 
@@ -43,6 +43,18 @@ nr_double_t trunc (const double arg) {
   return arg > 0 ? floor (arg) : floor (arg + 1);
 }
 #endif /* HAVE_TRUNC */
+
+#ifndef HAVE_ACOSH
+nr_double_t acosh (const double arg) {
+  return log (arg + sqrt (arg * arg - 1.0));
+}
+#endif /* HAVE_ACOSH */
+
+#ifndef HAVE_ASINH
+nr_double_t asinh (const double arg) {
+  return log (arg + sqrt (arg * arg + 1.0));
+}
+#endif /* HAVE_ASINH */
 
 /*!\brief Compute factorial n ie \$n!\$ 
 

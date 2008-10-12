@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: compat.h,v 1.1 2008-10-08 16:32:58 ela Exp $
+ * $Id: compat.h,v 1.2 2008-10-12 11:02:02 ela Exp $
  *
  */
 
@@ -46,10 +46,6 @@
 # ifndef isinf
 # define isinf(x)  (!_finite(x) && !_isnan(x))
 # endif
-#endif
-
-#ifdef __MINGW32__
-#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
 #endif
 
 #if (defined (__SVR4) && defined (__sun)) || defined (__sgi)

@@ -170,8 +170,8 @@ unset double_size
 
 dnl Checks for library functions.
 AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
-		cosh tanh fabs modf atan2 jn yn erf erfc round trunc \
-		strdup strerror strchr])
+		cosh tanh fabs modf atan2 jn yn erf erfc round trunc acosh \
+		asinh strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES

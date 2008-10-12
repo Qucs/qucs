@@ -26,8 +26,14 @@
 /* Define to 1 if you have the `acos' function. */
 #define HAVE_ACOS 1
 
+/* Define to 1 if you have the `acosh' function. */
+/* #undef HAVE_ACOSH */
+
 /* Define to 1 if you have the `asin' function. */
 #define HAVE_ASIN 1
+
+/* Define to 1 if you have the `asinh' function. */
+/* #undef HAVE_ASINH */
 
 /* Define to 1 if you have the `atan' function. */
 #define HAVE_ATAN 1
