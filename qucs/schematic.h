@@ -106,6 +106,7 @@ public:
   QPtrList<QString> UndoSymbol;    // undo stack for circuit symbol
 
 protected:
+  bool sizeOfFrame(int&, int&);
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user

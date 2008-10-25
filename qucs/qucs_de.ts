@@ -6798,6 +6798,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -13883,6 +13887,14 @@ werden in die Suche mit einbezogen.</translation>
     <message>
         <source>DIN A3 portrait</source>
         <translation>DIN A3 Hochformat</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
