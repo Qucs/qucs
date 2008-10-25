@@ -292,10 +292,9 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
 }
 
 // -----------------------------------------------------------
-void Schematic::paintFrame(ViewPainter *p)
+bool Schematic::sizeOfFrame(int& xall, int& yall)
 {
-  // dimensions:  X cm / 2.54 * 144
-  int xall, yall;
+  // Values exclude border of 1.5cm at each side.
   switch(showFrame) {
     case 1:  xall = 1020; yall =  765; break;  // DIN A5 landscape
     case 2:  xall =  765; yall = 1020; break;  // DIN A5 portrait
@@ -303,10 +302,23 @@ void Schematic::paintFrame(ViewPainter *p)
     case 4:  xall = 1020; yall = 1530; break;  // DIN A4 portrait
     case 5:  xall = 2295; yall = 1530; break;  // DIN A3 landscape
     case 6:  xall = 1530; yall = 2295; break;  // DIN A3 portrait
-    default:  return;
+    case 7:  xall = 1414; yall = 1054; break;  // letter landscape
+    case 8:  xall = 1054; yall = 1414; break;  // letter portrait
+    default:  return false;
   }
 
-  p->Painter->setPen(QPen(QPen::black,0));
+  return true;
+}
+
+// -----------------------------------------------------------
+void Schematic::paintFrame(ViewPainter *p)
+{
+  // dimensions:  X cm / 2.54 * 144
+  int xall, yall;
+  if(!sizeOfFrame(xall, yall))
+    return;
+
+  p->Painter->setPen(QPen(Qt::black,0));
   int d = p->LineSpacing + int(4.0 * p->Scale);
   int x1_, y1_, x2_, y2_;
   p->map(xall, yall, x1_, y1_);
@@ -316,32 +328,33 @@ void Schematic::paintFrame(ViewPainter *p)
   p->Painter->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
 
   int z;
-  for(z=255; z<xall; z+=255) {
+  int step = xall / ((xall+127) / 255);
+  for(z=step; z<=xall-step; z+=step) {
     p->map(z, 0, x2_, y2_);
     p->Painter->drawLine(x2_, y2_, x2_, y2_+d);
     p->Painter->drawLine(x2_, y1_-d, x2_, y1_);
   }
-  for(z=255; z<yall; z+=255) {
-    p->map(0, z, x2_, y2_);
-    p->Painter->drawLine(x2_, y2_, x2_+d, y2_);
-    p->Painter->drawLine(x1_-d, y2_, x1_, y2_);
-  }
-
   char Letter[2] = "1";
-  for(z=125; z<xall; z+=255) {
+  for(z=step/2+5; z<xall; z+=step) {
     p->drawText(Letter, z, 3, 0);
     p->map(z, yall+3, x2_, y2_);
     p->Painter->drawText(x2_, y2_-d, 0, 0, Qt::DontClip, Letter);
     Letter[0]++;
   }
+
+  step = yall / ((yall+127) / 255);
+  for(z=step; z<=yall-step; z+=step) {
+    p->map(0, z, x2_, y2_);
+    p->Painter->drawLine(x2_, y2_, x2_+d, y2_);
+    p->Painter->drawLine(x1_-d, y2_, x1_, y2_);
+  }
   Letter[0] = 'A';
-  for(z=125; z<yall; z+=255) {
+  for(z=step/2+5; z<yall; z+=step) {
     p->drawText(Letter, 5, z, 0);
     p->map(xall+5, z, x2_, y2_);
     p->Painter->drawText(x2_-d, y2_, 0, 0, Qt::DontClip, Letter);
     Letter[0]++;
   }
-
 
   // draw text box with text
   p->map(xall-340, yall-3, x1_, y1_);

@@ -6540,6 +6540,10 @@ Use:  qucsedit [-r] fitxer
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -11737,6 +11741,14 @@ en la búsqueda.</translation>
     <message>
         <source>DIN A3 portrait</source>
         <translation>DIN A3 vertical</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

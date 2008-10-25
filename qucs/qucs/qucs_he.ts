@@ -6411,6 +6411,10 @@ Usage:  qucsedit [-r] file
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -11326,6 +11330,14 @@ are included in the search.</source>
     </message>
     <message>
         <source>DIN A3 portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
