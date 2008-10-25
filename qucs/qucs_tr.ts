@@ -6391,6 +6391,10 @@ Kullanım:  qucsedit [-r] kütük
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -11522,6 +11526,14 @@ Bütün kütüphaneler aranır.</translation>
     <message>
         <source>DIN A3 portrait</source>
         <translation>DIN A3 dikey</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

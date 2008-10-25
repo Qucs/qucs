@@ -23,8 +23,12 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- busses for digital designs (instead of wires only)
+- keeping input/output type of VHDL subcircuits based on VHDL files
+- real library creation using VHDL (precompiled objects as well as
+  libraries)
 - eye-diagram implementation
-- editing long property lines, e.g. for EDD device
+- editing long property lines (multi-line inputs), e.g. for EDD device
 - what about S-parameter file references in library elements?
 - Verilog-HDL editor based on VHDL editor
 - allow mirroring, placement of component arrays and alike while
