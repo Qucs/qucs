@@ -104,6 +104,8 @@ AC_CONFIG_FILES([Makefile
 		 report/mesfet/pics/Makefile
 		 report/EKV26/Makefile
 		 report/EKV26/pics/Makefile
+		 report/photodiode/Makefile
+		 report/photodiode/pics/Makefile
 		 tutorial/Makefile
 		 tutorial/getstarted/Makefile
 		 tutorial/getstarted/pics/Makefile
