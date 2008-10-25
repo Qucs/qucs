@@ -99,6 +99,8 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   Combo_Frame->insertItem(tr("DIN A4 portrait"));
   Combo_Frame->insertItem(tr("DIN A3 landscape"));
   Combo_Frame->insertItem(tr("DIN A3 portrait"));
+  Combo_Frame->insertItem(tr("Letter landscape"));
+  Combo_Frame->insertItem(tr("Letter portrait"));
   gp3->addMultiCellWidget(Combo_Frame,0,0,0,1);
 
   Input_Frame0 = new QTextEdit(Tab3);

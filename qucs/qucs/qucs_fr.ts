@@ -6568,6 +6568,10 @@ Invocation :  qucsedit [-r] fichier
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -11988,6 +11992,14 @@ le nom inclut le texte recherchée. La recherche est
     <message>
         <source>DIN A3 portrait</source>
         <translation>A3 portrait</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

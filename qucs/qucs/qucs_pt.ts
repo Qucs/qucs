@@ -6419,6 +6419,10 @@ Usage:  qucsedit [-r] file
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -9605,6 +9609,14 @@ are included in the search.</source>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -6762,6 +6762,10 @@ Použití:  qucsedit [-r] soubor
         <source>Photodiode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material parameter for temperature model</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -13830,6 +13834,14 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
     <message>
         <source>Frame</source>
         <translation>Rámec</translation>
+    </message>
+    <message>
+        <source>Letter landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter portrait</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
