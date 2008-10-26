@@ -1,7 +1,7 @@
 /*
  * analysis.cpp - analysis class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.13 2008/01/10 20:00:00 ela Exp $
+ * $Id: analysis.cpp,v 1.14 2008/10/26 17:59:46 ela Exp $
  *
  */
 
@@ -114,21 +114,25 @@ sweep * analysis::createSweep (const char * n) {
     }
   }
 
-  // lists of values and constant values
-  else if (!strcmp (type, "list") || !strcmp (type, "const")) {
+  // lists of values
+  else if (!strcmp (type, "list")) {
     vector * values = getPropertyVector ("Values");
     int points = values->getSize ();
-    if (!strcmp (type, "list")) {
-      swp = new lstsweep (n);
-      ((lstsweep *) swp)->create (points);
-    }
-    else if (!strcmp (type, "const")) {
-      swp = new consweep (n);
-      ((consweep *) swp)->create (points);
-    }
+    swp = new lstsweep (n);
+    ((lstsweep *) swp)->create (points);
     for (int i = 0; i < values->getSize (); i++)
       swp->set (i, real (values->get (i)));
   }
+
+  // constant value
+  else if (!strcmp (type, "const")) {
+    nr_double_t val = getPropertyDouble ("Values");
+    swp = new consweep (n);
+    ((consweep *) swp)->create (1);
+    swp->set (0, val);
+  }
+
+  swp->setParent (this);
   return swp;
 }
 

@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * allowing variables in constant parameter simulation boxes
  * existing HICUM models can now be converter by the qucsconv command
    line tool into library elements
  * allowing property references inside the same	instance of a component

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.91 2008/10/05 17:52:11 ela Exp $
+ * $Id: input.cpp,v 1.92 2008/10/26 17:59:46 ela Exp $
  *
  */
 
@@ -140,19 +140,14 @@ void input::factory (void) {
 	// add the properties to analysis
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	  if (pairs->value->ident) {
-	    if (pairs->value->var) {
+	    if (pairs->value->var && strcmp (pairs->key, "Param")) {
 	      variable * v;
 	      if ((v = def->env->getVariable (pairs->value->ident)) != NULL) {
 		// equation variable reference in analysis property
 		a->addProperty (pairs->key, v);
 	      }
 	      else {
-		// put new parameter sweep variable into environment
-		v = new variable (pairs->value->ident);
-		constant * c = new constant (TAG_DOUBLE);
-		c->d = 0; // initialize the variable
-		v->setConstant (c);
-		def->env->addVariable (v);
+		// should not be reached!
 		a->addProperty (pairs->key, pairs->value->ident);
 	      }
 	    }

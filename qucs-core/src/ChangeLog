@@ -1,3 +1,12 @@
+2008-10-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* sweep.cpp: Return 'Values' property content of parent analysis
+	for constant sweeps.
+
+	* check_netlist.cpp: Allowing parameter sweep variables or other
+	variable in the 'Values' property (when it is marked 'const') of
+	simulation boxes.
+
 2008-10-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* compat.h: New file containing system specific #include's and
