@@ -1,7 +1,7 @@
 /*
  * sweep.h - variable sweep class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: sweep.h,v 1.3 2007-09-16 16:49:39 ela Exp $
+ * $Id: sweep.h,v 1.4 2008-10-26 17:59:46 ela Exp $
  *
  */
 
@@ -52,6 +52,8 @@ class sweep : public object
   char * toString (void);
   void reverse (void);
   void reset (void) { counter = 0; };
+  object * getParent (void) { return parent; }
+  void setParent (object * p) { parent = p; }
 
  protected:
   int type;
@@ -61,6 +63,7 @@ class sweep : public object
   int size;
   char * txt;
   int counter;
+  object * parent;
 };
 
 class linsweep : public sweep

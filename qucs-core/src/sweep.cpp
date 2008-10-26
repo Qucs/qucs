@@ -1,7 +1,7 @@
 /*
  * sweep.cpp - variable sweep class implementation
  *
- * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: sweep.cpp,v 1.9 2007-09-16 16:49:39 ela Exp $
+ * $Id: sweep.cpp,v 1.10 2008-10-26 17:59:46 ela Exp $
  *
  */
 
@@ -138,6 +138,8 @@ void sweep::reverse (void) {
 nr_double_t sweep::next (void) {
   nr_double_t res = data[counter];
   if (++counter >= size) counter = 0;
+  if (size == 1)
+    return parent->getPropertyDouble ("Values");
   return res;
 }
 
