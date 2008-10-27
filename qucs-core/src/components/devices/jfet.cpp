@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.36 2008-10-07 20:15:33 ela Exp $
+ * $Id: jfet.cpp,v 1.37 2008-10-27 17:07:17 ela Exp $
  *
  */
 
@@ -432,8 +432,8 @@ PROP_OPT [] = {
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_RNG_FET },
   { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
-  { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-  { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Vt0tc", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Betatce", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   { "Area", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
   PROP_NO_PROP };

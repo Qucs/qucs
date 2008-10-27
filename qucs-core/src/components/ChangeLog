@@ -1,3 +1,8 @@
+2008-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/jfet.cpp (cirdef): Adjusted property range for 'Vt0tc'
+	and 'Betatce' parameters to have no limitations.
+
 2008-10-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* rectline.cpp (cirdef): Added 'Material' parameter.
