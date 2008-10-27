@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.44 2008-10-07 20:15:33 ela Exp $
+ * $Id: diode.cpp,v 1.45 2008-10-27 18:42:23 ela Exp $
  *
  */
 
@@ -355,6 +355,11 @@ void diode::loadOperatingPoints (void) {
 
 // Calculates and saves operating points.
 void diode::calcOperatingPoints (void) {
+
+  // load operating points
+  loadOperatingPoints ();
+
+  // get necessary properties
   nr_double_t M   = getScaledProperty ("M");
   nr_double_t Cj0 = getScaledProperty ("Cj0");
   nr_double_t Vj  = getScaledProperty ("Vj");
@@ -405,7 +410,6 @@ void diode::initTR (void) {
 void diode::calcTR (nr_double_t) {
   calcDC ();
   saveOperatingPoints ();
-  loadOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Cd = getOperatingPoint ("Cd");
