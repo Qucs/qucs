@@ -1,3 +1,8 @@
+2008-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Transistors.lib: Added 4 new transistors provided by
+	Frans Schreuder.  Thanks!
+
 2008-09-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* symbolwidget.cpp (createSymbol): Added symbol code for new
