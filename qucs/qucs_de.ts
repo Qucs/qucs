@@ -6802,6 +6802,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>material parameter for temperature model</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EPFL-EKV MOS 2.6 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
