@@ -50,7 +50,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp EKV26nMOS.cpp EKV26pMOS.cpp rectline.cpp hicumL0V1p2.cpp         \
-  hicumL2V2p23.cpp photodiode.cpp
+  hicumL2V2p23.cpp photodiode.cpp EKV26MOS.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -73,7 +73,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
   diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h rfedd2p.h MESFET.h     \
   EKV26nMOS.h EKV26pMOS.h rectline.h hicumL0V1p2.h hicumL2V2p23.h             \
-  photodiode.h
+  photodiode.h EKV26MOS.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
