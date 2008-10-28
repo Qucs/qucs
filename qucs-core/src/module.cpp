@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.4 2008/10/09 17:41:31 ela Exp $
+ * $Id: module.cpp,v 1.5 2008/10/28 19:30:04 ela Exp $
  *
  */
 
@@ -231,6 +231,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (MESFET);
   REGISTER_CIRCUIT (EKV26nMOS);
   REGISTER_CIRCUIT (EKV26pMOS);
+  REGISTER_CIRCUIT (EKV26MOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (photodiode);

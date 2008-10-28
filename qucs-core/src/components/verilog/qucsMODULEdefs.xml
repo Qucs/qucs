@@ -200,7 +200,7 @@ PROP_REQ [] = {
 <!-- emit required properties -->
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
-    <admst:if test="[name!='npn' and name!='pnp']">
+    <admst:if test="[name!='npn' and name!='pnp' and name!='nmos' and name!='pmos']">
       <admst:apply-templates select="." match=":property"/>
     </admst:if>
   </admst:if>
@@ -212,7 +212,7 @@ PROP_OPT [] = {
 <!-- emit optional properties -->
 <admst:for-each select="variable">
   <admst:if test="[input='yes']">
-    <admst:if test="[name='npn' or name='pnp']">
+    <admst:if test="[name='npn' or name='pnp' or name='nmos' or name='pmos']">
       <admst:apply-templates select="." match=":property"/>
     </admst:if>
   </admst:if>

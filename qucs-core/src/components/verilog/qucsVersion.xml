@@ -2137,7 +2137,7 @@
         </admst:new>
       </admst:if>
     </admst:when>
-    <admst:when test="[name='pspva']">
+    <admst:when test="[name='pspva' or name='EKV26MOS']">
       <admst:if test="[nilled(variable[name='nmos'])]">
         <admst:new datatype="variable" inputs=".,'nmos',analog">
           <admst:push into="module/variable" select="." onduplicate="ignore"/>

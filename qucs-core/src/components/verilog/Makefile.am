@@ -36,6 +36,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26nMOS.analogfunction.cpp EKV26nMOS.core.cpp \
 	EKV26pMOS.analogfunction.cpp EKV26pMOS.core.cpp \
+	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp
@@ -51,6 +52,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	MESFET.analogfunction.h MESFET.defs.h MESFET.core.h \
 	EKV26nMOS.analogfunction.h EKV26nMOS.defs.h EKV26nMOS.core.h \
 	EKV26pMOS.analogfunction.h EKV26pMOS.defs.h EKV26pMOS.core.h \
+	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h
@@ -58,7 +60,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va EKV26nMOS.va EKV26pMOS.va \
-  hicumL0V1p2.va hicumL2V2p23.va photodiode.va
+  hicumL0V1p2.va hicumL2V2p23.va photodiode.va EKV26MOS.va
 
 XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
   qucsMODULEdefs.xml qucsMODULEgui.xml
@@ -198,6 +200,19 @@ EKV26pMOS.defs.h: EKV26pMOS.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 EKV26pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 EKV26pMOS.gui.cpp: EKV26pMOS.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+EKV26MOS.analogfunction.cpp: analogfunction.xml
+EKV26MOS.analogfunction.cpp: EKV26MOS.va
+	$(ADMSXML) $< -e analogfunction.xml
+EKV26MOS.core.cpp: EKV26MOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+EKV26MOS.core.cpp: EKV26MOS.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+EKV26MOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+EKV26MOS.defs.h: EKV26MOS.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+EKV26MOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+EKV26MOS.gui.cpp: EKV26MOS.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 hicumL0V1p2.analogfunction.cpp: analogfunction.xml
