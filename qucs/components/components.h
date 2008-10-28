@@ -142,6 +142,7 @@
 #include "MESFET.h"
 #include "EKV26nMOS.h"
 #include "EKV26pMOS.h"
+#include "EKV26MOS.h"
 #include "hicumL0V1p2.h"
 #include "hicumL2V2p23.h"
 #include "photodiode.h"
