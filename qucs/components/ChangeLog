@@ -1,3 +1,7 @@
+2008-10-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp (createSymbol): Added 'Varactor' symbol mode.
+
 2008-10-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* rectline.cpp (RectLine): Added 'Material' parameter.
