@@ -1,3 +1,7 @@
+2008-10-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26nMOS.va, EKV26pMOS.va: Removed these files.
+
 2008-10-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* photodiode.va: Added new photodiode model.  Thanks to Mike
