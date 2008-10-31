@@ -1,3 +1,10 @@
+2008-10-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26pMOS.cpp, EKV26nMOS.cpp: Removed these files.
+
+	* EKV26MOS.cpp (info_pmos): Changing default values for PMOS type
+	model.
+
 2008-10-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (createSymbol): Added 'Varactor' symbol mode.
