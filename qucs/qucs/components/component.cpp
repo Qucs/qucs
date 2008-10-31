@@ -1127,6 +1127,16 @@ bool Component::getBrush(const QString& s, QBrush& Brush, int i)
 }
 
 // ---------------------------------------------------------------------
+Property * Component::getProperty(const QString& name)
+{
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->Name == name) {
+      return pp;
+    }
+  return NULL;
+}
+
+// ---------------------------------------------------------------------
 void Component::copyComponent(Component *pc)
 {
   Type = pc->Type;
@@ -1552,8 +1562,6 @@ Component* getComponentFromName(QString& Line)
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
 	else if(cstr == "DD") c = new EqnDefined();
-	else if(cstr == "KV26nMOS") c = new EKV26nMOS();
-	else if(cstr == "KV26pMOS") c = new EKV26pMOS();
 	else if(cstr == "KV26MOS") c = new EKV26MOS();
         break;
   case 'O' : if(cstr == "pAmp") c = new OpAmp();

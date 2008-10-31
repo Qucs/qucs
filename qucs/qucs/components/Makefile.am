@@ -49,8 +49,8 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   hicumL2V2p1.cpp HBT_X.cpp verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp  \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
-  MESFET.cpp EKV26nMOS.cpp EKV26pMOS.cpp rectline.cpp hicumL0V1p2.cpp         \
-  hicumL2V2p23.cpp photodiode.cpp EKV26MOS.cpp
+  MESFET.cpp rectline.cpp hicumL0V1p2.cpp hicumL2V2p23.cpp photodiode.cpp     \
+  EKV26MOS.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
