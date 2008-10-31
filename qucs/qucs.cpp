@@ -349,9 +349,9 @@ pInfoFunc nonlinearComps[] =
 pInfoFunc VerilogAComps[] =
   {&hicumL2V2p1::info, &HBT_X::info, &mod_amp::info, &hic2_full::info,
    &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
-   &potentiometer::info, &MESFET::info, &EKV26nMOS::info, &EKV26pMOS::info,
+   &potentiometer::info, &MESFET::info, &EKV26MOS::info, &EKV26MOS::info_pmos,
    &hicumL0V1p2::info, &hicumL0V1p2::info_pnp, &hicumL2V2p23::info,
-   &photodiode::info, &EKV26MOS::info, &EKV26MOS::info_pmos, 0};
+   &photodiode::info, 0};
 
 pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
