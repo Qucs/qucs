@@ -72,8 +72,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   twistedpair.h bondwire.h hicumL2V2p1.h HBT_X.h verilogfile.h vexp.h iexp.h  \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
   diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h rfedd2p.h MESFET.h     \
-  EKV26nMOS.h EKV26pMOS.h rectline.h hicumL0V1p2.h hicumL2V2p23.h             \
-  photodiode.h EKV26MOS.h
+  rectline.h hicumL0V1p2.h hicumL2V2p23.h photodiode.h EKV26MOS.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
