@@ -172,7 +172,7 @@ EKV26MOS::EKV26MOS()
 Component * EKV26MOS::newOne()
 {
   EKV26MOS * p = new EKV26MOS();
-  p->Props.getFirst()->Value = Props.getFirst()->Value; 
+  p->getProperty("Type")->Value = getProperty("Type")->Value; 
   p->recreate(0); 
   return p;
 }
@@ -194,7 +194,26 @@ Element * EKV26MOS::info_pmos(QString& Name, char * &BitmapFile, bool getNewOne)
   if(getNewOne)
   {
     EKV26MOS* p = new EKV26MOS();
-    p->Props.getFirst()->Value = "pmos";
+    p->getProperty("Type")->Value = "pmos";
+    p->getProperty("Dw")->Value = "-0.03e-6";
+    p->getProperty("Vto")->Value = "-0.55";
+    p->getProperty("Gamma")->Value = "0.69";
+    p->getProperty("Phi")->Value = "0.87";
+    p->getProperty("Kp")->Value = "35e-6";
+    p->getProperty("EO")->Value = "51.0e6";
+    p->getProperty("Ucrit")->Value = "18.0e6";
+    p->getProperty("Lambda")->Value = "1.1";
+    p->getProperty("Weta")->Value = "0.0";
+    p->getProperty("Leta")->Value = "0.45";
+    p->getProperty("Q0")->Value = "200e-6";
+    p->getProperty("Lk")->Value = "0.6e-6";
+    p->getProperty("Tcv")->Value = "-1.4e-3";
+    p->getProperty("Bex")->Value = "-1.4";
+    p->getProperty("Ucex")->Value = "2.0";
+    p->getProperty("Rsh")->Value = "990.0";
+    p->getProperty("Iba")->Value = "0.0";
+    p->getProperty("Ibb")->Value = "3.0e8";
+    p->getProperty("Kf")->Value = "1.0e-28";
     p->recreate(0);
     return p;
   }
@@ -218,7 +237,7 @@ void EKV26MOS::createSymbol()
   Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
 
   // arrow
-  if(Props.getFirst()->Value == "nmos") {
+  if(getProperty("Type")->Value == "nmos") {
     Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
   } else {

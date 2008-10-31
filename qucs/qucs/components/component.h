@@ -18,12 +18,12 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "../element.h"
-
 #include <qptrlist.h>
 #include <qpen.h>
 #include <qpoint.h>
 #include <qwidget.h>
+
+#include "element.h"
 
 class Schematic;
 class ViewPainter;
@@ -90,6 +90,7 @@ protected:
   bool getBrush(const QString&, QBrush&, int);
 
   void copyComponent(Component*);
+  Property * getProperty(const QString&);
 };
 
 
