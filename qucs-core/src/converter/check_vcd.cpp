@@ -1,7 +1,7 @@
 /*
  * check_vcd.cpp - iterate a vcd file
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.14 2007-09-16 16:49:40 ela Exp $
+ * $Id: check_vcd.cpp,v 1.15 2008-11-02 19:09:07 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ vcd_find_code (struct vcd_scope * root, char * code) {
 static struct vcd_changeset *
 vcd_find_firstset (struct vcd_changeset * root) {
   struct vcd_changeset * cs, * result = NULL;
-  int Min = root ? root->t : 0;
+  double Min = root ? root->t : 0;
   for (cs = root; cs; cs = cs->next) {
     if (!cs->done && cs->t <= Min) {
       Min = cs->t;
@@ -128,7 +128,7 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 	vv->value = vc->value;
 	vv->isreal = vc->isreal;
 	if (current->t > 0) { // due to a $dumpvars before
-	  fprintf (stderr, "vcd notice, duplicate value change at t = %d of "
+	  fprintf (stderr, "vcd notice, duplicate value change at t = %g of "
 		   "variable `%s'\n", current->t, vc->var->ident);
 	}
       }
@@ -410,12 +410,12 @@ static void vcd_prepare_datasets (void) {
 #if VCD_DEBUG
 // Debugging: Prints the VCD sets.
 static void vcd_print_sets (void) {
-  struct vcd_set * vs;
-  struct vcd_variable * vv;
-  for (vs = vcd_sets; vs; vs = vs->next) {
-    fprintf (stderr, "--- t => %d\n", vs->t);
-    for (vv = vs->var; vv; vv = vv->next) {
-      fprintf (stderr, "%s\t => %s\n", vv->value, vv->var);
+  struct vcd_changeset * vs;
+  struct vcd_change * vv;
+  for (vs = vcd->changesets; vs; vs = vs->next) {
+    fprintf (stderr, "--- t => %g\n", vs->t);
+    for (vv = vs->changes; vv; vv = vv->next) {
+      fprintf (stderr, "%s\t => %s\n", vv->value, vv->var->ident);
     }
   }
 }
@@ -424,11 +424,11 @@ static void vcd_print_sets (void) {
 static void vcd_dataset_print (void) {
   struct dataset_variable * ds;
   struct dataset_value * dv;
-  for (ds = dataset; ds; ds = ds->next) {
+  for (ds = dataset_root; ds; ds = ds->next) {
     fprintf (stderr, "\n%s%s => %s\n",
 	     ds->type == DATA_INDEPENDENT ? "in" : "",
-	     ds->type == DATA_UNKNOWN ? "xxx" : "dep", ds->name);
-    for (dv = ds->value; dv; dv = dv->next) {
+	     ds->type == DATA_UNKNOWN ? "xxx" : "dep", ds->ident);
+    for (dv = ds->values; dv; dv = dv->next) {
       fprintf (stderr, "  %s\n", dv->value);
     }
   }

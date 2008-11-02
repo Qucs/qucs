@@ -5,7 +5,7 @@
  * parse_vcd.y - parser for a VCD data file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
- * Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.6 2006-08-09 08:32:18 raimi Exp $
+ * $Id: parse_vcd.y,v 1.7 2008-11-02 19:09:07 ela Exp $
  *
  */
 
@@ -70,6 +70,7 @@
 %token Real
 %token Binary
 %token PositiveInteger
+%token PositiveHugeInteger
 %token Identifier     /* proper identifiers */
 %token IdentifierCode /* shortcuts used in the dump */
 %token Reference
@@ -91,8 +92,8 @@
 
 %type <ident> Identifier IdentifierCode Reference
 %type <value> Value ZERO ONE Z X Binary Real
-%type <integer> Size PositiveInteger TimeScale SimulationTime
-%type <real> TimeUnit
+%type <integer> Size PositiveInteger TimeScale
+%type <real> TimeUnit SimulationTime PositiveHugeInteger
 %type <change> ScalarValueChange VectorValueChange ValueChangeList ValueChange
 %type <changeset> ValueChangeset
 %type <scope> ScopeDeclaration
@@ -292,7 +293,7 @@ ValueChangeset:
 ;
 
 SimulationTime:
-    HASHMARK PositiveInteger {
+    HASHMARK PositiveHugeInteger {
       $$ = $2;
     }
 ;

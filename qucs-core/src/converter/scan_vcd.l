@@ -5,7 +5,7 @@
  * scan_vcd.l - scanner for a VCD data file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
- * Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.7 2007-03-26 19:29:18 ela Exp $
+ * $Id: scan_vcd.l,v 1.8 2008-11-02 19:09:07 ela Exp $
  *
  */
 
@@ -163,9 +163,9 @@ IDENT    [a-zA-Z_][a-zA-Z0-9_.-]*
 }
 
 <TIMESTAMP>{DECIMAL} {
-  vcd_lval.integer = atoi (vcd_text);
+  vcd_lval.real = strtod (vcd_text, NULL);
   BEGIN(INITIAL);
-  return PositiveInteger;
+  return PositiveHugeInteger;
 }
 
 <INITIAL,DUMP>[rR] {
