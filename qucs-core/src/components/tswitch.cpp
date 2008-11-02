@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.5 2008-10-07 20:15:32 ela Exp $
+ * $Id: tswitch.cpp,v 1.6 2008-11-02 17:44:39 ela Exp $
  *
  */
 
@@ -71,7 +71,7 @@ void tswitch::initDC (void) {
   nr_double_t r = initState ();
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_1, NODE_2);
-  setD (VSRC_1, VSRC_1, r);
+  setD (VSRC_1, VSRC_1, -r);
 }
 
 void tswitch::initAC (void) {
@@ -99,7 +99,7 @@ void tswitch::calcTR (nr_double_t t) {
     if (t >= ti) on = !on; else break;
   }
 
-  setD (VSRC_1, VSRC_1, on ? ron : roff);
+  setD (VSRC_1, VSRC_1, on ? -ron : -roff);
 }
 
 // properties
