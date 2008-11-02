@@ -1,3 +1,8 @@
+2008-11-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* tswitch.cpp: Fixed severe bug in time switch.  Thanks to Arne
+	Woerner for reporting it!
+
 2008-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/jfet.cpp (cirdef): Adjusted property range for 'Vt0tc'
