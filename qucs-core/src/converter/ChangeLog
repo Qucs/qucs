@@ -1,3 +1,9 @@
+2008-11-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp, parse_vcd.y, scan_vcd.l: Using 'double' to store
+	timestamp values necessary for large positive timestamps (when
+	simulating in millisecond and larger ranges).
+
 2008-10-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Applied changes in component definitions and

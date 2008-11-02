@@ -2,7 +2,7 @@
  * check_vcd.h - checker definitions for a vcd file
  *
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.8 2006/07/03 08:52:23 raimi Exp $
+ * $Id: check_vcd.h,v 1.9 2008/11/02 19:09:07 ela Exp $
  *
  */
 
@@ -121,7 +121,7 @@ struct vcd_change {
 
 // A full set of VCD value changes.
 struct vcd_changeset {
-  int t;                       // time stamp
+  double t;                    // time stamp
   struct vcd_change * changes; // list of VCD changes 
   int done;                    // flag for the checker
   struct vcd_changeset * next;
@@ -150,7 +150,7 @@ struct vcd_variable {
 
 // A VCD change set.
 struct vcd_set {
-  int t;                           // time stamp
+  double t;                        // time stamp
   struct vcd_variable * variables; // list of VCD variables
   struct vcd_set * next;
 };
