@@ -1071,7 +1071,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	else {
 	  Signals.remove(Signals.find(*it)); // remove node name of output port
 	  switch(pc->Props.at(1)->Value.at(0).latin1()) {
-          case 'a': (*it) += ": inout";  // attribut "analog" is "inout"
+          case 'a': (*it) += ": inout";  // attribute "analog" is "inout"
 	    break;
           case 'o': Signals.append(*it);   // output ports need workaround
 	    (*it) = "net_out" + (*it);
@@ -1082,6 +1082,12 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	}
       }
     }
+  }
+
+  // remove empty subcircuit ports (missing port numbers)
+  for(it = SubcircuitPorts.begin(); it != SubcircuitPorts.end(); ) {
+    if(*it == " ") it = SubcircuitPorts.remove(it);
+    else it++;
   }
 
   QString f = properFileName(DocName);
