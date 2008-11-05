@@ -87,8 +87,10 @@ void Subcircuit::createSymbol()
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
     // remove unused ports
-    for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
-      if(!pp->avail) Ports.remove();
+    for(Port *pp = Ports.first(); pp != 0; ) {
+      if(!pp->avail) { Ports.remove(); pp = Ports.current (); }
+      else pp = Ports.next();
+    }
   }
   else {
     No = QucsApp::testFile(FileName);

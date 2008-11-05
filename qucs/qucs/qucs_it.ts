@@ -6406,10 +6406,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>EPFL-EKV NMOS 2.6 verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>long = 1, short = 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6603,10 +6599,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>EPFL-EKV NMOS 2.6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EPFL-EKV PMOS 2.6 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

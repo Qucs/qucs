@@ -1,3 +1,8 @@
+2008-11-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (createSubNetlistPlain): Fixed netlist bug
+	occurring when subcircuit port numbers are missing.
+
 2008-10-25  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* schematic.cpp (paintFrame): Added US letter formats for the
