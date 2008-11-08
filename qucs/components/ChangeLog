@@ -1,3 +1,8 @@
+2008-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* logical_buf.cpp (Logical_Buf): Added new digital buffer
+	component.
+
 2008-10-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* EKV26pMOS.cpp, EKV26nMOS.cpp: Removed these files.

@@ -118,6 +118,7 @@
 #include "logical_xor.h"
 #include "logical_xnor.h"
 #include "logical_inv.h"
+#include "logical_buf.h"
 #include "digi_sim.h"
 #include "digi_source.h"
 #include "rs_flipflop.h"
