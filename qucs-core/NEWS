@@ -30,7 +30,7 @@ Version 0.0.15
  * existing HICUM models can now be converter by the qucsconv command
    line tool into library elements
  * allowing property references inside the same	instance of a component
- * new component: rectangular waveguide
+ * new component: rectangular waveguide, digital buffer
  * added noise figure property to amplifier model
  * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6, HICUM L0 v1.2,
    HICUM L2 v2.23, photodiode

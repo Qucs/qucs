@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.5 2008/10/31 18:45:43 ela Exp $
+ * $Id: components.h,v 1.6 2008/11/08 20:05:54 ela Exp $
  *
  */
 
@@ -131,6 +131,7 @@
 #include "digital/xnor.h"
 #include "digital/xor.h"
 #include "digital/digisource.h"
+#include "digital/buffer.h"
 
 #include "verilog/hicumL2V2p1.core.h"
 #include "verilog/HBT_X.core.h"

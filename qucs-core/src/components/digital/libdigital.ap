@@ -25,7 +25,7 @@ NAME = libdigital
 
 # List all sources here.
 SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
-	and.cpp xnor.cpp xor.cpp digisource.cpp
+	and.cpp xnor.cpp xor.cpp digisource.cpp buffer.cpp
 
 # Additional libraries.
 LIBS = 

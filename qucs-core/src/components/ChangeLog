@@ -1,3 +1,7 @@
+2008-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* digital/buffer.cpp: Added new digital buffer component.
+
 2008-11-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* tswitch.cpp: Fixed severe bug in time switch.  Thanks to Arne
