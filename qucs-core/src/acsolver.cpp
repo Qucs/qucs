@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: acsolver.cpp,v 1.22 2008/10/07 20:15:32 ela Exp $
+ * $Id: acsolver.cpp,v 1.23 2008/11/16 12:20:36 ela Exp $
  *
  */
 
@@ -163,6 +163,21 @@ void acsolver::saveNoiseResults (vector * f) {
     // renormalise the results
     x->set (r, fabs (xn->get (r) * sqrt (kB * T0)));
   }
+
+  // apply probe data
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (!c->isProbe ()) continue;
+    int np, nn;
+    nr_double_t vp, vn;
+    np = getNodeNr (c->getNode (NODE_1)->getName ());
+    vp = np > 0 ? xn->get (np - 1) : 0.0;
+    nn = getNodeNr (c->getNode (NODE_2)->getName ());
+    vn = nn > 0 ? xn->get (nn - 1) : 0.0;
+    c->setOperatingPoint ("Vr", fabs ((vp - vn) * sqrt (kB * T0)));
+    c->setOperatingPoint ("Vi", 0.0);
+  }
+
   saveResults ("vn", "in", 0, f);
 }
 

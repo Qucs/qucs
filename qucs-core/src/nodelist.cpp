@@ -1,7 +1,7 @@
 /*
  * nodelist.cpp - node list class implementation
  *
- * Copyright (C) 2003, 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodelist.cpp,v 1.12 2006/08/09 08:32:18 raimi Exp $
+ * $Id: nodelist.cpp,v 1.13 2008/11/16 12:20:36 ela Exp $
  *
  */
 
@@ -202,6 +202,15 @@ int nodelist::contains (char * str) {
       res++;
   }
   return res;
+}
+
+// Returns the node number of the give node name.
+int nodelist::getNodeNr (char * str) {
+  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
+    if (n->name != NULL && str != NULL && !strcmp (n->name, str)) 
+      return n->n;
+  }
+  return -1;
 }
 
 /* This function returns the node name positioned at the specified
