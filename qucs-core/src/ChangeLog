@@ -1,3 +1,8 @@
+2008-11-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* acsolver.cpp: Voltage probe now returns noise voltage data
+	properly.
+
 2008-10-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* sweep.cpp: Return 'Values' property content of parent analysis

@@ -1,7 +1,7 @@
 /*
  * nodelist.h - node list class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodelist.h,v 1.7 2005-06-02 18:17:51 raimi Exp $
+ * $Id: nodelist.h,v 1.8 2008-11-16 12:20:36 ela Exp $
  *
  */
 
@@ -50,6 +50,7 @@ class nodelist
   struct nodelist_t * getRoot (void) { return root; }
   int length (void);
   int contains (char *);
+  int getNodeNr (char *);
   char * get (int);
   int isInternal (int);
   void addCircuitNode (struct nodelist_t *, node *);

@@ -1,7 +1,7 @@
 /*
  * nasolver.cpp - nodal analysis solver class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.51 2008-01-13 11:39:19 ela Exp $
+ * $Id: nasolver.cpp,v 1.52 2008-11-16 12:20:36 ela Exp $
  *
  */
 
@@ -801,6 +801,12 @@ int nasolver<nr_type_t>::countNodes (void) {
   return nlist->length () - 1;
 }
 
+// Returns the node number of the give node name.
+template <class nr_type_t>
+int nasolver<nr_type_t>::getNodeNr (char * str) {
+  return nlist->getNodeNr (str);
+}
+
 /* The function returns the assigned node number for the port of the
    given circuits.  It returns -1 if there is no such node. */
 template <class nr_type_t>
@@ -1166,7 +1172,8 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
       if (!c->isProbe ()) continue;
       if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
-      c->saveOperatingPoints ();
+      if (strcmp (volts, "vn"))
+	c->saveOperatingPoints ();
       n = createOP (c->getName (), volts);
       saveVariable (n, rect (c->getOperatingPoint ("Vr"),
 			     c->getOperatingPoint ("Vi")), f);
