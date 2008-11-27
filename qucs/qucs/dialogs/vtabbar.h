@@ -39,17 +39,16 @@ public:
 
   virtual ~VTabBar();
   VTab* addTab(const QString& caption,int id = -1);
-  virtual QSize sizeHint();
-	
+
   VTab* findTab(int id);
   void setTabToolTip(VTab *tab,const QString &tip);
   void setTabToolTip(int id,const QString &tip);
   void removeTab(VTab *tab);
   void removeTab(int id);
   bool isAllTabsOff();
-	
+
 public slots:
-    
+
   void setCurrentTab(VTab *tab);
   void setCurrentTab(int id);
   void setPosition(VTabPosition p_pos);
@@ -59,7 +58,7 @@ signals:
   void activatedTab(int p_id);
   void activatedTab(VTab *tab);
   void allTabsOff();
-	
+
 private slots:
   void setTabState(int p_id,bool state);
 

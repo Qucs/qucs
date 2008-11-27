@@ -1,3 +1,12 @@
+2008-11-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/vtabbutton.cpp (drawButton): Adjusted code to work with
+	MacOSX as well.  Thanks to Gopala.
+
+	* bitmaps/Makefile.am (MACICONS): Added MacOSX icons.
+
+	* main.cpp (main): Initial position is centered on the screen.
+
 2008-11-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (createSubNetlistPlain): Fixed netlist bug

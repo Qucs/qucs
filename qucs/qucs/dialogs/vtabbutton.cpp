@@ -72,27 +72,26 @@ QSize VTab::sizeHint() const
 
 void VTab::drawButton(QPainter *p)
 {
-  const QSize& sz = sizeHint();
-  QPixmap pm(sz.height(),sz.width());
-  pm.fill(eraseColor());
-  QPainter pa(&pm);
+  p->save();
   QStyle::SFlags st = QStyle::Style_Default | QStyle::Style_Enabled;
   if (isOn())
     st|=QStyle::Style_On;
 
-  style().drawControl(QStyle::CE_PushButton,&pa,this, QRect(0,0,pm.width(),pm.height()), colorGroup(),st);
-  style().drawControl(QStyle::CE_PushButtonLabel,&pa,this, QRect(0,0,pm.width(),pm.height()), colorGroup(),st);
-  pa.end();
+  QRect r(0, 0, height(), width());
 
-  const double x = width()/2;
-  const double y = height()/2;
-  p->translate(x,y);
-  if(m_position == TabLeft)
+  if (m_position == TabLeft) {
+    p->translate(0, height());
     p->rotate(-90);
-  else
+  }
+  else {
+    p->translate(width(), 0);
     p->rotate(90);
-  p->translate(-y,-x);
-  p->drawPixmap(0,0,pm);
+  }
+
+  style().drawControl(QStyle::CE_PushButton, p, this, r, colorGroup(), st);
+  style().drawControl(QStyle::CE_PushButtonLabel, p, this, r, colorGroup(), st);
+
+  p->restore();
 }
 
 void VTab::setText(const QString &s)

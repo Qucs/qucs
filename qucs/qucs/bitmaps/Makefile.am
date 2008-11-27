@@ -61,11 +61,15 @@ PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
 # application pictures
 ICONS = big.button.qucs.xpm big.qucs.xpm tiny.button.qucs.xpm tiny.qucs.xpm
 
-EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS)
+# application pictures
+MACICONS = qucs.icns qucsattenuator.icns qucsfilter.icns qucshelp.icns \
+  qucslib.icns qucsedit.icns qucstrans.icns
+
+EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS) $(MACICONS)
 
 # installation of pictures
 picdatadir = ${prefix}/share/qucs/bitmaps
-picdata_DATA = $(EXTRA_DIST)
+picdata_DATA = $(XPMS) $(PNGS) $(ICONS)
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in

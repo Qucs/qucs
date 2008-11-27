@@ -472,14 +472,20 @@ bool checkVersion(QString& Line)
 int main(int argc, char *argv[])
 {
   // apply default settings
-  QucsSettings.x = 0;
-  QucsSettings.y = 0;
-  QucsSettings.dx = 600;
-  QucsSettings.dy = 400;
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;
   QucsSettings.maxUndo = 20;
   QucsSettings.NodeWiring = 0;
+
+  // initially center the application
+  QApplication a(argc, argv);
+  QDesktopWidget *d = a.desktop();
+  int w = d->width();
+  int h = d->height();
+  QucsSettings.x = w/8;
+  QucsSettings.y = h/8;
+  QucsSettings.dx = w*3/4;
+  QucsSettings.dy = h*3/4;
 
   // is application relocated?
   char * var = getenv ("QUCSDIR");
@@ -535,7 +541,6 @@ int main(int argc, char *argv[])
     QucsSettings.AscoDir = "";
   }
 
-  QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );

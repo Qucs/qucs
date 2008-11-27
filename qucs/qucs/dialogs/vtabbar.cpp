@@ -27,7 +27,7 @@ VTabBar::VTabBar(VTabPosition p,QWidget* parent, const char* name): QWidget(pare
 {
   m_position = p;
   m_layout = new QVBoxLayout(this);
-  m_layout->addStretch(800); //HACK to avoid spaces b/w buttons 
+  m_layout->addStretch(800); //HACK to avoid spaces b/w buttons
   m_index = 0;
   m_tabsOff = true;
   m_tabs.setAutoDelete( false );
@@ -59,7 +59,7 @@ VTab* VTabBar::findTab(int _id)
     }
   return 0l;
 }
-	
+
 void VTabBar::setTabToolTip(VTab *tab,const QString &tip)
 {
   QToolTip::add(tab,tip);
@@ -154,19 +154,6 @@ void VTabBar::switchOffAllTabs()
   m_tabsOff = true;
   emit allTabsOff();
 }
-
-QSize VTabBar::sizeHint()
-{
-  VTab * c = m_tabs.first();
-  const int width = c->sizeHint().width();
-  int height = 350;
-  for ( ; c; c = m_tabs.next() )
-    {
-      height += c->sizeHint().height();
-    }
-  return QSize(width,height);
-}
-
 
 void VTabBar::setPosition(VTabPosition p_pos)
 {

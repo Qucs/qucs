@@ -58,6 +58,13 @@ case $host_os in
 esac
 AM_CONDITIONAL(COND_WIN32, test x$WIN32 = xyes)
 
+dnl Check for MacOSX.
+case $host_os in
+  *darwin*) MACOSX=yes ;;
+  *)        MACOSX=no  ;;
+esac
+AM_CONDITIONAL(COND_MACOSX, test x$MACOSX = xyes)
+
 dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
