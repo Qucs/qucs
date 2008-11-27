@@ -1,3 +1,8 @@
+2008-11-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (mac-install-apps): Added post install scripts for
+	MacOSX.
+
 2008-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* contrib/ps2sp: Renamed ps2sp.pl into ps2sp in order to avoid
