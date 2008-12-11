@@ -3,6 +3,8 @@
 //  ## It is modified after the first version of HICUM/L0 code    ##
 
 // Minor code related changes
+// 11/08: Conditional statement for calculating normalized minority charge to avoid overflow at TFH=0
+// 11/08: Range of AHQ has been modified to a new range [-0.9:10] from the old range [0:10]
 // 03/08: Quick Fix: Default value of TFH has been changed from infinity to zero and modified the default value limits to [0, inf) to include zero
 // 12/06: Upper limit of FGEO is changed to infinity
 //  06/06:  Thermal node "tnode" set as external
@@ -36,6 +38,13 @@
 // New expression for the normalized hole charge qpt and the model parameter AHQ is inserted
 // The reverse Early-Effect VER is reintroduced
 // A temperature dependent modeling of IQF using the model parameter ZETAIQF is included
+
+//*****************************************************
+//*****************************************************
+// 11/08: Modification done at TUD
+// 3 more parameters VDEDC, ZEDC, AJEDC have been introduced for DC depletion charge
+// Flag FIQF has been introduced to introduce voltage dependence in the base related critical current
+// ZETARTH has been introduced for temperature dependent thermal resistance 
 //*****************************************************
 
 //Default simulator: Spectre
@@ -59,16 +68,16 @@
 //Spectre
 //`include "constants.h"
 //`include "discipline.h"
-
+               
 
 `define	NPN	+1
 `define	PNP	-1
 
 `define VPT_thresh   	1.0e2
-`define EXPLIM		80.0
+`define EXPLIM		80.0 
 `define INF		1.0e6
 `define TMAX		326.85
-`define TMIN		-100.0
+`define TMIN		-100.00
 `define MIN_R		0.001
 `define Gmin 		1.0e-12
 
@@ -96,7 +105,7 @@
       y		= 1.0-exp(x*ln(1.0-v_j/vd));\
       qjf	= cj0*vd*y/x+aj*cj0*(vj-v_j);\
   end else begin\
-      qjf	= 0.0;\
+      qjf	= 0.00;\
   end
 
 
@@ -237,42 +246,55 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	parameter real is     		= 1.0e-16	from [0:1]	`P(spice:name="is"  info="(Modified) saturation current" m:factor="yes" unit="A");                  
 	parameter real mcf    		= 1.00		from (0:10]	`P(spice:name="mcf" info="Non-ideality coefficient of forward collector current");                  
 	parameter real mcr    		= 1.00		from (0:10]	`P(spice:name="mcr" info="Non-ideality coefficient of reverse collector current");                
-	parameter real vef   		= `INF		from (0:`INF]	`P(spice:name="vef" info="forward Early voltage (normalization volt.)"  unit="V" default:value="infinity");                  
-     parameter real ver   		= `INF		from (0:`INF]	`P(spice:name="ver" info="reverse Early voltage (normalization volt.)"  unit="A" m:factor="yes" default:value="infinity"); 
-      parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection toll-off current" unit="A" m:factor="yes" default:value="infinity");        
+	parameter real vef   	   	= `INF		from (0:`INF]	`P(spice:name="vef" info="forward Early voltage (normalization volt.)"  unit="V" default:value="infinity");                  
+  parameter real ver   	  	= `INF		from (0:`INF]	`P(spice:name="ver" info="reverse Early voltage (normalization volt.)"  unit="V" default:value="infinity"); 
+  parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection toll-off current" unit="A" m:factor="yes" default:value="infinity");
+  
+  parameter real fiqf       = 0       from  [0:1] `P(spice:name="fiqf" info="flag for turning on base related critical current" default:value="zero");
+         
 	parameter real iqr    		= `INF		from (0:`INF]	`P(spice:name="iqr" info="inverse d.c. high-injection roll-off current" unit="A" m:factor="yes" default:value="infinity");               
 	parameter real iqfh   		= `INF		from (0:`INF]	`P(spice:name="iqfh" info="high-injection correction current" unit="A" m:factor="yes");              
-	parameter real tfh    		= 0.0		from [0:`INF)	`P(spice:name="tfh" info="high-injection correction factor" test:value="2e-9" m:factor="yes");             
-      parameter real ahq   		= 0		      from [0:10]	  `P(spice:name="ahcx"   info="Smoothing factor for current dependence");                                         
+	parameter real tfh    		= 0.0		  from [0:`INF)	`P(spice:name="tfh" info="high-injection correction factor" test:value="2e-9" m:factor="yes");             
+  parameter real ahq   		  = 0		    from [-0.9:10]	  `P(spice:name="ahcx"   info="Smoothing factor for the d.c. injection width");   
+                                        
 // Base current                              
-	parameter real ibes   		= 1e-18		from [0:1]	`P(spice:name="ibes" info="BE saturation current" unit="A" m:factor="yes");                 
-	parameter real mbe    		= 1.0		from (0:10]	`P(spice:name="mbe"  info="BE non-ideality factor");                 
-	parameter real ires   		= 0.0		from [0:1]	`P(spice:name="ires" info="BE recombination saturation current" test:value="1e-16" unit="A" m:factor="yes");               
-	parameter real mre    		= 2.0		from (0:10]	`P(spice:name="mre"  info="BE recombination non-ideality factor");        
-	parameter real ibcs  		= 0.0		from [0:1]	`P(spice:name="ibcs" info="BC saturation current" test:value="1e-16" unit="A" m:factor="yes");   
-	parameter real mbc    		= 1.0		from (0:10]	`P(spice:name="mbc"  info="BC non-ideality factor");
+	parameter real ibes   		= 1e-18	  from [0:1]	`P(spice:name="ibes" info="BE saturation current" unit="A" m:factor="yes");                 
+	parameter real mbe    		= 1.0		  from (0:10]	`P(spice:name="mbe"  info="BE non-ideality factor");                 
+	parameter real ires   		= 0.0		  from [0:1]	`P(spice:name="ires" info="BE recombination saturation current" test:value="1e-16" unit="A" m:factor="yes");               
+	parameter real mre    		= 2.0		  from (0:10]	`P(spice:name="mre"  info="BE recombination non-ideality factor");        
+	parameter real ibcs  	   	= 0.0		  from [0:1]	`P(spice:name="ibcs" info="BC saturation current" test:value="1e-16" unit="A" m:factor="yes");   
+	parameter real mbc    		= 1.0		  from (0:10]	`P(spice:name="mbc"  info="BC non-ideality factor");
                                                
 // BE depletion cap                          
 	parameter real cje0   		= 1.0e-20 	from (0:`INF)	`P(spice:name="cje0" info="Zero-bias BE depletion capacitance" unit="F" test:value="2e-14" m:factor="yes");
-	parameter real vde    		= 0.9		from (0:10]	`P(spice:name="vde"  info="BE built-in voltage" unit="V");
-	parameter real ze     		= 0.5		from (0:1]	`P(spice:name="ze"   info="BE exponent factor"); 
-	parameter real aje    		= 2.5		from [1:`INF)	`P(spice:name="aje"  info="Ratio of maximum to zero-bias value");
+	parameter real vde    		= 0.9		    from (0:10]	`P(spice:name="vde"  info="BE built-in voltage" unit="V");
+	parameter real ze     		= 0.5		    from (0:1]	`P(spice:name="ze"   info="BE exponent factor"); 
+	parameter real aje    		= 2.5		    from [1:`INF)	`P(spice:name="aje"  info="Ratio of maximum to zero-bias value");
+  
+  
+  parameter real vdedc    		= 0.9		from (0:10]	`P(spice:name="vdedc"  info="BE charge built-in voltage for d.c. transfer current" unit="V");
+	parameter real zedc     		= 0.5		from (0:1]	`P(spice:name="zedc"   info="charge BE exponent factor for d.c. transfer current"); 
+	parameter real ajedc    		= 2.5		from [1:`INF)	`P(spice:name="ajedc"  info="BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current");
+  
+  
+  
+  
                                                
 // Transit time                              
 	parameter real t0     		= 0.0		from [0:`INF)	`P(spice:name="t0"    info="low current transit time at Vbici=0" test:value="5e-12" unit="s");
-	parameter real dt0h   		= 0.0		from [0:`INF)	`P(spice:name="dt0h"  info="Base width modulation contribution" test:value="2e-12" unit="s");
+	parameter real dt0h   		= 0.0		`P(spice:name="dt0h"  info="Base width modulation contribution" test:value="2e-12" unit="s");
 	parameter real tbvl   		= 0.0		from [0:`INF)	`P(spice:name="tbvl"  info="SCR width modulation contribution" test:value="4e-12" unit="s");
 	parameter real tef0   		= 0.0		from [0:`INF)	`P(spice:name="tef0"  info="Storage time in neutral emitter" test:value="1e-12" unit="s"); 
 	parameter real gte    		= 1.0		from (0:10]	`P(spice:name="gte"   info="Exponent factor for emmiter transit time");                  
 	parameter real thcs   		= 0.0		from [0:`INF)	`P(spice:name="thcs"  info="Saturation time at high current densities" test:value="3e-11" unit="s");
 	parameter real ahc    		= 0.1		from (0:10]	`P(spice:name="ahc"   info="Smoothing facor for current dependence");
-      parameter real tr     		= 0.0		from [0:`INF)	`P(spice:name="tr"    info="Storage time at inverse operation" unit="s"); 
+  parameter real tr     		= 0.0		from [0:`INF)	`P(spice:name="tr"    info="Storage time at inverse operation" unit="s"); 
 	                                             
 // Critical current                          
 	parameter real rci0   		= 150		from (0:`INF)	`P(spice:name="rci0"  info="Low-field collector resistance under emitter" test:value="50" unit="Ohm" m:inverse_factor="yes");
 	parameter real vlim   		= 0.5		from (0:10]	`P(spice:name="vlim"  info="Voltage dividing ohmic and satur.region" unit="V");                  
 	parameter real vpt    		= 100		from (0:100]	`P(spice:name="vpt"   info="Punch-through voltage" test:value="10" unit="V" default="infinity");
-	parameter real vces  		= 0.1		from [0:1]	`P(spice:name="vces"  info="Saturation voltage" unit="V");
+	parameter real vces  	   	= 0.1		from [0:1]	`P(spice:name="vces"  info="Saturation voltage" unit="V");
           	
 
                                      
@@ -339,15 +361,17 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	parameter real zetarbi		= 0.0				`P(spice:name="zetarbi" info="TC of internal base resistance" test:value="0.6"); 
 	parameter real zetarbx		= 0.0				`P(spice:name="zetarbx" info="TC of external base resistance" test:value="0.2"); 
 	parameter real zetarcx		= 0.0				`P(spice:name="zetarcx" info="TC of external collector resistance" test:value="0.2");
-	parameter real zetare		= 0.0				`P(spice:name="zetare"  info="TC of emitter resistances"); 
-      parameter real zetaiqf		= 0.0				`P(spice:name="zetiqf"  info="TC of knee current"); 
-      parameter real alkav		= 0.0				`P(spice:name="alkav" info="TC of avalanche prefactor" unit="1/K"); 
-	parameter real aleav		= 0.0				`P(spice:name="aleav" info="TC of avalanche exponential factor" unit="1/K");
+	parameter real zetare		  = 0.0				`P(spice:name="zetare"  info="TC of emitter resistances"); 
+  parameter real zetaiqf		= 0.0				`P(spice:name="zetiqf"  info="TC of iqf"); 
+  parameter real alkav		  = 0.0				`P(spice:name="alkav" info="TC of avalanche prefactor" unit="1/K"); 
+	parameter real aleav		  = 0.0				`P(spice:name="aleav" info="TC of avalanche exponential factor" unit="1/K");
+	
+	parameter real zetarth		= 0.0				`P(spice:name="zetarth" info="Exponent factor for temperature dependent thermal resistance" test:value="0.0");
 	
 // Self-heating                              
  	parameter integer flsh		= 0		from [0:2]	`P(spice:name="flsh"  info="Flag for self-heating calculation" test:value="2");            
- 	parameter real rth		= 0.0		from [0:`INF)	`P(spice:name="rth"  info="Thermal resistance" test:value="200.0" unit="K/W" m:inverse_factor="yes");            
-	parameter real cth		= 0.0		from [0:`INF)	`P(spice:name="cth"  info="Thermal capacitance" test:value="0.1" unit="Ws/K" m:factor="yes");
+ 	parameter real rth		    = 0.0		from [0:`INF)	`P(spice:name="rth"  info="Thermal resistance" test:value="200.0" unit="K/W" m:inverse_factor="yes");            
+	parameter real cth		    = 0.0		from [0:`INF)	`P(spice:name="cth"  info="Thermal capacitance" test:value="0.1" unit="Ws/K" m:factor="yes");
 	
 // Transistor type
 	parameter integer npn		= 1		from [0:1]	`P(spice:isflag="yes" info="model type flag  for npn" );
@@ -355,9 +379,9 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 
 //Circuit simulator specific parameters
 	parameter real tnom		= 27				`P(spice:name="tnom" info="Temperature for which parameters are valid" unit="C");
-	parameter real dt		= 0.0				`P(spice:name="dt" type="instance" info="Temperature change for particular transistor" unit="K");                   
+	parameter real dt		  = 0.0				`P(spice:name="dt" type="instance" info="Temperature change for particular transistor" unit="K");                   
 
-
+ 
 // Declaration of the variables: begin
 
 	real HICUMtype `P(spice:name="type" info="Device type from npn or pnp flags" unit="no" ask="yes");
@@ -368,6 +392,7 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	real cmax,cr,ve;
 	real ee1,ez,ezr,vdj1,vdj2,ex1,vr,vj1,vj2,vj4;
 	real qj1,qj2,qj3,qjf;
+	
 	
 	
 	//Cjfun		*** VT, removed: BA
@@ -381,13 +406,13 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	
 	// temperature and drift
 	real VT,Tamb,Tdev,Tnom,dT,qtt0,ln_qtt0;
-	real vde_t,vdci_t,vdcx_t,vds_t;
+	real vde_t,vdci_t,vdcx_t,vds_t,vdedc_t;
 	real is_t,ires_t,ibes_t,ibcs_t,iqf_t;
 	real itss_t,iscs_t,cje0_t,cjci0_t,cjcx0_t;
 	real cjs0_t,rci0_t,vlim_t;
 	real vces_t,thcs_t,tef0_t,rbi0_t;
 	real rbx_t,rcx_t,re_t,t0_t,eavl_t,kavl_t;
-	real aje_t;
+	real aje_t,ajedc_t;
 
 	// bc charge and cap
 	real qjci `P(ask="yes" info="B-C internal junction charge" unit="C");
@@ -402,9 +427,11 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	// transfer and internal base current
 	real cc,qj_2,qj,facl;
 	real tf0,ickf,ickr,itfi,itri,qm, qml, qmh;
-	real qpt,itf,itr, qpt_l, qpt_h;
+	real qpt,itf,itr, qpt_l, qpt_h, denom_iqf;
 	real it `P(ask="yes" info="Transfer Current" unit="A");
 	real ibe,ire,ibi;
+	real itfl,itrl,al,s3l,wl,d_qfh;
+	
 	
 	
 	// be diffusion charge
@@ -424,8 +451,9 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	// substrate transistor, diode and cap
 	real qjs,HSa,HSb,HSI_Tsu,HSUM;
 
-	// self heating
+	// self heating      
 	real pterm;
+  real rth_t, x_t;
 	
 	// new for temperature dependence
   	real mg,zetabci,zetasct,zetatef,avs;
@@ -526,8 +554,14 @@ analog begin
 	ibcs_t  = ibcs*exp(zetabci*ln_qtt0+vgc/VT*(qtt0-1));
 	itss_t	= itss*exp(zetasct*ln_qtt0+vgc/VT*(qtt0-1));
 	iscs_t  = iscs*exp(zetasct*ln_qtt0+vgs/VT*(qtt0-1));
+	
       `TMPHICJ(cje0,vde,ze,vgbe,cje0_t,vde_t)
+      `TMPHICJ(cje0,vde,zedc,vgbe,cje0_t,vdedc_t)
+      
 	aje_t	= aje*vde_t/vde;
+		
+  ajedc_t	= ajedc*vdedc_t/vdedc;
+	
 	`TMPHICJ(cjci0,vdci,zci,vgbc,cjci0_t,vdci_t)
 	`TMPHICJ(cjcx0,vdcx,zcx,vgbc,cjcx0_t,vdcx_t)
 	`TMPHICJ(cjs0,vds,zs,vgsc,cjs0_t,vds_t)
@@ -546,8 +580,27 @@ analog begin
 	re_t    = re*exp(zetare*ln_qtt0);
 	eavl_t  = eavl*exp(aleav*dT);
 	kavl_t  = kavl*exp(alkav*dT);
-      //eavl_t  = eavl;
+	
+	
+	//Temperature dependence of Thermal resistance
+	
+		
+	if (zetarth!=0) begin
+  
+  rth_t  = rth*exp(zetarth*ln(Tdev/Tnom));
+  
+  end else begin
+  
+  rth_t=rth;
+  
+  end
+  
+  
+      
+  //eavl_t  = eavl;
 	//kavl_t  = kavl;
+
+
 
 //
 // Calculation of intrinsic transistor elements
@@ -582,8 +635,8 @@ analog begin
 
 //Internal be cap and charge
 
-	`QJMODF(Vbiei,cje0_t,vde_t,ze,aje_t,qjei)
-	//cjei	= ddx(qjei,V(bi));
+//	`QJMODF(Vbiei,cje0_t,vde_t,ze,aje_t,qjei)
+//	cjei	= ddx(qjei,V(bi));
 
 // Critical current: ick
 	vc	= Vciei-vces_t;
@@ -593,18 +646,38 @@ analog begin
 	ick	= vceff*(1+0.5*(x+sqrt(x*x+1e-3)))/rci0_t/sqrt(1+vceff*vceff/vlim_t/vlim_t);
 
 
-// Normalized BC cap and carge
+// Normalized BC cap and charge
 	cc	= cjci0_t_ii/cjcii;
 	qjci	= qjci/cjci0_t_ii; 
-      qje   = qjei/cje0_t;
-      qj_2	= (1+qjci/vef+qje/ver)/2;
+	
+	`QJMODF(Vbiei,cje0_t,vdedc_t,zedc,ajedc_t,qjei)
+	
+	qje   = qjei/cje0_t;
+  qj_2	= (1+qjci/vef+qje/ver)/2;
+      
+  //  qj   =  1+qjci/vef;       
       
 
 // Minority charge transit time
 	tf0	= t0_t+dt0h*(cc-1)+tbvl*(1/cc-1);
 
 // DC critical currents
-	ickf	= iqf_t;
+//	  ickf	= iqf_t;
+		
+	//Determination of base realted critical current
+	
+  if (fiqf==1)begin   
+  
+    denom_iqf = fiqf*((tf0/t0)-1);
+     
+    ickf   =  iqf_t/(1+denom_iqf);
+    
+    end else begin
+  
+     ickf	= iqf_t;
+     
+    end  
+  
 	ickr	= iqr;
 
 // Ideal transfer currents
@@ -616,12 +689,27 @@ analog begin
 	`LIN_EXP(le2,arg2)
 	itri=is_t*le2;
       
+ 
+
 
 
 // Normalized minority charge at low currents (w=0) and high currents (w=1)
 
-        qml	= itfi/ickf+itri/ickr+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh)));
-        qmh	= itfi/ickf+itri/ickr+itfi/iqfh+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh)));
+
+
+    if (tfh!=0)begin
+    
+    qml	= itfi/ickf+itri/ickr+exp((0.6666)*ln(itfi*(itfi/ick)*((tfh)/iqfh)));
+    qmh	= itfi/ickf+itri/ickr+itfi/iqfh+exp((0.6666)*ln(itfi*(itfi/ick)*((tfh)/iqfh)));
+    
+    end else begin
+    
+    qml	= itfi/ickf+itri/ickr;
+    qmh	= itfi/ickf+itri/ickr+itfi/iqfh;
+    
+    end
+
+
 
 
  // Normalized  hole charge at low currents (w=0) and high currents (w=1)
@@ -631,18 +719,28 @@ analog begin
 
 // Calculation of the injection width
 
-
-
       a1= 1-ick/(1+ahq)/itfi*qpt_l;
       a2= 1+ick/(1+ahq)/itfi*(qpt_h-qpt_l);
       aa= a1/a2;
 
-w= (sqrt(aa*aa+0.01)+aa)/(1+sqrt(1+0.01));
+      w= (sqrt(aa*aa+0.01)+aa)/(1+sqrt(1+0.01));
 
 // Normalized minority charge
 	
-qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh)));
+
       
+
+    if (tfh!=0) begin
+    
+    qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*((tfh)/iqfh)));
+    
+    end else begin
+    
+    qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w;
+    
+    end
+    
+    
 
 // Normalized total hole charge
 	qpt	= qj_2+sqrt((qj_2)*(qj_2)+qm);
@@ -655,13 +753,18 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	itf	= itfi/qpt; 
 	itr	= itri/qpt;
 
-	
-// Transfer current
 
+
+
+
+
+  // Transfer current
+  
 	if (itf<=1e-20) begin
 		itf	= 1e-20;
 	end
 	it	= itf-itr;
+
 
 // BE diffusion charge
 
@@ -762,9 +865,9 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 
 // Self heating
 
-	if (flsh == 1 && rth >= `MIN_R) begin
+	if (flsh == 1 && rth_t >= `MIN_R) begin
 		pterm	= it*Vciei+iavl*(vdci_t-Vbici); 
-	end else if (flsh == 2 && rth >= `MIN_R) begin
+	end else if (flsh == 2 && rth_t >= `MIN_R) begin
 		pterm	=  Vciei*it + (vdci_t-Vbici)*iavl + ijbe*Vbiei + ijbc*Vbici + ijsc*Vsci;
 		if (rb >= `MIN_R) begin
 		pterm	= pterm + Vbbi*Vbbi/rb;
@@ -786,6 +889,9 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	Qbci  = cbcpar*Vbci;
 	Qbe   = cbepar*Vbe;
 	Qbici = qjcii+qr;
+	
+	`QJMODF(Vbiei,cje0_t,vde_t,ze,aje_t,qjei)  // For computation of AC charge
+	
 	Qbiei = qjei+qf;
 
 	ijsc  = HICUMtype*ijsc;
@@ -815,20 +921,20 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	if (re >= `MIN_R) begin
 	I(br_eie_i)	  	<+ Veie/re_t					`P(spectre:gmin="add");
 	end else begin
-	//V(br_eie_v)		<+ 0.0;
-	I(br_eie_i)		<+ V(br_eie_v)/1e-6;
+//	V(br_eie_v)		<+ 0.0;
+	I(br_eie_i)             <+ V(br_eie_v)/1e-6;
 	end
 	if (rcx >= `MIN_R) begin
 	I(br_cic_i)	  	<+ Vcic/rcx_t					`P(spectre:gmin="add");
 	end else begin
-	//V(br_cic_v)		<+ 0.0;
-	I(br_cic_i)		<+ V(br_cic_v)/1e-6;
+//	V(br_cic_v)		<+ 0.0;
+	I(br_cic_i)             <+ V(br_cic_v)/1e-6;
 	end
 	if (rbi0 >= `MIN_R || rbx >= `MIN_R) begin
 	I(br_bbi_i)	  	<+ Vbbi/rb				`P(spectre:gmin="add");
 	end else begin
-	//V(br_bbi_v)		<+ 0.0;
-	I(br_bbi_i)		<+ V(br_bbi_v)/1e-6;
+//	V(br_bbi_v)		<+ 0.0;
+	I(br_bbi_i)             <+ V(br_bbi_v)/1e-6;
 	end
 	I(br_bici)	<+ Ibici				`P(spectre:gmin="add" spectre:pwl_sat_current="IMAX" spectre:pwl_sat_cond="imax/0.025" spectre:pwl_rev_current="imax" spectre:pwl_rev_cond="IMAX/0.025");
 	I(br_bici)	<+ ddt(Qbici);
@@ -841,7 +947,7 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	if(flsh == 0 || rth < `MIN_R) begin
 		I(br_sht) 	<+ Vrth/`MIN_R;
 	end else begin
-		I(br_sht) 	<+ Vrth/rth-pterm			`P(spectre:gmin="add");
+		I(br_sht) 	<+ Vrth/rth_t-pterm			`P(spectre:gmin="add");
 		I(br_sht) 	<+ ddt(cth*Vrth);
 	end
 	// ******************************************
@@ -849,11 +955,14 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 	// with external thermal node, follwing code may be used.
 	// This external thermal node should remain accessible.
 	// ********************************************
+
 	//if(flsh == 0 || rth < `MIN_R) begin
 	//	V(br_sht)	<+ 0.0;
+	//	
 	//end else begin
-	//	I(br_sht) 	<+ Vrth/rth-pterm		`P(spectre:gmin="add");
+	//	I(br_sht) 	<+ Vrth/rth_t-pterm		`P(spectre:gmin="add");
 	//	I(br_sht) 	<+ ddt(cth*Vrth);
+	//
 	//end
 	// ********************************************
 	
@@ -878,6 +987,10 @@ qm	= itfi/ickf+itri/ickr+itfi/iqfh*w*w+exp((0.6666)*ln(itfi*(itfi/ick)*(tfh/iqfh
 // Flicker noise   
 	flicker_Pwr	= kf*pow(ijbe,af);
 	I(br_biei)	<+ flicker_noise(flicker_Pwr,1.0);
+
+
+
+
 
 end  // analog
 endmodule
