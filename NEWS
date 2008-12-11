@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * additional install step for MacOSX and appropriate icons
  * US letter formats for schematic frame
  * simulation time for digital files (Verilog and VHDL) now stored in
    additional configuration file

@@ -29,10 +29,12 @@ hicumL0V1p2::hicumL0V1p2()
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("ver", "1.0e6", false,
     QObject::tr ("reverse Early voltage (normalization volt.)")
-    +" ("+QObject::tr ("A")+")"));
+    +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("iqf", "1.0e6", false,
     QObject::tr ("forward d.c. high-injection toll-off current")
     +" ("+QObject::tr ("A")+")"));
+  Props.append (new Property ("fiqf", "0", false,
+    QObject::tr ("flag for turning on base related critical current")));
   Props.append (new Property ("iqr", "1.0e6", false,
     QObject::tr ("inverse d.c. high-injection roll-off current")
     +" ("+QObject::tr ("A")+")"));
@@ -42,7 +44,7 @@ hicumL0V1p2::hicumL0V1p2()
   Props.append (new Property ("tfh", "0.0", false,
     QObject::tr ("high-injection correction factor")));
   Props.append (new Property ("ahq", "0", false,
-    QObject::tr ("Smoothing factor for current dependence")));
+    QObject::tr ("Smoothing factor for the d.c. injection width")));
   Props.append (new Property ("ibes", "1e-18", false,
     QObject::tr ("BE saturation current")
     +" ("+QObject::tr ("A")+")"));
@@ -68,6 +70,13 @@ hicumL0V1p2::hicumL0V1p2()
     QObject::tr ("BE exponent factor")));
   Props.append (new Property ("aje", "2.5", false,
     QObject::tr ("Ratio of maximum to zero-bias value")));
+  Props.append (new Property ("vdedc", "0.9", false,
+    QObject::tr ("BE charge built-in voltage for d.c. transfer current")
+    +" ("+QObject::tr ("V")+")"));
+  Props.append (new Property ("zedc", "0.5", false,
+    QObject::tr ("charge BE exponent factor for d.c. transfer current")));
+  Props.append (new Property ("ajedc", "2.5", false,
+    QObject::tr ("BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current")));
   Props.append (new Property ("t0", "0.0", false,
     QObject::tr ("low current transit time at Vbici=0")
     +" ("+QObject::tr ("s")+")"));
@@ -227,13 +236,15 @@ hicumL0V1p2::hicumL0V1p2()
   Props.append (new Property ("zetare", "0.0", false,
     QObject::tr ("TC of emitter resistances")));
   Props.append (new Property ("zetaiqf", "0.0", false,
-    QObject::tr ("TC of knee current")));
+    QObject::tr ("TC of iqf")));
   Props.append (new Property ("alkav", "0.0", false,
     QObject::tr ("TC of avalanche prefactor")
     +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("aleav", "0.0", false,
     QObject::tr ("TC of avalanche exponential factor")
     +" ("+QObject::tr ("1/K")+")"));
+  Props.append (new Property ("zetarth", "0.0", false,
+    QObject::tr ("Exponent factor for temperature dependent thermal resistance")));
   Props.append (new Property ("flsh", "0", false,
     QObject::tr ("Flag for self-heating calculation")));
   Props.append (new Property ("rth", "0.0", false,
@@ -248,7 +259,7 @@ hicumL0V1p2::hicumL0V1p2()
   Props.append (new Property ("dt", "0.0", false,
     QObject::tr ("Temperature change for particular transistor")
     +" ("+QObject::tr ("K")+")"));
-  Props.append (new Property ("Temp", "26.85", false,
+  Props.append (new Property ("Temp", "27", false,
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
