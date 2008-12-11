@@ -1,3 +1,8 @@
+2008-12-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL0V1p2.va: Updated HICUM/L0 v1.2 according to changes by
+	TUD.
+
 2008-10-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* EKV26nMOS.va, EKV26pMOS.va: Removed these files.

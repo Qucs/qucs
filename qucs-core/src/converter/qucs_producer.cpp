@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.30 2008-10-08 16:43:30 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.31 2008-12-11 18:09:05 ela Exp $
  *
  */
 
@@ -306,16 +306,17 @@ qucs_devices[] = {
   },
   /* hicum/l0 v1.2 bipolar transistor */
   { "hicumL0V1p2", "hicumL0V1p2", "Q", 5,
-    { "Type", "is", "mcf", "mcr", "vef", "ver", "iqf", "iqr", "iqfh", "tfh",
-      "ahq", "ibes", "mbe", "ires", "mre", "ibcs", "mbc", "cje0", "vde", "ze",
-      "aje", "t0", "dt0h", "tbvl", "tef0", "gte", "thcs", "ahc", "tr", "rci0",
-      "vlim", "vpt", "vces", "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx",
-      "zcx", "vptcx", "fbc", "rbi0", "vr0e", "vr0c", "fgeo", "rbx", "rcx",
-      "re", "itss", "msf", "iscs", "msc", "cjs0", "vds", "zs", "vpts",
-      "cbcpar", "cbepar", "eavl", "kavl", "kf", "af", "vgb", "vge", "vgc",
-      "vgs", "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci",
-      "alvs", "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "zetaiqf",
-      "alkav", "aleav", "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
+    { "Type", "is", "mcf", "mcr", "vef", "ver", "iqf", "fiqf", "iqr", "iqfh",
+      "tfh", "ahq", "ibes", "mbe", "ires", "mre", "ibcs", "mbc", "cje0", "vde",
+      "ze", "aje", "vdedc", "zedc", "ajedc", "t0", "dt0h", "tbvl", "tef0",
+      "gte", "thcs", "ahc", "tr", "rci0", "vlim", "vpt", "vces", "cjci0",
+      "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx", "vptcx", "fbc", "rbi0",
+      "vr0e", "vr0c", "fgeo", "rbx", "rcx", "re", "itss", "msf", "iscs", "msc",
+      "cjs0", "vds", "zs", "vpts", "cbcpar", "cbepar", "eavl", "kavl", "kf",
+      "af", "vgb", "vge", "vgc", "vgs", "f1vg", "f2vg", "alt0", "kt0",
+      "zetact", "zetabet", "zetaci", "alvs", "alces", "zetarbi", "zetarbx",
+      "zetarcx", "zetare", "zetaiqf", "alkav", "aleav", "zetarth", "flsh",
+      "rth", "cth", "tnom", "dt", "Temp", NULL },
     NULL,
     "1 0 0 8 -26 0 0",
     NULL
