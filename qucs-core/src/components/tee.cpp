@@ -1,7 +1,7 @@
 /*
  * tee.cpp - tee connector class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2008 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tee.cpp,v 1.9 2005-06-02 18:17:52 raimi Exp $
+ * $Id: tee.cpp,v 1.10 2008-12-19 19:46:21 ela Exp $
  *
  */
 
@@ -26,14 +26,7 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
+#include "component.h"
 #include "tee.h"
 
 tee::tee () : circuit (3) {

@@ -72,6 +72,9 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_FUNC],
 		    #ifdef HAVE_NAMESPACES
 		    using namespace std;
 		    #endif
+		    #endif
+		    #ifdef log2
+		    #undef log2
 		    #endif]],
 		   [[complex<double> a;  
 		   $1(a); return 0;]])],
