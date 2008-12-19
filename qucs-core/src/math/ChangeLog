@@ -1,3 +1,8 @@
+2008-12-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* complex.h: Try avoiding compile failure on platforms where
+	log2() is defined as a macro, e.g. cygwin.
+
 2008-10-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* real.cpp: Providing real argument acosh() and asinh() function

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.h,v 1.6 2008/01/14 21:15:12 ela Exp $
+ * $Id: complex.h,v 1.7 2008/12/19 19:46:21 ela Exp $
  *
  */
 
@@ -39,6 +39,11 @@ typedef std::complex<nr_double_t> nr_complex_t;
 #include <complex>
 using namespace std;
 typedef std::complex<nr_double_t> nr_complex_t;
+#endif
+
+// undefine this macro if it is defined already
+#ifdef log2
+#undef log2
 #endif
 
 // create a complex object given rectangle coordinates
