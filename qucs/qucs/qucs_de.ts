@@ -6716,7 +6716,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished">Glättungsfaktor für Stromabhängigkeit</translation>
+        <translation>Glättungsfaktor für Stromabhängigkeit</translation>
     </message>
     <message>
         <source>TC of knee current</source>
@@ -6812,7 +6812,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Smoothing factor for the d.c. injection width</source>
-        <translation type="unfinished"></translation>
+        <translation>Glättungsfaktor für die DC-Strominjektionsweite</translation>
     </message>
     <message>
         <source>BE charge built-in voltage for d.c. transfer current</source>
@@ -6828,19 +6828,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>TC of iqf</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturkoeffizient von iqf</translation>
     </message>
     <message>
         <source>Exponent factor for temperature dependent thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturexponent des thermischen Widerstand</translation>
     </message>
     <message>
         <source>Exponent factor for emitter transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponentieller Faktor für die Emittertransitzeit</translation>
     </message>
     <message>
         <source>Vto temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperaturkoeffizient von Vto</translation>
     </message>
 </context>
 <context>
