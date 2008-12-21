@@ -76,12 +76,12 @@ hic0_full::hic0_full()
     QObject::tr ("Storage time in neutral emitter")
     +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("gte", "1.0", false,
-    QObject::tr ("Exponent factor for emmiter transit time")));
+    QObject::tr ("Exponent factor for emitter transit time")));
   Props.append (new Property ("thcs", "0.0", false,
     QObject::tr ("Saturation time at high current densities")
     +" ("+QObject::tr ("s")+")"));
   Props.append (new Property ("ahc", "0.1", false,
-    QObject::tr ("Smoothing facor for current dependence")));
+    QObject::tr ("Smoothing factor for current dependence")));
   Props.append (new Property ("tr", "0.0", false,
     QObject::tr ("Storage time at inverse operation")
     +" ("+QObject::tr ("s")+")"));

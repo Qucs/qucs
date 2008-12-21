@@ -148,7 +148,7 @@ EKV26MOS::EKV26MOS()
   Props.append (new Property ("Area", "1.0", false,
     QObject::tr ("diode relative area")));
   Props.append (new Property ("Fc", "0.5", false,
-    QObject::tr ("forward-bias depletion capcitance coefficient")));
+    QObject::tr ("forward-bias depletion capacitance coefficient")));
   Props.append (new Property ("Tt", "0.1e-9", false,
     QObject::tr ("transit time")
     +" ("+QObject::tr ("s")+")"));
