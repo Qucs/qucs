@@ -98,7 +98,7 @@ electrical Drain_int, Source_int;
  parameter real Cj0=300e-15 from [0:inf]         `attr(info="zero-bias junction capacitance" unit="F");
  parameter real M=0.5 from [1e-6:inf]          `attr(info="grading coefficient");
  parameter real Area=1.0 from [1e-3:inf]       `attr(info="diode relative area");
- parameter real Fc=0.5 from [1e-6:inf]         `attr(info="forward-bias depletion capcitance coefficient");
+ parameter real Fc=0.5 from [1e-6:inf]         `attr(info="forward-bias depletion capacitance coefficient");
  parameter real Tt=0.1e-9 from [1e-20:inf]     `attr(info="transit time" unit="s" );
  parameter real Xti=3.0 from [1e-6:inf]        `attr(info="saturation current temperature exponent");
  // Charge partition parameter

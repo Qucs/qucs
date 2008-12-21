@@ -254,9 +254,9 @@ module hic0_full (c,b,e,s,tnode);
 	parameter real dt0h   		= 0.0		from [0:`INF)	`P(spice:name="dt0h"  info="Base width modulation contribution" test:value="2e-12" unit="s");
 	parameter real tbvl   		= 0.0		from [0:`INF)	`P(spice:name="tbvl"  info="SCR width modulation contribution" test:value="4e-12" unit="s");
 	parameter real tef0   		= 0.0		from [0:`INF)	`P(spice:name="tef0"  info="Storage time in neutral emitter" test:value="1e-12" unit="s"); 
-	parameter real gte    		= 1.0		from (0:10]	`P(spice:name="gte"   info="Exponent factor for emmiter transit time");                  
+	parameter real gte    		= 1.0		from (0:10]	`P(spice:name="gte"   info="Exponent factor for emitter transit time");                  
 	parameter real thcs   		= 0.0		from [0:`INF)	`P(spice:name="thcs"  info="Saturation time at high current densities" test:value="3e-11" unit="s");
-	parameter real ahc    		= 0.1		from (0:10]	`P(spice:name="ahc"   info="Smoothing facor for current dependence");
+	parameter real ahc    		= 0.1		from (0:10]	`P(spice:name="ahc"   info="Smoothing factor for current dependence");
 	parameter real tr     		= 0.0		from [0:`INF)	`P(spice:name="tr"    info="Storage time at inverse operation" unit="s"); 
 	                                             
 // Critical current                          

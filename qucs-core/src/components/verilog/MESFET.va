@@ -66,7 +66,7 @@ electrical n1, n2, n3, n4;
  parameter real Xti = 3.0 from [1e-9 : inf]
   `attr(info="diode saturation current temperature coefficient");
  parameter real Fc = 0.5 from [1e-6 : inf]
-  `attr(info="forward-bias depletion capcitance coefficient");
+  `attr(info="forward-bias depletion capacitance coefficient");
  parameter real Tau = 1e-9 from [1e-20 : inf]
   `attr(info="transit time under gate" unit = "s");
  parameter real Rin = 1e-3 from [1e-20 : inf]
@@ -104,7 +104,7 @@ electrical n1, n2, n3, n4;
  parameter integer QLEVELDS = 2 from [0 : 3]
   `attr(info="drain-source charge equation selector");
  parameter real Vtotc = 0 from [-inf : inf]
-  `attr(info="Vto temperature  coefficient");
+  `attr(info="Vto temperature coefficient");
  parameter real Rg = 5.1 from [1e-9 : inf]
   `attr(info="gate resistance" unit = "Ohms");
  parameter real Rd = 1.3 from [1e-9 : inf]

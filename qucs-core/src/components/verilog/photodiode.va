@@ -27,7 +27,7 @@ module photodiode (Anode, Cathode, Light);
  parameter real M=0.5 from [1e-6:inf]             `attr(info="grading coefficient");
  parameter real Area=1.0 from [1.0:inf]           `attr(info="diode relative area");
  parameter real Tnom=26.85 from [-273:inf]        `attr(info="parameter measurement temperature" unit="Celsius");
- parameter real Fc=0.5 from [1e-6:inf]            `attr(info="forward-bias depletion capcitance coefficient");
+ parameter real Fc=0.5 from [1e-6:inf]            `attr(info="forward-bias depletion capacitance coefficient");
  parameter real Tt=10e-9 from [1e-20:inf]         `attr(info="transit time" unit="s" );
  parameter real Xti=3.0 from [1e-6:inf]           `attr(info="saturation current temperature exponent");
  parameter real Eg= 1.16 from [1e-6:inf]          `attr(info="energy gap" unit="eV");
