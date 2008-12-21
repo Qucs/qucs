@@ -5703,15 +5703,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exponent factor for emmiter transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Saturation time at high current densities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smoothing facor for current dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6103,10 +6095,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>forward-bias depletion capcitance coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>transit time under gate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6176,10 +6164,6 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>drain-source charge equation selector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vto temperature  coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6455,14 +6439,6 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC of knee current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>npn HICUM L0 v1.2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6544,6 +6520,46 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <source>Buffer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flag for turning on base related critical current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for the d.c. injection width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE charge built-in voltage for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>charge BE exponent factor for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of iqf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for temperature dependent thermal resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for emitter transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vto temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

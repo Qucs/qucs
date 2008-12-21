@@ -42,7 +42,7 @@ photodiode::photodiode()
     QObject::tr ("parameter measurement temperature")
     +" ("+QObject::tr ("Celsius")+")"));
   Props.append (new Property ("Fc", "0.5", false,
-    QObject::tr ("forward-bias depletion capcitance coefficient")));
+    QObject::tr ("forward-bias depletion capacitance coefficient")));
   Props.append (new Property ("Tt", "10e-9", false,
     QObject::tr ("transit time")
     +" ("+QObject::tr ("s")+")"));
