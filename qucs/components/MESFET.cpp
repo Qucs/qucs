@@ -63,7 +63,7 @@ MESFET::MESFET()
   Props.append (new Property ("Xti", "3.0", false,
     QObject::tr ("diode saturation current temperature coefficient")));
   Props.append (new Property ("Fc", "0.5", false,
-    QObject::tr ("forward-bias depletion capcitance coefficient")));
+    QObject::tr ("forward-bias depletion capacitance coefficient")));
   Props.append (new Property ("Tau", "1e-9", false,
     QObject::tr ("transit time under gate")
     +" ("+QObject::tr ("s")+")"));
@@ -110,7 +110,7 @@ MESFET::MESFET()
   Props.append (new Property ("QLEVELDS", "2", false,
     QObject::tr ("drain-source charge equation selector")));
   Props.append (new Property ("Vtotc", "0", false,
-    QObject::tr ("Vto temperature  coefficient")));
+    QObject::tr ("Vto temperature coefficient")));
   Props.append (new Property ("Rg", "5.1", false,
     QObject::tr ("gate resistance")
     +" ("+QObject::tr ("Ohms")+")"));
