@@ -74,8 +74,10 @@ void VTab::drawButton(QPainter *p)
 {
   p->save();
   QStyle::SFlags st = QStyle::Style_Default | QStyle::Style_Enabled;
-  if (isOn())
-    st|=QStyle::Style_On;
+  if (isOn()) {
+    st |= QStyle::Style_On;
+    st |= QStyle::Style_Down;
+  }
 
   QRect r(0, 0, height(), width());
 

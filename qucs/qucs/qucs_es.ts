@@ -5710,7 +5710,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Exponent factor for emmiter transit time</source>
-        <translation>Factor exponencial para el tiempo transitorio de emisor</translation>
+        <translation type="obsolete">Factor exponencial para el tiempo transitorio de emisor</translation>
     </message>
     <message>
         <source>Saturation time at high current densities</source>
@@ -5718,7 +5718,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Smoothing facor for current dependence</source>
-        <translation>Factor de rizado para corriente de dependencia</translation>
+        <translation type="obsolete">Factor de rizado para corriente de dependencia</translation>
     </message>
     <message>
         <source>Storage time at inverse operation</source>
@@ -6110,7 +6110,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>forward-bias depletion capcitance coefficient</source>
-        <translation>coeficiente de la capacidad de deplexión en polarización directa</translation>
+        <translation type="obsolete">coeficiente de la capacidad de deplexión en polarización directa</translation>
     </message>
     <message>
         <source>transit time under gate</source>
@@ -6186,7 +6186,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Vto temperature  coefficient</source>
-        <translation>Vto coeficiente(sp)(sp)temperatura</translation>
+        <translation type="obsolete">Vto coeficiente(sp)(sp)temperatura</translation>
     </message>
     <message>
         <source>Ohms</source>
@@ -6461,14 +6461,6 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC of knee current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>npn HICUM L0 v1.2</source>
         <translation type="unfinished">npn HICUM L0 v1.2</translation>
     </message>
@@ -6550,6 +6542,46 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>Buffer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flag for turning on base related critical current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for the d.c. injection width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE charge built-in voltage for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>charge BE exponent factor for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of iqf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for temperature dependent thermal resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for emitter transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vto temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
