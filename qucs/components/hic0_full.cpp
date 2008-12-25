@@ -28,7 +28,7 @@ hic0_full::hic0_full()
     QObject::tr ("forward Early voltage (normalization volt.)")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("iqf", "1.0e6", false,
-    QObject::tr ("forward d.c. high-injection toll-off current")
+    QObject::tr ("forward d.c. high-injection roll-off current")
     +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("iqr", "1.0e6", false,
     QObject::tr ("inverse d.c. high-injection roll-off current")

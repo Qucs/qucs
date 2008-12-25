@@ -31,7 +31,7 @@ hicumL0V1p2::hicumL0V1p2()
     QObject::tr ("reverse Early voltage (normalization volt.)")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("iqf", "1.0e6", false,
-    QObject::tr ("forward d.c. high-injection toll-off current")
+    QObject::tr ("forward d.c. high-injection roll-off current")
     +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("fiqf", "0", false,
     QObject::tr ("flag for turning on base related critical current")));
@@ -76,7 +76,7 @@ hicumL0V1p2::hicumL0V1p2()
   Props.append (new Property ("zedc", "0.5", false,
     QObject::tr ("charge BE exponent factor for d.c. transfer current")));
   Props.append (new Property ("ajedc", "2.5", false,
-    QObject::tr ("BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current")));
+    QObject::tr ("BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current")));
   Props.append (new Property ("t0", "0.0", false,
     QObject::tr ("low current transit time at Vbici=0")
     +" ("+QObject::tr ("s")+")"));
