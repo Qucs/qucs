@@ -248,7 +248,7 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	parameter real mcr    		= 1.00		from (0:10]	`P(spice:name="mcr" info="Non-ideality coefficient of reverse collector current");                
 	parameter real vef   	   	= `INF		from (0:`INF]	`P(spice:name="vef" info="forward Early voltage (normalization volt.)"  unit="V" default:value="infinity");                  
   parameter real ver   	  	= `INF		from (0:`INF]	`P(spice:name="ver" info="reverse Early voltage (normalization volt.)"  unit="V" default:value="infinity"); 
-  parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection toll-off current" unit="A" m:factor="yes" default:value="infinity");
+  parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection roll-off current" unit="A" m:factor="yes" default:value="infinity");
   
   parameter real fiqf       = 0       from  [0:1] `P(spice:name="fiqf" info="flag for turning on base related critical current" default:value="zero");
          
@@ -274,7 +274,7 @@ module hicumL0V1p2 (c,b,e,s,tnode);
   
   parameter real vdedc    		= 0.9		from (0:10]	`P(spice:name="vdedc"  info="BE charge built-in voltage for d.c. transfer current" unit="V");
 	parameter real zedc     		= 0.5		from (0:1]	`P(spice:name="zedc"   info="charge BE exponent factor for d.c. transfer current"); 
-	parameter real ajedc    		= 2.5		from [1:`INF)	`P(spice:name="ajedc"  info="BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current");
+	parameter real ajedc    		= 2.5		from [1:`INF)	`P(spice:name="ajedc"  info="BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current");
   
   
   

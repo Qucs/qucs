@@ -230,7 +230,7 @@ module hic0_full (c,b,e,s,tnode);
 	parameter real mcf    		= 1.00		from (0:10]	`P(spice:name="mcf" info="Non-ideality coefficient of forward collector current");                  
 	parameter real mcr    		= 1.00		from (0:10]	`P(spice:name="mcr" info="Non-ideality coefficient of reverse collector current");                
 	parameter real vef   		= `INF		from (0:`INF]	`P(spice:name="vef" info="forward Early voltage (normalization volt.)"  unit="V" default:value="infinity");                  
-	parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection toll-off current" unit="A" m:factor="yes" default:value="infinity");        
+	parameter real iqf    		= `INF		from (0:`INF]	`P(spice:name="iqf" info="forward d.c. high-injection roll-off current" unit="A" m:factor="yes" default:value="infinity");        
 	parameter real iqr    		= `INF		from (0:`INF]	`P(spice:name="iqr" info="inverse d.c. high-injection roll-off current" unit="A" m:factor="yes" default:value="infinity");               
 	parameter real iqfh   		= `INF		from (0:`INF]	`P(spice:name="iqfh" info="high-injection correction current" unit="A" m:factor="yes");              
 	parameter real tfh    		= `INF		from (0:`INF]	`P(spice:name="tfh" info="high-injection correction factor" test:value="2e-9" m:factor="yes");                
