@@ -5591,10 +5591,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>forward d.c. high-injection toll-off current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>inverse d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6495,10 +6491,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TC of iqf</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6516,6 +6508,14 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Vto temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
