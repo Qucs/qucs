@@ -23,6 +23,9 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Transmission line defined by RLCG values.
+- Implement fftshift() functionality.
+- File based sources defined in the frequency domain.
 - MESFET translation from SPICE to qucs in the converter.
 - Four-terminal versions of two-port RFEDD's.
 	- Implementation of ddx() operator, especially for EDD.
