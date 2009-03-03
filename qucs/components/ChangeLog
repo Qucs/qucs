@@ -1,3 +1,8 @@
+2009-03-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (libcomponents_a_SOURCES): Added many new digital
+	primitives.  Thanks a lot to Mike Brinson for the huge effort.
+
 2008-11-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* logical_buf.cpp (Logical_Buf): Added new digital buffer

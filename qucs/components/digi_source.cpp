@@ -140,7 +140,7 @@ QString Digi_Source::vhdlCode(int NumPorts)
     }
   }
 
-  s += "  end process;\n\n";
+  s += "  end process;\n";
   return s;
 }
 
@@ -185,6 +185,6 @@ QString Digi_Source::verilogCode(int NumPorts)
     }
   }
 
-  s += "  end\n\n";
+  s += "  end\n";
   return s;
 }

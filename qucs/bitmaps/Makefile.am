@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,12 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   vfile.png ifile.png mod_amp.png thyristor.png triac.png diac.png            \
   log_amp.png pnp_therm.png pnpsub_therm.png potentiometer.png rfedd.png      \
   MESFET.png EKV26nMOS.png EKV26pMOS.png rectline.png photodiode.png          \
-  buffer.png
+  buffer.png dff_SR.png jkff_SR.png tff_SR.png gatedDlatch.png logic_0.png    \
+  logic_1.png mux2to1.png mux4to1.png mux8to1.png DLS_nto1.png DLS_1ton.png   \
+  andor4x2.png andor4x3.png andor4x4.png dmux2to4.png dmux3to8.png            \
+  dmux4to16.png ha1b.png fa1b.png fa2b.png pad2bit.png pad3bit.png            \
+  pad4bit.png binarytogrey4bit.png greytobinary4bit.png comp_1bit.png         \
+  comp_2bit.png comp_4bit.png hpribin4bit.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \

@@ -6263,6 +6263,282 @@ Usage:  qucsedit [-r] file
         <source>forward d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tranfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>output delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tranfer function scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate tranfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate tranfer function low scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logic 0 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logic 1 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pad output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x2 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x2 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x3 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x3 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x4 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4x4 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4bit binary to grey converter verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4Bit Bin2Grey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data voltage level shifter (digital to analogue) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D2A Level Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data voltage level shifter (analogue to digital) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2D Level Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2to4 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2to4 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3to8 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3to8 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4to16 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4to16 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1bit full adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Bit FullAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2bit full adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2Bit FullAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gated D latch verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gated D-Latch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4bit grey to binary converter verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4Bit Grey2Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1bit half adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Bit HalfAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4bit highest priority encoder (binary form) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4Bit HPRI-Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>jk flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JK-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logic 0 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logic 1 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logic 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>8to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>T flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>T-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -8851,6 +9127,10 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>This suffix is already registered!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
