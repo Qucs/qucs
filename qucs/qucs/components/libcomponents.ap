@@ -1,7 +1,7 @@
 #
 # qucs/components/libcomponents.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,13 @@ SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp rectline.cpp hicumL0V1p2.cpp hicumL2V2p23.cpp photodiode.cpp     \
-  EKV26MOS.cpp logical_buf.cpp
+  EKV26MOS.cpp logical_buf.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
+  gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
+  DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
+  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp          \
+  pad2bit.cpp pad3bit.cpp pad4bit.cpp binarytogrey4bit.cpp                    \
+  greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
+  hpribin4bit.cpp
 
 # List of special Qt files.
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h

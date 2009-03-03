@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,7 +50,13 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vfile.cpp ifile.cpp mod_amp.cpp hic2_full.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp hic0_full.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp rectline.cpp hicumL0V1p2.cpp hicumL2V2p23.cpp photodiode.cpp     \
-  EKV26MOS.cpp logical_buf.cpp
+  EKV26MOS.cpp logical_buf.cpp dff_SR.cpp jkff_SR.cpp tff_SR.cpp              \
+  gatedDlatch.cpp logic_0.cpp logic_1.cpp mux2to1.cpp mux4to1.cpp mux8to1.cpp \
+  DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
+  dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp          \
+  pad2bit.cpp pad3bit.cpp pad4bit.cpp binarytogrey4bit.cpp                    \
+  greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
+  hpribin4bit.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -73,7 +79,11 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   eqndefined.h vfile.h ifile.h mod_amp.h hic2_full.h thyristor.h triac.h      \
   diac.h log_amp.h hic0_full.h potentiometer.h rfedd.h rfedd2p.h MESFET.h     \
   rectline.h hicumL0V1p2.h hicumL2V2p23.h photodiode.h EKV26MOS.h             \
-  logical_buf.h
+  logical_buf.h dff_SR.h jkff_SR.h tff_SR.h gatedDlatch.h logic_0.h logic_1.h \
+  mux2to1.h mux4to1.h mux8to1.h DLS_nto1.h DLS_1ton.h andor4x2.h andor4x3.h   \
+  andor4x4.h dmux2to4.h dmux3to8.h dmux4to16.h ha1b.h fa1b.h fa2b.h pad2bit.h \
+  pad3bit.h pad4bit.h binarytogrey4bit.h greytobinary4bit.h comp_1bit.h       \
+  comp_2bit.h comp_4bit.h hpribin4bit.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

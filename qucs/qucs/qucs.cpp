@@ -357,8 +357,21 @@ pInfoFunc digitalComps[] =
   {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
    &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
    &Logical_XOR::info, &Logical_XNOR::info, &Logical_Buf::info,
-   &RS_FlipFlop::info, &D_FlipFlop::info, &JK_FlipFlop::info,
-   &VHDL_File::info, &Verilog_File::info, &Digi_Sim::info, 0};
+   &andor4x2::info,  &andor4x3::info, &andor4x4::info,
+   &mux2to1::info,  &mux4to1::info,  &mux8to1::info, 
+   &dmux2to4::info, &dmux3to8::info,  &dmux4to16::info,
+   &ha1b::info, &fa1b::info,  &fa2b::info,
+   &RS_FlipFlop::info, &D_FlipFlop::info, &dff_SR::info, 
+   &JK_FlipFlop::info, &jkff_SR::info, &tff_SR::info, 
+   &gatedDlatch::info,
+   &logic_0::info, &logic_1::info, 
+   &pad2bit::info, &pad3bit::info, &pad4bit::info, 
+   &DLS_nto1::info, &DLS_1ton::info,  
+   &binarytogrey4bit::info,  &greytobinary4bit::info,
+   &comp_1bit::info, &comp_2bit::info, &comp_4bit::info,
+   &hpribin4bit::info, 
+   &VHDL_File::info, &Verilog_File::info, 
+   &Digi_Sim::info, 0};
 
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
