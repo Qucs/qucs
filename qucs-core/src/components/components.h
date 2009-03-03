@@ -1,7 +1,7 @@
 /*
  * components.h - global component header file
  *
- * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.6 2008/11/08 20:05:54 ela Exp $
+ * $Id: components.h,v 1.7 2009/03/03 18:30:12 ela Exp $
  *
  */
 
@@ -145,5 +145,35 @@
 #include "verilog/hicumL0V1p2.core.h"
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/photodiode.core.h"
+
+#include "verilog/dff_SR.core.h"
+#include "verilog/tff_SR.core.h"
+#include "verilog/jkff_SR.core.h"
+#include "verilog/gatedDlatch.core.h"
+#include "verilog/logic_1.core.h"
+#include "verilog/logic_0.core.h"
+#include "verilog/mux2to1.core.h"
+#include "verilog/mux4to1.core.h"
+#include "verilog/mux8to1.core.h"
+#include "verilog/DLS_nto1.core.h"
+#include "verilog/DLS_1ton.core.h"
+#include "verilog/andor4x2.core.h"
+#include "verilog/andor4x3.core.h"
+#include "verilog/andor4x4.core.h"
+#include "verilog/dmux2to4.core.h"
+#include "verilog/dmux3to8.core.h"
+#include "verilog/dmux4to16.core.h"
+#include "verilog/ha1b.core.h"
+#include "verilog/fa1b.core.h"
+#include "verilog/fa2b.core.h"
+#include "verilog/pad2bit.core.h"
+#include "verilog/pad3bit.core.h"
+#include "verilog/pad4bit.core.h"
+#include "verilog/binarytogrey4bit.core.h"
+#include "verilog/greytobinary4bit.core.h"
+#include "verilog/comp_1bit.core.h"
+#include "verilog/comp_2bit.core.h"
+#include "verilog/comp_4bit.core.h"
+#include "verilog/hpribin4bit.core.h"
 
 #endif /* __COMPONENTS_H__ */

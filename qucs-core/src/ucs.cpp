@@ -1,7 +1,7 @@
 /*
  * ucs.cpp - main program implementation
  *
- * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.32 2008/10/07 20:15:32 ela Exp $
+ * $Id: ucs.cpp,v 1.33 2009/03/03 18:30:12 ela Exp $
  *
  */
 
@@ -71,7 +71,7 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
 	"Qucsator " PACKAGE_VERSION "\n"
-	"Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 "
+	"Copyright (C) 2003-2009 "
 	"Stefan Jahn <stefan@lkcc.org>\n"
         "Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>\n"
         "Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>\n"

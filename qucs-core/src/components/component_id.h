@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.61 2008/11/08 20:05:54 ela Exp $
+ * $Id: component_id.h,v 1.62 2009/03/03 18:30:12 ela Exp $
  *
  */
 
@@ -149,6 +149,37 @@ enum circuit_type {
   CIR_hicumL0V1p2,
   CIR_hicumL2V2p23,
   CIR_photodiode,
+
+  // digital verilog devices
+  CIR_dff_SR,
+  CIR_tff_SR,
+  CIR_jkff_SR,
+  CIR_gatedDlatch,
+  CIR_logic_1,
+  CIR_logic_0,
+  CIR_mux2to1,
+  CIR_mux4to1,
+  CIR_mux8to1,
+  CIR_DLS_nto1,
+  CIR_DLS_1ton,
+  CIR_andor4x2,
+  CIR_andor4x3,
+  CIR_andor4x4,
+  CIR_dmux2to4,
+  CIR_dmux3to8,
+  CIR_dmux4to16,
+  CIR_ha1b,
+  CIR_fa1b,
+  CIR_fa2b,
+  CIR_pad2bit,
+  CIR_pad3bit,
+  CIR_pad4bit,
+  CIR_binarytogrey4bit,
+  CIR_greytobinary4bit,
+  CIR_comp_1bit,
+  CIR_comp_2bit,
+  CIR_comp_4bit,
+  CIR_hpribin4bit,
 };
 
 #endif /* __COMPONENT_ID_H__ */
