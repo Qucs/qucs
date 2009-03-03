@@ -1,3 +1,8 @@
+2009-03-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (libverilog_a_SOURCES): Added many new digital
+	primitives.  Thanks a lot to Mike Brinson for the huge effort!
+
 2008-12-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL0V1p2.va: Updated HICUM/L0 v1.2 according to changes by

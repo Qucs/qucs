@@ -1,7 +1,7 @@
 /*
  * module.cpp - module class implementation
  *
- * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.7 2008-11-08 20:05:54 ela Exp $
+ * $Id: module.cpp,v 1.8 2009-03-03 18:30:12 ela Exp $
  *
  */
 
@@ -234,6 +234,35 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (photodiode);
+  REGISTER_CIRCUIT (dff_SR);
+  REGISTER_CIRCUIT (tff_SR);
+  REGISTER_CIRCUIT (jkff_SR);
+  REGISTER_CIRCUIT (gatedDlatch);
+  REGISTER_CIRCUIT (logic_1);
+  REGISTER_CIRCUIT (logic_0);
+  REGISTER_CIRCUIT (mux2to1);
+  REGISTER_CIRCUIT (mux4to1);
+  REGISTER_CIRCUIT (mux8to1);
+  REGISTER_CIRCUIT (DLS_nto1);
+  REGISTER_CIRCUIT (DLS_1ton);
+  REGISTER_CIRCUIT (andor4x2);
+  REGISTER_CIRCUIT (andor4x3);
+  REGISTER_CIRCUIT (andor4x4);
+  REGISTER_CIRCUIT (dmux2to4);
+  REGISTER_CIRCUIT (dmux3to8);
+  REGISTER_CIRCUIT (dmux4to16);
+  REGISTER_CIRCUIT (ha1b);
+  REGISTER_CIRCUIT (fa1b);
+  REGISTER_CIRCUIT (fa2b);
+  REGISTER_CIRCUIT (pad2bit);
+  REGISTER_CIRCUIT (pad3bit);
+  REGISTER_CIRCUIT (pad4bit);
+  REGISTER_CIRCUIT (binarytogrey4bit);
+  REGISTER_CIRCUIT (greytobinary4bit);
+  REGISTER_CIRCUIT (comp_1bit);
+  REGISTER_CIRCUIT (comp_2bit);
+  REGISTER_CIRCUIT (comp_4bit);
+  REGISTER_CIRCUIT (hpribin4bit);
 
   // analyses
   REGISTER_ANALYSIS (dcsolver);
