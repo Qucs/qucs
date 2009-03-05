@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * hpribin4bit.cpp - device implementations for hpribin4bit module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "hpribin4bit.h"
@@ -26,7 +28,7 @@ hpribin4bit::hpribin4bit()
   Description = QObject::tr ("4bit highest priority encoder (binary form) verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function scaling factor")));
+    QObject::tr ("transfer function scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -72,14 +74,14 @@ void hpribin4bit::createSymbol()
 
   Texts.append(new Text(-35,-45, "HPRI/BIN", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(-35,-21,  "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35,-1,   "1",  QPen::darkBlue, 12.0)); 
-  Texts.append(new Text(-35, 19,  "2",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 39,  "3",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35,-23,  "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, -3,  "1",  QPen::darkBlue, 12.0)); 
+  Texts.append(new Text(-35, 17,  "2",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 37,  "3",  QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( 25, 19,  "V",  QPen::darkBlue, 12.0)); 
-  Texts.append(new Text( 25, -1,  "Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text( 25, -21, "X",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( 25, 17,  "V",  QPen::darkBlue, 12.0)); 
+  Texts.append(new Text( 25, -3,  "Y",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( 25,-23,  "X",  QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-60,-10));  // A
   Ports.append(new Port(-60, 10));  // B
@@ -99,11 +101,11 @@ QString hpribin4bit::vhdlCode( int )
   QString td=";\n";
 
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString A    = Ports.at(0)->Connection->Name;
   QString B    = Ports.at(1)->Connection->Name;
@@ -125,12 +127,13 @@ QString hpribin4bit::vhdlCode( int )
 QString hpribin4bit::verilogCode( int )
 {
   QString t = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      t = Props.at(1)->Value;
-      if(!Verilog_Time(t, Name))
-        return t;    // Time does not have VHDL format.
-      t = " #" + t ;
-    }
+    t = Props.at(1)->Value;
+    if(!Verilog_Time(t, Name))
+      return t;    // Time does not have VHDL format.
+    t = " #" + t ;
+  }
   
   QString l = "";
 

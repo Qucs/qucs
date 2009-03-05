@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * ha1b.cpp - device implementations for ha1b module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "ha1b.h"
@@ -26,7 +28,7 @@ ha1b::ha1b()
   Description = QObject::tr ("1bit half adder verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -67,7 +69,7 @@ void ha1b::createSymbol()
   Lines.append(new Line( 30, 10, 50, 10,QPen(QPen::darkBlue,2)));  // CO
   Lines.append(new Line( 30,-10, 50,-10,QPen(QPen::darkBlue,2)));  // S
 
-  Texts.append(new Text(0, -1, "CO", QPen::darkBlue, 12.0));
+  Texts.append(new Text(0, -3, "CO", QPen::darkBlue, 12.0));
 
   Lines.append(new Line(-10,-35, 10, -35, QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-35,  5, -25, QPen(QPen::darkBlue,2)));
@@ -77,7 +79,7 @@ void ha1b::createSymbol()
   Ports.append(new Port(-50,-10));  // A
   Ports.append(new Port(-50, 10));  // B
   Ports.append(new Port( 50, 10));  // CO
-  Ports.append(new Port( 50, -10));  // S
+  Ports.append(new Port( 50,-10));  // S
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  34;
@@ -88,23 +90,22 @@ QString ha1b::vhdlCode( int )
   QString s="";
   QString td=";\n";
 
- if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return s;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return s;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString A  = Ports.at(0)->Connection->Name;
   QString B  = Ports.at(1)->Connection->Name;
   QString CO = Ports.at(2)->Connection->Name;
   QString S  = Ports.at(3)->Connection->Name;
- 
 
   s = "\n  " + Name + ":process (" + A + ", " +  B + ")\n"  +
       "  begin\n" +
-      "    " + CO + " <= " +  A + " and " + B  +  td  + 
-      "    " + S  + " <= " +  A + " xor " + B  +  td  +
+      "    " + CO + " <= " + A + " and " + B + td +
+      "    " + S  + " <= " + A + " xor " + B + td +
       "  end process;\n";
   return s;
 }
@@ -113,11 +114,11 @@ QString ha1b::verilogCode( int )
 {
   QString td = "";
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td ;
+  }
   
   QString l = "";
 
@@ -126,11 +127,9 @@ QString ha1b::verilogCode( int )
   QString CO = Ports.at(2)->Connection->Name;
   QString S  = Ports.at(3)->Connection->Name;
  
-
   QString COR = "CO_reg" + Name + CO;
   QString SR  = "S_reg"  + Name + S;
   
-
   l = "\n  // " + Name + " 1bit halfadder\n" +
       "  assign  " + CO + " = " + COR + ";\n" +
       "  reg     " + COR + " = 0;\n" +

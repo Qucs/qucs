@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * dmux4to16.cpp - device implementations for dmux4to16 module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "dmux4to16.h"
@@ -26,7 +28,7 @@ dmux4to16::dmux4to16()
   Description = QObject::tr ("4to16 demultiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -85,37 +87,37 @@ void dmux4to16::createSymbol()
   Lines.append(new Line( 30, -40, 50,-40,QPen(QPen::darkBlue,2)));  // Y1
   Lines.append(new Line( 30, -50, 50,-50,QPen(QPen::darkBlue,2)));  // Y0
 
-  Arcs.append(new Arc(  -40,   -55,  10,  10, 0, 16*360, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -40, -55, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
  
   Texts.append(new Text(-25,-85, "DMUX", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(-28,-61, "En", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-26, -15, "G", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-13, -20, "}", QPen::darkBlue, 16.0));
-  Texts.append(new Text( -5, -18, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -8,  1, "15", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-63, "En", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-26,-15, "G", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-13,-20, "}", QPen::darkBlue, 16.0));
+  Texts.append(new Text( -5,-20, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -8,  0, "15", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( -28, -41, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -28,  19, "3", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-43, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 17, "3", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(  15, -57, "0", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15, -47, "1", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15, -37, "2", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15, -27, "3", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15, -17, "4", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15,  -7, "5", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15,   3, "6", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15,  13, "7", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15,  23, "8", QPen::darkBlue, 9.0));
-  Texts.append(new Text(  15,  33, "9", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  43, "10", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  53, "11", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  63, "12", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  73, "13", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  83, "14", QPen::darkBlue, 9.0));
-  Texts.append(new Text(   8,  93, "15", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,-59, "0", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,-49, "1", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,-39, "2", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,-29, "3", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,-19, "4", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15, -9, "5", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15,  1, "6", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15, 11, "7", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15, 21, "8", QPen::darkBlue, 9.0));
+  Texts.append(new Text( 15, 31, "9", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 41, "10", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 51, "11", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 61, "12", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 71, "13", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 81, "14", QPen::darkBlue, 9.0));
+  Texts.append(new Text(  8, 91, "15", QPen::darkBlue, 9.0));
 
-  Lines.append(new Line(-5,  2, 7,  2, QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-6,  2, 9,  2, QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-50,-50));  // En
   Ports.append(new Port(-50,-30));  // A
@@ -149,11 +151,11 @@ QString dmux4to16::vhdlCode( int )
   QString td=";\n";
 
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString En = Ports.at(0)->Connection->Name;
   QString A  = Ports.at(1)->Connection->Name;
@@ -203,12 +205,13 @@ QString dmux4to16::vhdlCode( int )
 QString dmux4to16::verilogCode( int )
 {
   QString td = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td ;
+  }
   
   QString l = "";
 
