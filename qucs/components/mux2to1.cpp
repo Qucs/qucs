@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * mux2to1.cpp - device implementations for mux2to1 module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "mux2to1.h"
@@ -26,7 +28,7 @@ mux2to1::mux2to1()
   Description = QObject::tr ("2to1 multiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -65,27 +67,27 @@ void mux2to1::createSymbol()
 
   Lines.append(new Line(-50,-20,-40,-20,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-50,  0,-30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-50, 20, -30, 20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-50, 40, -30, 40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-50, 20,-30, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-50, 40,-30, 40,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line( 30, 0, 50, 0,QPen(QPen::darkBlue,2)));
 
-  Arcs.append(new Arc(  -40,   -25,  10,  10, 0, 16*360, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-40, -25, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
  
   Texts.append(new Text(-17,-55, "MUX", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(-25,-31, "En", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25,-11, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-33, "En", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-13, "0", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( -15, -15, "G", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-1, -21, "}", QPen::darkBlue, 16.0));
-  Texts.append(new Text( 12,-20, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 12, -1, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-15,-15, "G", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -1,-21, "}", QPen::darkBlue, 16.0));
+  Texts.append(new Text( 12,-22, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 12, -2, "1", QPen::darkBlue, 12.0));
 
-  Lines.append(new Line(9, 0, 25, 0, QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(11, 0, 23, 0, QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text( -25,  9, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -25, 29, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,  7, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 27, "1", QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-50,-20));  // En
   Ports.append(new Port(-50,  0));  // A
@@ -103,11 +105,11 @@ QString mux2to1::vhdlCode( int )
   QString td=";\n";
 
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString En = Ports.at(0)->Connection->Name;
   QString A  = Ports.at(1)->Connection->Name;
@@ -115,10 +117,9 @@ QString mux2to1::vhdlCode( int )
   QString D1 = Ports.at(3)->Connection->Name;
   QString y  = Ports.at(4)->Connection->Name;
 
-  s = "\n  " + Name + ":process (" + En + ", " +  A + ", " +
-                              D0 + ", " +  D1 + ")\n"  +
-     "  begin\n    " +
-     y + " <= " +  "(not " + En + ") and ((" + D1 + " and " + A + ") or " + 
+  s = "\n  " + Name + ":process (" + En + ", " +  A + ", " + D0 + ", " +  D1 + ")\n" +
+     "  begin\n" +
+     "    " + y + " <= " +  "(not " + En + ") and ((" + D1 + " and " + A + ") or " + 
                   "(" + D0 + " and " + "(not " + A + ")))" + td  +
      "  end process;\n";
   return s;
@@ -127,12 +128,13 @@ QString mux2to1::vhdlCode( int )
 QString mux2to1::verilogCode( int )
 {
   QString td = " ";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td;
+  }
   
   QString l = "";
 

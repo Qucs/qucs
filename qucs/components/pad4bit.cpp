@@ -58,9 +58,9 @@ void pad4bit::createSymbol()
   Lines.append(new Line( 40, 30, 30, 30,QPen(QPen::darkGreen,2))); // D
  
   Texts.append(new Text(-58,-46, " 0   1   2    3", QPen::darkGreen, 12.0));
-  Texts.append(new Text(-58,-21, " 4   5   6    7", QPen::darkGreen, 12.0));
-  Texts.append(new Text(-58, 4, " 8   9  10 11", QPen::darkGreen, 12.0));
-  Texts.append(new Text(-58, 24, "12 13 14 15", QPen::darkGreen, 12.0));
+  Texts.append(new Text(-58,-23, " 4   5   6    7", QPen::darkGreen, 12.0));
+  Texts.append(new Text(-58,  0, " 8   9  10 11", QPen::darkGreen, 12.0));
+  Texts.append(new Text(-58, 23, "12 13 14 15", QPen::darkGreen, 12.0));
  
   Ports.append(new Port(40, 30));  // D
   Ports.append(new Port(40, 10));  // C

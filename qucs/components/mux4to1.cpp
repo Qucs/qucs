@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * mux4to1.cpp - device implementations for mux4to1 module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "mux4to1.h"
@@ -26,7 +28,7 @@ mux4to1::mux4to1()
   Description = QObject::tr ("4to1 multiplexer verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -72,34 +74,34 @@ void mux4to1::createSymbol()
 
   Lines.append(new Line( 30, 10, 50, 10,QPen(QPen::darkBlue,2)));
 
-  Arcs.append(new Arc(  -40,   -45,  10,  10, 0, 16*360, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -40, -45, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
  
   Texts.append(new Text(-17,-75, "MUX", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(-25,-51, "En", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-14, -23, "G", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-53, "En", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-14,-23, "G", QPen::darkBlue, 12.0));
   Texts.append(new Text(-1, -28, "}", QPen::darkBlue, 16.0));
-  Texts.append(new Text( 12,-28, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 12, -9, "3", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 12,-30, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 12,-10, "3", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( -25, -29, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -25,  -9, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-31, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-11, "1", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( -25, 19, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -25, 39, "1", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -25, 59, "2", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -25, 79, "3", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 17, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 37, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 57, "2", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 77, "3", QPen::darkBlue, 12.0));
 
-  Lines.append(new Line(9, -8, 25, -8, QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(11, -8, 23, -8, QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-50,-40));  // En
-  Ports.append(new Port(-50, -20)); // A
+  Ports.append(new Port(-50,-20));  // A
   Ports.append(new Port(-50,  0));  // B
   Ports.append(new Port(-50, 30));  // D0
   Ports.append(new Port(-50, 50));  // D1
   Ports.append(new Port(-50, 70));  // D2
   Ports.append(new Port(-50, 90));  // D3
-  Ports.append(new Port( 50, 10 ));  // Y
+  Ports.append(new Port( 50, 10));  // Y
 
   x1 = -50; y1 = -84;
   x2 =  50; y2 =  104;
@@ -110,12 +112,12 @@ QString mux4to1::vhdlCode( int )
   QString s="";
   QString td=";\n";
 
- if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString En = Ports.at(0)->Connection->Name;
   QString A  = Ports.at(1)->Connection->Name;
@@ -140,12 +142,13 @@ QString mux4to1::vhdlCode( int )
 QString mux4to1::verilogCode( int )
 {
   QString td = " ";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td ;
+  }
   
   QString l = "";
 

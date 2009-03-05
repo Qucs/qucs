@@ -56,10 +56,8 @@ void pad3bit::createSymbol()
   Lines.append(new Line( 40,-10, 30,-10,QPen(QPen::darkGreen,2)));  // B
   Lines.append(new Line( 40, 10, 30, 10,QPen(QPen::darkGreen,2))); // C
 
- 
-  Texts.append(new Text(-58,-31, " 0   1   2    3", QPen::darkGreen, 12.0));
-  Texts.append(new Text(-58, -6, " 4   5   6    7", QPen::darkGreen, 12.0));
-
+  Texts.append(new Text(-58,-33, " 0   1   2    3", QPen::darkGreen, 12.0));
+  Texts.append(new Text(-58, -8, " 4   5   6    7", QPen::darkGreen, 12.0));
 
   Ports.append(new Port(40, 10));  // C
   Ports.append(new Port(40,-10));  // B
