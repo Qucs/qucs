@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * fa2b.cpp - device implementations for fa2b module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "fa2b.h"
@@ -26,12 +28,11 @@ fa2b::fa2b()
   Description = QObject::tr ("2bit full adder verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
  
-
   createSymbol ();
   tx = x1 + 19;
   ty = y2 + 4;
@@ -73,25 +74,25 @@ void fa2b::createSymbol()
   Lines.append(new Line( 40, 10, 60, 10,QPen(QPen::darkBlue,2)));  // S1
   Lines.append(new Line( 40,-10, 60,-10,QPen(QPen::darkBlue,2)));  // S0
 
-  Lines.append(new Line(-10, -55, 10, -55, QPen(QPen::darkBlue,2)));  
+  Lines.append(new Line( -10, -55, 10, -55, QPen(QPen::darkBlue,2)));  
   Lines.append(new Line( -10, -55,  0, -45, QPen(QPen::darkBlue,2)));  
   Lines.append(new Line(  0,  -45,-10, -35, QPen(QPen::darkBlue,2)));  
   Lines.append(new Line( -10, -35, 10, -35, QPen(QPen::darkBlue,2)));  
 
   Texts.append(new Text(-25,-20,   "{",  QPen::darkBlue, 16.0));
-  Texts.append(new Text(-15,-15,   "X",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35,-21,   "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35,-1,   "1",   QPen::darkBlue, 12.0));
+  Texts.append(new Text(-15,-13,   "X",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35,-23,   "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, -3,   "1",  QPen::darkBlue, 12.0));
   Texts.append(new Text(-25, 22,   "{",  QPen::darkBlue, 16.0));
-  Texts.append(new Text(-15, 27,   "Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 19,   "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 39,   "1",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 59,   "CI",  QPen::darkBlue,12.0));
+  Texts.append(new Text(-15, 29,   "Y",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 17,   "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 37,   "1",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 57,  "CI",  QPen::darkBlue, 12.0));
   Texts.append(new Text( 17,-20,   "}",  QPen::darkBlue, 16.0));
-  Texts.append(new Text( 3, -15,   "S",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(  28, -21, "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(  28, -1,  "1",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(  10, 19,  "CO", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 3, -13,   "S",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( 28,-23,   "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( 28, -3,   "1",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( 10, 17,  "CO",  QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-60,-10));  // X0 -> D
   Ports.append(new Port(-60, 10));  // X1 -> C
@@ -112,11 +113,11 @@ QString fa2b::vhdlCode( int )
   QString td=";\n";
 
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString D    = Ports.at(0)->Connection->Name;
   QString C    = Ports.at(1)->Connection->Name;
@@ -139,13 +140,14 @@ QString fa2b::vhdlCode( int )
 QString fa2b::verilogCode( int )
 {
   QString td = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
-  
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td ;
+  }
+
   QString l = "";
 
   QString D    = Ports.at(0)->Connection->Name;
@@ -160,7 +162,6 @@ QString fa2b::verilogCode( int )
   QString COR  = "CO_reg" + Name + CO;
   QString S1R  = "S1_reg" + Name + S1;
   QString S0R  = "S0_reg" + Name + S0;
-  
 
   l = "\n  // "+Name+" 2bit fulladder\n"+
       "  assign  "+CO+" = "+COR+";\n"+

@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * greytobinary4bit.cpp - device implementations for greytobinary4bit module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "greytobinary4bit.h"
@@ -26,7 +28,7 @@ greytobinary4bit::greytobinary4bit()
   Description = QObject::tr ("4bit grey to binary converter verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function scaling factor")));
+    QObject::tr ("transfer function scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -74,15 +76,15 @@ void greytobinary4bit::createSymbol()
  
   Texts.append(new Text(-14,-58, "G/B", QPen::darkBlue, 12.0));
  
-  Texts.append(new Text(-25,-41, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25,-21, "1", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25, -1, "2", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25, 19, "3", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-43, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-23, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, -3, "2", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, 17, "3", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text( 15,-41, "0", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 15,-21, "1", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 15, -1, "2", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 15, 19, "3", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 15,-43, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 15,-23, "1", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 15, -3, "2", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 15, 17, "3", QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-50,-30));  // G0
   Ports.append(new Port(-50,-10));  // G1
@@ -102,12 +104,13 @@ QString greytobinary4bit::vhdlCode( int )
 {
   QString s="";
   QString td=";\n";
- if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString G0 = Ports.at(0)->Connection->Name;
   QString G1 = Ports.at(1)->Connection->Name;
@@ -131,12 +134,13 @@ QString greytobinary4bit::vhdlCode( int )
 QString greytobinary4bit::verilogCode( int )
 {
   QString td = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // Time does not have VHDL format
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // Time does not have VHDL format
+    td = " #" + td;
+  }
 
   QString G0 = Ports.at(0)->Connection->Name;
   QString G1 = Ports.at(1)->Connection->Name;

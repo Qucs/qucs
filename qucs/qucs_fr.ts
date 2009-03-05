@@ -6593,23 +6593,7 @@ Invocation :  qucsedit [-r] fichier
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tranfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>output delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tranfer function scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cross coupled gate tranfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cross coupled gate tranfer function low scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6866,6 +6850,22 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>T-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transfer function scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate transfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate transfer function low scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

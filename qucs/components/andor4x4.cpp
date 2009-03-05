@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * andor4x4.cpp - device implementations for andor4x4 module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "andor4x4.h"
@@ -26,7 +28,7 @@ andor4x4::andor4x4()
   Description = QObject::tr ("4x4 andor verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -99,7 +101,6 @@ void andor4x4::createSymbol()
   Lines.append(new Line(  7, -30, 17, -35,QPen(QPen::darkBlue,2))); 
   Lines.append(new Line( 22, -30, 22, -45,QPen(QPen::darkBlue,2)));  
 
-
   Ports.append(new Port(-50,-50));  // A11
   Ports.append(new Port(-50,-40));  // A12
   Ports.append(new Port(-50,-30));  // A13
@@ -124,18 +125,19 @@ void andor4x4::createSymbol()
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 = 144;
-
 }
+
 QString andor4x4::vhdlCode( int )
 {
   QString s="";
   QString td=";\n";
- if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-    }
+
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString a11 = Ports.at(0)->Connection->Name;
   QString a12 = Ports.at(1)->Connection->Name;
@@ -172,13 +174,14 @@ QString andor4x4::vhdlCode( int )
 
 QString andor4x4::verilogCode( int )
 {
-  QString td = " ";
-    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // Time does not have VHDL format
-      td = " #" + td;
-    }
+  QString td = "";
+
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // Time does not have VHDL format
+    td = " #" + td;
+  }
   
   QString a11 = Ports.at(0)->Connection->Name;
   QString a12 = Ports.at(1)->Connection->Name;
