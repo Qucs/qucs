@@ -17,7 +17,7 @@ module mux2to1 (EN, A, D0, D1, Y);
  electrical n1, n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Ccc, In1;

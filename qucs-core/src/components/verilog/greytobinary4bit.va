@@ -17,7 +17,7 @@ module greytobinary4bit (G0, G1, G2, G3, B3, B2, B1, B0 );
  electrical B0n1, B0n2, B1n1, B1n2, B2n1, B2n2, B3n1, B3n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd;

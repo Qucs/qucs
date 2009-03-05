@@ -20,7 +20,7 @@ module dmux4to16 (EN, A, B, C, D, Y15, Y14, Y13, Y12, Y11, Y10, Y9, Y8, Y7, Y6, 
  electrical Y12n1, Y12n2, Y13n1, Y13n2, Y14n1, Y14n2, Y15n1, Y15n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1n from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd, VENI, VAI, VBI, VCI, VDI, IY0, IY1, IY2, IY3, IY4, IY5, IY6, IY7;

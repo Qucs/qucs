@@ -17,7 +17,7 @@ module fa1b (A, B, CI, CO, S);
  electrical Sn1, Sn2, COn1, COn2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd, KS, HCO, ICO, IS;

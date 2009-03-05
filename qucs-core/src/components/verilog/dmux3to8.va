@@ -18,7 +18,7 @@ module dmux3to8 (EN, A, B, C, Y7, Y6, Y5, Y4, Y3, Y2, Y1, Y0);
  electrical Y4n1, Y4n2, Y5n1, Y5n2, Y6n1, Y6n2, Y7n1, Y7n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1n from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd, VENI, VAI, VBI, VCI, IY0, IY1, IY2, IY3, IY4, IY5, IY6, IY7;
