@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * comp_1bit.cpp - device implementations for comp_1bit module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "comp_1bit.h"
@@ -26,7 +28,7 @@ comp_1bit::comp_1bit()
   Description = QObject::tr ("1bit comparator verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -70,11 +72,11 @@ void comp_1bit::createSymbol()
 
   Texts.append(new Text(-25,-55, "COMP", QPen::darkBlue, 12.0));
 
-  Texts.append(new Text(-25,-21,   "X",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25, -1,   "Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text( -5,  9, "X<Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text( -5, -11, "X>Y", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -5, -31, "X=Y", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-23,   "X",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25, -3,   "Y",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( -5,  7, "X<Y",  QPen::darkBlue, 12.0));
+  Texts.append(new Text( -5,-13, "X>Y", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -5,-33, "X=Y", QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-50,-10));  // X
   Ports.append(new Port(-50, 10));  // Y
@@ -92,10 +94,10 @@ QString comp_1bit::vhdlCode( int )
    QString td=";\n";
 
    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
+     td = Props.at(1)->Value;
+     if(!VHDL_Time(td, Name))
+       return td;    // Time does not have VHDL format.
+     td = " after " + td + ";\n";
    }
  
   QString X    = Ports.at(0)->Connection->Name;
@@ -116,14 +118,14 @@ QString comp_1bit::vhdlCode( int )
 QString comp_1bit::verilogCode( int )
 {
   QString l="";
-
   QString td = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td;
+  }
 
   QString X    = Ports.at(0)->Connection->Name;
   QString Y    = Ports.at(1)->Connection->Name;

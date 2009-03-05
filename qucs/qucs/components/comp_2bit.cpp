@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * comp_2bit.cpp - device implementations for comp_2bit module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "comp_2bit.h"
@@ -26,7 +28,7 @@ comp_2bit::comp_2bit()
   Description = QObject::tr ("2bit comparator verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -74,15 +76,15 @@ void comp_2bit::createSymbol()
 
   Texts.append(new Text(-25,-20,   "{",  QPen::darkBlue, 16.0));
   Texts.append(new Text(-15,-15,   "X",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35,-21,   "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35,-1,   "1",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35,-23,   "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, -3,   "1",  QPen::darkBlue, 12.0));
   Texts.append(new Text(-25, 22,   "{",  QPen::darkBlue, 16.0));
   Texts.append(new Text(-15, 27,   "Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 19,   "0",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(-35, 39,   "1",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(  5, 19, "X<Y",  QPen::darkBlue, 12.0));
-  Texts.append(new Text(  5, -1, "X>Y", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  5,-21, "X=Y", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 17,   "0",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(-35, 37,   "1",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(  5, 17, "X<Y",  QPen::darkBlue, 12.0));
+  Texts.append(new Text(  5, -3, "X>Y", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  5,-23, "X=Y", QPen::darkBlue, 12.0));
 
   Ports.append(new Port(-60,-10));  // X0
   Ports.append(new Port(-60, 10));  // X1
@@ -98,15 +100,15 @@ void comp_2bit::createSymbol()
 
 QString comp_2bit::vhdlCode( int )
 {
-   QString s="";
-   QString td=";\n";
+  QString s="";
+  QString td=";\n";
 
-   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!VHDL_Time(td, Name))
-        return td;    // Time does not have VHDL format.
-      td = " after " + td + ";\n";
-   }
+  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
+    td = Props.at(1)->Value;
+    if(!VHDL_Time(td, Name))
+      return td;    // Time does not have VHDL format.
+    td = " after " + td + ";\n";
+  }
 
   QString X0   = Ports.at(0)->Connection->Name;
   QString X1   = Ports.at(1)->Connection->Name;
@@ -128,14 +130,14 @@ QString comp_2bit::vhdlCode( int )
 QString comp_2bit::verilogCode( int )
 {
   QString l="";
-
   QString td = "";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-      td = Props.at(1)->Value;
-      if(!Verilog_Time(td, Name))
-        return td;    // time has not VHDL format.
-      td = " #" + td ;
-    }
+    td = Props.at(1)->Value;
+    if(!Verilog_Time(td, Name))
+      return td;    // time has not VHDL format.
+    td = " #" + td ;
+  }
 
   QString X0    = Ports.at(0)->Connection->Name;
   QString X1    = Ports.at(1)->Connection->Name;

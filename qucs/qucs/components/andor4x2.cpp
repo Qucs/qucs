@@ -5,6 +5,7 @@
     copyright            : (C) 2008 by Mike Brinson
     email                : mbrin72043@yahoo.co.uk
  ***************************************************************************/
+
 /*
  * andor4x2.cpp - device implementations for andor4x2 module
  *
@@ -14,6 +15,7 @@
  * any later version.
  * 
  */
+
 #include <stdlib.h>
 
 #include "andor4x2.h"
@@ -26,7 +28,7 @@ andor4x2::andor4x2()
   Description = QObject::tr ("4x2 andor verilog device");
 
   Props.append (new Property ("TR", "6", false,
-    QObject::tr ("tranfer function high scaling factor")));
+    QObject::tr ("transfer function high scaling factor")));
   Props.append (new Property ("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
@@ -138,13 +140,14 @@ QString andor4x2::vhdlCode( int )
 QString andor4x2::verilogCode( int )
 {
   QString td = " ";
+
   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
     td = Props.at(1)->Value;
     if(!Verilog_Time (td, Name))
       return td;    // time has not VHDL format.
     td = " #" + td ;
   }
-  
+
   QString l = "";
 
   QString a11 = Ports.at(0)->Connection->Name;

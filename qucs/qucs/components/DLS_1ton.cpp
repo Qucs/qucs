@@ -59,8 +59,8 @@ void DLS_1ton::createSymbol()
   Lines.append(new Line(-25, -20,-15, -20,QPen(QPen::darkRed,2)));
   Lines.append(new Line( 25,  20, 15,  20,QPen(QPen::darkRed,2)));
   
-  Texts.append(new Text(-10,-30, "1", QPen::darkRed, 12.0));
-  Texts.append(new Text( 0, 10, "n", QPen::darkRed, 12.0));
+  Texts.append(new Text(-10,-32, "1", QPen::darkRed, 12.0));
+  Texts.append(new Text(  0,  8, "n", QPen::darkRed, 12.0));
  
   Ports.append(new Port(-40, 0));  // Lin
   Ports.append(new Port( 40, 0));  // Lout
