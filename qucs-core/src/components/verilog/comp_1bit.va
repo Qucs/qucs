@@ -17,7 +17,7 @@ module comp_1bit (X, Y, L, G, E);
  electrical Ln1, Ln2, Gn1, Gn2, En1, En2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd, mL, mG, mE;

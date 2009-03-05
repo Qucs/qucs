@@ -17,7 +17,7 @@ module binarytogrey4bit (B0, B1, B2, B3, G3, G2, G1, G0 );
  electrical G0n1, G0n2, G1n1, G1n2, G2n1, G2n2, G3n1, G3n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd;

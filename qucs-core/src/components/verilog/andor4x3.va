@@ -17,7 +17,7 @@ module andor4x3 (A11, A12, A13, A21, A22, A23, A31, A32, A33, A41, A42, A43, Y);
  electrical n1, n2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function high scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function high scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd, Iand;

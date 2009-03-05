@@ -17,7 +17,7 @@ module hpribin4bit (A, B, C, D, V, Y, X);
  electrical Xn1, Xn2, Yn1, Yn2, Vn1, Vn2;
 //
  `define attr(txt) (*txt*)
- parameter real TR=6 from [1.0:20.0] `attr(info="tranfer function scaling factor");
+ parameter real TR=6 from [1.0:20.0] `attr(info="transfer function scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="output delay" unit="s");
 //
  real Rd, Cd;

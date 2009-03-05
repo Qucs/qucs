@@ -18,8 +18,8 @@ module dff_SR (S, D, CLK, R, QB, QO);
  electrical n1, n1A, n2, n3, n3A, n4, QA;
 //
  `define attr(txt) (*txt*)
- parameter real TR_H=6 from [1.0:20.0] `attr(info="cross coupled gate tranfer function high scaling factor");
- parameter real TR_L=5  from [1.0:20.0] `attr(info="cross coupled gate tranfer function low scaling factor");
+ parameter real TR_H=6 from [1.0:20.0] `attr(info="cross coupled gate transfer function high scaling factor");
+ parameter real TR_L=5  from [1.0:20.0] `attr(info="cross coupled gate transfer function low scaling factor");
  parameter real Delay = 1e-9 from [0: inf] `attr(info="cross coupled gate delay" unit="s");
 //
 real Rd, Ccc;
