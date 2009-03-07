@@ -1,7 +1,7 @@
 /*
  * check_netlist.cpp - checker for the Qucs netlist
  *
- * Copyright (C) 2003-2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.129 2008/10/26 17:59:46 ela Exp $
+ * $Id: check_netlist.cpp,v 1.130 2009/03/07 19:20:14 ela Exp $
  *
  */
 
@@ -196,10 +196,17 @@ static struct value_t * checker_find_substrate (struct definition_t * def,
 
 /* Puts the given double value variable into an environment. */
 static variable * checker_add_variable (environment * env,
-					char * var, bool pass) {
+					char * var, int type, bool pass) {
   variable * v = new variable (var);
-  eqn::constant * c = new eqn::constant (eqn::TAG_DOUBLE);
-  c->d = 0; // initialize the variable
+  eqn::constant * c = new eqn::constant (type);
+  switch (type) {
+    case TAG_DOUBLE:
+      c->d = 0.0; // initialize the variable
+      break;
+    case TAG_VECTOR:
+      c->v = new vector ();
+      break;
+  }
   v->setConstant (c);
   env->addVariable (v, pass);
   return v;
@@ -209,7 +216,7 @@ static variable * checker_add_variable (environment * env,
    success, otherwise zero. */
 static int checker_resolve_variable (struct definition_t * root,
 				     struct definition_t * def,
-				     struct pair_t * pair) {
+				     struct pair_t * pair, int type) {
   struct value_t * val;
   struct value_t * value = pair->value;
   if (value->ident != NULL) {
@@ -218,12 +225,12 @@ static int checker_resolve_variable (struct definition_t * root,
     if ((val = checker_find_variable (root, "SW", "Param", value->ident))) {
       /* add parameter sweep variable to environment */
       if (!strcmp (def->type, "SW") && !strcmp (pair->key, "Param")) {
-	checker_add_variable (root->env, value->ident, true);
+	checker_add_variable (root->env, value->ident, TAG_DOUBLE, true);
       }
       /* mark both the variable identifier and the parameter sweep
 	 variable to be actually variables */
-      val->var = eqn::TAG_DOUBLE;
-      value->var = eqn::TAG_DOUBLE;
+      val->var = TAG_DOUBLE;
+      value->var = TAG_DOUBLE;
       found++;
     }
     /* 2. find analysis in parameter sweeps */
@@ -251,10 +258,10 @@ static int checker_resolve_variable (struct definition_t * root,
     if (root->env) {
       if (root->env->getChecker()->containsVariable (value->ident)) {
 	variable * v;
-	value->var = eqn::TAG_DOUBLE;
+	value->var = (type == PROP_LIST) ? TAG_VECTOR : TAG_DOUBLE;
 	if ((v = root->env->getVariable (value->ident)) == NULL) {
 	  // put variable into the environment
-	  checker_add_variable (root->env, value->ident, false);
+	  checker_add_variable (root->env, value->ident, value->var, false);
 	}
 	found++;
       }
@@ -282,13 +289,13 @@ static int checker_resolve_variable (struct definition_t * root,
 	// replace property string
 	free (value->ident);
 	value->ident = strdup (ref);
-	value->var = eqn::TAG_DOUBLE;
+	value->var = TAG_DOUBLE;
 
 	// already done previously?
 	variable * v;
 	if ((v = root->env->getVariable (ref)) == NULL) {
 	  // put variable into the environment
-	  checker_add_variable (root->env, ref, false);
+	  checker_add_variable (root->env, ref, TAG_DOUBLE, false);
 	  // also add reference equation into environment
 	  root->env->getChecker()->addReference ("#propref", ref, txt);
 	}
@@ -612,10 +619,10 @@ static int checker_validate_lists (struct definition_t * root) {
 			def->type, def->instance);
 	      errors++;
 	    }
-	    val->var = eqn::TAG_UNKNOWN;
+	    val->var = TAG_UNKNOWN;
 	  }
 	  if (!strcmp (type, "list")) {
-	    val->var = eqn::TAG_VECTOR;
+	    val->var = TAG_VECTOR;
 	  }
 	  // check and evaluate the unit scale in a value list
 	  for (; val != NULL; val = val->next) {
@@ -898,7 +905,7 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     else {
       // a value list
       struct value_t * val = pp->value;
-      val->var = eqn::TAG_VECTOR;
+      val->var = TAG_VECTOR;
       // check and evaluate the unit scale in a value list
       for (; val != NULL; val = val->next) {
 	if (!checker_evaluate_scale (val))
@@ -1506,7 +1513,8 @@ static int checker_validate_properties (struct definition_t * root,
   /* check the property content */
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     /* check whether properties are either required or optional */
-    if (checker_is_property (available, pair->key) == PROP_NONE) {
+    int type = checker_is_property (available, pair->key);
+    if (type == PROP_NONE) {
       if (strcmp (def->type, "Def")) {
 	logprint (LOG_ERROR, 
 		  "line %d: checker error, extraneous property `%s' is "
@@ -1525,7 +1533,7 @@ static int checker_validate_properties (struct definition_t * root,
 	errors++;
       }
       /* check variables in properties */
-      if (!checker_resolve_variable (root, def, pair))
+      if (!checker_resolve_variable (root, def, pair, type))
 	errors++;
     }
   }
@@ -1891,7 +1899,7 @@ static void checker_subcircuit_args (struct definition_t * def,
       env->getChecker()->addDouble ("#subcircuit",
 				    pair->key, pair->value->value);
       // also put it into the environment
-      variable * v = checker_add_variable (env, pair->key, true);
+      variable * v = checker_add_variable (env, pair->key, TAG_DOUBLE, true);
       v->getConstant()->d = pair->value->value;
     }
   }

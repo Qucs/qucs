@@ -1,7 +1,7 @@
 /*
  * equation.h - checker definitions for Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.h,v 1.47 2008/09/12 15:54:22 ela Exp $
+ * $Id: equation.h,v 1.48 2009/03/07 19:20:14 ela Exp $
  *
  */
 
@@ -87,6 +87,7 @@ public:
   constant * getResult (void) { return res; } 
   nr_double_t getResultDouble (void);
   nr_complex_t getResultComplex (void);
+  vector getResultVector (void);
   void setResult (constant *);
   char * getInstance (void);
   void setInstance (const char *);
@@ -301,6 +302,7 @@ public:
   bool containsVariable (char *);
   nr_double_t getDouble (char *);
   void setDouble (char *, nr_double_t);
+  vector getVector (char *);
   void setDefinitions (struct definition_t * d) { defs = d; }
   struct definition_t * getDefinitions (void) { return defs; }
   node * findProperty (char *);
