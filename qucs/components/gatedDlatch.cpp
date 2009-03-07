@@ -66,20 +66,23 @@ void gatedDlatch::createSymbol()
   Lines.append(new Line( 30,  40,-30, 40,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 40,-30, -40,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-50,-25,-30,-25,QPen(QPen::darkBlue,2))); // D
-  Lines.append(new Line(-50, 25,-30, 25,QPen(QPen::darkBlue,2))); // C
-  Lines.append(new Line( 40, 25, 50, 25,QPen(QPen::darkBlue,2))); // QB
-  Lines.append(new Line( 30,-25, 50,-25,QPen(QPen::darkBlue,2))); // Q
+  Lines.append(new Line(-50,-20,-30,-20,QPen(QPen::darkBlue,2))); // D
+  Lines.append(new Line(-50, 20,-30, 20,QPen(QPen::darkBlue,2))); // C
+  Lines.append(new Line( 40, 20, 50, 20,QPen(QPen::darkBlue,2))); // QB
+  Lines.append(new Line( 30,-20, 50,-20,QPen(QPen::darkBlue,2))); // Q
 
-  Arcs.append(new Arc( 30, 20, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( 30, 15, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-25,-37, "D", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-25, 12, "C", QPen::darkBlue, 12.0));
- 
-  Ports.append(new Port(-50,-25));  // D
-  Ports.append(new Port(-50, 25));  // C
-  Ports.append(new Port( 50, 25));  // QB
-  Ports.append(new Port( 50,-25));  // Q
+  Texts.append(new Text(-25,-32, "D", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,  7, "C", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 11,-32, "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 11,  7, "Q", QPen::darkBlue, 12.0));
+  Texts.current()->over=true;
+
+  Ports.append(new Port(-50,-20));  // D
+  Ports.append(new Port(-50, 20));  // C
+  Ports.append(new Port( 50, 20));  // QB
+  Ports.append(new Port( 50,-20));  // Q
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  44;

@@ -62,41 +62,41 @@ Element * dff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
 void dff_SR::createSymbol()
 {
   // put in here symbol drawing code and terminal definitions
-  Lines.append(new Line(-30, -40, 30,-40,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30, -40, 30, 40,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30,  40,-30, 40,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-30,  40,-30,-40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,-40, 30,-40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,-40, 30, 40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30, 40,-30, 40,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30, 40,-30,-40,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-45,-25,-30,-25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-45, 25,-30, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30, 25, 45, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30,-25, 45,-25,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-50,-20,-30,-20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-50, 20,-30, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30, 20, 50, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,-20, 50,-20,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line( -30, 15,-20, 25,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -30, 35,-20, 25,QPen(QPen::darkBlue ,2)));
+  Lines.append(new Line( -30, 10,-20, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -30, 30,-20, 20,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(  0,  -50,  0, -60,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,   50,  0,  60,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, -50,  0, -60,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,  50,  0,  60,QPen(QPen::darkBlue,2)));
 
   Arcs.append(new Arc( -5,-50, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( -5, 40, 10, 10, 0, 16*360, QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-25,-37,  "D", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 13,-37,  "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-25,-32,  "D", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 11,-32,  "Q", QPen::darkBlue, 12.0));
   Texts.append(new Text( -5,-39,  "S", QPen::darkBlue, 12.0));
-  Texts.append(new Text( 13, 12,  "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 11,  7,  "Q", QPen::darkBlue, 12.0));
   Texts.current()->over=true;
   Texts.append(new Text( -5, 17,  "R", QPen::darkBlue, 12.0));
  
   Ports.append(new Port(0,  -60));  // S
-  Ports.append(new Port(-45,-25));  // D
-  Ports.append(new Port(-45, 25));  // CLK
+  Ports.append(new Port(-50,-20));  // D
+  Ports.append(new Port(-50, 20));  // CLK
   Ports.append(new Port(  0, 60));  // R
-  Ports.append(new Port( 45, 25));  // QB
-  Ports.append(new Port( 45,-25));  // Q
+  Ports.append(new Port( 50, 20));  // QB
+  Ports.append(new Port( 50,-20));  // Q
 
-  x1 = -45; y1 = -60;
-  x2 =  45; y2 =  60;
+  x1 = -50; y1 = -60;
+  x2 =  50; y2 =  60;
 }
 
 QString dff_SR::vhdlCode( int )
