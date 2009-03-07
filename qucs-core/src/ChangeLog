@@ -1,3 +1,12 @@
+2009-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp (getVector): Helper function for environment
+	access.
+
+	* environment.cpp: Handling vector values appropriately.
+
+	* check_netlist.cpp: Passing vectors in environment.
+
 2008-11-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* acsolver.cpp: Voltage probe now returns noise voltage data

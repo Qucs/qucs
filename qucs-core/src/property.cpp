@@ -1,7 +1,7 @@
 /*
  * property.cpp - generic property class implementation
  *
- * Copyright (C) 2003, 2004, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.14 2008-02-18 18:03:55 ela Exp $
+ * $Id: property.cpp,v 1.15 2009-03-07 19:20:14 ela Exp $
  *
  */
 
@@ -114,7 +114,7 @@ property::property (const property & p) {
 
 // Destructor deletes the property object.
 property::~property () {
-#if 1 /* FIXME: do this at another code location */
+#if 0 /* FIXME: do this at another code location */
   if (type == PROPERTY_VAR) {
     constant * c = var->getConstant ();
     if (c->getType () == TAG_VECTOR) {
@@ -156,7 +156,12 @@ property * property::findProperty (const char * n) {
 
 // Returns the property's value as vector.
 vector * property::getVector (void) {
-  if (var != NULL) return V (var->getConstant ());
+  if (var != NULL) {
+    if (var->getType () == VAR_CONSTANT)
+      return V (var->getConstant ());
+    else if (var->getType () == VAR_REFERENCE)
+      return V (var->getReference()->getResult ());
+  }
   return NULL;
 }
 

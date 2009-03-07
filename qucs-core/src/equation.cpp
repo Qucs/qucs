@@ -1,7 +1,7 @@
 /*
  * equation.cpp - checker for the Qucs equations
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: equation.cpp,v 1.70 2008-09-13 16:59:51 ela Exp $
+ * $Id: equation.cpp,v 1.71 2009-03-07 19:20:14 ela Exp $
  *
  */
 
@@ -1003,6 +1003,35 @@ nr_complex_t node::getResultComplex (void) {
     }
   }
   return 0.0;
+}
+
+/* Returns an immediate vector depending on the type of the equation
+   nodes result type. */
+vector node::getResultVector (void) {
+  constant * c = getResult ();
+  vector v;
+  if (c != NULL) {
+    switch (getType ()) {
+    case TAG_MATRIX:
+      {
+	int ro, co, n = 0;
+	v = vector (c->m->getRows () * c->m->getCols ());
+	for (co = 0; co < c->m->getCols (); co++)
+	  for (ro = 0; ro < c->m->getRows (); ro++)
+	    v (n++) = c->m->get (ro, co);
+      }
+      break;
+    case TAG_VECTOR:
+      v = *(c->v); break;
+    case TAG_DOUBLE:
+      v = vector (1); v (0) = c->d; break;
+    case TAG_COMPLEX:
+      v = vector (1); v (0) = *(c->c); break;
+    case TAG_BOOLEAN:
+      v = vector (1); v (0) = c->b ? 1.0 : 0.0; break;
+    }
+  }
+  return v;
 }
 
 // Assigns the dependency list to the equation node object.
@@ -2202,4 +2231,16 @@ void checker::setDouble (char * ident, nr_double_t val) {
       }
     }
   }
+}
+
+/* The functions looks through the set of equations for a vector
+   result and returns it.  If there is no such assignment, an empty
+   vector is returned. */ 
+vector checker::getVector (char * ident) {
+  foreach_equation (eqn) {
+    if (!strcmp (ident, eqn->result)) {
+      return eqn->getResultVector ();
+    }
+  }
+  return vector ();
 }

@@ -1,7 +1,7 @@
 /*
  * environment.cpp - variable environment class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: environment.cpp,v 1.15 2008-01-10 20:00:00 ela Exp $
+ * $Id: environment.cpp,v 1.16 2009-03-07 19:20:14 ela Exp $
  *
  */
 
@@ -129,8 +129,7 @@ void environment::copyVariables (variable * org) {
     // depending on variable type copy values too
     switch (var->getType ()) {
     case VAR_CONSTANT:
-      c = new constant (TAG_DOUBLE);
-      c->d = var->getConstant()->d;
+      c = new constant (*(var->getConstant ()));
       var->setConstant (c);
       break;
     case VAR_VALUE:
@@ -267,7 +266,14 @@ void environment::fetchConstants (void) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () == VAR_CONSTANT) {
       constant * c = var->getConstant ();
-      c->d = getDouble (var->getName ());
+      switch (c->getType ()) {
+      case TAG_DOUBLE: 
+	c->d = getDouble (var->getName ());
+	break;
+      case TAG_VECTOR:
+	*c->v = getVector (var->getName ());
+	break;
+      }
     }
   }
 }
@@ -340,6 +346,11 @@ void environment::updateReferences (environment * up) {
       setDouble (var->getName (), d);
     }
   }
+}
+
+// Returns vector of an assignment in the equation checker.
+vector environment::getVector (char * ident) {
+  return checkee->getVector (ident);
 }
 
 // Returns double value of an assignment in the equation checker.
