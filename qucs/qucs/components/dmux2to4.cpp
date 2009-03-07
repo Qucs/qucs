@@ -79,7 +79,7 @@ void dmux2to4::createSymbol()
   Texts.append(new Text(-28,-63, "En",QPen::darkBlue, 12.0));
   Texts.append(new Text(-20,-33, "G", QPen::darkBlue, 12.0));
   Texts.append(new Text(-8, -38, "}", QPen::darkBlue, 16.0));
-  Texts.append(new Text( 2, -38, "0", QPen::darkBlue, 12.0));
+  Texts.append(new Text( 2, -40, "0", QPen::darkBlue, 12.0));
   Texts.append(new Text( 2, -20, "3", QPen::darkBlue, 12.0));
 
   Texts.append(new Text(-28,-43, "0", QPen::darkBlue, 12.0));

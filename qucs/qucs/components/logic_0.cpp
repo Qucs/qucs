@@ -61,7 +61,7 @@ void logic_0::createSymbol()
   Lines.append(new Line(-35, 10,-20, 10,QPen(QPen::darkGreen,2)));
   Lines.append(new Line(-35,-10,-35, 10,QPen(QPen::darkGreen,2)));
 
-  Texts.append(new Text(-30,-11, "0", QPen::darkGreen, 12.0));
+  Texts.append(new Text(-30,-12, "0", QPen::darkGreen, 12.0));
 
   Ports.append(new Port(  0,  0)); // L0
 
