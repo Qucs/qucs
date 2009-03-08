@@ -38,9 +38,9 @@ D_FlipFlop::D_FlipFlop()
   Lines.append(new Line( 30,-10, 20,-10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0, 20,  0, 30,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-17,-17, "D", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  6,-17, "Q", QPen::darkBlue, 12.0));
-  Texts.append(new Text( -4,  5, "R", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-17,-21, "D", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  6,-21, "Q", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -4,  5, "R", QPen::darkBlue, 9.0));
   Lines.append(new Line(-20,  6,-12, 10,QPen(QPen::darkBlue,0)));
   Lines.append(new Line(-20, 14,-12, 10,QPen(QPen::darkBlue,0)));
 
