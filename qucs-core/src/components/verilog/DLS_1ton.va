@@ -17,9 +17,10 @@ module DLS_1ton (Lin, Lout);
  inout Lin, Lout;
  electrical Lin, Lout;
  electrical n1, n2;
+ electrical Vout;
  `define attr(txt) (*txt*)
- parameter real LEVEL=5 from [1:inf] `attr(info= "voltage level" unit="V");
- parameter real Delay = 1e-9 from [0: inf] `attr(info="time delay" unit="s");
+ parameter real LEVEL = 5 from [1:inf] `attr(info= "voltage level" unit="V");
+ parameter real Delay = 1e-9 from [0:inf] `attr(info="time delay" unit="s");
 //
  real Rd, Cd;
 //
@@ -33,7 +34,9 @@ module DLS_1ton (Lin, Lout);
  I(n1)      <+ V(n1);
  I(n1, n2)  <+ V(n1, n2)/Rd;
  I(n2)      <+ ddt(Cd*V(n2));
- I(Lout)    <+ -V(n2);
- I(Lout)    <+  V(Lout);
+// I(Lout)    <+ -V(n2);
+// I(Lout)    <+  V(Lout);
+ I(Lout)    <+ V(Vout);
+ I(Vout)    <+ V(Lout) - V(n2);
  end
 endmodule

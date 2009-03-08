@@ -1,3 +1,7 @@
+2009-03-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* DLS_1ton.va: Changed output impedance from 1ohm to zero.
+
 2009-03-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (libverilog_a_SOURCES): Added many new digital
