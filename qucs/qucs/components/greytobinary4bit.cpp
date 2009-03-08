@@ -74,13 +74,10 @@ void greytobinary4bit::createSymbol()
   Lines.append(new Line( 30,-10, 50,-10,QPen(QPen::darkBlue,2)));  // B1
   Lines.append(new Line( 30,-30, 50,-30,QPen(QPen::darkBlue,2)));  // B0
  
-  Texts.append(new Text(-18,-59, "G", QPen::darkBlue, 12.0));
-  Texts.append(new Text(  7,-59, "B", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-16,-59, "G", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -2,-59, "/", QPen::darkBlue, 12.0));
+  Texts.append(new Text(  5,-59, "B", QPen::darkBlue, 12.0));
 
-  Lines.append(new Line( -5,-50, 5,-50,QPen(QPen::darkBlue,1)));
-  Lines.append(new Line(  0,-55, 5,-50,QPen(QPen::darkBlue,1)));
-  Lines.append(new Line(  0,-45, 5,-50,QPen(QPen::darkBlue,1)));
- 
   Texts.append(new Text(-25,-43, "0", QPen::darkBlue, 12.0));
   Texts.append(new Text(-25,-23, "1", QPen::darkBlue, 12.0));
   Texts.append(new Text(-25, -3, "2", QPen::darkBlue, 12.0));
