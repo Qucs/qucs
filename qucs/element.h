@@ -52,9 +52,11 @@ struct Area {
 
 struct Port {
   Port() {};
-  Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {};
+  Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {
+    Type=""; Connection=0;};
   int   x, y;
   bool  avail;
+  QString Type;
   Node *Connection;
 };
 

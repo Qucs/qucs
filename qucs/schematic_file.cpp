@@ -337,13 +337,24 @@ void Schematic::simpleInsertComponent(Component *c)
 
     // check if new node lies upon existing node
     for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
-      if(pn->cx == x) if(pn->cy == y)  break;
+      if(pn->cx == x) if(pn->cy == y) {
+	if (!pn->Type.isEmpty()) {
+	  pp->Type = pn->Type;
+	}
+	if (!pp->Type.isEmpty()) {
+	  pn->Type = pp->Type;
+	}
+	break;
+      }
 
     if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
       DocNodes.append(pn);
     }
     pn->Connections.append(c);  // connect schematic node to component node
+    if (!pp->Type.isEmpty()) {
+      pn->Type = pp->Type;
+    }
 
     pp->Connection = pn;  // connect component node to schematic node
   }
@@ -740,61 +751,88 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 
 // ---------------------------------------------------
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
-                               int& countInit, bool Analog)
+				int& countInit, bool Analog)
 {
+  Node *pn;
   int z=0;
-  Node *pn, *p2;
-  Wire *pw;
-  Element *pe;
-  bool setName=false;
-  QPtrList<Node> Cons;
 
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
-    if(pn->Name.isEmpty() == User) continue;  // already named ?
+    if(pn->Name.isEmpty() == User) {
+      continue;  // already named ?
+    }
     if(!User) {
       if(Analog) pn->Name = "_net";
       else  pn->Name = "net_net";   // VHDL names must not begin with '_'
       pn->Name += QString::number(z++);  // create numbered node name
     }
     else
-      if(pn->State)  continue;  // already worked on
-
-    if(!Analog)  // collect all node names for VHDL signal declaration
-      if(Signals.findIndex(pn->Name) < 0)  // avoid redeclaration of signal
-        Signals.append(pn->Name);
+      if(pn->State) {
+	continue;  // already worked on
+      }
 
     if(Analog) createNodeSet(Collect, countInit, pn, pn);
 
     pn->State = 1;
-    Cons.append(pn);
-    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
-      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-	if(pe->Type == isWire) {
-	  pw = (Wire*)pe;
-	  if(p2 != pw->Port1) {
-	    if(pw->Port1->Name.isEmpty()) {
-	      pw->Port1->Name = pn->Name;
-	      pw->Port1->State = 1;
-	      Cons.append(pw->Port1);
-	      setName = true;
-	    }
-	  }
-	  else {
-	    if(pw->Port2->Name.isEmpty()) {
-	      pw->Port2->Name = pn->Name;
-	      pw->Port2->State = 1;
-	      Cons.append(pw->Port2);
-	      setName = true;
-	    }
-	  }
-	  if(setName) {
-	    Cons.findRef(p2);   // back to current Connection
-	    if (Analog) createNodeSet(Collect, countInit, pw, pn);
-	    setName = false;
+    propagateNode(Collect, countInit, Analog, pn);
+  }
+}
+
+// ---------------------------------------------------
+// Collects the signal names for digital simulations.
+void Schematic::collectDigitalSignals(void)
+{
+  int i;
+  Node *pn;
+
+  for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
+    if((i=Signals.findIndex(pn->Name)) < 0) { // avoid redeclaration of signal
+      Signals.append(pn->Name);
+      SignalTypes.append(pn->Type);
+    } else if (!pn->Type.isEmpty()) {
+      SignalTypes[i] = pn->Type;
+    }
+  }
+}
+
+// ---------------------------------------------------
+// Propagates the given node to connected component ports.
+void Schematic::propagateNode(QStringList& Collect,
+			      int& countInit, bool Analog, Node *pn)
+{
+  bool setName=false;
+  QPtrList<Node> Cons;
+  Node *p2;
+  Wire *pw;
+  Element *pe;
+
+  Cons.append(pn);
+  for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+    for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+      if(pe->Type == isWire) {
+	pw = (Wire*)pe;
+	if(p2 != pw->Port1) {
+	  if(pw->Port1->Name.isEmpty()) {
+	    pw->Port1->Name = pn->Name;
+	    pw->Port1->State = 1;
+	    Cons.append(pw->Port1);
+	    setName = true;
 	  }
 	}
-    Cons.clear();
-  }
+	else {
+	  if(pw->Port2->Name.isEmpty()) {
+	    pw->Port2->Name = pn->Name;
+	    pw->Port2->State = 1;
+	    Cons.append(pw->Port2);
+	    setName = true;
+	  }
+	}
+	if(setName) {
+	  Cons.findRef(p2);   // back to current Connection
+	  if (Analog) createNodeSet(Collect, countInit, pw, pn);
+	  setName = false;
+	}
+      }
+  Cons.clear();
 }
 
 // ---------------------------------------------------
@@ -869,6 +907,11 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
       d->isVerilog = isVerilog;
       d->creatingLib = creatingLib;
       r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
+      int in=0;
+      for(Port *pp = pc->Ports.first(); pp != 0; pp = pc->Ports.next(), in++) {
+	pp->Type = d->PortTypes[in];
+	pp->Connection->Type = pp->Type;
+      }
       delete d;
       if(!r) return false;
       continue;
@@ -964,12 +1007,14 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
   }
 
-
   // work on named nodes first in order to preserve the user given names
   throughAllNodes(true, Collect, countInit, NumPorts<0);
 
   // give names to the remaining (unnamed) nodes
   throughAllNodes(false, Collect, countInit, NumPorts<0);
+
+  if(NumPorts>=0) // collect all node names for VHDL signal declaration
+    collectDigitalSignals();
 
   return true;
 }
@@ -983,6 +1028,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
   Collect.clear();
   StringList.clear();
   Signals.clear();
+  SignalTypes.clear();
 
   // Apply node names and collect subcircuits and file include
   creatingLib = true;
@@ -1007,6 +1053,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
   createSubNetlistPlain(stream, ErrText, NumPorts);
 
   Signals.clear();  // was filled in "giveNodeNames()"
+  SignalTypes.clear();
   return true;
 }
 
@@ -1019,13 +1066,15 @@ bool Schematic::createLibNetlist(QTextStream *stream, QTextEdit *ErrText,
 void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 				      int NumPorts)
 {
-  int i, z;
+  int i, z, r;
   QString s;
-  QStringList SubcircuitPorts;
+  QStringList SubcircuitPortNames;
+  QStringList SubcircuitPortTypes;
   QStringList InPorts;
   QStringList OutPorts;
   QStringList InOutPorts;
-  QStringList::Iterator it;
+  QStringList::Iterator it_name;
+  QStringList::Iterator it_type;
   Component *pc;
 
   // probably creating a library currently
@@ -1041,7 +1090,9 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
     tstream = new QTextStream(&ofile);
   }
 
-  // collect subcircuit ports and sort their node names into "SubcircuitPorts"
+  // collect subcircuit ports and sort their node names into
+  // "SubcircuitPortNames"
+  PortTypes.clear();
   for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(pc->Model.at(0) == '.') {  // no simulations in subcircuits
       ErrText->insert(
@@ -1049,45 +1100,69 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       continue;
     }
     else if(pc->Model == "Port") {
-      i  = pc->Props.first()->Value.toInt();
-      for(z=SubcircuitPorts.size(); z<i; z++)
-        SubcircuitPorts.append(" ");
-      it = SubcircuitPorts.at(i-1);
-      (*it) = pc->Ports.getFirst()->Connection->Name;
+      i = pc->Props.first()->Value.toInt();
+      for(z=SubcircuitPortNames.size(); z<i; z++) { // add empty port names
+	SubcircuitPortNames.append(" ");
+	SubcircuitPortTypes.append(" ");
+      }
+      it_name = SubcircuitPortNames.at(i-1);
+      it_type = SubcircuitPortTypes.at(i-1);
+      (*it_name) = pc->Ports.getFirst()->Connection->Name;
+      r = Signals.findIndex(*it_name);
+      (*it_type) = SignalTypes[r];
+      // propagate type to port symbol
+      pc->Ports.getFirst()->Connection->Type = SignalTypes[r];
+
       if(NumPorts >= 0) {
 	if (isVerilog) {
-	  Signals.remove(Signals.find(*it)); // remove node name
+	  Signals.remove(Signals.find(*it_name)); // remove node name
 	  switch(pc->Props.at(1)->Value.at(0).latin1()) {
           case 'a':
-	    InOutPorts.append(*it);
+	    InOutPorts.append(*it_name);
 	    break;
           case 'o':
-	    OutPorts.append(*it);
+	    OutPorts.append(*it_name);
 	    break;
           default:
-	    InPorts.append(*it);
+	    InPorts.append(*it_name);
 	  }
 	}
 	else {
-	  Signals.remove(Signals.find(*it)); // remove node name of output port
+	  // remove node name of output port
+	  r = Signals.findIndex(*it_name);
+	  Signals.remove(Signals.at(r));
+	  SignalTypes.remove(SignalTypes.at(r));
 	  switch(pc->Props.at(1)->Value.at(0).latin1()) {
-          case 'a': (*it) += ": inout";  // attribute "analog" is "inout"
+          case 'a':
+	    (*it_name) += " : inout";  // attribute "analog" is "inout"
 	    break;
-          case 'o': Signals.append(*it);   // output ports need workaround
-	    (*it) = "net_out" + (*it);
+          case 'o':
+	    Signals.append(*it_name);   // output ports need workaround
+	    SignalTypes.append(*it_type);
+	    (*it_name) = "net_out" + (*it_name);
 	    // no "break;" here !!!
-          default:  (*it) += ": " + pc->Props.at(1)->Value;
+          default:
+	    (*it_name) += " : " + pc->Props.at(1)->Value;
 	  }
-	  (*it) += " " VHDL_SIGNAL_TYPE;
+	  (*it_name) += " " + ((*it_type).isEmpty() ?
+			       VHDL_SIGNAL_TYPE : (*it_type));
 	}
       }
     }
   }
 
   // remove empty subcircuit ports (missing port numbers)
-  for(it = SubcircuitPorts.begin(); it != SubcircuitPorts.end(); ) {
-    if(*it == " ") it = SubcircuitPorts.remove(it);
-    else it++;
+  for(it_name = SubcircuitPortNames.begin(),
+      it_type = SubcircuitPortTypes.begin();
+      it_name != SubcircuitPortNames.end(); ) {
+    if(*it_name == " ") {
+      it_name = SubcircuitPortNames.remove(it_name);
+      it_type = SubcircuitPortTypes.remove(it_type);
+    } else {
+      PortTypes.append(*it_type);
+      it_name++;
+      it_type++;
+    }
   }
 
   QString f = properFileName(DocName);
@@ -1096,7 +1171,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
   Painting *pi;
   if(NumPorts < 0) {
     // ..... analog subcircuit ...................................
-    (*tstream) << "\n.Def:" << Type << " " << SubcircuitPorts.join(" ");
+    (*tstream) << "\n.Def:" << Type << " " << SubcircuitPortNames.join(" ");
     for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
       if(pi->Name == ".ID ") {
         SubParameter *pp;
@@ -1120,7 +1195,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
     if (isVerilog) {
       // ..... digital subcircuit ...................................
       (*tstream) << "\nmodule Sub_" << Type << " ("
-		 << SubcircuitPorts.join(", ") << ");\n";
+		 << SubcircuitPortNames.join(", ") << ");\n";
       if(!InPorts.isEmpty())
 	(*tstream) << "  input " << InPorts.join(", ") << ";\n";
       if(!OutPorts.isEmpty())
@@ -1144,14 +1219,20 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       // ..... digital subcircuit ...................................
       (*tstream) << VHDL_LIBRARIES;
       (*tstream) << "entity Sub_" << Type << " is\n"
-		 << "  port (" << SubcircuitPorts.join(";\n        ") << ");\n"
+		 << "  port ("
+		 << SubcircuitPortNames.join(";\n        ") << ");\n"
 		 << "end entity;\n"
 		 << "use work.all;\n"
 		 << "architecture Arch_Sub_" << Type << " of Sub_" << Type
 		 << " is\n";
-      if(!Signals.isEmpty())
-	(*tstream) << "  signal " << Signals.join(",\n         ")
-		   << " : " VHDL_SIGNAL_TYPE ";\n";
+      if(!Signals.isEmpty()) {
+	for(unsigned int j=0; j<Signals.count(); j++) {
+	  (*tstream) << "  signal " << Signals[j] << " : " 
+		     << (SignalTypes[j].isEmpty() ? 
+			 VHDL_SIGNAL_TYPE : SignalTypes[j])
+		     << ";\n";
+	}
+      }
 
       (*tstream) << "begin\n";
 
@@ -1196,6 +1277,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
   createSubNetlistPlain(stream, ErrText, NumPorts);
 
   Signals.clear();  // was filled in "giveNodeNames()"
+  SignalTypes.clear();
   return true;
 }
 
@@ -1300,10 +1382,14 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 	     << "  wire " << Signals.join(",\n       ")
 	     << ";\n\n";
     } else {
-      stream << "architecture Arch_TestBench of TestBench is\n"
-	     << "  signal " << Signals.join(",\n         ")
-	     << " : " VHDL_SIGNAL_TYPE ";\n"
-	     << "begin\n";
+      stream << "architecture Arch_TestBench of TestBench is\n";
+      for(unsigned int i=0; i<Signals.count(); i++) {
+	stream << "  signal " << Signals[i] << " : " 
+	       << (SignalTypes[i].isEmpty() ? 
+		   VHDL_SIGNAL_TYPE : SignalTypes[i])
+	       << ";\n";
+      }
+      stream << "begin\n";
     }
 
     if(Signals.findIndex("gnd") >= 0) {
@@ -1315,6 +1401,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
     }
   }
   Signals.clear();  // was filled in "giveNodeNames()"
+  SignalTypes.clear();
   StringList.clear();
 
   QString s, Time;
