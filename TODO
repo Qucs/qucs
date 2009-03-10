@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- different color/thickness of wires in order to visualize
+  different types of signals
 - busses for digital designs (instead of wires only)
 - keeping input/output type of VHDL subcircuits based on VHDL files
 - real library creation using VHDL (precompiled objects as well as
