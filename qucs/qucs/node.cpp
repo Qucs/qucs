@@ -25,6 +25,7 @@ Node::Node(int _x, int _y)
   Label = 0;
   Type  = isNode;
   State = 0;
+  Type = "";
 
   cx = _x;
   cy = _y;

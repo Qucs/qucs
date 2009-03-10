@@ -236,9 +236,13 @@ private:
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
   void throughAllNodes(bool, QStringList&, int&, bool);
+  void propagateNode(QStringList&, int&, bool, Node*);
+  void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, int);
 
   QStringList Signals; // collecting node names for VHDL signal declarations
+  QStringList SignalTypes;
+  QStringList PortTypes;
 
 public:
   bool isVerilog;

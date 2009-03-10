@@ -1,3 +1,8 @@
+2009-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* vhdlfile.cpp (loadFile): Extracting signal types and passing
+	them to port specifications.
+
 2009-03-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (libcomponents_a_SOURCES): Added many new digital

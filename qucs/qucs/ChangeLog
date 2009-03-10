@@ -1,3 +1,9 @@
+2009-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (createSubNetlistPlain): Adjusting type
+	specifiers of VHDL subcircuits according to arbitrary signal types
+	in VHDL files.
+
 2008-11-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/vtabbutton.cpp (drawButton): Adjusted code to work with
