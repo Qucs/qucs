@@ -187,7 +187,8 @@ QString VHDL_File::loadFile()
     if ((k = t.find(' ')) >= 0)
       t = t.mid(k+1);
     t = t.simplifyWhiteSpace();
-    k = s.mid(l,j).contains(',') + 1;
+    k = s.find(';',l+2);
+    k = s.mid(l,k-l).contains(',') + 1;
     while (k-->0) types = types + t + ",";
     i--;
     l = i;
