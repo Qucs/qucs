@@ -99,7 +99,7 @@ QString VHDL_File::loadFile()
   File = stream.read();   // QString is better for "find" function
   f.close();
 
-  int i=0, j, k=0;
+  int i=0, j, l, k=0;
   while((i=File.find("--", i)) >= 0) { // remove all VHDL comments
     j = File.find('\n', i+2);          // (This also finds "--" within a ...
     if(j < 0)                          //  string, but as no strings are ...
@@ -108,7 +108,6 @@ QString VHDL_File::loadFile()
       File.remove(i, j-i);
   }
 
-  
   QRegExp Expr;
   Expr.setCaseSensitive(false);
   for(;;) {
@@ -157,21 +156,37 @@ QString VHDL_File::loadFile()
   if(j < 0)
     return QString("");
   s = s.mid(i, j-i);
-  s.remove(' ');
-
-  i = 0;    // remove all VHDL identifiers (e.g. ": out bit;")
-  while((i=s.find(':', i)) >= 0) {
-    j = s.find(';', i+2);
-    if(j < 0)
-      s = s.left(i);
-    else
-      s.remove(i, j-i);
-    i--;
-  }
-
   s.remove('\n');
   s.remove('\t');
+
+  // find port names and types in parameter specification
+  l = i = 0;    // remove all VHDL identifiers (e.g. ": out bit;")
+  QString types = "", t;
+  while((i=s.find(':', i)) >= 0) {
+    j = s.find(';', i+2);
+    if(j < 0) {
+      t = s.mid(i+1);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s = s.left(i);
+    } else {
+      t = s.mid(i+1, j-i);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s.remove(i, j-i);
+    }
+    if ((k = t.find(' ')) >= 0)
+      t = t.mid(k+1);
+    t.remove(' ');
+    k = s.mid(l,j).contains(',') + 1;
+    while (k-->0) types = types + t + ",";
+    i--;
+    l = i;
+  }
+
+  s.remove(' ');
   s.replace(';', ',');
+  TypeNames=types=types.left(types.length()-1);
   return s;
 }
 
@@ -182,10 +197,10 @@ void VHDL_File::createSymbol()
   int fHeight = metrics.lineSpacing();
 
   int No = 0;
+  TypeNames = "";
   QString tmp, PortNames = loadFile();
   if(!PortNames.isEmpty())
     No = PortNames.contains(',') + 1;
-
 
   #define HALFWIDTH  17
   int h = 30*((No-1)/2) + 15;
@@ -200,9 +215,12 @@ void VHDL_File::createSymbol()
 
 
   int y = 15-h, i = 0;
+  Port *pp;
   while(i<No) {
     Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
+    pp = new Port(-30,  y);
+    Ports.append(pp);
+    pp->Type = TypeNames.section(',', i, i);
     tmp = PortNames.section(',', i, i);
     w = metrics.width(tmp);
     Texts.append(new Text(-19-w, y-fHeight-2, tmp));
@@ -210,7 +228,9 @@ void VHDL_File::createSymbol()
 
     if(i == No) break;
     Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
+    pp = new Port( 30,  y);
+    Ports.append(pp);
+    pp->Type = TypeNames.section(',', i, i);
     tmp = PortNames.section(',', i, i);
     Texts.append(new Text( 20, y-fHeight-2, tmp));
     y += 60;

@@ -37,7 +37,8 @@ public:
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
 
   QPtrList<Element> Connections;
-  QString Name;   // node name used by creation of netlist
+  QString Name; // node name used by creation of netlist
+  QString Type; // type of node (used by digital files)
   int State;	// remember some things during some operations
 };
 
