@@ -39,6 +39,7 @@ protected:
 
   QString EntityName;
   QString ErrText;
+  QString TypeNames;
 };
 
 #endif
