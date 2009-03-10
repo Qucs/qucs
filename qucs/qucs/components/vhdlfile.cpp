@@ -99,7 +99,7 @@ QString VHDL_File::loadFile()
   File = stream.read();   // QString is better for "find" function
   f.close();
 
-  int i=0, j, l, k=0;
+  int i=0, p, j, l, k=0;
   while((i=File.find("--", i)) >= 0) { // remove all VHDL comments
     j = File.find('\n', i+2);          // (This also finds "--" within a ...
     if(j < 0)                          //  string, but as no strings are ...
@@ -149,12 +149,21 @@ QString VHDL_File::loadFile()
   i = s.find(Expr, j+1);
   if(i < 0)
     return QString("");
+  // find opening (
   i = s.find('(', i+4) + 1;
   if(i <= 0)
     return QString("");
-  j = s.find(')', i);
-  if(j < 0)
-    return QString("");
+
+  // find closing (
+  p = i;
+  j = i-1;
+  do {
+    j = s.find(')', j+1);
+    if(j < 0)
+      return QString("");
+    p = s.find('(', p+1);
+  } while (p >= 0);
+
   s = s.mid(i, j-i);
   s.remove('\n');
   s.remove('\t');
@@ -177,7 +186,7 @@ QString VHDL_File::loadFile()
     }
     if ((k = t.find(' ')) >= 0)
       t = t.mid(k+1);
-    t.remove(' ');
+    t = t.simplifyWhiteSpace();
     k = s.mid(l,j).contains(',') + 1;
     while (k-->0) types = types + t + ",";
     i--;
