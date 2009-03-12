@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * allowing VHDL files on schematic with arbitrary in/out signals
  * many new digital primitives defined for analogue, VHDL and Verilog
    simulations
  * additional install step for MacOSX and appropriate icons
