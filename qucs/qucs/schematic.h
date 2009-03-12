@@ -34,6 +34,26 @@
 
 class QTextEdit;
 
+// digital signal data
+struct DigSignal {
+  DigSignal() { Name=""; Type=""; }
+  DigSignal(const QString& _Name, const QString& _Type = "")
+    : Name(_Name), Type(_Type) {}
+  QString Name; // name
+  QString Type; // type of signal
+};
+typedef QMap<QString, DigSignal> DigMap;
+
+// subcircuit, vhdl, etc. file structure
+struct SubFile {
+  SubFile() { Type=""; File=""; PortTypes.clear(); }
+  SubFile(const QString& _Type, const QString& _File)
+    : Type(_Type), File(_File) { PortTypes.clear(); }
+  QString Type;          // type of file
+  QString File;          // file name identifier
+  QStringList PortTypes; // data types of in/out signals
+};
+typedef QMap<QString, SubFile> SubMap;
 
 class Schematic : public QScrollView, public QucsDoc {
   Q_OBJECT
@@ -235,16 +255,19 @@ private:
   bool    rebuildSymbol(QString *);
 
   static void createNodeSet(QStringList&, int&, Conductor*, Node*);
-  void throughAllNodes(bool, QStringList&, int&, bool);
-  void propagateNode(QStringList&, int&, bool, Node*);
+  void throughAllNodes(bool, QStringList&, int&);
+  void propagateNode(QStringList&, int&, Node*);
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*, int);
+  void beginNetlistDigital(QTextStream&);
+  void endNetlistDigital(QTextStream&);
+  bool throughAllComps(QTextStream *, int&, QStringList&, QTextEdit *, int);
 
-  QStringList Signals; // collecting node names for VHDL signal declarations
-  QStringList SignalTypes;
+  DigMap Signals; // collecting node names for VHDL signal declarations
   QStringList PortTypes;
 
 public:
+  bool isAnalog;
   bool isVerilog;
   bool creatingLib;
 };
