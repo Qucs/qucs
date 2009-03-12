@@ -877,11 +877,13 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       QString f = pc->getSubcircuitFile();
       SubMap::Iterator it = FileList.find(f);
       if(it != FileList.end()) {
-	i = 0;
-	// apply in/out signal types of subcircuit
-	for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
-	  pp->Type = it.data().PortTypes[i];
-	  pp->Connection->Type = pp->Type;
+	if (!it.data().PortTypes.isEmpty()) {
+	  i = 0;
+	  // apply in/out signal types of subcircuit
+	  for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
+	    pp->Type = it.data().PortTypes[i];
+	    pp->Connection->Type = pp->Type;
+	  }
 	}
         continue;   // insert each subcircuit just one time
       }
@@ -901,14 +903,16 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       d->isAnalog = isAnalog;
       d->creatingLib = creatingLib;
       r = d->createSubNetlist(stream, countInit, Collect, ErrText, NumPorts);
-      i = 0;
-      // save in/out signal types of subcircuit
-      for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
-	pp->Type = d->PortTypes[i];
-	pp->Connection->Type = pp->Type;
+      if (r) {
+	i = 0;
+	// save in/out signal types of subcircuit
+	for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
+	  pp->Type = d->PortTypes[i];
+	  pp->Connection->Type = pp->Type;
+	}
+	sub.PortTypes = d->PortTypes;
+	FileList.replace(f, sub);
       }
-      sub.PortTypes = d->PortTypes;
-      FileList.replace(f, sub);
       delete d;
       if(!r) return false;
       continue;
