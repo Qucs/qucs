@@ -40,7 +40,7 @@
 #include "main.h"
 #include "schematic.h"
 
- extern QStringList StringList;
+extern SubMap FileList;
 
 LibraryDialog::LibraryDialog(QucsApp *App_, QListViewItem *SchematicList)
 			: QDialog(App_, 0, TRUE, Qt::WDestructiveClose)
@@ -301,19 +301,21 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "Model");
 	int error = 0;
 	QStringList IFiles;
-	while(!StringList.isEmpty()) {
-	  QString f = StringList.last();
-	  StringList.remove(f);
+	SubMap::Iterator it = FileList.begin();
+	while(it != FileList.end()) {
+	  QString f = it.data().File;
 	  QString ifn, ofn;
-	  if(f.find("SCH") == 0) {
-	    ifn = f.mid(4) + ".lst";
+	  if(it.data().Type == "SCH") {
+	    ifn = f + ".lst";
 	    ofn = ifn;
-	  } else if(f.find("CIR") == 0) {
-	    ifn = f.mid(4) + ".lst";
+	  } else if(it.data().Type == "CIR") {
+	    ifn = f + ".lst";
 	    ofn = ifn;
 	  }
 	  error += intoFile(ifn, ofn, IFiles);
+	  it++;
 	}
+	FileList.clear();
 	if(!IFiles.isEmpty()) {
 	  Stream << "  <ModelIncludes \"" << IFiles.join("\" \"") << "\">\n";
 	}
@@ -330,19 +332,21 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "VerilogModel");
 	int error = 0;
 	QStringList IFiles;
-	while(!StringList.isEmpty()) {
-	  QString f = StringList.last();
-	  StringList.remove(f);
+	SubMap::Iterator it = FileList.begin();
+	while(it != FileList.end()) {
+	  QString f = it.data().File;
 	  QString ifn, ofn;
-	  if(f.find("SCH") == 0) {
-	    ifn = f.mid(4) + ".lst";
-	    ofn = f.mid(4) + ".v";
-	  } else if(f.find("VER") == 0) {
-	    ifn = f.mid(4);
+	  if(it.data().Type == "SCH") {
+	    ifn = f + ".lst";
+	    ofn = f + ".v";
+	  } else if(it.data().Type == "VER") {
+	    ifn = f;
 	    ofn = ifn;
 	  }
 	  error += intoFile(ifn, ofn, IFiles);
+	  it++;
 	}
+	FileList.clear();
 	if(!IFiles.isEmpty()) {
 	  Stream << "  <VerilogModelIncludes \"" 
 		 << IFiles.join("\" \"") << "\">\n";
@@ -360,19 +364,20 @@ void LibraryDialog::slotNext()
 	intoStream(Stream, tmp, "VHDLModel");
 	int error = 0;
 	QStringList IFiles;
-	while(!StringList.isEmpty()) {
-	  QString f = StringList.last();
-	  StringList.remove(f);
+	SubMap::Iterator it = FileList.begin();
+	while(it != FileList.end()) {
+	  QString f = it.data().File;
 	  QString ifn, ofn;
-	  if(f.find("SCH") == 0) {
-	    ifn = f.mid(4) + ".lst";
-	    ofn = f.mid(4) + ".vhdl";
-	  } else if(f.find("VHD") == 0) {
-	    ifn = f.mid(4);
+	  if(it.data().Type == "SCH") {
+	    ifn = f + ".lst";
+	    ofn = f + ".vhdl";
+	  } else if(it.data().Type == "VHD") {
+	    ifn = f;
 	    ofn = ifn;
 	  }
 	  error += intoFile(ifn, ofn, IFiles);
 	}
+	FileList.clear();
 	if(!IFiles.isEmpty()) {
 	  Stream << "  <VHDLModelIncludes \"" 
 		 << IFiles.join("\" \"") << "\">\n";

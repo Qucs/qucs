@@ -1,3 +1,10 @@
+2009-03-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp: Some code cleanup.  Also fixed a problem
+	with subcircuits containing VHDL files: passing signal types up
+	also when more than one instance of the subcircuit is on the
+	schematic.
+
 2009-03-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp (createSubNetlistPlain): Adjusting type
