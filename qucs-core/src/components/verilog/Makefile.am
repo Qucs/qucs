@@ -105,7 +105,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	fa2b.analogfunction.h fa2b.defs.h fa2b.core.h \
 	pad2bit.analogfunction.h pad2bit.defs.h pad2bit.core.h \
 	pad3bit.analogfunction.h pad3bit.defs.h pad3bit.core.h \
-	pad4bit.analogfunction.h pad4bit.defs.h pad4bit.core.h
+	pad4bit.analogfunction.h pad4bit.defs.h pad4bit.core.h \
 	binarytogrey4bit.analogfunction.h binarytogrey4bit.defs.h \
 	binarytogrey4bit.core.h	greytobinary4bit.analogfunction.h \
 	greytobinary4bit.defs.h greytobinary4bit.core.h \
