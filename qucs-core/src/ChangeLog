@@ -1,3 +1,8 @@
+2009-03-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Allowing time start/stop to be steered by sweep
+	variables correctly.
+
 2009-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp (getVector): Helper function for environment
