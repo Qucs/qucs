@@ -1376,10 +1376,13 @@ void GateComponent::createSymbol()
     else if(Model.at(z) == 'A')
       Texts.append(new Text( -10, 3-y, "&", QPen::darkBlue, 15.0));
     else if(Model.at(0) == 'X') {
-      if(Model.at(1) == 'N')
-        Texts.append(new Text( -11, 3-y, "=", QPen::darkBlue, 15.0));
+      if(Model.at(1) == 'N') {
+	Ellips.append(new Area(xr,-4, 8, 8,
+                  QPen(QPen::darkBlue,0), QBrush(QPen::darkBlue)));
+        Texts.append(new Text( -11, 3-y, "=1", QPen::darkBlue, 15.0));
+      }
       else
-        Texts.append(new Text( -12, 3-y, "=1", QPen::darkBlue, 15.0));
+        Texts.append(new Text( -11, 3-y, "=1", QPen::darkBlue, 15.0));
     }
   }
   else {   // old symbol
