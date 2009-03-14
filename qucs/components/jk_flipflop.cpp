@@ -41,10 +41,10 @@ JK_FlipFlop::JK_FlipFlop()
   Lines.append(new Line(  0,-30,  0,-40,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0, 30,  0, 40,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text( -4,-28, "S", QPen::darkBlue,  9.0));
-  Texts.append(new Text( -4, 15, "R", QPen::darkBlue,  9.0));
-  Texts.append(new Text(-17,-31, "J", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-17,  8, "K", QPen::darkBlue, 12.0));
+  Texts.append(new Text( -4,-29, "S", QPen::darkBlue,  9.0));
+  Texts.append(new Text( -4, 14, "R", QPen::darkBlue,  9.0));
+  Texts.append(new Text(-18,-31, "J", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-18,  8, "K", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,-31, "Q", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,  8, "Q", QPen::darkBlue, 12.0));
   Texts.current()->over=true;
