@@ -38,8 +38,8 @@ RS_FlipFlop::RS_FlipFlop()
   Lines.append(new Line( 30,-10, 20,-10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30, 10, 20, 10,QPen(QPen::darkBlue,2)));
 
-  Texts.append(new Text(-17,-21, "R", QPen::darkBlue, 12.0));
-  Texts.append(new Text(-17, -1, "S", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-18,-21, "R", QPen::darkBlue, 12.0));
+  Texts.append(new Text(-18, -1, "S", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6,-21, "Q", QPen::darkBlue, 12.0));
   Texts.append(new Text(  6, -1, "Q", QPen::darkBlue, 12.0));
   Texts.current()->over=true;

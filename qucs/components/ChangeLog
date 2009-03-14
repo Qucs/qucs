@@ -1,3 +1,8 @@
+2009-03-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (createSymbol): Fixed DIN symbol for basic XNOR
+	gate component.
+
 2009-03-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* vhdlfile.cpp (loadFile): Extracting signal types and passing
