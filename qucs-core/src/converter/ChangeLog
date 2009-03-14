@@ -1,3 +1,8 @@
+2009-03-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Allow "C12 1 2 C=126f" syntax to be translated
+	correctly.
+
 2008-11-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_vcd.cpp, parse_vcd.y, scan_vcd.l: Using 'double' to store
