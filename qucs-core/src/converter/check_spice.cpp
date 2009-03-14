@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.47 2008-10-08 16:43:30 ela Exp $
+ * $Id: check_spice.cpp,v 1.48 2009-03-14 15:44:44 ela Exp $
  *
  */
 
@@ -705,6 +705,9 @@ static void spice_translate_device (struct definition_t * root,
   if (tran != NULL) {
     spice_value_done (inst);
     spice_adjust_device (def, tran);
+  }
+  else if (!strcasecmp (def->type, "C")) {
+    // can probably be skipped
   }
   else {
     fprintf (stderr, "spice error, no such .MODEL `%s' found as specified in "
