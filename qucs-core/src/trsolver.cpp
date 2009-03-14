@@ -1,7 +1,7 @@
 /*
  * trsolver.cpp - transient solver class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.58 2008-10-08 16:32:58 ela Exp $
+ * $Id: trsolver.cpp,v 1.59 2009-03-14 13:30:31 ela Exp $
  *
  */
 
@@ -99,7 +99,7 @@ trsolver::trsolver (trsolver & o)
 
 // This function creates the time sweep if necessary.
 void trsolver::initSteps (void) {
-  if (swp != NULL) return;
+  if (swp != NULL) delete swp;
   swp = createSweep ("time");
 }
 
@@ -170,9 +170,6 @@ int trsolver::solve (void) {
   fixpoint = 0;
   statRejected = statSteps = statIterations = statConvergence = 0;
 
-  // Create time sweep if necessary.
-  initSteps ();
-
   // Choose a solver.
   if (!strcmp (solver, "CroutLU"))
     eqnAlgo = ALGO_LU_DECOMPOSITION;
@@ -197,6 +194,9 @@ int trsolver::solve (void) {
   initTR ();
   setCalculation ((calculate_func_t) &calcTR);
   solve_pre ();
+
+  // Create time sweep if necessary.
+  initSteps ();
   swp->reset ();
 
   // Recall the DC solution.
