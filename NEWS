@@ -35,7 +35,8 @@ Version 0.0.15
    additional configuration file
  * Czech translation of the internal help system
  * new components: EPFL-EKV NMOS/PMOS V2.6, rectangular waveguide,
-   HICUM L0 v1.2, HICUM L2 v3.23, photodiode, digital buffer
+   HICUM L0 v1.2, HICUM L2 v3.23, photodiode, digital buffer, microstrip
+   radial stub
  * new libraries added: PMOSFETs, NMOSFETs, Regulators, Varistors and
    Ideal
 
