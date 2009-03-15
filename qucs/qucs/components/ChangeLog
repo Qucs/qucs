@@ -1,3 +1,7 @@
+2009-03-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* msrstub.cpp (MSrstub): New component: microstrip radial stub.
+
 2009-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (createSymbol): Fixed DIN symbol for basic XNOR
