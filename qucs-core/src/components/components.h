@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.7 2009/03/03 18:30:12 ela Exp $
+ * $Id: components.h,v 1.8 2009/03/15 13:20:56 ela Exp $
  *
  */
 
@@ -114,6 +114,7 @@
 #include "microstrip/mstee.h"
 #include "microstrip/mscross.h"
 #include "microstrip/msvia.h"
+#include "microstrip/msrstub.h"
 #include "microstrip/bondwire.h"
 
 #include "microstrip/cpwline.h"

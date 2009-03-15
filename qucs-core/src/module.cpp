@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.8 2009/03/03 18:30:12 ela Exp $
+ * $Id: module.cpp,v 1.9 2009/03/15 13:20:56 ela Exp $
  *
  */
 
@@ -191,6 +191,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (mstee);
   REGISTER_CIRCUIT (mscross);
   REGISTER_CIRCUIT (msvia);
+  REGISTER_CIRCUIT (msrstub);
   REGISTER_CIRCUIT (bondwire);
   REGISTER_CIRCUIT (cpwline);
   REGISTER_CIRCUIT (cpwopen);

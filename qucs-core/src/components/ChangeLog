@@ -1,3 +1,7 @@
+2009-03-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msrstub.cpp: New component: microstrip radial stub.
+
 2008-11-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/buffer.cpp: Added new digital buffer component.
