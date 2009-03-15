@@ -1,7 +1,7 @@
 #
 # src/components/microstrip/libmicrostrip.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ NAME = libmicrostrip
 SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp \
 	msstep.cpp msopen.cpp msgap.cpp mscoupled.cpp mstee.cpp mscross.cpp \
 	msvia.cpp cpwline.cpp cpwopen.cpp cpwshort.cpp cpwgap.cpp cpwstep.cpp \
-	bondwire.cpp
+	bondwire.cpp msrstub.cpp
 
 # Additional libraries.
 LIBS = 
