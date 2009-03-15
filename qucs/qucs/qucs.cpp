@@ -334,7 +334,7 @@ pInfoFunc TransmissionLines[] =
    &RectLine::info,
    &Substrate::info, &MSline::info, &MScoupled::info, &MScorner::info,
    &MSmbend::info, &MSstep::info, &MStee::info, &MScross::info, &MSopen::info,
-   &MSgap::info, &MSvia::info, &Coplanar::info, &CPWopen::info,
+   &MSgap::info, &MSvia::info, &MSrstub::info, &Coplanar::info, &CPWopen::info,
    &CPWshort::info, &CPWgap::info, &CPWstep::info, &BondWire::info, 0};
 
 pInfoFunc nonlinearComps[] =

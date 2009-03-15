@@ -6840,6 +6840,26 @@ Use:  qucsedit [-r] fitxer
         <source>cross coupled gate transfer function low scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>microstrip radial stub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inner radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outer radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stub angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Radial Stub</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

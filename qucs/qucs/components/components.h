@@ -71,6 +71,7 @@
 #include "msopen.h"
 #include "msgap.h"
 #include "msvia.h"
+#include "msrstub.h"
 #include "coplanar.h"
 #include "cpwopen.h"
 #include "cpwshort.h"

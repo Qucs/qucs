@@ -1564,6 +1564,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "GAP") c = new MSgap();
 	else if(cstr == "COUPLED") c = new MScoupled();
 	else if(cstr == "VIA") c = new MSvia();
+	else if(cstr == "RSTUB") c = new MSrstub();
 	else if(cstr == "ESFET") c = new MESFET();
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
