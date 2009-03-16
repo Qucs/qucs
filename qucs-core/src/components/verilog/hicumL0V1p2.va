@@ -5,7 +5,7 @@
  
 //  HICUM Level_0 Version_1.2: A Verilog-A description
 //  (A simplified version of HICUM Level2 model for BJT) 
-//  ## It is modified after the first version of HICUM/L0 code    ##
+//  ## It is modified after the first version of HICUM/L0 code ##
 
 // Minor code related changes
 // 01/09: Introduction of temporary dc capacitance variable CJE_DC to call the procedure with 
@@ -93,6 +93,7 @@
 `define MIN_R		0.001
 `define Gmin 		1.0e-12
 //`define Gmin		$simparam("gmin")        //suggested by L.L
+//`define Gmin		$simparam("gmin",1e-12)  //suggested by L.L
 
 `define QCMODF(vj,cj0,vd,z,aj,cjf)\
   if(cj0 > 0.0) begin\
@@ -174,8 +175,8 @@
     
 //Temperature dependence of depletion capacitance parameters
 `define TMPHICJ(cj0,vd,z,vg,cj0_t,vd_t)\
-	arg	= 0.5*vd/VT0;\
-	vdj0	= 2*VT0*ln(exp(arg)-exp(-arg));\
+  arg	= 0.5*vd/vt0;\
+	vdj0	= 2*vt0*ln(exp(arg)-exp(-arg));\
 	vdjt	= vdj0*qtt0+vg*(1-qtt0)-mg*VT*ln_qtt0;\
 	vd_t	= vdjt+2*VT*ln(0.5*(1+sqrt(1+4*exp(-vdjt/VT))));\
 	cj0_t	= cj0*exp(z*ln(vd/vd_t));
@@ -246,9 +247,9 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	branch		(ci,ei)		br_ciei;
 	branch 		(b,bi)  	br_bbi_i;  
 	branch 		(b,bi)  	br_bbi_v; 	
-	branch		(b,e)		br_be;
+	branch		(b,e)		  br_be;
 	branch		(b,ci)		br_bci;
-	branch		(b,s)		br_bs;
+	branch		(b,s)		  br_bs;
 	branch		(s,ci)		br_sci;
 	branch		(tnode )	br_sht;                          
                                         
@@ -281,20 +282,20 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 // BE depletion cap                          
 	parameter real cje0   		= 1.0e-20 	from (0:`INF)	`P(spice:name="cje0" info="Zero-bias BE depletion capacitance" unit="F" test:value="2e-14" m:factor="yes");
 	parameter real vde    		= 0.9		    from (0:10]	`P(spice:name="vde"  info="BE built-in voltage" unit="V");
- 
+//	parameter real ze     		= 0.5		    from (0:1]	`P(spice:name="ze"   info="BE exponent factor"); 
 	parameter real ze     		= 0.5		    from (0:1)	`P(spice:name="ze"   info="BE exponent factor");
 	parameter real aje    		= 2.5		    from [1:`INF)	`P(spice:name="aje"  info="Ratio of maximum to zero-bias value");
   
   
   parameter real vdedc    		= 0.9		from (0:10]	`P(spice:name="vdedc"  info="BE charge built-in voltage for d.c. transfer current" unit="V");
- 
+//	parameter real zedc     		= 0.5		from (0:1]	`P(spice:name="zedc"   info="charge BE exponent factor for d.c. transfer current"); 
 	parameter real zedc     		= 0.5		from (0:1)	`P(spice:name="zedc"   info="charge BE exponent factor for d.c. transfer current");
 	parameter real ajedc    		= 2.5		from [1:`INF)	`P(spice:name="ajedc"  info="BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current");
   
+ // parameter real cje0_dc   		= 1.0e-20 	from (0:`INF)	`P(spice:name="cje0" info="Zero-bias BE depletion capacitance" unit="F" test:value="2e-14" m:factor="yes");
   
   
-  
-  
+   
                                                
 // Transit time                              
 	parameter real t0     		= 0.0		from [0:`INF)	`P(spice:name="t0"    info="low current transit time at Vbici=0" test:value="5e-12" unit="s");
@@ -415,7 +416,7 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	real cj1,cj2,cj3,cjf;
 	
 	
-	//cjtfun 	*** tnom,VT,mg,VT0, removed: BA
+	//cjtfun 	*** tnom,VT,mg,vt0, removed: BA
 	real	vg;
 	real	vdj0,vdjt,cj0_t,vd_t,aj_t;
 	
@@ -474,7 +475,7 @@ module hicumL0V1p2 (c,b,e,s,tnode);
 	// new for temperature dependence
   	real mg,zetabci,zetasct,zetatef,avs;
   	real k1,k2,vgbe,vgbc,vgsc,dvg;	
-  	real xvf,xvf2,dvj,uvc,VT0;
+  	real xvf,xvf2,dvj,uvc,vt0;
 
   	// noise
   	real flicker_Pwr,fourkt,twoq;
@@ -550,7 +551,7 @@ analog begin
 	end
 	end
 
-	VT0     = `P_K*Tnom /`P_Q;
+	vt0     = `P_K*Tnom /`P_Q;
 	VT      = `P_K*Tdev /`P_Q;
 	dT      = Tdev-Tnom;  
 	qtt0    = Tdev/Tnom;
@@ -573,7 +574,8 @@ analog begin
 	
       `TMPHICJ(cje0,vde,ze,vgbe,cje0_t,vde_t)
       
-     
+   //  `TMPHICJ(cje0,vde,zedc,vgbe,cje0_t,vdedc_t)
+   
        cje0_dc = cje0;
    
       `TMPHICJ(cje0_dc,vdedc,zedc,vgbe,cje0_dc_t,vdedc_t)   //introducing DC capacitance
@@ -716,8 +718,7 @@ analog begin
 
 // Normalized minority charge at low currents (w=0) and high currents (w=1)
 
-
-
+ 
     if (tfh!=0)begin
     
     qml	= itfi/ickf+itri/ickr+exp((0.6666)*ln(itfi*(itfi/ick)*((tfh)/iqfh)));
@@ -747,7 +748,7 @@ analog begin
       w= (sqrt(aa*aa+0.01)+aa)/(1+sqrt(1+0.01));
 
 // Normalized minority charge
-	
+	   
 
     if (tfh!=0) begin
     
@@ -976,6 +977,7 @@ analog begin
 	// ********************************************
 
 	//if(flsh == 0 || rth < `MIN_R) begin
+	//
 	//	V(br_sht)	<+ 0.0;
 	//	
 	//end else begin
@@ -1006,7 +1008,6 @@ analog begin
 // Flicker noise   
 	flicker_Pwr	= kf*pow(ijbe,af);
 	I(br_biei)	<+ flicker_noise(flicker_Pwr,1.0);
-
 
 
 
