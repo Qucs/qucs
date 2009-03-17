@@ -1005,10 +1005,6 @@
         <translation type="obsolete">שגיאה: לא יכול להתחיל את הסימולטור!</translation>
     </message>
     <message>
-        <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation type="unfinished">סגור</translation>
     </message>
@@ -1102,6 +1098,10 @@
     </message>
     <message>
         <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
