@@ -1105,7 +1105,7 @@
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation>Die Datei wurde erfolgreich importiert!</translation>
+        <translation type="obsolete">Die Datei wurde erfolgreich importiert!</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1149,59 +1149,63 @@
     </message>
     <message>
         <source>Convert Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Datendatei konvertieren...</translation>
     </message>
     <message>
         <source>File specification</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateispezifikation</translation>
     </message>
     <message>
         <source>Input File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabedatei:</translation>
     </message>
     <message>
         <source>Output Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabedaten:</translation>
     </message>
     <message>
         <source>Qucs dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Datensatz</translation>
     </message>
     <message>
         <source>Touchstone</source>
-        <translation type="unfinished"></translation>
+        <translation>Touchstone</translation>
     </message>
     <message>
         <source>CSV</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV</translation>
     </message>
     <message>
         <source>Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Bibliothek</translation>
     </message>
     <message>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertieren</translation>
     </message>
     <message>
         <source>Qucs dataset files</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Datensatzdateien</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished">SPICE Dateien</translation>
+        <translation>SPICE Dateien</translation>
     </message>
     <message>
         <source>Any file</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien</translation>
     </message>
     <message>
         <source>Running command line:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommandozeile wird ausgeführt:</translation>
     </message>
     <message>
         <source>Qucs netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Netzliste</translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
+        <translation>Die Datei wurde erfolgreich konvertiert!</translation>
     </message>
 </context>
 <context>
@@ -6900,87 +6904,87 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>output delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerung am Ausgang</translation>
     </message>
     <message>
         <source>cross coupled gate delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerung des kreuzgekoppelten Gatters</translation>
     </message>
     <message>
         <source>voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungspegel</translation>
     </message>
     <message>
         <source>time delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerungszeit</translation>
     </message>
     <message>
         <source>logic 0 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungspegel von logisch 0</translation>
     </message>
     <message>
         <source>logic 1 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungspegel von logisch 1</translation>
     </message>
     <message>
         <source>pad output value</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabewert des Patterngenerators</translation>
     </message>
     <message>
         <source>4x2 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x2 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x3 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x3 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x4 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x4 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit binary to grey converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4Bit Bin2Grey</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>1Bit Komparator</translation>
     </message>
     <message>
         <source>2bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit Komparator Verilogmodell</translation>
     </message>
     <message>
         <source>2Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>2Bit Komparator</translation>
     </message>
     <message>
         <source>4bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit Komparator Verilogmodell</translation>
     </message>
     <message>
         <source>4Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>4Bit Komparator</translation>
     </message>
     <message>
         <source>D flip flop with set and reset verilog device</source>
@@ -6988,7 +6992,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>D-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>D-Speicherglied mit SR</translation>
     </message>
     <message>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
@@ -7008,7 +7012,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>2to4 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2zu4 Demultiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>2to4 Demux</source>
@@ -7016,7 +7020,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>3to8 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>3zu8 Demultiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>3to8 Demux</source>
@@ -7024,7 +7028,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4to16 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>5zu16 Demultiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>4to16 Demux</source>
@@ -7032,19 +7036,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>1bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>1bit Volladdierer Verilogmodell</translation>
     </message>
     <message>
         <source>1Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>1Bit Volladdierer</translation>
     </message>
     <message>
         <source>2bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit Volladdierer Verilogmodell</translation>
     </message>
     <message>
         <source>2Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>2Bit Volladdierer</translation>
     </message>
     <message>
         <source>gated D latch verilog device</source>
@@ -7064,11 +7068,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>1bit half adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>1bit Halbaddierer Verilogmodell</translation>
     </message>
     <message>
         <source>1Bit HalfAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>1Bit Halbaddierer</translation>
     </message>
     <message>
         <source>4bit highest priority encoder (binary form) verilog device</source>
@@ -7084,27 +7088,27 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>JK-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>JK-Speicherglied mit SR</translation>
     </message>
     <message>
         <source>logic 0 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisch 0 Verilogmodell</translation>
     </message>
     <message>
         <source>Logic 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisch 0</translation>
     </message>
     <message>
         <source>logic 1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisch 1 Verilogmodell</translation>
     </message>
     <message>
         <source>Logic 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Logisch 1</translation>
     </message>
     <message>
         <source>2to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2zu1 Multiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>2to1 Mux</source>
@@ -7112,7 +7116,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4zu1 Multiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>4to1 Mux</source>
@@ -7120,7 +7124,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>8to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>8zu1 Multiplexer Verilogmodell</translation>
     </message>
     <message>
         <source>8to1 Mux</source>
@@ -7128,7 +7132,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>2bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit Patterngenerator Verilogmodell</translation>
     </message>
     <message>
         <source>2Bit Pattern</source>
@@ -7136,7 +7140,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>3bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>3bit Patterngenerator Verilogmodell</translation>
     </message>
     <message>
         <source>3Bit Pattern</source>
@@ -7144,7 +7148,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit Patterngenerator Verilogmodell</translation>
     </message>
     <message>
         <source>4Bit Pattern</source>
@@ -7156,7 +7160,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>T-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>T-Speicherglied mit SR</translation>
     </message>
     <message>
         <source>transfer function high scaling factor</source>
@@ -7164,7 +7168,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>transfer function scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor für die Transferfunktion</translation>
     </message>
     <message>
         <source>cross coupled gate transfer function high scaling factor</source>
@@ -7176,23 +7180,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>microstrip radial stub</source>
-        <translation type="unfinished"></translation>
+        <translation>radiale Mikrostreifenstichleitung</translation>
     </message>
     <message>
         <source>inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>innerer Radius</translation>
     </message>
     <message>
         <source>outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>äußerer Radius</translation>
     </message>
     <message>
         <source>stub angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Winkel der Stichleitung</translation>
     </message>
     <message>
         <source>Microstrip Radial Stub</source>
-        <translation type="unfinished"></translation>
+        <translation>Radiale Mikrostreifenstichleitung</translation>
     </message>
 </context>
 <context>
@@ -9872,17 +9876,19 @@ Zentriert ausgewählte Elemente vertikal</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten &amp;Import/Export...</translation>
     </message>
     <message>
         <source>Convert data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datendatei konvertieren</translation>
     </message>
     <message>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten Import/Export
+
+Konvertiert Datendatei in verschiedene Datenformate</translation>
     </message>
 </context>
 <context>
@@ -13623,7 +13629,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch</translation>
     </message>
 </context>
 <context>

@@ -1049,7 +1049,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation>Fájl importálás sikeres!</translation>
+        <translation type="obsolete">Fájl importálás sikeres!</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1145,6 +1145,10 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
