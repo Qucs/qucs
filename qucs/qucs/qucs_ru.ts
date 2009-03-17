@@ -1037,11 +1037,11 @@
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation>Импортировать файл данных...</translation>
+        <translation type="obsolete">Импортировать файл данных...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation>Импортируемый файл:</translation>
+        <translation type="obsolete">Импортируемый файл:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -1057,7 +1057,7 @@
     </message>
     <message>
         <source>Import</source>
-        <translation>Импорт</translation>
+        <translation type="obsolete">Импорт</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1069,7 +1069,7 @@
     </message>
     <message>
         <source>Any File</source>
-        <translation>Любой файл</translation>
+        <translation type="obsolete">Любой файл</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
@@ -1146,6 +1146,62 @@
     <message>
         <source>CSV files</source>
         <translation>файлы CSV</translation>
+    </message>
+    <message>
+        <source>Convert Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE files</source>
+        <translation type="unfinished">файлы SPICE</translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running command line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9585,17 +9641,17 @@ Install Content of a Package</source>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation>&amp;Импортировать данные...</translation>
+        <translation type="obsolete">&amp;Импортировать данные...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation>Преобразовать файл в файл данных Qucs</translation>
+        <translation type="obsolete">Преобразовать файл в файл данных Qucs</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation>Импортировать данные
+        <translation type="obsolete">Импортировать данные
 
 Преобразовать файл данных в файл данных Qucs</translation>
     </message>
@@ -9794,6 +9850,20 @@ Center vertically selected elements</source>
     <message>
         <source>verilog-a devices</source>
         <translation>устройства verilog-a</translation>
+    </message>
+    <message>
+        <source>&amp;Import/Export Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import/Export Data
+
+Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
