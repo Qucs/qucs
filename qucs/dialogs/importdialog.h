@@ -25,6 +25,8 @@ class QTextEdit;
 class QLineEdit;
 class QGridLayout;
 class QPushButton;
+class QComboBox;
+class QLabel;
 
 
 class ImportDialog : public QDialog  {
@@ -40,6 +42,7 @@ private slots:
   void slotImport();
   void slotAbort();
   void slotBrowse();
+  void slotType(int);
 
 private:
   void startSimulator();
@@ -47,10 +50,12 @@ private:
 public:
   QGridLayout *all;
 
+  QLabel *OutputLabel;
   QProcess Process;
   QTextEdit *MsgText;
-  QLineEdit *ImportEdit, *OutputEdit;
+  QLineEdit *ImportEdit, *OutputEdit, *OutputData;
   QPushButton *ImportButt, *CancelButt, *AbortButt;
+  QComboBox *OutType;
 };
 
 #endif
