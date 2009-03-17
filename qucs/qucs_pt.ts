@@ -988,10 +988,6 @@
         <translation type="obsolete">ERRO: Não é possível inciar o simulador!</translation>
     </message>
     <message>
-        <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1085,6 +1081,10 @@
     </message>
     <message>
         <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

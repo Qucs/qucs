@@ -961,10 +961,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Successfully imported file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Converter ended with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1022,6 +1018,10 @@
     </message>
     <message>
         <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

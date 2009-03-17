@@ -118,8 +118,28 @@ void ImportDialog::slotBrowse()
     lastDir = Info.dirPath(true);  // remember last directory
     ImportEdit->setText(s);
 
-    if(OutputEdit->text().isEmpty())
-      OutputEdit->setText(Info.baseName()+".dat");
+    if(OutputEdit->text().isEmpty()) {
+      switch(OutType->currentItem()) {
+      case 0:
+	OutputEdit->setText(Info.baseName()+".dat");
+	break;
+      case 1:
+	OutputEdit->setText(Info.baseName()+".snp");
+	break;
+      case 2:
+	OutputEdit->setText(Info.baseName()+".csv");
+	break;
+      case 3:
+	OutputEdit->setText(Info.baseName()+".lib");
+	break;
+      case 4:
+	OutputEdit->setText(Info.baseName()+".txt");
+	break;
+      default:
+	OutputEdit->setText(Info.baseName()+".dat");
+	break;
+      }
+    }
   }
 }
 
@@ -279,7 +299,7 @@ void ImportDialog::slotProcessEnded()
   AbortButt->setDisabled(true);
 
   if(Process.normalExit() && (Process.exitStatus() == 0)) {
-    MsgText->append(tr("Successfully imported file!"));
+    MsgText->append(tr("Successfully converted file!"));
 
     disconnect(CancelButt, SIGNAL(clicked()), 0, 0);
     connect(CancelButt, SIGNAL(clicked()), SLOT(accept()));
