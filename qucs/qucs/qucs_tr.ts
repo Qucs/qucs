@@ -983,7 +983,7 @@
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation>Kütük basarılı sekilde alındı!</translation>
+        <translation type="obsolete">Kütük basarılı sekilde alındı!</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1079,6 +1079,10 @@
     </message>
     <message>
         <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
