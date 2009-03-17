@@ -977,11 +977,11 @@
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation>Importar Fitxer de dades...</translation>
+        <translation type="obsolete">Importar Fitxer de dades...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation>Fitxer a importar:</translation>
+        <translation type="obsolete">Fitxer a importar:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -997,7 +997,7 @@
     </message>
     <message>
         <source>Import</source>
-        <translation>Importar</translation>
+        <translation type="obsolete">Importar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1009,7 +1009,7 @@
     </message>
     <message>
         <source>Any File</source>
-        <translation>Qualsevol Fitxer</translation>
+        <translation type="obsolete">Qualsevol Fitxer</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
@@ -1085,6 +1085,62 @@
     </message>
     <message>
         <source>CSV files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE files</source>
+        <translation type="unfinished">fitxers SPICE</translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running command line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs netlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9145,17 +9201,17 @@ Instalar el contenido de un Paquete</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation>&amp;Importar Dades...</translation>
+        <translation type="obsolete">&amp;Importar Dades...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation>Convertir fitxer a fitxer de dades de Qucs</translation>
+        <translation type="obsolete">Convertir fitxer a fitxer de dades de Qucs</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation>Importar Dades
+        <translation type="obsolete">Importar Dades
 
 Convertir fitxer de dades a fitxer de dades de Qucs</translation>
     </message>
@@ -9353,6 +9409,20 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import/Export Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import/Export Data
+
+Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

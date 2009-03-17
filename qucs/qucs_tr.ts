@@ -919,11 +919,11 @@
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation>Kütügü Dısarıdan Al...</translation>
+        <translation type="obsolete">Kütügü Dısarıdan Al...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation>Dısarıdan Alınan Kütük:</translation>
+        <translation type="obsolete">Dısarıdan Alınan Kütük:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -939,7 +939,7 @@
     </message>
     <message>
         <source>Import</source>
-        <translation>Dısarıdan Al</translation>
+        <translation type="obsolete">Dısarıdan Al</translation>
     </message>
     <message>
         <source>All known</source>
@@ -947,7 +947,7 @@
     </message>
     <message>
         <source>Any File</source>
-        <translation>Herhangi Bir Kütük</translation>
+        <translation type="obsolete">Herhangi Bir Kütük</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
@@ -1024,6 +1024,62 @@
     <message>
         <source>CSV files</source>
         <translation>CVS kütükleri</translation>
+    </message>
+    <message>
+        <source>Convert Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE files</source>
+        <translation type="unfinished">SPICE kütükleri</translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running command line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8918,17 +8974,17 @@ Bohça içerigini yükle</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation>&amp;Dısarıdan Veri Al...</translation>
+        <translation type="obsolete">&amp;Dısarıdan Veri Al...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation>Kütügü Qucs veri kütügüne çevir</translation>
+        <translation type="obsolete">Kütügü Qucs veri kütügüne çevir</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation>Dısarıdan Veri Al
+        <translation type="obsolete">Dısarıdan Veri Al
 
 Veri kütügünü Qucs veri kütügüne çevirir</translation>
     </message>
@@ -9135,6 +9191,20 @@ Seçili bileşenleri dikey olarak ortala</translation>
     <message>
         <source>verilog-a devices</source>
         <translation>verilog-a devre elemanları</translation>
+    </message>
+    <message>
+        <source>&amp;Import/Export Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import/Export Data
+
+Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

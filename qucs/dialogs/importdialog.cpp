@@ -21,6 +21,7 @@
 #include <qlineedit.h>
 #include <qtextedit.h>
 #include <qvgroupbox.h>
+#include <qcombobox.h>
 #include <qfiledialog.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
@@ -33,21 +34,38 @@
 ImportDialog::ImportDialog(QWidget *parent)
 		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
-  setCaption(tr("Import Data File..."));
+  setCaption(tr("Convert Data File..."));
 
   all = new QGridLayout(this, 4, 3, 5, 3);
 
-  all->addWidget(new QLabel(tr("Import File:"), this), 0, 0);
-  ImportEdit = new QLineEdit(this);
-  all->addWidget(ImportEdit, 0, 1);
-  QPushButton *BrowseButt = new QPushButton(tr("Browse"), this);
-  all->addWidget(BrowseButt, 0, 2);
+  QVGroupBox *Group2 = new QVGroupBox(tr("File specification"),this);
+  all->addMultiCellWidget(Group2, 0,1, 0,2);
+  QWidget *f = new QWidget(Group2);
+  QGridLayout *file = new QGridLayout(f, 3, 3, 5);
+  file->addWidget(new QLabel(tr("Input File:"), f), 0, 0);
+  ImportEdit = new QLineEdit(f);
+  file->addWidget(ImportEdit, 0, 1);
+  QPushButton *BrowseButt = new QPushButton(tr("Browse"), f);
+  file->addWidget(BrowseButt, 0, 2);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowse()));
-
-  all->addWidget(new QLabel(tr("Output File:"), this), 1, 0);
-  OutputEdit = new QLineEdit(this);
-  all->addWidget(OutputEdit, 1, 1);
-
+  file->addWidget(new QLabel(tr("Output File:"), f), 1, 0);
+  OutputEdit = new QLineEdit(f);
+  file->addWidget(OutputEdit, 1, 1);
+  OutputLabel = new QLabel(tr("Output Data:"), f);
+  OutputLabel->setEnabled(false);
+  file->addWidget(OutputLabel, 2, 0);
+  OutputData = new QLineEdit(f);
+  OutputData->setEnabled(false);
+  file->addWidget(OutputData, 2, 1);
+  OutType = new QComboBox(f);
+  OutType->insertItem(tr("Qucs dataset"));
+  OutType->insertItem(tr("Touchstone"));
+  OutType->insertItem(tr("CSV"));
+  OutType->insertItem(tr("Qucs library"));
+  OutType->insertItem(tr("Qucs netlist"));
+  connect(OutType, SIGNAL(activated(int)), SLOT(slotType(int)));
+  file->addWidget(OutType, 2, 2);
+  
   QVGroupBox *Group1 = new QVGroupBox(tr("Messages"),this);
   all->addMultiCellWidget(Group1, 2,2, 0,2);
 
@@ -62,7 +80,7 @@ ImportDialog::ImportDialog(QWidget *parent)
 
   Butts->setStretchFactor(new QWidget(Butts), 5); // stretchable placeholder
   
-  ImportButt = new QPushButton(tr("Import"), Butts);
+  ImportButt = new QPushButton(tr("Convert"), Butts);
   connect(ImportButt, SIGNAL(clicked()), SLOT(slotImport()));
   AbortButt = new QPushButton(tr("Abort"), Butts);
   AbortButt->setDisabled(true);
@@ -82,14 +100,17 @@ void ImportDialog::slotBrowse()
 {
   QString s = QFileDialog::getOpenFileName(
      lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("All known")+" (*.s?p *.csv *.citi *.cit *.asc *.mdl *.vcd);;"+
+     tr("All known")+
+     " (*.s?p *.csv *.citi *.cit *.asc *.mdl *.vcd *.dat *.cir);;"+
      tr("Touchstone files")+" (*.s?p);;"+
      tr("CSV files")+" (*.csv);;"+
      tr("CITI files")+" (*.citi *.cit);;"+
      tr("ZVR ASCII files")+" (*.asc);;"+
      tr("IC-CAP model files")+" (*.mdl);;"+
      tr("VCD files")+" (*.vcd);;"+
-     tr("Any File")+" (*)",
+     tr("Qucs dataset files")+" (*.dat);;"+
+     tr("SPICE files")+" (*.cir);;"+
+     tr("Any file")+" (*)",
      this, 0, tr("Enter a Data File Name"));
 
   if(!s.isEmpty()) {
@@ -138,6 +159,10 @@ void ImportDialog::slotImport()
     CommandLine << "mdl";
   else if(Suffix == "csv")
     CommandLine << "csv";
+  else if(Suffix == "dat")
+    CommandLine << "qucsdata";
+  else if(Suffix == "cir")
+    CommandLine << "spice";
   else for(;;) {
     if(Suffix.at(0) == 's')
       if(Suffix.at(2) == 'p')
@@ -150,7 +175,34 @@ void ImportDialog::slotImport()
     MsgText->append(tr("ERROR: Unknown file format! Please check file name extension!"));
     return;
   }
-  CommandLine << "-of" << "qucsdata" << "-i" << ImportEdit->text()
+
+  CommandLine << "-of";
+  switch(OutType->currentItem()) {
+  case 0:
+    CommandLine << "qucsdata";
+    break;
+  case 1:
+    CommandLine << "touchstone";
+    if (!OutputData->text().isEmpty())
+      CommandLine << "-d" << OutputData->text();
+    break;
+  case 2:
+    CommandLine << "csv";
+    if (!OutputData->text().isEmpty())
+      CommandLine << "-d" << OutputData->text();
+    break;
+  case 3:
+    CommandLine << "qucslib";
+    break;
+  case 4:
+    CommandLine << "qucs";
+    break;
+  default:
+    CommandLine << "qucsdata";
+    break;
+  }
+
+  CommandLine << "-i" << ImportEdit->text()
               << "-o" << QucsWorkDir.filePath(OutputEdit->text());
 
   Process.setArguments(CommandLine);
@@ -161,8 +213,34 @@ void ImportDialog::slotImport()
   connect(&Process, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&Process, SIGNAL(processExited()), SLOT(slotProcessEnded()));
 
+  MsgText->append(tr("Running command line:")+"\n");
+  MsgText->append(CommandLine.join(" "));
+  MsgText->append("\n");
+
   if(!Process.start())
     MsgText->append(tr("ERROR: Cannot start converter!"));
+}
+
+// ------------------------------------------------------------------------
+void ImportDialog::slotType(int index)
+{
+  switch(index) {
+  case 0:
+  case 3:
+  case 4:
+    OutputData->setEnabled(false);
+    OutputLabel->setEnabled(false);
+    break;
+  case 1:
+  case 2:
+    OutputData->setEnabled(true);
+    OutputLabel->setEnabled(true);
+    break;
+  default:
+    OutputData->setEnabled(false);
+    OutputLabel->setEnabled(false);
+    break;
+  }
 }
 
 // ------------------------------------------------------------------------
@@ -197,13 +275,11 @@ void ImportDialog::slotDisplayErr()
 // Is called when the simulation process terminates.
 void ImportDialog::slotProcessEnded()
 {
-  MsgText->append(" ");
   ImportButt->setDisabled(false);
   AbortButt->setDisabled(true);
 
   if(Process.normalExit() && (Process.exitStatus() == 0)) {
     MsgText->append(tr("Successfully imported file!"));
-    OutputEdit->clear();
 
     disconnect(CancelButt, SIGNAL(clicked()), 0, 0);
     connect(CancelButt, SIGNAL(clicked()), SLOT(accept()));
