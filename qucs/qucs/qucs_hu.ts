@@ -980,11 +980,11 @@ fizikai tulajdonságait számítja ki.</translation>
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation>Adat fájl import...</translation>
+        <translation type="obsolete">Adat fájl import...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation>Fájl import:</translation>
+        <translation type="obsolete">Fájl import:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -1000,7 +1000,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importálás</translation>
+        <translation type="obsolete">Importálás</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1012,7 +1012,7 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation>Összes fájl</translation>
+        <translation type="obsolete">Összes fájl</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
@@ -1090,6 +1090,62 @@ fizikai tulajdonságait számítja ki.</translation>
     <message>
         <source>CSV files</source>
         <translation>CSV fájlok</translation>
+    </message>
+    <message>
+        <source>Convert Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Data:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs dataset files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE files</source>
+        <translation type="unfinished">SPICE fájl</translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running command line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9221,17 +9277,17 @@ Install Content of a Package</source>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation>Adat &amp;Importálás...</translation>
+        <translation type="obsolete">Adat &amp;Importálás...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation>Fájl Qucs adatfájlba konvertálása</translation>
+        <translation type="obsolete">Fájl Qucs adatfájlba konvertálása</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation>Adat importálás
+        <translation type="obsolete">Adat importálás
 
 Fájl Qucs adatfájlba konvertálása</translation>
     </message>
@@ -9435,6 +9491,20 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import/Export Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import/Export Data
+
+Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

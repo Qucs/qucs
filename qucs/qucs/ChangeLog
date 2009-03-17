@@ -1,3 +1,9 @@
+2009-03-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/importdialog.cpp (slotImport): Dialog can now also
+	export data.  It's a complete frontend for the QucsConv command
+	line tool.
+
 2009-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* schematic_file.cpp: Some code cleanup.  Also fixed a problem

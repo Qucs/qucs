@@ -339,11 +339,11 @@ void QucsApp::initActions()
 	tr("Extract Package\n\nInstall Content of a Package"));
   connect(extractPkg, SIGNAL(activated()), SLOT(slotExtractPackage()));
 
-  importData = new QAction("Import Data...",
-		 tr("&Import Data..."), CTRL+SHIFT+Key_I, this);
-  importData->setStatusTip(tr("Convert file to Qucs data file"));
+  importData = new QAction("Import/Export Data...",
+		 tr("&Import/Export Data..."), CTRL+SHIFT+Key_I, this);
+  importData->setStatusTip(tr("Convert data file"));
   importData->setWhatsThis(
-	tr("Import Data\n\nConvert data file to Qucs data file"));
+	tr("Import/Export Data\n\nConvert data file to various file formats"));
   connect(importData, SIGNAL(activated()), SLOT(slotImportData()));
 
   graph2csv = new QAction("Export to CSV...",
