@@ -1,3 +1,8 @@
+2009-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (load): Fixed bug in loading RFEDD with more than
+	4 parameters specified.
+
 2009-03-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* msrstub.cpp (MSrstub): New component: microstrip radial stub.
