@@ -772,6 +772,8 @@ bool Component::load(const QString& _s)
     tmp = 3;
   else if(Model == "EDD")
     tmp = 5;
+  else if(Model == "RFEDD")
+    tmp = 8;
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   for(; tmp<=(int)counts/2; tmp++)
@@ -808,7 +810,8 @@ bool Component::load(const QString& _s)
       return true;
     }
 
-    if(Model != "EDD")
+    // for equations
+    if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1);
