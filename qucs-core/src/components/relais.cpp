@@ -1,7 +1,7 @@
 /*
- * relais.cpp - time controlled switch class implementation
+ * relais.cpp - relais class implementation
  *
- * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.5 2008-10-07 20:15:32 ela Exp $
+ * $Id: relais.cpp,v 1.6 2009-03-20 15:41:50 ela Exp $
  *
  */
 
@@ -93,7 +93,7 @@ void relais::calcDC (void) {
   } else if (state == REAL_OFF) {
     r = roff;
   }
-  setD (VSRC_1, VSRC_1, r);
+  setD (VSRC_1, VSRC_1, -r);
 }
 
 void relais::saveOperatingPoints (void) {
@@ -102,7 +102,7 @@ void relais::saveOperatingPoints (void) {
 
 void relais::initAC (void) {
   initDC ();
-  setD (VSRC_1, VSRC_1, r);
+  setD (VSRC_1, VSRC_1, -r);
 }
 
 void relais::initTR (void) {
