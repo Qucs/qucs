@@ -1,3 +1,8 @@
+2009-03-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* relais.cpp: Fixed on resistance value.  Same bug as in the time
+	switch previously.
+
 2009-03-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msrstub.cpp: New component: microstrip radial stub.
