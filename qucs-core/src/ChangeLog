@@ -1,3 +1,8 @@
+2009-03-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed dB() calculation for real arguments to
+	reflect power conversion (10*log10) as in all other computations.
+
 2009-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Allowing time start/stop to be steered by sweep
