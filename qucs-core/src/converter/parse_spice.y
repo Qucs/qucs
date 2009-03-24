@@ -4,7 +4,7 @@
 /*
  * parse_spice.y - parser for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.20 2007-03-25 08:10:57 ela Exp $
+ * $Id: parse_spice.y,v 1.21 2009-03-24 15:30:16 ela Exp $
  *
  */
 
@@ -33,6 +33,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __MINGW32__
+#define strcasecmp stricmp
+#endif
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
@@ -167,6 +171,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <ident> IC_Special OFF_Special SIM_Type TEMP_Special MOS_Special
 %type <ident> BranchFunc NODESET_Action T_Device U_Device S_Device W_Device
 %type <ident> TF_Action SENS_Action FOUR_Action OpFunc TC_Special TEMP_Action
+%type <ident> GE_Type
 
 %%
 
@@ -279,8 +284,18 @@ DefinitionLine:
   }
   | GE_Source Node Node GE_Type Digits NodeValueList Eol {
     /* voltage controlled source POLY */
-    fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
-    $$ = NULL;
+    if (!strcasecmp ($4, "POLY")) {
+      $$ = spice_create_device ($1);
+      spice_append_str_value ($$, $2, HINT_NODE);
+      spice_append_str_value ($$, $3, HINT_NODE);
+      spice_append_str_value ($$, $4, HINT_NAME);
+      spice_append_val_value ($$, $5, HINT_NUMBER);
+      $$->values = netlist_append_values ($$->values, $6);
+    }
+    else {
+      fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
+      $$ = NULL;
+    }
   }
   | GE_Source Node Node GE_Type Eol {
     /* voltage controlled sources OTHER behavioural */

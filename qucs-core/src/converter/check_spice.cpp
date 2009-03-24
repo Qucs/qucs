@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.48 2009-03-14 15:44:44 ela Exp $
+ * $Id: check_spice.cpp,v 1.49 2009-03-24 15:30:16 ela Exp $
  *
  */
 
@@ -2152,18 +2152,20 @@ spice_post_translator (struct definition_t * root) {
 			 !strcmp (def->type, "CCVS"))) {
       struct definition_t * target;
       struct value_t * val = spice_find_device_instance (def);
-      char * key = val->ident;
-      target = spice_find_definition (root, "Vdc", key);
-      if (target) {
-	// adjust the controlling nodes of the source
-	spice_adjust_vsource_nodes (def, target);      
-	spice_translate_nodes (def, 1);
-      }
-      else {
-	fprintf (stderr, "spice error, no such voltage source `%s' found as "
-		 "referenced by the %s `%s' instance\n", def->type,
-		 def->instance, key);
-	spice_errors++;
+      if (val) {
+	char * key = val->ident;
+	target = spice_find_definition (root, "Vdc", key);
+	if (target) {
+	  // adjust the controlling nodes of the source
+	  spice_adjust_vsource_nodes (def, target);      
+	  spice_translate_nodes (def, 1);
+	}
+	else {
+	  fprintf (stderr, "spice error, no such voltage source `%s' found as "
+		   "referenced by the %s `%s' instance\n", def->type,
+		   def->instance, key);
+	  spice_errors++;
+	}
       }
     }
     // post-process switches
@@ -2393,6 +2395,188 @@ spice_post_translator (struct definition_t * root) {
   return root;
 }
 
+/* Translates E and G poly sources. */
+static struct definition_t *
+spice_translate_poly (struct definition_t * root,
+		      struct definition_t * def) {
+  struct value_t * prop, * val;
+  struct definition_t * ieqn, * qeqn;
+  int npoly;
+
+  if (!strcasecmp (def->type, "E") || !strcasecmp (def->type, "G")) {
+    if ((prop = spice_find_property (def->values, "POLY")) != NULL) {
+      // retype poly source into EDD
+      free (def->type);
+      def->type = strdup ("EDD");
+      spice_value_done (prop);
+      // get number of polynomial terms
+      prop = prop->next;
+      npoly = (int) spice_evaluate_value (prop);
+      spice_value_done (prop);
+
+      // contruct properties, equations and nodes of the EDD
+      prop = prop->next;
+      char I_[4], Q_[4];
+      char * ieq, * qeq;
+      int p;
+      for (int i = npoly * 2 - 1; i >= 0; i--) {
+	p = (i + 1) / 2 + 1;
+	struct node_t * node = spice_translate_node (prop->ident);
+	def->nodes = netlist_append_nodes (def->nodes, node);
+	spice_value_done (prop);
+	prop = prop->next;
+	if (i & 1) {
+	  ieq = (char *) malloc (strlen (def->instance) + 4 + 2);
+	  qeq = (char *) malloc (strlen (def->instance) + 4 + 2);
+	  sprintf (ieq, "%s.I%d", def->instance, p);
+	  sprintf (qeq, "%s.Q%d", def->instance, p);
+	  sprintf (I_, "I%d", p);
+	  sprintf (Q_, "Q%d", p);
+	  spice_set_property_string (def, Q_, qeq);
+	  spice_set_property_string (def, I_, ieq);
+	  ieqn = spice_create_definition (def, "Eqn");
+	  qeqn = spice_create_definition (def, "Eqn");
+	  spice_set_property_string (ieqn, "Export", "no");
+	  spice_set_property_string (qeqn, "Export", "no");
+	  spice_set_property_string (ieqn, ieq, "0");
+	  spice_set_property_string (qeqn, qeq, "0");
+	  root = spice_add_definition (root, qeqn);
+	  root = spice_add_definition (root, ieqn);
+	  sprintf (ieq, "Eqn%sI%d", def->instance, p);
+	  sprintf (qeq, "Eqn%sQ%d", def->instance, p);
+	  free (ieqn->instance);
+	  free (qeqn->instance);
+	  qeqn->instance = strdup (qeq);
+	  ieqn->instance = strdup (ieq);
+	  free (ieq);
+	  free (qeq);
+	}
+      }
+      p = 1;
+      ieq = (char *) malloc (strlen (def->instance) + 4 + 3);
+      qeq = (char *) malloc (strlen (def->instance) + 4 + 3);
+      sprintf (ieq, "%s.I%d", def->instance, p);
+      sprintf (qeq, "%s.Q%d", def->instance, p);
+      sprintf (I_, "I%d", p);
+      sprintf (Q_, "Q%d", p);
+      spice_set_property_string (def, Q_, qeq);
+      spice_set_property_string (def, I_, ieq);
+      ieqn = spice_create_definition (def, "Eqn");
+      qeqn = spice_create_definition (def, "Eqn");
+      spice_set_property_string (ieqn, "Export", "no");
+      spice_set_property_string (qeqn, "Export", "no");
+      spice_set_property_string (ieqn, ieq, "0");
+      spice_set_property_string (qeqn, qeq, "0");
+      root = spice_add_definition (root, qeqn);
+      root = spice_add_definition (root, ieqn);
+      sprintf (ieq, "Eqn%sI%d", def->instance, p);
+      sprintf (qeq, "Eqn%sQ%d", def->instance, p);
+      free (ieqn->instance);
+      free (qeqn->instance);
+      qeqn->instance = strdup (qeq);
+      ieqn->instance = strdup (ieq);
+      
+      // contruct polynomial expression
+      int * pn = (int *) calloc (npoly, sizeof (int));
+      int x, y, firstx = 1, firsty = 1;
+      y = -1; x = -1;
+      char e[1024], v[256];
+      strcpy (e, "");
+
+      foreach_value (prop, val) {
+	double k;
+	if (VAL_IS_NUMBER (val)) {
+	  if (val->hint & HINT_NODE)
+	    k = strtod (val->ident, NULL);
+	  else
+	    k = spice_evaluate_value (val);
+	  spice_value_done (val);
+
+	  if (k != 0.0) {
+	    sprintf (v, "%+g", k);
+	    strcat (e, v);
+	    for (int i = 0; i < npoly; i++) {
+	      switch (pn[i]) {
+	      case 0:
+		strcpy (v, "");
+		break;
+	      case 1:
+		sprintf (v, "*V%d", i + 2);
+		break;
+	      case 2:
+		sprintf (v, "*V%d*V%d", i + 2, i + 2);
+		break;
+	      default:
+		sprintf (v, "*V%d^%d", i + 2, pn[i]);
+		break;
+	      }
+	      strcat (e, v);
+	    }
+	  }
+
+	  if (!firstx) {
+	    pn[x]--;
+	  }
+	  else
+	    firstx = 0;
+	  x++;
+	  if (x % npoly == 0) {
+	    y++;
+	    if (!firsty) {
+	      pn[y-1]++;
+	    }
+	    else
+ 	      firsty = 0;
+	    y %= npoly;
+	  }
+	  x %= npoly;
+	  pn[x]++;
+
+	}
+	else break;
+      }
+      free (pn);
+
+      // replace first current branch to reflect polynom
+      sprintf (ieq, "%s.I%d", def->instance, p);
+      sprintf (qeq, "%s.Q%d", def->instance, p);
+      spice_set_property_string (ieqn, ieq, e);
+      spice_set_property_string (qeqn, qeq, "0");
+      free (ieq);
+      free (qeq);
+
+      // finally add buffering controlled source
+      struct definition_t * ctrl = NULL;
+      struct node_t * pnode, * nnode;
+      char * intp;
+
+      if (!strcasecmp (def->type, "G"))
+	ctrl = spice_create_definition (def, "CCVS");
+      else if (!strcasecmp (def->type, "E"))
+	ctrl = spice_create_definition (def, "CCCS");
+      
+      pnode = spice_get_node (def, 1);
+      nnode = spice_get_node (def, 2);
+      intp = strdup (spice_create_intern_node ());
+
+      spice_append_node (ctrl, intp);
+      spice_append_node (ctrl, nnode->node);
+      spice_append_node (ctrl, pnode->node);
+      spice_append_node (ctrl, (char *) "gnd");
+
+      free (pnode->node);
+      pnode->node = strdup (intp);
+      free (nnode->node);
+      nnode->node = strdup ("gnd");
+      free (intp);
+
+      spice_set_property_string (ctrl, "G", "1");
+      root = spice_add_definition (root, ctrl);
+    }
+  }
+  return root;
+}
+
 /* The function translates special actions defined in the Spice
    netlist including the types of simulations. */
 static struct definition_t *
@@ -2556,6 +2740,10 @@ static struct definition_t * spice_translator (struct definition_t * root) {
 	    !strcasecmp (def->type, "S") || !strcasecmp (def->type, "R") ||
 	    !strcasecmp (def->type, "C")) {
 	  spice_translate_device (root, def);
+	}
+	// vcvs sources
+	if (!strcasecmp (def->type, "E") || !strcasecmp (def->type, "G")) {
+	  root = spice_translate_poly (root, def);
 	}
 	// voltage sources
 	if (!strcasecmp (def->type, "V")) {
