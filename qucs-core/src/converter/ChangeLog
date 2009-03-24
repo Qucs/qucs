@@ -1,3 +1,8 @@
+2009-03-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Experimental version of G/E types poly source
+	translation added.
+
 2009-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Allow "C12 1 2 C=126f" syntax to be translated
