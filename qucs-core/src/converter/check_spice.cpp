@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.49 2009/03/24 15:30:16 ela Exp $
+ * $Id: check_spice.cpp,v 1.50 2009/03/24 15:37:46 ela Exp $
  *
  */
 
@@ -2401,9 +2401,13 @@ spice_translate_poly (struct definition_t * root,
 		      struct definition_t * def) {
   struct value_t * prop, * val;
   struct definition_t * ieqn, * qeqn;
-  int npoly;
+  int npoly, type;
 
   if (!strcasecmp (def->type, "E") || !strcasecmp (def->type, "G")) {
+    if (!strcasecmp (def->type, "E"))
+      type = 0;
+    else if (!strcasecmp (def->type, "G"))
+      type = 1;
     if ((prop = spice_find_property (def->values, "POLY")) != NULL) {
       // retype poly source into EDD
       free (def->type);
@@ -2550,9 +2554,9 @@ spice_translate_poly (struct definition_t * root,
       struct node_t * pnode, * nnode;
       char * intp;
 
-      if (!strcasecmp (def->type, "G"))
+      if (type == 0)
 	ctrl = spice_create_definition (def, "CCVS");
-      else if (!strcasecmp (def->type, "E"))
+      else if (type == 1)
 	ctrl = spice_create_definition (def, "CCCS");
       
       pnode = spice_get_node (def, 1);
