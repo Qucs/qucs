@@ -1,4 +1,4 @@
-<Qucs Library 0.0.11 "OpAmps">
+<Qucs Library 0.0.15 "OpAmps">
 
 <Component uA741>
   <Description>
@@ -63,7 +63,6 @@
   </Symbol>
 </Component>
 
-
 <Component op27(mod)>
   <Description>
 Modular macromodel for OP27.
@@ -114,28 +113,28 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="op27_cir"
   Vdc:VOFF2 _net7 _netIN_P1 U="1.5e-05"
   Vdc:VOFF1 _netIN_N1 _net6 U="1.5e-05"
 .Def:End
-
   </Model>
   <Symbol>
-    <Line -20 60 0 -120 #000080 2 1>
-    <Line -20 -60 90 60 #000080 2 1>
-    <Line -20 60 90 -60 #000080 2 1>
-    <Line 90 0 -20 0 #000080 2 1>
-    <Line -20 40 -20 0 #000080 2 1>
-    <Line -20 -40 -20 0 #000080 2 1>
-    <.PortSym -40 -40 1 0>
-    <.PortSym -40 40 2 0>
-    <.PortSym 90 0 3 180>
-    <Line 40 20 0 20 #000080 2 1>
-    <Line 40 -20 0 -20 #000080 2 1>
-    <.PortSym 40 -40 4 180>
-    <.PortSym 40 40 5 180>
-    <.ID -20 69 SUB>
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -5 -20 12 #000000 0 "OP27\n(MOD)">
-    <Text 45 25 12 #000000 0 "VEE">
-    <Text 45 -40 12 #000000 0 "VCC">
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <.PortSym 90 0 3 180>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.ID -20 69 OP>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <Text -15 -15 10 #000000 0 "OP27\n(MOD)">
   </Symbol>
 </Component>
 
@@ -178,29 +177,28 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="op27_boyle_cir"
 .Def:End
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 90 70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line -20 70 90 -70 #000080 2 1>
-    <Line 70 0 10 0 #000080 2 1>
-    <.PortSym 80 0 3 180>
-    <Line -30 -30 10 0 #000080 2 1>
-    <Line -30 30 10 0 #000080 2 1>
-    <.PortSym -30 30 2 0>
-    <.PortSym -30 -30 1 0>
-    <Line 40 -25 0 -20 #000080 2 1>
-    <Line 40 45 0 -20 #000080 2 1>
-    <.PortSym 40 45 5 180>
-    <.PortSym 40 -45 4 180>
-    <Text -10 -50 30 #000000 0 "-">
-    <Text -10 20 20 #000000 0 "+">
-    <Text -10 -10 12 #000000 0 "OP27\n(Boyle)">
-    <Text 45 -40 12 #000000 0 "VCC">
-    <Text 45 25 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 90 0 3 180>
+  <.PortSym 40 40 5 180>
+  <.PortSym -40 40 2 0>
+  <.ID -20 64 OP>
+  <Text -15 -15 10 #000000 0 "OP27\n(Boyle)">
   </Symbol>
 </Component>
-
-
 
 <Component ua741(mod)>
   <Description>
@@ -251,32 +249,33 @@ Idc:Ioff1 _net0 _net1 I="10nA"
 .Def:End
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line -20 -70 110 70 #000080 2 1>
-    <Line -20 70 110 -70 #000080 2 1>
-    <Line 90 0 10 0 #000080 2 1>
-    <.PortSym 100 0 3 180>
-    <Line 50 -25 0 -30 #000080 2 1>
-    <Line 50 60 0 -35 #000080 2 1>
-    <.PortSym 50 60 5 180>
-    <.PortSym 50 -55 4 180>
-    <Line -30 -30 10 0 #000080 2 1>
-    <Line -30 30 10 0 #000080 2 1>
-    <.PortSym -30 -30 1 0>
-    <.PortSym -30 30 2 0>
-    <Text -10 -50 30 #000000 0 "-">
-    <Text -10 20 20 #000000 0 "+">
-    <Text 55 -45 12 #000000 0 "VCC">
-    <Text 55 35 12 #000000 0 "VEE">
-    <Text 5 -15 12 #000000 0 "UA741\n(MOD)">
+  <.PortSym -40 -40 1 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.PortSym 90 0 3 180>
+  <.PortSym -40 40 2 0>
+  <.ID -20 64 OP>
+  <Text -15 -15 10 #000000 0 "UA741\n(MOD)">
   </Symbol>
 </Component>
 
 <Component ua741(boyle)>
   <Description>
 Boyle model for ua741.
-Mike Brinson, 2007
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_ua741_boyle_ _net0 _net1 _net2 _net3 _net4
@@ -311,37 +310,35 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ua741_boyle_cir"
   BJT:Q2 _netN_INP _net9 _net11 _ref Type="npn" Is="8.21538e-16" Bf="83.3333" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
   BJT:Q1 _netN_INN _net8 _net10 _ref Type="npn" Is="8e-16" Bf="107.143" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
 .Def:End
-
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 60 0 -125 #00007f 2 1>
-    <Line -20 -65 100 65 #00007f 2 1>
-    <Line -20 60 100 -60 #00007f 2 1>
-    <Line -35 -35 15 0 #00007f 2 1>
-    <Line -35 40 15 0 #00007f 2 1>
-    <Line 80 0 15 0 #00007f 2 1>
-    <.PortSym -35 -35 1 0>
-    <.PortSym -35 40 2 0>
-    <.PortSym 95 0 3 180>
-    <Line 60 50 0 -40 #00007f 2 1>
-    <Line 60 -15 0 -40 #00007f 2 1>
-    <Text -15 -55 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -15 -5 12 #000000 0 "UA741(Boyle)">
-    <.PortSym 60 -55 4 180>
-    <.PortSym 60 50 5 180>
-    <Text 65 -30 12 #000000 0 "VCC">
-    <Text 65 20 12 #000000 0 "VEE">
+  <.PortSym -40 -40 2 0>
+  <.PortSym -40 40 1 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 40 5 180>
+  <.PortSym 40 -40 4 180>
+  <.ID -20 69 OP>
+  <.PortSym 90 0 3 180>
+  <Text -15 -15 10 #000000 0 "UA741\n(Boyle)">
   </Symbol>
 </Component>
 
-
 <Component ua741(TI)>
   <Description>
-UA741 Macromodel (Modified Boyle model generated by PSPICE parts).
+UA741 macromodel (Modified Boyle model generated by PSPICE parts).
 Manufacturer: Texas Instruments.
-
   </Description>
   <Model>
 .Def:OpAmps_ua741_TI_ _net0 _net1 _net2 _net3 _net4
@@ -389,25 +386,26 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ua741_ps_cir"
 .Def:End
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 70 100 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line -20 -70 100 70 #000080 2 1>
-    <Line 80 0 10 0 #000080 2 1>
-    <.PortSym 90 0 3 180>
-    <Line -30 40 10 0 #000080 2 1>
-    <Line -30 -40 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <.PortSym -30 40 2 0>
-    <Line 50 -20 0 -30 #000080 2 1>
-    <Line 50 50 0 -30 #000080 2 1>
-    <.PortSym 50 -50 4 180>
-    <.PortSym 50 50 5 180>
-    <Text 0 -10 12 #000000 0 "UA741(TI)">
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text 65 -30 12 #000000 0 "VCC">
-    <Text 65 25 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.ID -20 69 OP>
+  <.PortSym 90 0 3 180>
+  <Text -15 -15 10 #000000 0 "UA741\n(TI)">
   </Symbol>
 </Component>
 
@@ -460,35 +458,35 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="opa27_TI_cir"
   .Def:End
   Sub:X1 _ref _netP_INP _netP_INN _netP_VCC _netP_VEE _netP_OUT Type="OPA27_TI"
 .Def:End
-
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 100 70 #000080 2 1>
-    <Line -20 70 100 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 80 0 10 0 #000080 2 1>
-    <.PortSym 90 0 3 180>
-    <Line -30 -40 10 0 #000080 2 1>
-    <Line -30 40 10 0 #000080 2 1>
-    <.PortSym -30 40 2 0>
-    <.PortSym -30 -40 1 0>
-    <Line 40 -30 0 -25 #000080 2 1>
-    <Line 40 55 0 -25 #000080 2 1>
-    <.PortSym 40 -55 4 180>
-    <.PortSym 40 55 5 180>
-    <Text -10 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -10 -5 12 #000000 0 "OPA27(TI)">
-    <Text 45 -40 12 #000000 0 "VCC">
-    <Text 45 30 12 #000000 0 "VEE">
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym -40 40 2 0>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 90 0 3 180>
+  <.PortSym 40 40 5 180>
+  <.ID -20 69 OP>
+  <.PortSym -40 -40 1 0>
+  <Text -15 -15 10 #000000 0 "OPA27\n(TI)">
   </Symbol>
 </Component>
 
 <Component tl081(TI)>
   <Description>
-TL081(TI) modified Boyle macromodel
-Mike Brinson, 2007
+TL081(TI) modified Boyle macromodel.
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_tl081_TI_ _net0 _net1 _net2 _net3 _net4
@@ -531,36 +529,35 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="tl081_TI_cir"
   .Def:End
   Sub:X1 _ref _netP_INP _netP_INN _netP_VCC _netP_VEE _netP_OUT _netTIMES Type="UA741_TI"
 .Def:End
-
-
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 110 70 #000080 2 1>
-    <Line -20 70 110 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 90 0 10 0 #000080 2 1>
-    <.PortSym 100 0 3 180>
-    <Line -30 40 10 0 #000080 2 1>
-    <Line -30 -40 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <.PortSym -30 40 2 0>
-    <Line 65 -15 0 -30 #000080 2 1>
-    <Line 65 45 0 -30 #000080 2 1>
-    <.PortSym 65 -45 4 180>
-    <.PortSym 65 45 5 180>
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -5 -5 12 #000000 0 "TL081(TI)">
-    <Text 70 -35 12 #000000 0 "VCC">
-    <Text 70 20 12 #000000 0 "VEE">
+  <.PortSym 90 0 3 180>
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.ID -20 69 OP>
+  <Text -15 -15 10 #000000 0 "TL081\n(TI)">
   </Symbol>
 </Component>
 
 <Component tl071(TI)>
   <Description>
-TL071(TI) Modified Boyle macromodel
-Mike Brinson, 2007
+TL071(TI) Modified Boyle macromodel.
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_tl071_TI_ _net0 _net1 _net2 _net3 _net4
@@ -603,35 +600,35 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="tl071_TI_cir"
   .Def:End
   Sub:X1 _ref _netP_INP _netP_INN _netP_VCC _netP_VEE _netP_OUT Type="TL071_TI"
 .Def:End
-
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 100 70 #000080 2 1>
-    <Line -20 70 100 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 80 0 10 0 #000080 2 1>
-    <.PortSym 90 0 3 180>
-    <Line 50 -20 0 -30 #000080 2 1>
-    <Line 50 50 0 -30 #000080 2 1>
-    <.PortSym 50 -50 4 180>
-    <.PortSym 50 50 5 180>
-    <Line -30 -40 10 0 #000080 2 1>
-    <Line -30 40 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <.PortSym -30 40 2 0>
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -5 -5 12 #000000 0 "TL071C(TI)">
-    <Text 55 -35 12 #000000 0 "VCC">
-    <Text 55 20 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.PortSym 90 0 3 180>
+  <.ID -20 69 OP>
+  <Text -15 -15 10 #000000 0 "TL071C\n(TI)">
   </Symbol>
 </Component>
 
 <Component OP07(TI)>
   <Description>
-OP07(TI) Modified Boyle model
-Mike Brinson, 2007
+OP07(TI) Modified Boyle model.
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_OP07_TI_ _net0 _net1 _net2 _net3 _net4
@@ -678,33 +675,33 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="op07c_TI_cir"
 .Def:End
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 100 70 #000080 2 1>
-    <Line -20 70 100 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 80 0 10 0 #000080 2 1>
-    <.PortSym 90 0 3 180>
-    <Line -30 -40 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <Line -30 40 10 0 #000080 2 1>
-    <.PortSym -30 40 2 0>
-    <Line 50 55 0 -35 #000080 2 1>
-    <Line 50 -20 0 -35 #000080 2 1>
-    <.PortSym 50 -55 4 180>
-    <.PortSym 50 55 5 180>
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -10 -5 12 #000000 0 "OP07(TI)">
-    <Text 55 -35 12 #000000 0 "VCC">
-    <Text 55 20 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.PortSym 90 0 3 180>
+  <.ID -20 69 OP>
+  <Text -15 -15 10 #000000 0 "OP07\n(TI)">
   </Symbol>
 </Component>
 
-
 <Component OP37(TI)>
   <Description>
-OP37(TI) Modified Boyle macromodel
-Mike Brinson, 2007
+OP37(TI) Modified Boyle macromodel.
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_OP37_TI_ _net0 _net1 _net2 _net3 _net4
@@ -751,32 +748,33 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="op37a_TI_cir"
 .Def:End
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 90 70 #000080 2 1>
-    <Line -20 70 90 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 70 0 10 0 #000080 2 1>
-    <.PortSym 80 0 3 180>
-    <Line -30 -40 10 0 #000080 2 1>
-    <Line -30 40 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <.PortSym -30 40 2 0>
-    <Line 40 -65 0 40 #000080 2 1>
-    <Line 40 25 0 40 #000080 2 1>
-    <.PortSym 40 -65 4 180>
-    <.PortSym 40 65 5 180>
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 30 20 #000000 0 "+">
-    <Text -15 -5 12 #000000 0 "OP37(TI)">
-    <Text 45 -40 12 #000000 0 "VCC">
-    <Text 45 25 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <.PortSym -40 40 2 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.PortSym 90 0 3 180>
+  <.ID -20 69 OP>
+  <Text -15 -15 10 #000000 0 "OP37\n(TI)">
   </Symbol>
 </Component>
 
 <Component mc1458(TI)>
   <Description>
-mc1458(TI) Modified Boyle model
-Mike Brinson, 2007
+mc1458(TI) Modified Boyle model.
+Mike Brinson, 2007.
   </Description>
   <Model>
 .Def:OpAmps_mc1458_TI_ _net0 _net1 _net2 _net3 _net4
@@ -821,28 +819,28 @@ Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="mc1458_TI_cir"
   .Def:End
   Sub:X1 _ref _netP_INP _netP_INN _netP_VCC _netP_VEE _netP_OUT Type="MC1458_TI"
 .Def:End
-
   </Model>
   <Symbol>
-    <.ID -20 74 SUB>
-    <Line -20 -70 100 70 #000080 2 1>
-    <Line -20 70 100 -70 #000080 2 1>
-    <Line -20 -70 0 140 #000080 2 1>
-    <Line 80 0 10 0 #000080 2 1>
-    <.PortSym 90 0 3 180>
-    <Line -30 -40 10 0 #000080 2 1>
-    <Line -30 30 10 0 #000080 2 1>
-    <.PortSym -30 -40 1 0>
-    <.PortSym -30 30 2 0>
-    <Line 40 -30 0 -35 #000080 2 1>
-    <Line 40 65 0 -35 #000080 2 1>
-    <.PortSym 40 -65 4 180>
-    <.PortSym 40 65 5 180>
-    <Text 45 -40 12 #000000 0 "VCC">
-    <Text -15 -60 30 #000000 0 "-">
-    <Text -15 20 20 #000000 0 "+">
-    <Text -10 -5 12 #000000 0 "mc1458(TI)">
-    <Text 45 30 12 #000000 0 "VEE">
+  <.PortSym -40 -40 1 0>
+  <Line -20 60 0 -120 #000080 2 1>
+  <Line -20 -60 90 60 #000080 2 1>
+  <Line 90 0 -20 0 #000080 2 1>
+  <Line -20 40 -20 0 #000080 2 1>
+  <Line -20 -40 -20 0 #000080 2 1>
+  <Line 40 20 0 20 #000080 2 1>
+  <Line 40 -20 0 -20 #000080 2 1>
+  <Text 45 25 10 #000000 0 "VEE">
+  <Text 45 -40 10 #000000 0 "VCC">
+  <Line -15 40 10 0 #ff0000 2 1>
+  <Line -10 35 0 10 #ff0000 2 1>
+  <Line -20 60 90 -60 #000080 2 1>
+  <Line -15 -40 10 0 #000000 2 1>
+  <.PortSym 90 0 3 180>
+  <.PortSym 40 -40 4 180>
+  <.PortSym 40 40 5 180>
+  <.ID -20 69 OP>
+  <Text -15 -15 10 #000000 0 "mc1458\n(TI)">
+  <.PortSym -40 40 2 0>
   </Symbol>
 </Component>
 
