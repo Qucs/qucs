@@ -1,3 +1,11 @@
+2009-03-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Transistors.lib: Added yet another transistor provided
+	by Frans Schreuder. Thanks!
+
+	* library/OpAmps.lib: Reworked symbols of Mike Brinson's
+	operational amplifiers.  Unified layout and put them onto grid.
+
 2009-02-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Transistors.lib: Added 6 new transistors provided by
