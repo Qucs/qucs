@@ -1,3 +1,8 @@
+2009-03-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed polynom order algorithm.  It's a messy
+	one, but working as far as known.
+
 2009-03-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Minor code cleanup for poly source translation.

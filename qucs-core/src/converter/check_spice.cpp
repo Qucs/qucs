@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.51 2009-03-25 17:25:49 ela Exp $
+ * $Id: check_spice.cpp,v 1.52 2009-03-27 17:10:23 ela Exp $
  *
  */
 
@@ -2438,6 +2438,52 @@ spice_add_edd_equation (struct definition_t * root,
   return root;
 }
 
+/* Since there no or little documentation about the polynom orders in
+   the SPICE2G6 'POLY' statements the following piece of code is a
+   straight re-implementation of the Fortran code in SPICE2G6. */
+static void spice2g6_nxtpwr (int * seq, int nd) {
+  int i, k, ps;
+
+  // special handling of one-dimensional polynoms
+  if (nd == 1) {
+    seq[0]++;
+    return;
+  }
+
+  // two and more-dimensional polynoms
+  k = nd;
+  do {
+    if (seq[k - 1] != 0) break;
+  } 
+  while (--k != 0);
+
+  if (k == 0) {
+    seq[0]++;
+  }
+  else if (k != nd) {
+    seq[k - 1]--;
+    seq[k]++;
+  }
+  else {
+    for (i = 0; i < k - 1; i++)
+      if (seq[i] != 0) break;
+    if (i == k - 1) {
+      seq[0] = seq[nd - 1] + 1;
+      seq[nd-1] = 0;
+      return;
+    }
+    ps = 1;
+    k = nd - 1;
+    while (seq[k - 1] < 1) {
+      ps += seq[k];
+      seq[k] = 0;
+      k--;
+    }
+    seq[k] += ps;
+    seq[k - 1]--;
+  }
+}
+
 /* Creates a 'nd' dimensional polynomial expression extracted from the
    coefficient list of a value. */
 static char *
@@ -2446,8 +2492,6 @@ spice_create_poly (struct value_t * prop, int nd) {
 
   // contruct polynomial expression
   int * pn = (int *) calloc (nd, sizeof (int));
-  int x, y, firstx = 1, firsty = 1;
-  y = -1; x = -1;
   static char expr[1024];
   char value[256];
   strcpy (expr, "");
@@ -2465,10 +2509,6 @@ spice_create_poly (struct value_t * prop, int nd) {
 
     // construct single polynom
     if (k != 0.0) {
-
-      fprintf (stderr, "poly:");
-      for (int i = 0; i < nd; i++) fprintf (stderr, " %d", pn[i]);
-      fprintf (stderr, "\n");
 
       // coefficient
       sprintf (value, "%+g", k);
@@ -2495,23 +2535,8 @@ spice_create_poly (struct value_t * prop, int nd) {
       }
     }
 
-    // prepare polynom renumbering; TODO: messy/wrong implementation
-    if (!firstx)
-      pn[x]--;
-    else
-      firstx = 0;
-    x++;
-    if (x % nd == 0) {
-      y++;
-      if (!firsty)
-	pn[y-1]++;
-      else
-	firsty = 0;
-      y %= nd;
-    }
-    x %= nd;
-    pn[x]++;
-
+    // prepare next polynom
+    spice2g6_nxtpwr (pn, nd);
   }
   free (pn);
   return expr;
