@@ -296,6 +296,7 @@ void LibraryDialog::slotNext()
 
       // save analog model
       tmp.truncate(0);
+      Doc->isAnalog = true;
       ret = Doc->createLibNetlist(&ts, ErrText, -1);
       if(ret) {
 	intoStream(Stream, tmp, "Model");
@@ -312,7 +313,7 @@ void LibraryDialog::slotNext()
 	    ifn = f + ".lst";
 	    ofn = ifn;
 	  }
-	  error += intoFile(ifn, ofn, IFiles);
+	  if (!ifn.isEmpty()) error += intoFile(ifn, ofn, IFiles);
 	  it++;
 	}
 	FileList.clear();
@@ -327,6 +328,7 @@ void LibraryDialog::slotNext()
       // save verilog model
       tmp.truncate(0);
       Doc->isVerilog = true;
+      Doc->isAnalog = false;
       ret = Doc->createLibNetlist(&ts, ErrText, 0);
       if(ret) {
 	intoStream(Stream, tmp, "VerilogModel");
@@ -343,7 +345,7 @@ void LibraryDialog::slotNext()
 	    ifn = f;
 	    ofn = ifn;
 	  }
-	  error += intoFile(ifn, ofn, IFiles);
+	  if (!ifn.isEmpty()) error += intoFile(ifn, ofn, IFiles);
 	  it++;
 	}
 	FileList.clear();
@@ -359,6 +361,7 @@ void LibraryDialog::slotNext()
       // save vhdl model
       tmp.truncate(0);
       Doc->isVerilog = false;
+      Doc->isAnalog = false;
       ret = Doc->createLibNetlist(&ts, ErrText, 0);
       if(ret) {
 	intoStream(Stream, tmp, "VHDLModel");
@@ -375,7 +378,8 @@ void LibraryDialog::slotNext()
 	    ifn = f;
 	    ofn = ifn;
 	  }
-	  error += intoFile(ifn, ofn, IFiles);
+	  if (!ifn.isEmpty()) error += intoFile(ifn, ofn, IFiles);
+	  it++;
 	}
 	FileList.clear();
 	if(!IFiles.isEmpty()) {
