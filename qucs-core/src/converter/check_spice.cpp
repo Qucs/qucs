@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.52 2009-03-27 17:10:23 ela Exp $
+ * $Id: check_spice.cpp,v 1.53 2009-03-28 16:04:15 ela Exp $
  *
  */
 
@@ -392,6 +392,7 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
     }
     // skip identifier if next is a float again (F and H sources)
     else if ((def->type[0] == 'F' || def->type[0] == 'H') &&
+	     strcasecmp (val->ident, "POLY") &&
 	     val->hint & HINT_NAME &&
 	     val->next && val->next->hint & HINT_NUMBER)
       continue;
@@ -756,10 +757,12 @@ static int spice_translate_type (struct definition_t * def) {
   for (tran = spice_device_table; tran->type && def->type; tran++) {
     found = 1;
     if (!strcasecmp (tran->type, def->type)) {
-      free (def->type);
-      def->type = strdup (tran->trans);
-      found++;
-      break;
+      if (!spice_find_property (def->values, "POLY")) {
+	free (def->type);
+	def->type = strdup (tran->trans);
+	found++;
+	break;
+      }
     }
   }
   return found;
@@ -2116,6 +2119,286 @@ spice_translate_coupled_x (struct definition_t * root,
   return root;
 }
 
+/* Contructs an edd equation name. */
+static char *
+spice_create_eqnstr (struct definition_t * def, int p, char type) {
+  char * n = (char *) malloc (strlen (def->instance) + 4 + 3);
+  sprintf (n, "%s.%c%d", def->instance, type, p);
+  return n;
+}
+
+/* The function adds edd equation properties to the given netlist
+   definition and also adds the appropriate equation instances. */
+static struct definition_t *
+spice_add_edd_equation (struct definition_t * root,
+			struct definition_t * def, int p,
+			struct definition_t ** i, struct definition_t ** q) {
+  struct definition_t * ieqn, * qeqn;
+  char I_[4], Q_[4];
+  char * ieq = spice_create_eqnstr (def, p, 'I');
+  char * qeq = spice_create_eqnstr (def, p, 'Q');
+  sprintf (I_, "I%d", p);
+  sprintf (Q_, "Q%d", p);
+  spice_set_property_string (def, Q_, qeq);
+  spice_set_property_string (def, I_, ieq);
+  ieqn = spice_create_definition (def, "Eqn");
+  qeqn = spice_create_definition (def, "Eqn");
+  spice_set_property_string (ieqn, "Export", "no");
+  spice_set_property_string (qeqn, "Export", "no");
+  spice_set_property_string (ieqn, ieq, "0");
+  spice_set_property_string (qeqn, qeq, "0");
+  root = spice_add_definition (root, qeqn);
+  root = spice_add_definition (root, ieqn);
+  sprintf (ieq, "Eqn%sI%d", def->instance, p);
+  sprintf (qeq, "Eqn%sQ%d", def->instance, p);
+  free (ieqn->instance);
+  free (qeqn->instance);
+  qeqn->instance = strdup (qeq);
+  ieqn->instance = strdup (ieq);
+  free (ieq);
+  free (qeq);
+  if (i) (*i) = ieqn;
+  if (q) (*q) = qeqn;
+  return root;
+}
+
+/* Since there no or little documentation about the polynom orders in
+   the SPICE2G6 'POLY' statements the following piece of code is a
+   straight re-implementation of the Fortran code in SPICE2G6. */
+static void spice2g6_nxtpwr (int * seq, int nd) {
+  int i, k, ps;
+
+  // special handling of one-dimensional polynoms
+  if (nd == 1) {
+    seq[0]++;
+    return;
+  }
+
+  // two and more-dimensional polynoms
+  k = nd;
+  do {
+    if (seq[k - 1] != 0) break;
+  } 
+  while (--k != 0);
+
+  if (k == 0) {
+    seq[0]++;
+  }
+  else if (k != nd) {
+    seq[k - 1]--;
+    seq[k]++;
+  }
+  else {
+    for (i = 0; i < k - 1; i++)
+      if (seq[i] != 0) break;
+    if (i == k - 1) {
+      seq[0] = seq[nd - 1] + 1;
+      seq[nd-1] = 0;
+      return;
+    }
+    ps = 1;
+    k = nd - 1;
+    while (seq[k - 1] < 1) {
+      ps += seq[k];
+      seq[k] = 0;
+      k--;
+    }
+    seq[k] += ps;
+    seq[k - 1]--;
+  }
+}
+
+/* Creates a 'nd' dimensional polynomial expression extracted from the
+   coefficient list of a value. */
+static char *
+spice_create_poly (struct value_t * prop, int nd) {
+  struct value_t * val;
+
+  // contruct polynomial expression
+  int * pn = (int *) calloc (nd, sizeof (int));
+  static char expr[1024];
+  char value[256];
+  strcpy (expr, "");
+
+  // go through spice values
+  foreach_value (prop, val) {
+    if (!VAL_IS_NUMBER (val)) break;
+
+    double k;
+    if (val->hint & HINT_NODE)
+      k = strtod (val->ident, NULL);
+    else
+      k = spice_evaluate_value (val);
+    spice_value_done (val);
+
+    // construct single polynom
+    if (k != 0.0) {
+
+      // coefficient
+      sprintf (value, "%+g", k);
+      strcat (expr, value);
+
+      // remaining polynom
+      for (int i = 0; i < nd; i++) {
+	int n = i + 2;
+	switch (pn[i]) {
+	case 0:
+	  strcpy (value, "");
+	  break;
+	case 1:
+	  sprintf (value, "*V%d", n);
+	  break;
+	case 2:
+	  sprintf (value, "*V%d*V%d", n, n);
+	  break;
+	default:
+	  sprintf (value, "*V%d^%d", n, pn[i]);
+	  break;
+	}
+	strcat (expr, value);
+      }
+    }
+
+    // prepare next polynom
+    spice2g6_nxtpwr (pn, nd);
+  }
+  free (pn);
+  return expr;
+}
+
+/* Translates E and G poly sources. */
+static struct definition_t *
+spice_translate_poly (struct definition_t * root, struct definition_t * def) {
+  struct value_t * prop;
+  int nd, type = -1;
+
+  // only handle appropriate sources
+  if (strcasecmp (def->type, "E") && strcasecmp (def->type, "G") &&
+      strcasecmp (def->type, "F") && strcasecmp (def->type, "H"))
+    return root;
+
+  // save source type information
+  if (!strcasecmp (def->type, "E"))
+    type = 0;
+  else if (!strcasecmp (def->type, "G"))
+    type = 1;
+  else if (!strcasecmp (def->type, "H"))
+    type = 2;
+  else if (!strcasecmp (def->type, "F"))
+    type = 3;
+
+  if ((prop = spice_find_property (def->values, "POLY")) != NULL) {
+    // retype poly source into EDD
+    free (def->type);
+    def->type = strdup ("EDD");
+    spice_value_done (prop);
+    // get number of polynomial terms
+    prop = prop->next;
+    nd = (int) spice_evaluate_value (prop);
+    spice_value_done (prop);
+
+    // contruct properties, equations and nodes of the EDD
+    if (type <= 1) {
+      // handle E and G voltage controlled sources
+      prop = prop->next;
+      for (int i = nd * 2 - 1; i >= 0; i--) {
+	int p = (i + 1) / 2 + 1;
+	struct node_t * node = spice_translate_node (prop->ident);
+	def->nodes = netlist_append_nodes (def->nodes, node);
+	if (i & 1) root = spice_add_edd_equation (root, def, p, NULL, NULL);
+	spice_value_done (prop);
+	prop = prop->next;
+      }
+    }
+    else {
+      // handle F and H current controlled sources
+      prop = prop->next;
+      for (int i = nd; i > 0; i--) {
+	struct definition_t * vdc, * ibuf;
+	char * vn, * np, * nn;
+	int p = i + 1;
+	// find referenced voltage source (where current flows through)
+	vn = prop->ident;
+	vdc = spice_find_definition (root, "Vdc", vn);
+	if (vdc) {
+	  // create intermediate current controlled voltage source
+	  // passing voltage to an EDD branch
+	  ibuf = spice_create_definition (def, "CCVS");
+	  vn = (char *) malloc (strlen (ibuf->instance) + 3);
+	  sprintf (vn, "%sV%d", ibuf->instance, p);
+	  free (ibuf->instance);
+	  ibuf->instance = vn;
+	  struct node_t * node = spice_get_node (vdc, 1);
+	  np = strdup (spice_create_intern_node ());
+	  nn = strdup (spice_create_intern_node ());
+	  spice_append_node (ibuf, node->node);
+	  free (node->node);
+	  node->node = strdup (nn);
+	  spice_append_node (def, np);
+	  spice_append_node (def, (char *) "gnd");
+	  spice_append_node (ibuf, np);
+	  spice_append_node (ibuf, (char *) "gnd");
+	  spice_append_node (ibuf, nn);
+	  spice_set_property_string (ibuf, "G", "1");
+	  root = spice_add_definition (root, ibuf);
+	  free (nn);
+	  free (np);
+	}
+	else {
+	  fprintf (stderr, "spice error, no such voltage source `%s' found as "
+		   "referenced by the %s `%s' instance\n", def->type,
+		   def->instance, vn);
+	  spice_errors++;
+	}
+	root = spice_add_edd_equation (root, def, p, NULL, NULL);
+	spice_value_done (prop);
+	prop = prop->next;
+      }
+    }
+
+    // add first (really evaluating) I and Q equations
+    struct definition_t * ieqn, * qeqn;
+    root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
+      
+    // contruct polynomial expression
+    char * expr = spice_create_poly (prop, nd);
+
+    // replace first current branch to reflect polynom
+    char * ieq = spice_create_eqnstr (def, 1, 'I');
+    spice_set_property_string (ieqn, ieq, expr);
+    free (ieq);
+
+    // finally add buffering controlled source
+    struct definition_t * obuf = NULL;
+    struct node_t * pnode, * nnode;
+    char * intp;
+
+    if ((type & 1) == 0)
+      obuf = spice_create_definition (def, "CCVS");
+    else if ((type & 1) == 1)
+      obuf = spice_create_definition (def, "CCCS");
+
+    pnode = spice_get_node (def, 1);
+    nnode = spice_get_node (def, 2);
+    intp = strdup (spice_create_intern_node ());
+
+    spice_append_node (obuf, intp);
+    spice_append_node (obuf, nnode->node);
+    spice_append_node (obuf, pnode->node);
+    spice_append_node (obuf, (char *) "gnd");
+
+    free (pnode->node);
+    pnode->node = strdup (intp);
+    free (nnode->node);
+    nnode->node = strdup ("gnd");
+    free (intp);
+
+    spice_set_property_string (obuf, "G", "1");
+    root = spice_add_definition (root, obuf);
+  }
+  return root;
+}
+
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
@@ -2161,12 +2444,17 @@ spice_post_translator (struct definition_t * root) {
 	  spice_translate_nodes (def, 1);
 	}
 	else {
-	  fprintf (stderr, "spice error, no such voltage source `%s' found as "
-		   "referenced by the %s `%s' instance\n", def->type,
+	  fprintf (stderr, "spice error, no such voltage source `%s' found "
+		   "as referenced by the %s `%s' instance\n", def->type,
 		   def->instance, key);
 	  spice_errors++;
 	}
       }
+    }
+    // post-process F and H poly sources
+    if (!def->action && (!strcmp (def->type, "F") ||
+			 !strcmp (def->type, "H"))) {
+      root = spice_translate_poly (root, def);
     }
     // post-process switches
     if (!def->action && !strcmp (def->type, "Relais")) {
@@ -2395,232 +2683,6 @@ spice_post_translator (struct definition_t * root) {
   return root;
 }
 
-/* Contructs an edd equation name. */
-static char *
-spice_create_eqnstr (struct definition_t * def, int p, char type) {
-  char * n = (char *) malloc (strlen (def->instance) + 4 + 3);
-  sprintf (n, "%s.%c%d", def->instance, type, p);
-  return n;
-}
-
-/* The function adds edd equation properties to the given netlist
-   definition and also adds the appropriate equation instances. */
-static struct definition_t *
-spice_add_edd_equation (struct definition_t * root,
-			struct definition_t * def, int p,
-			struct definition_t ** i, struct definition_t ** q) {
-  struct definition_t * ieqn, * qeqn;
-  char I_[4], Q_[4];
-  char * ieq = spice_create_eqnstr (def, p, 'I');
-  char * qeq = spice_create_eqnstr (def, p, 'Q');
-  sprintf (I_, "I%d", p);
-  sprintf (Q_, "Q%d", p);
-  spice_set_property_string (def, Q_, qeq);
-  spice_set_property_string (def, I_, ieq);
-  ieqn = spice_create_definition (def, "Eqn");
-  qeqn = spice_create_definition (def, "Eqn");
-  spice_set_property_string (ieqn, "Export", "no");
-  spice_set_property_string (qeqn, "Export", "no");
-  spice_set_property_string (ieqn, ieq, "0");
-  spice_set_property_string (qeqn, qeq, "0");
-  root = spice_add_definition (root, qeqn);
-  root = spice_add_definition (root, ieqn);
-  sprintf (ieq, "Eqn%sI%d", def->instance, p);
-  sprintf (qeq, "Eqn%sQ%d", def->instance, p);
-  free (ieqn->instance);
-  free (qeqn->instance);
-  qeqn->instance = strdup (qeq);
-  ieqn->instance = strdup (ieq);
-  free (ieq);
-  free (qeq);
-  if (i) (*i) = ieqn;
-  if (q) (*q) = qeqn;
-  return root;
-}
-
-/* Since there no or little documentation about the polynom orders in
-   the SPICE2G6 'POLY' statements the following piece of code is a
-   straight re-implementation of the Fortran code in SPICE2G6. */
-static void spice2g6_nxtpwr (int * seq, int nd) {
-  int i, k, ps;
-
-  // special handling of one-dimensional polynoms
-  if (nd == 1) {
-    seq[0]++;
-    return;
-  }
-
-  // two and more-dimensional polynoms
-  k = nd;
-  do {
-    if (seq[k - 1] != 0) break;
-  } 
-  while (--k != 0);
-
-  if (k == 0) {
-    seq[0]++;
-  }
-  else if (k != nd) {
-    seq[k - 1]--;
-    seq[k]++;
-  }
-  else {
-    for (i = 0; i < k - 1; i++)
-      if (seq[i] != 0) break;
-    if (i == k - 1) {
-      seq[0] = seq[nd - 1] + 1;
-      seq[nd-1] = 0;
-      return;
-    }
-    ps = 1;
-    k = nd - 1;
-    while (seq[k - 1] < 1) {
-      ps += seq[k];
-      seq[k] = 0;
-      k--;
-    }
-    seq[k] += ps;
-    seq[k - 1]--;
-  }
-}
-
-/* Creates a 'nd' dimensional polynomial expression extracted from the
-   coefficient list of a value. */
-static char *
-spice_create_poly (struct value_t * prop, int nd) {
-  struct value_t * val;
-
-  // contruct polynomial expression
-  int * pn = (int *) calloc (nd, sizeof (int));
-  static char expr[1024];
-  char value[256];
-  strcpy (expr, "");
-
-  // go through spice values
-  foreach_value (prop, val) {
-    if (!VAL_IS_NUMBER (val)) break;
-
-    double k;
-    if (val->hint & HINT_NODE)
-      k = strtod (val->ident, NULL);
-    else
-      k = spice_evaluate_value (val);
-    spice_value_done (val);
-
-    // construct single polynom
-    if (k != 0.0) {
-
-      // coefficient
-      sprintf (value, "%+g", k);
-      strcat (expr, value);
-
-      // remaining polynom
-      for (int i = 0; i < nd; i++) {
-	int n = i + 2;
-	switch (pn[i]) {
-	case 0:
-	  strcpy (value, "");
-	  break;
-	case 1:
-	  sprintf (value, "*V%d", n);
-	  break;
-	case 2:
-	  sprintf (value, "*V%d*V%d", n, n);
-	  break;
-	default:
-	  sprintf (value, "*V%d^%d", n, pn[i]);
-	  break;
-	}
-	strcat (expr, value);
-      }
-    }
-
-    // prepare next polynom
-    spice2g6_nxtpwr (pn, nd);
-  }
-  free (pn);
-  return expr;
-}
-
-/* Translates E and G poly sources. */
-static struct definition_t *
-spice_translate_poly (struct definition_t * root, struct definition_t * def) {
-  struct value_t * prop;
-  int nd, type;
-
-  // only handle appropriate sources
-  if (strcasecmp (def->type, "E") && strcasecmp (def->type, "G"))
-    return root;
-
-  if (!strcasecmp (def->type, "E"))
-    type = 0;
-  else if (!strcasecmp (def->type, "G"))
-    type = 1;
-
-  if ((prop = spice_find_property (def->values, "POLY")) != NULL) {
-    // retype poly source into EDD
-    free (def->type);
-    def->type = strdup ("EDD");
-    spice_value_done (prop);
-    // get number of polynomial terms
-    prop = prop->next;
-    nd = (int) spice_evaluate_value (prop);
-    spice_value_done (prop);
-
-    // contruct properties, equations and nodes of the EDD
-    prop = prop->next;
-    for (int i = nd * 2 - 1; i >= 0; i--) {
-      int p = (i + 1) / 2 + 1;
-      struct node_t * node = spice_translate_node (prop->ident);
-      def->nodes = netlist_append_nodes (def->nodes, node);
-      if (i & 1) root = spice_add_edd_equation (root, def, p, NULL, NULL);
-      spice_value_done (prop);
-      prop = prop->next;
-    }
-
-    // add first (really evaluating) I and Q equations
-    struct definition_t * ieqn, * qeqn;
-    root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
-      
-    // contruct polynomial expression
-    char * expr = spice_create_poly (prop, nd);
-
-    // replace first current branch to reflect polynom
-    char * ieq = spice_create_eqnstr (def, 1, 'I');
-    spice_set_property_string (ieqn, ieq, expr);
-    free (ieq);
-
-    // finally add buffering controlled source
-    struct definition_t * ctrl = NULL;
-    struct node_t * pnode, * nnode;
-    char * intp;
-
-    if (type == 0)
-      ctrl = spice_create_definition (def, "CCVS");
-    else if (type == 1)
-      ctrl = spice_create_definition (def, "CCCS");
-
-    pnode = spice_get_node (def, 1);
-    nnode = spice_get_node (def, 2);
-    intp = strdup (spice_create_intern_node ());
-
-    spice_append_node (ctrl, intp);
-    spice_append_node (ctrl, nnode->node);
-    spice_append_node (ctrl, pnode->node);
-    spice_append_node (ctrl, (char *) "gnd");
-
-    free (pnode->node);
-    pnode->node = strdup (intp);
-    free (nnode->node);
-    nnode->node = strdup ("gnd");
-    free (intp);
-
-    spice_set_property_string (ctrl, "G", "1");
-    root = spice_add_definition (root, ctrl);
-  }
-  return root;
-}
-
 /* The function translates special actions defined in the Spice
    netlist including the types of simulations. */
 static struct definition_t *
@@ -2785,7 +2847,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
 	    !strcasecmp (def->type, "C")) {
 	  spice_translate_device (root, def);
 	}
-	// vcvs sources
+	// controlled sources
 	if (!strcasecmp (def->type, "E") || !strcasecmp (def->type, "G")) {
 	  root = spice_translate_poly (root, def);
 	}
@@ -2842,6 +2904,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
        - three mutual inductors
    - current controlled switch (gyrator + voltage controlled switch)
    - single-frequency FM (using pm-modulator)
+       - controlled E, G, F, and H poly sources
    - analog behavioural B, E, G, F, and H sources
    - piece-wise linear (PWL) voltage and current sources
    - temperature analysis (.TEMP)
@@ -2855,7 +2918,10 @@ static void spice_lister (struct definition_t * root) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     fprintf (stderr, "%s:%s", def->type, def->instance);
     for (val = def->values; val != NULL; val = val->next) {
-      fprintf (stderr, " %s[%d]", val->ident, val->hint);
+      if (val->ident)
+	fprintf (stderr, " %s[%d]", val->ident, val->hint);
+      else
+	fprintf (stderr, " %g[%d]", val->value, val->hint);
     }
     fprintf (stderr, "\n");
   }  

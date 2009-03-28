@@ -1,3 +1,8 @@
+2009-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l, parse_spice.y, check_spice.cpp: Also added
+	possibility to translate F/H poly sources.
+
 2009-03-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed polynom order algorithm.  It's a messy

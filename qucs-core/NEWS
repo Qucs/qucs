@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * translation of F, H, E and G polynomial spice sources
  * many new digital primitives in Verilog-A
  * allowing variables in constant parameter simulation boxes
  * existing HICUM models can now be converter by the qucsconv command
