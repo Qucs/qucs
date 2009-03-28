@@ -4,7 +4,7 @@
 /*
  * scan_spice.l - scanner for a Spice netlist
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.27 2008/05/28 18:23:14 ela Exp $
+ * $Id: scan_spice.l,v 1.28 2009/03/28 16:04:15 ela Exp $
  *
  */
 
@@ -129,6 +129,7 @@ POLY     [pP][oO][lL][yY]
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
 %x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP RLCPROP
+%x FHVALS
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -149,7 +150,7 @@ POLY     [pP][oO][lL][yY]
 
 <STARTUP,INITIAL,IVREF,DEVPROP,LREF,MODREF1,MODREF2,IGNORE,FUNREF,
  FILEREF,VREF,VSINGLE,ISWITCH,VSWITCH,CONTROL,GEVALS,INLINE,SUBCKT,
- TLPROP,RLCPROP>[\*\$] {
+ TLPROP,RLCPROP,FHVALS>[\*\$] {
     /* ignored inline region begins here (3f5, 2g6 and hspice) */
     BEGIN(INLINE);
   }
@@ -211,7 +212,7 @@ POLY     [pP][oO][lL][yY]
 <STARTUP,INITIAL>^[fFhH]{CSFX} {
     /* current controlled source instances */
     spice_lval.ident = strdup (spice_text);
-    BEGIN(IVREF);
+    BEGIN(FHVALS);
     return FH_Source;
 }
 
@@ -460,7 +461,7 @@ POLY     [pP][oO][lL][yY]
     return ModelProps;
 }
 
-<IVREF,VREF,ISWITCH>[vV]{CSFX} { /* voltage source references */
+<IVREF,VREF,ISWITCH,FHVALS>[vV]{CSFX} { /* voltage source references */
     spice_lval.ident = strdup (spice_text);
     return V_Source;
 }
@@ -520,30 +521,30 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,
- GEVALS,TLPROP,RLCPROP>{DIGIT}+ {
+ GEVALS,TLPROP,RLCPROP,FHVALS>{DIGIT}+ {
     /* identify node (containing digits) */
     spice_lval.ident = strdup (spice_text);
     return Digits;
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,FUNREF,VREF,VSINGLE,GEVALS,TLPROP,
- RLCPROP>{NUMBER} {
+ RLCPROP,FHVALS>{NUMBER} {
     /* identify float (any kind) */
     spice_lval.ident = strdup (spice_text);
     return Floats;
 }
 
-<GEVALS>{POLY} {
+<GEVALS,FHVALS>{POLY} {
     /* identify analog behaviour */
     spice_lval.ident = strdup (spice_text);
-    return GE_Type;
+    return Behave;
 }
 
-<GEVALS>{TABLE}|{VALUE}|{FREQ}|{LAPLACE} {
+<GEVALS,FHVALS>{TABLE}|{VALUE}|{FREQ}|{LAPLACE} {
     /* identify analog behaviour */
     spice_lval.ident = strdup (spice_text);
     BEGIN(IGNORE);
-    return GE_Type;
+    return Behave;
 }
 
 <IVREF,FUNREF>{FUNCTION} { /* function specials (e.g. in sources) */
@@ -591,14 +592,14 @@ POLY     [pP][oO][lL][yY]
 }
 
 <STARTUP,IVREF,DEVPROP,FUNREF,VREF,VSINGLE,ISWITCH,VSWITCH,GEVALS,
- TLPROP,RLCPROP>{NODE} {
+ TLPROP,RLCPROP,FHVALS>{NODE} {
     /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Nodes;
 }
 
 <STARTUP,IVREF,DEVPROP,LREF,IGNORE,FUNREF,FILEREF,VREF,VSINGLE,
- ISWITCH,VSWITCH,GEVALS,SUBCKT,TLPROP,RLCPROP>{EOL} {
+ ISWITCH,VSWITCH,GEVALS,SUBCKT,TLPROP,RLCPROP,FHVALS>{EOL} {
     /* detect end of line */
     BEGIN(STARTUP);
     return Eol;

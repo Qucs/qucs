@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.21 2009/03/24 15:30:16 ela Exp $
+ * $Id: parse_spice.y,v 1.22 2009/03/28 16:04:15 ela Exp $
  *
  */
 
@@ -139,7 +139,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %token OFF_Special IC_Special SIM_Type TEMP_Special MOS_Special B_Source
 %token DISTO_Action INCLUDE_Action File BranchFunc NODESET_Action T_Device
 %token U_Device S_Device W_Device ON_Special TF_Action SENS_Action FOUR_Action
-%token OpFunc GE_Type TC_Special TEMP_Action
+%token OpFunc Behave TC_Special TEMP_Action
 
 %union {
   char * ident;
@@ -158,6 +158,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <value> OPTIONS_List MODEL_List DEVICE_List_1 DEVICE_List_2 DEVICE_List_3
 %type <value> IC_Condition_1 IC_Condition_2 IC_Condition_3 NODESET_List
 %type <value> IC_Condition_4 SWITCH_State NodeValueList TC_Value_1 TC_Value_2
+%type <value> VSourceList
 
 %type <ident> Identifier Nodes Function Value Floats Digits Node
 %type <ident> RLC_Device K_Device L_Device IV_Source GE_Source FH_Source
@@ -171,7 +172,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <ident> IC_Special OFF_Special SIM_Type TEMP_Special MOS_Special
 %type <ident> BranchFunc NODESET_Action T_Device U_Device S_Device W_Device
 %type <ident> TF_Action SENS_Action FOUR_Action OpFunc TC_Special TEMP_Action
-%type <ident> GE_Type
+%type <ident> Behave
 
 %%
 
@@ -282,7 +283,7 @@ DefinitionLine:
     spice_append_val_value ($$, $4, HINT_NUMBER);
     $$->values = netlist_append_values ($$->values, $5);
   }
-  | GE_Source Node Node GE_Type Digits NodeValueList Eol {
+  | GE_Source Node Node Behave Digits NodeValueList Eol {
     /* voltage controlled source POLY */
     if (!strcasecmp ($4, "POLY")) {
       $$ = spice_create_device ($1);
@@ -297,7 +298,7 @@ DefinitionLine:
       $$ = NULL;
     }
   }
-  | GE_Source Node Node GE_Type Eol {
+  | GE_Source Node Node Behave Eol {
     /* voltage controlled sources OTHER behavioural */
     fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
     $$ = NULL;
@@ -310,6 +311,27 @@ DefinitionLine:
     spice_append_str_value ($$, $4, HINT_NODE);
     spice_append_str_value ($$, $5, HINT_NODE);
     spice_append_val_value ($$, $6, HINT_NUMBER);
+  }
+  | FH_Source Node Node Behave Digits VSourceList NodeValueList Eol {
+    /* current controlled source POLY */
+    if (!strcasecmp ($4, "POLY")) {
+      $$ = spice_create_device ($1);
+      spice_append_str_value ($$, $2, HINT_NODE);
+      spice_append_str_value ($$, $3, HINT_NODE);
+      spice_append_str_value ($$, $4, HINT_NAME);
+      spice_append_val_value ($$, $5, HINT_NUMBER);
+      $$->values = netlist_append_values ($$->values, $6);
+      $$->values = netlist_append_values ($$->values, $7);
+    }
+    else {
+      fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
+      $$ = NULL;
+    }
+  }
+  | FH_Source Node Node Behave Eol {
+    /* current controlled sources OTHER behavioural */
+    fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
+    $$ = NULL;
   }
   | FH_Source Node Node V_Source Value Eol {
     /* current controlled sources */
@@ -846,6 +868,13 @@ NodeValueList: /* nothing */ { $$ = NULL; }
 NodeList: /* nothing */ { $$ = NULL; }
   | Node NodeList {
     $$ = spice_create_str_value ($1, HINT_NODE);
+    $$->next = $2;
+  }
+;
+
+VSourceList: /* nothing */ { $$ = NULL; }
+  | V_Source VSourceList {
+    $$ = spice_create_str_value ($1, HINT_NAME);
     $$->next = $2;
   }
 ;
