@@ -1,3 +1,11 @@
+2009-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (startSimulator): Fixed bug for netlist
+	creation from library components with library includes.
+
+	* dialogs/librarydialog.cpp (slotNext): Fixed "endless loop" bug
+	during library creation.
+
 2009-03-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/importdialog.cpp (slotImport): Dialog can now also

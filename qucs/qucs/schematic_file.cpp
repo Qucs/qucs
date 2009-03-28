@@ -987,7 +987,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SubMap::Iterator it = FileList.find(f);
       if(it != FileList.end())
         continue;   // insert each vhdl/verilog component just one time
-      QString s = ((pc->Model == "VHDL") ? "VHD" : "VER");
+      s = ((pc->Model == "VHDL") ? "VHD" : "VER");
       FileList.insert(f, SubFile(s, f));
 
       if(pc->Model == "VHDL") {

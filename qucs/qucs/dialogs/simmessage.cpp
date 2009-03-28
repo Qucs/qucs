@@ -316,7 +316,15 @@ void SimMessage::startSimulator()
   }
   else {
     // output NodeSets, SPICE simulations etc.
-    Stream << Collect.join("\n") << '\n';
+    for(QStringList::Iterator it = Collect.begin();
+	it != Collect.end(); ++it) {
+      // don't put library includes into netlist...
+      if ((*it).right(4) != ".lst") {
+	Stream << *it << '\n';
+      }
+    }
+    Stream << '\n';
+
     isVerilog = ((Schematic*)DocWidget)->isVerilog;
     SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts);
     if(SimTime.at(0) == '§') {
