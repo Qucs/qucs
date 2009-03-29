@@ -1,3 +1,8 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* phototransistor.cpp (phototransistor): Added new phototransistor
+	model.  Thanks to Mike!
+
 2009-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (load): Fixed bug in loading RFEDD with more than

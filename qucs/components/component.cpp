@@ -1616,6 +1616,7 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'p' : if(cstr == "otentiometer") c = new potentiometer();
         else if(cstr == "hotodiode") c = new photodiode();
+        else if(cstr == "hototransistor") c = new phototransistor();
         else if(cstr == "ad2bit") c = new pad2bit();
         else if(cstr == "ad3bit") c = new pad3bit();
         else if(cstr == "ad4bit") c = new pad4bit();
