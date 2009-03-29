@@ -304,8 +304,12 @@ if(!firstGraph->cPointsX.isEmpty()) {
         Lines.append(new Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
         Lines.append(new Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
 
-        // output magnitude of (complex) number
-        Texts.append(new Text(x+3, y,
+	if (*(px+1) == 0.0)
+	  // output real number
+	  Texts.append(new Text(x+3, y,QString::number(*px)));
+	else
+	  // output magnitude of (complex) number
+	  Texts.append(new Text(x+3, y,
               QString::number(sqrt((*px)*(*px) + (*(px+1))*(*(px+1))))));
 
         px += 2;
