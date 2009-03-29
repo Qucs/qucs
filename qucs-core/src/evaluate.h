@@ -1,7 +1,7 @@
 /*
  * evaluate.h - definitions for Qucs equation evaluations
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.47 2008-03-27 17:34:29 ela Exp $
+ * $Id: evaluate.h,v 1.48 2009-03-29 18:11:27 ela Exp $
  *
  */
 
@@ -573,6 +573,7 @@ public:
   static constant * idft_v (constant *);
   static constant * time2freq_v_v (constant *);
   static constant * freq2time_v_v (constant *);
+  static constant * fftshift_v (constant *);
 
   static constant * xvalue_d (constant *);
   static constant * xvalue_c (constant *);

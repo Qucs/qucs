@@ -1,7 +1,7 @@
 /*
  * fourier.h - fourier transformation class definitions
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.h,v 1.5 2006-04-27 07:02:48 raimi Exp $
+ * $Id: fourier.h,v 1.6 2009-03-29 18:11:27 ela Exp $
  *
  */
 
@@ -34,6 +34,9 @@ namespace fourier {
   vector ifft_1d (vector);
   vector  dft_1d (vector, int isign = 1);
   vector idft_1d (vector);
+
+  // additional public function
+  vector fftshift (vector);
 
   // internal functions
   void  _fft_1d (nr_double_t *, int, int isign = 1);
