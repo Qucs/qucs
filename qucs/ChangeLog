@@ -1,3 +1,8 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac (paths): Added yet another path to look for Qt3
+	header files.
+
 2008-11-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (mac-install-apps): Added post install scripts for
