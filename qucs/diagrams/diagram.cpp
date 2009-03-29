@@ -497,6 +497,7 @@ void Diagram::calcData(Graph *g)
   float *p_end;
   g->ScrPoints = p_end = p;
   p_end += Size - 9;   // limit of buffer
+  *(p++) = STROKEEND;
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
