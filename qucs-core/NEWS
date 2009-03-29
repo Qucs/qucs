@@ -36,7 +36,7 @@ Version 0.0.15
    radial stub
  * added noise figure property to amplifier model
  * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6, HICUM L0 v1.2,
-   HICUM L2 v2.23, photodiode
+   HICUM L2 v2.23, photodiode, phototransistor
 
 Version 0.0.14
 --------------

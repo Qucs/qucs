@@ -38,6 +38,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp \
+	phototransistor.analogfunction.cpp phototransistor.core.cpp \
 	\
 	dff_SR.analogfunction.cpp dff_SR.core.cpp \
 	tff_SR.analogfunction.cpp tff_SR.core.cpp \
@@ -82,6 +83,8 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
+	phototransistor.analogfunction.h phototransistor.defs.h \
+	phototransistor.core.h \
 	\
 	dff_SR.analogfunction.h dff_SR.defs.h dff_SR.core.h \
 	tff_SR.analogfunction.h tff_SR.defs.h tff_SR.core.h \
@@ -117,7 +120,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
-  photodiode.va EKV26MOS.va \
+  photodiode.va EKV26MOS.va phototransistor.va \
   \
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
@@ -668,6 +671,19 @@ hpribin4bit.defs.h: hpribin4bit.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hpribin4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hpribin4bit.gui.cpp: hpribin4bit.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+phototransistor.analogfunction.cpp: analogfunction.xml
+phototransistor.analogfunction.cpp: phototransistor.va
+	$(ADMSXML) $< -e analogfunction.xml
+phototransistor.core.cpp: phototransistor.defs.h qucsVersion.xml qucsMODULEcore.xml
+phototransistor.core.cpp: phototransistor.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+phototransistor.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+phototransistor.defs.h: phototransistor.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+phototransistor.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+phototransistor.gui.cpp: phototransistor.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

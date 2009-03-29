@@ -1,3 +1,8 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* phototransistor.va: Added new phototransistor model.  Thanks to
+	Mike Brinson!
+
 2009-03-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* DLS_1ton.va: Changed output impedance from 1ohm to zero.
