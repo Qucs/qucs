@@ -1,7 +1,7 @@
 /*
  * fourier.cpp - fourier transformation class implementation
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: fourier.cpp,v 1.9 2008/01/10 20:00:00 ela Exp $
+ * $Id: fourier.cpp,v 1.10 2009/03/29 18:11:27 ela Exp $
  *
  */
 
@@ -311,3 +311,16 @@ void fourier::_fft_nd (nr_double_t * data, int len[], int nd, int isign) {
 void fourier::_ifft_nd (nr_double_t * data, int len[], int nd) {
   _fft_nd (data, len, nd, -1);
 }
+
+// Shuffles values of FFT around.
+vector fourier::fftshift (vector var) {
+  int i, n, len = var.getSize ();
+  vector res = vector (len);
+  n = len / 2;
+  for (i = 0; i < len / 2; i++) {
+    res (i) = var (n + i);
+    res (i + n) = var (i);
+  }
+  return res;
+}
+

@@ -1,7 +1,7 @@
 /*
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.81 2009/03/22 09:19:33 ela Exp $
+ * $Id: evaluate.cpp,v 1.82 2009/03/29 18:11:27 ela Exp $
  *
  */
 
@@ -2221,6 +2221,14 @@ FOURIER_HELPER_2 (fft);
 FOURIER_HELPER_2 (ifft);
 FOURIER_HELPER_2 (dft);
 FOURIER_HELPER_2 (idft);
+
+// Shuffles values of FFT arounds.
+constant * evaluate::fftshift_v (constant * args) {
+  _ARV0 (v);
+  _DEFV ();
+  res->v = new vector (fftshift (*v));
+  return res;
+}
 
 // This is the stoz, ztos, ytos, stoy helper macro.
 #define MAKE_FUNC_DEFINITION_3(cfunc) \

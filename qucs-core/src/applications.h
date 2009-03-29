@@ -1,7 +1,7 @@
 /*
  * applications.h - the Qucs application list
  *
- * Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.31 2008/03/27 17:34:29 ela Exp $
+ * $Id: applications.h,v 1.32 2009/03/29 18:11:27 ela Exp $
  *
  */
 
@@ -665,6 +665,7 @@ struct application_t eqn::applications[] = {
     { TAG_VECTOR, TAG_VECTOR } },
   { "Freq2Time", TAG_VECTOR, evaluate::freq2time_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
+  { "fftshift",  TAG_VECTOR, evaluate::fftshift_v, 1, { TAG_VECTOR } },
 
   { "xvalue", TAG_COMPLEX, evaluate::xvalue_d, 2,
     { TAG_VECTOR, TAG_DOUBLE } },

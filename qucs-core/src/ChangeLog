@@ -1,3 +1,9 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* fourier.cpp (fftshift): New function which shifts the values of
+	a FFT vector such that the frequency 0 is in the center of the
+	resulting vector.
+
 2009-03-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed dB() calculation for real arguments to
