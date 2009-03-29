@@ -1,3 +1,8 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/mathfunc.html, docs/en/mathfunc.html: Documented new
+	fftshift() functionality.
+
 2008-10-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/cs/index.html: Updated Czech translation of internal help
