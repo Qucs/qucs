@@ -437,7 +437,7 @@ using namespace device;
   setOperatingPoint (&quot;%(name)&quot;, %(name));
 </admst:for-each>
 <admst:text format="\n"/>
-
+<!--
 <admst:text format="#if DEBUG\n"/>
 
 <admst:for-each select="node">
@@ -485,6 +485,7 @@ using namespace device;
   </admst:choose>
 </admst:for-each>
 <admst:text format="#endif /* DEBUG */\n"/>
+-->
 <admst:text format="}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
