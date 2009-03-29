@@ -6918,6 +6918,38 @@ Digitális szimuláció</translation>
         <source>Microstrip Radial Stub</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Phototransistor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dark current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collector series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emitter series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>responsivity at relative selectivity=100%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative selectivity polynomial coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phototransistor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
