@@ -1,3 +1,8 @@
+2009-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/timingdiagram.cpp (calcDiagram): Fixed display of
+	negative real numbers.  For complex numbers we use magnitude.
+
 2009-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/simmessage.cpp (startSimulator): Fixed bug for netlist
