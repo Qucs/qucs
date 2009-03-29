@@ -131,7 +131,7 @@ AC_MSG_CHECKING([for Qt headers])
 paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include/qt3 \
   /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt \
   /usr/X11R6/include/qt /usr/X11R6/include /sw/include/qt \
-  /usr/X11R6/include/qt2"
+  /usr/X11R6/include/qt2 $prefix/include/qt3"
 for path in $paths; do
   if test -f "$path/qapplication.h"; then
     QT_INCLUDES=$path
