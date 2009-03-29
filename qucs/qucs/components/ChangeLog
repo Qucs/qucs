@@ -1,5 +1,8 @@
 2009-03-29  Stefan Jahn  <stefan@lkcc.org>
 
+	* relais.cpp (Relais): Added marks to visualize input voltage
+	polarity.
+
 	* phototransistor.cpp (phototransistor): Added new phototransistor
 	model.  Thanks to Mike!
 
