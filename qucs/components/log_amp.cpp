@@ -108,5 +108,5 @@ void log_amp::createSymbol()
   Ports.append(new Port( 40,  0));
 
   x1 = -30; y1 = -38;
-  x2 =  30; y2 =  38;
+  x2 =  40; y2 =  38;
 }
