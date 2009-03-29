@@ -505,7 +505,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     for(int No = g->countY/dy * (dx-1)*(dy-1); No>0; No--) {
 
       // reset the polygon bounding buffer
-      for(i=x2-1; i>=0; i--) {
+      for(i=x2; i>=0; i--) {
         (Bounds+i)->max = INT_MIN;
         (Bounds+i)->min = INT_MAX;
       }
@@ -1118,7 +1118,7 @@ qDebug("ENDE");*/
 // for the coordinates is released here.
 void Rect3DDiagram::createAxisLabels()
 {
-  if(Mem)  delete Mem;
+  if(Mem)  free (Mem);
   Mem  = 0;
   pMem = 0;
 }
