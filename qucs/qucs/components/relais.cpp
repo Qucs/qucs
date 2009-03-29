@@ -30,6 +30,10 @@ Relais::Relais()
   Lines.append(new Line(-15, -8,-15,  8,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-45,  8,-15, -8,QPen(QPen::darkBlue,2)));
 
+  Lines.append(new Line(-43, -3,-37, -3,QPen(QPen::red,1)));
+  Lines.append(new Line(-40, -6,-40,  0,QPen(QPen::red,1)));
+  Lines.append(new Line(-23,  3,-17,  3,QPen(QPen::black,1)));  
+
   Lines.append(new Line(-15,  0, 35,  0,QPen(QPen::darkBlue,1,Qt::DotLine)));
 
   Lines.append(new Line( 30,-30, 30,-18,QPen(QPen::darkBlue,2)));
