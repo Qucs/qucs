@@ -4,7 +4,7 @@
 #
 # Run this script to re-generate all maintainer-generated files.
 #
-# Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,12 +46,13 @@ if [ -r config.status ]; then
   CMD=`awk '/^#.*\/?configure .*/ { $1 = ""; print; exit }' < config.status`
   if test "x$CMD" = "x" ; then
     # Autoconf 2.5x
-    CMD=`grep "with options" < config.status | \
-         sed 's/[^"]*["]\([^"]*\)["]/\1/' | sed 's/\\\//g' | sed "s/'//g"`
-    CMD="./configure $CMD"
+    eval set -- ./configure `grep "with options" < config.status | \
+         sed 's/^[^"]*["]\(.*\)\\\"$/\1/'` '"$@"'
+  else
+    set -- $CMD "$@"
   fi
 else
-  CMD="./configure --enable-maintainer-mode"
+  set -- ./configure --enable-maintainer-mode "$@"
 fi
-echo "Running $CMD $@ ..."
-$CMD "$@"
+echo Running `for i; do echo "'$i'"; done` ...
+"$@"

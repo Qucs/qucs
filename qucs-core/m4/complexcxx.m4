@@ -95,7 +95,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_FUNCS],
 for ac_func in $1
 do
 AC_CHECK_CXX_COMPLEX_FUNC($ac_func,
-              [AC_DEFINE_UNQUOTED([AS_TR_CPP([HAVE_CXX_COMPLEX_$ac_func])]) $2],
+              [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_CXX_COMPLEX_$ac_func])) $2],
               [$3])dnl
 done
 ])
