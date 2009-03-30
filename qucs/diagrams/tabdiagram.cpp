@@ -236,7 +236,13 @@ if(g) if(!g->cPointsX.isEmpty()) {
     py = g->cPointsY - 2;
     if(g->cPointsX.getFirst()) {
 
-      if(sameDependencies(g, firstGraph)) {
+      if (!g->cPointsY) {   // no data points
+	Str = QObject::tr("invalid");
+	colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
+	if(colWidth < 0)  goto funcEnd;
+	Texts.append(new Text(x, y, Str));
+      }
+      else if(sameDependencies(g, firstGraph)) {
         int z=g->cPointsX.getFirst()->count * g->countY;
         if(z > NumAll)  NumAll = z;
 

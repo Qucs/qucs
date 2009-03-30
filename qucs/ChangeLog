@@ -1,3 +1,9 @@
+2009-03-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/tabdiagram.cpp (calcDiagram): Fixed a segfault bug
+	occurring when an dependent variable without data points is meant
+	to be displayed.
+
 2009-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/timingdiagram.cpp (calcDiagram): Fixed display of
