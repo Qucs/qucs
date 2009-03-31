@@ -48,9 +48,9 @@ electrical Drain_int, Source_int;
  parameter real Cox = 3.45e-3 from [0 : inf]         `attr(info="gate oxide capacitance per unit area" unit = "F/m**2" );
  parameter real Xj = 0.15e-6 from [0.01e-6 : 1.0e-6] `attr(info="metallurgical junction depth" unit = "m");
  parameter real Dw = -0.02e-6 from [-inf : 0.0]      `attr(info="channel width correction" unit = "m");
- parameter real Dl = -0.05e-6 from [-inf : 0.0]       `attr(info="channel length correction" unit = "m");
+ parameter real Dl = -0.05e-6 from [-inf : 0.0]      `attr(info="channel length correction" unit = "m");
 // Basic intrinsic model parameters
- parameter real Vto = 0.6 from [1e-6 : 2.0]         `attr(info="long channel threshold voltage" unit="V" );
+ parameter real Vto = 0.6 from [-inf : inf]         `attr(info="long channel threshold voltage" unit="V" );
  parameter real Gamma = 0.71 from [0.0 : 2.0]       `attr(info="body effect parameter" unit="V**(1/2)");
  parameter real Phi = 0.97 from [0.3 : 2.0]         `attr(info="bulk Fermi potential" unit="V");
  parameter real Kp = 150e-6 from [10e-6 : inf]      `attr(info="transconductance parameter" unit = "A/V**2");
