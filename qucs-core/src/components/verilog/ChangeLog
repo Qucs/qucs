@@ -1,3 +1,8 @@
+2009-03-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* EKV26MOS.va: Fixed range of 'Vto' property to include both
+	positive and negative values.
+
 2009-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* phototransistor.va: Added new phototransistor model.  Thanks to
