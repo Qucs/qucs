@@ -33,7 +33,7 @@ Version 0.0.15
    line tool into library elements
  * allowing property references inside the same	instance of a component
  * new components: rectangular waveguide, digital buffer, microstrip
-   radial stub
+   radial stub, RLCG transmission line
  * added noise figure property to amplifier model
  * new Verilog-A device models: EPFL-EKV NMOS/PMOS V2.6, HICUM L0 v1.2,
    HICUM L2 v2.23, photodiode, phototransistor

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.10 2009-03-29 13:04:54 ela Exp $
+ * $Id: module.cpp,v 1.11 2009-04-01 18:54:54 ela Exp $
  *
  */
 
@@ -174,6 +174,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (coaxline);
   REGISTER_CIRCUIT (rectline);
   REGISTER_CIRCUIT (twistedpair);
+  REGISTER_CIRCUIT (rlcg);
   REGISTER_CIRCUIT (coupler);
   REGISTER_CIRCUIT (diode);
   REGISTER_CIRCUIT (eqndefined);
