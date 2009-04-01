@@ -6980,6 +6980,46 @@ Invocation :  qucsedit [-r] fichier
         <source>Phototransistor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>RLCG transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RLCG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conductive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RLCG Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

@@ -331,7 +331,7 @@ pInfoFunc Probes[] =
 
 pInfoFunc TransmissionLines[] =
   {&TLine::info, &TLine_4Port::info, &TwistedPair::info, &CoaxialLine::info,
-   &RectLine::info,
+   &RectLine::info, &RLCG::info,
    &Substrate::info, &MSline::info, &MScoupled::info, &MScorner::info,
    &MSmbend::info, &MSstep::info, &MStee::info, &MScross::info, &MSopen::info,
    &MSgap::info, &MSvia::info, &MSrstub::info, &Coplanar::info, &CPWopen::info,
