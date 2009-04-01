@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.9 2009/03/29 13:04:54 ela Exp $
+ * $Id: components.h,v 1.10 2009/04/01 18:54:54 ela Exp $
  *
  */
 
@@ -75,6 +75,7 @@
 #include "rectline.h"
 #include "twistedpair.h"
 #include "tline4p.h"
+#include "rlcg.h"
 #include "iprobe.h"
 #include "vprobe.h"
 #include "spfile.h"

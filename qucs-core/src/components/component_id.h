@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.64 2009/03/29 13:04:54 ela Exp $
+ * $Id: component_id.h,v 1.65 2009/04/01 18:54:54 ela Exp $
  *
  */
 
@@ -76,6 +76,7 @@ enum circuit_type {
   CIR_RECTANGULAR,
   CIR_TWISTEDPAIR,
   CIR_TLINE4P,
+  CIR_RLCG,
   CIR_IPROBE,
   CIR_VPROBE,
   CIR_SPFILE,

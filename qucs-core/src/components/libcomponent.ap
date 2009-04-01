@@ -1,7 +1,7 @@
 #
 # src/components/libcomponent.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
 	vpm.cpp tswitch.cpp relais.cpp short.cpp tline4p.cpp twistedpair.cpp \
 	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp          \
-	rectline.cpp
+	rectline.cpp rlcg.cpp
 
 # Additional libraries.
 LIBS = 
