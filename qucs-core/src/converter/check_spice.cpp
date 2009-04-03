@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.53 2009/03/28 16:04:15 ela Exp $
+ * $Id: check_spice.cpp,v 1.54 2009/04/03 19:05:20 ela Exp $
  *
  */
 
@@ -2208,10 +2208,26 @@ static void spice2g6_nxtpwr (int * seq, int nd) {
   }
 }
 
+/* The function takes the given spice value, converts it into an
+   appropriate real value and save optional scale and unit and finally
+   returns the actual value. */
+static double spice_get_value (struct value_t * val) {
+  const char * str;
+  char * end;
+  double v, value = strtod (val->ident, &end);
+  if (*end) {
+    str = spice_evaluate_scale (end, &end, &v);
+    value *= v;
+    val->scale = str ? strdup (str) : NULL;
+    if (*end) val->unit = strdup (end);
+  }
+  return spice_evaluate_value (val);
+}
+
 /* Creates a 'nd' dimensional polynomial expression extracted from the
    coefficient list of a value. */
 static char *
-spice_create_poly (struct value_t * prop, int nd) {
+spice_create_poly (struct value_t * prop, int nd, int integrate) {
   struct value_t * val;
 
   // contruct polynomial expression
@@ -2224,11 +2240,7 @@ spice_create_poly (struct value_t * prop, int nd) {
   foreach_value (prop, val) {
     if (!VAL_IS_NUMBER (val)) break;
 
-    double k;
-    if (val->hint & HINT_NODE)
-      k = strtod (val->ident, NULL);
-    else
-      k = spice_evaluate_value (val);
+    double k = spice_get_value (val);
     spice_value_done (val);
 
     // construct single polynom
@@ -2240,8 +2252,9 @@ spice_create_poly (struct value_t * prop, int nd) {
 
       // remaining polynom
       for (int i = 0; i < nd; i++) {
-	int n = i + 2;
-	switch (pn[i]) {
+	int n = integrate ? i + 1 : i + 2;
+	int e = integrate ? pn[i] + 2 : pn[i];
+	switch (e) {
 	case 0:
 	  strcpy (value, "");
 	  break;
@@ -2252,10 +2265,16 @@ spice_create_poly (struct value_t * prop, int nd) {
 	  sprintf (value, "*V%d*V%d", n, n);
 	  break;
 	default:
-	  sprintf (value, "*V%d^%d", n, pn[i]);
+	  sprintf (value, "*V%d^%d", n, e);
 	  break;
 	}
 	strcat (expr, value);
+
+	// coefficient correction
+	if (integrate && e > 1) {
+	  sprintf (value, "/%d", e);
+	  strcat (expr, value);
+	}
       }
     }
 
@@ -2361,7 +2380,7 @@ spice_translate_poly (struct definition_t * root, struct definition_t * def) {
     root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
       
     // contruct polynomial expression
-    char * expr = spice_create_poly (prop, nd);
+    char * expr = spice_create_poly (prop, nd, 0);
 
     // replace first current branch to reflect polynom
     char * ieq = spice_create_eqnstr (def, 1, 'I');
@@ -2395,6 +2414,86 @@ spice_translate_poly (struct definition_t * root, struct definition_t * def) {
 
     spice_set_property_string (obuf, "G", "1");
     root = spice_add_definition (root, obuf);
+  }
+  return root;
+}
+
+/* Translates non-linear L and C poly definitions. */
+static struct definition_t *
+spice_translate_poly_lc (struct definition_t * root,
+			 struct definition_t * def) {
+  struct value_t * prop;
+  int type = -1;
+  double lc = 0.0;
+
+  // save type information
+  if (!strcasecmp (def->type, "C"))
+    type = 0;
+  else if (!strcasecmp (def->type, "L"))
+    type = 1;
+
+  if ((prop = spice_find_property (def->values, "POLY")) != NULL) {
+    // retype poly LC into EDD
+    free (def->type);
+    def->type = strdup ("EDD");
+    spice_value_done (prop);
+
+    // get constant L or C value
+    struct pair_t * p;
+    if ((p = spice_find_property (def, "C")) != NULL) {
+      lc = spice_get_property_value (def, "C");
+      def->pairs = spice_del_property (def->pairs, p);
+    }
+    else if ((p = spice_find_property (def, "L")) != NULL) {
+      lc = spice_get_property_value (def, "L");
+      def->pairs = spice_del_property (def->pairs, p);
+    }
+
+    // add I and Q equations
+    struct definition_t * ieqn, * qeqn;
+    root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
+      
+    // contruct polynomial expression
+    char * expr1 = strdup (spice_create_poly (prop, 1, 1));
+    char * expr2 = expr1;
+    if (lc != 0.0) {
+      expr2 = (char *) malloc (strlen (expr1) + 256);
+      sprintf (expr2, "%+g*V1%s", lc, expr1);
+      free (expr1);
+    }
+
+    // replace first charge branch to reflect polynom
+    char * qeq = spice_create_eqnstr (def, 1, 'Q');
+    spice_set_property_string (qeqn, qeq, expr2);
+    free (expr2);
+    free (qeq);
+
+    // finally add converting gyrator if necessary
+    if (type == 1) {
+      struct definition_t * gyra = NULL;
+      struct node_t * pnode, * nnode;
+      char * intp;
+
+      gyra = spice_create_definition (def, "Gyrator");
+
+      pnode = spice_get_node (def, 1);
+      nnode = spice_get_node (def, 2);
+      intp = strdup (spice_create_intern_node ());
+
+      spice_append_node (gyra, intp);
+      spice_append_node (gyra, nnode->node);
+      spice_append_node (gyra, pnode->node);
+      spice_append_node (gyra, (char *) "gnd");
+
+      free (pnode->node);
+      pnode->node = strdup (intp);
+      free (nnode->node);
+      nnode->node = strdup ("gnd");
+      free (intp);
+
+      spice_set_property_string (gyra, "R", "1");
+      root = spice_add_definition (root, gyra);
+    }
   }
   return root;
 }
@@ -2851,6 +2950,10 @@ static struct definition_t * spice_translator (struct definition_t * root) {
 	if (!strcasecmp (def->type, "E") || !strcasecmp (def->type, "G")) {
 	  root = spice_translate_poly (root, def);
 	}
+	// controlled sources
+	if (!strcasecmp (def->type, "C") || !strcasecmp (def->type, "L")) {
+	  root = spice_translate_poly_lc (root, def);
+	}
 	// voltage sources
 	if (!strcasecmp (def->type, "V")) {
 	  root = spice_translate_source (root, def, 'U');
@@ -2909,6 +3012,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
    - piece-wise linear (PWL) voltage and current sources
    - temperature analysis (.TEMP)
    - temperature option (.OPTIONS TNOM=27)
+       - non-linear L and C poly components
 */
 
 #if 0

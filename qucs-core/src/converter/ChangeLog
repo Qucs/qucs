@@ -1,3 +1,8 @@
+2009-04-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Allowing translation of polynomial Ls and Cs as
+	specified by SPICE 2g6 notation.
+
 2009-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l, parse_spice.y, check_spice.cpp: Also added

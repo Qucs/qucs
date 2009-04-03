@@ -32,7 +32,7 @@ unfixed) have a look at the file BUGS.
 - Introduce global nodes (e.g. subst!) in the simulator. 
 - Allow variable references in property value lists.
 - Translation of B-sources in SPICE converter using EDD.
-- Translation of polynomial C's and L's in SPICE converter using EDD.
+	- Translation of polynomial C's and L's in SPICE converter using EDD.
 - Noise equations in EDD.
 - Implicit expressions for EDD.
 - User defined functions for equation solver.

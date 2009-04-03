@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * translation of polynomial C's and L's in spice converter
  * translation of F, H, E and G polynomial spice sources
  * many new digital primitives in Verilog-A
  * allowing variables in constant parameter simulation boxes

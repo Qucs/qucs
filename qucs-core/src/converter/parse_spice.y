@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.22 2009/03/28 16:04:15 ela Exp $
+ * $Id: parse_spice.y,v 1.23 2009/04/03 19:05:20 ela Exp $
  *
  */
 
@@ -260,6 +260,15 @@ DefinitionLine:
     spice_append_str_value ($$, $3, HINT_NODE);
     spice_append_val_value ($$, $4, HINT_NUMBER);
     $$->values = netlist_append_values ($$->values, $5);
+  }
+  | RLC_Device Node Node Value Behave NodeValueList Eol {
+    /* non-linear C and L poly definitions */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
   }
   | K_Device L_Device L_Device Value Eol {
     /* Mutual inductors */

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.28 2009/03/28 16:04:15 ela Exp $
+ * $Id: scan_spice.l,v 1.29 2009/04/03 19:05:20 ela Exp $
  *
  */
 
@@ -534,7 +534,7 @@ POLY     [pP][oO][lL][yY]
     return Floats;
 }
 
-<GEVALS,FHVALS>{POLY} {
+<GEVALS,FHVALS,RLCPROP>{POLY} {
     /* identify analog behaviour */
     spice_lval.ident = strdup (spice_text);
     return Behave;
