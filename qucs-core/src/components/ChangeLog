@@ -1,3 +1,8 @@
+2009-04-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msgap.cpp: Fixed property fetching bug for the gap
+	width.
+
 2009-04-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* rlcg.cpp: Added new transmission line defined by RLCG loads.

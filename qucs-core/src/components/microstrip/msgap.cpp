@@ -1,7 +1,7 @@
 /*
  * msgap.cpp - microstrip gap class implementation
  *
- * Copyright (C) 2004, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msgap.cpp,v 1.13 2008-10-07 20:15:33 ela Exp $
+ * $Id: msgap.cpp,v 1.14 2009-04-03 19:28:46 ela Exp $
  *
  */
 
@@ -45,7 +45,7 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   /* how to get properties of this component, e.g. W */
   nr_double_t W1 = getPropertyDouble ("W1");
   nr_double_t W2 = getPropertyDouble ("W2");
-  nr_double_t s  = getPropertyDouble ("s");
+  nr_double_t s  = getPropertyDouble ("S");
   char * SModel  = getPropertyString ("MSModel");
   char * DModel  = getPropertyString ("MSDispModel");
 
@@ -87,7 +87,7 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   C1 *= (Q2 + Q3) / (Q2 + 1.0);
   C2 *= (Q2 + Q4) / (Q2 + 1.0);
 
-  if (flip) { // if neccessary flip ports back
+  if (flip) { // if necessary flip ports back
     Q1 = C1;
     C1 = C2;
     C2 = Q1;
