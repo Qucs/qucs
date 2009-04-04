@@ -6864,7 +6864,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>flag for turning on base related critical current</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltet den kritischen Strom für die Basis ein/aus</translation>
     </message>
     <message>
         <source>Smoothing factor for the d.c. injection width</source>
@@ -6988,7 +6988,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>D flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>D-Speicherglied mit Set- und Resetfunktion Verilogmodell</translation>
     </message>
     <message>
         <source>D-FlipFlop w/ SR</source>
@@ -6996,19 +6996,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Pegelverschieber (digital nach analog) Verilogmodell</translation>
     </message>
     <message>
         <source>D2A Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>D2A Pegelverschieber</translation>
     </message>
     <message>
         <source>data voltage level shifter (analogue to digital) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Pegelverschieber (analog nach digital) Verilogmodell</translation>
     </message>
     <message>
         <source>A2D Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>A2D Pegelverschieber</translation>
     </message>
     <message>
         <source>2to4 demultiplexer verilog device</source>
@@ -7016,7 +7016,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>2to4 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>2zu4 Demux</translation>
     </message>
     <message>
         <source>3to8 demultiplexer verilog device</source>
@@ -7024,7 +7024,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>3to8 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>3zu8 Demux</translation>
     </message>
     <message>
         <source>4to16 demultiplexer verilog device</source>
@@ -7032,7 +7032,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4to16 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>4zu16 Demux</translation>
     </message>
     <message>
         <source>1bit full adder verilog device</source>
@@ -7052,19 +7052,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>gated D latch verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>steuerbares D-Speicherglied Verilogmodell</translation>
     </message>
     <message>
         <source>Gated D-Latch</source>
-        <translation type="unfinished"></translation>
+        <translation>Steuerbares D-Speicherglied</translation>
     </message>
     <message>
         <source>4bit grey to binary converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit Grey / Binär Umsetzer Verilogmodel</translation>
     </message>
     <message>
         <source>4Bit Grey2Bin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">4Bit Grey2Bin</translation>
     </message>
     <message>
         <source>1bit half adder verilog device</source>
@@ -7076,7 +7076,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4bit highest priority encoder (binary form) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit Prioritätsencoder (binäre Form) Verilogmodell</translation>
     </message>
     <message>
         <source>4Bit HPRI-Bin</source>
@@ -7084,7 +7084,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>jk flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>JK-Speicherglied mit Set- und Reseteingängen Verilogmodell</translation>
     </message>
     <message>
         <source>JK-FlipFlop w/ SR</source>
@@ -7112,7 +7112,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>2to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>2zu1 Mux</translation>
     </message>
     <message>
         <source>4to1 multiplexer verilog device</source>
@@ -7120,7 +7120,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>4to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>4zu1 Mux</translation>
     </message>
     <message>
         <source>8to1 multiplexer verilog device</source>
@@ -7128,7 +7128,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>8to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>8zu1 Mux</translation>
     </message>
     <message>
         <source>2bit pattern generator verilog device</source>
@@ -7156,7 +7156,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>T flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>T-Speicherglied mit Set- und Resetfunktion Verilogmodell</translation>
     </message>
     <message>
         <source>T-FlipFlop w/ SR</source>
@@ -7200,75 +7200,75 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Phototransistor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Phototransistor Verilogmodell</translation>
     </message>
     <message>
         <source>dark current</source>
-        <translation type="unfinished"></translation>
+        <translation>Dunkelstrom</translation>
     </message>
     <message>
         <source>collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollektorserienwiderstand</translation>
     </message>
     <message>
         <source>emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Emitterserienwiderstand</translation>
     </message>
     <message>
         <source>base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Basisserienwiderstand</translation>
     </message>
     <message>
         <source>responsivity at relative selectivity=100%</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansprechvermögen bei der relativen Empfindlichkeit=100%</translation>
     </message>
     <message>
         <source>relative selectivity polynomial coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Polynomkoeffizient der relativen Empfindlichkeit</translation>
     </message>
     <message>
         <source>Phototransistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Phototransistor</translation>
     </message>
     <message>
         <source>RLCG transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>RLCG Leitung</translation>
     </message>
     <message>
         <source>RLCG</source>
-        <translation type="unfinished"></translation>
+        <translation>RLCG</translation>
     </message>
     <message>
         <source>resistive load</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstandsbelag</translation>
     </message>
     <message>
         <source>Ohm/m</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohm/m</translation>
     </message>
     <message>
         <source>inductive load</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivitätsbelag</translation>
     </message>
     <message>
         <source>H/m</source>
-        <translation type="unfinished"></translation>
+        <translation>H/m</translation>
     </message>
     <message>
         <source>capacitive load</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazitätsbelag</translation>
     </message>
     <message>
         <source>conductive load</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitwertsbelag</translation>
     </message>
     <message>
         <source>S/m</source>
-        <translation type="unfinished"></translation>
+        <translation>S/m</translation>
     </message>
     <message>
         <source>RLCG Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>RLCG Leitung</translation>
     </message>
 </context>
 <context>
