@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.50 2008/10/07 20:15:33 ela Exp $
+ * $Id: bjt.cpp,v 1.51 2009/04/04 17:12:10 ela Exp $
  *
  */
 
@@ -806,7 +806,7 @@ PROP_OPT [] = {
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_RNG_BJT },
   { "Ptf", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
-  { "Xtb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Xtb", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   { "Xti", PROP_REAL, { 3, PROP_NO_STR }, PROP_POS_RANGE },
   { "Eg", PROP_REAL, { EgSi, PROP_NO_STR }, PROP_POS_RANGE },
   { "Tnom", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
